@@ -557,7 +557,7 @@ static void InFormat(R_inpstream_t stream)
 
 #define HASHSIZE 1099
 
-#define PTRHASH(obj) (((R_size_t) (obj)) >> 2)
+#define PTRHASH(obj) (((R_size_t) SEXP_TO_PTR(obj)) >> 2)
 
 #define HASH_TABLE_COUNT(ht) TRUELENGTH(CDR(ht))
 #define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), val)
@@ -590,8 +590,8 @@ static int HashGet(SEXP item, SEXP ht)
 {
     R_size_t pos = PTRHASH(item) % HASH_TABLE_SIZE(ht);
     SEXP cell;
-    for (cell = HASH_BUCKET(ht, pos); cell != R_NilValue; cell = CDR(cell))
-	if (item == TAG(cell))
+    for (cell = HASH_BUCKET(ht, pos); ! IS_R_NilValue(cell); cell = CDR(cell))
+	if (SEXP_EQL(item, TAG(cell)))
 	    return INTEGER(CAR(cell))[0];
     return 0;
 }
@@ -730,9 +730,9 @@ static SEXP GetPersistentName(R_outpstream_t stream, SEXP s)
 	case WEAKREFSXP:
 	case EXTPTRSXP: break;
 	case ENVSXP:
-	    if (s == R_GlobalEnv ||
-		s == R_BaseEnv ||
-		s == R_EmptyEnv ||
+	    if (IS_R_GlobalEnv(s) ||
+		IS_R_BaseEnv(s) ||
+		IS_R_EmptyEnv(s) ||
 		R_IsNamespaceEnv(s) ||
 		R_IsPackageEnv(s))
 		return R_NilValue;
@@ -760,13 +760,13 @@ static SEXP PersistentRestore(R_inpstream_t stream, SEXP s)
 
 static int SaveSpecialHook(SEXP item)
 {
-    if (item == R_NilValue)      return NILVALUE_SXP;
-    if (item == R_EmptyEnv)	 return EMPTYENV_SXP;
-    if (item == R_BaseEnv)	 return BASEENV_SXP;
-    if (item == R_GlobalEnv)     return GLOBALENV_SXP;
-    if (item == R_UnboundValue)  return UNBOUNDVALUE_SXP;
-    if (item == R_MissingArg)    return MISSINGARG_SXP;
-    if (item == R_BaseNamespace) return BASENAMESPACE_SXP;
+    if (IS_R_NilValue(item))      return NILVALUE_SXP;
+    if (IS_R_EmptyEnv(item))	  return EMPTYENV_SXP;
+    if (IS_R_BaseEnv(item))	  return BASEENV_SXP;
+    if (IS_R_GlobalEnv(item))     return GLOBALENV_SXP;
+    if (IS_R_UnboundValue(item))  return UNBOUNDVALUE_SXP;
+    if (IS_R_MissingArg(item))    return MISSINGARG_SXP;
+    if (IS_R_BaseNamespace(item)) return BASENAMESPACE_SXP;
     return 0;
 }
 
@@ -790,7 +790,7 @@ static void OutStringVec(R_outpstream_t stream, SEXP s, SEXP ref_table)
 
 #ifdef WARN_ABOUT_NAMES_IN_PERSISTENT_STRINGS
     SEXP names = getAttrib(s, R_NamesSymbol);
-    if (names != R_NilValue)
+    if (! IS_R_NilValue(names))
 	warning(_("names in persistent strings are currently ignored"));
 #endif
 
@@ -938,7 +938,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 
  tailcall:
     R_CheckStack();
-    if ((t = GetPersistentName(stream, s)) != R_NilValue) {
+    if (! IS_R_NilValue(t = GetPersistentName(stream, s))) {
 	R_assert(TYPEOF(t) == STRSXP && LENGTH(t) > 0);
 	PROTECT(t);
 	HashAdd(s, ref_table);
@@ -989,13 +989,13 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	case LANGSXP:
 	case CLOSXP:
 	case PROMSXP:
-	case DOTSXP: hastag = TAG(s) != R_NilValue; break;
+	case DOTSXP: hastag = ! IS_R_NilValue(TAG(s)); break;
 	default: hastag = FALSE;
 	}
 	/* With the CHARSXP cache chains maintained through the ATTRIB
 	   field the content of that field must not be serialized, so
 	   we treat it as not there. */
-	hasattr = (TYPEOF(s) != CHARSXP && ATTRIB(s) != R_NilValue);
+	hasattr = (TYPEOF(s) != CHARSXP && ! IS_R_NilValue(ATTRIB(s)));
 	flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
 			  hasattr, hastag);
 	OutInteger(stream, flags);
@@ -1010,7 +1010,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	       recursion on the CDR */
 	    if (hasattr)
 		WriteItem(ATTRIB(s), ref_table, stream);
-	    if (TAG(s) != R_NilValue)
+	    if (! IS_R_NilValue(TAG(s)))
 		WriteItem(TAG(s), ref_table, stream);
 	    WriteItem(CAR(s), ref_table, stream);
 	    /* now do a tail call to WriteItem to handle the CDR */
@@ -1033,7 +1033,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    OutString(stream, PRIMNAME(s), (int)strlen(PRIMNAME(s)));
 	    break;
 	case CHARSXP:
-	    if (s == NA_STRING)
+	    if (IS_NA_STRING(s))
 		OutInteger(stream, -1);
 	    else {
 		OutInteger(stream, LENGTH(s));
@@ -1113,9 +1113,9 @@ static Rboolean AddCircleHash(SEXP item, SEXP ct)
     table = CDR(ct);
     R_size_t pos = PTRHASH(item) % LENGTH(table);
     bucket = VECTOR_ELT(table, pos);
-    for (list = bucket; list != R_NilValue; list = CDR(list))
-	if (TAG(list) == item) {
-	    if (CAR(list) == R_NilValue) {
+    for (list = bucket; ! IS_R_NilValue(list); list = CDR(list))
+	if (SEXP_EQL(TAG(list), item)) {
+	    if (IS_R_NilValue(CAR(list))) {
 		/* this is the second time; enter in list and mark */
 		SETCAR(list, R_UnboundValue); /* anything different will do */
 		SETCAR(ct, CONS(item, CAR(ct)));
@@ -1164,8 +1164,8 @@ static SEXP ScanForCircles(SEXP s)
 
 static SEXP findrep(SEXP x, SEXP reps)
 {
-    for (; reps != R_NilValue; reps = CDR(reps))
-	if (x == CAR(reps))
+    for (; ! IS_R_NilValue(reps); reps = CDR(reps))
+	if (SEXP_EQL(x, CAR(reps)))
 	    return reps;
     return R_NilValue;
 }
@@ -1177,9 +1177,9 @@ static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
     if (type == LANGSXP || type == LISTSXP) {
 	SEXP r = findrep(s, reps);
 	int output = TRUE;
-	if (r != R_NilValue) {
+	if (! IS_R_NilValue(r)) {
 	    /* we have a cell referenced more than once */
-	    if (TAG(r) == R_NilValue) {
+	    if (IS_R_NilValue(TAG(r))) {
 		/* this is the first reference, so update and register
 		   the counter */
 		int i = INTEGER(CAR(reps))[0]++;
@@ -1197,14 +1197,14 @@ static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
 	}
 	if (output) {
 	    SEXP attr = ATTRIB(s);
-	    if (attr != R_NilValue) {
+	    if (! IS_R_NilValue(attr)) {
 		switch(type) {
 		case LANGSXP: type = ATTRLANGSXP; break;
 		case LISTSXP: type = ATTRLISTSXP; break;
 		}
 	    }
 	    OutInteger(stream, type);
-	    if (attr != R_NilValue)
+	    if (! IS_R_NilValue(attr))
 		WriteItem(attr, ref_table, stream);
 	    WriteItem(TAG(s), ref_table, stream);
 	    WriteBCLang(CAR(s), ref_table, reps, stream);
@@ -1557,15 +1557,15 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    SET_HASHTAB(s, ReadItem(ref_table, stream));
 	    SET_ATTRIB(s, ReadItem(ref_table, stream));
 	    R_ReadItemDepth--;
-	    if (ATTRIB(s) != R_NilValue &&
-		getAttrib(s, R_ClassSymbol) != R_NilValue)
+	    if (! IS_R_NilValue(ATTRIB(s)) &&
+		! IS_R_NilValue(getAttrib(s, R_ClassSymbol)))
 		/* We don't write out the object bit for environments,
 		   so reconstruct it here if needed. */
 		SET_OBJECT(s, 1);
 	    R_RestoreHashCount(s);
 	    if (locked) R_LockEnvironment(s, FALSE);
 	    /* Convert a NULL enclosure to baseenv() */
-	    if (ENCLOS(s) == R_NilValue) SET_ENCLOS(s, R_BaseEnv);
+	    if (IS_R_NilValue(ENCLOS(s))) SET_ENCLOS(s, R_BaseEnv);
 	    UNPROTECT(1);
 	    return s;
 	}
@@ -1600,8 +1600,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	R_ReadItemDepth--; /* do this early because of the recursion. */
 	SETCDR(s, ReadItem(ref_table, stream));
 	/* For reading closures and promises stored in earlier versions, convert NULL env to baseenv() */
-	if      (type == CLOSXP && CLOENV(s) == R_NilValue) SET_CLOENV(s, R_BaseEnv);
-	else if (type == PROMSXP && PRENV(s) == R_NilValue) SET_PRENV(s, R_BaseEnv);
+	if      (type == CLOSXP && IS_R_NilValue(CLOENV(s))) SET_CLOENV(s, R_BaseEnv);
+	else if (type == PROMSXP && IS_R_NilValue(PRENV(s))) SET_PRENV(s, R_BaseEnv);
 	UNPROTECT(1); /* s */
 	return s;
     default:
@@ -2151,7 +2151,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ascii) type = R_pstream_ascii_format;
     else type = R_pstream_xdr_format;
 
-    if (CADDDR(args) == R_NilValue)
+    if (IS_R_NilValue(CADDDR(args)))
 	version = R_DefaultSerializeVersion;
     else
 	version = asInteger(CADDDR(args));
@@ -2161,7 +2161,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("cannot save to connections in version %d format"), version);
 
     fun = CAR(nthcdr(args,4));
-    hook = fun != R_NilValue ? CallHook : NULL;
+    hook = ! IS_R_NilValue(fun) ? CallHook : NULL;
 
     /* Now we need to do some sanity checking of the arguments.
        A filename will already have been opened, so anything
@@ -2212,7 +2212,7 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
 
     fun = CADR(args);
-    hook = fun != R_NilValue ? CallHook : NULL;
+    hook = ! IS_R_NilValue(fun) ? CallHook : NULL;
 
     /* Now we need to do some sanity checking of the arguments.
        A filename will already have been opened, so anything
@@ -2305,13 +2305,13 @@ R_serializeb(SEXP object, SEXP icon, SEXP xdr, SEXP Sversion, SEXP fun)
     Rconnection con = getConnection(asInteger(icon));
     int version;
 
-    if (Sversion == R_NilValue)
+    if (IS_R_NilValue(Sversion))
 	version = R_DefaultSerializeVersion;
     else version = asInteger(Sversion);
     if (version == NA_INTEGER || version <= 0)
 	error(_("bad version value"));
 
-    hook = fun != R_NilValue ? CallHook : NULL;
+    hook = ! IS_R_NilValue(fun) ? CallHook : NULL;
 
     InitBConOutPStream(&out, &bbs, con,
 		       asLogical(xdr) ? R_pstream_xdr_format : R_pstream_binary_format,
@@ -2454,20 +2454,20 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
     SEXP (*hook)(SEXP, SEXP);
     int version;
 
-    if (Sversion == R_NilValue)
+    if (IS_R_NilValue(Sversion))
 	version = R_DefaultSerializeVersion;
     else version = asInteger(Sversion);
     if (version == NA_INTEGER || version <= 0)
 	error(_("bad version value"));
 
-    hook = fun != R_NilValue ? CallHook : NULL;
+    hook = ! IS_R_NilValue(fun) ? CallHook : NULL;
 
     int asc = asLogical(ascii);
     if (asc == NA_LOGICAL) type = R_pstream_binary_format;
     else if (asc) type = R_pstream_ascii_format;
     else type = R_pstream_xdr_format; /**** binary or ascii if no XDR? */
 
-    if (icon == R_NilValue) {
+    if (IS_R_NilValue(icon)) {
 	RCNTXT cntxt;
 	struct membuf_st mbs;
 	SEXP val;
@@ -2503,7 +2503,7 @@ SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
     struct R_inpstream_st in;
     SEXP (*hook)(SEXP, SEXP);
 
-    hook = fun != R_NilValue ? CallHook : NULL;
+    hook = ! IS_R_NilValue(fun) ? CallHook : NULL;
 
     if (TYPEOF(icon) == STRSXP && LENGTH(icon) > 0) {
 	/* was the format in R < 2.4.0, removed in R 2.8.0 */
@@ -2721,7 +2721,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 	sym = install(CHAR(STRING_ELT(vars, i)));
 
 	tmp = findVarInFrame(env, sym);
-	if (tmp == R_UnboundValue) {
+	if (IS_R_UnboundValue(tmp)) {
 /*		PrintValue(env);
 		PrintValue(R_GetTraceback(0)); */  /* DJM debugging */
 	    error(_("object '%s' not found"), EncodeChar(STRING_ELT(vars, i)));

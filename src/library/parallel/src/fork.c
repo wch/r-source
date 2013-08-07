@@ -621,7 +621,7 @@ SEXP mc_interactive(SEXP sWhat) {
 
 /* req is one-based, cpu_set is zero-based */
 SEXP mc_affinity(SEXP req) {
-    if (req != R_NilValue && TYPEOF(req) != INTSXP && TYPEOF(req) != REALSXP)
+    if (! IS_R_NilValue(req) && TYPEOF(req) != INTSXP && TYPEOF(req) != REALSXP)
 	error(_("invalid CPU affinity specification"));
     if (TYPEOF(req) == REALSXP)
 	req = coerceVector(req, INTSXP);
@@ -664,7 +664,7 @@ SEXP mc_affinity(SEXP req) {
 	cpu_set_t cs;
 	CPU_ZERO(&cs);
 	if (sched_getaffinity(0, sizeof(cs), &cs)) {
-	    if (req == R_NilValue)
+	    if (IS_R_NilValue(req))
 		error(_("retrieving CPU affinity set failed"));
 	    return R_NilValue;
 	} else {

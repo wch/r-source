@@ -76,7 +76,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(use_sep) { /* paste(..., sep, .) */
 	sep = CADR(args);
-	if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
+	if (!isString(sep) || LENGTH(sep) <= 0 || IS_NA_STRING(STRING_ELT(sep, 0)))
 	    error(_("invalid separator"));
 	sep = STRING_ELT(sep, 0);
 	csep = translateChar(sep);
@@ -92,7 +92,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0 ||
-	   STRING_ELT(collapse, 0) == NA_STRING)
+	   IS_NA_STRING(STRING_ELT(collapse, 0)))
 	    error(_("invalid '%s' argument"), "collapse");
     if(nx == 0)
 	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
@@ -213,7 +213,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx = XLENGTH(ans)) > 0) {
+    if(! IS_R_NilValue(collapse) && (nx = XLENGTH(ans)) > 0) {
 	sep = STRING_ELT(collapse, 0);
 	use_UTF8 = IS_UTF8(sep);
 	use_Bytes = IS_BYTES(sep);
@@ -295,7 +295,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     sep = CADR(args);
-    if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
+    if (!isString(sep) || LENGTH(sep) <= 0 || IS_NA_STRING(STRING_ELT(sep, 0)))
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = CHAR(sep);
@@ -507,13 +507,13 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    w = wd;
 	    if (adj != Rprt_adj_none) {
 		for (i = 0; i < n; i++)
-		    if (STRING_ELT(xx, i) != NA_STRING)
+		    if (! IS_NA_STRING(STRING_ELT(xx, i)))
 			w = imax2(w, Rstrlen(STRING_ELT(xx, i), 0));
 		    else if (na) w = imax2(w, R_print.na_width);
 	    } else w = 0;
 	    /* now calculate the buffer size needed, in bytes */
 	    for (i = 0; i < n; i++)
-		if (STRING_ELT(xx, i) != NA_STRING) {
+		if (! IS_NA_STRING(STRING_ELT(xx, i))) {
 		    il = Rstrlen(STRING_ELT(xx, i), 0);
 		    cnt = imax2(cnt, LENGTH(STRING_ELT(xx, i)) + imax2(0, w-il));
 		} else if (na) cnt  = imax2(cnt, R_print.na_width + imax2(0, w-R_print.na_width));
@@ -521,11 +521,11 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    char buff[cnt+1];
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
-		if(!na && STRING_ELT(xx, i) == NA_STRING) {
+		if(!na && IS_NA_STRING(STRING_ELT(xx, i))) {
 		    SET_STRING_ELT(y, i, NA_STRING);
 		} else {
 		    q = buff;
-		    if(STRING_ELT(xx, i) == NA_STRING) s0 = R_print.na_string;
+		    if(IS_NA_STRING(STRING_ELT(xx, i))) s0 = R_print.na_string;
 		    else s0 = STRING_ELT(xx, i) ;
 		    s = CHAR(s0);
 		    il = Rstrlen(s0, 0);
@@ -549,11 +549,11 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
 	}
     }
-    if((l = getAttrib(x, R_DimSymbol)) != R_NilValue) {
+    if(! IS_R_NilValue(l = getAttrib(x, R_DimSymbol))) {
 	setAttrib(y, R_DimSymbol, l);
-	if((l = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
+	if(! IS_R_NilValue(l = getAttrib(x, R_DimNamesSymbol)))
 	    setAttrib(y, R_DimNamesSymbol, l);
-    } else if((l = getAttrib(x, R_NamesSymbol)) != R_NilValue)
+    } else if(! IS_R_NilValue(l = getAttrib(x, R_NamesSymbol)))
 	setAttrib(y, R_NamesSymbol, l);
 
     /* In case something else forgets to set PrintDefaults(), PR#14477 */
@@ -624,7 +624,7 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case STRSXP:
 	for (R_xlen_t i = 0; i < n; i++)
-	    if (STRING_ELT(x, i) != NA_STRING) {
+	    if (! IS_NA_STRING(STRING_ELT(x, i))) {
 		int il = Rstrlen(STRING_ELT(x, i), 0);
 		if (il > w) w = il;
 	    }

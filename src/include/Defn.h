@@ -115,17 +115,17 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 /**** HASHASH uses the first bit -- see HASHASH_MASK defined below */
 
 #ifdef USE_RINTERNALS
-# define IS_BYTES(x) ((x)->sxpinfo.gp & BYTES_MASK)
-# define SET_BYTES(x) (((x)->sxpinfo.gp) |= BYTES_MASK)
-# define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
-# define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
-# define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
-# define SET_ASCII(x) (((x)->sxpinfo.gp) |= ASCII_MASK)
-# define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
-# define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
-# define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
-# define SET_CACHED(x) (((x)->sxpinfo.gp) |= CACHED_MASK)
-# define IS_CACHED(x) (((x)->sxpinfo.gp) & CACHED_MASK)
+# define IS_BYTES(x) (SEXPPTR(x)->sxpinfo.gp & BYTES_MASK)
+# define SET_BYTES(x) ((SEXPPTR(x)->sxpinfo.gp) |= BYTES_MASK)
+# define IS_LATIN1(x) (SEXPPTR(x)->sxpinfo.gp & LATIN1_MASK)
+# define SET_LATIN1(x) ((SEXPPTR(x)->sxpinfo.gp) |= LATIN1_MASK)
+# define IS_ASCII(x) (SEXPPTR(x)->sxpinfo.gp & ASCII_MASK)
+# define SET_ASCII(x) ((SEXPPTR(x)->sxpinfo.gp) |= ASCII_MASK)
+# define IS_UTF8(x) (SEXPPTR(x)->sxpinfo.gp & UTF8_MASK)
+# define SET_UTF8(x) ((SEXPPTR(x)->sxpinfo.gp) |= UTF8_MASK)
+# define ENC_KNOWN(x) (SEXPPTR(x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+# define SET_CACHED(x) ((SEXPPTR(x)->sxpinfo.gp) |= CACHED_MASK)
+# define IS_CACHED(x) ((SEXPPTR(x)->sxpinfo.gp) & CACHED_MASK)
 #else
 /* Needed only for write-barrier testing */
 int IS_BYTES(SEXP x);
@@ -143,6 +143,7 @@ int IS_CACHED(SEXP x);
 /* macros and declarations for managing CHARSXP cache */
 # define CXHEAD(x) (x)
 # define CXTAIL(x) ATTRIB(x)
+# define CXTAIL0(x) ATTRIB0(x)
 SEXP (SET_CXTAIL)(SEXP x, SEXP y);
 
 #include "Errormsg.h"
@@ -361,28 +362,28 @@ typedef struct {
  */
 
 /* Primitive Access Macros */
-#define PRIMOFFSET(x)	((x)->u.primsxp.offset)
-#define SET_PRIMOFFSET(x,v)	(((x)->u.primsxp.offset)=(v))
-#define PRIMFUN(x)	(R_FunTab[(x)->u.primsxp.offset].cfun)
-#define PRIMNAME(x)	(R_FunTab[(x)->u.primsxp.offset].name)
-#define PRIMVAL(x)	(R_FunTab[(x)->u.primsxp.offset].code)
-#define PRIMARITY(x)	(R_FunTab[(x)->u.primsxp.offset].arity)
-#define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
-#define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
-#define PRIMINTERNAL(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)%100)/10)
+#define PRIMOFFSET(x)	(SEXPPTR(x)->u.primsxp.offset)
+#define SET_PRIMOFFSET(x,v)	((SEXPPTR(x)->u.primsxp.offset)=(v))
+#define PRIMFUN(x)	(R_FunTab[SEXPPTR(x)->u.primsxp.offset].cfun)
+#define PRIMNAME(x)	(R_FunTab[SEXPPTR(x)->u.primsxp.offset].name)
+#define PRIMVAL(x)	(R_FunTab[SEXPPTR(x)->u.primsxp.offset].code)
+#define PRIMARITY(x)	(R_FunTab[SEXPPTR(x)->u.primsxp.offset].arity)
+#define PPINFO(x)	(R_FunTab[SEXPPTR(x)->u.primsxp.offset].gram)
+#define PRIMPRINT(x)	(((R_FunTab[SEXPPTR(x)->u.primsxp.offset].eval)/100)%10)
+#define PRIMINTERNAL(x)	(((R_FunTab[SEXPPTR(x)->u.primsxp.offset].eval)%100)/10)
 
 /* Promise Access Macros */
-#define PRCODE(x)	((x)->u.promsxp.expr)
-#define PRENV(x)	((x)->u.promsxp.env)
-#define PRVALUE(x)	((x)->u.promsxp.value)
-#define PRSEEN(x)	((x)->sxpinfo.gp)
-#define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
+#define PRCODE(x)	(SEXPPTR(x)->u.promsxp.expr)
+#define PRENV(x)	(SEXPPTR(x)->u.promsxp.env)
+#define PRVALUE(x)	(SEXPPTR(x)->u.promsxp.value)
+#define PRSEEN(x)	(SEXPPTR(x)->sxpinfo.gp)
+#define SET_PRSEEN(x,v)	((SEXPPTR(x)->sxpinfo.gp)=(v))
 
 /* Hashing Macros */
-#define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)
+#define HASHASH(x)      (SEXPPTR(x)->sxpinfo.gp & HASHASH_MASK)
 #define HASHVALUE(x)    TRUELENGTH(x)
-#define SET_HASHASH(x,v) ((v) ? (((x)->sxpinfo.gp) |= HASHASH_MASK) : \
-			  (((x)->sxpinfo.gp) &= (~HASHASH_MASK)))
+#define SET_HASHASH(x,v) ((v) ? ((SEXPPTR(x)->sxpinfo.gp) |= HASHASH_MASK) : \
+			  ((SEXPPTR(x)->sxpinfo.gp) &= (~HASHASH_MASK)))
 #define SET_HASHVALUE(x,v) SET_TRUELENGTH(x, v)
 
 /* Vector Heap Structure */
@@ -406,24 +407,24 @@ typedef struct {
 #define ACTIVE_BINDING_MASK (1<<15)
 #define BINDING_LOCK_MASK (1<<14)
 #define SPECIAL_BINDING_MASK (ACTIVE_BINDING_MASK | BINDING_LOCK_MASK)
-#define IS_ACTIVE_BINDING(b) ((b)->sxpinfo.gp & ACTIVE_BINDING_MASK)
-#define BINDING_IS_LOCKED(b) ((b)->sxpinfo.gp & BINDING_LOCK_MASK)
-#define SET_ACTIVE_BINDING_BIT(b) ((b)->sxpinfo.gp |= ACTIVE_BINDING_MASK)
-#define LOCK_BINDING(b) ((b)->sxpinfo.gp |= BINDING_LOCK_MASK)
-#define UNLOCK_BINDING(b) ((b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
+#define IS_ACTIVE_BINDING(b) (SEXPPTR(b)->sxpinfo.gp & ACTIVE_BINDING_MASK)
+#define BINDING_IS_LOCKED(b) (SEXPPTR(b)->sxpinfo.gp & BINDING_LOCK_MASK)
+#define SET_ACTIVE_BINDING_BIT(b) (SEXPPTR(b)->sxpinfo.gp |= ACTIVE_BINDING_MASK)
+#define LOCK_BINDING(b) (SEXPPTR(b)->sxpinfo.gp |= BINDING_LOCK_MASK)
+#define UNLOCK_BINDING(b) (SEXPPTR(b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
 
 #define BASE_SYM_CACHED_MASK (1<<13)
-#define SET_BASE_SYM_CACHED(b) ((b)->sxpinfo.gp |= BASE_SYM_CACHED_MASK)
-#define UNSET_BASE_SYM_CACHED(b) ((b)->sxpinfo.gp &= (~BASE_SYM_CACHED_MASK))
-#define BASE_SYM_CACHED(b) ((b)->sxpinfo.gp & BASE_SYM_CACHED_MASK)
+#define SET_BASE_SYM_CACHED(b) (SEXPPTR(b)->sxpinfo.gp |= BASE_SYM_CACHED_MASK)
+#define UNSET_BASE_SYM_CACHED(b) (SEXPPTR(b)->sxpinfo.gp &= (~BASE_SYM_CACHED_MASK))
+#define BASE_SYM_CACHED(b) (SEXPPTR(b)->sxpinfo.gp & BASE_SYM_CACHED_MASK)
 
 #define SPECIAL_SYMBOL_MASK (1<<12)
-#define SET_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
-#define UNSET_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
-#define IS_SPECIAL_SYMBOL(b) ((b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
-#define SET_NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
-#define UNSET_NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
-#define NO_SPECIAL_SYMBOLS(b) ((b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
+#define SET_SPECIAL_SYMBOL(b) (SEXPPTR(b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
+#define UNSET_SPECIAL_SYMBOL(b) (SEXPPTR(b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
+#define IS_SPECIAL_SYMBOL(b) (SEXPPTR(b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
+#define SET_NO_SPECIAL_SYMBOLS(b) (SEXPPTR(b)->sxpinfo.gp |= SPECIAL_SYMBOL_MASK)
+#define UNSET_NO_SPECIAL_SYMBOLS(b) (SEXPPTR(b)->sxpinfo.gp &= (~SPECIAL_SYMBOL_MASK))
+#define NO_SPECIAL_SYMBOLS(b) (SEXPPTR(b)->sxpinfo.gp & SPECIAL_SYMBOL_MASK)
 
 #else /* USE_RINTERNALS */
 

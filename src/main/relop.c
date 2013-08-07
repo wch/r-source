@@ -63,7 +63,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     /* pre-test to handle the most common case quickly.
        Used to skip warning too ....
      */
-    if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
+    if (IS_R_NilValue(ATTRIB(x)) && IS_R_NilValue(ATTRIB(y)) &&
 	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP && nx > 0 && ny > 0) {
 	SEXP ans = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
 	if (nx > 0 && ny > 0)
@@ -200,11 +200,11 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 
 
     PROTECT(x);
-    if (dims != R_NilValue) {
+    if (! IS_R_NilValue(dims)) {
 	setAttrib(x, R_DimSymbol, dims);
-	if (xnames != R_NilValue)
+	if (! IS_R_NilValue(xnames))
 	    setAttrib(x, R_DimNamesSymbol, xnames);
-	else if (ynames != R_NilValue)
+	else if (! IS_R_NilValue(ynames))
 	    setAttrib(x, R_DimNamesSymbol, ynames);
     }
     else {
@@ -474,7 +474,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
 	    else
 		LOGICAL(ans)[i] = Seql(c1, c2) ? 1 : 0;
@@ -485,7 +485,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
 	    else
 		LOGICAL(ans)[i] = Seql(c1, c2) ? 0 : 1;
@@ -496,9 +496,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else if (c1 == c2)
+	    else if (SEXP_EQL(c1, c2))
 		LOGICAL(ans)[i] = 0;
 	    else {
 		errno = 0;
@@ -515,9 +515,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else if (c1 == c2)
+	    else if (SEXP_EQL(c1, c2))
 		LOGICAL(ans)[i] = 0;
 	    else {
 		errno = 0;
@@ -534,9 +534,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else if (c1 == c2)
+	    else if (SEXP_EQL(c1, c2))
 		LOGICAL(ans)[i] = 1;
 	    else {
 		errno = 0;
@@ -553,9 +553,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    c1 = STRING_ELT(s1, i % n1);
 	    c2 = STRING_ELT(s2, i % n2);
-	    if (c1 == NA_STRING || c2 == NA_STRING)
+	    if (IS_NA_STRING(c1) || IS_NA_STRING(c2))
 		LOGICAL(ans)[i] = NA_LOGICAL;
-	    else if (c1 == c2)
+	    else if (SEXP_EQL(c1, c2))
 		LOGICAL(ans)[i] = 1;
 	    else {
 		errno = 0;

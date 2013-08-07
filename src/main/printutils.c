@@ -154,11 +154,11 @@ const char *EncodeEnvironment(SEXP x)
 {
     const void *vmax = vmaxget();
     static char ch[1000];
-    if (x == R_GlobalEnv)
+    if (IS_R_GlobalEnv(x))
 	sprintf(ch, "<environment: R_GlobalEnv>");
-    else if (x == R_BaseEnv)
+    else if (IS_R_BaseEnv(x))
 	sprintf(ch, "<environment: base>");
-    else if (x == R_EmptyEnv)
+    else if (IS_R_EmptyEnv(x))
 	sprintf(ch, "<environment: R_EmptyEnv>");
     else if (R_IsPackageEnv(x))
 	snprintf(ch, 1000, "<environment: %s>",
@@ -166,7 +166,7 @@ const char *EncodeEnvironment(SEXP x)
     else if (R_IsNamespaceEnv(x))
 	snprintf(ch, 1000, "<environment: namespace:%s>",
 		translateChar(STRING_ELT(R_NamespaceEnvSpec(x), 0)));
-    else snprintf(ch, 1000, "<environment: %p>", (void *)x);
+    else snprintf(ch, 1000, "<environment: %p>", (void *) SEXP_TO_PTR(x));
 
     vmaxset(vmax);
     return ch;
@@ -442,7 +442,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
     R_StringBuffer *buffer = &gBuffer;
 
-    if (s == NA_STRING) {
+    if (IS_NA_STRING(s)) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
 	cnt = i = (int)(quote ? strlen(CHAR(R_print.na_string)) :
 			strlen(CHAR(R_print.na_string_noquote)));

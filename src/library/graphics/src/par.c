@@ -1074,13 +1074,13 @@ SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(value = allocVector(VECSXP, nargs));
 	oldnames = getAttrib(args, R_NamesSymbol);
 	for (i = 0 ; i < nargs ; i++) {
-	    if (oldnames != R_NilValue)
+	    if (! IS_R_NilValue(oldnames))
 		tag = STRING_ELT(oldnames, i);
 	    else
 		tag = R_NilValue;
 	    val = VECTOR_ELT(args, i);
 	    /* tags are all ASCII */
-	    if (tag != R_NilValue && CHAR(tag)[0]) {
+	    if (! IS_R_NilValue(tag) && CHAR(tag)[0]) {
 		new_spec = 1;
 		SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));
 		SET_STRING_ELT(newnames, i, tag);
@@ -1088,7 +1088,7 @@ SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (isString(val) && length(val) > 0) {
 		tag = STRING_ELT(val, 0);
-		if (tag != R_NilValue && CHAR(tag)[0]) {
+		if (! IS_R_NilValue(tag) && CHAR(tag)[0]) {
 		    SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));
 		    SET_STRING_ELT(newnames, i, tag);
 		}
@@ -1234,10 +1234,10 @@ SEXP C_layout(SEXP args)
 void ProcessInlinePars(SEXP s, pGEDevDesc dd)
 {
     if (isList(s)) {
-	while (s != R_NilValue) {
+	while (! IS_R_NilValue(s)) {
 	    if (isList(CAR(s)))
 		ProcessInlinePars(CAR(s), dd);
-	    else if (TAG(s) != R_NilValue)
+	    else if (! IS_R_NilValue(TAG(s)))
 		Specify2(CHAR(PRINTNAME(TAG(s))), CAR(s), dd);
 	    s = CDR(s);
 	}

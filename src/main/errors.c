@@ -187,7 +187,7 @@ RETSIGTYPE attribute_hidden onsigusr1(int dummy)
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
-    R_ParseErrorFile = NULL;
+    R_ParseErrorFile = R_NULL_SEXP;
     R_ParseErrorMsg[0] = '\0';
 
     /* Bail out if there is a browser/try on the stack--do we really
@@ -222,7 +222,7 @@ RETSIGTYPE attribute_hidden onsigusr2(int dummy)
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
-    R_ParseErrorFile = NULL;
+    R_ParseErrorFile = R_NULL_SEXP;
     R_ParseErrorMsg[0] = '\0';
     R_CleanUp(SA_SAVE, 0, 0);
 }
@@ -312,7 +312,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	return;
 
     s = GetOption1(install("warning.expression"));
-    if( s != R_NilValue ) {
+    if( ! IS_R_NilValue(s) ) {
 	if( !isLanguage(s) &&  ! isExpression(s) )
 	    error(_("invalid option \"warning.expression\""));
 	cptr = R_GlobalContext;
@@ -348,7 +348,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     }
     else if(w == 1) {	/* print as they happen */
 	char *tr;
-	if( call != R_NilValue ) {
+	if( ! IS_R_NilValue(call) ) {
 	    dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	} else dcall = "";
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
@@ -363,7 +363,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
 	else
 	    REprintf(_("Warning in %s :\n  %s\n"), dcall, buf);
-	if(R_ShowWarnCalls && call != R_NilValue) {
+	if(R_ShowWarnCalls && ! IS_R_NilValue(call)) {
 	    tr = R_ConciseTraceback(call, 0);
 	    if (strlen(tr)) REprintf("Calls: %s\n", tr);
 	}
@@ -375,7 +375,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
 	    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
 		strcat(buf, " [... truncated]");
-	    if(R_ShowWarnCalls && call != R_NilValue) {
+	    if(R_ShowWarnCalls && ! IS_R_NilValue(call)) {
 		char *tr =  R_ConciseTraceback(call, 0); 
 		size_t nc = strlen(tr);
 		if (nc && nc + (int)strlen(buf) + 8 < BUFSIZE) {
@@ -460,7 +460,7 @@ void PrintWarnings(void)
     if( R_CollectWarnings == 1 ) {
 	REprintf("%s", header);
 	names = CAR(ATTRIB(R_Warnings));
-	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
+	if( IS_R_NilValue(VECTOR_ELT(R_Warnings, 0)) )
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
 	else {
 	    const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
@@ -486,7 +486,7 @@ void PrintWarnings(void)
 	REprintf("%s", header);
 	names = CAR(ATTRIB(R_Warnings));
 	for(i = 0; i < R_CollectWarnings; i++) {
-	    if( VECTOR_ELT(R_Warnings, i) == R_NilValue )
+	    if( IS_R_NilValue(VECTOR_ELT(R_Warnings, i)) )
 		REprintf("%d: %s \n", i+1, CHAR(STRING_ELT(names, i)));
 	    else {
 		const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
@@ -590,7 +590,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	    Rvsnprintf(errbuf, sizeof(errbuf), format, ap);
 	    REprintf("%s\n", errbuf);
 	}
-	if (R_Warnings != R_NilValue) {
+	if (! IS_R_NilValue(R_Warnings)) {
 	    R_CollectWarnings = 0;
 	    R_Warnings = R_NilValue;
 	    REprintf(_("Lost warning messages\n"));
@@ -607,7 +607,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     oldInError = inError;
     inError = 1;
 
-    if(call != R_NilValue) {
+    if(! IS_R_NilValue(call)) {
 	char tmp[BUFSIZE];
 	char *head = _("Error in "),
 	     *mid1 = " : ", *mid2 = _(" (from %s) : "), *tail = "\n  ";
@@ -675,7 +675,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     p = errbuf + strlen(errbuf) - 1;
     if(*p != '\n') strcat(errbuf, "\n");
 
-    if(R_ShowErrorCalls && call != R_NilValue) {  /* assume we want to avoid deparse */
+    if(R_ShowErrorCalls && ! IS_R_NilValue(call)) {  /* assume we want to avoid deparse */
 	tr = R_ConciseTraceback(call, 0); 
 	size_t nc = strlen(tr);
 	if (nc && nc + strlen(errbuf) + 8 < BUFSIZE) {
@@ -760,7 +760,7 @@ static void try_jump_to_restart(void)
 {
     SEXP list;
 
-    for (list = R_RestartStack; list != R_NilValue; list = CDR(list)) {
+    for (list = R_RestartStack; ! IS_R_NilValue(list); list = CDR(list)) {
 	SEXP restart = CAR(list);
 	if (TYPEOF(restart) == VECSXP && LENGTH(restart) > 1) {
 	    SEXP name = VECTOR_ELT(restart, 0);
@@ -805,7 +805,7 @@ static void jump_to_top_ex(Rboolean traceback,
 
 	/* now see if options("error") is set */
 	s = GetOption1(install("error"));
-	haveHandler = ( s != R_NilValue );
+	haveHandler = ( ! IS_R_NilValue(s) );
 	if (haveHandler) {
 	    if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
 		REprintf(_("invalid option \"error\"\n"));
@@ -835,7 +835,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	R_FlushConsole();
 	R_ClearerrConsole();
 	R_ParseError = 0;
-	R_ParseErrorFile = NULL;
+	R_ParseErrorFile = R_NULL_SEXP;
 	R_ParseErrorMsg[0] = '\0';
     }
 
@@ -941,8 +941,8 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   || streql(cfn, "message")) continue;
 		rho = cptr->cloenv;
 	    }
-	while(rho != R_EmptyEnv) {
-	    if (rho == R_GlobalEnv) break;
+	while(! IS_R_EmptyEnv(rho)) {
+	    if (IS_R_GlobalEnv(rho)) break;
 	    else if (R_IsNamespaceEnv(rho)) {
 		domain = translateChar(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
 		break;
@@ -1044,8 +1044,8 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		rho = cptr->cloenv;
 		break;
 	    }
-	while(rho != R_EmptyEnv) {
-	    if (rho == R_GlobalEnv) break;
+	while(! IS_R_EmptyEnv(rho)) {
+	    if (IS_R_GlobalEnv(rho)) break;
 	    else if (R_IsNamespaceEnv(rho)) {
 		domain = translateChar(STRING_ELT(R_NamespaceEnvSpec(rho), 0));
 		break;
@@ -1125,7 +1125,7 @@ SEXP attribute_hidden do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue) { /* message */
+    if (! IS_R_NilValue(CAR(args))) { /* message */
       SETCAR(args, coerceVector(CAR(args), STRSXP));
       if(!isValidString(CAR(args)))
 	  errorcall(c_call, _(" [invalid string in stop(.)]"));
@@ -1151,7 +1151,7 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	immediateWarning = 0;
     args = CDR(args);
-    if (CAR(args) != R_NilValue) {
+    if (! IS_R_NilValue(CAR(args))) {
 	SETCAR(args, coerceVector(CAR(args), STRSXP));
 	if(!isValidString(CAR(args)))
 	    warningcall(c_call, _(" [invalid string in warning(.)]"));
@@ -1342,7 +1342,7 @@ SEXP R_GetTraceback(int skip)
 		skip--;
 	    else {
 		SETCAR(t, deparse1(c->call, 0, DEFAULTDEPARSE));
-		if (c->srcref && !isNull(c->srcref)) 
+		if (! IS_NULL_SEXP(c->srcref) && !isNull(c->srcref)) 
 		    setAttrib(CAR(t), R_SrcrefSymbol, duplicate(c->srcref));
 		t = CDR(t);
 	    }
@@ -1464,7 +1464,7 @@ SEXP attribute_hidden do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
     target = CAR(args); args = CDR(args);
     calling = asLogical(CAR(args));
 
-    if (classes == R_NilValue || handlers == R_NilValue)
+    if (IS_R_NilValue(classes) || IS_R_NilValue(handlers))
 	return R_HandlerStack;
 
     if (TYPEOF(classes) != STRSXP || TYPEOF(handlers) != VECSXP ||
@@ -1501,7 +1501,7 @@ SEXP attribute_hidden do_resetCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP findSimpleErrorHandler(void)
 {
     SEXP list;
-    for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
+    for (list = R_HandlerStack; ! IS_R_NilValue(list); list = CDR(list)) {
 	SEXP entry = CAR(list);
 	if (! strcmp(CHAR(ENTRY_CLASS(entry)), "simpleError") ||
 	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "error") ||
@@ -1517,8 +1517,8 @@ static void vsignalWarning(SEXP call, const char *format, va_list ap)
     SEXP hooksym, hcall, qcall;
 
     hooksym = install(".signalSimpleWarning");
-    if (SYMVALUE(hooksym) != R_UnboundValue &&
-	SYMVALUE(R_QuoteSymbol) != R_UnboundValue) {
+    if (! IS_R_UnboundValue(SYMVALUE(hooksym)) &&
+	! IS_R_UnboundValue(SYMVALUE(R_QuoteSymbol))) {
 	PROTECT(qcall = LCONS(R_QuoteSymbol, LCONS(call, R_NilValue)));
 	PROTECT(hcall = LCONS(qcall, R_NilValue));
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
@@ -1547,7 +1547,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 
     oldstack = R_HandlerStack;
     Rvsnprintf(localbuf, BUFSIZE - 1, format, ap);
-    while ((list = findSimpleErrorHandler()) != R_NilValue) {
+    while (! IS_R_NilValue(list = findSimpleErrorHandler())) {
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
@@ -1555,7 +1555,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	/*	Rvsnprintf(buf, BUFSIZE - 1, format, ap);*/
 	buf[BUFSIZE - 1] = 0;
 	if (IS_CALLING_ENTRY(entry)) {
-	    if (ENTRY_HANDLER(entry) == R_RestartToken)
+	    if (SEXP_EQL(ENTRY_HANDLER(entry), R_RestartToken))
 		return; /* go to default error handling; do not reset stack */
 	    else {
 		SEXP hooksym, hcall, qcall;
@@ -1589,7 +1589,7 @@ static SEXP findConditionHandler(SEXP cond)
 	return R_NilValue;
 
     /**** need some changes here to allow conditions to be S4 classes */
-    for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
+    for (list = R_HandlerStack; ! IS_R_NilValue(list); list = CDR(list)) {
 	SEXP entry = CAR(list);
 	for (i = 0; i < LENGTH(classes); i++)
 	    if (! strcmp(CHAR(ENTRY_CLASS(entry)),
@@ -1610,12 +1610,12 @@ SEXP attribute_hidden do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho
     ecall = CADDR(args);
 
     PROTECT(oldstack = R_HandlerStack);
-    while ((list = findConditionHandler(cond)) != R_NilValue) {
+    while (! IS_R_NilValue(list = findConditionHandler(cond))) {
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
 	if (IS_CALLING_ENTRY(entry)) {
 	    SEXP h = ENTRY_HANDLER(entry);
-	    if (h == R_RestartToken) {
+	    if (SEXP_EQL(h, R_RestartToken)) {
 		const char *msgstr = NULL;
 		if (TYPEOF(msg) == STRSXP && LENGTH(msg) > 0)
 		    msgstr = translateChar(STRING_ELT(msg, 0));
@@ -1639,7 +1639,7 @@ SEXP attribute_hidden do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho
 static SEXP findInterruptHandler(void)
 {
     SEXP list;
-    for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
+    for (list = R_HandlerStack; ! IS_R_NilValue(list); list = CDR(list)) {
 	SEXP entry = CAR(list);
 	if (! strcmp(CHAR(ENTRY_CLASS(entry)), "interrupt") ||
 	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "condition"))
@@ -1666,7 +1666,7 @@ static void signalInterrupt(void)
     SEXP list, cond, oldstack;
 
     PROTECT(oldstack = R_HandlerStack);
-    while ((list = findInterruptHandler()) != R_NilValue) {
+    while (! IS_R_NilValue(list = findInterruptHandler())) {
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
 	PROTECT(cond = getInterruptCondition());
@@ -1689,8 +1689,8 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
 {
     SEXP klass, rho, entry, name;
 
-    if ((cptr->handlerstack != R_HandlerStack ||
-	 cptr->restartstack != R_RestartStack)) {
+    if ((! SEXP_EQL(cptr->handlerstack, R_HandlerStack) ||
+	 ! SEXP_EQL(cptr->restartstack, R_RestartStack))) {
 	if (IS_RESTART_BIT_SET(cptr->callflag))
 	    return;
 	else
@@ -1756,9 +1756,9 @@ SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     i = asInteger(CAR(args));
     for (list = R_RestartStack;
-	 list != R_NilValue && i > 1;
+	 ! IS_R_NilValue(list) && i > 1;
 	 list = CDR(list), i--);
-    if (list != R_NilValue)
+    if (! IS_R_NilValue(list))
 	return CAR(list);
     else if (i == 1) {
 	/**** need to pre-allocate */
@@ -1795,14 +1795,14 @@ static void invokeRestart(SEXP r, SEXP arglist)
 {
     SEXP exit = RESTART_EXIT(r);
 
-    if (exit == R_NilValue) {
+    if (IS_R_NilValue(exit)) {
 	R_RestartStack = R_NilValue;
 	jump_to_toplevel();
     }
     else {
-	for (; R_RestartStack != R_NilValue;
+	for (; ! IS_R_NilValue(R_RestartStack);
 	     R_RestartStack = CDR(R_RestartStack))
-	    if (exit == RESTART_EXIT(CAR(R_RestartStack))) {
+	    if (SEXP_EQL(exit, RESTART_EXIT(CAR(R_RestartStack)))) {
 		R_RestartStack = CDR(R_RestartStack);
 		if (TYPEOF(exit) == EXTPTRSXP) {
 		    RCNTXT *c = (RCNTXT *) R_ExternalPtrAddr(exit);
@@ -1857,7 +1857,7 @@ SEXP attribute_hidden
 do_interruptsSuspended(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int orig_value = R_interrupts_suspended;
-    if (args != R_NilValue)
+    if (! IS_R_NilValue(args))
 	R_interrupts_suspended = asLogical(CAR(args));
     return ScalarLogical(orig_value);
 }
@@ -1873,7 +1873,7 @@ R_GetCurrentSrcref(int skip)
     SEXP srcref = R_Srcref;
     if (skip < 0) { /* to count up from the bottom, we need to count them all first */
     	while (c) {
-    	    if (srcref && srcref != R_NilValue) 
+    	    if (! IS_NULL_SEXP(srcref) && ! IS_R_NilValue(srcref)) 
 		skip++;
     	    srcref = c->srcref;
     	    c = c->nextcontext;
@@ -1882,13 +1882,13 @@ R_GetCurrentSrcref(int skip)
     	c = R_GlobalContext;
     	srcref = R_Srcref;
     }
-    while (c && (skip || !srcref || srcref == R_NilValue)) {
-    	if (srcref && srcref != R_NilValue) 
+    while (c && (skip || IS_NULL_SEXP(srcref) || IS_R_NilValue(srcref))) {
+    	if (! IS_NULL_SEXP(srcref) && ! IS_R_NilValue(srcref)) 
 	    skip--;
     	srcref = c->srcref;
     	c = c->nextcontext;
     }
-    if (skip || !srcref)
+    if (skip || IS_NULL_SEXP(srcref))
     	srcref = R_NilValue;
     return srcref;
 }

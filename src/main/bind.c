@@ -128,7 +128,7 @@ AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
 	break;
     case LISTSXP:
 	if (recurse) {
-	    while (x != R_NilValue) {
+	    while (! IS_R_NilValue(x)) {
 		if (usenames && !data->ans_nnames) {
 		    if (!isNull(TAG(x))) data->ans_nnames = 1;
 		    else data->ans_nnames = HasNames(CAR(x));
@@ -211,13 +211,13 @@ ListAnswer(SEXP x, int recurse, struct BindData *data, SEXP call)
 	break;
     case LISTSXP:
 	if (recurse) {
-	    while (x != R_NilValue) {
+	    while (! IS_R_NilValue(x)) {
 		ListAnswer(CAR(x), recurse, data, call);
 		x = CDR(x);
 	    }
 	}
 	else
-	    while (x != R_NilValue) {
+	    while (! IS_R_NilValue(x)) {
 		LIST_ASSIGN(duplicate(CAR(x)));
 		x = CDR(x);
 	    }
@@ -236,7 +236,7 @@ StringAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    StringAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -263,7 +263,7 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    LogicalAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -299,7 +299,7 @@ IntegerAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    IntegerAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -336,7 +336,7 @@ RealAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    RealAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -385,7 +385,7 @@ ComplexAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    ComplexAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -457,7 +457,7 @@ RawAnswer(SEXP x, struct BindData *data, SEXP call)
     case NILSXP:
 	break;
     case LISTSXP:
-	while (x != R_NilValue) {
+	while (! IS_R_NilValue(x)) {
 	    RawAnswer(CAR(x), data, call);
 	    x = CDR(x);
 	}
@@ -532,7 +532,7 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno)
 	ans = mkCharCE(cbuf, CE_UTF8);
     }
     else if (*CHAR(tag)) {
-	if(tag == NA_STRING) ans = NA_STRING;
+	if(IS_NA_STRING(tag)) ans = NA_STRING;
 	else {
 	    const char *st = translateCharUTF8(tag);
 	    cbuf = R_AllocStringBuffer(strlen(st), &cbuff);
@@ -549,8 +549,8 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno)
 SEXP attribute_hidden ItemName(SEXP names, R_xlen_t i)
 {
   /* return  names[i]  if it is a character (>= 1 char), or NULL otherwise */
-    if (names != R_NilValue &&
-	STRING_ELT(names, i) != R_NilValue &&
+    if (! IS_R_NilValue(names) &&
+	! IS_R_NilValue(STRING_ELT(names, i)) &&
 	CHAR(STRING_ELT(names, i))[0] != '\0') /* length test */
 	return STRING_ELT(names, i);
     else
@@ -582,7 +582,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
     /* If we beneath a new tag, we reset the index */
     /* sequence and create the new basename string. */
 
-    if (tag != R_NilValue) {
+    if (! IS_R_NilValue(tag)) {
 	PROTECT(base = NewBase(base, tag));
 	savefirstpos = nameData->firstpos;
 	saveseqno = nameData->seqno;
@@ -606,7 +606,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 		NewExtractNames(CAR(v), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && nameData->count == 0)
+		if (IS_R_NilValue(namei) && nameData->count == 0)
 		    nameData->firstpos = data->ans_nnames;
 		nameData->count++;
 		namei = NewName(base, namei, ++(nameData->seqno));
@@ -624,7 +624,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 		NewExtractNames(VECTOR_ELT(v, i), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && nameData->count == 0)
+		if (IS_R_NilValue(namei) && nameData->count == 0)
 		    nameData->firstpos = data->ans_nnames;
 		nameData->count++;
 		namei = NewName(base, namei, ++(nameData->seqno));
@@ -640,7 +640,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
     case RAWSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
-	    if (namei == R_NilValue && nameData->count == 0)
+	    if (IS_R_NilValue(namei) && nameData->count == 0)
 		nameData->firstpos = data->ans_nnames;
 	    nameData->count++;
 	    namei = NewName(base, namei, ++(nameData->seqno));
@@ -654,7 +654,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 	namei = NewName(base, R_NilValue, ++(nameData->seqno));
 	SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
     }
-    if (tag != R_NilValue) {
+    if (! IS_R_NilValue(tag)) {
 	if (nameData->firstpos >= 0 && nameData->count == 1)
 	    SET_STRING_ELT(data->ans_names, nameData->firstpos, base);
 	nameData->firstpos = savefirstpos;
@@ -672,30 +672,30 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 
 static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames, SEXP call)
 {
-    SEXP a, n, last = NULL, next = NULL;
+    SEXP a, n, last = R_NULL_SEXP, next = R_NULL_SEXP;
     int v, n_recurse = 0, n_usenames = 0;
 
-    for (a = ans; a != R_NilValue; a = next) {
+    for (a = ans; ! IS_R_NilValue(a); a = next) {
 	n = TAG(a);
 	next = CDR(a);
-	if (n != R_NilValue && pmatch(R_RecursiveSymbol, n, 1)) {
+	if (! IS_R_NilValue(n) && pmatch(R_RecursiveSymbol, n, 1)) {
 	    if (n_recurse++ == 1)
 		errorcall(call, _("repeated formal argument 'recursive'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*recurse = v;
 	    }
-	    if (last == NULL)
+	    if (IS_NULL_SEXP(last))
 		ans = next;
 	    else
 		SETCDR(last, next);
 	}
-	else if (n != R_NilValue && pmatch(R_UseNamesSymbol, n, 1)) {
+	else if (! IS_R_NilValue(n) && pmatch(R_UseNamesSymbol, n, 1)) {
 	    if (n_usenames++ == 1)
 		errorcall(call, _("repeated formal argument 'use.names'"));
 	    if ((v = asLogical(CAR(a))) != NA_INTEGER) {
 		*usenames = v;
 	    }
-	    if (last == NULL)
+	    if (IS_NULL_SEXP(last))
 		ans = next;
 	    else
 		SETCDR(last, next);
@@ -759,7 +759,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     data.ans_length = 0;
     data.ans_nnames = 0;
 
-    for (t = args; t != R_NilValue; t = CDR(t)) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	if (usenames && !data.ans_nnames) {
 	    if (!isNull(TAG(t))) data.ans_nnames = 1;
 	    else data.ans_nnames = HasNames(CAR(t));
@@ -791,7 +791,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (mode == VECSXP || mode == EXPRSXP) {
 	if (!recurse) {
-	    while (args != R_NilValue) {
+	    while (! IS_R_NilValue(args)) {
 		ListAnswer(CAR(args), 0, &data, call);
 		args = CDR(args);
 	    }
@@ -818,7 +818,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     if (data.ans_nnames && data.ans_length > 0) {
 	PROTECT(data.ans_names = allocVector(STRSXP, data.ans_length));
 	data.ans_nnames = 0;
-	while (args != R_NilValue) {
+	while (! IS_R_NilValue(args)) {
 	    nameData.seqno = 0;
 	    nameData.firstpos = 0;
 	    nameData.count = 0;
@@ -869,7 +869,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isNewList(args)) {
 	n = xlength(args);
-	if (usenames && getAttrib(args, R_NamesSymbol) != R_NilValue)
+	if (usenames && ! IS_R_NilValue(getAttrib(args, R_NamesSymbol)))
 	    data.ans_nnames = 1;
 	for (i = 0; i < n; i++) {
 	    if (usenames && !data.ans_nnames)
@@ -878,7 +878,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else if (isList(args)) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    if (usenames && !data.ans_nnames) {
 		if (!isNull(TAG(t))) data.ans_nnames = 1;
 		else data.ans_nnames = HasNames(CAR(t));
@@ -957,7 +957,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 		nameData.seqno = 0;
 		nameData.firstpos = 0;
 		nameData.count = 0;
-		while (args != R_NilValue) {
+		while (! IS_R_NilValue(args)) {
 		    NewExtractNames(CAR(args), R_NilValue,
 				    TAG(args), recurse, &data, &nameData);
 		    args = CDR(args);
@@ -1024,7 +1024,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
     klass = "";
     method = R_NilValue;
-    for (a = args; a != R_NilValue && compatible; a = CDR(a)) {
+    for (a = args; ! IS_R_NilValue(a) && compatible; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
 	if (isObject(obj)) {
 	    int i;
@@ -1037,7 +1037,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		sprintf(buf, "%s.%s", generic, s);
 		classmethod = R_LookupMethod(install(buf), env, env,
 					     R_BaseNamespace);
-		if (classmethod != R_UnboundValue) {
+		if (! IS_R_UnboundValue(classmethod)) {
 		    if (klass[0] == '\0') {
 			/* There is no previous class */
 			/* We use this method. */
@@ -1061,7 +1061,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
     }
-    if (method != R_NilValue) {
+    if (! IS_R_NilValue(method)) {
 	PROTECT(method);
 	args = applyClosure(call, method, args, env, R_BaseEnv);
 	UNPROTECT(2);
@@ -1076,7 +1076,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     data.ans_flags = 0;
     data.ans_length = 0;
     data.ans_nnames = 0;
-    for (t = args; t != R_NilValue; t = CDR(t))
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t))
 	AnswerType(PRVALUE(CAR(t)), 0, 0, &data, call);
 
     /* zero-extent matrices shouldn't give NULL, but cbind(NULL) should: */
@@ -1162,7 +1162,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 
     /* check if we are in the zero-row case */
 
-    for (t = args; t != R_NilValue; t = CDR(t)) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	u = PRVALUE(CAR(t));
 	if((isMatrix(u) ? nrows(u) : length(u)) > 0) {
 	    lenmin = 1;
@@ -1173,7 +1173,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     /* check conformability of matrix arguments */
 
     int na = 0;
-    for (t = args; t != R_NilValue; t = CDR(t), na++) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t), na++) {
 	u = PRVALUE(CAR(t));
 	dims = getAttrib(u, R_DimSymbol);
 	if (length(dims) == 2) {
@@ -1193,15 +1193,15 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 
     /* Check conformability of vector arguments. -- Look for dimnames. */
 
-    for (t = args, na = 0; t != R_NilValue; t = CDR(t), na++) {
+    for (t = args, na = 0; ! IS_R_NilValue(t); t = CDR(t), na++) {
 	u = PRVALUE(CAR(t));
 	dims = getAttrib(u, R_DimSymbol);
 	if (length(dims) == 2) {
 	    dn = getAttrib(u, R_DimNamesSymbol);
 	    if (length(dn) == 2) {
-		if (VECTOR_ELT(dn, 1) != R_NilValue)
+		if (! IS_R_NilValue(VECTOR_ELT(dn, 1)))
 		    have_cnames = TRUE;
-		if (VECTOR_ELT(dn, 0) != R_NilValue)
+		if (! IS_R_NilValue(VECTOR_ELT(dn, 0)))
 		    mnames = mrows;
 	    }
 	} else {
@@ -1211,7 +1211,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		warning("number of rows of result is not a multiple of vector length (arg %d)", na + 1);
 	    }
 	    dn = getAttrib(u, R_NamesSymbol);
-	    if (k >= lenmin && (TAG(t) != R_NilValue ||
+	    if (k >= lenmin && (! IS_R_NilValue(TAG(t)) ||
 				(deparse_level == 2) ||
 				((deparse_level == 1) &&
 				 isSymbol(substitute(CAR(t),R_NilValue)))))
@@ -1226,7 +1226,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     R_xlen_t n = 0; // index, possibly of long vector
 
     if (mode == STRSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, STRSXP);
@@ -1238,7 +1238,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == VECSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		/* we cannot assume here that coercion will work */
@@ -1271,7 +1271,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == CPLXSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, CPLXSXP);
@@ -1283,7 +1283,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == RAWSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, RAWSXP);
@@ -1295,7 +1295,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else { /* everything else, currently REALSXP, INTSXP, LGLSXP */
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		k = LENGTH(u);
@@ -1339,20 +1339,20 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	else
 	    nam = R_NilValue;	/* -Wall */
 	j = 0;
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u)) {
 		v = getAttrib(u, R_DimNamesSymbol);
 
 		if (have_rnames &&
-		    GetRowNames(dn) == R_NilValue &&
-		    GetRowNames(v) != R_NilValue)
+		    IS_R_NilValue(GetRowNames(dn)) &&
+		    ! IS_R_NilValue(GetRowNames(v)))
 		    SetRowNames(dn, duplicate(GetRowNames(v)));
 
 		/* rbind() does this only  if(have_?names) .. : */
 		/* but if tnam is non-null, have_cnames = TRUE: see above */
 		tnam = GetColNames(v);
-		if (tnam != R_NilValue) {
+		if (! IS_R_NilValue(tnam)) {
 		    for (i = 0; i < length(tnam); i++)
 			SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 		}
@@ -1363,11 +1363,11 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    } else if (length(u) >= lenmin) {
 		u = getAttrib(u, R_NamesSymbol);
 
-		if (have_rnames && GetRowNames(dn) == R_NilValue
-		    && u != R_NilValue && length(u) == rows)
+		if (have_rnames && IS_R_NilValue(GetRowNames(dn))
+		    && ! IS_R_NilValue(u) && length(u) == rows)
 		    SetRowNames(dn, duplicate(u));
 
-		if (TAG(t) != R_NilValue)
+		if (! IS_R_NilValue(TAG(t)))
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
 		    expr = substitute(CAR(t), R_NilValue);
@@ -1406,7 +1406,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 
     /* check if we are in the zero-cols case */
 
-    for (t = args; t != R_NilValue; t = CDR(t)) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	u = PRVALUE(CAR(t));
 	if((isMatrix(u) ? ncols(u) : length(u)) > 0) {
 	    lenmin = 1;
@@ -1417,7 +1417,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     /* check conformability of matrix arguments */
 
     int na = 0;
-    for (t = args; t != R_NilValue; t = CDR(t), na++) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t), na++) {
 	u = PRVALUE(CAR(t));
 	dims = getAttrib(u, R_DimSymbol);
 	if (length(dims) == 2) {
@@ -1438,15 +1438,15 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     /* Check conformability of vector arguments. -- Look for dimnames. */
 
     na = 0;
-    for (t = args; t != R_NilValue; t = CDR(t), na++) {
+    for (t = args; ! IS_R_NilValue(t); t = CDR(t), na++) {
 	u = PRVALUE(CAR(t));
 	dims = getAttrib(u, R_DimSymbol);
 	if (length(dims) == 2) {
 	    dn = getAttrib(u, R_DimNamesSymbol);
 	    if (length(dn) == 2) {
-		if (VECTOR_ELT(dn, 0) != R_NilValue)
+		if (! IS_R_NilValue(VECTOR_ELT(dn, 0)))
 		    have_rnames = TRUE;
-		if (VECTOR_ELT(dn, 1) != R_NilValue)
+		if (! IS_R_NilValue(VECTOR_ELT(dn, 1)))
 		    mnames = mcols;
 	    }
 	}
@@ -1457,7 +1457,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		warning("number of columns of result is not a multiple of vector length (arg %d)", na + 1);
 	    }
 	    dn = getAttrib(u, R_NamesSymbol);
-	    if (k >= lenmin && (TAG(t) != R_NilValue ||
+	    if (k >= lenmin && (! IS_R_NilValue(TAG(t)) ||
 				(deparse_level == 2) ||
 				((deparse_level == 1) &&
 				 isSymbol(substitute(CAR(t),R_NilValue)))))
@@ -1473,7 +1473,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     R_xlen_t n = 0;
 
     if (mode == STRSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, STRSXP);
@@ -1488,7 +1488,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == VECSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		PROTECT(u = coerceVector(u, mode));
@@ -1504,7 +1504,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == RAWSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, RAWSXP);
@@ -1519,7 +1519,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else if (mode == CPLXSXP) {
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, CPLXSXP);
@@ -1534,7 +1534,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	}
     }
     else { /* everything else, currently REALSXP, INTSXP, LGLSXP */
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		k = LENGTH(u);
@@ -1588,21 +1588,21 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	else
 	    nam = R_NilValue;	/* -Wall */
 	j = 0;
-	for (t = args; t != R_NilValue; t = CDR(t)) {
+	for (t = args; ! IS_R_NilValue(t); t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u)) {
 		v = getAttrib(u, R_DimNamesSymbol);
 
 		if (have_cnames &&
-		    GetColNames(dn) == R_NilValue &&
-		    GetColNames(v) != R_NilValue)
+		    IS_R_NilValue(GetColNames(dn)) &&
+		    ! IS_R_NilValue(GetColNames(v)))
 		    SetColNames(dn, duplicate(GetColNames(v)));
 
 		/* cbind() doesn't test have_?names BEFORE tnam!=Nil..:*/
 		/* but if tnam is non-null, have_rnames = TRUE: see above */
 		tnam = GetRowNames(v);
 		if (have_rnames) {
-		    if (tnam != R_NilValue) {
+		    if (! IS_R_NilValue(tnam)) {
 			for (i = 0; i < length(tnam); i++)
 			    SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 		    }
@@ -1615,11 +1615,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    else if (length(u) >= lenmin) {
 		u = getAttrib(u, R_NamesSymbol);
 
-		if (have_cnames && GetColNames(dn) == R_NilValue
-		    && u != R_NilValue && length(u) == cols)
+		if (have_cnames && IS_R_NilValue(GetColNames(dn))
+		    && ! IS_R_NilValue(u) && length(u) == cols)
 		    SetColNames(dn, duplicate(u));
 
-		if (TAG(t) != R_NilValue)
+		if (! IS_R_NilValue(TAG(t)))
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
 		else {
 		    expr = substitute(CAR(t), R_NilValue);

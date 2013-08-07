@@ -133,12 +133,12 @@ SEXP codeFilesAppend(SEXP f1, SEXP f2)
     char buf[APPENDBUFSIZE];
     int status = 0;
     size_t nchar;
-    if (STRING_ELT(f1, 0) == NA_STRING ||
+    if (IS_NA_STRING(STRING_ELT(f1, 0)) ||
 	!(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
 	goto done;
     for (int i = 0; i < n; i++) {
 	status = 0;
-	if (STRING_ELT(f2, i) == NA_STRING ||
+	if (IS_NA_STRING(STRING_ELT(f2, i)) ||
 	    !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
 	snprintf(buf, APPENDBUFSIZE, "#line 1 \"%s\"\n",
 		 CHAR(STRING_ELT(f2, i)));

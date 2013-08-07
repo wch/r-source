@@ -1036,7 +1036,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_wday = NA_INTEGER;
 	tm.tm_isdst = -1;
 	offset = NA_INTEGER;
-	invalid = STRING_ELT(x, i%n) == NA_STRING ||
+	invalid = IS_NA_STRING(STRING_ELT(x, i%n)) ||
 	    !R_strptime(CHAR(STRING_ELT(x, i%n)),
 			CHAR(STRING_ELT(sformat, i%m)), &tm, &psecs, &offset);
 	if(!invalid) {

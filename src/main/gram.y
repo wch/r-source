@@ -80,8 +80,8 @@ typedef struct yyltype
 #define INIT_DATA_COUNT 16384    	/* init parser data to this size */
 #define MAX_DATA_COUNT   65536		/* release it at the end if it is this size or larger*/
 
-#define DATA_COUNT  (ParseState.data ? length( ParseState.data ) / DATA_ROWS : 0)
-#define ID_COUNT    ((ParseState.ids ? length( ParseState.ids ) / 2 : 0) - 1)
+#define DATA_COUNT  (! IS_NULL_SEXP(ParseState.data) ? length( ParseState.data ) / DATA_ROWS : 0)
+#define ID_COUNT    ((! IS_NULL_SEXP(ParseState.ids) ? length( ParseState.ids ) / 2 : 0) - 1)
 
 static void finalizeData( ) ;
 static void growData( ) ;
@@ -333,7 +333,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %%
 
 prog	:	END_OF_INPUT			{ return 0; }
-	|	'\n'				{ return xxvalue(NULL,2,NULL); }
+	|	'\n'				{ return xxvalue(R_NULL_SEXP,2,NULL); }
 	|	expr_or_assign '\n'			{ return xxvalue($1,3,&@1); }
 	|	expr_or_assign ';'			{ return xxvalue($1,4,&@1); }
 	|	error	 			{ YYABORT; }
@@ -916,7 +916,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 	if (isString(expr))
 	    expr = install(CHAR(STRING_ELT(expr, 0)));
 	PROTECT(expr);
-	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
+	if (length(CDR(args)) == 1 && IS_R_MissingArg(CADR(args)) && IS_R_NilValue(TAG(CDR(args))) )
 	    ans = lang1(expr);
 	else
 	    ans = LCONS(expr, CDR(args));
@@ -1185,8 +1185,8 @@ static void UseSrcRefState(SrcRefState *state);
 attribute_hidden
 void InitParser(void)
 {
-    ParseState.data = NULL;
-    ParseState.ids = NULL;
+    ParseState.data = R_NULL_SEXP;
+    ParseState.ids = R_NULL_SEXP;
 }
 
 /* This is called each time a new parse sequence begins */
@@ -1197,8 +1197,8 @@ void R_InitSrcRefState(void)
     	SrcRefState *prev = malloc(sizeof(SrcRefState));
     	PutSrcRefState(prev);
 	ParseState.prevState = prev;
-	ParseState.data = NULL;
-	ParseState.ids = NULL;
+	ParseState.data = R_NULL_SEXP;
+	ParseState.ids = R_NULL_SEXP;
     } else
         ParseState.prevState = NULL;
     ParseState.keepSrcRefs = FALSE;
@@ -1220,21 +1220,21 @@ void R_FinalizeSrcRefState(void)
     UNPROTECT_PTR(ParseState.Original);
     /* Free the data, text and ids if we are restoring a previous state,
        or if they have grown too large */
-    if (ParseState.data) {
+    if (! IS_NULL_SEXP(ParseState.data)) {
     	if (ParseState.prevState || DATA_COUNT > MAX_DATA_COUNT) {
 	    R_ReleaseObject(ParseState.data);
 	    R_ReleaseObject(ParseState.text);
-	    ParseState.data = NULL;
+	    ParseState.data = R_NULL_SEXP;
 	} else /* Remove all the strings from the text vector so they don't take up memory, and clean up data */
 	    for (int i=0; i < ParseState.data_count; i++) {
 	    	SET_STRING_ELT(ParseState.text, i, R_BlankString);
 		_PARENT(i) = 0;
 	    }
     } 
-    if (ParseState.ids) {
+    if (! IS_NULL_SEXP(ParseState.ids)) {
 	if (ParseState.prevState || ID_COUNT > MAX_DATA_COUNT) {
 	    R_ReleaseObject(ParseState.ids);
-	    ParseState.ids = NULL;
+	    ParseState.ids = R_NULL_SEXP;
         } else {/* Remove the parent records */
             if (identifier > ID_COUNT) identifier = ID_COUNT;
             for (int i=0; i < identifier; i++)
@@ -1939,8 +1939,8 @@ static void yyerror(const char *s)
 
 static void CheckFormalArgs(SEXP formlist, SEXP _new, YYLTYPE *lloc)
 {
-    while (formlist != R_NilValue) {
-	if (TAG(formlist) == _new) {
+    while (! IS_R_NilValue(formlist)) {
+	if (SEXP_EQL(TAG(formlist), _new)) {
 	    error(_("repeated formal argument '%s' on line %d"), EncodeChar(PRINTNAME(_new)),
 								 lloc->first_line);
 	}
@@ -3425,7 +3425,7 @@ static void growData(){
 	
     SEXP bigger, biggertext ; 
     int new_data_count;	
-    if (!ParseState.data) {
+    if (IS_NULL_SEXP(ParseState.data)) {
         new_data_count = INIT_DATA_COUNT;
     	R_PreserveObject(ParseState.data = allocVector(INTSXP, 0));
     	R_PreserveObject(ParseState.text = allocVector(STRSXP, 0));
@@ -3447,7 +3447,7 @@ static void growID( int target ){
 	
     SEXP bigger;
     int new_count;
-    if (!ParseState.ids) {
+    if (IS_NULL_SEXP(ParseState.ids)) {
         new_count = INIT_DATA_COUNT/2 - 1;
         R_PreserveObject(ParseState.ids = allocVector(INTSXP, 0));
     } else

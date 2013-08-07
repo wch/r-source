@@ -70,7 +70,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
     nx = xlength(x);
     tmp = result;
 
-    if (x == R_NilValue)
+    if (IS_R_NilValue(x))
 	return x;
 
     for (i = 0; i < n; i++) {
@@ -163,7 +163,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     R_xlen_t stretch = 1;
     SEXP indx, result, attrib, nattrib;
 
-    if (s == R_MissingArg) return duplicate(x);
+    if (IS_R_MissingArg(s)) return duplicate(x);
 
     PROTECT(s);
     attrib = getAttrib(x, R_DimSymbol);
@@ -201,13 +201,13 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	SET_NAMED(result, 2);
 
     PROTECT(result = ExtractSubset(x, result, indx, call));
-    if (result != R_NilValue) {
+    if (! IS_R_NilValue(result)) {
 	if (
-	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
+	    (! IS_R_NilValue(attrib = getAttrib(x, R_NamesSymbol))) ||
 	    ( /* here we might have an array.  Use row names if 1D */
 		isArray(x) && LENGTH(getAttrib(x, R_DimNamesSymbol)) == 1 &&
-		(attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue &&
-		(attrib = GetRowNames(attrib)) != R_NilValue
+		! IS_R_NilValue(attrib = getAttrib(x, R_DimNamesSymbol)) &&
+		! IS_R_NilValue(attrib = GetRowNames(attrib))
 		)
 	    ) {
 	    nattrib = allocVector(TYPEOF(attrib), n);
@@ -216,7 +216,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	    setAttrib(result, R_NamesSymbol, nattrib);
 	    UNPROTECT(1);
 	}
-	if ((attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue &&
+	if (! IS_R_NilValue(attrib = getAttrib(x, R_SrcrefSymbol)) &&
 	    TYPEOF(attrib) == VECSXP) {
 	    nattrib = allocVector(VECSXP, n);
 	    PROTECT(nattrib); /* seems unneeded */
@@ -510,7 +510,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 
     dimnames = getAttrib(x, R_DimNamesSymbol);
     dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
-    if (dimnames != R_NilValue) {
+    if (! IS_R_NilValue(dimnames)) {
 	int j = 0;
 	PROTECT(xdims = allocVector(VECSXP, k));
 	if (TYPEOF(dimnames) == VECSXP) {
@@ -564,9 +564,9 @@ static SEXP ExtractArg(SEXP args, SEXP arg_sym)
     SEXP arg, prev_arg;
     int found = 0;
 
-    for (arg = prev_arg = args; arg != R_NilValue; arg = CDR(arg)) {
-	if(TAG(arg) == arg_sym) {
-	    if (arg == prev_arg) /* found at head of args */
+    for (arg = prev_arg = args; ! IS_R_NilValue(arg); arg = CDR(arg)) {
+	if(SEXP_EQL(TAG(arg), arg_sym)) {
+	    if (SEXP_EQL(arg, prev_arg)) /* found at head of args */
 		args = CDR(args);
 	    else
 		SETCDR(prev_arg, CDR(arg));
@@ -611,7 +611,7 @@ static R_INLINE
 int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SEXP rho, SEXP *ans)
 {
-    if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
+    if (! IS_R_NilValue(args) && ! SEXP_EQL(CAR(args), R_DotsSymbol)) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
 	if (! OBJECT(x)) {
@@ -657,7 +657,7 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
-    if (ATTRIB(s) == R_NilValue)
+    if (IS_R_NilValue(ATTRIB(s)))
 	switch (TYPEOF(s)) {
 	case REALSXP:
 	    if (XLENGTH(s) == 1 && ! ISNAN(REAL(s)[0]))
@@ -683,11 +683,11 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
        or matrix directly to improve speed for these simple cases. */
     SEXP cdrArgs = CDR(args);
     SEXP cddrArgs = CDR(cdrArgs);
-    if (cdrArgs != R_NilValue && cddrArgs == R_NilValue &&
-	TAG(cdrArgs) == R_NilValue) {
+    if (! IS_R_NilValue(cdrArgs) && IS_R_NilValue(cddrArgs) &&
+	IS_R_NilValue(TAG(cdrArgs))) {
 	/* one index, not named */
 	SEXP x = CAR(args);
-	if (ATTRIB(x) == R_NilValue) {
+	if (IS_R_NilValue(ATTRIB(x))) {
 	    SEXP s = CAR(cdrArgs);
 	    R_xlen_t i = scalarIndex(s);
 	    switch (TYPEOF(x)) {
@@ -707,12 +707,12 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    else if (cddrArgs != R_NilValue && CDR(cddrArgs) == R_NilValue &&
-	     TAG(cdrArgs) == R_NilValue && TAG(cddrArgs) == R_NilValue) {
+    else if (! IS_R_NilValue(cddrArgs) && IS_R_NilValue(CDR(cddrArgs)) &&
+	     IS_R_NilValue(TAG(cdrArgs)) && IS_R_NilValue(TAG(cddrArgs))) {
 	/* two indices, not named */
 	SEXP x = CAR(args);
 	SEXP attr = ATTRIB(x);
-	if (TAG(attr) == R_DimSymbol && CDR(attr) == R_NilValue) {
+	if (SEXP_EQL(TAG(attr), R_DimSymbol) && IS_R_NilValue(CDR(attr))) {
 	    /* only attribute of x is 'dim' */
 	    SEXP dim = CAR(attr);
 	    if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2) {
@@ -756,7 +756,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* but in fact S does not do this. */
     /* FIXME: replace the test by isNull ... ? */
 
-    if (x == R_NilValue) {
+    if (IS_R_NilValue(x)) {
 	UNPROTECT(1);
 	return x;
     }
@@ -782,7 +782,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(ax = allocVector(VECSXP, length(x)));
 	    setAttrib(ax, R_NamesSymbol, getAttrib(x, R_NamesSymbol));
 	}
-	for(px = x, i = 0 ; px != R_NilValue ; px = CDR(px))
+	for(px = x, i = 0 ; ! IS_R_NilValue(px) ; px = CDR(px))
 	    SET_VECTOR_ELT(ax, i++, CAR(px));
     }
     else errorcall(call, R_MSG_ob_nonsub, type2char(TYPEOF(x)));
@@ -809,7 +809,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		PROTECT(attr = allocVector(INTSXP, 1));
 		INTEGER(attr)[0] = length(ans);
 		setAttrib(ans, R_DimSymbol, attr);
-		if((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue) {
+		if(! IS_R_NilValue(attrib = getAttrib(x, R_DimNamesSymbol))) {
 		    /* reinstate dimnames, include names of dimnames */
 		    PROTECT(nattrib = duplicate(attrib));
 		    SET_VECTOR_ELT(nattrib, 0, nm);
@@ -838,7 +838,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = allocList(LENGTH(ax)));
 	if ( LENGTH(ax) > 0 )
 	    SET_TYPEOF(ans, LANGSXP);
-	for(px = ans, i = 0 ; px != R_NilValue ; px = CDR(px))
+	for(px = ans, i = 0 ; ! IS_R_NilValue(px) ; px = CDR(px))
 	    SETCAR(px, VECTOR_ELT(ax, i++));
 	setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
 	setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
@@ -848,7 +848,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	PROTECT(ans);
     }
-    if (ATTRIB(ans) != R_NilValue) { /* remove probably erroneous attr's */
+    if (! IS_R_NilValue(ATTRIB(ans))) { /* remove probably erroneous attr's */
 	setAttrib(ans, R_TspSymbol, R_NilValue);
 #ifdef _S4_subsettable
 	if(!IS_S4_OBJECT(x))
@@ -909,7 +909,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This code was intended for compatibility with S, */
     /* but in fact S does not do this.	Will anyone notice? */
 
-    if (x == R_NilValue) {
+    if (IS_R_NilValue(x)) {
 	UNPROTECT(1);
 	return x;
     }
@@ -928,7 +928,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* code to allow classes to extend environment */
     if(TYPEOF(x) == S4SXP) {
         x = R_getS4DataSlot(x, ANYSXP);
-	if(x == R_NilValue)
+	if(IS_R_NilValue(x))
 	  errorcall(call, _("this S4 class is not subsettable"));
     }
 
@@ -944,7 +944,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else SET_NAMED(ans, 2);
 
 	UNPROTECT(1);
-	if(ans == R_UnboundValue)
+	if(IS_R_UnboundValue(ans))
 	    return(R_NilValue);
 	if (NAMED(ans))
 	    SET_NAMED(ans, 2);
@@ -1063,7 +1063,7 @@ pstrmatch(SEXP target, SEXP input, size_t slen)
     const char *st = "";
     const void *vmax = vmaxget();
 
-    if(target == R_NilValue)
+    if(IS_R_NilValue(target))
 	return NO_MATCH;
 
     switch (TYPEOF(target)) {
@@ -1146,7 +1146,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
      /* The mechanism to allow a class extending "environment" */
     if( IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP ){
         x = R_getS4DataSlot(x, ANYSXP);
-	if(x == R_NilValue)
+	if(IS_R_NilValue(x))
 	    errorcall(call, "$ operator not defined for this S4 class");
     }
 
@@ -1157,7 +1157,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	int havematch;
 	UNPROTECT(2);
 	havematch = 0;
-	for (y = x ; y != R_NilValue ; y = CDR(y)) {
+	for (y = x ; ! IS_R_NilValue(y) ; y = CDR(y)) {
 	    switch(pstrmatch(TAG(y), input, slen)) {
 	    case EXACT_MATCH:
 		y = CAR(y);
@@ -1251,7 +1251,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    UNPROTECT(1);
 	}
 	UNPROTECT(2);
-	if( y != R_UnboundValue ) {
+	if( ! IS_R_UnboundValue(y) ) {
 	    if (NAMED(y))
 		SET_NAMED(y, 2);
 	    else if (NAMED(x) > NAMED(y))

@@ -88,7 +88,7 @@ SEXP attribute_hidden getParseContext(void)
 static void getParseFilename(char* buffer, size_t buflen)
 {
     buffer[0] = '\0';
-    if (R_ParseErrorFile) {
+    if (! IS_NULL_SEXP(R_ParseErrorFile)) {
     	if (isEnvironment(R_ParseErrorFile)) {
 	    SEXP filename;
 	    PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
@@ -230,7 +230,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if(!streql(encoding, "unknown") && !streql(encoding, "native.enc")) 
     	warning(_("argument '%s = \"%s\"' will be ignored"), "encoding", encoding);
 
-    if (prompt == R_NilValue)
+    if (IS_R_NilValue(prompt))
 	PROTECT(prompt);
     else
 	PROTECT(prompt = coerceVector(prompt, STRSXP));

@@ -193,7 +193,7 @@ int attribute_hidden R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	n = length(text);
 	l = 0;
 	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(text, i) != R_NilValue) {
+	    if (! IS_R_NilValue(STRING_ELT(text, i))) {
 		k = (int) strlen(translateChar(STRING_ELT(text, i)));
 		if (k > l)
 		    l = k;

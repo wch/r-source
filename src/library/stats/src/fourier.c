@@ -123,7 +123,7 @@ SEXP mvfft(SEXP z, SEXP inverse)
     int *iwork;
 
     d = getAttrib(z, R_DimSymbol);
-    if (d == R_NilValue || length(d) > 2)
+    if (IS_R_NilValue(d) || length(d) > 2)
 	error(_("vector-valued (multivariate) series required"));
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];

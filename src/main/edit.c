@@ -116,7 +116,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else filename = DefaultFileName;
 
-    if (x != R_NilValue) {
+    if (! IS_R_NilValue(x)) {
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, _("unable to open file"));
 	if (LENGTH(STRING_ELT(fn, 0)) == 0) EdFileUsed++;
@@ -204,7 +204,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tmp = eval(VECTOR_ELT(x, j), R_GlobalEnv);
 	x = tmp;
     }
-    if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
+    if (TYPEOF(x) == CLOSXP && ! IS_R_NilValue(envir))
 	SET_CLOENV(x, envir);
     UNPROTECT(3);
     vmaxset(vmaxsave);

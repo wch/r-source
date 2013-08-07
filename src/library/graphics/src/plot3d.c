@@ -1226,9 +1226,9 @@ SEXP C_persp(SEXP args)
 	    SEXP xl = STRING_ELT(xlab, 0), yl = STRING_ELT(ylab, 0),
 		zl = STRING_ELT(zlab, 0);
 	    PerspAxes(REAL(xlim), REAL(ylim), REAL(zlim),
-		      (xl == NA_STRING) ? "" : CHAR(xl), getCharCE(xl),
-		      (yl == NA_STRING) ? "" : CHAR(yl), getCharCE(yl),
-		      (zl == NA_STRING) ? "" : CHAR(zl), getCharCE(zl),
+		      (IS_NA_STRING(xl)) ? "" : CHAR(xl), getCharCE(xl),
+		      (IS_NA_STRING(yl)) ? "" : CHAR(yl), getCharCE(yl),
+		      (IS_NA_STRING(zl)) ? "" : CHAR(zl), getCharCE(zl),
 		      nTicks, tickType, dd);
 	}
     }
@@ -1610,7 +1610,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			    /** Test corners for intersection with previous labels **/
 			    label2 = labelList;
 			    result = 0;
-			    while ((result == 0) && (label2 != R_NilValue)) {
+			    while ((result == 0) && (! IS_R_NilValue(label2))) {
 				result = TestLabelIntersection(label1, CAR(label2));
 				label2 = CDR(label2);
 			    }
@@ -1674,7 +1674,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			    /** Test corners for intersection with previous labels **/
 			    label2 = labelList;
 			    result = 0;
-			    while ((result == 0) && (label2 != R_NilValue)) {
+			    while ((result == 0) && (! IS_R_NilValue(label2))) {
 				result = TestLabelIntersection(label1, CAR(label2));
 				label2 = CDR(label2);
 			    }

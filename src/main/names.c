@@ -985,10 +985,10 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     name = CAR(args);
     if (!isString(name) || length(name) != 1 ||
-	STRING_ELT(name, 0) == R_NilValue)
+	IS_R_NilValue(STRING_ELT(name, 0)))
 	errorcall(call, _("string argument required"));
     prim = R_Primitive(CHAR(STRING_ELT(name, 0)));
-    if (prim == R_NilValue)
+    if (IS_R_NilValue(prim))
 	errorcall(call, _("no such primitive function"));
     return prim;
 }
@@ -1132,7 +1132,7 @@ SEXP install(const char *name)
     hashcode = R_Newhashpjw(name);
     i = hashcode % HSIZE;
     /* Check to see if the symbol is already present;  if it is, return it. */
-    for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
+    for (sym = R_SymbolTable[i]; ! IS_R_NilValue(sym); sym = CDR(sym))
 	if (strcmp(name, CHAR(PRINTNAME(CAR(sym)))) == 0) return (CAR(sym));
     /* Create a new symbol node and link it into the table. */
     sym = mkSYMSXP(mkChar(name), R_UnboundValue);
@@ -1160,7 +1160,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     fun = CAR(s);
     if (!isSymbol(fun))
 	errorcall(call, _("invalid .Internal() argument"));
-    if (INTERNAL(fun) == R_NilValue)
+    if (IS_R_NilValue(INTERNAL(fun)))
 	errorcall(call, _("there is no .Internal function '%s'"),
 		  CHAR(PRINTNAME(fun)));
 

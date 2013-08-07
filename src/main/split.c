@@ -46,7 +46,7 @@ SEXP attribute_hidden do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nfac > 0 && (nobs % nfac) != 0)
 	warning(_("data length is not a multiple of split variable"));
     nm = getAttrib(x, R_NamesSymbol);
-    have_names = nm != R_NilValue;
+    have_names = ! IS_R_NilValue(nm);
     PROTECT(counts = allocVector(INTSXP, nlevs));
     for (int i = 0; i < nlevs; i++) INTEGER(counts)[i] = 0;
     for (R_xlen_t i = 0; i < nobs; i++) {

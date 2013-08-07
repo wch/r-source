@@ -1093,7 +1093,7 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 	if(TYPEOF(spackage) == STRSXP)
 	    package = translateChar(STRING_ELT(spackage, 0));
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
-		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
+		SEXP_EQL(R_ExternalPtrTag(spackage), install("DLLInfo"))) {
 	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
 	    package = NULL;
 	} else
@@ -1147,7 +1147,7 @@ createRSymbolObject(SEXP sname, DL_FUNC f, R_RegisteredNativeSymbol *symbol,
     PROTECT(sym = allocVector(VECSXP, n));    numProtects++;
     PROTECT(names = allocVector(STRSXP, n));    numProtects++;
 
-    if(!sname || sname == R_NilValue) {
+    if(IS_NULL_SEXP(sname) || IS_R_NilValue(sname)) {
 	PROTECT(sname = mkString(symbol->symbol.call->name));
 	numProtects++;
     }
@@ -1257,7 +1257,7 @@ R_getRoutineSymbols(NativeSymbolType type, DllInfo *info)
 	default:
 	    continue;
 	}
-	SET_VECTOR_ELT(ans, i, createRSymbolObject(NULL,  address, &sym, TRUE));/* XXX */
+	SET_VECTOR_ELT(ans, i, createRSymbolObject(R_NULL_SEXP,  address, &sym, TRUE));/* XXX */
     }
 
     setAttrib(ans, R_ClassSymbol, mkString("NativeRoutineList"));
@@ -1275,7 +1275,7 @@ R_getRegisteredRoutines(SEXP dll)
     const char * const names[] = {".C", ".Call", ".Fortran", ".External"};
 
     if(TYPEOF(dll) != EXTPTRSXP &&
-       R_ExternalPtrTag(dll) != install("DLLInfo"))
+       ! SEXP_EQL(R_ExternalPtrTag(dll), install("DLLInfo")))
 	error(_("R_getRegisteredRoutines() expects a DllInfo reference"));
 
     info = (DllInfo *) R_ExternalPtrAddr(dll);
@@ -1314,7 +1314,7 @@ do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(TYPEOF(spackage) == STRSXP)
 	    package = translateChar(STRING_ELT(spackage, 0));
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
-		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
+		SEXP_EQL(R_ExternalPtrTag(spackage), install("DLLInfo"))) {
 	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
 	    package = NULL;
 	} else
@@ -1369,7 +1369,7 @@ do_getRegisteredRoutines(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP dll = CAR(args), ans, snames;
 
     if(TYPEOF(dll) != EXTPTRSXP &&
-       R_ExternalPtrTag(dll) != install("DLLInfo"))
+       ! SEXP_EQL(R_ExternalPtrTag(dll), install("DLLInfo")))
 	error(_("R_getRegisteredRoutines() expects a DllInfo reference"));
 
     DllInfo *info = (DllInfo *) R_ExternalPtrAddr(dll);
@@ -1399,19 +1399,19 @@ do_getRegisteredRoutines(SEXP call, SEXP op, SEXP args, SEXP env)
    registrations.  The naming of these routines may be less than
    ideal. */
 
-static SEXP CEntryTable = NULL;
+static SEXP CEntryTable = SEXP_INIT;
 
 static SEXP get_package_CEntry_table(const char *package)
 {
     SEXP penv, pname;
 
-    if (CEntryTable == NULL) {
+    if (IS_NULL_SEXP(CEntryTable)) {
 	CEntryTable = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(CEntryTable);
     }
     pname = install(package);
     penv = findVarInFrame(CEntryTable, pname);
-    if (penv == R_UnboundValue) {
+    if (IS_R_UnboundValue(penv)) {
 	penv = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	defineVar(pname, penv, CEntryTable);
     }
@@ -1432,7 +1432,7 @@ DL_FUNC R_GetCCallable(const char *package, const char *name)
 {
     SEXP penv = get_package_CEntry_table(package);
     SEXP eptr = findVarInFrame(penv, install(name));
-    if (eptr == R_UnboundValue)
+    if (IS_R_UnboundValue(eptr))
 	error(_("function '%s' not provided by package '%s'"), name, package);
     else if (TYPEOF(eptr) != EXTPTRSXP)
 	error(_("table entry must be an external pointer"));

@@ -58,7 +58,7 @@ void formatString(SEXP *x, R_xlen_t n, int *fieldwidth, int quote)
     int l;
 
     for (R_xlen_t i = 0; i < n; i++) {
-	if (x[i] == NA_STRING) {
+	if (IS_NA_STRING(x[i])) {
 	    l = quote ? R_print.na_width : R_print.na_width_noquote;
 	} else l = Rstrlen(x[i], quote) + (quote ? 2 : 0);
 	if (l > xmax) xmax = l;

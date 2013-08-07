@@ -264,7 +264,7 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	VERBLATEX   VerbatimArg1 LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	
 UserMacro:	NEWCOMMAND  VerbatimArg1 VerbatimArg { $$ = xxnewcommand($1, $2, $3, &@$); }
-	|	USERMACRO			{ $$ = xxusermacro($1, xxnewlist(NULL), &@$); }
+	|	USERMACRO			{ $$ = xxusermacro($1, xxnewlist(R_NULL_SEXP), &@$); }
 	|	USERMACRO1  VerbatimArg		{ $$ = xxusermacro($1, xxnewlist($2), &@$); }
 	|	USERMACRO2  VerbatimArg VerbatimArg
 						{ $$ = xxusermacro($1, xxnewlist2($2, $3), &@$); }
@@ -308,7 +308,7 @@ RLikeArg:	goRLike Arg			{ xxpopMode($1); $$ = $2; }
 /* This one is like VerbatimArg2 below:  it does the push after seeing the brace */
 
 RLikeArg2:	'{' goRLike2 ArgItems '}'	{ xxpopMode($2); $$ = $3; }
-	|	'{' goRLike2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
+	|	'{' goRLike2 '}'		{ xxpopMode($2); $$ = xxnewlist(R_NULL_SEXP); }
 
 VerbatimArg:	goVerbatim Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -317,7 +317,7 @@ VerbatimArg1:	goVerbatim1 Arg			{ xxpopMode($1); $$ = $2; }
 /* This one executes the push after seeing the brace starting the optional second arg */
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
-	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
+	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(R_NULL_SEXP); }
 
 IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist(xxtag($2, TEXT, &@$)); }
 
@@ -341,9 +341,9 @@ goItem0:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, ESCAPE, FALSE); }
 goItem2:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, LATEXMACRO2, FALSE); }
 
 Arg:		'{' ArgItems  '}'		{ $$ = $2; }
-	|	'{' '}'				{ $$ = xxnewlist(NULL); }
+	|	'{' '}'				{ $$ = xxnewlist(R_NULL_SEXP); }
 	|	'{' ArgItems error '}'		{ $$ = $2; }
-	|	'{' error '}'			{ $$ = xxnewlist(NULL); }
+	|	'{' error '}'			{ $$ = xxnewlist(R_NULL_SEXP); }
 	|	'{' ArgItems error END_OF_INPUT { $$ = $2; }
 
 Option:		'[' Item ']'			{ $$ = $2; }	
@@ -413,7 +413,7 @@ static SEXP xxnewlist(SEXP item)
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
     PROTECT(tmp = NewList());
-    if (item) {
+    if (! IS_NULL_SEXP(item)) {
     	int flag = getDynamicFlag(item);
     	PROTECT(ans = GrowList(tmp, item));
     	setDynamicFlag(ans, flag);
@@ -530,7 +530,7 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     else
     	PROTECT(thedefn = mkString(""));
     prev = findVar(install(CHAR(STRING_ELT(thename, 0))), parseState.xxMacroList);
-    if (prev != R_UnboundValue && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
+    if (! IS_R_UnboundValue(prev) && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
         snprintf(buffer, sizeof(buffer), _("Macro '%s' previously defined."), 
                  CHAR(STRING_ELT(thename, 0)));
         yyerror(buffer);
@@ -1155,14 +1155,14 @@ static SEXP InstallKeywords()
 static int KeywordLookup(const char *s)
 {
     SEXP rec = findVar(install(s), parseState.xxMacroList);
-    if (rec == R_UnboundValue) return UNKNOWN;
+    if (IS_R_UnboundValue(rec)) return UNKNOWN;
     else return INTEGER(rec)[0];
 }
 
 static SEXP UserMacroLookup(const char *s)
 {
     SEXP rec = findVar(install(s), parseState.xxMacroList);
-    if (rec == R_UnboundValue) error(_("Unable to find macro %s"), s);
+    if (IS_R_UnboundValue(rec)) error(_("Unable to find macro %s"), s);
     return getAttrib(rec, install("definition"));
 }
 

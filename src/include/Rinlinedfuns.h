@@ -116,6 +116,40 @@ INLINE_FUN void R_Reprotect(SEXP s, PROTECT_INDEX i)
 
 int Rf_envlength(SEXP rho);
 
+#ifdef BIGSEXP
+INLINE_FUN SEXP PTR_TO_SEXP(void *p)
+{
+    SEXP x = { 0, {(SEXPREC *) p} };
+    return x;
+}
+
+INLINE_FUN SEXPREC *SEXPPTR(SEXP x)
+{
+    if (x.tag) R_ErrorImmediateSEXP(x);
+    return x.u.ptr;
+}
+
+INLINE_FUN int SEXP_EQL(SEXP x, SEXP y)
+{
+    return x.u.ptr == y.u.ptr && x.tag == y.tag;
+}
+
+INLINE_FUN int TYPEOF(SEXP x)
+{
+    return x.tag ? x.tag : TYPEOF0(x);
+}
+
+INLINE_FUN int OBJECT(SEXP x)
+{
+    return x.tag ? FALSE : OBJECT0(x);
+}
+
+INLINE_FUN SEXP ATTRIB(SEXP x)
+{
+    return x.tag ? R_NilValue : ATTRIB0(x);
+}
+#endif
+
 /* TODO: a  Length(.) {say} which is  length() + dispatch (S3 + S4) if needed
          for one approach, see do_seq_along() in ../main/seq.c
 */
@@ -139,7 +173,7 @@ INLINE_FUN R_len_t length(SEXP s)
     case LANGSXP:
     case DOTSXP:
 	i = 0;
-	while (s != NULL && s != R_NilValue) {
+	while (! IS_NULL_SEXP(s) && ! IS_R_NilValue(s)) {
 	    i++;
 	    s = CDR(s);
 	}
@@ -171,7 +205,7 @@ INLINE_FUN R_xlen_t xlength(SEXP s)
     case LANGSXP:
     case DOTSXP:
 	i = 0;
-	while (s != NULL && s != R_NilValue) {
+	while (! IS_NULL_SEXP(s) && ! IS_R_NilValue(s)) {
 	    i++;
 	    s = CDR(s);
 	}
@@ -209,7 +243,7 @@ INLINE_FUN SEXP elt(SEXP list, int i)
 INLINE_FUN SEXP lastElt(SEXP list)
 {
     SEXP result = R_NilValue;
-    while (list != R_NilValue) {
+    while (! IS_R_NilValue(list)) {
 	result = list;
 	list = CDR(list);
     }
@@ -265,10 +299,10 @@ INLINE_FUN SEXP list5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
 INLINE_FUN SEXP listAppend(SEXP s, SEXP t)
 {
     SEXP r;
-    if (s == R_NilValue)
+    if (IS_R_NilValue(s))
 	return t;
     r = s;
-    while (CDR(r) != R_NilValue)
+    while (! IS_R_NilValue(CDR(r)))
 	r = CDR(r);
     SETCDR(r, t);
     return s;
@@ -404,13 +438,13 @@ INLINE_FUN Rboolean isPrimitive(SEXP s)
 
 INLINE_FUN Rboolean isList(SEXP s)
 {
-    return (s == R_NilValue || TYPEOF(s) == LISTSXP);
+    return (IS_R_NilValue(s) || TYPEOF(s) == LISTSXP);
 }
 
 
 INLINE_FUN Rboolean isNewList(SEXP s)
 {
-    return (s == R_NilValue || TYPEOF(s) == VECSXP);
+    return (IS_R_NilValue(s) || TYPEOF(s) == VECSXP);
 }
 
 INLINE_FUN Rboolean isPairList(SEXP s)
@@ -483,7 +517,7 @@ INLINE_FUN Rboolean isFrame(SEXP s)
 
 INLINE_FUN Rboolean isLanguage(SEXP s)
 {
-    return (s == R_NilValue || TYPEOF(s) == LANGSXP);
+    return (IS_R_NilValue(s) || TYPEOF(s) == LANGSXP);
 }
 
 INLINE_FUN Rboolean isMatrix(SEXP s)
@@ -514,7 +548,7 @@ INLINE_FUN Rboolean isArray(SEXP s)
 
 INLINE_FUN Rboolean isTs(SEXP s)
 {
-    return (isVector(s) && getAttrib(s, R_TspSymbol) != R_NilValue);
+    return (isVector(s) && ! IS_R_NilValue(getAttrib(s, R_TspSymbol)));
 }
 
 
@@ -585,8 +619,14 @@ INLINE_FUN SEXP ScalarInteger(int x)
 
 INLINE_FUN SEXP ScalarReal(double x)
 {
+#ifdef BIGSEXP_IMMEDIATE
+    SEXP ans;
+    ans.tag = REALSXP;
+    ans.u.dbl = x;
+#else    
     SEXP ans = allocVector(REALSXP, (R_xlen_t)1);
     REAL(ans)[0] = x;
+#endif
     return ans;
 }
 
@@ -621,7 +661,7 @@ INLINE_FUN SEXP ScalarRaw(Rbyte x)
 
 INLINE_FUN Rboolean isVectorizable(SEXP s)
 {
-    if (s == R_NilValue) return TRUE;
+    if (IS_R_NilValue(s)) return TRUE;
     else if (isNewList(s)) {
 	R_xlen_t i, n;
 
@@ -632,7 +672,7 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 	return TRUE;
     }
     else if (isList(s)) {
-	for ( ; s != R_NilValue; s = CDR(s))
+	for ( ; ! IS_R_NilValue(s); s = CDR(s))
 	    if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1) return FALSE;
 	return TRUE;
     }

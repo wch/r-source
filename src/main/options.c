@@ -88,8 +88,8 @@ static SEXP Options(void)
 
 static SEXP FindTaggedItem(SEXP lst, SEXP tag)
 {
-    for ( ; lst!=R_NilValue ; lst=CDR(lst)) {
-	if (TAG(lst) == tag)
+    for ( ; ! IS_R_NilValue(lst) ; lst = CDR(lst)) {
+	if (SEXP_EQL(TAG(lst), tag))
 	    return lst;
     }
     return R_NilValue;
@@ -178,9 +178,9 @@ static SEXP SetOption(SEXP tag, SEXP value)
     opt = FindTaggedItem(opt, tag);
 
     /* The option is being removed. */
-    if (value == R_NilValue) {
-	for ( ; t != R_NilValue ; t = CDR(t))
-	    if (TAG(CDR(t)) == tag) {
+    if (IS_R_NilValue(value)) {
+	for ( ; ! IS_R_NilValue(t) ; t = CDR(t))
+	    if (SEXP_EQL(TAG(CDR(t)), tag)) {
 		old = CAR(t);
 		SETCDR(t, CDDR(t));
 		return old;
@@ -189,8 +189,8 @@ static SEXP SetOption(SEXP tag, SEXP value)
     }
     /* If the option is new, a new slot */
     /* is added to the end of .Options */
-    if (opt == R_NilValue) {
-	while (CDR(t) != R_NilValue)
+    if (IS_R_NilValue(opt)) {
+	while (! IS_R_NilValue(CDR(t)))
 	    t = CDR(t);
 	PROTECT(value);
 	SETCDR(t, allocList(1));
@@ -340,7 +340,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     options = SYMVALUE(Options());
 
-    if (args == R_NilValue) {
+    if (IS_R_NilValue(args)) {
 	/* This is the zero argument case.
 	   We alloc up a real list and write the system values into it.
 	*/
@@ -348,7 +348,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(value = allocVector(VECSXP, n));
 	PROTECT(names = allocVector(STRSXP, n));
 	i = 0;
-	while (options != R_NilValue) {
+	while (! IS_R_NilValue(options)) {
 	    SET_STRING_ELT(names, i, PRINTNAME(TAG(options)));
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
 	    options = CDR(options); i++;
@@ -376,7 +376,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(args);
     if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))
-	&& TAG(args) == R_NilValue ) {
+	&& IS_R_NilValue(TAG(args)) ) {
 	args = CAR(args);
 	n = length(args);
     }
@@ -451,13 +451,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "editor") && isString(argi)) {
 		s = asChar(argi);
-		if (s == NA_STRING || length(s) == 0)
+		if (IS_NA_STRING(s) || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
 	    }
 	    else if (streql(CHAR(namei), "continue")) {
 		s = asChar(argi);
-		if (s == NA_STRING || length(s) == 0)
+		if (IS_NA_STRING(s) || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
 		SET_VECTOR_ELT(value, i,
@@ -465,7 +465,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
 		s = asChar(argi);
-		if (s == NA_STRING || length(s) == 0)
+		if (IS_NA_STRING(s) || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
 		SET_VECTOR_ELT(value, i,

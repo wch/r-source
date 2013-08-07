@@ -41,7 +41,7 @@
 static SEXP
 getListElement(SEXP list, SEXP names, const char *str)
 {
-    SEXP elmt = (SEXP) NULL;
+    SEXP elmt = R_NULL_SEXP;
     const char *tempChar;
     int i;
 
@@ -101,27 +101,27 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg)
     PROTECT(tmp = getAttrib(control, R_NamesSymbol));
 
     conv = getListElement(control, tmp, "maxiter");
-    if(conv == NULL || !isNumeric(conv))
+    if(IS_NULL_SEXP(conv) || !isNumeric(conv))
 	error(_("'%s' absent"), "control$maxiter");
     maxIter = asInteger(conv);
 
     conv = getListElement(control, tmp, "tol");
-    if(conv == NULL || !isNumeric(conv))
+    if(IS_NULL_SEXP(conv) || !isNumeric(conv))
 	error(_("'%s' absent"), "control$tol");
     tolerance = asReal(conv);
 
     conv = getListElement(control, tmp, "minFactor");
-    if(conv == NULL || !isNumeric(conv))
+    if(IS_NULL_SEXP(conv) || !isNumeric(conv))
 	error(_("'%s' absent"), "control$minFactor");
     minFac = asReal(conv);
 
     conv = getListElement(control, tmp, "warnOnly");
-    if(conv == NULL || !isLogical(conv))
+    if(IS_NULL_SEXP(conv) || !isLogical(conv))
 	error(_("'%s' absent"), "control$warnOnly");
     warnOnly = asLogical(conv);
 
     conv = getListElement(control, tmp, "printEval");
-    if(conv == NULL || !isLogical(conv))
+    if(IS_NULL_SEXP(conv) || !isLogical(conv))
 	error(_("'%s' absent"), "control$printEval");
     printEval = asLogical(conv);
 
@@ -162,32 +162,32 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg)
     tmp = getAttrib(m, R_NamesSymbol);
 
     conv = getListElement(m, tmp, "conv");
-    if(conv == NULL || !isFunction(conv))
+    if(IS_NULL_SEXP(conv) || !isFunction(conv))
 	error(_("'%s' absent"), "m$conv()");
     PROTECT(conv = lang1(conv));
 
     incr = getListElement(m, tmp, "incr");
-    if(incr == NULL || !isFunction(incr))
+    if(IS_NULL_SEXP(incr) || !isFunction(incr))
 	error(_("'%s' absent"), "m$incr()");
     PROTECT(incr = lang1(incr));
 
     deviance = getListElement(m, tmp, "deviance");
-    if(deviance == NULL || !isFunction(deviance))
+    if(IS_NULL_SEXP(deviance) || !isFunction(deviance))
 	error(_("'%s' absent"), "m$deviance()");
     PROTECT(deviance = lang1(deviance));
 
     trace = getListElement(m, tmp, "trace");
-    if(trace == NULL || !isFunction(trace))
+    if(IS_NULL_SEXP(trace) || !isFunction(trace))
 	error(_("'%s' absent"), "m$trace()");
     PROTECT(trace = lang1(trace));
 
     setPars = getListElement(m, tmp, "setPars");
-    if(setPars == NULL || !isFunction(setPars))
+    if(IS_NULL_SEXP(setPars) || !isFunction(setPars))
 	error(_("'%s' absent"), "m$setPars()");
     PROTECT(setPars);
 
     getPars = getListElement(m, tmp, "getPars");
-    if(getPars == NULL || !isFunction(getPars))
+    if(IS_NULL_SEXP(getPars) || !isFunction(getPars))
 	error(_("'%s' absent"), "m$getPars()");
     PROTECT(getPars = lang1(getPars));
 
@@ -325,14 +325,15 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
     PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), lengthTheta));
 
     for(i = 0, start = 0; i < LENGTH(theta); i++) {
-	for(j = 0; j < LENGTH(VECTOR_ELT(pars, i)); j++, start += LENGTH(ans)) {
+	SEXP pars_i = VECTOR_ELT(pars, i);
+	for(j = 0; j < LENGTH(pars_i); j++, start += LENGTH(ans)) {
 	    SEXP ans_del;
 	    double origPar, xx, delta;
 
-	    origPar = REAL(VECTOR_ELT(pars, i))[j];
+	    origPar = REAL(pars_i)[j];
 	    xx = fabs(origPar);
 	    delta = (xx == 0) ? eps : xx*eps;
-	    REAL(VECTOR_ELT(pars, i))[j] += rDir[i] * delta;
+	    REAL(pars_i)[j] += rDir[i] * delta;
 	    PROTECT(ans_del = eval(expr, rho));
 	    if(!isReal(ans_del)) ans_del = coerceVector(ans_del, REALSXP);
 	    UNPROTECT(1);
@@ -342,7 +343,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 		REAL(gradient)[start + k] =
 		    rDir[i] * (REAL(ans_del)[k] - REAL(ans)[k])/delta;
 	    }
-	    REAL(VECTOR_ELT(pars, i))[j] = origPar;
+	    REAL(pars_i)[j] = origPar;
 	}
     }
     setAttrib(ans, install("gradient"), gradient);

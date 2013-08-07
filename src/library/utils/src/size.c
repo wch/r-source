@@ -89,7 +89,7 @@ static R_size_t objectsize(SEXP s)
 	dup = csduplicated(s);
 	for (R_xlen_t i = 0; i < xlength(s); i++) {
 	    tmp = STRING_ELT(s, i);
-	    if(tmp != NA_STRING && !LOGICAL(dup)[i])
+	    if(! IS_NA_STRING(tmp) && !LOGICAL(dup)[i])
 		cnt += objectsize(tmp);
 	}
 	isVec = TRUE;

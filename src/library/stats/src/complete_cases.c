@@ -37,9 +37,9 @@ SEXP compcases(SEXP args)
 
     len = -1;
 
-    for (s = args; s != R_NilValue; s = CDR(s)) {
+    for (s = args; ! IS_R_NilValue(s); s = CDR(s)) {
 	if (isList(CAR(s))) {
-	    for (t = CAR(s); t != R_NilValue; t = CDR(t))
+	    for (t = CAR(s); ! IS_R_NilValue(t); t = CDR(t))
 		if (isMatrix(CAR(t))) {
 		    u = getAttrib(CAR(t), R_DimSymbol);
 		    if (len < 0)
@@ -114,13 +114,13 @@ SEXP compcases(SEXP args)
     for (i = 0; i < len; i++) INTEGER(rval)[i] = 1;
     /* FIXME : there is a lot of shared code here for vectors. */
     /* It should be abstracted out and optimized. */
-    for (s = args; s != R_NilValue; s = CDR(s)) {
+    for (s = args; ! IS_R_NilValue(s); s = CDR(s)) {
 	if (isList(CAR(s))) {
 	    /* Now we only need to worry about vectors */
 	    /* since we use mod to handle arrays. */
 	    /* FIXME : using mod like this causes */
 	    /* a potential performance hit. */
-	    for (t = CAR(s); t != R_NilValue; t = CDR(t)) {
+	    for (t = CAR(s); ! IS_R_NilValue(t); t = CDR(t)) {
 		u = CAR(t);
 		for (i = 0; i < LENGTH(u); i++) {
 		    switch (TYPEOF(u)) {
@@ -138,7 +138,7 @@ SEXP compcases(SEXP args)
 			    INTEGER(rval)[i % len] = 0;
 			break;
 		    case STRSXP:
-			if (STRING_ELT(u, i) == NA_STRING)
+			if (IS_NA_STRING(STRING_ELT(u, i)))
 			    INTEGER(rval)[i % len] = 0;
 			break;
 		    default:
@@ -170,7 +170,7 @@ SEXP compcases(SEXP args)
 			    INTEGER(rval)[i % len] = 0;
 			break;
 		    case STRSXP:
-			if (STRING_ELT(u, i) == NA_STRING)
+			if (IS_NA_STRING(STRING_ELT(u, i)))
 			    INTEGER(rval)[i % len] = 0;
 			break;
 		    default:
@@ -198,7 +198,7 @@ SEXP compcases(SEXP args)
 			INTEGER(rval)[i % len] = 0;
 		    break;
 		case STRSXP:
-		    if (STRING_ELT(u, i) == NA_STRING)
+		    if (IS_NA_STRING(STRING_ELT(u, i)))
 			INTEGER(rval)[i % len] = 0;
 		    break;
 		default:

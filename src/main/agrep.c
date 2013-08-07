@@ -151,7 +151,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	useWC = !IS_ASCII(STRING_ELT(pat, 0));
 	if(!useWC) {
 	    for (i = 0 ; i < n ; i++) {
-		if(STRING_ELT(vec, i) == NA_STRING) continue;
+		if(IS_NA_STRING(STRING_ELT(vec, i))) continue;
 		if(!IS_ASCII(STRING_ELT(vec, i))) {
 		    useWC = TRUE;
 		    break;
@@ -160,7 +160,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    if(STRING_ELT(pat, 0) == NA_STRING) {
+    if(IS_NA_STRING(STRING_ELT(pat, 0))) {
 	if(opt_value) {
 	    PROTECT(ans = allocVector(STRSXP, n));
 	    for(i = 0; i < n; i++)
@@ -216,7 +216,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	if(STRING_ELT(vec, i) == NA_STRING) {
+	if(IS_NA_STRING(STRING_ELT(vec, i))) {
 	    LOGICAL(ind)[i] = 0;
 	    continue;
 	}
@@ -553,7 +553,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!useBytes) {
 	for(i = 0; i < nx; i++) {
-	    if(STRING_ELT(x, i) == NA_STRING) continue;
+	    if(IS_NA_STRING(STRING_ELT(x, i))) continue;
 	    if(!IS_ASCII(STRING_ELT(x, i))) {
 		useWC = TRUE;
 		break;
@@ -561,7 +561,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(!useWC) {
 	    for(j = 0; j < ny; j++) {
-		if(STRING_ELT(y, j) == NA_STRING) continue;
+		if(IS_NA_STRING(STRING_ELT(y, j))) continue;
 		if(!IS_ASCII(STRING_ELT(y, j))) {
 		    useWC = TRUE;
 		    break;
@@ -586,7 +586,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     for(i = 0; i < nx; i++) {
 	elt = STRING_ELT(x, i);
-	if(elt == NA_STRING) {
+	if(IS_NA_STRING(elt)) {
 	    for(j = 0; j < ny; j++) {
 		ANS(i, j) = NA_REAL;
 		if(opt_counts) {
@@ -624,7 +624,7 @@ SEXP attribute_hidden do_adist(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    for(j = 0; j < ny; j++) {
 		elt = STRING_ELT(y, j);
-		if(elt == NA_STRING) {
+		if(IS_NA_STRING(elt)) {
 		    ANS(i, j) = NA_REAL;
 		    if(opt_counts) {
 			for(m = 0; m < 3; m++) {
@@ -766,7 +766,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!isString(pat) ||
        (length(pat) < 1) ||
-       (STRING_ELT(pat, 0) == NA_STRING))
+       (IS_NA_STRING(STRING_ELT(pat, 0))))
 	error(_("invalid '%s' argument"), "pattern");
     if(length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
@@ -792,7 +792,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
         useWC = !IS_ASCII(STRING_ELT(pat, 0));
         if(!useWC) {
             for(i = 0 ; i < n ; i++) {
-                if(STRING_ELT(vec, i) == NA_STRING) continue;
+                if(IS_NA_STRING(STRING_ELT(vec, i))) continue;
                 if(!IS_ASCII(STRING_ELT(vec, i))) {
                     useWC = TRUE;
                     break;
@@ -840,7 +840,7 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	if(STRING_ELT(vec, i) == NA_STRING) {
+	if(IS_NA_STRING(STRING_ELT(vec, i))) {
 	    PROTECT(matchpos = ScalarInteger(NA_INTEGER));
 	    setAttrib(matchpos, install("match.length"),
 		      ScalarInteger(NA_INTEGER));

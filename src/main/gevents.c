@@ -122,7 +122,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    dd = gd->dev;
 	    if (dd->gettingEvent)
 	    	error(_("recursive use of 'getGraphicsEvent' not supported"));
-	    if (dd->eventEnv != R_NilValue) {
+	    if (! IS_R_NilValue(dd->eventEnv)) {
 	        if (dd->eventHelper) dd->eventHelper(dd, 1);
 	        dd->gettingEvent = TRUE;
 	        defineVar(install("result"), R_NilValue, dd->eventEnv);
@@ -137,7 +137,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_FlushConsole();
 
 	/* Poll them */
-	while (result == R_NilValue) {
+	while (IS_R_NilValue(result)) {
 	    R_ProcessEvents();
 	    R_CheckUserInterrupt();
 	    i = 1;
@@ -145,10 +145,11 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while (i++ < NumDevices()) {
 		gd = GEgetDevice(devNum);
 		dd = gd->dev;
-		if (dd->eventEnv != R_NilValue) {
+		if (! IS_R_NilValue(dd->eventEnv)) {
 		    if (dd->eventHelper) dd->eventHelper(dd, 2);
 		    result = findVar(install("result"), dd->eventEnv);
-		    if (result != R_NilValue && result != R_UnboundValue) {
+		    if (! IS_R_NilValue(result) &&
+			! IS_R_UnboundValue(result)) {
 		        break;
 		    }
 		}
@@ -161,7 +162,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	while (i++ < NumDevices()) {
 	    gd = GEgetDevice(devNum);
 	    dd = gd->dev;
-	    if (dd->eventEnv != R_NilValue) {
+	    if (! IS_R_NilValue(dd->eventEnv)) {
 	        if (dd->eventHelper) dd->eventHelper(dd, 0);
 	        dd->gettingEvent = FALSE;
 	    }

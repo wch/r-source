@@ -43,7 +43,7 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 
     if (n == n2) {
         if (TYPEOF(s2) == type && NAMED(s2) == 0) {
-	    if (ATTRIB(s2) != R_NilValue) {
+	    if (! IS_R_NilValue(ATTRIB(s2))) {
 		/* need to remove 'dim', 'dimnames' and 'names'
 		   attributes if present to match what copyMostAttrib
 		   does (it might be OK to ignore 'dim' and 'dimnames'
@@ -59,7 +59,7 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
             /* Can use 1st arg's space only if 2nd arg has no attributes, else
                we may not get attributes of result right. */
             if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0
-		&& ATTRIB(s2) == R_NilValue)
+		&& IS_R_NilValue(ATTRIB(s2)))
                 return s1;
     }
     else if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0)

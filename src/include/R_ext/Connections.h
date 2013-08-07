@@ -71,7 +71,7 @@ struct Rconn {
     Rboolean EOF_signalled;
     Rboolean UTF8out;
     void *id;
-    void *ex_ptr;
+    SEXP ex_ptr;
     void *private;
     int status; /* for pipes etc */
 };

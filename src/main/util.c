@@ -60,8 +60,8 @@ void F77_SYMBOL(rexitc)(char *msg, int *nchar);
 attribute_hidden
 Rboolean tsConform(SEXP x, SEXP y)
 {
-    if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
-	(y = getAttrib(y, R_TspSymbol)) != R_NilValue) {
+    if (! IS_R_NilValue(x = getAttrib(x, R_TspSymbol)) &&
+	! IS_R_NilValue(y = getAttrib(y, R_TspSymbol))) {
 	/* tspgets should enforce this, but prior to 2.4.0
 	   had INTEGER() here */
 	if(TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP)
@@ -78,7 +78,7 @@ int nrows(SEXP s)
     SEXP t;
     if (isVector(s) || isList(s)) {
 	t = getAttrib(s, R_DimSymbol);
-	if (t == R_NilValue) return LENGTH(s);
+	if (IS_R_NilValue(t)) return LENGTH(s);
 	return INTEGER(t)[0];
     }
     else if (isFrame(s)) {
@@ -94,7 +94,7 @@ int ncols(SEXP s)
     SEXP t;
     if (isVector(s) || isList(s)) {
 	t = getAttrib(s, R_DimSymbol);
-	if (t == R_NilValue) return 1;
+	if (IS_R_NilValue(t)) return 1;
 	if (LENGTH(t) >= 2) return INTEGER(t)[1];
 	/* This is a 1D (or possibly 0D array) */
 	return 1;
@@ -376,7 +376,7 @@ Rboolean isBlankString(const char *s)
 
 Rboolean StringBlank(SEXP x)
 {
-    if (x == R_NilValue) return TRUE;
+    if (IS_R_NilValue(x)) return TRUE;
     else return CHAR(x)[0] == '\0';
 }
 
@@ -444,7 +444,7 @@ void attribute_hidden Rf_check1arg(SEXP arg, SEXP call, const char *formal)
     SEXP tag = TAG(arg);
     const char *supplied;
     size_t ns;
-    if (tag == R_NilValue) return;
+    if (IS_R_NilValue(tag)) return;
     supplied = CHAR(PRINTNAME(tag)); ns = strlen(supplied);
     if (ns > strlen(formal) || strncmp(supplied, formal, ns))
 	errorcall(call, _("supplied argument name '%s' does not match '%s'"),
@@ -456,7 +456,7 @@ SEXP nthcdr(SEXP s, int n)
 {
     if (isList(s) || isLanguage(s) || isFrame(s) || TYPEOF(s) == DOTSXP ) {
 	while( n-- > 0 ) {
-	    if (s == R_NilValue)
+	    if (IS_R_NilValue(s))
 		error(_("'nthcdr' list shorter than %d"), n);
 	    s = CDR(s);
 	}
@@ -475,7 +475,7 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     for (cptr = R_GlobalContext; cptr != NULL; cptr = cptr->nextcontext) {
-	if ((cptr->callflag & CTXT_FUNCTION) && cptr->cloenv == rho) {
+	if ((cptr->callflag & CTXT_FUNCTION) && SEXP_EQL(cptr->cloenv, rho)) {
 	    nargs = length(cptr->promargs);
 	    break;
 	}
@@ -507,8 +507,8 @@ void setSVector(SEXP * vec, int len, SEXP val)
 Rboolean isFree(SEXP val)
 {
     SEXP t;
-    for (t = R_FreeSEXP; t != R_NilValue; t = CAR(t))
-	if (val == t)
+    for (t = R_FreeSEXP; ! IS_R_NilValue(t); t = CAR(t))
+	if (SEXP_EQL(val, t))
 	    return TRUE;
     return FALSE;
 }
@@ -691,7 +691,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
 	error(_("character argument expected"));
-    if (STRING_ELT(s, 0) == NA_STRING)
+    if (IS_NA_STRING(STRING_ELT(s, 0)))
 	error(_("missing value is invalid"));
 
     /* get current directory to return */
@@ -730,7 +730,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING)
+	if (IS_NA_STRING(STRING_ELT(s, i)))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = filenameToWchar(STRING_ELT(s, i), TRUE);
@@ -764,7 +764,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING)
+	if (IS_NA_STRING(STRING_ELT(s, i)))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
@@ -805,7 +805,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING)
+	if (IS_NA_STRING(STRING_ELT(s, i)))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    memset(sp, 0, 4*PATH_MAX);
@@ -847,7 +847,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
-	if (STRING_ELT(s, i) == NA_STRING)
+	if (IS_NA_STRING(STRING_ELT(s, i)))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
@@ -982,7 +982,7 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	w  = 0;
 	for(i = 0; i < len; i++) {
 	    s = STRING_ELT(x, i);
-	    if(na || s != NA_STRING)
+	    if(na || ! IS_NA_STRING(s))
 		w = R_imax2(w, Rstrlen(s, quote));
 	}
 	if(quote) w +=2; /* for surrounding quotes */
@@ -990,7 +990,7 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = duplicate(x));
     for(i = 0; i < len; i++) {
 	s = STRING_ELT(x, i);
-	if(na || s != NA_STRING) {
+	if(na || ! IS_NA_STRING(s)) {
 	    cetype_t ienc = getCharCE(s);
 	    if(ienc == CE_UTF8) {
 		const char *ss = EncodeString(s, w-1000000, quote, 
@@ -1053,7 +1053,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if(streql(this, "UTF-8")) ienc = CE_UTF8;
 	else if(streql(this, "bytes")) ienc = CE_BYTES;
 	tmp = STRING_ELT(x, i);
-	if(tmp == NA_STRING) continue;
+	if(IS_NA_STRING(tmp)) continue;
 	if (! ((ienc == CE_LATIN1 && IS_LATIN1(tmp)) ||
 	       (ienc == CE_UTF8 && IS_UTF8(tmp)) ||
 	       (ienc == CE_BYTES && IS_BYTES(tmp)) ||
@@ -1644,7 +1644,7 @@ SEXP attribute_hidden do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = CAR(args);
     for (i = 0; i < XLENGTH(ans); i++) {
 	el = STRING_ELT(ans, i);
-	if (el == NA_STRING) { /* do nothing */ }
+	if (IS_NA_STRING(el)) { /* do nothing */ }
 	else if(PRIMVAL(op) && !known_to_be_utf8) { /* enc2utf8 */
 	    if(!IS_UTF8(el) && !IS_ASCII(el)) {
 		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
@@ -1787,7 +1787,7 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x;
     UErrorCode  status = U_ZERO_ERROR;
 
-    for (; args != R_NilValue; args = CDR(args)) {
+    for (; ! IS_R_NilValue(args); args = CDR(args)) {
 	if (isNull(TAG(args))) error(_("all arguments must be named"));
 	const char *this = CHAR(PRINTNAME(TAG(args)));
 	const char *s;

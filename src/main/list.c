@@ -60,7 +60,7 @@ static void namewalk(SEXP s, NameWalkData *d)
 	    if(d->StoreValues) {
 		if(d->UniqueNames) {
 		    for(int j = 0 ; j < d->ItemCounts ; j++) {
-			if(STRING_ELT(d->ans, j) == name)
+			if(SEXP_EQL(STRING_ELT(d->ans, j), name))
 			    goto ignore;
 		    }
 		}
@@ -72,7 +72,7 @@ static void namewalk(SEXP s, NameWalkData *d)
 	break;
     case LANGSXP:
 	if(!d->IncludeFunctions) s = CDR(s);
-	while(s != R_NilValue) {
+	while(! IS_R_NilValue(s)) {
 	    namewalk(CAR(s), d);
 	    s = CDR(s);
 	}
@@ -93,7 +93,7 @@ SEXP attribute_hidden do_allnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP expr;
     int i, savecount;
-    NameWalkData data = {NULL, 0, 0, 0, 0, 0};
+    NameWalkData data = {R_NULL_SEXP, 0, 0, 0, 0, 0};
 
     checkArity(op, args);
 

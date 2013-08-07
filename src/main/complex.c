@@ -263,14 +263,14 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     UNPROTECT(1);
 
     /* quick return if there are no attributes */
-    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+    if (IS_R_NilValue(ATTRIB(s1)) && IS_R_NilValue(ATTRIB(s2)))
 	return ans;
 
     /* Copy attributes from longer argument. */
 
-    if (ans != s2 && n == n2 && ATTRIB(s2) != R_NilValue)
+    if (! SEXP_EQL(ans, s2) && n == n2 && ! IS_R_NilValue(ATTRIB(s2)))
         copyMostAttrib(s2, ans);
-    if (ans != s1 && n == n1 && ATTRIB(s1) != R_NilValue)
+    if (! SEXP_EQL(ans, s1) && n == n1 && ! IS_R_NilValue(ATTRIB(s1)))
         copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
 
     return ans;
@@ -362,7 +362,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else errorcall(call, _("non-numeric argument to function"));
 
-    if (x != y && ATTRIB(x) != R_NilValue) {
+    if (! SEXP_EQL(x, y) && ! IS_R_NilValue(ATTRIB(x))) {
         PROTECT(x);
         PROTECT(y);
         DUPLICATE_ATTRIB(y, x);

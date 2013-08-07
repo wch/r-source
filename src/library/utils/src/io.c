@@ -582,7 +582,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Use the first non-NA to screen */
     for (i = 0; i < len; i++) {
 	tmp = CHAR(STRING_ELT(cvec, i));
-	if (!(STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
+	if (!(IS_NA_STRING(STRING_ELT(cvec, i)) || strlen(tmp) == 0
 	      || isNAstring(tmp, 1, &data) || isBlankString(tmp)))
 	    break;
     }
@@ -594,7 +594,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(rval = allocVector(LGLSXP, len));
 	for (i = 0; i < len; i++) {
 	    tmp = CHAR(STRING_ELT(cvec, i));
-	    if (STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
+	    if (IS_NA_STRING(STRING_ELT(cvec, i)) || strlen(tmp) == 0
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		LOGICAL(rval)[i] = NA_LOGICAL;
 	    else {
@@ -616,7 +616,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(rval = allocVector(INTSXP, len));
 	for (i = 0; i < len; i++) {
 	    tmp = CHAR(STRING_ELT(cvec, i));
-	    if (STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
+	    if (IS_NA_STRING(STRING_ELT(cvec, i)) || strlen(tmp) == 0
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		INTEGER(rval)[i] = NA_INTEGER;
 	    else {
@@ -635,7 +635,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(rval = allocVector(REALSXP, len));
 	for (i = 0; i < len; i++) {
 	    tmp = CHAR(STRING_ELT(cvec, i));
-	    if (STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
+	    if (IS_NA_STRING(STRING_ELT(cvec, i)) || strlen(tmp) == 0
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		REAL(rval)[i] = NA_REAL;
 	    else {
@@ -654,7 +654,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(rval = allocVector(CPLXSXP, len));
 	for (i = 0; i < len; i++) {
 	    tmp = CHAR(STRING_ELT(cvec, i));
-	    if (STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
+	    if (IS_NA_STRING(STRING_ELT(cvec, i)) || strlen(tmp) == 0
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		COMPLEX(rval)[i].r = COMPLEX(rval)[i].i = NA_REAL;
 	    else {
@@ -682,7 +682,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    j = 0;
 	    for (i = 0; i < len; i++) {
 		/* <NA> is never to be a level here */
-		if (STRING_ELT(cvec, i) == NA_STRING) continue;
+		if (IS_NA_STRING(STRING_ELT(cvec, i))) continue;
 		if (LOGICAL(dup)[i] == 0 && !isNAstring(CHAR(STRING_ELT(cvec, i)), 1, &data))
 		    j++;
 	    }
@@ -690,7 +690,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(levs = allocVector(STRSXP,j));
 	    j = 0;
 	    for (i = 0; i < len; i++) {
-		if (STRING_ELT(cvec, i) == NA_STRING) continue;
+		if (IS_NA_STRING(STRING_ELT(cvec, i))) continue;
 		if (LOGICAL(dup)[i] == 0 && !isNAstring(CHAR(STRING_ELT(cvec, i)), 1, &data))
 		    SET_STRING_ELT(levs, j++, STRING_ELT(cvec, i));
 	    }
@@ -935,7 +935,7 @@ static Rboolean isna(SEXP x, int indx)
 	return ISNAN(REAL(x)[indx]);
 	break;
     case STRSXP:
-	return STRING_ELT(x, indx) == NA_STRING;
+	return IS_NA_STRING(STRING_ELT(x, indx));
 	break;
     case CPLXSXP:
 	rc = COMPLEX(x)[indx];

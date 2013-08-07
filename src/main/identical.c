@@ -86,7 +86,7 @@ Rboolean
 R_compute_identical(SEXP x, SEXP y, int flags)
 {
     SEXP ax, ay, atrx, atry;
-    if(x == y) /* same pointer */
+    if(SEXP_EQL(x, y)) /* same pointer */
 	return TRUE;
     if(TYPEOF(x) != TYPEOF(y))
 	return FALSE;
@@ -114,8 +114,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
        common (and they are used for S4 slots) we should store them in
        a hash table.
     */
-    else if(ax != R_NilValue || ay != R_NilValue) {
-	if(ax == R_NilValue || ay == R_NilValue)
+    else if(! IS_R_NilValue(ax) || ! IS_R_NilValue(ay)) {
+	if(IS_R_NilValue(ax) || IS_R_NilValue(ay))
 	    return FALSE;
 	if(TYPEOF(ax) != LISTSXP || TYPEOF(ay) != LISTSXP) {
 	    warning(_("ignoring non-pairlist attributes"));
@@ -124,9 +124,9 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	    if(length(ax) != length(ay)) return FALSE;
 	    /* They are the same length and should have
 	       unique non-empty non-NA tags */
-	    for(elx = ax; elx != R_NilValue; elx = CDR(elx)) {
+	    for(elx = ax; ! IS_R_NilValue(elx); elx = CDR(elx)) {
 		const char *tx = CHAR(PRINTNAME(TAG(elx)));
-		for(ely = ay; ely != R_NilValue; ely = CDR(ely))
+		for(ely = ay; ! IS_R_NilValue(ely); ely = CDR(ely))
 		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
 			/* We need to treat row.names specially here */
 			if(streql(tx, "row.names")) {
@@ -142,7 +142,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 				return FALSE;
 			break;
 		    }
-		if(ely == R_NilValue) return FALSE;
+		if(IS_R_NilValue(ely)) return FALSE;
 	    }
 	}
     }
@@ -191,8 +191,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	if(n != xlength(y)) return FALSE;
 	for(i = 0; i < n; i++) {
 	    /* This special-casing for NAs is not needed */
-	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
-		na2 = (STRING_ELT(y, i) == NA_STRING);
+	    Rboolean na1 = (IS_NA_STRING(STRING_ELT(x, i))),
+		na2 = (IS_NA_STRING(STRING_ELT(y, i)));
 	    if(na1 ^ na2) return FALSE;
 	    if(na1 && na2) continue;
 	    if (! Seql(STRING_ELT(x, i), STRING_ELT(y, i))) return FALSE;
@@ -217,8 +217,8 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case LANGSXP:
     case LISTSXP:
     {
-	while (x != R_NilValue) {
-	    if(y == R_NilValue)
+	while (! IS_R_NilValue(x)) {
+	    if(IS_R_NilValue(y))
 		return FALSE;
 	    if(!R_compute_identical(CAR(x), CAR(y), flags))
 		return FALSE;
@@ -227,12 +227,12 @@ R_compute_identical(SEXP x, SEXP y, int flags)
 	    x = CDR(x);
 	    y = CDR(y);
 	}
-	return(y == R_NilValue);
+	return(IS_R_NilValue(y));
     }
     case CLOSXP:
 	return(R_compute_identical(FORMALS(x), FORMALS(y), flags) &&
 	       R_compute_identical(BODY_EXPR(x), BODY_EXPR(y), flags) &&
-	       (IGNORE_ENV || CLOENV(x) == CLOENV(y) ? TRUE : FALSE) &&
+	       (IGNORE_ENV || SEXP_EQL(CLOENV(x), CLOENV(y)) ? TRUE : FALSE) &&
 	       (IGNORE_BYTECODE || R_compute_identical(BODY(x), BODY(y), flags))
 	       );
     case SPECIALSXP:
@@ -242,7 +242,7 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     case SYMSXP:
     case WEAKREFSXP:
     case BCODESXP: /**** is this the best approach? */
-	return(x == y ? TRUE : FALSE);
+	return(SEXP_EQL(x, y) ? TRUE : FALSE);
     case EXTPTRSXP:
 	return (EXTPTR_PTR(x) == EXTPTR_PTR(y) ? TRUE : FALSE);
     case RAWSXP:

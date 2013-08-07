@@ -66,7 +66,7 @@ SEXP R_quick_method_check(SEXP object, SEXP fsym, SEXP fdef);
 static SEXP R_target, R_defined, R_nextMethod, R_dot_nextMethod,
     R_loadMethod_name;
 
-static SEXP Methods_Namespace = NULL;
+static SEXP Methods_Namespace = SEXP_INIT;
 
 static const char *check_single_string(SEXP, Rboolean, const char *);
 static const char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty,
@@ -85,9 +85,9 @@ static void init_loadMethod()
 
 SEXP R_initMethodDispatch(SEXP envir)
 {
-    if(envir && !isNull(envir))
+    if(! IS_NULL_SEXP(envir) && !isNull(envir))
 	Methods_Namespace = envir;
-    if(!Methods_Namespace)
+    if(IS_NULL_SEXP(Methods_Namespace))
 	Methods_Namespace = R_GlobalEnv;
     if(initialized)
 	return(envir);
@@ -144,8 +144,8 @@ SEXP R_initMethodDispatch(SEXP envir)
 	R_empty_skeletons = eval(R_empty_skeletons, Methods_Namespace);
     R_PreserveObject(R_empty_skeletons);
     UNPROTECT(1);
-    if(R_short_skeletons == R_UnboundValue ||
-       R_empty_skeletons == R_UnboundValue)
+    if(IS_R_UnboundValue(R_short_skeletons) ||
+       IS_R_UnboundValue(R_empty_skeletons))
 	error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"));
     f_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 0);
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
@@ -211,7 +211,7 @@ static SEXP R_find_method(SEXP mlist, const char *class, SEXP fname)
        but not including inheritance. */
     SEXP value, methods;
     methods = R_do_slot(mlist, s_allMethods);
-    if(methods == R_NilValue) {
+    if(IS_R_NilValue(methods)) {
 	error(_("no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"),
 	      class_string(mlist), CHAR(asChar(fname)));
 	return(R_NilValue); /* -Wall */
@@ -225,15 +225,15 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
     /* Match the list of (evaluated) args to the methods list. */
     SEXP object, methods, value, retValue = R_NilValue;
     const char *class; int nprotect = 0;
-    if(!mlist)
+    if(IS_NULL_SEXP(mlist))
 	return R_NilValue;
     methods = R_do_slot(mlist, s_allMethods);
-    if(methods == R_NilValue)
+    if(IS_R_NilValue(methods))
 	return R_NilValue;
     while(!isNull(args) && !isNull(methods)) {
 	object = CAR(args); args = CDR(args);
 	if(TYPEOF(object) == PROMSXP) {
-	    if(PRVALUE(object) == R_UnboundValue) {
+	    if(IS_R_UnboundValue(PRVALUE(object))) {
 		SEXP tmp = eval(PRCODE(object), PRENV(object));
 		PROTECT(tmp); nprotect++;
 		SET_PRVALUE(object,  tmp);
@@ -258,22 +258,22 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 {
     /* Match the list of (evaluated) args to the methods table. */
-    static SEXP  R_allmtable = NULL, R_siglength;
+    static SEXP  R_allmtable = SEXP_INIT, R_siglength;
     SEXP object, value, mtable;
     const char *class; int nprotect = 0, nsig, nargs;
 #define NBUF 200
     char buf[NBUF]; char *ptr;
-    if(!R_allmtable) {
+    if(IS_NULL_SEXP(R_allmtable)) {
 	R_allmtable = install(".AllMTable");
 	R_siglength = install(".SigLength");
     }
-    if(!genericEnv || TYPEOF(genericEnv) != ENVSXP)
+    if(IS_NULL_SEXP(genericEnv) || TYPEOF(genericEnv) != ENVSXP)
 	return R_NilValue; /* a bug or not initialized yet */
     mtable = findVarInFrame(genericEnv, R_allmtable);
-    if(mtable == R_UnboundValue || TYPEOF(mtable) != ENVSXP)
+    if(IS_R_UnboundValue(mtable) || TYPEOF(mtable) != ENVSXP)
 	return R_NilValue;
     object = findVarInFrame(genericEnv, R_siglength);
-    if(object == R_UnboundValue)
+    if(IS_R_UnboundValue(object))
 	return R_NilValue;
     switch(TYPEOF(object)) {
     case REALSXP:
@@ -296,7 +296,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
     while(!isNull(args) && nargs < nsig) {
 	object = CAR(args); args = CDR(args);
 	if(TYPEOF(object) == PROMSXP) {
-	    if(PRVALUE(object) == R_UnboundValue) {
+	    if(IS_R_UnboundValue(PRVALUE(object))) {
 		SEXP tmp = eval(PRCODE(object), PRENV(object));
 		PROTECT(tmp); nprotect++;
 		SET_PRVALUE(object,  tmp);
@@ -305,7 +305,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 	    else
 		object = PRVALUE(object);
 	}
-	if(object == R_MissingArg)
+	if(IS_R_MissingArg(object))
 	    class = "missing";
 	else
 	    class = CHAR(STRING_ELT(R_data_class(object, TRUE), 0));
@@ -330,7 +330,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 	ptr = strcpy(ptr, "missing"); ptr += strlen("missing");
     }	    
     value = findVarInFrame(mtable, install(buf));
-    if(value == R_UnboundValue)
+    if(IS_R_UnboundValue(value))
 	value = R_NilValue;
     UNPROTECT(nprotect);
     return(value);
@@ -369,8 +369,8 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
    CLOSXP and with a slot/attribute named "generic" will qualify.
 */
 #define IS_NON_GENERIC(vl) (TYPEOF(vl) == BUILTINSXP ||TYPEOF(vl) == SPECIALSXP || \
-            (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) == R_NilValue))
-#define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) != R_NilValue)
+			    (TYPEOF(vl) == CLOSXP && IS_R_NilValue(getAttrib(vl, s_generic))))
+#define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && ! IS_R_NilValue(getAttrib(vl, s_generic)))
 #define PACKAGE_SLOT(vl) getAttrib(vl, R_PackageSymbol)
 
 static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
@@ -380,9 +380,9 @@ static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 	symbol = install(CHAR(asChar(symbol)));
     pkg = CHAR(STRING_ELT(package, 0)); /* package is guaranteed single string */
 
-    while (rho != R_NilValue) {
+    while (! IS_R_NilValue(rho)) {
 	vl = findVarInFrame(rho, symbol);
-	if (vl != R_UnboundValue) {
+	if (! IS_R_UnboundValue(vl)) {
 	    if (TYPEOF(vl) == PROMSXP) {
 		PROTECT(vl);
 		vl = eval(vl, rho);
@@ -407,7 +407,7 @@ static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 	rho = ENCLOS(rho);
     }
     /* look in base if either generic is missing */
-    if(generic == R_UnboundValue) {
+    if(IS_R_UnboundValue(generic)) {
 	vl = SYMVALUE(symbol);
 	if(IS_GENERIC(vl)) {
 	    generic = vl;
@@ -428,9 +428,9 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
     else check_single_string(name, TRUE, "The argument \"f\" to getGeneric");
     check_single_string(package, FALSE, "The argument \"package\" to getGeneric");
     value = get_generic(name, env, package);
-    if(value == R_UnboundValue) {
+    if(IS_R_UnboundValue(value)) {
 	if(asLogical(mustFind)) {
-	    if(env == R_GlobalEnv)
+	    if(IS_R_GlobalEnv(env))
 		error(_("no generic function definition found for '%s'"),
 		  CHAR(asChar(name)));
 	    else
@@ -450,7 +450,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
     int nprotect = 0;
 
     if(!initialized)
-	R_initMethodDispatch(NULL);
+	R_initMethodDispatch(R_NULL_SEXP);
     fsym = fname;
     /* TODO:  the code for do_standardGeneric does a test of fsym,
      * with a less informative error message.  Should combine them.*/
@@ -462,7 +462,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
     case CLOSXP:
         f_env = CLOENV(fdef);
 	PROTECT(mlist = findVar(s_dot_Methods, f_env)); nprotect++;
-	if(mlist == R_UnboundValue)
+	if(IS_R_UnboundValue(mlist))
             mlist = R_NilValue;
 	break;
     case SPECIALSXP: case BUILTINSXP:
@@ -571,7 +571,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     if(isFunction(mlist))
 	return mlist;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
-    if(arg_slot == R_NilValue) {
+    if(IS_R_NilValue(arg_slot)) {
 	error(_("object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"),
 	      class_string(mlist), CHAR(asChar(fname)));
 	return(R_NilValue); /* -Wall */
@@ -582,7 +582,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	/* shouldn't happen, since argument in class MethodsList has class
 	   "name" */
 	arg_sym = install(CHAR(asChar(arg_slot)));
-    if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
+    if(SEXP_EQL(arg_sym, R_DotsSymbol) || DDVAL(arg_sym) > 0)
 	error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
 	      CHAR(asChar(fname)));
     if(TYPEOF(ev) != ENVSXP) {
@@ -625,7 +625,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
       UNPROTECT(nprotect);
       return(R_NilValue);
     }
-    if(value == R_MissingArg) {/* the check put in before calling
+    if(IS_R_MissingArg(value)) {/* the check put in before calling
 			  function  MethodListSelect in R */
       error(_("recursive use of function '%s' in method selection, with no default method"),
 		  CHAR(asChar(fname)));
@@ -658,18 +658,18 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
      * going into an infinite loop of method calls
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
-    if(op == R_UnboundValue)
+    if(IS_R_UnboundValue(op))
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
     /* If "..." is an argument, need to pass it down to next method;
      * (this was motivated by issues with match.call; are these still
      * valid in rev. 2.12 ? )*/
-    dotsDone = (findVarInFrame3(ev, R_DotsSymbol, TRUE) == R_UnboundValue);
+    dotsDone = IS_R_UnboundValue((findVarInFrame3(ev, R_DotsSymbol, TRUE)));
     {PROTECT(e = duplicate(matched_call)); nprotect++;}
     if(!dotsDone) {
 	SEXP ee = e, dots;
 	PROTECT(dots = allocVector(LANGSXP, 1)); nprotect++;
 	SETCAR(dots, R_DotsSymbol);
-	for(ee = e; CDR(ee) != R_NilValue; ee = CDR(ee));
+	for(ee = e; ! IS_R_NilValue(CDR(ee)); ee = CDR(ee));
 	SETCDR(ee, dots); /* append ... symbol, with NULL CDR() */
     }
     prim_case = isPrimitive(op);
@@ -687,13 +687,13 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     appears) in which case ... was appended. */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
-	if(this_sym == R_DotsSymbol) {
+	if(SEXP_EQL(this_sym, R_DotsSymbol)) {
 	    /* skip this; will have been appended */
 	    if(dotsDone)
 		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
 	    SETCDR(argsp, CDR(args));
 	}
-	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
+	else if(! IS_R_MissingArg(CAR(args))) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
 	argsp = args; args = CDR(args);
     }
@@ -724,18 +724,18 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
     SEXP s, attrib;
     int found = 1; /* we "know" the class attribute is there */
     PROTECT(def);
-    for(s = attrib = ATTRIB(def); s != R_NilValue; s = CDR(s)) {
+    for(s = attrib = ATTRIB(def); ! IS_R_NilValue(s); s = CDR(s)) {
 	SEXP t = TAG(s);
-	if(t == R_target) {
+	if(SEXP_EQL(t, R_target)) {
 	    defineVar(R_dot_target, CAR(s), ev); found++;
 	}
-	else if(t == R_defined) {
+	else if(SEXP_EQL(t, R_defined)) {
 	    defineVar(R_dot_defined, CAR(s), ev); found++;
 	}
-	else if(t == R_nextMethod)  {
+	else if(SEXP_EQL(t, R_nextMethod))  {
 	    defineVar(R_dot_nextMethod, CAR(s), ev); found++;
 	}
-	else if(t == R_SourceSymbol)  {
+	else if(SEXP_EQL(t, R_SourceSymbol))  {
 	    /* ignore */ found++;
 	}
     }
@@ -767,7 +767,7 @@ static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
     lwidth = 0;
     for(i = 0; i<nargs; i++) {
 	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
-	if(thisPkg == R_NilValue)
+	if(IS_R_NilValue(thisPkg))
 	    thisPkg = s_base;
 	lwidth += strlen(STRING_VALUE(thisPkg)) + 1;
     }	
@@ -779,7 +779,7 @@ static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
 	if(i > 0)
 	    *bufptr++ = '#';
 	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
-	if(thisPkg == R_NilValue)
+	if(IS_R_NilValue(thisPkg))
 	    thisPkg = s_base;
 	strcpy(bufptr, STRING_VALUE(thisPkg));
 	while(*bufptr)
@@ -862,13 +862,13 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
     if(TYPEOF(class) == STRSXP) {
 	SEXP package = PACKAGE_SLOT(class);
 	value = findVarInFrame(table, install(CHAR(STRING_ELT(class, 0))));
-	if(value == R_UnboundValue)
+	if(IS_R_UnboundValue(value))
 	    return R_NilValue;
 	else if(TYPEOF(package) == STRSXP) {
 	    SEXP defPkg = PACKAGE_SLOT(value);
 	    /* check equality of package */
 	    if(TYPEOF(defPkg) == STRSXP && length(defPkg) ==1 &&
-	       STRING_ELT(defPkg,0) != STRING_ELT(package, 0))
+	       ! SEXP_EQL(STRING_ELT(defPkg,0), STRING_ELT(package, 0)))
 		return R_NilValue;
 	    else
 		return value;
@@ -886,8 +886,8 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
 
 static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 {
-    static SEXP dotFind = NULL, f; SEXP  e, ee;
-    if(dotFind == NULL) {
+    static SEXP dotFind = SEXP_INIT, f; SEXP  e, ee;
+    if(IS_NULL_SEXP(dotFind)) {
 	dotFind = install(".InheritForDispatch");
 	f = findFun(dotFind, R_MethodsNamespace);
     }
@@ -903,8 +903,8 @@ static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 
 static SEXP dots_class(SEXP ev, int *checkerrP)
 {
-    static SEXP call = NULL; SEXP  ee;
-    if(call == NULL) {
+    static SEXP call = SEXP_INIT; SEXP  ee;
+    if(IS_NULL_SEXP(call)) {
 	SEXP dotFind, f, R_dots;
 	dotFind = install(".dotsClass");
 	f = findFun(dotFind, R_MethodsNamespace);
@@ -919,8 +919,8 @@ static SEXP dots_class(SEXP ev, int *checkerrP)
 
 static SEXP do_mtable(SEXP fdef, SEXP ev)
 {
-    static SEXP dotFind = NULL, f; SEXP  e, ee;
-    if(dotFind == NULL) {
+    static SEXP dotFind = SEXP_INIT, f; SEXP  e, ee;
+    if(IS_NULL_SEXP(dotFind)) {
 	dotFind = install(".getMethodsTable");
 	f = findFun(dotFind, R_MethodsNamespace);
 	R_PreserveObject(f);
@@ -935,14 +935,14 @@ static SEXP do_mtable(SEXP fdef, SEXP ev)
 
 SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
-    static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength, R_dots;
+    static SEXP R_mtable = SEXP_INIT, R_allmtable, R_sigargs, R_siglength, R_dots;
     int nprotect = 0;
     SEXP mtable, classes, thisClass = R_NilValue /* -Wall */, sigargs, 
 	siglength, f_env = R_NilValue, method, f, val = R_NilValue;
     char *buf, *bufptr;
     int nargs, i, lwidth = 0;
 
-    if(!R_mtable) {
+    if(IS_NULL_SEXP(R_mtable)) {
 	R_mtable = install(".MTable");
 	R_allmtable = install(".AllMTable");
 	R_sigargs = install(".SigArgs");
@@ -966,14 +966,14 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	      class_string(fdef));
     }
     PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
-    if(mtable == R_UnboundValue) {
+    if(IS_R_UnboundValue(mtable)) {
 	do_mtable(fdef, ev); /* Should initialize the generic */
 	PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
     }
     PROTECT(sigargs = findVarInFrame(f_env, R_sigargs)); nprotect++;
     PROTECT(siglength = findVarInFrame(f_env, R_siglength)); nprotect++;
-    if(sigargs == R_UnboundValue || siglength == R_UnboundValue ||
-       mtable == R_UnboundValue)
+    if(IS_R_UnboundValue(sigargs) || IS_R_UnboundValue(siglength) ||
+       IS_R_UnboundValue(mtable))
 	error("generic \"%s\" seems not to have been initialized for table dispatch---need to have '.SigArgs' and '.AllMtable' assigned in its environment");
     nargs = asInteger(siglength);
     PROTECT(classes = allocVector(VECSXP, nargs)); nprotect++;
@@ -986,7 +986,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	else {
 	    /*  get its class */
 	    SEXP arg; int check_err;
-	    if(arg_sym == R_dots) {
+	    if(SEXP_EQL(arg_sym, R_dots)) {
 		thisClass = dots_class(ev, &check_err);
 	    }
 	    else {
@@ -1019,7 +1019,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     vmaxset(vmax);
     if(DUPLICATE_CLASS_CASE(method))
 	method = R_selectByPackage(method, classes, nargs);
-    if(method == R_UnboundValue) {
+    if(IS_R_UnboundValue(method)) {
 	method = do_inherited_table(classes, fdef, mtable, ev);
     }
     /* the rest of this is identical to R_standardGeneric;

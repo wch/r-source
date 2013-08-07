@@ -431,7 +431,7 @@ SEXP in_RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(tvec) == REALSXP) {
 			REAL(tvec2)[j] = REAL(tvec)[j];
 		} else if (TYPEOF(tvec) == STRSXP) {
-		    if (STRING_ELT(tvec, j) != ssNA_STRING)
+		    if (! SEXP_EQL(STRING_ELT(tvec, j), ssNA_STRING))
 			SET_STRING_ELT(tvec2, j, STRING_ELT(tvec, j));
 		    else
 			SET_STRING_ELT(tvec2, j, NA_STRING);
@@ -755,14 +755,14 @@ static void cell_cursor_init(DEstruct DE)
     } else {
 	if (length(DE->work) >= whichcol) {
 	    tmp = VECTOR_ELT(DE->work, whichcol - 1);
-	    if (tmp != R_NilValue &&
+	    if (! IS_R_NilValue(tmp) &&
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults();
 		if (TYPEOF(tmp) == REALSXP) {
 		    strncpy(buf, EncodeElement(tmp, i, 0, '.'),
 			    BOOSTED_BUF_SIZE-1);
 		} else if (TYPEOF(tmp) == STRSXP) {
-		    if (STRING_ELT(tmp, i) != ssNA_STRING)
+		    if (! SEXP_EQL(STRING_ELT(tmp, i), ssNA_STRING))
 			strncpy(buf, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 		}
@@ -781,7 +781,7 @@ static const char *get_col_name(DEstruct DE, int col)
     if (col <= DE->xmaxused) {
 	/* don't use NA labels */
 	SEXP tmp = STRING_ELT(DE->names, col - 1);
-	if(tmp != NA_STRING) return(CHAR(tmp));
+	if(! IS_NA_STRING(tmp)) return(CHAR(tmp));
     }
     nwrote = snprintf(clab, 25, "var%d", col);
     if (nwrote >= 25)
@@ -801,7 +801,7 @@ static int get_col_width(DEstruct DE, int col)
 	if (isNull(tmp)) return DE->box_w;
 	/* don't use NA labels */
 	lab = STRING_ELT(DE->names, col - 1);
-	if(lab != NA_STRING) strp = CHAR(lab); else strp = "var12";
+	if(! IS_NA_STRING(lab)) strp = CHAR(lab); else strp = "var12";
 	PrintDefaults();
 
 	w = textwidth(DE, strp, (int) strlen(strp));
@@ -906,7 +906,7 @@ static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
 	printstring(DE ,strp, (int) strlen(strp), ssrow, sscol, 0);
     }
     else if (TYPEOF(invec) == STRSXP) {
-	if (STRING_ELT(invec, vrow) != ssNA_STRING) {
+	if (! SEXP_EQL(STRING_ELT(invec, vrow), ssNA_STRING)) {
 	    strp = EncodeElement(invec, vrow, 0, '.');
 	    printstring(DE ,strp, (int) strlen(strp), ssrow, sscol, 0);
 	}
@@ -2513,7 +2513,7 @@ static void copycell(DEstruct DE)
 	strcpy(copycontents, "");
 	if (length(DE->work) >= whichcol) {
 	    tmp = VECTOR_ELT(DE->work, whichcol - 1);
-	    if (tmp != R_NilValue &&
+	    if (! IS_R_NilValue(tmp) &&
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults();
 		if (TYPEOF(tmp) == REALSXP) {
@@ -2521,7 +2521,7 @@ static void copycell(DEstruct DE)
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';
 		} else if (TYPEOF(tmp) == STRSXP) {
-		    if (STRING_ELT(tmp, i) != ssNA_STRING) {
+		    if (! SEXP_EQL(STRING_ELT(tmp, i), ssNA_STRING)) {
 			strncpy(copycontents, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';

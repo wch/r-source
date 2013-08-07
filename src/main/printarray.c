@@ -59,7 +59,7 @@ static void MatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	tmp = STRING_ELT(cl, j);
-	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	if(IS_NA_STRING(tmp)) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("%*s%s", w-l, "",
 		EncodeString(tmp, l, 0, Rprt_adj_left));
@@ -76,7 +76,7 @@ static void RightMatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	tmp = STRING_ELT(cl, j);
-	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	if(IS_NA_STRING(tmp)) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	/* This does not work correctly at least on FC3
 	Rprintf("%*s", R_print.gap+w,
@@ -96,7 +96,7 @@ static void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	tmp= STRING_ELT(cl, j);
-	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	if(IS_NA_STRING(tmp)) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("%*s%s%*s", R_print.gap, "",
 		EncodeString(tmp, l, 0, Rprt_adj_left), w-l, "");
@@ -113,7 +113,7 @@ static void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 
     if (!isNull(rl)) {
 	tmp= STRING_ELT(rl, i);
-	if(tmp == NA_STRING) l = R_print.na_width_noquote;
+	if(IS_NA_STRING(tmp)) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",
 		EncodeString(tmp, l, 0, Rprt_adj_left),
@@ -166,7 +166,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 								\
 	if (!isNull(cl)) {					\
 	    const void *vmax = vmaxget();			\
-	    if(STRING_ELT(cl, j) == NA_STRING)			\
+	    if(IS_NA_STRING(STRING_ELT(cl, j)))			\
 		clabw = R_print.na_width_noquote;		\
 	    else clabw = strwidth(translateChar(STRING_ELT(cl, j)));	\
 	    vmaxset(vmax);					\
@@ -449,9 +449,9 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     int r = INTEGER(dim)[0];
     int c = INTEGER(dim)[1], r_pr;
     /* PR#850 */
-    if ((rl != R_NilValue) && (r > length(rl)))
+    if ((! IS_R_NilValue(rl)) && (r > length(rl)))
 	error(_("too few row labels"));
-    if ((cl != R_NilValue) && (c > length(cl)))
+    if ((! IS_R_NilValue(cl)) && (c > length(cl)))
 	error(_("too few column labels"));
     if (r == 0 && c == 0) {
 	Rprintf("<0 x 0 matrix>\n");
@@ -521,7 +521,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	int b = nr * nc;
 	Rboolean max_reached;
 
-	if (dimnames == R_NilValue) {
+	if (IS_R_NilValue(dimnames)) {
 	    has_dimnames = 0;
 	    has_dnn = 0;
 	    dn0 = R_NilValue;
@@ -565,7 +565,7 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 	    for (j = 2 ; j < ndim; j++) {
 		int l = (i / k) % INTEGER(dim)[j] + 1;
 		if (has_dimnames &&
-		    ((dn = VECTOR_ELT(dimnames, j)) != R_NilValue)) {
+		    (! IS_R_NilValue(dn = VECTOR_ELT(dimnames, j)))) {
 		    if ( has_dnn )
 			Rprintf(", %s = %s",
 				translateChar(STRING_ELT(dnn, j)),

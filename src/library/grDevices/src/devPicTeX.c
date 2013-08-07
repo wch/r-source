@@ -732,7 +732,7 @@ SEXP PicTeX(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
-	    return 0;
+	    return R_NULL_SEXP;
 	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
 	    free(dev);
 	    error(_("unable to start %s() device"), "pictex");

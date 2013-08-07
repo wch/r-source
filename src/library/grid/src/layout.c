@@ -48,11 +48,13 @@ int* layoutRespectMat(SEXP l) {
 }
 
 double layoutHJust(SEXP l) {
-    return REAL(VECTOR_ELT(l, LAYOUT_VJUST))[0];
+    SEXP lv = VECTOR_ELT(l, LAYOUT_VJUST);
+    return REAL(lv)[0];
 }
 
 double layoutVJust(SEXP l) {
-    return REAL(VECTOR_ELT(l, LAYOUT_VJUST))[1];
+    SEXP lv = VECTOR_ELT(l, LAYOUT_VJUST);
+    return REAL(lv)[1];
 }
 
 Rboolean relativeUnit(SEXP unit, int index,
@@ -620,11 +622,13 @@ void calcViewportLocationFromLayout(SEXP layoutPosRow,
 	maxcol = INTEGER(layoutPosCol)[1] - 1;
     }
     /* Put the relevant values into vpl */
+    SEXP vpLW = viewportLayoutWidths(parent);
+    SEXP vpWCM = viewportLayoutHeights(parent);
     subRegion(viewportLayout(parent), minrow, maxrow, mincol, maxcol,
-	      REAL(viewportLayoutWidths(parent)), 
-	      REAL(viewportLayoutHeights(parent)),
-              REAL(viewportWidthCM(parent))[0],
-              REAL(viewportHeightCM(parent))[0],
+	      REAL(vpLW), 
+	      REAL(vpWCM),
+              asReal(viewportWidthCM(parent)),
+              asReal(viewportHeightCM(parent)),
 	      &x, &y, &width, &height);
     /* Layout widths and heights are stored in CM
      */

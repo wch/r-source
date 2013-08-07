@@ -59,7 +59,7 @@ void initDL(pGEDevDesc dd)
 {
     SEXP dl, dlindex;
     SEXP vp = gridStateElement(dd, GSS_VP);
-    SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+    SEXP gsd = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
     /* The top-level viewport goes at the start of the display list
      */
     PROTECT(dl = allocVector(VECSXP, 100));
@@ -82,7 +82,7 @@ void initDL(pGEDevDesc dd)
 void initOtherState(pGEDevDesc dd)
 {
     SEXP currloc, prevloc, recording;
-    SEXP state = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+    SEXP state = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
     currloc = VECTOR_ELT(state, GSS_CURRLOC);
     REAL(currloc)[0] = NA_REAL;
     REAL(currloc)[1] = NA_REAL;    
@@ -138,13 +138,13 @@ void fillGridSystemState(SEXP state, pGEDevDesc dd)
 
 SEXP gridStateElement(pGEDevDesc dd, int elementIndex)
 {
-    return VECTOR_ELT((SEXP) dd->gesd[gridRegisterIndex]->systemSpecific, 
+    return VECTOR_ELT(PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific), 
 		      elementIndex);
 }
 
 void setGridStateElement(pGEDevDesc dd, int elementIndex, SEXP value)
 {
-    SET_VECTOR_ELT((SEXP) dd->gesd[gridRegisterIndex]->systemSpecific, 
+    SET_VECTOR_ELT(PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific), 
 		   elementIndex, value);
 }
 
@@ -161,7 +161,7 @@ static int findStateSlot()
     int result = -1;
     SEXP globalstate = findVar(install(".GRID.STATE"), R_gridEvalEnv);
     for (i = 0; i < length(globalstate); i++)
-	if (VECTOR_ELT(globalstate, i) == R_NilValue) {
+	if (IS_R_NilValue(VECTOR_ELT(globalstate, i))) {
 	    result = i;
 	    break;
 	}
@@ -201,7 +201,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	/* Store that state with the device for easy retrieval
 	 */
 	sd = dd->gesd[gridRegisterIndex];
-	sd->systemSpecific = (void*) gridState;
+	sd->systemSpecific = SEXP_TO_PTR(gridState);
 	/* Initialise the grid state for a device
 	 */
 	fillGridSystemState(gridState, dd);
@@ -218,7 +218,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	/* Simply detach the system state from the global variable
 	 * and it will be garbage-collected
 	 */
-	deglobaliseState((SEXP) sd->systemSpecific);
+	deglobaliseState(PTR_TO_SEXP(sd->systemSpecific));
 	/* Also set the device pointer to NULL
 	 */
 	sd->systemSpecific = NULL;	
@@ -226,7 +226,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
     case GE_SaveState:
 	break;
     case GE_RestoreState:
-	gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+	gsd = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
 	PROTECT(devsize = allocVector(REALSXP, 2));
 	getDeviceSize(dd, &(REAL(devsize)[0]), &(REAL(devsize)[1]));
 	SET_VECTOR_ELT(gsd, GSS_DEVSIZE, devsize);
@@ -290,9 +290,8 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	/*
 	 * data is a numeric scale factor
 	 */
-	PROTECT(scale = allocVector(REALSXP, 1));
-	REAL(scale)[0] = REAL(gridStateElement(dd, GSS_SCALE))[0]*
-	    REAL(data)[0];
+	PROTECT(scale = ScalarReal(asReal(gridStateElement(dd, GSS_SCALE))*
+				   asReal(data)));
 	setGridStateElement(dd, GSS_SCALE, scale);
 	UNPROTECT(1);
 	break;

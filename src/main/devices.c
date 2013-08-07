@@ -144,7 +144,7 @@ pGEDevDesc GEcurrentDevice(void)
 		So we look for it first on the global search path.
 	    */
 	    defdev = findVar(devName, R_GlobalEnv);
-	    if(defdev != R_UnboundValue) {
+	    if(! IS_R_UnboundValue(defdev)) {
 		PROTECT(defdev = lang1(devName));
 		eval(defdev, R_GlobalEnv);
 		UNPROTECT(1);
@@ -156,8 +156,8 @@ pGEDevDesc GEcurrentDevice(void)
 		*/
 		SEXP ns = findVarInFrame(R_NamespaceRegistry,
 					 install("grDevices"));
-		if(ns != R_UnboundValue &&
-		   findVar(devName, ns) != R_UnboundValue) {
+		if(! IS_R_UnboundValue(ns) &&
+		   ! IS_R_UnboundValue(findVar(devName, ns))) {
 		    PROTECT(defdev = lang1(devName));
 		    eval(defdev, ns);
 		    UNPROTECT(1);
@@ -407,7 +407,7 @@ void GEaddDevice(pGEDevDesc gdd)
 
     /* find empty slot for new descriptor */
     i = 1;
-    if (CDR(s) == R_NilValue)
+    if (IS_R_NilValue(CDR(s)))
 	appnd = TRUE;
     else {
 	s = CDR(s);
@@ -415,7 +415,7 @@ void GEaddDevice(pGEDevDesc gdd)
     }
     while (R_Devices[i] != NULL) {
 	i++;
-	if (CDR(s) == R_NilValue)
+	if (IS_R_NilValue(CDR(s)))
 	    appnd = TRUE;
 	else
 	    s = CDR(s);

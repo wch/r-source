@@ -204,7 +204,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     Rboolean need_ellipses = FALSE;
     LocalParseData localData =
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
-	     NULL,
+	     R_NULL_SEXP,
 	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
 	     DEFAULT_Cutoff, FALSE, 0, TRUE, FALSE, INT_MAX, TRUE, 0};
     localData.cutoff = cutoff;
@@ -393,7 +393,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nobjs < 1 || length(file) < 1)
 	error(_("zero-length argument"));
     source = CADDR(args);
-    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+    if (! IS_R_NilValue(source) && TYPEOF(source) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */
@@ -407,7 +407,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (j = 0, nout = 0; j < nobjs; j++, o = CDR(o)) {
 	SET_TAG(o, installTrChar(STRING_ELT(names, j)));
 	SETCAR(o, findVar(TAG(o), source));
-	if (CAR(o) == R_UnboundValue)
+	if (IS_R_UnboundValue(CAR(o)))
 	    warning(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(o))));
 	else nout++;
     }
@@ -416,7 +416,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nout > 0) {
 	if(INTEGER(file)[0] == 1) {
 	    for (i = 0, nout = 0; i < nobjs; i++) {
-		if (CAR(o) == R_UnboundValue) continue;
+		if (IS_R_UnboundValue(CAR(o))) continue;
 		obj_name = translateChar(STRING_ELT(names, i));
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		if(isValidName(obj_name)) Rprintf("%s <-\n", obj_name);
@@ -447,7 +447,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
 		unsigned int extra = 6;
-		if (CAR(o) == R_UnboundValue) continue;
+		if (IS_R_UnboundValue(CAR(o))) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		s = translateChar(STRING_ELT(names, i));
 		if(isValidName(s)) {
@@ -504,7 +504,7 @@ static Rboolean
 curlyahead(SEXP s)
 {
     if (isList(s) || isLanguage(s))
-	if (TYPEOF(CAR(s)) == SYMSXP && CAR(s) == R_BraceSymbol)
+	if (TYPEOF(CAR(s)) == SYMSXP && SEXP_EQL(CAR(s), R_BraceSymbol))
 	    return TRUE;
     return FALSE;
 }
@@ -578,8 +578,8 @@ static Rboolean hasAttributes(SEXP s)
     SEXP a = ATTRIB(s);
     if (length(a) > 2) return(TRUE);
     while(!isNull(a)) {
-	if(TAG(a) != R_SrcrefSymbol
-	   && (TYPEOF(s) != CLOSXP || TAG(a) != R_SourceSymbol))
+	if(! SEXP_EQL(TAG(a), R_SrcrefSymbol)
+	   && (TYPEOF(s) != CLOSXP || ! SEXP_EQL(TAG(a), R_SourceSymbol)))
 	    return(TRUE);
 	a = CDR(a);
     }
@@ -599,21 +599,22 @@ static void attr2(SEXP s, LocalParseData *d)
     if(hasAttributes(s)) {
 	SEXP a = ATTRIB(s);
 	while(!isNull(a)) {
-	    if(TAG(a) != R_SourceSymbol && TAG(a) != R_SrcrefSymbol) {
+	    if(! SEXP_EQL(TAG(a), R_SourceSymbol) &&
+	       ! SEXP_EQL(TAG(a), R_SrcrefSymbol)) {
 		print2buff(", ", d);
-		if(TAG(a) == R_DimSymbol) {
+		if(SEXP_EQL(TAG(a), R_DimSymbol)) {
 		    print2buff(".Dim", d);
 		}
-		else if(TAG(a) == R_DimNamesSymbol) {
+		else if(SEXP_EQL(TAG(a), R_DimNamesSymbol)) {
 		    print2buff(".Dimnames", d);
 		}
-		else if(TAG(a) == R_NamesSymbol) {
+		else if(SEXP_EQL(TAG(a), R_NamesSymbol)) {
 		    print2buff(".Names", d);
 		}
-		else if(TAG(a) == R_TspSymbol) {
+		else if(SEXP_EQL(TAG(a), R_TspSymbol)) {
 		    print2buff(".Tsp", d);
 		}
-		else if(TAG(a) == R_LevelsSymbol) {
+		else if(SEXP_EQL(TAG(a), R_LevelsSymbol)) {
 		    print2buff(".Label", d);
 		}
 		else {
@@ -648,7 +649,7 @@ static void printcomment(SEXP s, LocalParseData *d)
     /* look for old-style comments first */
 
     if(isList(TAG(s)) && !isNull(TAG(s))) {
-	for (s = TAG(s); s != R_NilValue; s = CDR(s)) {
+	for (s = TAG(s); ! IS_R_NilValue(s); s = CDR(s)) {
 	    print2buff(translateChar(STRING_ELT(CAR(s), 0)), d);
 	    writeline(d);
 	}
@@ -825,8 +826,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if (localOpts & SHOWATTRIBUTES) attr1(s, d);
 	print2buff("list(", d);
 	d->inlist++;
-	for (t=s ; CDR(t) != R_NilValue ; t=CDR(t) ) {
-	    if( TAG(t) != R_NilValue ) {
+	for (t=s ; ! IS_R_NilValue(CDR(t)) ; t=CDR(t) ) {
+	    if( ! IS_R_NilValue(TAG(t)) ) {
 		d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
 		deparse2buff(TAG(t), d);
 		d->opts = localOpts;
@@ -835,7 +836,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    deparse2buff(CAR(t), d);
 	    print2buff(", ", d);
 	}
-	if( TAG(t) != R_NilValue ) {
+	if( ! IS_R_NilValue(TAG(t)) ) {
 	    d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
 	    deparse2buff(TAG(t), d);
 	    d->opts = localOpts;
@@ -945,7 +946,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    d->incurly += 1;
 		    d->indent++;
 		    writeline(d);
-		    while (s != R_NilValue) {
+		    while (! IS_R_NilValue(s)) {
 			deparse2buff(CAR(s), d);
 			writeline(d);
 			s = CDR(s);
@@ -1220,7 +1221,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
 static void writeline(LocalParseData *d)
 {
-    if (d->strvec != R_NilValue && d->linenumber < d->maxlines)
+    if (! IS_R_NilValue(d->strvec) && d->linenumber < d->maxlines)
 	SET_STRING_ELT(d->strvec, d->linenumber, mkChar(d->buffer.data));
     d->linenumber++;
     if (d->linenumber >= d->maxlines) d->active = FALSE;
@@ -1344,7 +1345,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    }
 	} else if((d->opts & KEEPNA) && TYPEOF(vector) == STRSXP) {
 	    for(i = 0; i < tlen; i++)
-		if(STRING_ELT(vector, i) != NA_STRING) {
+		if(! IS_NA_STRING(STRING_ELT(vector, i))) {
 		    allNA = FALSE;
 		    break;
 		}
@@ -1367,7 +1368,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 			|| ISNA(COMPLEX(vector)[i].i)) ) {
 		strp = "NA_complex_";
 	    } else if (allNA && TYPEOF(vector) == STRSXP &&
-		       STRING_ELT(vector, i) == NA_STRING) {
+		       IS_NA_STRING(STRING_ELT(vector, i))) {
 		strp = "NA_character_";
 	    } else if (TYPEOF(vector) == REALSXP && (d->opts & S_COMPAT)) {
 		int w, d, e;
@@ -1481,13 +1482,13 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 {
     Rboolean lbreak = FALSE;
 
-    while (arglist != R_NilValue) {
+    while (! IS_R_NilValue(arglist)) {
 	if (TYPEOF(arglist) != LISTSXP && TYPEOF(arglist) != LANGSXP)
 	    error(_("badly formed function expression"));
-	if (TAG(arglist) != R_NilValue) {
+	if (! IS_R_NilValue(TAG(arglist))) {
 	    SEXP s = TAG(arglist);
 
-	    if( s == R_DotsSymbol )
+	    if( SEXP_EQL(s, R_DotsSymbol) )
 		print2buff(CHAR(PRINTNAME(s)), d);
 	    else if(d->backtick) 
 		print2buff(quotify(PRINTNAME(s), '`'), d);
@@ -1495,21 +1496,21 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 	        print2buff(quotify(PRINTNAME(s), '"'), d);
 	    
 	    if(formals) {
-		if (CAR(arglist) != R_MissingArg) {
+		if (! IS_R_MissingArg(CAR(arglist))) {
 		    print2buff(" = ", d);
 		    deparse2buff(CAR(arglist), d);
 		}
 	    }
 	    else {
 		print2buff(" = ", d);
-		if (CAR(arglist) != R_MissingArg) {
+		if (! IS_R_MissingArg(CAR(arglist))) {
 		    deparse2buff(CAR(arglist), d);
 		}
 	    }
 	}
 	else deparse2buff(CAR(arglist), d);
 	arglist = CDR(arglist);
-	if (arglist != R_NilValue) {
+	if (! IS_R_NilValue(arglist)) {
 	    print2buff(", ", d);
 	    linebreak(&lbreak, d);
 	}

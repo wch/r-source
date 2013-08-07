@@ -166,6 +166,64 @@ typedef enum {
 } SEXPTYPE;
 #endif
 
+#ifdef BIGSEXP
+typedef struct SEXPREC SEXPREC;
+
+/* accessing the tag as a full word seems much more efficient that as
+   the first byte. For immediate CHARSXPs we will need to do some
+   byte-order-specific magic. */
+typedef struct {
+    unsigned long tag;
+    union {
+	SEXPREC *ptr;
+	double dbl;
+	int in;
+    } u;
+} SEXP;
+
+#define SEXP_INIT { 0, {NULL} }
+#define SEXP_INIT_PTR(p) { 0, {(SEXPREC *) (p)} }
+
+/* SEXPREC *SEXPPTR(SEXP x); -- declared in inlined funs below */
+#define SEXPPTR0(x) ((x).u.ptr)
+
+void R_ErrorImmediateSEXP(SEXP x);
+
+/**** These are probably EXTREMELY unsafe */
+/* SEXP PTR_TO_SEXP(void *p);     -- declared in inlined funs below */
+/* SEXPREC *SEXPPTR(SEXP x);      -- declared in inlined funs below */
+/* int SEXP_EQL(SEXP x, SEXP y);  -- declared in inlined funs below */
+#define SEXP_TO_PTR(x) SEXPPTR(x)
+
+#define REAL(x) ((x).tag ? &((x).u.dbl) : REAL0(x))
+
+#define SEXP_IS_IMMEDIATE(x) ((x).tag)
+#else
+typedef struct SEXPREC SEXPREC, *SEXP;
+
+#define SEXP_INIT NULL
+#define SEXP_INIT_PTR(p) (p)
+
+#define SEXPPTR(x) (x)
+#define SEXPPTR0(x) (x)
+#define SEXP_EQL(x, y) (SEXPPTR(x) == SEXPPTR(y))
+#define PTR_TO_SEXP(x) ((SEXP) (x))
+#define SEXP_TO_PTR(x) (x)
+#define SEXP_IS_IMMEDIATE(x) FALSE
+#endif
+
+#define SEXPPTR_EQL(x, y) (SEXPPTR(x) == SEXPPTR(y))
+#define IS_R_NilValue(x) SEXP_EQL(x, R_NilValue)
+#define IS_NULL_SEXP(x) (SEXPPTR(x) == NULL)
+
+#define IS_R_UnboundValue(x) SEXP_EQL(x, R_UnboundValue)
+#define IS_R_BaseEnv(x) SEXP_EQL(x, R_BaseEnv)
+#define IS_R_BaseNamespace(x) SEXP_EQL(x, R_BaseNamespace)
+#define IS_R_GlobalEnv(x) SEXP_EQL(x, R_GlobalEnv)
+#define IS_R_EmptyEnv(x) SEXP_EQL(x, R_EmptyEnv)
+#define IS_R_MissingArg(x) SEXP_EQL(x, R_MissingArg)
+#define IS_NA_STRING(x) SEXP_EQL(x, NA_STRING)
+
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.
  * It defines internal structures that are otherwise only accessible
@@ -200,33 +258,33 @@ struct primsxp_struct {
 };
 
 struct symsxp_struct {
-    struct SEXPREC *pname;
-    struct SEXPREC *value;
-    struct SEXPREC *internal;
+    SEXP pname;
+    SEXP value;
+    SEXP internal;
 };
 
 struct listsxp_struct {
-    struct SEXPREC *carval;
-    struct SEXPREC *cdrval;
-    struct SEXPREC *tagval;
+    SEXP carval;
+    SEXP cdrval;
+    SEXP tagval;
 };
 
 struct envsxp_struct {
-    struct SEXPREC *frame;
-    struct SEXPREC *enclos;
-    struct SEXPREC *hashtab;
+    SEXP frame;
+    SEXP enclos;
+    SEXP hashtab;
 };
 
 struct closxp_struct {
-    struct SEXPREC *formals;
-    struct SEXPREC *body;
-    struct SEXPREC *env;
+    SEXP formals;
+    SEXP body;
+    SEXP env;
 };
 
 struct promsxp_struct {
-    struct SEXPREC *value;
-    struct SEXPREC *expr;
-    struct SEXPREC *env;
+    SEXP value;
+    SEXP expr;
+    SEXP env;
 };
 
 /* Every node must start with a set of sxpinfo flags and an attribute
@@ -234,12 +292,12 @@ struct promsxp_struct {
    fields used to maintain the collector's linked list structures. */
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
-    struct SEXPREC *attrib; \
-    struct SEXPREC *gengc_next_node, *gengc_prev_node
+    SEXP attrib; \
+    SEXP gengc_next_node, gengc_prev_node
 
 /* The standard node structure consists of a header followed by the
    node data. */
-typedef struct SEXPREC {
+struct SEXPREC {
     SEXPREC_HEADER;
     union {
 	struct primsxp_struct primsxp;
@@ -249,7 +307,7 @@ typedef struct SEXPREC {
 	struct closxp_struct closxp;
 	struct promsxp_struct promsxp;
     } u;
-} SEXPREC, *SEXP;
+};
 
 /* The generational collector uses a reduced version of SEXPREC as a
    header in vector nodes.  The layout MUST be kept consistent with
@@ -267,39 +325,55 @@ typedef struct VECTOR_SEXPREC {
 typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* General Cons Cell Attributes */
-#define ATTRIB(x)	((x)->attrib)
-#define OBJECT(x)	((x)->sxpinfo.obj)
-#define MARK(x)		((x)->sxpinfo.mark)
-#define TYPEOF(x)	((x)->sxpinfo.type)
-#define NAMED(x)	((x)->sxpinfo.named)
-#define RTRACE(x)	((x)->sxpinfo.trace)
-#define LEVELS(x)	((x)->sxpinfo.gp)
-#define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
-#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
-#define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
-#define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
-#define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
+#define MARK(x)		(SEXPPTR(x)->sxpinfo.mark)
+#ifndef BIGSEXP
+#define ATTRIB(x)	(SEXPPTR(x)->attrib)
+#define OBJECT(x)	(SEXPPTR(x)->sxpinfo.obj)
+#define TYPEOF(x)	(SEXPPTR(x)->sxpinfo.type)
+#endif
+#define ATTRIB0(x)	(SEXPPTR(x)->attrib)
+#define OBJECT0(x)	(SEXPPTR(x)->sxpinfo.obj)
+#define TYPEOF0(x)	(SEXPPTR(x)->sxpinfo.type)
+#ifdef BIGSEXP
+#define NAMED(x)	(SEXP_IS_IMMEDIATE(x) ? 2 : NAMED0(x))
+#else
+#define NAMED(x)	NAMED0(x)
+#endif
+#define NAMED0(x)	(SEXPPTR(x)->sxpinfo.named)
+#define RTRACE(x)	(SEXPPTR(x)->sxpinfo.trace)
+#define LEVELS(x)	(SEXPPTR(x)->sxpinfo.gp)
+#define SET_OBJECT(x,v)	((SEXPPTR(x)->sxpinfo.obj)=(v))
+#define SET_TYPEOF(x,v)	((SEXPPTR(x)->sxpinfo.type)=(v))
+#ifdef BIGSEXP
+#define SET_NAMED(x,v)	(SEXP_IS_IMMEDIATE(x) ? 2 : ((SEXPPTR(x)->sxpinfo.named)=(v)))
+#else
+#define SET_NAMED(x,v)	((SEXPPTR(x)->sxpinfo.named)=(v))
+#endif
+#define SET_RTRACE(x,v)	((SEXPPTR(x)->sxpinfo.trace)=(v))
+#define SETLEVELS(x,v)	((SEXPPTR(x)->sxpinfo.gp)=((unsigned short)v))
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
-#define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
-#define SET_S4_OBJECT(x) (((x)->sxpinfo.gp) |= S4_OBJECT_MASK)
-#define UNSET_S4_OBJECT(x) (((x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
+#define IS_S4_OBJECT(x) (SEXP_IS_IMMEDIATE(x) ? FALSE : (SEXPPTR(x)->sxpinfo.gp & S4_OBJECT_MASK))
+#define SET_S4_OBJECT(x) ((SEXPPTR(x)->sxpinfo.gp) |= S4_OBJECT_MASK)
+#define UNSET_S4_OBJECT(x) ((SEXPPTR(x)->sxpinfo.gp) &= ~S4_OBJECT_MASK)
 
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t R_BadLongVector(SEXP, const char *, int);
 # define IS_LONG_VEC(x) (SHORT_VEC_LENGTH(x) == R_LONG_VEC_TOKEN)
-# define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
-# define SHORT_VEC_TRUELENGTH(x) (((VECSEXP) (x))->vecsxp.truelength)
-# define LONG_VEC_LENGTH(x) ((R_long_vec_hdr_t *) (x))[-1].lv_length
-# define LONG_VEC_TRUELENGTH(x) ((R_long_vec_hdr_t *) (x))[-1].lv_truelength
+# define SHORT_VEC_LENGTH(x) (SEXP_IS_IMMEDIATE(x) ? 1 : SHORT_VEC_LENGTH0(x))
+# define SHORT_VEC_TRUELENGTH(x) (SEXP_IS_IMMEDIATE(x) ? 1 : SHORT_VEC_TRUELENGTH0(x))
+# define SHORT_VEC_LENGTH0(x) (((VECSEXP) SEXPPTR(x))->vecsxp.length)
+# define SHORT_VEC_TRUELENGTH0(x) (((VECSEXP) SEXPPTR(x))->vecsxp.truelength)
+# define LONG_VEC_LENGTH(x) ((R_long_vec_hdr_t *) SEXPPTR(x))[-1].lv_length
+# define LONG_VEC_TRUELENGTH(x) ((R_long_vec_hdr_t *) SEXPPTR(x))[-1].lv_truelength
 # define XLENGTH(x) (IS_LONG_VEC(x) ? LONG_VEC_LENGTH(x) : SHORT_VEC_LENGTH(x))
 # define XTRUELENGTH(x)	(IS_LONG_VEC(x) ? LONG_VEC_TRUELENGTH(x) : SHORT_VEC_TRUELENGTH(x))
 # define LENGTH(x) (IS_LONG_VEC(x) ? R_BadLongVector(x, __FILE__, __LINE__) : SHORT_VEC_LENGTH(x))
 # define TRUELENGTH(x) (IS_LONG_VEC(x) ? R_BadLongVector(x, __FILE__, __LINE__) : SHORT_VEC_TRUELENGTH(x))
-# define SET_SHORT_VEC_LENGTH(x,v) (SHORT_VEC_LENGTH(x) = (v))
-# define SET_SHORT_VEC_TRUELENGTH(x,v) (SHORT_VEC_TRUELENGTH(x) = (v))
+# define SET_SHORT_VEC_LENGTH(x,v) (SHORT_VEC_LENGTH0(x) = (v))
+# define SET_SHORT_VEC_TRUELENGTH(x,v) (SHORT_VEC_TRUELENGTH0(x) = (v))
 # define SET_LONG_VEC_LENGTH(x,v) (LONG_VEC_LENGTH(x) = (v))
 # define SET_LONG_VEC_TRUELENGTH(x,v) (LONG_VEC_TRUELENGTH(x) = (v))
 # define SETLENGTH(x,v) do { \
@@ -317,12 +391,14 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
       else SET_SHORT_VEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__); \
   } while (0)
 #else
-# define LENGTH(x)	(((VECSEXP) (x))->vecsxp.length)
-# define TRUELENGTH(x)	(((VECSEXP) (x))->vecsxp.truelength)
+# define LENGTH(x)	(SEXP_IS_IMMEDIATE(x) ? 1 : LENGTH0(x))
+# define TRUELENGTH(x)	(SEXP_IS_IMMEDIATE(x) ? 1 : TRUELENGTH0(x))
+# define LENGTH0(x)	(((VECSEXP) SEXPPTR(x))->vecsxp.length)
+# define TRUELENGTH0(x)	(((VECSEXP) SEXPPTR(x))->vecsxp.truelength)
 # define XLENGTH(x) LENGTH(x)
 # define XTRUELENGTH(x) TRUELENGTH(x)
-# define SETLENGTH(x,v)		((((VECSEXP) (x))->vecsxp.length)=(v))
-# define SET_TRUELENGTH(x,v)	((((VECSEXP) (x))->vecsxp.truelength)=(v))
+# define SETLENGTH(x,v)		((((VECSEXP) SEXPPTR(x))->vecsxp.length)=(v))
+# define SET_TRUELENGTH(x,v)	((((VECSEXP) SEXPPTR(x))->vecsxp.truelength)=(v))
 # define SET_SHORT_VEC_LENGTH SETLENGTH
 # define SET_SHORT_VEC_TRUELENGTH SET_TRUELENGTH
 # define IS_LONG_VEC(x) 0
@@ -331,13 +407,17 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
    known offset from the node SEXP. */
-#define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
+#define DATAPTR(x)	(((SEXPREC_ALIGN *) SEXPPTR(x)) + 1)
 #define CHAR(x)		((const char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
+#ifdef BIGSEXP
+#define REAL0(x) ((double *) DATAPTR(x))
+#else
+#define REAL(x)		((double *) DATAPTR(x))
+#endif
 #define RAW(x)		((Rbyte *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
-#define REAL(x)		((double *) DATAPTR(x))
 #define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
@@ -345,10 +425,10 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* List Access Macros */
 /* These also work for ... objects */
-#define LISTVAL(x)	((x)->u.listsxp)
-#define TAG(e)		((e)->u.listsxp.tagval)
-#define CAR(e)		((e)->u.listsxp.carval)
-#define CDR(e)		((e)->u.listsxp.cdrval)
+#define LISTVAL(x)	(SEXPPTR(x)->u.listsxp)
+#define TAG(e)		(SEXPPTR(e)->u.listsxp.tagval)
+#define CAR(e)		(SEXPPTR(e)->u.listsxp.carval)
+#define CDR(e)		(SEXPPTR(e)->u.listsxp.cdrval)
 #define CAAR(e)		CAR(CAR(e))
 #define CDAR(e)		CDR(CAR(e))
 #define CADR(e)		CAR(CDR(e))
@@ -357,43 +437,41 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CADDDR(e)	CAR(CDR(CDR(CDR(e))))
 #define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
 #define MISSING_MASK	15 /* reserve 4 bits--only 2 uses now */
-#define MISSING(x)	((x)->sxpinfo.gp & MISSING_MASK)/* for closure calls */
+#define MISSING(x)	(SEXPPTR(x)->sxpinfo.gp & MISSING_MASK)/* for closure calls */
 #define SET_MISSING(x,v) do { \
   SEXP __x__ = (x); \
   int __v__ = (v); \
-  int __other_flags__ = __x__->sxpinfo.gp & ~MISSING_MASK; \
-  __x__->sxpinfo.gp = __other_flags__ | __v__; \
+  int __other_flags__ = SEXPPTR(__x__)->sxpinfo.gp & ~MISSING_MASK;	\
+  SEXPPTR(__x__)->sxpinfo.gp = __other_flags__ | __v__;			\
 } while (0)
 
 /* Closure Access Macros */
-#define FORMALS(x)	((x)->u.closxp.formals)
-#define BODY(x)		((x)->u.closxp.body)
-#define CLOENV(x)	((x)->u.closxp.env)
-#define RDEBUG(x)	((x)->sxpinfo.debug)
-#define SET_RDEBUG(x,v)	(((x)->sxpinfo.debug)=(v))
-#define RSTEP(x)	((x)->sxpinfo.spare)
-#define SET_RSTEP(x,v)	(((x)->sxpinfo.spare)=(v))
+#define FORMALS(x)	(SEXPPTR(x)->u.closxp.formals)
+#define BODY(x)		(SEXPPTR(x)->u.closxp.body)
+#define CLOENV(x)	(SEXPPTR(x)->u.closxp.env)
+#define RDEBUG(x)	(SEXPPTR(x)->sxpinfo.debug)
+#define SET_RDEBUG(x,v)	((SEXPPTR(x)->sxpinfo.debug)=(v))
+#define RSTEP(x)	(SEXPPTR(x)->sxpinfo.spare)
+#define SET_RSTEP(x,v)	((SEXPPTR(x)->sxpinfo.spare)=(v))
 
 /* Symbol Access Macros */
-#define PRINTNAME(x)	((x)->u.symsxp.pname)
-#define SYMVALUE(x)	((x)->u.symsxp.value)
-#define INTERNAL(x)	((x)->u.symsxp.internal)
+#define PRINTNAME(x)	(SEXPPTR(x)->u.symsxp.pname)
+#define SYMVALUE(x)	(SEXPPTR(x)->u.symsxp.value)
+#define INTERNAL(x)	(SEXPPTR(x)->u.symsxp.internal)
 #define DDVAL_MASK	1
-#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
-#define SET_DDVAL_BIT(x) (((x)->sxpinfo.gp) |= DDVAL_MASK)
-#define UNSET_DDVAL_BIT(x) (((x)->sxpinfo.gp) &= ~DDVAL_MASK)
+#define DDVAL(x)	(SEXPPTR(x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
+#define SET_DDVAL_BIT(x) ((SEXPPTR(x)->sxpinfo.gp) |= DDVAL_MASK)
+#define UNSET_DDVAL_BIT(x) ((SEXPPTR(x)->sxpinfo.gp) &= ~DDVAL_MASK)
 #define SET_DDVAL(x,v) ((v) ? SET_DDVAL_BIT(x) : UNSET_DDVAL_BIT(x)) /* for ..1, ..2 etc */
 
 /* Environment Access Macros */
-#define FRAME(x)	((x)->u.envsxp.frame)
-#define ENCLOS(x)	((x)->u.envsxp.enclos)
-#define HASHTAB(x)	((x)->u.envsxp.hashtab)
-#define ENVFLAGS(x)	((x)->sxpinfo.gp)	/* for environments */
-#define SET_ENVFLAGS(x,v)	(((x)->sxpinfo.gp)=(v))
+#define FRAME(x)	(SEXPPTR(x)->u.envsxp.frame)
+#define ENCLOS(x)	(SEXPPTR(x)->u.envsxp.enclos)
+#define HASHTAB(x)	(SEXPPTR(x)->u.envsxp.hashtab)
+#define ENVFLAGS(x)	(SEXPPTR(x)->sxpinfo.gp)	/* for environments */
+#define SET_ENVFLAGS(x,v)	((SEXPPTR(x)->sxpinfo.gp)=(v))
 
 #else /* not USE_RINTERNALS */
-
-typedef struct SEXPREC *SEXP;
 
 #define CHAR(x)		R_CHAR(x)
 const char *(R_CHAR)(SEXP x);
@@ -418,10 +496,12 @@ Rboolean (Rf_isObject)(SEXP s);
 */
 
 /* General Cons Cell Attributes */
+int  (MARK)(SEXP x);
+#ifndef BIGSEXP
 SEXP (ATTRIB)(SEXP x);
 int  (OBJECT)(SEXP x);
-int  (MARK)(SEXP x);
 int  (TYPEOF)(SEXP x);
+#endif
 int  (NAMED)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
@@ -447,8 +527,13 @@ int  (SETLEVELS)(SEXP x, int v);
 
 int  *(LOGICAL)(SEXP x);
 int  *(INTEGER)(SEXP x);
-Rbyte *(RAW)(SEXP x);
+#ifdef BIGSEXP
+double *(REAL0)(SEXP x);
+#else
 double *(REAL)(SEXP x);
+#endif
+Rbyte *(RAW)(SEXP x);
+
 Rcomplex *(COMPLEX)(SEXP x);
 SEXP (STRING_ELT)(SEXP x, R_xlen_t i);
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
@@ -536,7 +621,7 @@ void (SET_HASHVALUE)(SEXP x, int v);
 
 
 /* External pointer access macros */
-#define EXTPTR_PTR(x)	CAR(x)
+#define EXTPTR_PTR(x)	SEXPPTR0(CAR(x))
 #define EXTPTR_PROT(x)	CDR(x)
 #define EXTPTR_TAG(x)	TAG(x)
 
@@ -574,6 +659,12 @@ LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
 LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
+#ifdef __MAIN__
+LibExtern SEXP  R_NULL_SEXP = SEXP_INIT;
+#else
+LibExtern SEXP  R_NULL_SEXP;
+#endif
+
 #ifdef __MAIN__
 attribute_hidden
 #else
@@ -1162,6 +1253,12 @@ void Rf_unprotect(int);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
+#ifdef BIGSEXP
+SEXP PTR_TO_SEXP(void *p);
+SEXPREC *SEXPPTR(SEXP x);
+int SEXP_EQL(SEXP x, SEXP y);
+int TYPEOF(SEXP x);
+#endif
 #endif
 
 #ifdef USE_RINTERNALS

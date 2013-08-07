@@ -561,9 +561,9 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	SEXP trace, p, q;
 	int line = 1, i;
 	PROTECT(trace = R_GetTraceback(0));
-	if(trace != R_NilValue) {
+	if(! IS_R_NilValue(trace)) {
 	    REprintf("\nTraceback:\n");
-	    for(p = trace; p != R_NilValue; p = CDR(p), line++) {
+	    for(p = trace; ! IS_R_NilValue(p); p = CDR(p), line++) {
 		q = CAR(p); /* a character vector */
 		REprintf("%2d: ", line);
 		for(i = 0; i < LENGTH(q); i++)
@@ -877,7 +877,7 @@ void setup_Rmainloop(void)
 	doneit = 1;
 	PROTECT(cmd = install(".OptRequireMethods"));
 	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
-	if (R_CurrentExpr != R_UnboundValue &&
+	if (! IS_R_UnboundValue(R_CurrentExpr) &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));
 		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
@@ -932,7 +932,7 @@ void setup_Rmainloop(void)
 	doneit = 1;
 	PROTECT(cmd = install(".First"));
 	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
-	if (R_CurrentExpr != R_UnboundValue &&
+	if (! IS_R_UnboundValue(R_CurrentExpr) &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));
 		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
@@ -950,7 +950,7 @@ void setup_Rmainloop(void)
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
 	R_CurrentExpr = findVar(cmd, baseEnv);
-	if (R_CurrentExpr != R_UnboundValue &&
+	if (! IS_R_UnboundValue(R_CurrentExpr) &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));
 		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
@@ -1104,13 +1104,13 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     PROTECT(argList);
     /* substitute defaults */
-    if(CAR(argList) == R_MissingArg)
+    if(IS_R_MissingArg(CAR(argList)))
 	SETCAR(argList, mkString(""));
-    if(CADR(argList) == R_MissingArg)
+    if(IS_R_MissingArg(CADR(argList)))
 	SETCAR(CDR(argList), R_NilValue);
-    if(CADDR(argList) == R_MissingArg) 
+    if(IS_R_MissingArg(CADDR(argList)))
 	SETCAR(CDDR(argList), ScalarLogical(1));
-    if(CADDDR(argList) == R_MissingArg) 
+    if(IS_R_MissingArg(CADDDR(argList)))
 	SETCAR(CDR(CDDR(argList)), ScalarInteger(0));
 
     /* return if 'expr' is not TRUE */
@@ -1193,7 +1193,7 @@ void R_dot_Last(void)
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
     PROTECT(cmd = install(".Last"));
     R_CurrentExpr = findVar(cmd, R_GlobalEnv);
-    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
+    if (! IS_R_UnboundValue(R_CurrentExpr) && TYPEOF(R_CurrentExpr) == CLOSXP) {
 	PROTECT(R_CurrentExpr = lang1(cmd));
 	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
 	UNPROTECT(1);
@@ -1201,7 +1201,7 @@ void R_dot_Last(void)
     UNPROTECT(1);
     PROTECT(cmd = install(".Last.sys"));
     R_CurrentExpr = findVar(cmd, R_BaseNamespace);
-    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
+    if (! IS_R_UnboundValue(R_CurrentExpr) && TYPEOF(R_CurrentExpr) == CLOSXP) {
 	PROTECT(R_CurrentExpr = lang1(cmd));
 	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
 	UNPROTECT(1);
@@ -1489,7 +1489,7 @@ Rboolean
 R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 		      Rboolean visible, void *userData)
 {
-    SEXP f = (SEXP) userData;
+    SEXP f = PTR_TO_SEXP(userData);
     SEXP e, tmp, val, cur;
     int errorOccurred;
     Rboolean again, useData = LOGICAL(VECTOR_ELT(f, 2))[0];
@@ -1511,7 +1511,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 	SETCAR(cur, VECTOR_ELT(f, 1));
     }
 
-    val = R_tryEval(e, NULL, &errorOccurred);
+    val = R_tryEval(e, R_NULL_SEXP, &errorOccurred);
     if(!errorOccurred) {
 	PROTECT(val);
 	if(TYPEOF(val) != LGLSXP) {
@@ -1545,7 +1545,7 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 	tmpName = CHAR(STRING_ELT(name, 0));
 
     PROTECT(index = allocVector(INTSXP, 1));
-    el = Rf_addTaskCallback(R_taskCallbackRoutine,  internalData,
+    el = Rf_addTaskCallback(R_taskCallbackRoutine,  SEXP_TO_PTR(internalData),
 			    (void (*)(void*)) R_ReleaseObject, tmpName,
 			    INTEGER(index));
 

@@ -38,7 +38,7 @@
 #include <Defn.h>
 
 /* We might get a call with R_NilValue from subassignment code */
-#define ECALL(call, yy) if(call == R_NilValue) error(yy); else errorcall(call, yy);
+#define ECALL(call, yy) if(IS_R_NilValue(call)) error(yy); else errorcall(call, yy);
 
 /* This allows for the unusual case where x is of length 2,
    and x[[-m]] selects one element for m = 1, 2.
@@ -92,7 +92,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	vmax = vmaxget();
 	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
-	if (names != R_NilValue) {
+	if (! IS_R_NilValue(names)) {
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++) {
 		const char *tmp = translateChar(STRING_ELT(names, i));
@@ -126,7 +126,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	vmax = vmaxget();
 	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
-	if (names != R_NilValue) {
+	if (! IS_R_NilValue(names)) {
 	    for (i = 0; i < nx; i++)
 		if (streql(translateChar(STRING_ELT(names, i)),
 			   translateChar(PRINTNAME(s)))) {
@@ -140,7 +140,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	vmaxset(vmax);
 	break;
     default:
-	if (call == R_NilValue)
+	if (IS_R_NilValue(call))
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
 	    errorcall(call, _("invalid subscript type '%s'"),
@@ -213,7 +213,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
     }
     case STRSXP:
 	/* NA matches nothing */
-	if(STRING_ELT(s, pos) == NA_STRING) break;
+	if(IS_NA_STRING(STRING_ELT(s, pos))) break;
 	/* "" matches nothing: see names.Rd */
 	if(!CHAR(STRING_ELT(s, pos))[0]) break;
 
@@ -221,7 +221,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	vmax = vmaxget();
 	ss = translateChar(STRING_ELT(s, pos));
 	for (R_xlen_t i = 0; i < xlength(names); i++)
-	    if (STRING_ELT(names, i) != NA_STRING) {
+	    if (! IS_NA_STRING(STRING_ELT(names, i))) {
 		if (streql(translateChar(STRING_ELT(names, i)), ss)) {
 		    indx = i;
 		    break;
@@ -231,13 +231,13 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 	if (pok && indx < 0) {
 	    size_t len = strlen(ss);
 	    for(R_xlen_t i = 0; i < xlength(names); i++) {
-		if (STRING_ELT(names, i) != NA_STRING) {
+		if (! IS_NA_STRING(STRING_ELT(names, i))) {
 		    cur_name = translateChar(STRING_ELT(names, i));
 		    if(!strncmp(cur_name, ss, len)) {
 			if(indx == -1) {/* first one */
 			    indx = i;
 			    if (warn_pok) {
-				if (call == R_NilValue)
+				if (IS_R_NilValue(call))
 				    warning(_("partial match of '%s' to '%s'"),
 					    ss, cur_name);
 				else
@@ -263,7 +263,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
     case SYMSXP:
 	vmax = vmaxget();
 	for (R_xlen_t i = 0; i < xlength(names); i++)
-	    if (STRING_ELT(names, i) != NA_STRING &&
+	    if (! IS_NA_STRING(STRING_ELT(names, i)) &&
 		streql(translateChar(STRING_ELT(names, i)),
 		       CHAR(PRINTNAME(s)))) {
 		indx = i;
@@ -271,7 +271,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 		break;
 	    }
     default:
-	if (call == R_NilValue)
+	if (IS_R_NilValue(call))
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
 	    errorcall(call, _("invalid subscript type '%s'"),
@@ -452,7 +452,7 @@ SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
             v = INTEGER(sicol)[j];
             idx = j + (i * NR);
             s_elt = STRING_ELT(s, idx);
-            if (s_elt == NA_STRING) v = NA_INTEGER;
+            if (IS_NA_STRING(s_elt)) v = NA_INTEGER;
             if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
             if (v == 0) errorcall(call, _("subscript out of bounds"));
             INTEGER(si)[idx] = v;
@@ -731,14 +731,14 @@ stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 	PROTECT(indx = match(names, s, 0));
 	/* second pass to correct this */
 	for (i = 0; i < ns; i++)
-	    if(STRING_ELT(s, i) == NA_STRING || !CHAR(STRING_ELT(s, i))[0])
+	    if(IS_NA_STRING(STRING_ELT(s, i)) || !CHAR(STRING_ELT(s, i))[0])
 		INTEGER(indx)[i] = 0;
 	for (i = 0; i < ns; i++) SET_VECTOR_ELT(indexnames, i, R_NilValue);
     } else {
 	PROTECT(indx = allocVector(INTSXP, ns));
 	for (i = 0; i < ns; i++) {
 	    sub = 0;
-	    if (names != R_NilValue) {
+	    if (! IS_R_NilValue(names)) {
 		for (j = 0; j < nnames; j++) {
 		    SEXP names_j = STRING_ELT(names, j);
 		    if (NonNullStringMatch(STRING_ELT(s, i), names_j)) {
@@ -815,16 +815,16 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
 	return tmp;
     case STRSXP:
 	dnames = getAttrib(x, R_DimNamesSymbol);
-	if (dnames == R_NilValue) {
+	if (IS_R_NilValue(dnames)) {
 	    ECALL(call, _("no 'dimnames' attribute for array"));
 	}
 	dnames = VECTOR_ELT(dnames, dim);
 	return stringSubscript(s, ns, nd, dnames, &stretch, call);
     case SYMSXP:
-	if (s == R_MissingArg)
+	if (IS_R_MissingArg(s))
 	    return nullSubscript(nd);
     default:
-	if (call == R_NilValue)
+	if (IS_R_NilValue(call))
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
 	    errorcall(call, _("invalid subscript type '%s'"),
@@ -881,7 +881,7 @@ vectorSubscript(R_xlen_t nx, SEXP s, R_xlen_t *stretch, SEXP x, SEXP call)
 
     R_xlen_t ns = xlength(s);
     /* special case for simple indices -- does not duplicate */
-    if (ns == 1 && TYPEOF(s) == INTSXP && ATTRIB(s) == R_NilValue) {
+    if (ns == 1 && TYPEOF(s) == INTSXP && IS_R_NilValue(ATTRIB(s))) {
 	int i = INTEGER(s)[0];
 	if (0 < i && i <= nx) {
 	    *stretch = 0;
@@ -889,8 +889,10 @@ vectorSubscript(R_xlen_t nx, SEXP s, R_xlen_t *stretch, SEXP x, SEXP call)
 	}
     }
     PROTECT(s = duplicate(s));
-    SET_ATTRIB(s, R_NilValue);
-    SET_OBJECT(s, 0);
+    if (! IS_R_NilValue(ATTRIB(s)))
+	SET_ATTRIB(s, R_NilValue);
+    if (OBJECT(s))
+	SET_OBJECT(s, 0);
     switch (TYPEOF(s)) {
     case NILSXP:
 	*stretch = 0;
@@ -914,12 +916,12 @@ vectorSubscript(R_xlen_t nx, SEXP s, R_xlen_t *stretch, SEXP x, SEXP call)
     break;
     case SYMSXP:
 	*stretch = 0;
-	if (s == R_MissingArg) {
+	if (IS_R_MissingArg(s)) {
 	    ans = nullSubscript(nx);
 	    break;
 	}
     default:
-	if (call == R_NilValue)
+	if (IS_R_NilValue(call))
 	    error(_("invalid subscript type '%s'"), type2char(TYPEOF(s)));
 	else
 	    errorcall(call, _("invalid subscript type '%s'"),

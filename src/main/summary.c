@@ -194,9 +194,9 @@ static Rboolean smin(SEXP x, SEXP *value, Rboolean narm)
     const void *vmax = vmaxget(); // precautionary for Scollate
 
     for (R_xlen_t i = 0; i < XLENGTH(x); i++) {
-	if (STRING_ELT(x, i) != NA_STRING) {
+	if (! IS_NA_STRING(STRING_ELT(x, i))) {
 	    if (!updated ||
-		(s != STRING_ELT(x, i) && Scollate(s, STRING_ELT(x, i)) > 0)) {
+		(! SEXP_EQL(s, STRING_ELT(x, i)) && Scollate(s, STRING_ELT(x, i)) > 0)) {
 		s = STRING_ELT(x, i);
 		if(!updated) updated = TRUE;
 	    }
@@ -262,9 +262,9 @@ static Rboolean smax(SEXP x, SEXP *value, Rboolean narm)
     const void *vmax = vmaxget(); // precautionary for Scollate
 
     for (R_xlen_t i = 0; i < XLENGTH(x); i++) {
-	if (STRING_ELT(x, i) != NA_STRING) {
+	if (! IS_NA_STRING(STRING_ELT(x, i))) {
 	    if (!updated ||
-		(s != STRING_ELT(x, i) && Scollate(s, STRING_ELT(x, i)) < 0)) {
+		(! SEXP_EQL(s, STRING_ELT(x, i)) && Scollate(s, STRING_ELT(x, i)) < 0)) {
 		s = STRING_ELT(x, i);
 		if(!updated) updated = TRUE;
 	    }
@@ -348,11 +348,11 @@ SEXP fixup_NaRm(SEXP args)
 
     /* Need to make sure na.rm is last and exists */
     na_value = ScalarLogical(FALSE);
-    for(SEXP a = args, prev = R_NilValue; a != R_NilValue; a = CDR(a)) {
-	if(TAG(a) == R_NaRmSymbol) {
-	    if(CDR(a) == R_NilValue) return args;
+    for(SEXP a = args, prev = R_NilValue; ! IS_R_NilValue(a); a = CDR(a)) {
+	if(SEXP_EQL(TAG(a), R_NaRmSymbol)) {
+	    if(IS_R_NilValue(CDR(a))) return args;
 	    na_value = CAR(a);
-	    if(prev == R_NilValue) args = CDR(a);
+	    if(IS_R_NilValue(prev)) args = CDR(a);
 	    else SETCDR(prev, CDR(a));
 	}
 	prev = a;
@@ -363,11 +363,11 @@ SEXP fixup_NaRm(SEXP args)
     UNPROTECT(1);
     PROTECT(t);
     SET_TAG(t, R_NaRmSymbol);
-    if (args == R_NilValue)
+    if (IS_R_NilValue(args))
 	args = t;
     else {
 	SEXP r = args;
-	while (CDR(r) != R_NilValue) r = CDR(r);
+	while (! IS_R_NilValue(CDR(r))) r = CDR(r);
 	SETCDR(r, t);
     }
     UNPROTECT(1);
@@ -477,7 +477,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     */
 	a = args;
 	int_a = 1;
-	while (a != R_NilValue) {
+	while (! IS_R_NilValue(a)) {
 	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a)) && !isNull(CAR(a))) {
 		int_a = 0;
 		break;
@@ -516,7 +516,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /*-- now loop over all arguments.  Do the 'op' switch INSIDE : */
-    while (args != R_NilValue) {
+    while (! IS_R_NilValue(args)) {
 	a = CAR(args);
 	int_a = 0;/* int_a = 1	<-->	a is INTEGER */
 	real_a = 0;
@@ -582,8 +582,8 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 				stmp = StringFromInteger(itmp, &warn);
 			    if(real_a)
 				stmp = StringFromReal(tmp, &warn);
-			    if(((iop == 2 && stmp != scum && Scollate(stmp, scum) < 0)) ||
-			       (iop == 3 && stmp != scum && Scollate(stmp, scum) > 0) )
+			    if(((iop == 2 && ! SEXP_EQL(stmp, scum) && Scollate(stmp, scum) < 0)) ||
+			       (iop == 3 && ! SEXP_EQL(stmp, scum) && Scollate(stmp, scum) > 0) )
 				scum = stmp;
 			}
 		    }
@@ -770,7 +770,7 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(op = findFun(install("range.default"), env));
     PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
-    for (a = args, b = prargs; a != R_NilValue; a = CDR(a), b = CDR(b))
+    for (a = args, b = prargs; ! IS_R_NilValue(a); a = CDR(a), b = CDR(b))
 	SET_PRVALUE(CAR(b), CAR(a));
     ans = applyClosure(call, op, prargs, env, R_BaseEnv);
     UNPROTECT(3);
@@ -810,7 +810,7 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));
     if (i) {
 	INTEGER(ans)[0] = indx + 1;
-	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* preserve names */
+	if (! IS_R_NilValue(getAttrib(sx, R_NamesSymbol))) { /* preserve names */
 	    SEXP ansnam;
 	    PROTECT(ansnam =
 		    ScalarString(STRING_ELT(getAttrib(sx, R_NamesSymbol), indx)));
@@ -846,7 +846,7 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(INTSXP, len));
     memcpy(INTEGER(ans), buf, sizeof(int) * len);
 
-    if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
+    if (! IS_R_NilValue(v_nms = getAttrib(v, R_NamesSymbol))) {
         PROTECT(ans_nms = allocVector(STRSXP, len));
         for (i = 0; i < len; i++) {
             SET_STRING_ELT(ans_nms, i,
@@ -875,7 +875,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' value"), "na.rm");
     args = CDR(args);
     x = CAR(args);
-    if(args == R_NilValue) error(_("no arguments"));
+    if(IS_R_NilValue(args)) error(_("no arguments"));
 
     anstype = TYPEOF(x);
     switch(anstype) {
@@ -889,10 +889,10 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid input type"));
     }
     a = CDR(args);
-    if(a == R_NilValue) return x; /* one input */
+    if(IS_R_NilValue(a)) return x; /* one input */
 
     len = xlength(x); /* not LENGTH, as NULL is allowed */
-    for(; a != R_NilValue; a = CDR(a)) {
+    for(; ! IS_R_NilValue(a); a = CDR(a)) {
 	x = CAR(a);
 	type = TYPEOF(x);
 	switch(type) {
@@ -917,7 +917,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(anstype < INTSXP) anstype = INTSXP;
     if(len == 0) return allocVector(anstype, 0);
     /* Check for fractional recycling (added in 2.14.0) */
-    for(a = args; a != R_NilValue; a = CDR(a)) {
+    for(a = args; ! IS_R_NilValue(a); a = CDR(a)) {
 	n = length(CAR(a));
 	if (len % n) {
 	    warning(_("an argument will be fractionally recycled"));
@@ -935,7 +935,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = XLENGTH(x);
 	for(i = 0; i < len; i++) ra[i] = r[i % n];
 	UNPROTECT(1);
-	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	for(a = CDR(args); ! IS_R_NilValue(a); a = CDR(a)) {
 	    x = CAR(a);
 	    PROTECT(x = coerceVector(CAR(a), anstype));
 	    n = XLENGTH(x);
@@ -968,7 +968,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = XLENGTH(x);
 	for(i = 0; i < len; i++) ra[i] = r[i % n];
 	UNPROTECT(1);
-	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	for(a = CDR(args); ! IS_R_NilValue(a); a = CDR(a)) {
 	    PROTECT(x = coerceVector(CAR(a), anstype));
 	    n = XLENGTH(x);
 	    r = REAL(x);
@@ -996,7 +996,7 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = XLENGTH(x);
 	for(i = 0; i < len; i++) SET_STRING_ELT(ans, i, STRING_ELT(x, i % n));
 	UNPROTECT(1);
-	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	for(a = CDR(args); ! IS_R_NilValue(a); a = CDR(a)) {
 	    SEXP tmp, t2;
 	    PROTECT(x = coerceVector(CAR(a), anstype));
 	    n = XLENGTH(x);
@@ -1004,14 +1004,16 @@ SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 		tmp = STRING_ELT(x, i % n);
 		t2 = STRING_ELT(ans, i);
 		if(PRIMVAL(op) == 1) {
-		    if( (narm && t2 == NA_STRING) ||
-			(t2 != NA_STRING && tmp != NA_STRING && tmp != t2 && Scollate(tmp, t2) > 0) ||
-			(!narm && tmp == NA_STRING) )
+		    if( (narm && IS_NA_STRING(t2)) ||
+			(! IS_NA_STRING(t2) && ! IS_NA_STRING(tmp) &&
+			 ! SEXP_EQL(tmp, t2) && Scollate(tmp, t2) > 0) ||
+			(!narm && IS_NA_STRING(tmp)) )
 			SET_STRING_ELT(ans, i, tmp);
 		} else {
-		    if( (narm && t2 == NA_STRING) ||
-			(t2 != NA_STRING && tmp != NA_STRING && tmp != t2 && Scollate(tmp, t2) < 0) ||
-			(!narm && tmp == NA_STRING) )
+		    if( (narm && IS_NA_STRING(t2)) ||
+			(! IS_NA_STRING(t2) && ! IS_NA_STRING(tmp) &&
+			 ! SEXP_EQL(tmp, t2) && Scollate(tmp, t2) < 0) ||
+			(!narm && IS_NA_STRING(tmp)) )
 			SET_STRING_ELT(ans, i, tmp);
 		}
 	    }

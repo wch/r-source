@@ -516,7 +516,7 @@ void init_con(Rconnection new, const char *description, int enc,
     current_id = (void *)((size_t) current_id+1);
     if(!current_id) current_id = (void *) 1;
     new->id = current_id;
-    new->ex_ptr = NULL;
+    new->ex_ptr = R_NULL_SEXP;
     new->status = NA_INTEGER;
 }
 
@@ -2615,13 +2615,14 @@ static void outtext_close(Rconnection con)
     int idx = ConnIndex(con);
     SEXP tmp, env = VECTOR_ELT(OutTextData, idx);
 
-    if(this->namesymbol &&
-       findVarInFrame3(env, this->namesymbol, FALSE) != R_UnboundValue)
+    if(! IS_NULL_SEXP(this->namesymbol) &&
+       ! IS_R_UnboundValue(findVarInFrame3(env, this->namesymbol, FALSE)))
 	R_unLockBinding(this->namesymbol, env);
     if(strlen(this->lastline) > 0) {
 	PROTECT(tmp = xlengthgets(this->data, ++this->len));
 	SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(this->lastline));
-	if(this->namesymbol) defineVar(this->namesymbol, tmp, env);
+	if(! IS_NULL_SEXP(this->namesymbol))
+	    defineVar(this->namesymbol, tmp, env);
 	SET_NAMED(tmp, 2);
 	this->data = tmp;
 	UNPROTECT(1);
@@ -2637,7 +2638,7 @@ static void outtext_destroy(Rconnection con)
        However, this could be quite expensive.
     */
     SET_VECTOR_ELT(OutTextData, idx, R_NilValue);
-    if(!this->namesymbol) R_ReleaseObject(this->data);
+    if(IS_NULL_SEXP(this->namesymbol)) R_ReleaseObject(this->data);
     free(this->lastline); free(this);
 }
 
@@ -2696,9 +2697,10 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    *q = '\0';
 	    PROTECT(tmp = xlengthgets(this->data, ++this->len));
 	    SET_STRING_ELT(tmp, this->len - 1, mkCharLocal(p));
-	    if(this->namesymbol) {
-		if(findVarInFrame3(env, this->namesymbol, FALSE)
-		   != R_UnboundValue) R_unLockBinding(this->namesymbol, env);
+	    if(! IS_NULL_SEXP(this->namesymbol)) {
+		if(! IS_R_UnboundValue(findVarInFrame3(env, this->namesymbol,
+						       FALSE)))
+		    R_unLockBinding(this->namesymbol, env);
 		defineVar(this->namesymbol, tmp, env);
 		R_LockBinding(this->namesymbol, env);
 	    } else {
@@ -2737,8 +2739,8 @@ static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
     Routtextconn this = con->private;
     SEXP val;
 
-    if(stext == R_NilValue) {
-	this->namesymbol = NULL;
+    if(IS_R_NilValue(stext)) {
+	this->namesymbol = R_NULL_SEXP;
 	    /* create variable pointed to by con->description */
 	val = allocVector(STRSXP, 0);
 	R_PreserveObject(val);
@@ -2755,7 +2757,7 @@ static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 	    /* take over existing variable */
 	    val = findVar1(this->namesymbol, VECTOR_ELT(OutTextData, idx),
 			   STRSXP, FALSE);
-	    if(val == R_UnboundValue) {
+	    if(IS_R_UnboundValue(val)) {
 		warning(_("text connection: appending to a non-existent char vector"));
 		PROTECT(val = allocVector(STRSXP, 0));
 		defineVar(this->namesymbol, val, VECTOR_ELT(OutTextData, idx));
@@ -2845,12 +2847,12 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "text");
 	con = Connections[ncon] = newtext(desc, stext, type);
     } else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0) {
-	if (OutTextData == NULL) {
+	if (IS_NULL_SEXP(OutTextData)) {
 	    OutTextData = allocVector(VECSXP, NCONNECTIONS);
 	    R_PreserveObject(OutTextData);
 	}
 	SET_VECTOR_ELT(OutTextData, ncon, venv);
-	if(stext == R_NilValue)
+	if(IS_R_NilValue(stext))
 	    con = Connections[ncon] = newouttext("NULL", stext, open, ncon);
 	else if(isString(stext) && length(stext) == 1)
 	    con = Connections[ncon] =
@@ -3621,7 +3623,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0, m = 0; i < n; i++) {
 	    onechar = isRaw ? rawOneString(bytes, nbytes, &np)
 		: readOneString(con);
-	    if(onechar != R_NilValue) {
+	    if(! IS_R_NilValue(onechar)) {
 		SET_STRING_ELT(ans, i, onechar);
 		m++;
 	    } else break;
@@ -4202,7 +4204,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "nchars");
 	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np, useBytes)
 	    : readFixedString(con, len, useBytes);
-	if(onechar != R_NilValue) {
+	if(! IS_R_NilValue(onechar)) {
 	    SET_STRING_ELT(ans, i, onechar);
 	    m++;
 	} else break;

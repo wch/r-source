@@ -366,7 +366,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     FIXUP_NULL_AND_CHECK_TYPES(y, ypi);
 
     nx = XLENGTH(x);
-    if (ATTRIB(x) != R_NilValue) {
+    if (! IS_R_NilValue(ATTRIB(x))) {
 	xattr = TRUE;
 	xarray = isArray(x);
 	xts = isTs(x);
@@ -374,7 +374,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     }
     else xarray = xts = xattr = FALSE;
     ny = XLENGTH(y);
-    if (ATTRIB(y) != R_NilValue) {
+    if (! IS_R_NilValue(ATTRIB(y))) {
 	yattr = TRUE;
 	yarray = isArray(y);
 	yts = isTs(y);
@@ -466,7 +466,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
 	nprotect += 2;
     }
-    else klass = tsp = NULL; /* -Wall */
+    else klass = tsp = R_NULL_SEXP; /* -Wall */
 
     if (mismatch)
 	warningcall(lcall,
@@ -499,13 +499,13 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     /* Don't set the dims if one argument is an array of size 0 and the
        other isn't of size zero, cos they're wrong */
     /* Not if the other argument is a scalar (PR#1979) */
-    if (dims != R_NilValue) {
+    if (! IS_R_NilValue(dims)) {
 	if (!((xarray && (nx == 0) && (ny > 1)) ||
 	      (yarray && (ny == 0) && (nx > 1)))){
 	    setAttrib(val, R_DimSymbol, dims);
-	    if (xnames != R_NilValue)
+	    if (! IS_R_NilValue(xnames))
 		setAttrib(val, R_DimNamesSymbol, xnames);
-	    else if (ynames != R_NilValue)
+	    else if (! IS_R_NilValue(ynames))
 		setAttrib(val, R_DimNamesSymbol, ynames);
 	}
     }
@@ -553,9 +553,9 @@ static SEXP logical_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     SEXP names = PROTECT(getAttrib(s1, R_NamesSymbol));
     SEXP dim = PROTECT(getAttrib(s1, R_DimSymbol));
     SEXP dimnames = PROTECT(getAttrib(s1, R_DimNamesSymbol));
-    if(names != R_NilValue) setAttrib(ans, R_NamesSymbol, names);
-    if(dim != R_NilValue) setAttrib(ans, R_DimSymbol, dim);
-    if(dimnames != R_NilValue) setAttrib(ans, R_DimNamesSymbol, dimnames);
+    if(! IS_R_NilValue(names)) setAttrib(ans, R_NamesSymbol, names);
+    if(! IS_R_NilValue(dim)) setAttrib(ans, R_DimSymbol, dim);
+    if(! IS_R_NilValue(dimnames)) setAttrib(ans, R_DimNamesSymbol, dimnames);
     UNPROTECT(3);
 
     switch (code) {
@@ -798,14 +798,14 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     UNPROTECT(1);
 
     /* quick return if there are no attributes */
-    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+    if (IS_R_NilValue(ATTRIB(s1)) && IS_R_NilValue(ATTRIB(s2)))
 	return ans;
 
     /* Copy attributes from longer argument. */
 
-    if (ans != s2 && n == n2 && ATTRIB(s2) != R_NilValue)
+    if (! SEXP_EQL(ans, s2) && n == n2 && ! IS_R_NilValue(ATTRIB(s2)))
 	copyMostAttrib(s2, ans);
-    if (ans != s1 && n == n1 && ATTRIB(s1) != R_NilValue)
+    if (! SEXP_EQL(ans, s1) && n == n1 && ! IS_R_NilValue(ATTRIB(s1)))
 	copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
 
     return ans;
@@ -1029,14 +1029,14 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     UNPROTECT(1);
 
     /* quick return if there are no attributes */
-    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+    if (IS_R_NilValue(ATTRIB(s1)) && IS_R_NilValue(ATTRIB(s2)))
 	return ans;
 
     /* Copy attributes from longer argument. */
 
-    if (ans != s2 && n == n2 && ATTRIB(s2) != R_NilValue)
+    if (! SEXP_EQL(ans, s2) && n == n2 && ! IS_R_NilValue(ATTRIB(s2)))
 	copyMostAttrib(s2, ans);
-    if (ans != s1 && n == n1 && ATTRIB(s1) != R_NilValue)
+    if (! SEXP_EQL(ans, s1) && n == n1 && ! IS_R_NilValue(ATTRIB(s1)))
 	copyMostAttrib(s1, ans); /* Done 2nd so s1's attrs overwrite s2's */
 
     return ans;
@@ -1073,7 +1073,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     /* These are primitives, so need to use the call */
     if(naflag) warningcall(lcall, R_MSG_NA);
 
-    if (sa != sy && ATTRIB(sa) != R_NilValue)
+    if (! SEXP_EQL(sa, sy) && ! IS_R_NilValue(ATTRIB(sa)))
 	DUPLICATE_ATTRIB(sy, sa);
     UNPROTECT(2);
     return sy;
@@ -1184,7 +1184,7 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	errorcall(call, R_MSG_NONNUM_MATH);
 
-    if (x != s && ATTRIB(x) != R_NilValue)
+    if (! SEXP_EQL(x, s) && ! IS_R_NilValue(ATTRIB(x)))
 	DUPLICATE_ATTRIB(s, x);
     UNPROTECT(1);
     return s;
@@ -1451,7 +1451,7 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SETCDR(args, CONS(ScalarReal(digits), R_NilValue));
 	} else {
 	    /* If named, do argument matching by name */
-	    if (TAG(args) != R_NilValue || TAG(CDR(args)) != R_NilValue) {
+	    if (! IS_R_NilValue(TAG(args)) || ! IS_R_NilValue(TAG(CDR(args)))) {
 		PROTECT(ap = CONS(R_NilValue, list1(R_NilValue)));
 		SET_TAG(ap,  install("x"));
 		SET_TAG(CDR(ap), install("digits"));

@@ -73,10 +73,10 @@ static int ccmp(Rcomplex x, Rcomplex y, Rboolean nalast)
 
 static int scmp(SEXP x, SEXP y, Rboolean nalast)
 {
-    if (x == NA_STRING && y == NA_STRING) return 0;
-    if (x == NA_STRING) return nalast ? 1 : -1;
-    if (y == NA_STRING) return nalast ? -1 : 1;
-    if (x == y) return 0;  /* same string in cache */
+    if (IS_NA_STRING(x) && IS_NA_STRING(y)) return 0;
+    if (IS_NA_STRING(x)) return nalast ? 1 : -1;
+    if (IS_NA_STRING(y)) return nalast ? -1 : 1;
+    if (SEXP_EQL(x, y)) return 0;  /* same string in cache */
     return Scollate(x, y);
 }
 
@@ -324,7 +324,7 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     decreasing = asLogical(CADR(args));
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
-    if(CAR(args) == R_NilValue) return R_NilValue;
+    if(IS_R_NilValue(CAR(args))) return R_NilValue;
     if(!isVectorAtomic(CAR(args)))
 	error(_("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
@@ -727,7 +727,7 @@ static int listgreater(int i, int j, SEXP key, Rboolean nalast,
     SEXP x;
     int c = -1;
 
-    while (key != R_NilValue) {
+    while (! IS_R_NilValue(key)) {
 	x = CAR(key);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -824,7 +824,7 @@ static int listgreaterl(R_xlen_t i, R_xlen_t j, SEXP key, Rboolean nalast,
     SEXP x;
     int c = -1;
 
-    while (key != R_NilValue) {
+    while (! IS_R_NilValue(key)) {
 	x = CAR(key);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -985,7 +985,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
 	    break;
 	case STRSXP:
-	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    for (i = 0; i < n; i++) isna[i] = (IS_NA_STRING(sx[i]));
 	    break;
 	case CPLXSXP:
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
@@ -1119,7 +1119,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(x[i]);
 	    break;
 	case STRSXP:
-	    for (i = 0; i < n; i++) isna[i] = (sx[i] == NA_STRING);
+	    for (i = 0; i < n; i++) isna[i] = (IS_NA_STRING(sx[i]));
 	    break;
 	case CPLXSXP:
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
@@ -1227,12 +1227,12 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
     args = CDR(args);
-    if (args == R_NilValue)
+    if (IS_R_NilValue(args))
 	return R_NilValue;
 
     if (isVector(CAR(args)))
 	n = XLENGTH(CAR(args));
-    for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
+    for (ap = args; ! IS_R_NilValue(ap); ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
 	    error(_("argument %d is not a vector"), narg + 1);
 	if (XLENGTH(CAR(ap)) != n)

@@ -52,7 +52,7 @@
    costly than dereferencing. */
 #define DUPLICATE_ATTRIB(to, from) do {\
   SEXP __from__ = (from); \
-  if (ATTRIB(__from__) != R_NilValue) { \
+  if (! IS_R_NilValue(ATTRIB(__from__))) {	\
     SEXP __to__ = (to); \
     (DUPLICATE_ATTRIB)(__to__, __from__);	\
   } \
@@ -60,7 +60,7 @@
 
 #define CLEAR_ATTRIB(x) do {\
   SEXP __x__ = (x); \
-  if (ATTRIB(__x__) != R_NilValue) { \
+  if (! IS_R_NilValue(ATTRIB(__x__))) {	\
     SET_ATTRIB(__x__, R_NilValue); \
     if (OBJECT(__x__)) SET_OBJECT(__x__, 0); \
     if (IS_S4_OBJECT(__x__)) UNSET_S4_OBJECT(__x__); \
@@ -107,7 +107,7 @@ LogicalFromComplex(Rcomplex x, int *warn)
 int attribute_hidden
 LogicalFromString(SEXP x, int *warn)
 {
-    if (x != R_NaString) {
+    if (! SEXP_EQL(x, R_NaString)) {
 	if (StringTrue(CHAR(x))) return 1;
 	if (StringFalse(CHAR(x))) return 0;
     }
@@ -153,7 +153,7 @@ IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
+    if (! SEXP_EQL(x, R_NaString) && !isBlankString(CHAR(x))) { /* ASCII */
 	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp)) {
 	    if (xdouble > INT_MAX) {
@@ -203,7 +203,7 @@ RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
+    if (! SEXP_EQL(x, R_NaString) && !isBlankString(CHAR(x))) { /* ASCII */
 	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp))
 	    return xdouble;
@@ -267,7 +267,7 @@ ComplexFromString(SEXP x, int *warn)
     char *endp;
 
     z.r = z.i = NA_REAL;
-    if (x != R_NaString && !isBlankString(xx)) {
+    if (! SEXP_EQL(x, R_NaString) && !isBlankString(xx)) {
 	xr = R_strtod(xx, &endp);
 	if (isBlankString(endp)) {
 	    z.r = xr;
@@ -358,8 +358,8 @@ SEXP PairToVectorList(SEXP x)
 {
     SEXP xptr, xnew, xnames;
     int i, len = 0, named = 0;
-    for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr)) {
-	named = named | (TAG(xptr) != R_NilValue);
+    for (xptr = x ; ! IS_R_NilValue(xptr) ; xptr = CDR(xptr)) {
+	named = named | ! IS_R_NilValue((TAG(xptr)));
 	len++;
     }
     PROTECT(x);
@@ -370,7 +370,7 @@ SEXP PairToVectorList(SEXP x)
 	PROTECT(xnames = allocVector(STRSXP, len));
 	xptr = x;
 	for (i = 0, xptr = x; i < len; i++, xptr = CDR(xptr)) {
-	    if(TAG(xptr) == R_NilValue)
+	    if(IS_R_NilValue(TAG(xptr)))
 		SET_STRING_ELT(xnames, i, R_BlankString);
 	    else
 		SET_STRING_ELT(xnames, i, PRINTNAME(TAG(xptr)));
@@ -392,7 +392,7 @@ SEXP VectorToPairList(SEXP x)
     PROTECT(x);
     PROTECT(xnew = allocList(len)); /* limited to int */
     PROTECT(xnames = getAttrib(x, R_NamesSymbol));
-    named = (xnames != R_NilValue);
+    named = (! IS_R_NilValue(xnames));
     xptr = xnew;
     for (i = 0; i < len; i++) {
 	SETCAR(xptr, VECTOR_ELT(x, i));
@@ -898,7 +898,7 @@ static SEXP coerceToVectorList(SEXP v)
 	UNIMPLEMENTED_TYPE("coerceToVectorList", v);
     }
     tmp = getAttrib(v, R_NamesSymbol);
-    if (tmp != R_NilValue)
+    if (! IS_R_NilValue(tmp))
 	setAttrib(ans, R_NamesSymbol, tmp);
     UNPROTECT(1);
     return (ans);
@@ -947,7 +947,7 @@ static SEXP coerceToPairList(SEXP v)
 	ansp = CDR(ansp);
     }
     ansp = getAttrib(v, R_NamesSymbol);
-    if (ansp != R_NilValue)
+    if (! IS_R_NilValue(ansp))
 	setAttrib(ans, R_NamesSymbol, ansp);
     UNPROTECT(1);
     return (ans);
@@ -973,7 +973,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
     else if (type == STRSXP) {
 	n = length(v);
 	PROTECT(rval = allocVector(type, n));
-	for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp), i++) {
+	for (vp = v, i = 0; ! IS_R_NilValue(vp); vp = CDR(vp), i++) {
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
 		SET_STRING_ELT(rval, i, STRING_ELT(CAR(vp), 0));
 	    else
@@ -1018,15 +1018,15 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 
     /* If any tags are non-null then we */
     /* need to add a names attribute. */
-    for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp))
-	if (TAG(vp) != R_NilValue)
+    for (vp = v, i = 0; ! IS_R_NilValue(vp); vp = CDR(vp))
+	if (! IS_R_NilValue(TAG(vp)))
 	    i = 1;
 
     if (i) {
 	i = 0;
 	names = allocVector(STRSXP, n);
-	for (vp = v; vp != R_NilValue; vp = CDR(vp), i++)
-	    if (TAG(vp) != R_NilValue)
+	for (vp = v; ! IS_R_NilValue(vp); vp = CDR(vp), i++)
+	    if (! IS_R_NilValue(TAG(vp)))
 		SET_STRING_ELT(names, i, PRINTNAME(TAG(vp)));
 	setAttrib(rval, R_NamesSymbol, names);
     }
@@ -1136,7 +1136,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 
     if (warn) CoercionWarning(warn);
     names = getAttrib(v, R_NamesSymbol);
-    if (names != R_NilValue)
+    if (! IS_R_NilValue(names))
 	setAttrib(rval, R_NamesSymbol, names);
     UNPROTECT(1);
     return rval;
@@ -1169,7 +1169,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     /* code to allow classes to extend ENVSXP, SYMSXP, etc */
     if(IS_S4_OBJECT(v) && TYPEOF(v) == S4SXP) {
 	SEXP vv = R_getS4DataSlot(v, ANYSXP);
-	if(vv == R_NilValue)
+	if(IS_R_NilValue(vv))
 	  error(_("no method for coercing this S4 class to a vector"));
 	else if(TYPEOF(vv) == type)
 	  return vv;
@@ -1216,7 +1216,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	/* The distinction between strings and other elements was
 	 * here "always", but is really dubious since it makes x <- a
 	 * and x <- "a" come out identical. Won't fix just now. */
-	for (vp = v;  vp != R_NilValue; vp = CDR(vp), i++) {
+	for (vp = v;  ! IS_R_NilValue(vp); vp = CDR(vp), i++) {
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
 		SET_STRING_ELT(ans, i, STRING_ELT(CAR(vp), 0));
 	    else
@@ -1308,7 +1308,7 @@ static SEXP asFunction(SEXP x)
 	pf = allocList(n - 1);
 	SET_FORMALS(f, pf);
 	while(--n) {
-	    if (TAG(x) == R_NilValue) {
+	    if (IS_R_NilValue(TAG(x))) {
 		SET_TAG(pf, CreateTag(CAR(x)));
 		SETCAR(pf, R_MissingArg);
 	    }
@@ -1425,7 +1425,7 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     x = CAR(args);
     if(TYPEOF(x) == type) {
-	if(ATTRIB(x) == R_NilValue) return x;
+	if(IS_R_NilValue(ATTRIB(x))) return x;
 	ans = NAMED(x) ? duplicate(x) : x;
 	CLEAR_ATTRIB(ans);
 	return ans;
@@ -1467,7 +1467,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case CPLXSXP:
 	case STRSXP:
 	case RAWSXP:
-	    if(ATTRIB(x) == R_NilValue) return x;
+	    if(IS_R_NilValue(ATTRIB(x))) return x;
 	    ans  = NAMED(x) ? duplicate(x) : x;
 	    CLEAR_ATTRIB(ans);
 	    return ans;
@@ -1481,7 +1481,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP) {
 	SEXP v = R_getS4DataSlot(x, ANYSXP);
-	if(v == R_NilValue)
+	if(IS_R_NilValue(v))
 	    error(_("no method for coercing this S4 class to a vector"));
 	x = v;
     }
@@ -1547,7 +1547,7 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(pargs = args = allocList(n - 1));
     for (i = 0; i < n - 1; i++) {
 	SETCAR(pargs, VECTOR_ELT(arglist, i));
-	if (names != R_NilValue && *CHAR(STRING_ELT(names, i)) != '\0') /* ASCII */
+	if (! IS_R_NilValue(names) && *CHAR(STRING_ELT(names, i)) != '\0') /* ASCII */
 	    SET_TAG(pargs, installTrChar(STRING_ELT(names, i)));
 	else
 	    SET_TAG(pargs, R_NilValue);
@@ -1592,7 +1592,7 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ap = ans = allocList(n));
 	for (i = 0; i < n; i++) {
 	    SETCAR(ap, VECTOR_ELT(args, i));
-	    if (names != R_NilValue && !StringBlank(STRING_ELT(names, i)))
+	    if (! IS_R_NilValue(names) && !StringBlank(STRING_ELT(names, i)))
 		SET_TAG(ap, installTrChar(STRING_ELT(names, i)));
 	    ap = CDR(ap);
 	}
@@ -1959,10 +1959,10 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = 0;
 
     /* We allow a "names" attribute on any vector. */
-    if (LOGICAL(ans)[0] && ATTRIB(CAR(args)) != R_NilValue) {
+    if (LOGICAL(ans)[0] && ! IS_R_NilValue(ATTRIB(CAR(args)))) {
 	a = ATTRIB(CAR(args));
-	while(a != R_NilValue) {
-	    if (TAG(a) != R_NamesSymbol) {
+	while(! IS_R_NilValue(a)) {
+	    if (! SEXP_EQL(TAG(a), R_NamesSymbol)) {
 		LOGICAL(ans)[0] = 0;
 		break;
 	    }
@@ -2020,7 +2020,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (STRING_ELT(x, i) == NA_STRING);
+	    LOGICAL(ans)[i] = IS_NA_STRING(STRING_ELT(x, i));
 	break;
 
 /* Same code for LISTSXP and VECSXP : */
@@ -2037,7 +2037,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    LOGICAL(ans)[i] = ISNAN(REAL(s)[0]);		\
 		    break;						\
 		case STRSXP:						\
-		    LOGICAL(ans)[i] = (STRING_ELT(s, 0) == NA_STRING);	\
+		    LOGICAL(ans)[i] = IS_NA_STRING(STRING_ELT(s, 0));	\
 		    break;						\
 		case CPLXSXP:						\
 		    LOGICAL(ans)[i] = (ISNAN(COMPLEX(s)[0].r)		\
@@ -2071,9 +2071,9 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
-    if (dims != R_NilValue)
+    if (! IS_R_NilValue(dims))
 	setAttrib(ans, R_DimSymbol, dims);
-    if (names != R_NilValue) {
+    if (! IS_R_NilValue(names)) {
 	if (isArray(x))
 	    setAttrib(ans, R_DimNamesSymbol, names);
 	else
@@ -2125,7 +2125,7 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++)
-	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
+	    if (IS_NA_STRING(STRING_ELT(x, i))) return TRUE;
 	break;
  // Note that the recursive calls to anyNA() below never will do method dispatch
     case LISTSXP:
@@ -2218,9 +2218,9 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
     }
-    if (dims != R_NilValue)
+    if (! IS_R_NilValue(dims))
 	setAttrib(ans, R_DimSymbol, dims);
-    if (names != R_NilValue) {
+    if (! IS_R_NilValue(names)) {
 	if (isArray(x))
 	    setAttrib(ans, R_DimNamesSymbol, names);
 	else
@@ -2281,9 +2281,9 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
     }
-    if (dims != R_NilValue)
+    if (! IS_R_NilValue(dims))
 	setAttrib(ans, R_DimSymbol, dims);
-    if (names != R_NilValue) {
+    if (! IS_R_NilValue(names)) {
 	if (isArray(x))
 	    setAttrib(ans, R_DimNamesSymbol, names);
 	else
@@ -2377,7 +2377,7 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (streql(str, ".Internal")) error("illegal usage");
     PROTECT(rfun = install(str));
     PROTECT(evargs = duplicate(CDR(args)));
-    for (rest = evargs; rest != R_NilValue; rest = CDR(rest)) {
+    for (rest = evargs; ! IS_R_NilValue(rest); rest = CDR(rest)) {
 	PROTECT(tmp = eval(CAR(rest), rho));
 	if (NAMED(tmp)) tmp = duplicate(tmp);
 	SETCAR(rest, tmp);
@@ -2440,7 +2440,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETCAR(c, mkPROMISE(VECTOR_ELT(args, i), rho));
 	SET_PRVALUE(CAR(c), VECTOR_ELT(args, i));
 #endif
-	if (ItemName(names, (int)i) != R_NilValue)
+	if (! IS_R_NilValue(ItemName(names, (int)i)))
 	    SET_TAG(c, installTrChar(ItemName(names, i)));
 	c = CDR(c);
     }
@@ -2470,9 +2470,9 @@ SEXP substitute(SEXP lang, SEXP rho)
     case PROMSXP:
 	return substitute(PREXPR(lang), rho);
     case SYMSXP:
-	if (rho != R_NilValue) {
+	if (! IS_R_NilValue(rho)) {
 	    t = findVarInFrame3( rho, lang, TRUE);
-	    if (t != R_UnboundValue) {
+	    if (! IS_R_UnboundValue(t)) {
 		if (TYPEOF(t) == PROMSXP) {
 		    do {
 			t = PREXPR(t);
@@ -2483,7 +2483,7 @@ SEXP substitute(SEXP lang, SEXP rho)
 		}
 		else if (TYPEOF(t) == DOTSXP)
 		    error(_("'...' used in an incorrect context"));
-		if (rho != R_GlobalEnv)
+		if (! IS_R_GlobalEnv(rho))
 		    return t;
 	    }
 	}
@@ -2505,20 +2505,20 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 
     if (isNull(el)) return el;
 
-    while (el != R_NilValue) {
+    while (! IS_R_NilValue(el)) {
 	/* walk along the pairlist, substituting elements.
 	   res is the result
 	   p is the current last element
 	   h is the element currently being processed
 	 */
-	if (CAR(el) == R_DotsSymbol) {
-	    if (rho == R_NilValue)
+	if (SEXP_EQL(CAR(el), R_DotsSymbol)) {
+	    if (IS_R_NilValue(rho))
 		h = R_UnboundValue;	/* so there is no substitution below */
 	    else
 		h = findVarInFrame3(rho, CAR(el), TRUE);
-	    if (h == R_UnboundValue)
+	    if (IS_R_UnboundValue(h))
 		h = LCONS(R_DotsSymbol, R_NilValue);
-	    else if (h == R_NilValue  || h == R_MissingArg)
+	    else if (IS_R_NilValue(h)  || IS_R_MissingArg(h))
 		h = R_NilValue;
 	    else if (TYPEOF(h) == DOTSXP)
 		h = substituteList(h, R_NilValue);
@@ -2532,18 +2532,18 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 		h = CONS(h, R_NilValue);
 	    SET_TAG(h, TAG(el));
 	}
-	if (h != R_NilValue) {
-	    if (res == R_NilValue)
+	if (! IS_R_NilValue(h)) {
+	    if (IS_R_NilValue(res))
 		PROTECT(res = h);
 	    else
 		SETCDR(p, h);
 	    /* now set 'p': dots might have expanded to a list of length > 1 */
-	    while (CDR(h) != R_NilValue) h = CDR(h);
+	    while (! IS_R_NilValue(CDR(h))) h = CDR(h);
 	    p = h;
 	}
 	el = CDR(el);
     }
-    if(res != R_NilValue) UNPROTECT(1);
+    if(! IS_R_NilValue(res)) UNPROTECT(1);
     return res;
 }
 
@@ -2560,17 +2560,17 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(argList = matchArgs(ap, args, call));
 
     /* set up the environment for substitution */
-    if (CADR(argList) == R_MissingArg)
+    if (IS_R_MissingArg(CADR(argList)))
 	env = rho;
     else
 	env = eval(CADR(argList), rho);
-    if (env == R_GlobalEnv)	/* For historical reasons, don't substitute in R_GlobalEnv */
+    if (IS_R_GlobalEnv(env))	/* For historical reasons, don't substitute in R_GlobalEnv */
 	env = R_NilValue;
     else if (TYPEOF(env) == VECSXP)
 	env = NewEnvironment(R_NilValue, VectorToPairList(env), R_BaseEnv);
     else if (TYPEOF(env) == LISTSXP)
 	env = NewEnvironment(R_NilValue, duplicate(env), R_BaseEnv);
-    if (env != R_NilValue && TYPEOF(env) != ENVSXP)
+    if (! IS_R_NilValue(env) && TYPEOF(env) != ENVSXP)
 	errorcall(call, _("invalid environment specified"));
 
     PROTECT(env);
@@ -2759,7 +2759,7 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     obj = CAR(args);
 
     value = CADR(args);
-    if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
+    if (!isValidString(value) || IS_NA_STRING(STRING_ELT(value, 0)))
 	error(_("'value' must be non-null character string"));
     type = str2type(CHAR(STRING_ELT(value, 0)));
     if(type == (SEXPTYPE) -1) {

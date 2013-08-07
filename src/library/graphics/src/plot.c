@@ -88,13 +88,13 @@ static SEXP getInlinePar(SEXP s, char *name)
     SEXP result = R_NilValue;
     int found = 0;
     if (isList(s) && !found) {
-	while (s != R_NilValue) {
+	while (! IS_R_NilValue(s)) {
 	    if (isList(CAR(s))) {
 		result = getInlinePar(CAR(s), name);
-		if (result)
+		if (! IS_NULL_SEXP(result))
 		    found = 1;
 	    } else
-		if (TAG(s) != R_NilValue)
+		if (! IS_R_NilValue(TAG(s)))
 		    if (!strcmp(CHAR(PRINTNAME(TAG(s))), name)) {
 			result = CAR(s);
 			found = 1;
@@ -117,7 +117,7 @@ static SEXP FixupPch(SEXP pch, int dflt)
 
     PROTECT(ans = allocVector(INTSXP, n));
     if (isList(pch)) {
-	for (i = 0; pch != R_NilValue;	pch = CDR(pch))
+	for (i = 0; ! IS_R_NilValue(pch);	pch = CDR(pch))
 	    INTEGER(ans)[i++] = asInteger(CAR(pch));
     }
     else if (isInteger(pch)) {
@@ -165,7 +165,7 @@ SEXP FixupLwd(SEXP lwd, double dflt)
 {
     int i, n;
     double w;
-    SEXP ans = NULL;
+    SEXP ans = R_NULL_SEXP;
 
     n = length(lwd);
     if (n == 0)
@@ -374,7 +374,7 @@ GetTextArg(SEXP spec, SEXP *ptxt, rcolor *pcol, double *pcex, int *pfont)
 	}
 	else {
 	    nms = getAttrib(spec, R_NamesSymbol);
-	    if (nms == R_NilValue){ /* PR#1939 */
+	    if (IS_R_NilValue(nms)){ /* PR#1939 */
 	       txt = VECTOR_ELT(spec, 0);
 	       if (TYPEOF(txt) == LANGSXP || TYPEOF(txt) == SYMSXP )
 		    REPROTECT(txt = coerceVector(txt, EXPRSXP), pi);
@@ -417,7 +417,7 @@ GetTextArg(SEXP spec, SEXP *ptxt, rcolor *pcol, double *pcex, int *pfont)
 	break;
     }
     UNPROTECT(1);
-    if (txt != R_NilValue) {
+    if (! IS_R_NilValue(txt)) {
 	*ptxt = txt;
 	if (R_FINITE(cex))	 *pcex	 = cex;
 	if (colspecd)	         *pcol	 = col;
@@ -1123,7 +1123,7 @@ SEXP C_axis(SEXP args)
 		    }
 		    else {
 			label = STRING_ELT(lab, ind[i]);
-			if(label != NA_STRING) {
+			if(! IS_NA_STRING(label)) {
 			    const char *ss = CHAR(label);
 			    labw = GStrWidth(ss, 0, NFC, dd);
 			    tnew = temp - 0.5 * labw;
@@ -1264,7 +1264,7 @@ SEXP C_axis(SEXP args)
 		    }
 		    else {
 			label = STRING_ELT(lab, ind[i]);
-			if(label != NA_STRING) {
+			if(! IS_NA_STRING(label)) {
 			    const char *ss = CHAR(label);
 			    labw = GStrWidth(ss, getCharCE(label), INCHES, dd);
 			    labw = GConvertYUnits(labw, INCHES, NFC, dd);
@@ -2217,7 +2217,7 @@ SEXP C_text(SEXP args)
 			  adjx, adjy, gpptr(dd)->srt, dd);
 	    } else {
 		string = STRING_ELT(txt, i % ntxt);
-		if(string != NA_STRING)
+		if(! IS_NA_STRING(string))
 		    GText(xx, yy, INCHES, CHAR(string), getCharCE(string),
 			  adjx, adjy, gpptr(dd)->srt, dd);
 	    }
@@ -2456,7 +2456,7 @@ SEXP C_mtext(SEXP args)
     if (gpptr(dd)->xpd < 1)
 	gpptr(dd)->xpd = 1;
 
-    if (outer) {
+    if (! IS_NULL_SEXP(outer)) {
 	gpnewsave = gpptr(dd)->new;
 	dpnewsave = dpptr(dd)->new;
 	/* override par("xpd") and force clipping to device region */
@@ -2497,7 +2497,7 @@ SEXP C_mtext(SEXP args)
 		       padjval, dd);
 	else {
 	    string = STRING_ELT(text, i % ntext);
-	    if(string != NA_STRING)
+	    if(! IS_NA_STRING(string))
 		GMtext(CHAR(string), getCharCE(string), sideval, lineval,
 		       outerval, atval, gpptr(dd)->las, padjval, dd);
 	}
@@ -2537,19 +2537,19 @@ SEXP C_title(SEXP args)
 
     Main = sub = xlab = ylab = R_NilValue;
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (! IS_R_NilValue(CAR(args)) && LENGTH(CAR(args)) > 0)
 	Main = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (! IS_R_NilValue(CAR(args)) && LENGTH(CAR(args)) > 0)
 	sub = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (! IS_R_NilValue(CAR(args)) && LENGTH(CAR(args)) > 0)
 	xlab = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (! IS_R_NilValue(CAR(args)) && LENGTH(CAR(args)) > 0)
 	ylab = CAR(args);
     args = CDR(args);
 
@@ -2572,7 +2572,7 @@ SEXP C_title(SEXP args)
     adj = gpptr(dd)->adj;
 
     GMode(1, dd);
-    if (Main != R_NilValue) {
+    if (! IS_R_NilValue(Main)) {
 	cex = gpptr(dd)->cexmain;
 	col = gpptr(dd)->colmain;
 	font = gpptr(dd)->fontmain;
@@ -2615,14 +2615,14 @@ SEXP C_title(SEXP args)
 	  offset = 0.5 * (n - 1) + vpos;
 	  for (i = 0; i < n; i++) {
 		string = STRING_ELT(Main, i);
-		if(string != NA_STRING)
+		if(! IS_NA_STRING(string))
 		    GText(hpos, offset - i, where, CHAR(string), getCharCE(string),
 			  adj, adjy, 0.0, dd);
 	  }
 	}
 	UNPROTECT(1);
     }
-    if (sub != R_NilValue) {
+    if (! IS_R_NilValue(sub)) {
 	cex = gpptr(dd)->cexsub;
 	col = gpptr(dd)->colsub;
 	font = gpptr(dd)->fontsub;
@@ -2651,14 +2651,14 @@ SEXP C_title(SEXP args)
 	    n = length(sub);
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(sub, i);
-		if(string != NA_STRING)
+		if(! IS_NA_STRING(string))
 		    GMtext(CHAR(string), getCharCE(string), 1, vpos, where,
 			   hpos, 0, 0.0, dd);
 	    }
 	}
 	UNPROTECT(1);
     }
-    if (xlab != R_NilValue) {
+    if (! IS_R_NilValue(xlab)) {
 	cex = gpptr(dd)->cexlab;
 	col = gpptr(dd)->collab;
 	font = gpptr(dd)->fontlab;
@@ -2687,14 +2687,14 @@ SEXP C_title(SEXP args)
 	    n = length(xlab);
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(xlab, i);
-		if(string != NA_STRING)
+		if(! IS_NA_STRING(string))
 		    GMtext(CHAR(string), getCharCE(string), 1, vpos + i,
 			   where, hpos, 0, 0.0, dd);
 	    }
 	}
 	UNPROTECT(1);
     }
-    if (ylab != R_NilValue) {
+    if (! IS_R_NilValue(ylab)) {
 	cex = gpptr(dd)->cexlab;
 	col = gpptr(dd)->collab;
 	font = gpptr(dd)->fontlab;
@@ -2723,7 +2723,7 @@ SEXP C_title(SEXP args)
 	    n = length(ylab);
 	    for (i = 0; i < n; i++) {
 		string = STRING_ELT(ylab, i);
-		if(string != NA_STRING)
+		if(! IS_NA_STRING(string))
 		    GMtext(CHAR(string), getCharCE(string), 2, vpos - i,
 			   where, hpos, 0, 0.0, dd);
 	    }
@@ -2751,23 +2751,23 @@ SEXP C_abline(SEXP args)
     args = CDR(args);
     if (length(args) < 5) error(_("too few arguments"));
 
-    if ((a = CAR(args)) != R_NilValue)
+    if (! IS_R_NilValue(a = CAR(args)))
 	SETCAR(args, a = coerceVector(a, REALSXP));
     args = CDR(args);
 
-    if ((b = CAR(args)) != R_NilValue)
+    if (! IS_R_NilValue(b = CAR(args)))
 	SETCAR(args, b = coerceVector(b, REALSXP));
     args = CDR(args);
 
-    if ((h = CAR(args)) != R_NilValue)
+    if (! IS_R_NilValue(h = CAR(args)))
 	SETCAR(args, h = coerceVector(h, REALSXP));
     args = CDR(args);
 
-    if ((v = CAR(args)) != R_NilValue)
+    if (! IS_R_NilValue(v = CAR(args)))
 	SETCAR(args, v = coerceVector(v, REALSXP));
     args = CDR(args);
 
-    if ((untf = CAR(args)) != R_NilValue)
+    if (! IS_R_NilValue(untf = CAR(args)))
 	SETCAR(args, untf = coerceVector(untf, LGLSXP));
     args = CDR(args);
 
@@ -2787,8 +2787,8 @@ SEXP C_abline(SEXP args)
 
     nlines = 0;
 
-    if (a != R_NilValue) {  /* case where a ans b are supplied */
-	if (b == R_NilValue) {
+    if (! IS_R_NilValue(a)) {  /* case where a ans b are supplied */
+	if (IS_R_NilValue(b)) {
 	    if (LENGTH(a) != 2)
 		error(_("invalid a=, b= specification"));
 	    aa = REAL(a)[0];
@@ -2874,7 +2874,7 @@ SEXP C_abline(SEXP args)
 	GMode(0, dd);
 	nlines++;
     }
-    if (h != R_NilValue) { /* horizontal liee */
+    if (! IS_R_NilValue(h)) { /* horizontal liee */
 	GMode(1, dd);
 	for (i = 0; i < LENGTH(h); i++) {
 	    gpptr(dd)->col = INTEGER(col)[nlines % ncol];
@@ -2894,7 +2894,7 @@ SEXP C_abline(SEXP args)
 	}
 	GMode(0, dd);
     }
-    if (v != R_NilValue) { /* vertical line */
+    if (! IS_R_NilValue(v)) { /* vertical line */
 	GMode(1, dd);
 	for (i = 0; i < LENGTH(v); i++) {
 	    gpptr(dd)->col = INTEGER(col)[nlines % ncol];
@@ -2981,7 +2981,7 @@ SEXP C_locator(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     args = CDR(args);
     /* If replaying, just draw the points and lines that were recorded */
-    if (call == R_NilValue) {
+    if (IS_R_NilValue(call)) {
 	x = CAR(args); args = CDR(args);
 	y = CAR(args); args = CDR(args);
 	nobs = CAR(args); args = CDR(args);
@@ -3099,7 +3099,7 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
     /* If we are replaying the display list, then just redraw the
        labels beside the identified points */
-    if (call == R_NilValue) {
+    if (IS_R_NilValue(call)) {
 	ind = CAR(args); args = CDR(args);
 	pos = CAR(args); args = CDR(args);
 	x = CAR(args); args = CDR(args);
@@ -3333,7 +3333,7 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho)
 					     GMapUnits(units), dd);	\
 	else {								\
 	    ch = STRING_ELT(str, i);					\
-	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :			\
+	    REAL(ans)[i] = (IS_NA_STRING(ch)) ? 0.0 :	\
 		GStr ## KIND(CHAR(ch), getCharCE(ch), GMapUnits(units), dd);		\
 	}								\
     gpptr(dd)->cex = cexsave;						\
@@ -3378,7 +3378,7 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
     else {
 	xl = dnd_xpos[-k-1];
 	yl = (dnd_hang >= 0) ? *y - dnd_hang : 0;
-	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
+	if(! IS_NA_STRING(STRING_ELT(dnd_llabels, -k-1)))
 	    GText(xl, yl-dnd_offset, USER,
 		  CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  getCharCE(STRING_ELT(dnd_llabels, -k-1)),
@@ -3390,7 +3390,7 @@ static void drawdend(int node, double *x, double *y, SEXP dnd_llabels,
     else {
 	xr = dnd_xpos[-k-1];
 	yr = (dnd_hang >= 0) ? *y - dnd_hang : 0;
-	if(STRING_ELT(dnd_llabels, -k-1) != NA_STRING)
+	if(! IS_NA_STRING(STRING_ELT(dnd_llabels, -k-1)))
 	    GText(xr, yr-dnd_offset, USER,
 		  CHAR(STRING_ELT(dnd_llabels, -k-1)),
 		  getCharCE(STRING_ELT(dnd_llabels, -k-1)),
@@ -3540,7 +3540,7 @@ SEXP C_dendwindow(SEXP args)
     pin = gpptr(dd)->pin[1];
     for (i = 0; i <= n; i++) {
 	str = STRING_ELT(llabels, i);
-	ll[i] = (str == NA_STRING) ? 0.0 :
+	ll[i] = (IS_NA_STRING(str)) ? 0.0 :
 	    GStrWidth(CHAR(str), getCharCE(str), INCHES, dd) + dnd_offset;
     }
 

@@ -38,10 +38,10 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 {
     SEXP result;
     SEXPTYPE type = eval ? BUILTINSXP : SPECIALSXP;
-    static SEXP PrimCache = NULL;
+    static SEXP PrimCache = SEXP_INIT;
     static int FunTabSize = 0;
     
-    if (PrimCache == NULL) {
+    if (IS_NULL_SEXP(PrimCache)) {
 	/* compute the number of entires in R_FunTab */
 	while (R_FunTab[FunTabSize].name)
 	    FunTabSize++;
@@ -56,7 +56,7 @@ SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 
     result = VECTOR_ELT(PrimCache, offset);
 
-    if (result == R_NilValue) {
+    if (IS_R_NilValue(result)) {
 	result = allocSExp(type);
 	SET_PRIMOFFSET(result, offset);
 	SET_VECTOR_ELT(PrimCache, offset, result);
@@ -104,7 +104,7 @@ SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 	break;
     }
 
-    if(rho == R_NilValue)
+    if(IS_R_NilValue(rho))
 	SET_CLOENV(c, R_GlobalEnv);
     else
 	SET_CLOENV(c, rho);

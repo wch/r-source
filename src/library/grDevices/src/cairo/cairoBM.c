@@ -511,7 +511,7 @@ SEXP in_Cairo(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
+	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return R_NULL_SEXP;
 	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
 			    width, height, pointsize,
 			    bgcolor, res, antialias, family)) {

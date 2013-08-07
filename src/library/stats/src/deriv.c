@@ -107,12 +107,12 @@ static int isOne(SEXP s)
 
 static int isUminus(SEXP s)
 {
-    if (TYPEOF(s) == LANGSXP && CAR(s) == MinusSymbol) {
+    if (TYPEOF(s) == LANGSXP && SEXP_EQL(CAR(s), MinusSymbol)) {
 	switch(length(s)) {
 	case 2:
 	    return 1;
 	case 3:
-	    if (CADDR(s) == R_MissingArg)
+	    if (IS_R_MissingArg(CADDR(s)))
 		return 1;
 	    else return 0;
 	default:
@@ -134,7 +134,7 @@ static SEXP PP(SEXP s)
 static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 {
     SEXP ans;
-    if (fun == PlusSymbol) {
+    if (SEXP_EQL(fun, PlusSymbol)) {
 	if (isZero(arg1))
 	    ans = arg2;
 	else if (isZero(arg2))
@@ -146,8 +146,8 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 	else
 	    ans = lang3(PlusSymbol, arg1, arg2);
     }
-    else if (fun == MinusSymbol) {
-	if (arg2 == R_MissingArg) {
+    else if (SEXP_EQL(fun, MinusSymbol)) {
+	if (IS_R_MissingArg(arg2)) {
 	    if (isZero(arg1))
 		ans = Constant(0.);
 	    else if (isUminus(arg1))
@@ -172,7 +172,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 		ans = lang3(MinusSymbol, arg1, arg2);
 	}
     }
-    else if (fun == TimesSymbol) {
+    else if (SEXP_EQL(fun, TimesSymbol)) {
 	if (isZero(arg1) || isZero(arg2))
 	    ans = Constant(0.);
 	else if (isOne(arg1))
@@ -194,7 +194,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 	else
 	    ans = lang3(TimesSymbol, arg1, arg2);
     }
-    else if (fun == DivideSymbol) {
+    else if (SEXP_EQL(fun, DivideSymbol)) {
 	if (isZero(arg1))
 	    ans = Constant(0.);
 	else if (isZero(arg2))
@@ -215,7 +215,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 	}
 	else ans = lang3(DivideSymbol, arg1, arg2);
     }
-    else if (fun == PowerSymbol) {
+    else if (SEXP_EQL(fun, PowerSymbol)) {
 	if (isZero(arg2))
 	    ans = Constant(1.);
 	else if (isZero(arg1))
@@ -227,32 +227,32 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 	else
 	    ans = lang3(PowerSymbol, arg1, arg2);
     }
-    else if (fun == ExpSymbol) {
+    else if (SEXP_EQL(fun, ExpSymbol)) {
 	/* FIXME: simplify exp(lgamma( E )) = gamma( E ) */
 	ans = lang2(ExpSymbol, arg1);
     }
-    else if (fun == LogSymbol) {
+    else if (SEXP_EQL(fun, LogSymbol)) {
 	/* FIXME: simplify log(gamma( E )) = lgamma( E ) */
 	ans = lang2(LogSymbol, arg1);
     }
-    else if (fun == CosSymbol)	ans = lang2(CosSymbol, arg1);
-    else if (fun == SinSymbol)	ans = lang2(SinSymbol, arg1);
-    else if (fun == TanSymbol)	ans = lang2(TanSymbol, arg1);
-    else if (fun == CoshSymbol) ans = lang2(CoshSymbol, arg1);
-    else if (fun == SinhSymbol) ans = lang2(SinhSymbol, arg1);
-    else if (fun == TanhSymbol) ans = lang2(TanhSymbol, arg1);
-    else if (fun == SqrtSymbol) ans = lang2(SqrtSymbol, arg1);
-    else if (fun == PnormSymbol)ans = lang2(PnormSymbol, arg1);
-    else if (fun == DnormSymbol)ans = lang2(DnormSymbol, arg1);
-    else if (fun == AsinSymbol) ans = lang2(AsinSymbol, arg1);
-    else if (fun == AcosSymbol) ans = lang2(AcosSymbol, arg1);
-    else if (fun == AtanSymbol) ans = lang2(AtanSymbol, arg1);
-    else if (fun == GammaSymbol)ans = lang2(GammaSymbol, arg1);
-    else if (fun == LGammaSymbol)ans = lang2(LGammaSymbol, arg1);
-    else if (fun == DiGammaSymbol) ans = lang2(DiGammaSymbol, arg1);
-    else if (fun == TriGammaSymbol) ans = lang2(TriGammaSymbol, arg1);
-    else if (fun == PsiSymbol){
-       if (arg2 == R_MissingArg) ans = lang2(PsiSymbol, arg1);
+    else if (SEXP_EQL(fun, CosSymbol))	ans = lang2(CosSymbol, arg1);
+    else if (SEXP_EQL(fun, SinSymbol))	ans = lang2(SinSymbol, arg1);
+    else if (SEXP_EQL(fun, TanSymbol))	ans = lang2(TanSymbol, arg1);
+    else if (SEXP_EQL(fun, CoshSymbol)) ans = lang2(CoshSymbol, arg1);
+    else if (SEXP_EQL(fun, SinhSymbol)) ans = lang2(SinhSymbol, arg1);
+    else if (SEXP_EQL(fun, TanhSymbol)) ans = lang2(TanhSymbol, arg1);
+    else if (SEXP_EQL(fun, SqrtSymbol)) ans = lang2(SqrtSymbol, arg1);
+    else if (SEXP_EQL(fun, PnormSymbol))ans = lang2(PnormSymbol, arg1);
+    else if (SEXP_EQL(fun, DnormSymbol))ans = lang2(DnormSymbol, arg1);
+    else if (SEXP_EQL(fun, AsinSymbol)) ans = lang2(AsinSymbol, arg1);
+    else if (SEXP_EQL(fun, AcosSymbol)) ans = lang2(AcosSymbol, arg1);
+    else if (SEXP_EQL(fun, AtanSymbol)) ans = lang2(AtanSymbol, arg1);
+    else if (SEXP_EQL(fun, GammaSymbol))ans = lang2(GammaSymbol, arg1);
+    else if (SEXP_EQL(fun, LGammaSymbol))ans = lang2(LGammaSymbol, arg1);
+    else if (SEXP_EQL(fun, DiGammaSymbol)) ans = lang2(DiGammaSymbol, arg1);
+    else if (SEXP_EQL(fun, TriGammaSymbol)) ans = lang2(TriGammaSymbol, arg1);
+    else if (SEXP_EQL(fun, PsiSymbol)){
+       if (IS_R_MissingArg(arg2)) ans = lang2(PsiSymbol, arg1);
        else ans = lang3(PsiSymbol, arg1, arg2);
     }
     else ans = Constant(NA_REAL);
@@ -283,7 +283,7 @@ static SEXP D(SEXP expr, SEXP var)
 	ans = Constant(0);
 	break;
     case SYMSXP:
-	if (expr == var) ans = Constant(1.);
+	if (SEXP_EQL(expr, var)) ans = Constant(1.);
 	else ans = Constant(0.);
 	break;
     case LISTSXP:
@@ -291,10 +291,10 @@ static SEXP D(SEXP expr, SEXP var)
 	else ans = Constant(NA_REAL);
 	break;
     case LANGSXP:
-	if (CAR(expr) == ParenSymbol) {
+	if (SEXP_EQL(CAR(expr), ParenSymbol)) {
 	    ans = D(CADR(expr), var);
 	}
-	else if (CAR(expr) == PlusSymbol) {
+	else if (SEXP_EQL(CAR(expr), PlusSymbol)) {
 	    if (length(expr) == 2)
 		ans = D(CADR(expr), var);
 	    else {
@@ -304,7 +304,7 @@ static SEXP D(SEXP expr, SEXP var)
 		UNPROTECT(2);
 	    }
 	}
-	else if (CAR(expr) == MinusSymbol) {
+	else if (SEXP_EQL(CAR(expr), MinusSymbol)) {
 	    if (length(expr) == 2) {
 		ans = simplify(MinusSymbol,
 			       PP(D(CADR(expr), var)),
@@ -318,13 +318,13 @@ static SEXP D(SEXP expr, SEXP var)
 		UNPROTECT(2);
 	    }
 	}
-	else if (CAR(expr) == TimesSymbol) {
+	else if (SEXP_EQL(CAR(expr), TimesSymbol)) {
 	    ans = simplify(PlusSymbol,
 			   PP_S(TimesSymbol,PP(D(CADR(expr),var)), CADDR(expr)),
 			   PP_S(TimesSymbol,CADR(expr), PP(D(CADDR(expr),var))));
 	    UNPROTECT(4);
 	}
-	else if (CAR(expr) == DivideSymbol) {
+	else if (SEXP_EQL(CAR(expr), DivideSymbol)) {
 	    PROTECT(expr1 = D(CADR(expr), var));
 	    PROTECT(expr2 = D(CADDR(expr), var));
 	    ans = simplify(MinusSymbol,
@@ -334,7 +334,7 @@ static SEXP D(SEXP expr, SEXP var)
 				PP_S(PowerSymbol,CADDR(expr),PP(Constant(2.)))));
 	    UNPROTECT(7);
 	}
-	else if (CAR(expr) == PowerSymbol) {
+	else if (SEXP_EQL(CAR(expr), PowerSymbol)) {
 	    if (isLogical(CADDR(expr)) || isNumeric(CADDR(expr))) {
 		ans = simplify(TimesSymbol,
 			       CADDR(expr),
@@ -368,31 +368,31 @@ static SEXP D(SEXP expr, SEXP var)
 		UNPROTECT(2);
 	    }
 	}
-	else if (CAR(expr) == ExpSymbol) {
+	else if (SEXP_EQL(CAR(expr), ExpSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   expr,
 			   PP(D(CADR(expr), var)));
 	    UNPROTECT(1);
 	}
-	else if (CAR(expr) == LogSymbol) {
+	else if (SEXP_EQL(CAR(expr), LogSymbol)) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   CADR(expr));
 	    UNPROTECT(1);
 	}
-	else if (CAR(expr) == CosSymbol) {
+	else if (SEXP_EQL(CAR(expr), CosSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(SinSymbol, CADR(expr)),
 			   PP_S2(MinusSymbol, PP(D(CADR(expr), var))));
 	    UNPROTECT(3);
 	}
-	else if (CAR(expr) == SinSymbol) {
+	else if (SEXP_EQL(CAR(expr), SinSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(CosSymbol, CADR(expr)),
 			   PP(D(CADR(expr), var)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == TanSymbol) {
+	else if (SEXP_EQL(CAR(expr), TanSymbol)) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(PowerSymbol,
@@ -400,19 +400,19 @@ static SEXP D(SEXP expr, SEXP var)
 				PP(Constant(2.0))));
 	    UNPROTECT(4);
 	}
-	else if (CAR(expr) == CoshSymbol) {
+	else if (SEXP_EQL(CAR(expr), CoshSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(SinhSymbol, CADR(expr)),
 			   PP(D(CADR(expr), var)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == SinhSymbol) {
+	else if (SEXP_EQL(CAR(expr), SinhSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(CoshSymbol, CADR(expr)),
 			   PP(D(CADR(expr), var))),
 		UNPROTECT(2);
 	}
-	else if (CAR(expr) == TanhSymbol) {
+	else if (SEXP_EQL(CAR(expr), TanhSymbol)) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(PowerSymbol,
@@ -420,7 +420,7 @@ static SEXP D(SEXP expr, SEXP var)
 				PP(Constant(2.0))));
 	    UNPROTECT(4);
 	}
-	else if (CAR(expr) == SqrtSymbol) {
+	else if (SEXP_EQL(CAR(expr), SqrtSymbol)) {
 	    PROTECT(expr1 = allocList(3));
 	    SET_TYPEOF(expr1, LANGSXP);
 	    SETCAR(expr1, PowerSymbol);
@@ -429,13 +429,13 @@ static SEXP D(SEXP expr, SEXP var)
 	    ans = D(expr1, var);
 	    UNPROTECT(1);
 	}
-	else if (CAR(expr) == PnormSymbol) {
+	else if (SEXP_EQL(CAR(expr), PnormSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(DnormSymbol, CADR(expr)),
 			   PP(D(CADR(expr), var)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == DnormSymbol) {
+	else if (SEXP_EQL(CAR(expr), DnormSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP_S2(MinusSymbol, CADR(expr)),
 			   PP_S(TimesSymbol,
@@ -443,7 +443,7 @@ static SEXP D(SEXP expr, SEXP var)
 				PP(D(CADR(expr), var))));
 	    UNPROTECT(4);
 	}
-	else if (CAR(expr) == AsinSymbol) {
+	else if (SEXP_EQL(CAR(expr), AsinSymbol)) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(SqrtSymbol,
@@ -452,7 +452,7 @@ static SEXP D(SEXP expr, SEXP var)
 				R_MissingArg));
 	    UNPROTECT(4);
 	}
-	else if (CAR(expr) == AcosSymbol) {
+	else if (SEXP_EQL(CAR(expr), AcosSymbol)) {
 	    ans = simplify(MinusSymbol,
 			   PP_S(DivideSymbol,
 				PP(D(CADR(expr), var)),
@@ -463,20 +463,20 @@ static SEXP D(SEXP expr, SEXP var)
 				     R_MissingArg)), R_MissingArg);
 	    UNPROTECT(5);
 	}
-	else if (CAR(expr) == AtanSymbol) {
+	else if (SEXP_EQL(CAR(expr), AtanSymbol)) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(PlusSymbol,Constant(1.),
 				PP_S(PowerSymbol, CADR(expr),Constant(2.))));
 	    UNPROTECT(3);
 	}
-	else if (CAR(expr) == LGammaSymbol) {
+	else if (SEXP_EQL(CAR(expr), LGammaSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S2(DiGammaSymbol, CADR(expr)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == GammaSymbol) {
+	else if (SEXP_EQL(CAR(expr), GammaSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(TimesSymbol,
@@ -484,19 +484,19 @@ static SEXP D(SEXP expr, SEXP var)
 				PP_S2(DiGammaSymbol, CADR(expr))));
 	    UNPROTECT(3);
 	}
-	else if (CAR(expr) == DiGammaSymbol) {
+	else if (SEXP_EQL(CAR(expr), DiGammaSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S2(TriGammaSymbol, CADR(expr)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == TriGammaSymbol) {
+	else if (SEXP_EQL(CAR(expr), TriGammaSymbol)) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(PsiSymbol, CADR(expr), ScalarInteger(2)));
 	    UNPROTECT(2);
 	}
-	else if (CAR(expr) == PsiSymbol) {
+	else if (SEXP_EQL(CAR(expr), PsiSymbol)) {
 	    if (length(expr) == 2){
 		ans = simplify(TimesSymbol,
 			       PP(D(CADR(expr), var)),
@@ -541,35 +541,35 @@ static int isPlusForm(SEXP expr)
 {
     return TYPEOF(expr) == LANGSXP
 	&& length(expr) == 3
-	&& CAR(expr) == PlusSymbol;
+	&& SEXP_EQL(CAR(expr), PlusSymbol);
 }
 
 static int isMinusForm(SEXP expr)
 {
     return TYPEOF(expr) == LANGSXP
 	&& length(expr) == 3
-	&& CAR(expr) == MinusSymbol;
+	&& SEXP_EQL(CAR(expr), MinusSymbol);
 }
 
 static int isTimesForm(SEXP expr)
 {
     return TYPEOF(expr) == LANGSXP
 	&& length(expr) == 3
-	&& CAR(expr) == TimesSymbol;
+	&& SEXP_EQL(CAR(expr), TimesSymbol);
 }
 
 static int isDivideForm(SEXP expr)
 {
     return TYPEOF(expr) == LANGSXP
 	&& length(expr) == 3
-	&& CAR(expr) == DivideSymbol;
+	&& SEXP_EQL(CAR(expr), DivideSymbol);
 }
 
 static int isPowerForm(SEXP expr)
 {
     return (TYPEOF(expr) == LANGSXP
 	    && length(expr) == 3
-	    && CAR(expr) == PowerSymbol);
+	    && SEXP_EQL(CAR(expr), PowerSymbol));
 }
 
 static SEXP AddParens(SEXP expr)
@@ -577,7 +577,7 @@ static SEXP AddParens(SEXP expr)
     SEXP e;
     if (TYPEOF(expr) == LANGSXP) {
 	e = CDR(expr);
-	while(e != R_NilValue) {
+	while(! IS_R_NilValue(e)) {
 	    SETCAR(e, AddParens(CAR(e)));
 	    e = CDR(e);
 	}
@@ -655,7 +655,7 @@ static int equal(SEXP expr1, SEXP expr2)
 	case NILSXP:
 	    return 1;
 	case SYMSXP:
-	    return expr1 == expr2;
+	    return SEXP_EQL(expr1, expr2);
 	case LGLSXP:
 	case INTSXP:
 	    return INTEGER(expr1)[0] == INTEGER(expr2)[0];
@@ -681,7 +681,7 @@ static int Accumulate(SEXP expr, SEXP exprlist)
     int k;
     e = exprlist;
     k = 0;
-    while(CDR(e) != R_NilValue) {
+    while(! IS_R_NilValue(CDR(e))) {
 	e = CDR(e);
 	k = k + 1;
 	if (equal(expr, CAR(e)))
@@ -697,7 +697,7 @@ static int Accumulate2(SEXP expr, SEXP exprlist)
     int k;
     e = exprlist;
     k = 0;
-    while(CDR(e) != R_NilValue) {
+    while(! IS_R_NilValue(CDR(e))) {
 	e = CDR(e);
 	k = k + 1;
     }
@@ -732,12 +732,12 @@ static int FindSubexprs(SEXP expr, SEXP exprlist, SEXP tag)
 	else { InvalidExpression("FindSubexprs"); return -1/*-Wall*/; }
 	break;
     case LANGSXP:
-	if (CAR(expr) == install("(")) {
+	if (SEXP_EQL(CAR(expr), install("("))) {
 	    return FindSubexprs(CADR(expr), exprlist, tag);
 	}
 	else {
 	    e = CDR(expr);
-	    while(e != R_NilValue) {
+	    while(! IS_R_NilValue(e)) {
 		if ((k = FindSubexprs(CAR(e), exprlist, tag)) != 0)
 		    SETCAR(e, MakeVariable(k, tag));
 		e = CDR(e);
@@ -755,7 +755,7 @@ static int CountOccurrences(SEXP sym, SEXP lst)
 {
     switch(TYPEOF(lst)) {
     case SYMSXP:
-	return lst == sym;
+	return SEXP_EQL(lst, sym);
     case LISTSXP:
     case LANGSXP:
 	return CountOccurrences(sym, CAR(lst))
@@ -769,7 +769,7 @@ static SEXP Replace(SEXP sym, SEXP expr, SEXP lst)
 {
     switch(TYPEOF(lst)) {
     case SYMSXP:
-	if (lst == sym) return expr;
+	if (SEXP_EQL(lst, sym)) return expr;
 	else return lst;
     case LISTSXP:
     case LANGSXP:
@@ -896,10 +896,10 @@ static SEXP AddHess(void)
 
 static SEXP Prune(SEXP lst)
 {
-    if (lst == R_NilValue)
+    if (IS_R_NilValue(lst))
 	return lst;
     SETCDR(lst, Prune(CDR(lst)));
-    if (CAR(lst) == R_MissingArg)
+    if (IS_R_MissingArg(CAR(lst)))
 	return CDR(lst);
     else return lst ;
 }
@@ -1049,7 +1049,7 @@ SEXP deriv(SEXP args)
 	ans = CDR(ans);
 	if (hessian) {
 	    for (j = i; j < nderiv; j++) {
-		if (CAR(ans) != R_MissingArg) {
+		if (! IS_R_MissingArg(CAR(ans))) {
 		    if (i == j) {
 			SETCAR(ans, HessAssign1(STRING_ELT(names, i),
 						AddParens(CAR(ans))));

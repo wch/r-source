@@ -537,9 +537,13 @@ static void fcn(int n, const double x[], double *f, function_info
 	goto badvalue;
     }
     if (state->have_gradient) {
-	g = REAL(PROTECT(coerceVector(getAttrib(s, install("gradient")), REALSXP)));
+	SEXP sg = PROTECT(coerceVector(getAttrib(s, install("gradient")),
+				       REALSXP));
+	g = REAL(sg);
 	if (state->have_hessian) {
-	    h = REAL(PROTECT(coerceVector(getAttrib(s, install("hessian")), REALSXP)));
+	    SEXP sh = PROTECT(coerceVector(getAttrib(s, install("hessian")),
+					   REALSXP));
+	    h = REAL(sh);
 	}
     }
     FT_store(n, *f, x, g, h, state);
@@ -783,13 +787,13 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     value = eval(state->R_fcall, state->R_env);
 
     v = getAttrib(value, R_gradientSymbol);
-    if (v != R_NilValue) {
+    if (! IS_R_NilValue(v)) {
 	if (LENGTH(v) == n && (isReal(v) || isInteger(v))) {
 	    iagflg = 1;
 	    state->have_gradient = 1;
 	    v = getAttrib(value, R_hessianSymbol);
 
-	    if (v != R_NilValue) {
+	    if (! IS_R_NilValue(v)) {
 		if (LENGTH(v) == (n * n) && (isReal(v) || isInteger(v))) {
 		    iahflg = 1;
 		    state->have_hessian = 1;

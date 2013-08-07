@@ -334,7 +334,7 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isVector(ncopy))
 	error(_("incorrect type for second argument"));
 
-    if (!isVector(s) && s != R_NilValue)
+    if (!isVector(s) && ! IS_R_NilValue(s))
 	error(_("attempt to replicate an object of type '%s'"), 
 	      type2char(TYPEOF(s)));
 
@@ -387,7 +387,7 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     s = CAR(args);
 
-    if (!isVector(s) && s != R_NilValue)
+    if (!isVector(s) && ! IS_R_NilValue(s))
 	error(_("attempt to replicate non-vector"));
 
     len = CADR(args);
@@ -638,7 +638,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(each == NA_INTEGER) each = 1;
 
     if(lx == 0) {
-	if(len > 0 && x == R_NilValue) 
+	if(len > 0 && IS_R_NilValue(x)) 
 	    warningcall(call, "'x' is NULL so the result will be NULL");
 	SEXP a;
 	PROTECT(a = duplicate(x));
@@ -658,7 +658,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nt = 1;
     } else {
 	R_xlen_t sum = 0;
-	if(CADR(args) == R_MissingArg) PROTECT(times = ScalarInteger(1));
+	if(IS_R_MissingArg(CADR(args))) PROTECT(times = ScalarInteger(1));
 	else PROTECT(times = coerceVector(CADR(args), INTSXP));
 	nprotect++;
 	nt = XLENGTH(times);
@@ -744,7 +744,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = CAR(args); args = CDR(args);
     along = CAR(args);
 
-    if(One && from != R_MissingArg) {
+    if(One && ! IS_R_MissingArg(from)) {
 	lf = length(from);
 	if(lf == 1 && (TYPEOF(from) == INTSXP || TYPEOF(from) == REALSXP)) {
 	    double rfrom = asReal(from);
@@ -758,13 +758,13 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = allocVector(INTSXP, 0);
 	goto done;
     }
-    if(along != R_MissingArg) {
+    if(! IS_R_MissingArg(along)) {
 	lout = XLENGTH(along);
 	if(One) {
 	    ans = lout ? seq_colon(1.0, (double)lout, call) : allocVector(INTSXP, 0);
 	    goto done;
 	}
-    } else if(len != R_MissingArg && len != R_NilValue) {
+    } else if(! IS_R_MissingArg(len) && ! IS_R_NilValue(len)) {
 	double rout = asReal(len);
 	if(ISNAN(rout) || rout <= -0.5)
 	    errorcall(call, _("'length.out' must be a non-negative number"));
@@ -776,15 +776,15 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(lout == NA_INTEGER) {
 	double rfrom = asReal(from), rto = asReal(to), rby = asReal(by), *ra;
-	if(from == R_MissingArg) rfrom = 1.0;
+	if(IS_R_MissingArg(from)) rfrom = 1.0;
 	else if(length(from) != 1) error("'from' must be of length 1");
-	if(to == R_MissingArg) rto = 1.0;
+	if(IS_R_MissingArg(to)) rto = 1.0;
 	else if(length(to) != 1) error("'to' must be of length 1");
 	if (!R_FINITE(rfrom))
 	    errorcall(call, "'from' cannot be NA, NaN or infinite");
 	if (!R_FINITE(rto))
 	    errorcall(call, "'to' cannot be NA, NaN or infinite");
-	if(by == R_MissingArg)
+	if(IS_R_MissingArg(by))
 	    ans = seq_colon(rfrom, rto, call);
 	else {
 	    if(length(by) != 1) error("'by' must be of length 1");
@@ -852,10 +852,10 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(INTSXP, 0);
     } else if (One) {
 	ans = seq_colon(1.0, (double)lout, call);
-    } else if (by == R_MissingArg) {
+    } else if (IS_R_MissingArg(by)) {
 	double rfrom = asReal(from), rto = asReal(to), rby;
-	if(to == R_MissingArg) rto = rfrom + (double)lout - 1;
-	if(from == R_MissingArg) rfrom = rto - (double)lout + 1;
+	if(IS_R_MissingArg(to)) rto = rfrom + (double)lout - 1;
+	if(IS_R_MissingArg(from)) rfrom = rto - (double)lout + 1;
 	if(!R_FINITE(rfrom))
 	    errorcall(call, _("'from' must be finite"));
 	if(!R_FINITE(rto))
@@ -870,9 +870,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		REAL(ans)[i] = rfrom + (double)i*rby;
 	    }
 	}
-    } else if (to == R_MissingArg) {
+    } else if (IS_R_MissingArg(to)) {
 	double rfrom = asReal(from), rby = asReal(by), rto;
-	if(from == R_MissingArg) rfrom = 1.0;
+	if(IS_R_MissingArg(from)) rfrom = 1.0;
 	if(!R_FINITE(rfrom))
 	    errorcall(call, _("'from' must be finite"));
 	if(!R_FINITE(rby))
@@ -892,7 +892,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		REAL(ans)[i] = rfrom + (double)i*rby;
 	    }
 	}
-    } else if (from == R_MissingArg) {
+    } else if (IS_R_MissingArg(from)) {
 	double rto = asReal(to), rby = asReal(by),
 	    rfrom = rto - (double)(lout-1)*rby;
 	if(!R_FINITE(rto))
@@ -925,14 +925,14 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     R_xlen_t len;
-    static SEXP length_op = NULL;
+    static SEXP length_op = SEXP_INIT;
 
     /* Store the .Primitive for 'length' for DispatchOrEval to use. */
-    if (length_op == NULL) {
+    if (IS_NULL_SEXP(length_op)) {
 	SEXP R_lengthSymbol = install("length");
 	length_op = eval(R_lengthSymbol, R_BaseEnv);
 	if (TYPEOF(length_op) != BUILTINSXP) {
-	    length_op = NULL;
+	    length_op = R_NULL_SEXP;
 	    error("'length' is not a BUILTIN");
 	}
 	R_PreserveObject(length_op);

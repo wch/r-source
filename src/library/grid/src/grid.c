@@ -91,7 +91,7 @@ void dirtyGridDevice(pGEDevDesc dd) {
 	SEXP gsd, griddev;
 	/* Record the fact that this device has now received grid output
 	 */
-	gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+	gsd = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
 	PROTECT(griddev = allocVector(LGLSXP, 1));
 	LOGICAL(griddev)[0] = TRUE;
 	SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
@@ -206,7 +206,7 @@ SEXP doSetViewport(SEXP vp,
      * NOTE that we will only clip if there is no rotation
      */
     else if (viewportClip(vp)) {
-	double rotationAngle = REAL(viewportRotation(vp))[0];
+	double rotationAngle = asReal(viewportRotation(vp));
 	if (rotationAngle != 0 &&
             rotationAngle != 90 &&
             rotationAngle != 270 &&
@@ -228,14 +228,15 @@ SEXP doSetViewport(SEXP vp,
 	     */
 	    SEXP x1, y1, x2, y2;
 	    LViewportContext vpc;
-	    double vpWidthCM = REAL(viewportWidthCM(vp))[0];
-	    double vpHeightCM = REAL(viewportHeightCM(vp))[0];
+	    double vpWidthCM = asReal(viewportWidthCM(vp));
+	    double vpHeightCM = asReal(viewportHeightCM(vp));
 	    R_GE_gcontext gc;
 	    LTransform transform;
+	    SEXP vpTvp = viewportTransform(vp);
 	    for (i=0; i<3; i++)
 		for (j=0; j<3; j++)
 		    transform[i][j] = 
-			REAL(viewportTransform(vp))[i + 3*j];
+			REAL(vpTvp)[i + 3*j];
 	    if (!topLevelVP) {
 		PROTECT(x1 = unit(0, L_NPC));
 		PROTECT(y1 = unit(0, L_NPC));
@@ -1037,13 +1038,14 @@ void getViewportTransform(SEXP currentvp,
 	 */
 	calcViewportTransform(currentvp, viewportParent(currentvp), 1, dd); 
     }
+    SEXP vpTcvp = viewportTransform(currentvp);
     for (i=0; i<3; i++)
 	for (j=0; j<3; j++)
 	    transform[i][j] = 
-		REAL(viewportTransform(currentvp))[i + 3*j];
-    *rotationAngle = REAL(viewportRotation(currentvp))[0];
-    *vpWidthCM = REAL(viewportWidthCM(currentvp))[0];
-    *vpHeightCM = REAL(viewportHeightCM(currentvp))[0];
+		REAL(vpTcvp)[i + 3*j];
+    *rotationAngle = asReal(viewportRotation(currentvp));
+    *vpWidthCM = asReal(viewportWidthCM(currentvp));
+    *vpHeightCM = asReal(viewportHeightCM(currentvp));
 }
 
 
@@ -1953,8 +1955,10 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
              * (so arrow heads are drawn at correct angle)
              */
             int np = LENGTH(VECTOR_ELT(points, 0));
-            double *px = REAL(VECTOR_ELT(points, 0));
-            double *py = REAL(VECTOR_ELT(points, 1));
+	    SEXP sx = VECTOR_ELT(points, 0);
+	    SEXP sy = VECTOR_ELT(points, 1);
+            double *px = REAL(sx);
+            double *py = REAL(sy);
             int start = 0;
             int end = np - 1;
             /*
@@ -2053,13 +2057,13 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 	 * when calculating physical value to return to user-level
 	 */
 	REAL(result)[0] = edgex / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[1] = edgey / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[2] = (xmax - xmin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[3] = (ymax - ymin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
         UNPROTECT(1); /* result */
     } else if (trace) {
         result = tracePts;
@@ -2494,13 +2498,13 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r,
 	 * when calculating physical value to return to user-level
 	 */
 	REAL(result)[0] = edgex / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[1] = edgey /
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[2] = (xmax - xmin) /
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[3] = (ymax - ymin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
     } 
     return result;
 }
@@ -2725,13 +2729,13 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 	 * when calculating physical value to return to user-level
 	 */
 	REAL(result)[0] = edgex / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[1] = edgey /
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[2] = (xmax - xmin) /
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[3] = (ymax - ymin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
     } 
     return result;
 }
@@ -3189,13 +3193,13 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	     * when calculating physical value to return to user-level
 	     */
 	    REAL(result)[0] = edgex / 
-		REAL(gridStateElement(dd, GSS_SCALE))[0];
+		asReal(gridStateElement(dd, GSS_SCALE));
 	    REAL(result)[1] = edgey / 
-		REAL(gridStateElement(dd, GSS_SCALE))[0];
+		asReal(gridStateElement(dd, GSS_SCALE));
 	    REAL(result)[2] = (xmax - xmin) / 
-		REAL(gridStateElement(dd, GSS_SCALE))[0];
+		asReal(gridStateElement(dd, GSS_SCALE));
 	    REAL(result)[3] = (ymax - ymin) / 
-		REAL(gridStateElement(dd, GSS_SCALE))[0];
+		asReal(gridStateElement(dd, GSS_SCALE));
 	}
     }
     vmaxset(vmax);
@@ -3541,13 +3545,13 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
 	 * when calculating physical value to return to user-level
 	 */
 	REAL(result)[0] = edgex / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[1] = edgey / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[2] = (xmax - xmin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
 	REAL(result)[3] = (ymax - ymin) / 
-	    REAL(gridStateElement(dd, GSS_SCALE))[0];
+	    asReal(gridStateElement(dd, GSS_SCALE));
     } 
     vmaxset(vmax);
     return result;
@@ -3614,11 +3618,11 @@ SEXP L_stringMetric(SEXP label)
              * when calculating physical value to return to user-level
              */
             REAL(ascent)[i] = fromDeviceHeight(asc, GE_INCHES, dd) / 
-                REAL(gridStateElement(dd, GSS_SCALE))[0];
+                asReal(gridStateElement(dd, GSS_SCALE));
             REAL(descent)[i] = fromDeviceHeight(dsc, GE_INCHES, dd) /
-                REAL(gridStateElement(dd, GSS_SCALE))[0];
+                asReal(gridStateElement(dd, GSS_SCALE));
             REAL(width)[i] = fromDeviceWidth(wid, GE_INCHES, dd) /
-                REAL(gridStateElement(dd, GSS_SCALE))[0];
+                asReal(gridStateElement(dd, GSS_SCALE));
 	}
     }
     PROTECT(result = allocVector(VECSXP, 3));

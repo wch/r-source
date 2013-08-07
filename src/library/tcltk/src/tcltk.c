@@ -98,8 +98,8 @@ static int R_call(ClientData clientData,
 		  const char *argv[])
 {
     int i;
-    SEXP expr, alist, ans;
-    void *fun;
+    SEXP expr, alist, ans, fun;
+    void *vfun;
 
     alist = R_NilValue;
     for (i = argc - 1 ; i > 1 ; i--){
@@ -108,9 +108,10 @@ static int R_call(ClientData clientData,
 	UNPROTECT(1);
     }
 
-    sscanf(argv[1], "%p", &fun);
+    sscanf(argv[1], "%p", &vfun);
+    fun = PTR_TO_SEXP(vfun);
 
-    expr = LCONS( (SEXP)fun, alist);
+    expr = LCONS( fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
     ans = eval(expr, R_GlobalEnv);
@@ -127,15 +128,16 @@ static int R_call_lang(ClientData clientData,
 		       int argc,
 		       const char *argv[])
 {
-    void *expr, *env; 
+    void *vexpr, *venv;
+    SEXP expr, env;
     SEXP ans;
 
-    sscanf(argv[1], "%p", &expr);
-    sscanf(argv[2], "%p", &env);
+    sscanf(argv[1], "%p", &vexpr); expr = PTR_TO_SEXP(vexpr);
+    sscanf(argv[2], "%p", &venv); env = PTR_TO_SEXP(venv);
 
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    ans = eval((SEXP)expr, (SEXP)env);
+    ans = eval(expr, env);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
@@ -597,11 +599,11 @@ static void callback_closure(char * buf, int buflen, SEXP closure)
 
     formals = FORMALS(closure);
 
-    snprintf(buf, buflen, "R_call %p", (void *) closure);
+    snprintf(buf, buflen, "R_call %p", (void *) SEXP_TO_PTR(closure));
 
-    while ( formals != R_NilValue )
+    while ( ! IS_R_NilValue(formals) )
     {
-	if (TAG(formals) ==  R_DotsSymbol) break;
+	if (SEXP_EQL(TAG(formals),  R_DotsSymbol)) break;
 	snprintf(tmp, 20, " %%%s", CHAR(PRINTNAME(TAG(formals))));
 	tmp[20] = '\0';
 	if (strlen(buf) + strlen(tmp) >= buflen)
@@ -613,7 +615,8 @@ static void callback_closure(char * buf, int buflen, SEXP closure)
 
 static void callback_lang(char *buf, int buflen, SEXP call, SEXP env)
 {
-    snprintf(buf, buflen, "R_call_lang %p %p", (void *) call, (void *) env);
+    snprintf(buf, buflen, "R_call_lang %p %p",
+	     (void *) SEXP_TO_PTR(call), (void *) SEXP_TO_PTR(env));
 
 }
 

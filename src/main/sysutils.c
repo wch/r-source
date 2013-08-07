@@ -192,7 +192,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {
     wchar_t wmode[10];
 
-    if(fn == NA_STRING) return NULL;
+    if(IS_NA_STRING(fn)) return NULL;
     mbstowcs(wmode, fixmode(mode), 10);
     return _wfopen(filenameToWchar(fn, expand), wmode);
 }
@@ -201,7 +201,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {
     const void *vmax = vmaxget();
     const char *filename = translateChar(fn), *res;
-    if(fn == NA_STRING || !filename) return NULL;
+    if(IS_NA_STRING(fn) || !filename) return NULL;
     if(expand) res = R_ExpandFileName(filename);
     else res = filename;
     vmaxset(vmax);
@@ -591,7 +591,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	args = CDR(args);
 	if(!isString(CAR(args)) || length(CAR(args)) != 1)
 	    error(_("invalid '%s' argument"), "sub");
-	if(STRING_ELT(CAR(args), 0) == NA_STRING) sub = NULL;
+	if(IS_NA_STRING(STRING_ELT(CAR(args), 0))) sub = NULL;
 	else sub = translateChar(STRING_ELT(CAR(args), 0));
 	args = CDR(args);
 	mark = asLogical(CAR(args));
@@ -646,7 +646,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("'x' must be a list of NULL or raw vectors"));
 	    } else {
 		si = STRING_ELT(x, i);
-		if (si == NA_STRING) {
+		if (IS_NA_STRING(si)) {
 		    if(!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
 		    continue;
 		}
@@ -787,7 +787,7 @@ const char *translateChar(SEXP x)
 
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateChar");
-    if(x == NA_STRING || !(ENC_KNOWN(x))) return ans;
+    if(IS_NA_STRING(x) || !(ENC_KNOWN(x))) return ans;
     if(IS_BYTES(x))
 	error(_("translating strings with \"bytes\" encoding is not allowed"));
     if(utf8locale && IS_UTF8(x)) return ans;
@@ -893,7 +893,7 @@ SEXP installTrChar(SEXP x)
 
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateChar");
-    if(x == NA_STRING || !(ENC_KNOWN(x))) return install(ans);
+    if(IS_NA_STRING(x) || !(ENC_KNOWN(x))) return install(ans);
     if(IS_BYTES(x))
 	error(_("translating strings with \"bytes\" encoding is not allowed"));
     if(utf8locale && IS_UTF8(x)) return install(ans);
@@ -1008,7 +1008,7 @@ const char *translateCharUTF8(SEXP x)
 
     if(TYPEOF(x) != CHARSXP)
 	error(_("'%s' must be called on a CHARSXP"), "translateCharUTF8");
-    if(x == NA_STRING) return ans;
+    if(IS_NA_STRING(x)) return ans;
     if(IS_UTF8(x)) return ans;
     if(IS_ASCII(x)) return ans;
     if(IS_BYTES(x))
@@ -1843,7 +1843,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0; i < XLENGTH(x); i++) {
 	SEXP el = STRING_ELT(x, i);
-	if (el == NA_STRING) continue;
+	if (IS_NA_STRING(el)) continue;
 #ifdef Win32
 	res = dos_wglob(filenameToWchar(el, FALSE),
 			(dirmark ? GLOB_MARK : 0) |

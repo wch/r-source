@@ -2677,7 +2677,7 @@ Rboolean GEcheckState(pGEDevDesc dd)
 
 Rboolean GErecording(SEXP call, pGEDevDesc dd)
 {
-    return (call != R_NilValue && dd->recordGraphics);
+    return (! IS_R_NilValue(call) && dd->recordGraphics);
 }
 
 /****************************************************************
@@ -2690,7 +2690,7 @@ void GErecordGraphicOperation(SEXP op, SEXP args, pGEDevDesc dd)
     SEXP lastOperation = dd->DLlastElt;
     if (dd->displayListOn) {
 	SEXP newOperation = list2(op, args);
-	if (lastOperation == R_NilValue) {
+	if (IS_R_NilValue(lastOperation)) {
 	    dd->displayList = CONS(newOperation, R_NilValue);
 	    dd->DLlastElt = dd->displayList;
 	} else {
@@ -2745,7 +2745,7 @@ void GEplayDisplayList(pGEDevDesc dd)
     this = GEdeviceNumber(dd);
     if (this == 0) return;
     theList = dd->displayList;
-    if (theList == R_NilValue) return;
+    if (IS_R_NilValue(theList)) return;
 
     /* Get each graphics system to restore state required for
      * replaying the display list
@@ -2757,11 +2757,11 @@ void GEplayDisplayList(pGEDevDesc dd)
      */
     PROTECT(theList);
     plotok = 1;
-    if (theList != R_NilValue) {
+    if (! IS_R_NilValue(theList)) {
 	savePalette(TRUE);
 	savedDevice = curDevice();
 	selectDevice(this);
-	while (theList != R_NilValue && plotok) {
+	while (! IS_R_NilValue(theList) && plotok) {
 	    SEXP theOperation = CAR(theList);
 	    SEXP op = CAR(theOperation);
 	    SEXP args = CADR(theOperation);
@@ -2973,7 +2973,7 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
      * This conversion of list to env taken from do_eval
      */
     PROTECT(x = VectorToPairList(list));
-    for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
+    for (xptr = x ; ! IS_R_NilValue(xptr) ; xptr = CDR(xptr))
 	SET_NAMED(CAR(xptr) , 2);
     /*
      * The environment passed in as the third arg is used as
@@ -3035,12 +3035,13 @@ void GEonExit()
 int GEstring_to_pch(SEXP pch)
 {
     int ipch = NA_INTEGER;
-    static SEXP last_pch = NULL;
+    static SEXP last_pch = SEXP_INIT;
     static int last_ipch = 0;
 
-    if (pch == NA_STRING) return NA_INTEGER;
+    if (IS_NA_STRING(pch)) return NA_INTEGER;
     if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
-    if (pch == last_pch) return last_ipch;/* take advantage of CHARSXP cache */
+    if (SEXP_EQL(pch, last_pch))
+	return last_ipch;/* take advantage of CHARSXP cache */
     ipch = (unsigned char) CHAR(pch)[0];
     if (IS_LATIN1(pch)) {
 	if (ipch > 127) ipch = -ipch;  /* record as Unicode */

@@ -777,10 +777,10 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp, InputRoutines
 
 static int NewSaveSpecialHook (SEXP item)
 {
-    if (item == R_NilValue)     return -1;
-    if (item == R_GlobalEnv)    return -2;
-    if (item == R_UnboundValue) return -3;
-    if (item == R_MissingArg)   return -4;
+    if (IS_R_NilValue(item))     return -1;
+    if (IS_R_GlobalEnv(item))    return -2;
+    if (IS_R_UnboundValue(item)) return -3;
+    if (IS_R_MissingArg(item))   return -4;
     return 0;
 }
 
@@ -792,7 +792,7 @@ static SEXP NewLoadSpecialHook (SEXPTYPE type)
     case -3: return R_UnboundValue;
     case -4: return R_MissingArg;
     }
-    return (SEXP) 0;	/* not strictly legal... */
+    return R_NULL_SEXP;	/* not strictly legal... */
 }
 
 
@@ -820,7 +820,7 @@ static SEXP NewLoadSpecialHook (SEXPTYPE type)
 
 #define HASHSIZE 1099
 
-#define PTRHASH(obj) (((R_size_t) (obj)) >> 2)
+#define PTRHASH(obj) (((R_size_t) SEXP_TO_PTR(obj)) >> 2)
 
 #define HASH_TABLE_KEYS_LIST(ht) CAR(ht)
 #define SET_HASH_TABLE_KEYS_LIST(ht, v) SETCAR(ht, v)
@@ -845,7 +845,7 @@ static void FixHashEntries(SEXP ht)
     SEXP cell;
     int count;
     for (cell = HASH_TABLE_KEYS_LIST(ht), count = 1;
-	 cell != R_NilValue;
+	 ! IS_R_NilValue(cell);
 	 cell = CDR(cell), count++)
 	INTEGER(TAG(cell))[0] = count;
 }
@@ -868,8 +868,8 @@ static int HashGet(SEXP item, SEXP ht)
 {
     R_size_t pos = PTRHASH(item) % HASH_TABLE_SIZE(ht);
     SEXP cell;
-    for (cell = HASH_BUCKET(ht, pos); cell != R_NilValue; cell = CDR(cell))
-	if (item == TAG(cell))
+    for (cell = HASH_BUCKET(ht, pos); ! IS_R_NilValue(cell); cell = CDR(cell))
+	if (SEXP_EQL(item, TAG(cell)))
 	    return INTEGER(CAR(cell))[0];
     return 0;
 }
@@ -911,7 +911,7 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
     case ENVSXP:
 	if (NewLookup(obj, env_list))
 	    return;
-	if (obj == R_BaseNamespace)
+	if (IS_R_BaseNamespace(obj))
 	    warning(_("base namespace is not preserved in version 1 workspaces"));
 	else if (R_IsNamespaceEnv(obj))
 	    error(_("cannot save namespace in version 1 workspaces"));
@@ -1228,7 +1228,7 @@ static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp,
 
     R_assert(TYPEOF(sym_table) == VECSXP && TYPEOF(env_table) == VECSXP);
     type = m->InInteger(fp, d);
-    if ((s = NewLoadSpecialHook(type)))
+    if (! IS_NULL_SEXP(s = NewLoadSpecialHook(type)))
 	return s;
     levs = m->InInteger(fp, d);
     objf = m->InInteger(fp, d);
@@ -1856,7 +1856,7 @@ void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 	    type = R_pstream_xdr_format;
 	}
 	R_WriteMagic(fp, magic);
-	R_InitFileOutPStream(&out, fp, type, version, NULL, NULL);
+	R_InitFileOutPStream(&out, fp, type, version, NULL, R_NULL_SEXP);
 	R_Serialize(obj, &out);
     }
 }
@@ -1895,13 +1895,13 @@ SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
     case R_MAGIC_XDR_V1:
 	return_and_free(NewXdrLoad(fp, &data));
     case R_MAGIC_ASCII_V2:
-	R_InitFileInPStream(&in, fp, R_pstream_ascii_format, NULL, NULL);
+	R_InitFileInPStream(&in, fp, R_pstream_ascii_format, NULL, R_NULL_SEXP);
 	return_and_free(R_Unserialize(&in));
     case R_MAGIC_BINARY_V2:
-	R_InitFileInPStream(&in, fp, R_pstream_binary_format, NULL, NULL);
+	R_InitFileInPStream(&in, fp, R_pstream_binary_format, NULL, R_NULL_SEXP);
 	return_and_free(R_Unserialize(&in));
     case R_MAGIC_XDR_V2:
-	R_InitFileInPStream(&in, fp, R_pstream_xdr_format, NULL, NULL);
+	R_InitFileInPStream(&in, fp, R_pstream_xdr_format, NULL, R_NULL_SEXP);
 	return_and_free(R_Unserialize(&in));
     default:
 	R_FreeStringBuffer(&data.buffer);
@@ -1942,14 +1942,14 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("'file' must be non-empty string"));
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	error(_("'ascii' must be logical"));
-    if (CADDDR(args) == R_NilValue)
+    if (IS_R_NilValue(CADDDR(args)))
 	version = R_DefaultSaveFormatVersion;
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
 	error(_("invalid '%s' argument"), "version");
     source = CAR(nthcdr(args,4));
-    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+    if (! IS_R_NilValue(source) && TYPEOF(source) != ENVSXP)
 	error(_("invalid '%s' argument"), "environment");
     ep = asLogical(CAR(nthcdr(args,5)));
     if (ep == NA_LOGICAL)
@@ -1974,7 +1974,7 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < len; j++, t = CDR(t)) {
 	SET_TAG(t, install(CHAR(STRING_ELT(CAR(args), j))));
 	tmp = findVar(TAG(t), source);
-	if (tmp == R_UnboundValue)
+	if (IS_R_UnboundValue(tmp))
 	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(t))));
 	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
@@ -2028,11 +2028,11 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
 
     PROTECT(ans);
     a = ans;
-    while (a != R_NilValue) {a = CDR(a); cnt++;}
+    while (! IS_R_NilValue(a)) {a = CDR(a); cnt++;}
     PROTECT(names = allocVector(STRSXP, cnt));
     cnt = 0;
     a = ans;
-    while (a != R_NilValue) {
+    while (! IS_R_NilValue(a)) {
 	SET_STRING_ELT(names, cnt++, PRINTNAME(TAG(a)));
 	defineVar(TAG(a), CAR(a), aenv);
 	if(R_seemsOldStyleS4Object(CAR(a)))
@@ -2151,7 +2151,7 @@ int attribute_hidden R_XDRDecodeInteger(void *buf)
 void R_SaveGlobalEnvToFile(const char *name)
 {
     SEXP sym = install("sys.save.image");
-    if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+    if (IS_R_UnboundValue(findVar(sym, R_GlobalEnv))) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "wb"); /* binary file */
 	if (!fp) {
 	    error(_("cannot save data -- unable to open '%s': %s"),
@@ -2172,7 +2172,7 @@ void R_SaveGlobalEnvToFile(const char *name)
 void R_RestoreGlobalEnvFromFile(const char *name, Rboolean quiet)
 {
     SEXP sym = install("sys.load.image");
-    if (findVar(sym, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
+    if (IS_R_UnboundValue(findVar(sym, R_GlobalEnv))) { /* not a perfect test */
 	FILE *fp = R_fopen(name, "rb"); /* binary file */
 	if(fp != NULL) {
 	    R_LoadSavedData(fp, R_GlobalEnv);
@@ -2244,7 +2244,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("'ascii' must be logical"));
     ascii = INTEGER(CADDR(args))[0];
 
-    if (CADDDR(args) == R_NilValue)
+    if (IS_R_NilValue(CADDDR(args)))
 	version = R_DefaultSaveFormatVersion;
     else
 	version = asInteger(CADDDR(args));
@@ -2253,7 +2253,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (version < 2)
 	error(_("cannot save to connections in version %d format"), version);
     source = CAR(nthcdr(args,4));
-    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+    if (! IS_R_NilValue(source) && TYPEOF(source) != ENVSXP)
 	error(_("invalid '%s' argument"), "environment");
     ep = asLogical(CAR(nthcdr(args,5)));
     if (ep == NA_LOGICAL)
@@ -2295,7 +2295,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("error writing to connection"));
     }
 
-    R_InitConnOutPStream(&out, con, type, version, NULL, NULL);
+    R_InitConnOutPStream(&out, con, type, version, NULL, R_NULL_SEXP);
 
     len = length(list);
     PROTECT(s = allocList(len));
@@ -2305,7 +2305,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_TAG(t, install(CHAR(STRING_ELT(list, j))));
 	SETCAR(t, findVar(TAG(t), source));
 	tmp = findVar(TAG(t), source);
-	if (tmp == R_UnboundValue)
+	if (IS_R_UnboundValue(tmp))
 	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(t))));
 	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
@@ -2372,7 +2372,7 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     if (strncmp((char*)buf, "RDA2\n", 5) == 0 ||
 	strncmp((char*)buf, "RDB2\n", 5) == 0 ||
 	strncmp((char*)buf, "RDX2\n", 5) == 0) {
-	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
+	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, R_NULL_SEXP);
 	/* PROTECT is paranoia: some close() method might allocate */
 	R_InitReadItemDepth = R_ReadItemDepth = -asInteger(CADDR(args));
 	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));

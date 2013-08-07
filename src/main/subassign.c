@@ -397,7 +397,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	}
     }
     xnames = getAttrib(x, R_NamesSymbol);
-    if (xnames != R_NilValue) {
+    if (! IS_R_NilValue(xnames)) {
 	PROTECT(xnewnames = allocVector(STRSXP, ii));
 	ii = 0;
 	for (i = 0; i < len; i++) {
@@ -462,7 +462,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* If so, we manufacture a real subscript vector. */
 
     PROTECT(s);
-    if (ATTRIB(s) != R_NilValue) { /* pretest to speed up simple case */
+    if (! IS_R_NilValue(ATTRIB(s))) { /* pretest to speed up simple case */
 	SEXP dim = getAttrib(x, R_DimSymbol);
 	if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
 	    if (isString(s)) {
@@ -500,7 +500,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     PROTECT(x);
 
-    if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
+    if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || ! IS_R_NilValue(y)) {
 	if (n > 0 && ny == 0)
 	    error(_("replacement has length zero"));
 	if (n > 0 && n % ny)
@@ -513,7 +513,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* FIXME : this should be a shallow copy for list */
     /* objects.  A full duplication is wasteful. */
 
-    if (x == y)
+    if (SEXP_EQL(x, y))
 	PROTECT(y = duplicate(y));
     else
 	PROTECT(y);
@@ -706,11 +706,11 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* Note makeSubscript passes the additional names back as the use.names
        attribute (a vector list) of the generated subscript vector */
     newnames = getAttrib(indx, R_UseNamesSymbol);
-    if (newnames != R_NilValue) {
+    if (! IS_R_NilValue(newnames)) {
 	SEXP oldnames = getAttrib(x, R_NamesSymbol);
-	if (oldnames != R_NilValue) {
+	if (! IS_R_NilValue(oldnames)) {
 	    for (i = 0; i < n; i++) {
-		if (VECTOR_ELT(newnames, i) != R_NilValue) {
+		if (! IS_R_NilValue(VECTOR_ELT(newnames, i))) {
 		    ii = gi(indx, i);
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
@@ -723,7 +723,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    for (i = 0; i < nx; i++)
 		SET_STRING_ELT(oldnames, i, R_BlankString);
 	    for (i = 0; i < n; i++) {
-		if (VECTOR_ELT(newnames, i) != R_NilValue) {
+		if (! IS_R_NilValue(VECTOR_ELT(newnames, i))) {
 		    ii = gi(indx, i);
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
@@ -792,7 +792,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* FIXME : this should be a shallow copy for list */
     /* objects.  A full duplication is wasteful. */
 
-    if (x == y)
+    if (SEXP_EQL(x, y))
 	PROTECT(y = duplicate(y));
     else
 	PROTECT(y);
@@ -1019,7 +1019,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     const void *vmax = vmaxget();
 
     PROTECT(dims = getAttrib(x, R_DimSymbol));
-    if (dims == R_NilValue || (k = LENGTH(dims)) != length(s))
+    if (IS_R_NilValue(dims) || (k = LENGTH(dims)) != length(s))
 	error(_("incorrect number of subscripts"));
 
     /* k is now the number of dims */
@@ -1083,7 +1083,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* FIXME : this should be a shallow copy for list */
     /* objects.  A full duplication is wasteful. */
 
-    if (x == y)
+    if (SEXP_EQL(x, y))
 	PROTECT(y = duplicate(y));
     else
 	PROTECT(y);
@@ -1345,7 +1345,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
     }
     else {
 	*s = p = CDR(args);
-	while (CDDR(p) != R_NilValue)
+	while (! IS_R_NilValue(CDDR(p)))
 	    p = CDR(p);
 	*y = CADR(p);
 	SETCDR(p, R_NilValue);
@@ -1358,7 +1358,7 @@ static R_INLINE
 int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SEXP rho, SEXP *ans)
 {
-    if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
+    if (! IS_R_NilValue(args) && ! SEXP_EQL(CAR(args), R_DotsSymbol)) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
 	if (! OBJECT(x)) {
@@ -1502,7 +1502,7 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 	    if(i != which)
 		SET_VECTOR_ELT(y, k++, VECTOR_ELT(x, i));
 	xnames = getAttrib(x, R_NamesSymbol);
-	if (xnames != R_NilValue) {
+	if (! IS_R_NilValue(xnames)) {
 	    PROTECT(ynames = allocVector(STRSXP, n - 1));
 	    k = 0;
 	    for (i = 0 ; i < n; i++)
@@ -1613,7 +1613,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("replacement has length zero"));
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error(_("more elements supplied than there are to replace"));
-	if (nsubs == 0 || CAR(subs) == R_MissingArg)
+	if (nsubs == 0 || IS_R_MissingArg(CAR(subs)))
 	    error(_("[[ ]] with missing subscript"));
 	if (nsubs == 1) {
 	    offset = OneIndex(x, thesub, xlength(x), 0, &newname, 
@@ -1785,9 +1785,9 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* In this case we must create a names attribute */
 	/* (if it doesn't already exist) and set the new */
 	/* value in the names attribute. */
-	if (stretch && newname != R_NilValue) {
+	if (stretch && ! IS_R_NilValue(newname)) {
 	    names = getAttrib(x, R_NamesSymbol);
-	    if (names == R_NilValue) {
+	    if (IS_R_NilValue(names)) {
 		PROTECT(names = allocVector(STRSXP, length(x)));
 		SET_STRING_ELT(names, offset, newname);
 		setAttrib(x, R_NamesSymbol, names);
@@ -1920,7 +1920,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     if(TYPEOF(x) == S4SXP) {
 	xS4 = x;
         x = R_getS4DataSlot(x, ANYSXP);
-	if(x == R_NilValue)
+	if(IS_R_NilValue(x))
 	  errorcall(call, _("no method for assigning subsets of this S4 class"));
     }
 
@@ -1928,8 +1928,8 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	/* Here we do need to duplicate */
 	if (maybe_duplicate)
 	    REPROTECT(val = duplicate(val), pvalidx);
-	if (TAG(x) == nlist) {
-	    if (val == R_NilValue) {
+	if (SEXP_EQL(TAG(x), nlist)) {
+	    if (IS_R_NilValue(val)) {
 		SET_ATTRIB(CDR(x), ATTRIB(x));
 		IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(x)) : UNSET_S4_OBJECT(CDR(x));
 		SET_OBJECT(CDR(x), OBJECT(x));
@@ -1940,22 +1940,22 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		SETCAR(x, val);
 	}
 	else {
-	    for (t = x; t != R_NilValue; t = CDR(t))
-		if (TAG(CDR(t)) == nlist) {
-		    if (val == R_NilValue)
+	    for (t = x; ! IS_R_NilValue(t); t = CDR(t))
+		if (SEXP_EQL(TAG(CDR(t)), nlist)) {
+		    if (IS_R_NilValue(val))
 			SETCDR(t, CDDR(t));
 		    else
 			SETCAR(CDR(t), val);
 		    break;
 		}
-		else if (CDR(t) == R_NilValue && val != R_NilValue) {
+		else if (IS_R_NilValue(CDR(t)) && ! IS_R_NilValue(val)) {
 		    SETCDR(t, allocSExp(LISTSXP));
 		    SET_TAG(CDR(t), nlist);
 		    SETCADR(t, val);
 		    break;
 		}
 	}
-	if (x == R_NilValue && val != R_NilValue) {
+	if (IS_R_NilValue(x) && ! IS_R_NilValue(val)) {
 	    x = allocList(1);
 	    SETCAR(x, val);
 	    SET_TAG(x, nlist);
@@ -1989,7 +1989,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	    /* If "val" is NULL, this is an element deletion */
 	    /* if there is a match to "nlist" otherwise "x" */
 	    /* is unchanged.  The attributes need adjustment. */
-	    if (names != R_NilValue) {
+	    if (! IS_R_NilValue(names)) {
 		imatch = -1;
 		for (i = 0; i < nx; i++)
 		    if (NonNullStringMatch(STRING_ELT(names, i), nlist)) {
@@ -2060,7 +2060,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	}
     }
     UNPROTECT(2);
-    if(xS4 != R_NilValue)
+    if(! IS_R_NilValue(xS4))
 	x = xS4; /* x was an env't, the data slot of xS4 */
     SET_NAMED(x, 0);
     if(S4) SET_S4_OBJECT(x);

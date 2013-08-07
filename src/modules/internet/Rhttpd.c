@@ -489,7 +489,7 @@ static SEXP parse_request_body(httpd_conn_t *c) {
 	if (c->content_length)
 	    memcpy(RAW(res), c->body, c->content_length);
 	if (c->content_type) { /* attach the content type so it can be interpreted */
-	    if (!R_ContentTypeName) R_ContentTypeName = install("content-type");
+	    if (IS_NULL_SEXP(R_ContentTypeName)) R_ContentTypeName = install("content-type");
 	    setAttrib(res, R_ContentTypeName, mkString(c->content_type));
 	}
 	UNPROTECT(1);
@@ -537,14 +537,14 @@ static SEXP handler_for_path(const char *path) {
 	    fn[c - e] = 0;
 	    DBG(Rprintf("handler_for_path('%s'): looking up custom handler '%s'\n", path, fn));
 	    /* we cache custom_handlers_env so in case it has not been loaded yet, fetch it */
-	    if (!custom_handlers_env) {
-		if (!R_HandlersName) R_HandlersName = install(".httpd.handlers.env");
+	    if (IS_NULL_SEXP(custom_handlers_env)) {
+		if (IS_NULL_SEXP(R_HandlersName)) R_HandlersName = install(".httpd.handlers.env");
 		custom_handlers_env = eval(R_HandlersName, R_FindNamespace(mkString("tools")));
 	    }
 	    /* we only proceed if .httpd.handlers.env really exists */
 	    if (TYPEOF(custom_handlers_env) == ENVSXP) {
 		SEXP cl = findVarInFrame3(custom_handlers_env, install(fn), TRUE);
-		if (cl != R_UnboundValue && TYPEOF(cl) == CLOSXP) /* we need a closure */
+		if (! IS_R_UnboundValue(cl) && TYPEOF(cl) == CLOSXP) /* we need a closure */
 		    return cl;
 	    }
 	}
@@ -643,7 +643,7 @@ static void process_request_(void *ptr)
 		    send_response(c->sock, buf, strlen(buf));
 		}
 		send_response(c->sock, ct, strlen(ct));
-		if (sHeaders != R_NilValue) {
+		if (! IS_R_NilValue(sHeaders)) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
 			const char *hs = CHAR(STRING_ELT(sHeaders, i));
@@ -716,7 +716,7 @@ static void process_request_(void *ptr)
 		    send_response(c->sock, buf, strlen(buf));
 		}
 		send_response(c->sock, ct, strlen(ct));
-		if (sHeaders != R_NilValue) {
+		if (! IS_R_NilValue(sHeaders)) {
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
 			const char *hs = CHAR(STRING_ELT(sHeaders, i));
@@ -1248,9 +1248,9 @@ void in_R_HTTPDStop(void)
 SEXP R_init_httpd(SEXP sIP, SEXP sPort)
 {
     const char *ip = 0;
-    if (sIP != R_NilValue && (TYPEOF(sIP) != STRSXP || LENGTH(sIP) != 1))
+    if (! IS_R_NilValue(sIP) && (TYPEOF(sIP) != STRSXP || LENGTH(sIP) != 1))
 	Rf_error("invalid bind address specification");
-    if (sIP != R_NilValue)
+    if (! IS_R_NilValue(sIP))
 	ip = CHAR(STRING_ELT(sIP, 0));
     return ScalarInteger(in_R_HTTPDCreate(ip, asInteger(sPort)));
 }

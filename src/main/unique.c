@@ -152,7 +152,7 @@ static hlen chash(SEXP x, R_xlen_t indx, HashData *d)
  * we do (upper ^ lower) */
 static hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
 {
-    intptr_t z = (intptr_t) STRING_ELT(x, indx);
+    intptr_t z = (intptr_t) SEXP_TO_PTR(STRING_ELT(x, indx));
     unsigned int z1 = (unsigned int)(z & 0xffffffff), z2 = 0;
 #if SIZEOF_LONG == 8
     z2 = (unsigned int)(z/0x100000000L);
@@ -221,10 +221,10 @@ static int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
     if (i < 0 || j < 0) return 0;
     /* Two strings which have the same address must be the same,
        so avoid looking at the contents */
-    if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
+    if (SEXP_EQL(STRING_ELT(x, i), STRING_ELT(y, j))) return 1;
     /* Then if either is NA the other cannot be */
     /* Once all CHARSXPs are cached, Seql will handle this */
-    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING)
+    if (IS_NA_STRING(STRING_ELT(x, i)) || IS_NA_STRING(STRING_ELT(y, j)))
 	return 0;
     return Seql(STRING_ELT(x, i), STRING_ELT(y, j));
 }
@@ -851,7 +851,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     else type = TYPEOF(x) < TYPEOF(table) ? TYPEOF(table) : TYPEOF(x);
     PROTECT(x     = coerceVector(x,     type)); nprot++;
     PROTECT(table = coerceVector(table, type)); nprot++;
-    if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
+    if (! IS_NULL_SEXP(incomp)) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
     data.nomatch = nmatch;
     HashTableSetup(table, &data, NA_INTEGER);
     if(type == STRSXP) {
@@ -895,7 +895,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     }
     PROTECT(data.HashTable); nprot++;
     DoHashing(table, &data);
-    if (incomp) UndoHashing(incomp, table, &data);
+    if (! IS_NULL_SEXP(incomp)) UndoHashing(incomp, table, &data);
     ans = HashLookup(table, x, &data);
     UNPROTECT(nprot);
     return ans;
@@ -903,13 +903,13 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 
 SEXP matchE(SEXP itable, SEXP ix, int nmatch, SEXP env)
 {
-    return match5(itable, ix, nmatch, NULL, env);
+    return match5(itable, ix, nmatch, R_NULL_SEXP, env);
 }
 
 /* used from other code, not here: */
 SEXP match(SEXP itable, SEXP ix, int nmatch)
 {
-    return match5(itable, ix, nmatch, NULL, R_BaseEnv);
+    return match5(itable, ix, nmatch, R_NULL_SEXP, R_BaseEnv);
 }
 
 
@@ -1202,12 +1202,12 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static SEXP StripUnmatched(SEXP s)
 {
-    if (s == R_NilValue) return s;
+    if (IS_R_NilValue(s)) return s;
 
-    if (CAR(s) == R_MissingArg && !ARGUSED(s) ) {
+    if (IS_R_MissingArg(CAR(s)) && !ARGUSED(s) ) {
 	return StripUnmatched(CDR(s));
     }
-    else if (CAR(s) == R_DotsSymbol ) {
+    else if (SEXP_EQL(CAR(s), R_DotsSymbol) ) {
 	return StripUnmatched(CDR(s));
     }
     else {
@@ -1219,13 +1219,13 @@ static SEXP StripUnmatched(SEXP s)
 static SEXP ExpandDots(SEXP s, int expdots)
 {
     SEXP r;
-    if (s == R_NilValue)
+    if (IS_R_NilValue(s))
 	return s;
     if (TYPEOF(CAR(s)) == DOTSXP ) {
 	SET_TYPEOF(CAR(s), LISTSXP);	/* a safe mutation */
 	if (expdots) {
 	    r = CAR(s);
-	    while (CDR(r) != R_NilValue ) {
+	    while (! IS_R_NilValue(CDR(r)) ) {
 		SET_ARGUSED(r, 1);
 		r = CDR(r);
 	    }
@@ -1247,10 +1247,10 @@ static SEXP subDots(SEXP rho)
 
     dots = findVar(R_DotsSymbol, rho);
 
-    if (dots == R_UnboundValue)
+    if (IS_R_UnboundValue(dots))
 	error(_("... used in a situation where it does not exist"));
 
-    if (dots == R_MissingArg)
+    if (IS_R_MissingArg(dots))
 	return dots;
 
     len = length(dots);
@@ -1296,7 +1296,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* matchcall was called from. */
 	cptr = R_GlobalContext;
 	while (cptr != NULL) {
-	    if (cptr->callflag & CTXT_FUNCTION && cptr->cloenv == sysp)
+	    if (cptr->callflag & CTXT_FUNCTION && SEXP_EQL(cptr->cloenv, sysp))
 		break;
 	    cptr = cptr->nextcontext;
 	}
@@ -1365,22 +1365,22 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
        of the actuals  */
 
     t2 = R_MissingArg;
-    for (t1=actuals ; t1!=R_NilValue ; t1 = CDR(t1) ) {
-	if (CAR(t1) == R_DotsSymbol) {
+    for (t1=actuals ; ! IS_R_NilValue(t1) ; t1 = CDR(t1) ) {
+	if (SEXP_EQL(CAR(t1), R_DotsSymbol)) {
 		t2 = subDots(sysp);
 		break;
 	}
     }
     /* now to splice t2 into the correct spot in actuals */
-    if (t2 != R_MissingArg ) {	/* so we did something above */
-	if( CAR(actuals) == R_DotsSymbol ) {
+    if (! IS_R_MissingArg(t2) ) {	/* so we did something above */
+	if( SEXP_EQL(CAR(actuals), R_DotsSymbol) ) {
 	    UNPROTECT(1);
 	    actuals = listAppend(t2, CDR(actuals));
 	    PROTECT(actuals);
 	}
 	else {
-	    for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
-		if( CADR(t1) == R_DotsSymbol ) {
+	    for(t1=actuals; ! IS_R_NilValue(t1); t1=CDR(t1)) {
+		if( SEXP_EQL(CADR(t1), R_DotsSymbol) ) {
 		    tail = CDDR(t1);
 		    SETCDR(t1, t2);
 		    listAppend(actuals,tail);
@@ -1389,14 +1389,14 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     } else { /* get rid of it */
-	if( CAR(actuals) == R_DotsSymbol ) {
+	if( SEXP_EQL(CAR(actuals), R_DotsSymbol) ) {
 	    UNPROTECT(1);
 	    actuals = CDR(actuals);
 	    PROTECT(actuals);
 	}
 	else {
-	    for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
-		if( CADR(t1) == R_DotsSymbol ) {
+	    for(t1=actuals; ! IS_R_NilValue(t1); t1=CDR(t1)) {
+		if( SEXP_EQL(CADR(t1), R_DotsSymbol) ) {
 		    tail = CDDR(t1);
 		    SETCDR(t1, tail);
 		    break;
@@ -1408,7 +1408,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attach the argument names as tags */
 
-    for (f = formals, b = rlist; b != R_NilValue; b = CDR(b), f = CDR(f)) {
+    for (f = formals, b = rlist; ! IS_R_NilValue(b); b = CDR(b), f = CDR(f)) {
 	SET_TAG(b, TAG(f));
     }
 
@@ -1693,7 +1693,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static int csequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
-    return STRING_ELT(x, i) == STRING_ELT(y, j);
+    return SEXP_EQL(STRING_ELT(x, i), STRING_ELT(y, j));
 }
 
 static void HashTableSetup1(SEXP x, HashData *d)

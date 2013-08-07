@@ -69,11 +69,13 @@ SEXP viewportLayout(SEXP vp) {
 }
 
 double viewportHJust(SEXP vp) {
-    return REAL(VECTOR_ELT(vp, VP_VALIDJUST))[0];
+    SEXP svp = VECTOR_ELT(vp, VP_VALIDJUST);
+    return REAL(svp)[0];
 }
 
 double viewportVJust(SEXP vp) {
-    return REAL(VECTOR_ELT(vp, VP_VALIDJUST))[1];
+    SEXP svp = VECTOR_ELT(vp, VP_VALIDJUST);
+    return REAL(svp)[1];
 }
 
 SEXP viewportLayoutPosRow(SEXP vp) {
@@ -98,11 +100,11 @@ int viewportFont(SEXP vp) {
 }
 
 double viewportFontSize(SEXP vp) {
-    return REAL(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTSIZE))[0];
+    return asReal(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTSIZE));
 }
 
 double viewportLineHeight(SEXP vp) {
-    return REAL(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_LINEHEIGHT))[0];
+    return asReal(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_LINEHEIGHT));
 }
 
 double viewportCex(SEXP vp) {
@@ -253,13 +255,14 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	    calcViewportTransform(parent, viewportParent(parent), 0, dd);
 	/* Get information required to transform viewport location
 	 */
-	parentWidthCM = REAL(viewportWidthCM(parent))[0];
-	parentHeightCM = REAL(viewportHeightCM(parent))[0];
-	parentAngle = REAL(viewportRotation(parent))[0];
+	parentWidthCM = asReal(viewportWidthCM(parent));
+	parentHeightCM = asReal(viewportHeightCM(parent));
+	parentAngle = asReal(viewportRotation(parent));
+	SEXP vpTp = viewportTransform(parent);
 	for (i=0; i<3; i++)
 	    for (j=0; j<3; j++)
 		parentTransform[i][j] = 
-		    REAL(viewportTransform(parent))[i +3*j];
+		    REAL(vpTp)[i +3*j];
 	fillViewportContextFromViewport(parent, &parentContext);
 	/* 
 	 * Don't get gcontext from parent because the most recent
@@ -372,7 +375,7 @@ void initVP(pGEDevDesc dd)
     SEXP vpfnname, vpfn, vp;
     SEXP xscale, yscale;
     SEXP currentgp = gridStateElement(dd, GSS_GPAR);
-    SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+    SEXP gsd = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
     PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_gridEvalEnv));
     PROTECT(vpfn = lang1(vpfnname));
     PROTECT(vp = eval(vpfn, R_GlobalEnv));

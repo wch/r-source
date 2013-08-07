@@ -226,7 +226,8 @@ double pureNullUnitValue(SEXP unit, int index)
 		unitValue(arg2(unit), index);
 	}
 	else if (timesOp(unit)) {
-	    result = REAL(arg1(unit))[index] * 
+	    SEXP a1u = arg1(unit);
+	    result = REAL(a1u)[index] * 
 		unitValue(arg2(unit), index);
 	}
 	else if (minFunc(unit)) {
@@ -905,7 +906,7 @@ double transform(double value, int unit, SEXP data,
     case L_DIDA:
     case L_CICERO:
     case L_SCALEDPOINTS:
-      result = result * REAL(gridStateElement(dd, GSS_SCALE))[0];
+      result = result * asReal(gridStateElement(dd, GSS_SCALE));
       break;
     default:
       /*
@@ -1154,7 +1155,8 @@ double transformXArithmetic(SEXP x, int index,
 		       dd);
     }
     else if (timesOp(x)) {
-	result = REAL(arg1(x))[index % LENGTH(arg1(x))] *
+	SEXP a1x = arg1(x);
+	result = REAL(a1x)[index % LENGTH(arg1(x))] *
 	    transformX(arg2(x), index, vpc, gc,
 		       widthCM, heightCM, 
 		       nullLMode, L_multiplying, dd);
@@ -1234,7 +1236,8 @@ double transformYArithmetic(SEXP y, int index,
 		       dd);
     }
     else if (timesOp(y)) {
-	result = REAL(arg1(y))[index % LENGTH(arg1(y))] *
+	SEXP a1y = arg1(y);
+	result = REAL(a1y)[index % LENGTH(arg1(y))] *
 	    transformY(arg2(y), index, vpc, gc,
 		       widthCM, heightCM, 
 		       nullLMode, L_multiplying, dd);
@@ -1314,7 +1317,8 @@ double transformWidthArithmetic(SEXP width, int index,
 			   dd);
     }
     else if (timesOp(width)) {
-	result = REAL(arg1(width))[index % LENGTH(arg1(width))] *
+	SEXP a1w = arg1(width);
+	result = REAL(a1w)[index % LENGTH(arg1(width))] *
 	    transformWidth(arg2(width), index, vpc, gc,
 			   widthCM, heightCM, 
 			   nullLMode, L_multiplying, dd);
@@ -1394,7 +1398,8 @@ double transformHeightArithmetic(SEXP height, int index,
 			    dd);
     }
     else if (timesOp(height)) {
-	result = REAL(arg1(height))[index % LENGTH(arg1(height))] *
+	SEXP a1h = arg1(height);
+	result = REAL(a1h)[index % LENGTH(arg1(height))] *
 	    transformHeight(arg2(height), index, vpc, gc,
 			    widthCM, heightCM, 
 			    nullLMode, L_multiplying, dd);
@@ -1651,7 +1656,7 @@ double transformFromINCHES(double value, int unit,
     case L_DIDA:
     case L_CICERO:
     case L_SCALEDPOINTS:
-      result = result / REAL(gridStateElement(dd, GSS_SCALE))[0];
+      result = result / asReal(gridStateElement(dd, GSS_SCALE));
       break;
     default:
       /*

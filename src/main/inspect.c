@@ -42,11 +42,11 @@
 static void PrintEnvironment(SEXP x)
 {
     const void *vmax = vmaxget();
-    if (x == R_GlobalEnv)
+    if (IS_R_GlobalEnv(x))
 	Rprintf("<R_GlobalEnv>");
-    else if (x == R_BaseEnv)
+    else if (IS_R_BaseEnv(x))
 	Rprintf("<base>");
-    else if (x == R_EmptyEnv)
+    else if (IS_R_EmptyEnv(x))
 	Rprintf("<R_EmptyEnv>");
     else if (R_IsPackageEnv(x))
 	Rprintf("<%s>",
@@ -54,7 +54,7 @@ static void PrintEnvironment(SEXP x)
     else if (R_IsNamespaceEnv(x))
 	Rprintf("<namespace:%s>",
 		translateChar(STRING_ELT(R_NamespaceEnvSpec(x), 0)));
-    else Rprintf("<%p>", (void *)x);
+    else Rprintf("<%p>", (void *)SEXPPTR(x));
     vmaxset(vmax);
 }
 
@@ -114,8 +114,8 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v), 
 	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #else
-    Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v), 
-	    v->sxpinfo.gcgen, v->sxpinfo.gccls);
+    Rprintf("@%lx %02d %s g%dc%d [", (long) SEXPPTR(v), TYPEOF(v), typename(v), 
+	    SEXPPTR(v)->sxpinfo.gcgen, SEXPPTR(v)->sxpinfo.gccls);
 #endif
     if (OBJECT(v)) { a = 1; Rprintf("OBJ"); }
     if (MARK(v)) { if (a) Rprintf(","); Rprintf("MARK"); a = 1; }
@@ -133,7 +133,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (IS_GLOBAL_FRAME(v)) { if (a) Rprintf(","); Rprintf("GL"); a = 1; }
     }
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
-    if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
+    if (! IS_NULL_SEXP(ATTRIB(v)) && ! IS_R_NilValue(ATTRIB(v))) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
     switch (TYPEOF(v)) {
     case VECSXP: case STRSXP: case LGLSXP: case INTSXP: case RAWSXP:
@@ -153,7 +153,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	Rprintf("\"%s\"", CHAR(v));
     }
     if (TYPEOF(v) == SYMSXP)
-	Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (SYMVALUE(v) == R_UnboundValue) ? "" : " (has value)");
+	Rprintf("\"%s\"%s", EncodeChar(PRINTNAME(v)), (IS_R_UnboundValue(SYMVALUE(v))) ? "" : " (has value)");
     switch (TYPEOF(v)) { /* for native vectors print the first elements in-line */
     case LGLSXP:
 	if (XLENGTH(v) > 0) {
@@ -221,8 +221,8 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	case LISTSXP: case LANGSXP:
 	    {
 		SEXP lc = v;
-		while (lc != R_NilValue) {
-		    if (TAG(lc) && TAG(lc) != R_NilValue) {
+		while (! IS_R_NilValue(lc)) {
+		    if (! IS_NULL_SEXP(TAG(lc)) && ! IS_R_NilValue(TAG(lc))) {
 			pp(pre + 2);
 			Rprintf("TAG: "); /* TAG should be a one-liner since it's a symbol so we don't put it on an extra line*/
 			inspect_tree(0, TAG(lc), deep - 1, pvec);
@@ -233,13 +233,13 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    }
 	    break;
 	case ENVSXP:
-	    if (FRAME(v) != R_NilValue) {
+	    if (! IS_R_NilValue(FRAME(v))) {
 		pp(pre); Rprintf("FRAME:\n");
 		inspect_tree(pre+2, FRAME(v), deep - 1, pvec);
 	    }
 	    pp(pre); Rprintf("ENCLOS:\n");
 	    inspect_tree(pre+2, ENCLOS(v), 0, pvec);
-	    if (HASHTAB(v) != R_NilValue) {
+	    if (! IS_R_NilValue(HASHTAB(v))) {
 		pp(pre); Rprintf("HASHTAB:\n");
 		inspect_tree(pre+2, HASHTAB(v), deep - 1, pvec);
 	    }
@@ -255,7 +255,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    break;
 	}
     
-    if (ATTRIB(v) && ATTRIB(v) != R_NilValue && TYPEOF(v) != CHARSXP) {
+    if (! IS_NULL_SEXP(ATTRIB(v)) && ! IS_R_NilValue(ATTRIB(v)) && TYPEOF(v) != CHARSXP) {
 	pp(pre); Rprintf("ATTRIB:\n"); inspect_tree(pre+2, ATTRIB(v), deep, pvec);
     }
 }
@@ -267,9 +267,9 @@ SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     SEXP obj = CAR(args);
     int deep = -1;
     int pvec = 5;
-    if (CDR(args) != R_NilValue) {
+    if (! IS_R_NilValue(CDR(args))) {
 	deep = asInteger(CADR(args));
-	if (CDDR(args) != R_NilValue)
+	if (! IS_R_NilValue(CDDR(args)))
 	    pvec = asInteger(CADDR(args));
     }
 	

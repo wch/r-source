@@ -90,7 +90,7 @@ static SEXP Starma_tag;
 
 #define GET_STARMA \
     Starma G; \
-    if (TYPEOF(pG) != EXTPTRSXP || R_ExternalPtrTag(pG) != Starma_tag) \
+    if (TYPEOF(pG) != EXTPTRSXP || ! SEXP_EQL(R_ExternalPtrTag(pG), Starma_tag)) \
 	error(_("bad Starma struct"));\
     G = (Starma) R_ExternalPtrAddr(pG)
 

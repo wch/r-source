@@ -819,8 +819,8 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     const char *p, *encoding;
     RCNTXT cntxt;
-    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE};
+    LocalData data = {R_NULL_SEXP, 0, 0, '.', NULL, NO_COMCHAR, 0,
+		      NULL, FALSE, FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
@@ -984,7 +984,7 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op,args);
 
     prompt = CAR(args);
-    if (prompt == R_NilValue) {
+    if (IS_R_NilValue(prompt)) {
 	ConsolePrompt[0] = '\0'; /* precaution */
 	PROTECT(prompt);
     } else {

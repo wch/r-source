@@ -132,7 +132,7 @@ please bug.report() [R_run_onexits]"));
 	    R_RestartStack = c->restartstack;
 	    cend(c->cenddata);
 	}
-	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
+	if (! IS_R_NilValue(c->cloenv) && ! IS_R_NilValue(c->conexit)) {
 	    SEXP s = c->conexit;
 	    c->conexit = R_NilValue; /* prevent recursion */
 	    R_HandlerStack = c->handlerstack;
@@ -254,7 +254,7 @@ void endcontext(RCNTXT * cptr)
 {
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
-    if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
+    if (! IS_R_NilValue(cptr->cloenv) && ! IS_R_NilValue(cptr->conexit) ) {
 	SEXP s = cptr->conexit;
 	Rboolean savevis = R_Visible;
 	cptr->conexit = R_NilValue; /* prevent recursion */
@@ -277,7 +277,7 @@ void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 	for (cptr = R_GlobalContext;
 	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	     cptr = cptr->nextcontext)
-	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
+	    if (cptr->callflag & CTXT_LOOP && SEXP_EQL(cptr->cloenv, env) )
 		jumpfun(cptr, mask, val);
 	error(_("no loop for break/next, jumping to top level"));
     }
@@ -285,7 +285,7 @@ void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 	for (cptr = R_GlobalContext;
 	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
 	     cptr = cptr->nextcontext)
-	    if ((cptr->callflag & mask) && cptr->cloenv == env)
+	    if ((cptr->callflag & mask) && SEXP_EQL(cptr->cloenv, env))
 		jumpfun(cptr, mask, val);
 	error(_("no function to return from, jumping to top level"));
     }
@@ -364,13 +364,13 @@ int attribute_hidden R_sysparent(int n, RCNTXT *cptr)
     while (cptr->nextcontext != NULL && !(cptr->callflag & CTXT_FUNCTION) )
 	cptr = cptr->nextcontext;
     s = cptr->sysparent;
-    if(s == R_GlobalEnv)
+    if(IS_R_GlobalEnv(s))
 	return 0;
     j = 0;
     while (cptr != NULL ) {
 	if (cptr->callflag & CTXT_FUNCTION) {
 	    j++;
-	    if( cptr->cloenv == s )
+	    if( SEXP_EQL(cptr->cloenv, s) )
 		n=j;
 	}
 	cptr = cptr->nextcontext;
@@ -409,7 +409,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0) {
 	    	PROTECT(result = duplicate(cptr->call));
-	    	if (cptr->srcref && !isNull(cptr->srcref))
+	    	if (! IS_NULL_SEXP(cptr->srcref) && !isNull(cptr->srcref))
 	    	    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
 	    	UNPROTECT(1);
 	    	return result;
@@ -420,7 +420,7 @@ SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
     }
     if (n == 0 && cptr->nextcontext == NULL) {
 	PROTECT(result = duplicate(cptr->call));
-	if (cptr->srcref && !isNull(cptr->srcref))
+	if (! IS_NULL_SEXP(cptr->srcref) && !isNull(cptr->srcref))
 	    setAttrib(result, R_SrcrefSymbol, duplicate(cptr->srcref));
 	UNPROTECT(1);
 	return result;
@@ -583,7 +583,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     t = cptr->sysparent;
     while (cptr != R_ToplevelContext) {
 	if (cptr->callflag & CTXT_FUNCTION )
-	    if (cptr->cloenv == t)
+	    if (SEXP_EQL(cptr->cloenv, t))
 		break;
 	cptr = cptr->nextcontext;
     }
@@ -664,7 +664,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     t = cptr->sysparent;
     while (cptr->nextcontext != NULL){
 	if (cptr->callflag & CTXT_FUNCTION ) {
-	    if (cptr->cloenv == t)
+	    if (SEXP_EQL(cptr->cloenv, t))
 	    {
 		if (n == 1)
 		    return cptr->sysparent;
@@ -744,7 +744,7 @@ protectedEval(void *d)
 {
     ProtectedEvalData *data = (ProtectedEvalData *)d;
     SEXP env = R_GlobalEnv;
-    if(data->env) {
+    if(! IS_NULL_SEXP(data->env)) {
 	env = data->env;
     }
     data->val = eval(data->expression, env);
@@ -758,7 +758,7 @@ R_tryEval(SEXP e, SEXP env, int *ErrorOccurred)
     ProtectedEvalData data;
 
     data.expression = e;
-    data.val = NULL;
+    data.val = R_NULL_SEXP;
     data.env = env;
 
     ok = R_ToplevelExec(protectedEval, &data);
@@ -766,7 +766,7 @@ R_tryEval(SEXP e, SEXP env, int *ErrorOccurred)
 	*ErrorOccurred = (ok == FALSE);
     }
     if (ok == FALSE)
-	data.val = NULL;
+	data.val = R_NULL_SEXP;
     else
 	UNPROTECT(1);
 

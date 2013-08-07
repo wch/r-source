@@ -157,7 +157,7 @@ static int      mkVerbEnv();
 %%
 
 Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); return 0; }
-	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); return 0; }
+	|	END_OF_INPUT			{ xxsavevalue(R_NULL_SEXP, &@$); return 0; }
 	|	error				{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
 	;
 
@@ -183,7 +183,7 @@ environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); }
 math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$); }
 
 block:		'{' Items  '}'			{ $$ = xxblock($2, &@$); }
-	|	'{' '}'				{ $$ = xxblock(NULL, &@$); }
+	|	'{' '}'				{ $$ = xxblock(R_NULL_SEXP, &@$); }
 
 %%
 
@@ -194,7 +194,7 @@ static SEXP xxnewlist(SEXP item)
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
     PROTECT(tmp = NewList());
-    if (item) {
+    if (! IS_NULL_SEXP(item)) {
     	PROTECT(ans = GrowList(tmp, item));
     	UNPROTECT_PTR(tmp);
     	UNPROTECT_PTR(item);
@@ -266,7 +266,7 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxblock(body=%p)", body);    
 #endif
-    if (!body) 
+    if (IS_NULL_SEXP(body)) 
         PROTECT(ans = allocVector(VECSXP, 0));
     else {
 	PROTECT(ans = PairToVectorList(CDR(body)));
@@ -297,12 +297,12 @@ static void xxSetInVerbEnv(SEXP envname)
     if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
     	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
     	PROTECT(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
-    } else parseState.xxInVerbEnv = NULL;
+    } else parseState.xxInVerbEnv = R_NULL_SEXP;
 }
 
 static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 {
-    if (items) {
+    if (! IS_NULL_SEXP(items)) {
     	PROTECT(parseState.Value = PairToVectorList(CDR(items)));
     	UNPROTECT_PTR(items);
     } else {
@@ -489,7 +489,7 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     	
-    parseState.xxInVerbEnv = NULL;
+    parseState.xxInVerbEnv = R_NULL_SEXP;
     
     parseState.xxlineno = 1;
     parseState.xxcolno = 1; 
@@ -718,7 +718,7 @@ static int token(void)
     
     setfirstloc();    
     
-    if (parseState.xxInVerbEnv)
+    if (! IS_NULL_SEXP(parseState.xxInVerbEnv))
     	return mkVerbEnv();    
     	
     c = xxgetc();
@@ -845,7 +845,7 @@ static int mkVerbEnv()
     	for (i = matched-1; i >= 0; i--) 
     	    xxungetc(*(--bp));    	    
     	UNPROTECT_PTR(parseState.xxInVerbEnv);
-    	parseState.xxInVerbEnv = NULL;
+    	parseState.xxInVerbEnv = R_NULL_SEXP;
     }
     	    
     PROTECT(yylval = mkString2(stext, bp - stext));

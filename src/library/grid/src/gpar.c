@@ -210,7 +210,7 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
      * Also scale by GSS_SCALE (a "zoom" factor)
      */
     gc->lwd = gpLineWidth(gp, i) * gpLex(gp, i) * 
-	REAL(gridStateElement(dd, GSS_SCALE))[0];
+	asReal(gridStateElement(dd, GSS_SCALE));
     gc->lty = gpLineType(gp, i);
     gc->lend = gpLineEnd(gp, i);
     gc->ljoin = gpLineJoin(gp, i);
@@ -219,7 +219,7 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
     /*
      * Scale by GSS_SCALE (a "zoom" factor)
      */
-    gc->ps = gpFontSize(gp, i) * REAL(gridStateElement(dd, GSS_SCALE))[0];
+    gc->ps = gpFontSize(gp, i) * asReal(gridStateElement(dd, GSS_SCALE));
     gc->lineheight = gpLineHeight(gp, i);
     gc->fontface = gpFont(gp, i);
     strcpy(gc->fontfamily, gpFontFamily(gp, i));
@@ -273,7 +273,7 @@ void initGPar(pGEDevDesc dd)
     SEXP gpar, gparnames, class;
     SEXP gpfill, gpcol, gpgamma, gplty, gplwd, gpcex, gpfs, gplh, gpfont;
     SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre, gplex;
-    SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+    SEXP gsd = PTR_TO_SEXP(dd->gesd[gridRegisterIndex]->systemSpecific);
     PROTECT(gpar = allocVector(VECSXP, 15));
     PROTECT(gparnames = allocVector(STRSXP, 15));
     SET_STRING_ELT(gparnames, GP_FILL, mkChar("fill"));

@@ -2451,7 +2451,7 @@ static BBOX RenderRadical(SEXP expr, int draw, mathContext *mc,
 
     leadWidth = radWidth;
     leadHeight = radHeight;
-    if (order != R_NilValue) {
+    if (! IS_R_NilValue(order)) {
 	SetSupStyle(style, mc, gc);
 	orderBBox = RenderScript(order, 0, mc, gc, dd);
 	leadWidth = max(leadWidth, bboxWidth(orderBBox) + 0.4 * radWidth);

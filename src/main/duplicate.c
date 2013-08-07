@@ -60,7 +60,7 @@
    will have been set to by the allocation function */
 #define DUPLICATE_ATTRIB(to, from) do {\
   SEXP __a__ = ATTRIB(from); \
-  if (__a__ != R_NilValue) { \
+  if (! IS_R_NilValue(__a__)) {	\
     SET_ATTRIB(to, duplicate1(__a__)); \
     SET_OBJECT(to, OBJECT(from)); \
     IS_S4_OBJECT(from) ? SET_S4_OBJECT(to) : UNSET_S4_OBJECT(to);  \
@@ -69,7 +69,7 @@
 
 #define COPY_TAG(to, from) do { \
   SEXP __tag__ = TAG(from); \
-  if (__tag__ != R_NilValue) SET_TAG(to, __tag__); \
+  if (! IS_R_NilValue(__tag__)) SET_TAG(to, __tag__);	\
 } while (0)
 
 
@@ -126,6 +126,13 @@ static SEXP duplicate1(SEXP s)
     SEXP h, t,  sp;
     R_xlen_t i, n;
 
+#ifdef BIGSEXP_IMMEDIATE
+    if (SEXP_IS_IMMEDIATE(s)) {
+	SEXP ans = allocVector(REALSXP, (R_xlen_t)1);
+	REAL(ans)[0] = s.u.dbl;
+	return ans;
+    }
+#endif
     switch (TYPEOF(s)) {
     case NILSXP:
     case SYMSXP:
@@ -156,7 +163,7 @@ static SEXP duplicate1(SEXP s)
     case LISTSXP:
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
+	while(! IS_R_NilValue(sp)) {
 	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
@@ -169,7 +176,7 @@ static SEXP duplicate1(SEXP s)
     case LANGSXP:
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
+	while(! IS_R_NilValue(sp)) {
 	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
@@ -184,7 +191,7 @@ static SEXP duplicate1(SEXP s)
     case DOTSXP:
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
+	while(! IS_R_NilValue(sp)) {
 	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
@@ -302,7 +309,7 @@ void copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
 	    for (j = 0; j < nc; j++) {
 		SET_STRING_ELT(tmp, i + j * NR, duplicate(CAR(pt)));
 		pt = CDR(pt);
-		if(pt == R_NilValue) pt = t;
+		if(IS_R_NilValue(pt)) pt = t;
 	    }
 	for (i = 0; i < ns; i++) {
 	    SETCAR(s, STRING_ELT(tmp, i++));
@@ -315,7 +322,7 @@ void copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
 	    SETCAR(s, duplicate(CAR(pt)));
 	    s = CDR(s);
 	    pt = CDR(pt);
-	    if(pt == R_NilValue) pt = t;
+	    if(IS_R_NilValue(pt)) pt = t;
 	}
     }
 }

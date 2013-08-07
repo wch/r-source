@@ -139,9 +139,9 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(ap,  install("expr"));
     SET_TAG(CDR(ap), install("add"));
     PROTECT(argList =  matchArgs(ap, args, call));
-    if (CAR(argList) == R_MissingArg) code = R_NilValue;
+    if (IS_R_MissingArg(CAR(argList))) code = R_NilValue;
     else code = CAR(argList);
-    if (CADR(argList) != R_MissingArg) {
+    if (! IS_R_MissingArg(CADR(argList))) {
 	addit = asLogical(eval(CADR(args), rho));
 	if (addit == NA_INTEGER)
 	    errorcall(call, _("invalid '%s' argument"), "add");
@@ -153,12 +153,12 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
        first closure call context with an environment matching the
        expression evaluation environment. */
     while (ctxt != R_ToplevelContext &&
-	   !((ctxt->callflag & CTXT_FUNCTION) && ctxt->cloenv == rho) )
+	   !((ctxt->callflag & CTXT_FUNCTION) && SEXP_EQL(ctxt->cloenv, rho)) )
 	ctxt = ctxt->nextcontext;
     if (ctxt->callflag & CTXT_FUNCTION)
     {
-	if (addit && (oldcode = ctxt->conexit) != R_NilValue ) {
-	    if ( CAR(oldcode) != R_BraceSymbol )
+	if (addit && ! IS_R_NilValue(oldcode = ctxt->conexit) ) {
+	    if ( ! SEXP_EQL(CAR(oldcode), R_BraceSymbol) )
 	    {
 		PROTECT(tmp = allocList(3));
 		SETCAR(tmp, R_BraceSymbol);
@@ -213,7 +213,7 @@ SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
 	PROTECT(s2 = findVarInFrame3(env, install(nm), TRUE));
-	if(s2 != R_UnboundValue) {
+	if(! IS_R_UnboundValue(s2)) {
 	    s = duplicate(s2);
 	    SET_CLOENV(s, R_GlobalEnv);
 	    UNPROTECT(2);
@@ -224,7 +224,7 @@ SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 					TRUE), xp);
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
 	PROTECT(s2 = findVarInFrame3(env, install(nm), TRUE));
-	if(s2 != R_UnboundValue) {
+	if(! IS_R_UnboundValue(s2)) {
 	    s = allocSExp(CLOSXP);
 	    SET_FORMALS(s, FORMALS(s2));
 	    SET_BODY(s, R_NilValue);
@@ -271,7 +271,7 @@ SEXP attribute_hidden do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP)
 	return CLOENV(CAR(args));
-    else if (CAR(args) == R_NilValue)
+    else if (IS_R_NilValue(CAR(args)))
 	return R_GlobalContext->sysparent;
     else return getAttrib(CAR(args), R_DotEnvSymbol);
 }
@@ -350,7 +350,7 @@ SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(arg)  &&
 	!isEnvironment((arg = simple_as_environment(arg))))
 	error( _("argument is not an environment"));
-    if( arg == R_EmptyEnv )
+    if( IS_R_EmptyEnv(arg) )
 	error(_("the empty environment has no parent"));
     return( ENCLOS(arg) );
 }
@@ -368,7 +368,7 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(env) &&
 	!isEnvironment((env = simple_as_environment(env))))
 	error(_("argument is not an environment"));
-    if( env == R_EmptyEnv )
+    if( IS_R_EmptyEnv(env) )
 	error(_("can not set parent of the empty environment"));
     parent = CADR(args);
     if (isNull(parent)) {
@@ -391,9 +391,9 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (TYPEOF(env) == ENVSXP ||
 	TYPEOF((env = simple_as_environment(env))) == ENVSXP) {
-	if (env == R_GlobalEnv) ans = mkString("R_GlobalEnv");
-	else if (env == R_BaseEnv) ans = mkString("base");
-	else if (env == R_EmptyEnv) ans = mkString("R_EmptyEnv");
+	if (IS_R_GlobalEnv(env)) ans = mkString("R_GlobalEnv");
+	else if (IS_R_BaseEnv(env)) ans = mkString("base");
+	else if (IS_R_EmptyEnv(env)) ans = mkString("R_EmptyEnv");
 	else if (R_IsPackageEnv(env))
 	    ans = ScalarString(STRING_ELT(R_PackageEnvName(env), 0));
 	else if (R_IsNamespaceEnv(env))
@@ -446,7 +446,7 @@ static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 {
     Rprintf("\n");
     *width = 0;
-    if (labels != R_NilValue) {
+    if (! IS_R_NilValue(labels)) {
 	Rprintf("%s ", EncodeString(STRING_ELT(labels, ntot % lablen),
 				    1, 0, Rprt_adj_left));
 	*width += Rstrlen(STRING_ELT(labels, ntot % lablen), 0) + 1;
@@ -455,7 +455,7 @@ static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 
 static void cat_sepwidth(SEXP sep, int *width, int ntot)
 {
-    if (sep == R_NilValue || LENGTH(sep) == 0)
+    if (IS_R_NilValue(sep) || LENGTH(sep) == 0)
 	*width = 0;
     else
 	*width = Rstrlen(STRING_ELT(sep, ntot % LENGTH(sep)), 0);
@@ -464,7 +464,7 @@ static void cat_sepwidth(SEXP sep, int *width, int ntot)
 static void cat_printsep(SEXP sep, int ntot)
 {
     const char *sepchar;
-    if (sep == R_NilValue || LENGTH(sep) == 0)
+    if (IS_R_NilValue(sep) || LENGTH(sep) == 0)
 	return;
 
     sepchar = trChar(STRING_ELT(sep, ntot % LENGTH(sep)));
@@ -546,7 +546,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     labs = CAR(args);
-    if (!isString(labs) && labs != R_NilValue)
+    if (!isString(labs) && ! IS_R_NilValue(labs))
 	error(_("invalid '%s' argument"), "labels");
     lablen = length(labs);
     args = CDR(args);
@@ -583,7 +583,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = length(s);
 	/* 0-length objects are ignored */
 	if (n > 0) {
-	    if (labs != R_NilValue && (iobj == 0)
+	    if (! IS_R_NilValue(labs) && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
 		/* FIXME -- Rstrlen allows for double-width chars */
@@ -669,7 +669,7 @@ SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(list = allocVector(VECSXP, n));
     PROTECT(names = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	if (TAG(args) != R_NilValue) {
+	if (! IS_R_NilValue(TAG(args))) {
 	    SET_STRING_ELT(names, i, PRINTNAME(TAG(args)));
 	    havenames = 1;
 	}
@@ -703,14 +703,14 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_VECTOR_ELT(ans, i, duplicate(CAR(a)));
 	else
 	    SET_VECTOR_ELT(ans, i, CAR(a));
-	if (TAG(a) != R_NilValue) named = 1;
+	if (! IS_R_NilValue(TAG(a))) named = 1;
 	a = CDR(a);
     }
     if (named) {
 	PROTECT(nms = allocVector(STRSXP, n));
 	a = args;
 	for (i = 0; i < n; i++) {
-	    if (TAG(a) != R_NilValue)
+	    if (! IS_R_NilValue(TAG(a)))
 		SET_STRING_ELT(nms, i, PRINTNAME(TAG(a)));
 	    else
 		SET_STRING_ELT(nms, i, R_BlankString);
@@ -786,7 +786,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	return (x);
     PROTECT(rval = allocVector(TYPEOF(x), len));
     PROTECT(xnames = getAttrib(x, R_NamesSymbol));
-    if (xnames != R_NilValue)
+    if (! IS_R_NilValue(xnames))
 	names = allocVector(STRSXP, len);
     else names = R_NilValue;	/*- just for -Wall --- should we do this ? */
     switch (TYPEOF(x)) {
@@ -797,7 +797,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		INTEGER(rval)[i] = INTEGER(x)[i];
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	    else
@@ -807,7 +807,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		REAL(rval)[i] = REAL(x)[i];
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	    else
@@ -817,7 +817,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		COMPLEX(rval)[i] = COMPLEX(x)[i];
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	    else {
@@ -829,14 +829,14 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		SET_STRING_ELT(rval, i, STRING_ELT(x, i));
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	    else
 		SET_STRING_ELT(rval, i, NA_STRING);
 	break;
     case LISTSXP:
-	for (t = rval; t != R_NilValue; t = CDR(t), x = CDR(x)) {
+	for (t = rval; ! IS_R_NilValue(t); t = CDR(t), x = CDR(x)) {
 	    SETCAR(t, CAR(x));
 	    SET_TAG(t, TAG(x));
 	}
@@ -844,7 +844,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		SET_VECTOR_ELT(rval, i, VECTOR_ELT(x, i));
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	break;
@@ -852,7 +852,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
 		RAW(rval)[i] = RAW(x)[i];
-		if (xnames != R_NilValue)
+		if (! IS_R_NilValue(xnames))
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	    else
@@ -861,7 +861,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     default:
 	UNIMPLEMENTED_TYPE("length<-", x);
     }
-    if (isVector(x) && xnames != R_NilValue)
+    if (isVector(x) && ! IS_R_NilValue(xnames))
 	setAttrib(rval, R_NamesSymbol, names);
     UNPROTECT(2);
     return rval;
@@ -922,22 +922,22 @@ static SEXP expandDots(SEXP el, SEXP rho)
     PROTECT(el); /* in do_switch, this is already protected */
     PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
 
-    while (el != R_NilValue) {
-	if (CAR(el) == R_DotsSymbol) {
+    while (! IS_R_NilValue(el)) {
+	if (SEXP_EQL(CAR(el), R_DotsSymbol)) {
 	    SEXP h = findVar(CAR(el), rho);
-	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
-		while (h != R_NilValue) {
+	    if (TYPEOF(h) == DOTSXP || IS_R_NilValue(h)) {
+		while (! IS_R_NilValue(h)) {
 		    SETCDR(tail, CONS(CAR(h), R_NilValue));
 		    tail = CDR(tail);
-		    if(TAG(h) != R_NilValue) SET_TAG(tail, TAG(h));
+		    if(! IS_R_NilValue(TAG(h))) SET_TAG(tail, TAG(h));
 		    h = CDR(h);
 		}
-	    } else if (h != R_MissingArg)
+	    } else if (! IS_R_MissingArg(h))
 		error(_("'...' used in an incorrect context"));
 	} else {
 	    SETCDR(tail, CONS(CAR(el), R_NilValue));
 	    tail = CDR(tail);
-	    if(TAG(el) != R_NilValue) SET_TAG(tail, TAG(el));
+	    if(! IS_R_NilValue(TAG(el))) SET_TAG(tail, TAG(el));
 	}
 	el = CDR(el);
     }
@@ -950,7 +950,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 
 static SEXP setDflt(SEXP arg, SEXP dflt)
 {
-    if (dflt) {
+    if (! IS_NULL_SEXP(dflt)) {
     	SEXP dflt1, dflt2;
     	PROTECT(dflt1 = deparse1line(dflt, TRUE));
     	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
@@ -985,7 +985,7 @@ static SEXP setDflt(SEXP arg, SEXP dflt)
 SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int argval, nargs = length(args);
-    SEXP x, y, z, w, ans, dflt = NULL;
+    SEXP x, y, z, w, ans, dflt = R_NULL_SEXP;
 
     if (nargs < 1) errorcall(call, _("'EXPR' is missing"));
     check1arg(args, call, "EXPR");
@@ -1002,17 +1002,17 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   there may be a ... argument */
 	PROTECT(w = expandDots(CDR(args), rho));
 	if (isString(x)) {
-	    for (y = w; y != R_NilValue; y = CDR(y)) {
-		if (TAG(y) != R_NilValue) {
+	    for (y = w; ! IS_R_NilValue(y); y = CDR(y)) {
+		if (! IS_R_NilValue(TAG(y))) {
 		    if (pmatch(STRING_ELT(x, 0), TAG(y), 1 /* exact */)) {
 			/* Find the next non-missing argument.
 			   (If there is none, return NULL.) */
-			while (CAR(y) == R_MissingArg) {
+			while (IS_R_MissingArg(CAR(y))) {
 			    y = CDR(y);
-			    if (y == R_NilValue) break;
-			    if (TAG(y) == R_NilValue) dflt = setDflt(y, dflt);
+			    if (IS_R_NilValue(y)) break;
+			    if (IS_R_NilValue(TAG(y))) dflt = setDflt(y, dflt);
 			}
-			if (y == R_NilValue) {
+			if (IS_R_NilValue(y)) {
 			    R_Visible = FALSE;
 			    UNPROTECT(2);
 			    return R_NilValue;
@@ -1021,8 +1021,8 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 			   is not necessary to determine the value of the
 			   switch(), but it should be fast and will detect
 			   typos. */
-			for (z = CDR(y); z != R_NilValue; z = CDR(z))
-			    if (TAG(z) == R_NilValue) dflt = setDflt(z, dflt);
+			for (z = CDR(y); ! IS_R_NilValue(z); z = CDR(z))
+			    if (IS_R_NilValue(TAG(z))) dflt = setDflt(z, dflt);
 
 			ans =  eval(CAR(y), rho);
 			UNPROTECT(2);
@@ -1031,7 +1031,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		} else
 		    dflt = setDflt(y, dflt);
 	    }
- 	    if (dflt) {
+ 	    if (! IS_NULL_SEXP(dflt)) {
 		ans =  eval(dflt, rho);
 		UNPROTECT(2);
 		return ans;
@@ -1041,7 +1041,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    argval = asInteger(x);
 	    if (argval != NA_INTEGER && argval >= 1 && argval <= length(w)) {
 		SEXP alt = CAR(nthcdr(w, argval - 1));
-		if (alt == R_MissingArg)
+		if (IS_R_MissingArg(alt))
 		    error("empty alternative in numeric switch");
 		ans =  eval(alt, rho);
 		UNPROTECT(2);

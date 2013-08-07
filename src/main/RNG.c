@@ -348,9 +348,9 @@ static void GetRNGkind(SEXP seeds)
 
     if (isNull(seeds))
 	seeds = GetSeedsFromVar();
-    if (seeds == R_UnboundValue) return;
+    if (IS_R_UnboundValue(seeds)) return;
     if (!isInteger(seeds)) {
-	if (seeds == R_MissingArg) /* How can this happen? */
+	if (IS_R_MissingArg(seeds)) /* How can this happen? */
 	    error(_("'.Random.seed' is a missing argument with no default"));
 	warning(_("'.Random.seed' is not an integer vector but of type '%s', so ignored"),
 		type2char(TYPEOF(seeds)));
@@ -405,7 +405,7 @@ void GetRNGstate()
 
     /* look only in the workspace */
     seeds = GetSeedsFromVar();
-    if (seeds == R_UnboundValue) {
+    if (IS_R_UnboundValue(seeds)) {
 	Randomize(RNG_kind);
     } else {
 	GetRNGkind(seeds);
@@ -762,7 +762,7 @@ static void RNG_Init_R_KT(Int32 seed)
 {
     SEXP fun, sseed, call, ans;
     fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE);
-    if(fun == R_UnboundValue)
+    if(IS_R_UnboundValue(fun))
 	error("function '.TAOCP1997init' is missing");
     PROTECT(sseed = ScalarInteger((int)(seed % 1073741821)));
     PROTECT(call = lang2(fun, sseed));

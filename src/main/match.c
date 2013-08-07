@@ -49,7 +49,7 @@
 Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
-    if (s == NA_STRING || t == NA_STRING) return FALSE;
+    if (IS_NA_STRING(s) || IS_NA_STRING(t)) return FALSE;
     if (CHAR(s)[0] && CHAR(t)[0] && Seql(s, t))
 	return TRUE;
     else
@@ -119,9 +119,9 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 
 static SEXP matchPar_int(const char *tag, SEXP *list, Rboolean exact)
 {
-    if (*list == R_NilValue)
+    if (IS_R_NilValue(*list))
 	return R_MissingArg;
-    else if (TAG(*list) != R_NilValue &&
+    else if (! IS_R_NilValue(TAG(*list)) &&
 	     psmatch(tag, CHAR(PRINTNAME(TAG(*list))), exact)) {
 	SEXP s = *list;
 	*list = CDR(*list);
@@ -130,8 +130,8 @@ static SEXP matchPar_int(const char *tag, SEXP *list, Rboolean exact)
     else {
 	SEXP last = *list;
 	SEXP next = CDR(*list);
-	while (next != R_NilValue) {
-	    if (TAG(next) != R_NilValue &&
+	while (! IS_R_NilValue(next)) {
+	    if (! IS_R_NilValue(TAG(next)) &&
 		psmatch(tag, CHAR(PRINTNAME(TAG(next))), exact)) {
 		SETCDR(last, CDR(next));
 		return CAR(next);
@@ -190,7 +190,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     SEXP f, a, b, dots, actuals;
 
     actuals = R_NilValue;
-    for (f = formals ; f != R_NilValue ; f = CDR(f), arg_i++) {
+    for (f = formals ; ! IS_R_NilValue(f) ; f = CDR(f), arg_i++) {
 	actuals = CONS(R_MissingArg, actuals);
 	SET_MISSING(actuals, 1);
     }
@@ -205,7 +205,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     int fargused[arg_i];
     memset(fargused, 0, sizeof(fargused));
 
-    for(b = supplied; b != R_NilValue; b = CDR(b)) SET_ARGUSED(b, 0);
+    for(b = supplied; ! IS_R_NilValue(b); b = CDR(b)) SET_ARGUSED(b, 0);
 
     PROTECT(actuals);
 
@@ -216,18 +216,18 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     f = formals;
     a = actuals;
     arg_i = 0;
-    while (f != R_NilValue) {
-	if (TAG(f) != R_DotsSymbol) {
+    while (! IS_R_NilValue(f)) {
+	if (! SEXP_EQL(TAG(f), R_DotsSymbol)) {
 	    i = 1;
-	    for (b = supplied; b != R_NilValue; b = CDR(b)) {
-		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), 1)) {
+	    for (b = supplied; ! IS_R_NilValue(b); b = CDR(b)) {
+		if (! IS_R_NilValue(TAG(b)) && pmatch(TAG(f), TAG(b), 1)) {
 		    if (fargused[arg_i] == 2)
 			error(_("formal argument \"%s\" matched by multiple actual arguments"),
 			      CHAR(PRINTNAME(TAG(f))));
 		    if (ARGUSED(b) == 2)
 			error(_("argument %d matches multiple formal arguments"), i);
 		    SETCAR(a, CAR(b));
-		    if(CAR(b) != R_MissingArg) SET_MISSING(a, 0);
+		    if(! IS_R_MissingArg(CAR(b))) SET_MISSING(a, 0);
 		    SET_ARGUSED(b, 2);
 		    fargused[arg_i] = 2;
 		}
@@ -248,16 +248,16 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     f = formals;
     a = actuals;
     arg_i = 0;
-    while (f != R_NilValue) {
+    while (! IS_R_NilValue(f)) {
 	if (fargused[arg_i] == 0) {
-	    if (TAG(f) == R_DotsSymbol && !seendots) {
+	    if (SEXP_EQL(TAG(f), R_DotsSymbol) && !seendots) {
 		/* Record where ... value goes */
 		dots = a;
 		seendots = 1;
 	    } else {
 		i = 1;
-		for (b = supplied; b != R_NilValue; b = CDR(b)) {
-		    if (ARGUSED(b) != 2 && TAG(b) != R_NilValue &&
+		for (b = supplied; ! IS_R_NilValue(b); b = CDR(b)) {
+		    if (ARGUSED(b) != 2 && ! IS_R_NilValue(TAG(b)) &&
 			pmatch(TAG(f), TAG(b), seendots)) {
 			if (ARGUSED(b))
 			    error(_("argument %d matches multiple formal arguments"), i);
@@ -271,7 +271,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 					CHAR(PRINTNAME(TAG(f))) );
 			}
 			SETCAR(a, CAR(b));
-			if (CAR(b) != R_MissingArg) SET_MISSING(a, 0);
+			if (! IS_R_MissingArg(CAR(b))) SET_MISSING(a, 0);
 			SET_ARGUSED(b, 1);
 			fargused[arg_i] = 1;
 		    }
@@ -296,18 +296,18 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     b = supplied;
     seendots = 0;
 
-    while (f != R_NilValue && b != R_NilValue && !seendots) {
-	if (TAG(f) == R_DotsSymbol) {
+    while (! IS_R_NilValue(f) && ! IS_R_NilValue(b) && !seendots) {
+	if (SEXP_EQL(TAG(f), R_DotsSymbol)) {
 	    /* Skip ... matching until all tags done */
 	    seendots = 1;
 	    f = CDR(f);
 	    a = CDR(a);
-	} else if (CAR(a) != R_MissingArg) {
+	} else if (! IS_R_MissingArg(CAR(a))) {
 	    /* Already matched by tag */
 	    /* skip to next formal */
 	    f = CDR(f);
 	    a = CDR(a);
-	} else if (ARGUSED(b) || TAG(b) != R_NilValue) {
+	} else if (ARGUSED(b) || ! IS_R_NilValue(TAG(b))) {
 	    /* This value used or tagged , skip to next value */
 	    /* The second test above is needed because we */
 	    /* shouldn't consider tagged values for positional */
@@ -317,7 +317,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 	} else {
 	    /* We have a positional match */
 	    SETCAR(a, CAR(b));
-	    if(CAR(b) != R_MissingArg) SET_MISSING(a, 0);
+	    if(! IS_R_MissingArg(CAR(b))) SET_MISSING(a, 0);
 	    SET_ARGUSED(b, 1);
 	    b = CDR(b);
 	    f = CDR(f);
@@ -325,17 +325,17 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 	}
     }
 
-    if (dots != R_NilValue) {
+    if (! IS_R_NilValue(dots)) {
 	/* Gobble up all unused actuals */
 	SET_MISSING(dots, 0);
 	i = 0;
-	for(a = supplied; a != R_NilValue ; a = CDR(a)) if(!ARGUSED(a)) i++;
+	for(a = supplied; ! IS_R_NilValue(a) ; a = CDR(a)) if(!ARGUSED(a)) i++;
 
 	if (i) {
 	    a = allocList(i);
 	    SET_TYPEOF(a, DOTSXP);
 	    f = a;
-	    for(b = supplied; b != R_NilValue; b = CDR(b))
+	    for(b = supplied; ! IS_R_NilValue(b); b = CDR(b))
 		if(!ARGUSED(b)) {
 		    SETCAR(f, CAR(b));
 		    SET_TAG(f, TAG(b));
@@ -346,9 +346,9 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     } else {
 	/* Check that all arguments are used */
 	SEXP unused = R_NilValue, last = R_NilValue;
-	for (b = supplied; b != R_NilValue; b = CDR(b))
+	for (b = supplied; ! IS_R_NilValue(b); b = CDR(b))
 	    if (!ARGUSED(b)) {
-		if(last == R_NilValue) {
+		if(IS_R_NilValue(last)) {
 		    PROTECT(unused = CONS(CAR(b), R_NilValue));
 		    SET_TAG(unused, TAG(b));
 		    last = unused;
@@ -359,14 +359,14 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 		}
 	    }
 
-	if(last != R_NilValue) {
+	if(! IS_R_NilValue(last)) {
             /* show bad arguments in call without evaluating them */
             SEXP unusedForError = R_NilValue, last = R_NilValue;
 
-            for(b = unused ; b != R_NilValue ; b = CDR(b)) {
+            for(b = unused ; ! IS_R_NilValue(b) ; b = CDR(b)) {
                 SEXP tagB = TAG(b), carB = CAR(b) ;
                 if (TYPEOF(carB) == PROMSXP) carB = PREXPR(carB) ;
-                if (last == R_NilValue) {
+                if (IS_R_NilValue(last)) {
                     PROTECT(last = CONS(carB, R_NilValue));
                     SET_TAG(last, tagB);
                     unusedForError = last;

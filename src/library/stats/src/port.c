@@ -378,9 +378,9 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	error(_("'rho' must be an environment"));
     if (!isReal(d) || n < 1)
 	error(_("'d' must be a nonempty numeric vector"));
-    if (hs != R_NilValue && gr == R_NilValue)
+    if (! IS_R_NilValue(hs) && IS_R_NilValue(gr))
 	error(_("When Hessian defined must also have gradient defined"));
-    if (R_NilValue == (xpt = findVarInFrame(rho, install(".par"))) ||
+    if (IS_R_NilValue(xpt = findVarInFrame(rho, install(".par"))) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
 	error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 	      n);
@@ -398,9 +398,9 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	    }
 	} else error(_("'lower' and 'upper' must be numeric vectors"));
     }
-    if (gr != R_NilValue) {
+    if (! IS_R_NilValue(gr)) {
 	g = Calloc(n, double);
-	if (hs != R_NilValue) h = Calloc((n * (n + 1))/2, double);
+	if (! IS_R_NilValue(hs)) h = Calloc((n * (n + 1))/2, double);
     }
 
     do {

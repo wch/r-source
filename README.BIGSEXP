@@ -1,0 +1,24 @@
+This branch contains a version of R that allows the SEXP type to be a
+struct instead of a pointer. To enable this define BIGSEXP when
+compiling the C code. This is motivated by observations of Justin
+Talbot that this might allow certain values, such as double, integer,
+and logical scalars and possibly short character strings to be
+represented as immediate values without allocation. Defining
+BIGSEXP_IMMEDIATE provides a little support for experimenting with
+this, but nothing is implemented.
+
+Changes to enable this were tedious but straight forward to make as the
+C compiler flags what needs to be changed. It is not clear that all
+places needing to be adjusted for immediate representation of values
+can be identified as easily.
+
+R with BIGSEXP defined is slower; here are timings for running 'make
+check' in builds without recommended packages:
+
+nobig: 75.552u 3.880s 1:32.08 86.2%	0+0k 0+373248io 0pf+0w
+big:  125.231u 5.340s 2:23.43 91.0%	0+0k 0+373248io 0pf+0w
+
+In SEXP-use-heavy simple benchmarks the BIGSEXP is about a factor of 2
+slower. So there will have to be substantial optimizations (or the
+implementation has to be more clever) for this to show a benefit. But
+it's there now for experimentation.

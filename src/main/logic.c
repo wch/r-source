@@ -136,11 +136,11 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     }
 
 
-    if (dims != R_NilValue) {
+    if (! IS_R_NilValue(dims)) {
 	setAttrib(x, R_DimSymbol, dims);
-	if(xnames != R_NilValue)
+	if(! IS_R_NilValue(xnames))
 	    setAttrib(x, R_DimNamesSymbol, xnames);
-	else if(ynames != R_NilValue)
+	else if(! IS_R_NilValue(ynames))
 	    setAttrib(x, R_DimNamesSymbol, ynames);
     }
     else {
@@ -177,9 +177,9 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	PROTECT(names = getAttrib(arg, R_NamesSymbol));
 	PROTECT(dim = getAttrib(arg, R_DimSymbol));
 	PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
-	if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
-	if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
-	if(dimnames != R_NilValue) setAttrib(x, R_DimNamesSymbol, dimnames);
+	if(! IS_R_NilValue(names)) setAttrib(x, R_NamesSymbol, names);
+	if(! IS_R_NilValue(dim)) setAttrib(x, R_DimSymbol, dim);
+	if(! IS_R_NilValue(dimnames)) setAttrib(x, R_DimNamesSymbol, dimnames);
 	UNPROTECT(3);
     }
     switch(TYPEOF(arg)) {
@@ -415,7 +415,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
 
-    for (s = args; s != R_NilValue; s = CDR(s)) {
+    for (s = args; ! IS_R_NilValue(s); s = CDR(s)) {
 	t = CAR(s);
 	/* Avoid memory waste from coercing empty inputs, and also
 	   avoid warnings with empty lists coming from sapply */

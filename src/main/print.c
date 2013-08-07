@@ -203,7 +203,7 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
     if (isClosure) {
 	if (isByteCode(BODY(s))) Rprintf("<bytecode: %p>\n", BODY(s));
 	t = CLOENV(s);
-	if (t != R_GlobalEnv)
+	if (! IS_R_GlobalEnv(t))
 	    Rprintf("%s\n", EncodeEnvironment(t));
     }
 }
@@ -295,12 +295,12 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   not visible on the search path. */
 	SEXP call, showS;
 	showS = findVar(install("show"), rho);
-	if(showS == R_UnboundValue) {
+	if(IS_R_UnboundValue(showS)) {
 	    SEXP methodsNS = R_FindNamespace(mkString("methods"));
-	    if(methodsNS == R_UnboundValue)
+	    if(IS_R_UnboundValue(methodsNS))
 		error("missing methods namespace: this should not happen");
 	    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
-	    if(showS == R_UnboundValue)
+	    if(IS_R_UnboundValue(showS))
 		error("missing show() in methods namespace: this should not happen");
 	}
 	PROTECT(call = lang2(showS, x));
@@ -326,7 +326,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
     char pbuf[115], *ptag, save[TAGBUFLEN + 5];
 
     ns = length(s);
-    if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
+    if(! IS_R_NilValue(dims = getAttrib(s, R_DimSymbol)) && length(dims) > 1) {
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	/* FIXME: check (ns <= R_print.max +1) ? ns : R_print.max; */
@@ -442,8 +442,8 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    /* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
 	    for (i = 0; i < n_pr; i++) {
 		if (i > 0) Rprintf("\n");
-		if (names != R_NilValue &&
-		    STRING_ELT(names, i) != R_NilValue &&
+		if (! IS_R_NilValue(names) &&
+		    ! IS_R_NilValue(STRING_ELT(names, i)) &&
 		    *CHAR(STRING_ELT(names, i)) != '\0') {
 		    const void *vmax = vmaxget();
 		    const char *ss = translateChar(STRING_ELT(names, i));
@@ -453,7 +453,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    } else {
 			/* we need to distinguish character NA from "NA", which
 			   is a valid (if non-syntactic) name */
-			if (STRING_ELT(names, i) == NA_STRING)
+			if (IS_NA_STRING(STRING_ELT(names, i)))
 			    sprintf(ptag, "$<NA>");
 			else if( isValidName(ss) )
 			    sprintf(ptag, "$%s", ss);
@@ -497,7 +497,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    char str[201];
 		    const char *ss = translateChar(STRING_ELT(klass, 0));
 		    snprintf(str, 200, ".__C__%s", ss);
-		    if(findVar(install(str), env) != R_UnboundValue)
+		    if(! IS_R_UnboundValue(findVar(install(str), env)))
 			className = ss;
 		}
 	    }
@@ -509,7 +509,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		return;
 	    }
 	    else {
-		if(names != R_NilValue) Rprintf("named ");
+		if(! IS_R_NilValue(names)) Rprintf("named ");
 		Rprintf("list()\n");
 	    }
 	    vmaxset(vmax);
@@ -527,11 +527,11 @@ static void printList(SEXP s, SEXP env)
     char pbuf[101], *ptag;
     const char *rn, *cn;
 
-    if ((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
+    if (! IS_R_NilValue(dims = getAttrib(s, R_DimSymbol)) && length(dims) > 1) {
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	i = 0;
-	while(s != R_NilValue) {
+	while(! IS_R_NilValue(s)) {
 	    switch(TYPEOF(CAR(s))) {
 
 	    case NILSXP:
@@ -596,14 +596,14 @@ static void printList(SEXP s, SEXP env)
 	SET_TYPEOF(newcall, LANGSXP);
 	while (TYPEOF(s) == LISTSXP) {
 	    if (i > 1) Rprintf("\n");
-	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
+	    if (! IS_R_NilValue(TAG(s)) && isSymbol(TAG(s))) {
 		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN) {
 		    if (taglen <= TAGBUFLEN)
 			sprintf(ptag, "$...");
 		} else {
 		    /* we need to distinguish character NA from "NA", which
 		       is a valid (if non-syntactic) name */
-		    if (PRINTNAME(TAG(s)) == NA_STRING)
+		    if (IS_NA_STRING(PRINTNAME(TAG(s))))
 			sprintf(ptag, "$<NA>");
 		    else if( isValidName(CHAR(PRINTNAME(TAG(s)))) )
 			sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
@@ -628,7 +628,7 @@ static void printList(SEXP s, SEXP env)
 	    s = CDR(s);
 	    i++;
 	}
-	if (s != R_NilValue) {
+	if (! IS_R_NilValue(s)) {
 	    Rprintf("\n. \n\n");
 	    PrintValueRec(s,env);
 	}
@@ -660,7 +660,7 @@ static void PrintSpecial(SEXP s)
 		       &xp);
     if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
     s2 = findVarInFrame3(env, install(nm), TRUE);
-    if(s2 == R_UnboundValue) {
+    if(IS_R_UnboundValue(s2)) {
 	REPROTECT(env = findVarInFrame3(R_BaseEnv,
 					install(".GenericArgsEnv"), TRUE),
 		  xp);
@@ -668,7 +668,7 @@ static void PrintSpecial(SEXP s)
 	    REPROTECT(env = eval(env, R_BaseEnv), xp);
 	s2 = findVarInFrame3(env, install(nm), TRUE);
     }
-    if(s2 != R_UnboundValue) {
+    if(! IS_R_UnboundValue(s2)) {
 	SEXP t;
 	PROTECT(s2);
 	t = deparse1(s2, 0, DEFAULTDEPARSE);
@@ -766,7 +766,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	    if (LENGTH(t) == 1) {
 		const void *vmax = vmaxget();
 		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
-		if (t != R_NilValue && VECTOR_ELT(t, 0) != R_NilValue) {
+		if (! IS_R_NilValue(t) && ! IS_R_NilValue(VECTOR_ELT(t, 0))) {
 		    SEXP nn = getAttrib(t, R_NamesSymbol);
 		    const char *title = NULL;
 
@@ -796,7 +796,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	else {
 	    UNPROTECT(1);
 	    PROTECT(t = getAttrib(s, R_NamesSymbol));
-	    if (t != R_NilValue)
+	    if (! IS_R_NilValue(t))
 		printNamedVector(s, t, R_print.quote, NULL);
 	    else
 		printVector(s, 1, R_print.quote);
@@ -838,37 +838,40 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
     char save[TAGBUFLEN + 5] = "\0";
 
     a = ATTRIB(s);
-    if (a != R_NilValue) {
+    if (! IS_R_NilValue(a)) {
 	strcpy(save, tagbuf);
 	/* remove the tag if it looks like a list not an attribute */
 	if (strlen(tagbuf) > 0 &&
 	    *(tagbuf + strlen(tagbuf) - 1) != ')')
 	    tagbuf[0] = '\0';
 	ptag = tagbuf + strlen(tagbuf);
-	while (a != R_NilValue) {
-	    if(useSlots && TAG(a) == R_ClassSymbol)
+	while (! IS_R_NilValue(a)) {
+	    if(useSlots && SEXP_EQL(TAG(a), R_ClassSymbol))
 		    goto nextattr;
 	    if(isArray(s) || isList(s)) {
-		if(TAG(a) == R_DimSymbol ||
-		   TAG(a) == R_DimNamesSymbol)
+		if(SEXP_EQL(TAG(a), R_DimSymbol) ||
+		   SEXP_EQL(TAG(a), R_DimNamesSymbol))
 		    goto nextattr;
 	    }
 	    if(inherits(s, "factor")) {
-		if(TAG(a) == R_LevelsSymbol)
+		if(SEXP_EQL(TAG(a), R_LevelsSymbol))
 		    goto nextattr;
-		if(TAG(a) == R_ClassSymbol)
+		if(SEXP_EQL(TAG(a), R_ClassSymbol))
 		    goto nextattr;
 	    }
 	    if(isFrame(s)) {
-		if(TAG(a) == R_RowNamesSymbol)
+		if(SEXP_EQL(TAG(a), R_RowNamesSymbol))
 		    goto nextattr;
 	    }
 	    if(!isArray(s)) {
-		if (TAG(a) == R_NamesSymbol)
+		if (SEXP_EQL(TAG(a), R_NamesSymbol))
 		    goto nextattr;
 	    }
-	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol || TAG(a) == R_SrcrefSymbol
-	       || TAG(a) == R_WholeSrcrefSymbol || TAG(a) == R_SrcfileSymbol)
+	    if(SEXP_EQL(TAG(a), R_CommentSymbol) ||
+	       SEXP_EQL(TAG(a), R_SourceSymbol) ||
+	       SEXP_EQL(TAG(a), R_SrcrefSymbol) ||
+	       SEXP_EQL(TAG(a), R_WholeSrcrefSymbol) ||
+	       SEXP_EQL(TAG(a), R_SrcfileSymbol))
 		goto nextattr;
 	    if(useSlots)
 		sprintf(ptag, "Slot \"%s\":",
@@ -877,7 +880,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		sprintf(ptag, "attr(,\"%s\")",
 			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
 	    Rprintf("%s", tagbuf); Rprintf("\n");
-	    if (TAG(a) == R_RowNamesSymbol) {
+	    if (SEXP_EQL(TAG(a), R_RowNamesSymbol)) {
 		/* need special handling AND protection */
 		SEXP val;
 		PROTECT(val = getAttrib(s, R_RowNamesSymbol));
@@ -889,12 +892,12 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		SEXP s, showS;
 
 		showS = findVar(install("show"), env);
-		if(showS == R_UnboundValue) {
+		if(IS_R_UnboundValue(showS)) {
 		    SEXP methodsNS = R_FindNamespace(mkString("methods"));
-		    if(methodsNS == R_UnboundValue)
+		    if(IS_R_UnboundValue(methodsNS))
 			error("missing methods namespace: this should not happen");
 		    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
-		    if(showS == R_UnboundValue)
+		    if(IS_R_UnboundValue(showS))
 			error("missing show() in methods namespace: this should not happen");
 		}
 		PROTECT(s = lang2(showS, CAR(a)));
@@ -970,12 +973,12 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	      reloaded in a session.
 	    */
 	    showS = findVar(install("show"), env);
-	    if(showS == R_UnboundValue) {
+	    if(IS_R_UnboundValue(showS)) {
 		SEXP methodsNS = R_FindNamespace(mkString("methods"));
-		if(methodsNS == R_UnboundValue)
+		if(IS_R_UnboundValue(methodsNS))
 		    error("missing methods namespace: this should not happen");
 		showS = findVarInFrame3(methodsNS, install("show"), TRUE);
-		if(showS == R_UnboundValue)
+		if(IS_R_UnboundValue(showS))
 		    error("missing show() in methods namespace: this should not happen");
 	    }
 	    PROTECT(call = lang2(showS, s));

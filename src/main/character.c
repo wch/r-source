@@ -147,7 +147,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     for (i = 0; i < len; i++) {
 	SEXP sxi = STRING_ELT(x, i);
-	if (sxi == NA_STRING) {
+	if (IS_NA_STRING(sxi)) {
 	    INTEGER(s)[i] = 2;
 	    continue;
 	}
@@ -204,11 +204,11 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmaxset(vmax);
     }
     R_FreeStringBufferL(&cbuff);
-    if ((d = getAttrib(x, R_NamesSymbol)) != R_NilValue)
+    if (! IS_R_NilValue(d = getAttrib(x, R_NamesSymbol)))
 	setAttrib(s, R_NamesSymbol, d);
-    if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
+    if (! IS_R_NilValue(d = getAttrib(x, R_DimSymbol)))
 	setAttrib(s, R_DimSymbol, d);
-    if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
+    if (! IS_R_NilValue(d = getAttrib(x, R_DimNamesSymbol)))
 	setAttrib(s, R_DimNamesSymbol, d);
     UNPROTECT(2);
     return s;
@@ -271,7 +271,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    start = INTEGER(sa)[i % k];
 	    stop = INTEGER(so)[i % l];
 	    el = STRING_ELT(x,i);
-	    if (el == NA_STRING || start == NA_INTEGER || stop == NA_INTEGER) {
+	    if (IS_NA_STRING(el) || start == NA_INTEGER || stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
@@ -371,7 +371,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    v_el = STRING_ELT(value, i % v);
 	    start = INTEGER(sa)[i % k];
 	    stop = INTEGER(so)[i % l];
-	    if (el == NA_STRING || v_el == NA_STRING ||
+	    if (IS_NA_STRING(el) || IS_NA_STRING(v_el) ||
 		start == NA_INTEGER || stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
@@ -555,7 +555,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     minlen = asInteger(CADR(args));
     vmax = vmaxget();
     for (i = 0 ; i < len ; i++) {
-	if (STRING_ELT(x, i) == NA_STRING)
+	if (IS_NA_STRING(STRING_ELT(x, i)))
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    s = translateChar(STRING_ELT(x, i));
@@ -714,7 +714,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* the translated string need not be the same length in bytes */
 	for (i = 0; i < n; i++) {
 	    el = STRING_ELT(x, i);
-	    if (el == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+	    if (IS_NA_STRING(el)) SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		const char *xi;
 		ienc = getCharCE(el);
@@ -757,7 +757,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	char *xi;
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
+	    if (IS_NA_STRING(STRING_ELT(x, i)))
 		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		xi = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
@@ -1033,11 +1033,11 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     _new = CAR(args); args = CDR(args);
     x = CAR(args);
     n = XLENGTH(x);
-    if (!isString(old) || length(old) < 1 || STRING_ELT(old, 0) == NA_STRING)
+    if (!isString(old) || length(old) < 1 || IS_NA_STRING(STRING_ELT(old, 0)))
 	error(_("invalid '%s' argument"), "old");
     if (length(old) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "old");
-    if (!isString(_new) || length(_new) < 1 || STRING_ELT(_new, 0) == NA_STRING)
+    if (!isString(_new) || length(_new) < 1 || IS_NA_STRING(STRING_ELT(_new, 0)))
 	error(_("invalid '%s' argument"), "new");
     if (length(_new) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "new");
@@ -1148,7 +1148,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
 	    el = STRING_ELT(x,i);
-	    if (el == NA_STRING)
+	    if (IS_NA_STRING(el))
 		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		ienc = getCharCE(el);
@@ -1231,7 +1231,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(STRSXP, n));
 	vmax = vmaxget();
 	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x,i) == NA_STRING)
+	    if (IS_NA_STRING(STRING_ELT(x,i)))
 		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		const char *xi = translateChar(STRING_ELT(x, i));
@@ -1281,7 +1281,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(STRSXP, len));
     vmax = vmaxget();
     for (i = 0; i < len; i++) {
-	if (STRING_ELT(x, i) == NA_STRING) {
+	if (IS_NA_STRING(STRING_ELT(x, i))) {
 	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    continue;
 	}
@@ -1319,7 +1319,7 @@ static int strtoi(SEXP s, int base)
     /* strtol might return extreme values on error */
     errno = 0;
 
-    if(s == NA_STRING) return(NA_INTEGER);
+    if(IS_NA_STRING(s)) return(NA_INTEGER);
     res = strtol(CHAR(s), &endp, base); /* ASCII */
     if(errno || *endp != '\0') res = NA_INTEGER;
     if(res > INT_MAX || res < INT_MIN) res = NA_INTEGER;

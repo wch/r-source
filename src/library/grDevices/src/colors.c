@@ -503,8 +503,8 @@ SEXP RGB2hsv(SEXP rgb)
     SET_STRING_ELT(names, 2, mkChar("v"));
     SET_VECTOR_ELT(dmns, 0, names);
     /* column names if input has: */
-    if ((dd = getAttrib(rgb, R_DimNamesSymbol)) != R_NilValue &&
-	(names = VECTOR_ELT(dd, 1)) != R_NilValue)
+    if (! IS_R_NilValue(dd = getAttrib(rgb, R_DimNamesSymbol)) &&
+	! IS_R_NilValue(names = VECTOR_ELT(dd, 1)))
 	SET_VECTOR_ELT(dmns, 1, names);
     setAttrib(ans, R_DimNamesSymbol, dmns);
     UNPROTECT(2);/* names, dmns */
@@ -547,7 +547,7 @@ SEXP col2rgb(SEXP colors, SEXP alpha)
     SET_STRING_ELT(names, 2, mkChar("blue"));
     if(alph) SET_STRING_ELT(names, 3, mkChar("alpha"));
     SET_VECTOR_ELT(dmns, 0, names);
-    if ((names = getAttrib(colors, R_NamesSymbol)) != R_NilValue)
+    if (! IS_R_NilValue(names = getAttrib(colors, R_NamesSymbol)))
 	SET_VECTOR_ELT(dmns, 1, names);
     setAttrib(ans, R_DimNamesSymbol, dmns);
 

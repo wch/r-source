@@ -281,7 +281,7 @@ SEXP DropDims(SEXP x)
     /* Check that dropping will actually do something. */
     /* (1) Check that there is a "dim" attribute. */
 
-    if (dims == R_NilValue) {
+    if (IS_R_NilValue(dims)) {
 	UNPROTECT(1);
 	return x;
     }
@@ -301,7 +301,7 @@ SEXP DropDims(SEXP x)
 	   If that has length one, it is ambiguous which dimnames to use,
 	   so use it if there is only one (as from R 2.7.0).
 	 */
-	if (dimnames != R_NilValue) {
+	if (! IS_R_NilValue(dimnames)) {
 	    if(XLENGTH(x) != 1) {
 		for (i = 0; i < LENGTH(dims); i++) {
 		    if (INTEGER(dims)[i] != 1) {
@@ -312,11 +312,11 @@ SEXP DropDims(SEXP x)
 	    } else { /* drop all dims: keep names if unambiguous */
 		int cnt;
 		for(i = 0, cnt = 0; i < LENGTH(dims); i++)
-		    if(VECTOR_ELT(dimnames, i) != R_NilValue) cnt++;
+		    if(! IS_R_NilValue(VECTOR_ELT(dimnames, i))) cnt++;
 		if(cnt == 1)
 		    for (i = 0; i < LENGTH(dims); i++) {
 			newnames = VECTOR_ELT(dimnames, i);
-			if(newnames != R_NilValue) break;
+			if(! IS_R_NilValue(newnames)) break;
 		    }
 	    }
 	}
@@ -346,7 +346,7 @@ SEXP DropDims(SEXP x)
 	    int havenames = 0;
 	    for (i = 0; i < ndims; i++)
 		if (INTEGER(dims)[i] != 1 &&
-		    VECTOR_ELT(dimnames, i) != R_NilValue)
+		    ! IS_R_NilValue(VECTOR_ELT(dimnames, i)))
 		    havenames = 1;
 	    if (havenames) {
 		PROTECT(newnames = allocVector(VECSXP, n));
@@ -365,7 +365,7 @@ SEXP DropDims(SEXP x)
 	PROTECT(dimnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
-	if (dimnames != R_NilValue)
+	if (! IS_R_NilValue(dimnames))
 	{
 	    if(!isNull(dnn))
 		setAttrib(newnames, R_NamesSymbol, newnamesnames);
@@ -385,7 +385,7 @@ SEXP attribute_hidden do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     x = CAR(args);
-    if ((xdims = getAttrib(x, R_DimSymbol)) != R_NilValue) {
+    if (! IS_R_NilValue((xdims = getAttrib(x, R_DimSymbol)))) {
 	n = LENGTH(xdims);
 	shorten = 0;
 	for (i = 0; i < n; i++)
@@ -641,9 +641,9 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
        && R_has_methods(op)) {
 	SEXP s, value;
 	/* Remove argument names to ensure positional matching */
-	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
+	for(s = args; ! IS_R_NilValue(s); s = CDR(s)) SET_TAG(s, R_NilValue);
 	value = R_possible_dispatch(call, op, args, rho, FALSE);
-	if (value) return value;
+	if (! IS_NULL_SEXP(value)) return value;
     }
 
     sym = isNull(y);
@@ -770,14 +770,14 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
-	if (xdims != R_NilValue || ydims != R_NilValue) {
+	if (! IS_R_NilValue(xdims) || ! IS_R_NilValue(ydims)) {
 	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
 	    /* allocate dimnames and dimnamesnames */
 
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
-	    if (xdims != R_NilValue) {
+	    if (! IS_R_NilValue(xdims)) {
 		if (ldx == 2 || ncx == 1) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
@@ -787,7 +787,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 
 #define YDIMS_ET_CETERA							\
-	    if (ydims != R_NilValue) {					\
+	    if (! IS_R_NilValue(ydims)) {				\
 		if (ldy == 2) {						\
 		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));	\
 		    dny = getAttrib(ydims, R_NamesSymbol);		\
@@ -805,9 +805,9 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	     * whose elements are all NULL ...				\
 	     * This is ugly but causes no real damage.			\
 	     * Now (2.1.0 ff), we don't anymore: */			\
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||			\
-		VECTOR_ELT(dimnames,1) != R_NilValue) {			\
-		if (dnx != R_NilValue || dny != R_NilValue)		\
+	    if (! IS_R_NilValue(VECTOR_ELT(dimnames,0)) || \
+		! IS_R_NilValue(VECTOR_ELT(dimnames,1))) { \
+		if (! IS_R_NilValue(dnx) || ! IS_R_NilValue(dny)) \
 		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);	\
 		setAttrib(ans, R_DimNamesSymbol, dimnames);		\
 	    }								\
@@ -841,7 +841,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
-	if (xdims != R_NilValue || ydims != R_NilValue) {
+	if (! IS_R_NilValue(xdims) || ! IS_R_NilValue(ydims)) {
 	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
 	    /* allocate dimnames and dimnamesnames */
@@ -849,7 +849,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 
-	    if (xdims != R_NilValue) {
+	    if (! IS_R_NilValue(xdims)) {
 		if (ldx == 2) {/* not nrx==1 : .. fixed, ihaka 2003-09-30 */
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
@@ -886,7 +886,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
-	if (xdims != R_NilValue || ydims != R_NilValue) {
+	if (! IS_R_NilValue(xdims) || ! IS_R_NilValue(ydims)) {
 	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
 
 	    /* allocate dimnames and dimnamesnames */
@@ -894,7 +894,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 
-	    if (xdims != R_NilValue) {
+	    if (! IS_R_NilValue(xdims)) {
 		if (ldx == 2) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
 		    dnx = getAttrib(xdims, R_NamesSymbol);
@@ -902,7 +902,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
 		}
 	    }
-	    if (ydims != R_NilValue) {
+	    if (! IS_R_NilValue(ydims)) {
 		if (ldy == 2) {
 		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));
 		    dny = getAttrib(ydims, R_NamesSymbol);
@@ -910,9 +910,9 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));
 		}
 	    }
-	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||
-		VECTOR_ELT(dimnames,1) != R_NilValue) {
-		if (dnx != R_NilValue || dny != R_NilValue)
+	    if (! IS_R_NilValue(VECTOR_ELT(dimnames,0)) ||
+		! IS_R_NilValue(VECTOR_ELT(dimnames,1))) {
+		if (! IS_R_NilValue(dnx) || ! IS_R_NilValue(dny))
 		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
 		setAttrib(ans, R_DimNamesSymbol, dimnames);
 	    }
@@ -951,7 +951,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    len = nrow = LENGTH(a);
 	    ncol = 1;
 	    dimnames = getAttrib(a, R_DimNamesSymbol);
-	    if (dimnames != R_NilValue) {
+	    if (! IS_R_NilValue(dimnames)) {
 		rnames = VECTOR_ELT(dimnames, 0);
 		dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
 	    }
@@ -961,7 +961,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    nrow = nrows(a);
 	    len = XLENGTH(a);
 	    dimnames = getAttrib(a, R_DimNamesSymbol);
-	    if (dimnames != R_NilValue) {
+	    if (! IS_R_NilValue(dimnames)) {
 		rnames = VECTOR_ELT(dimnames, 0);
 		cnames = VECTOR_ELT(dimnames, 1);
 		dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
@@ -1210,12 +1210,12 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* and handle the dimnames, if any */
     if (resize) {
 	PROTECT(dna = getAttrib(a, R_DimNamesSymbol));
-	if (dna != R_NilValue) {
+	if (! IS_R_NilValue(dna)) {
 	    SEXP dnna, dnr, dnnr;
 
 	    PROTECT(dnr  = allocVector(VECSXP, n));
 	    PROTECT(dnna = getAttrib(dna, R_NamesSymbol));
-	    if (dnna != R_NilValue) {
+	    if (! IS_R_NilValue(dnna)) {
 		PROTECT(dnnr = allocVector(STRSXP, n));
 		for (i = 0; i < n; i++) {
 		    SET_VECTOR_ELT(dnr, i, VECTOR_ELT(dna, pp[i]));

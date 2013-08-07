@@ -200,7 +200,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     for (itok = 0; itok < tlen; itok++) {
 	SEXP this = STRING_ELT(tok, itok);
 
-	if (this == NA_STRING) { /* NA token doesn't split */
+	if (IS_NA_STRING(this)) { /* NA token doesn't split */
 	    for (i = itok; i < len; i += tlen)
 		SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(x, i)));
 	    continue;
@@ -208,7 +208,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
-		if (STRING_ELT(x, i) == NA_STRING) {
+		if (IS_NA_STRING(STRING_ELT(x, i))) {
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
@@ -295,7 +295,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
-		if (STRING_ELT(x, i) == NA_STRING) {
+		if (IS_NA_STRING(STRING_ELT(x, i))) {
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
@@ -403,7 +403,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
-		if (STRING_ELT(x, i) == NA_STRING) {
+		if (IS_NA_STRING(STRING_ELT(x, i))) {
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
@@ -494,7 +494,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
-		if (STRING_ELT(x, i) == NA_STRING) {
+		if (IS_NA_STRING(STRING_ELT(x, i))) {
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
@@ -565,7 +565,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
-		if (STRING_ELT(x, i) == NA_STRING) {
+		if (IS_NA_STRING(STRING_ELT(x, i))) {
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
@@ -622,7 +622,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmaxset(vmax);
     }
 
-    if (getAttrib(x, R_NamesSymbol) != R_NilValue)
+    if (! IS_R_NilValue(getAttrib(x, R_NamesSymbol)))
 	namesgets(ans, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
     Free(pt); Free(wpt);
@@ -772,7 +772,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "text");
 
     n = XLENGTH(text);
-    if (STRING_ELT(pat, 0) == NA_STRING) {
+    if (IS_NA_STRING(STRING_ELT(pat, 0))) {
 	if (value_opt) {
 	    SEXP nmold = getAttrib(text, R_NamesSymbol);
 	    PROTECT(ans = allocVector(STRSXP, n));
@@ -872,7 +872,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	LOGICAL(ind)[i] = 0;
-	if (STRING_ELT(text, i) != NA_STRING) {
+	if (! IS_NA_STRING(STRING_ELT(text, i))) {
 	    const char *s = NULL;
 	    if (useBytes)
 		s = CHAR(STRING_ELT(text, i));
@@ -1120,7 +1120,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (invert) { /* invert is actually useful here as it
 				 is performing something like strsplit */
 		    R_size_t pos = 0;
-		    SEXP elt, mvec = NULL;
+		    SEXP elt, mvec = R_NULL_SEXP;
 		    int *fmatches = (int*) matches; /* either the minbuffer or an allocated maxibuffer */
 
 		    if (!nmatches) return text;
@@ -1158,7 +1158,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_VECTOR_ELT(ans, nmatches, elt);
 		    if (LENGTH(elt))
 			memcpy(RAW(elt), RAW(text) + LENGTH(text) - LENGTH(elt), LENGTH(elt));
-		    if (mvec)
+		    if (! IS_NULL_SEXP(mvec))
 			UNPROTECT(1);
 		    UNPROTECT(1);
 		    return ans;
@@ -1269,7 +1269,7 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     
     if (value) { /* for values we store in fact the absolute start offsets and length in the integer vector */
 	SEXP vec = CAR(res_head);
-	R_size_t entry = 0, cptr = 0, clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	R_size_t entry = 0, cptr = 0, clen = (IS_R_NilValue(CDR(res_head))) ? res_ptr : LENGTH(vec);
 	R_size_t inv_start = 0; /* 0-based start position of the pieces for invert */
 	res_val = INTEGER(vec);
 	ans = PROTECT(allocVector(VECSXP, invert ? (nmatches + 1) : nmatches));
@@ -1292,11 +1292,11 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cptr += 2;
 	    if (cptr >= clen) {
 		res_head = CDR(res_head);
-		if (res_head == R_NilValue) break;
+		if (IS_R_NilValue(res_head)) break;
 		vec = CAR(res_head);
 		res_val = INTEGER(vec);
 		cptr = 0;
-		clen = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+		clen = (IS_R_NilValue(CDR(res_head))) ? res_ptr : LENGTH(vec);
 	    }
 	}
 	if (invert) { /* add the last piece after the last match */
@@ -1309,9 +1309,9 @@ SEXP attribute_hidden do_grepraw(SEXP call, SEXP op, SEXP args, SEXP env)
     } else { /* if values are not needed, we just collect all the start offsets */
 	ans = allocVector(INTSXP, nmatches);
 	res_val = INTEGER(ans);
-	while (res_head != R_NilValue) {
+	while (! IS_R_NilValue(res_head)) {
 	    SEXP vec = CAR(res_head);
-	    R_size_t len = (CDR(res_head) == R_NilValue) ? res_ptr : LENGTH(vec);
+	    R_size_t len = (IS_R_NilValue(CDR(res_head))) ? res_ptr : LENGTH(vec);
 	    if (len) memcpy(res_val, INTEGER(vec), len * sizeof(int));
 	    res_val += len;
 	    res_head = CDR(res_head);
@@ -1520,7 +1520,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     n = XLENGTH(text);
     /* This contradicts the code below that has NA matching NA */
-    if (STRING_ELT(pat, 0) == NA_STRING) {
+    if (IS_NA_STRING(STRING_ELT(pat, 0))) {
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++)  SET_STRING_ELT(ans, i, NA_STRING);
 	UNPROTECT(1);
@@ -1627,7 +1627,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	/* NA pattern was handled above */
-	if (STRING_ELT(text, i) == NA_STRING) {
+	if (IS_NA_STRING(STRING_ELT(text, i))) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	    continue;
 	}
@@ -1650,7 +1650,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    st = fgrep_one_bytes(spat, s, ns, useBytes, use_UTF8);
 	    if (st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(text, i));
-	    else if (STRING_ELT(rep, 0) == NA_STRING)
+	    else if (IS_NA_STRING(STRING_ELT(rep, 0)))
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		if (global) { /* need to find max number of matches */
@@ -1739,7 +1739,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	   }
 	   if (nmatch == 0)
 	       SET_STRING_ELT(ans, i, STRING_ELT(text, i));
-	   else if (STRING_ELT(rep, 0) == NA_STRING)
+	   else if (IS_NA_STRING(STRING_ELT(rep, 0)))
 	       SET_STRING_ELT(ans, i, NA_STRING);
 	   else {
 	       /* copy the tail */
@@ -1803,7 +1803,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(text, i));
-	    else if (STRING_ELT(rep, 0) == NA_STRING)
+	    else if (IS_NA_STRING(STRING_ELT(rep, 0)))
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
@@ -1866,7 +1866,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(text, i));
-	    else if (STRING_ELT(rep, 0) == NA_STRING)
+	    else if (IS_NA_STRING(STRING_ELT(rep, 0)))
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		/* copy the tail */
@@ -2319,7 +2319,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* Note that excluding NAs differs from grep/sub */
-    if (!isString(pat) || length(pat) < 1 || STRING_ELT(pat, 0) == NA_STRING)
+    if (!isString(pat) || length(pat) < 1 || IS_NA_STRING(STRING_ELT(pat, 0)))
 	error(_("invalid '%s' argument"), "pattern");
     if (length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
@@ -2461,7 +2461,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    if (STRING_ELT(text, i) == NA_STRING) {
+	    if (IS_NA_STRING(STRING_ELT(text, i))) {
 		INTEGER(matchlen)[i] = INTEGER(ans)[i] = NA_INTEGER;
 	    } else {
 		if (useBytes)
@@ -2534,7 +2534,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmax = vmaxget();
 	for (i = 0 ; i < n ; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    if (STRING_ELT(text, i) == NA_STRING) {
+	    if (IS_NA_STRING(STRING_ELT(text, i))) {
 		elt = gregexpr_NAInputAns();
 	    } else {
 		if (fixed_opt || perl_opt) {
@@ -2617,7 +2617,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!isString(pat) ||
        (length(pat) < 1) ||
-       (STRING_ELT(pat, 0) == NA_STRING))
+       (IS_NA_STRING(STRING_ELT(pat, 0))))
 	error(_("invalid '%s' argument"), "pattern");
     if(length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
@@ -2643,7 +2643,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
         useWC = !IS_ASCII(STRING_ELT(pat, 0));
         if(!useWC) {
             for(i = 0 ; i < n ; i++) {
-                if(STRING_ELT(vec, i) == NA_STRING) continue;
+                if(IS_NA_STRING(STRING_ELT(vec, i))) continue;
                 if(!IS_ASCII(STRING_ELT(vec, i))) {
                     useWC = TRUE;
                     break;
@@ -2676,7 +2676,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	if(STRING_ELT(vec, i) == NA_STRING) {
+	if(IS_NA_STRING(STRING_ELT(vec, i))) {
 	    PROTECT(matchpos = ScalarInteger(NA_INTEGER));
 	    setAttrib(matchpos, install("match.length"),
 		      ScalarInteger(NA_INTEGER));

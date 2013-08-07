@@ -2548,7 +2548,7 @@ static void PSFileHeader(FILE *fp,
 	fprintf(fp, " %.2f 0 translate 90 rotate", paperwidth);
     fprintf(fp, " gs } def\n");
     prolog = findVar(install(".ps.prolog"), R_GlobalEnv);
-    if(prolog == R_UnboundValue) {
+    if(IS_R_UnboundValue(prolog)) {
 	/* if no object is visible, look in the graphics namespace */
 	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices")));
 	prolog = findVar(install(".ps.prolog"), graphicsNS);
@@ -3300,7 +3300,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
 	SEXP s = STRING_ELT(GetOption1(install("papersize")), 0);
-	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	if(! IS_NA_STRING(s) && strlen(CHAR(s)) > 0)
 	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "a4");
     }
@@ -4798,7 +4798,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
 	SEXP s = STRING_ELT(GetOption1(install("papersize")), 0);
-	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	if(! IS_NA_STRING(s) && strlen(CHAR(s)) > 0)
 	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "A4");
     }
@@ -6068,7 +6068,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
 	SEXP s = STRING_ELT(GetOption1(install("papersize")), 0);
-	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	if(! IS_NA_STRING(s) && strlen(CHAR(s)) > 0)
 	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "a4");
     }
@@ -8237,7 +8237,7 @@ SEXP PostScript(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
-	    return 0;
+	    return R_NULL_SEXP;
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts,
@@ -8305,7 +8305,7 @@ SEXP XFig(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
-	    return 0;
+	    return R_NULL_SEXP;
 	if(!XFigDeviceDriver(dev, file, paper, family, bg, fg, width, height,
 			     (double) horizontal, ps, onefile, pagecentre, defaultfont, textspecial,
 			     encoding)) {
@@ -8402,7 +8402,7 @@ SEXP PDF(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
-	    return 0;
+	    return R_NULL_SEXP;
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,

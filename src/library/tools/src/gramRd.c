@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.4.2.  */
+/* A Bison parser, made by GNU Bison 2.5.  */
 
-/* Skeleton implementation for Bison's Yacc-like parsers in C
+/* Bison implementation for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989-1990, 2000-2006, 2009-2010 Free Software
-   Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.4.2"
+#define YYBISON_VERSION "2.5"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -66,7 +65,7 @@
 
 /* Copy the first part of user declarations.  */
 
-/* Line 189 of yacc.c  */
+/* Line 268 of yacc.c  */
 #line 1 "gramRd.y"
 
 /*
@@ -242,8 +241,8 @@ static int 	mkComment(int);
 
 
 
-/* Line 189 of yacc.c  */
-#line 247 "gramRd.c"
+/* Line 268 of yacc.c  */
+#line 246 "gramRd.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -340,8 +339,8 @@ typedef struct YYLTYPE
 /* Copy the second part of user declarations.  */
 
 
-/* Line 264 of yacc.c  */
-#line 345 "gramRd.c"
+/* Line 343 of yacc.c  */
+#line 344 "gramRd.c"
 
 #ifdef short
 # undef short
@@ -444,11 +443,11 @@ YYID (yyi)
 #    define alloca _alloca
 #   else
 #    define YYSTACK_ALLOC alloca
-#    if ! defined _ALLOCA_H && ! defined _STDLIB_H && (defined __STDC__ || defined __C99__FUNC__ \
+#    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 #     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
-#     ifndef _STDLIB_H
-#      define _STDLIB_H 1
+#     ifndef EXIT_SUCCESS
+#      define EXIT_SUCCESS 0
 #     endif
 #    endif
 #   endif
@@ -471,24 +470,24 @@ YYID (yyi)
 #  ifndef YYSTACK_ALLOC_MAXIMUM
 #   define YYSTACK_ALLOC_MAXIMUM YYSIZE_MAXIMUM
 #  endif
-#  if (defined __cplusplus && ! defined _STDLIB_H \
+#  if (defined __cplusplus && ! defined EXIT_SUCCESS \
        && ! ((defined YYMALLOC || defined malloc) \
 	     && (defined YYFREE || defined free)))
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
-#   ifndef _STDLIB_H
-#    define _STDLIB_H 1
+#   ifndef EXIT_SUCCESS
+#    define EXIT_SUCCESS 0
 #   endif
 #  endif
 #  ifndef YYMALLOC
 #   define YYMALLOC malloc
-#   if ! defined malloc && ! defined _STDLIB_H && (defined __STDC__ || defined __C99__FUNC__ \
+#   if ! defined malloc && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 void *malloc (YYSIZE_T); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 #  ifndef YYFREE
 #   define YYFREE free
-#   if ! defined free && ! defined _STDLIB_H && (defined __STDC__ || defined __C99__FUNC__ \
+#   if ! defined free && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
@@ -519,23 +518,7 @@ union yyalloc
      ((N) * (sizeof (yytype_int16) + sizeof (YYSTYPE) + sizeof (YYLTYPE)) \
       + 2 * YYSTACK_GAP_MAXIMUM)
 
-/* Copy COUNT objects from FROM to TO.  The source and destination do
-   not overlap.  */
-# ifndef YYCOPY
-#  if defined __GNUC__ && 1 < __GNUC__
-#   define YYCOPY(To, From, Count) \
-      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
-#  else
-#   define YYCOPY(To, From, Count)		\
-      do					\
-	{					\
-	  YYSIZE_T yyi;				\
-	  for (yyi = 0; yyi < (Count); yyi++)	\
-	    (To)[yyi] = (From)[yyi];		\
-	}					\
-      while (YYID (0))
-#  endif
-# endif
+# define YYCOPY_NEEDED 1
 
 /* Relocate STACK from its old location to the new one.  The
    local variables YYSIZE and YYSTACKSIZE give the old and new number of
@@ -554,6 +537,26 @@ union yyalloc
     while (YYID (0))
 
 #endif
+
+#if defined YYCOPY_NEEDED && YYCOPY_NEEDED
+/* Copy COUNT objects from FROM to TO.  The source and destination do
+   not overlap.  */
+# ifndef YYCOPY
+#  if defined __GNUC__ && 1 < __GNUC__
+#   define YYCOPY(To, From, Count) \
+      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
+#  else
+#   define YYCOPY(To, From, Count)		\
+      do					\
+	{					\
+	  YYSIZE_T yyi;				\
+	  for (yyi = 0; yyi < (Count); yyi++)	\
+	    (To)[yyi] = (From)[yyi];		\
+	}					\
+      while (YYID (0))
+#  endif
+# endif
+#endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  33
@@ -742,8 +745,8 @@ static const yytype_uint8 yyr2[] =
        0,     0,     0,     0,     3,     2,     4,     3,     4,     3
 };
 
-/* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
-   STATE-NUM when YYTABLE doesn't specify something else to do.  Zero
+/* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
+   Performed when YYTABLE doesn't specify something else to do.  Zero
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
@@ -816,8 +819,7 @@ static const yytype_int8 yypgoto[] =
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule which
-   number is the opposite.  If zero, do what YYDEFACT says.
-   If YYTABLE_NINF, syntax error.  */
+   number is the opposite.  If YYTABLE_NINF, syntax error.  */
 #define YYTABLE_NINF -50
 static const yytype_int16 yytable[] =
 {
@@ -906,6 +908,12 @@ static const yytype_int16 yytable[] =
       17,    18,    19,    20,    21,    22,    23,    24,     0,    25,
        0,     0,    26
 };
+
+#define yypact_value_is_default(yystate) \
+  ((yystate) == (-94))
+
+#define yytable_value_is_error(yytable_value) \
+  YYID (0)
 
 static const yytype_int16 yycheck[] =
 {
@@ -1054,7 +1062,6 @@ do								\
     {								\
       yychar = (Token);						\
       yylval = (Value);						\
-      yytoken = YYTRANSLATE (yychar);				\
       YYPOPSTACK (1);						\
       goto yybackup;						\
     }								\
@@ -1306,7 +1313,6 @@ int yydebug;
 # define YYMAXDEPTH 10000
 #endif
 
-
 
 #if YYERROR_VERBOSE
 
@@ -1409,115 +1415,142 @@ yytnamerr (char *yyres, const char *yystr)
 }
 # endif
 
-/* Copy into YYRESULT an error message about the unexpected token
-   YYCHAR while in state YYSTATE.  Return the number of bytes copied,
-   including the terminating null byte.  If YYRESULT is null, do not
-   copy anything; just return the number of bytes that would be
-   copied.  As a special case, return 0 if an ordinary "syntax error"
-   message will do.  Return YYSIZE_MAXIMUM if overflow occurs during
-   size calculation.  */
-static YYSIZE_T
-yysyntax_error (char *yyresult, int yystate, int yychar)
+/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
+   about the unexpected token YYTOKEN for the state stack whose top is
+   YYSSP.
+
+   Return 0 if *YYMSG was successfully written.  Return 1 if *YYMSG is
+   not large enough to hold the message.  In that case, also set
+   *YYMSG_ALLOC to the required number of bytes.  Return 2 if the
+   required number of bytes is too large to store.  */
+static int
+yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
+                yytype_int16 *yyssp, int yytoken)
 {
-  int yyn = yypact[yystate];
+  YYSIZE_T yysize0 = yytnamerr (0, yytname[yytoken]);
+  YYSIZE_T yysize = yysize0;
+  YYSIZE_T yysize1;
+  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
+  /* Internationalized format string. */
+  const char *yyformat = 0;
+  /* Arguments of yyformat. */
+  char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
+  /* Number of reported tokens (one for the "unexpected", one per
+     "expected"). */
+  int yycount = 0;
 
-  if (! (YYPACT_NINF < yyn && yyn <= YYLAST))
-    return 0;
-  else
+  /* There are many possibilities here to consider:
+     - Assume YYFAIL is not used.  It's too flawed to consider.  See
+       <http://lists.gnu.org/archive/html/bison-patches/2009-12/msg00024.html>
+       for details.  YYERROR is fine as it does not invoke this
+       function.
+     - If this state is a consistent state with a default action, then
+       the only way this function was invoked is if the default action
+       is an error action.  In that case, don't check for expected
+       tokens because there are none.
+     - The only way there can be no lookahead present (in yychar) is if
+       this state is a consistent state with a default action.  Thus,
+       detecting the absence of a lookahead is sufficient to determine
+       that there is no unexpected or expected token to report.  In that
+       case, just report a simple "syntax error".
+     - Don't assume there isn't a lookahead just because this state is a
+       consistent state with a default action.  There might have been a
+       previous inconsistent state, consistent state with a non-default
+       action, or user semantic action that manipulated yychar.
+     - Of course, the expected token list depends on states to have
+       correct lookahead information, and it depends on the parser not
+       to perform extra reductions after fetching a lookahead from the
+       scanner and before detecting a syntax error.  Thus, state merging
+       (from LALR or IELR) and default reductions corrupt the expected
+       token list.  However, the list is correct for canonical LR with
+       one exception: it will still contain any token that will not be
+       accepted due to an error action in a later state.
+  */
+  if (yytoken != YYEMPTY)
     {
-      int yytype = YYTRANSLATE (yychar);
-      YYSIZE_T yysize0 = yytnamerr (0, yytname[yytype]);
-      YYSIZE_T yysize = yysize0;
-      YYSIZE_T yysize1;
-      int yysize_overflow = 0;
-      enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
-      char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
-      int yyx;
+      int yyn = yypact[*yyssp];
+      yyarg[yycount++] = yytname[yytoken];
+      if (!yypact_value_is_default (yyn))
+        {
+          /* Start YYX at -YYN if negative to avoid negative indexes in
+             YYCHECK.  In other words, skip the first -YYN actions for
+             this state because they are default actions.  */
+          int yyxbegin = yyn < 0 ? -yyn : 0;
+          /* Stay within bounds of both yycheck and yytname.  */
+          int yychecklim = YYLAST - yyn + 1;
+          int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+          int yyx;
 
-# if 0
-      /* This is so xgettext sees the translatable formats that are
-	 constructed on the fly.  */
-      YY_("syntax error, unexpected %s");
-      YY_("syntax error, unexpected %s, expecting %s");
-      YY_("syntax error, unexpected %s, expecting %s or %s");
-      YY_("syntax error, unexpected %s, expecting %s or %s or %s");
-      YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s");
-# endif
-      char *yyfmt;
-      char const *yyf;
-      static char const yyunexpected[] = "syntax error, unexpected %s";
-      static char const yyexpecting[] = ", expecting %s";
-      static char const yyor[] = " or %s";
-      char yyformat[sizeof yyunexpected
-		    + sizeof yyexpecting - 1
-		    + ((YYERROR_VERBOSE_ARGS_MAXIMUM - 2)
-		       * (sizeof yyor - 1))];
-      char const *yyprefix = yyexpecting;
-
-      /* Start YYX at -YYN if negative to avoid negative indexes in
-	 YYCHECK.  */
-      int yyxbegin = yyn < 0 ? -yyn : 0;
-
-      /* Stay within bounds of both yycheck and yytname.  */
-      int yychecklim = YYLAST - yyn + 1;
-      int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-      int yycount = 1;
-
-      yyarg[0] = yytname[yytype];
-      yyfmt = yystpcpy (yyformat, yyunexpected);
-
-      for (yyx = yyxbegin; yyx < yyxend; ++yyx)
-	if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR)
-	  {
-	    if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
-	      {
-		yycount = 1;
-		yysize = yysize0;
-		yyformat[sizeof yyunexpected - 1] = '\0';
-		break;
-	      }
-	    yyarg[yycount++] = yytname[yyx];
-	    yysize1 = yysize + yytnamerr (0, yytname[yyx]);
-	    yysize_overflow |= (yysize1 < yysize);
-	    yysize = yysize1;
-	    yyfmt = yystpcpy (yyfmt, yyprefix);
-	    yyprefix = yyor;
-	  }
-
-      yyf = YY_(yyformat);
-      yysize1 = yysize + yystrlen (yyf);
-      yysize_overflow |= (yysize1 < yysize);
-      yysize = yysize1;
-
-      if (yysize_overflow)
-	return YYSIZE_MAXIMUM;
-
-      if (yyresult)
-	{
-	  /* Avoid sprintf, as that infringes on the user's name space.
-	     Don't have undefined behavior even if the translation
-	     produced a string with the wrong number of "%s"s.  */
-	  char *yyp = yyresult;
-	  int yyi = 0;
-	  while ((*yyp = *yyf) != '\0')
-	    {
-	      if (*yyp == '%' && yyf[1] == 's' && yyi < yycount)
-		{
-		  yyp += yytnamerr (yyp, yyarg[yyi++]);
-		  yyf += 2;
-		}
-	      else
-		{
-		  yyp++;
-		  yyf++;
-		}
-	    }
-	}
-      return yysize;
+          for (yyx = yyxbegin; yyx < yyxend; ++yyx)
+            if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
+                && !yytable_value_is_error (yytable[yyx + yyn]))
+              {
+                if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
+                  {
+                    yycount = 1;
+                    yysize = yysize0;
+                    break;
+                  }
+                yyarg[yycount++] = yytname[yyx];
+                yysize1 = yysize + yytnamerr (0, yytname[yyx]);
+                if (! (yysize <= yysize1
+                       && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+                  return 2;
+                yysize = yysize1;
+              }
+        }
     }
+
+  switch (yycount)
+    {
+# define YYCASE_(N, S)                      \
+      case N:                               \
+        yyformat = S;                       \
+      break
+      YYCASE_(0, YY_("syntax error"));
+      YYCASE_(1, YY_("syntax error, unexpected %s"));
+      YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
+      YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
+      YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
+      YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+# undef YYCASE_
+    }
+
+  yysize1 = yysize + yystrlen (yyformat);
+  if (! (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
+    return 2;
+  yysize = yysize1;
+
+  if (*yymsg_alloc < yysize)
+    {
+      *yymsg_alloc = 2 * yysize;
+      if (! (yysize <= *yymsg_alloc
+             && *yymsg_alloc <= YYSTACK_ALLOC_MAXIMUM))
+        *yymsg_alloc = YYSTACK_ALLOC_MAXIMUM;
+      return 1;
+    }
+
+  /* Avoid sprintf, as that infringes on the user's name space.
+     Don't have undefined behavior even if the translation
+     produced a string with the wrong number of "%s"s.  */
+  {
+    char *yyp = *yymsg;
+    int yyi = 0;
+    while ((*yyp = *yyformat) != '\0')
+      if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
+        {
+          yyp += yytnamerr (yyp, yyarg[yyi++]);
+          yyformat += 2;
+        }
+      else
+        {
+          yyp++;
+          yyformat++;
+        }
+  }
+  return 0;
 }
 #endif /* YYERROR_VERBOSE */
-
 
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
@@ -1548,495 +1581,496 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
     {
       case 5: /* "SECTIONHEADER" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1557 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1590 "gramRd.c"
 	break;
       case 6: /* "RSECTIONHEADER" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1566 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1599 "gramRd.c"
 	break;
       case 7: /* "VSECTIONHEADER" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1575 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1608 "gramRd.c"
 	break;
       case 8: /* "SECTIONHEADER2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1584 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1617 "gramRd.c"
 	break;
       case 9: /* "RCODEMACRO" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1593 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1626 "gramRd.c"
 	break;
       case 10: /* "SEXPR" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1602 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1635 "gramRd.c"
 	break;
       case 12: /* "LATEXMACRO" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1611 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1644 "gramRd.c"
 	break;
       case 13: /* "VERBMACRO" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1620 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1653 "gramRd.c"
 	break;
       case 14: /* "OPTMACRO" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1629 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1662 "gramRd.c"
 	break;
       case 15: /* "ESCAPE" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1638 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1671 "gramRd.c"
 	break;
       case 16: /* "LISTSECTION" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1647 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1680 "gramRd.c"
 	break;
       case 17: /* "ITEMIZE" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1656 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1689 "gramRd.c"
 	break;
       case 18: /* "DESCRIPTION" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1665 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1698 "gramRd.c"
 	break;
       case 19: /* "NOITEM" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1674 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1707 "gramRd.c"
 	break;
       case 20: /* "LATEXMACRO2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1683 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1716 "gramRd.c"
 	break;
       case 21: /* "VERBMACRO2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1692 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1725 "gramRd.c"
 	break;
       case 22: /* "VERBLATEX" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1701 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1734 "gramRd.c"
 	break;
       case 23: /* "LATEXMACRO3" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1710 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1743 "gramRd.c"
 	break;
       case 24: /* "NEWCOMMAND" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1719 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1752 "gramRd.c"
 	break;
       case 25: /* "USERMACRO" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1728 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1761 "gramRd.c"
 	break;
       case 26: /* "USERMACRO1" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1737 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1770 "gramRd.c"
 	break;
       case 27: /* "USERMACRO2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1746 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1779 "gramRd.c"
 	break;
       case 28: /* "USERMACRO3" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1755 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1788 "gramRd.c"
 	break;
       case 29: /* "USERMACRO4" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1764 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1797 "gramRd.c"
 	break;
       case 30: /* "USERMACRO5" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1773 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1806 "gramRd.c"
 	break;
       case 31: /* "USERMACRO6" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1782 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1815 "gramRd.c"
 	break;
       case 32: /* "USERMACRO7" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1791 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1824 "gramRd.c"
 	break;
       case 33: /* "USERMACRO8" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1800 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1833 "gramRd.c"
 	break;
       case 34: /* "USERMACRO9" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1809 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1842 "gramRd.c"
 	break;
       case 35: /* "IFDEF" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1818 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1851 "gramRd.c"
 	break;
       case 36: /* "ENDIF" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1827 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1860 "gramRd.c"
 	break;
       case 37: /* "TEXT" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1836 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1869 "gramRd.c"
 	break;
       case 38: /* "RCODE" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1845 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1878 "gramRd.c"
 	break;
       case 39: /* "VERB" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1854 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1887 "gramRd.c"
 	break;
       case 40: /* "COMMENT" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1863 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1896 "gramRd.c"
 	break;
       case 41: /* "UNKNOWN" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1872 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1905 "gramRd.c"
 	break;
       case 42: /* "STARTFILE" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1881 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1914 "gramRd.c"
 	break;
       case 43: /* "STARTFRAGMENT" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1890 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1923 "gramRd.c"
 	break;
       case 54: /* "ArgItems" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1899 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1932 "gramRd.c"
 	break;
       case 58: /* "LatexArg" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1908 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1941 "gramRd.c"
 	break;
       case 63: /* "RLikeArg2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1917 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1950 "gramRd.c"
 	break;
       case 65: /* "VerbatimArg1" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1926 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1959 "gramRd.c"
 	break;
       case 66: /* "VerbatimArg2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1935 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1968 "gramRd.c"
 	break;
       case 67: /* "IfDefTarget" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1944 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1977 "gramRd.c"
 	break;
       case 68: /* "goLatexLike" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1953 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1986 "gramRd.c"
 	break;
       case 69: /* "goRLike" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1962 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 1995 "gramRd.c"
 	break;
       case 70: /* "goRLike2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1971 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2004 "gramRd.c"
 	break;
       case 71: /* "goOption" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1980 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2013 "gramRd.c"
 	break;
       case 72: /* "goVerbatim" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1989 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2022 "gramRd.c"
 	break;
       case 73: /* "goVerbatim1" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 1998 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2031 "gramRd.c"
 	break;
       case 74: /* "goVerbatim2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 2007 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2040 "gramRd.c"
 	break;
       case 75: /* "goItem0" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 2016 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2049 "gramRd.c"
 	break;
       case 76: /* "goItem2" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 2025 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2058 "gramRd.c"
 	break;
       case 78: /* "Option" */
 
-/* Line 1009 of yacc.c  */
+/* Line 1391 of yacc.c  */
 #line 194 "gramRd.y"
 	{ UNPROTECT_PTR((*yyvaluep)); };
 
-/* Line 1009 of yacc.c  */
-#line 2034 "gramRd.c"
+/* Line 1391 of yacc.c  */
+#line 2067 "gramRd.c"
 	break;
 
       default:
 	break;
     }
 }
+
 
 /* Prevent warnings from -Wmissing-prototypes.  */
 #ifdef YYPARSE_PARAM
@@ -2067,10 +2101,9 @@ YYLTYPE yylloc;
 int yynerrs;
 
 
-
-/*-------------------------.
-| yyparse or yypush_parse.  |
-`-------------------------*/
+/*----------.
+| yyparse.  |
+`----------*/
 
 #ifdef YYPARSE_PARAM
 #if (defined __STDC__ || defined __C99__FUNC__ \
@@ -2094,8 +2127,6 @@ yyparse ()
 #endif
 #endif
 {
-
-
     int yystate;
     /* Number of tokens to shift before error messages enabled.  */
     int yyerrstatus;
@@ -2124,7 +2155,7 @@ yyparse ()
     YYLTYPE *yylsp;
 
     /* The locations where the error started and ended.  */
-    YYLTYPE yyerror_range[2];
+    YYLTYPE yyerror_range[3];
 
     YYSIZE_T yystacksize;
 
@@ -2273,7 +2304,7 @@ yybackup:
 
   /* First try to decide what to do without reference to lookahead token.  */
   yyn = yypact[yystate];
-  if (yyn == YYPACT_NINF)
+  if (yypact_value_is_default (yyn))
     goto yydefault;
 
   /* Not known => get a lookahead token if don't already have one.  */
@@ -2304,8 +2335,8 @@ yybackup:
   yyn = yytable[yyn];
   if (yyn <= 0)
     {
-      if (yyn == 0 || yyn == YYTABLE_NINF)
-	goto yyerrlab;
+      if (yytable_value_is_error (yyn))
+        goto yyerrlab;
       yyn = -yyn;
       goto yyreduce;
     }
@@ -2361,441 +2392,441 @@ yyreduce:
     {
         case 2:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 206 "gramRd.y"
-    { xxsavevalue((yyvsp[(2) - (3)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(1) - (3)])); return 0; ;}
+    { xxsavevalue((yyvsp[(2) - (3)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(1) - (3)])); return 0; }
     break;
 
   case 3:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 207 "gramRd.y"
-    { xxsavevalue((yyvsp[(2) - (3)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(1) - (3)])); return 0; ;}
+    { xxsavevalue((yyvsp[(2) - (3)]), &(yyloc)); UNPROTECT_PTR((yyvsp[(1) - (3)])); return 0; }
     break;
 
   case 4:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 208 "gramRd.y"
-    { PROTECT(parseState.Value = R_NilValue);  YYABORT; ;}
+    { PROTECT(parseState.Value = R_NilValue);  YYABORT; }
     break;
 
   case 5:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 211 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (2)]); UNPROTECT_PTR((yyvsp[(1) - (2)])); ;}
+    { (yyval) = (yyvsp[(2) - (2)]); UNPROTECT_PTR((yyvsp[(1) - (2)])); }
     break;
 
   case 6:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 214 "gramRd.y"
-    { (yyval) = (yyvsp[(1) - (1)]); ;}
+    { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 7:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 217 "gramRd.y"
-    { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
+    { (yyval) = xxnewlist((yyvsp[(1) - (1)])); }
     break;
 
   case 8:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 218 "gramRd.y"
-    { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
+    { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); }
     break;
 
   case 9:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 220 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 10:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 221 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), HAS_SEXPR, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), HAS_SEXPR, &(yyloc)); }
     break;
 
   case 11:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 222 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 12:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 223 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 13:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 224 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 14:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 225 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); }
     break;
 
   case 15:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 226 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); }
     break;
 
   case 16:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 227 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); }
     break;
 
   case 17:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 228 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); }
     break;
 
   case 18:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 229 "gramRd.y"
-    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); ;}
+    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); }
     break;
 
   case 19:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 230 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); }
     break;
 
   case 20:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 231 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); }
     break;
 
   case 21:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 232 "gramRd.y"
-    { (yyval) = (yyvsp[(1) - (1)]); ;}
+    { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 22:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 233 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (2)]); ;}
+    { (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 23:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 235 "gramRd.y"
-    { (yyval) = xxnewlist((yyvsp[(1) - (1)])); ;}
+    { (yyval) = xxnewlist((yyvsp[(1) - (1)])); }
     break;
 
   case 24:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 236 "gramRd.y"
-    { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); ;}
+    { (yyval) = xxlist((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)])); }
     break;
 
   case 25:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 238 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), TEXT, &(yyloc)); }
     break;
 
   case 26:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 239 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), RCODE, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), RCODE, &(yyloc)); }
     break;
 
   case 27:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 240 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), VERB, &(yyloc)); }
     break;
 
   case 28:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 241 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), COMMENT, &(yyloc)); }
     break;
 
   case 29:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 242 "gramRd.y"
-    { (yyval) = xxtag((yyvsp[(1) - (1)]), UNKNOWN, &(yyloc)); yyerror(yyunknown); ;}
+    { (yyval) = xxtag((yyvsp[(1) - (1)]), UNKNOWN, &(yyloc)); yyerror(yyunknown); }
     break;
 
   case 30:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 243 "gramRd.y"
-    { (yyval) = xxmarkup(R_NilValue, (yyvsp[(1) - (1)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup(R_NilValue, (yyvsp[(1) - (1)]), STATIC, &(yyloc)); }
     break;
 
   case 31:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 244 "gramRd.y"
-    { (yyval) = (yyvsp[(1) - (1)]); ;}
+    { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 32:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 245 "gramRd.y"
-    { (yyval) = (yyvsp[(1) - (1)]); ;}
+    { (yyval) = (yyvsp[(1) - (1)]); }
     break;
 
   case 33:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 246 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (2)]); ;}
+    { (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 34:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 248 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 35:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 249 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); }
     break;
 
   case 36:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 250 "gramRd.y"
-    { (yyval) = xxmarkup3((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup3((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), STATIC, &(yyloc)); }
     break;
 
   case 37:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 251 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 38:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 252 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 39:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 253 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), STATIC, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), STATIC, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); }
     break;
 
   case 40:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 254 "gramRd.y"
-    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), STATIC, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); ;}
+    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), STATIC, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); }
     break;
 
   case 41:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 255 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 42:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 256 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (3)])); }
     break;
 
   case 43:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 257 "gramRd.y"
-    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); ;}
+    { (yyval) = xxOptionmarkup((yyvsp[(1) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)]), HAS_SEXPR, &(yyloc)); xxpopMode((yyvsp[(2) - (4)])); }
     break;
 
   case 44:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 258 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), STATIC, &(yyloc)); }
     break;
 
   case 45:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 259 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), R_NilValue, 1, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (2)]), (yyvsp[(2) - (2)]), R_NilValue, 1, STATIC, &(yyloc)); }
     break;
 
   case 46:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 260 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); }
     break;
 
   case 47:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 261 "gramRd.y"
-    { (yyval) = xxmarkup((yyvsp[(1) - (1)]), R_NilValue, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup((yyvsp[(1) - (1)]), R_NilValue, STATIC, &(yyloc)); }
     break;
 
   case 48:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 262 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[(4) - (4)])); }
     break;
 
   case 49:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 263 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (4)]), (yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), 2, HAS_IFDEF, &(yyloc)); }
     break;
 
   case 50:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 264 "gramRd.y"
-    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); ;}
+    { (yyval) = xxmarkup2((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), 2, STATIC, &(yyloc)); }
     break;
 
   case 51:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 266 "gramRd.y"
-    { (yyval) = xxnewcommand((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); ;}
+    { (yyval) = xxnewcommand((yyvsp[(1) - (3)]), (yyvsp[(2) - (3)]), (yyvsp[(3) - (3)]), &(yyloc)); }
     break;
 
   case 52:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 267 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (1)]), xxnewlist(NULL), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (1)]), xxnewlist(R_NULL_SEXP), &(yyloc)); }
     break;
 
   case 53:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 268 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (2)]), xxnewlist((yyvsp[(2) - (2)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (2)]), xxnewlist((yyvsp[(2) - (2)])), &(yyloc)); }
     break;
 
   case 54:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 270 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (3)]), xxnewlist2((yyvsp[(2) - (3)]), (yyvsp[(3) - (3)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (3)]), xxnewlist2((yyvsp[(2) - (3)]), (yyvsp[(3) - (3)])), &(yyloc)); }
     break;
 
   case 55:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 272 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (4)]), xxnewlist3((yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (4)]), xxnewlist3((yyvsp[(2) - (4)]), (yyvsp[(3) - (4)]), (yyvsp[(4) - (4)])), &(yyloc)); }
     break;
 
   case 56:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 274 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (5)]), xxnewlist4((yyvsp[(2) - (5)]), (yyvsp[(3) - (5)]), (yyvsp[(4) - (5)]), (yyvsp[(5) - (5)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (5)]), xxnewlist4((yyvsp[(2) - (5)]), (yyvsp[(3) - (5)]), (yyvsp[(4) - (5)]), (yyvsp[(5) - (5)])), &(yyloc)); }
     break;
 
   case 57:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 276 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (6)]), xxnewlist5((yyvsp[(2) - (6)]), (yyvsp[(3) - (6)]), (yyvsp[(4) - (6)]), (yyvsp[(5) - (6)]), (yyvsp[(6) - (6)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (6)]), xxnewlist5((yyvsp[(2) - (6)]), (yyvsp[(3) - (6)]), (yyvsp[(4) - (6)]), (yyvsp[(5) - (6)]), (yyvsp[(6) - (6)])), &(yyloc)); }
     break;
 
   case 58:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 278 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (7)]), xxnewlist6((yyvsp[(2) - (7)]), (yyvsp[(3) - (7)]), (yyvsp[(4) - (7)]), (yyvsp[(5) - (7)]), (yyvsp[(6) - (7)]), (yyvsp[(7) - (7)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (7)]), xxnewlist6((yyvsp[(2) - (7)]), (yyvsp[(3) - (7)]), (yyvsp[(4) - (7)]), (yyvsp[(5) - (7)]), (yyvsp[(6) - (7)]), (yyvsp[(7) - (7)])), &(yyloc)); }
     break;
 
   case 59:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 281 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (9)]), xxnewlist7((yyvsp[(2) - (9)]), (yyvsp[(3) - (9)]), (yyvsp[(4) - (9)]), (yyvsp[(5) - (9)]), (yyvsp[(6) - (9)]), (yyvsp[(7) - (9)]), (yyvsp[(8) - (9)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (9)]), xxnewlist7((yyvsp[(2) - (9)]), (yyvsp[(3) - (9)]), (yyvsp[(4) - (9)]), (yyvsp[(5) - (9)]), (yyvsp[(6) - (9)]), (yyvsp[(7) - (9)]), (yyvsp[(8) - (9)])), &(yyloc)); }
     break;
 
   case 60:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 284 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (10)]), xxnewlist8((yyvsp[(2) - (10)]), (yyvsp[(3) - (10)]), (yyvsp[(4) - (10)]), (yyvsp[(5) - (10)]), (yyvsp[(6) - (10)]), (yyvsp[(7) - (10)]), (yyvsp[(8) - (10)]), (yyvsp[(9) - (10)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (10)]), xxnewlist8((yyvsp[(2) - (10)]), (yyvsp[(3) - (10)]), (yyvsp[(4) - (10)]), (yyvsp[(5) - (10)]), (yyvsp[(6) - (10)]), (yyvsp[(7) - (10)]), (yyvsp[(8) - (10)]), (yyvsp[(9) - (10)])), &(yyloc)); }
     break;
 
   case 61:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 287 "gramRd.y"
-    { (yyval) = xxusermacro((yyvsp[(1) - (11)]), xxnewlist9((yyvsp[(2) - (11)]), (yyvsp[(3) - (11)]), (yyvsp[(4) - (11)]), (yyvsp[(5) - (11)]), (yyvsp[(6) - (11)]), (yyvsp[(7) - (11)]), (yyvsp[(8) - (11)]), (yyvsp[(9) - (11)]), (yyvsp[(10) - (11)])), &(yyloc)); ;}
+    { (yyval) = xxusermacro((yyvsp[(1) - (11)]), xxnewlist9((yyvsp[(2) - (11)]), (yyvsp[(3) - (11)]), (yyvsp[(4) - (11)]), (yyvsp[(5) - (11)]), (yyvsp[(6) - (11)]), (yyvsp[(7) - (11)]), (yyvsp[(8) - (11)]), (yyvsp[(9) - (11)]), (yyvsp[(10) - (11)])), &(yyloc)); }
     break;
 
   case 62:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 290 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 63:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 292 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 64:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 293 "gramRd.y"
     { xxpopMode((yyvsp[(1) - (2)])); (yyval) = xxnewlist((yyvsp[(2) - (2)])); 
      						  if(wCalls)
@@ -2804,190 +2835,201 @@ yyreduce:
      						  else
     	    					      warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
     	    					            parseState.xxBasename, (yylsp[(2) - (2)]).first_line, (yylsp[(2) - (2)]).first_column); 
-						;}
+						}
     break;
 
   case 65:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 302 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 66:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 304 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 67:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 306 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 68:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 310 "gramRd.y"
-    { xxpopMode((yyvsp[(2) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
+    { xxpopMode((yyvsp[(2) - (4)])); (yyval) = (yyvsp[(3) - (4)]); }
     break;
 
   case 69:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 311 "gramRd.y"
-    { xxpopMode((yyvsp[(2) - (3)])); (yyval) = xxnewlist(NULL); ;}
+    { xxpopMode((yyvsp[(2) - (3)])); (yyval) = xxnewlist(R_NULL_SEXP); }
     break;
 
   case 70:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 313 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 71:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 315 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = (yyvsp[(2) - (2)]); }
     break;
 
   case 72:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 319 "gramRd.y"
-    { xxpopMode((yyvsp[(2) - (4)])); (yyval) = (yyvsp[(3) - (4)]); ;}
+    { xxpopMode((yyvsp[(2) - (4)])); (yyval) = (yyvsp[(3) - (4)]); }
     break;
 
   case 73:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 320 "gramRd.y"
-    { xxpopMode((yyvsp[(2) - (3)])); (yyval) = xxnewlist(NULL); ;}
+    { xxpopMode((yyvsp[(2) - (3)])); (yyval) = xxnewlist(R_NULL_SEXP); }
     break;
 
   case 74:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 322 "gramRd.y"
-    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = xxnewlist(xxtag((yyvsp[(2) - (2)]), TEXT, &(yyloc))); ;}
+    { xxpopMode((yyvsp[(1) - (2)])); (yyval) = xxnewlist(xxtag((yyvsp[(2) - (2)]), TEXT, &(yyloc))); }
     break;
 
   case 75:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 325 "gramRd.y"
-    { (yyval) = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); ;}
+    { (yyval) = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); }
     break;
 
   case 76:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 327 "gramRd.y"
-    { (yyval) = xxpushMode(RLIKE, UNKNOWN, FALSE); ;}
+    { (yyval) = xxpushMode(RLIKE, UNKNOWN, FALSE); }
     break;
 
   case 77:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 329 "gramRd.y"
-    { parseState.xxbraceDepth--; (yyval) = xxpushMode(RLIKE, UNKNOWN, FALSE); parseState.xxbraceDepth++; ;}
+    { parseState.xxbraceDepth--; (yyval) = xxpushMode(RLIKE, UNKNOWN, FALSE); parseState.xxbraceDepth++; }
     break;
 
   case 78:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 331 "gramRd.y"
-    { (yyval) = xxpushMode(INOPTION, UNKNOWN, FALSE); ;}
+    { (yyval) = xxpushMode(INOPTION, UNKNOWN, FALSE); }
     break;
 
   case 79:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 333 "gramRd.y"
-    { (yyval) = xxpushMode(VERBATIM, UNKNOWN, FALSE); ;}
+    { (yyval) = xxpushMode(VERBATIM, UNKNOWN, FALSE); }
     break;
 
   case 80:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 335 "gramRd.y"
-    { (yyval) = xxpushMode(VERBATIM, UNKNOWN, TRUE); ;}
+    { (yyval) = xxpushMode(VERBATIM, UNKNOWN, TRUE); }
     break;
 
   case 81:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 337 "gramRd.y"
-    { parseState.xxbraceDepth--; (yyval) = xxpushMode(VERBATIM, UNKNOWN, FALSE); parseState.xxbraceDepth++; ;}
+    { parseState.xxbraceDepth--; (yyval) = xxpushMode(VERBATIM, UNKNOWN, FALSE); parseState.xxbraceDepth++; }
     break;
 
   case 82:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 339 "gramRd.y"
-    { (yyval) = xxpushMode(LATEXLIKE, ESCAPE, FALSE); ;}
+    { (yyval) = xxpushMode(LATEXLIKE, ESCAPE, FALSE); }
     break;
 
   case 83:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 341 "gramRd.y"
-    { (yyval) = xxpushMode(LATEXLIKE, LATEXMACRO2, FALSE); ;}
+    { (yyval) = xxpushMode(LATEXLIKE, LATEXMACRO2, FALSE); }
     break;
 
   case 84:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 343 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (3)]); ;}
+    { (yyval) = (yyvsp[(2) - (3)]); }
     break;
 
   case 85:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 344 "gramRd.y"
-    { (yyval) = xxnewlist(NULL); ;}
+    { (yyval) = xxnewlist(R_NULL_SEXP); }
     break;
 
   case 86:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 345 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (4)]); ;}
+    { (yyval) = (yyvsp[(2) - (4)]); }
     break;
 
   case 87:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 346 "gramRd.y"
-    { (yyval) = xxnewlist(NULL); ;}
+    { (yyval) = xxnewlist(R_NULL_SEXP); }
     break;
 
   case 88:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 347 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (4)]); ;}
+    { (yyval) = (yyvsp[(2) - (4)]); }
     break;
 
   case 89:
 
-/* Line 1464 of yacc.c  */
+/* Line 1806 of yacc.c  */
 #line 349 "gramRd.y"
-    { (yyval) = (yyvsp[(2) - (3)]); ;}
+    { (yyval) = (yyvsp[(2) - (3)]); }
     break;
 
 
 
-/* Line 1464 of yacc.c  */
-#line 2989 "gramRd.c"
+/* Line 1806 of yacc.c  */
+#line 3020 "gramRd.c"
       default: break;
     }
+  /* User semantic actions sometimes alter yychar, and that requires
+     that yytoken be updated with the new translation.  We take the
+     approach of translating immediately before every use of yytoken.
+     One alternative is translating here after every semantic action,
+     but that translation would be missed if the semantic action invokes
+     YYABORT, YYACCEPT, or YYERROR immediately after altering yychar or
+     if it invokes YYBACKUP.  In the case of YYABORT or YYACCEPT, an
+     incorrect destructor might then be invoked immediately.  In the
+     case of YYERROR or YYBACKUP, subsequent parser actions might lead
+     to an incorrect destructor call or verbose syntax error message
+     before the lookahead is translated.  */
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
 
   YYPOPSTACK (yylen);
@@ -3016,6 +3058,10 @@ yyreduce:
 | yyerrlab -- here on detecting error |
 `------------------------------------*/
 yyerrlab:
+  /* Make sure we have latest lookahead translation.  See comments at
+     user semantic actions for why this is necessary.  */
+  yytoken = yychar == YYEMPTY ? YYEMPTY : YYTRANSLATE (yychar);
+
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
@@ -3023,41 +3069,40 @@ yyerrlab:
 #if ! YYERROR_VERBOSE
       yyerror (YY_("syntax error"));
 #else
+# define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
+                                        yyssp, yytoken)
       {
-	YYSIZE_T yysize = yysyntax_error (0, yystate, yychar);
-	if (yymsg_alloc < yysize && yymsg_alloc < YYSTACK_ALLOC_MAXIMUM)
-	  {
-	    YYSIZE_T yyalloc = 2 * yysize;
-	    if (! (yysize <= yyalloc && yyalloc <= YYSTACK_ALLOC_MAXIMUM))
-	      yyalloc = YYSTACK_ALLOC_MAXIMUM;
-	    if (yymsg != yymsgbuf)
-	      YYSTACK_FREE (yymsg);
-	    yymsg = (char *) YYSTACK_ALLOC (yyalloc);
-	    if (yymsg)
-	      yymsg_alloc = yyalloc;
-	    else
-	      {
-		yymsg = yymsgbuf;
-		yymsg_alloc = sizeof yymsgbuf;
-	      }
-	  }
-
-	if (0 < yysize && yysize <= yymsg_alloc)
-	  {
-	    (void) yysyntax_error (yymsg, yystate, yychar);
-	    yyerror (yymsg);
-	  }
-	else
-	  {
-	    yyerror (YY_("syntax error"));
-	    if (yysize != 0)
-	      goto yyexhaustedlab;
-	  }
+        char const *yymsgp = YY_("syntax error");
+        int yysyntax_error_status;
+        yysyntax_error_status = YYSYNTAX_ERROR;
+        if (yysyntax_error_status == 0)
+          yymsgp = yymsg;
+        else if (yysyntax_error_status == 1)
+          {
+            if (yymsg != yymsgbuf)
+              YYSTACK_FREE (yymsg);
+            yymsg = (char *) YYSTACK_ALLOC (yymsg_alloc);
+            if (!yymsg)
+              {
+                yymsg = yymsgbuf;
+                yymsg_alloc = sizeof yymsgbuf;
+                yysyntax_error_status = 2;
+              }
+            else
+              {
+                yysyntax_error_status = YYSYNTAX_ERROR;
+                yymsgp = yymsg;
+              }
+          }
+        yyerror (yymsgp);
+        if (yysyntax_error_status == 2)
+          goto yyexhaustedlab;
       }
+# undef YYSYNTAX_ERROR
 #endif
     }
 
-  yyerror_range[0] = yylloc;
+  yyerror_range[1] = yylloc;
 
   if (yyerrstatus == 3)
     {
@@ -3094,7 +3139,7 @@ yyerrorlab:
   if (/*CONSTCOND*/ 0)
      goto yyerrorlab;
 
-  yyerror_range[0] = yylsp[1-yylen];
+  yyerror_range[1] = yylsp[1-yylen];
   /* Do not reclaim the symbols of the rule which action triggered
      this YYERROR.  */
   YYPOPSTACK (yylen);
@@ -3113,7 +3158,7 @@ yyerrlab1:
   for (;;)
     {
       yyn = yypact[yystate];
-      if (yyn != YYPACT_NINF)
+      if (!yypact_value_is_default (yyn))
 	{
 	  yyn += YYTERROR;
 	  if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR)
@@ -3128,7 +3173,7 @@ yyerrlab1:
       if (yyssp == yyss)
 	YYABORT;
 
-      yyerror_range[0] = *yylsp;
+      yyerror_range[1] = *yylsp;
       yydestruct ("Error: popping",
 		  yystos[yystate], yyvsp, yylsp);
       YYPOPSTACK (1);
@@ -3138,10 +3183,10 @@ yyerrlab1:
 
   *++yyvsp = yylval;
 
-  yyerror_range[1] = yylloc;
+  yyerror_range[2] = yylloc;
   /* Using YYLLOC is tempting, but would change the location of
      the lookahead.  YYLOC is available though.  */
-  YYLLOC_DEFAULT (yyloc, (yyerror_range - 1), 2);
+  YYLLOC_DEFAULT (yyloc, yyerror_range, 2);
   *++yylsp = yyloc;
 
   /* Shift the error token.  */
@@ -3177,8 +3222,13 @@ yyexhaustedlab:
 
 yyreturn:
   if (yychar != YYEMPTY)
-     yydestruct ("Cleanup: discarding lookahead",
-		 yytoken, &yylval, &yylloc);
+    {
+      /* Make sure we have latest lookahead translation.  See comments at
+         user semantic actions for why this is necessary.  */
+      yytoken = YYTRANSLATE (yychar);
+      yydestruct ("Cleanup: discarding lookahead",
+                  yytoken, &yylval, &yylloc);
+    }
   /* Do not reclaim the symbols of the rule which action triggered
      this YYABORT or YYACCEPT.  */
   YYPOPSTACK (yylen);
@@ -3203,7 +3253,7 @@ yyreturn:
 
 
 
-/* Line 1684 of yacc.c  */
+/* Line 2067 of yacc.c  */
 #line 351 "gramRd.y"
 
 
@@ -3270,7 +3320,7 @@ static SEXP xxnewlist(SEXP item)
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
     PROTECT(tmp = NewList());
-    if (item) {
+    if (! IS_NULL_SEXP(item)) {
     	int flag = getDynamicFlag(item);
     	PROTECT(ans = GrowList(tmp, item));
     	setDynamicFlag(ans, flag);
@@ -3387,7 +3437,7 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     else
     	PROTECT(thedefn = mkString(""));
     prev = findVar(install(CHAR(STRING_ELT(thename, 0))), parseState.xxMacroList);
-    if (prev != R_UnboundValue && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
+    if (! IS_R_UnboundValue(prev) && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
         snprintf(buffer, sizeof(buffer), _("Macro '%s' previously defined."), 
                  CHAR(STRING_ELT(thename, 0)));
         yyerror(buffer);
@@ -4012,14 +4062,14 @@ static SEXP InstallKeywords()
 static int KeywordLookup(const char *s)
 {
     SEXP rec = findVar(install(s), parseState.xxMacroList);
-    if (rec == R_UnboundValue) return UNKNOWN;
+    if (IS_R_UnboundValue(rec)) return UNKNOWN;
     else return INTEGER(rec)[0];
 }
 
 static SEXP UserMacroLookup(const char *s)
 {
     SEXP rec = findVar(install(s), parseState.xxMacroList);
-    if (rec == R_UnboundValue) error(_("Unable to find macro %s"), s);
+    if (IS_R_UnboundValue(rec)) error(_("Unable to find macro %s"), s);
     return getAttrib(rec, install("definition"));
 }
 
@@ -4122,7 +4172,7 @@ static void yyerror(const char *s)
 	}
     } else if (!strncmp(s, yyunknown, sizeof yyunknown-1)) {
     	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,
-		 "%s '%s'", s, CHAR(STRING_ELT(yylval, 0)));
+		"%s '%s'", s, CHAR(STRING_ELT(yylval, 0)));
     } else {
     	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, "%s", s);
     }
