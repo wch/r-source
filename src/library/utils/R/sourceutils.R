@@ -126,10 +126,10 @@ getParseData <- function(x, includeText = NA) {
         colnames(data) <- c( "line1", "col1",
 		 	     "line2", "col2",
 		 	     "terminal", "token.num", "id", "parent" )
-    	data <- data.frame(data[,-c(5,6)], token=tokens,
-    	                   terminal=as.logical(data[,"terminal"]),
-    	                   text=attr(data, "text"),
-    			   stringsAsFactors=FALSE)
+    	data <- data.frame(data[, -c(5,6), drop = FALSE], token = tokens,
+    	                   terminal = as.logical(data[,"terminal"]),
+    	                   text = attr(data, "text"),
+    			   stringsAsFactors = FALSE)
     	o <- order(data[,1], data[,2], -data[,3], -data[,4])
     	data <- data[o,]
     	rownames(data) <- data$id
