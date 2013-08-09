@@ -1717,8 +1717,8 @@ function(bytes)
     ## Strip apostrophes in offset spec.
     s <- gsub("'", "", s)
     if(nchar(s) <= 14L) {
-        substring(s, nchar(s), 14L) <-
-            substring("    0101000000", nchar(s), 14L)
+        s <- sprintf("%s%s", s,
+                     substring("    0101000000", nchar(s) + 1L, 14L))
         strptime(s, "%Y%m%d%H%M%S")
     } else if(substring(s, 15L, 15L) == "Z") {
         strptime(substring(s, 1L, 14L), "%Y%m%d%H%M%S")
