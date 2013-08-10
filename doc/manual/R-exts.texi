@@ -7235,7 +7235,7 @@ by a shell) and the second argument to @code{system} will be
 into an @R{} character vector.
 
 On POSIX-compliant OSes these commands pass a command-line to a shell:
-Wndows is not POSIX-compliant and there is a separate function
+Windows is not POSIX-compliant and there is a separate function
 @code{shell} to do so.
 
 The function @code{system.time}
