@@ -3903,8 +3903,10 @@ Default: false.
 Should the @file{vign_test} directory be removed if the test is successful?
 Default: true.
 @item _R_CHECK_REPLACING_IMPORTS_
-Should warnings about replacing imports be reported?  These come
-from auto-generated @file{NAMESPACE} files in other packages.
+Should warnings about replacing imports be reported?  These sometimes come
+from auto-generated @file{NAMESPACE} files in other packages, but most
+often from importing the whole of a namespace rather than using
+@code{importFrom}.
 Default: false.
 @item _R_CHECK_UNSAFE_CALLS_
 Check for calls that appear to tamper with (or allow tampering with)
