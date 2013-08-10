@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-02-28 05:58+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -33,6 +33,9 @@ msgstr ""
 
 msgid "'bias' must be positive"
 msgstr " 'bias' は正の値でなければなりません "
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr ""
 
 msgid "at least 3 columns needed"
 msgstr " 少なくとも 3 つ列が必要です "

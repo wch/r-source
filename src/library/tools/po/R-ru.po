@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -187,9 +187,6 @@ msgstr "Поля с не-ASCII значениями:"
 msgid "These fields must have ASCII values."
 msgstr "Эти поля должны иметь ASCII-значения."
 
-msgid "Required fields missing:"
-msgstr "Требуются пропущенные поля::"
-
 msgid "Malformed package version."
 msgstr "Неправильно созданная версия пакета."
 
@@ -277,11 +274,18 @@ msgstr "Стандартизируемо:: %s"
 msgid "Standardized license specification:"
 msgstr "Стандартизованная спецификация лицензии:"
 
+msgid "Deprecated license: %s"
+msgstr ""
+
 msgid "Invalid license file pointers: %s"
 msgstr "Неправильные указатели файла лицензии: %s"
 
-msgid "Components with restrictions not permitted:"
+#, fuzzy
+msgid "License components with restrictions not permitted:"
 msgstr "Компоненты с ограничениями не разрешены:"
+
+msgid "Licenses which are templates and need '+ file LICENSE':"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -371,6 +375,10 @@ msgstr "'data(package=)' не объявлены в:"
 
 msgid "'data(package=)' call not declared from: %s"
 msgstr "вызов 'data(package=)' не объявлен: %s"
+
+#, fuzzy
+msgid "Package has no 'Version' field"
+msgstr "у пакета '%s' нет .rda-файлов"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "NB: для проверок приходящего в CRAN нужен доступ в Интернет"
@@ -1343,6 +1351,13 @@ msgstr[0] "не могу перекодировать %s строку %s"
 msgstr[1] "не могу перекодировать %s строки %s"
 msgstr[2] "не могу перекодировать %s строки %s"
 
+#, fuzzy
+msgid "Required field missing or empty:"
+msgid_plural "Required fields missing or empty:"
+msgstr[0] "Требуются пропущенные поля::"
+msgstr[1] "Требуются пропущенные поля::"
+msgstr[2] "Требуются пропущенные поля::"
+
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
 msgstr[0] "Помощь по теме '%s' была найдена в следующем пакете:"
@@ -1816,9 +1831,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"
-
-#~ msgid "package '%s' has no .rda file"
-#~ msgstr "у пакета '%s' нет .rda-файлов"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd-файлы с синтаксическими ошибками:"

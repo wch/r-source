@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-03-18 10:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -182,9 +182,6 @@ msgstr "Felder mit nicht-ASCII Werten:"
 msgid "These fields must have ASCII values."
 msgstr "Diese Felder müssen ASCII Werte haben."
 
-msgid "Required fields missing:"
-msgstr "Benötigte Felder fehlen:"
-
 msgid "Malformed package version."
 msgstr "Falsch formatierte 'paket version'."
 
@@ -273,11 +270,18 @@ msgstr "Zu standardisieren: %s"
 msgid "Standardized license specification:"
 msgstr "Standardisierte Lizenzspezifikation:"
 
+msgid "Deprecated license: %s"
+msgstr ""
+
 msgid "Invalid license file pointers: %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
-msgid "Components with restrictions not permitted:"
+#, fuzzy
+msgid "License components with restrictions not permitted:"
 msgstr "Komponenten mit Einschränkungen nicht erlaubt:"
+
+msgid "Licenses which are templates and need '+ file LICENSE':"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
@@ -367,6 +371,10 @@ msgstr "Aufrufe von 'data(package=)' nicht angemeldet von:"
 
 msgid "'data(package=)' call not declared from: %s"
 msgstr "Aufruf von 'data(package=' nicht angemeldet von: %s"
+
+#, fuzzy
+msgid "Package has no 'Version' field"
+msgstr "Paket  '%s' enthält keine .rda Datei"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "NB: benötige Internetzugang, um CRAN-Incoming zu checken"
@@ -1323,6 +1331,12 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kann %s Zeile %s nicht rekodieren"
 msgstr[1] "kann '%s' Zeilen %s nicht rekodieren"
 
+#, fuzzy
+msgid "Required field missing or empty:"
+msgid_plural "Required fields missing or empty:"
+msgstr[0] "Benötigte Felder fehlen:"
+msgstr[1] "Benötigte Felder fehlen:"
+
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
 msgstr[0] "Zum Stichwort '%s' wurde Hilfe im folgenden Paket gefunden: "
@@ -1799,9 +1813,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' nicht gefunden: CHM Hilfe wird nicht erzeugt"
-
-#~ msgid "package '%s' has no .rda file"
-#~ msgstr "Paket  '%s' enthält keine .rda Datei"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd Dateien mit Syntaxfehlern:"

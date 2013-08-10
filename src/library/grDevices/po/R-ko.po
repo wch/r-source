@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-03-09 17:03-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -44,6 +44,9 @@ msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias'는 반드시 양수이어야 합니다"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr ""
 
 msgid "at least 3 columns needed"
 msgstr "최소한 3개의 열들이 필요합니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -33,6 +33,9 @@ msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' deve ser positivo"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr ""
 
 msgid "at least 3 columns needed"
 msgstr "pelo menos 3 colunas necessárias"
