@@ -2100,9 +2100,20 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    /* It was an empty element: most likely get here from evalArgs
 	       which may have been called on part of the args. */
 	    errorcall(call, _("argument %d is empty"), n);
+#ifdef CHECK_IS_MISSING_IN_evalList
+	    /* Radford Newl drops this R_isMissing check in pqR in
+	       03-zap-isMissing (but it seems to creep in again later
+	       with helper thread stuff?)  as it takes quite a bit of
+	       time (essentially the equivalent of evaluating the
+	       symbol, but maybe not as efficiently as eval) and only
+	       serves to change the error message, not always for the
+	       better. Also, the byte code interpreter does not do
+	       this, so dropping this makes compiled and interreted
+	       cod emore consistent. */
 	} else if (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)) {
 	    /* It was missing */
 	    errorcall(call, _("'%s' is missing"), EncodeChar(PRINTNAME(CAR(el))));
+#endif
 	} else {
 	    ev = CONS(eval(CAR(el), rho), R_NilValue);
 	    if (head==R_NilValue)
