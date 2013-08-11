@@ -32,6 +32,7 @@ SEXP complex_unary(ARITHOP_TYPE, SEXP, SEXP);
 SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
 
 /* for binary operations */
+/* adapted from Radford Neal's pqR */
 static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 					  SEXPTYPE type , R_xlen_t n)
 {
@@ -43,16 +44,13 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 
     if (n == n2) {
         if (TYPEOF(s2) == type && NAMED(s2) == 0) {
-	    if (ATTRIB(s2) != R_NilValue) {
-		/* need to remove 'dim', 'dimnames' and 'names'
-		   attributes if present to match what copyMostAttrib
-		   does (it might be OK to ignore 'dim' and 'dimnames'
-		   here since those should be replaced by attribute
-		   cleanup code in R_Binary) */
-		setAttrib(s2, R_DimSymbol, R_NilValue);
-		setAttrib(s2, R_DimNamesSymbol, R_NilValue);
+	    if (ATTRIB(s2) != R_NilValue)
+		/* need to remove 'names' attribute if present to
+		   match what copyMostAttrib does. copyMostAttributes
+		   also skips 'dim' and 'dimnames' but those, here
+		   since those, if present, will be replaced by
+		   attribute cleanup code in R_Binary) */
 		setAttrib(s2, R_NamesSymbol, R_NilValue);
-	    }
             return s2;
 	}
         else
@@ -63,7 +61,6 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
                 return s1;
     }
     else if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0)
-	/* n == n1 test needed to rule out n == 0 with n1 and n2 positive */
 	return s1;
 
     return allocVector(type, n);
