@@ -78,12 +78,9 @@
 #endif
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.
 
-  The section on \dQuote{Customizing compilation} in the \dQuote{R
-    Administration and Installation} manual (see the \file{doc/manual}
-  subdirectory of the \R source tree).
-
   The \sQuote{R Installation and Administration} and \sQuote{Writing R
-  Extensions} manuals.
+  Extensions} manuals, including the section on \dQuote{Customizing
+  compilation} in the former.
 }
 #ifdef unix
 \examples{\dontrun{

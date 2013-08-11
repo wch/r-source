@@ -13,18 +13,15 @@ usage="Usage: R CMD LINK [options] linkcmd
 
 Perform the specified linkcmd by passing it through GNU libtool and
 setting a few useful R-related options.  Use in particular when creating
-executables linked against the R shared library, in which case linkcmd
-must contain '-lR' but need not specify its library path.
+executables linked against the R shared library.
 
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
 
-Currently only is useful when creating executables, and only works if
-the C compiler is used for linking.  If FORTRAN code is to be linked, it
-needs to be manually ensured that the linker flags for the FORTRAN 77
-intrinsic and run-time libraries are present.  C++ is not supported
-(yet).
+Currently only is useful when creating executables, using the C or C++
+compiler for linking.  If FORTRAN code is to be linked, it needs to be
+manually ensured that the linker flags for the FORTRAN are included.
 
 Report bugs at bugs.r-project.org ."
 
