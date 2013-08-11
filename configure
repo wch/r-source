@@ -26508,20 +26508,6 @@ if test -z "${SHLIB_CXXLDFLAGS}"; then
 $as_echo "$as_me: WARNING: ${warn_shlib_cxxldflags}" >&2;}
 fi
 
-: ${SHLIB_RPATH="${shlib_rpath}"}
-if test -z "${SHLIB_RPATH}"; then
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${SHLIB_RPATH}"; then
-  SHLIB_RPATH="${shlib_rpath}"
-else
-  SHLIB_RPATH="${SHLIB_RPATH}${separator}${shlib_rpath}"
-fi
-  warn_shlib_rpath="I could not determine SHLIB_RPATH"
-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_shlib_rpath}" >&5
-$as_echo "$as_me: WARNING: ${warn_shlib_rpath}" >&2;}
-fi
-
 ## Step 6.  We may need flags different from SHLIB_LDFLAGS and SHLIB_EXT
 ## for building R as a shared library to link against (the SHLIB_* vars
 ## just determined are really for loadable modules).  On ELF there is no
@@ -35669,11 +35655,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35672: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35658: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35676: \$? = $ac_status" >&5
+   echo "$as_me:35662: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35768,11 +35754,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35771: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35757: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35775: \$? = $ac_status" >&5
+   echo "$as_me:35761: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35820,11 +35806,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35823: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35809: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35827: \$? = $ac_status" >&5
+   echo "$as_me:35813: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -42005,7 +41991,7 @@ esac
 
 ac_config_headers="$ac_config_headers src/include/config.h"
 
-ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/javaconf etc/ldpaths m4/Makefile po/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/blas/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/tre/Makefile src/extra/xdr/Makefile src/extra/xz/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/compiler/DESCRIPTION src/library/compiler/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/graphics/src/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grDevices/src/cairo/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/parallel/DESCRIPTION src/library/parallel/Makefile src/library/parallel/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/translations/DESCRIPTION src/library/translations/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/library/utils/src/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/R.sh src/scripts/Rcmd src/scripts/f77_f2c src/scripts/javareconf src/scripts/mkinstalldirs src/scripts/pager src/scripts/rtags src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+ac_config_files="$ac_config_files Makeconf Makefile doc/Makefile doc/html/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron etc/javaconf etc/ldpaths m4/Makefile po/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/blas/Makefile src/extra/bzip2/Makefile src/extra/intl/Makefile src/extra/pcre/Makefile src/extra/tre/Makefile src/extra/xdr/Makefile src/extra/xz/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/compiler/DESCRIPTION src/library/compiler/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/graphics/src/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grDevices/src/Makefile src/library/grDevices/src/cairo/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/parallel/DESCRIPTION src/library/parallel/Makefile src/library/parallel/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/translations/DESCRIPTION src/library/translations/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/library/utils/src/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/R.sh src/scripts/Rcmd src/scripts/f77_f2c src/scripts/javareconf src/scripts/mkinstalldirs src/scripts/pager src/scripts/rtags src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tools/Makefile"
 
 
 ac_config_commands="$ac_config_commands stamp-h"
@@ -43442,7 +43428,6 @@ do
     "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
     "tests/Embedding/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Embedding/Makefile" ;;
     "tests/Examples/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Examples/Makefile" ;;
-    "tests/Native/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Native/Makefile" ;;
     "tools/Makefile") CONFIG_FILES="$CONFIG_FILES tools/Makefile" ;;
     "stamp-h") CONFIG_COMMANDS="$CONFIG_COMMANDS stamp-h" ;;
 
