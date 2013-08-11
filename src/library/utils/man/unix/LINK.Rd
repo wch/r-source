@@ -20,16 +20,27 @@
 }
 \details{
   The linker front-end is useful in particular when linking against the
-  \R shared library, in which case \code{linkcmd} must contain \code{-lR}
-  but need not specify its library path.
+  \R shared or static library, in which case \code{linkcmd} must contain
+  \code{-lR} but need not specify its library path.
 
   Currently only works if the C compiler can be used for linking, and no
   C++ code is used.
 
-  Use \command{R CMD LINK --help} for more usage information.
+  The actual linking command is constructed by the version of
+  \command{libtool} installed at \file{\env{R_HOME}/bin}.
+
+  \command{R CMD LINK --help} gives usage information.
 }
 \note{
   Some binary distributions of \R have \code{LINK} in a separate
   bundle, e.g. an \code{R-devel} RPM.
 }
+\examples{\dontrun{
+CC=`R CMD config CC`
+R CMD LINK $CC -o foo foo.o `R CMD config --ldflags`
+
+## if Fortran code has been compiled into ForFoo.o
+FLIBS=`R CMD config FLIBS`
+R CMD LINK $CC -o foo foo.o ForFoo.o `R CMD config --ldflags` $FLIBS
+}}
 \keyword{utilities}

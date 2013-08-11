@@ -367,6 +367,8 @@
       
       \item \code{is.unsorted(NA)} returns false as documented (rather than
       \code{NA}).
+      
+      \item \command{R CMD LINK} did not know about sub-architectures.
     }
   }
 }
