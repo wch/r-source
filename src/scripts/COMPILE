@@ -7,19 +7,19 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R compilation front end: ${R_VERSION} (r${version})
 
-Copyright (C) 2000-2010 The R Core Team.
+Copyright (C) 2000-2013 The R Core Team.
 This is free software; see the GNU General Public License version 2 or
 later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD COMPILE [options] files
 
 Compile the specified files for subsequent collection into a shared
-library using 'R CMD SHLIB'.  Currently, the following languages with
-associated source file extensions are supported (provided that the
-respective compilers are available and R was configured to use these):
-C ('.c'), C++ ('.cc' or '.cpp'), FORTRAN 77 ('.f'), FORTRAN 90
-('.f90'), FORTRAN 95 ('.f95'), Objective C ('.m'), and Objective C++
-('.M' or '.mm').
+library using 'R CMD SHLIB' or an executable program using 'R CMD
+LINK'.  Currently, the following languages with associated source file
+extensions are supported (provided that the respective compilers are
+available and R was configured to use these): C ('.c'), C++ ('.cc' or
+'.cpp'), FORTRAN 77 ('.f'), FORTRAN 90 ('.f90'), FORTRAN 95 ('.f95'),
+Objective C ('.m'), and Objective C++ ('.M' or '.mm').
 
 Options:
   -h, --help		print short help message and exit

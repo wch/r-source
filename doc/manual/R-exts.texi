@@ -1374,8 +1374,9 @@ to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
-configuration variables, or the header and library flags necessary for
-linking against @R{}, see @kbd{R CMD config --help} for details.
+configuration variables, and also the header and library flags necessary
+for linking a front-end executable program against @R{}, see @kbd{R CMD
+config --help} for details.
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
