@@ -5,7 +5,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R linker front end: ${R_VERSION} (r${version})
 
-Copyright (C) 2000-2004 The R Core Team.
+Copyright (C) 2000-2013 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -46,7 +46,7 @@ if test -z "${R_HOME}"; then
   exit 1
 fi
 
-Rexeclibdir=${R_HOME}/lib
+Rexeclibdir="${R_HOME}/lib${R_ARCH}"
 linkopts="-avoid-version -rpath ${Rexeclibdir}"
 
 exec ${R_HOME}/bin/libtool --mode=link ${args} ${linkopts}
