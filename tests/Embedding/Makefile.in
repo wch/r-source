@@ -44,8 +44,8 @@ DISTFILES = Makefile.in Makefile.win index.html \
 
 ## need LD_LIBRARY_PATH to include ../../lib for e.g. libRblas.so
 R_CMD_LINK = $(top_builddir)/bin/R CMD $(MAIN_LINK)
-@WANT_R_SHLIB_TRUE@MY_LIBR=$(LIBR)
-@WANT_R_STATIC_TRUE@MY_LIBR=$(STATIC_LIBR)
+@WANT_R_SHLIB_TRUE@MY_LIBR = $(LIBR)
+@WANT_R_STATIC_TRUE@MY_LIBR = $(STATIC_LIBR)
 
 all: Makefile R-sources tests
 

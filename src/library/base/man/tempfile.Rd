@@ -53,7 +53,7 @@ tempdir()
   \env{TEMP} are checked in turn and the first found which points to a
   writable directory is used:
 #ifdef unix
-  if none succeeds \file{/tmp} is used.
+  if none succeeds \file{/tmp} is used.  The path should not contain spaces.
 #endif
 #ifdef windows
   if none succeeds the value of \env{R_USER} (see
