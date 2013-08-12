@@ -164,7 +164,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (ptr_R_EditFile)
 	rc = ptr_R_EditFile(filename);
     else {
-	sprintf(editcmd, "%s %s", cmd, filename);
+	sprintf(editcmd, "'%s' '%s'", cmd, filename); // allow for spaces
 	rc = R_system(editcmd);
     }
     if (rc != 0)

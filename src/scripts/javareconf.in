@@ -147,10 +147,10 @@ fi
 javac_works='not present'
 if test -n "$JAVAC"; then
     javac_works='not functional'
-    echo "public class A { }" > ${tempdir}/A.java
-    if test -f ${tempdir}/A.java; then
-	if "${JAVAC}" ${tempdir}/A.java >/dev/null; then
-           if test -f ${tempdir}/A.class; then
+    echo "public class A { }" > "${tempdir}/A.java"
+    if test -f "${tempdir}/A.java"; then
+	if "${JAVAC}" "${tempdir}/A.java" >/dev/null; then
+           if test -f "${tempdir}/A.class"; then
 		javac_works=yes
 	    fi
 	fi
@@ -324,7 +324,7 @@ fi
 
 ## Do cpmpile test in the temporary dir
 wd=${PWD}
-cd ${tempdir}
+cd "${tempdir}"
 
 echo
 echo "trying to compile and link a JNI progam "
@@ -361,7 +361,7 @@ fi
 
 rm -f conftest.c conftest.o conftest.so Makevars
 cd ${wd}
-rm -rf ${tempdir}
+rm -rf "${tempdir}"
 
 
 echo ""
