@@ -27,8 +27,8 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  if test @use_tcltk@ = yes; then \
-	    cat $(RSRC) > $${f}; \
-	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R ; \
+	    cat $(RSRC) > "$${f}"; \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R ; \
 	  else \
 	    $(SHELL) $(top_srcdir)/tools/copy-if-change \
 	      $(srcdir)/R/unix/zzzstub.R \

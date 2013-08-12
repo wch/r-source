@@ -72,10 +72,10 @@ install-strip: install
 uninstall:
 
 install-tests:
-	@(tmp=$${TMPDIR-/tmp}/R$$$$; mkdir $${tmp}; \
+	@(tmp=$${TMPDIR-/tmp}/R$$$$; mkdir "$${tmp}"; \
 	 cd "$(top_srcdir)"; abs_top_srcdir=`pwd`; \
 	 abs_MKINSTALLDIRS=`echo "$(MKINSTALLDIRS)" | sed "s:$(top_srcdir):$${abs_top_srcdir}:"` ; \
-	 cd $${tmp}; \
+	 cd "$${tmp"}; \
 	 for pkg in $(R_PKGS_RECOMMENDED); do \
 	   gzip -dc "$(abs_top_srcdir)/src/library/Recommended/$${pkg}.tgz" | $(TAR) xf - ; \
 	 done ; \

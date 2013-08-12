@@ -283,10 +283,14 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## https://stat.ethz.ch/pipermail/r-devel/2011-March/060262.html
         ## That has [A-Za-z], earlier versions [A-z], both of which may be
         ## invalid in some locales.
+        env0 <- "LC_COLLATE=C"
+        ## texi2dvi, at least on OS X (4.8) does not accept TMPDIR with spaces.
+        if (grepl(" ", Sys.getenv("TMPDIR")))
+            env0 <- paste(env0,  "TMPDIR=/tmp")
         out <- .system_with_capture(texi2dvi,
                                     c(opt_pdf, opt_quiet, opt_extra,
                                       shQuote(file)),
-                                    env = "LC_COLLATE=C")
+                                    env = env0)
 
         ## We cannot necessarily rely on out$status, hence let us
         ## analyze the log files in any case.
