@@ -269,7 +269,7 @@ those you
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and scripts
 can be executed from) or points to a valid temporary directory (one from
-which execution of scripts is allowed).
+which execution of scripts is allowed) whose path does not contain spaces.
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -1614,7 +1614,7 @@ its per-session temporary directory.  The environment variables
 first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
 @enindex R_USER
-@env{R_USER} on Windows.
+@env{R_USER} on Windows.  The path should not contain spaces.
 
 Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job
@@ -1768,7 +1768,7 @@ first library of a normal @R{} session is used (that shown by
 @enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
-a valid temporary directory.
+a valid temporary directory with a path not containing spaces.
 
 There are a number of options available: use @code{R CMD INSTALL --help}
 to see the current list.
