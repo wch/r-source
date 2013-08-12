@@ -369,6 +369,10 @@
       \code{NA}).
       
       \item \command{R CMD LINK} did not know about sub-architectures.
+      
+      \item \code{system()} and \code{system2()} are better protected
+      against users who misguidely have spaces in the temporary
+      directory path.
     }
   }
 }

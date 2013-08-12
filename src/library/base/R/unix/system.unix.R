@@ -44,7 +44,7 @@ system <- function(command, intern = FALSE,
         on.exit(unlink(f))
         writeLines(input, f)
         # cat(input, file=f, sep="\n")
-        command <- paste(command, "<", f)
+        command <- paste(command, "<", shQuote(f))
     }
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
@@ -98,7 +98,7 @@ system2 <- function(command, args = character(),
         on.exit(unlink(f))
         writeLines(input, f)
         # cat(input, file=f, sep="\n")
-        command <- paste(command, "<", f)
+        command <- paste(command, "<", shQuote(f))
     } else if (nzchar(stdin)) command <- paste(command, "<", stdin)
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
