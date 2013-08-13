@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -121,15 +121,6 @@ regexec(pattern, text, ignore.case = FALSE,
     vector} inputs.
 }
 
-\note{
-  Prior to \R 2.11.0 there was an argument \code{extended} which could
-  be used to select \sQuote{basic} regular expressions: this was often
-  used when \code{fixed = TRUE} would be preferable.  In the actual
-  implementation (as distinct from the POSIX standard) the only
-  difference was that \samp{?}, \samp{+}, \samp{\{}, \samp{|}, \samp{(},
-  and \samp{)} were not interpreted as metacharacters.
-}
-
 \value{
   \code{grep(value = FALSE)} returns a vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
@@ -204,12 +195,10 @@ regexec(pattern, text, ignore.case = FALSE,
 \source{
   The C code for POSIX-style regular expression matching has changed
   over the years.  As from \R 2.10.0 the TRE library of Ville Laurikari
-  (\url{http://laurikari.net/tre/}) is used.  From 2005 to \R 2.9.2,
-  code based on \code{glibc} was used (and before that, code from GNU
-  \command{grep}).  The POSIX standard does give some room for
-  interpretation, especially in the handling of invalid regular
-  expressions and the collation of character ranges, so the results will
-  have changed slightly.
+  (\url{http://laurikari.net/tre/}) is used.  The POSIX standard does
+  give some room for interpretation, especially in the handling of
+  invalid regular expressions and the collation of character ranges, so
+  the results will have changed slightly over the years.
 
   For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
 }
