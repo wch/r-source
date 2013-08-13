@@ -50,6 +50,8 @@
 \note{
   Some binary distributions of \R have \code{COMPILE} in a separate
   bundle, e.g. an \code{R-devel} RPM.
+  
+  This is not available on Windows.
 }
 \seealso{
   \code{\link{LINK}}, \code{\link{SHLIB}}, \code{\link{dyn.load}};

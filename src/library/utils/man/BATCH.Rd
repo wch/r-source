@@ -1,10 +1,7 @@
-% File src/library/utils/man/windows/BATCH.Rd
+% File src/library/utils/man/BATCH.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
-
-% Differs from the Unix version in no mentioning --no-readline nor not
-% running in the background.
 
 \name{BATCH}
 \alias{BATCH}
@@ -19,7 +16,10 @@
   \item{options}{a list of \R command line options, e.g., for setting the
     amount of memory available and controlling the load/save process.
     If \code{infile} starts with a \samp{-}, use \option{--} as the final
-    option.  The default options are \option{--restore --save}.}
+    option.
+    The default options are \option{--restore --save --no-readline}.
+    (Without \option{--no-readline} on Windows.)
+  }
   \item{outfile}{the name of a file to which to write output.  If not
     given, the name used is that of \code{infile}, with a possible
     \file{.R} extension stripped, and \file{.Rout} appended.}
@@ -31,16 +31,25 @@
   suppress this behavior, add \code{options(echo = FALSE)} at the
   beginning of \code{infile}, or use option \option{--slave}.
 
-  Files with an incomplete last line (no end of line mark) are
-  accepted.
+  The \code{infile} can have end of line marked by LF or CRLF (but not
+  just CR), and files with an incomplete last line (missing end of line
+  (EOL) mark) are processed correctly.
 
   A final expression \samp{proc.time()} will be executed after the input
   script unless the latter calls \code{\link{q}(runLast = FALSE)} or is aborted.
   This can be suppressed by the option \option{--no-timing}.
 
   Additional options can be set by the environment variable
-  \env{R_BATCH_OPTIONS}: these come after \option{--restore --save}
-  and before any options given on the command line.
+  \env{R_BATCH_OPTIONS}: these come after the default options (see the
+  description of the \code{options} argument) and before any options
+  given on the command line.
 }
+#ifdef unix
+\note{
+  Unlike \command{Splus BATCH} on a Unix-alike, this does not run the \R
+  process in the background.
+  In most shells, \preformatted{R CMD BATCH [options] infile [outfile] &}
+  will do so.
+}
+#endif
 \keyword{utilities}
-

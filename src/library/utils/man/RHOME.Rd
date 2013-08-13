@@ -1,4 +1,4 @@
-% File src/library/utils/man/unix/RHOME.Rd
+% File src/library/utils/man/RHOME.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
