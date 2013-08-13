@@ -371,7 +371,7 @@
       
       \item More of the installation and checking process will work even
       when \env{TMPDIR} is set to a path containing spaces, but this is
-      not recommeneded and external software (such as
+      not recommended and external software (such as
       \command{texi2dvi}) may fail.
     }
   }
