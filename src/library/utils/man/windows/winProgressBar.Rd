@@ -50,6 +50,9 @@ setWinProgressBar(pb, value, title = NULL, label = NULL)
   length-one numeric vector giving the previous value (invisibly for
   \code{setWinProgressBar}).
 }
+\note{
+    These functions are only available on Windows.
+}
 \seealso{
   \code{\link{txtProgressBar}}, \code{\link{tkProgressBar}}
 }

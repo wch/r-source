@@ -36,6 +36,9 @@ The previous setting is returned, invisibly if \code{use} is not \code{NA}.
   been loaded, this function will switch to the other one without
   unloading the first one, so there is a potential resource leak.
 }
+\note{
+  This is only available on Windows.
+}
 \author{
 Duncan Murdoch
 }

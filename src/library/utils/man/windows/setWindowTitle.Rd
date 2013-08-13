@@ -53,6 +53,9 @@ setStatusBar(text)
   \code{getWindowTitle} and \code{getIdentification} return the current
   window title and the normal window identification, respectively.
 }
+\note{
+  This is only available on Windows.
+}
 \examples{
 ## show the current working directory in the title, saving the old one
 oldtitle <- setWindowTitle(getwd())

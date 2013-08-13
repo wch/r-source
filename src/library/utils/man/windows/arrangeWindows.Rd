@@ -63,6 +63,10 @@ windows are included within \code{windows}.
 
 }
 
+\note{
+  This is only available on Windows.
+}
+
 \value{
 This function is called for the side effect of arranging the windows.
 The list of window handles is returned invisibly.

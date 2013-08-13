@@ -3,6 +3,9 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+% Differs from the Unix version in mentioning --no-readline and not
+% running in the background.
+
 \name{BATCH}
 \alias{BATCH}
 \title{Batch Execution of R}

@@ -378,6 +378,10 @@
       \item \code{system()} and \code{system2()} are better protected
       against users who misguidely have spaces in the temporary
       directory path.
+
+      \item \code{file.show()} and \code{edit()} are now more likely to
+      work on file paths containing spaces.  (Where external utilities
+      are used, not the norm on Windows nor in \command{R.app}.)
     }
   }
 }
