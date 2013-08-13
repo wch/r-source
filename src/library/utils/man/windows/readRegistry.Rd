@@ -42,6 +42,9 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   lists).  The default value (if any) precedes named values which
   precede subkeys, and both the latter sets are sorted alphabetically.
 }
+\note{
+  This is only available on Windows.
+}
 \examples{\donttest{
 ## only in HLM if set in an admin-mode install.
 readRegistry("SOFTWARE\\\\R-core", maxdepth = 3)

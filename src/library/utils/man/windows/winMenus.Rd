@@ -77,6 +77,9 @@ winMenuItems(menuname)
   \code{NULL}, invisibly.  If an error occurs, an informative error
   message will be given.
 }
+\note{
+    These functions are only available on Windows.
+}
 \seealso{\code{\link{winDialog}}}
 \examples{\dontrun{
 winMenuAdd("Testit")

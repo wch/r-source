@@ -55,6 +55,9 @@ getWindowsHandles(which = "R", pattern = "", minimized = FALSE)
 \value{
   A list of external pointers containing the window handles.
 }
+\note{
+  This is only available on Windows.
+}
 \author{
   Duncan Murdoch
 }

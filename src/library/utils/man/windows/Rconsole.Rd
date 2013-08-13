@@ -78,6 +78,8 @@
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
   dialog box which can be used to edit the console settings, and to save them
   to a file.
+
+  This is only available on Windows.
 }
 \author{
   Guido Masarotto and R-core members
