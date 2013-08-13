@@ -269,7 +269,10 @@ those you
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and scripts
 can be executed from) or points to a valid temporary directory (one from
-which execution of scripts is allowed) whose path does not contain spaces.
+which execution of scripts is allowed) whose path does not contain
+spaces.@footnote{Most aspects will work with paths containing spaces,
+but external software used by @R{}, e.g.@: @command{texi2dvi} version
+@code{4.8}, may not.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -1741,10 +1744,15 @@ Note that you may need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
 
-If installing packages on a Unix-alike to be used by other users, ensure
-that the system @code{umask} is set to give sufficient permissions (see
-also @code{Sys.umask} in @R{}).  (To a large extent this is unnecessary
-in recent versions of @R{}, which install packages as if @code{umask = 022}.)
+@c If installing packages on a Unix-alike to be used by other users, ensure
+@c that the system @code{umask} is set to give sufficient permissions (see
+@c also @code{Sys.umask} in @R{}).  (To a large extent this is unnecessary
+@c in recent versions of @R{}, which install packages as if @code{umask = 022}.)
+
+@enindex TMPDIR
+Ensure that the environment variable @env{TMPDIR} is either unset (and
+@file{/tmp} exists and can be written in and executed from) or points to
+a valid temporary directory with a path not containing spaces.
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the
@@ -1764,11 +1772,6 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 The part @samp{-l /path/to/library} can be omitted, in which case the
 first library of a normal @R{} session is used (that shown by
 @code{.libPaths()[1]}).
-
-@enindex TMPDIR
-Ensure that the environment variable @env{TMPDIR} is either unset (and
-@file{/tmp} exists and can be written in and executed from) or points to
-a valid temporary directory with a path not containing spaces.
 
 There are a number of options available: use @code{R CMD INSTALL --help}
 to see the current list.
