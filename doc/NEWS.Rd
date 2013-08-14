@@ -135,6 +135,27 @@
       \item (Windows only.) \command{Rscript -e} requires a non-empty
       argument for consistency with Unix versions of \R.  (Also
       \command{Rterm -e} and \command{R -e}.)
+      
+      \item \command{R CMD check} does more thorough checking of
+      declared packages and namespaces.  It reports
+      \itemize{
+	\item packages declared in more than one of the
+	\samp{Depends}, \samp{Imports}, \samp{Suggests} and
+	\samp{Enhances} fields of the \file{DESCRIPTION} file.
+
+	\item namespaces declared in \samp{Imports} but not
+	imported from, neither in the \file{NAMESPACE} file nor using
+	the \code{::} nor \code{:::} operators.
+
+	\item packages which are used in \code{library()} or
+	\code{requires()} calls in the \R code but were already put on
+	the search path \emph{via} \samp{Depends}.
+
+	\item packages declared in \samp{Depends} not imported
+	\emph{via} the \file{NAMESPACE} file (except the standard
+	packages).  Objects used from \samp{Depends} packages should be
+	imported to avoid conflicts.
+      }
     }
   }
 
@@ -165,7 +186,7 @@
       
       \item More of the installation and checking process will work even
       when \env{TMPDIR} is set to a path containing spaces, but this is
-      not recommeneded and external software (such as
+      not recommended and external software (such as
       \command{texi2dvi}) may fail.
     }
   }

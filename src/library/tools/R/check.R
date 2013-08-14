@@ -626,6 +626,13 @@ setRlibs <-
             }
         }
 
+        out <- tools:::.check_package_description2(dfile)
+        if (length(out)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log, paste(format(out), collapse = "\n"), "\n")
+        }
+
         if (!any) resultLog(Log, "OK")
     }
 
@@ -1095,14 +1102,16 @@ setRlibs <-
     check_R_code <- function()
     {
         if (!is_base_pkg) {
-            checkingLog(Log, "for unstated dependencies in R code")
+            checkingLog(Log, "dependencies in R code")
             if (do_install) {
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
                 out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
-                    warningLog(Log)
+                    if(any(grepl("not declared from", out)))
+                        warningLog(Log)
+                    else noteLog(Log)
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
                     wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
@@ -3956,7 +3965,7 @@ setRlibs <-
                         "but it is better to handcraft a NAMESPACE file.")
             } else {
                 noteLog(Log)
-                wrapLog("Packages without R code can be instaled without",
+                wrapLog("Packages without R code can be installed without",
                         "a NAMESPACE file, but it is cleaner to add",
                         "an empty one.")
             }
