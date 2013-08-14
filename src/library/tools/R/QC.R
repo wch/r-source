@@ -4914,6 +4914,7 @@ function(x, ...)
 function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
+    ns <- NULL
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
