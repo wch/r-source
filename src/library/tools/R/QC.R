@@ -4932,7 +4932,8 @@ function(package, dir, lib.loc = NULL)
             .package_env(package)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-        ns <- readRDS(file.path(dir, "Meta", "nsInfo.rds"))
+        nsfile <- file.path(dir, "Meta", "nsInfo.rds")
+        if (file.exists(nsfile)) ns <- readRDS(nsfile)
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
@@ -4943,7 +4944,9 @@ function(package, dir, lib.loc = NULL)
             dir <- file_path_as_absolute(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-        ns <- NULL # for now
+        nsfile <- file.path(dir, "NAMESPACE")
+        if(file.exists(nsfile))
+           ns <- parseNamespaceFile(basename(dir), dirname(dir))
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
             file <- tempfile()
@@ -5017,7 +5020,7 @@ function(package, dir, lib.loc = NULL)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% ":::") {
                 pkg <- deparse(e[[2L]])
-                ## <FIXME> fathom out if this package has a namespace
+                all_imports <<- c(all_imports, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
