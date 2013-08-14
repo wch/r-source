@@ -310,24 +310,127 @@ static int naflag;
 static SEXP lcall;
 #endif
 
+/* Integer arithmetic support */
+
+/* The tests using integer comparisons are a bit faster than the tests
+   using doubles, but they depend on a two's complement representation
+   (but that is almost universal).  The tests that compare results to
+   double's depend on being able to accurately represent all int's as
+   double's.  Since int's are almost universally 32 bit that should be
+   OK. */
+
+#ifndef INT_32_BITS
+/* configure checks whether int is 32 bits.  If not this code will
+   need to be rewritten.  Since 32 bit ints are pretty much universal,
+   we can worry about writing alternate code when the need arises.
+   To be safe, we signal a compiler error if int is not 32 bits. */
+# error code requires that int have 32 bits
+#else
+/* Just to be on the safe side, configure ought to check that the
+   mashine uses two's complement. A define like
+#define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
+   might work, but at least one compiler (CodeWarrior 6) chokes on it.
+   So for now just assume it is true.
+*/
+#define USES_TWOS_COMPLEMENT 1
+
+#if USES_TWOS_COMPLEMENT
+# define OPPOSITE_SIGNS(x, y) ((x < 0) ^ (y < 0))
+# define GOODISUM(x, y, z) (((x) > 0) ? ((y) < (z)) : ! ((y) < (z)))
+# define GOODIDIFF(x, y, z) (!(OPPOSITE_SIGNS(x, y) && OPPOSITE_SIGNS(x, z)))
+#else
+# define GOODISUM(x, y, z) ((double) (x) + (double) (y) == (z))
+# define GOODIDIFF(x, y, z) ((double) (x) - (double) (y) == (z))
+#endif
+#define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
+#define INTEGER_OVERFLOW_WARNING _("NAs produced by integer overflow")
+#endif
+
+static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
+{
+    if (x == NA_INTEGER || y == NA_INTEGER)
+	return NA_INTEGER;
+    else {
+	int z = x + y;
+	if (GOODISUM(x, y, z) && z != NA_INTEGER)
+	    return z;
+	else {
+	    if (pnaflag != NULL)
+		*pnaflag = TRUE;
+	    return NA_INTEGER;
+	}
+    }    
+}
+
+static R_INLINE int R_integer_minus(int x, int y, Rboolean *pnaflag)
+{
+    if (x == NA_INTEGER || y == NA_INTEGER)
+	return NA_INTEGER;
+    else {
+	int z = x - y;
+	if (GOODIDIFF(x, y, z) && z != NA_INTEGER)
+	    return z;
+	else {
+	    if (pnaflag != NULL)
+		*pnaflag = TRUE;
+	    return NA_INTEGER;
+	}
+    }
+}
+
+static R_INLINE int R_integer_times(int x, int y, Rboolean *pnaflag)
+{
+    if (x == NA_INTEGER || y == NA_INTEGER)
+	return NA_INTEGER;
+    else {
+	int z = x * y;
+	if (GOODIPROD(x, y, z) && z != NA_INTEGER)
+	    return z;
+	else {
+	    if (pnaflag != NULL)
+		*pnaflag = TRUE;
+	    return NA_INTEGER;
+	}
+    }
+}
+
+static R_INLINE double R_integer_divide(int x, int y)
+{
+    if (x == NA_INTEGER || y == NA_INTEGER)
+	return NA_REAL;
+    else
+	return (double) x / (double) y;
+}    
 
 /* Unary and Binary Operators */
 
 SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
+    SEXP ans, arg1, arg2;
+    int argc;
 
-    if (DispatchGroup("Ops", call, op, args, env, &ans))
-	return ans;
+    if (args == R_NilValue)
+	argc = 0;
+    else if (CDR(args) == R_NilValue)
+	argc = 1;
+    else if (CDDR(args) == R_NilValue)
+	argc = 2;
+    else
+	argc = length(args);
+    arg1 = CAR(args);
+    arg2 = CADR(args);
 
-    switch (length(args)) {
-    case 1:
-	return R_unary(call, op, CAR(args));
-    case 2:
-	return R_binary(call, op, CAR(args), CADR(args));
-    default:
-	errorcall(call,_("operator needs one or two arguments"));
+    if (ATTRIB(arg1) != R_NilValue || ATTRIB(arg2) != R_NilValue) {
+	if (DispatchGroup("Ops", call, op, args, env, &ans))
+	    return ans;
     }
+
+    if (argc == 2)
+	return R_binary(call, op, arg1, arg2);
+    else if (argc == 1)
+	return R_unary(call, op, arg1);
+    else
+	errorcall(call,_("operator needs one or two arguments"));
     return ans;			/* never used; to keep -Wall happy */
 }
 
@@ -630,40 +733,6 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 
 
 
-/* The tests using integer comparisons are a bit faster than the tests
-   using doubles, but they depend on a two's complement representation
-   (but that is almost universal).  The tests that compare results to
-   double's depend on being able to accurately represent all int's as
-   double's.  Since int's are almost universally 32 bit that should be
-   OK. */
-
-#ifndef INT_32_BITS
-/* configure checks whether int is 32 bits.  If not this code will
-   need to be rewritten.  Since 32 bit ints are pretty much universal,
-   we can worry about writing alternate code when the need arises.
-   To be safe, we signal a compiler error if int is not 32 bits. */
-# error code requires that int have 32 bits
-#else
-/* Just to be on the safe side, configure ought to check that the
-   mashine uses two's complement. A define like
-#define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
-   might work, but at least one compiler (CodeWarrior 6) chokes on it.
-   So for now just assume it is true.
-*/
-#define USES_TWOS_COMPLEMENT 1
-
-#if USES_TWOS_COMPLEMENT
-# define OPPOSITE_SIGNS(x, y) ((x < 0) ^ (y < 0))
-# define GOODISUM(x, y, z) (((x) > 0) ? ((y) < (z)) : ! ((y) < (z)))
-# define GOODIDIFF(x, y, z) (!(OPPOSITE_SIGNS(x, y) && OPPOSITE_SIGNS(x, z)))
-#else
-# define GOODISUM(x, y, z) ((double) (x) + (double) (y) == (z))
-# define GOODIDIFF(x, y, z) ((double) (x) - (double) (y) == (z))
-#endif
-#define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
-#define INTEGER_OVERFLOW_WARNING _("NAs produced by integer overflow")
-#endif
-
 static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 {
     R_xlen_t i, i1, i2, n, n1, n2;
@@ -689,17 +758,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		INTEGER(ans)[i] = NA_INTEGER;
-	    else {
-		int val = x1 + x2;
-		if (val != NA_INTEGER && GOODISUM(x1, x2, val))
-		    INTEGER(ans)[i] = val;
-		else {
-		    INTEGER(ans)[i] = NA_INTEGER;
-		    naflag = TRUE;
-		}
-	    }
+	    INTEGER(ans)[i] = R_integer_plus(x1, x2, &naflag);
 	}
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
@@ -709,17 +768,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		INTEGER(ans)[i] = NA_INTEGER;
-	    else {
-		int val = x1 - x2;
-		if (val != NA_INTEGER && GOODIDIFF(x1, x2, val))
-		    INTEGER(ans)[i] = val;
-		else {
-		    naflag = TRUE;
-		    INTEGER(ans)[i] = NA_INTEGER;
-		}
-	    }
+	    INTEGER(ans)[i] = R_integer_minus(x1, x2, &naflag);
 	}
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
@@ -729,17 +778,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		INTEGER(ans)[i] = NA_INTEGER;
-	    else {
-		int val = x1 * x2;
-		if (val != NA_INTEGER && GOODIPROD(x1, x2, val))
-		    INTEGER(ans)[i] = val;
-		else {
-		    naflag = TRUE;
-		    INTEGER(ans)[i] = NA_INTEGER;
-		}
-	    }
+	    INTEGER(ans)[i] = R_integer_times(x1, x2, &naflag);
 	}
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
@@ -749,10 +788,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		    REAL(ans)[i] = NA_REAL;
-		else
-		    REAL(ans)[i] = (double) x1 / (double) x2;
+	    REAL(ans)[i] = R_integer_divide(x1, x2);
 	}
 	break;
     case POWOP:
