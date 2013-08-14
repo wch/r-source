@@ -3180,6 +3180,33 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_package_description2
+
+.check_package_description2 <-
+function(dfile)
+{
+    dfile <- file_path_as_absolute(dfile)
+    db <- .read_description(dfile)
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
+    enhances <- .get_requires_from_package_db(db, "Enhances")
+    allpkgs <- c(depends, imports, suggests, enhances)
+    out <- unique(allpkgs[duplicated(allpkgs)])
+    class(out) <- "check_package_description2"
+    out
+}
+
+format.check_package_description2 <- function(x, ...)
+{
+    if(!length(x)) character()
+    else {
+        c(gettext("Packages listed in more than one of Depends, Imports, Suggests, Enhances:"),
+          paste(c(" ", sQuote(x)), collapse = " "),
+          "A package should be listed in at most one of these fields.")
+    }
+}
+
 .check_package_description_authors_at_R_field <-
 function(aar, strict = FALSE)
 {
@@ -4902,7 +4929,8 @@ function(package, dir, lib.loc = NULL)
             .package_env(package)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-     }
+        ns <- readRDS(file.path(dir, "Meta", "nsInfo.rds"))
+    }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
@@ -4912,6 +4940,7 @@ function(package, dir, lib.loc = NULL)
             dir <- file_path_as_absolute(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
+        ns <- NULL # for now
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
             file <- tempfile()
@@ -4925,7 +4954,7 @@ function(package, dir, lib.loc = NULL)
     }
     pkg_name <- db["Package"]
     depends <- .get_requires_from_package_db(db, "Depends")
-    imports <- .get_requires_from_package_db(db, "Imports")
+    imports <- imports0 <- .get_requires_from_package_db(db, "Imports")
     suggests <- .get_requires_from_package_db(db, "Suggests")
     enhances <- .get_requires_from_package_db(db, "Enhances")
 
@@ -4945,7 +4974,8 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- character()
+    bad_imports <- all_imports <- character()
+    bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
@@ -4973,10 +5003,13 @@ function(package, dir, lib.loc = NULL)
                         pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
                         if(! pkg %in% c(depends_suggests, common_names))
                             bad_exprs <<- c(bad_exprs, pkg)
+                        if(pkg %in% depends)
+                            bad_deps <<- c(bad_deps, pkg)
                     }
                 }
             } else if(Call %in% "::") {
                 pkg <- deparse(e[[2L]])
+                all_imports <<- c(all_imports, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% ":::") {
@@ -5033,12 +5066,23 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
+    bad_imp <- character()
+    if(length(ns)) {
+        imp <- ns$imports # a list, with entries of length 1 or 2
+        if (length(imp)) {
+            imp <- sapply(imp, function(x) x[[1L]])
+            all_imports <- unique(c(imp, all_imports))
+            bad_imp <- setdiff(imports0, all_imports)
+        }
+    }
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                in_depends = unique(bad_deps),
+                unused_imports = bad_imp,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5062,6 +5106,24 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$in_depends)) {
+          if(length(xx) > 1L) {
+              c(gettext("'library' or 'require' calls to packages already attached by Depends:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("'library' or 'require' call to %s which was already attached by Depends.",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$unused_imports)) {
+          if(length(xx) > 1L) {
+              c(gettext("Namespaces in Imports field not imported from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("Namespaces in Imports field not imported from:",
                        sQuote(xx))
           }
       },
