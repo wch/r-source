@@ -3206,7 +3206,7 @@ format.check_package_description2 <- function(x, ...)
           else
           "Package listed in more than one of Depends, Imports, Suggests, Enhances:",
           paste(c(" ", sQuote(x)), collapse = " "),
-          "A package should be listed in at most one of these fields.")
+          "A package should be listed in only one of these fields.")
     }
 }
 
@@ -5126,7 +5126,7 @@ function(x, ...)
               c(gettext("Namespaces in Imports field not imported from:"),
                 .pretty_format(sort(xx)))
           } else {
-              gettextf("Namespaces in Imports field not imported from:",
+              gettextf("Namespace in Imports field not imported from: %s",
                        sQuote(xx))
           }
       },

@@ -630,8 +630,7 @@ setRlibs <-
         if (length(out)) {
             if(!any) noteLog(Log)
             any <- TRUE
-            out <- c(format(out), "")
-            printLog(Log, paste(out, collapse = "\n"), "\n")
+            printLog(Log, paste(format(out), collapse = "\n"), "\n")
         }
 
         if (!any) resultLog(Log, "OK")
