@@ -46,10 +46,12 @@ massageExamples <-
         cat("base::assign(\".ExTimings\", \"", pkg,
             "-Ex.timings\", pos = 'CheckExEnv')\n", sep="", file = out)
         cat("base::cat(\"name\\tuser\\tsystem\\telapsed\\n\", file=base::get(\".ExTimings\", pos = 'CheckExEnv'))\n", file = out)
+        ## a package left OutDec = "," at the end of an example
         cat("base::assign(\".format_ptime\",",
             "function(x) {",
             "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
             "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
+            "  options(OutDec = '.')",
             "  format(x[1L:3L], digits = 7L)",
             "},",
             "pos = 'CheckExEnv')\n", sep = "\n", file = out)
