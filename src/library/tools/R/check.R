@@ -1102,7 +1102,7 @@ setRlibs <-
     check_R_code <- function()
     {
         if (!is_base_pkg) {
-            checkingLog(Log, "for unstated dependencies in R code")
+            checkingLog(Log, "dependencies in R code")
             if (do_install) {
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))

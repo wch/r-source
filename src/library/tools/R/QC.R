@@ -5073,14 +5073,17 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
-    bad_imp <- character()
+    bad_imp <- depends_not_import <- character()
     if(length(ns)) {
         imp <- ns$imports # a list, with entries of length 1 or 2
         if (length(imp)) {
             imp <- sapply(imp, function(x) x[[1L]])
             all_imports <- unique(c(imp, all_imports))
             bad_imp <- setdiff(imports0, all_imports)
+            depends_not_import <-
+                setdiff(depends, c(imp, standard_package_names))
         }
+
     }
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
@@ -5090,6 +5093,7 @@ function(package, dir, lib.loc = NULL)
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
+                depends_not_import = depends_not_import,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5131,6 +5135,15 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("Namespace in Imports field not imported from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$depends_not_import)) {
+          if(length(xx) > 1L) {
+              c(gettext("Packages in Depends field not imported from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("Package in Depends field not imported from: %s",
                        sQuote(xx))
           }
       },
