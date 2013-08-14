@@ -3201,7 +3201,10 @@ format.check_package_description2 <- function(x, ...)
 {
     if(!length(x)) character()
     else {
-        c(gettext("Packages listed in more than one of Depends, Imports, Suggests, Enhances:"),
+        c(if(length(x) > 1L)
+          "Packages listed in more than one of Depends, Imports, Suggests, Enhances:"
+          else
+          "Package listed in more than one of Depends, Imports, Suggests, Enhances:",
           paste(c(" ", sQuote(x)), collapse = " "),
           "A package should be listed in at most one of these fields.")
     }

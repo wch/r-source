@@ -571,13 +571,6 @@ setRlibs <-
             do_exit(1L)
         }
         any <- FALSE
-        out <- tools:::.check_package_description2(dfile)
-        if (length(out)) {
-            warningLog(Log)
-            any <- TRUE
-            out <- c(format(out), "")
-            printLog(Log, paste(out, collapse = "\n"), "\n")
-        }
         ## Check the encoding.
         Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -631,6 +624,14 @@ setRlibs <-
                 out <- .format_check_package_description_authors_at_R_field_results(out)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
             }
+        }
+
+        out <- tools:::.check_package_description2(dfile)
+        if (length(out)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            out <- c(format(out), "")
+            printLog(Log, paste(out, collapse = "\n"), "\n")
         }
 
         if (!any) resultLog(Log, "OK")
