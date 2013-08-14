@@ -54,23 +54,38 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     int xarray, yarray, xts, yts;
     Rboolean mismatch = FALSE, iS;
     PROTECT_INDEX xpi, ypi;
+    SEXPTYPE typex, typey;
 
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
     nx = xlength(x);
     ny = xlength(y);
+    typex = TYPEOF(x);
+    typey = TYPEOF(y);
 
     /* pre-test to handle the most common case quickly.
        Used to skip warning too ....
      */
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
-	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP && nx > 0 && ny > 0) {
-	SEXP ans = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+	(typex == REALSXP || typex == INTSXP) &&
+	(typey == REALSXP || typey == INTSXP) &&
+	nx > 0 && ny > 0) {
+	SEXP ans;
+	if (typex == INTSXP && typey == INTSXP) 
+	    ans = integer_relop(PRIMVAL(op), x, y);
+	else {
+	    if (typex == INTSXP)
+		REPROTECT(x = coerceVector(x, REALSXP), xpi);
+	    if (typey == INTSXP)
+		REPROTECT(y = coerceVector(y, REALSXP), ypi);
+	    ans = real_relop(PRIMVAL(op), x, y);
+	}
 	if (nx > 0 && ny > 0)
 	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	if (mismatch) {
 	    PROTECT(ans);
-	    warningcall(call, _("longer object length is not a multiple of shorter object length"));
+	    warningcall(call, _("longer object length is not "
+				"a multiple of shorter object length"));
 	    UNPROTECT(1);
 	}
 	UNPROTECT(2);
