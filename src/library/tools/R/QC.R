@@ -5075,7 +5075,7 @@ function(package, dir, lib.loc = NULL)
 
     bad_imp <- depends_not_import <- character()
     if(length(ns)) {
-        imp <- ns$imports # a list, with entries of length 1 or 2
+        imp <- c(ns$imports, ns$importClasses, ns$importMethods)
         if (length(imp)) {
             imp <- sapply(imp, function(x) x[[1L]])
             all_imports <- unique(c(imp, all_imports))
