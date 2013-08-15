@@ -673,7 +673,7 @@
                             lpkgs %in% basename(paths)
                     for (z in linkTo[have_vers]) {
                         p <- z[[1L]]
-                        path <- paths[p %in% basename(paths)]
+                        path <- paths[basename(paths) %in% p]
                         current <- readRDS(file.path(path, "Meta", "package.rds"))$DESCRIPTION["Version"]
                         target <- as.numeric_version(z$version)
                         if (!do.call(z$op, list(as.numeric_version(current), target)))
