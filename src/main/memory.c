@@ -1528,6 +1528,10 @@ static void RunGenCollect(R_size_t size_needed)
 
     FORWARD_NODE(R_Srcref);                /* Current source reference */
 
+    FORWARD_NODE(R_TrueValue);
+    FORWARD_NODE(R_FalseValue);
+    FORWARD_NODE(R_LogicalNAValue);
+
     if (R_SymbolTable != NULL)             /* in case of GC during startup */
 	for (i = 0; i < HSIZE; i++)        /* Symbol table */
 	    FORWARD_NODE(R_SymbolTable[i]);
@@ -2005,6 +2009,15 @@ void attribute_hidden InitMemory()
     
     /*  The current source line */
     R_Srcref = R_NilValue;
+
+    /* R_TrueValue and R_FalseValue */
+    R_TrueValue = mkTrue();
+    SET_NAMED(R_TrueValue, 2);
+    R_FalseValue = mkFalse();
+    SET_NAMED(R_FalseValue, 2);
+    R_LogicalNAValue = allocVector(LGLSXP, 1);
+    LOGICAL(R_LogicalNAValue)[0] = NA_LOGICAL;
+    SET_NAMED(R_LogicalNAValue, 2);
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
@@ -2735,6 +2748,21 @@ static void R_gc_internal(R_size_t size_needed)
 	      sexptype2char(first_bad_sexp_type),
 	      first_bad_sexp_type_line);
 #endif
+    }
+
+    /* sanity check on logical scalar values */
+    if (R_TrueValue != NULL && LOGICAL(R_TrueValue)[0] != TRUE) {
+	LOGICAL(R_TrueValue)[0] = TRUE;
+	warning("internal TRUE value has been modified");
+    }
+    if (R_FalseValue != NULL && LOGICAL(R_FalseValue)[0] != FALSE) {
+	LOGICAL(R_FalseValue)[0] = FALSE;
+	warning("internal FALSE value has been modified");
+    }
+    if (R_LogicalNAValue != NULL &&
+	LOGICAL(R_LogicalNAValue)[0] != NA_LOGICAL) {
+	LOGICAL(R_LogicalNAValue)[0] = NA_LOGICAL;
+	warning("internal logical NA value has been modified");
     }
 }
 

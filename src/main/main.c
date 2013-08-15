@@ -781,10 +781,10 @@ void setup_Rmainloop(void)
     /* make sure srand is called before R_tmpnam, PR#14381 */
     srand(TimeToSeed());
 
+    InitArithmetic();
     InitParser();
     InitTempDir(); /* must be before InitEd */
     InitMemory();
-    InitArithmetic();
     InitStringHash(); /* must be before InitNames */
     InitNames();
     InitBaseEnv();

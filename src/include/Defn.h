@@ -768,6 +768,11 @@ extern unsigned int max_contour_segments INI_as(25000);
 extern Rboolean known_to_be_latin1 INI_as(FALSE);
 extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
+/* pre-allocated boolean values */
+LibExtern SEXP R_TrueValue INI_as(NULL);
+LibExtern SEXP R_FalseValue INI_as(NULL);
+LibExtern SEXP R_LogicalNAValue INI_as(NULL);
+
 #ifdef __MAIN__
 # undef extern
 # undef extern0

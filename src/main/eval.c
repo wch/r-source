@@ -2934,8 +2934,6 @@ static SEXP R_AndSym = NULL;
 static SEXP R_OrSym = NULL;
 static SEXP R_NotSym = NULL;
 static SEXP R_CSym = NULL;
-static SEXP R_TrueValue = NULL;
-static SEXP R_FalseValue = NULL;
 
 #if defined(__GNUC__) && ! defined(BC_PROFILING) && (! defined(NO_THREADED_CODE))
 # define THREADED_CODE
@@ -2962,12 +2960,6 @@ void R_initialize_bcode(void)
   R_NotSym = install("!");
   R_CSym = install("c");
 
-  R_TrueValue = mkTrue();
-  SET_NAMED(R_TrueValue, 2);
-  R_PreserveObject(R_TrueValue);
-  R_FalseValue = mkFalse();
-  SET_NAMED(R_FalseValue, 2);
-  R_PreserveObject(R_FalseValue);
 #ifdef THREADED_CODE
   bcEval(NULL, NULL, FALSE);
 #endif
