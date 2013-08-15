@@ -209,6 +209,10 @@
 
       License \code{X11} is deprecated: use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
+  
+      \item Version requirements for \code{LinkingTo} packages are now
+      recognized: they are checked at installation.  (They were
+      previously silently ignored.)
     }
   }
 

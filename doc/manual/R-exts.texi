@@ -7883,7 +7883,7 @@ Depends: link2, link3
 LinkingTo: link2, link3
 @end example
 
-It must also `Depends' on those packages for they have to be installed
+It must also @samp{Depends} on those packages for they have to be installed
 prior to this one, and loaded prior to this one (so the path to their
 compiled code can be found).
 
@@ -7892,6 +7892,15 @@ linked-to packages are added to the include paths for C and C++ code.
 
 A @acronym{CRAN} example of the use of this mechanism is package
 @CRANpkg{lme4}, which links to @CRANpkg{Matrix}.
+
+As from @R{} 3.0.2 the @samp{LinkingTo} field can have a version
+requirement which is checked at installation.
+
+The @samp{LinkingTo} mechanism is also used by packages wishing to
+include headers from another package: if these are C++ headers
+containing source code or static linking is done at installation, the
+other package does not need to be (and usually should not be) listed in
+the @samp{Depends} field.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects

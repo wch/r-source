@@ -817,7 +817,7 @@ function(pkgs, lib.loc = NULL, file = NULL)
     return(invisible())
 }
 
-### * .test_package_depends_R_version
+### * .Rtest_package_depends_R_version
 
 .Rtest_package_depends_R_version <-
 function(dir)

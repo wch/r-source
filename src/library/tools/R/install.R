@@ -662,11 +662,26 @@
                 ## maybe even an error?  But installing Fortran-based packages should work
                 warning("R include directory is empty -- perhaps need to install R-devel.rpm or similar", call. = FALSE)
             has_error <- FALSE
-            linkTo <- desc["LinkingTo"]
-            if (!is.na(linkTo)) {
-                lpkgs <- strsplit(linkTo, ",[[:blank:]]*")[[1L]]
-                paths <- find.package(lpkgs, quiet=TRUE)
+            linkTo <- pkgInfo$LinkingTo
+            if (!is.null(linkTo)) {
+                lpkgs <- sapply(linkTo, function(x) x[[1L]])
+                paths <- find.package(lpkgs, quiet = TRUE)
                 if (length(paths)) {
+                    ## check any version requirements
+                    have_vers <-
+                        (vapply(linkTo, length, 1L) > 1L) &
+                            lpkgs %in% basename(paths)
+                    for (z in linkTo[have_vers]) {
+                        p <- z[[1L]]
+                        path <- paths[basename(paths) %in% p]
+                        current <- readRDS(file.path(path, "Meta", "package.rds"))$DESCRIPTION["Version"]
+                        target <- as.numeric_version(z$version)
+                        if (!do.call(z$op, list(as.numeric_version(current), target)))
+                            stop(gettextf("package %s %s was found, but %s %s is required by %s",
+                                          sQuote(p), current, z$op,
+                                          target, sQuote(pkgname)),
+                                 call. = FALSE, domain = NA)
+                    }
                     clink_cppflags <- paste(paste0('-I"', paths, '/include"'),
                                             collapse = " ")
                     Sys.setenv(CLINK_CPPFLAGS = clink_cppflags)
