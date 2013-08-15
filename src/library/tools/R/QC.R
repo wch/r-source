@@ -4981,7 +4981,7 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- all_imports <- character()
+    bad_imports <- all_imports <- imp3 <- character()
     bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
@@ -5022,6 +5022,7 @@ function(package, dir, lib.loc = NULL)
             } else if(Call %in% ":::") {
                 pkg <- deparse(e[[2L]])
                 all_imports <<- c(all_imports, pkg)
+                imp3 <<- c(imp3, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
@@ -5094,6 +5095,7 @@ function(package, dir, lib.loc = NULL)
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
+                imp3 = unique(imp3),
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5144,6 +5146,15 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("Package in Depends field not imported from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$imp3)) {
+          if(length(xx) > 1L) {
+              c(gettext("Namespaces imported from by ':::' calls:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("Namespace imported from by a ':::' call: %s",
                        sQuote(xx))
           }
       },

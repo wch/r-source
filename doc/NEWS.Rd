@@ -350,7 +350,7 @@
 	\samp{Enhances} fields of the \file{DESCRIPTION} file.
 
 	\item namespaces declared in \samp{Imports} but not
-	imported from, neither in the \samp{NAMESPACE} file nor using
+	imported from, neither in the \file{NAMESPACE} file nor using
 	the \code{::} nor \code{:::} operators.
 
 	\item packages which are used in \code{library()} or
@@ -358,10 +358,14 @@
 	the search path \emph{via} \samp{Depends}.
 
 	\item packages declared in \samp{Depends} not imported
-	\emph{via} the \samp{NAMESPACE} file (except the standard
+	\emph{via} the \file{NAMESPACE} file (except the standard
 	packages).  Objects used from \samp{Depends} packages should be
 	imported to avoid conflicts.
+
+	\item namespaces imported \emph{via} \code{:::} calls are
+	reported.  (Many of these should be \code{::} calls.)
       }
+      See \sQuote{Writing R Extensions} for good practice.
     }
   }
 
