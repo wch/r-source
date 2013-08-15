@@ -346,6 +346,14 @@ static SEXP lcall;
 #define INTEGER_OVERFLOW_WARNING _("NAs produced by integer overflow")
 #endif
 
+#define CHECK_INTEGER_OVERFLOW(call, ans, naflag) do {		\
+	if (naflag) {						\
+	    PROTECT(ans);					\
+	    warningcall(call, INTEGER_OVERFLOW_WARNING);	\
+	    UNPROTECT(1);					\
+	}							\
+    } while(0)
+
 static R_INLINE int R_integer_plus(int x, int y, Rboolean *pnaflag)
 {
     if (x == NA_INTEGER || y == NA_INTEGER)
@@ -402,6 +410,24 @@ static R_INLINE double R_integer_divide(int x, int y)
 	return (double) x / (double) y;
 }    
 
+static R_INLINE SEXP ScalarValue1(SEXP x)
+{
+    if (NAMED(x) == 0)
+	return x;
+    else
+	return allocVector(TYPEOF(x), 1);
+}
+
+static R_INLINE SEXP ScalarValue2(SEXP x, SEXP y)
+{
+    if (NAMED(x) == 0)
+	return x;
+    else if (NAMED(y) == 0)
+	return y;
+    else
+	return allocVector(TYPEOF(x), 1);
+}
+
 /* Unary and Binary Operators */
 
 SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -423,6 +449,94 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ATTRIB(arg1) != R_NilValue || ATTRIB(arg2) != R_NilValue) {
 	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
+    }
+    else if (argc == 2) {
+	/* Handle some scaler operations immediately */
+	if (TYPEOF(arg1) == REALSXP && LENGTH(arg1) == 1) {
+	    if (TYPEOF(arg2) == REALSXP && LENGTH(arg2) == 1) {
+		double x1 = REAL(arg1)[0];
+		double x2 = REAL(arg2)[0];
+		ans = ScalarValue2(arg1, arg2);
+		switch (PRIMVAL(op)) {
+		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
+		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
+		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
+		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		}
+	    }
+	    else if (TYPEOF(arg2) == INTSXP && LENGTH(arg2) == 1) {
+		double x1 = REAL(arg1)[0];
+		double x2 = INTEGER(arg2)[0] != NA_INTEGER ?
+		    (double) INTEGER(arg2)[0] : NA_REAL;
+		ans = ScalarValue1(arg1);
+		switch (PRIMVAL(op)) {
+		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
+		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
+		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
+		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		}
+	    }
+	}
+	else if (TYPEOF(arg1) == INTSXP && LENGTH(arg1) == 1) {
+	    if (TYPEOF(arg2) == REALSXP && LENGTH(arg2) == 1) {
+		double x1 = INTEGER(arg1)[0] != NA_INTEGER ?
+		    (double) INTEGER(arg1)[0] : NA_REAL;
+		double x2 = REAL(arg2)[0];
+		ans = ScalarValue1(arg2);
+		switch (PRIMVAL(op)) {
+		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
+		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
+		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
+		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		}
+	    }
+	    else if (TYPEOF(arg2) == INTSXP && LENGTH(arg2) == 1) {
+		Rboolean naflag = FALSE;
+		int x1 = INTEGER(arg1)[0];
+		int x2 = INTEGER(arg2)[0];
+		switch (PRIMVAL(op)) {
+		case PLUSOP:
+		    ans = ScalarValue2(arg1, arg2);
+		    INTEGER(ans)[0] = R_integer_plus(x1, x2, &naflag);
+		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
+		    return ans;
+		case MINUSOP:
+		    ans = ScalarValue2(arg1, arg2);
+		    INTEGER(ans)[0] = R_integer_minus(x1, x2, &naflag);
+		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
+		    return ans;
+		case TIMESOP:
+		    ans = ScalarValue2(arg1, arg2);
+		    INTEGER(ans)[0] = R_integer_times(x1, x2, &naflag);
+		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
+		    return ans;
+		case DIVOP:
+		    ans = ScalarReal(R_integer_divide(x1, x2));
+		    return ans;
+		}
+	    }
+	}
+    }
+    else if (argc == 1) {
+	if (TYPEOF(arg1) == REALSXP && LENGTH(arg1) == 1) {
+	    switch(PRIMVAL(op)) {
+	    case PLUSOP: return(arg1);
+	    case MINUSOP:
+		ans = ScalarValue1(arg1);
+		REAL(ans)[0] = -REAL(arg1)[0];
+		return ans;
+	    }
+	}
+	else if (TYPEOF(arg1) == INTSXP && LENGTH(arg1) == 1) {
+	    switch(PRIMVAL(op)) {
+	    case PLUSOP: return(arg1);
+	    case MINUSOP:
+		ans = ScalarValue1(arg1);
+		INTEGER(ans)[0] = INTEGER(arg1)[0] == NA_INTEGER ?
+		    NA_INTEGER : -INTEGER(arg1)[0];
+		return ans;
+	    }
+	}
     }
 
     if (argc == 2)
