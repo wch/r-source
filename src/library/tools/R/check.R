@@ -1109,8 +1109,7 @@ setRlibs <-
 
                 out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
-                    if(any(grepl("not declared from", out)))
-                        warningLog(Log)
+                    if(any(grepl("not declared from", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
                     wrapLog(msg_DESCRIPTION)
@@ -1123,7 +1122,8 @@ setRlibs <-
 
                 out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
-                    warningLog(Log)
+                    if(any(grepl("not declared from", out))) warningLog(Log)
+                    else noteLog(Log)
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
                     wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
