@@ -316,6 +316,7 @@ structure for a new package: see its help page for details.
 @menu
 * The DESCRIPTION file::        
 * Licensing::                   
+* Package Dependencies::        
 * The INDEX file::              
 * Package subdirectories::      
 * Data in packages::            
@@ -452,124 +453,13 @@ The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
-@c DESCRIPTION field Depends
+The  @samp{Depends}, @samp{Imports}, @samp{Suggests} and @samp{Imports}
+fields are discussed in a later subsection.
+
 @c DESCRIPTION field SystemRequirements
-The @samp{Depends} field gives a comma-separated list of package names
-which this package depends on.  The package name may be optionally
-followed by a comment in parentheses.  The comment should contain a
-comparison operator, whitespace and a valid version number.  You can
-also use the special package name @samp{R} if your package depends on a
-certain version of @R{} --- e.g., if the package works only with @R{}
-version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
-@samp{Depends} field.  You can also require a certain SVN revision for
-R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)}
-requires a version later than R-devel of late July 2011 (including
-released versions of 2.14.0).  Both @code{library} and the @R{} package
-checking facilities use this field: hence it is an error to use improper
-syntax or misuse the @samp{Depends} field for comments on other software
-that might be needed.  Other dependencies (external to the @R{} system)
-should be listed in the @samp{SystemRequirements} field, possibly
-amplified in a separate @file{README} file.  The @R{} @command{INSTALL}
-facilities check if the version of @R{} used is recent enough for the
-package being installed, and the list of packages which is specified
-will be attached (after checking version requirements) before the
-current package, both when @code{library} is called and when preparing
-for lazy-loading during installation.
-
-A package (or @samp{R}) can appear more than once in the
-@samp{Depends} field.
-
-It makes no sense to declare a dependence on @code{R} without a version
-specification, nor on the package @pkg{base}: this is an @R{} package
-and @pkg{base} is always available.
-
-@c DESCRIPTION field Imports
-The @samp{Imports} field lists packages whose namespaces are imported
-from (as specified in the @file{NAMESPACE} file) but which do not need
-to be attached.  Namespaces accessed by the @samp{::} and @samp{:::}
-operators must be listed here, or in @samp{Suggests} or @samp{Enhances}
-(see below).  Ideally this field will include all the standard packages
-that are used, and it is important to include S4-using packages (as
-their class definitions can change and the @file{DESCRIPTION} file is
-used to decide which packages to re-install when this happens).
-Packages declared in the @samp{Depends} field should not also be in the
-@samp{Imports} field.  Version requirements can be specified and are
-checked when the namespace is loaded (but only in @R{} >= 3.0.0).
-
-@c DESCRIPTION field Suggests
-The @samp{Suggests} field uses the same syntax as @samp{Depends} and
-lists packages that are not necessarily needed.  This includes packages
-used only in examples, tests or vignettes (@pxref{Writing package
-vignettes}), and packages loaded in the body of functions.  E.g.,
-suppose an example from package @pkg{foo} uses a dataset from package
-@pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
-unless one wants to execute all the examples/tests/vignettes: it is
-useful to have @pkg{bar}, but not necessary.  Version requirements can
-be specified, and will be used by @command{R CMD check}.  Note that
-someone wanting to run the examples/tests/vignettes may not have a
-suggested package available (and it may not even be possible to install
-it for that platform), so it is desirable that the use of suggested
-packages is made conditional @emph{via}
-@code{if(require(@var{pkgname}))}).
-
-@c DESCRIPTION field Enhances
-Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
-package at hand, e.g., by providing methods for classes from these
-packages, or ways to handle objects from these packages (so several
-packages have @samp{Enhances: chron} because they can handle datetime
-objects from @CRANpkg{chron} even though they prefer @R{}'s native
-datetime functions).  Version requirements can be specified, but are
-currently not used.  Such packages cannot be required to check the
-package: any tests which use them must be conditional on the presence
-of the package.  (If your tests use e.g.@: a dataset from another
-package it should be in @samp{Suggests} and not @samp{Enhances}.)
-
-The general rules are
-
-@itemize @bullet
-@item
-Packages whose namespace only is needed to load the package using
-@code{library(@var{pkgname})} must be listed in the @samp{Imports} field
-and not in the @samp{Depends} field.  Packages listed in @code{imports}
-or @code{importFrom} directives in the @file{NAMESPACE} file should
-almost always be in @samp{Imports} and not @samp{Depends}.
-@item
-Packages that need to be attached to successfully load the package using
-@code{library(@var{pkgname})} must be listed in the @samp{Depends}
-field, only.
-@item
-All packages that are needed@footnote{This includes all packages
-directly called by @code{library} and @code{require} calls, as well as
-data obtained @emph{via} @code{data(theirdata, package = "somepkg")}
-calls: @command{R CMD check} will warn about all of these.  But there
-are subtler uses which it will not detect: e.g.@: if package A uses
-package B and makes use of functionality in package B which uses package
-C which package B suggests or enhances, then package C needs to be in
-the @samp{Suggests} list for package A.  Nor will undeclared uses in
-included files be reported, nor unconditional uses of packages listed
-under @samp{Enhances}.} to successfully run @code{R CMD check} on the
-package must be listed in one of @samp{Depends} or @samp{Suggests} or
-@samp{Imports}.  Packages used to run examples or tests conditionally
-(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
-in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
-that all the packages needed for a complete check are installed.)
-@end itemize
-
-@noindent
-In particular, packages providing ``only'' data for examples or
-vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
-in order to make lean installations possible.
-
-Version dependencies in the @samp{Depends} and @samp{Imports} fields are
-used by @code{library} when it loads the package, and
-@code{install.packages} checks versions for the @samp{Depends},
-@samp{Imports} and (for @code{dependencies = TRUE}) @samp{Suggests}
-fields.
-
-It is increasingly important that the information in these fields is
-complete and accurate: it is for example used to compute which packages
-depend on an updated package and which packages can safely be installed
-in parallel.
+Dependencies external to the @R{} system should be listed in the
+@samp{SystemRequirements} field, possibly amplified in a separate
+@file{README} file.
 
 @c DESCRIPTION field URL
 The @samp{URL} field may give a list of @acronym{URL}s
@@ -731,7 +621,9 @@ authors/developers) and @code{MailingList} are in common use. Some
 repositories (including @acronym{CRAN} and R-forge) add their own
 fields.
 
-@node Licensing, The INDEX file, The DESCRIPTION file, Package structure
+
+
+@node Licensing, Package Dependencies, The DESCRIPTION file, Package structure
 @subsection Licensing
 
 Licensing for a package which might be distributed is an important but
@@ -849,8 +741,162 @@ like @file{LICENSE.note}.
 A few ``standard'' licenses are rather license templates which need
 additional information to be completed @emph{via} @samp{+ file LICENSE}.
 
+@node Package Dependencies, The INDEX file, Licensing, Package structure
+@subsection Package Dependencies
 
-@node The INDEX file, Package subdirectories, Licensing, Package structure
+@c DESCRIPTION field Depends
+The @samp{Depends} field gives a comma-separated list of package names
+which this package depends on.  Those packages will be attached before
+the current package when @code{library} or @code{require} is called.
+Each package name may be optionally followed by a comment in parentheses
+specifying a version requirement.  The comment should contain a
+comparison operator, whitespace and a valid version number,
+e.g. @samp{MASS (>= 3.1-20)}.
+
+Tne @samp{Depends} field can also specify a dependence on a certain
+version of @R{} --- e.g., if the package works only with @R{}
+version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
+@samp{Depends} field.  You can also require a certain SVN revision for
+R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)}
+requires a version later than R-devel of late July 2011 (including
+released versions of 2.14.0).
+
+It makes no sense to declare a dependence on @code{R} without a version
+specification, nor on the package @pkg{base}: this is an @R{} package
+and package @pkg{base} is always available.
+
+A package or @samp{R} can appear more than once in the @samp{Depends}
+field, for example to give upper and lower bounds on acceptable versions.
+
+Both @code{library} and the @R{} package checking facilities use this
+field: hence it is an error to use improper syntax or misuse the
+@samp{Depends} field for comments on other software that might be
+needed.  The @R{} @command{INSTALL} facilities check if the version of
+@R{} used is recent enough for the package being installed, and the list
+of packages which is specified will be attached (after checking version
+requirements) before the current package, both when @code{library} is
+called and when preparing for lazy-loading during installation.
+
+@c DESCRIPTION field Imports
+The @samp{Imports} field lists packages whose namespaces are imported
+from (as specified in the @file{NAMESPACE} file) but which do not need
+to be attached.  Namespaces accessed by the @samp{::} and @samp{:::}
+operators must be listed here, or in @samp{Suggests} or @samp{Enhances}
+(see below).  Ideally this field will include all the standard packages
+that are used, and it is important to include S4-using packages (as
+their class definitions can change and the @file{DESCRIPTION} file is
+used to decide which packages to re-install when this happens).
+Packages declared in the @samp{Depends} field should not also be in the
+@samp{Imports} field.  Version requirements can be specified and are
+checked when the namespace is loaded (but only in @R{} >= 3.0.0).
+
+@c DESCRIPTION field Suggests
+The @samp{Suggests} field uses the same syntax as @samp{Depends} and
+lists packages that are not necessarily needed.  This includes packages
+used only in examples, tests or vignettes (@pxref{Writing package
+vignettes}), and packages loaded in the body of functions.  E.g.,
+suppose an example from package @pkg{foo} uses a dataset from package
+@pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
+unless one wants to execute all the examples/tests/vignettes: it is
+useful to have @pkg{bar}, but not necessary.  Version requirements can
+be specified, and will be used by @command{R CMD check}.  Note that
+someone wanting to run the examples/tests/vignettes may not have a
+suggested package available (and it may not even be possible to install
+it for that platform), so it is desirable that the use of suggested
+packages is made conditional @emph{via}
+@code{if(require(@var{pkgname}))}).
+
+@c DESCRIPTION field Enhances
+Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
+package at hand, e.g., by providing methods for classes from these
+packages, or ways to handle objects from these packages (so several
+packages have @samp{Enhances: chron} because they can handle datetime
+objects from @CRANpkg{chron} even though they prefer @R{}'s native
+datetime functions).  Version requirements can be specified, but are
+currently not used.  Such packages cannot be required to check the
+package: any tests which use them must be conditional on the presence
+of the package.  (If your tests use e.g.@: a dataset from another
+package it should be in @samp{Suggests} and not @samp{Enhances}.)
+
+The general rules are
+
+@itemize @bullet
+@item
+A package should be listed in only one of these fields.
+@item
+Packages whose namespace only is needed to load the package using
+@code{library(@var{pkgname})} should be listed in the @samp{Imports} field
+and not in the @samp{Depends} field.  Packages listed in @code{imports}
+or @code{importFrom} directives in the @file{NAMESPACE} file should
+almost always be in @samp{Imports} and not @samp{Depends}.
+@item
+Packages that need to be attached to successfully load the package using
+@code{library(@var{pkgname})} must be listed in the @samp{Depends}
+field.
+@item
+All packages that are needed@footnote{This includes all packages
+directly called by @code{library} and @code{require} calls, as well as
+data obtained @emph{via} @code{data(theirdata, package = "somepkg")}
+calls: @command{R CMD check} will warn about all of these.  But there
+are subtler uses which it will not detect: e.g.@: if package A uses
+package B and makes use of functionality in package B which uses package
+C which package B suggests or enhances, then package C needs to be in
+the @samp{Suggests} list for package A.  Nor will undeclared uses in
+included files be reported, nor unconditional uses of packages listed
+under @samp{Enhances}.} to successfully run @code{R CMD check} on the
+package must be listed in one of @samp{Depends} or @samp{Suggests} or
+@samp{Imports}.  Packages used to run examples or tests conditionally
+(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
+in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
+that all the packages needed for a complete check are installed.)
+@end itemize
+
+@noindent
+In particular, packages providing ``only'' data for examples or
+vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
+in order to make lean installations possible.
+
+Version dependencies in the @samp{Depends} and @samp{Imports} fields are
+used by @code{library} when it loads the package, and
+@code{install.packages} checks versions for the @samp{Depends},
+@samp{Imports} and (for @code{dependencies = TRUE}) @samp{Suggests}
+fields.
+
+It is increasingly important that the information in these fields is
+complete and accurate: it is for example used to compute which packages
+depend on an updated package and which packages can safely be installed
+in parallel.
+
+This scheme was developed before all packages had namespaces (@R{}
+2.14.0 in October 2011), and good practice changed once that was in
+place.
+
+Field @samp{Depends} should nowadays be used rarely, only for packages
+which are intended to be put on the search path to make their facilities
+available to the end user (and not to the package itself): for example
+it makes sense that a user of package @pkg{latticeExtra} would want the
+functions of package @pkg{lattice} made available.
+
+Almost always packages mentioned in @samp{Depends} should also be
+imported from in the @file{NAMESPACE} file: this ensures that any needed
+parts of those packages are available when some other package imports
+the current package.
+
+The @samp{Imports} field should not contain packages which are not
+imported from (@emph{via} the @file{NAMESPACE} file or @code{::} or
+@code{:::} operators), as all the packages listed in that field need to
+be installed for the current package to be installed.  (This is checked
+by @command{R CMD check}.)
+
+@R{} code in the package should call @code{library} or @code{require}
+only exceptionally.  Such calls are never needed for packages listed in
+@samp{Depends} as they will already be on the search path.  It used to
+be common practice to use @code{require} calls for packages listed in
+@samp{suggests} in functions which used their functionality, but
+nowadays it is better to access such functionality @emph{via} @code{::}
+calls.
+
+@node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
 
