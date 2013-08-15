@@ -626,11 +626,11 @@ setRlibs <-
             }
         }
 
-        out <- tools:::.check_package_description2(dfile)
+        out <- format(tools:::.check_package_description2(dfile))
         if (length(out)) {
             if(!any) noteLog(Log)
             any <- TRUE
-            printLog(Log, paste(format(out), collapse = "\n"), "\n")
+            printLog(Log, paste(out, collapse = "\n"), "\n")
         }
 
         if (!any) resultLog(Log, "OK")
