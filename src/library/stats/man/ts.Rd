@@ -27,7 +27,7 @@ as.ts(x, \dots)
 is.ts(x)
 }
 \arguments{
-  \item{data}{a numeric vector or matrix of the observed time-series
+  \item{data}{a vector or matrix of the observed time-series
     values. A data frame will be coerced to a numeric matrix via
     \code{data.matrix}.  (See also \sQuote{Details}.)}
   \item{start}{the time of the first observation.  Either a single
@@ -102,6 +102,10 @@ is.ts(x)
   \code{\link{window}};
   \code{\link{print.ts}}, the print method for time series objects;
   \code{\link{plot.ts}}, the plot method for time series objects.
+  
+  For other definitions of \sQuote{time series} (e.g.,
+  time-ordered obsevervations) see the CRAN task view at
+  \url{http://cran.r-project.org/web/views/TimeSeries.html}.
 }
 \examples{
 require(graphics)
