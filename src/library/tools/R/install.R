@@ -665,15 +665,17 @@
             linkTo <- pkgInfo$LinkingTo
             if (!is.null(linkTo)) {
                 lpkgs <- sapply(linkTo, function(x) x[[1L]])
+                ## we checked that these were all available earlier,
+                ## but be cautious in case this changed.
                 paths <- find.package(lpkgs, quiet = TRUE)
+                bpaths <- basename(paths)
                 if (length(paths)) {
                     ## check any version requirements
                     have_vers <-
-                        (vapply(linkTo, length, 1L) > 1L) &
-                            lpkgs %in% basename(paths)
+                        (vapply(linkTo, length, 1L) > 1L) & lpkgs %in% bpaths
                     for (z in linkTo[have_vers]) {
                         p <- z[[1L]]
-                        path <- paths[basename(paths) %in% p]
+                        path <- paths[bpaths %in% p]
                         current <- readRDS(file.path(path, "Meta", "package.rds"))$DESCRIPTION["Version"]
                         target <- as.numeric_version(z$version)
                         if (!do.call(z$op, list(as.numeric_version(current), target)))
