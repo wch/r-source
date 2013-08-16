@@ -4949,39 +4949,47 @@ function(x, ...)
           }
       },
       if(length(xx <- x$in_depends)) {
+          msg <- "  Please remove these calls from your code."
           if(length(xx) > 1L) {
               c(gettext("'library' or 'require' calls to packages already attached by Depends:"),
-                .pretty_format(sort(xx)))
+                .pretty_format(sort(xx)), msg)
           } else {
-              gettextf("'library' or 'require' call to %s which was already attached by Depends.",
-                       sQuote(xx))
+              c(gettextf("'library' or 'require' call to %s which was already attached by Depends.",
+                         sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$unused_imports)) {
+          msg <- "  All declared Imports should be used."
           if(length(xx) > 1L) {
               c(gettext("Namespaces in Imports field not imported from:"),
-                .pretty_format(sort(xx)))
+                .pretty_format(sort(xx)), msg)
           } else {
-              gettextf("Namespace in Imports field not imported from: %s",
-                       sQuote(xx))
+              c(gettextf("Namespace in Imports field not imported from: %s",
+                       sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$depends_not_import)) {
-          if(length(xx) > 1L) {
+          msg <- c("  These packages needs to imported from for the case when",
+                   "  this namespace is loaded but not attached.")
+         if(length(xx) > 1L) {
               c(gettext("Packages in Depends field not imported from:"),
-                .pretty_format(sort(xx)))
+                .pretty_format(sort(xx)), msg)
           } else {
-              gettextf("Package in Depends field not imported from: %s",
-                       sQuote(xx))
+              c(gettextf("Package in Depends field not imported from: %s",
+                         sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$imp3)) {
+          msg <- c("See the note in ?::: about the use of this operator.",
+                   ":: should be used rather than ::: if the function is exported,",
+                   "and a package never needs to use ::: for its own functions.")
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
               c(gettext("Namespaces imported from by ':::' calls:"),
-                .pretty_format(sort(xx)))
+                .pretty_format(sort(xx)), msg)
           } else {
-              gettextf("Namespace imported from by a ':::' call: %s",
-                       sQuote(xx))
+              c(gettextf("Namespace imported from by a ':::' call: %s",
+                         sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$data)) {
