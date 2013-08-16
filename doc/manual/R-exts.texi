@@ -453,8 +453,8 @@ The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
-The  @samp{Depends}, @samp{Imports}, @samp{Suggests} and @samp{Imports}
-fields are discussed in a later subsection.
+The @samp{Depends}, @samp{Imports}, @samp{Suggests}, @samp{Enhances} and
+@samp{LinkingTo} fields are discussed in a later subsection.
 
 @c DESCRIPTION field SystemRequirements
 Dependencies external to the @R{} system should be listed in the
@@ -774,8 +774,7 @@ field: hence it is an error to use improper syntax or misuse the
 needed.  The @R{} @command{INSTALL} facilities check if the version of
 @R{} used is recent enough for the package being installed, and the list
 of packages which is specified will be attached (after checking version
-requirements) before the current package, both when @code{library} is
-called and when preparing for lazy-loading during installation.
+requirements) before the current package.
 
 @c DESCRIPTION field Imports
 The @samp{Imports} field lists packages whose namespaces are imported
@@ -788,7 +787,7 @@ their class definitions can change and the @file{DESCRIPTION} file is
 used to decide which packages to re-install when this happens).
 Packages declared in the @samp{Depends} field should not also be in the
 @samp{Imports} field.  Version requirements can be specified and are
-checked when the namespace is loaded (but only in @R{} >= 3.0.0).
+checked when the namespace is loaded (since @R{} >= 3.0.0).
 
 @c DESCRIPTION field Suggests
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
@@ -895,6 +894,28 @@ be common practice to use @code{require} calls for packages listed in
 @samp{suggests} in functions which used their functionality, but
 nowadays it is better to access such functionality @emph{via} @code{::}
 calls.
+
+@c DESCRIPTION field LinkingTo
+A package that wishes to make use of header files in other packages needs
+to declare them as a comma-separated list in the field @samp{LinkingTo}
+in the @file{DESCRIPTION} file.  For example
+
+@example
+LinkingTo: link1, link2
+@end example
+
+@noindent
+As from @R{} 3.0.2 the @samp{LinkingTo} field can have a version
+requirement which is checked at installation.  (In earlier versions of
+@R{} it would cause the specification to be ignored.)
+
+Specifying a package in @samp{LinkingTo} suffices if these are C++
+headers containing source code or static linking is done at
+installation: the packages do not need to be (and usually should not be)
+listed in the @samp{Depends} or @samp{Imports} fields.
+
+For another use of @samp{LinkingTo} see @ref{Linking to native routines
+in other packages}.
 
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
@@ -7873,34 +7894,20 @@ The author of @pkg{packB} is responsible for ensuring that
 provide some automated tools to simplify exporting larger numbers of
 routines.
 
-@c DESCRIPTION field LinkingTo
-A package that wishes to make use of header files in other packages needs
-to declare them as a comma-separated list in the field @samp{LinkingTo}
-in the @file{DESCRIPTION} file.  For example
+A package that wishes to make use of header files in other packages
+needs to declare them as a comma-separated list in the field
+@samp{LinkingTo} in the @file{DESCRIPTION} file.  This then arranges
+that the @file{include} directories in the installed linked-to packages
+are added to the include paths for C and C++ code.
 
-@example
-Depends: link2, link3
-LinkingTo: link2, link3
-@end example
+It must also specify @samp{Imports}@footnote{with a corresponding
+@code{import} or @code{importFrom} entry in the @file{NAMESPACE} file.}
+or @samp{Depends} of those packages, for they have to be loaded prior to
+this one (so the path to their compiled code has been registered).
 
-It must also @samp{Depends} on those packages for they have to be installed
-prior to this one, and loaded prior to this one (so the path to their
-compiled code can be found).
-
-This then arranges that the @file{include} directories in the installed
-linked-to packages are added to the include paths for C and C++ code.
 
 A @acronym{CRAN} example of the use of this mechanism is package
 @CRANpkg{lme4}, which links to @CRANpkg{Matrix}.
-
-As from @R{} 3.0.2 the @samp{LinkingTo} field can have a version
-requirement which is checked at installation.
-
-The @samp{LinkingTo} mechanism is also used by packages wishing to
-include headers from another package: if these are C++ headers
-containing source code or static linking is done at installation, the
-other package does not need to be (and usually should not be) listed in
-the @samp{Depends} field.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
