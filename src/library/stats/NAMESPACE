@@ -77,7 +77,7 @@ export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
 ## anova.lmlist: caper, lmPerm
 ## model.frame.aovlist: ScottKnott TukeyC
 ## diff.ts: FitARMA
-## median.default: RItools TDMR
+## median.default: RItools TDMR demography ftsa
 ## qqnorm.default: BayesX, metRology
 ## plot.density: GB2, MCMChybridGP, astro, rehh
 ## print.formula: ndl, polytomous
