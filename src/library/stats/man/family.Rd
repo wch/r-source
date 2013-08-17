@@ -4,6 +4,17 @@
 % Distributed under GPL 2 or later
 
 \name{family}
+\alias{family}
+\alias{binomial}
+\alias{gaussian}
+\alias{Gamma}
+\alias{inverse.gaussian}
+\alias{poisson}
+\alias{quasi}
+\alias{quasibinomial}
+\alias{quasipoisson}
+%\alias{print.family}
+
 \title{Family Objects for Models}
 \usage{
 family(object, \dots)
@@ -17,16 +28,6 @@ quasi(link = "identity", variance = "constant")
 quasibinomial(link = "logit")
 quasipoisson(link = "log")
 }
-\alias{family}
-\alias{binomial}
-\alias{gaussian}
-\alias{Gamma}
-\alias{inverse.gaussian}
-\alias{poisson}
-\alias{quasi}
-\alias{quasibinomial}
-\alias{quasipoisson}
-\alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.  This can be
     a name/expression, a literal character string, a length-one character

@@ -50,31 +50,31 @@ export(add.scope, add1, addmargins, aggregate,aggregate.ts, AIC,
        runif, rweibull, rwilcox, rWishart, sd, se.contrast, simulate,
        spline, splinefun, splinefunH, SSD, start, stat.anova, step,
        summary.manova, symnum, termplot, terms, time, ts, tsp,
-       "tsp<-", TukeyHSD, TukeyHSD.aov, uniroot, update, var,
-       variable.names, vcov, weighted.mean, weighted.residuals,
-       weights, window, "window<-", write.ftable, xtabs, pbirthday,
-       qbirthday)
+       "tsp<-", TukeyHSD, uniroot, update, var, variable.names, vcov,
+       weighted.mean, weighted.residuals, weights, window, "window<-",
+       write.ftable, xtabs, pbirthday, qbirthday)
 
 ## methods used by R itself.
 export(density.default, model.frame.default, summary.aov, summary.lm,
        update.formula)
 
 ## historical
-export(aggregate.data.frame, aggregate.default, anova.glm,
-       anova.glmlist, anova.lm, anova.lmlist, anova.mlm,
-       deriv.default, deriv.formula, deriv3.default, deriv3.formula,
-       diff.ts, hatvalues.lm, lines.ts, model.frame.aovlist,
+export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
+       anova.lmlist, anova.mlm, diff.ts, model.frame.aovlist,
        model.frame.glm, model.frame.lm, model.matrix.default,
        model.matrix.lm, plot.density, plot.lm, plot.mlm, plot.ts,
-       plot.TukeyHSD, predict.glm, predict.lm, predict.mlm,
-       predict.poly, print.anova, print.density, print.family,
-       print.formula, print.ftable, print.glm, print.infl,
-       print.integrate, print.lm, print.logLik, print.terms, print.ts,
-       qqnorm.default, quantile.default, residuals.default,
-       residuals.glm, residuals.lm, rstandard.glm, rstandard.lm,
-       rstudent.glm, rstudent.lm, summary.aovlist, summary.glm,
-       summary.infl, summary.mlm, terms.aovlist, terms.default,
-       terms.formula, terms.terms, update.default)
+       predict.glm, predict.lm, predict.mlm, predict.poly,
+       print.anova, print.density, print.formula, print.ftable,
+       print.glm, print.integrate, print.lm, print.ts, qqnorm.default,
+       quantile.default, residuals.default, residuals.glm,
+       residuals.lm, summary.aovlist, summary.glm, summary.mlm,
+       terms.formula, TukeyHSD.aov, update.default)
+
+##export(aggregate.default, hatvalues.lm, print.infl, deriv.default,
+##    deriv.formula, deriv3.default, deriv3.formula, lines.ts,
+##    plot.TukeyHSD, print.family, print.logLik, print.terms,
+##    rstandard.glm, rstandard.lm, rstudent.glm, rstudent.lm,
+##    summary.infl, terms.aovlist, terms.default, terms.terms)
 
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
@@ -103,7 +103,6 @@ S3method(as.ts, default)
 S3method(anova, glm)
 S3method(anova, glmlist)
 S3method(anova, lm)
-S3method(anova, lmlist)
 S3method(anova, lmlist)
 S3method(BIC, default)
 S3method(BIC, logLik)

@@ -199,6 +199,8 @@
       
       \item Package \pkg{stats} no longer exports \code{median.default},
       which was only needed to counteract a badly behaved package. % 'rv'.
+      
+      \item Many methods are no longer exported by package \pkg{stats}.
     }
   }
 

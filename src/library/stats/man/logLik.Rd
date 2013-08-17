@@ -8,8 +8,8 @@
 \name{logLik}
 \encoding{UTF-8}
 \alias{logLik}
-\alias{print.logLik}
-\alias{str.logLik}
+%\alias{print.logLik}
+%\alias{str.logLik}
 \alias{logLik.lm}
 \title{Extract Log-Likelihood}
 \usage{

@@ -4,14 +4,14 @@
 % Distributed under GPL 2 or later
 
 \name{anova.lm}
+\alias{anova.lm}
+\alias{anova.lmlist}
 \title{ANOVA for Linear Model Fits}
 \usage{
 \method{anova}{lm}(object, \dots)
 
-anova.lmlist(object, \dots, scale = 0, test = "F")
+\method{anova}{lmlist}(object, \dots, scale = 0, test = "F")
 }
-\alias{anova.lm}
-\alias{anova.lmlist}
 \description{
   Compute an analysis of variance table for one or more linear model fits.
 }
