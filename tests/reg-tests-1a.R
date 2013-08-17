@@ -4369,12 +4369,6 @@ stopifnot(identical(colnames(A, do.NULL = FALSE), character(0)))
 ## were 'row' etc in 2.3.1.
 
 
-## misuse of a method (based on example from package mmlcr)
-model.matrix.lm(height ~ weight, women)
-# although it is an incorrect call, it should not crash in NextMethod.
-## fixed in 2.4.0
-
-
 ## grep(value = TRUE) sometimes preserved names, sometimes not
 x <- 1:3
 xx <- letters[1:3]
