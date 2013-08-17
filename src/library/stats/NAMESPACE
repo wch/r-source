@@ -70,12 +70,6 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        weights, window, "window<-", write.ftable, xtabs, pbirthday,
        qbirthday)
 
-# for now, as package 'rv' takes over median
-export(median.default)
-
-# defunct
-# export(clearNames, mauchley.test, reshapeWide, reshapeLong, anovalist.lm, lm.fit.null, lm.wfit.null, glm.fit.null)
-
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
 S3method("[", acf)
