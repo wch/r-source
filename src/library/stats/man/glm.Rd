@@ -10,7 +10,7 @@
 \alias{glm}
 \alias{glm.fit}
 \alias{weights.glm}
-\alias{print.glm}
+%\alias{print.glm}
 \concept{regression}
 \concept{logistic}
 \concept{log-linear}

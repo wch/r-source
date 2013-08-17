@@ -7447,7 +7447,7 @@ Crew  Child        0      0
 > 
 > ### Name: glm
 > ### Title: Fitting Generalized Linear Models
-> ### Aliases: glm glm.fit weights.glm print.glm
+> ### Aliases: glm glm.fit weights.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -8432,7 +8432,7 @@ Coefficients:
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm print.lm
+> ### Aliases: lm
 > ### Keywords: regression
 > 
 > ### ** Examples
