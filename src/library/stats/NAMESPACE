@@ -59,11 +59,11 @@ export(density.default, model.frame.default, summary.aov, summary.lm,
        update.formula)
 
 ## historical
-export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
-       model.matrix.default, model.matrix.lm, plot.ts, predict.glm,
-       predict.lm, predict.mlm, print.anova, print.integrate,
-       print.ts, quantile.default, residuals.glm, residuals.lm,
-       summary.glm, summary.mlm, terms.formula, update.default)
+export(aggregate.data.frame, anova.glm, anova.glmlist,
+anova.lm, median.default, model.matrix.default, model.matrix.lm,
+plot.ts, predict.glm, predict.lm, predict.mlm, print.anova,
+print.integrate, print.ts, quantile.default, residuals.glm,
+residuals.lm, summary.glm, summary.mlm, terms.formula, update.default)
 
 ##export(aggregate.default, hatvalues.lm, print.infl, deriv.default,
 ##    deriv.formula, deriv3.default, deriv3.formula, lines.ts,
@@ -77,7 +77,6 @@ export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
 ## anova.lmlist: caper, lmPerm
 ## model.frame.aovlist: ScottKnott TukeyC
 ## diff.ts: FitARMA
-## median.default: RItools TDMR demography ftsa
 ## qqnorm.default: BayesX, metRology
 ## plot.density: GB2, MCMChybridGP, astro, rehh
 ## print.formula: ndl, polytomous
