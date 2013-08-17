@@ -60,21 +60,50 @@ export(density.default, model.frame.default, summary.aov, summary.lm,
 
 ## historical
 export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
-       anova.lmlist, anova.mlm, diff.ts, model.frame.aovlist,
-       model.frame.glm, model.frame.lm, model.matrix.default,
-       model.matrix.lm, plot.density, plot.lm, plot.mlm, plot.ts,
-       predict.glm, predict.lm, predict.mlm, predict.poly,
-       print.anova, print.density, print.formula, print.ftable,
-       print.glm, print.integrate, print.lm, print.ts, qqnorm.default,
-       quantile.default, residuals.default, residuals.glm,
-       residuals.lm, summary.aovlist, summary.glm, summary.mlm,
-       terms.formula, TukeyHSD.aov, update.default)
+       anova.lmlist, model.frame.aovlist, model.matrix.default,
+       model.matrix.lm, plot.density, plot.lm, plot.ts, predict.glm,
+       predict.lm, predict.mlm, predict.poly, print.anova,
+       print.formula, print.ftable, print.glm, print.integrate,
+       print.lm, print.ts, qqnorm.default, quantile.default,
+       residuals.glm, residuals.lm, summary.glm, summary.mlm,
+       terms.formula, update.default)
 
 ##export(aggregate.default, hatvalues.lm, print.infl, deriv.default,
 ##    deriv.formula, deriv3.default, deriv3.formula, lines.ts,
 ##    plot.TukeyHSD, print.family, print.logLik, print.terms,
 ##    rstandard.glm, rstandard.lm, rstudent.glm, rstudent.lm,
-##    summary.infl, terms.aovlist, terms.default, terms.terms)
+##    summary.infl, terms.aovlist, terms.default, terms.terms,
+##    TukeyHSD.aov)
+
+## export(anova.mlm, diff.ts,  model.frame.glm, model.frame.lm, plot.mlm, predict.poly, print.density, print.ftable, residuals.default, summary.aovlist)
+
+## diff.ts: FitARMA
+## median.default: RItools
+## print.density: BrailleR
+## summary.aovlist: BrailleR
+
+## anova.glmlist: MLCM gam mgcv
+## anova.lmlist: caper, lmPerm
+## model.frame.aovlist: ScottKnott TukeyC
+## model.matrix.default: AlgDesign, MNP, MonoPoly, MuMIn, ResourceSelection, Zelig, arm, car, endogMNP, factorQR, list
+## model.matrix.lm: robustbase
+## plot.density: GB2, MCMChybridGP, astro, rehh
+## plot.lm: NADA
+## print.anova: VGAM, car, geiger
+## print.formula: ndl, polytomous
+## print.glm: Zelig, brglm, season
+## print.integrate: Rmpfr
+## print.lm: DoE.base, mosaic, tempdisagg
+## print.ts: forecast
+## quantile.default: circular, localdepth, move, qtlhot, spaa
+## qqnorm.default: BayesX, metRology
+## residuals.glm: DAMisc, car, haplo.stats, lasso2, plsRbeta, plsRglm, rms, spgwr
+## residuals.lm: CADFest, robustbase
+## summary.mlm: heplots, visreg
+## terms.formula: many
+## update.default: MuMIn, spatstat
+
+
 
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
@@ -104,6 +133,7 @@ S3method(anova, glm)
 S3method(anova, glmlist)
 S3method(anova, lm)
 S3method(anova, lmlist)
+S3method(anova, mlm)
 S3method(BIC, default)
 S3method(BIC, logLik)
 S3method(case.names, default)

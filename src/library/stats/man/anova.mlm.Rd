@@ -5,7 +5,7 @@
 
 \name{anova.mlm}
 \alias{anova.mlm}
-\alias{anova.mlmlist}
+%\alias{anova.mlmlist}
 \title{Comparisons between Multivariate Linear Models}
 \description{
   Compute a (generalized) analysis of variance table for one or more

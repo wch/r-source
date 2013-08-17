@@ -7,7 +7,7 @@
 
 \name{TukeyHSD}
 \alias{TukeyHSD}
-\alias{TukeyHSD.aov}
+%\alias{TukeyHSD.aov}
 %\alias{print.TukeyHSD}
 %\alias{plot.TukeyHSD}
 \title{Compute Tukey Honest Significant Differences}
