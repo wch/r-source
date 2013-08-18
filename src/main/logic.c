@@ -34,6 +34,7 @@ static SEXP lbinary(SEXP, SEXP, SEXP);
 static SEXP binaryLogic(int code, SEXP s1, SEXP s2);
 static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 
+#define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
 
 /* & | ! */
 SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -56,7 +57,7 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (DispatchGroup("Ops",call, op, args, env, &ans))
 	    return ans;
     }
-    else if (argc == 1 && TYPEOF(arg1) == LGLSXP && LENGTH(arg1) == 1) {
+    else if (argc == 1 && IS_SCALAR(arg1, LGLSXP)) {
 	/* directly handle '!' operator for simple logical scalars. */
         int v = LOGICAL(arg1)[0];
         return ScalarLogical(v == NA_LOGICAL ? v : ! v);
