@@ -63,7 +63,7 @@ export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
        median.default, model.matrix.default, model.matrix.lm, plot.ts,
        predict.glm, predict.lm, predict.mlm, print.anova,
        print.integrate, residuals.glm, residuals.lm, summary.glm,
-       summary.mlm, terms.formula, update.default)
+       terms.formula, update.default)
 
 ##export(aggregate.default, hatvalues.lm, print.infl, deriv.default,
 ##    deriv.formula, deriv3.default, deriv3.formula, lines.ts,
@@ -72,30 +72,21 @@ export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
 ##    summary.infl, terms.aovlist, terms.default, terms.terms,
 ##    TukeyHSD.aov)
 
-## export(anova.lmlist, anova.mlm, diff.ts,  model.frame.glm, model.frame.aovlist, model.frame.lm, qqnorm.default, plot.density, plot.lm, plot.mlm, predict.poly, print.density, print.formula, print.ftable, print.lm, print.glm, print.ts, quantile.default, residuals.default, summary.aovlist)
+## export(anova.lmlist, anova.mlm, diff.ts, model.frame.glm,
+## model.frame.aovlist, model.frame.lm, qqnorm.default, plot.density,
+## plot.lm, plot.mlm, predict.poly, print.density, print.formula,
+## print.ftable, print.lm, print.glm, print.ts, quantile.default,
+## residuals.default, summary.aovlist, summary.mlm)
 
-## anova.lmlist: caper, lmPerm
-## model.frame.aovlist: ScottKnott TukeyC
-## diff.ts: FitARMA
-## qqnorm.default: BayesX, metRology
-## plot.density: GB2, MCMChybridGP, astro, rehh
-## print.formula: ndl, polytomous
-## plot.lm: NADA
-## print.density: BrailleR
-## print.glm: Zelig, brglm, season
-## print.lm: DoE.base, mosaic, tempdisagg
-## print.ts: forecast
-## quantile.default: circular, localdepth, move, qtlhot, spaa
-## summary.aovlist: BrailleR
-
+## anova:glm: MASS, modTempEff, spatstat
 ## anova.glmlist: MLCM gam mgcv
+## anova.lm: ICC, caper, gam
 ## model.matrix.default: AlgDesign, MNP, MonoPoly, MuMIn, ResourceSelection, Zelig, arm, car, endogMNP, factorQR, list
 ## model.matrix.lm: robustbase
 ## print.anova: VGAM, car, geiger
 ## print.integrate: Rmpfr
 ## residuals.glm: DAMisc, car, haplo.stats, lasso2, plsRbeta, plsRglm, rms, spgwr
 ## residuals.lm: CADFest, robustbase
-## summary.mlm: heplots, visreg
 ## terms.formula: many
 ## update.default: MuMIn, spatstat
 
