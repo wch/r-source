@@ -90,18 +90,15 @@ export(density.default, model.frame.default, plot.ecdf, plot.stepfun,
        summary.aov, summary.lm, summary.stepfun, update.formula)
 
 ## historical
-export(aggregate.data.frame, anova.glm, anova.glmlist, anova.lm,
-       median.default, model.matrix.default, model.matrix.lm,
-       plot.spec, plot.ts, predict.glm, predict.lm, predict.mlm,
-       print.anova, print.integrate, quantile.default,
-       residuals.glm, residuals.lm, summary.glm, terms.formula,
-       update.default)
+export(aggregate.data.frame, anova.glmlist, anova.lm, median.default,
+       model.matrix.default, model.matrix.lm, plot.ts, predict.glm,
+       predict.lm, predict.mlm, print.anova, print.integrate,
+       quantile.default, residuals.glm, residuals.lm, summary.glm,
+       terms.formula, update.default)
 
-## anova:glm: MASS, modTempEff, spatstat
 ## anova.glmlist: MLCM gam mgcv
 ## anova.lm: ICC, caper, gam
 ## model.matrix.lm: robustbase
-## plot.spec: cts, multitaper
 ## print.anova: VGAM, car, geiger
 ## print.integrate: Rmpfr
 ## residuals.glm: DAMisc, car, haplo.stats, lasso2, plsRbeta, plsRglm, rms, spgwr
