@@ -1,6 +1,6 @@
 % File src/library/stats/man/anova.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anova.lm}
@@ -51,11 +51,6 @@
 }
 \value{
   An object of class \code{"anova"} inheriting from class \code{"data.frame"}.
-}
-\note{
-  Versions of \R prior to 1.2.0 based F tests on pairwise comparisons,
-  and this behaviour can still be obtained by a direct call to
-  \code{anovalist.lm}.
 }
 \section{Warning}{
   The comparison between two or more models will only be valid if they

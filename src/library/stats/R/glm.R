@@ -417,9 +417,12 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
     dotargs <- dotargs[!named]
     is.glm <- vapply(dotargs,function(x) inherits(x,"glm"), NA)
     dotargs <- dotargs[is.glm]
+
+    ## do not copy this: anova.glmlist is not an exported object.
+    ## use anova(structure(list(object, dotargs), class = "glmlist"))
     if (length(dotargs))
 	return(anova.glmlist(c(list(object), dotargs),
-			     dispersion = dispersion, test=test))
+			     dispersion = dispersion, test = test))
 
     ## score tests require a bit of extra computing
     doscore <- !is.null(test) && test=="Rao"
