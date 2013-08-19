@@ -12155,7 +12155,7 @@ Number of Fisher Scoring iterations: 4
 > 
 > ### Name: predict.lm
 > ### Title: Predict method for Linear Model Fits
-> ### Aliases: predict.lm predict.mlm
+> ### Aliases: predict.lm
 > ### Keywords: regression
 > 
 > ### ** Examples
