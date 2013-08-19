@@ -97,9 +97,10 @@ export(aggregate.data.frame, anova.glmlist, anova.lm, median.default,
        update.default)
 
 ## anova.glmlist: MLCM, gam, mgcv
-## anova.lm: ICC, caper, gam
+## anova.lm: ICC, caper, gam, link in HH
 ## model.matrix.lm: robustbase
 ## print.integrate: Rmpfr
+## quantile.default: BioC:IRanges, circular, localdepth, move, qtlhot, spaa
 ## residuals.glm: DAMisc, car, haplo.stats, lasso2, plsRbeta, plsRglm, rms, spgwr
 ## residuals.lm: CADFest, robustbase
 ## update.default: MuMIn, spatstat
