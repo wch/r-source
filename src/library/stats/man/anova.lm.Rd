@@ -1,17 +1,17 @@
 % File src/library/stats/man/anova.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anova.lm}
+\alias{anova.lm}
+\alias{anova.lmlist}
 \title{ANOVA for Linear Model Fits}
 \usage{
 \method{anova}{lm}(object, \dots)
 
-anova.lmlist(object, \dots, scale = 0, test = "F")
+\method{anova}{lmlist}(object, \dots, scale = 0, test = "F")
 }
-\alias{anova.lm}
-\alias{anova.lmlist}
 \description{
   Compute an analysis of variance table for one or more linear model fits.
 }
@@ -51,11 +51,6 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
 }
 \value{
   An object of class \code{"anova"} inheriting from class \code{"data.frame"}.
-}
-\note{
-  Versions of \R prior to 1.2.0 based F tests on pairwise comparisons,
-  and this behaviour can still be obtained by a direct call to
-  \code{anovalist.lm}.
 }
 \section{Warning}{
   The comparison between two or more models will only be valid if they
