@@ -429,7 +429,6 @@ static R_INLINE SEXP ScalarValue2(SEXP x, SEXP y)
 }
 
 /* Unary and Binary Operators */
-#define IS_SCALAR(x, type) (TYPEOF(x) == (type) && SHORT_VEC_LENGTH(x) == 1)
 
 SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 {
