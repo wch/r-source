@@ -67,6 +67,9 @@
       \item \code{grid.show.layout()} and \code{grid.show.viewport()}
       get an optional \code{vp.ex} argument.
       
+      \item There is a new function \code{find_gs_cmd()} in the
+      \pkg{tools} package to locate a GhostScript executable.  (This is
+      an enhanced version of a previously internal function there.)
     }
   }
 

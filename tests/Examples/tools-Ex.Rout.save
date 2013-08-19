@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-28 r63431) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-19 r63621) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -222,7 +222,7 @@ Error in assertCondition(sqrt(2), "warning") :
 > try( assertCondition(sqrt("abc"), "warning") )# -> error: had no warning
 Error in assertCondition(sqrt("abc"), "warning") : 
   Got simpleError in evaluating sqrt("abc"); wanted warning
->      assertCondition(sqrt("abc"), "error") 
+>      assertCondition(sqrt("abc"), "error")
 >   ## identical to assertError() call above
 > 
 > assertCondition(matrix(1:5, 2,3), "warning")
@@ -233,7 +233,7 @@ Error in assertCondition(matrix(1:8, 4, 3), "error") :
 > 
 > ## either warning or worse:
 > assertCondition(matrix(1:8, 4,3), "error","warning") # OK
-> assertCondition(matrix(1:8, 4, 3), "warning") # OK 
+> assertCondition(matrix(1:8, 4, 3), "warning") # OK
 > 
 > ## when both are signalled:
 > ff <- function() { warning("my warning"); stop("my error") }
@@ -624,6 +624,24 @@ attr(,"match.length")
 > ### Keywords: file
 > 
 > ### ** Examples
+> 
+> 
+> cleanEx()
+> nameEx("find_gs_cmd")
+> ### * find_gs_cmd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_gs_cmd
+> ### Title: Find a GhostScript Executable
+> ### Aliases: find_gs_cmd
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## Suppose a Solaris system has GhostScript 9.00 on the path and
+> ##D ## 9.07 in /opt/csw/bin.  Then one might set
+> ##D Sys.setenv(R_GSCMD = "/opt/csw/bin/gs")
+> ## End(Not run)
 > 
 > 
 > cleanEx()
