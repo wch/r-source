@@ -84,8 +84,8 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
       recursion).
     }
     \item{\code{initMethodDispatch}:}{
-      Turn on the internal method dispatch code.  Called on attaching
-      the package.  Also, if dispatch has been turned off (by calling
+      Turn on the internal method dispatch code.  Called on loading
+      the namespace.  Also, if dispatch has been turned off (by calling
       \code{.isMethodsDispatchOn(FALSE)}---a very gutsy thing to do),
       calling this function should turn dispatch back on again.
     }
