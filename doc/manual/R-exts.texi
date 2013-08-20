@@ -3440,9 +3440,10 @@ Some additional steps are needed for packages which make use of formal
 internally).  The package should have @code{Depends: methods} in its
 @file{DESCRIPTION} file@footnote{This was necessary at least prior to
 @R{} 3.0.2 as the @pkg{methods} package looked for its own @R{} code on
-the search path.}, @code{import(methods)} in the @file{NAMESPACE} file
-and any classes and methods which are to be exported need to be declared
-in the @file{NAMESPACE} file.  For example, the @pkg{stats4} package has
+the search path.} and @code{import(methods)} or
+@code{importFrom(methods, ...)} plus any classes and methods which are
+to be exported need to be declared in the @file{NAMESPACE} file.  For
+example, the @pkg{stats4} package has
 
 @findex exportClasses
 @findex exportMethods
