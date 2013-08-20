@@ -698,28 +698,44 @@ setRlibs <-
                 }
             }
         }
-        ## any others?
-        topfiles <- dir()
-        known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
-                   "LICENCE.note", "LICENSE.note",
-                   "MD5", "NAMESPACE", "NEWS", "PORTING", "README",
-                   "COPYING", "COPYING.LIB", "GPL-2", "GPL-3",
-                   "AUTHORS", "COPYRIGHTS", # should be in inst
-                   "BUGS", "Bugs", "ChangeLog", "INSTALL", "TODO", "ToDo",
-                   "configure", "configure.win", "cleanup", "cleanup.win",
-                   "configure.ac", "configure.in", "datafiles",
-                   "R", "data", "demo", "exec", "inst", "man",
-                   "po", "src", "tests", "vignettes")
-        topfiles <- setdiff(topfiles, known)
-        if (lt <- length(topfiles)) {
-                    any <- TRUE
-                    noteLog(Log)
-                    printLog(Log,
-                             if(lt > 1L) "Non-standard files found at top level:\n"
-                             else "Non-standard file found at top level:\n" )
-                    msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
-                                   indent = 2L, exdent = 2L)
-                    printLog(Log, paste(c(msg, ""), collapse="\n"))
+        if (!is_base_pkg) {
+            ## any others?
+            topfiles <- dir()
+            known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
+                       "LICENCE.note", "LICENSE.note",
+                       "MD5", "NAMESPACE", "NEWS", "PORTING",
+                       "COPYING", "COPYING.LIB", "GPL-2", "GPL-3",
+                       "BUGS", "Bugs",
+                       "ChangeLog", "Changelog", "CHANGELOG", "CHANGES", "Changes",
+                       "INSTALL", "README", "THANKS", "TODO", "ToDo",
+                       "configure", "configure.win", "cleanup", "cleanup.win",
+                       "configure.ac", "configure.in",
+                       "config.log", "config.status", # done after installation
+                       "datafiles",
+                       "R", "data", "demo", "exec", "inst", "man",
+                       "po", "src", "tests", "vignettes",
+                       "java")
+            topfiles <- setdiff(topfiles, known)
+            if (file.exists(file.path("inst", "AUTHORS")))
+                topfiles <- setdiff(topfiles, "AUTHORS")
+            if (file.exists(file.path("inst", "COPYRIGHTS")))
+                topfiles <- setdiff(topfiles, "COPYRIGHTS")
+            if (lt <- length(topfiles)) {
+                any <- TRUE
+                noteLog(Log)
+                printLog(Log,
+                         if(lt > 1L) "Non-standard files found at top level:\n"
+                         else "Non-standard file found at top level:\n" )
+                msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
+                               indent = 2L, exdent = 2L)
+                printLog(Log, paste(c(msg, ""), collapse="\n"))
+                cp <- grep("^copyright", topfiles,
+                           ignore.case = TRUE, value = TRUE)
+                if (length(cp))
+                    printLog(Log, "Copyright information should be in file inst/COPYRIGHTS\n")
+                if("AUTHORS" %in% topfiles)
+                    printLog(Log, "Authors information should be in file inst/AUTHORS\n")
+            }
         }
         if (!any) resultLog(Log, "OK")
     }
