@@ -698,6 +698,29 @@ setRlibs <-
                 }
             }
         }
+        ## any others?
+        topfiles <- dir()
+        known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
+                   "LICENCE.note", "LICENSE.note",
+                   "MD5", "NAMESPACE", "NEWS", "PORTING", "README",
+                   "COPYING", "COPYING.LIB", "GPL-2", "GPL-3",
+                   "AUTHORS", "COPYRIGHTS", # should be in inst
+                   "BUGS", "Bugs", "ChangeLog", "INSTALL", "TODO", "ToDo",
+                   "configure", "configure.win", "cleanup", "cleanup.win",
+                   "configure.ac", "configure.in", "datafiles",
+                   "R", "data", "demo", "exec", "inst", "man",
+                   "po", "src", "tests", "vignettes")
+        topfiles <- setdiff(topfiles, known)
+        if (lt <- length(topfiles)) {
+                    any <- TRUE
+                    noteLog(Log)
+                    printLog(Log,
+                             if(lt > 1L) "Non-standard files found at top level:\n"
+                             else "Non-standard file found at top level:\n" )
+                    msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
+                                   indent = 2L, exdent = 2L)
+                    printLog(Log, paste(c(msg, ""), collapse="\n"))
+        }
         if (!any) resultLog(Log, "OK")
     }
 
