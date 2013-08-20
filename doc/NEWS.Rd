@@ -412,6 +412,11 @@
       work on file paths containing spaces.  (Where external utilities
       are used, not the norm on Windows nor in \command{R.app}, which
       should previously have worked.)
+      
+      \item Packages using the \pkg{methods} package are more likely to
+      work when they import it, even if it is not attached.  (Several
+      parts of its C code were looking for its \R functions on the
+      search path rather than in its namespace.)
     }
   }
 }

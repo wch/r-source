@@ -157,6 +157,10 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
     return listAppend(oldargs, newargs);
 }
 
+/* R_MethodsNamespace is initialized to R_GlobalEnv when R is
+   initialized.  If it set to the methods namespace when the latter is
+   loaded, and back to R_GlobalEnv when it is unloaded. */
+
 #ifdef S3_for_S4_warn /* not currently used */
 static SEXP s_check_S3_for_S4 = 0;
 void R_warn_S3_for_S4(SEXP method) {
@@ -916,6 +920,14 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/*
+   ==============================================================
+
+     code from here on down is support for the methods package
+
+   ==============================================================
+*/
+
 /**
  * Return the 0-based index of an is() match in a vector of class-name
  * strings terminated by an empty string.  Returns -1 for no match.
@@ -992,9 +1004,9 @@ int R_check_class_etc(SEXP x, const char **valid)
     pkg = getAttrib(cl, R_PackageSymbol); /* ==R== packageSlot(class(x)) */
     if(!isNull(pkg)) { /* find  rho := correct class Environment */
 	SEXP clEnvCall;
-	// FIXME: fails if 'methods' is not attached.
+	// FIXME: fails if 'methods' is not loaded.
 	PROTECT(clEnvCall = lang2(meth_classEnv, cl));
-	rho = eval(clEnvCall, R_GlobalEnv);
+	rho = eval(clEnvCall, R_MethodsNamespace);
 	UNPROTECT(1);
 	if(!isEnvironment(rho))
 	    error(_("could not find correct environment; please report!"));
@@ -1002,19 +1014,9 @@ int R_check_class_etc(SEXP x, const char **valid)
     return R_check_class_and_super(x, valid, rho);
 }
 
-/*
-   ==============================================================
-
-     code from here on down is support for the methods package
-
-   ==============================================================
-*/
-
 /* standardGeneric:  uses a pointer to R_standardGeneric, to be
-   initialized when the methods package is attached.  When and if the
-   methods code is automatically included, the pointer will not be
-   needed
-
+   initialized when the methods namespace is loaded,
+   via R_initMethodDispatch.
 */
 static R_stdGen_ptr_t R_standardGeneric_ptr = 0;
 static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef);
@@ -1026,6 +1028,8 @@ R_stdGen_ptr_t R_get_standardGeneric_ptr(void)
     return R_standardGeneric_ptr;
 }
 
+/* Also called from R_initMethodDispatch in methods C code, which is
+   called when the methods namespace is loaded. */
 R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
 {
     R_stdGen_ptr_t old = R_standardGeneric_ptr;
@@ -1038,27 +1042,29 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
     return old;
 }
 
-static SEXP R_isMethodsDispatchOn(SEXP onOff) {
-    SEXP value = allocVector(LGLSXP, 1);
-    Rboolean onOffValue;
+static SEXP R_isMethodsDispatchOn(SEXP onOff)
+{
     R_stdGen_ptr_t old = R_get_standardGeneric_ptr();
-    LOGICAL(value)[0] = !NOT_METHODS_DISPATCH_PTR(old);
+    int ival =  !NOT_METHODS_DISPATCH_PTR(old);
     if(length(onOff) > 0) {
-	onOffValue = asLogical(onOff);
+	Rboolean onOffValue = asLogical(onOff);
 	if(onOffValue == NA_INTEGER)
 	    error(_("'onOff' must be TRUE or FALSE"));
 	else if(onOffValue == FALSE)
-	    R_set_standardGeneric_ptr(0, 0);
+	    R_set_standardGeneric_ptr(NULL, R_GlobalEnv);
+	// TRUE is not currently used
 	else if(NOT_METHODS_DISPATCH_PTR(old)) {
-	    SEXP call;
-	    PROTECT(call = allocList(2));
-	    SETCAR(call, install("initMethodsDispatch"));
-	    eval(call, R_GlobalEnv); /* only works with
-					methods	 attached */
+	    // so not already on
+	    // This may not work correctly: the default arg is incorrect.
+	    warning("R_isMethodsDispatchOn(TRUE) called -- may not work correctly");
+	    // FIXME: use call = PROTECT(lang1(install("initMethodDispatch")));
+	    SEXP call = PROTECT(allocList(2));
+	    SETCAR(call, install("initMethodDispatch"));
+	    eval(call, R_MethodsNamespace); // only works with methods loaded
 	    UNPROTECT(1);
 	}
     }
-    return value;
+    return ScalarLogical(ival);
 }
 
 /* simpler version for internal use, in attrib.c and print.c */
@@ -1069,6 +1075,13 @@ Rboolean isMethodsDispatchOn(void)
 }
 
 
+/* primitive for .isMethodsDispatchOn
+   This is generally called without an arg, but is call with
+   onOff=FALSE when package methods is detached/unloaded.
+
+   It seems it is not currently called with onOff = TRUE (and would
+   not have worked prior to 3.0.2).
+*/ 
 attribute_hidden
 SEXP do_S4on(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1497,7 +1510,7 @@ SEXP R_do_MAKE_CLASS(const char *what)
     PROTECT(call = allocVector(LANGSXP, 2));
     SETCAR(call, s_getClass);
     SETCAR(CDR(call), mkString(what));
-    e = eval(call, R_GlobalEnv);
+    e = eval(call, R_MethodsNamespace);
     UNPROTECT(1);
     return(e);
 }
@@ -1513,7 +1526,7 @@ SEXP R_getClassDef(const char *what)
     PROTECT(call = allocVector(LANGSXP, 2));
     SETCAR(call, s_getClassDef);
     SETCAR(CDR(call), mkString(what));
-    e = eval(call, R_GlobalEnv);
+    e = eval(call, R_MethodsNamespace);
     UNPROTECT(1);
     return(e);
 }
