@@ -711,7 +711,6 @@ setRlibs <-
                        "README.md", # seems popular
                        "configure", "configure.win", "cleanup", "cleanup.win",
                        "configure.ac", "configure.in",
-                       "config.log", "config.status", # done after installation
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
@@ -721,6 +720,9 @@ setRlibs <-
                 topfiles <- setdiff(topfiles, "AUTHORS")
             if (file.exists(file.path("inst", "COPYRIGHTS")))
                 topfiles <- setdiff(topfiles, "COPYRIGHTS")
+            ## Now check if any of these were created since we started
+            times <- file.info(topfiles)$ctime
+            topfiles <- topfiles[times <= .unpack.time]
             if (lt <- length(topfiles)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -3961,6 +3963,7 @@ setRlibs <-
         messageLog(Log, "using session charset: ", charset)
         is_ascii <- charset == "ASCII"
 
+        .unpack.time <- Sys.time()
         ## report options used
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
