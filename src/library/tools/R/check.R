@@ -657,8 +657,8 @@ setRlibs <-
                                 function(x) grepl(x, lic, fixed = TRUE))
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
+                    if(!any) noteLog(Log)
                     any <- TRUE
-                    noteLog(Log)
                     one <- (length(topfiles) == 1L)
                     msg <- c(if(one) "File" else "Files",
                              "\n",
@@ -682,8 +682,8 @@ setRlibs <-
                                 function(x) grepl(x, lic, fixed = TRUE))
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
+                    if(!any) noteLog(Log)
                     any <- TRUE
-                    noteLog(Log)
                     one <- (length(topfiles) == 1L)
                     msg <- c(if(one) "File" else "Files",
                              "\n",
@@ -721,8 +721,8 @@ setRlibs <-
             if (file.exists(file.path("inst", "COPYRIGHTS")))
                 topfiles <- setdiff(topfiles, "COPYRIGHTS")
             if (lt <- length(topfiles)) {
+                if(!any) noteLog(Log)
                 any <- TRUE
-                noteLog(Log)
                 printLog(Log,
                          if(lt > 1L) "Non-standard files found at top level:\n"
                          else "Non-standard file found at top level:\n" )
