@@ -1114,7 +1114,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     nS3methods <- 1000L
     S3methods <- matrix(NA_character_, nS3methods, 3L)
     nativeRoutines <- list()
-    nS3 <- 0
+    nS3 <- 0L
     parseDirective <- function(e) {
         ## trying to get more helpful error message:
 	asChar <- function(cc) {
@@ -1235,7 +1235,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
                            if(symNames[idx] != "") {
-                               e <- parse(text = symNames[idx], srcfile=NULL)[[1L]]
+                               e <- parse(text = symNames[idx], srcfile = NULL)[[1L]]
                                if(is.call(e))
                                    val <- eval(e)
                                else
