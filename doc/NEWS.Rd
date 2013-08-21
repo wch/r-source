@@ -108,6 +108,9 @@
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
+      
+      \item The limit of 500 \code{S3method} entries in a
+      \code{NAMESPACE} file has been removed.
     }
   }
 
