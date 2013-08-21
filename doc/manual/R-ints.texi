@@ -4028,6 +4028,13 @@ example etc.  This is only useful on Windows: the devices do not exist
 elsewhere.
 Default: empty (but @samp{stop} for CRAN submission checks on Windows).
 
+@item _R_CHECK_TOPLEVEL_FILES_
+Report on top-level files in the package sources that are not described
+in `Writing R Extensions' nor are commonly understood (like
+@file{ChangeLog}).  Variations on standard names (e.g.@:
+@file{COPYRIGHT}) are also reported.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like
@@ -4047,6 +4054,7 @@ _R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
 _R_CHECK_SCREEN_DEVICE_=stop
+_R_CHECK_TOPLEVEL_FILES_=TRUE
 @end example
 
 @noindent

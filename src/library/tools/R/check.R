@@ -698,7 +698,7 @@ setRlibs <-
                 }
             }
         }
-        if (!is_base_pkg) {
+        if (!is_base_pkg && R_check_toplevel_files) {
             ## any others?
             topfiles <- dir()
             known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
@@ -3792,6 +3792,8 @@ setRlibs <-
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
+    R_check_toplevel_files <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -3819,6 +3821,7 @@ setRlibs <-
         R_check_Rd_line_widths <- TRUE
         R_check_FF <- "registration"
         do_timings <- TRUE
+        R_check_toplevel_files <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
@@ -3835,7 +3838,8 @@ setRlibs <-
                     	R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-
-                                    R_check_unsafe_calls <- FALSE
+                                    R_check_unsafe_calls <-
+                                        R_check_toplevel_files <- FALSE
         R_check_Rd_line_widths <- FALSE
     }
 

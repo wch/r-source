@@ -154,20 +154,20 @@
       have been added to allow package authors to suppress false
       positive reports.
 
-      \item \code{R CMD check --as-cran} warns about a false value of the
+      \item \command{R CMD check --as-cran} warns about a false value of the
       \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
       packages, and ignores it (as an Open Source package needs to have
       complete sources for its vignettes).
 
-      \item \code{R CMD check --no-rebuild-vignettes} is defunct:
-      \code{R CMD check --no-build-vignettes} has been preferred since
+      \item \command{R CMD check --no-rebuild-vignettes} is defunct:
+      \command{R CMD check --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
-      \item \code{R CMD build --no-vignettes} is defunct:
-      \code{R CMD build --no-build-vignettes} has been preferred since
+      \item \command{R CMD build --no-vignettes} is defunct:
+      \command{R CMD build --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
-      \item \code{R CMD Sweave} and \code{R CMD Stangle} now
+      \item \command{R CMD Sweave} and \command{R CMD Stangle} now
       process both Sweave and non-Sweave vignettes.  The
       \code{tools::buildVignette()} function has been added to do the
       same tasks from within \R.
@@ -176,6 +176,10 @@
       (where installed) \command{pkg-config --libs libR} are now those
       needed to link a front-end against the (shared or static) \R
       library.
+      
+      \item \command{R CMD check} optionally checks for non-standard
+      top-level files (which are often mistakes): this is enabled for
+      \option{--as-cran}.
     }
   }
 
