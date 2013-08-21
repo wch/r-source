@@ -1974,72 +1974,35 @@ SEXP attribute_hidden do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
-    if (length(args) != 2)
+    SEXP lhs, rhs;
+
+    if (args == R_NilValue ||
+	CDR(args) == R_NilValue ||
+	CDDR(args) != R_NilValue)
 	WrongArgCount(asym[PRIMVAL(op)]);
-    if (isString(CAR(args))) {
-	/* fix up a duplicate or args and recursively call do_set */
-	SEXP val;
-	PROTECT(args = duplicate(args));
-	SETCAR(args, installTrChar(STRING_ELT(CAR(args), 0)));
-	val = do_set(call, op, args, rho);
-	UNPROTECT(1);
-	return val;
-    }
 
-    switch (PRIMVAL(op)) {
-    case 1: case 3:					/* <-, = */
-	if (isSymbol(CAR(args))) {
-	    s = eval(CADR(args), rho);
-#ifdef CONSERVATIVE_COPYING /* not default */
-	    if (NAMED(s))
-	    {
-		SEXP t;
-		PROTECT(s);
-		t = duplicate(s);
-		UNPROTECT(1);
-		s = t;
-	    }
-	    PROTECT(s);
-	    defineVar(CAR(args), s, rho);
-	    UNPROTECT(1);
-	    SET_NAMED(s, 1);
-#else
-	    switch (NAMED(s)) {
-	    case 0: SET_NAMED(s, 1); break;
-	    case 1: SET_NAMED(s, 2); break;
-	    }
-	    defineVar(CAR(args), s, rho);
-#endif
-	    R_Visible = FALSE;
-	    return (s);
-	}
-	else if (isLanguage(CAR(args))) {
-	    R_Visible = FALSE;
-	    return applydefine(call, op, args, rho);
-	}
-	else errorcall(call,
-		       _("invalid (do_set) left-hand side to assignment"));
-    case 2:						/* <<- */
-	if (isSymbol(CAR(args))) {
-	    s = eval(CADR(args), rho);
-	    if (NAMED(s))
-		s = duplicate(s);
-	    PROTECT(s);
-	    setVar(CAR(args), s, ENCLOS(rho));
-	    UNPROTECT(1);
-	    SET_NAMED(s, 1);
-	    R_Visible = FALSE;
-	    return s;
-	}
-	else if (isLanguage(CAR(args)))
-	    return applydefine(call, op, args, rho);
-	else error(_("invalid assignment left-hand side"));
+    lhs = CAR(args);
 
+    switch (TYPEOF(lhs)) {
+    case STRSXP:
+	lhs = installTrChar(STRING_ELT(lhs, 0));
+	/* fall through */
+    case SYMSXP:
+	rhs = eval(CADR(args), rho);
+	SET_NAMED(rhs, NAMED(rhs) ? 2 : 1);
+	if (PRIMVAL(op) == 2)                       /* <<- */
+	    setVar(lhs, rhs, ENCLOS(rho));
+	else                                        /* <-, = */
+	    defineVar(lhs, rhs, rho);
+	R_Visible = FALSE;
+	return rhs;
+    case LANGSXP:
+	R_Visible = FALSE;
+	return applydefine(call, op, args, rho);
     default:
-	UNIMPLEMENTED("do_set");
-
+	errorcall(call, _("invalid (do_set) left-hand side to assignment"));
     }
+
     return R_NilValue;/*NOTREACHED*/
 }
 
