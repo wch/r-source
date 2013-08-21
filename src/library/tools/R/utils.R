@@ -1281,8 +1281,7 @@ function(package)
              Hmisc = c("abs.error.pred", "all.digits", "all.is.numeric",
                        "format.df", "format.pval", "t.test.cluster"),
              HyperbolicDist = "log.hist",
-             MASS = c("frequency.polygon",
-                      "gamma.dispersion", "gamma.shape",
+             MASS = c("frequency.polygon", "gamma.dispersion", "gamma.shape",
                       "hist.FD", "hist.scott"),
              ## FIXME: since these are already listed with 'base',
              ##        they should not need to be repeated here:
@@ -1308,15 +1307,15 @@ function(package)
              gbm = c("pretty.gbm.tree", "quantile.rug"),
              gpclib = "scale.poly",
              grDevices = "boxplot.stats",
-             graphics = c("close.screen",
-             "plot.design", "plot.new", "plot.window", "plot.xy",
-             "split.screen"),
+             graphics = c("close.screen", "plot.design", "plot.new",
+                          "plot.window", "plot.xy", "split.screen"),
              ic.infer = "all.R2",
              hier.part = "all.regs",
              lasso2 = "qr.rtr.inv",
              latticeExtra = "xyplot.list",
              locfit = c("density.lf", "plot.eval"),
              moments = c("all.cumulants", "all.moments"),
+             mosaic = "t.test",
              mratios = c("t.test.ration", "t.test.ratio.default",
                          "t.test.ratio.formula"),
              ncdf = c("open.ncdf", "close.ncdf",
@@ -1330,14 +1329,14 @@ function(package)
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
-             "influence.measures", "t.test",
-             "plot.spec.phase", "plot.spec.coherency"),
+                       "influence.measures", "t.test",
+                       "plot.spec.phase", "plot.spec.coherency"),
              supclust = c("sign.change", "sign.flip"),
              tensorA = "chol.tensor",
              utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
-    thisPkg <- stopList[[package, exact = TRUE]] # 'st' matched 'stats'
+    thisPkg <- stopList[[package]]
     if(!length(thisPkg)) character() else thisPkg
 }
 
