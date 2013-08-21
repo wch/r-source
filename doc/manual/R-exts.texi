@@ -3135,6 +3135,8 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
+There is currently a limit of @code{500} on the number of
+@code{S3method} directives in a single package.
 
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
