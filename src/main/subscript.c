@@ -870,7 +870,6 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 		return s;
 	    }
 	}
-#ifdef FAST_REAL_SUBSCRIPTS
 	else if (TYPEOF(s) == REALSXP) {
 	    double di = REAL(s)[0];
 	    if (1 <= di && di <= nx) {
@@ -882,7 +881,6 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 		return s;
 	    }
 	}
-#endif
     }
 
     PROTECT(s = duplicate(s));
