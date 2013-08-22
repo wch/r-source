@@ -74,23 +74,23 @@
 
       \item \code{abbreviate()} handles without warning non-ASCII input
       strings which require no abbreviation.
-      
+
       \item \code{read.dcf()} no longer has a limit of 8191 bytes per
       line. (Wish of \PR{15250}.)
 
       \item \code{formatC(x)} no longer copies the class of \code{x} to
       the result, to avoid misuse creating invalid objects as in
       \PR{15303}.  A warning is given if a class is discarded.
-      
+
       \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
       more tests to be run without recommended packages being installed.
 
       \item The initialization of the regression coefficients for
       non-degenerate differenced models in \code{arima()} has been
       changed and in some examples avoids a local maximum.  (\PR{15396})
-      
+
       \item \code{termplot()} now has an argument \code{transform.x}
-      to control the display of individual terms in the plot.  
+      to control the display of individual terms in the plot.
       (\PR{15329})
     }
   }
@@ -131,11 +131,11 @@
       on a Linux system and record that value rather than the
       frequently-changing full path such as
       \file{/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64}.
-      
+
       \item (Windows only.) \command{Rscript -e} requires a non-empty
       argument for consistency with Unix versions of \R.  (Also
       \command{Rterm -e} and \command{R -e}.)
-      
+
       \item \command{R CMD check} does more thorough checking of
       declared packages and namespaces.  It reports
       \itemize{
@@ -172,7 +172,7 @@
       \item The minimum version for a system \code{xz} library is now
       5.0.3 (was 4.999).  This is in part to avoid 5.0.2, which can
       compress in ways other versions cannot decompress.
-      
+
       \item The included version of PCRE has been updated to 8.33.
 
       \item The included version of \code{zlib} has been updated to
@@ -187,7 +187,7 @@
       \item Configuring with \option{--disable-byte-compilation} will
       override the \file{DESCRIPTION} files of recommended packages,
       which typically require byte-compilation.
-      
+
       \item More of the installation and checking process will work even
       when \env{TMPDIR} is set to a path containing spaces, but this is
       not recommended and external software (such as
@@ -209,7 +209,7 @@
 
       License \code{X11} is deprecated: use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
-  
+
       \item Version requirements for \code{LinkingTo} packages are now
       recognized: they are checked at installation.  (They were
       previously silently ignored.)
@@ -398,12 +398,12 @@
 
       \item \command{R CMD rtags} works on platforms (such as OS X)
       with a XSI-conformant shell command \command{echo}. (\PR{15231})
-      
+
       \item \code{is.unsorted(NA)} returns false as documented (rather than
       \code{NA}).
-      
+
       \item \command{R CMD LINK} did not know about sub-architectures.
-      
+
       \item \code{system()} and \code{system2()} are better protected
       against users who misguidedly have spaces in the temporary
       directory path.
@@ -412,11 +412,13 @@
       work on file paths containing spaces.  (Where external utilities
       are used, not the norm on Windows nor in \command{R.app}, which
       should previously have worked.)
-      
+
       \item Packages using the \pkg{methods} package are more likely to
       work when they import it, even if it is not attached.  (Several
       parts of its C code were looking for its \R functions on the
       search path rather than in its namespace.)
+
+      \item \code{lgamma(-x)} is no longer \code{NaN} for very small x.
     }
   }
 }
