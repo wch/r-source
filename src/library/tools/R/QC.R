@@ -5108,6 +5108,8 @@ function(package, dir, lib.loc = NULL)
         else ""
     if(length(imp3)) {
         imp3 <- unique(imp3)
+        ## remove other packages which have the same maintainer,
+        ## but report references to itself.
         maintainers <-
             sapply(imp3,
                    function(p) {
@@ -5115,7 +5117,7 @@ function(package, dir, lib.loc = NULL)
                        if(dfile == "") return("")
                        .read_description(dfile)["Maintainer"]
                    })
-        imp3 <- imp3[maintainers != db["Maintainer"]]
+        imp3 <- imp3[(maintainers != db["Maintainer"]) | (imp3 == pkg_name)]
     }
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
@@ -5183,7 +5185,7 @@ function(x, ...)
       if(length(xx <- x$imp3)) {
           msg <- c("See the note in ?::: about the use of this operator.",
                    ":: should be used rather than ::: if the function is exported,",
-                   "and a package never needs to use ::: for its own functions.")
+                   "and a package almost never needs to use ::: for its own functions.")
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
               c(gettext("Namespaces imported from by ':::' calls:"),
