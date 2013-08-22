@@ -1481,6 +1481,8 @@ rm -f config.* src/Makevars src/config.h
 As this example shows, @command{configure} often creates working files
 such as @file{config.log}.
 
+If your configure script needs auxiliary files, it is recommended that
+you ship them in a @file{tools} directory (as @R{} itself does).
 
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,

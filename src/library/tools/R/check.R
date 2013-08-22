@@ -718,7 +718,7 @@ setRlibs <-
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
-                       "java")
+                       "java", "tools") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
                 topfiles <- setdiff(topfiles, "AUTHORS")
