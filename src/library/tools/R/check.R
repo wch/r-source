@@ -2838,8 +2838,10 @@ setRlibs <-
             excludes <- readLines("BinaryFiles")
             execs <- execs[!execs %in% excludes]
         }
-        if (grepl("^check", install) && file.exists(".install_timestamp"))
-            execs <- execs[file_test("-ot", execs, ".install_timestamp")]
+        if(use_install_timestamp) {
+            its <- file.path(pkgdir, ".install_timestamp")
+            execs <- execs[file_test("-ot", execs, its)]
+        }
         if (nb <- length(execs)) {
             msg <- ngettext(nb,
                             "Found the following executable file:",
@@ -3969,6 +3971,16 @@ setRlibs <-
         is_ascii <- charset == "ASCII"
 
         .unpack.time <- Sys.time()
+        ## Support two stage install/check operating on unpacked
+        ## sources.
+        use_install_timestamp <-
+            (grepl("^check", install) &&
+             file.exists(file.path(pkgdir, ".install_timestamp")))
+            
+        if(use_install_timestamp)
+            .unpack.time <-
+                file.info(file.path(pkgdir, ".install_timestamp"))$mtime
+        
         ## report options used
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
@@ -4047,7 +4059,8 @@ setRlibs <-
             ## we are not going to install and hence not run any code.
             ## </NOTE>
             if (do_install) {
-                topfiles0 <- dir(pkgdir)
+                topfiles0 <-
+                    if(!use_install_timestamp) dir(pkgdir) else NULL
                 check_dependencies()
             } else topfiles0 <- NULL
 
@@ -4069,6 +4082,7 @@ setRlibs <-
 
             ## we need to do this before installation
             if (R_check_executables) check_executables()
+            ## (Alternatively, could use .unpack.time.)
 
             check_dot_files(check_incoming)
 
@@ -4078,11 +4092,17 @@ setRlibs <-
 	    setwd(startdir)
 
             ## record this before installation.
+            ## <NOTE>
+            ## Could also teach the code to check 'src/Makevars[.in]'
+            ## files to use .unpack.time.
+            ## (But we want to know if the sources contain
+            ## 'src/Makevars' and INSTALL re-creates this.)
+            ## </NOTE>
             makevars <-
                 Sys.glob(file.path(pkgdir, "src",
                                    c("Makevars.in", "Makevars")))
-            if(grepl("^check", install) &&
-               file.exists(its <- file.path(pkgdir, ".install_timestamp"))) {
+            if(use_install_timestamp) {
+                its <- file.path(pkgdir, ".install_timestamp")
                 makevars <- makevars[file_test("-ot", makevars, its)]
             }
             makevars <- basename(makevars)
