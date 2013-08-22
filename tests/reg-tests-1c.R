@@ -174,4 +174,9 @@ stopifnot(is.null(names(B)))
 ## needed an un-NAMED rhs.
 
 
+## lgamma(x) for very small negative x
+X <- 3e-308; stopifnot(identical(lgamma(-X), lgamma(X)))
+## lgamma(-X) was NaN in R <= 3.0.1
+
+
 proc.time()
