@@ -5106,12 +5106,23 @@ function(package, dir, lib.loc = NULL)
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
+    if(length(imp3)) {
+        imp3 <- unique(imp3)
+        maintainers <-
+            sapply(imp3,
+                   function(p) {
+                       dfile <- system.file("DESCRIPTION", package = p)
+                       if(dfile == "") return("")
+                       .read_description(dfile)["Maintainer"]
+                   })
+        imp3 <- imp3[maintainers != db["Maintainer"]]
+    }
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
-                imp3 = unique(imp3),
+                imp3 = imp3,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
