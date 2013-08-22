@@ -630,6 +630,9 @@
                                  paste(configure_args, collapse = " "))
                     if (debug) message("configure command: ", sQuote(cmd),
                                        domain = NA)
+                    ## in case the configure script calls SHLIB (some do)
+                    cmd <- paste("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_=false",
+                                 cmd)
                     res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))

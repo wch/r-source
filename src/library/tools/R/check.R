@@ -700,7 +700,11 @@ setRlibs <-
         }
         if (!is_base_pkg && R_check_toplevel_files) {
             ## any others?
-            topfiles <- dir()
+            if(is.null(topfiles0)) {
+                topfiles <- dir()
+                ## Now check if any of these were created since we started
+                topfiles <- topfiles[file.info(topfiles)$ctime <= .unpack.time]
+            } else topfiles <- topfiles0
             known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
                        "LICENCE.note", "LICENSE.note",
                        "MD5", "NAMESPACE", "NEWS", "PORTING",
@@ -720,9 +724,6 @@ setRlibs <-
                 topfiles <- setdiff(topfiles, "AUTHORS")
             if (file.exists(file.path("inst", "COPYRIGHTS")))
                 topfiles <- setdiff(topfiles, "COPYRIGHTS")
-            ## Now check if any of these were created since we started
-            times <- file.info(topfiles)$ctime
-            topfiles <- topfiles[times <= .unpack.time]
             if (lt <- length(topfiles)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
@@ -4045,7 +4046,10 @@ setRlibs <-
             ## give up if they are missing.  But we don't check them if
             ## we are not going to install and hence not run any code.
             ## </NOTE>
-            if (do_install) check_dependencies()
+            if (do_install) {
+                topfiles0 <- dir(pkgdir)
+                check_dependencies()
+            } else topfiles0 <- NULL
 
             check_sources()
             checkingLog(Log, "if there is a namespace")
