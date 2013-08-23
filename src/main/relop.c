@@ -62,43 +62,44 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	argc = length(args);
     arg1 = CAR(args);
     arg2 = CADR(args);
-    if (argc != 2)
-	error("operator needs two arguments");
 
     if (ATTRIB(arg1) != R_NilValue || ATTRIB(arg2) != R_NilValue) {
 	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
     }
-    else if (IS_SCALAR(arg1, INTSXP)) {
-	int ix = INTEGER(arg1)[0];
-	if (IS_SCALAR(arg2, INTSXP)) {
-	    int iy = INTEGER(arg2)[0];
-	    if (ix == NA_INTEGER || iy == NA_INTEGER)
-		return ScalarLogical(NA_LOGICAL);
-	    DO_SCALAR_RELOP(oper, ix, iy);
+    else if (argc == 2) {
+	if (IS_SCALAR(arg1, INTSXP)) {
+	    int ix = INTEGER(arg1)[0];
+	    if (IS_SCALAR(arg2, INTSXP)) {
+		int iy = INTEGER(arg2)[0];
+		if (ix == NA_INTEGER || iy == NA_INTEGER)
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, ix, iy);
+	    }
+	    else if (IS_SCALAR(arg2, REALSXP)) {
+		double dy = REAL(arg2)[0];
+		if (ix == NA_INTEGER || ISNAN(dy))
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, ix, dy);
+	    }
 	}
-	else if (IS_SCALAR(arg2, REALSXP)) {
-	    double dy = REAL(arg2)[0];
-	    if (ix == NA_INTEGER || ISNAN(dy))
-		return ScalarLogical(NA_LOGICAL);
-	    DO_SCALAR_RELOP(oper, ix, dy);
+	else if (IS_SCALAR(arg1, REALSXP)) {
+	    double dx = REAL(arg1)[0];
+	    if (IS_SCALAR(arg2, INTSXP)) {
+		int iy = INTEGER(arg2)[0];
+		if (ISNAN(dx) || iy == NA_INTEGER)
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, dx, iy);
+	    }
+	    else if (IS_SCALAR(arg2, REALSXP)) {
+		double dy = REAL(arg2)[0];
+		if (ISNAN(dx) || ISNAN(dy))
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, dx, dy);
+	    }
 	}
     }
-    else if (IS_SCALAR(arg1, REALSXP)) {
-	double dx = REAL(arg1)[0];
-	if (IS_SCALAR(arg2, INTSXP)) {
-	    int iy = INTEGER(arg2)[0];
-	    if (ISNAN(dx) || iy == NA_INTEGER)
-		return ScalarLogical(NA_LOGICAL);
-	    DO_SCALAR_RELOP(oper, dx, iy);
-	}
-	else if (IS_SCALAR(arg2, REALSXP)) {
-	    double dy = REAL(arg2)[0];
-	    if (ISNAN(dx) || ISNAN(dy))
-		return ScalarLogical(NA_LOGICAL);
-	    DO_SCALAR_RELOP(oper, dx, dy);
-	}
-    }
+    else error("operator needs two arguments");
 
     return do_relop_dflt(call, op, arg1, arg2);
 }
