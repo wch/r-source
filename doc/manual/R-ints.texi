@@ -3907,7 +3907,7 @@ Should warnings about replacing imports be reported?  These sometimes come
 from auto-generated @file{NAMESPACE} files in other packages, but most
 often from importing the whole of a namespace rather than using
 @code{importFrom}.
-Default: false.
+Default: false (but true for CRAN submission checks).
 @item _R_CHECK_UNSAFE_CALLS_
 Check for calls that appear to tamper with (or allow tampering with)
 already loaded code not from the current package: such calls may well
@@ -4009,6 +4009,13 @@ Should the package code be checked for the presence of recently deprecated
 or defunct functions (including completely removed functions). 
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_TOPLEVEL_FILES_
+Report on top-level files in the package sources that are not described
+in `Writing R Extensions' nor are commonly understood (like
+@file{ChangeLog}).  Variations on standard names (e.g.@:
+@file{COPYRIGHT}) are also reported.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like
@@ -4027,6 +4034,7 @@ _R_CHECK_CODE_ATTACH_=TRUE
 _R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
+_R_CHECK_TOPLEVEL_FILES_=TRUE
 @end example
 
 @noindent

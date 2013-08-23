@@ -657,8 +657,8 @@ setRlibs <-
                                 function(x) grepl(x, lic, fixed = TRUE))
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
+                    if(!any) noteLog(Log)
                     any <- TRUE
-                    noteLog(Log)
                     one <- (length(topfiles) == 1L)
                     msg <- c(if(one) "File" else "Files",
                              "\n",
@@ -682,8 +682,8 @@ setRlibs <-
                                 function(x) grepl(x, lic, fixed = TRUE))
                 topfiles <- topfiles[!found]
                 if (length(topfiles)) {
+                    if(!any) noteLog(Log)
                     any <- TRUE
-                    noteLog(Log)
                     one <- (length(topfiles) == 1L)
                     msg <- c(if(one) "File" else "Files",
                              "\n",
@@ -696,6 +696,49 @@ setRlibs <-
                              })
                     printLog(Log, msg)
                 }
+            }
+        }
+        if (!is_base_pkg && R_check_toplevel_files) {
+            ## any others?
+            if(is.null(topfiles0)) {
+                topfiles <- dir()
+                ## Now check if any of these were created since we started
+                topfiles <- topfiles[file.info(topfiles)$ctime <= .unpack.time]
+            } else topfiles <- topfiles0
+            known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
+                       "LICENCE.note", "LICENSE.note",
+                       "MD5", "NAMESPACE", "NEWS", "PORTING",
+                       "COPYING", "COPYING.LIB", "GPL-2", "GPL-3",
+                       "BUGS", "Bugs",
+                       "ChangeLog", "Changelog", "CHANGELOG", "CHANGES", "Changes",
+                       "INSTALL", "README", "THANKS", "TODO", "ToDo",
+                       "README.md", # seems popular
+                       "configure", "configure.win", "cleanup", "cleanup.win",
+                       "configure.ac", "configure.in",
+                       "datafiles",
+                       "R", "data", "demo", "exec", "inst", "man",
+                       "po", "src", "tests", "vignettes",
+                       "java", "tools") # common dirs in packages.
+            topfiles <- setdiff(topfiles, known)
+            if (file.exists(file.path("inst", "AUTHORS")))
+                topfiles <- setdiff(topfiles, "AUTHORS")
+            if (file.exists(file.path("inst", "COPYRIGHTS")))
+                topfiles <- setdiff(topfiles, "COPYRIGHTS")
+            if (lt <- length(topfiles)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log,
+                         if(lt > 1L) "Non-standard files found at top level:\n"
+                         else "Non-standard file found at top level:\n" )
+                msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
+                               indent = 2L, exdent = 2L)
+                printLog(Log, paste(c(msg, ""), collapse="\n"))
+                cp <- grep("^copyright", topfiles,
+                           ignore.case = TRUE, value = TRUE)
+                if (length(cp))
+                    printLog(Log, "Copyright information should be in file inst/COPYRIGHTS\n")
+                if("AUTHORS" %in% topfiles)
+                    printLog(Log, "Authors information should be in file inst/AUTHORS\n")
             }
         }
         if (!any) resultLog(Log, "OK")
@@ -2775,8 +2818,10 @@ setRlibs <-
             excludes <- readLines("BinaryFiles")
             execs <- execs[!execs %in% excludes]
         }
-        if (grepl("^check", install) && file.exists(".install_timestamp"))
-            execs <- execs[file_test("-ot", execs, ".install_timestamp")]
+        if(use_install_timestamp) {
+            its <- file.path(pkgdir, ".install_timestamp")
+            execs <- execs[file_test("-ot", execs, its)]
+        }
         if (nb <- length(execs)) {
             msg <- ngettext(nb,
                             "Found the following executable file:",
@@ -3708,6 +3753,8 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPENDS_ONLY_", "FALSE"))
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
+    R_check_toplevel_files <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -3731,6 +3778,7 @@ setRlibs <-
         R_check_depr_def <- TRUE
         R_check_Rd_line_widths <- TRUE
         do_timings <- TRUE
+        R_check_toplevel_files <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
@@ -3747,7 +3795,8 @@ setRlibs <-
                     	R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-
-                                    R_check_unsafe_calls <- FALSE
+                                    R_check_unsafe_calls <-
+                                        R_check_toplevel_files <- FALSE
         R_check_Rd_line_widths <- FALSE
     }
 
@@ -3875,6 +3924,17 @@ setRlibs <-
         messageLog(Log, "using session charset: ", charset)
         is_ascii <- charset == "ASCII"
 
+        .unpack.time <- Sys.time()
+        ## Support two stage install/check operating on unpacked
+        ## sources.
+        use_install_timestamp <-
+            (grepl("^check", install) &&
+             file.exists(file.path(pkgdir, ".install_timestamp")))
+
+        if(use_install_timestamp)
+            .unpack.time <-
+                file.info(file.path(pkgdir, ".install_timestamp"))$mtime
+
         ## report options used
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
@@ -3952,7 +4012,11 @@ setRlibs <-
             ## give up if they are missing.  But we don't check them if
             ## we are not going to install and hence not run any code.
             ## </NOTE>
-            if (do_install) check_dependencies()
+            if (do_install) {
+                topfiles0 <-
+                    if(!use_install_timestamp) dir(pkgdir) else NULL
+                check_dependencies()
+            } else topfiles0 <- NULL
 
             check_sources()
             checkingLog(Log, "if there is a namespace")

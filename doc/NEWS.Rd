@@ -160,6 +160,10 @@
 	reported.  (Many of these should be \code{::} calls.)
       }
       See \sQuote{Writing R Extensions} for good practice.
+      
+      \item \command{R CMD check} optionally checks for non-standard
+      top-level files (which are often mistakes): this is enabled for
+      \option{--as-cran}.
     }
   }
 
