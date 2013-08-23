@@ -176,10 +176,6 @@
       (where installed) \command{pkg-config --libs libR} are now those
       needed to link a front-end against the (shared or static) \R
       library.
-
-      \item \command{R CMD check} optionally checks for non-standard
-      top-level files (which are often mistakes): this is enabled for
-      \option{--as-cran}.
     }
   }
 
@@ -378,6 +374,10 @@
 	reported.  (Many of these should be \code{::} calls.)
       }
       See \sQuote{Writing R Extensions} for good practice.
+      
+      \item \command{R CMD check} optionally checks for non-standard
+      top-level files (which are often mistakes): this is enabled for
+      \option{--as-cran}.
     }
   }
 
