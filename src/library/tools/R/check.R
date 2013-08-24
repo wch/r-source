@@ -345,7 +345,7 @@ setRlibs <-
         ## Build list of exclude patterns.
         ignore <- get_exclude_patterns()
         ignore_file <- ".Rbuildignore"
-        if (file.exists(ignore_file))
+        if (ignore_file %in% dir()))
             ignore <- c(ignore, readLines(ignore_file))
 
         ## Ensure that the names of the files in the package are valid
@@ -3161,7 +3161,8 @@ setRlibs <-
     {
         checkingLog(Log, "for file ",
                     sQuote(file.path(pkgname0, "DESCRIPTION")))
-        if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
+        if ("DESCRIPTION" %in% dir(pkgdir)) {
+            f <- file.path(pkgdir, "DESCRIPTION")
             desc <- try(.read_description(f))
             if (inherits(desc, "try-error") || !length(desc)) {
                 resultLog(Log, "EXISTS but not correct format")
@@ -3187,6 +3188,10 @@ setRlibs <-
                          "  have at least 2 characters and not end with a dot.\n")
             } else resultLog(Log, "OK")
             encoding <- desc["Encoding"]
+        } else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
+            errorLog(Log,
+                     "File DESCRIPTION does not exist but there is a case-insenstiive match.")
+            do_exit(1L)
         } else {
             resultLog(Log, "NO")
             do_exit(1L)
@@ -4020,13 +4025,19 @@ setRlibs <-
 
             check_sources()
             checkingLog(Log, "if there is a namespace")
-            if (file.exists(file.path(pkgdir, "NAMESPACE")))
+            ## careful: we need a case-sensitive match
+            if ("NAMESPACE" %in% dir(pkgdir))
                 resultLog(Log, "OK")
-            else if (dir.exists(file.path(pkgdir, "R"))) {
-                warningLog(Log)
+            else  if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
+                errorLog(Log,
+                       "File NAMESPACE does not exist but there is a case-insenstiive match.")
+                do_exit(1L)
+            } else if (dir.exists(file.path(pkgdir, "R"))) {
+                errorLog(Log)
                 wrapLog("All packages need a namespace as from R 3.0.0.\n",
                         "R CMD build will produce a suitable starting point,",
                         "but it is better to handcraft a NAMESPACE file.")
+                do_exit(1L)
             } else {
                 noteLog(Log)
                 wrapLog("Packages without R code can be installed without",
