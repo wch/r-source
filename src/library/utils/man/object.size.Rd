@@ -1,6 +1,6 @@
 % File src/library/utils/man/object.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{object.size}
@@ -19,10 +19,10 @@ object.size(x)
   \item{x}{An \R object.}
   \item{quote}{logical, indicating whether or not the result should be
     printed with surrounding quotes.}
-  \item{units}{The units to be used in printing the size.  Other allowed
-    values are \code{"Kb"}, \code{"Mb"}, \code{"Gb"} and \code{"auto"}
-    (see \sQuote{Details}).
-    As from \R 2.14.0, \code{"KB"} etc are also accepted.}
+  \item{units}{The units to be used in printing the size.  Allowed
+    values are \code{"b"}, \code{"Kb"}, \code{"Mb"}, \code{"Gb"},
+    \code{"B"}, \code{"KB"}, \code{"MB"}, \code{"GB"}, and \code{"auto"}
+    (see \sQuote{Details}).} 
   \item{\dots}{Arguments to be passed to or from other methods.}
 }
 \details{
