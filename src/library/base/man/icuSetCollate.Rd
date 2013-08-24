@@ -62,7 +62,7 @@ icuSetCollate(...)
   \code{C} locale, unless \code{locale} is specified.
 }
 \note{
-  As from \R 2.9.0, ICU is used by default wherever it is available:
+  ICU is used by default wherever it is available:
   this include Mac OS >= 10.4 and many Linux installations.
 }
 \seealso{

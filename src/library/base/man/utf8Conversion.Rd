@@ -34,7 +34,7 @@ intToUtf8(x, multiple = FALSE)
   numeric values are truncated to integers.)  The
   \code{\link{Encoding}} is declared as \code{"UTF-8"}.
 
-  As from \R 2.11.0 \code{NA} inputs are mapped to \code{NA} output.
+  \code{NA} inputs are mapped to \code{NA} output.
 }
 \examples{\dontrun{
 ## will only display in some locales and fonts

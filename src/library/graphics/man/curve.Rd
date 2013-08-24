@@ -96,8 +96,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   taken as a request to plot a function named \code{x} (and it is used
   as such in the \code{function} method for \code{plot}).
 
-  As from \R 2.14.0 the \code{plot} method can be called directly as
-  \code{plot.function}.
+  The \code{plot} method can be called directly as \code{plot.function}.
 }
 
 \value{

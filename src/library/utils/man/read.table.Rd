@@ -44,7 +44,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     not contain an \emph{absolute} path, the file name is
     \emph{relative} to the current working directory,
     \code{\link{getwd}()}. Tilde-expansion is performed where supported.
-    As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
+    This can be a compressed file (see \code{\link{file}}).
 
     Alternatively, \code{file} can be a readable text-mode
     \link{connection} (which will be opened for reading if

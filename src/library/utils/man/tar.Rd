@@ -105,8 +105,8 @@ tar(tarfile, files = NULL,
 
     Names of links in the \sQuote{ustar} format are restricted to 100
     bytes.  There is an GNU extension for arbitrarily long link names,
-    but \command{bsdtar} does not read.  As from \R 2.15.3 the internal
-    method uses the GNU extension, with a warning.
+    but \command{bsdtar} does not read.  The internal method uses the
+    GNU extension, with a warning.
 
     \item Header fields, in particular the padding to be used when
     fields are not full or not used.  POSIX did define the correct

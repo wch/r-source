@@ -31,8 +31,8 @@ pkg:::name
   Note that \code{pkg::name} does \strong{not} access the objects in the
   environment \code{package:pkg} (which does not exist until the
   package's namespace is attached): the latter may contain objects not
-  exported from the namespace.  As from \R 2.14.0 it can access datasets
-  made available by lazy-loading.
+  exported from the namespace.  It can access datasets made available by
+  lazy-loading.
 }
 
 \note{
