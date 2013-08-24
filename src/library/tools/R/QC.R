@@ -5182,8 +5182,8 @@ function(x, ...)
                          sQuote(xx)), msg)
           }
       },
-      if(length(xx <- x$imp3)) {
-          msg <- c("See the note in ?':::' about the use of this operator.",
+      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
+          msg <- c("See the note in ?`:::` about the use of this operator.",
                    ":: should be used rather than ::: if the function is exported,",
                    "and a package almost never needs to use ::: for its own functions.")
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
