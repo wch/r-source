@@ -3312,19 +3312,26 @@ setRlibs <-
         if (!extra_arch &&
             file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "package namespace information")
-            msg_NAMESPACE <-
-                c("See section 'Package namespaces'",
-                  " of the 'Writing R Extensions' manual.\n")
-            tryCatch(parseNamespaceFile(basename(pkgdir), dirname(pkgdir)),
+            ns <- tryCatch(parseNamespaceFile(basename(pkgdir),
+                                              dirname(pkgdir)),
                      error = function(e) {
                          errorLog(Log)
                          printLog0(Log,
-                                   "Invalid NAMESPACE file, parsing gives:", "\n",
-                                   as.character(e), "\n")
+                                   "Invalid NAMESPACE file, parsing gives:",
+                                   "\n", as.character(e), "\n")
+                         msg_NAMESPACE <-
+                             c("See section 'Package namespaces'",
+                               " of the 'Writing R Extensions' manual.\n")
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
-            resultLog(Log, "OK")
+            nS3methods <- nrow(ns$S3methods)
+            if (nS3methods > 500L) {
+                msg <- sprintf("R < 3.1.0 has a limit of 500 registered S3 methods: found %d",
+                               nS3methods)
+                noteLog(Log, msg)
+            } else
+                resultLog(Log, "OK")
         }
 
         checkingLog(Log, "package dependencies")
