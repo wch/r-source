@@ -72,6 +72,11 @@
       an enhanced version of a previously internal function there.)
       
       \item \code{object.size()} gains a \code{format()} method.
+      
+      \item There is a new family, \code{"ArialMT"} for the \code{pdf()}
+      and \code{postscriipt()} devices.  This will only be rendered
+      correctly on viewers which have access to Monotype TrueType fonts
+      (but are sometimes requested by journals).
     }
   }
 
