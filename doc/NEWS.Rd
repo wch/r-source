@@ -70,6 +70,8 @@
       \item There is a new function \code{find_gs_cmd()} in the
       \pkg{tools} package to locate a GhostScript executable.  (This is
       an enhanced version of a previously internal function there.)
+      
+      \item \code{object.size()} gains a \code{format()} method.
     }
   }
 
