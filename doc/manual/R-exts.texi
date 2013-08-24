@@ -753,7 +753,7 @@ specifying a version requirement.  The comment should contain a
 comparison operator, whitespace and a valid version number,
 e.g. @samp{MASS (>= 3.1-20)}.
 
-Tne @samp{Depends} field can also specify a dependence on a certain
+The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{}
 version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
 @samp{Depends} field.  You can also require a certain SVN revision for
