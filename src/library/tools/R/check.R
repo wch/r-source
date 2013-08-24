@@ -345,7 +345,7 @@ setRlibs <-
         ## Build list of exclude patterns.
         ignore <- get_exclude_patterns()
         ignore_file <- ".Rbuildignore"
-        if (ignore_file %in% dir()))
+        if (ignore_file %in% dir())
             ignore <- c(ignore, readLines(ignore_file))
 
         ## Ensure that the names of the files in the package are valid
