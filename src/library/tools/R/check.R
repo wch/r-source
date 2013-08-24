@@ -3140,6 +3140,8 @@ setRlibs <-
                 else {
                     this <- unique(grep("Warning: replacing previous import",
                                         lines, fixed = TRUE, value = TRUE))
+                    this <- grep(paste0(sQuote(pkgname), "$"), this,
+                                 value = TRUE)
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
                     lines <- c(lines, this)
