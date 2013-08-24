@@ -137,7 +137,7 @@ mcMap(f, ...)
   should consult their documentation.
 
   Note that \pkg{tcltk} counts as a GUI for these purposes since
-  \command{Tcl} runs an event loop.  As from \R 2.15.3 that event loop
+  \command{Tcl} runs an event loop.  That event loop
   is inhibited in a child process but there could still be problems with
   Tk graphical connections.
 }

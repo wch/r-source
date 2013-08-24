@@ -35,8 +35,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 \details{
   If the \code{con} is a character string, the function calls
   \code{\link{file}} to obtain a file connection which is opened for
-  the duration of the function call.  As from \R 2.10.0 this can be a
-  compressed file.
+  the duration of the function call.  This can be a compressed file.
 
   If the connection is open it is read from its current position.  If it
   is not open, it is opened in \code{"rt"} mode for the duration of

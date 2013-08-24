@@ -30,8 +30,8 @@
 
   \command{R CMD build} builds \R source tarballs.  The name(s) of the
   packages are taken from the \file{DESCRIPTION} files and not from the
-  directory names.  As from \R 2.13.0 this works entirely on a copy of
-  the supplied source directories.
+  directory names. This works entirely on a copy of the supplied source
+  directories.
 
   Use \command{R CMD \var{foo} --help} to obtain usage information on
   utility \code{\var{foo}}.
