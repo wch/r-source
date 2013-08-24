@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-28 r63433) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-24 r63673) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2935,6 +2935,20 @@ $encoding
 attr(,"class")
 [1] "Type1Font"
 
+$ArialMT
+$family
+[1] "ArialMT"
+
+$metrics
+[1] "ArialMT.afm"            "ArialMT-Bold.afm"       "ArialMT-Italic.afm"    
+[4] "ArialMT-BoldItalic.afm" "Symbol.afm"            
+
+$encoding
+[1] "default"
+
+attr(,"class")
+[1] "Type1Font"
+
 $ComputerModern
 $family
 [1] "ComputerModern"
@@ -3140,9 +3154,10 @@ attr(,"class")
 [13] "URWBookman"           "NimbusMon"            "NimbusSan"           
 [16] "URWHelvetica"         "NimbusSanCond"        "CenturySch"          
 [19] "URWPalladio"          "NimbusRom"            "URWTimes"            
-[22] "Japan1"               "Japan1HeiMin"         "Japan1GothicBBB"     
-[25] "Japan1Ryumin"         "Korea1"               "Korea1deb"           
-[28] "CNS1"                 "GB1"                  "Jp_UCS-2"            
+[22] "ArialMT"              "Japan1"               "Japan1HeiMin"        
+[25] "Japan1GothicBBB"      "Japan1Ryumin"         "Korea1"              
+[28] "Korea1deb"            "CNS1"                 "GB1"                 
+[31] "Jp_UCS-2"            
 > 
 > 
 > 
