@@ -104,7 +104,7 @@ is.ts(x)
   \code{\link{plot.ts}}, the plot method for time series objects.
   
   For other definitions of \sQuote{time series} (e.g.,
-  time-ordered obsevervations) see the CRAN task view at
+  time-ordered observations) see the CRAN task view at
   \url{http://cran.r-project.org/web/views/TimeSeries.html}.
 }
 \examples{
