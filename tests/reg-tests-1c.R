@@ -179,4 +179,9 @@ X <- 3e-308; stopifnot(identical(lgamma(-X), lgamma(X)))
 ## lgamma(-X) was NaN in R <= 3.0.1
 
 
+## PR#15413
+z <- subset(data.frame(one = numeric()), select = one)
+stopifnot(nrow(z) == 0L)
+## created a row prior to 3.0.2
+
 proc.time()

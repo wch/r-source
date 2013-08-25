@@ -1,7 +1,7 @@
 #  File src/library/base/R/frametools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,20 +18,20 @@
 
 subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 {
-    if(missing(subset))
-	r <- TRUE
+    r <- if(missing(subset))
+	rep_len(TRUE, nrow(x))
     else {
 	e <- substitute(subset)
 	r <- eval(e, x, parent.frame())
         if(!is.logical(r)) stop("'subset' must be logical")
-	r <- r & !is.na(r)
+	r & !is.na(r)
     }
-    if(missing(select))
-	vars <- TRUE
+    vars <- if(missing(select))
+	TRUE
     else {
 	nl <- as.list(seq_along(x))
 	names(nl) <- names(x)
-	vars <- eval(substitute(select), nl, parent.frame())
+	eval(substitute(select), nl, parent.frame())
     }
     x[r, vars, drop = drop]
 }
