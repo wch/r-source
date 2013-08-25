@@ -3290,15 +3290,17 @@ function(x, ...)
 ### * .check_make_vars
 
 .check_make_vars <-
-function(dir)
+function(dir, makevars = c("Makevars.in", "Makevars"))
 {
-
     bad_flags <- list()
     class(bad_flags) <- "check_make_vars"
 
-    paths <- file.path(dir, c("Makevars.in", "Makevars"))
+    paths <- file.path(dir, makevars)
     paths <- paths[file_test("-f", paths)]
     if(!length(paths)) return(bad_flags)
+    bad_flags$paths <- file.path("src", basename(paths))
+    ## Makevars could be used with --no-configure
+    ## and maybe configure does not even use src/Makevars.in
     mfile <- paths[1L]
     make <- Sys.getenv("MAKE")
     if(make == "") make <- "make"
@@ -3358,7 +3360,6 @@ function(dir)
                   structure(list(bad), names = names[i]))
     }
 
-    class(bad_flags) <- "check_make_vars"
     bad_flags
 }
 
@@ -3378,6 +3379,16 @@ function(x, ...)
       if(length(bad <- x$uflags)) {
           c(gettextf("Variables overriding user/site settings:"),
             sprintf("  %s", bad))
+      },
+      if(length(x$paths) > 1L) {
+          c(sprintf("Package has both %s and %s.",
+                  sQuote("src/Makevars.in"), sQuote("src/Makevars")),
+            strwrap(sprintf("Installation with --no-configure' is unlikely to work.  If you intended %s to be used on Windows, rename it to %s otherwise remove it.  If %s created %s, you need a %s script.",
+                            sQuote("src/Makevars"),
+                            sQuote("src/Makevars.win"),
+                            sQuote("configure"),
+                            sQuote("src/Makevars"),
+                            sQuote("cleanup"))))
       })
 }
 
@@ -4982,7 +4993,7 @@ function(x, ...)
       if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
           msg <- c("See the note in ?`:::` about the use of this operator.",
                    ":: should be used rather than ::: if the function is exported,",
-                   "and a package never needs to use ::: for its own functions.")
+                   "and a package almost never needs to use ::: for its own functions.")
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
               c(gettext("Namespaces imported from by ':::' calls:"),
@@ -6085,7 +6096,7 @@ function(dir)
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
-        p2 <- grep("^(multicore)( |\\(|$)", p, value = TRUE)
+        p2 <- grep("^(multicore|igraph0)( |\\(|$)", p, value = TRUE)
         uses <- c(uses, p2)
         p2 <- grep("^(BRugs|R2OpenBUGS)( |\\(|$)", p, value = TRUE)
         BUGS <- c(BUGS, p2)

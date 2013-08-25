@@ -1905,12 +1905,15 @@ setRlibs <-
         } else resultLog(Log, "OK")
 
         ## Check src/Makevars[.in] compilation flags.
-        if (any(file.exists(file.path("src", c("Makevars", "Makevars.in")))) ) {
+        if (length(makevars)) {
             checkingLog(Log, "compilation flags in Makevars")
-            Rcmd <- "tools:::.check_make_vars(\"src\")\n"
+
+            Rcmd <- sprintf("tools:::.check_make_vars(\"src\", %s)\n",
+                            deparse(makevars))
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                warningLog(Log)
+                if(any(grepl("^(Non-portable flags|Variables overriding)", out)))
+                   warningLog(Log) else noteLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
@@ -3278,15 +3281,16 @@ setRlibs <-
         if (!extra_arch &&
             file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "package namespace information")
-            msg_NAMESPACE <-
-                c("See section 'Package namespaces'",
-                  " of the 'Writing R Extensions' manual.\n")
-            tryCatch(parseNamespaceFile(basename(pkgdir), dirname(pkgdir)),
+            tryCatch(parseNamespaceFile(basename(pkgdir),
+                                              dirname(pkgdir)),
                      error = function(e) {
                          errorLog(Log)
                          printLog0(Log,
-                                   "Invalid NAMESPACE file, parsing gives:", "\n",
-                                   as.character(e), "\n")
+                                   "Invalid NAMESPACE file, parsing gives:",
+                                   "\n", as.character(e), "\n")
+                         msg_NAMESPACE <-
+                             c("See section 'Package namespaces'",
+                               " of the 'Writing R Extensions' manual.\n")
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
@@ -4064,6 +4068,22 @@ setRlibs <-
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
 	    setwd(startdir)
+
+            ## record this before installation.
+            ## <NOTE>
+            ## Could also teach the code to check 'src/Makevars[.in]'
+            ## files to use .unpack.time.
+            ## (But we want to know if the sources contain
+            ## 'src/Makevars' and INSTALL re-creates this.)
+            ## </NOTE>
+            makevars <-
+                Sys.glob(file.path(pkgdir, "src",
+                                   c("Makevars.in", "Makevars")))
+            if(use_install_timestamp) {
+                its <- file.path(pkgdir, ".install_timestamp")
+                makevars <- makevars[file_test("-ot", makevars, its)]
+            }
+            makevars <- basename(makevars)
 
             if (do_install) {
                 check_install()
