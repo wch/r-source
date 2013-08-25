@@ -423,6 +423,10 @@
       search path rather than in its namespace.)
 
       \item \code{lgamma(-x)} is no longer \code{NaN} for very small x.
+
+      \item (Windows) \code{system2()} now respects specifying
+      \code{stdout} and \code{stderr} as files if called from
+      \command{Rgui}. (\PR{15393})
     }
   }
 }
