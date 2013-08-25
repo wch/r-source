@@ -110,14 +110,11 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
-      is no longer recognized as valid.  Use \sQuote{MIT} or
-      \sQuote{BSD_2_clause} instead.
+      is no longer recognized as valid.  Use \sQuote{MIT + file LICENSE} or
+      \sQuote{BSD_2_clause + file LICENSE} instead.
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
-
-      \item The limit of 500 \code{S3method} entries in a
-      \code{NAMESPACE} file has been removed.
     }
   }
 
@@ -438,6 +435,9 @@
       \item Version requirements for \code{LinkingTo} packages are now
       recognized: they are checked at installation.  (They were
       previously silently ignored.)
+
+      \item The limit of 500 \code{S3method} entries in a
+      \code{NAMESPACE} file has been removed.
     }
   }
 

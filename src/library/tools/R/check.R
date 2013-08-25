@@ -3327,7 +3327,7 @@ setRlibs <-
                      })
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
-                msg <- sprintf("R < 3.1.0 has a limit of 500 registered S3 methods: found %d",
+                msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
                                nS3methods)
                 noteLog(Log, msg)
             } else
