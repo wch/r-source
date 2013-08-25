@@ -4381,6 +4381,12 @@ will show the compilers and configuration options used for the
 @noindent
 was used.
 
+The @TeX{} implementation used by the developers is MacTeX
+(@uref{http://www.tug.org/mactex/}): the full installation is several
+gigabytes, but a smaller version (ca 300MB) is available at
+@uref{http://www.tug.org/mactex/morepackages.html}: you will want to add
+some packages, including @pkg{inconsolata}.
+
 @menu
 * Snow Leopard::                
 * Lion::                        
@@ -4445,6 +4451,8 @@ F77="gfortran-4.2 -arch x86_64"
 FC=$F77
 OBJC="clang"
 @end example
+
+See the comments under Mountain Lion about X11 and GTK.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
