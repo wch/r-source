@@ -430,6 +430,9 @@
       
       \item Closing an \code{x11()} device whilst \code{locator()} or
       \code{identify()} is in progress no longer hangs \R.  (\PR{15253})
+
+      \item \code{list.dirs(full.names = FALSE)} was not implemented.
+      (\PR{15170})
     }
   }
 }
