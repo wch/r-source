@@ -414,19 +414,22 @@
 
       \item \code{file.show()} and \code{edit()} are now more likely to
       work on file paths containing spaces.  (Where external utilities
-      are used, not the norm on Windows nor in \command{R.app}, which
+      are used, not the norm on Windows nor in \command{R.app} which
       should previously have worked.)
 
       \item Packages using the \pkg{methods} package are more likely to
-      work when they import it, even if it is not attached.  (Several
-      parts of its C code were looking for its \R functions on the
-      search path rather than in its namespace.)
+      work when they import it but it is not attached.  (Several parts
+      of its C code were looking for its \R functions on the search path
+      rather than in its namespace.)
 
       \item \code{lgamma(-x)} is no longer \code{NaN} for very small x.
 
       \item (Windows) \code{system2()} now respects specifying
       \code{stdout} and \code{stderr} as files if called from
       \command{Rgui}. (\PR{15393})
+      
+      \item Closing an \code{x11()} device whilst \code{locator()} or
+      \code{identify()} is in progress no longer hangs \R.  (\PR{15253})
     }
   }
 }
