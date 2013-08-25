@@ -207,17 +207,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
          texi2dvi = getOption("texi2dvi"),
          texinputs = NULL, index = TRUE)
 {
+    if (clean) pre_files <- list.files(all.files = TRUE)
     do_cleanup <- function(clean)
         if(clean) {
             ## output file will be created in the current directory
             out_file <- paste(basename(file_path_sans_ext(file)),
-                              if(pdf) "pdf" else "dvi",
-                              sep = ".")
+                              if(pdf) "pdf" else "dvi", sep = ".")
             files <- setdiff(list.files(all.files = TRUE),
-                             c(".", "..", out_file))
-            file.remove(files[file_test("-nt", files, ".timestamp")])
+                             c(".", "..", out_file, pre_files))
+            file.remove(files)
         }
-
 
     ## Run texi2dvi on a latex file, or emulate it.
 
@@ -260,11 +259,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     } else on.exit(Sys.setenv(BSTINPUTS = obstinputs), add = TRUE)
     Sys.setenv(BSTINPUTS = paste(obstinputs, bstinputs, sep = envSep))
 
-    if (clean) {
-        file.create(".timestamp")
-        on.exit(file.remove(".timestamp"), add = TRUE)
-        Sys.sleep(0.1) # wait long enough for files to be after the timestamp
-    }
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         ## switch off the use of texindy in texi2dvi >= 1.157
         Sys.setenv(TEXINDY = "false")

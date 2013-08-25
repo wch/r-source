@@ -24,9 +24,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   \item{file}{character.  Name of LaTeX source file.}
   \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced instead of
     the default dvi file (\code{texi2dvi} command line option \option{--pdf}).}
-  \item{clean}{logical.  If \code{TRUE}, all auxiliary files are removed
-    (\code{texi2dvi} command line option \option{--clean}).  May not work on
-    some platforms.}
+  \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
+    during the conversion are removed.}
   \item{quiet}{logical.  No output unless an error occurs.  Ignored if
     emulation (see the \code{texi2dvi} argument) is used.}
   \item{texi2dvi}{character (or \code{NULL}).  Script or program used to
