@@ -1111,9 +1111,10 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     importMethods <- list()
     importClasses <- list()
     dynlibs <- character()
-    S3methods <- matrix(NA_character_, 500L, 3L)
+    nS3methods <- 1000L
+    S3methods <- matrix(NA_character_, nS3methods, 3L)
     nativeRoutines <- list()
-    nS3 <- 0
+    nS3 <- 0L
     parseDirective <- function(e) {
         ## trying to get more helpful error message:
 	asChar <- function(cc) {
@@ -1234,7 +1235,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
                            if(symNames[idx] != "") {
-                               e <- parse(text = symNames[idx], srcfile=NULL)[[1L]]
+                               e <- parse(text = symNames[idx], srcfile = NULL)[[1L]]
                                if(is.call(e))
                                    val <- eval(e)
                                else
@@ -1273,9 +1274,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                                      deparse(e)),
                             call. = FALSE, domain = NA)
                    nS3 <<- nS3 + 1L
-                   if(nS3 > 500L)
-                       stop("too many 'S3method' directives -- the current limit is 500",
-                            call. = FALSE, domain = NA)
+                   if(nS3 > nS3methods) {
+                       old <- S3methods
+                       nold <- nS3methods
+                       nS3methods <<- nS3methods * 2L
+                       new <- matrix(NA_character_, nS3methods, 3L)
+                       ind <- seq_len(nold)
+                       for (i in 1:3) new[ind, i] <- old[ind, i]
+                       S3methods <<- new
+                       rm(old, new)
+                   }
                    S3methods[nS3, seq_along(spec)] <<- asChar(spec)
                },
                stop(gettextf("unknown namespace directive: %s", deparse(e, nlines=1L)),

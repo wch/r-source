@@ -217,6 +217,9 @@
       \item Version requirements for \code{LinkingTo} packages are now
       recognized: they are checked at installation.  (They were
       previously silently ignored.)
+
+      \item The limit of 500 \code{S3method} entries in a
+      \code{NAMESPACE} file has been removed.
     }
   }
 
