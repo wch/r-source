@@ -1,6 +1,6 @@
 % File src/library/stats/man/printCoefmat.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{printCoefmat}
@@ -8,8 +8,8 @@
 \title{Print Coefficient Matrices}
 \description{
   Utility function to be used in higher-level \code{\link{print}}
-  methods, such as \code{\link{print.summary.lm}},
-  \code{\link{print.summary.glm}} and \code{\link{print.anova}}.  The
+  methods, such as those for \code{\link{summary.lm}},
+  \code{\link{summary.glm}} and \code{\link{anova}}.  The
   goal is to provide a flexible interface with smart defaults such
   that often, only \code{x} needs to be specified.
 }

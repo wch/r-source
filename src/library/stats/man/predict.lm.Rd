@@ -23,10 +23,10 @@
   \item{newdata}{An optional data frame in which to look for variables with
     which to predict.  If omitted, the fitted values are used.}
   \item{se.fit}{A switch indicating if standard errors are required.}
-  \item{scale}{Scale parameter for std.err. calculation}
-  \item{df}{Degrees of freedom for scale}
+  \item{scale}{Scale parameter for std.err. calculation.}
+  \item{df}{Degrees of freedom for scale.}
   \item{interval}{Type of interval calculation.}
-  \item{level}{Tolerance/confidence level}
+  \item{level}{Tolerance/confidence level.}
   \item{type}{Type of prediction (response or model term).}
   \item{terms}{If \code{type = "terms"}, which terms (default is all
     terms), a \code{\link{character}} vector.}
@@ -36,7 +36,7 @@
     for prediction intervals.  See \sQuote{Details}.}
   \item{weights}{variance weights for prediction. This can be a numeric
     vector or a one-sided model formula. In the latter case, it is
-    interpreted as an expression evaluated in \code{newdata}}
+    interpreted as an expression evaluated in \code{newdata}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{

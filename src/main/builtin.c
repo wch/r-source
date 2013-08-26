@@ -37,7 +37,7 @@ R_xlen_t asVecSize(SEXP x)
 {
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
-	case INTSXP: 
+	case INTSXP:
 	{
 	    int res = INTEGER(x)[0];
 	    if(res == NA_INTEGER) error(_("vector size cannot be NA"));
@@ -58,7 +58,7 @@ R_xlen_t asVecSize(SEXP x)
 	    if(!R_FINITE(d)) error(_("vector size cannot be infinite"));
 	    if(d > R_XLEN_T_MAX) error(_("vector size specified is too large"));
 	    return (R_xlen_t) d;
-	}	
+	}
 	default:
 	    break;
 	}
@@ -286,7 +286,7 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CADR(args);
 
     if (TYPEOF(CAR(args)) == CLOSXP
-	&& (isEnvironment(env) || 
+	&& (isEnvironment(env) ||
 	    isEnvironment(env = simple_as_environment(env)) ||
 	    isNull(env))) {
 	if (isNull(env))
@@ -907,7 +907,7 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef LONG_VECTOR_SUPPORT
 	return xlengthgets(x, len);
 #else
-        error(_("vector size specified is too large"));
+	error(_("vector size specified is too large"));
 	return x; /* -Wall */
 #endif
     }
@@ -947,16 +947,16 @@ static SEXP expandDots(SEXP el, SEXP rho)
 
 /* This function is used in do_switch to record the default value and
    to detect multiple defaults, which are not allowed as of 2.13.x */
-   
-static SEXP setDflt(SEXP arg, SEXP dflt) 
+
+static SEXP setDflt(SEXP arg, SEXP dflt)
 {
     if (dflt) {
-    	SEXP dflt1, dflt2;
-    	PROTECT(dflt1 = deparse1line(dflt, TRUE));
-    	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
-    	error(_("duplicate 'switch' defaults: '%s' and '%s'"), 
+	SEXP dflt1, dflt2;
+	PROTECT(dflt1 = deparse1line(dflt, TRUE));
+	PROTECT(dflt2 = deparse1line(CAR(arg), TRUE));
+	error(_("duplicate 'switch' defaults: '%s' and '%s'"),
 	      CHAR(STRING_ELT(dflt1, 0)), CHAR(STRING_ELT(dflt2, 0)));
-    	UNPROTECT(2); /* won't get here, but just for good form */
+	UNPROTECT(2); /* won't get here, but just for good form */
     }
     return(CAR(arg));
 }
@@ -968,10 +968,10 @@ static SEXP setDflt(SEXP arg, SEXP dflt)
  3) will work.  But if there is no 'next', return NULL. One arg beyond
  the first is allowed to be unnamed; it becomes the default value if
  there is no match.
- 
+
  If the value of the first arg is not a character string
  then coerce it to an integer k and choose the kth argument from those
- that remain provided 1 < k < nargs.  
+ that remain provided 1 < k < nargs.
 
  Changed in 2.11.0 to be primitive, so the wrapper does not partially
  match to EXPR, and to return NULL invisibly if it is an error
@@ -1016,9 +1016,9 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 			   is not necessary to determine the value of the
 			   switch(), but it should be fast and will detect
 			   typos. */
-			for (z = CDR(y); z != R_NilValue; z = CDR(z)) 
+			for (z = CDR(y); z != R_NilValue; z = CDR(z))
 			    if (TAG(z) == R_NilValue) dflt = setDflt(z, dflt);
-			    
+
 			ans =  eval(CAR(y), rho);
 			UNPROTECT(2);
 			return ans;
@@ -1026,7 +1026,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		} else
 		    dflt = setDflt(y, dflt);
 	    }
- 	    if (dflt) {
+	    if (dflt) {
 		ans =  eval(dflt, rho);
 		UNPROTECT(2);
 		return ans;

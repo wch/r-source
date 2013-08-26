@@ -1,30 +1,9 @@
 useDynLib(tools, .registration = TRUE)
 
-## Package 'tools' must work before 'utils' -- cannot import
-## importFrom("utils",
-## 	   Stangle, Sweave,
-## 	   available.packages,
-## 	   bibentry, citEntry, citeNatbib,
-## 	   compareVersion,
-## 	   contrib.url,
-## 	   data,
-## 	   flush.console,
-## 	   globalVariables,
-## 	   install.packages,
-## 	   installed.packages,
-## 	   localeToCharset,
-## 	   make.packages.html,
-## 	   packageDescription,
-## 	   read.delim,
-## 	   summaryRprof,
-## 	   tail,
-## 	   tar, untar, zip)
-
 export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
        "Rd2txt", "Rd2txt_options", "RdTextFilter", "Rd_db", "Rdiff",
-       "Rdindex", "SweaveTeXFilter",
-       "add_datalist", "assertCondition", "assertError",
-       "assertWarning", "bibstyle",
+       "Rdindex", "SweaveTeXFilter", "add_datalist",
+       "assertCondition", "assertError", "assertWarning", "bibstyle",
        "buildVignettes", "charset_to_Unicode", "checkDocFiles",
        "checkDocStyle", "checkFF", "checkMD5sums", "checkNEWS",
        "checkRd", "checkPoFile", "checkPoFiles", "checkRdaFiles",

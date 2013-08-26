@@ -1,6 +1,6 @@
 % File src/library/base/man/data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data.frame}
@@ -131,10 +131,10 @@ default.stringsAsFactors()
 }
 \examples{
 L3 <- LETTERS[1:3]
-(d <- data.frame(cbind(x = 1, y = 1:10), fac = sample(L3, 10, replace = TRUE)))
-
-## The same with automatic column names:
-data.frame(cbind(  1,   1:10),     sample(L3, 10, replace = TRUE))
+fac <- sample(L3, 10, replace = TRUE)
+(d <- data.frame(x = 1, y = 1:10, fac = fac))
+## The "same" with automatic column names:
+data.frame(1, 1:10, sample(L3, 10, replace = TRUE))
 
 is.data.frame(d)
 
@@ -144,9 +144,9 @@ rbind(class = sapply(dd, class), mode = sapply(dd, mode))
 
 stopifnot(1:10 == row.names(d))  # {coercion}
 
-(d0  <- d[, FALSE])   # NULL data frame with 10 rows
-(d.0 <- d[FALSE, ])   # <0 rows> data frame  (3 cols)
-(d00 <- d0[FALSE, ])  # NULL data frame with 0 rows
+(d0  <- d[, FALSE])   # data frame with 0 columns and 10 rows
+(d.0 <- d[FALSE, ])   # <0 rows> data frame  (3 named cols)
+(d00 <- d0[FALSE, ])  # data frame with 0 columns and 0 rows
 }
 \keyword{classes}
 \keyword{methods}

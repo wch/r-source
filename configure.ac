@@ -1149,7 +1149,7 @@ R_ABI
 
 ## We need to determine the following:
 ##
-## MAIN_LD, MAINLD_FLAGS
+## MAIN_LD, MAIN_LDFLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared objects (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS, FCPICFLAGS
@@ -1475,7 +1475,10 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     esac
     ## Luke Tierney says that just '-export-dynamic' does not work for
     ## Intel compilers (icc).
+    ## Could also use -rdynamic
     main_ldflags="-Wl,--export-dynamic"
+    STATICR1="-Wl,--whole-archive"
+    STATICR2="-Wl,--no-whole-archive"
     ;;
   mingw*)
     SHLIB_EXT=".dll"
@@ -1720,6 +1723,8 @@ AC_SUBST(RBLAS_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 AC_SUBST(FW_VERSION)
+AC_SUBST(STATICR1)
+AC_SUBST(STATICR2)
 
 ### OpenMP.
 

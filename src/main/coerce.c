@@ -1168,7 +1168,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	return v;
     /* code to allow classes to extend ENVSXP, SYMSXP, etc */
     if(IS_S4_OBJECT(v) && TYPEOF(v) == S4SXP) {
-        SEXP vv = R_getS4DataSlot(v, ANYSXP);
+	SEXP vv = R_getS4DataSlot(v, ANYSXP);
 	if(vv == R_NilValue)
 	  error(_("no method for coercing this S4 class to a vector"));
 	else if(TYPEOF(vv) == type)
@@ -1376,7 +1376,7 @@ SEXP asCharacterFactor(SEXP x)
     SEXP ans;
 
     if( !inherits(x, "factor") )
-        error(_("attempting to coerce non-factor"));
+	error(_("attempting to coerce non-factor"));
 
     R_xlen_t i, n = XLENGTH(x);
     SEXP labels = getAttrib(x, install("levels"));
@@ -1480,7 +1480,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if(IS_S4_OBJECT(x) && TYPEOF(x) == S4SXP) {
-        SEXP v = R_getS4DataSlot(x, ANYSXP);
+	SEXP v = R_getS4DataSlot(x, ANYSXP);
 	if(v == R_NilValue)
 	    error(_("no method for coercing this S4 class to a vector"));
 	x = v;
@@ -2132,7 +2132,7 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 			       R_IsNaN(COMPLEX(x)[i].i));
 	break;
     default:
-        errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
     }
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2195,7 +2195,7 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = (R_FINITE(COMPLEX(x)[i].r) && R_FINITE(COMPLEX(x)[i].i));
 	break;
     default:
-        errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
     }
     if (dims != R_NilValue)
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2263,7 +2263,7 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-        errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
+	errorcall(call, _("default method not implemented for type '%s'"), type2char(TYPEOF(x)));
     }
     if (!isNull(dims))
 	setAttrib(ans, R_DimSymbol, dims);
@@ -2294,8 +2294,8 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rfun = install(str));
     PROTECT(evargs = duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest)) {
-        PROTECT(tmp = eval(CAR(rest), rho));
-        if (NAMED(tmp)) tmp = duplicate(tmp);
+	PROTECT(tmp = eval(CAR(rest), rho));
+	if (NAMED(tmp)) tmp = duplicate(tmp);
 	SETCAR(rest, tmp);
 	UNPROTECT(1);
     }
@@ -2545,13 +2545,13 @@ static int class2type(const char *s)
     /* cannot get here return -1; */
 }
 
-static SEXP do_unsetS4(SEXP obj, SEXP newClass) 
+static SEXP do_unsetS4(SEXP obj, SEXP newClass)
 {
   if(isNull(newClass))  { /* NULL class is only valid for S3 objects */
     warning(_("Setting class(x) to NULL;   result will no longer be an S4 object"));
   }
   else if(length(newClass) > 1)
-    warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"), 
+    warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"),
 	    translateChar(STRING_ELT(newClass, 0)),
 	    translateChar(STRING_ELT(newClass, 1)));
   else
