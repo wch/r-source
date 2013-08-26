@@ -161,7 +161,8 @@
       \item \command{R CMD check --as-cran} warns about a false value of the
       \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
       packages, and ignores it (as an Open Source package needs to have
-      complete sources for its vignettes).
+      complete sources for its vignettes which should be usable on a
+      suitably well-equipped system).
 
       \item \command{R CMD check --no-rebuild-vignettes} is defunct:
       \command{R CMD check --no-build-vignettes} has been preferred since
@@ -261,8 +262,8 @@
       \item New \code{assertCondition()}, etc. utilities in \pkg{tools}, useful
       for testing.
 
-      \item Profiling now records non-inlined calls from byte compiled
-      code to BUILTIN functions.
+      \item Profiling now records non-inlined calls from byte-compiled
+      code to \code{BUILTIN} functions.
 
       \item Various functions in \pkg{stats} and elsewhere that use
       non-standard evaluation are now more careful to follow the
@@ -284,8 +285,8 @@
 
       \item Methods invoked by \code{NextMethod()} had different dynamic
       parent to the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic
-      (\PR{15267}).
+      invoked via lazy evaluation could lose track of their generic.
+      (\PR{15267})
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
