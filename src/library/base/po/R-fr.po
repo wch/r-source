@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2013-03-18 21:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1120,7 +1120,8 @@ msgstr ""
 msgid "cannot import into a sealed namespace"
 msgstr "impossible d'importer vers un espace de noms verrouillé"
 
-msgid "replacing previous import %s when loading %s"
+#, fuzzy
+msgid "replacing previous import by %s when loading %s"
 msgstr "remplacement de l'importation précédente %s lors du chargement de %s"
 
 msgid "invalid import target"
@@ -1163,9 +1164,6 @@ msgstr "noms de symboles dupliqués %s dans useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "mauvaise directive 'S3method' : %s"
-
-msgid "too many 'S3method' directives"
-msgstr "trop de directives 'S3method'"
 
 msgid "unknown namespace directive: %s"
 msgstr "directive inconnue dans l'espace de noms : %s"
@@ -1749,6 +1747,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "trop de directives 'S3method'"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "la matrice doit être carrée pour 'chol'"

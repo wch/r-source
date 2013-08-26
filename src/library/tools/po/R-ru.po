@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -369,6 +369,34 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr "не объявлен вызов 'library' или 'require' из %s"
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+#, fuzzy
+msgid "Namespace in Imports field not imported from: %s"
+msgstr "Определения зависимости имен не требуется: %s"
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
+msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
 msgstr "'data(package=)' не объявлены в:"
@@ -871,6 +899,9 @@ msgid ""
 "similar"
 msgstr ""
 "Включаемая папка R пуста -- возможно, надо установить R-devel.rpm или похожее"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr ""
 
 msgid "no source files found"
 msgstr "не найдено файлов исходников"
@@ -1723,9 +1754,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 
 #~ msgid "Namespace dependencies not required:"
 #~ msgstr "Определения пространства имен не требуются:"
-
-#~ msgid "Namespace dependency not required: %s"
-#~ msgstr "Определения зависимости имен не требуется: %s"
 
 #~ msgid "Package name and namespace differ."
 #~ msgstr "Имена пакета и пространства имен различаются."

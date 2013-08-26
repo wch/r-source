@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2013-03-18 10:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -365,6 +365,34 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+#, fuzzy
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+#, fuzzy
+msgid "Namespace in Imports field not imported from: %s"
+msgstr "Nicht benötigte Namensraumabhängigkeiten: %s"
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
+msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
 msgstr "Aufrufe von 'data(package=)' nicht angemeldet von:"
@@ -868,6 +896,9 @@ msgid ""
 msgstr ""
 "Das R include Verzeichnis ist leer -- evtl. muss das R-devel Paket "
 "installiert werden"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr ""
 
 msgid "no source files found"
 msgstr "kein Quellkode gefunden"
@@ -1701,9 +1732,6 @@ msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "Namespace dependencies not required:"
 #~ msgstr "Nicht benötigte Namensraumabhängigkeiten:"
-
-#~ msgid "Namespace dependency not required: %s"
-#~ msgstr "Nicht benötigte Namensraumabhängigkeiten: %s"
 
 #~ msgid "Package name and namespace differ."
 #~ msgstr "Paketname und Namensraum unterscheiden sich"

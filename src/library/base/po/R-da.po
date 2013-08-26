@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2013-02-02 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1066,7 +1066,8 @@ msgstr "erstatter lokal værdi med import %s når %s indlæses"
 msgid "cannot import into a sealed namespace"
 msgstr "kan ikke importere til et forseglet navnerum"
 
-msgid "replacing previous import %s when loading %s"
+#, fuzzy
+msgid "replacing previous import by %s when loading %s"
 msgstr "erstatter tidligere import %s når %s indlæses"
 
 msgid "invalid import target"
@@ -1106,9 +1107,6 @@ msgstr "duplikerede symbolnavne %s i useDynLib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "ugyldig 'S3method'-direktiv: %s"
-
-msgid "too many 'S3method' directives"
-msgstr "for mange 'S3method'-direktiver"
 
 msgid "unknown namespace directive: %s"
 msgstr "ukendt navnerumsdirektiv: %s"
@@ -1680,6 +1678,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
+
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "for mange 'S3method'-direktiver"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "ikkekvadratisk matrix i 'chol'"

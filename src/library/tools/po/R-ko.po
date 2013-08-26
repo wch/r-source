@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -372,6 +372,31 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr ""
+
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr ""
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+msgid "Namespace in Imports field not imported from: %s"
+msgstr ""
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
 msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
@@ -862,6 +887,9 @@ msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확�
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
+msgstr ""
+
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr ""
 
 msgid "no source files found"

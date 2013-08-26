@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1039,7 +1039,7 @@ msgstr ""
 msgid "cannot import into a sealed namespace"
 msgstr ""
 
-msgid "replacing previous import %s when loading %s"
+msgid "replacing previous import by %s when loading %s"
 msgstr ""
 
 msgid "invalid import target"
@@ -1075,9 +1075,6 @@ msgid "duplicated symbol names %s in useDynLib(\"%s\")"
 msgstr ""
 
 msgid "bad 'S3method' directive: %s"
-msgstr ""
-
-msgid "too many 'S3method' directives"
 msgstr ""
 
 msgid "unknown namespace directive: %s"
