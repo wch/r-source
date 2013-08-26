@@ -59,7 +59,6 @@ SEXP C_xspline(SEXP args);
 
 
 SEXP C_par(SEXP call, SEXP op, SEXP args, SEXP rho);
-SEXP C_new_page();
 SEXP C_plot_new(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP C_locator(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho);

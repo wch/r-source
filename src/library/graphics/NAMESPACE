@@ -1,4 +1,4 @@
-useDynLib(graphics, C_new_page,
+useDynLib(graphics, 
           C_contour, C_contourDef, C_filledcontour, C_image,
           C_persp, C_abline, C_arrows, C_axis, C_box, C_clip,
           C_convertX, C_convertY, C_dend, C_dendwindow, C_erase,

@@ -59,6 +59,7 @@
 \concept{oma}
 \concept{omd}
 \concept{omi}
+\concept{page}
 \concept{pch}
 \concept{pin}
 \concept{plt}
@@ -126,8 +127,8 @@ par(\dots, no.readonly = FALSE)
 
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
   may only be used in queries and cannot be set.  (\code{"cin"},
-  \code{"cra"}, \code{"csi"}, \code{"cxy"} and \code{"din"} are always
-  read-only.)
+  \code{"cra"}, \code{"csi"}, \code{"cxy"}, \code{"din"} and
+  \code{"page"} are always read-only.)
 
   Several parameters can only be set by a call to \code{par()}:
   \itemize{
@@ -472,6 +473,10 @@ par(\dots, no.readonly = FALSE)
       of the device region.}
     \item{\code{omi}}{A vector of the form \code{c(bottom, left, top,
         right)} giving the size of the outer margins in inches.}
+    \item{\code{page}}{\emph{\bold{R.O.}}; A boolean value indicating
+        whether the next call to \code{\link{plot.new}} is going
+        to start a new page.  This value may be \code{FALSE} if there
+        are multiple figures on the page.}
     \item{\code{pch}}{Either an integer specifying a symbol or a single
       character to be used as the default in plotting points.  See
       \code{\link{points}} for possible values and their interpretation.

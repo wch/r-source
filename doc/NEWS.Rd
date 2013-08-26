@@ -77,6 +77,10 @@
       and \code{postscriipt()} devices.  This will only be rendered
       correctly on viewers which have access to Monotype TrueType fonts
       (but are sometimes requested by journals).
+
+      \item There is a new read-only \code{par()} parameter called
+      \code{"page"}, which returns a logical value indicating whether
+      the next \code{plot.new()} call will start a new page.
     }
   }
 

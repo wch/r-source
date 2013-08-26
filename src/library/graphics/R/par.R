@@ -28,7 +28,7 @@
 	   "font", "font.axis", "font.lab", "font.main", "font.sub",
            "lab", "las", "lend", "lheight", "ljoin", "lmitre", "lty", "lwd",
            "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
-	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
+	   "new", "oma", "omd", "omi", "page", "pch", "pin", "plt", "ps", "pty",
 	   "smo", "srt", "tck", "tcl", "usr",
 	   "xaxp", "xaxs", "xaxt",  "xpd",
 	   "yaxp", "yaxs", "yaxt", "ylbias"
@@ -39,7 +39,7 @@
 
 par <- function (..., no.readonly = FALSE)
 {
-    .Pars.readonly <- c("cin","cra","csi","cxy","din")
+    .Pars.readonly <- c("cin","cra","csi","cxy","din","page")
     single <- FALSE
     args <- list(...)
     if (!length(args))

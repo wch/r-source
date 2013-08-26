@@ -78,7 +78,6 @@ typedef enum {
 #define GMMathText		Rf_GMMathText
 #define GMode			Rf_GMode
 #define GMtext			Rf_GMtext
-#define GNewPage		Rf_GNewPage
 #define GNewPlot		Rf_GNewPlot
 #define GPath   		Rf_GPath
 #define GPolygon		Rf_GPolygon
