@@ -133,10 +133,6 @@ default.stringsAsFactors()
 L3 <- LETTERS[1:3]
 fac <- sample(L3, 10, replace = TRUE)
 (d <- data.frame(x = 1, y = 1:10, fac = fac))
-\dontshow{% formerly, example was  data.frame(cbind(.,.), fac):
-stopifnot(identical(within(d, y <- as.numeric(y)),
-		data.frame(cbind(x = 1, y = 1:10), fac)))
-}
 ## The "same" with automatic column names:
 data.frame(1, 1:10, sample(L3, 10, replace = TRUE))
 
