@@ -30,6 +30,7 @@
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CallMethodDef CallEntries[] = {
+    CALLDEF(C_new_page, 0),
     CALLDEF(C_contourDef, 0),
     CALLDEF(C_StemLeaf, 4),
     CALLDEF(C_BinCount, 4),

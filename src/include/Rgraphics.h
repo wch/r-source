@@ -78,6 +78,7 @@ typedef enum {
 #define GMMathText		Rf_GMMathText
 #define GMode			Rf_GMode
 #define GMtext			Rf_GMtext
+#define GNewPage		Rf_GNewPage
 #define GNewPlot		Rf_GNewPlot
 #define GPath   		Rf_GPath
 #define GPolygon		Rf_GPolygon
@@ -143,7 +144,8 @@ void GCheckState(pGEDevDesc);
  * Set to 0 when don't want drawing to go ahead */
 void GSetState(int, pGEDevDesc);
 
-
+/* Is plot.new() going to start a new page ? */
+int GNewPage();
 
 /*-------------------------------------------------------------------
  *

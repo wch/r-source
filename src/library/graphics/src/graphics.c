@@ -1741,6 +1741,24 @@ Rboolean GRecording(SEXP call, pGEDevDesc dd)
     return GErecording(call, dd);
 }
 
+/* Will GNewPlot() produce new page ? 
+ * MUST be kept in synch with logic of GNewPlot below 
+ */
+int GNewPage() 
+{
+    pGEDevDesc dd;
+    int result = 0;
+    dd = GEcurrentDevice();
+    if (gpptr(dd)->new) {
+        if (!gpptr(dd)->state) 
+            result = 1;
+    } else {
+	if (gpptr(dd)->currentFigure + 1 > gpptr(dd)->lastFigure) 
+            result = 1;
+    }
+    return result;
+}
+
 /*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
 pGEDevDesc GNewPlot(Rboolean recording)
 {
