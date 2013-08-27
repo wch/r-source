@@ -245,7 +245,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundin
             r = (r * 1e+303)/pow(10.0, (double)(kp+303));
         else
             r /= pow(10.0, (double)kp);
-        if ((R_print.digits && r < tbl[R_print.digits]) {
+        if (R_print.digits && r < tbl[R_print.digits]) {
             r *= 10.0;
             kp--;
         }
