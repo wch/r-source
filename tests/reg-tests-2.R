@@ -2742,9 +2742,14 @@ load(file.path(Sys.getenv('SRCDIR'), 'arima.rda'))
 (f1 <- arima(x, xreg = xreg, order = c(1,1,1), seasonal = c(1,0,1)))
 (f2 <- arima(diff(x), xreg = diff(xreg), order = c(1,0,1), seasonal = c(1,0,1),
              include.mean = FALSE))
-stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.attributes = FALSE))
+stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.names = FALSE))
 ## first gave local optim in 3.0.1
 
+## all.equal always checked the names
+x <- c(a=1, b=2)
+y <- c(a=1, d=2)
+all.equal(x, y, check.names = FALSE)
+## failed on mismatched attributes
 
 ## PR#15411, plus digits change
 format(9992, digits = 3)

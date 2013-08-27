@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -275,7 +275,11 @@ attr.all.equal <- function(target, current,
                 msg <- c(msg, "names for target but not for current")
             else msg <- c(msg, "names for current but not for target")
         }
+    } else {
+	ax[["names"]] <- NULL
+	ay[["names"]] <- NULL
     }
+	
     if(check.attributes && (length(ax) || length(ay))) {# some (more) attributes
 	## order by names before comparison:
 	nx <- names(ax)
