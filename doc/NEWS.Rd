@@ -443,6 +443,9 @@
       
       \item \code{format()} sometimes added unnecessary spaces. 
       (\PR{15411})
+      
+      \item \code{all.equal(check.names = FALSE)} would ignore the request
+      to ignore the names and would check them as attributes.
     }
   }
 }
