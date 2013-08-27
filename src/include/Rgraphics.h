@@ -143,9 +143,6 @@ void GCheckState(pGEDevDesc);
  * Set to 0 when don't want drawing to go ahead */
 void GSetState(int, pGEDevDesc);
 
-/* Is plot.new() going to start a new page ? */
-int GNewPage();
-
 /*-------------------------------------------------------------------
  *
  *  GRAPHICAL PRIMITIVES are the generic front-end for the functions
