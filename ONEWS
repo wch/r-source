@@ -6205,3 +6205,15 @@ CHANGES IN R VERSION 2.10.0:
       objects with a Latin-1 or UTF-8 encoding would corrupt the
       CHARSXP cache.
 
+
+	*********************************************************
+	*							*
+	*	News of 2.9.2 and earlier is in file 'OONEWS'	*
+	*							*
+	*********************************************************
+
+
+%%% Local Variables:
+%%% mode: text
+%%% coding: utf-8
+%%% End:
