@@ -2744,3 +2744,11 @@ load(file.path(Sys.getenv('SRCDIR'), 'arima.rda'))
              include.mean = FALSE))
 stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.attributes = FALSE))
 ## first gave local optim in 3.0.1
+
+
+## PR#15411, plus digits change
+format(9992, digits = 3)
+format(9996, digits = 3)
+format(0.0002, digits = 0, nsmall = 2)
+format(pi*10, digits = 0, nsmall = 1)
+## second added an extra space; 3rd and 4th were not allowed.

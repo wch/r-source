@@ -7170,3 +7170,15 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 > stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.attributes = FALSE))
 > ## first gave local optim in 3.0.1
 > 
+> 
+> ## PR#15411, plus digits change
+> format(9992, digits = 3)
+[1] "9992"
+> format(9996, digits = 3)
+[1] "9996"
+> format(0.0002, digits = 0, nsmall = 2)
+[1] "0.00"
+> format(pi*10, digits = 0, nsmall = 1)
+[1] "31.4"
+> ## second added an extra space; 3rd and 4th were not allowed.
+> 
