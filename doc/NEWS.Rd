@@ -95,6 +95,10 @@
       
       \item \code{format()} now supports \code{digits = 0}, to
       display \code{nsmall} decimal places.
+
+      \item There is a new read-only \code{par()} parameter called
+      \code{"page"}, which returns a logical value indicating whether
+      the next \code{plot.new()} call will start a new page.
     }
   }
 
