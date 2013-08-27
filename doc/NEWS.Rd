@@ -446,6 +446,9 @@
       
       \item \code{all.equal(check.names = FALSE)} would ignore the request
       to ignore the names and would check them as attributes.
+      
+      \item The symbol set by \code{tools::Rd2txt_options(itemBullet=)}
+      was not respected in some locales. (\PR{15435})
     }
   }
 }
