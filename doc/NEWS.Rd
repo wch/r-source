@@ -17,7 +17,7 @@
       elements).
 
       \item The \code{example()} and \code{tools::Rd2ex()} functions now
-      have parameters to allow them to ignore \verb{\dontrun} markup in
+      have parameters to allow them to ignore \code{\\dontrun} markup in
       examples.  (Suggested by Peter Solymos.)
 
       \item \code{str(x)} is considerably faster for very large lists,
@@ -211,15 +211,15 @@
       \code{--no-byte-compile} which will override a \samp{ByteCompile}
       field in the package's \file{DESCRIPTION} file.
 
-      \item License \code{BSD} is deprecated: use \sQuote{BSD_3_clause}
-      or \sQuote{BSD_2_clause} instead.
+      \item License \samp{BSD} is deprecated: use \samp{BSD_3_clause}
+      or \samp{BSD_2_clause} instead.
 
-      License \code{X11} is deprecated: use \sQuote{MIT} or
-      \sQuote{BSD_2_clause} instead.
+      License \samp{X11} is deprecated: use \samp{MIT} or
+      \samp{BSD_2_clause} instead.
 
       \item Version requirements for \code{LinkingTo} packages are now
-      recognized: they are checked at installation.  (They were
-      previously silently ignored.)
+      recognized: they are checked at installation.  (Fields with
+      version requirements were previously silently ignored.)
 
       \item The limit of 500 \code{S3method} entries in a
       \code{NAMESPACE} file has been removed.
@@ -235,7 +235,7 @@
       Note that \file{Rdefines.h} is not kept up-to-date, and
       \file{Rinternals.h} is preferred for new code.
 
-      \item \code{eval} and \code{applyClosure} qre now protected
+      \item \code{eval} and \code{applyClosure} are now protected
       against package code supplying an invalid \code{rho}.
     }
   }
@@ -313,15 +313,16 @@
 
       \item Two warning/error messages have been corrected:
       the (optional) warning produced by a partial name match
-      with a pairlist, the error message from a zero length argument to
+      with a pairlist, the error message from a zero-length argument to
       the \code{:} operator.  (Found by Radford Neal; \PR{15358},
       \PR{15356})
 
       \item \code{svd()} returned \code{NULL} rather than omitting
       components as documented.  (Found by Radford Neal; \PR{15360})
 
-      \item \code{mclapply()} and \code{mcparallel()} with \code{silent
-      = TRUE} could break a process that uses \code{stdout} output
+      \item \code{mclapply()} and \code{mcparallel()} with
+      \code{silent = TRUE} could break a process that uses
+      \code{stdout} output
       unguarded against broken pipes (e.g., \code{zip} will fail
       silently). To work around such issues, they now replace
       \code{stdout} with a descriptor pointed to \file{/dev/null}
@@ -384,7 +385,7 @@
       integer, although unary \code{-} did.
 
       \item \code{na.omit()} and \code{na.exclude()} added a row
-      to a zero row data frame.  (\PR{15399})
+      to a zero-row data frame.  (\PR{15399})
 
       \item All the (where necessary cut-down) vignettes are installed
       if \R was configured with \option{--without-recommended-packages}.
@@ -397,7 +398,7 @@
 
       \item (Windows only) Starting \R with \command{R} (instead of
       \command{Rterm} or \command{Rgui}) would lose any
-      zero length strings from the command line arguments. (\PR{15406})
+      zero-length strings from the command line arguments. (\PR{15406})
 
       \item Errors in the encoding specified on the command line via
       \command{--encoding=foo} were not handled properly.  (\PR{15405})
