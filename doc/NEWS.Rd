@@ -92,6 +92,9 @@
       \item \code{termplot()} now has an argument \code{transform.x}
       to control the display of individual terms in the plot.
       (\PR{15329})
+      
+      \item \code{format()} now supports \code{digits = 0}, to
+      display \code{nsmall} decimal places.
     }
   }
 
@@ -436,6 +439,9 @@
 
       \item \code{list.dirs(full.names = FALSE)} was not implemented.
       (\PR{15170})
+      
+      \item \code{format()} sometimes added unnecessary spaces. 
+      (\PR{15411})
     }
   }
 }

@@ -81,7 +81,7 @@ void R_PV(SEXP s);
 
 #define R_MIN_WIDTH_OPT		10
 #define R_MAX_WIDTH_OPT		10000
-#define R_MIN_DIGITS_OPT	1
+#define R_MIN_DIGITS_OPT	0
 #define R_MAX_DIGITS_OPT	22
 
 #endif

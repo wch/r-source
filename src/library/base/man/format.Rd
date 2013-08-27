@@ -105,7 +105,8 @@ format(x, \dots)
   Numeric vectors are encoded with the minimum number of decimal places
   needed to display all the elements to at least the \code{digits}
   significant digits.  However, if all the elements then have trailing
-  zeroes, the number of decimal places is reduced until at least one
+  zeroes, the number of decimal places is reduced until 
+  \code{nsmall} is reached or at least one
   element has a non-zero final digit; see also the argument
   documentation for \code{big.*}, \code{small.*} etc, above.  See the
   note in \code{\link{print.default}} about \code{digits >= 16}.
