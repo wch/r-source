@@ -814,8 +814,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = NULL)
     impnames <- names(impvars)
     if (anyDuplicated(impnames)) {
         stop(gettextf("duplicate import names %s",
-                      paste(impnames[duplicated(impnames)], collapse = ", ")),
-             domain = NA)
+                      paste(sQuote(impnames[duplicated(impnames)]),
+                            collapse = ", ")), domain = NA)
     }
     if (isNamespace(self) && isBaseNamespace(self)) {
         impenv <- self
@@ -1222,7 +1222,9 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 
                        dup <- duplicated(names(symNames))
                        if (any(dup))
-                           warning(gettextf("duplicated symbol names %s in useDynLib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
+                           warning(gettextf("duplicate symbol names %s in useDynLib(\"%s\")",
+                                            paste(sQuote(names(symNames)[dup]),
+                                                  collapse = ", "), dyl),
                                    domain = NA)
 
                        symNames <- symNames[!dup]
