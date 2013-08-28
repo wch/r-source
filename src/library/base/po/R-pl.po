@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2382,7 +2382,8 @@ msgstr "pusta nazwa w dyrektywie '%s' w pliku 'NAMESPACE'"
 # src/library/base/R/namespace.R: 1206
 # warning(gettextf("duplicated symbol names %s in useDynLib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
 #                                    domain = NA)
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "powtórzone nazwy symboli %s w 'useDynlib(\"%s\")'"
 
 # src/library/base/R/namespace.R: 1254

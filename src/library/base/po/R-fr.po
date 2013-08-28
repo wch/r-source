@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: 2013-03-18 21:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1159,7 +1159,8 @@ msgstr "le package %s n'a aucun fichier 'NAMESPACE'"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "nom vide dans la directive '%s' dans le fichier 'NAMESPACE'"
 
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "noms de symboles dupliqués %s dans useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"

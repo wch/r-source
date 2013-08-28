@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: 2013-03-02 09:39+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1128,7 +1128,8 @@ msgstr " パッケージ %s には 'NAMESPACE' ファイルがありません "
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr " 'NAMESPACE' ファイル中のディレクティブ '%s' 中には名前がありません "
 
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr " 重複したシンボル名 %s が useDynlib(\"%s\") 中に見つかりました "
 
 msgid "bad 'S3method' directive: %s"

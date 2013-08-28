@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: 2013-02-02 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1102,7 +1102,8 @@ msgstr "pakke %s har ikke en 'NAMESPACE'-fil"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "tomt navn i direktiv '%s' i 'NAMESPACE'-fil"
 
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "duplikerede symbolnavne %s i useDynLib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
