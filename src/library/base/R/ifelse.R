@@ -18,8 +18,21 @@
 
 ifelse <- function (test, yes, no)
 {
-    if(is.atomic(test)) # do not lose attributes
-	storage.mode(test) <- "logical"
+    if(is.atomic(test)) { # do not lose attributes
+        if (typeof(test) != "logical")
+            storage.mode(test) <- "logical"
+        ## quick return for cases where 'ifelse(a, x, y)' is used
+        ## instead of 'if (a) x else y'
+        if (length(test) == 1) {
+            if (is.na(test)) return(NA)
+            else if (test) {
+                if (length(yes) == 1 && is.null(attributes(yes)))
+                    return(yes)
+            }
+            else if (length(no) == 1 && is.null(attributes(no)))
+                return(no)
+        }
+    }
     else ## typically a "class"; storage.mode<-() typically fails
 	test <- if(isS4(test)) as(test, "logical") else as.logical(test)
     ans <- test
