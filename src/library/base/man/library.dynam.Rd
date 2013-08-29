@@ -1,6 +1,6 @@
 % File src/library/base/man/library.dynam.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
@@ -58,6 +58,9 @@ library.dynam.unload(chname, libpath,
   package's \file{libs} directory.  See the \dQuote{Windows} section of
   the help on \code{\link{dyn.load}} for how to control where dependent
   DLLs are found.
+
+  See \code{\link{dyn.load}} for comments about diagnostic messages
+  which may be seen on Windows.
 #endif
 
   \code{library.dynam.unload} is designed for use in
@@ -66,9 +69,6 @@ library.dynam.unload(chname, libpath,
 
   \code{.dynLibs} is used for getting (with no argument) or setting the
   DLLs which are currently loaded by packages (using \code{library.dynam}).
-
-  \code{lib.loc} should contain absolute paths: versions of \R prior to
-  2.12.0 may get confused by relative paths.
 }
 \value{
    If \code{chname} is not specified, \code{library.dynam} returns an
