@@ -167,6 +167,7 @@ static void format_via_sprintf(double r, int d, int *kpower, int *nsig)
 }
 
 
+#if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 static const long double tbl[] =
 {
     /* Powers exactly representable with 64 bit mantissa (except the first, which is only used with digits=0) */
@@ -175,8 +176,18 @@ static const long double tbl[] =
     1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
     1e20, 1e21, 1e22, 1e23, 1e24, 1e25, 1e26, 1e27
 };
+#else
+static const double tbl[] =
+{
+    1e-1, 
+    1e00, 1e01, 1e02, 1e03, 1e04, 1e05, 1e06, 1e07, 1e08, 1e09,
+    1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19,
+    1e20, 1e21, 1e22
+};
+#endif
 
-static void scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
+static void 
+scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
 {
     /* for a number x , determine
      *	sgn    = 1_{x < 0}  {0/1}
@@ -232,9 +243,10 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundin
 	   alpha already rounded to 64 bits */
         alpha = (double) R_nearbyintl(r_prec);
 #else
+	double r_prec = r;
         /* use exact scaling factor in double precision, if possible */
         if (abs(kp) <= 22) {
-            if (kp >= 0) r /= tbl[kp+1]; else r *= tbl[ -kp+1];
+            if (kp >= 0) r_prec /= tbl[kp+1]; else r_prec *= tbl[ -kp+1];
         }
         /* on IEEE 1e-308 is not representable except by gradual underflow.
            Shifting by 303 allows for any potential denormalized numbers x,
@@ -242,16 +254,17 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundin
            is in range. Representation of 1e+303 has low error.
          */
         else if (kp <= R_dec_min_exponent)
-            r = (r * 1e+303)/pow(10.0, (double)(kp+303));
+            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
         else
-            r /= pow(10.0, (double)kp);
-        if (R_print.digits && r < tbl[R_print.digits]) {
-            r *= 10.0;
+            r_prec /= pow(10.0, (double)kp);
+        if (r_prec < tbl[R_print.digits]) {
+            r_prec *= 10.0;
             kp--;
         }
         /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits */
-        /* accuracy limited by double rounding problem, alpha already rounded to 53 bits */
-        alpha = R_nearbyint(r);
+        /* accuracy limited by double rounding problem, 
+	   alpha already rounded to 53 bits */
+        alpha = R_nearbyint(r_prec);
 #endif
         *nsig = R_print.digits;
         for (j = 1; j <= R_print.digits; j++) {
