@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-10 r63530) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-28 r63747) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7177,6 +7177,7 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 [1] TRUE
 > ## failed on mismatched attributes
 > 
+> 
 > ## PR#15411, plus digits change
 > format(9992, digits = 3)
 [1] "9992"
@@ -7187,4 +7188,12 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 > format(pi*10, digits = 0, nsmall = 1)
 [1] "31.4"
 > ## second added an extra space; 3rd and 4th were not allowed.
+> 
+> ## and one branch of this was wrong:
+> xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,
++         1016450281, 1178703303, 1324731023, 1454533441)
+> xx
+ [1]  -86870268  107833358  302536985  481015309  675718935  854197259
+ [7] 1016450281 1178703303 1324731023 1454533441
+> ## dropped spaces without long doubles
 > 
