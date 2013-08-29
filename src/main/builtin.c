@@ -662,19 +662,26 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP list, names;
+    SEXP list, names, next;
     int i, n, havenames;
-    havenames = 0;
-    n = length(args);
+
+    /* compute number of args and check for names */
+    for (next = args, n = 0, havenames = FALSE;
+	 next != R_NilValue;
+	 next = CDR(next)) {
+	if (TAG(next) != R_NilValue)
+	    havenames = TRUE;
+	n++;
+    }
+
     PROTECT(list = allocVector(VECSXP, n));
-    PROTECT(names = allocVector(STRSXP, n));
+    PROTECT(names = havenames ? allocVector(STRSXP, n) : R_NilValue);
     for (i = 0; i < n; i++) {
-	if (TAG(args) != R_NilValue) {
-	    SET_STRING_ELT(names, i, PRINTNAME(TAG(args)));
-	    havenames = 1;
-	}
-	else {
-	    SET_STRING_ELT(names, i, R_BlankString);
+	if (havenames) {
+	    if (TAG(args) != R_NilValue)
+		SET_STRING_ELT(names, i, PRINTNAME(TAG(args)));
+	    else
+		SET_STRING_ELT(names, i, R_BlankString);
 	}
 	if (NAMED(CAR(args)))
 	    SET_VECTOR_ELT(list, i, duplicate(CAR(args)));
