@@ -1666,6 +1666,10 @@
   }
 }
 
-\section{CHANGES in \R 2.x.y}{
-  Older news can be found in top-level file \file{ONEWS} in the \R sources.
-}
+%% news() makes incorrect assumptions here
+%% \section{CHANGES in \R 2.x.y}{
+%%   \itemize{
+%%     \item 
+%%     Older news can be found in top-level file \file{ONEWS} in the \R sources.
+%%   }
+%% }
