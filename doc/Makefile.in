@@ -65,6 +65,28 @@ PDFLATEX = @PDFLATEX@
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
 	fi
 
+docs2: NEWS.rds NEWS.2 NEWS.2.html NEWS.2.pdf
+
+NEWS.2.rds: $(srcdir)/NEWS.2.Rd
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\"), stages = 'install'), 'NEWS.2.rds')" | $(R_EXE)
+
+## NB: this is only the top part of NEWS.2 in the sources.
+NEWS.2: NEWS.2.rds
+	@$(ECHO) "creating NEWS.2"
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.2.rds", "NEWS.2")' |  $(R_EXE)
+
+NEWS.2.html: NEWS.2.rds
+	@$(ECHO) "creating NEWS.2.html"
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.html")' |  $(R_EXE)
+
+NEWS.2.pdf: NEWS.2.rds
+	@if test -z "$(PDFLATEX)"; then \
+	  $(ECHO) "'pdflatex' is needed to make NEWS.2.pdf but is missing on your system."; \
+	else \
+	 $(ECHO) "creating NEWS.2.pdf"; \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.2.rds", "NEWS.2.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	fi
+
 
 install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \
@@ -120,7 +142,7 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
-	-@rm -f NEWS.rds
+	-@rm -f NEWS.rds NEWS.2 NEWS.2.html NEWS.2.pdf
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \

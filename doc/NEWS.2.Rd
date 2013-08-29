@@ -6979,5 +6979,6 @@
 }
 
 \section{OLDER NEWS}{
-  Older news can be found in top-level file \file{OONEWS} in the \R sources.
+  News for \R 2.9.2 patched and earlier can be found in top-level files
+  such as \file{NEWS.2} in the \R sources.
 }
