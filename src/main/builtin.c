@@ -684,9 +684,8 @@ SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_STRING_ELT(names, i, R_BlankString);
 	}
 	if (NAMED(CAR(args)))
-	    SET_VECTOR_ELT(list, i, duplicate(CAR(args)));
-	else
-	    SET_VECTOR_ELT(list, i, CAR(args));
+	    INCREMENT_NAMED(CAR(args));
+	SET_VECTOR_ELT(list, i, CAR(args));
 	args = CDR(args);
     }
     if (havenames) {
