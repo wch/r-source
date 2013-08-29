@@ -1818,12 +1818,6 @@ static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
     return installAssignFcnSymbol(fun);
 }
 
-#define INCREMENT_NAMED(x) do {				\
-	SEXP __x__ = (x);				\
-	if (NAMED(__x__) != 2)				\
-	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
-    } while (0)
-
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, afun, rhsprom;
