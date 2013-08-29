@@ -357,6 +357,6 @@ INSTFILES = README \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-plot-latin1.pdf.save \
+	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  encodings.R utf8-regex.R \
 	  nanbug.rda WinUnicode.dat
