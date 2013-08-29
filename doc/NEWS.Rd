@@ -10,6 +10,12 @@
 \section{\Rlogo CHANGES IN R 3.0.2}{
   \subsection{NEW FEATURES}{
     \itemize{
+      \item The \file{NEWS} files have been re-organized.
+
+      This file contains news for \R >= 3.0.0: news for the 0.x.y, 1.x.y
+      and 2.x.y releases is in files \file{NEWS.0}, \file{NEWS.1} and
+      \file{NEWS.2} in the sources.
+      
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -1670,6 +1676,6 @@
 %% \section{CHANGES in \R 2.x.y}{
 %%   \itemize{
 %%     \item 
-%%     Older news can be found in top-level file \file{ONEWS} in the \R sources.
+%%     Older news can be found in top-level file \file{NEWS.2} in the \R sources.
 %%   }
 %% }
