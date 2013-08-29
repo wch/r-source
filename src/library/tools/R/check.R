@@ -3825,6 +3825,7 @@ setRlibs <-
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
         Sys.setenv("_R_CHECK_REPLACING_IMPORTS_" = "TRUE")
+        Sys.setenv("_R_CHECK_CRAN_INCOMING_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev))  Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         R_check_vc_dirs <- TRUE

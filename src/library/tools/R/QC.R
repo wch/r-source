@@ -5162,6 +5162,8 @@ function(package, dir, lib.loc = NULL)
 format.check_packages_used <-
 function(x, ...)
 {
+    incoming <- identical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"),
+                          "TRUE")
     c(character(),
       if(length(xx <- x$imports)) {
           if(length(xx) > 1L) {
@@ -5225,6 +5227,13 @@ function(x, ...)
       if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(incoming) {
+              base <- unlist(.get_standard_package_names()[c("base", "recommended")])
+              if (any(xx %in% base))
+                  msg <- c(msg,
+                           "  Including base/recommended package(s):",
+                           .pretty_format(intersect(base, xx)))
+          }
           if(length(xx) > 1L) {
               c(gettext("Namespaces with unexported objects imported by ':::' calls:"),
                 .pretty_format(sort(xx)), msg)
