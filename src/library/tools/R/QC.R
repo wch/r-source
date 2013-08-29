@@ -5106,8 +5106,10 @@ function(package, dir, lib.loc = NULL)
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
+    imp3 <- unique(imp3)
+    imp3self <- pkg_name %in% imp3
+    imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
-        imp3 <- unique(imp3)
         ## remove other packages which have the same maintainer,
         ## but report references to itself.
         maintainers <-
@@ -5117,14 +5119,14 @@ function(package, dir, lib.loc = NULL)
                        if(dfile == "") return("")
                        .read_description(dfile)["Maintainer"]
                    })
-        imp3 <- imp3[(maintainers != db["Maintainer"]) | (imp3 == pkg_name)]
+        imp3 <- imp3[(maintainers != db["Maintainer"])]
     }
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
-                imp3 = imp3,
+                imp3 = imp3, imp3self = imp3self,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5184,8 +5186,7 @@ function(x, ...)
       },
       if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
           msg <- c("See the note in ?`:::` about the use of this operator.",
-                   ":: should be used rather than ::: if the function is exported,",
-                   "and a package almost never needs to use ::: for its own functions.")
+                   ":: should be used rather than ::: if the function is exported.")
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
               c(gettext("Namespaces imported from by ':::' calls:"),
@@ -5194,6 +5195,12 @@ function(x, ...)
               c(gettextf("Namespace imported from by a ':::' call: %s",
                          sQuote(xx)), msg)
           }
+      },
+      if(identical(x$imp3self, TRUE)) {
+          msg <-
+              c("There are ::: calls to the package's namespace in its code.",
+                "A package almost never needs to use ::: for its own objects.")
+          strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L)
       },
       if(length(xx <- x$data)) {
           if(length(xx) > 1L) {
