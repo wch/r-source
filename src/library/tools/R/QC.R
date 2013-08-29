@@ -4997,7 +4997,7 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- all_imports <- imp3 <- character()
+    bad_imports <- all_imports <- imp3 <- imp3f <- character()
     bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
@@ -5039,6 +5039,7 @@ function(package, dir, lib.loc = NULL)
                 pkg <- deparse(e[[2L]])
                 all_imports <<- c(all_imports, pkg)
                 imp3 <<- c(imp3, pkg)
+                imp3f <<- c(imp3f, deparse(e[[3L]]))
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
@@ -5106,6 +5107,7 @@ function(package, dir, lib.loc = NULL)
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
+    names(imp3f) <- imp3
     imp3 <- unique(imp3)
     imp3self <- pkg_name %in% imp3
     imp3 <- setdiff(imp3, pkg_name)
@@ -5120,13 +5122,38 @@ function(package, dir, lib.loc = NULL)
                        .read_description(dfile)["Maintainer"]
                    })
         imp3 <- imp3[(maintainers != db["Maintainer"])]
-    }
+        imp3f <- imp3f[names(imp3f) %in% imp3]
+        imps <- split(imp3f, names(imp3f))
+        imp2 <- imp3 <- unknown <- character()
+        for (p in names(imps)) {
+            if (p %in% "base") {
+                imp2 <- c(imp2, p)
+                next
+            }
+            ns <- .getNamespace(p)
+            value <- if(is.null(ns)) {
+                ## this could be noisy
+                tryCatch(suppressWarnings(loadNamespace(p)),
+                         error = function(e) e)
+            } else NULL
+            if (inherits(value, "error")) {
+                unknown <- c(unknown, p)
+            } else {
+                exps <- ls(envir = getNamespaceInfo(p, "exports"),
+                           all.names = TRUE)
+                this <- imps[[p]]
+                if (any(this %in% exps)) imp2 <- c(imp2, p)
+                if (any(! this %in% exps)) imp3 <- c(imp3, p)
+            }
+        }
+    } else imp2 <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
-                imp3 = imp3, imp3self = imp3self,
+                imp2 = imp2, imp3 = imp3, imp3self = imp3self,
+                imp3unknown = unknown,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5184,15 +5211,25 @@ function(x, ...)
                          sQuote(xx)), msg)
           }
       },
-      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
-          msg <- c("See the note in ?`:::` about the use of this operator.",
-                   ":: should be used rather than ::: if the function is exported.")
+      if(length(xx <- x$imp2)) { ## ' ' seems to get converted to dir quotes
+          msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
-              c(gettext("Namespaces imported from by ':::' calls:"),
+              c(gettext("Namespaces imported from by ':::' calls which should be '::':"),
                 .pretty_format(sort(xx)), msg)
           } else {
-              c(gettextf("Namespace imported from by a ':::' call: %s",
+              c(gettextf("Namespace imported from by a ':::' call which should be '::': %s",
+                         sQuote(xx)), msg)
+          }
+      },
+      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
+          msg <- "See the note in ?`:::` about the use of this operator."
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(length(xx) > 1L) {
+              c(gettext("Namespaces with unexported objects imported by ':::' calls:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Namespace with unexported objects imported by a ':::' call: %s",
                          sQuote(xx)), msg)
           }
       },
@@ -5201,6 +5238,17 @@ function(x, ...)
               c("There are ::: calls to the package's namespace in its code.",
                 "A package almost never needs to use ::: for its own objects.")
           strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L)
+      },
+      if(length(xx <- x$imp3unknown)) {
+          msg <- "See the note in ?`:::` about the use of this operator."
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(length(xx) > 1L) {
+              c(gettext("Unavailable namespaces imported from by ':::' calls:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Unavailable namespace imported from by a ':::' call: %s",
+                         sQuote(xx)), msg)
+          }
       },
       if(length(xx <- x$data)) {
           if(length(xx) > 1L) {
