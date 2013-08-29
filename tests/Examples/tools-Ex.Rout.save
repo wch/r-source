@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-19 r63621) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -100,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x32cec28>
+<environment: 0x2eaffd8>
 
 $showURLs
 [1] FALSE
@@ -134,7 +134,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x32cec28>
+<environment: 0x2eaffd8>
 
 $showURLs
 [1] FALSE
@@ -168,7 +168,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 0x32cec28>
+<environment: 0x2eaffd8>
 
 $showURLs
 [1] FALSE
@@ -289,7 +289,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3876a68>
+<environment: 0x3828048>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1059,7 +1059,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.243 0.008 0.252 0 0 
+Time elapsed:  0.225 0.009 0.234 0 0 
 > grDevices::dev.off()
 null device 
           1 
