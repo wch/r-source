@@ -1669,10 +1669,14 @@
   }
 }
 
-%% news() makes incorrect assumptions here
-%% \section{CHANGES in \R 2.x.y}{
-%%   \itemize{
-%%     \item 
-%%     Older news can be found in top-level file \file{NEWS.2} in the \R sources.
-%%   }
-%% }
+\section{CHANGES in previous versions}{
+   \itemize{
+     \item 
+     Older news can be found in text format in files 
+     \ifelse{html}{\href{/NEWS.0}{NEWS.0}, \href{/NEWS.1}{NEWS.1} 
+     and \href{/NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and 
+     \file{NEWS.2}} in the \R home directory.  News in HTML format for 
+     \R  versions from 2.10.0 to 2.15.3 is in 
+     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
+   }
+ }
