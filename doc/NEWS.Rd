@@ -168,9 +168,6 @@
 	\emph{via} the \file{NAMESPACE} file (except the standard
 	packages).  Objects used from \samp{Depends} packages should be
 	imported to avoid conflicts.
-
-	\item namespaces imported \emph{via} \code{:::} calls are
-	reported.  (Many of these should be \code{::} calls.)
       }
       See \sQuote{Writing R Extensions} for good practice.
       

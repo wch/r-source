@@ -4818,7 +4818,7 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- all_imports <- imp3 <- character()
+    bad_imports <- all_imports <- character()
     bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
@@ -4859,7 +4859,6 @@ function(package, dir, lib.loc = NULL)
             } else if(Call %in% ":::") {
                 pkg <- deparse(e[[2L]])
                 all_imports <<- c(all_imports, pkg)
-                imp3 <<- c(imp3, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
@@ -4932,7 +4931,6 @@ function(package, dir, lib.loc = NULL)
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
-                imp3 = unique(imp3),
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -4987,19 +4985,6 @@ function(x, ...)
                 .pretty_format(sort(xx)), msg)
           } else {
               c(gettextf("Package in Depends field not imported from: %s",
-                         sQuote(xx)), msg)
-          }
-      },
-      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
-          msg <- c("See the note in ?`:::` about the use of this operator.",
-                   ":: should be used rather than ::: if the function is exported,",
-                   "and a package almost never needs to use ::: for its own functions.")
-          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
-          if(length(xx) > 1L) {
-              c(gettext("Namespaces imported from by ':::' calls:"),
-                .pretty_format(sort(xx)), msg)
-          } else {
-              c(gettextf("Namespace imported from by a ':::' call: %s",
                          sQuote(xx)), msg)
           }
       },
