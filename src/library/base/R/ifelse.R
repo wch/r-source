@@ -23,7 +23,7 @@ ifelse <- function (test, yes, no)
             storage.mode(test) <- "logical"
         ## quick return for cases where 'ifelse(a, x, y)' is used
         ## instead of 'if (a) x else y'
-        if (length(test) == 1) {
+        if (length(test) == 1 && is.null(attributes(test))) {
             if (is.na(test)) return(NA)
             else if (test) {
                 if (length(yes) == 1 && is.null(attributes(yes)))
