@@ -55,11 +55,14 @@ Duncan Murdoch
 \code{\link{Rd2txt}}
 }
 \examples{
+\donttest{
+# The itemBullet is locale-specific
 saveOpts <- Rd2txt_options()
 saveOpts
 Rd2txt_options(minIndent = 4)
 Rd2txt_options()
 Rd2txt_options(saveOpts)
 Rd2txt_options()
+}
 }
 \keyword{  documentation  }
