@@ -10,12 +10,11 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = COPYING
+INSTFILES = COPYING NEWS.2 NEWS.1 NEWS.0
 ## plus NEWS and NEWS.pdf, but need to wait until they are generated
 NON_SVN_INSTFILES = SVN-REVISION
 DISTFILES = $(INSTFILES) \
-	ChangeLog INSTALL NEWS.2 NEWS.1 NEWS.0 \
-	README VERSION VERSION-NICK \
+	ChangeLog INSTALL README VERSION VERSION-NICK \
 	Makeconf.in Makefile.in Makefile.fw \
 	config.site configure configure.ac
 SUBDIRS = m4 tools doc etc share src tests

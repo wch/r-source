@@ -9,7 +9,8 @@
 
 \section{LATER NEWS}{
   News for \R 3.0.0 and later can be found in file \file{NEWS.Rd} in the
-  \R sources.
+  \R sources and files \file{NEWS} and \file{doc/html/NEWS.html}
+  in an \R build.
 }
 
 \section{\Rlogo CHANGES IN R VERSION 2.15.3}{
@@ -6980,5 +6981,5 @@
 
 \section{OLDER NEWS}{
   News for \R 2.9.2 patched and earlier can be found in top-level files
-  such as \file{NEWS.2} in the \R sources.
+  such as \file{NEWS.2}.
 }
