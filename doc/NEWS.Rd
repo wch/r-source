@@ -14,7 +14,8 @@
 
       This file contains news for \R >= 3.0.0: news for the 0.x.y, 1.x.y
       and 2.x.y releases is in files \file{NEWS.0}, \file{NEWS.1} and
-      \file{NEWS.2} in the sources.
+      \file{NEWS.2} in the sources.  The latter files are now installed
+      when \R is installed.
       
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
