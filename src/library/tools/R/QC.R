@@ -5162,8 +5162,10 @@ function(package, dir, lib.loc = NULL)
 format.check_packages_used <-
 function(x, ...)
 {
-    incoming <- identical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"),
-                          "TRUE")
+    incoming <-
+        identical(Sys.getenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_",
+                             "FALSE"),
+                  "TRUE")
     c(character(),
       if(length(xx <- x$imports)) {
           if(length(xx) > 1L) {
