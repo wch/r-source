@@ -65,7 +65,8 @@ PDFLATEX = @PDFLATEX@
 	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
 	fi
 
-docs2: NEWS.rds NEWS.2 NEWS.2.html NEWS.2.pdf
+## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
+docs2: NEWS.rds NEWS.2.html NEWS.2.pdf
 
 NEWS.2.rds: $(srcdir)/NEWS.2.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\"), stages = 'install'), 'NEWS.2.rds')" | $(R_EXE)
