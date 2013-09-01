@@ -101,7 +101,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
         file.show(tf, delete.file = TRUE, encoding = "UTF-8")
         return(invisible(path))
     } else if(what == "COPYING") {
-        path <- file.path(R.home(), what)
+        path <- file.path(R.home("doc"), what)
         file.show(path)
         return(invisible(path))
     } else if(what %in% dir(file.path(R.home("share"), "licenses"))) {
