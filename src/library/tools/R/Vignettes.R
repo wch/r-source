@@ -722,6 +722,7 @@ function(vigns)
     files <- vigns$docs
     names <- vigns$names
     dir <- vigns$dir
+    sources <- vigns$sources
 
     if(!file_test("-d", dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
@@ -731,6 +732,7 @@ function(vigns)
         out <- data.frame(File = character(),
                           Title = character(),
                           PDF = character(),
+			  R = character(),
                           stringsAsFactors = FALSE)
         out$Depends <- list()
         out$Keywords <- list()
@@ -771,6 +773,8 @@ function(vigns)
                                         # names
                       stringsAsFactors = FALSE)
     # Optional
+    if (length(sources)) 
+	out$R <- basename(unlist(sources))
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
 
