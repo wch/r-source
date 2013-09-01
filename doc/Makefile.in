@@ -144,13 +144,13 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
-	-@rm -f NEWS.rds NEWS2.rds NEWS.2 NEWS.2.html NEWS.2.pdf
+	-@rm -f $(INSTFILES2) NEWS2.rds NEWS.2 NEWS.2.html NEWS.2.pdf
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(NON_SVN_INSTFILES) ../NEWS; \
+	  rm -f $(NON_SVN_INSTFILES); \
 	fi
 	-@rm -f Makefile R.1
 maintainer-clean: distclean
