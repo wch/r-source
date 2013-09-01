@@ -1,7 +1,7 @@
 #  File src/library/tools/R/readNEWS.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-readNEWS <- function(file = file.path(R.home(), "NEWS"),
+readNEWS <- function(file = file.path(R.home("doc"), "NEWS"),
                      trace = FALSE, chop = c("first", "1", "par1", "keepAll"))
 {
     ## Purpose: read R's NEWS file - or a file similarly organized
@@ -210,7 +210,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 
 # Check for common formatting errors in a NEWS file.
 
-checkNEWS <- function(file = file.path(R.home(), "NEWS")) {
+checkNEWS <- function(file = file.path(R.home("doc"), "NEWS")) {
     check <- function(item) {
 	if (is.list(item)) return(all(unlist(lapply(item, check))))
 

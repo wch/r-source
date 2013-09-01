@@ -1,6 +1,6 @@
 % File src/library/tools/man/readNEWS.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readNEWS}
@@ -13,9 +13,9 @@
   \R 2.12.0 the preferred format is \file{NEWS.Rd}.
 }
 \usage{
-readNEWS(file = file.path(R.home(), "NEWS"), trace = FALSE,
+readNEWS(file = file.path(R.home("doc"), "NEWS"), trace = FALSE,
          chop = c("first", "1", "par1", "keepAll"))
-checkNEWS(file = file.path(R.home(), "NEWS"))
+checkNEWS(file = file.path(R.home("doc"), "NEWS"))
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
