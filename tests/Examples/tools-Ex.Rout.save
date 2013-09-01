@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-29 r63455) -- "Good Sport"
+R version 3.0.1 Patched (2013-09-01 r63787) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -696,25 +696,6 @@ function (x, ...)
 > ## Not run: 
 > ##D pskill(c(237, 245), SIGKILL)
 > ## End(Not run)
-> 
-> 
-> cleanEx()
-> nameEx("readNEWS")
-> ### * readNEWS
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: readNEWS
-> ### Title: Read R's NEWS file or a similar one
-> ### Aliases: readNEWS checkNEWS
-> ### Keywords: file documentation
-> 
-> ### ** Examples
-> # Check the current NEWS file
-> 
-> stopifnot(checkNEWS())
-> 
-> 
 > 
 > 
 > cleanEx()
