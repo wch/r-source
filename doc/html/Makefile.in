@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = \
-	R.css Search.html SearchOn.html \
+	NEWS.2.html R.css Search.html SearchOn.html \
 	favicon.ico left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html packages-head-utf8.html
 NON_SVN_INSTFILES = resources.html NEWS.html
