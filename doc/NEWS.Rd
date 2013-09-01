@@ -256,6 +256,10 @@
 
       \item \code{plclust()} is deprecated: use the \code{plot()} method
       for class \code{"hclust"} instead.
+      
+      \item Functions \code{readNEWS()} and \code{checkNEWS()} in
+      package \pkg{tools} are deprecated (and they have not worked with
+      current \file{NEWS} files for a long time).
     }
   }
 

@@ -48,28 +48,9 @@ checkNEWS(file = file.path(R.home(), "NEWS"))
   \code{checkNEWS()} returns \code{TRUE} if no suspected errors are found,
   or prints a message for each suspected error and returns \code{FALSE}.
 
-  Note that this was only ever experimental and may be removed soon,
+  Note that this was only ever experimental and will be removed soon,
   since the NEWS-file format is not longer supported (but there are
-  examples \file{ONEWS}, \file{OONEWS} and perhaps in packages).
-}
-\examples{\donttest{
-NEWStr  <- readNEWS(trace = TRUE)  # chop = "first" ( = "first non-empty")
-## keep the full NEWS entry text i.e. "no chopping":
-NEWStrA <- readNEWS(chop = "keepAll")
-object.size(NEWStr)
-object.size(NEWStrA)    # (no chopping) ==> about double the size
-
-str(NEWStr, max.level = 3)
-
-str(NEWStr[[c("2.3", "2.3.1")]], max.level = 2, vec.len = 1)
-
-NEWStr [[c("2.3", "2.3.1", "NEW FEATURES")]]
-NEWStrA[[c("2.4", "2.4.0", "NEW FEATURES")]]
-}
-# Check the current NEWS file
-
-stopifnot(checkNEWS())
-
+  examples \file{NEWS.0}, \file{NEWS.1} and perhaps in packages).
 }
 \keyword{file}
 \keyword{documentation}

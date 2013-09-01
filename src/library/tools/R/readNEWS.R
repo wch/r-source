@@ -19,6 +19,7 @@
 readNEWS <- function(file = file.path(R.home(), "NEWS"),
                      trace = FALSE, chop = c("first", "1", "par1", "keepAll"))
 {
+    .Deprecated()
     ## Purpose: read R's NEWS file - or a file similarly organized
     ## ----------------------------------------------------------------------
     ## Arguments: trace: is used in  "inner functions"
@@ -211,6 +212,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 # Check for common formatting errors in a NEWS file.
 
 checkNEWS <- function(file = file.path(R.home(), "NEWS")) {
+    .Deprecated()
     check <- function(item) {
 	if (is.list(item)) return(all(unlist(lapply(item, check))))
 
