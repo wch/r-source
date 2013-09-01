@@ -81,6 +81,9 @@
       \item There is a new read-only \code{par()} parameter called
       \code{"page"}, which returns a logical value indicating whether
       the next \code{plot.new()} call will start a new page.
+
+      \item The file with news, including \file{NEWS} and \file{NEWS.2},
+      have been moved to the \file{doc} directory.
     }
   }
 
@@ -1893,9 +1896,9 @@
    \itemize{
      \item 
      Older news can be found in text format in files 
-     \ifelse{html}{\href{/NEWS.0}{NEWS.0}, \href{/NEWS.1}{NEWS.1} 
-     and \href{/NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and 
-     \file{NEWS.2}} in the \R home directory.  News in HTML format for 
+     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1} 
+     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and 
+     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for 
      \R  versions from 2.10.0 to 2.15.3 is in 
      \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
    }

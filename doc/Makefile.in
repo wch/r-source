@@ -12,11 +12,12 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv \
-	KEYWORDS KEYWORDS.db THANKS
+	KEYWORDS KEYWORDS.db THANKS NEWS.0 NEWS.1 NEWS.2
 DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 \
   NEWS.Rd NEWS.2.Rd
-## NEWS.rds is also installed, but generated later.
+INSTFILES2 = NEWS.rds NEWS NEWS.pdf
 NON_SVN_INSTFILES = FAQ RESOURCES
+## generated later.
 SUBDIRS = html manual
 
 HELP2MAN = perl $(top_srcdir)/tools/help2man.pl
@@ -35,7 +36,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 NEWS.rds ../NEWS html/NEWS.html ../NEWS.pdf
+docs: R.1 NEWS.rds NEWS html/NEWS.html NEWS.pdf
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -46,9 +47,9 @@ R.1:
 NEWS.rds: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\"), stages = 'install'), 'NEWS.rds')" | $(R_EXE)
 
-../NEWS: NEWS.rds
+NEWS: NEWS.rds
 	@$(ECHO) "creating NEWS"
-	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "../NEWS")' |  $(R_EXE)
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "NEWS")' |  $(R_EXE)
 
 html/NEWS.html: NEWS.rds
 	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE)
@@ -57,16 +58,16 @@ PDFLATEX = @PDFLATEX@
 ## needs pdflatex (and more)
 ## Need LC_COLLATE to work around the misuse of [A-z] in texi2dvi 1.135
 ## (as reported by MM)
-../NEWS.pdf: NEWS.rds
+NEWS.pdf: NEWS.rds
 	@if test -z "$(PDFLATEX)"; then \
 	  $(ECHO) "'pdflatex' is needed to make NEWS.pdf but is missing on your system."; \
 	else \
 	 $(ECHO) "creating NEWS.pdf"; \
-	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
+	 $(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  LC_COLLATE=C $(R_EXE); \
 	fi
 
 ## NEWS.2.html ships as doc/html/NEWS.2.html in the sources.
-docs2: NEWS.rds NEWS.2.html NEWS.2.pdf
+docs2: NEWS.2.rds NEWS.2.html NEWS.2.pdf
 
 NEWS.2.rds: $(srcdir)/NEWS.2.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\"), stages = 'install'), 'NEWS.2.rds')" | $(R_EXE)
@@ -111,7 +112,7 @@ install-sources:
 	done
 ## installed from builddir
 install-sources2: installdirs
-	@for f in $(NON_SVN_INSTFILES) NEWS.rds; do \
+	@for f in $(NON_SVN_INSTFILES) $(INSTFILES2); do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)"; \
 	done
 install-strip: install
@@ -124,7 +125,7 @@ uninstall:
 	  for d in $(SUBDIRS); do \
 	    (cd $${d} && $(MAKE) $@) || exit 1; \
 	  done; \
-	  for f in $(INSTFILES) $(NON_SVN_INSTFILES) NEWS.rds; do \
+	  for f in $(INSTFILES) $(NON_SVN_INSTFILES) $(INSTFILES2); do \
 	    rm -f "$(DESTDIR)$(rdocdir)"/$${f}; \
 	  done; \
 	  rmdir "$(DESTDIR)$(rdocdir)" 2>/dev/null \
@@ -143,7 +144,7 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
-	-@rm -f NEWS.rds NEWS.2 NEWS.2.html NEWS.2.pdf
+	-@rm -f NEWS.rds NEWS2.rds NEWS.2 NEWS.2.html NEWS.2.pdf
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
