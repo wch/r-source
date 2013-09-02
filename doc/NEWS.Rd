@@ -10,9 +10,10 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{type.convert()} (hence \code{read.table()}) returns
-      a character vector or factor when representing a numeric input
-      as a double would lose accuracy.  Similarly for complex inputs.
+      \item \code{type.convert()} (and hence \code{read.table()})
+      returns a character vector or factor when representing a numeric
+      input as a double would lose accuracy.  Similarly for complex
+      inputs.
 
       If a file contains numeric data with unrepresentable numbers of
       decimal places that are intended to be read as numeric, specify
@@ -78,12 +79,8 @@
       correctly on viewers which have access to Monotype TrueType fonts
       (but are sometimes requested by journals).
 
-      \item There is a new read-only \code{par()} parameter called
-      \code{"page"}, which returns a logical value indicating whether
-      the next \code{plot.new()} call will start a new page.
-
-      \item The file with news, including \file{NEWS} and \file{NEWS.2},
-      have been moved to the \file{doc} directory.
+      \item The text and PDF news files, including \file{NEWS} and
+      \file{NEWS.2}, have been moved to the \file{doc} directory.
     }
   }
 
@@ -175,7 +172,7 @@
       \command{R CMD check --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
-      \item \command{R CMD build --no-vignettes} is defunct:
+      \item \command{R CMD build --no-vignettes} is defunct:\cr
       \command{R CMD build --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
@@ -247,8 +244,9 @@
 
       This file contains news for \R >= 3.0.0: news for the 0.x.y, 1.x.y
       and 2.x.y releases is in files \file{NEWS.0}, \file{NEWS.1} and
-      \file{NEWS.2} in the sources.  The latter files are now installed
-      when \R is installed.
+      \file{NEWS.2}.  The latter files are now installed when \R is
+      installed.  An HTML version of news from 2.10.0 to 2.15.3 is
+      available as \file{doc/html/NEWS.2.html}.
       
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
@@ -304,10 +302,10 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
-      \item Methods invoked by \code{NextMethod()} had different dynamic
-      parent to the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic.
-      (\PR{15267})
+      \item Methods invoked by \code{NextMethod()} had a different
+      dynamic parent to the generic. This was causing trouble where S3
+      methods invoked via lazy evaluation could lose track of their
+      generic.  (\PR{15267})
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
@@ -401,7 +399,8 @@
 	\item packages declared in \samp{Depends} not imported
 	\emph{via} the \file{NAMESPACE} file (except the standard
 	packages).  Objects used from \samp{Depends} packages should be
-	imported to avoid conflicts.
+	imported to avoid conflicts and to allow correct operation when
+	the namespace is loaded but not attached.
       }
       See \sQuote{Writing R Extensions} for good practice.
       
@@ -777,6 +776,11 @@
       the \code{tz} argument and not \code{"GMT"} as documented
       (\PR{14973}).
 
+      \item The active binding to assign fields in reference classes
+      has been cleaned up to reduce dependence on the class' package
+      environment, also fixing bug in initializing read-only fields
+      (inspired by a report from Hadley Wickham).
+
       \item \code{str(d)} no longer gives an error when \code{names(d)}
       contain illegal multibyte strings (\PR{15247}).
 
@@ -854,6 +858,9 @@
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no
       class name, but did not set the object bit. (\PR{15299})
+
+      \item The \code{trace()} method for reference generator objects
+      failed after those objects became function definitions.
 
       \item \code{write.table()} did not check that factors were
       constructed correctly, and so caused a segment fault when
