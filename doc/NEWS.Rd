@@ -14,8 +14,9 @@
 
       This file contains news for \R >= 3.0.0: news for the 0.x.y, 1.x.y
       and 2.x.y releases is in files \file{NEWS.0}, \file{NEWS.1} and
-      \file{NEWS.2} in the sources.  The latter files are now installed
-      when \R is installed.
+      \file{NEWS.2}.  The latter files are now installed when \R is
+      installed.  An HTML version of news from 2.10.0 to 2.15.3 is
+      available as \file{doc/html/NEWS.2.html}.
       
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
@@ -71,10 +72,10 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
-      \item Methods invoked by \code{NextMethod()} had different dynamic
-      parent to the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic.
-      (\PR{15267})
+      \item Methods invoked by \code{NextMethod()} had a different
+      dynamic parent to the generic. This was causing trouble where S3
+      methods invoked via lazy evaluation could lose track of their
+      generic.  (\PR{15267})
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
@@ -168,7 +169,8 @@
 	\item packages declared in \samp{Depends} not imported
 	\emph{via} the \file{NAMESPACE} file (except the standard
 	packages).  Objects used from \samp{Depends} packages should be
-	imported to avoid conflicts.
+	imported to avoid conflicts and to allow correct operation when
+	the namespace is loaded but not attached.
       }
       See \sQuote{Writing R Extensions} for good practice.
       
