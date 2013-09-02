@@ -54,12 +54,19 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
         exts <- "pdf"
     }
     exts <- c(exts, toupper(exts))
-    pattern <- sprintf("^%s%s[.](%s)$", name, if (main) "" else ".*",
-                                          paste(exts, collapse = "|"))
-
+    pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
     output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE, no..=TRUE)
     output0 <- output0[file_test("-f", file.path(dir, output0))]
-    output <- grep(pattern, output0, value = TRUE)
+    output <- grep(pattern1, output0, value = TRUE)
+    # If main is FALSE, we want to find all other files with related names.  We make sure
+    # that the main file is in position 1.
+    # FIXME:  we should check a timestamp or something to see that these were produced by tangling
+    #	      for the "name" vignette, they aren't just coincidentally similar names.
+    if (!main) {
+	pattern2 <- sprintf("^%s.*[.](%s)$", name, paste(exts, collapse = "|"))
+	output2 <- grep(pattern2, output0, value = TRUE)
+	output <- c(output, setdiff(output2, output))
+    }
 
     if (by == "weave") {
         if (length(output) == 0L)
@@ -773,8 +780,12 @@ function(vigns)
                                         # names
                       stringsAsFactors = FALSE)
     # Optional
-    if (length(sources)) 
-	out$R <- basename(unlist(sources))
+    if (length(sources)) {
+	out[,"R"] <- ""
+	for (i in seq_len(nrow(out))) 
+	    if (length(s <- vigns$sources[[i]])) 
+		out$R[i] <- basename(s[1L])
+    }
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
 

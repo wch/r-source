@@ -589,7 +589,6 @@ function(dir, outDir, encoding = "")
 .install_package_vignettes3 <-
 function(dir, outDir, encoding = "")
 {
-    message("NEW!\n")
     packageName <- basename(outDir)
     dir <- file_path_as_absolute(dir)
     indexname <- file.path(dir, "build", "vignette.rds")
