@@ -5881,9 +5881,11 @@ function(dir)
 
     ## Check for possibly mis-spelled field names.
     nms <- names(meta)
-    nms <- nms[is.na(match(nms, .get_standard_DESCRIPTION_fields())) &
+    stdNms <- .get_standard_DESCRIPTION_fields()
+    nms <- nms[is.na(match(nms, stdNms)) &
                !grepl("^(X-CRAN|Repository/R-Forge)", nms)]
-    if(length(nms))
+    if(length(nms) && ## Allow maintainer notes  <stdName>Note :
+       length(nms <- nms[is.na(match(nms, paste0(stdNms,"Note")))]))
         out$fields <- nms
 
     ## We do not want to use utils::available.packages() for now, as
