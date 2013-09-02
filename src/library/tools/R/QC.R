@@ -5110,6 +5110,7 @@ function(package, dir, lib.loc = NULL)
     names(imp3f) <- imp3
     imp3 <- unique(imp3)
     imp3self <- pkg_name %in% imp3
+    imp3selfcalls <- as.vector(imp3f[names(imp3f) == pkg_name])
     imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
         ## remove other packages which have the same maintainer,
@@ -5124,10 +5125,11 @@ function(package, dir, lib.loc = NULL)
         imp3 <- imp3[(maintainers != db["Maintainer"])]
         imp3f <- imp3f[names(imp3f) %in% imp3]
         imps <- split(imp3f, names(imp3f))
-        imp2 <- imp3 <- unknown <- character()
+        imp2 <- imp3 <- imp3f <- unknown <- character()
         for (p in names(imps)) {
+            this <- imps[[p]]
             if (p %in% "base") {
-                imp2 <- c(imp2, p)
+                imp2 <- c(imp2, paste(p, this, sep = ":::"))
                 next
             }
             ns <- .getNamespace(p)
@@ -5141,9 +5143,13 @@ function(package, dir, lib.loc = NULL)
             } else {
                 exps <- ls(envir = getNamespaceInfo(p, "exports"),
                            all.names = TRUE)
-                this <- imps[[p]]
-                if (any(this %in% exps)) imp2 <- c(imp2, p)
-                if (any(! this %in% exps)) imp3 <- c(imp3, p)
+                this2 <- this %in% exps
+                if (any(this2))
+                    imp2 <- c(imp2, paste(p, this[this2], sep = ":::"))
+                if (any(!this2)) {
+                    imp3 <- c(imp3, p)
+                    imp3f <- c(imp3f, paste(p, this[!this2], sep = ":::"))
+                }
             }
         }
     } else imp2 <- unknown <- character()
@@ -5152,7 +5158,10 @@ function(package, dir, lib.loc = NULL)
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
-                imp2 = imp2, imp3 = imp3, imp3self = imp3self,
+                imp2 = sort(unique(imp2)),
+                imp3 = imp3, imp3f = sort(unique(imp3f)),
+                imp3self = imp3self,
+                imp3selfcalls = sort(unique(imp3selfcalls)),
                 imp3unknown = unknown,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
@@ -5219,14 +5228,15 @@ function(x, ...)
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(length(xx) > 1L) {
-              c(gettext("Namespaces imported from by ':::' calls which should be '::':"),
+              c(gettext("':::' calls which should be '::':"),
                 .pretty_format(sort(xx)), msg)
           } else {
-              c(gettextf("Namespace imported from by a ':::' call which should be '::': %s",
+              c(gettextf("':::' call which should be '::': %s",
                          sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
+          xxx <- x$imp3f
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(incoming) {
@@ -5236,19 +5246,20 @@ function(x, ...)
                            "  Including base/recommended package(s):",
                            .pretty_format(intersect(base, xx)))
           }
-          if(length(xx) > 1L) {
-              c(gettext("Namespaces with unexported objects imported by ':::' calls:"),
-                .pretty_format(sort(xx)), msg)
+          if(length(xxx) > 1L) {
+              c(gettext("Unexported objects imported by ':::' calls:"),
+                .pretty_format(sort(xxx)), msg)
           } else {
-              c(gettextf("Namespace with unexported objects imported by a ':::' call: %s",
-                         sQuote(xx)), msg)
+              c(gettextf("Unexported objects imported by a ':::' call: %s",
+                         sQuote(xxx)), msg)
           }
       },
       if(identical(x$imp3self, TRUE)) {
           msg <-
               c("There are ::: calls to the package's namespace in its code.",
-                "A package almost never needs to use ::: for its own objects.")
-          strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L)
+                "A package almost never needs to use ::: for its own objects:")
+          c(strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L),
+            .pretty_format(sort(x$imp3selfcalls)))
       },
       if(length(xx <- x$imp3unknown)) {
           msg <- "See the note in ?`:::` about the use of this operator."
