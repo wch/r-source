@@ -310,24 +310,21 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        docdir <- file.path(dir, "doc")
-        ## Using package installed in @code{dir} ...
-    } else {
-        if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
-        ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
-        else {
-            dir <- file_path_as_absolute(dir)
-            if (is.null(subdirs))
-                subdirs <- c("vignettes", file.path("inst", "doc"))
-            for (subdir in subdirs) {
-                docdir <- file.path(dir, subdir)
-                if(file_test("-d", docdir))
-                    break
-            }
-        }
+    }
+    if(missing(dir))
+	stop("you must specify 'package' or 'dir'")
+    ## Using sources from directory @code{dir} ...
+    if(!file_test("-d", dir))
+	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+    else {
+	dir <- file_path_as_absolute(dir)
+	if (is.null(subdirs))
+	    subdirs <- c("vignettes", if (missing(package)) file.path("inst", "doc") else file.path("doc") )
+	for (subdir in subdirs) {
+	    docdir <- file.path(dir, subdir)
+	    if(file_test("-d", docdir))
+		break
+	}
     }
 
     if(!file_test("-d", docdir)) return(NULL)
@@ -776,16 +773,14 @@ function(vigns)
     out <- data.frame(File = unlist(contents[, "File"]),
                       Title = unlist(contents[, "Title"]),
                       PDF = outputs,	# Not necessarily PDF, but name it that for back compatibility
+		      R = "",		# May or may not be present
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
     # Optional
-    if (length(sources)) {
-	out[,"R"] <- ""
-	for (i in seq_len(nrow(out))) 
-	    if (length(s <- vigns$sources[[i]])) 
-		out$R[i] <- basename(s[1L])
-    }
+    for (i in seq_along(sources)) 
+	if (length(s <- sources[[i]]))
+	    out$R[which(names(sources)[i] == files)] <- basename(s[1L])
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
 
