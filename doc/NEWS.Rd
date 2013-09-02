@@ -463,6 +463,9 @@
       
       \item The symbol set by \code{tools::Rd2txt_options(itemBullet=)}
       was not respected in some locales. (\PR{15435})
+
+      \item \code{mcMap()} was not exported by package
+      \pkg{parallel}. (\PR{15439})
     }
   }
 }
