@@ -2632,14 +2632,15 @@ permissions, some care is needed with permissions.  This applies on
 Windows and to e.g.@: FAT-formatted drives and SMB-mounted file systems
 on other OSes.  The `mode' of the file recorded in the tarball will be
 whatever @code{file.info()} returns.  On Windows this will record only
-directories with execute permission and on other OSes it is likely that
-all files have reported `mode' @code{0777}.  A particular issue is
+directories as having execute permission and on other OSes it is likely
+that all files have reported `mode' @code{0777}.  A particular issue is
 packages being built on Windows which are intended to contain executable
-scripts such as @file{configure} and @file{cleanup}: it is difficult to
-include these from Windows but where Cygwin has been used to set a
-POSIX-like mode, using environment variable @env{R_BUILD_TAR=tar.exe}
-@emph{may} provide a workaround.
+scripts such as @file{configure} and @file{cleanup}: @command{R CMD
+build} ensures those two are recorded with execute permission.
 
+Directory @file{build} of the package sources is reserved for use by
+@command{R CMD build}: it contains information which may not easily be
+created when the package is installed.
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
