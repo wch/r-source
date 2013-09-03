@@ -240,18 +240,20 @@ packages to @acronym{CRAN}: current instructions are linked from
 The sources of an @R{} package consists of a subdirectory containing a
 files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
-@file{man}, @file{po}, @file{src}, @file{tests} and @file{vignettes}
-(some of which can be missing, but which should not be empty).  The
-package subdirectory may also contain files @file{INDEX},
+@file{man}, @file{po}, @file{src}, @file{tests}, @file{tools} and
+@file{vignettes} (some of which can be missing, but which should not be
+empty).  The package subdirectory may also contain files @file{INDEX},
 @file{configure}, @file{cleanup}, @file{LICENSE}, @file{LICENCE} and
 @file{NEWS}.  Other files such as @file{INSTALL} (for non-standard
 installation instructions), @file{README}/@file{README.md}@footnote{This
-seems to be commonly used for a file in `markdown' format.  Be aware that
-most users of @R{} will not know that, nor know how to view such a file:
-platforms such as OS X and Windows do not have a default viewer set in
-their file associations. The @acronym{CRAN} package web pages render
-such files in @HTML{}.}, or @file{ChangeLog} will be ignored by @R{},
-but may be useful to end users.
+seems to be commonly used for a file in `markdown' format.  Be aware
+that most users of @R{} will not know that, nor know how to view such a
+file: platforms such as OS X and Windows do not have a default viewer
+set in their file associations. The @acronym{CRAN} package web pages
+render such files in @HTML{}.}, or @file{ChangeLog} will be ignored by
+@R{}, but may be useful to end users.  The utility @command{R CMD build}
+may add files in a @file{build} directory (but this should not be used
+for other purposes).
 
 Except where specifically mentioned,@footnote{currently, top-level files
 @file{.Rbuildignore} and @file{.Rinstignore}, and
@@ -2584,7 +2586,7 @@ temporarily installed to execute them.  Post-execution binary copies of
 those pages containing build-time macros will be saved in
 @file{build/partial.rdb}.  If there are any install-time or render-time
 macros, a @file{.pdf} version of the package manual will be built and
-installed in the @file{build/} subdirectory.  (This allows
+installed in the @file{build} subdirectory.  (This allows
 @acronym{CRAN} or other repositories to display the manual even if they
 are unable to install the package.)  This can be suppressed by the
 option @option{--no-manual} or if package's @file{DESCRIPTION} contains
