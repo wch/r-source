@@ -5121,7 +5121,7 @@ function(package, dir, lib.loc = NULL)
             this <- imps[[p]]
             if (p %in% "base") {
                 this <- setdiff(this, ls(baseenv(), all.names = TRUE))
-                if(length(this2))
+                if(length(this))
                     imp2un <- c(imp2un, paste(p, this, sep = "::"))
                 next
             }
