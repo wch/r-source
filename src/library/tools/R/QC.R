@@ -5112,6 +5112,25 @@ function(package, dir, lib.loc = NULL)
             gettext("package 'methods' is used but not declared")
         else ""
 
+    extras <- list(
+        base = c("Sys.junction", "shell", "shell.exec"),
+        grDevices = c("X11.options", "X11Font", "X11Fonts", "quartz",
+        "quartz.options", "quartz.save", "quartzFont", "quartzFonts",
+        "bringToTop", "msgWindow", "win.graph", "win.metafile", "win.print",
+        "windows", "windows.options", "windowsFont", "windowsFonts"),
+        parallel = c("mccollect", "mcparallel", "mc.reset.stream", "mcaffinity"),
+        utils = c("nsl", "DLL.version", "Filters",
+        "choose.dir", "choose.files", "getClipboardFormats",
+        "getIdentification", "getWindowsHandle", "getWindowsHandles",
+        "getWindowTitle", "loadRconsole", "readClipboard",
+        "readRegistry", "setStatusBar", "setWindowTitle",
+        "shortPathName", "win.version", "winDialog",
+        "winDialogString", "winMenuAdd", "winMenuAddItem",
+        "winMenuDel", "winMenuDelItem", "winMenuNames",
+        "winMenuItems", "writeClipboard", "zip.unpack",
+        "winProgressBar", "getWinProgressBar", "setWinProgressBar",
+        "setInternet2", "arrangeWindows")
+        )
     imp2un <- character()
     if(length(imp2)) { ## Try to check these are exported
         names(imp2f) <- imp2
@@ -5121,6 +5140,7 @@ function(package, dir, lib.loc = NULL)
             ## some people have these quoted:
             this <- imps[[p]]
             this <- sub('^"(.*)"$', "\\1", this)
+            this <- sub("^'(.*)'$", "\\1", this)
             if (p %in% "base") {
                 this <- setdiff(this, ls(baseenv(), all.names = TRUE))
                 if(length(this))
@@ -5134,8 +5154,8 @@ function(package, dir, lib.loc = NULL)
                          error = function(e) e)
             } else NULL
             if (!inherits(value, "error")) {
-                exps <- ls(envir = getNamespaceInfo(p, "exports"),
-                           all.names = TRUE)
+                exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
+                             all.names = TRUE), extras[[p]])
                 this2 <- setdiff(this, exps)
                 if(length(this2))
                     imp2un <- c(imp2un, paste(p, this2, sep = "::"))
@@ -5165,6 +5185,7 @@ function(package, dir, lib.loc = NULL)
         for (p in names(imps)) {
             this <- imps[[p]]
             this <- sub('^"(.*)"$', "\\1", this)
+            this <- sub("^'(.*)'$", "\\1", this)
             if (p %in% "base") {
                 imp32 <- c(imp32, paste(p, this, sep = ":::"))
                 next
@@ -5178,8 +5199,8 @@ function(package, dir, lib.loc = NULL)
             if (inherits(value, "error")) {
                 unknown <- c(unknown, p)
             } else {
-                 exps <- ls(envir = getNamespaceInfo(p, "exports"),
-                            all.names = TRUE)
+                 exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
+                              all.names = TRUE), extras[[p]])
                  this2 <- this %in% exps
                  if (any(this2))
                      imp32 <- c(imp32, paste(p, this[this2], sep = ":::"))
