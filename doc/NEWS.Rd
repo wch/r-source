@@ -186,9 +186,13 @@
       needed to link a front-end against the (shared or static) \R
       library.
       
-      \item \command{R CMD check} reports namespaces imported \emph{via}
+      \item \command{R CMD check} checks objects imported \emph{via}
       \code{:::} calls, including where this is unnecessary because
-      \code{::} would do or the code is in the namepace being imported from.
+      \code{::} would do or the code is in the namepace being imported
+      from.
+     
+      It also reports objects imported by \code{::} or \code{:::} calls
+      which do not exist (or for \code{::}, are not exported).
     }
   }
 
