@@ -5121,7 +5121,8 @@ function(package, dir, lib.loc = NULL)
             this <- imps[[p]]
             if (p %in% "base") {
                 this <- setdiff(this, ls(baseenv(), all.names = TRUE))
-                imp2un <- c(imp2un, paste(p, this, sep = "::"))
+                if(length(this2))
+                    imp2un <- c(imp2un, paste(p, this, sep = "::"))
                 next
             }
             ns <- .getNamespace(p)
@@ -5135,7 +5136,8 @@ function(package, dir, lib.loc = NULL)
                 exps <- ls(envir = getNamespaceInfo(p, "exports"),
                            all.names = TRUE)
                 this2 <- setdiff(this, exps)
-                imp2un <- c(imp2un, paste(p, this2, sep = "::"))
+                if(length(this2))
+                    imp2un <- c(imp2un, paste(p, this2, sep = "::"))
             }
         }
     }
