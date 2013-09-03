@@ -5118,7 +5118,9 @@ function(package, dir, lib.loc = NULL)
         imp2 <- unique(imp2)
         imps <- split(imp2f, names(imp2f))
         for (p in names(imps)) {
+            ## some people have these quoted:
             this <- imps[[p]]
+            this <- sub('^"(.*)"$', "\\1", this)
             if (p %in% "base") {
                 this <- setdiff(this, ls(baseenv(), all.names = TRUE))
                 if(length(this))
@@ -5128,11 +5130,10 @@ function(package, dir, lib.loc = NULL)
             ns <- .getNamespace(p)
             value <- if(is.null(ns)) {
                 ## this could be noisy
-                tryCatch(suppressWarnings(loadNamespace(p)),
+                tryCatch(suppressMessages(loadNamespace(p)),
                          error = function(e) e)
             } else NULL
-            if (inherits(value, "error")) {
-            } else {
+            if (!inherits(value, "error")) {
                 exps <- ls(envir = getNamespaceInfo(p, "exports"),
                            all.names = TRUE)
                 this2 <- setdiff(this, exps)
@@ -5163,6 +5164,7 @@ function(package, dir, lib.loc = NULL)
         imp32 <- imp3 <- imp3f <- imp3ff <- unknown <- character()
         for (p in names(imps)) {
             this <- imps[[p]]
+            this <- sub('^"(.*)"$', "\\1", this)
             if (p %in% "base") {
                 imp32 <- c(imp32, paste(p, this, sep = ":::"))
                 next
@@ -5170,7 +5172,7 @@ function(package, dir, lib.loc = NULL)
             ns <- .getNamespace(p)
             value <- if(is.null(ns)) {
                 ## this could be noisy
-                tryCatch(suppressWarnings(loadNamespace(p)),
+                tryCatch(suppressMessages(loadNamespace(p)),
                          error = function(e) e)
             } else NULL
             if (inherits(value, "error")) {
