@@ -188,11 +188,14 @@
       
       \item \command{R CMD check} checks objects imported \emph{via}
       \code{:::} calls, including where this is unnecessary because
-      \code{::} would do or the code is in the namepace being imported
-      from.
+      \code{::} would do or code imports from a namespace it is in.
      
       It also reports objects imported by \code{::} or \code{:::} calls
       which do not exist (or for \code{::}, are not exported).
+
+      \item \command{R CMD build} makes more use of the \file{build}
+      sub-directory of package sources, for example to record
+      information about the vignettes.
     }
   }
 
