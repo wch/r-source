@@ -1969,7 +1969,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                              dQuote(def@className),
                              sQuote(def@package),
                              sQuote(prev@package)),
-                    domain = NA)
+                    domain = NA, call. = FALSE) # always an internal call
         return(TRUE)
     }
     ## if there are already duplicate classes, we check duplicates
@@ -1983,7 +1983,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                                  dQuote(def@className),
                                  sQuote(def@package),
                                  sQuote(prev@package)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
             return(FALSE)
         }
     }
@@ -2008,7 +2008,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                          dQuote(def@className),
                          sQuote(def@package),
                          sQuote(prev@package)),
-                    domain = NA)
+                    domain = NA, call. = FALSE)
     TRUE
 }
 
