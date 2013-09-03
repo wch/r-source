@@ -5152,7 +5152,7 @@ function(package, dir, lib.loc = NULL)
             ns <- .getNamespace(p)
             value <- if(is.null(ns)) {
                 ## this could be noisy
-                tryCatch(suppressMessages(loadNamespace(p)),
+                tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),
                          error = function(e) e)
             } else NULL
             if (!inherits(value, "error")) {
@@ -5195,7 +5195,7 @@ function(package, dir, lib.loc = NULL)
             ns <- .getNamespace(p)
             value <- if(is.null(ns)) {
                 ## this could be noisy
-                tryCatch(suppressMessages(loadNamespace(p)),
+                tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),
                          error = function(e) e)
             } else NULL
             if (inherits(value, "error")) {
