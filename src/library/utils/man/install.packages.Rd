@@ -93,7 +93,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     The default, \code{NA}, means
     \code{c("Depends", "Imports", "LinkingTo")}.
 
-    \code{TRUE} means (as from \R 2.15.0) to use
+    \code{TRUE} means to use
     \code{c("Depends", "Imports", "LinkingTo", "Suggests")} for
     \code{pkgs} and
     \code{c("Depends", "Imports", "LinkingTo")} for added dependencies:
@@ -192,13 +192,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
   apart from under Windows or a CRAN binary distribution for OS X.
 
-  This is the main function to install packages.  It takes
-  a vector of names and a destination library, downloads the packages
-  from the repositories and installs them.  (If the library is omitted
-  it defaults to the first directory in \code{.libPaths()}, with a
-  message if there is more than one.)  If \code{lib} is omitted or is of
-  length one and is not a (group) writable directory, the code offers
-  to create a personal library tree (the first element of
+  This is the main function to install packages.  It takes a vector of
+  names and a destination library, downloads the packages from the
+  repositories and installs them.  (If the library is omitted it
+  defaults to the first directory in \code{.libPaths()}, with a message
+  if there is more than one.)  If \code{lib} is omitted or is of length
+  one and is not a (group) writable directory, in interactive use the
+  code offers to create a personal library tree (the first element of
   \code{Sys.getenv("R_LIBS_USER")}) and install there.
 #ifdef windows
   Detection of a writable directory is problematic on Windows: see the

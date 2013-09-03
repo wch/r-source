@@ -1,6 +1,6 @@
 % File src/library/utils/man/INSTALL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -102,7 +102,7 @@
 #endif
 #ifdef unix
 
-  Some platforms (notably OS X and Windows) support
+  Some platforms (notably Windows) make use of
   sub-architectures in which binaries for different CPUs are installed
   within the same library tree. For such installations, the default
   behaviour is to try to build packages for all installed
