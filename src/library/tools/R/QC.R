@@ -5129,7 +5129,9 @@ function(package, dir, lib.loc = NULL)
         "winMenuDel", "winMenuDelItem", "winMenuNames",
         "winMenuItems", "writeClipboard", "zip.unpack",
         "winProgressBar", "getWinProgressBar", "setWinProgressBar",
-        "setInternet2", "arrangeWindows")
+        "setInternet2", "arrangeWindows"),
+        RODBC = c("odbcConnectAccess", "odbcConnectAccess2007",
+        "odbcConnectDbase", "odbcConnectExcel", "odbcConnectExcel2007")
         )
     imp2un <- character()
     if(length(imp2)) { ## Try to check these are exported
