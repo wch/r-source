@@ -4818,7 +4818,7 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- all_imports <- character()
+    bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
     bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
@@ -4856,9 +4856,15 @@ function(package, dir, lib.loc = NULL)
                 all_imports <<- c(all_imports, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
+                else {
+                    imp2 <<- c(imp2, pkg)
+                    imp2f <<- c(imp2f, deparse(e[[3L]]))
+                }
             } else if(Call %in% ":::") {
                 pkg <- deparse(e[[2L]])
                 all_imports <<- c(all_imports, pkg)
+                imp3 <<- c(imp3, pkg)
+                imp3f <<- c(imp3f, deparse(e[[3L]]))
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
@@ -4926,11 +4932,105 @@ function(package, dir, lib.loc = NULL)
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
+
+    extras <- list(
+        base = c("Sys.junction", "shell", "shell.exec"),
+        grDevices = c("X11.options", "X11Font", "X11Fonts", "quartz",
+        "quartz.options", "quartz.save", "quartzFont", "quartzFonts",
+        "bringToTop", "msgWindow", "win.graph", "win.metafile", "win.print",
+        "windows", "windows.options", "windowsFont", "windowsFonts"),
+        parallel = c("mccollect", "mcparallel", "mc.reset.stream", "mcaffinity"),
+        utils = c("nsl", "DLL.version", "Filters",
+        "choose.dir", "choose.files", "getClipboardFormats",
+        "getIdentification", "getWindowsHandle", "getWindowsHandles",
+        "getWindowTitle", "loadRconsole", "readClipboard",
+        "readRegistry", "setStatusBar", "setWindowTitle",
+        "shortPathName", "win.version", "winDialog",
+        "winDialogString", "winMenuAdd", "winMenuAddItem",
+        "winMenuDel", "winMenuDelItem", "winMenuNames",
+        "winMenuItems", "writeClipboard", "zip.unpack",
+        "winProgressBar", "getWinProgressBar", "setWinProgressBar",
+        "setInternet2", "arrangeWindows"),
+        RODBC = c("odbcConnectAccess", "odbcConnectAccess2007",
+        "odbcConnectDbase", "odbcConnectExcel", "odbcConnectExcel2007")
+        )
+    imp2un <- character()
+    if(length(imp2)) { ## Try to check these are exported
+        names(imp2f) <- imp2
+        imp2 <- unique(imp2)
+        imps <- split(imp2f, names(imp2f))
+        for (p in names(imps)) {
+            ## some people have these quoted:
+            this <- imps[[p]]
+            this <- sub('^"(.*)"$', "\\1", this)
+            this <- sub("^'(.*)'$", "\\1", this)
+            if (p %in% "base") {
+                this <- setdiff(this, ls(baseenv(), all.names = TRUE))
+                if(length(this))
+                    imp2un <- c(imp2un, paste(p, this, sep = "::"))
+                next
+            }
+            ns <- .getNamespace(p)
+            value <- if(is.null(ns)) {
+                ## this could be noisy
+                tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),
+                         error = function(e) e)
+            } else NULL
+            if (!inherits(value, "error")) {
+                exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
+                             all.names = TRUE), extras[[p]])
+                this2 <- setdiff(this, exps)
+                if(length(this2))
+                    imp2un <- c(imp2un, paste(p, this2, sep = "::"))
+            }
+        }
+    }
+
+    names(imp3f) <- imp3
+    imp3 <- unique(imp3)
+    imp3 <- setdiff(imp3, pkg_name)
+    if(length(imp3)) {
+        imp3f <- imp3f[names(imp3f) %in% imp3]
+        imps <- split(imp3f, names(imp3f))
+        imp32 <- imp3ff <- character()
+        for (p in names(imps)) {
+            this <- imps[[p]]
+            this <- sub('^"(.*)"$', "\\1", this)
+            this <- sub("^'(.*)'$", "\\1", this)
+            if (p %in% "base") {
+                imp32 <- c(imp32, paste(p, this, sep = ":::"))
+                next
+            }
+            ns <- .getNamespace(p)
+            value <- if(is.null(ns)) {
+                ## this could be noisy
+                tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),
+                         error = function(e) e)
+            } else NULL
+            if (!inherits(value, "error")) {
+                 exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
+                              all.names = TRUE), extras[[p]])
+                 this2 <- this %in% exps
+                 if (any(this2))
+                     imp32 <- c(imp32, paste(p, this[this2], sep = ":::"))
+                 if (any(!this2)) {
+                     this <- this[!this2]
+                     pp <- ls(envir = asNamespace(p), all.names = TRUE)
+                     this2 <- this %in% pp
+                     if(any(!this2))
+                         imp3ff <- c(imp3ff, paste(p, this[!this2], sep = ":::"))
+                 }
+            }
+        }
+    } else imp32 <- imp3ff <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
+                imp2un = sort(unique(imp2un)),
+                imp32 = sort(unique(imp32)),
+                imp3ff = sort(unique(imp3ff)),
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -4988,6 +5088,34 @@ function(x, ...)
                          sQuote(xx)), msg)
           }
       },
+      if(length(xx <- x$imp2un)) {
+          if(length(xx) > 1L) {
+              c(gettext("Missing or unexported objects:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("Missing or unexported object: %s", sQuote(xx))
+          }
+      },
+      if(length(xx <- x$imp32)) { ## ' ' seems to get converted to dir quotes
+          msg <- "See the note in ?`:::` about the use of this operator."
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(length(xx) > 1L) {
+              c(gettext("':::' calls which should be '::':"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("':::' call which should be '::': %s",
+                         sQuote(xx)), msg)
+          }
+      },
+      if(length(xx <- x$imp3ff)) {
+           if(length(xx) > 1L) {
+              c(gettext("Missing objects imported by ':::' calls:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("Missing object imported by a ':::' call: %s",
+                       sQuote(xx))
+          }
+       },
       if(length(xx <- x$data)) {
           if(length(xx) > 1L) {
               c(gettext("'data(package=)' calls not declared from:"),

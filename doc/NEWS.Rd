@@ -171,6 +171,13 @@
 	packages).  Objects used from \samp{Depends} packages should be
 	imported to avoid conflicts and to allow correct operation when
 	the namespace is loaded but not attached.
+
+	\item objects imported \emph{via} \code{:::} calls where
+	\code{::} would do.
+
+	\item objects imported by \code{::} which are not exported.
+
+	\item objects imported by \code{:::} calls which do not exist.
       }
       See \sQuote{Writing R Extensions} for good practice.
       
