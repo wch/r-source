@@ -1965,11 +1965,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         ## it is possible one  of these is inconsistent, but unlikely
         ## and we will get here often from multiple setOldClass(...)'s
         if(warnLevel)
-            warning(gettextf("the specification for S3 class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+            message(gettextf("Note: the specification for S3 class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class.",
                              dQuote(def@className),
                              sQuote(def@package),
                              sQuote(prev@package)),
-                    domain = NA, call. = FALSE) # always an internal call
+                    domain = NA)
         return(TRUE)
     }
     ## if there are already duplicate classes, we check duplicates
@@ -1979,11 +1979,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         dups <- match(supers, multipleClasses(), 0) > 0
         if(any(dups)) {
             if(warnLevel)
-                warning(gettextf("some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
+                message(gettextf("Note: some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
                                  dQuote(def@className),
                                  sQuote(def@package),
                                  sQuote(prev@package)),
-                    domain = NA, call. = FALSE)
+                    domain = NA)
             return(FALSE)
         }
     }
@@ -2004,11 +2004,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             return(FALSE)
     }
     if(warnLevel)
-        warning(gettextf("the specification for class %s in package %s seems equivalent to one from package %s and is not turning on duplicate class definitions for this class",
+        message(gettextf("Note: the specification for class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class.",
                          dQuote(def@className),
                          sQuote(def@package),
                          sQuote(prev@package)),
-                    domain = NA, call. = FALSE)
+                    domain = NA)
     TRUE
 }
 
