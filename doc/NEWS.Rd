@@ -186,12 +186,7 @@
       needed to link a front-end against the (shared or static) \R
       library.
       
-      \item \command{R CMD check} checks objects imported \emph{via}
-      \code{:::} calls, including where this is unnecessary because
-      \code{::} would do or code imports from a namespace it is in.
-     
-      It also reports objects imported by \code{::} or \code{:::} calls
-      which do not exist (or for \code{::}, are not exported).
+      \item \command{R CMD check} analyses \code{:::} calls.
 
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
@@ -411,6 +406,13 @@
 	packages).  Objects used from \samp{Depends} packages should be
 	imported to avoid conflicts and to allow correct operation when
 	the namespace is loaded but not attached.
+
+	\item objects imported \emph{via} \code{:::} calls where
+	\code{::} would do.
+
+	\item objects imported by \code{::} which are not exported.
+
+	\item objects imported by \code{:::} calls which do not exist.
       }
       See \sQuote{Writing R Extensions} for good practice.
       
