@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -857,6 +857,38 @@ msgstr "wywołania 'library' lub 'require' nie zadeklarowane z:"
 #                        sQuote(xx))
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "wywołanie 'library' lub 'require' nie jest zadeklarowane z: %s"
+
+# tools/R/QC.R: 4803
+# gettext("'library' or 'require' calls not declared from:")
+#, fuzzy
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr "wywołania 'library' lub 'require' nie zadeklarowane z:"
+
+# tools/R/QC.R: 4806
+# gettextf("'library' or 'require' call not declared from: %s",
+#                        sQuote(xx))
+#, fuzzy
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr "wywołanie 'library' lub 'require' nie jest zadeklarowane z: %s"
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+msgid "Namespace in Imports field not imported from: %s"
+msgstr ""
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
+msgstr ""
 
 # tools/R/QC.R: 4812
 # gettext("'data(package=)' calls not declared from:")
@@ -1975,6 +2007,9 @@ msgid ""
 msgstr ""
 "Katalog 'include' w R jest pusty -- być może trzeba zainstalować R-devel.rpm "
 "lub coś podobnego"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr ""
 
 # tools/R/install.R: 795
 # warning("no source files found", call. = FALSE)

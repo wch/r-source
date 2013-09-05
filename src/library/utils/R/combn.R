@@ -31,7 +31,7 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     ##	unchanged to function given by argument FUN,  if any.
 
     ##S : Change if (simplify = TRUE) return an array/matrix {not a 'vector'}
-    stopifnot(length(m) == 1L)
+    stopifnot(length(m) == 1L, is.numeric(m))
     if(m < 0) stop("m < 0", domain = NA)
     if(is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == x)
 	x <- seq_len(x)

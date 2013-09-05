@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2312,7 +2312,8 @@ msgstr "nie można zaimportować do zamkniętej przestrzeni nazw"
 
 # src/library/base/R/namespace.R: 815
 # gettext("replacing previous import %s when loading %s")
-msgid "replacing previous import %s when loading %s"
+#, fuzzy
+msgid "replacing previous import by %s when loading %s"
 msgstr "zastępowanie poprzedniego importu %s podczas ładowanie %s"
 
 # src/library/base/R/namespace.R: 823
@@ -2381,7 +2382,8 @@ msgstr "pusta nazwa w dyrektywie '%s' w pliku 'NAMESPACE'"
 # src/library/base/R/namespace.R: 1206
 # warning(gettextf("duplicated symbol names %s in useDynLib(\"%s\")", paste(names(symNames)[dup], collapse = ", "), dyl),
 #                                    domain = NA)
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "powtórzone nazwy symboli %s w 'useDynlib(\"%s\")'"
 
 # src/library/base/R/namespace.R: 1254
@@ -2390,11 +2392,6 @@ msgstr "powtórzone nazwy symboli %s w 'useDynlib(\"%s\")'"
 #                             call. = FALSE, domain = NA)
 msgid "bad 'S3method' directive: %s"
 msgstr "niepoprawna dyrektywa 'S3method': %s"
-
-# src/library/base/R/namespace.R: 1259
-# stop("too many 'S3method' directives", call. = FALSE)
-msgid "too many 'S3method' directives"
-msgstr "zbyć dużo dyrektyw 'S3method'"
 
 # src/library/base/R/namespace.R: 1262
 # stop(gettextf("unknown namespace directive: %s", deparse(e, nlines=1L)),
@@ -4559,6 +4556,11 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+# src/library/base/R/namespace.R: 1259
+# stop("too many 'S3method' directives", call. = FALSE)
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "zbyć dużo dyrektyw 'S3method'"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "macierz w 'chol' nie jest kwadratowa"

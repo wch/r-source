@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,6 +347,32 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr ""
+
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr ""
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+#, fuzzy
+msgid "Namespace in Imports field not imported from: %s"
+msgstr "Navnerumsafhængighed ikke krævet: %s"
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
 msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
@@ -827,6 +853,9 @@ msgstr ""
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
+msgstr ""
+
+msgid "package %s %s was found, but %s %s is required by %s"
 msgstr ""
 
 msgid "no source files found"
@@ -1355,6 +1384,3 @@ msgstr[1] ""
 
 #~ msgid "Namespace dependencies not required:"
 #~ msgstr "Navnerumsafhængigheder ikke krævet:"
-
-#~ msgid "Namespace dependency not required: %s"
-#~ msgstr "Navnerumsafhængighed ikke krævet: %s"

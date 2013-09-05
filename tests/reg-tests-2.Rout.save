@@ -7167,6 +7167,24 @@ Coefficients:
 s.e.   0.4162  0.4420  0.0329   0.2210      0.7441
 
 sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
-> stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.attributes = FALSE))
+> stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.names = FALSE))
 > ## first gave local optim in 3.0.1
+> 
+> ## all.equal always checked the names
+> x <- c(a=1, b=2)
+> y <- c(a=1, d=2)
+> all.equal(x, y, check.names = FALSE)
+[1] TRUE
+> ## failed on mismatched attributes
+> 
+> ## PR#15411, plus digits change
+> format(9992, digits = 3)
+[1] "9992"
+> format(9996, digits = 3)
+[1] "9996"
+> format(0.0002, digits = 0, nsmall = 2)
+[1] "0.00"
+> format(pi*10, digits = 0, nsmall = 1)
+[1] "31.4"
+> ## second added an extra space; 3rd and 4th were not allowed.
 > 

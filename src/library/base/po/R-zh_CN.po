@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1046,7 +1046,8 @@ msgstr "在输入%2$s时局部值将被引进值%1$s代替"
 msgid "cannot import into a sealed namespace"
 msgstr "不能进口到已经封闭了的名字空间"
 
-msgid "replacing previous import %s when loading %s"
+#, fuzzy
+msgid "replacing previous import by %s when loading %s"
 msgstr "输入%2$s将代替前次引进%1$s"
 
 msgid "invalid import target"
@@ -1080,14 +1081,12 @@ msgstr "程辑包%s 没有'NAMESPACE'这一文件"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "'NAMESPACE'文件里'%s'指示中有空的名字"
 
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "useDynlib(\"%s\")里有重复字符名字%s"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "不是'S3method'指令：%s"
-
-msgid "too many 'S3method' directives"
-msgstr "'S3method'指令太多"
 
 msgid "unknown namespace directive: %s"
 msgstr "未知名字空间指令：%s"
@@ -1622,6 +1621,9 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "'S3method'指令太多"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "'chol'的矩阵不是正方形的"

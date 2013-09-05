@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37+0100\n"
+"POT-Creation-Date: 2013-08-28 07:45+0100\n"
 "PO-Revision-Date: 2013-02-20 17:48-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -41,86 +41,90 @@ msgid "bad units specified in '%s'"
 msgstr "'%s'에 지정된 기본단위가 올바르지 않습니다"
 
 # CHL20130308
-#: graphics.c:1778 graphics.c:1800
+#: graphics.c:1783 graphics.c:1805
 msgid "attempt to plot on null device"
 msgstr "null device에 플랏을 시도합니다"
 
 # CHL20130308
-#: graphics.c:1830
+#: graphics.c:1835
 msgid "outer margins too large (figure region too small)"
 msgstr "외부 여백이 너무 커서 figure region이 너무 작습니다"
 
 # CHL20130308
-#: graphics.c:1832
+#: graphics.c:1837
 msgid "figure region too large"
 msgstr "figure region이 너무 큽니다"
 
 # CHL20130308
-#: graphics.c:1834
+#: graphics.c:1839
 msgid "figure margins too large"
 msgstr "figure 여백이 너무 큽니다"
 
 # CHL20130308
-#: graphics.c:1836
+#: graphics.c:1841
 msgid "plot region too large"
 msgstr "플랏 영역이 너무 큽니다"
 
 # CHL20130308
-#: graphics.c:1883
+#: graphics.c:1888
 #, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr ""
 
 # CHL20130308
-#: graphics.c:1935
+#: graphics.c:1940
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "무한한 한계를 가지는 축입니다 [GScale(%g,%g,%d, .); log=%d]"
 
 # CHL20130308
-#: graphics.c:1965
+#: graphics.c:1970
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "축의 스타일 \"%c\"은 구현되지 않았습니다"
 
 # CHL20130308
-#: graphics.c:2203
+#: graphics.c:2208
 msgid "no graphics device is active"
 msgstr "활성화 된 그래픽 장치가 없습니다"
 
 # CHL20130308
-#: graphics.c:2398
+#: graphics.c:2403
 msgid "plot.new has not been called yet"
 msgstr "plot.new는 아직까지 호출되지 않았습니다"
 
 # CHL20130308
-#: graphics.c:2400
+#: graphics.c:2405
 msgid "invalid graphics state"
 msgstr "유효한 그래픽 상태가 아닙니다"
 
+#: graphics.c:2547
+msgid "graphics device closed during call to locator or identify"
+msgstr ""
+
 # CHL20130308
-#: graphics.c:2561
+#: graphics.c:2596
 msgid "No graphics device is active"
 msgstr "활성화된 그래픽 장치가 없습니다"
 
 # CHL20130308
-#: graphics.c:3020
+#: graphics.c:3055
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "길이가 0인 arrow는 angle을 정할 수 없기 때문에 넘어갑니다"
 
 # CHL20130308
-#: graphics.c:3101
+#: graphics.c:3136
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "유효한 par(\"bty\") = '%c'가 아니므로 그려질 box()가 없습니다"
 
 # CHL20130308
-#: graphics.c:3118
+#: graphics.c:3153
 msgid "invalid argument to GBox"
 msgstr "유효하지 않은 인자가 GBox에 전달되었습니다"
 
 # CHL20130308
-#: graphics.c:3363
+#: graphics.c:3398
 msgid "metric information not available for this device"
 msgstr "이 장치에 대한 metric information이 사용가능하지 않습니다"
 
@@ -130,84 +134,84 @@ msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "그래픽 파라미터 'family'는 최대 200바이트의 길이를 가질 수 있습니다"
 
 # CHL20130308
-#: par.c:159
+#: par.c:160
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "그래픽 파라미터 \"%s\"에 지정된 값이 유효하지 않습니다"
 
 # CHL20130308
-#: par.c:166
+#: par.c:167
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "그래픽 파라미터 \"%s\"는 잘못된 길이를 가지고 있습니다"
 
 # CHL20130308
-#: par.c:261 par.c:671
+#: par.c:262 par.c:672
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "그래픽 파라미터 \"%s\"를 설정할 수 없습니다"
 
 # CHL20130308
-#: par.c:433
+#: par.c:434
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "파라미터 \"mfg\"는 잘못된 길이를 가지고 있습니다"
 
 # CHL20130308
-#: par.c:441
+#: par.c:442
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\"내의 파라미터 \"i\"가 범위밖에 있습니다"
 
 # CHL20130308
-#: par.c:443
+#: par.c:444
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\"내의 파라미터 \"j\"가 범위밖에 있습니다"
 
 # CHL20130308
-#: par.c:448
+#: par.c:449
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"내 'nr'의 값이 잘못되었으므로 무시될 것입니다"
 
 # CHL20130308
-#: par.c:450
+#: par.c:451
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"내 'nc'의 값이 잘못되었으므로 무시될 것입니다"
 
 # CHL20130308
-#: par.c:476
+#: par.c:477
 msgid "calling par(new=TRUE) with no plot"
 msgstr "플랏없이 par(new=TRUE)를 호출합니다"
 
 # CHL20130308
-#: par.c:663 par.c:1047
+#: par.c:664 par.c:1062
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "그래픽 파라미터 \"%s\"는 필요하지 않습니다"
 
 # CHL20130308
-#: par.c:667 par.c:1051
+#: par.c:668 par.c:1066
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"는 그래픽 매개변수가 아닙니다"
 
 # CHL20130308
-#: par.c:1104
+#: par.c:1119
 msgid "invalid argument passed to par()"
 msgstr "par()에 전달된 인자는 유효하지 않습니다"
 
 # CHL20130308
-#: par.c:1148
+#: par.c:1163
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 행이 있습니다 (최대 %d입니다)"
 
 # CHL20130308
-#: par.c:1154
+#: par.c:1169
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 열들이 있습니다 (최대 %d입니다)"
 
 # CHL20130308
-#: par.c:1156
+#: par.c:1171
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 셀들이 있습니다 (최대 %d개입니다)"

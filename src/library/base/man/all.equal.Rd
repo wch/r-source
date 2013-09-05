@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -38,11 +38,10 @@ attr.all.equal(target, current,
     \code{tolerance} are not considered.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
   \item{check.attributes}{logical indicating if the
-    \code{\link{attributes}(.)} of \code{target} and \code{current}
-    should be compared as well.}
+    \code{\link{attributes}} of \code{target} and \code{current}
+    (other than the names) should be compared.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
-    of \code{target} and \code{current} should be compared as well (and
-    separately from the \code{attributes}).}
+    of \code{target} and \code{current} should be compared.}
 }
 \description{
     \code{all.equal(x, y)} is a utility to compare \R objects \code{x}

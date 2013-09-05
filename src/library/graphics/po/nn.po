@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37+0100\n"
+"POT-Creation-Date: 2013-08-28 07:45+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -32,73 +32,77 @@ msgstr "for mange grafikksystem registrerte"
 msgid "bad units specified in '%s'"
 msgstr "ugyldige einingar gjevne i «%s»"
 
-#: graphics.c:1778 graphics.c:1800
+#: graphics.c:1783 graphics.c:1805
 msgid "attempt to plot on null device"
 msgstr "forsøk på å plotta på nulleininga"
 
-#: graphics.c:1830
+#: graphics.c:1835
 #, fuzzy
 msgid "outer margins too large (figure region too small)"
 msgstr "ytremargane er for store (figurområdet vert for lite)"
 
-#: graphics.c:1832
+#: graphics.c:1837
 msgid "figure region too large"
 msgstr "figurområdet er for stort"
 
-#: graphics.c:1834
+#: graphics.c:1839
 msgid "figure margins too large"
 msgstr "figurmargane er for store"
 
-#: graphics.c:1836
+#: graphics.c:1841
 msgid "plot region too large"
 msgstr "plotteområdet er for stort"
 
-#: graphics.c:1883
+#: graphics.c:1888
 #, fuzzy, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "relativt verdiområde = %4.0f × EPS er lite (akse %d)"
 
-#: graphics.c:1935
+#: graphics.c:1940
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "uendelege aksegrenser [GScale(%g,%g,%d, .); log=%d]"
 
-#: graphics.c:1965
+#: graphics.c:1970
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "aksestilen «%c» er ikkje implementert"
 
-#: graphics.c:2203
+#: graphics.c:2208
 #, fuzzy
 msgid "no graphics device is active"
 msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:2398
+#: graphics.c:2403
 msgid "plot.new has not been called yet"
 msgstr "plot.new er ikkje kalla enno"
 
-#: graphics.c:2400
+#: graphics.c:2405
 msgid "invalid graphics state"
 msgstr "ugyldig grafikktilstand"
 
-#: graphics.c:2561
+#: graphics.c:2547
+msgid "graphics device closed during call to locator or identify"
+msgstr ""
+
+#: graphics.c:2596
 msgid "No graphics device is active"
 msgstr "Inga verksam grafikkeining"
 
-#: graphics.c:3020
+#: graphics.c:3055
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "pil av lengd null har ikkje-unik vinkel, og vert derfor ikkje teikna"
 
-#: graphics.c:3101
+#: graphics.c:3136
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ugyldig par(\"bty\") = '%c' (ingen box() teikna)"
 
-#: graphics.c:3118
+#: graphics.c:3153
 msgid "invalid argument to GBox"
 msgstr "ugyldig argument til GBox"
 
-#: graphics.c:3363
+#: graphics.c:3398
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"
@@ -107,72 +111,72 @@ msgstr "Metrikkinformasjon ikkje tilgjengeleg for eininga"
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "den grafiske parameteren «family» har ei makslengd på 200 byte"
 
-#: par.c:159
+#: par.c:160
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "ugyldig verdi oppgjeven for den grafiske parameteren «%s»"
 
-#: par.c:166
+#: par.c:167
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "den grafiske parameteren «%s» har feil lengd"
 
-#: par.c:261 par.c:671
+#: par.c:262 par.c:672
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "den grafiske parameteren «%s» kan ikkje definerast"
 
-#: par.c:433
+#: par.c:434
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "parameteren «mfg» har feil lengd"
 
-#: par.c:441
+#: par.c:442
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "parameteren «i» i «mfg» ligg utanfor gyldig verdiområde"
 
-#: par.c:443
+#: par.c:444
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "parameteren «j» i «mfg» ligg utanfor gyldig verdiområde"
 
-#: par.c:448
+#: par.c:449
 #, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nr» i «mfg» er feil, og vert ikkje brukt"
 
-#: par.c:450
+#: par.c:451
 #, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nc» i «mfg» er feil, og vert ikkje brukt"
 
-#: par.c:476
+#: par.c:477
 msgid "calling par(new=TRUE) with no plot"
 msgstr "kallar par(new=TRUE) utan noko plott"
 
-#: par.c:663 par.c:1047
+#: par.c:664 par.c:1062
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "den grafiske parameteren «%s» er utdatert"
 
-#: par.c:667 par.c:1051
+#: par.c:668 par.c:1066
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "«%s» er ikkje ein grafisk parameter"
 
-#: par.c:1104
+#: par.c:1119
 msgid "invalid argument passed to par()"
 msgstr "ugyldig argument sendt til par()"
 
-#: par.c:1148
+#: par.c:1163
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "for mange rader i oppsett (grense: %d)"
 
-#: par.c:1154
+#: par.c:1169
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "for mange kolonnar i oppsett (grense: %d)"
 
-#: par.c:1156
+#: par.c:1171
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "for mange celler i oppsett (grense: %d)"

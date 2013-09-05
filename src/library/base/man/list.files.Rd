@@ -92,5 +92,6 @@ list.files(R.home())
 dir("../..", pattern = "^[a-lr]", full.names = TRUE, ignore.case = TRUE)
 
 list.dirs(R.home("doc"))
+list.dirs(R.home("doc"), full.names = FALSE)
 }
 \keyword{file}

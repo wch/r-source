@@ -1820,6 +1820,12 @@ static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
     return installAssignFcnSymbol(fun);
 }
 
+#define INCREMENT_NAMED(x) do {				\
+	SEXP __x__ = (x);				\
+	if (NAMED(__x__) != 2)				\
+	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
+    } while (0)
+
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, afun, rhsprom;
@@ -1956,14 +1962,14 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(nprot);
     endcontext(&cntxt); /* which does not run the remove */
     unbindVar(R_TmpvalSymbol, rho);
-#ifdef CONSERVATIVE_COPYING /* not default */
-    return duplicate(saverhs);
-#else
+#ifdef OLD_RHS_NAMED
     /* we do not duplicate the value, so to be conservative mark the
        value as NAMED = 2 */
     SET_NAMED(saverhs, 2);
-    return saverhs;
+#else
+    INCREMENT_NAMED(saverhs);
 #endif
+    return saverhs;
 }
 
 /* Defunct in 1.5.0
@@ -1995,7 +2001,7 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* fall through */
     case SYMSXP:
 	rhs = eval(CADR(args), rho);
-	SET_NAMED(rhs, NAMED(rhs) ? 2 : 1);
+	INCREMENT_NAMED(rhs);
 	if (PRIMVAL(op) == 2)                       /* <<- */
 	    setVar(lhs, rhs, ENCLOS(rho));
 	else                                        /* <-, = */
@@ -4792,9 +4798,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    defineVar(symbol, value, rho);
 	R_BCNodeStackTop--; /* now pop LHS value off the stack */
 	/* original right-hand side value is now on top of stack again */
+#ifdef OLD_RHS_NAMED
 	/* we do not duplicate the right-hand side value, so to be
 	   conservative mark the value as NAMED = 2 */
 	SET_NAMED(GETSTACK(-1), 2);
+#else
+	INCREMENT_NAMED(GETSTACK(-1));
+#endif
 	NEXT();
       }
     OP(STARTSUBSET, 2): DO_STARTDISPATCH("[");
@@ -4954,9 +4964,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	setVar(symbol, value, ENCLOS(rho));
 	/* original right-hand side value is now on top of stack again */
+#ifdef OLD_RHS_NAMED
 	/* we do not duplicate the right-hand side value, so to be
 	   conservative mark the value as NAMED = 2 */
 	SET_NAMED(GETSTACK(-1), 2);
+#else
+	INCREMENT_NAMED(GETSTACK(-1));
+#endif
 	NEXT();
       }
     OP(SETTER_CALL, 2):

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37+0100\n"
+"POT-Creation-Date: 2013-08-28 07:45+0100\n"
 "PO-Revision-Date: 2013-02-28 16:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -29,71 +29,75 @@ msgstr "das Basisgrafiksystem ist nicht registriert"
 msgid "bad units specified in '%s'"
 msgstr "unbrauchbare Einheit in '%s' spezifiziert"
 
-#: graphics.c:1778 graphics.c:1800
+#: graphics.c:1783 graphics.c:1805
 msgid "attempt to plot on null device"
 msgstr "Versuch auf das Nulldevice zu zeichnen"
 
-#: graphics.c:1830
+#: graphics.c:1835
 msgid "outer margins too large (figure region too small)"
 msgstr "äußere Ränder zu groß (figure region zu klein)"
 
-#: graphics.c:1832
+#: graphics.c:1837
 msgid "figure region too large"
 msgstr "figure region zu groß"
 
-#: graphics.c:1834
+#: graphics.c:1839
 msgid "figure margins too large"
 msgstr "Grafikränder zu groß"
 
-#: graphics.c:1836
+#: graphics.c:1841
 msgid "plot region too large"
 msgstr "plot region zu groß"
 
-#: graphics.c:1883
+#: graphics.c:1888
 #, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "relativer Wertebereich (%4.0f * EPS) ist klein (Achse %d)"
 
-#: graphics.c:1935
+#: graphics.c:1940
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "unendliche Achsengrenzen [GDcale(%g,%g,%d, .); log=%d]"
 
-#: graphics.c:1965
+#: graphics.c:1970
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "Achsenstil \"%c\" nicht implementiert"
 
-#: graphics.c:2203
+#: graphics.c:2208
 msgid "no graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:2398
+#: graphics.c:2403
 msgid "plot.new has not been called yet"
 msgstr "plot.new wurde noch nicht aufgerufen"
 
-#: graphics.c:2400
+#: graphics.c:2405
 msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: graphics.c:2561
+#: graphics.c:2547
+msgid "graphics device closed during call to locator or identify"
+msgstr ""
+
+#: graphics.c:2596
 msgid "No graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:3020
+#: graphics.c:3055
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
 
-#: graphics.c:3101
+#: graphics.c:3136
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
 
-#: graphics.c:3118
+#: graphics.c:3153
 msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
-#: graphics.c:3363
+#: graphics.c:3398
 msgid "metric information not available for this device"
 msgstr "Metrikinformation für dieses Device nicht verfügbar"
 
@@ -101,70 +105,70 @@ msgstr "Metrikinformation für dieses Device nicht verfügbar"
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "Grafikparameter 'family' hat eine maximale Länge von 200 bytes"
 
-#: par.c:159
+#: par.c:160
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
 msgstr "ungültiger Wert für den Grafikparameter \"%s\" spezifiziert"
 
-#: par.c:166
+#: par.c:167
 #, c-format
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "Grafikparameter \"%s\" hat falsche Länge"
 
-#: par.c:261 par.c:671
+#: par.c:262 par.c:672
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "Grafikparameter \"%s\" kann nicht gesetzt werden"
 
-#: par.c:433
+#: par.c:434
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "Parameter \"mfg\" hat falsche Länge"
 
-#: par.c:441
+#: par.c:442
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "Parameter \"i\" in \"mfg\" ist außerhalb des zulässigen Bereiches"
 
-#: par.c:443
+#: par.c:444
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "Parameter \"j\" in \"mfg\" ist außerhalb des zulässigen Bereiches"
 
-#: par.c:448
+#: par.c:449
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
 msgstr "Wert für 'nr' in \"mfg\" ist falsch und wird ignoriert"
 
-#: par.c:450
+#: par.c:451
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "Wert für 'nc' in \"mfg\" ist falsch und wird ignoriert"
 
-#: par.c:476
+#: par.c:477
 msgid "calling par(new=TRUE) with no plot"
 msgstr "par(new) ohne Plot aufgerufen"
 
-#: par.c:663 par.c:1047
+#: par.c:664 par.c:1062
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "Grafikparameter \"%s\" ist veraltet"
 
-#: par.c:667 par.c:1051
+#: par.c:668 par.c:1066
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" ist kein Grafikparameter"
 
-#: par.c:1104
+#: par.c:1119
 msgid "invalid argument passed to par()"
 msgstr "ungültiges Argument an par() übergeben"
 
-#: par.c:1148
+#: par.c:1163
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "zu viele Zeilen in layout, höchstens %d zulässig"
 
-#: par.c:1154
+#: par.c:1169
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "zu viele Spalten in layout, höchstens %d zulässig"
 
-#: par.c:1156
+#: par.c:1171
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "zu viele Zellen in layout, höchstens %d zulässig"

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,3 +43,13 @@ SIGUSR2 <- .Call(PS_sigs, 31L)
 latexArgCount <- integer()              # The next line modifies this
 latexTable <- makeLatexTable(utf8table)  # FIXME: Should latexTable be hardcoded instead?
 rm(PS_sigs)
+
+.onLoad <- function(libname, pkgname) {
+    ## see if we can render Unicode bullet: not C locales, nor CJK on Windows.
+    if (.Platform$OS.type == "windows") {
+	cp <- l10n_info()$codepage
+	if (cp > 0 && (cp == 874L || (cp >= 1250L && cp <= 1258L)))
+	    Rd2txt_options(itemBullet = "\u2022 ")
+    } else if (!is.na(iconv("\u2022", "UTF-8", "")))
+	Rd2txt_options(itemBullet = "\u2022 ")
+}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2013-08-28 07:45\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1087,7 +1087,8 @@ msgstr "lokaler Wert durch import %s ersetzt, während %s geladen wurde"
 msgid "cannot import into a sealed namespace"
 msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
-msgid "replacing previous import %s when loading %s"
+#, fuzzy
+msgid "replacing previous import by %s when loading %s"
 msgstr "vorhergehender Import %s während des Ladens von %s ersetzt"
 
 msgid "invalid import target"
@@ -1123,14 +1124,12 @@ msgstr "Paket %s hat keine 'NAMESPACE' Datei"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "leerer Name in der Direktive  '%s' in der 'NAMESPACE' Datei"
 
-msgid "duplicated symbol names %s in useDynLib(\"%s\")"
+#, fuzzy
+msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "doppelte Symbolnamen %s in useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "unbrauchbare 'S3method' Direktive: %s"
-
-msgid "too many 'S3method' directives"
-msgstr "zu viele 'S3method' Direktiven"
 
 msgid "unknown namespace directive: %s"
 msgstr "unbekannte Namensraum Direktive: %s"
@@ -1706,6 +1705,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "zu viele 'S3method' Direktiven"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "nicht-quadratische Matrix in 'chol'"

@@ -109,6 +109,7 @@ ParTable  [] = {
     { "oma",		 1 },
     { "omd",		 1 },
     { "omi",		 1 },
+    { "page",            2 },
     { "pch",		 0 },
     { "pin",		 1 },
     { "plt",		 1 },
@@ -914,6 +915,20 @@ static SEXP Query(const char *what, pGEDevDesc dd)
 	REAL(value)[1] = dpptr(dd)->omi[1];
 	REAL(value)[2] = dpptr(dd)->omi[2];
 	REAL(value)[3] = dpptr(dd)->omi[3];
+    }
+    else if (streql(what, "page")) {
+        /* This calculation mimics the decision-making in GNewPlot()
+         * in graphics.c SO it MUST be kept in synch with the logic there
+         */
+        value = allocVector(LGLSXP, 1);
+        LOGICAL(value)[0] = 0;
+        if (dpptr(dd)->new) {
+            if (!dpptr(dd)->state) 
+                LOGICAL(value)[0] = 1;
+        } else {
+            if (dpptr(dd)->currentFigure + 1 > dpptr(dd)->lastFigure) 
+                LOGICAL(value)[0] = 1;
+        }
     }
     else if (streql(what, "pch")) {
 	int val = dpptr(dd)->pch;

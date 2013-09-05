@@ -143,8 +143,6 @@ void GCheckState(pGEDevDesc);
  * Set to 0 when don't want drawing to go ahead */
 void GSetState(int, pGEDevDesc);
 
-
-
 /*-------------------------------------------------------------------
  *
  *  GRAPHICAL PRIMITIVES are the generic front-end for the functions

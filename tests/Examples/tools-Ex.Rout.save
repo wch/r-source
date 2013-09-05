@@ -95,7 +95,7 @@ $sectionExtra
 [1] 2
 
 $itemBullet
-[1] "* "
+[1] "• "
 
 $enumFormat
 function (n) 
@@ -129,7 +129,7 @@ $sectionExtra
 [1] 2
 
 $itemBullet
-[1] "* "
+[1] "• "
 
 $enumFormat
 function (n) 
@@ -163,7 +163,7 @@ $sectionExtra
 [1] 2
 
 $itemBullet
-[1] "* "
+[1] "• "
 
 $enumFormat
 function (n) 

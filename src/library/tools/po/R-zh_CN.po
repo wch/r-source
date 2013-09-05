@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-08-26 08:03\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -344,6 +344,34 @@ msgstr "'library'或'require'调用没有被声明:"
 
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "'library'或'require'调用没有被声明: %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls to packages already attached by Depends:"
+msgstr "'library'或'require'调用没有被声明:"
+
+#, fuzzy
+msgid ""
+"'library' or 'require' call to %s which was already attached by Depends."
+msgstr "'library'或'require'调用没有被声明: %s"
+
+msgid "Namespaces in Imports field not imported from:"
+msgstr ""
+
+#, fuzzy
+msgid "Namespace in Imports field not imported from: %s"
+msgstr "不需要名字空间从属: %s"
+
+msgid "Packages in Depends field not imported from:"
+msgstr ""
+
+msgid "Package in Depends field not imported from: %s"
+msgstr ""
+
+msgid "Namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Namespace imported from by a ':::' call: %s"
+msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
 msgstr "'data(package=)'调用没有被声明:"
@@ -836,6 +864,9 @@ msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
 "similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
+
+msgid "package %s %s was found, but %s %s is required by %s"
+msgstr ""
 
 msgid "no source files found"
 msgstr "找不到源程序文件"
@@ -1607,9 +1638,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Namespace dependencies not required:"
 #~ msgstr "不需要名字空间从属:"
-
-#~ msgid "Namespace dependency not required: %s"
-#~ msgstr "不需要名字空间从属: %s"
 
 #~ msgid "Package name and namespace differ."
 #~ msgstr "程辑包的名字和它的名字空间不一样."
