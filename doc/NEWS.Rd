@@ -240,6 +240,11 @@
 
       \item The limit of 500 \code{S3method} entries in a
       \code{NAMESPACE} file has been removed.
+  
+      \item The default \sQuote{version} of Bioconductor for its
+      packages has been changed to the upcoming \samp{2.13}, but this
+      can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
+      in file \file{Renviron.site}.
     }
   }
 
