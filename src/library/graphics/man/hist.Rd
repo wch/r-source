@@ -33,7 +33,8 @@ hist(x, \dots)
       number of cells (see \sQuote{Details}),
       \item a function to compute the number of cells.
     }
-    In the last three cases the number is a suggestion only.  If
+    In the last three cases the number is a suggestion only; the
+     breakpoints will be set to \code{\link{pretty}} values.  If
      \code{breaks} is a function, the \code{x} vector is supplied to it
      as the only argument. 
   }
