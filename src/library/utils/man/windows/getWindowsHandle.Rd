@@ -37,10 +37,6 @@ getWindowsHandle(which = "Console")
   through this function.
 }
 \note{
-  As from \R 2.6.0, this function returns an external pointer rather than
-  an integer value, and \code{which = "ProcessId"} is no longer supported.
-  Use \code{\link{Sys.getpid}} for the latter.
-
   This is only available on Windows.
 }
 \value{

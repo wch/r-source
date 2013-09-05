@@ -398,7 +398,7 @@ get_exclude_patterns <- function()
                                full.names = TRUE))) {
             messageLog(Log, "compacting vignettes and other PDF files")
             if(compact_vignettes %in% c("gs", "gs+qpdf", "both")) {
-                gs_cmd <- find_gs_cmd(Sys.getenv("R_GSCMD", ""))
+                gs_cmd <- find_gs_cmd()
                 gs_quality <- "ebook"
             } else {
                 gs_cmd <- ""

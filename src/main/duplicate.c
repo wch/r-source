@@ -43,6 +43,27 @@
    a small but measurable difference, at least for some cases
    and when (as in R 2.15.x) a for() loop was used.
 */
+#ifdef __APPLE__
+/* it seems some OS X builds do not copy >= 2^32 bytes fully */
+#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do { \
+  R_xlen_t __n__ = XLENGTH(from); \
+  PROTECT(from); \
+  PROTECT(to = allocVector(TYPEOF(from), __n__)); \
+  if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
+  else { \
+      R_xlen_t __this; \
+      type *__to = fun(to), *__from = fun(from); \
+      do { \
+         __this = (__n__ < 1000000) ? __n__ : 1000000; \
+         memcpy(__to, __from, __this * sizeof(type));  \
+	 __n__ -= __this;  __to += __this; __from += __this; \
+      } while(__n__ > 0); \
+  } \
+  DUPLICATE_ATTRIB(to, from); \
+  SET_TRUELENGTH(to, XTRUELENGTH(from)); \
+  UNPROTECT(2); \
+} while (0)
+#else
 #define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do { \
   R_xlen_t __n__ = XLENGTH(from); \
   PROTECT(from); \
@@ -53,6 +74,7 @@
   SET_TRUELENGTH(to, XTRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
+#endif
 
 /* The following macros avoid the cost of going through calls to the
    assignment functions (and duplicate in the case of ATTRIB) when the

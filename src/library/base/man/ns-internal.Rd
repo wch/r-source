@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-internals}
@@ -35,10 +35,10 @@ importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
 isNamespace(ns)
 namespaceExport(ns, vars)
-namespaceImport(self, \dots)
-namespaceImportFrom(self, ns, vars, generics, packages)
-namespaceImportClasses(self, ns, vars)
-namespaceImportMethods(self, ns, vars)
+namespaceImport(self, \dots, from = NULL)
+namespaceImportFrom(self, ns, vars, generics, packages, from = NULL)
+namespaceImportClasses(self, ns, vars, from = NULL)
+namespaceImportMethods(self, ns, vars, from = NULL)
 packageHasNamespace(package, package.lib)
 parseNamespaceFile(package, package.lib, mustExist = TRUE)
 registerS3method(genname, class, method, envir = parent.frame())

@@ -5,7 +5,7 @@
 
 \name{plot.lm}
 \alias{plot.lm}
-\alias{plot.mlm}%which is .NotYetImplemented()
+% \alias{plot.mlm} %which is .NotYetImplemented()
 \title{Plot Diagnostics for an lm Object}
 \usage{
 \method{plot}{lm}(x, which = c(1:3, 5), %% was which = 1:4

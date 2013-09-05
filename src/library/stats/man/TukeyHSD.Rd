@@ -7,9 +7,9 @@
 
 \name{TukeyHSD}
 \alias{TukeyHSD}
-\alias{TukeyHSD.aov}
-\alias{print.TukeyHSD}
-\alias{plot.TukeyHSD}
+%\alias{TukeyHSD.aov}
+%\alias{print.TukeyHSD}
+%\alias{plot.TukeyHSD}
 \title{Compute Tukey Honest Significant Differences}
 \description{
   Create a set of confidence intervals on the differences between the

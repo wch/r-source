@@ -5,5 +5,5 @@ Priority: base
 Author: R Core Team and contributors worldwide
 Description: Statistical Functions using S4 classes
 Maintainer: R Core Team <R-core@r-project.org>
-Depends: methods, graphics, stats
+Imports: graphics, methods, stats
 License: Part of R @VERSION@

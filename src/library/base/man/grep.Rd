@@ -116,9 +116,8 @@ regexec(pattern, text, ignore.case = FALSE,
   locale, and you should expect it only to work for ASCII characters if
   \code{useBytes = TRUE}.
 
-  As from \R 2.14.0, \code{regexpr} and \code{gregexpr} with \code{perl
-    = TRUE} allow Python-style named captures, but not for \emph{long
-    vector} inputs.
+  \code{regexpr} and \code{gregexpr} with \code{perl = TRUE} allow
+    Python-style named captures, but not for \emph{long vector} inputs.  
 }
 
 \value{

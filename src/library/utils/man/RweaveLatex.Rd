@@ -50,8 +50,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   unset or empty.  If set, it should be exactly \code{TRUE} or
   \code{FALSE}: any other values are taken as \code{FALSE}.
 
-  As from \R 2.12.0, the simplest way for frequent Sweave users to ensure
-  that \file{Sweave.sty} is in the TeX input path is to add
+  The simplest way for frequent Sweave users to ensure that
+  \file{Sweave.sty} is in the TeX input path is to add
   \file{\var{R_HOME}/share/texmf} as a \sQuote{texmf tree} (\sQuote{root
   directory} in the parlance of the \sQuote{MiKTeX settings} utility).
 

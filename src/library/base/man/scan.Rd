@@ -33,7 +33,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     When running \R from a script, \code{file = "stdin"} can be used to
     refer to the process's \code{stdin} file stream.
 
-    As from \R 2.10.0 this can be a compressed file (see \code{\link{file}}).
+    This can be a compressed file (see \code{\link{file}}).
 
     Alternatively, \code{file} can be a \code{\link{connection}},
     which will be opened if necessary, and if so closed at the end of

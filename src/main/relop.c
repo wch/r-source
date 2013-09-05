@@ -37,14 +37,71 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call);
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 
+#define DO_SCALAR_RELOP(oper, x, y) do {			\
+	switch (oper) {						\
+	case EQOP: return ScalarLogical((x) == (y));		\
+	case NEOP: return ScalarLogical((x) != (y));		\
+	case LTOP: return ScalarLogical((x) < (y));		\
+	case GTOP: return ScalarLogical((x) > (y));		\
+	case LEOP: return ScalarLogical((x) <= (y));		\
+	case GEOP: return ScalarLogical((x) >= (y));		\
+	}							\
+    } while (0)
+
 SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
+    SEXP ans, arg1, arg2;
+    int argc;
+    int oper = PRIMVAL(op);
 
-    if (DispatchGroup("Ops", call, op, args, env, &ans))
-	return ans;
-    checkArity(op, args);
-    return do_relop_dflt(call, op, CAR(args), CADR(args));
+    if (! IS_R_NilValue(args) &&
+	! IS_R_NilValue(CDR(args)) &&
+	IS_R_NilValue(CDDR(args)))
+	argc = 2;
+    else
+	argc = length(args);
+    arg1 = CAR(args);
+    arg2 = CADR(args);
+
+    if (! IS_R_NilValue(ATTRIB(arg1)) || ! IS_R_NilValue(ATTRIB(arg2))) {
+	if (DispatchGroup("Ops", call, op, args, env, &ans))
+	    return ans;
+    }
+    else if (argc == 2) {
+	if (IS_SCALAR(arg1, INTSXP)) {
+	    int ix = INTEGER(arg1)[0];
+	    if (IS_SCALAR(arg2, INTSXP)) {
+		int iy = INTEGER(arg2)[0];
+		if (ix == NA_INTEGER || iy == NA_INTEGER)
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, ix, iy);
+	    }
+	    else if (IS_SCALAR(arg2, REALSXP)) {
+		double dy = REAL(arg2)[0];
+		if (ix == NA_INTEGER || ISNAN(dy))
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, ix, dy);
+	    }
+	}
+	else if (IS_SCALAR(arg1, REALSXP)) {
+	    double dx = REAL(arg1)[0];
+	    if (IS_SCALAR(arg2, INTSXP)) {
+		int iy = INTEGER(arg2)[0];
+		if (ISNAN(dx) || iy == NA_INTEGER)
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, dx, iy);
+	    }
+	    else if (IS_SCALAR(arg2, REALSXP)) {
+		double dy = REAL(arg2)[0];
+		if (ISNAN(dx) || ISNAN(dy))
+		    return ScalarLogical(NA_LOGICAL);
+		DO_SCALAR_RELOP(oper, dx, dy);
+	    }
+	}
+    }
+    else error("operator needs two arguments");
+
+    return do_relop_dflt(call, op, arg1, arg2);
 }
 
 SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
@@ -76,14 +133,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 		int iy = INTEGER(y)[0];
 		if (ix == NA_INTEGER || iy == NA_INTEGER)
 		    return ScalarLogical(NA_LOGICAL);
-		switch (PRIMVAL(op)) {
-		case EQOP: return ScalarLogical(ix == iy);
-		case NEOP: return ScalarLogical(ix != iy);
-		case LTOP: return ScalarLogical(ix < iy);
-		case GTOP: return ScalarLogical(ix > iy);
-		case LEOP: return ScalarLogical(ix <= iy);
-		case GEOP: return ScalarLogical(ix >= iy);
-		}
+		DO_SCALAR_RELOP(PRIMVAL(op), ix, iy);
 	    }
 	    else {
 		double dx = typex == REALSXP ? REAL(x)[0] :
@@ -92,14 +142,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 		    INTEGER(y)[0] != NA_INTEGER ? INTEGER(y)[0] : NA_REAL;
 		if (ISNAN(dx) || ISNAN(dy))
 		    return ScalarLogical(NA_LOGICAL);
-		switch (PRIMVAL(op)) {
-		case EQOP: return ScalarLogical(dx == dy);
-		case NEOP: return ScalarLogical(dx != dy);
-		case LTOP: return ScalarLogical(dx < dy);
-		case GTOP: return ScalarLogical(dx > dy);
-		case LEOP: return ScalarLogical(dx <= dy);
-		case GEOP: return ScalarLogical(dx >= dy);
-		}
+		DO_SCALAR_RELOP(PRIMVAL(op), dx, dy);
 	    }
 	}
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
     SEXP object;
-    char buffer[20];
+    char buffer[21];
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -142,7 +142,7 @@ SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  _("'tracemem' is not useful for weak reference or external pointer objects"));
 
     SET_RTRACE(object, 1);
-    snprintf(buffer, 20, "<%p>", (void *) object);
+    snprintf(buffer, 21, "<%p>", (void *) object);
     return mkString(buffer);
 #else
     errorcall(call, _("R was not compiled with support for memory profiling"));
@@ -208,7 +208,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
     SEXP object, previous, ans, ap, argList;
-    char buffer[20];
+    char buffer[21];
 
     PROTECT(ap = list2(R_NilValue, R_NilValue));
     SET_TAG(ap,  install("x"));
@@ -228,7 +228,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, _("invalid '%s' argument"), "previous");
 
     if (RTRACE(object)) {
-	snprintf(buffer, 20, "<%p>", (void *) object);
+	snprintf(buffer, 21, "<%p>", (void *) object);
 	ans = mkString(buffer);
     } else {
 	R_Visible = 0;

@@ -8,6 +8,8 @@
 \title{Optimization using PORT routines }
 \description{
   Unconstrained and box-constrained optimization using PORT routines.
+
+  For historical compatibility.
 }
 \usage{
 nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
@@ -87,7 +89,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
     \item{\code{trace}}{The value of the objective function and the parameters
       is printed every trace'th iteration.  Defaults to 0 which
       indicates no trace information is to be printed.}
-    \item{\code{abs.tol}}{Absolute tolerance.  As from \R{} 2.12.0, defaults
+    \item{\code{abs.tol}}{Absolute tolerance.  Defaults
       to 0 so the absolute convergence test is not used.  If the objective
       function is known to be non-negative, the previous default of
       \code{1e-20} would be more appropriate.}% AFCTOL  31
@@ -112,7 +114,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   Underlying Fortran code by David M. Gay
 }
 \seealso{
-  \code{\link{optim}} and \code{\link{nlm}}.
+  \code{\link{optim}} (which is preferred) and \code{\link{nlm}}.
 
   \code{\link{optimize}} for one-dimensional minimization and
   \code{\link{constrOptim}} for constrained optimization.

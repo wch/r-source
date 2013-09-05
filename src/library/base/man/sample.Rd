@@ -43,9 +43,9 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   inferred from the first argument, so that \code{sample(x)} generates a
   random permutation of the elements of \code{x} (or \code{1:x}).
 
-  As from \R 2.11.0 it is allowed to ask for \code{size = 0} samples
-  with \code{n = 0} or a length-zero \code{x}, but otherwise \code{n >
-  0} or positive \code{length(x)} is required.
+  It is allowed to ask for \code{size = 0} samples with \code{n = 0} or
+  a length-zero \code{x}, but otherwise \code{n > 0} or positive
+  \code{length(x)} is required.
 
   Non-integer positive numerical values of \code{n} or \code{x} will be
   truncated to the next smallest integer, which has to be no larger than

@@ -558,8 +558,10 @@ case.names.lm <- function(object, full = FALSE, ...)
 
 anova.lm <- function(object, ...)
 {
-    if(length(list(object, ...)) > 1L)
-	return(anova.lmlist(object, ...))
+    ## Do not copy this: anova.lmlist is not an exported object.
+    ## See anova.glm for further comments.
+    if(length(list(object, ...)) > 1L) return(anova.lmlist(object, ...))
+
     if(!inherits(object, "lm"))
 	warning("calling anova.lm(<fake-lm-object>) ...")
     w <- object$weights

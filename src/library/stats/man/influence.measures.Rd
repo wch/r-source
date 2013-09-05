@@ -14,8 +14,8 @@
 \concept{DFFITs}
 
 \alias{influence.measures}
-\alias{print.infl}
-\alias{summary.infl}
+%\alias{print.infl}
+%\alias{summary.infl}
 \alias{hat}
 \alias{hatvalues}
 \alias{hatvalues.lm}

@@ -56,7 +56,7 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (DispatchGroup("Ops",call, op, args, env, &ans))
 	    return ans;
     }
-    else if (argc == 1 && TYPEOF(arg1) == LGLSXP && LENGTH(arg1) == 1) {
+    else if (argc == 1 && IS_SCALAR(arg1, LGLSXP)) {
 	/* directly handle '!' operator for simple logical scalars. */
         int v = LOGICAL(arg1)[0];
         return ScalarLogical(v == NA_LOGICAL ? v : ! v);

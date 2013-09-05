@@ -94,7 +94,7 @@ double dnt(double x, double df, double ncp, int give_log)
     }
     else {  /* x ~= 0 : -> same value as for  x = 0 */
 	u = lgammafn((df+1)/2) - lgammafn(df/2)
-	    - .5*(log(M_PI) + log(df) + ncp*ncp);
+	    - (M_LN_SQRT_PI + .5*(log(df) + ncp*ncp));
     }
 
     return (give_log ? u : exp(u));

@@ -90,7 +90,7 @@ pnchisq_raw(double x, double f, double theta,
 #endif
 
     if(theta < 80) { /* use 110 for Inf, as ppois(110, 80/2, lower.tail=FALSE) is 2e-20 */
-	LDOUBLE sum = 0, sum2 = 0, lambda = 0.5*theta, 
+	LDOUBLE sum = 0, sum2 = 0, lambda = 0.5*theta,
 	    pr = EXP(-lambda); // does this need a feature test?
 	double ans;
 	int i;
@@ -136,7 +136,7 @@ pnchisq_raw(double x, double f, double theta,
        sqrt(DBL_EPSILON) * f2) {
 	/* evade cancellation error */
 	/* t = exp((1 - t)*(2 - t/(f2 + 1))) / sqrt(2*M_PI*(f2 + 1));*/
-        lt = (1 - t)*(2 - t/(f2 + 1)) - 0.5 * log(2*M_PI*(f2 + 1));
+        lt = (1 - t)*(2 - t/(f2 + 1)) - M_LN_SQRT_2PI - 0.5 * log(f2 + 1);
 #ifdef DEBUG_pnch
 	REprintf(" (case I) ==> ");
 #endif

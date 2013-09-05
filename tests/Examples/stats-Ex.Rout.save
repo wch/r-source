@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-28 r63431) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-17 r63600) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1718,7 +1718,7 @@ Variances:
 > 
 > ### Name: TukeyHSD
 > ### Title: Compute Tukey Honest Significant Differences
-> ### Aliases: TukeyHSD TukeyHSD.aov print.TukeyHSD plot.TukeyHSD
+> ### Aliases: TukeyHSD
 > ### Keywords: models design
 > 
 > ### ** Examples
@@ -2604,7 +2604,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: anova.mlm
 > ### Title: Comparisons between Multivariate Linear Models
-> ### Aliases: anova.mlm anova.mlmlist
+> ### Aliases: anova.mlm
 > ### Keywords: regression models multivariate
 > 
 > ### ** Examples
@@ -5664,7 +5664,7 @@ NULL
 > 
 > ### Name: density
 > ### Title: Kernel Density Estimation
-> ### Aliases: density density.default print.density
+> ### Aliases: density density.default
 > ### Keywords: distribution smooth
 > 
 > ### ** Examples
@@ -6611,7 +6611,7 @@ The degrees of freedom for the model is 0 and the fit was 0.4755
 > ### Name: family
 > ### Title: Family Objects for Models
 > ### Aliases: family binomial gaussian Gamma inverse.gaussian poisson quasi
-> ###   quasibinomial quasipoisson print.family
+> ###   quasibinomial quasipoisson
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -7447,7 +7447,7 @@ Crew  Child        0      0
 > 
 > ### Name: glm
 > ### Title: Fitting Generalized Linear Models
-> ### Aliases: glm glm.fit weights.glm print.glm
+> ### Aliases: glm glm.fit weights.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
@@ -7780,10 +7780,10 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > 
 > ### Name: influence.measures
 > ### Title: Regression Deletion Diagnostics
-> ### Aliases: influence.measures print.infl summary.infl hat hatvalues
-> ###   hatvalues.lm rstandard rstandard.lm rstandard.glm rstudent
-> ###   rstudent.lm rstudent.glm dfbeta dfbeta.lm dfbetas dfbetas.lm dffits
-> ###   covratio cooks.distance cooks.distance.lm cooks.distance.glm
+> ### Aliases: influence.measures hat hatvalues hatvalues.lm rstandard
+> ###   rstandard.lm rstandard.glm rstudent rstudent.lm rstudent.glm dfbeta
+> ###   dfbeta.lm dfbetas dfbetas.lm dffits covratio cooks.distance
+> ###   cooks.distance.lm cooks.distance.glm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8432,7 +8432,7 @@ Coefficients:
 > 
 > ### Name: lm
 > ### Title: Fitting Linear Models
-> ### Aliases: lm print.lm
+> ### Aliases: lm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -8710,7 +8710,7 @@ $df
 > 
 > ### Name: logLik
 > ### Title: Extract Log-Likelihood
-> ### Aliases: logLik print.logLik str.logLik logLik.lm
+> ### Aliases: logLik logLik.lm
 > ### Keywords: models
 > 
 > ### ** Examples
@@ -11171,7 +11171,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > 
 > ### Name: plot.lm
 > ### Title: Plot Diagnostics for an lm Object
-> ### Aliases: plot.lm plot.mlm
+> ### Aliases: plot.lm
 > ### Keywords: hplot regression
 > 
 > ### ** Examples
@@ -12155,7 +12155,7 @@ Number of Fisher Scoring iterations: 4
 > 
 > ### Name: predict.lm
 > ### Title: Predict method for Linear Model Fits
-> ### Aliases: predict.lm predict.mlm
+> ### Aliases: predict.lm
 > ### Keywords: regression
 > 
 > ### ** Examples

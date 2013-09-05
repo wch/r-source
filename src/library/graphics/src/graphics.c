@@ -2525,13 +2525,43 @@ void GLine(double x1, double y1, double x2, double y2, int coords, pGEDevDesc dd
 	GELine(x1, y1, x2, y2, &gc, dd);
 }
 
+/* We need extra graphics device closure handling
+   when inside a call to locator (it should raise
+   an error and return).  PR#15253
+
+   This assume that locator is running on only one device at a time, 
+   which is currently safe.
+*/
+static void (*old_close)(pDevDesc) = NULL;
+
+static void locator_close(pDevDesc dd)
+{
+    if(old_close) old_close(dd);
+    dd->close = old_close;
+    old_close = NULL;
+    error(_("graphics device closed during call to locator or identify"));
+}
+
+
 /* Read the current "pen" position. */
 Rboolean GLocator(double *x, double *y, int coords, pGEDevDesc dd)
 {
-    if(dd->dev->locator && dd->dev->locator(x, y, dd->dev)) {
-	GConvert(x, y, DEVICE, coords, dd);
-	return TRUE;
-    } else return FALSE;
+  Rboolean ret;
+  /* store original close handler (it will still be called on
+     closure) and assign new handler that throws an error
+  */
+  old_close = (dd->dev)->close;
+  dd->dev->close = &locator_close;
+  
+  if(dd->dev->locator && dd->dev->locator(x, y, dd->dev)) {
+      GConvert(x, y, DEVICE, coords, dd);
+      ret =  TRUE;
+  } else ret =  FALSE;
+  /* restore original close handler */
+  dd->dev->close = old_close;
+  old_close = NULL;
+  return ret;
+  
 }
 
 /* Access character font metric information.  */

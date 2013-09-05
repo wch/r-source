@@ -70,7 +70,7 @@ tempdir()
   package \pkg{parallel} (or \CRANpkg{multicore}) share a per-session
   temporary directory.  Further, the \sQuote{guaranteed not to be
     currently in use} applies only at the time of asking, and two
-  children could ask simultaneously.  As from \R 2.14.1 this is avoided
+  children could ask simultaneously.  This is circumvented
   by ensuring that \code{tempfile} calls in different children try
   different names.
 }

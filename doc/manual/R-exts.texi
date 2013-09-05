@@ -245,8 +245,13 @@ files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
 package subdirectory may also contain files @file{INDEX},
 @file{configure}, @file{cleanup}, @file{LICENSE}, @file{LICENCE} and
 @file{NEWS}.  Other files such as @file{INSTALL} (for non-standard
-installation instructions), @file{README} or @file{ChangeLog} will be
-ignored by @R{}, but may be useful to end users.
+installation instructions), @file{README}/@file{README.md}@footnote{This
+seems to be commonly used for a file in `markdown' format.  Be aware that
+most users of @R{} will not know that, nor know how to view such a file:
+platforms such as OS X and Windows do not have a default viewer set in
+their file associations. The @acronym{CRAN} package web pages render
+such files in @HTML{}.}, or @file{ChangeLog} will be ignored by @R{},
+but may be useful to end users.
 
 Except where specifically mentioned,@footnote{currently, top-level files
 @file{.Rbuildignore} and @file{.Rinstignore}, and
@@ -753,7 +758,7 @@ specifying a version requirement.  The comment should contain a
 comparison operator, whitespace and a valid version number,
 e.g. @samp{MASS (>= 3.1-20)}.
 
-Tne @samp{Depends} field can also specify a dependence on a certain
+The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{}
 version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
 @samp{Depends} field.  You can also require a certain SVN revision for
@@ -1481,6 +1486,8 @@ rm -f config.* src/Makevars src/config.h
 As this example shows, @command{configure} often creates working files
 such as @file{config.log}.
 
+If your configure script needs auxiliary files, it is recommended that
+you ship them in a @file{tools} directory (as @R{} itself does).
 
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,
@@ -3145,6 +3152,8 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
+There used to be a limit on the number of @code{S3method} directives: it
+was @code{500} prior to @R{} 3.1.0.
 
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
@@ -3448,9 +3457,12 @@ standard function @code{c} in @pkg{base}.
 Some additional steps are needed for packages which make use of formal
 (S4-style) classes and methods (unless these are purely used
 internally).  The package should have @code{Depends: methods} in its
-@file{DESCRIPTION} file and any classes and methods which are to be
-exported need to be declared in the @file{NAMESPACE} file.  For example,
-the @pkg{stats4} package has
+@file{DESCRIPTION} file@footnote{This was necessary at least prior to
+@R{} 3.0.2 as the @pkg{methods} package looked for its own @R{} code on
+the search path.} and @code{import(methods)} or
+@code{importFrom(methods, ...)} plus any classes and methods which are
+to be exported need to be declared in the @file{NAMESPACE} file.  For
+example, the @pkg{stats4} package has
 
 @findex exportClasses
 @findex exportMethods

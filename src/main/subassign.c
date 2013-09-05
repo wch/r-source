@@ -366,6 +366,28 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 	return(which);
 }
 
+#ifdef LONG_VECTOR_SUPPORT
+static R_INLINE R_xlen_t gi(SEXP indx, R_xlen_t i)
+{
+    if (TYPEOF(indx) == REALSXP) {
+	double d = REAL(indx)[i];
+	return R_FINITE(d) ? (R_xlen_t) d : NA_INTEGER;
+    } else
+	return INTEGER(indx)[i];
+}
+#else
+#define R_SHORT_LEN_MAX INT_MAX
+static R_INLINE int gi(SEXP indx, R_xlen_t i)
+{
+    if (TYPEOF(indx) == REALSXP) {
+	double d = REAL(indx)[i];
+	if (!R_FINITE(d) || d < -R_SHORT_LEN_MAX || d > R_SHORT_LEN_MAX) return NA_INTEGER;
+	return (int) d;
+    } else
+	return INTEGER(indx)[i];
+}
+#endif
+
 static SEXP DeleteListElements(SEXP x, SEXP which)
 {
     SEXP include, xnew, xnames, xnewnames;
@@ -377,7 +399,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
     for (i = 0; i < len; i++)
 	INTEGER(include)[i] = 1;
     for (i = 0; i < lenw; i++) {
-	ii = INTEGER(which)[i];
+	ii = gi(which, i);
 	if (0 < ii  && ii <= len)
 	    INTEGER(include)[ii - 1] = 0;
     }
@@ -413,28 +435,6 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
     UNPROTECT(2);
     return xnew;
 }
-
-#ifdef LONG_VECTOR_SUPPORT
-static R_INLINE R_xlen_t gi(SEXP indx, R_xlen_t i)
-{
-    if (TYPEOF(indx) == REALSXP) {
-	double d = REAL(indx)[i];
-	return R_FINITE(d) ? (R_xlen_t) d : NA_INTEGER;
-    } else
-	return INTEGER(indx)[i];
-}
-#else
-#define R_SHORT_LEN_MAX INT_MAX
-static R_INLINE int gi(SEXP indx, R_xlen_t i)
-{
-    if (TYPEOF(indx) == REALSXP) {
-	double d = REAL(indx)[i];
-	if (!R_FINITE(d) || d < -R_SHORT_LEN_MAX || d > R_SHORT_LEN_MAX) return NA_INTEGER;
-	return (int) d;
-    } else
-	return INTEGER(indx)[i];
-}
-#endif
 
 static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
     /* if RHS (container or element) has NAMED > 0 set NAMED = 2.
@@ -1332,23 +1332,27 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 }
 
 
-static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
+static R_INLINE int SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {
-    int nargs = length(args);
-    SEXP p;
-    if (nargs < 2)
+    if (IS_R_NilValue(CDR(args)))
 	error(_("SubAssignArgs: invalid number of arguments"));
     *x = CAR(args);
-    if(nargs == 2) {
+    if (IS_R_NilValue(CDDR(args))) {
 	*s = R_NilValue;
 	*y = CADR(args);
+	return 0;
     }
     else {
+	int nsubs = 1;
+	SEXP p;
 	*s = p = CDR(args);
-	while (! IS_R_NilValue(CDDR(p)))
+	while (! IS_R_NilValue(CDDR(p))) {
 	    p = CDR(p);
+	    nsubs++;
+	}
 	*y = CADR(p);
 	SETCDR(p, R_NilValue);
+	return nsubs;
     }
 }
 
@@ -1416,9 +1420,8 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (NAMED(CAR(args)) == 2)
 	x = SETCAR(args, duplicate(CAR(args)));
 
-    SubAssignArgs(args, &x, &subs, &y);
+    nsubs = SubAssignArgs(args, &x, &subs, &y);
     S4 = IS_S4_OBJECT(x);
-    nsubs = length(subs);
 
     oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
@@ -1544,7 +1547,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(args);
 
-    SubAssignArgs(args, &x, &subs, &y);
+    nsubs = SubAssignArgs(args, &x, &subs, &y);
     S4 = IS_S4_OBJECT(x);
 
     /* Handle NULL left-hand sides.  If the right-hand side */
@@ -1573,7 +1576,6 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
-    nsubs = length(subs);
 
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {

@@ -7,7 +7,7 @@
 
 \name{lm}
 \alias{lm}
-\alias{print.lm}
+%\alias{print.lm}
 \concept{regression}
 \title{Fitting Linear Models}
 \description{

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscriptFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscriptFonts}
@@ -59,8 +59,9 @@ pdfFonts(\dots)
   \code{"NimbusSanCond"}, \code{"CenturySch"}, \code{"URWPalladio"} and
   \code{"NimbusRom"} (synonym \code{"URWTimes"}).
 
-  There are also mappings for \code{"ComputerModern"} and
-  \code{"ComputerModernItalic"}.
+  There are also mappings for \code{"ComputerModern"},
+  \code{"ComputerModernItalic"} and, as from \R 3.1.0, \code{"ArialMT"}
+  (Monotype Arial).
 
   Finally, there are some default mappings for East Asian locales
   described in a separate section.

@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -390,24 +390,25 @@ loadNamespace <- function (package, lib.loc = NULL,
             if (is.character(i))
                 namespaceImport(ns,
                                 loadNamespace(i, c(lib.loc, .libPaths()),
-                                              versionCheck = vI[[i]]))
+                                              versionCheck = vI[[i]]),
+                                from = package)
             else
                 namespaceImportFrom(ns,
                                     loadNamespace(j <- i[[1L]],
                                                   c(lib.loc, .libPaths()),
                                                   versionCheck = vI[[j]]),
-                                    i[[2L]])
+                                    i[[2L]], from = package)
         }
         for(imp in nsInfo$importClasses)
             namespaceImportClasses(ns, loadNamespace(j <- imp[[1L]],
                                                      c(lib.loc, .libPaths()),
                                                      versionCheck = vI[[j]]),
-                                   imp[[2L]])
+                                   imp[[2L]], from = package)
         for(imp in nsInfo$importMethods)
             namespaceImportMethods(ns, loadNamespace(j <- imp[[1L]],
                                                      c(lib.loc, .libPaths()),
                                                      versionCheck = vI[[j]]),
-                                   imp[[2L]])
+                                   imp[[2L]], from = package)
 
         ## store info for loading namespace for loadingNamespaceInfo to read
         "__LoadingNamespaceInfo__" <- list(libname = package.lib,
@@ -768,10 +769,11 @@ asNamespace <- function(ns, base.OK = TRUE) {
     else ns
 }
 
-namespaceImport <- function(self, ...)
-    for (ns in list(...)) namespaceImportFrom(self, asNamespace(ns))
+namespaceImport <- function(self, ..., from = NULL)
+    for (ns in list(...))
+        namespaceImportFrom(self, asNamespace(ns), from = from)
 
-namespaceImportFrom <- function(self, ns, vars, generics, packages)
+namespaceImportFrom <- function(self, ns, vars, generics, packages, from = NULL)
 {
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
@@ -827,7 +829,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
         if (namespaceIsSealed(self))
             stop("cannot import into a sealed namespace")
         impenv <- parent.env(self)
-        msg <- gettext("replacing previous import %s when loading %s")
+        msg <- gettext("replacing previous import by %s when loading %s")
         register <- TRUE
     }
     else if (is.environment(self)) {
@@ -886,7 +888,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
 	    }
             ## this is always called from another function, so reporting call
             ## is unhelpful
-            warning(sprintf(msg, sQuote(n), sQuote(nsname)),
+            warning(sprintf(msg, sQuote(paste(nsname, n, sep = "::")),
+                            sQuote(from)),
                     call. = FALSE, domain = NA)
 	}
     importIntoEnv(impenv, impnames, ns, impvars)
@@ -894,13 +897,15 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
         addImports(self, ns, if (missing(vars)) TRUE else impvars)
 }
 
-namespaceImportClasses <- function(self, ns, vars) {
+namespaceImportClasses <- function(self, ns, vars, from = NULL)
+{
     for(i in seq_along(vars))
         vars[[i]] <- methods:::classMetaName(vars[[i]])
-    namespaceImportFrom(self, asNamespace(ns), vars)
+    namespaceImportFrom(self, asNamespace(ns), vars, from = from)
 }
 
-namespaceImportMethods <- function(self, ns, vars) {
+namespaceImportMethods <- function(self, ns, vars, from = NULL)
+{
     allVars <- character()
     generics <- character()
     packages <- character()
@@ -951,7 +956,8 @@ namespaceImportMethods <- function(self, ns, vars) {
             }
         }
     }
-    namespaceImportFrom(self, asNamespace(ns), allVars, generics, packages)
+    namespaceImportFrom(self, asNamespace(ns), allVars, generics, packages,
+                        from = from)
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
@@ -1111,9 +1117,10 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     importMethods <- list()
     importClasses <- list()
     dynlibs <- character()
-    S3methods <- matrix(NA_character_, 500L, 3L)
+    nS3methods <- 1000L
+    S3methods <- matrix(NA_character_, nS3methods, 3L)
     nativeRoutines <- list()
-    nS3 <- 0
+    nS3 <- 0L
     parseDirective <- function(e) {
         ## trying to get more helpful error message:
 	asChar <- function(cc) {
@@ -1234,7 +1241,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
                            if(symNames[idx] != "") {
-                               e <- parse(text = symNames[idx], srcfile=NULL)[[1L]]
+                               e <- parse(text = symNames[idx], srcfile = NULL)[[1L]]
                                if(is.call(e))
                                    val <- eval(e)
                                else
@@ -1273,8 +1280,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                                      deparse(e)),
                             call. = FALSE, domain = NA)
                    nS3 <<- nS3 + 1L
-                   if(nS3 > 500L)
-                       stop("too many 'S3method' directives", call. = FALSE)
+                   if(nS3 > nS3methods) {
+                       old <- S3methods
+                       nold <- nS3methods
+                       nS3methods <<- nS3methods * 2L
+                       new <- matrix(NA_character_, nS3methods, 3L)
+                       ind <- seq_len(nold)
+                       for (i in 1:3) new[ind, i] <- old[ind, i]
+                       S3methods <<- new
+                       rm(old, new)
+                   }
                    S3methods[nS3, seq_along(spec)] <<- asChar(spec)
                },
                stop(gettextf("unknown namespace directive: %s", deparse(e, nlines=1L)),

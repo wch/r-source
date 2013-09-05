@@ -6,7 +6,7 @@
 \name{density}
 \alias{density}
 \alias{density.default}
-\alias{print.density}
+% \alias{print.density}
 \title{Kernel Density Estimation}
 \usage{
 density(x, \dots)
@@ -26,10 +26,11 @@ density(x, \dots)
     (Note this differs from the reference books cited below, and from S-PLUS.)
 
     \code{bw} can also be a character string giving a rule to choose the
-    bandwidth.  See \code{\link{bw.nrd}}. \cr
-    The default, \code{"nrd0"}, has remained the default for historical
-    and compatibility reasons, rather than as a general recommendation,
-    where e.g., \code{"SJ"} would rather fit, see also V&R (2002).
+    bandwidth.  See \code{\link{bw.nrd}}. \cr The default,
+    \code{"nrd0"}, has remained the default for historical and
+    compatibility reasons, rather than as a general recommendation,
+    where e.g., \code{"SJ"} would rather fit, see also Venables and
+    Ripley (2002).
 
     The specified (or computed) value of \code{bw} is multiplied by
     \code{adjust}.
