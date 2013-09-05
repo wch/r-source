@@ -1013,7 +1013,7 @@ setRlibs <-
             ## These include pre-2.10.0 ones
             R_system_subdirs <-
                 c("Meta", "R", "data", "demo", "exec", "libs",
-                  "man", "help", "html", "latex", "R-ex")
+                  "man", "help", "html", "latex", "R-ex", "build")
             allfiles <- dir("inst", full.names = TRUE)
             alldirs <- allfiles[file.info(allfiles)$isdir]
             suspect <- basename(alldirs) %in% R_system_subdirs
@@ -1029,7 +1029,7 @@ setRlibs <-
                     wrapLog("Found the following non-empty",
                             "subdirectories of 'inst' also",
                             "used by R:\n")
-                    printLog(Log, paste(c(suspect, ""), collapse = "\n"))
+                    printLog(Log, .format_lines_with_indent(suspect), "\n")
                     wrapLog("It is recommended not to interfere",
                             "with package subdirectories used by R.\n")
                 }
@@ -3493,7 +3493,7 @@ setRlibs <-
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
             "      --no-vignettes    do not run R code in vignettes",
-            "      --no-build-vignettes    do not build PDFs of vignettes",
+            "      --no-build-vignettes    do not build vignette outputs",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
