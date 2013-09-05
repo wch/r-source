@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-05 r63844) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -33,6 +33,7 @@ Error: test of `options(error=expression(NULL))'
 + }
 > 
 > ## bad infinite recursion / on.exit / ... interactions
+> options(expressions=2000) # to avoid C stack overflow
 > bar <- function() 1+1
 > foo <- function() { on.exit(bar()); foo() }
 > foo() # now simple "infinite recursion"

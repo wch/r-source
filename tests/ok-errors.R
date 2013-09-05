@@ -15,6 +15,7 @@ vector("list", 2^30+2)
 }
 
 ## bad infinite recursion / on.exit / ... interactions
+options(expressions=2000) # to avoid C stack overflow
 bar <- function() 1+1
 foo <- function() { on.exit(bar()); foo() }
 foo() # now simple "infinite recursion"
