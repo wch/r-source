@@ -330,7 +330,7 @@ get_exclude_patterns <- function()
             if (!is.null(vigns) && length(vigns$docs)) {
                 if (!pkgInstalled) {
                     messageLog(Log,
-                               "installing the package to re-build vignettes")
+                               "installing the package to build vignettes")
                     pkgInstalled <- temp_install_pkg(pkgdir, libdir)
                 }
 
@@ -345,8 +345,7 @@ get_exclude_patterns <- function()
                     Sys.setenv(R_LIBS = libdir)
                 }
 
-                # Tangle all vignettes now.  We'll try again at INSTALL time in 3.0.0,
-                # but eventually this is the only place the tangling will happen.
+                # Tangle all vignettes now. 
 
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
@@ -391,6 +390,28 @@ get_exclude_patterns <- function()
                         }
                     }
                 }
+		
+		vignetteIndex <- .build_vignette_index(vigns)
+
+		if(NROW(vignetteIndex) > 0L) {
+		    ## remove any files with no R code (they will have header comments).
+		    ## if not correctly declared they might not be in the current encoding
+		    sources <- vignetteIndex$R
+		    for(i in seq_along(sources)) {
+			file <- file.path(doc_dir, sources[i])
+			if (!file_test("-f", file)) next
+			bfr <- readLines(file, warn = FALSE)
+			if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE))) {
+			    unlink(file)
+			    vignetteIndex$R[i] <- ""
+			}
+		    }
+		}
+
+		## Save the list
+		dir.create("build", showWarnings = FALSE)
+		saveRDS(vignetteIndex,
+			file = file.path("build", "vignette.rds"))
             }
         }
         if (compact_vignettes != "no" &&

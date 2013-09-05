@@ -54,12 +54,19 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
         exts <- "pdf"
     }
     exts <- c(exts, toupper(exts))
-    pattern <- sprintf("^%s%s[.](%s)$", name, if (main) "" else ".*",
-                                          paste(exts, collapse = "|"))
-
+    pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
     output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE, no..=TRUE)
     output0 <- output0[file_test("-f", file.path(dir, output0))]
-    output <- grep(pattern, output0, value = TRUE)
+    output <- grep(pattern1, output0, value = TRUE)
+    # If main is FALSE, we want to find all other files with related names.  We make sure
+    # that the main file is in position 1.
+    # FIXME:  we should check a timestamp or something to see that these were produced by tangling
+    #	      for the "name" vignette, they aren't just coincidentally similar names.
+    if (!main) {
+	pattern2 <- sprintf("^%s.*[.](%s)$", name, paste(exts, collapse = "|"))
+	output2 <- grep(pattern2, output0, value = TRUE)
+	output <- c(output, setdiff(output2, output))
+    }
 
     if (by == "weave") {
         if (length(output) == 0L)
@@ -303,24 +310,21 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        docdir <- file.path(dir, "doc")
-        ## Using package installed in @code{dir} ...
-    } else {
-        if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
-        ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
-        else {
-            dir <- file_path_as_absolute(dir)
-            if (is.null(subdirs))
-                subdirs <- c("vignettes", file.path("inst", "doc"))
-            for (subdir in subdirs) {
-                docdir <- file.path(dir, subdir)
-                if(file_test("-d", docdir))
-                    break
-            }
-        }
+    }
+    if(missing(dir))
+	stop("you must specify 'package' or 'dir'")
+    ## Using sources from directory @code{dir} ...
+    if(!file_test("-d", dir))
+	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+    else {
+	dir <- file_path_as_absolute(dir)
+	if (is.null(subdirs))
+	    subdirs <- c("vignettes", if (missing(package)) file.path("inst", "doc") else file.path("doc") )
+	for (subdir in subdirs) {
+	    docdir <- file.path(dir, subdir)
+	    if(file_test("-d", docdir))
+		break
+	}
     }
 
     if(!file_test("-d", docdir)) return(NULL)
@@ -722,6 +726,7 @@ function(vigns)
     files <- vigns$docs
     names <- vigns$names
     dir <- vigns$dir
+    sources <- vigns$sources
 
     if(!file_test("-d", dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
@@ -731,6 +736,7 @@ function(vigns)
         out <- data.frame(File = character(),
                           Title = character(),
                           PDF = character(),
+			  R = character(),
                           stringsAsFactors = FALSE)
         out$Depends <- list()
         out$Keywords <- list()
@@ -767,10 +773,14 @@ function(vigns)
     out <- data.frame(File = unlist(contents[, "File"]),
                       Title = unlist(contents[, "Title"]),
                       PDF = outputs,	# Not necessarily PDF, but name it that for back compatibility
+		      R = "",		# May or may not be present
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
     # Optional
+    for (i in seq_along(sources)) 
+	if (length(s <- sources[[i]]))
+	    out$R[which(names(sources)[i] == files)] <- basename(s[1L])
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
 

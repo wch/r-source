@@ -463,7 +463,7 @@ function(dir, outDir)
 }
 
 ### * .install_package_vignettes2
-## called from R CMD INSTALL
+## called from R CMD INSTALL for pre 3.0.2-built tarballs, and for base packages
 
 .install_package_vignettes2 <-
 function(dir, outDir, encoding = "")
@@ -579,6 +579,39 @@ function(dir, outDir, encoding = "")
 
     saveRDS(vignetteIndex,
              file = file.path(outDir, "Meta", "vignette.rds"))
+
+    invisible()
+}
+
+### * .install_package_vignettes3
+## called from R CMD INSTALL for 3.0.2 or later tarballs
+
+.install_package_vignettes3 <-
+function(dir, outDir, encoding = "")
+{
+    packageName <- basename(outDir)
+    dir <- file_path_as_absolute(dir)
+    indexname <- file.path(dir, "build", "vignette.rds")
+    ok <- file_test("-f", indexname)
+    ## Create a vignette index only if the vignette dir exists.
+    if (!ok)
+       return(invisible())
+       
+    ## Copy the index to Meta
+    file.copy(indexname, file.path(outDir, "Meta"))
+
+    ## If there is an HTML index in the @file{inst/doc} subdirectory of
+    ## the package source directory (@code{dir}), we do not overwrite it
+    ## (similar to top-level @file{INDEX} files).  Installation already
+    ## copied this over.
+    vignetteDir <- file.path(outDir, "doc")
+    hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
+    htmlIndex <- file.path(outDir, "doc", "index.html")
+
+    vignetteIndex <- readRDS(indexname)
+
+    if(!hasHtmlIndex)
+        .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
 
     invisible()
 }
@@ -707,7 +740,7 @@ function(dir, outDir, keep.source = TRUE)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
     ## This also creates the .R files
-    .install_package_vignettes2(dir, outDir)
+    .install_package_vignettes2(dir, outDir)    
     invisible()
 }
 

@@ -1,5 +1,7 @@
 ## For examples skipped in testing because they need recommended packages.
 
+pdf("reg-examples-3.pdf", encoding = "ISOLatin1.enc")
+
 ## From datasets
 if(require("survival")){
   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)

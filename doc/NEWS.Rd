@@ -10,9 +10,10 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{type.convert()} (hence \code{read.table()}) returns
-      a character vector or factor when representing a numeric input
-      as a double would lose accuracy.  Similarly for complex inputs.
+      \item \code{type.convert()} (and hence \code{read.table()})
+      returns a character vector or factor when representing a numeric
+      input as a double would lose accuracy.  Similarly for complex
+      inputs.
 
       If a file contains numeric data with unrepresentable numbers of
       decimal places that are intended to be read as numeric, specify
@@ -78,9 +79,12 @@
       correctly on viewers which have access to Monotype TrueType fonts
       (but are sometimes requested by journals).
 
-      \item There is a new read-only \code{par()} parameter called
-      \code{"page"}, which returns a logical value indicating whether
-      the next \code{plot.new()} call will start a new page.
+      \item The text and PDF news files, including \file{NEWS} and
+      \file{NEWS.2}, have been moved to the \file{doc} directory.
+
+      \code{utils::modifyList()} gets a new argument \code{keep.null}
+      allowing \code{NULL} components in the replacement to be retained,
+      instead of causing corresponding components to be deleted.
     }
   }
 
@@ -172,7 +176,7 @@
       \command{R CMD check --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
-      \item \command{R CMD build --no-vignettes} is defunct:
+      \item \command{R CMD build --no-vignettes} is defunct:\cr
       \command{R CMD build --no-build-vignettes} has been preferred since
       \R 3.0.0.
 
@@ -185,6 +189,12 @@
       (where installed) \command{pkg-config --libs libR} are now those
       needed to link a front-end against the (shared or static) \R
       library.
+      
+      \item \command{R CMD check} analyses \code{:::} calls.
+
+      \item \command{R CMD build} makes more use of the \file{build}
+      sub-directory of package sources, for example to record
+      information about the vignettes.
     }
   }
 
@@ -213,6 +223,9 @@
       \code{namespace} has been removed.
 
       \item Many methods are no longer exported by package \pkg{stats}.
+      
+      \item Functions \code{readNEWS()} and \code{checkNEWS()} in
+      package \pkg{tools} are defunct.
     }
   }
 
@@ -233,6 +246,14 @@
 \section{\Rlogo CHANGES IN R 3.0.2}{
   \subsection{NEW FEATURES}{
     \itemize{
+      \item The \file{NEWS} files have been re-organized.
+
+      This file contains news for \R >= 3.0.0: news for the 0.x.y, 1.x.y
+      and 2.x.y releases is in files \file{NEWS.0}, \file{NEWS.1} and
+      \file{NEWS.2}.  The latter files are now installed when \R is
+      installed.  An HTML version of news from 2.10.0 to 2.15.3 is
+      available as \file{doc/html/NEWS.2.html}.
+      
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -287,10 +308,10 @@
       partial parse information available up to the location of the
       error.  (Request of Reijo Sund.)
 
-      \item Methods invoked by \code{NextMethod()} had different dynamic
-      parent to the generic. This was causing trouble where S3 methods
-      invoked via lazy evaluation could lose track of their generic.
-      (\PR{15267})
+      \item Methods invoked by \code{NextMethod()} had a different
+      dynamic parent to the generic. This was causing trouble where S3
+      methods invoked via lazy evaluation could lose track of their
+      generic.  (\PR{15267})
 
       \item Code for the negative binomial distribution now treats the case
       \code{size == 0} as a one-point distribution at zero.
@@ -342,6 +363,9 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
+      
+      \item \command{R CMD build} now weaves and tangles all vignettes,
+      so suggested packages are never required during package installation.
 
       \item \code{checkFF()} (used by \command{R CMD check}) does a
       better job of detecting calls from other packages, including not
@@ -384,10 +408,15 @@
 	\item packages declared in \samp{Depends} not imported
 	\emph{via} the \file{NAMESPACE} file (except the standard
 	packages).  Objects used from \samp{Depends} packages should be
-	imported to avoid conflicts.
+	imported to avoid conflicts and to allow correct operation when
+	the namespace is loaded but not attached.
 
-	\item namespaces imported \emph{via} \code{:::} calls are
-	reported.  (Many of these should be \code{::} calls.)
+	\item objects imported \emph{via} \code{:::} calls where
+	\code{::} would do.
+
+	\item objects imported by \code{::} which are not exported.
+
+	\item objects imported by \code{:::} calls which do not exist.
       }
       See \sQuote{Writing R Extensions} for good practice.
       
@@ -450,6 +479,11 @@
 
       \item The limit of 500 \code{S3method} entries in a
       \code{NAMESPACE} file has been removed.
+  
+      \item The default \sQuote{version} of Bioconductor for its
+      packages has been changed to the upcoming \samp{2.13}, but this
+      can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
+      in file \file{Renviron.site}.
     }
   }
 
@@ -475,6 +509,10 @@
 
       \item \code{plclust()} is deprecated: use the \code{plot()} method
       for class \code{"hclust"} instead.
+      
+      \item Functions \code{readNEWS()} and \code{checkNEWS()} in
+      package \pkg{tools} are deprecated (and they have not worked with
+      current \file{NEWS} files for a long time).
     }
   }
 
@@ -676,6 +714,9 @@
       
       \item The symbol set by \code{tools::Rd2txt_options(itemBullet=)}
       was not respected in some locales. (\PR{15435})
+
+      \item \code{mcMap()} was not exported by package
+      \pkg{parallel}. (\PR{15439})
     }
   }
 }
@@ -759,6 +800,11 @@
       the \code{tz} argument and not \code{"GMT"} as documented
       (\PR{14973}).
 
+      \item The active binding to assign fields in reference classes
+      has been cleaned up to reduce dependence on the class' package
+      environment, also fixing bug in initializing read-only fields
+      (inspired by a report from Hadley Wickham).
+
       \item \code{str(d)} no longer gives an error when \code{names(d)}
       contain illegal multibyte strings (\PR{15247}).
 
@@ -836,6 +882,9 @@
       \item Binary operations on equal length vectors copied the
       class name from the second operand when the first had no
       class name, but did not set the object bit. (\PR{15299})
+
+      \item The \code{trace()} method for reference generator objects
+      failed after those objects became function definitions.
 
       \item \code{write.table()} did not check that factors were
       constructed correctly, and so caused a segment fault when
@@ -1881,10 +1930,14 @@
   }
 }
 
-%% news() makes incorrect assumptions here
-%% \section{CHANGES in \R 2.x.y}{
-%%   \itemize{
-%%     \item 
-%%     Older news can be found in top-level file \file{ONEWS} in the \R sources.
-%%   }
-%% }
+\section{CHANGES in previous versions}{
+   \itemize{
+     \item 
+     Older news can be found in text format in files 
+     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1} 
+     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and 
+     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for 
+     \R  versions from 2.10.0 to 2.15.3 is in 
+     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
+   }
+ }

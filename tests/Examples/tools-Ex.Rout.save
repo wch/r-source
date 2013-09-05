@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-19 r63621) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-01 r63787) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -77,108 +77,6 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
-> saveOpts <- Rd2txt_options()
-> saveOpts
-$width
-[1] 80
-
-$minIndent
-[1] 10
-
-$extraIndent
-[1] 4
-
-$sectionIndent
-[1] 5
-
-$sectionExtra
-[1] 2
-
-$itemBullet
-[1] "• "
-
-$enumFormat
-function (n) 
-sprintf("%d. ", n)
-<environment: 0x32cec28>
-
-$showURLs
-[1] FALSE
-
-$code_quote
-[1] TRUE
-
-$underline_titles
-[1] TRUE
-
-> Rd2txt_options(minIndent = 4)
-> Rd2txt_options()
-$width
-[1] 80
-
-$minIndent
-[1] 4
-
-$extraIndent
-[1] 4
-
-$sectionIndent
-[1] 5
-
-$sectionExtra
-[1] 2
-
-$itemBullet
-[1] "• "
-
-$enumFormat
-function (n) 
-sprintf("%d. ", n)
-<environment: 0x32cec28>
-
-$showURLs
-[1] FALSE
-
-$code_quote
-[1] TRUE
-
-$underline_titles
-[1] TRUE
-
-> Rd2txt_options(saveOpts)
-> Rd2txt_options()
-$width
-[1] 80
-
-$minIndent
-[1] 10
-
-$extraIndent
-[1] 4
-
-$sectionIndent
-[1] 5
-
-$sectionExtra
-[1] 2
-
-$itemBullet
-[1] "• "
-
-$enumFormat
-function (n) 
-sprintf("%d. ", n)
-<environment: 0x32cec28>
-
-$showURLs
-[1] FALSE
-
-$code_quote
-[1] TRUE
-
-$underline_titles
-[1] TRUE
-
 > 
 > 
 > 
@@ -289,7 +187,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3876a68>
+<environment: 0x3828048>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -819,25 +717,6 @@ function (x, ...)
 > 
 > 
 > cleanEx()
-> nameEx("readNEWS")
-> ### * readNEWS
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: readNEWS
-> ### Title: Read R's NEWS file or a similar one
-> ### Aliases: readNEWS checkNEWS
-> ### Keywords: file documentation
-> 
-> ### ** Examples
-> # Check the current NEWS file
-> 
-> stopifnot(checkNEWS())
-> 
-> 
-> 
-> 
-> cleanEx()
 > nameEx("showNonASCII")
 > ### * showNonASCII
 > 
@@ -1059,7 +938,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.243 0.008 0.252 0 0 
+Time elapsed:  0.225 0.009 0.234 0 0 
 > grDevices::dev.off()
 null device 
           1 

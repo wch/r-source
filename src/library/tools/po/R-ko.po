@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-09-03 07:44\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -393,10 +393,34 @@ msgstr ""
 msgid "Package in Depends field not imported from: %s"
 msgstr ""
 
-msgid "Namespaces imported from by ':::' calls:"
+msgid "Missing or unexported objects:"
 msgstr ""
 
-msgid "Namespace imported from by a ':::' call: %s"
+msgid "Missing or unexported object: %s"
+msgstr ""
+
+msgid "':::' calls which should be '::':"
+msgstr ""
+
+msgid "':::' call which should be '::': %s"
+msgstr ""
+
+msgid "Missing objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Missing object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unexported objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Unexported object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unavailable namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Unavailable namespace imported from by a ':::' call: %s"
 msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
@@ -1087,9 +1111,6 @@ msgstr ""
 msgid "argument '%s' must be a character string or connection"
 msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
 
-msgid "'file' must be a character string or connection"
-msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"
-
 msgid "unimplemented encoding"
 msgstr "구현되지 않은 인코딩입니다"
 
@@ -1329,6 +1350,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'file' must be a character string or connection"
+#~ msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"
 
 #~ msgid "file '%s' was not created"
 #~ msgstr "파일 '%s'은 생성되지 않았습니다"

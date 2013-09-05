@@ -1,6 +1,6 @@
 % File src/library/base/man/array.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{array}
@@ -56,6 +56,9 @@ is.array(x)
   \code{"dim"} attribute for that dimension.
 
   \code{is.array} is a \link{primitive} function.
+
+  For a list array, the \code{print} methods prints entries of length
+  not one in the form \samp{integer,7} indicating the type and length.
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}

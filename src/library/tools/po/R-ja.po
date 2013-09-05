@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-09-03 07:44\n"
 "PO-Revision-Date: 2013-03-19 13:39+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -392,10 +392,34 @@ msgstr ""
 msgid "Package in Depends field not imported from: %s"
 msgstr ""
 
-msgid "Namespaces imported from by ':::' calls:"
+msgid "Missing or unexported objects:"
 msgstr ""
 
-msgid "Namespace imported from by a ':::' call: %s"
+msgid "Missing or unexported object: %s"
+msgstr ""
+
+msgid "':::' calls which should be '::':"
+msgstr ""
+
+msgid "':::' call which should be '::': %s"
+msgstr ""
+
+msgid "Missing objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Missing object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unexported objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Unexported object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unavailable namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Unavailable namespace imported from by a ':::' call: %s"
 msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
@@ -1123,9 +1147,6 @@ msgstr " パッケージ '%s' は最小のセットに縮小された依存関�
 msgid "argument '%s' must be a character string or connection"
 msgstr " 引数 '%s' は文字列かコネクションでなければなりません "
 
-msgid "'file' must be a character string or connection"
-msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "
-
 msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "
 
@@ -1366,6 +1387,9 @@ msgstr[0] " トピック '%s' に関するヘルプが以下のパッケージ�
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "'file' must be a character string or connection"
+#~ msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "
 
 #~ msgid "not found"
 #~ msgstr " が見つかりません "

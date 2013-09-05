@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-09-03 07:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -367,10 +367,34 @@ msgstr ""
 msgid "Package in Depends field not imported from: %s"
 msgstr ""
 
-msgid "Namespaces imported from by ':::' calls:"
+msgid "Missing or unexported objects:"
 msgstr ""
 
-msgid "Namespace imported from by a ':::' call: %s"
+msgid "Missing or unexported object: %s"
+msgstr ""
+
+msgid "':::' calls which should be '::':"
+msgstr ""
+
+msgid "':::' call which should be '::': %s"
+msgstr ""
+
+msgid "Missing objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Missing object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unexported objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Unexported object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unavailable namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Unavailable namespace imported from by a ':::' call: %s"
 msgstr ""
 
 msgid "'data(package=)' calls not declared from:"
@@ -1073,9 +1097,6 @@ msgstr "程辑包'%s'的从属被减低成最小集."
 msgid "argument '%s' must be a character string or connection"
 msgstr "参数'%s'必需是字符串或联结"
 
-msgid "'file' must be a character string or connection"
-msgstr "参数'file'必需是字符串或联结"
-
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
 
@@ -1307,6 +1328,9 @@ msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "'file' must be a character string or connection"
+#~ msgstr "参数'file'必需是字符串或联结"
 
 #~ msgid "not found"
 #~ msgstr "找不到"

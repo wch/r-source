@@ -240,18 +240,20 @@ packages to @acronym{CRAN}: current instructions are linked from
 The sources of an @R{} package consists of a subdirectory containing a
 files @file{DESCRIPTION} and @file{NAMESPACE}, and the subdirectories
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
-@file{man}, @file{po}, @file{src}, @file{tests} and @file{vignettes}
-(some of which can be missing, but which should not be empty).  The
-package subdirectory may also contain files @file{INDEX},
+@file{man}, @file{po}, @file{src}, @file{tests}, @file{tools} and
+@file{vignettes} (some of which can be missing, but which should not be
+empty).  The package subdirectory may also contain files @file{INDEX},
 @file{configure}, @file{cleanup}, @file{LICENSE}, @file{LICENCE} and
 @file{NEWS}.  Other files such as @file{INSTALL} (for non-standard
 installation instructions), @file{README}/@file{README.md}@footnote{This
-seems to be commonly used for a file in `markdown' format.  Be aware that
-most users of @R{} will not know that, nor know how to view such a file:
-platforms such as OS X and Windows do not have a default viewer set in
-their file associations. The @acronym{CRAN} package web pages render
-such files in @HTML{}.}, or @file{ChangeLog} will be ignored by @R{},
-but may be useful to end users.
+seems to be commonly used for a file in `markdown' format.  Be aware
+that most users of @R{} will not know that, nor know how to view such a
+file: platforms such as OS X and Windows do not have a default viewer
+set in their file associations. The @acronym{CRAN} package web pages
+render such files in @HTML{}.}, or @file{ChangeLog} will be ignored by
+@R{}, but may be useful to end users.  The utility @command{R CMD build}
+may add files in a @file{build} directory (but this should not be used
+for other purposes).
 
 Except where specifically mentioned,@footnote{currently, top-level files
 @file{.Rbuildignore} and @file{.Rinstignore}, and
@@ -2584,7 +2586,7 @@ temporarily installed to execute them.  Post-execution binary copies of
 those pages containing build-time macros will be saved in
 @file{build/partial.rdb}.  If there are any install-time or render-time
 macros, a @file{.pdf} version of the package manual will be built and
-installed in the @file{build/} subdirectory.  (This allows
+installed in the @file{build} subdirectory.  (This allows
 @acronym{CRAN} or other repositories to display the manual even if they
 are unable to install the package.)  This can be suppressed by the
 option @option{--no-manual} or if package's @file{DESCRIPTION} contains
@@ -2630,14 +2632,17 @@ permissions, some care is needed with permissions.  This applies on
 Windows and to e.g.@: FAT-formatted drives and SMB-mounted file systems
 on other OSes.  The `mode' of the file recorded in the tarball will be
 whatever @code{file.info()} returns.  On Windows this will record only
-directories with execute permission and on other OSes it is likely that
-all files have reported `mode' @code{0777}.  A particular issue is
+directories as having execute permission and on other OSes it is likely
+that all files have reported `mode' @code{0777}.  A particular issue is
 packages being built on Windows which are intended to contain executable
-scripts such as @file{configure} and @file{cleanup}: it is difficult to
-include these from Windows but where Cygwin has been used to set a
-POSIX-like mode, using environment variable @env{R_BUILD_TAR=tar.exe}
-@emph{may} provide a workaround.
+scripts such as @file{configure} and @file{cleanup}: @command{R CMD
+build} ensures those two are recorded with execute permission.
 
+Directory @file{build} of the package sources is reserved for use by
+@command{R CMD build}: it contains information which may not easily be
+created when the package is installed, including index information on
+the vignettes and, rarely, information on the help pages and perhaps a
+copy of the PDF reference manual (see above).
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
@@ -2826,7 +2831,7 @@ working.
 Note that it is pointless (and potentially misleading since the files
 might be outdated) to include in @file{inst/doc} @R{} code files which
 would be generated from vignette sources, as these will be re-generated
-when the package is installed (unless the vignette does not generate any
+when the package is built (unless the vignette does not generate any
 @R{} code, in which case it is also pointless/misleading).
 
 Metadata lines can be placed in the source file, preferably in @LaTeX{}

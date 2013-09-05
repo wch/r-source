@@ -492,6 +492,12 @@ Rboolean (Rf_isObject)(SEXP s);
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
+#define INCREMENT_NAMED(x) do {				\
+	SEXP __x__ = (x);				\
+	if (NAMED(__x__) != 2)				\
+	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
+    } while (0)
+
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
    The function STRING_ELT is used as an argument to arrayAssign even

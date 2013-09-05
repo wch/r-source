@@ -718,6 +718,7 @@ setRlibs <-
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
+                       "build", # used by R CMD build
                        "java", "tools") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
@@ -1012,7 +1013,7 @@ setRlibs <-
             ## These include pre-2.10.0 ones
             R_system_subdirs <-
                 c("Meta", "R", "data", "demo", "exec", "libs",
-                  "man", "help", "html", "latex", "R-ex")
+                  "man", "help", "html", "latex", "R-ex", "build")
             allfiles <- dir("inst", full.names = TRUE)
             alldirs <- allfiles[file.info(allfiles)$isdir]
             suspect <- basename(alldirs) %in% R_system_subdirs
@@ -1028,7 +1029,7 @@ setRlibs <-
                     wrapLog("Found the following non-empty",
                             "subdirectories of 'inst' also",
                             "used by R:\n")
-                    printLog(Log, paste(c(suspect, ""), collapse = "\n"))
+                    printLog(Log, .format_lines_with_indent(suspect), "\n")
                     wrapLog("It is recommended not to interfere",
                             "with package subdirectories used by R.\n")
                 }
@@ -2281,7 +2282,10 @@ setRlibs <-
                     Log$stars <<-  "*"
                     if (!res) do_exit(1L)
                 }
-            } else resultLog(Log, "NONE")
+            } else {
+                resultLog(Log, "NONE")
+                no_examples <<- TRUE
+            }
         }
     }
 
@@ -2838,10 +2842,6 @@ setRlibs <-
             excludes <- readLines("BinaryFiles")
             execs <- execs[!execs %in% excludes]
         }
-        if(use_install_timestamp) {
-            its <- file.path(pkgdir, ".install_timestamp")
-            execs <- execs[file_test("-ot", execs, its)]
-        }
         if (nb <- length(execs)) {
             msg <- ngettext(nb,
                             "Found the following executable file:",
@@ -2875,8 +2875,7 @@ setRlibs <-
                         recursive = TRUE, pattern = "^[.]")
         dots <- sub("^./","", dots)
         allowed <-
-            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras",
-              ".install_timestamp") # Kurt uses this
+            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras")
         dots <- dots[!dots %in% allowed]
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)
@@ -3524,7 +3523,7 @@ setRlibs <-
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
             "      --no-vignettes    do not run R code in vignettes",
-            "      --no-build-vignettes    do not build PDFs of vignettes",
+            "      --no-build-vignettes    do not build vignette outputs",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -3824,6 +3823,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
+        Sys.setenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev))  Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         R_check_vc_dirs <- TRUE
@@ -3903,6 +3903,7 @@ setRlibs <-
 
         ## The previous package may have set do_install to FALSE
         do_install <- do_install_arg
+        no_examples <- FALSE
 
         ## $pkgdir is the corresponding absolute path.
         ## pkgname0 is the name of the top-level directory
@@ -3984,15 +3985,6 @@ setRlibs <-
         is_ascii <- charset == "ASCII"
 
         .unpack.time <- Sys.time()
-        ## Support two stage install/check operating on unpacked
-        ## sources.
-        use_install_timestamp <-
-            (grepl("^check", install) &&
-             file.exists(file.path(pkgdir, ".install_timestamp")))
-
-        if(use_install_timestamp)
-            .unpack.time <-
-                file.info(file.path(pkgdir, ".install_timestamp"))$mtime
 
         ## report options used
         if (!do_codoc) opts <- c(opts, "--no-codoc")
@@ -4072,8 +4064,7 @@ setRlibs <-
             ## we are not going to install and hence not run any code.
             ## </NOTE>
             if (do_install) {
-                topfiles0 <-
-                    if(!use_install_timestamp) dir(pkgdir) else NULL
+                topfiles0 <- dir(pkgdir)
                 check_dependencies()
             } else topfiles0 <- NULL
 
@@ -4120,10 +4111,6 @@ setRlibs <-
             makevars <-
                 Sys.glob(file.path(pkgdir, "src",
                                    c("Makevars.in", "Makevars")))
-            if(use_install_timestamp) {
-                its <- file.path(pkgdir, ".install_timestamp")
-                makevars <- makevars[file_test("-ot", makevars, its)]
-            }
             makevars <- basename(makevars)
 
             if (do_install) {
@@ -4175,6 +4162,24 @@ setRlibs <-
                 check_pkg_manual(pkgdir, desc["Package"])
         }
 
+        if (check_incoming && no_examples &&
+            dir.exists(file.path(pkgdir, "R"))) {
+           tests_dir <- file.path(pkgdir, "tests")
+            if (dir.exists(tests_dir) &&
+                length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
+                no_examples <- FALSE
+            vigns <- pkgVignettes(dir = pkgdir)
+            if (!is.null(vigns) && length(vigns$docs)) no_examples <- FALSE
+            if (no_examples) {
+                ## figure out if the R code exercises anything
+                ns <- parseNamespaceFile(basename(pkgdir), dirname(pkgdir))
+                if(length(ns$exports) || length(ns$exportPatterns) ||
+                   length(ns$exportMethods) || length(ns$S3methods)) {
+                    checkingLog(Log, "for code which exercises the package")
+                    warningLog(Log, "No examples, no tests, no vignettes")
+                }
+            }
+        }
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }

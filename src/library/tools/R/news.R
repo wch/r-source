@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -530,7 +530,8 @@ function(file = NULL)
     }
 
     db <- .extract_news_from_Rd(x)
-
+    db <- db[db[,1L] != "CHANGES in previous versions",,drop = FALSE]
+    
     ## Squeeze in an empty date column.
     .make_news_db(cbind(sub("^CHANGES IN (R )?(VERSION )?", "", db[, 1L]),
                         NA_character_,

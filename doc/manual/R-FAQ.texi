@@ -458,20 +458,15 @@ respectively.
 @subsection How can R be installed (Windows)
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
-a base distribution and a large number of add-on packages from @CRAN{}
-to run on Windows 2000 and later (including 64-bit versions of Windows)
-on ix86 and x86_64 chips. The Windows version of R was created by Robert
-Gentleman and Guido Masarotto, and is now being developed and maintained
-by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
+a base distribution and add-on packages from @CRAN{} to run on Windows
+XP and later (including 64-bit versions of Windows) on ix86 and x86_64
+chips. The Windows version of R was created by Robert Gentleman and
+Guido Masarotto, and is now being developed and maintained by
+@email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 
-@c Note that when uncompressing the zip files, the pkunzip program needs to
-@c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
-@c aware that some decompression programs do not preserve long file names
-@c properly.
-
-For most installations the Windows installer program will be the easiest
-tool to use.
+The same directory has links to snapshots of the r-patched and r-devel
+versions of R.
 
 See the @url{http://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
@@ -480,23 +475,16 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 @subsection How can R be installed (Macintosh)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
-Apple installer package inside a disk image named @file{R.dmg}.  Once
-downloaded and executed, the installer will install the current
-non-developer release of R.  RAqua is a native Mac OS X Darwin version
-of R with a R.app Mac OS X @acronym{GUI}.  Inside
-@file{bin/macosx/powerpc/contrib/@var{x}.@var{y}} there are prebuilt
-binary packages (for powerpc version of Mac OS X) to be used with RAqua
-corresponding to the ``@var{x}.@var{y}'' release of R. The installation
-of these packages is available through the ``Package'' menu of the R.app
-@acronym{GUI}.  This port of R for Mac OS X is maintained by
-@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
+Apple installer package to run on OS X 10.6 (`Snow Leopard') and later.
+Once downloaded and executed, the installer will install the current
+release of R and a R.app Mac OS X @acronym{GUI}.  This port of R for Mac
+OS X is maintained by @email{Simon.Urbanek@@R-project.org, Simon
+Urbanek} (and previously by Stefano Iacus).  The
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}} has more details.
 
-The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
-(@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
-and a large number of add-on packages of R 1.7.1 to run under Mac OS 8.6
-to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
+Snapshots of the r-patched and r-devel versions of R are available as
+Apple installer packages at @uref{http://r.research.att.com}.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?

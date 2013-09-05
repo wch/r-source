@@ -8,7 +8,7 @@ include ../src/gnuwin32/MkRules
 
 R_EXE=../$(BINDIR)/Rterm --vanilla --slave
 
-all: NEWS.rds html/NEWS.html ../NEWS ../NEWS.pdf \
+all: NEWS.rds html/NEWS.html NEWS NEWS.pdf \
   CHANGES.rds CHANGES html/CHANGES.html
 
 NEWS.rds: NEWS.Rd
@@ -18,13 +18,13 @@ CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
 	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 ## Force ASCII output, for portability on Windows
-../NEWS: NEWS.rds
+NEWS: NEWS.rds
 	@$(ECHO) "creating NEWS"
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE) LC_ALL=C
 
 ## Should be allowed to fail if pdflatex is not available
-../NEWS.pdf: NEWS.rds
+NEWS.pdf: NEWS.rds
 	@$(ECHO) "creating NEWS.pdf"
 	-@$(ECHO) "options(warn=1);tools:::Rd2pdf_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
@@ -42,5 +42,5 @@ html/CHANGES.html: CHANGES.rds
 	  $(R_EXE)
 
 clean:
-	@rm -f NEWS.rds html/NEWS.html ../NEWS ../NEWS.pdf \
+	@rm -f NEWS.rds html/NEWS.html NEWS NEWS.pdf \
 	  CHANGES.rds html/CHANGES.html

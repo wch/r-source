@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-07-28 r63431) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -656,8 +656,8 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.18 0.006 1.191 0 0 
+Time elapsed:  1.119 0.007 1.13 0 0 
 > 
 > proc.time()
    user  system elapsed 
-  1.284   0.021   1.299 
+  1.225   0.019   1.237 

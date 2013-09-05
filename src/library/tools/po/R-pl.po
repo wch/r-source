@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-26 08:03\n"
+"POT-Creation-Date: 2013-09-03 07:44\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -884,10 +884,34 @@ msgstr ""
 msgid "Package in Depends field not imported from: %s"
 msgstr ""
 
-msgid "Namespaces imported from by ':::' calls:"
+msgid "Missing or unexported objects:"
 msgstr ""
 
-msgid "Namespace imported from by a ':::' call: %s"
+msgid "Missing or unexported object: %s"
+msgstr ""
+
+msgid "':::' calls which should be '::':"
+msgstr ""
+
+msgid "':::' call which should be '::': %s"
+msgstr ""
+
+msgid "Missing objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Missing object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unexported objects imported by ':::' calls:"
+msgstr ""
+
+msgid "Unexported object imported by a ':::' call: %s"
+msgstr ""
+
+msgid "Unavailable namespaces imported from by ':::' calls:"
+msgstr ""
+
+msgid "Unavailable namespace imported from by a ':::' call: %s"
 msgstr ""
 
 # tools/R/QC.R: 4812
@@ -2433,11 +2457,6 @@ msgstr "Pakiet '%s' swoje zależności zredukował do najmniejszego zbioru."
 msgid "argument '%s' must be a character string or connection"
 msgstr "argument '%s' musi być łańcuchem tekstowym lub połączeniem"
 
-# tools/R/readNEWS.R: 157
-# stop("'file' must be a character string or connection")
-msgid "'file' must be a character string or connection"
-msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
-
 # tools/R/recode.R: 60
 # stop("unimplemented encoding")
 msgid "unimplemented encoding"
@@ -3002,6 +3021,11 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
+
+# tools/R/readNEWS.R: 157
+# stop("'file' must be a character string or connection")
+#~ msgid "'file' must be a character string or connection"
+#~ msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
 
 #~ msgid "not found"
 #~ msgstr ": nie znaleziono."

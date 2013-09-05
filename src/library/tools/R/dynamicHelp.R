@@ -198,7 +198,7 @@ httpd <- function(path, query, ...)
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     else if(path == "/NEWS")
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
-    else if(path %in% c("/ONEWS", "/OONEWS")) # not installed
+    else if(grepl("^/NEWS[.][[:digit:]]$", path)) 
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain"))
     else if(!grepl("^/(doc|library|session)/", path))
