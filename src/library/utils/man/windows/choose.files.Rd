@@ -60,6 +60,9 @@ Filters
   it is large but this function is not intended to select thousands of
   files, when the limit might be reached.
 }
+\note{
+  This is only available on Windows.
+}
 \seealso{
   \code{\link{file.choose}}, \code{\link{choose.dir}}.
 

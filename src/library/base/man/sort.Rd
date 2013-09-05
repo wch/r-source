@@ -141,7 +141,6 @@ require(stats)
 
 x <- swiss$Education[1:25]
 x; sort(x); sort(x, partial = c(10, 15))
-median.default # shows you another example for 'partial'
 
 ## illustrate 'stable' sorting (of ties):
 sort(c(10:3, 2:12), method = "sh", index.return = TRUE) # is stable

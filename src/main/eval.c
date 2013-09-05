@@ -2941,8 +2941,6 @@ static SEXP R_AndSym = SEXP_INIT;
 static SEXP R_OrSym = SEXP_INIT;
 static SEXP R_NotSym = SEXP_INIT;
 static SEXP R_CSym = SEXP_INIT;
-static SEXP R_TrueValue = SEXP_INIT;
-static SEXP R_FalseValue = SEXP_INIT;
 
 #if defined(__GNUC__) && ! defined(BC_PROFILING) && (! defined(NO_THREADED_CODE))
 # define THREADED_CODE
@@ -2969,12 +2967,6 @@ void R_initialize_bcode(void)
   R_NotSym = install("!");
   R_CSym = install("c");
 
-  R_TrueValue = mkTrue();
-  SET_NAMED(R_TrueValue, 2);
-  R_PreserveObject(R_TrueValue);
-  R_FalseValue = mkFalse();
-  SET_NAMED(R_FalseValue, 2);
-  R_PreserveObject(R_FalseValue);
 #ifdef THREADED_CODE
   bcEval(R_NULL_SEXP, R_NULL_SEXP, FALSE);
 #endif
@@ -3311,6 +3303,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Math1(which) Builtin1(do_math1,which,rho)
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
+#ifdef NO_SAVE_ALLOC
 # define DO_FAST_BINOP(op,a,b) do { \
     SKIP_OP(); \
     SETSTACK_REAL(-2, (a) op (b)); \
@@ -3327,6 +3320,41 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	NEXT(); \
     } \
 } while(0)
+#else
+/* these reuse one of the two values on the top of the stack if itis
+   of the right type and has NAMED = 0. It is known that both of these
+   will have length one and have no attributes. */
+# define DO_FAST_BINOP(op,a,b) do {					\
+	SKIP_OP();							\
+	SEXP sa = R_BCNodeStackTop[-2];					\
+	SEXP sb = R_BCNodeStackTop[-1];					\
+	SEXP ans;							\
+	if (NAMED(sa) == 0 && TYPEOF(sa) == REALSXP) ans = sa;		\
+	else if (NAMED(sb) == 0 && TYPEOF(sb) == REALSXP) ans = sb;	\
+	else ans = allocVector(REALSXP, 1);				\
+	REAL(ans)[0] = (a) op (b);					\
+	SETSTACK(-2, ans);						\
+	R_BCNodeStackTop--;						\
+	NEXT();								\
+    } while (0)
+
+# define DO_FAST_BINOP_INT(op, a, b) do { \
+	double dval = ((double) (a)) op ((double) (b)); \
+	if (dval <= INT_MAX && dval >= INT_MIN + 1) {	\
+	    SKIP_OP();							\
+	    SEXP sa = R_BCNodeStackTop[-2];				\
+	    SEXP sb = R_BCNodeStackTop[-1];				\
+	    SEXP ans;							\
+	    if (NAMED(sa) == 0 && TYPEOF(sa) == INTSXP) ans = sa;	\
+	    else if (NAMED(sb) == 0 && TYPEOF(sb) == INTSXP) ans = sb;	\
+	    else ans = allocVector(INTSXP, 1);				\
+	    INTEGER(ans)[0] = (int) dval;				\
+	    SETSTACK(-2, ans);						\
+	    R_BCNodeStackTop--;						\
+	    NEXT();							\
+	}								\
+    } while(0)
+#endif
 
 # define FastBinary(op,opval,opsym) do { \
     scalar_value_t vx; \

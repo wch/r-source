@@ -3180,6 +3180,52 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_package_description2
+
+.check_package_description2 <-
+function(dfile)
+{
+    dfile <- file_path_as_absolute(dfile)
+    db <- .read_description(dfile)
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
+    enhances <- .get_requires_from_package_db(db, "Enhances")
+    allpkgs <- c(depends, imports, suggests, enhances)
+    out <- unique(allpkgs[duplicated(allpkgs)])
+    links <- character()
+    llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
+    if(length(llinks)) {
+        llinks <- llinks[sapply(llinks, length) > 1L]
+        if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
+    }
+    out <- list(duplicates = unique(allpkgs[duplicated(allpkgs)]),
+                bad_links = links)
+    class(out) <- "check_package_description2"
+    out
+}
+
+format.check_package_description2 <- function(x, ...)
+{
+    c(if(length(xx <- x$duplicates)) {
+        c(if(length(xx) > 1L)
+          "Packages listed in more than one of Depends, Imports, Suggests, Enhances:"
+        else
+          "Package listed in more than one of Depends, Imports, Suggests, Enhances:",
+          paste(c(" ", sQuote(xx)), collapse = " "),
+          "A package should be listed in only one of these fields.")
+    },
+      if(length(xx <- x$bad_links)) {
+          if(length(xx) > 1L)
+              c("Versioned LinkingTo values for",
+                paste(c(" ", sQuote(xx)), collapse = " "),
+                "are only usable in R >= 3.0.2")
+          else
+              sprintf("Versioned LinkingTo value for %s is only usable in R >= 3.0.2",
+                      sQuote(xx))
+      })
+}
+
 .check_package_description_authors_at_R_field <-
 function(aar, strict = FALSE)
 {
@@ -4884,6 +4930,7 @@ function(x, ...)
 function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
+    ns <- NULL
     if(!missing(package)) {
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
@@ -4902,7 +4949,9 @@ function(package, dir, lib.loc = NULL)
             .package_env(package)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
-     }
+        nsfile <- file.path(dir, "Meta", "nsInfo.rds")
+        if (file.exists(nsfile)) ns <- readRDS(nsfile)
+    }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
@@ -4912,6 +4961,9 @@ function(package, dir, lib.loc = NULL)
             dir <- file_path_as_absolute(dir)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
+        nsfile <- file.path(dir, "NAMESPACE")
+        if(file.exists(nsfile))
+           ns <- parseNamespaceFile(basename(dir), dirname(dir))
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
             file <- tempfile()
@@ -4925,7 +4977,7 @@ function(package, dir, lib.loc = NULL)
     }
     pkg_name <- db["Package"]
     depends <- .get_requires_from_package_db(db, "Depends")
-    imports <- .get_requires_from_package_db(db, "Imports")
+    imports <- imports0 <- .get_requires_from_package_db(db, "Imports")
     suggests <- .get_requires_from_package_db(db, "Suggests")
     enhances <- .get_requires_from_package_db(db, "Enhances")
 
@@ -4945,7 +4997,8 @@ function(package, dir, lib.loc = NULL)
     common_names <- c("pkg", "pkgName", "package", "pos")
 
     bad_exprs <- character()
-    bad_imports <- character()
+    bad_imports <- all_imports <- imp3 <- character()
+    bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
@@ -4973,15 +5026,19 @@ function(package, dir, lib.loc = NULL)
                         pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
                         if(! pkg %in% c(depends_suggests, common_names))
                             bad_exprs <<- c(bad_exprs, pkg)
+                        if(pkg %in% depends)
+                            bad_deps <<- c(bad_deps, pkg)
                     }
                 }
             } else if(Call %in% "::") {
                 pkg <- deparse(e[[2L]])
+                all_imports <<- c(all_imports, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% ":::") {
                 pkg <- deparse(e[[2L]])
-                ## <FIXME> fathom out if this package has a namespace
+                all_imports <<- c(all_imports, pkg)
+                imp3 <<- c(imp3, pkg)
                 if(! pkg %in% imports)
                     bad_imports <<- c(bad_imports, pkg)
             } else if(Call %in% c("setClass", "setMethod")) {
@@ -5033,12 +5090,28 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
+    bad_imp <- depends_not_import <- character()
+    if(length(ns)) {
+        imp <- c(ns$imports, ns$importClasses, ns$importMethods)
+        if (length(imp)) {
+            imp <- sapply(imp, function(x) x[[1L]])
+            all_imports <- unique(c(imp, all_imports))
+            bad_imp <- setdiff(imports0, all_imports)
+            depends_not_import <-
+                setdiff(depends, c(imp, standard_package_names))
+        }
+
+    }
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
         else ""
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                in_depends = unique(bad_deps),
+                unused_imports = bad_imp,
+                depends_not_import = depends_not_import,
+                imp3 = unique(imp3),
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5063,6 +5136,50 @@ function(x, ...)
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
                        sQuote(xx))
+          }
+      },
+      if(length(xx <- x$in_depends)) {
+          msg <- "  Please remove these calls from your code."
+          if(length(xx) > 1L) {
+              c(gettext("'library' or 'require' calls to packages already attached by Depends:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("'library' or 'require' call to %s which was already attached by Depends.",
+                         sQuote(xx)), msg)
+          }
+      },
+      if(length(xx <- x$unused_imports)) {
+          msg <- "  All declared Imports should be used."
+          if(length(xx) > 1L) {
+              c(gettext("Namespaces in Imports field not imported from:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Namespace in Imports field not imported from: %s",
+                       sQuote(xx)), msg)
+          }
+      },
+      if(length(xx <- x$depends_not_import)) {
+          msg <- c("  These packages needs to imported from for the case when",
+                   "  this namespace is loaded but not attached.")
+         if(length(xx) > 1L) {
+              c(gettext("Packages in Depends field not imported from:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Package in Depends field not imported from: %s",
+                         sQuote(xx)), msg)
+          }
+      },
+      if(length(xx <- x$imp3)) {
+          msg <- c("See the note in ?::: about the use of this operator.",
+                   ":: should be used rather than ::: if the function is exported,",
+                   "and a package never needs to use ::: for its own functions.")
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(length(xx) > 1L) {
+              c(gettext("Namespaces imported from by ':::' calls:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Namespace imported from by a ':::' call: %s",
+                         sQuote(xx)), msg)
           }
       },
       if(length(xx <- x$data)) {

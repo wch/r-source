@@ -781,6 +781,7 @@ void setup_Rmainloop(void)
     /* make sure srand is called before R_tmpnam, PR#14381 */
     srand(TimeToSeed());
 
+    InitArithmetic();
     InitParser();
     InitTempDir(); /* must be before InitEd */
     InitMemory();
@@ -791,7 +792,6 @@ void setup_Rmainloop(void)
     InitDynload();
     InitOptions();
     InitEd();
-    InitArithmetic();
     InitGraphics();
     
     R_Is_Running = 1;

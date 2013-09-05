@@ -54,28 +54,82 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     int xarray, yarray, xts, yts;
     Rboolean mismatch = FALSE, iS;
     PROTECT_INDEX xpi, ypi;
+    SEXPTYPE typex, typey;
 
-    PROTECT_WITH_INDEX(x, &xpi);
-    PROTECT_WITH_INDEX(y, &ypi);
     nx = xlength(x);
     ny = xlength(y);
+    typex = TYPEOF(x);
+    typey = TYPEOF(y);
 
     /* pre-test to handle the most common case quickly.
        Used to skip warning too ....
      */
     if (IS_R_NilValue(ATTRIB(x)) && IS_R_NilValue(ATTRIB(y)) &&
-	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP && nx > 0 && ny > 0) {
-	SEXP ans = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
+	(typex == REALSXP || typex == INTSXP) &&
+	(typey == REALSXP || typey == INTSXP) &&
+	nx > 0 && ny > 0) {
+
+	/* handle the scalar case */
+	if (nx == 1 && ny == 1) {
+	    if (typex == INTSXP && typey == INTSXP) {
+		int ix = INTEGER(x)[0];
+		int iy = INTEGER(y)[0];
+		if (ix == NA_INTEGER || iy == NA_INTEGER)
+		    return ScalarLogical(NA_LOGICAL);
+		switch (PRIMVAL(op)) {
+		case EQOP: return ScalarLogical(ix == iy);
+		case NEOP: return ScalarLogical(ix != iy);
+		case LTOP: return ScalarLogical(ix < iy);
+		case GTOP: return ScalarLogical(ix > iy);
+		case LEOP: return ScalarLogical(ix <= iy);
+		case GEOP: return ScalarLogical(ix >= iy);
+		}
+	    }
+	    else {
+		double dx = typex == REALSXP ? REAL(x)[0] :
+		    INTEGER(x)[0] != NA_INTEGER ? INTEGER(x)[0] : NA_REAL;
+		double dy = typey == REALSXP ? REAL(y)[0] :
+		    INTEGER(y)[0] != NA_INTEGER ? INTEGER(y)[0] : NA_REAL;
+		if (ISNAN(dx) || ISNAN(dy))
+		    return ScalarLogical(NA_LOGICAL);
+		switch (PRIMVAL(op)) {
+		case EQOP: return ScalarLogical(dx == dy);
+		case NEOP: return ScalarLogical(dx != dy);
+		case LTOP: return ScalarLogical(dx < dy);
+		case GTOP: return ScalarLogical(dx > dy);
+		case LEOP: return ScalarLogical(dx <= dy);
+		case GEOP: return ScalarLogical(dx >= dy);
+		}
+	    }
+	}
+
+	/* non-scalar case */
+	PROTECT_WITH_INDEX(x, &xpi);
+	PROTECT_WITH_INDEX(y, &ypi);
+	SEXP ans;
+	if (typex == INTSXP && typey == INTSXP) 
+	    ans = integer_relop(PRIMVAL(op), x, y);
+	else {
+	    if (typex == INTSXP)
+		REPROTECT(x = coerceVector(x, REALSXP), xpi);
+	    if (typey == INTSXP)
+		REPROTECT(y = coerceVector(y, REALSXP), ypi);
+	    ans = real_relop(PRIMVAL(op), x, y);
+	}
 	if (nx > 0 && ny > 0)
 	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	if (mismatch) {
 	    PROTECT(ans);
-	    warningcall(call, _("longer object length is not a multiple of shorter object length"));
+	    warningcall(call, _("longer object length is not "
+				"a multiple of shorter object length"));
 	    UNPROTECT(1);
 	}
 	UNPROTECT(2);
 	return ans;
     }
+
+    PROTECT_WITH_INDEX(x, &xpi);
+    PROTECT_WITH_INDEX(y, &ypi);
 
     /* That symbols and calls were allowed was undocumented prior to
        R 2.5.0.  We deparse them as deparse() would, minus attributes */

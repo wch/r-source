@@ -22,6 +22,9 @@ shortPathName(path)
   file does not exist, the supplied path will be returned with slashes
   replaced by backslashes.
 }
+\note{
+  This is only available on Windows.
+}
 \seealso{
   \code{\link{normalizePath}}.
 }

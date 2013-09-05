@@ -46,6 +46,11 @@ memory.limit(size = NA)
   Size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}
   and rounded down for \code{memory.limit}.
 }
+\note{
+  These functions exist on other platforms but always report infinity as
+  \R does itself provide limits on memory allocation---the OS's own
+  facilities can be used. 
+}
 \seealso{
   \link{Memory-limits} for other limits.
 

@@ -13,19 +13,18 @@ export(abline, arrows, assocplot, axTicks, Axis, axis, axis.Date,
        axis.POSIXct, barplot, box, boxplot, bxp, cdplot, clip,
        close.screen, co.intervals, contour, coplot, curve, dotchart,
        erase.screen, filled.contour, fourfoldplot, frame, grconvertX,
-       grconvertY, grid, hist, hist.default, identify, image, layout,
-       layout.show, lcm, legend, lines, lines.default, locator,
-       matlines, matplot, matpoints, mosaicplot, mtext, pairs,
-       panel.smooth, par, persp, pie, plot, plot.design,
-       plot.function, plot.new, plot.window, plot.xy, points, polygon,
-       polypath, rasterImage, rect, rug, screen, segments,
-       smoothScatter, spineplot, split.screen, stars, stem, strheight,
-       stripchart, strwidth, sunflowerplot, symbols, text, title,
-       xinch, xspline, xyinch, yinch, .filled.contour)
+       grconvertY, grid, hist, identify, image, layout, layout.show,
+       lcm, legend, lines, locator, matlines, matplot, matpoints,
+       mosaicplot, mtext, pairs, panel.smooth, par, persp, pie, plot,
+       plot.design, plot.function, plot.new, plot.window, plot.xy,
+       points, polygon, polypath, rasterImage, rect, rug, screen,
+       segments, smoothScatter, spineplot, split.screen, stars, stem,
+       strheight, stripchart, strwidth, sunflowerplot, symbols, text,
+       title, xinch, xspline, xyinch, yinch, .filled.contour)
 
 # leave most of the default methods visible as people seem to call them.
 export(barplot.default, boxplot.default, boxplot.matrix,
-       contour.default, image.default,
+       contour.default, hist.default, image.default, lines.default,
        pairs.default, plot.default, points.default, text.default)
 
 S3method(Axis, default)

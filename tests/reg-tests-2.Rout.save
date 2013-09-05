@@ -7167,6 +7167,6 @@ Coefficients:
 s.e.   0.4162  0.4420  0.0329   0.2210      0.7441
 
 sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
-> stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3)
-+ ## first gave local optim in 3.0.1
-+ 
+> stopifnot(all.equal(coef(f1), coef(f2), tolerance = 1e-3, check.attributes = FALSE))
+> ## first gave local optim in 3.0.1
+> 

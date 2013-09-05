@@ -196,6 +196,9 @@
 
       \item \code{package.skeleton()}'s deprecated argument
       \code{namespace} has been removed.
+      
+      \item Package \pkg{stats} no longer exports \code{median.default},
+      which was only needed to counteract a badly behaved package. % 'rv'.
     }
   }
 
@@ -337,6 +340,31 @@
       on a Linux system and record that value rather than the
       frequently-changing full path such as
       \file{/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64}.
+      
+      \item \command{R CMD check} does more thorough checking of
+      declared packages and namespaces.  It reports
+      \itemize{
+	\item packages declared in more than one of the
+	\samp{Depends}, \samp{Imports}, \samp{Suggests} and
+	\samp{Enhances} fields of the \file{DESCRIPTION} file.
+
+	\item namespaces declared in \samp{Imports} but not
+	imported from, neither in the \file{NAMESPACE} file nor using
+	the \code{::} nor \code{:::} operators.
+
+	\item packages which are used in \code{library()} or
+	\code{requires()} calls in the \R code but were already put on
+	the search path \emph{via} \samp{Depends}.
+
+	\item packages declared in \samp{Depends} not imported
+	\emph{via} the \file{NAMESPACE} file (except the standard
+	packages).  Objects used from \samp{Depends} packages should be
+	imported to avoid conflicts.
+
+	\item namespaces imported \emph{via} \code{:::} calls are
+	reported.  (Many of these should be \code{::} calls.)
+      }
+      See \sQuote{Writing R Extensions} for good practice.
     }
   }
 
@@ -364,6 +392,11 @@
       \item Configuring with \option{--disable-byte-compilation} will
       override the \file{DESCRIPTION} files of recommended packages,
       which typically require byte-compilation.
+      
+      \item More of the installation and checking process will work even
+      when \env{TMPDIR} is set to a path containing spaces, but this is
+      not recommended and external software (such as
+      \command{texi2dvi}) may fail.
     }
   }
 
@@ -381,6 +414,10 @@
 
       License \code{X11} is deprecated: use \sQuote{MIT} or
       \sQuote{BSD_2_clause} instead.
+  
+      \item Version requirements for \code{LinkingTo} packages are now
+      recognized: they are checked at installation.  (They were
+      previously silently ignored.)
     }
   }
 
@@ -573,8 +610,13 @@
       \item \command{R CMD LINK} did not know about sub-architectures.
       
       \item \code{system()} and \code{system2()} are better protected
-      against users who misguidely have spaces in the temporary
+      against users who misguidedly have spaces in the temporary
       directory path.
+
+      \item \code{file.show()} and \code{edit()} are now more likely to
+      work on file paths containing spaces.  (Where external utilities
+      are used, not the norm on Windows nor in \command{R.app}, which
+      should previously have worked.)
     }
   }
 }

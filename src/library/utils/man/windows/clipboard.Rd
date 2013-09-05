@@ -73,6 +73,9 @@ writeClipboard(str, format = 1)
   For \code{writeClipboard} an invisible logical indicating success or
   failure.
 }
+\note{
+  This is only available on Windows.
+}
 \seealso{
   \code{\link{file}} which can be used to set up a connection to a clipboard.
 }

@@ -38,6 +38,8 @@ winDialogString(message, default)
   where appropriate \code{Return} accepts the default action,
   \code{Esc} cancels and the underlined initial letter (\code{Y} or
   \code{N}) can be used.
+
+  These functions are only available on Windows.
 }
 \seealso{\code{\link{winMenuAdd}}\cr
   \code{\link{file.choose}} to select a file\cr

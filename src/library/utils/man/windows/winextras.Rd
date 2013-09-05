@@ -17,4 +17,7 @@ win.version()
   \code{\link{bug.report}} which returns a character string describing
   the version of Windows in use.
 }
+\note{
+    These functions are only available on Windows.
+}
 \keyword{utilities}

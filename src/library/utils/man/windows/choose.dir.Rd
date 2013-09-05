@@ -28,6 +28,9 @@ choose.dir(default = "", caption = "Select folder")
   To workaround a bug, on Vista and later only folders under
   \sQuote{Computer} are accessible via the widget.
 }
+\note{
+  This is only available on Windows.
+}
 \seealso{
   \code{\link{choose.files}}
 }

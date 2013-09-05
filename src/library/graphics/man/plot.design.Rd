@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plot.design.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.design}
@@ -9,8 +9,6 @@
 \description{
   Plot univariate effects of one or more \code{\link{factor}}s,
   typically for a designed experiment as analyzed by \code{\link{aov}()}.
-  Further, in S this a method of the \code{\link{plot}} generic function
-  for \code{design} objects.
 }
 \usage{
 plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
@@ -26,7 +24,7 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   \item{fun}{a function (or name of one) to be applied to each
     subset.  It must return one number for a numeric (vector) input.}
   \item{data}{data frame containing the variables referenced by \code{x}
-    when that is formula like.}
+    when that is formula-like.}
   \item{\dots}{\link{graphical parameters} such as \code{col},
     see \code{\link{par}}.}
   \item{ylim}{range of y values, as in \code{\link{plot.default}}.}
@@ -46,10 +44,6 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   levels of a particular factor are shown along a vertical line, and the
   overall value of \code{fun()} for the response is drawn as a
   horizontal line.
-
-  This is a new \R implementation which will not be completely
-  compatible to the earlier S implementations.  This is not a bug but
-  might still change.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. eds (1992)
@@ -62,9 +56,13 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   Springer Verlag.
 }
 \author{Roberto Frisullo and Martin Maechler}
-\note{A big effort was taken to make this closely compatible to the S
-  version.  However, \code{col} (and \code{fg}) specification has
+\note{
+  A big effort was taken to make this closely compatible to the S
+  version.  However, \code{col} (and \code{fg}) specifications have
   different effects.
+
+  In S this was a method of the \code{\link{plot}} generic function for
+  \code{design} objects.
 }
 \seealso{\code{\link{interaction.plot}} for a \sQuote{standard graphic}
   of designed experiments.}

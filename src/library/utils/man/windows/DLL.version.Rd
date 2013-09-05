@@ -24,6 +24,9 @@ DLL.version(path)
   \R used to build the DLL.  If the information is not available, the
   corresponding string is empty.
 }
+\note{
+  This is only available on Windows.
+}
 \examples{
 DLL.version(file.path(R.home("bin"), "R.dll"))
 DLL.version(file.path(R.home(), "library/stats/libs", .Platform$r_arch, "stats.dll"))
