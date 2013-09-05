@@ -245,12 +245,6 @@
       packages has been changed to the upcoming \samp{2.13}, but this
       can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
       in file \file{Renviron.site}.
-
- % Some people consider its LPPL licence incompatible with GPL.
-      \item LaTeX style file \file{upquote.sty} is no longer included:
-      it should be readily available in your LaTeX distribution and is
-      skipped if not found (but directional quotes will be rendered less
-      elegantly).
     }
   }
 
