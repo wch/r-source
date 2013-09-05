@@ -2842,10 +2842,6 @@ setRlibs <-
             excludes <- readLines("BinaryFiles")
             execs <- execs[!execs %in% excludes]
         }
-        if(use_install_timestamp) {
-            its <- file.path(pkgdir, ".install_timestamp")
-            execs <- execs[file_test("-ot", execs, its)]
-        }
         if (nb <- length(execs)) {
             msg <- ngettext(nb,
                             "Found the following executable file:",
@@ -2879,8 +2875,7 @@ setRlibs <-
                         recursive = TRUE, pattern = "^[.]")
         dots <- sub("^./","", dots)
         allowed <-
-            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras",
-              ".install_timestamp") # Kurt uses this
+            c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras")
         dots <- dots[!dots %in% allowed]
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)
@@ -3991,15 +3986,6 @@ setRlibs <-
         is_ascii <- charset == "ASCII"
 
         .unpack.time <- Sys.time()
-        ## Support two stage install/check operating on unpacked
-        ## sources.
-        use_install_timestamp <-
-            (grepl("^check", install) &&
-             file.exists(file.path(pkgdir, ".install_timestamp")))
-
-        if(use_install_timestamp)
-            .unpack.time <-
-                file.info(file.path(pkgdir, ".install_timestamp"))$mtime
 
         ## report options used
         if (!do_codoc) opts <- c(opts, "--no-codoc")
@@ -4079,8 +4065,7 @@ setRlibs <-
             ## we are not going to install and hence not run any code.
             ## </NOTE>
             if (do_install) {
-                topfiles0 <-
-                    if(!use_install_timestamp) dir(pkgdir) else NULL
+                topfiles0 <- dir(pkgdir)
                 check_dependencies()
             } else topfiles0 <- NULL
 
@@ -4127,10 +4112,6 @@ setRlibs <-
             makevars <-
                 Sys.glob(file.path(pkgdir, "src",
                                    c("Makevars.in", "Makevars")))
-            if(use_install_timestamp) {
-                its <- file.path(pkgdir, ".install_timestamp")
-                makevars <- makevars[file_test("-ot", makevars, its)]
-            }
             makevars <- basename(makevars)
 
             if (do_install) {
