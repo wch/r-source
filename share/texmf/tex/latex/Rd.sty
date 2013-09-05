@@ -49,7 +49,7 @@
 %% rather than (the identical) \@noligs from the LaTeX2e kernel.
 %% Hence, we add to \verbatim@font ... suggestion by Bernd Raichle
 %% <raichle@Informatik.Uni-Stuttgart.DE>.
-\ifthenelse{\boolean{Rd@use@inconsolata}}{}{\IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}}
+\ifthenelse{\boolean{Rd@use@inconsolata}}{}{\RequirePackage{upquote}}
 \g@addto@macro\verbatim@font\@noligs
 
 \addtolength{\textheight}{12mm}
