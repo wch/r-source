@@ -5,7 +5,7 @@ Talbot that this might allow certain values, such as double, integer,
 and logical scalars and possibly short character strings to be
 represented as immediate values without allocation. Defining
 BIGSEXP_IMMEDIATE provides a little support for experimenting with
-this, but nothing is implemented.
+this, but only very little is implemented.
 
 Changes to enable this were tedious but straight forward to make as the
 C compiler flags what needs to be changed. It is not clear that all
@@ -22,3 +22,5 @@ In SEXP-use-heavy simple benchmarks the BIGSEXP is about a factor of 2
 slower. So there will have to be substantial optimizations (or the
 implementation has to be more clever) for this to show a benefit. But
 it's there now for experimentation.
+
+Trunk changes merged in through r63844.

@@ -456,12 +456,20 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (IS_SCALAR(arg2, REALSXP)) {
 		double x1 = REAL(arg1)[0];
 		double x2 = REAL(arg2)[0];
+#ifdef BIGSEXP_IMMEDIATE
+		switch (PRIMVAL(op)) {
+		case PLUSOP: return ScalarReal(x1 + x2);
+		case MINUSOP: return ScalarReal(x1 - x2);
+		case TIMESOP: return ScalarReal(x1 * x2);
+		case DIVOP: return ScalarReal(x1 / x2);
+#else
 		ans = ScalarValue2(arg1, arg2);
 		switch (PRIMVAL(op)) {
 		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
 		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
 		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
 		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+#endif
 		}
 	    }
 	    else if (IS_SCALAR(arg2, INTSXP)) {

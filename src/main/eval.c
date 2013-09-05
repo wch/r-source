@@ -3266,6 +3266,9 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Math1(which) Builtin1(do_math1,which,rho)
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
+#ifdef BIGSEXP_IMMEDIATE
+# define NO_SAVE_ALLOC
+#endif
 #ifdef NO_SAVE_ALLOC
 # define DO_FAST_BINOP(op,a,b) do { \
     SKIP_OP(); \
