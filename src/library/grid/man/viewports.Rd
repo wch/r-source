@@ -19,10 +19,10 @@
 }
 \usage{
 pushViewport(..., recording=TRUE)
-popViewport(n, recording=TRUE)
+popViewport(n = 1, recording=TRUE)
 downViewport(name, strict=FALSE, recording=TRUE)
 seekViewport(name, recording=TRUE)
-upViewport(n, recording=TRUE)
+upViewport(n = 1, recording=TRUE)
 }
 \arguments{
   \item{\dots}{One or more objects of class \code{"viewport"}.}

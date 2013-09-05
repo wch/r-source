@@ -693,7 +693,6 @@ void setup_Rmainloop(void)
     volatile int doneit;
     volatile SEXP baseEnv;
     SEXP cmd;
-    FILE *fp;
     char deferred_warnings[11][250];
     volatile int ndeferred_warnings = 0;
 
@@ -838,7 +837,11 @@ void setup_Rmainloop(void)
        Perhaps it makes more sense to quit gracefully?
     */
 
-    fp = R_OpenLibraryFile("base");
+#ifdef RMIN_ONLY
+    /* This is intended to support a minimal build for experimentation. */
+    if (R_SignalHandlers) init_signal_handlers();
+#else
+    FILE *fp = R_OpenLibraryFile("base");
     if (fp == NULL)
 	R_Suicide(_("unable to open the base package\n"));
 
@@ -851,6 +854,7 @@ void setup_Rmainloop(void)
 	R_ReplFile(fp, baseEnv);
     }
     fclose(fp);
+#endif
 
     /* This is where we source the system-wide, the site's and the
        user's profile (in that order).  If there is an error, we

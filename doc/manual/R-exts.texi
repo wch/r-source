@@ -1374,8 +1374,9 @@ to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
-configuration variables, or the header and library flags necessary for
-linking against @R{}, see @kbd{R CMD config --help} for details.
+configuration variables, and also the header and library flags necessary
+for linking a front-end executable program against @R{}, see @kbd{R CMD
+config --help} for details.
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -7246,7 +7247,7 @@ by a shell) and the second argument to @code{system} will be
 into an @R{} character vector.
 
 On POSIX-compliant OSes these commands pass a command-line to a shell:
-Wndows is not POSIX-compliant and there is a separate function
+Windows is not POSIX-compliant and there is a separate function
 @code{shell} to do so.
 
 The function @code{system.time}
@@ -11829,12 +11830,13 @@ shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
 section.  Also, it can be built as a static library if configured with
 @option{--enable-R-static-lib}, and that can be used in a very similar
-way.
+way (at least on Linux: on other platforms one needs to ensure that all
+the symbols exported by @file{libR.a} and linked into the front-end).
 
-The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
+The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R}, is one
 such example, and the former @acronym{GNOME} (see package @pkg{gnomeGUI}
-on @acronym{CRAN}'s @samp{Archive} area) and OS X consoles are
-others.  The source for @file{@var{R_HOME}/bin/exec/R} is in file
+on @acronym{CRAN}'s @samp{Archive} area) and OS X consoles are others.
+The source for @file{@var{R_HOME}/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
 @example

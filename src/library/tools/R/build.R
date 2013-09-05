@@ -116,8 +116,7 @@ summaryLog <- function(Log)
         else if(Log$notes == 1L)
             printLog(Log,
                      sprintf("NOTE: There was 1 note.\n"))
-        printLog(Log,
-                 sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
+        cat(sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
     }
 }
 

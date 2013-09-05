@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -194,9 +194,6 @@ msgstr "Champs comportant des valeurs non ASCII :"
 msgid "These fields must have ASCII values."
 msgstr "Ces champs doivent avoir des valeurs ASCII."
 
-msgid "Required fields missing:"
-msgstr "Champs requis mais manquants :"
-
 msgid "Malformed package version."
 msgstr "Version de package mal orthographiée."
 
@@ -284,11 +281,18 @@ msgstr "Standardisable : %s"
 msgid "Standardized license specification:"
 msgstr "Spécification de licence standard :"
 
+msgid "Deprecated license: %s"
+msgstr ""
+
 msgid "Invalid license file pointers: %s"
 msgstr "Pointeur de fichier licence incorrect : %s"
 
-msgid "Components with restrictions not permitted:"
+#, fuzzy
+msgid "License components with restrictions not permitted:"
 msgstr "Le composants avec restrictions ne sont pas autorisés :"
+
+msgid "Licenses which are templates and need '+ file LICENSE':"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
@@ -381,6 +385,9 @@ msgstr "appel 'data(package=)' non déclaré depuis :"
 
 msgid "'data(package=)' call not declared from: %s"
 msgstr "appel 'data(package=)' non déclaré depuis : %s"
+
+msgid "Package has no 'Version' field"
+msgstr ""
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
@@ -1360,6 +1367,12 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "impossible de réencoder %s ligne %s"
 msgstr[1] "impossible de réencoder %s lignes %s"
+
+#, fuzzy
+msgid "Required field missing or empty:"
+msgid_plural "Required fields missing or empty:"
+msgstr[0] "Champs requis mais manquants :"
+msgstr[1] "Champs requis mais manquants :"
 
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"

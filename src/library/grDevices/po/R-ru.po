@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-08-10 10:02\n"
 "PO-Revision-Date: 2013-03-19 19:20-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -41,6 +41,9 @@ msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' должен быть положительным"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr ""
 
 msgid "at least 3 columns needed"
 msgstr "нужны по крайней мере 3 колонки"
