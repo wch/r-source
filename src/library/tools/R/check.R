@@ -718,7 +718,7 @@ setRlibs <-
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
-                       "build", # appeared in Sep 2013
+                       "build", # used by R CMD build
                        "java", "tools") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
@@ -2282,7 +2282,10 @@ setRlibs <-
                     Log$stars <<-  "*"
                     if (!res) do_exit(1L)
                 }
-            } else resultLog(Log, "NONE")
+            } else {
+                resultLog(Log, "NONE")
+                no_examples <<- TRUE
+            }
         }
     }
 
@@ -3906,6 +3909,7 @@ setRlibs <-
 
         ## The previous package may have set do_install to FALSE
         do_install <- do_install_arg
+        no_examples <- FALSE
 
         ## $pkgdir is the corresponding absolute path.
         ## pkgname0 is the name of the top-level directory
@@ -4178,6 +4182,24 @@ setRlibs <-
                 check_pkg_manual(pkgdir, desc["Package"])
         }
 
+        if (check_incoming && no_examples &&
+            dir.exists(file.path(pkgdir, "R"))) {
+           tests_dir <- file.path(pkgdir, "tests")
+            if (dir.exists(tests_dir) &&
+                length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
+                no_examples <- FALSE
+            vigns <- pkgVignettes(dir = pkgdir)
+            if (!is.null(vigns) && length(vigns$docs)) no_examples <- FALSE
+            if (no_examples) {
+                ## figure out if the R code exercises anything
+                ns <- parseNamespaceFile(basename(pkgdir), dirname(pkgdir))
+                if(length(ns$exports) || length(ns$exportPatterns) ||
+                   length(ns$exportMethods) || length(ns$S3methods)) {
+                    checkingLog(Log, "for code which exercises the package")
+                    warningLog(Log, "No examples, no tests, no vignettes")
+                }
+            }
+        }
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }
