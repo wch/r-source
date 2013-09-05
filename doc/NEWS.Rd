@@ -81,6 +81,10 @@
 
       \item The text and PDF news files, including \file{NEWS} and
       \file{NEWS.2}, have been moved to the \file{doc} directory.
+
+      \code{utils::modifyList()} gets a new argument \code{keep.null}
+      allowing \code{NULL} components in the replacement to be retained,
+      instead of causing corresponding components to be deleted.
     }
   }
 

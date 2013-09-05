@@ -11,20 +11,24 @@
   elements at each level to match a second list.
 }
 \usage{
-modifyList(x, val)
+modifyList(x, val, keep.null = FALSE)
 }
 \arguments{
-  \item{x}{a named \code{\link{list}}, possibly empty.}
-  \item{val}{a named list with components to replace corresponding
+  \item{x}{A named \code{\link{list}}, possibly empty.}
+  \item{val}{A named list with components to replace corresponding
     components in \code{x}.}
+  \item{keep.null}{ If \code{TRUE}, \code{NULL} elements in \code{val}
+    become \code{NULL} elements in \code{x}.  Otherwise, the
+    corresponding element, if present, is deleted from \code{x}. }
 }
 \value{
   A modified version of \code{x}, with the modifications determined as
   follows (here, list elements are identified by their names).  Elements
   in \code{val} which are missing from \code{x} are added to \code{x}.
   For elements that are common to both but are not both lists
-  themselves, the component in \code{x} is replaced by the one in
-  \code{val}.  For common elements that are both lists, \code{x[[name]]}
+  themselves, the component in \code{x} is replaced (or possibly
+  deleted, depending on the value of \code{keep.null}) by the one in
+  \code{val}.  For common elements that are in both lists, \code{x[[name]]}
   is replaced by \code{modifyList(x[[name]], val[[name]])}.
 }
 \examples{
