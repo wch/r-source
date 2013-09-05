@@ -2878,9 +2878,10 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of @LaTeX{} packages are required (including
-@pkg{url.sty}, and @pkg{listings.sty}) and others such as @pkg{hyperref}
-and @pkg{inconsolata} are desirable (and without them you may need to change
-@R{}'s defaults: @pxref{Making the manuals}).
+@pkg{url.sty}, and @pkg{listings.sty}) and others such as
+@pkg{hyperref}, @pkg{inconsolata} and @pkg{upquote} are desirable (and
+without them you may need to change @R{}'s defaults: @pxref{Making the
+manuals}).
 
 
 If you want to build from the R Subversion repository you need both
@@ -4385,7 +4386,7 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is several
 gigabytes, but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will want to add
-some packages, including @pkg{inconsolata}.
+some packages including @pkg{inconsolata} and @pkg{upquote}.
 
 @menu
 * Snow Leopard::                
