@@ -1,11 +1,11 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{2.2}
+\def\fileversion{2.3}
 \def\filename{jss}
-\def\filedate{2013/04/06}
+\def\filedate{2013/09/05}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
-%% License: GPL-2
+%% License: GPL-2 | GPL-3
 %% Copyright: (C) Achim Zeileis
 %% Please report errors to Achim.Zeileis@R-project.org
 %%
