@@ -4164,7 +4164,7 @@ setRlibs <-
                 check_pkg_manual(pkgdir, desc["Package"])
         }
 
-        if (check_incoming && no_examples &&
+        if (!is_base_pkg && check_incoming && no_examples &&
             dir.exists(file.path(pkgdir, "R"))) {
            tests_dir <- file.path(pkgdir, "tests")
             if (dir.exists(tests_dir) &&
