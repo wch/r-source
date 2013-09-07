@@ -11,12 +11,16 @@
 \DeclareOption{noae}{\setboolean{Sweave@ae}{false}}
 \ProcessOptions
 
-\RequirePackage{graphicx,fancyvrb}
-\IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
+\RequirePackage{graphicx,fancyvrb,textcomp}
+%% inspired by an earlier version of upquote.sty
+\begingroup
+\catcode`'=\active \catcode``=\active
+\g@addto@macro\@noligs{\let`\textasciigrave \let'\textquotesingle}
+\endgroup
 
 \ifthenelse{\boolean{Sweave@gin}}{\setkeys{Gin}{width=0.8\textwidth}}{}%
 \ifthenelse{\boolean{Sweave@ae}}{%
-  \RequirePackage[T1]{fontenc}  
+  \RequirePackage[T1]{fontenc}
   \RequirePackage{ae}
 }{}%
 
