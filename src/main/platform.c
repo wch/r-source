@@ -871,9 +871,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(ctime)[i] = (double) sb.st_ctime;
 	    REAL(atime)[i] = (double) sb.st_atime;
 # ifdef STAT_TIMESPEC_NS
-	    REAL(mtime)[i] += STAT_TIMESPEC_NS (st, st_mtim);
-	    REAL(ctime)[i] += STAT_TIMESPEC_NS (st, st_ctim);
-	    REAL(atime)[i] += STAT_TIMESPEC_NS (st, st_atim);
+	    REAL(mtime)[i] += STAT_TIMESPEC_NS (sb, st_mtim);
+	    REAL(ctime)[i] += STAT_TIMESPEC_NS (sb, st_ctim);
+	    REAL(atime)[i] += STAT_TIMESPEC_NS (sb, st_atim);
 # endif
 #endif
 #ifdef UNIX_EXTRAS
