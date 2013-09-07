@@ -116,16 +116,11 @@ share/licenses/*
 
 share/texmf/bibtex/bst/jss.bst
 
-	Copyright 1994-2005 Patrick W Daly
+	Copyright 1994-2007 Patrick W Daly
 
 share/texmf/tex/latex/jss.cls
 
 	Copyright: (C) Achim Zeileis
-
-share/texmf/tex/latex/upquote.sty
-
-	Copyright 2000 Michael A. Covington.
-	Copyright 2003 Michael A. Covington, Frank Mittelbach.
 
 src/library/graphics/R/mosaicplot.R
 

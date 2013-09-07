@@ -85,6 +85,10 @@
       \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
+      
+      \item Processing Sweave and Rd documents to PDF now renders
+      backticks and single quotes better in several instances, including
+      in \samp{\\code} and \samp{\\samp} expressions.
     }
   }
 
@@ -195,6 +199,8 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
+      
+      \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
     }
   }
 
