@@ -1152,7 +1152,12 @@
                 starsmsg(stars, "installing vignettes")
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
-                res <- try(.install_package_vignettes2(".", instdir, enc))
+		if (file_test("-f", file.path("build", "vignette.rds")))
+		    installer <- .install_package_vignettes3   
+		# FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
+		else
+		    installer <- .install_package_vignettes2 
+                res <- try(installer(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing vignettes failed")
             }

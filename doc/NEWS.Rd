@@ -131,6 +131,9 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
+      
+      \item \command{R CMD build} now weaves and tangles all vignettes,
+      so suggested packages are never required during package installation.
 
       \item \code{checkFF()} (used by \command{R CMD check}) does a
       better job of detecting calls from other packages, including not

@@ -54,12 +54,19 @@ find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), f
         exts <- "pdf"
     }
     exts <- c(exts, toupper(exts))
-    pattern <- sprintf("^%s%s[.](%s)$", name, if (main) "" else ".*",
-                                          paste(exts, collapse = "|"))
-
+    pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
     output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE, no..=TRUE)
     output0 <- output0[file_test("-f", file.path(dir, output0))]
-    output <- grep(pattern, output0, value = TRUE)
+    output <- grep(pattern1, output0, value = TRUE)
+    # If main is FALSE, we want to find all other files with related names.  We make sure
+    # that the main file is in position 1.
+    # FIXME:  we should check a timestamp or something to see that these were produced by tangling
+    #	      for the "name" vignette, they aren't just coincidentally similar names.
+    if (!main) {
+	pattern2 <- sprintf("^%s.*[.](%s)$", name, paste(exts, collapse = "|"))
+	output2 <- grep(pattern2, output0, value = TRUE)
+	output <- c(output, setdiff(output2, output))
+    }
 
     if (by == "weave") {
         if (length(output) == 0L)
@@ -302,34 +309,29 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        docdir <- file.path(dir, "doc")
-        ## Using package installed in @code{dir} ...
-    } else {
-        if(missing(dir))
-            stop("you must specify 'package' or 'dir'")
-        ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir), domain = NA)
-        else {
-            dir <- file_path_as_absolute(dir)
-            if (is.null(subdirs))
-                subdirs <- c("vignettes", file.path("inst", "doc"))
-            for (subdir in subdirs) {
-                docdir <- file.path(dir, subdir)
-                if(file_test("-d", docdir))
-                    break
-            }
-        }
+    }
+    if(missing(dir))
+	stop("you must specify 'package' or 'dir'")
+    ## Using sources from directory @code{dir} ...
+    if(!file_test("-d", dir))
+	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+    else {
+	# This code is for 3.0.x only:  3.1.0 will assume all vignettes are in the vignettes directory
+	dir <- file_path_as_absolute(dir)
+	if (is.null(subdirs))
+	    subdirs <- c("vignettes", if (missing(package)) file.path("inst", "doc") else file.path("doc") )
+	docdirs <- file.path(dir, subdirs)
+	docdirs <- docdirs[file_test("-d", docdirs)]
     }
 
-    if(!file_test("-d", docdir)) return(NULL)
+    if(!length(docdirs)) return(NULL)
 
     # Locate all vignette files
     buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
     engineList <- vignetteEngine(package=buildPkgs)
 
     docs <- names <- engines <- patterns <- NULL
-    allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
+    allFiles <- list.files(docdirs, all.files = FALSE, full.names = TRUE)
     if (length(allFiles) > 0L) {
         for (name in names(engineList)) {
             engine <- engineList[[name]]
@@ -352,6 +354,16 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
             }
         }
     }
+    # In 3.0.x, we might see the same vignette in both vignettes and inst/doc.  Remove the inst/doc one
+    if (length(docdirs) > 1) {
+	inVignettes <- docdirs[1]  == substr(docs, 1L, nchar(docdirs[1]))
+	basenames <- basename(docs)
+        dup <- !inVignettes & (basenames %in% basenames[inVignettes])
+	docs <- docs[!dup]
+	names <- names[!dup]
+	engines <- engines[!dup]
+	patterns <- patterns[!dup]
+    }
 
     # Assert
     stopifnot(length(names) == length(docs))
@@ -359,14 +371,14 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
     stopifnot(length(patterns) == length(docs))
     stopifnot(!any(duplicated(docs)))
 
-    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, dir=docdir, pkgdir=dir)
+    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, dir=docdirs[1L], pkgdir=dir)
 
     if (output) {
         outputs <- character(length(docs))
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            outputI <- find_vignette_product(name, by = "weave", dir = docdir, engine = engine)
+            outputI <- find_vignette_product(name, by = "weave", dir = dirname(file), engine = engine)
             outputs[i] <- outputI
         }
         z$outputs <- outputs
@@ -377,7 +389,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
         for (i in seq_along(docs)) {
             file <- docs[i]
             name <- names[i]
-            sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir, engine = engine)
+            sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = dirname(file), engine = engine)
             sources[[file]] <- sourcesI
         }
         z$sources <- sources
@@ -399,10 +411,13 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc)
     if(is.null(vigns)) return(invisible())
 
+    ## 3.0.x:  We'll only build the ones in the vigns$dir directory.  In later versions
+    ## there won't be any others
+    dobuild <- vigns$dir == substr(vigns$docs, 1L, nchar(vigns$dir))
     ## Assert that duplicated vignette names do not exist, e.g.
     ## 'vig' and 'vig' from 'vig.Rnw' and 'vig.Snw'.
     dups <- duplicated(vigns$names)
-    if (any(dups)) {
+    if (any(dups[dobuild])) {
         names <- unique(vigns$names[dups])
         docs <- sort(basename(vigns$docs[vigns$names %in% names]))
         stop("Detected vignette source files (", paste(sQuote(docs), collapse=", "), ") with shared names (", paste(sQuote(names), collapse=", "), ") and therefore risking overwriting each others output files")
@@ -436,6 +451,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     sourceList <- list()
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
+        if (!dobuild[i]) next
         file <- vigns$docs[i]
         file <- basename(file)
         name <- vigns$names[i]
@@ -504,10 +520,12 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     }
 
     # Assert
-    stopifnot(length(outputs) == length(vigns$docs))
+    stopifnot(length(outputs) == length(vigns$docs[dobuild]))
 
-    vigns$outputs <- outputs
-    vigns$sources <- sourceList
+    vigns$outputs <- rep("", length(vigns$names))
+    vigns$outputs[dobuild] <- outputs
+    vigns$sources <- rep("", length(vigns$names))
+    vigns$sources[dobuild] <- sourceList
 
     if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
     ## Might have been in origfiles ...
@@ -621,6 +639,7 @@ function(vigns)
     files <- vigns$docs
     names <- vigns$names
     dir <- vigns$dir
+    sources <- vigns$sources
 
     if(!file_test("-d", dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
@@ -630,6 +649,7 @@ function(vigns)
         out <- data.frame(File = character(),
                           Title = character(),
                           PDF = character(),
+			  R = character(),
                           stringsAsFactors = FALSE)
         out$Depends <- list()
         out$Keywords <- list()
@@ -666,10 +686,14 @@ function(vigns)
     out <- data.frame(File = unlist(contents[, "File"]),
                       Title = unlist(contents[, "Title"]),
                       PDF = outputs,	# Not necessarily PDF, but name it that for back compatibility
+		      R = "",		# May or may not be present
                       row.names = NULL, # avoid trying to compute row
                                         # names
                       stringsAsFactors = FALSE)
     # Optional
+    for (i in seq_along(sources)) 
+	if (length(s <- sources[[i]]))
+	    out$R[which(names(sources)[i] == files)] <- basename(s[1L])
     out$Depends <- contents[, "Depends"]
     out$Keywords <- contents[, "Keywords"]
 

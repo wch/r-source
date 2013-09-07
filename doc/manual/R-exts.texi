@@ -2819,7 +2819,7 @@ working.
 Note that it is pointless (and potentially misleading since the files
 might be outdated) to include in @file{inst/doc} @R{} code files which
 would be generated from vignette sources, as these will be re-generated
-when the package is installed (unless the vignette does not generate any
+when the package is built (unless the vignette does not generate any
 @R{} code, in which case it is also pointless/misleading).
 
 Metadata lines can be placed in the source file, preferably in @LaTeX{}
