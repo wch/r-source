@@ -429,10 +429,23 @@ tar <- function(tarfile, files = NULL,
         header[101:107] <- charToRaw(sprintf("%07o", mode))
         ## Windows does not have uid, gid: defaults to 0, which isn't great
         uid <- info$uid
-        if(!is.null(uid) && !is.na(uid))
+        ## uids are supposed to be less than 'nobody' (32767)
+        ## but it seems there are broken ones around: PR#15436
+        if(!is.null(uid) && !is.na(uid)) {
+            if(uid < 0L || uid > 32767L) {
+                warning(gettextf("invalid uid value replaced by that for user 'nobody'", uid),
+                        domain = NA, call. = FALSE)
+                uid <- 32767L
+            }
             header[109:115] <- charToRaw(sprintf("%07o", uid))
+        }
         gid <- info$gid
         if(!is.null(gid) && !is.na(gid))
+            if(gid < 0L || gid > 32767L) {
+                warning(gettextf("invalid gid value replaced by that for user 'nobody'", uid),
+                        domain = NA, call. = FALSE)
+                gid <- 32767L
+            }
             header[117:123] <- charToRaw(sprintf("%07o", gid))
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
         if (info$isdir) header[157L] <- charToRaw("5")
