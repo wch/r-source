@@ -85,10 +85,6 @@
       \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
-      
-      \item Processing Sweave and Rd documents to PDF now renders
-      backticks and single quotes better in several instances, including
-      in \samp{\\code} and \samp{\\samp} expressions.
     }
   }
 
@@ -349,6 +345,10 @@
       \item There is a new read-only \code{par()} parameter called
       \code{"page"}, which returns a logical value indicating whether
       the next \code{plot.new()} call will start a new page.
+      
+      \item Processing Sweave and Rd documents to PDF now renders
+      backticks and single quotes better in several instances, including
+      in \samp{\\code} and \samp{\\samp} expressions.
     }
   }
 
