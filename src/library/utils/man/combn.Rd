@@ -1,6 +1,6 @@
 % File src/library/utils/man/combn.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -36,6 +36,10 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
     efficiency reasons).  This will badly fail if \code{FUN(u)} is not of
     constant length.}
   \item{\dots}{optionally, further arguments to \code{FUN}.}
+}
+\details{
+  Factors \code{x} are accepted from \R 3.1.0 (although coincidentally
+  they worked for \code{simplify = FALSE} in earlier versions).
 }
 \value{
   a \code{\link{list}} or \code{\link{array}}, see the \code{simplify}

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/combn.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,13 +30,16 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     ##	a list; else returns a vector or an array.  "..." are passed
     ##	unchanged to function given by argument FUN,  if any.
 
-    ##S : Change if (simplify = TRUE) return an array/matrix {not a 'vector'}
     stopifnot(length(m) == 1L, is.numeric(m))
     if(m < 0) stop("m < 0", domain = NA)
     if(is.numeric(x) && length(x) == 1L && x > 0 && trunc(x) == x)
 	x <- seq_len(x)
     n <- length(x)
     if(n < m) stop("n < m", domain = NA)
+    x0 <- x
+    if(simplify) {
+        if(is.factor(x)) x <- as.integer(x)
+    }
     m <- as.integer(m)
     e <- 0
     h <- m
@@ -60,21 +63,10 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 		else # MM: *still* a matrix - a la "drop = FALSE"
 		    c(d, count)
 	    } ## NULL in all 'else' cases
-##S	use.arr <- !is.null(dim.use)
     }
-##S	else use.arr <- FALSE
 
-    if(simplify) { # use atomic vector/array instead of list
-##S	if(use.arr)
-	    out <- matrix(r, nrow = len.r, ncol = count) # matrix for now
-##S	else {
-##S	    if(count > 1) {
-##S		out <- vector(storage.mode(r), len.r * count)
-##S		out[1L] <- r
-##S	    }
-##S	    else out <- r
-##S	}
-    }
+    if(simplify)
+        out <- matrix(r, nrow = len.r, ncol = count) # matrix for now
     else {
 	out <- vector("list", count)
 	out[[1L]] <- r
@@ -96,11 +88,16 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
 	    }
 	    a[m - h + j] <- e + j
 	    r <- if(nofun) x[a] else FUN(x[a], ...)
-	    if(simplify) ##S if(use.arr)
-		out[, i] <- r else out[[i]] <- r
+	    if(simplify) out[, i] <- r else out[[i]] <- r
 	    i <- i + 1L
 	}
     }
-    if(simplify) ##S if(use.arr)
-	array(out, dim.use) else out
+    if(simplify) {
+        if(is.factor(x0)) {
+            levels(out) <- levels(x0)
+            class(out) <- class(x0)
+        }
+        dim(out) <- dim.use
+    }
+    out
 }
