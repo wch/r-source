@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-07-28 r63431) -- "Good Sport"
+R version 3.0.1 Patched (2013-09-08 r63873) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.168   0.016   0.173 
+  0.165   0.017   0.172 
