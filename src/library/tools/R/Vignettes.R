@@ -471,9 +471,9 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
             texi2pdf(file = output, clean = FALSE, quiet = quiet)
             output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
         }
-        outputs <- c(outputs, output)
+        outputs[file] <- output
 
-        if (tangle) {  # This is set for custom engines
+        if (tangle) {  # This is set for all engines as of 3.0.2
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet)
                 setwd(startdir)
@@ -506,7 +506,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         ## fail to close it.
         graphics.off()
 
-        keep <- c(outputs, unlist(sourceList))
+        keep <- c(outputs, sourceList)
         if(clean) {
             f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
             newer <- file_test("-nt", f, ".build.timestamp")
@@ -523,9 +523,9 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     stopifnot(length(outputs) == length(vigns$docs[dobuild]))
 
     vigns$outputs <- rep("", length(vigns$names))
-    vigns$outputs[dobuild] <- outputs
-    vigns$sources <- rep("", length(vigns$names))
-    vigns$sources[dobuild] <- sourceList
+    names(vigns$outputs) <- vigns$docs
+    vigns$outputs[names(outputs)] <- outputs
+    vigns$sources <- sourceList
 
     if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
     ## Might have been in origfiles ...
