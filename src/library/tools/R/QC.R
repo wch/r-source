@@ -2953,7 +2953,7 @@ function(x, ...)
 ### * .check_package_description
 
 .check_package_description <-
-function(dfile)
+function(dfile, strict = FALSE)
 {
     dfile <- file_path_as_absolute(dfile)
     db <- .read_description(dfile)
@@ -3015,16 +3015,6 @@ function(dfile)
         mostattributes(res) <- NULL     # Keep names.
         out <- c(out, res)
     }
-
-    ## FIXME: this was done right at the beginning
-    ## Mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-##     required_fields <- c("Package", "Version", "License", "Description",
-##                          "Title", "Author", "Maintainer")
-##     if(length(i <- which(is.na(match(required_fields, names(db))) |
-##                          !nzchar(db[required_fields]))))
-##         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
@@ -3094,6 +3084,13 @@ function(dfile)
                 list(bad_dep_entry = bad_dep_entry,
                      bad_dep_op = bad_dep_op,
                      bad_dep_version = bad_dep_version)
+    }
+    if(strict && !is.na(val <- db["VignetteBuilder"])) {
+        ## should be a single entry
+        depends <- .strip_whitespace(unlist(strsplit(val, ",")))
+        if(length(depends) != 1L ||
+           !grepl("^[[:alnum:].]*$", depends))
+            out$bad_vignettebuilder <- TRUE
     }
     if(!is.na(val <- db["Priority"])
        && !is.na(package_name)
@@ -3166,6 +3163,11 @@ function(x, ...)
             writeLines(tmp)
         }
         writeLines("")
+    }
+    if(identical(x$bad_vignettebuilder, TRUE)) {
+        writeLines(c(gettext("Invalid VignetteBuilder field."),
+                     strwrap(gettextf("This field must contain a single package (and no version requirement).")),
+                     ""))
     }
 
     if(length(x$bad_priority))
