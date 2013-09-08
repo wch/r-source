@@ -405,7 +405,6 @@ for file in $files; do
     ${SED-sed} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" -e "s|JAVAC =.\{0,\}|JAVAC = $JAVAC|" -e "s|JAVAH =.\{0,\}|JAVAH = $JAVAH|" -e "s|JAR =.\{0,\}|JAR = $JAR|" -e "s|JAVA_CPPFLAGS =.\{0,\}|JAVA_CPPFLAGS = ${JAVA_CPPFLAGS}|g"  "${file}" > "${file}.new"
     if test -f "${file}.new"; then
 	mv "${file}" "${file}.old"
-	mv "${file}.new" "${file}"
     else
 	echo "*** cannot create ${file}.new~*** Please run as root if required.~" | ${SED-sed} -e 'y/~/\n/' >&2
 	exit 1
