@@ -330,7 +330,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
     buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
     engineList <- vignetteEngine(package=buildPkgs)
 
-    docs <- names <- engines <- patterns <- NULL
+    docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdirs, all.files = FALSE, full.names = TRUE)
     if (length(allFiles) > 0L) {
         for (name in names(engineList)) {
