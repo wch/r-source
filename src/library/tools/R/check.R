@@ -1816,6 +1816,21 @@ setRlibs <-
         checkingLog(Log, "files in 'vignettes'")
         ## special case common problems.
         any <- FALSE
+        pattern <- vignetteEngine("Sweave")$pattern
+        vign_dir <- file.path(pkgdir, "vignettes")
+        sources <- setdiff(list.files(file.path(pkgdir, "inst", "doc"),
+                                      pattern = pattern),
+                           list.files(vign_dir, pattern = pattern))
+        if(length(sources)) {
+            warningLog(Log)
+            any <- TRUE
+            msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
+                    strwrap(paste(sources, collapse = ", "),
+                            indent = 2L, exdent = 4L),
+                     "")
+            printLog(Log, paste(msg, collapse = "\n"))
+        }
+
         files <- dir(file.path(pkgdir, "vignettes"))
         already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
         bad <- files[files %in% already]
