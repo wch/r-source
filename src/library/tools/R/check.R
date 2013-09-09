@@ -314,6 +314,7 @@ setRlibs <-
                 warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
         }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
+        if (dir.exists("vignettes")) check_vign_contents()
 
         setwd(pkgoutdir)
 
@@ -1806,6 +1807,57 @@ setRlibs <-
                      sQuote("Writing R Extensions"), ",\n",
                      "or move the vignette sources from ",
                      sQuote("inst/doc"), " to ", sQuote("vignettes"), ".\n")
+        }
+        if (!any) resultLog(Log, "OK")
+    }
+
+    check_vign_contents <- function()
+    {
+        checkingLog(Log, "files in 'vignettes'")
+        ## special case common problems.
+        any <- FALSE
+        files <- dir(file.path(pkgdir, "vignettes"))
+        already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
+        bad <- files[files %in% already]
+        if (length(bad)) {
+            noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files are already in R: ",
+                     paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please remove them from your package.\n")
+        }
+        files2 <- dir(file.path(pkgdir, "vignettes"), recursive = TRUE,
+                     pattern = "[.](cls|sty|drv)$", full.names = TRUE)
+        files2 <- files2[! basename(files2) %in%
+                       c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
+        bad <- character()
+        for(f in files2) {
+            pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
+            if(length(grep(pat, readLines(f, warn = FALSE), useBytes = TRUE))
+               == 3L) bad <- c(bad, basename(f))
+        }
+        if (length(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files contain a license that requires\n",
+                     "distribution of original sources:\n",
+                     "  ", paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please ensure that you have complied with it.\n")
+        }
+
+        ## Now look for TeX leftovers (and soiltexture, Amelia ...).
+        bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
+                     files, ignore.case = TRUE)
+        if (any(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files look like leftovers/mistakes:\n",
+                     paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
+                                   indent = 2, exdent = 2), collapse = "\n"),
+                     "\nPlease remove them from your package.\n")
         }
         if (!any) resultLog(Log, "OK")
     }
