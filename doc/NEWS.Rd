@@ -89,6 +89,10 @@
       \item \code{combn(x, simplify = TRUE)} now gives a factor result
       for factor input \code{x} (previously user error).
       (Related to \PR{15442}.)
+      
+      \item Added \code{utils::fileSnapshot()} and 
+      \code{utils::changedFiles()} functions to allow snapshots and 
+      comparison of directories of files.
     }
   }
 
