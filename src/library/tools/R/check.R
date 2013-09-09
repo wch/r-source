@@ -1825,7 +1825,7 @@ setRlibs <-
             warningLog(Log)
             any <- TRUE
             msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                    strwrap(paste(sources, collapse = ", "),
+                    strwrap(paste(sQuote(sources), collapse = ", "),
                             indent = 2L, exdent = 4L),
                      "")
             printLog(Log, paste(msg, collapse = "\n"))
@@ -2597,6 +2597,7 @@ setRlibs <-
             t1 <- proc.time()
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
+                if(dirname(file) != vigns$dir) next
                 name <- vigns$names[i]
                 enc <- getVignetteEncoding(file, TRUE)
                 if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
