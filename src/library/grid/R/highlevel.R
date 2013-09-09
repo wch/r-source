@@ -131,8 +131,8 @@ grid.multipanel <- function(x = stats::runif(90), y = stats::runif(90),
 
 grid.show.layout <- function(l, newpage=TRUE,
                              bg="light grey",
-                         cell.border="blue", cell.fill="light blue",
-                         cell.label=TRUE, label.col="blue",
+                             cell.border="blue", cell.fill="light blue",
+                             cell.label=TRUE, label.col="blue",
                              unit.col="red", vp=NULL) {
   if (!is.layout(l))
     stop("'l' must be a layout")

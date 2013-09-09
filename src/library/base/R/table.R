@@ -122,7 +122,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
     ## tables with empty extents have no contents and are hard to
     ## output in a readable way, so just say something descriptive and
     ## return.
-    d <- dim(x) 
+    d <- dim(x)
     if (any(d == 0)) {
         cat ("< table of extent", paste(d, collapse=" x "), ">\n")
         return ( invisible(x) )

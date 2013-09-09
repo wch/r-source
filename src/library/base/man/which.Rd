@@ -1,6 +1,6 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which}
@@ -56,14 +56,15 @@ which((1:12)\%\%2 == 0) # which are even?
 which(1:10 > 3, arr.ind = TRUE)
 
 ( m <- matrix(1:12, 3, 4) )
-which(m \%\% 3 == 0)
-which(m \%\% 3 == 0, arr.ind = TRUE)
+div.3 <- m \%\% 3 == 0
+which(div.3)
+which(div.3, arr.ind = TRUE)
 rownames(m) <- paste("Case", 1:3, sep = "_")
 which(m \%\% 5 == 0, arr.ind = TRUE)
 
 dim(m) <- c(2, 2, 3); m
-which(m \%\% 3 == 0, arr.ind = FALSE)
-which(m \%\% 3 == 0, arr.ind = TRUE)
+which(div.3, arr.ind = FALSE)
+which(div.3, arr.ind = TRUE)
 
 vm <- c(m)
 dim(vm) <- length(vm) #-- funny thing with  length(dim(...)) == 1

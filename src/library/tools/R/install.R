@@ -630,6 +630,9 @@
                                  paste(configure_args, collapse = " "))
                     if (debug) message("configure command: ", sQuote(cmd),
                                        domain = NA)
+                    ## in case the configure script calls SHLIB (some do)
+                    cmd <- paste("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_=false",
+                                 cmd)
                     res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
@@ -1153,10 +1156,10 @@
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
 		if (file_test("-f", file.path("build", "vignette.rds")))
-		    installer <- .install_package_vignettes3   
+		    installer <- .install_package_vignettes3
 		# FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
 		else
-		    installer <- .install_package_vignettes2 
+		    installer <- .install_package_vignettes2
                 res <- try(installer(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing vignettes failed")

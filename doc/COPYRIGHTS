@@ -539,3 +539,5 @@ src/appl/{dchdc,dpfa,dpbsl,dpoco,dpodi,dpofa,dposl,dqrdc,
 
 are part of LINPACK, with authors J.J. Dongarra, Cleve Moler and
 G.W. Stewart
+
+src/appl/dqrdc2.f is based on dqrdc.f by G.W. Stewart.
