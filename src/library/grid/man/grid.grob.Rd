@@ -71,7 +71,7 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
   draws all of its children.  Before drawing its children, a gTree
   pushes its \code{childrenvp} slot and then navigates back up (calls
   \code{\link{upViewport}}) so that the children can specify their location
-  within the childrenvp via a \code{\link{vpPath}}.
+  within the \code{childrenvp} via a \code{\link{vpPath}}.
 
   Grob names need not be unique in general, but all children of a
   gTree must have different names.
@@ -86,7 +86,7 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
   and some higher-level grid components (e.g., \code{\link{grid.xaxis}}
   and \code{grid.yaxis}) are derived from these classes.
 
-  \code{grobTree} is just a convenient wrapper for \code{gTree()}
+  \code{grobTree} is just a convenient wrapper for \code{gTree}
   when the only components of the gTree are grobs (so all
   unnamed arguments become children of the gTree).
 
