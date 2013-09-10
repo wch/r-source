@@ -3086,10 +3086,8 @@ function(dfile, strict = FALSE)
                      bad_dep_version = bad_dep_version)
     }
     if(strict && !is.na(val <- db["VignetteBuilder"])) {
-        ## should be a single entry
         depends <- .strip_whitespace(unlist(strsplit(val, ",")))
-        if(length(depends) != 1L ||
-           !grepl("^[[:alnum:].]*$", depends))
+        if(length(depends) < 1L || !all(grepl("^[[:alnum:].]*$", depends)))
             out$bad_vignettebuilder <- TRUE
     }
     if(!is.na(val <- db["Priority"])
@@ -3166,7 +3164,7 @@ function(x, ...)
     }
     if(identical(x$bad_vignettebuilder, TRUE)) {
         writeLines(c(gettext("Invalid VignetteBuilder field."),
-                     strwrap(gettextf("This field must contain a single package (and no version requirement).")),
+                     strwrap(gettextf("This field must contain one or more packages (and no version requirement).")),
                      ""))
     }
 
