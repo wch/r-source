@@ -491,6 +491,10 @@
 
       \item \code{mcMap()} was not exported by package
       \pkg{parallel}. (\PR{15439})
+      
+      \item \code{plot()} for \code{TukeyHSD} objects did not balance
+      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots. 
+      (\PR{15449})
     }
   }
 }
