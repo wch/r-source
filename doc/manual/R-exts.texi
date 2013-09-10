@@ -546,11 +546,12 @@ include large figures which are not part of the package sources (and
 hence only in packages which do not have an Open Source license).
 
 @c DESCRIPTION field VignetteBuilder
-The @samp{VignetteBuilder} field names a package that provides 
-an engine other than Sweave for building vignettes.  This may
-be the current package, or one listed in @samp{Depends},
-@samp{Suggests} or @samp{Imports}.
-See @ref{Non-Sweave vignettes} for details.
+The @samp{VignetteBuilder} field names (in a comma-separated list) 
+packages that provide an engine for building vignettes.  These may 
+include the current package, or ones listed in @samp{Depends},
+@samp{Suggests} or @samp{Imports}. The @pkg{utils} package is always
+implicitly appended.  See @ref{Non-Sweave vignettes} for 
+details.
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
@@ -2951,7 +2952,8 @@ package @file{DESCRIPTION} file, and also specified in the
 namespace must be available to build or check your package).  If more
 than one package is specified as a builder, they will be searched in the
 order given there.  The @pkg{utils} package is always implicitly
-appended to the list of builder packages.
+appended to the list of builder packages, but may be included earlier
+to change the search order.
 
 Note that a package with non-Sweave vignettes should always have a
 @samp{VignetteBuilder} field in the @file{DESCRIPTION} file, since this
