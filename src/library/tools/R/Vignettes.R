@@ -296,6 +296,12 @@ function(x, ...)
     invisible(x)
 }
 
+### get the engine from a file
+
+getVignetteEngine <- function(filename, lines = readLines(filename, warn=FALSE)) {
+    c(.get_vignette_metadata(lines, "Engine"), "utils::Sweave")[1L]
+}
+
 ### * engineMatches
 ###
 ### does the engine from a vignette match one of the registered ones?
@@ -353,11 +359,8 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
                 idxs <- grep(pattern, allFiles)
 		docsT <- allFiles[idxs]
 		keep <- logical(length(docsT))
-		for (i in seq_along(docsT)) {
-		    lines <- readLines(docsT[i])
-		    thisengine <- .get_vignette_metadata(lines, "Engine")
-		    keep[i] <- engineMatches(name, thisengine)
-		}
+		for (i in seq_along(docsT)) 
+		    keep[i] <- engineMatches(name, getVignetteEngine(docsT[i]))
 		idxs  <- idxs[keep]
                 nidxs <- length(idxs)
                 if (nidxs > 0L) {
@@ -557,15 +560,9 @@ buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = 
 	for (pkg in buildPkg)
 	    loadNamespace(pkg)
 	    
-    if (is.null(engine)) {
+    if (is.null(engine)) 
     # Infer vignette engine from vignette content
-	lines <- readLines(file, warn=FALSE)
-	engine <- .get_vignette_metadata(lines, "Engine")
-	if (length(engine) == 0L)
-	    engine <- "utils::Sweave"
-	else 
-	    engine <- engine[1]
-    }
+	engine <- getVignetteEngine(file)
 
     # Get the vignette engine
     if (is.character(engine))
@@ -730,7 +727,7 @@ function(file)
     } else unlist(strsplit(keywords[1L], ", *"))
     ## no point in recording the file path since this is called on
     ## package installation.
-    engine <- c(.get_vignette_metadata(lines, "Engine"), "Sweave")[1L]
+    engine <- getVignetteEngine(lines=lines)
     list(file = basename(file), title = title, depends = depends,
          keywords = keywords, engine = engine)
 }
