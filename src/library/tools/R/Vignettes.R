@@ -296,6 +296,16 @@ function(x, ...)
     invisible(x)
 }
 
+### * engineMatches
+###
+### does the engine from a vignette match one of the registered ones?
+###
+engineMatches <- function(regengine, vigengine) {
+    if (!grepl("::", vigengine))
+	regengine <- sub("^.*::", "", regengine)
+    regengine == vigengine
+}
+
 ### * pkgVignettes
 ###
 ### Get an object of class pkgVignettes which contains a list of
@@ -341,6 +351,14 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
             patternsT <- engine$pattern
             for (pattern in patternsT) {
                 idxs <- grep(pattern, allFiles)
+		docsT <- allFiles[idxs]
+		keep <- logical(length(docsT))
+		for (i in seq_along(docsT)) {
+		    lines <- readLines(docsT[i])
+		    thisengine <- .get_vignette_metadata(lines, "Engine")
+		    keep[i] <- engineMatches(name, thisengine)
+		}
+		idxs  <- idxs[keep]
                 nidxs <- length(idxs)
                 if (nidxs > 0L) {
                     if (is.function(engine$weave)) {
