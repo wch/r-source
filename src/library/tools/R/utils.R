@@ -1287,6 +1287,7 @@ function(package)
              SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
+             arm = "sigma.hat", # lme4 has sigma()
              assist = "chol.new",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
