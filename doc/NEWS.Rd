@@ -82,10 +82,6 @@
       \item The text and PDF news files, including \file{NEWS} and
       \file{NEWS.2}, have been moved to the \file{doc} directory.
 
-      \code{utils::modifyList()} gets a new argument \code{keep.null}
-      allowing \code{NULL} components in the replacement to be retained,
-      instead of causing corresponding components to be deleted.
-
       \item \code{combn(x, simplify = TRUE)} now gives a factor result
       for factor input \code{x} (previously user error).
       (Related to \PR{15442}.)
@@ -359,6 +355,10 @@
       \item Processing Sweave and Rd documents to PDF now renders
       backticks and single quotes better in several instances, including
       in \samp{\\code} and \samp{\\samp} expressions.
+
+      \code{utils::modifyList()} gets a new argument \code{keep.null}
+      allowing \code{NULL} components in the replacement to be retained,
+      instead of causing corresponding components to be deleted.
     }
   }
 
