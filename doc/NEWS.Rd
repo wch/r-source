@@ -233,6 +233,8 @@
       \code{namespace} has been removed.
 
       \item Many methods are no longer exported by package \pkg{stats}.
+      They are all registered on their generic, which should be called
+      rather than calling a method directly.
       
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
