@@ -45,6 +45,8 @@
 #include <Rmath.h>
 extern double Rf_gamma_cody(double);
 
+#include <R_ext/Itermacros.h>
+
 #include "arithmetic.h"
 
 #include <errno.h>
@@ -846,7 +848,6 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 	++i)
 
 
-
 static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 {
     R_xlen_t i, i1, i2, n, n1, n2;
@@ -868,81 +869,73 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 
     switch (code) {
     case PLUSOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    INTEGER(ans)[i] = R_integer_plus(x1, x2, &naflag);
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		INTEGER(ans)[i] = R_integer_plus(x1, x2, &naflag);
+	    });
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case MINUSOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    INTEGER(ans)[i] = R_integer_minus(x1, x2, &naflag);
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		INTEGER(ans)[i] = R_integer_minus(x1, x2, &naflag);
+	    });
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case TIMESOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    INTEGER(ans)[i] = R_integer_times(x1, x2, &naflag);
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		INTEGER(ans)[i] = R_integer_times(x1, x2, &naflag);
+	    });
 	if (naflag)
 	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case DIVOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    REAL(ans)[i] = R_integer_divide(x1, x2);
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		REAL(ans)[i] = R_integer_divide(x1, x2);
+	    });
 	break;
     case POWOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    if((x1 = INTEGER(s1)[i1]) == 1 || (x2 = INTEGER(s2)[i2]) == 0)
-		REAL(ans)[i] = 1.;
-	    else if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		REAL(ans)[i] = NA_REAL;
-	    else {
-		REAL(ans)[i] = R_POW((double) x1, (double) x2);
-	    }
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		if((x1 = INTEGER(s1)[i1]) == 1 || (x2 = INTEGER(s2)[i2]) == 0)
+		    REAL(ans)[i] = 1.;
+		else if (x1 == NA_INTEGER || x2 == NA_INTEGER)
+		    REAL(ans)[i] = NA_REAL;
+		else
+		    REAL(ans)[i] = R_POW((double) x1, (double) x2);
+	    });
 	break;
     case MODOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
-		INTEGER(ans)[i] = NA_INTEGER;
-	    else {
-		INTEGER(ans)[i] = /* till 0.63.2:	x1 % x2 */
-		    (x1 >= 0 && x2 > 0) ? x1 % x2 :
-		    (int)myfmod((double)x1,(double)x2);
-	    }
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
+		    INTEGER(ans)[i] = NA_INTEGER;
+		else {
+		    INTEGER(ans)[i] = /* till 0.63.2:	x1 % x2 */
+			(x1 >= 0 && x2 > 0) ? x1 % x2 :
+			(int)myfmod((double)x1,(double)x2);
+		}
+	    });
 	break;
     case IDIVOP:
-	mod_iterate(n1, n2, i1, i2) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = INTEGER(s1)[i1];
-	    x2 = INTEGER(s2)[i2];
-	    /* This had x %/% 0 == 0 prior to 2.14.1, but
-	       it seems conventionally to be undefined */
-	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
-		INTEGER(ans)[i] = NA_INTEGER;
-	    else
-		INTEGER(ans)[i] = (int) floor((double)x1 / (double)x2);
-	}
+	MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		x1 = INTEGER(s1)[i1];
+		x2 = INTEGER(s2)[i2];
+		/* This had x %/% 0 == 0 prior to 2.14.1, but
+		   it seems conventionally to be undefined */
+		if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
+		    INTEGER(ans)[i] = NA_INTEGER;
+		else
+		    INTEGER(ans)[i] = (int) floor((double)x1 / (double)x2);
+	    });
 	break;
     }
     UNPROTECT(1);
@@ -981,199 +974,163 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     switch (code) {
     case PLUSOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *dx = REAL(s1);
+	    double *dy = REAL(s2);
             if (n2 == 1) {
-                double tmp = REAL(s2)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] + tmp;
-            }
+		double tmp = dy[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] + tmp;);
+	    }
             else if (n1 == 1) {
-                double tmp = REAL(s1)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = tmp + REAL(s2)[i];
-            }
+		double tmp = dx[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = tmp + dy[i];);
+	    }
             else if (n1 == n2)
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] + REAL(s2)[i];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] + dy[i];);
             else
-                mod_iterate(n1, n2, i1, i2) {
-//		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		    REAL(ans)[i] = REAL(s1)[i1] + REAL(s2)[i2];
-		}
-	} else	if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_INTEGER(s1, i1) + REAL(s2)[i2];
-	     }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = REAL(s1)[i1] + R_INTEGER(s2, i2);
-	     }
+		MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+				  da[i] = dx[i1] + dy[i2];);
 	}
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_INTEGER(s1, i1) + REAL(s2)[i2];);
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = REAL(s1)[i1] + R_INTEGER(s2, i2););
 	break;
     case MINUSOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *dx = REAL(s1);
+	    double *dy = REAL(s2);
             if (n2 == 1) {
-                double tmp = REAL(s2)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] - tmp;
+                double tmp = dy[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] - tmp;);
             }
             else if (n1 == 1) {
-                double tmp = REAL(s1)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = tmp - REAL(s2)[i];
+                double tmp = dx[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = tmp - dy[i];);
             }
             else if (n1 == n2)
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] - REAL(s2)[i];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] - dy[i];);
             else
-                mod_iterate(n1, n2, i1, i2) {
-//		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		    REAL(ans)[i] = REAL(s1)[i1] - REAL(s2)[i2];
-		}
-	} else	if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_INTEGER(s1, i1) - REAL(s2)[i2];
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = REAL(s1)[i1] - R_INTEGER(s2, i2);
-	   }
+		MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+				  da[i] = dx[i1] - dy[i2];);
 	}
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_INTEGER(s1, i1) - REAL(s2)[i2];);
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = REAL(s1)[i1] - R_INTEGER(s2, i2););
 	break;
     case TIMESOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *dx = REAL(s1);
+	    double *dy = REAL(s2);
             if (n2 == 1) {
-                double tmp = REAL(s2)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] * tmp;
+                double tmp = dy[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] * tmp;);
             }
             else if (n1 == 1) {
                 double tmp = REAL(s1)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = tmp * REAL(s2)[i];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = tmp * dy[i];);
             }
             else if (n1 == n2)
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] * REAL(s2)[i];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] * dy[i];);
             else
-                mod_iterate(n1, n2, i1, i2) {
-//		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		    REAL(ans)[i] = REAL(s1)[i1] * REAL(s2)[i2];
-		}
-	} else if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_INTEGER(s1, i1) * REAL(s2)[i2];
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = REAL(s1)[i1] * R_INTEGER(s2, i2);
-	   }
+		MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+				  da[i] = dx[i1] * dy[i2];);
 	}
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_INTEGER(s1, i1) * REAL(s2)[i2];);
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = REAL(s1)[i1] * R_INTEGER(s2, i2););
 	break;
     case DIVOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *dx = REAL(s1);
+	    double *dy = REAL(s2);
             if (n2 == 1) {
-                double tmp = REAL(s2)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] / tmp;
+                double tmp = dy[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] / tmp;);
             }
             else if (n1 == 1) {
-                double tmp = REAL(s1)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = tmp / REAL(s2)[i];
+                double tmp = dx[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = tmp / dy[i];);
             }
             else if (n1 == n2)
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = REAL(s1)[i] / REAL(s2)[i];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] / dy[i];);
             else
-                mod_iterate(n1, n2, i1, i2) {
-//		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		    REAL(ans)[i] = REAL(s1)[i1] / REAL(s2)[i2];
-		}
-	} else if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_INTEGER(s1, i1) / REAL(s2)[i2];
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = REAL(s1)[i1] / R_INTEGER(s2, i2);
-	   }
+		MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+				  da[i] = dx[i1] / dy[i2];);
 	}
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_INTEGER(s1, i1) / REAL(s2)[i2];);
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = REAL(s1)[i1] / R_INTEGER(s2, i2););
 	break;
     case POWOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *dx = REAL(s1);
+	    double *dy = REAL(s2);
             if (n2 == 1) {
-                double tmp = REAL(s2)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = R_POW(REAL(s1)[i], tmp);
+                double tmp = dy[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = R_POW(dx[i], tmp););
             }
             else if (n1 == 1) {
-                double tmp = REAL(s1)[0];
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = R_POW(tmp, REAL(s2)[i]);
+                double tmp = dx[0];
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = R_POW(tmp, dy[i]););
             }
             else if (n1 == n2)
-                for (i = 0; i < n; i++)
-		    REAL(ans)[i] = R_POW(REAL(s1)[i], REAL(s2)[i]);
+		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = R_POW(dx[i], dy[i]););
             else
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_POW(REAL(s1)[i1], REAL(s2)[i2]);
-	    }
-	} else if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_POW( R_INTEGER(s1, i1), REAL(s2)[i2]);
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = R_POW(REAL(s1)[i1], R_INTEGER(s2, i2));
-	   }
+		MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+				  da[i] = R_POW(dx[i1], dy[i2]););
 	}
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_POW( R_INTEGER(s1, i1),
+						    REAL(s2)[i2]););
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = R_POW(REAL(s1)[i1],
+						   R_INTEGER(s2, i2)););
 	break;
     case MODOP:
-	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfmod(REAL(s1)[i1], REAL(s2)[i2]);
-	    }
-	} else if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfmod( R_INTEGER(s1, i1), REAL(s2)[i2]);
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfmod(REAL(s1)[i1], R_INTEGER(s2, i2));
-	   }
-	}
+	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP)
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfmod(REAL(s1)[i1],
+						    REAL(s2)[i2]););
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfmod( R_INTEGER(s1, i1),
+						     REAL(s2)[i2]););
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfmod(REAL(s1)[i1],
+						    R_INTEGER(s2, i2)););
 	break;
     case IDIVOP:
-	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfloor(REAL(s1)[i1], REAL(s2)[i2]);
-	    }
-	} else if(TYPEOF(s1) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfloor(R_INTEGER(s1, i1), REAL(s2)[i2]);
-	   }
-	} else	if(TYPEOF(s2) == INTSXP ) {
-	   mod_iterate(n1, n2, i1, i2) {
-//	       if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	       REAL(ans)[i] = myfloor(REAL(s1)[i1], R_INTEGER(s2,i2));
-	   }
-	}
+	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP)
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfloor(REAL(s1)[i1],
+						     REAL(s2)[i2]););
+	else if(TYPEOF(s1) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfloor(R_INTEGER(s1, i1),
+						     REAL(s2)[i2]););
+	else if(TYPEOF(s2) == INTSXP )
+	    MOD_ITERATE_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
+			      REAL(ans)[i] = myfloor(REAL(s1)[i1],
+						     R_INTEGER(s2,i2)););
 	break;
     }
     UNPROTECT(1);
