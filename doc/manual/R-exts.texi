@@ -1473,11 +1473,11 @@ versions of Autoconf in fact allow an already set @code{FLIBS} to
 override the test for the FORTRAN linker flags.)
 
 
-@strong{Note bene:} If the @command{configure} script creates files,
-e.g.@: @file{src/Makevars}, you do need a @command{cleanup} script to
-remove them.  Otherwise if the package has vignettes, @command{R CMD
-build} will ship the files that are created.  For example, package
-@pkg{RODBC} has
+@strong{N.B.}: If the @command{configure} script creates files, e.g.@:
+@file{src/Makevars}, you do need a @command{cleanup} script to remove
+them.  Otherwise if the package has vignettes, @command{R CMD build}
+will ship the files that are created.  For example, package @pkg{RODBC}
+has
 
 @example
 #!/bin/sh
@@ -1603,7 +1603,7 @@ preprocessor options (for example include paths) for C/C++ files
 @code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
 (@pxref{Creating shared objects}).
 
-@strong{NB:} Include paths are preprocessor options, not compiler
+@strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.
@@ -8651,7 +8651,7 @@ given in the table.
 
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{Note}: although it is
+@code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{N.B.}: although it is
 possible to return objects of internal types, it is unsafe to do so as
 assumptions are made about how they are handled which may be violated at
 user-level evaluation.)  More details are given in @ref{R Internal
