@@ -115,6 +115,10 @@
       \item \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
+      
+      \item \code{tools::pkgVignettes()} gains argument \code{check};
+      if set to \code{TRUE}, it will warn when it appears a vignette requests
+      a non-existent vignette engine. 
     }
   }
 

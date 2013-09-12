@@ -17,7 +17,7 @@ buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE,
                clean = TRUE, tangle = FALSE)
 
 pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
-	     output = FALSE, source = FALSE)
+	     output = FALSE, source = FALSE, check = FALSE)
 }
 \arguments{
   \item{package}{a character string naming an installed package.  If
@@ -40,6 +40,10 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
     for each vignette in the result.}
   \item{source}{logical.  If \code{TRUE}, include the tangled output filename
     for each vignette in the result.}
+  \item{check}{logical.  If \code{TRUE}, check whether all files that
+    have vignette-like filenames have an identifiable vignette engine.
+    This may be a false positive if a file is not a vignette but has a 
+    filename matching a pattern defined by one of the vignette engines.} 
 }
 \details{
   \code{buildVignettes} is used by \code{R CMD build} and \code{R CMD

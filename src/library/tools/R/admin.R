@@ -491,7 +491,7 @@ function(dir, outDir, encoding = "")
     hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
-    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
+    vigns <- pkgVignettes(dir = dir, subdirs = subdir, check = TRUE)
 
     ## Write dummy HTML index if no vignettes are found and exit.
     if(length(vigns$docs) == 0L) {

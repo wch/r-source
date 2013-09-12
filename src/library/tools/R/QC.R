@@ -2670,7 +2670,7 @@ function(dir, force_suggests = TRUE)
     ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
+    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"), check = TRUE)
     if (!is.null(vigns) && length(vigns$docs) > 0L) {
         reqs <- unique(unlist(.build_vignette_index(vigns)$Depends))
         ## For the time being, ignore base packages missing from the
