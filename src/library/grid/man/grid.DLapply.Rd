@@ -7,21 +7,23 @@
 \alias{grid.DLapply}
 \title{ Modify the Grid Display List }
 \description{
-  Call a function on each element of the current display list
-  and replace the element with the result.
+  Call a function on each element of the current display list.
 }
 \usage{
 grid.DLapply(FUN, ...)
 }
 \arguments{
-  \item{FUN}{A function.}
+  \item{FUN}{A function;  the first argument to this function
+    is passed each element of the display list. 
+  }
   \item{\dots}{Further arguments to pass to \code{FUN} .}
 }
 \value{
-  The side effect of this function is to modify the grid display list.
+  The side effect of these functions
+  is usually to modify the grid display list.
 }
 \details{
-  This is an insanely dangerous function (for the grid display list).
+  This function is insanely dangerous (for the grid display list).
 
   Two token efforts are made to try to avoid ending up with complete
   garbage on the display list:
@@ -39,7 +41,9 @@ grid.DLapply(FUN, ...)
 }
 \examples{
 grid.newpage()
-grid.rect(width=.5, height=.5, gp=gpar(fill="grey"))
+grid.rect(width=.4, height=.4, x=.25, y=.75, gp=gpar(fill="black"), name="r1")
+grid.rect(width=.4, height=.4, x=.5, y=.5, gp=gpar(fill="grey"), name="r2")
+grid.rect(width=.4, height=.4, x=.75, y=.25, gp=gpar(fill="white"), name="r3")
 grid.DLapply(function(x) { if (is.grob(x)) x$gp <- gpar(); x })
 grid.refresh()
 }

@@ -14,12 +14,13 @@ export(
        "grid.convert", "grid.convertHeight",
 
        "current.viewport", "current.vpPath", "current.vpTree",
-       "current.transform",
+       "current.transform", "current.rotation", "current.parent",
+       "depth", "explode",
        "engine.display.list",
        "gpar", "get.gpar",
        "grid.collection",
        "grid.copy", "grid.display.list", "grid.draw",
-       "grid.record", "grid.delay", "grid.DLapply",
+       "grid.record", "grid.delay", "grid.DLapply", 
        "grid.grill",
        "grid.layout", "grid.locator",
        "grid.newpage",
@@ -36,7 +37,8 @@ export(
        "grobAscent", "grobDescent",
        "absolute.size",
 
-       "valid.just",
+       "valid.just", "resolveHJust", "resolveVJust",
+       "resolveRasterSize",
 
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
        "pop.viewport", "push.viewport",
@@ -75,6 +77,7 @@ export(
        # Listing grobs and viewports
        "grid.ls",
        "nestedListing", "pathListing", "grobPathListing",
+       "grid.grep",
        # Deprecated
        "getNames", "childNames",
 
@@ -233,6 +236,7 @@ S3method("heightDetails", "segments")
 S3method("heightDetails", "text")
 S3method("heightDetails", "xspline")
 S3method("heightDetails", "beziergrob")
+S3method("heightDetails", "rastergrob")
 #S3method("height.details", "viewport")
 
 S3method("postDraw", "grob")
@@ -264,6 +268,9 @@ S3method("validDetails", "rect")
 S3method("validDetails", "roundrect")
 S3method("validDetails", "segments")
 S3method("validDetails", "text")
+S3method("validDetails", "xspline")
+S3method("validDetails", "beziergrob")
+S3method("validDetails", "rastergrob")
 
 S3method("widthDetails", "arrows")
 S3method("widthDetails", "circle")
@@ -281,6 +288,7 @@ S3method("widthDetails", "segments")
 S3method("widthDetails", "text")
 S3method("widthDetails", "xspline")
 S3method("widthDetails", "beziergrob")
+S3method("widthDetails", "rastergrob")
 #S3method("width.details", "viewport")
 
 S3method("xDetails", "circle")
@@ -296,6 +304,7 @@ S3method("xDetails", "segments")
 S3method("xDetails", "text")
 S3method("xDetails", "xspline")
 S3method("xDetails", "beziergrob")
+S3method("xDetails", "rastergrob")
 
 S3method("yDetails", "circle")
 S3method("yDetails", "curve")
@@ -310,6 +319,7 @@ S3method("yDetails", "segments")
 S3method("yDetails", "text")
 S3method("yDetails", "xspline")
 S3method("yDetails", "beziergrob")
+S3method("yDetails", "rastergrob")
 
 S3method("ascentDetails", "default")
 S3method("ascentDetails", "grob")
@@ -324,6 +334,8 @@ S3method("depth", "vpList")
 S3method("depth", "vpStack")
 S3method("depth", "vpTree")
 S3method("depth", "path")
+S3method("explode", "character")
+S3method("explode", "path")
 S3method("drawVP", "viewport")
 S3method("drawVP", "vpList")
 S3method("drawVP", "vpStack")
@@ -384,3 +396,12 @@ S3method("makeContext", "forcedgrob")
 S3method("force", "default")
 S3method("force", "grob")
 S3method("force", "gTree")
+
+S3method("grid.force", "default")
+S3method("grid.force", "grob")
+S3method("grid.force", "character")
+S3method("grid.force", "gPath")
+S3method("grid.revert", "default")
+S3method("grid.revert", "grob")
+S3method("grid.revert", "character")
+S3method("grid.revert", "gPath")

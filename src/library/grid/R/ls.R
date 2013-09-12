@@ -353,7 +353,7 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
             # In this case, need to prepend a fake path on the front
             # so that subsequent upViewport()s will work
             x <- vpPathFromVector(c(rep("...", recordedDepth - depth(x)),
-                                    explodePath(as.character(x))))
+                                    explode(as.character(x))))
         }
         # This would be simpler if paths were kept as vectors
         # but that redesign is a bit of an undertaking
@@ -381,7 +381,7 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
             class(result) <- c("vpNameTreeListing", "vpTreeListing",
                                "gridTreeListing", "gridListing")
         } else {
-            path <- explodePath(x$path)
+            path <- explode(x$path)
             result <- gridList(vpPathFromVector(c(path[-1L], x$name)),
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
@@ -756,3 +756,135 @@ grobPathListing <- function(x, ...) {
     }
 }
 
+# Tidy up the vpPath from grid.ls() to remove ROOT if it is there
+clean <- function(paths) {
+    sapply(lapply(paths,
+                  function(x) {
+                      pieces <- explode(x)
+                      if (length(pieces) && pieces[1] == "ROOT")
+                          pieces <- pieces[-1]
+                      pieces
+                  }),
+           function(x) {
+               if (length(x))
+                   as.character(vpPath(x))
+               else ""
+           })
+}
+
+# Given a gPath, return complete grob paths that match from the display list
+grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
+                      strict = FALSE, grep = FALSE, global = FALSE,
+                      no.match = character()) {
+    if (!inherits(path, "gPath"))
+        path <- gPath(path)
+    depth <- depth(path)
+    grep <- rep(grep, length.out = depth)
+
+    # Get each piece of the path as a sequential char vector
+    pathPieces <- explode(path)
+
+    if (is.null(x)) {
+        dl <- grid.ls(grobs=grobs, viewports=viewports, print = FALSE)
+    } else {
+        dl <- grid.ls(x, grobs=grobs, viewports=viewports, print = FALSE)
+    }
+    if (!length(dl$name))
+        stop("Nothing on the display list")
+    # Only keep vpListing and grobListing
+    names <- names(dl)
+    dl <- lapply(dl,
+                 function(x) {
+                     x[dl$type == "vpListing" | dl$type == "grobListing" |
+                       dl$type == "gTreeListing"]
+                 })
+    names(dl) <- names
+    # "depth" is vpDepth for vpListing and gDepth for grobListing
+    # "path" is gPath for vpListing and vpPath for grobListing
+    if (is.null(x)) {
+        # (remove "ROOT" from path and depth)
+        dl$depth <- ifelse(dl$type == "vpListing", dl$vpDepth - 1, dl$gDepth)
+        dl$path <- ifelse(dl$type == "vpListing", clean(dl$vpPath), dl$gPath)
+    } else {
+        dl$depth <- ifelse(dl$type == "vpListing", dl$vpDepth, dl$gDepth)
+        dl$path <- ifelse(dl$type == "vpListing", dl$vpPath, dl$gPath)
+    }
+    # Limit our search only to grobs whose depth matches ours
+    # For not strict, we're only looking at the grob names, so all
+    # depths apply.
+    matchingDepths <- if (! strict) which((dl$depth + 1) >= depth)
+                      else which((dl$depth + 1) == depth)
+    if (!length(matchingDepths))
+        return(no.match)
+
+    nMatches <- 0
+    searchMatches <- vector("list", length(matchingDepths))
+    # For each name of the correct path length
+    for (i in matchingDepths) {
+        dlPathPieces <- 
+            if (dl$depth[i] > 0) 
+                c(explode(dl$path[i]), dl$name[i])
+            else 
+                dl$name[i]
+        matches <- logical(depth)
+        if (!strict) {
+            # NOTE that we already know that the dlPath is AT LEAST as long
+            # as the path
+            depthOffset <- 0
+            while (depthOffset + depth <= dl$depth[i] + 1 &&
+                   !all(matches)) {
+                for (j in 1:depth) {
+                    matches[j] <-
+                        if (grep[j])
+                            grepl(pathPieces[j], dlPathPieces[depthOffset + j])
+                        else
+                            pathPieces[j] == dlPathPieces[depthOffset + j]
+                }
+                depthOffset <- depthOffset + 1
+            }
+        } else {
+            # Check whether we need to grep this level or not, attempt match
+            # NOTE that we already know that path and dlPath are same length
+            for (j in 1:depth) {
+                matches[j] <-
+                    if (grep[j])
+                        grepl(pathPieces[j], dlPathPieces[j])
+                    else
+                        pathPieces[j] == dlPathPieces[j]
+            }
+        }
+        # We have found a grob
+        if (all(matches)) {
+            if (!global) {
+                # Returning early to avoid further searching
+                if (dl$type[i] == "vpListing") {
+                    result <- do.call("vpPath", list(dlPathPieces))
+                } else {
+                    result <- do.call("gPath", list(dlPathPieces))
+                    attr(result, "vpPath") <- clean(dl$vpPath[i])
+                }
+                return(result)
+            } else {
+                nMatches <- nMatches + 1
+                if (dl$type[i] == "vpListing") {
+                    result <- do.call("vpPath",
+                                      list(dlPathPieces))
+                } else {
+                    result <- do.call("gPath",
+                                      list(dlPathPieces))
+                    attr(result, "vpPath") <- clean(dl$vpPath[i])
+                }
+                searchMatches[[nMatches]] <- result
+            }
+        }
+    }
+
+    if (!nMatches)
+        return(no.match)
+
+    # We may have allocated a list too large earlier,
+    # subset to only matching results
+    searchMatches <- searchMatches[1:nMatches]
+
+    return(searchMatches)
+}

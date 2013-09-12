@@ -138,7 +138,7 @@ downViewport <- function(name, strict=FALSE, recording=TRUE) {
 # vpPath directly (i.e., w/o calling vpPath)
 downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
   name <- as.character(name)
-  downViewport(vpPathDirect(name), strict, recording=recording)
+  downViewport(vpPath(name), strict, recording=recording)
 }
 
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
@@ -241,15 +241,29 @@ current.vpPath <- function() {
 }
 
 # Function to obtain the current viewport
-current.viewport <- function(vp=NULL) {
-  if (is.null(vp))
+current.viewport <- function() {
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
     vpFromPushedvp(grid.Call(L_currentViewport))
-  else {
-    warning("the 'vp' argument is deprecated")
-    vp
-  }
+}
+
+# Return the parent of the current viewport
+# (could be NULL)
+current.parent <- function(n=1) {
+    if (n < 1)
+        stop("Invalid number of generations")
+    vp <- grid.Call(L_currentViewport)
+    generation <- 1
+    while (generation <= n) {
+        if (is.null(vp))
+            stop("Invalid number of generations")
+        vp <- vp$parent
+        generation <- generation + 1
+    }
+    if (!is.null(vp))
+        vpFromPushedvp(vp)
+    else
+        vp
 }
 
 vpListFromNode <- function(node) {
@@ -293,7 +307,11 @@ current.vpTree <- function(all=TRUE) {
 }
 
 current.transform <- function() {
-  grid.Call(L_currentViewport)$trans
+    grid.Call(L_currentViewport)$trans
+}
+
+current.rotation <- function() {
+    grid.Call(L_currentViewport)$rotation
 }
 
 # Call this function if you want the graphics device erased or moved

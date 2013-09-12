@@ -1,4 +1,30 @@
 
+Changes from grid_3.0.* to grid_3.1.0:
+-------------------------------------
+
+1.  New current.rotation() function.
+
+2.  vpPath() and gPath() now automatically expand any embedded path 
+    separators in their input.
+
+3.  New functions depth(), for determining the depth of a viewport 
+    hierarchy or path, and explode(), for expanding a path into
+    its components.
+
+4.  New function grid.grep()
+    (based on ideas and code from Simon Potter).
+
+5.  The grid.force() function now accepts an explicit grob to (draw 
+    and) force or a gPath to force a specific already-drawn grob.
+    Ditto the grid.revert() function.
+
+6.  New current.parent() function to return parent of current viewport.
+
+7.  New resolveRasterSize() function.
+
+8   Made 'vp' argument of current.viewport() defunct.
+
+
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------
 

@@ -199,7 +199,7 @@ valid.data <- function(units, data) {
                    is.character(data[[i]]))))
                 stop("no 'grob' supplied for 'grobwidth/height' unit")
             if (is.character(data[[i]]))
-                data[[i]] <- gPathDirect(data[[i]])
+                data[[i]] <- gPath(data[[i]])
             if (inherits(data[[i]], "gPath"))
                 if (depth(data[[i]]) > 1)
                     stop("'gPath' must have depth 1 in 'grobwidth/height' units")
@@ -673,7 +673,7 @@ grobX.gPath <- function(x, theta) {
 }
 
 grobX.default <- function(x, theta) {
-  unit(convertTheta(theta), "grobx", data=gPathDirect(as.character(x)))
+  unit(convertTheta(theta), "grobx", data=gPath(as.character(x)))
 }
 
 # grobY
@@ -694,7 +694,7 @@ grobY.gPath <- function(x, theta) {
 }
 
 grobY.default <- function(x, theta) {
-  unit(convertTheta(theta), "groby", data=gPathDirect(as.character(x)))
+  unit(convertTheta(theta), "groby", data=gPath(as.character(x)))
 }
 
 # grobWidth
@@ -715,7 +715,7 @@ grobWidth.gPath <- function(x) {
 }
 
 grobWidth.default <- function(x) {
-  unit(1, "grobwidth", data=gPathDirect(as.character(x)))
+  unit(1, "grobwidth", data=gPath(as.character(x)))
 }
 
 # grobHeight
@@ -736,7 +736,7 @@ grobHeight.gPath <- function(x) {
 }
 
 grobHeight.default <- function(x) {
-  unit(1, "grobheight", data=gPathDirect(as.character(x)))
+  unit(1, "grobheight", data=gPath(as.character(x)))
 }
 
 # grobAscent
@@ -757,7 +757,7 @@ grobAscent.gPath <- function(x) {
 }
 
 grobAscent.default <- function(x) {
-  unit(1, "grobascent", data=gPathDirect(as.character(x)))
+  unit(1, "grobascent", data=gPath(as.character(x)))
 }
 
 # grobDescent
@@ -778,7 +778,7 @@ grobDescent.gPath <- function(x) {
 }
 
 grobDescent.default <- function(x) {
-  unit(1, "grobdescent", data=gPathDirect(as.character(x)))
+  unit(1, "grobdescent", data=gPath(as.character(x)))
 }
 
 #########################

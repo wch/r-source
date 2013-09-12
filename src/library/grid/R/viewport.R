@@ -160,34 +160,34 @@ height.details.viewport <- function(x) {
 }
 
 # How many "levels" in viewport object
-depth <- function(vp) {
+depth <- function(x) {
   UseMethod("depth")
 }
 
-depth.viewport <- function(vp) {
+depth.viewport <- function(x) {
   1
 }
 
-depth.vpList <- function(vp) {
+depth.vpList <- function(x) {
   # When pushed, the last element of the vpList is pushed last
   # so we are left whereever that leaves us
-  depth(vp[[length(vp)]])
+  depth(x[[length(x)]])
 }
 
-depth.vpStack <- function(vp) {
+depth.vpStack <- function(x) {
   # Elements in the stack may be vpStacks or vpLists or vpTrees
   # so need to sum all the depths
-  sum(sapply(vp, depth, simplify=TRUE))
+  sum(sapply(x, depth, simplify=TRUE))
 }
 
-depth.vpTree <- function(vp) {
+depth.vpTree <- function(x) {
   # When pushed, the last element of the vpTree$children is
   # pushed last so we are left wherever that leaves us
-  depth(vp$parent) + depth(vp$children[[length(vp$children)]])
+  depth(x$parent) + depth(x$children[[length(x$children)]])
 }
 
-depth.path <- function(path) {
-  path$n
+depth.path <- function(x) {
+  x$n
 }
 
 ####################
@@ -317,14 +317,15 @@ setvpgpar.vpTree <- function(vp) {
 .grid.pathSep <- "::"
 
 vpPathFromVector <- function(names) {
-  n <- length(names)
-  if (n < 1)
-    stop("a viewport path must contain at least one viewport name")
   if (any(bad <- !is.character(names)))
       stop(ngettext(sum(bad),
                     "invalid viewport name",
                     "invalid viewport names"),
            domain = NA)
+  names <- unlist(strsplit(names, .grid.pathSep))
+  n <- length(names)
+  if (n < 1)
+    stop("a viewport path must contain at least one viewport name")
   path <- list(path=if (n==1) NULL else
                paste(names[seq_len(n-1L)], collapse=.grid.pathSep),
                name=names[n],
@@ -335,12 +336,6 @@ vpPathFromVector <- function(names) {
 
 vpPath <- function(...) {
   names <- c(...)
-  vpPathFromVector(names)
-}
-
-# Create vpPath from string with embedded VpPathSep(s)
-vpPathDirect <- function(path) {
-  names <- unlist(strsplit(path, .grid.pathSep))
   vpPathFromVector(names)
 }
 
@@ -362,8 +357,19 @@ print.path <- function(x, ...) {
 }
 
 # Explode path$path
-explodePath <- function(path) {
-  unlist(strsplit(path, .grid.pathSep))
+explode <- function(x) {
+    UseMethod("explode")
+}
+
+explode.character <- function(x) {
+    unlist(strsplit(x, .grid.pathSep))
+}
+
+explode.path <- function(x) {
+  if (x$n == 1)
+    x$name
+  else
+    c(explode(x$path), x$name)
 }
 
 

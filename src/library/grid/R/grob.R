@@ -62,7 +62,7 @@ checkvpSlot <- function(vp) {
   # For interactive use, allow user to specify
   # vpPath directly (i.e., w/o calling vpPath)
   if (is.character(vp))
-    vp <- vpPathDirect(vp)
+    vp <- vpPath(vp)
   vp
 }
 
@@ -143,12 +143,14 @@ print.grob <- function(x, ...) {
 # Functions for creating "paths" of viewport names
 
 gPathFromVector <- function(names) {
-  n <- length(names)
-  if (n < 1L)
-    stop("a 'grob' path must contain at least one 'grob' name")
   if (any(bad <- !is.character(names)))
       stop(ngettext(sum(bad), "invalid grob name", "invalid grob names"),
            domain = NA)
+  # Break out any embedded .grid.pathSep's
+  names <- unlist(strsplit(names, .grid.pathSep))
+  n <- length(names)
+  if (n < 1L)
+    stop("a 'grob' path must contain at least one 'grob' name")
   path <- list(path = if (n==1) NULL else
                paste(names[1L:(n-1)], collapse = .grid.pathSep),
                name = names[n], n = n)
@@ -158,12 +160,6 @@ gPathFromVector <- function(names) {
 
 gPath <- function(...) {
   names <- c(...)
-  gPathFromVector(names)
-}
-
-# Create gPath from string with embedded .grid.pathSep(s)
-gPathDirect <- function(path) {
-  names <- unlist(strsplit(path, .grid.pathSep))
   gPathFromVector(names)
 }
 
@@ -361,7 +357,7 @@ grid.get <- function(gPath, strict=FALSE, grep=FALSE, global=FALSE,
   if (allDevices)
     stop("'allDevices' not yet implemented")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -382,7 +378,7 @@ getGrob <- function(gTree, gPath, strict=FALSE,
   if (!inherits(gTree, "gTree"))
     stop("it is only valid to get a child from a \"gTree\"")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (depth(gPath) == 1 && strict) {
@@ -400,7 +396,7 @@ getGrob <- function(gTree, gPath, strict=FALSE,
 grid.set <- function(gPath, newGrob, strict=FALSE, grep=FALSE,
                      redraw=TRUE) {
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -431,7 +427,7 @@ setGrob <- function(gTree, gPath, newGrob, strict=FALSE, grep=FALSE) {
   if (!inherits(newGrob, "grob"))
     stop("it is only valid to set a 'grob' as child of a \"gTree\"")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -465,7 +461,7 @@ grid.add <- function(gPath, child, strict=FALSE,
   if (allDevices)
     stop("'allDevices' not yet implemented")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -483,7 +479,7 @@ addGrob <- function(gTree, child, gPath=NULL, strict=FALSE,
         addToGTree(gTree, child)
     } else {
         if (is.character(gPath))
-            gPath <- gPathDirect(gPath)
+            gPath <- gPath(gPath)
         # Only makes sense to specify a gPath for a gTree
         if (!inherits(gTree, "gTree"))
             stop("it is only valid to add a child to a \"gTree\"")
@@ -511,7 +507,7 @@ grid.remove <- function(gPath, warn=TRUE, strict=FALSE,
   if (allDevices)
     stop("'allDevices' not yet implemented")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -521,7 +517,7 @@ grid.remove <- function(gPath, warn=TRUE, strict=FALSE,
     removeNameFromDL(gPath$name, strict, grep, global, warn, redraw)
   } else {
     name <- gPath$name
-    gPath <- gPathDirect(gPath$path)
+    gPath <- gPath(gPath$path)
     greppath <- grep[-length(grep)]
     grepname <- grep[length(grep)]
     removeDLFromGPath(gPath, name, strict, greppath, grepname,
@@ -541,7 +537,7 @@ removeGrob <- function(gTree, gPath, strict=FALSE,
     if (!inherits(gTree, "gTree"))
         stop("it is only valid to remove a child from a \"gTree\"")
     if (is.character(gPath))
-        gPath <- gPathDirect(gPath)
+        gPath <- gPath(gPath)
     if (!inherits(gPath, "gPath"))
         stop("invalid 'gPath'")
     if (!is.logical(grep))
@@ -552,7 +548,7 @@ removeGrob <- function(gTree, gPath, strict=FALSE,
         result <- removeName(gTree, gPath$name, strict, grep, global, warn)
     } else {
         name <- gPath$name
-        gPath <- gPathDirect(gPath$path)
+        gPath <- gPath(gPath$path)
         greppath <- grep[-length(grep)]
         grepname <- grep[length(grep)]
         # result will be NULL if no match
@@ -576,7 +572,7 @@ grid.edit <- function(gPath, ..., strict=FALSE,
   if (allDevices)
     stop("'allDevices' not yet implemented")
   if (is.character(gPath))
-    gPath <- gPathDirect(gPath)
+    gPath <- gPath(gPath)
   if (!inherits(gPath, "gPath"))
     stop("invalid 'gPath'")
   if (!is.logical(grep))
@@ -600,7 +596,7 @@ editGrob <- function(grob, gPath=NULL, ..., strict=FALSE,
         editThisGrob(grob, specs)
     } else {
         if (is.character(gPath))
-            gPath <- gPathDirect(gPath)
+            gPath <- gPath(gPath)
         # Only makes sense to specify a gPath for a gTree
         if (!inherits(grob, "gTree"))
             stop("it is only valid to edit a child of a \"gTree\"")
@@ -676,8 +672,8 @@ partialPathMatch <- function(pathsofar, path, strict=FALSE, grep) {
     if (!any(grep))
       length(grep(paste0("^", pathsofar), path)) > 0L
     else {
-      pathSoFarElts <- explodePath(pathsofar)
-      pathElts <- explodePath(path)
+      pathSoFarElts <- explode(pathsofar)
+      pathElts <- explode(path)
       ok <- TRUE
       npsfe <- length(pathSoFarElts)
       index <- 1
@@ -709,8 +705,8 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
       else
         match <- (length(grep(paste0(path, "$"), pathsofar)) > 0L)
     else {
-      pathSoFarElts <- explodePath(pathsofar)
-      pathElts <- explodePath(path)
+      pathSoFarElts <- explode(pathsofar)
+      pathElts <- explode(path)
       npsfe <- length(pathSoFarElts)
       npe <- length(pathElts)
       if (npe > npsfe) {
@@ -2072,9 +2068,16 @@ makeContext.forcedgrob <- function(x) x
 
 makeContent.forcedgrob <- function(x) x
 
-# NOTE that things will get much trickier if allow
-# grid.force(gPath = ...)
-grid.force <- function(redraw=TRUE) {
+grid.force <- function(x, ...) {
+    UseMethod("grid.force")
+}
+
+grid.force.default <- function(x, redraw = FALSE, ...) {
+    if (!missing(x)) 
+        stop("Invalid force target")
+    # Must upViewport(0) otherwise you risk running the display
+    # list from something other than the ROOT viewport
+    oldcontext <- upViewport(0, recording=FALSE)
     dl.index <- grid.Call(L_getDLindex)
     if (dl.index > 1) {
         # Start at 2 because first element is viewport[ROOT]
@@ -2088,6 +2091,59 @@ grid.force <- function(redraw=TRUE) {
     if (redraw) {
         draw.all()
     }
+    # Try to go back to original context
+    if (length(oldcontext)) {
+        seekViewport(oldcontext, recording=FALSE)
+    }
+}
+
+grid.force.grob <- function(x, draw = FALSE, ...) {
+    fx <- force(x)
+    if (draw)
+        grid.draw(fx)
+    fx
+}
+
+grid.force.character <- function(x, ...) {
+    grid.force(gPath(x), ...)
+}
+
+grid.force.gPath <- function(x, 
+                             strict=FALSE, grep=FALSE, global=FALSE,
+                             redraw = FALSE, ...) {
+    # Use viewports=TRUE so that get vpPaths in result
+    paths <- grid.grep(x, viewports = TRUE,
+                       strict = strict, grep = grep, global = global)
+    f <- function(path, ...) {
+        # Only force grobs or gTrees
+        # (might have vpPaths because we said grid.grep(viewports=TRUE))
+        if (!inherits(path, "gPath")) return()
+        target <- grid.get(path, strict=TRUE)
+        vpPath <- attr(path, "vpPath")
+        depth <- 0
+        if (nchar(vpPath))
+            depth <- downViewport(vpPath, recording=FALSE)
+        forcedgrob <- force(target, ...)
+        if (depth > 0)
+            upViewport(depth, recording=FALSE)
+        grid.set(path, strict=TRUE, forcedgrob)
+    }
+    if (length(paths)) {
+        # To get the force happening in the correct context ...
+        oldcontext <- upViewport(0, recording=FALSE)
+        if (global) {
+            lapply(paths, f, ...)
+        } else {
+            f(paths, ...)
+        }
+        if (redraw) {
+            draw.all()
+        }
+        # Try to go back to original context
+        if (length(oldcontext))
+            seekViewport(oldcontext, recording=FALSE)
+    } 
+    invisible()
 }
 
 revert <- function(x) {
@@ -2109,7 +2165,13 @@ revert.forcedgrob <- function(x) {
 
 # NOTE that things will get much trickier if allow
 # grid.revert(gPath = ...)
-grid.revert <- function(redraw=TRUE) {
+grid.revert <- function(x, ...) {
+    UseMethod("grid.revert")
+}
+
+grid.revert.default <- function(x, redraw=FALSE, ...) {
+    if (!missing(x)) 
+        stop("Invalid revert target")
     dl.index <- grid.Call(L_getDLindex)
     if (dl.index > 1) {
         # Start at 2 because first element is viewport[ROOT]
@@ -2123,6 +2185,39 @@ grid.revert <- function(redraw=TRUE) {
     if (redraw) {
         draw.all()
     }
+}
+
+grid.revert.grob <- function(x, draw=FALSE, ...) {
+    rx <- revert(x)
+    if (draw) {
+        grid.draw(x)
+    }
+    rx
+}
+
+grid.revert.character <- function(x, ...) {
+    grid.revert(gPath(x), ...)
+}
+
+grid.revert.gPath <- function(x, 
+                              strict=FALSE, grep=FALSE, global=FALSE,
+                              redraw = FALSE, ...) {
+    paths <- grid.grep(x, strict = strict, grep = grep, global = global)
+    f <- function(path, ...) {
+        grid.set(path, strict=TRUE,
+                 revert(grid.get(path, strict=TRUE), ...))
+    }
+    if (length(paths)) {
+        if (global) {
+            lapply(paths, f, ...)
+        } else {
+            f(paths, ...)
+        }
+        if (redraw) {
+            draw.all()
+        }
+    } 
+    invisible()
 }
 
 ###############################

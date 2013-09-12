@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-11 r63910) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -213,8 +213,8 @@ See help("Deprecated")
 > 
 > ### Name: Querying the Viewport Tree
 > ### Title: Get the Current Grid Viewport (Tree)
-> ### Aliases: current.viewport current.vpTree current.vpPath
-> ###   current.transform
+> ### Aliases: current.viewport current.parent current.vpTree current.vpPath
+> ###   current.transform current.rotation
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -239,6 +239,53 @@ viewport[C]
 > current.vpTree(all=FALSE)
 viewport[C]->(viewport[D]) 
 > popViewport(0)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("depth")
+> ### * depth
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: depth
+> ### Title: Determine the number of levels in an object.
+> ### Aliases: depth depth.viewport depth.path
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> vp <- viewport()
+> depth(vp)
+[1] 1
+> depth(vpStack(vp, vp))
+[1] 2
+> depth(vpList(vpStack(vp, vp), vp))
+[1] 1
+> depth(vpPath("vp"))
+[1] 1
+> depth(vpPath("vp1", "vp2"))
+[1] 2
+> 
+> 
+> 
+> cleanEx()
+> nameEx("explode")
+> ### * explode
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: explode
+> ### Title: Explode a path into its components.
+> ### Aliases: explode explode.character explode.path
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> explode("vp1::vp2")
+[1] "vp1" "vp2"
+> explode(vpPath("vp1", "vp2"))
+[1] "vp1" "vp2"
 > 
 > 
 > 
@@ -388,7 +435,9 @@ $lty
 > ### ** Examples
 > 
 > grid.newpage()
-> grid.rect(width=.5, height=.5, gp=gpar(fill="grey"))
+> grid.rect(width=.4, height=.4, x=.25, y=.75, gp=gpar(fill="black"), name="r1")
+> grid.rect(width=.4, height=.4, x=.5, y=.5, gp=gpar(fill="grey"), name="r2")
+> grid.rect(width=.4, height=.4, x=.75, y=.25, gp=gpar(fill="white"), name="r3")
 > grid.DLapply(function(x) { if (is.grob(x)) x$gp <- gpar(); x })
 NULL
 > grid.refresh()
@@ -764,28 +813,78 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > 
 > ### Name: grid.force
 > ### Title: Force a grob into its components
-> ### Aliases: grid.force grid.revert
+> ### Aliases: grid.force grid.force.default grid.force.gPath grid.force.grob
+> ###   grid.revert grid.revert.gPath grid.revert.grob
 > ### Keywords: dplot
 > 
 > ### ** Examples
 > 
 > grid.newpage()
 > pushViewport(viewport(width=.5, height=.5))
-> grid.xaxis()
+> # Draw xaxis
+> grid.xaxis(name="xax")
 > grid.ls()
-GRID.text.248
-GRID.xaxis.249
+GRID.text.247
+xax
+> # Force xaxis
 > grid.force()
 > grid.ls()
-GRID.text.248
-GRID.xaxis.249
+GRID.text.247
+xax
   major
   ticks
   labels
+> # Revert xaxis
 > grid.revert()
 > grid.ls()
-GRID.text.248
-GRID.xaxis.249
+GRID.text.247
+xax
+> # Draw and force yaxis
+> grid.force(yaxisGrob(), draw=TRUE)
+forcedgrob[GRID.yaxis.248] 
+> grid.ls()
+GRID.text.247
+xax
+GRID.yaxis.248
+  major
+  ticks
+  labels
+> # Revert yaxis
+> grid.revert()
+> grid.ls()
+GRID.text.247
+xax
+GRID.yaxis.248
+> # Force JUST xaxis
+> grid.force("xax")
+> grid.ls()
+GRID.text.247
+xax
+  major
+  ticks
+  labels
+GRID.yaxis.248
+> # Force ALL
+> grid.force()
+> grid.ls()
+GRID.text.247
+xax
+  major
+  ticks
+  labels
+GRID.yaxis.248
+  major
+  ticks
+  labels
+> # Revert JUST xaxis
+> grid.revert("xax")
+> grid.ls()
+GRID.text.247
+xax
+GRID.yaxis.248
+  major
+  ticks
+  labels
 > 
 > 
 > 
@@ -905,6 +1004,81 @@ NULL
 > grab <- grid.grab()
 > grid.newpage()
 > grid.draw(grab)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grid.grep")
+> ### * grid.grep
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grid.grep
+> ### Title: Search for grobs
+> ### Aliases: grid.grep
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> # A gTree, called "grandparent", with child gTree,
+> # called "parent", with childrenvp vpStack (vp2 within vp1)
+> # and child grob, called "child", with vp vpPath (down to vp2)
+> sampleGTree <- gTree(name="grandparent",
++                      children=gList(gTree(name="parent",
++                           children=gList(grob(name="child", vp="vp1::vp2")),
++                           childrenvp=vpStack(viewport(name="vp1"),
++                                              viewport(name="vp2")))))
+> # Searching for grobs
+> grid.grep("parent", sampleGTree)
+grandparent::parent 
+> grid.grep("parent", sampleGTree, strict=TRUE)
+character(0)
+> grid.grep("grandparent", sampleGTree, strict=TRUE)
+grandparent 
+> grid.grep("grandparent::parent", sampleGTree)
+grandparent::parent 
+> grid.grep("parent::child", sampleGTree)
+grandparent::parent::child 
+> grid.grep("[a-z]", sampleGTree, grep=TRUE)
+grandparent 
+> grid.grep("[a-z]", sampleGTree, grep=TRUE, global=TRUE)
+[[1]]
+grandparent 
+
+[[2]]
+grandparent::parent 
+
+[[3]]
+grandparent::parent::child 
+
+> # Searching for viewports
+> grid.grep("vp1", sampleGTree, viewports=TRUE)
+vp1 
+> grid.grep("vp2", sampleGTree, viewports=TRUE)
+vp1::vp2 
+> grid.grep("vp", sampleGTree, viewports=TRUE, grep=TRUE)
+vp1 
+> grid.grep("vp2", sampleGTree, viewports=TRUE, strict=TRUE)
+character(0)
+> grid.grep("vp1::vp2", sampleGTree, viewports=TRUE)
+vp1::vp2 
+> # Searching for both
+> grid.grep("[a-z]", sampleGTree, viewports=TRUE, grep=TRUE, global=TRUE)
+[[1]]
+grandparent 
+
+[[2]]
+grandparent::parent 
+
+[[3]]
+vp1 
+
+[[4]]
+vp1::vp2 
+
+[[5]]
+grandparent::parent::child 
+
 > 
 > 
 > 
@@ -1547,6 +1721,35 @@ List of 6
 > 
 > 
 > cleanEx()
+> nameEx("resolveRasterSize")
+> ### * resolveRasterSize
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: resolveRasterSize
+> ### Title: Utility function to resolve the size of a raster grob
+> ### Aliases: resolveRasterSize
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> # Square raster
+> rg <- rasterGrob(matrix(0))
+> # Fill the complete page (if page is square)
+> grid.newpage()
+> resolveRasterSize(rg)$height
+[1] 6.8inches
+> grid.draw(rg)
+> # Forced to fit tall thin region
+> grid.newpage()
+> pushViewport(viewport(width=.1))
+> resolveRasterSize(rg)$height
+[1] 0.68inches
+> grid.draw(rg)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("showGrob")
 > ### * showGrob
 > 
@@ -1962,7 +2165,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.159 0.017 1.181 0 0 
+Time elapsed:  1.324 0.016 1.34 0 0 
 > grDevices::dev.off()
 null device 
           1 
