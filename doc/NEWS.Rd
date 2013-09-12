@@ -112,7 +112,7 @@
       backticks and single quotes better in several instances, including
       in \samp{\\code} and \samp{\\samp} expressions.
 
-      \code{utils::modifyList()} gets a new argument \code{keep.null}
+      \item \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
     }
