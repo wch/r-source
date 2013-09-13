@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -56,16 +56,16 @@ require(package, lib.loc = NULL, quietly = FALSE,
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
-  package with name \code{package}.  \code{require} is designed for use
+  package with name \code{package} and put it on the search list.
+  \code{require} is designed for use
   inside other functions; it returns \code{FALSE} and gives a warning
   (rather than an error as \code{library()} does by default) if the
   package does not exist.  Both functions check and update the list of
   currently loaded packages and do not reload a package which is already
-  loaded.  (Furthermore, if the package has a namespace and a name
-  space of that name is already loaded, they work from the existing
-  namespace rather than reloading from the file system.  If you want to
+  loaded.  (If you want to
   reload such a package, call \code{\link{detach}(unload = TRUE)} or
-  \code{\link{unloadNamespace}} first.)
+  \code{\link{unloadNamespace}} first.)  If you want to load a package
+  without putting it on the search list, use \code{\link{requireNamespace}}.
 
   To suppress messages during the loading of packages use
   \code{\link{suppressPackageStartupMessages}}: this will suppress all
@@ -154,12 +154,13 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{\link{.libPaths}}, \code{\link{.packages}}.
 
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
-  \code{\link{objects}}, \code{\link{autoload}},
+  \code{\link{objects}}, \code{\link{autoload}}, 
+  \code{\link{requireNamespace}},
   \code{\link{library.dynam}}, \code{\link{data}},
   \code{\link{install.packages}} and
   \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
-
+  
   The initial set of packages attached is set by
   \code{\link{options}(defaultPackages=)}: see also \code{\link{Startup}}.
 }
