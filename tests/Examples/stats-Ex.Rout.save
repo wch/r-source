@@ -2453,7 +2453,7 @@ Frequency = 1
 > 
 > ### Name: anova.glm
 > ### Title: Analysis of Deviance for Generalized Linear Model Fits
-> ### Aliases: anova.glm anova.glmlist
+> ### Aliases: anova.glm
 > ### Keywords: models regression
 > 
 > ### ** Examples
