@@ -277,7 +277,7 @@ help.search <-
 	    ## R 1.8.0.	 If they are missing, we really cannot use
 	    ## the package (as library() will refuse to load it).
 	    ## We always load hsearch.rds to establish the format,
-	    ## sometimes vignettes.rds.
+	    ## sometimes vignette.rds.
 
 	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
 		hDB <- readRDS(hs_file)

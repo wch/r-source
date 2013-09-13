@@ -6456,7 +6456,7 @@ function(dir)
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than new-style 'vignettes'.
     ## Currently only works for Sweave vignettes: eventually, we should
-    ## be able to use build/vignettes.rds for determining *all* package
+    ## be able to use build/vignette.rds for determining *all* package
     ## vignettes.
 
     pattern <- vignetteEngine("Sweave")$pattern
