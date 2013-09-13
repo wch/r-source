@@ -6469,6 +6469,12 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for non-Sweave vignettes (as indicated by the presense of a
+    ## 'VignetteBuilder' field in DESCRIPTION) without
+    ## 'build/vignette.rds'.
+    if(!is.na(meta["VignetteBuilder"]) &&
+       !file.exists(file.path(dir, "build", "vignette.rds")))
+        out$missing_vignette_index <- TRUE
 
     out
 }
@@ -6580,6 +6586,9 @@ function(x, ...)
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$missing_vignette_index)) {
+          "Package has non-Sweave vignettes but no prebuilt vignette index."
       }
       )
 }
