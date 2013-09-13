@@ -321,7 +321,8 @@ engineMatches <- function(regengine, vigengine) {
 ### each of them, and the name of the directory which contains them.
 
 pkgVignettes <-
-function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = FALSE, check = FALSE)
+function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
+         source = FALSE, check = FALSE)
 {
     ## Argument handling.
     if(!missing(package)) {
@@ -361,7 +362,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
 		docsT <- allFiles[idxs]
 		matchedPattern[idxs] <- TRUE
 		keep <- logical(length(docsT))
-		for (i in seq_along(docsT)) 
+		for (i in seq_along(docsT))
 		    keep[i] <- engineMatches(name, getVignetteEngine(docsT[i]))
 		idxs  <- idxs[keep]
                 nidxs <- length(idxs)
@@ -380,11 +381,14 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
                 }
             }
         }
-	if (check && any(matchedPattern)) 
-	    warning("Files named as vignettes but with no recognized vignette engine:\n", 
-	            paste("  ", substring(allFiles[matchedPattern], nchar(dir) + 2), collapse="\n"))
+	if (check && any(matchedPattern)) {
+            files <- substring(allFiles[matchedPattern], nchar(dir) + 2)
+            msg <- c("Files named as vignettes but with no recognized vignette engine:",
+                     paste("  ", sQuote(files)),
+                     "(Is a VignetteBuilder field missing?)")
+        } else msg <- character()
     }
-    # In 3.0.x, we might see the same vignette in both vignettes and inst/doc.  Remove the inst/doc one
+    ## In 3.0.x, we might see the same vignette in both vignettes and inst/doc.  Remove the inst/doc one
     if (length(docdirs) > 1) {
 	inVignettes <- docdirs[1]  == substr(docs, 1L, nchar(docdirs[1]))
 	basenames <- basename(docs)
@@ -401,7 +405,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE, source = 
     stopifnot(length(patterns) == length(docs))
     stopifnot(!any(duplicated(docs)))
 
-    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, dir=docdirs[1L], pkgdir=dir)
+    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, dir=docdirs[1L], pkgdir=dir, msg = msg)
 
     if (output) {
         outputs <- character(length(docs))
@@ -440,6 +444,8 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 {
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc, check = TRUE)
     if(is.null(vigns)) return(invisible())
+    if(length(vigns$msg))
+        warning(paste(msg, collapse = "\n"), domain = NA)
 
     ## 3.0.x:  We'll only build the ones in the vigns$dir directory.  In later versions
     ## there won't be any others

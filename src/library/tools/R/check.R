@@ -3383,8 +3383,11 @@ setRlibs <-
         res <- .check_package_depends(pkgdir, R_check_force_suggests)
         if(any(sapply(res, length) > 0L)) {
             out <- format(res)
-            if(!all(names(res) %in% c("suggests_but_not_installed",
-                                      "enhances_but_not_installed"))) {
+            allowed <- c("suggests_but_not_installed",
+                         "enhances_but_not_installed",
+                         "many_depends",
+                         if(!check_incoming) "bad_engine")
+            if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
                 if(length(res$suggested_but_not_installed))
