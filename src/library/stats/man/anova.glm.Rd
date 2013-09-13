@@ -1,6 +1,6 @@
 % File src/library/stats/man/anova.glm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anova.glm}
@@ -61,11 +61,10 @@
   An object of class \code{"anova"} inheriting from class \code{"data.frame"}.
 }
 \section{Warning}{
-  The comparison between two or more models by \code{anova} or
-  \code{anova.glmlist} will only be valid if they
+  The comparison between two or more models will only be valid if they
   are fitted to the same dataset. This may be a problem if there are
   missing values and \R's default of \code{na.action = na.omit} is used,
-  and \code{anova.glmlist} will detect this with an error.
+  and \code{anova} will detect this with an error.
 }
 \references{
   Hastie, T. J. and Pregibon, D. (1992)
