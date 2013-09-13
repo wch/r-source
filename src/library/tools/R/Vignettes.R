@@ -353,6 +353,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdirs, all.files = FALSE, full.names = TRUE)
     matchedPattern <- rep(FALSE, length(allFiles))
+    msg <- character()
     if (length(allFiles) > 0L) {
         for (name in names(engineList)) {
             engine <- engineList[[name]]
@@ -386,7 +387,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
             msg <- c("Files named as vignettes but with no recognized vignette engine:",
                      paste("  ", sQuote(files)),
                      "(Is a VignetteBuilder field missing?)")
-        } else msg <- character()
+        }
     }
     ## In 3.0.x, we might see the same vignette in both vignettes and inst/doc.  Remove the inst/doc one
     if (length(docdirs) > 1) {
