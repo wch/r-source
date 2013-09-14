@@ -731,9 +731,9 @@ setRlibs <-
             if (lt <- length(topfiles)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         if(lt > 1L) "Non-standard files found at top level:\n"
-                         else "Non-standard file found at top level:\n" )
+                printLog(Log, ## dirs are files, but maybe not on Windows
+                         if(lt > 1L) "Non-standard files/directories found at top level:\n"
+                         else "Non-standard file/directory found at top level:\n" )
                 msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
                                indent = 2L, exdent = 2L)
                 printLog(Log, paste(c(msg, ""), collapse="\n"))
