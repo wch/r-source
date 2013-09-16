@@ -75,7 +75,10 @@ getRversion()
   access the integers of a version use two indices: see the examples.
 }
 \seealso{
-  \code{\link{compareVersion}}
+  \code{\link{compareVersion}};
+  \code{\link{packageVersion}} for the version of a specific \R package.
+  \code{\link{R.version}} etc for the version of \R (and the information
+  underlying \code{getRversion()}).
 }
 \examples{
 x <- package_version(c("1.2-4", "1.2-3", "2.1"))
@@ -100,6 +103,6 @@ x[[3]] <- "2.2.3"; x
 x <- c(x, package_version("0.0"))
 is.na(x)[4] <- TRUE
 stopifnot(identical(is.na(x), c(rep(FALSE,3), TRUE)),
-          anyNA(x))
+	  anyNA(x))
 }
 \keyword{utilities}
