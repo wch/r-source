@@ -377,8 +377,13 @@ get_exclude_patterns <- function()
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    file.copy(c(vigns$docs, vigns$outputs, unlist(vigns$sources)), doc_dir)
-                    unlink(c(vigns$outputs, unlist(vigns$sources)))
+		    # Copy vignette files from vignettes directory
+		    vign_files <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
+		    # not those already in inst/doc
+		    vign_files <- vign_files[substr(vign_files, 1, nchar(vigns$dir)) == vigns$dir]
+                    file.copy(vign_files, doc_dir)
+		    # Remove product files from vignettes
+		    unlink(setdiff(vign_files, vigns$docs))
                     extras_file <- file.path("vignettes", ".install_extras")
                     if (file.exists(extras_file)) {
                         extras <- readLines(extras_file, warn = FALSE)
