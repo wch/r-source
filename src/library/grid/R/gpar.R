@@ -44,8 +44,8 @@ validGP <- function(gpars) {
   }
   # Check a gpar is numeric and not NULL
   numnotnull <- function(gparname) {
-    if (!is.na(match(gparname, names(gpars)))) {
-      if (is.null(gpars[[gparname]]))
+    if (!is.na(match(gparname, nmgp))) {
+      if (is.null(gpars[[gparname]]))## remove it
         gpars[[gparname]] <<- NULL
       else {
         check.length(gparname)
@@ -53,6 +53,7 @@ validGP <- function(gpars) {
       }
     }
   }
+  nmgp <- names(gpars)
   # fontsize, lineheight, cex, lwd should be numeric and not NULL
   numnotnull("fontsize")
   numnotnull("lineheight")
@@ -60,20 +61,19 @@ validGP <- function(gpars) {
   numnotnull("lwd")
   numnotnull("lex")
   # gamma defunct in 2.7.0
-  if ("gamma" %in% names(gpars)) {
+  if ("gamma" %in% nmgp) {
     warning("'gamma' 'gpar' element is defunct")
     gpars$gamma <- NULL
   }
-  numnotnull("alpha")
   # col and fill are converted in C code
   # BUT still want to check length > 0
-  if (!is.na(match("col", names(gpars)))) {
+  if (!is.na(match("col", nmgp))) {
       if (is.null(gpars$col))
           gpars$col <- NULL
       else
           check.length("col")
   }
-  if (!is.na(match("fill", names(gpars)))) {
+  if (!is.na(match("fill", nmgp))) {
       if (is.null(gpars$fill))
           gpars$fill <- NULL
       else
@@ -81,19 +81,19 @@ validGP <- function(gpars) {
   }
   # lty converted in C code
   # BUT still want to check for NULL and check length > 0
-  if (!is.na(match("lty", names(gpars)))) {
+  if (!is.na(match("lty", nmgp))) {
     if (is.null(gpars$lty))
       gpars$lty <- NULL
     else
       check.length("lty")
   }
-  if (!is.na(match("lineend", names(gpars)))) {
+  if (!is.na(match("lineend", nmgp))) {
     if (is.null(gpars$lineend))
       gpars$lineend <- NULL
     else
       check.length("lineend")
   }
-  if (!is.na(match("linejoin", names(gpars)))) {
+  if (!is.na(match("linejoin", nmgp))) {
     if (is.null(gpars$linejoin))
       gpars$linejoin <- NULL
     else
@@ -101,17 +101,18 @@ validGP <- function(gpars) {
   }
   # linemitre should be larger than 1
   numnotnull("linemitre")
-  if (!is.na(match("linemitre", names(gpars)))) {
+  if (!is.na(match("linemitre", nmgp))) {
     if (any(gpars$linemitre < 1))
       stop("invalid 'linemitre' value")
   }
   # alpha should be 0 to 1
-  if (!is.na(match("alpha", names(gpars)))) {
+  numnotnull("alpha")
+  if (!is.na(match("alpha", nmgp))) {
     if (any(gpars$alpha < 0 || gpars$alpha > 1))
       stop("invalid 'alpha' value")
   }
-  # font should be integer and not NULL
-  if (!is.na(match("font", names(gpars)))) {
+  # font should be integer and not null
+  if (!is.na(match("font", nmgp))) {
     if (is.null(gpars$font))
       gpars$font <- NULL
     else {
@@ -120,7 +121,7 @@ validGP <- function(gpars) {
     }
   }
   # fontfamily should be character
-  if (!is.na(match("fontfamily", names(gpars)))) {
+  if (!is.na(match("fontfamily", nmgp))) {
     if (is.null(gpars$fontfamily))
       gpars$fontfamily <- NULL
     else {
@@ -131,34 +132,30 @@ validGP <- function(gpars) {
   # fontface can be character or integer;  map character to integer
   # store value in font
   # Illegal to specify both font and fontface
-  if (!is.na(match("fontface", names(gpars)))) {
-    if (!is.na(match("font", names(gpars))))
+  if (!is.na(match("fontface", nmgp))) {
+    if (!is.na(match("font", nmgp)))
       stop("must specify only one of 'font' and 'fontface'")
-    if (is.null(gpars$fontface))
-      gpars$font <- NULL
-    else {
-      check.length("fontface")
-      if (is.numeric(gpars$fontface))
-        gpars$font <- as.integer(gpars$fontface)
-      else {
-        temp.char <- as.character(gpars$fontface)
-        temp.num <- integer(length(temp.char))
-        for (i in seq_along(temp.char))
-          temp.num[i] <- switch(temp.char[i],
-                                plain=1,
-                                italic=3,
-                                oblique=3,
-                                bold=2,
-                                bold.italic=4,
-                                symbol=5,
-                                # These are Hershey variants
-                                cyrillic=5,
-                                cyrillic.oblique=6,
-                                EUC=7,
-                                stop("invalid font face"))
-        gpars$font <- as.integer(temp.num)
-      }
-    }
+    gpars$font <-
+	if (is.null(gpars$fontface)) NULL # remove it
+	else {
+	    check.length("fontface")
+	    if (is.numeric(gpars$fontface))
+		as.integer(gpars$fontface)
+	    else
+		vapply(as.character(gpars$fontface),
+		       function(ch) # returns integer
+		       switch(ch,
+			      plain = 1L,
+			      bold  = 2L,
+			      italic=, oblique = 3L,
+			      bold.italic = 4L,
+			      symbol= 5L,
+					# These are Hershey variants
+			      cyrillic=5L,
+			      cyrillic.oblique=6L,
+			      EUC   = 7L,
+			      stop("invalid fontface ", ch)), 0L)
+	}
   }
   gpars
 }
