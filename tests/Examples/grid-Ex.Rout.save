@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-09-11 r63910) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-09-16 r63937) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -159,53 +159,6 @@ attr(,"class")
 > 
 > 
 > cleanEx()
-> nameEx("convertNative")
-> ### * convertNative
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: convertNative
-> ### Title: Convert a Unit Object to Native units
-> ### Aliases: convertNative
-> ### Keywords: dplot
-> 
-> ### ** Examples
-> 
-> grid.newpage()
-> pushViewport(viewport(width=unit(.5, "npc"),
-+                        height=unit(.5, "npc")))
-> grid.rect()
-> w <- convertNative(unit(1, "inches"))
-Warning: 'convertNative' is deprecated.
-Use 'convertUnit' instead.
-See help("Deprecated")
-> h <- convertNative(unit(1, "inches"), "y")
-Warning: 'convertNative' is deprecated.
-Use 'convertUnit' instead.
-See help("Deprecated")
-> # This rectangle starts off life as 1in square, but if you
-> # resize the device it will no longer be 1in square
-> grid.rect(width=unit(w, "native"), height=unit(h, "native"),
-+           gp=gpar(col="red"))
-> popViewport(1)
-> 
-> # How to use grid.convert(), etc instead
-> convertNative(unit(1, "inches")) ==
-+   convertX(unit(1, "inches"), "native", valueOnly=TRUE)
-Warning: 'convertNative' is deprecated.
-Use 'convertUnit' instead.
-See help("Deprecated")
-[1] TRUE
-> convertNative(unit(1, "inches"), "y", "dimension") ==
-+   convertHeight(unit(1, "inches"), "native", valueOnly=TRUE)
-Warning: 'convertNative' is deprecated.
-Use 'convertUnit' instead.
-See help("Deprecated")
-[1] TRUE
-> 
-> 
-> 
-> cleanEx()
 > nameEx("current.viewport")
 > ### * current.viewport
 > 
@@ -228,12 +181,12 @@ See help("Deprecated")
 +   just="left", name="C"))
 > pushViewport(viewport(width=0.8, height=0.8, name="D"))
 > current.vpPath()
-GRID.VP.67::A::C::D 
+GRID.VP.65::A::C::D 
 > upViewport(1)
 > current.vpPath()
-GRID.VP.67::A::C 
+GRID.VP.65::A::C 
 > current.vpTree()
-viewport[ROOT]->(viewport[GRID.VP.67]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
+viewport[ROOT]->(viewport[GRID.VP.65]->(viewport[A]->(viewport[B], viewport[C]->(viewport[D])))) 
 > current.viewport()
 viewport[C] 
 > current.vpTree(all=FALSE)
@@ -341,8 +294,8 @@ g1::g2
 > 
 > grid.grill()
 > getNames()
-[1] "GRID.text.168"     "GRID.rect.169"     "GRID.rect.170"    
-[4] "GRID.segments.171" "GRID.segments.172"
+[1] "GRID.text.165"     "GRID.rect.166"     "GRID.rect.167"    
+[4] "GRID.segments.168" "GRID.segments.169"
 > 
 > 
 > 
@@ -445,89 +398,6 @@ NULL
 > 
 > 
 > cleanEx()
-> nameEx("grid.arrows")
-> ### * grid.arrows
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: grid.arrows
-> ### Title: Draw Arrows
-> ### Aliases: grid.arrows arrowsGrob
-> ### Keywords: dplot
-> 
-> ### ** Examples
-> 
-> ## Not run: 
-> ##D ## to avoid lots of deprecation warnings
-> ##D pushViewport(viewport(layout=grid.layout(2, 4)))
-> ##D pushViewport(viewport(layout.pos.col=1,
-> ##D                        layout.pos.row=1))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D grid.arrows()
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=2,
-> ##D                        layout.pos.row=1))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D grid.arrows(angle=15, type="closed")
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=3,
-> ##D                        layout.pos.row=1))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D grid.arrows(angle=5, length=unit(0.1, "npc"),
-> ##D             type="closed", gp=gpar(fill="white"))
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=4,
-> ##D                        layout.pos.row=1))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D grid.arrows(x=unit(0:80/100, "npc"),
-> ##D             y=unit(1 - (0:80/100)^2, "npc"))
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=1,
-> ##D                        layout.pos.row=2))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D grid.arrows(ends="both")
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=2,
-> ##D                        layout.pos.row=2))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D # Recycling arguments
-> ##D grid.arrows(x=unit(1:10/11, "npc"), y=unit(1:3/4, "npc"))
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=3,
-> ##D                        layout.pos.row=2))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D # Drawing arrows on a segments grob
-> ##D gs <- segmentsGrob(x0=unit(1:4/5, "npc"),
-> ##D                    x1=unit(1:4/5, "npc"))
-> ##D grid.arrows(grob=gs, length=unit(0.1, "npc"),
-> ##D             type="closed", gp=gpar(fill="white"))
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=4,
-> ##D                        layout.pos.row=2))
-> ##D grid.rect(gp=gpar(col="grey"))
-> ##D # Arrows on a lines grob
-> ##D # Name these because going to grid.edit them later
-> ##D gl <- linesGrob(name="curve", x=unit(0:80/100, "npc"),
-> ##D                 y=unit((0:80/100)^2, "npc"))
-> ##D grid.arrows(name="arrowOnLine", grob=gl, angle=15, type="closed",
-> ##D             gp=gpar(fill="black"))
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=1,
-> ##D                        layout.pos.row=2))
-> ##D grid.move.to(x=0.5, y=0.8)
-> ##D popViewport()
-> ##D pushViewport(viewport(layout.pos.col=4,
-> ##D                        layout.pos.row=1))
-> ##D # Arrows on a line.to grob
-> ##D glt <- lineToGrob(x=0.5, y=0.2, gp=gpar(lwd=3))
-> ##D grid.arrows(grob=glt, ends="first", gp=gpar(lwd=3))
-> ##D popViewport(2)
-> ##D grid.edit(gPath("arrowOnLine", "curve"), y=unit((0:80/100)^3, "npc"))
-> ## End(Not run)
-> 
-> 
-> 
-> cleanEx()
 > nameEx("grid.bezier")
 > ### * grid.bezier
 > 
@@ -618,9 +488,7 @@ NULL
 > 
 > ### Name: grid.convert
 > ### Title: Convert Between Different grid Coordinate Systems
-> ### Aliases: grid.convert grid.convertX grid.convertY grid.convertWidth
-> ###   grid.convertHeight convertUnit convertX convertY convertWidth
-> ###   convertHeight
+> ### Aliases: convertUnit convertX convertY convertWidth convertHeight
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -824,12 +692,12 @@ Error in editDLfromGPath(gPath, specs, strict, grep, global, redraw) :
 > # Draw xaxis
 > grid.xaxis(name="xax")
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
 > # Force xaxis
 > grid.force()
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
   major
   ticks
@@ -837,51 +705,51 @@ xax
 > # Revert xaxis
 > grid.revert()
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
 > # Draw and force yaxis
 > grid.force(yaxisGrob(), draw=TRUE)
-forcedgrob[GRID.yaxis.248] 
+forcedgrob[GRID.yaxis.245] 
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
-GRID.yaxis.248
+GRID.yaxis.245
   major
   ticks
   labels
 > # Revert yaxis
 > grid.revert()
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
-GRID.yaxis.248
+GRID.yaxis.245
 > # Force JUST xaxis
 > grid.force("xax")
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
   major
   ticks
   labels
-GRID.yaxis.248
+GRID.yaxis.245
 > # Force ALL
 > grid.force()
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
   major
   ticks
   labels
-GRID.yaxis.248
+GRID.yaxis.245
   major
   ticks
   labels
 > # Revert JUST xaxis
 > grid.revert("xax")
 > grid.ls()
-GRID.text.247
+GRID.text.244
 xax
-GRID.yaxis.248
+GRID.yaxis.245
   major
   ticks
   labels
@@ -2165,7 +2033,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.324 0.016 1.34 0 0 
+Time elapsed:  1.34 0.016 1.356 0 0 
 > grDevices::dev.off()
 null device 
           1 

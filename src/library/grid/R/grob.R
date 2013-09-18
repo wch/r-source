@@ -115,13 +115,7 @@ grob <- function(..., name=NULL, gp=NULL, vp=NULL, cl=NULL) {
   validGrob(g)
 }
 
-grid.grob <- function(list.struct, cl=NULL, draw=TRUE) {
-  warning("grid.grob() is deprecated; please use grob() instead")
-  g <- do.call("grob", c(list.struct, cl=cl))
-  if (draw)
-    grid.draw(g)
-  invisible(g)
-}
+grid.grob <- function(list.struct, cl=NULL, draw=TRUE) .Defunct("grob")
 
 is.grob <- function(x) {
   inherits(x, "grob")
@@ -1942,8 +1936,7 @@ draw.all <- function() {
 }
 
 draw.details <- function(x, recording) {
-    .Deprecated("drawDetails")
-    UseMethod("drawDetails")
+    .Defunct("drawDetails")
 }
 
 preDrawDetails <- function(x) {

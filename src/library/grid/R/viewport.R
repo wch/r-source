@@ -199,7 +199,7 @@ viewport.layout <- function(vp) {
 }
 
 viewport.transform <- function(vp) {
-  .Deprecated("current.transform")
+    .Defunct("current.transform")
 }
 
 ####################

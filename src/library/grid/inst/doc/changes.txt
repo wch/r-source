@@ -22,7 +22,13 @@ Changes from grid_3.0.* to grid_3.1.0:
 
 7.  New resolveRasterSize() function.
 
-8   Made 'vp' argument of current.viewport() defunct.
+8.  Made 'vp' argument of current.viewport() defunct.
+
+9.  Deprecated functions made defunct: 
+    grid.grob, grid.arrows, arrowsGrob, grid.convert, grid.convertX,
+    grid.convertY, grid.convertWidth, grid.convertHeight,
+    grid.collection, push.viewport, pop.viewport, viewport.transform,
+    draw.details, convertNative.
 
 
 Changes from grid_3.0.0 to grid_3.0.1:

@@ -46,8 +46,7 @@ valid.unit <- function(x, units, data) {
 grid.convert <- function(x, unitTo, axisFrom="x", typeFrom="location",
                          axisTo=axisFrom, typeTo=typeFrom,
                          valueOnly=FALSE) {
-  .Deprecated("convertUnit")
-  convertUnit(x, unitTo, axisFrom, typeFrom, axisTo, typeTo, valueOnly)
+    .Defunct("convertUnit")
 }
 
 convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
@@ -70,8 +69,7 @@ convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
 }
 
 grid.convertX <- function(x, unitTo, valueOnly=FALSE) {
-  .Deprecated("convertX")
-  convertX(x, unitTo, valueOnly)
+  .Defunct("convertX")
 }
 
 convertX <- function(x, unitTo, valueOnly=FALSE) {
@@ -80,8 +78,7 @@ convertX <- function(x, unitTo, valueOnly=FALSE) {
 }
 
 grid.convertY <- function(x, unitTo, valueOnly=FALSE) {
-  .Deprecated("convertY")
-  convertY(x, unitTo, valueOnly)
+  .Defunct("convertY")
 }
 
 convertY <- function(x, unitTo, valueOnly=FALSE) {
@@ -90,8 +87,7 @@ convertY <- function(x, unitTo, valueOnly=FALSE) {
 }
 
 grid.convertWidth <- function(x, unitTo, valueOnly=FALSE) {
-  .Deprecated("convertWidth")
-  convertWidth(x, unitTo, valueOnly)
+  .Defunct("convertWidth")
 }
 
 convertWidth <- function(x, unitTo, valueOnly=FALSE) {
@@ -100,8 +96,7 @@ convertWidth <- function(x, unitTo, valueOnly=FALSE) {
 }
 
 grid.convertHeight <- function(x, unitTo, valueOnly=FALSE) {
-  .Deprecated("convertHeight")
-  convertHeight(x, unitTo, valueOnly)
+  .Defunct("convertHeight")
 }
 
 convertHeight <- function(x, unitTo, valueOnly=FALSE) {
@@ -110,9 +105,7 @@ convertHeight <- function(x, unitTo, valueOnly=FALSE) {
 }
 
 convertNative <- function(unit, dimension="x", type="location") {
-  .Deprecated("convertUnit")
-  convertUnit(unit, "native", dimension, type, dimension, type,
-              valueOnly=TRUE)
+  .Defunct("convertUnit")
 }
 
 # This is like the "convert" functions:  it evaluates units (immediately)

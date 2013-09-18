@@ -88,8 +88,7 @@ push.vp.vpPath <- function(vp, recording) {
 }
 
 push.viewport <- function(..., recording=TRUE) {
-  .Deprecated("pushViewport")
-  pushViewport(..., recording=recording)
+    .Defunct("pushViewport")
 }
 
 pushViewport <- function(..., recording=TRUE) {
@@ -184,8 +183,7 @@ vpDepth <- function() {
 }
 
 pop.viewport <- function(n=1, recording=TRUE) {
-  .Deprecated("popViewport")
-  popViewport(n, recording=recording)
+    .Defunct("popViewport")
 }
 
 popViewport <- function(n=1, recording=TRUE) {
