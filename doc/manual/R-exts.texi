@@ -881,8 +881,8 @@ place.
 Field @samp{Depends} should nowadays be used rarely, only for packages
 which are intended to be put on the search path to make their facilities
 available to the end user (and not to the package itself): for example
-it makes sense that a user of package @pkg{latticeExtra} would want the
-functions of package @pkg{lattice} made available.
+it makes sense that a user of package @CRANpkg{latticeExtra} would want
+the functions of package @CRANpkg{lattice} made available.
 
 Almost always packages mentioned in @samp{Depends} should also be
 imported from in the @file{NAMESPACE} file: this ensures that any needed
@@ -1476,8 +1476,8 @@ override the test for the FORTRAN linker flags.)
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
 @file{src/Makevars}, you do need a @command{cleanup} script to remove
 them.  Otherwise if the package has vignettes, @command{R CMD build}
-will ship the files that are created.  For example, package @pkg{RODBC}
-has
+will ship the files that are created.  For example, package
+@CRANpkg{RODBC} has
 
 @example
 #!/bin/sh
