@@ -186,7 +186,8 @@ stopifnot(nrow(z) == 0L)
 
 ## https://stat.ethz.ch/pipermail/r-devel/2013-September/067524.html
 dbeta(0.9, 9.9e307, 10)
+dbeta(0.1, 9,  9.9e307)
 dbeta(0.1, 9.9e307, 10)
-## first hung 3.0.1.
+## first two hung in R <= 3.0.2
 
 proc.time()

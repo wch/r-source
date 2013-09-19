@@ -30,7 +30,7 @@
  *	in a manner that should be stable (with small relative error)
  *	for all x and M=np. In particular for x/np close to 1, direct
  *	evaluation fails, and evaluation is based on the Taylor series
- *	of log((1+v)/(1-v)) with v = (x-np)/(x+np).
+ *	of log((1+v)/(1-v)) with v = (x-M)/(x+M) = (x-np)/(x+np).
  */
 #include "nmath.h"
 
@@ -44,10 +44,11 @@ double attribute_hidden bd0(double x, double np)
     if (fabs(x-np) < 0.1*(x+np)) {
 	v = (x-np)/(x+np);  // might underflow to 0
 	s = (x-np)*v;/* s using v -- change by MM */
+	if(fabs(s) < DBL_MIN) return s;
 	ej = 2*x*v;
 	v = v*v;
-	for (j = 1; j  < 1000; j++) { /* Taylor series */
-	    ej *= v;
+	for (j = 1; j < 1000000; j++) { // Taylor series; no infinite loop
+	    ej *= v;// = v^(2j+1) 
 	    s1 = s+ej/((j<<1)+1);
 	    if (s1 == s) /* last term was effectively 0 */
 		return s1 ;

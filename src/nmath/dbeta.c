@@ -42,8 +42,6 @@
 
 double dbeta(double x, double a, double b, int give_log)
 {
-    double lval;
-
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(a) || ISNAN(b)) return x + a + b;
@@ -61,9 +59,10 @@ double dbeta(double x, double a, double b, int give_log)
 	if(b < 1) return(ML_POSINF);
 	/* b == 1 : */ return(R_D_val(a));
     }
+    double lval;
     if (a <= 2 || b <= 2)
 	lval = (a-1)*log(x) + (b-1)*log1p(-x) - lbeta(a, b);
-    else if(!R_FINITE(a) || !R_FINITE(a))
+    else if(!R_FINITE(a) || !R_FINITE(b))
 	lval = ML_NEGINF;
     else
 	lval = log(a+b-1) + dbinom_raw(a-1, a+b-2, x, 1-x, TRUE);
