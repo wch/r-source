@@ -437,7 +437,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc, check = TRUE)
     if(is.null(vigns)) return(invisible())
     if(length(vigns$msg))
-        warning(paste(msg, collapse = "\n"), domain = NA)
+        warning(paste(vigns$msg, collapse = "\n"), domain = NA)
 
     ## Assert that duplicated vignette names do not exist, e.g.
     ## 'vig' and 'vig' from 'vig.Rnw' and 'vig.Snw'.
