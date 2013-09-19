@@ -38,7 +38,10 @@ vignette_type <- function(file) {
 # found, it will be returned).  For tangle, main = TRUE will look <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
 # For texipdf, <name>.pdf is located.
-find_vignette_product <- function(name, by = c("weave", "tangle", "texi2pdf"), final=FALSE, main=TRUE, dir = ".", engine, ...) {
+find_vignette_product <-
+    function(name, by = c("weave", "tangle", "texi2pdf"),
+             final = FALSE, main = TRUE, dir = ".", engine, ...)
+{
     stopifnot(length(name) == 1L)
     by <- match.arg(by)
     stopifnot(file_test("-d", dir))
@@ -348,7 +351,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 
     # Locate all vignette files
     buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
-    engineList <- vignetteEngine(package=buildPkgs)
+    engineList <- vignetteEngine(package = buildPkgs)
 
     docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
@@ -497,7 +500,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
         }
         outputs <- c(outputs, output)
 
-        if (tangle) {  # This is set for custom engines
+        if (tangle) {  # This is set for all engines as of 3.0.2
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet)
                 setwd(startdir)

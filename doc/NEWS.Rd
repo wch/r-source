@@ -123,10 +123,15 @@
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
       is no longer recognized as valid. Use \samp{MIT} or
-    \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
+      \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
+      
+      \item Help for S4 methods with very long signatures now tries
+      harder to split the description in the \samp{Usage} field to no
+      more than 80 characters per line (some packages had over 120
+      characters).
     }
   }
 
@@ -195,10 +200,6 @@
       library.
       
       \item \command{R CMD check} analyses \code{:::} calls.
-
-      \item \command{R CMD build} makes more use of the \file{build}
-      sub-directory of package sources, for example to record
-      information about the vignettes.
       
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
     }
@@ -442,14 +443,18 @@
       See \sQuote{Writing R Extensions} for good practice.
       
       \item \command{R CMD check} optionally checks for non-standard
-      top-level files (which are often mistakes): this is enabled for
-      \option{--as-cran}.
+      top-level files and directories (which are often mistakes): this
+      is enabled for \option{--as-cran}.
       
       \item LaTeX style file \code{upquote.sty} is no longer included
       (the version was several years old).  A much later version is
       commonly included in LaTeX distributions but does not play well
       with the \code{ae} fonts which are the default for Sweave
       vignettes.
+
+      \item \command{R CMD build} makes more use of the \file{build}
+      sub-directory of package sources, for example to record
+      information about the vignettes.
     }
   }
 

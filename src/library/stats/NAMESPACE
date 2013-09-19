@@ -95,7 +95,6 @@ export(aggregate.data.frame, median.default, model.matrix.default,
        print.integrate, residuals.glm, residuals.lm, summary.glm,
        terms.formula, update.default)
 
-## anova.lm: ICC, caper, link in HH
 ## model.matrix.lm: robustbase
 ## print.integrate: Rmpfr
 ## residuals.glm: DAMisc, car, haplo.stats, lasso2, plsRbeta, plsRglm, rms, spgwr
