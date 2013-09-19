@@ -252,6 +252,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.0.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} truncated the imaginary part of 
+      complex number constants.  (Reported by Yihui Xie.)
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.2}{
   \subsection{NEW FEATURES}{
     \itemize{
