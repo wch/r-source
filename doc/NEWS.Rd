@@ -248,9 +248,6 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
-      
-      \item \code{dbeta(x, a, b)} with \code{a} close to machine
-      infinity could infinite-loop.  (Reported by Ioannis Kosmidis.)
     }
   }
 }
@@ -260,6 +257,9 @@
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of 
       complex number constants.  (Reported by Yihui Xie.)
+      
+      \item \code{dbeta(x, a, b)} with \code{a} close to machine
+      infinity could infinite-loop.  (Reported by Ioannis Kosmidis.)
     }
   }
 }
