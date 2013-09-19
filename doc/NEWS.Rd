@@ -197,14 +197,18 @@
       See \sQuote{Writing R Extensions} for good practice.
       
       \item \command{R CMD check} optionally checks for non-standard
-      top-level files (which are often mistakes): this is enabled for
-      \option{--as-cran}.
+      top-level files and directories (which are often mistakes): this
+      is enabled for \option{--as-cran}.
       
       \item LaTeX style file \code{upquote.sty} is no longer included
       (the version was several years old).  A much later version is
       commonly included in LaTeX distributions but does not play well
       with the \code{ae} fonts which are the default for Sweave
       vignettes.
+
+      \item \command{R CMD build} makes more use of the \file{build}
+      sub-directory of package sources, for example to record
+      information about the vignettes.
     }
   }
 
