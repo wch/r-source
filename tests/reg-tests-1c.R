@@ -184,4 +184,9 @@ z <- subset(data.frame(one = numeric()), select = one)
 stopifnot(nrow(z) == 0L)
 ## created a row prior to 3.0.2
 
+## https://stat.ethz.ch/pipermail/r-devel/2013-September/067524.html
+dbeta(0.9, 9.9e307, 10)
+dbeta(0.1, 9.9e307, 10)
+## first hung 3.0.1.
+
 proc.time()
