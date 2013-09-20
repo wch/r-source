@@ -626,6 +626,27 @@ setRlibs <-
                 out <- .format_check_package_description_authors_at_R_field_results(out)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
             }
+            ## and there might be stale Authors and Maintainer fields
+            yorig <- db[c("Author", "Maintainer")]
+            if(any(!is.na(yorig))) {
+                enc <- db["Encoding"]
+                aar <- utils:::.read_authors_at_R_field(aar)
+                tmp <- utils:::.format_authors_at_R_field_for_author(aar)
+                ## uses strwrap, so will be in current locale
+                if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+                y <- c(Author = tmp,
+                       Maintainer =
+                       utils:::.format_authors_at_R_field_for_maintainer(aar))
+                diff <- y != yorig
+                if(any(diff)) {
+                    if(!any) noteLog(Log)
+                    any <- TRUE
+                    if(diff[1L])
+                        printLog(Log, "Author field differs from that derived from Authors@R", "\n")
+                    if(diff[2L])
+                        printLog(Log, "Maintainer field differs from that derived from Authors@R", "\n")
+                }
+            }
         }
 
         out <- format(tools:::.check_package_description2(dfile))
