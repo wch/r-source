@@ -637,14 +637,24 @@ setRlibs <-
                 y <- c(Author = tmp,
                        Maintainer =
                        utils:::.format_authors_at_R_field_for_maintainer(aar))
+                ## ignore formatting as far as possible
+                clean_up <- function(x) gsub("[[:space:]]+", " ", x)
+                yorig <- sapply(yorig, clean_up)
+                y <- sapply(y, clean_up)
                 diff <- y != yorig
                 if(any(diff)) {
                     if(!any) noteLog(Log)
                     any <- TRUE
-                    if(diff[1L])
+                    if(diff[1L]) {
                         printLog(Log, "Author field differs from that derived from Authors@R", "\n")
-                    if(diff[2L])
+                        printLog(Log, "Author:    ", sQuote(yorig[1L]), "\n")
+                        printLog(Log, "Authors@R: ", sQuote(y[1L]), "\n")
+                    }
+                    if(diff[2L]) {
                         printLog(Log, "Maintainer field differs from that derived from Authors@R", "\n")
+                        printLog(Log, "Maintainer: ", sQuote(yorig[2L]), "\n")
+                        printLog(Log, "Authors@R:  ", sQuote(y[2L]), "\n")
+                    }
                 }
             }
         }
