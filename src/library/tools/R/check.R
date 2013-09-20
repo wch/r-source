@@ -628,7 +628,7 @@ setRlibs <-
             }
             ## and there might be stale Authors and Maintainer fields
             yorig <- db[c("Author", "Maintainer")]
-            if(any(!is.na(yorig))) {
+            if(check_incoming &&any(!is.na(yorig))) {
                 enc <- db["Encoding"]
                 aar <- utils:::.read_authors_at_R_field(aar)
                 tmp <- utils:::.format_authors_at_R_field_for_author(aar)
@@ -638,7 +638,11 @@ setRlibs <-
                        Maintainer =
                        utils:::.format_authors_at_R_field_for_maintainer(aar))
                 ## ignore formatting as far as possible
-                clean_up <- function(x) gsub("[[:space:]]+", " ", x)
+                clean_up <- function(x) {
+                    x <- gsub("[[:space:]]+", " ", x)
+                    x <- sub("^[[:space:]]+", " ", x)
+                    sub("^[[:space:]]+$", " ", x)
+                }
                 yorig <- sapply(yorig, clean_up)
                 y <- sapply(y, clean_up)
                 diff <- y != yorig
