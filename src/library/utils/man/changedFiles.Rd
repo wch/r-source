@@ -110,7 +110,7 @@ digest function.
 \code{fileSnapshot} returns an object of class \code{"fileSnapshot"}.
 This is a list containing the fields 
 
-\item{info}{a dataframe whose rownames are the filenames, and whose
+\item{info}{a data frame whose rownames are the filenames, and whose
 columns contain the requested snapshot data} 
 
 \item{path}{the normalized \code{path} from the call} 
