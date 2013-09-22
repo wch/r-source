@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-09-08 r63873) -- "Good Sport"
+R version 3.0.2 RC (2013-09-22 r63960) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -576,7 +576,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.167 0.005 0.174 0 0 
+Time elapsed:  0.247 0.002 0.25 0 0 
 > grDevices::dev.off()
 null device 
           1 

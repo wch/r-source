@@ -1,5 +1,5 @@
 
-R version 3.0.1 Patched (2013-09-08 r63873) -- "Good Sport"
+R version 3.0.2 RC (2013-09-22 r63960) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -48,4 +48,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.163   0.011   0.591 
+  0.265   0.026   0.956 
