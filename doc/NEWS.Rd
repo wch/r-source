@@ -141,7 +141,9 @@
       Windows).
       
       \item \command{R CMD build} now weaves and tangles all vignettes,
-      so suggested packages are never required during package installation.
+      so suggested packages are not required during package installation
+      if the source tarball was prepared with current
+      \command{R CMD build}.
 
       \item \code{checkFF()} (used by \command{R CMD check}) does a
       better job of detecting calls from other packages, including not
@@ -201,10 +203,10 @@
       is enabled for \option{--as-cran}.
       
       \item LaTeX style file \code{upquote.sty} is no longer included
-      (the version was several years old).  A much later version is
-      commonly included in LaTeX distributions but does not play well
-      with the \code{ae} fonts which are the default for Sweave
-      vignettes.
+      (the version was several years old): it is no longer used in \R.
+      A much later version is commonly included in LaTeX distributions
+      but does not play well with the \code{ae} fonts which are the
+      default for Sweave vignettes.
 
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
