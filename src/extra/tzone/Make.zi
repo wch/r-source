@@ -1,6 +1,6 @@
 ## Makefile to be run on a unix box with zic in the path (/usr/sbin/zic?)
 
-VERSION = 2012d
+VERSION = 2013e
 TZDIR = zoneinfo
 TZTMP = tz
 TARFILE=tzdata$(VERSION).tar.gz
