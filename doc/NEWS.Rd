@@ -260,6 +260,9 @@
       
       \item \code{dbeta(x, a, b)} with \code{a} close to machine
       infinity could infinite-loop.  (Reported by Ioannis Kosmidis.)
+
+      \item \code{provideDimnames()} failed for arrays with a 0
+      dimension. (\PR{15465})
     }
   }
 }
@@ -365,7 +368,7 @@
       \item There is a new read-only \code{par()} parameter called
       \code{"page"}, which returns a logical value indicating whether
       the next \code{plot.new()} call will start a new page.
-      
+
       \item Processing Sweave and Rd documents to PDF now renders
       backticks and single quotes better in several instances, including
       in \samp{\\code} and \samp{\\samp} expressions.

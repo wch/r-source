@@ -184,10 +184,18 @@ z <- subset(data.frame(one = numeric()), select = one)
 stopifnot(nrow(z) == 0L)
 ## created a row prior to 3.0.2
 
+
 ## https://stat.ethz.ch/pipermail/r-devel/2013-September/067524.html
 dbeta(0.9, 9.9e307, 10)
 dbeta(0.1, 9,  9.9e307)
 dbeta(0.1, 9.9e307, 10)
 ## first two hung in R <= 3.0.2
+
+## PR#15465
+provideDimnames(matrix(nrow = 0, ncol = 1))
+provideDimnames(table(character()))
+as.data.frame(table(character()))
+## all failed in 3.0.2
+
 
 proc.time()
