@@ -2838,6 +2838,10 @@ function(dir, force_suggests = TRUE)
     ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
+
+    ## This is unsafe if the package itself is the VignetteBuilder,
+    ## as we may not have installed it yet.
+    ## But only problematic if we get an old version.
     vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
                           check = TRUE)
 
