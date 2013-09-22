@@ -1,13 +1,14 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.unsorted}
 \alias{is.unsorted}
 \title{Test if an Object is Not Sorted}
 \description{
-  Test if an object is not sorted, without the cost of sorting it.
+  Test if an object is not sorted (in increasing order), without the
+  cost of sorting it.
 }
 \usage{
 is.unsorted(x, na.rm = FALSE, strictly = FALSE)
@@ -28,7 +29,7 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
 }
 \note{
   This function is designed for objects with one-dimensional indices, as
-  described above.  Dataframes, matrices and other arrays may give
+  described above.  Data frames, matrices and other arrays may give
   surprising results.
 }
 \seealso{\code{\link{sort}}, \code{\link{order}}.}
