@@ -1471,6 +1471,9 @@ build which should run on all Macs from mid-2008 on.  For older Intel
 Macs and some older versions of the OS you can install @R{} from the
 sources.
 
+It is important that is you use the binary package that your OS is fully
+updated: run `Software Update' from the Apple menu to be sure.
+
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows three components (`Package Name').  Everyone will need
@@ -4466,6 +4469,9 @@ This may need
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
+Note that this expects a fully-updated X11 installation: it was built
+against the Apple X11 from Snow Leopard, but XQuartz will work if recent
+enough (e.g.@: version 2.7.4).
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
