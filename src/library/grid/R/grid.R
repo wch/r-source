@@ -140,7 +140,25 @@ downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
   downViewport(vpPath(name), strict, recording=recording)
 }
 
+# Build vpPath from one (pushed) viewport up to another (pushed) viewport
+# 'anc' is assumed to be an ancestor of 'desc'
+# 'depth' is the depth that the final depth should have
+buildPath <- function(desc, anc, depth) {
+    path <- desc$name
+    while (!identical(desc$parent, anc)) {
+        if (is.null(desc$parent)) 
+            stop("Down viewport failed to record on display list")
+        desc <- desc$parent
+        path <- c(desc$name, path)
+    }
+    result <- vpPath(path)
+    if (depth(result) != depth)
+        warning("Down viewport incorrectly recorded on display list")
+    result
+}
+
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
+    start <- grid.Call(L_currentViewport)
     if (name$n == 1)
         result <- grid.Call.graphics(L_downviewport, name$name, strict)
     else
@@ -157,7 +175,9 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
     # ... including the depth navigated down
     if (recording) {
         attr(name, "depth") <- result
-        record(name)
+        # Record the strict path down
+        path <- buildPath(pvp, start, result)
+        record(path)
     }
     invisible(result)
 }

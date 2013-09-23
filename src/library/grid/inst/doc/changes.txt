@@ -30,6 +30,11 @@ Changes from grid_3.0.* to grid_3.1.0:
     grid.collection, push.viewport, pop.viewport, viewport.transform,
     draw.details, convertNative.
 
+10. Down viewports are now recorded on the display list as full-depth
+    strict vpPaths even when downViewport() is called with non-strict
+    vpPath (which can produce a down viewport of greater depth than
+    the depth of the vpPath).
+
 
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------
