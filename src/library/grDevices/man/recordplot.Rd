@@ -32,11 +32,10 @@ replayPlot(x)
   The format of recorded plots may change between \R versions.
   Recorded plots should \strong{not} be used as a permanent
   storage format for \R plots.  There were extensive changes in \R
-  3.0.0, and only plots recorded in that or later can be replayed in
-  this version of \R.
+  3.0.0, and now only plots from the current session can be replayed.
 
   \R will always attempt to replay a recorded plot, but if the plot was
-  recorded with a different \R version or build then bad things may happen.
+  recorded with a different \R session then bad things may happen.
 }
 \value{
   \code{recordPlot} returns an object of class \code{"recordedplot"}.
