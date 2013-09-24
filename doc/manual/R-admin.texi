@@ -473,16 +473,11 @@ fonts.  We have provided four alternatives:
 and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
-either of the options @code{inconsolata}, on a Unix-alike only if found by
-@command{configure}) or @code{beramono}, which replace the Courier
+either of the options @code{inconsolata}, on a Unix-alike only if found
+by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
-will need the appropriate @LaTeX{} package @pkg{inconsolata} or
-@pkg{bera} installed.@footnote{Some Debian/Ubuntu systems use a rather
-old version of TeXLive and so need Debian package
-@samp{texlive-fonts-extra} installed.  Fedora prior to 18 used an even
-older version of TeXLive: the best option is to update to TeXLive 2012
-or later, from the sources or see
-@uref{http://fedoraproject.org/wiki/Features/TeXLive}.})
+will need a recent version of the appropriate @LaTeX{} package
+@pkg{inconsolata} or @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
