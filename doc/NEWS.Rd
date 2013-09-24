@@ -266,6 +266,9 @@
 
       \item \code{provideDimnames()} failed for arrays with a 0
       dimension. (\PR{15465})
+      
+      \item \code{rbind()} and \code{cbind()} did not handle
+      list objects correctly. (\PR{15468})
     }
   }
 }

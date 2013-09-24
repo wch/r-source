@@ -1240,7 +1240,8 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     else if (mode == VECSXP) {
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
-	    if (isMatrix(u) || length(u) >= lenmin) {
+	    int umatrix = isMatrix(u); /* might be lost in coercion to VECSXP */
+	    if (umatrix || length(u) >= lenmin) {
 		/* we cannot assume here that coercion will work */
 		switch(TYPEOF(u)) {
 		case NILSXP:
@@ -1256,7 +1257,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    PROTECT(u = coerceVector(u, mode));
 		    k = LENGTH(u);
 		    if (k > 0) {
-			idx = (!isMatrix(u)) ? rows : k;
+			idx = (!umatrix) ? rows : k;
 			for (i = 0; i < idx; i++)
 			    SET_VECTOR_ELT(result, n++,
 					   duplicate(VECTOR_ELT(u, i % k)));
@@ -1490,10 +1491,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
     else if (mode == VECSXP) {
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
-	    if (isMatrix(u) || length(u) >= lenmin) {
+ 	    int umatrix = isMatrix(u), urows = umatrix ? nrows(u) : 1; /* coercing to VECSXP will lose these. PR#15468 */
+	    if (umatrix || length(u) >= lenmin) {
 		PROTECT(u = coerceVector(u, mode));
 		k = LENGTH(u);
-		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		idx = umatrix ? urows : (k > 0);
 		for (i = 0; i < idx; i++)
 		    for (j = 0; j < cols; j++)
 		      SET_VECTOR_ELT(result, i + n + (j * rows),

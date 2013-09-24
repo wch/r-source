@@ -2764,3 +2764,14 @@ xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,
         1016450281, 1178703303, 1324731023, 1454533441)
 xx
 ## dropped spaces without long doubles
+
+
+## PR#15468
+M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",
+1:2)))
+L <- list(elem1=1, elem2=2)
+rbind(M, L)
+rbind(L, M)
+cbind(M, L)
+cbind(L, M)
+## lost the dim of M, so returned NULL entries
