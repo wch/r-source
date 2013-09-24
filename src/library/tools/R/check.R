@@ -2317,15 +2317,17 @@ setRlibs <-
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
-                times <- read.table(tfile, header = TRUE, row.names = 1L, colClasses = c("character", rep("numeric", 3)))
-                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
+                times <- read.table(tfile, header = TRUE, row.names = 1L,
+                                    colClasses = c("character", rep("numeric", 3L)))
+                o <- order(times[[1L]]+times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
-                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
+                keep <- (times[[1L]] + times[[2L]] > 5) | (times[[3L]] > 5)
                 if(any(keep)) {
                     printLog(Log, "Examples with CPU or elapsed time > 5s\n")
                     times <- capture.output(format(times[keep, ]))
                     printLog(Log, paste(times, collapse = "\n"), "\n")
                 }
+                no_examples <<- all(times[[3L]] < 0.01)
             }
             TRUE
         }
@@ -4285,7 +4287,7 @@ setRlibs <-
                 if(length(ns$exports) || length(ns$exportPatterns) ||
                    length(ns$exportMethods) || length(ns$S3methods)) {
                     checkingLog(Log, "for code which exercises the package")
-                    warningLog(Log, "No examples, no tests, no vignettes")
+                    warningLog(Log, "No non-trivial examples, no tests, no vignettes")
                 }
             }
         }
