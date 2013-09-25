@@ -261,14 +261,18 @@
       \item \code{getParseData()} truncated the imaginary part of 
       complex number constants.  (Reported by Yihui Xie.)
       
-      \item \code{dbeta(x, a, b)} with \code{a} close to machine
-      infinity could infinite-loop.  (Reported by Ioannis Kosmidis.)
+      \item \code{dbeta(x, a, b)} with \code{a} or \code{b} within a
+      factor of 2 of the largest representable number could
+      infinite-loop.  (Reported by Ioannis Kosmidis.)
 
       \item \code{provideDimnames()} failed for arrays with a 0
       dimension. (\PR{15465})
       
       \item \code{rbind()} and \code{cbind()} did not handle
       list objects correctly. (\PR{15468})
+
+      \item \code{replayPlot()} now checks if it is replaying a plot
+      from the same session.
     }
   }
 }
