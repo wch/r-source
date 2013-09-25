@@ -1904,7 +1904,7 @@ setRlibs <-
                 gs_cmd <- find_gs_cmd(Sys.getenv("R_GSCMD", ""))
                 if (nzchar(gs_cmd)) {
                     res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
-                    res <- format(res, diff = 2.5e5) # 250 KB for now
+                    res <- format(res, diff = 2.56e5) # 250 KB for now
                     if(length(res)) {
                         if (!any) warningLog(Log)
                         any <- TRUE

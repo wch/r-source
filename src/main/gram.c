@@ -4557,6 +4557,10 @@ static int NumericValue(int c)
 	YYTEXT_PUSH(c, yyp);
 	last = c;
     }
+    
+    if(c == 'i')
+	YYTEXT_PUSH(c, yyp); /* for getParseData */
+	
     YYTEXT_PUSH('\0', yyp);    
     /* Make certain that things are okay. */
     if(c == 'L') {

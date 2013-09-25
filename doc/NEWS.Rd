@@ -7,6 +7,21 @@
 \title{ R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.0.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} truncated the imaginary part of 
+      complex number constants.  (Reported by Yihui Xie.)
+      
+      \item \code{dbeta(x, a, b)} with \code{a} close to machine
+      infinity could infinite-loop.  (Reported by Ioannis Kosmidis.)
+
+      \item \code{provideDimnames()} failed for arrays with a 0
+      dimension. (\PR{15465})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.0.2}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -90,8 +105,9 @@
       the result, to avoid misuse creating invalid objects as in
       \PR{15303}.  A warning is given if a class is discarded.
 
-      \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
-      more tests to be run without recommended packages being installed.
+      \item Dataset \code{npk} has been copied from \CRANpkg{MASS} to
+      allow more tests to be run without recommended packages being
+      installed.
 
       \item The initialization of the regression coefficients for
       non-degenerate differenced models in \code{arima()} has been

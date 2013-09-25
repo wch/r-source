@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -74,8 +74,8 @@ tiff(filename = "Rplot\%03d.tif",
     argument is missing the default is taken from
     \code{windows.options()$bitmap.aa.win}.
 
-    For allowed values and their effect (on fonts
-    and lines) with \code{type = "cairo"} see \code{\link{svg}}.}
+    For allowed values and their effect (on fonts and lines, but not
+    fills) with \code{type = "cairo"} see \code{\link{svg}}.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
