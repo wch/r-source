@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{library}
-\title{Loading and Listing of Packages}
+\title{Loading/Attaching and Listing of Packages}
 \alias{library}
 \alias{require}
 
@@ -14,7 +14,7 @@
 \alias{format.packageInfo}
 \alias{print.packageInfo}
 \description{
-  \code{library} and \code{require} load add-on packages.
+  \code{library} and \code{require} load and attach add-on packages.
 }
 \usage{
 library(package, help, pos = 2, lib.loc = NULL,
@@ -32,7 +32,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
     whether \code{character.only} is \code{FALSE} (default) or
     \code{TRUE}).}
   \item{pos}{the position on the search list at which to attach the
-    loaded package.  Can also be the name of a position on the current
+    loaded namespace.  Can also be the name of a position on the current
     search list as given by \code{\link{search}()}.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
@@ -51,21 +51,21 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
-    package loading is printed, and most often, no errors/warnings are
-    printed if package loading fails.}
+    package attaching is printed, and most often, no errors/warnings are
+    printed if package attaching fails.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
-  package with name \code{package} and put it on the search list.
-  \code{require} is designed for use
-  inside other functions; it returns \code{FALSE} and gives a warning
-  (rather than an error as \code{library()} does by default) if the
-  package does not exist.  Both functions check and update the list of
-  currently loaded packages and do not reload a package which is already
-  loaded.  (If you want to
-  reload such a package, call \code{\link{detach}(unload = TRUE)} or
-  \code{\link{unloadNamespace}} first.)  If you want to load a package
-  without putting it on the search list, use \code{\link{requireNamespace}}.
+  namespace of the package with name \code{package} and attach it on the
+  search list.  \code{require} is designed for use inside other
+  functions; it returns \code{FALSE} and gives a warning (rather than an
+  error as \code{library()} does by default) if the package does not
+  exist.  Both functions check and update the list of currently attached
+  packages and do not reload a namespace which is already loaded.  (If
+  you want to reload such a package, call \code{\link{detach}(unload =
+  TRUE)} or \code{\link{unloadNamespace}} first.)  If you want to load a
+  package without attaching it on the search list, see
+  \code{\link{requireNamespace}}.
 
   To suppress messages during the loading of packages use
   \code{\link{suppressPackageStartupMessages}}: this will suppress all
@@ -121,18 +121,18 @@ require(package, lib.loc = NULL, quietly = FALSE,
   is attached (as it is by default).  Packages may define formal generic
   functions as well as re-defining functions in other packages (notably
   \pkg{base}) to be generic, and this information is cached whenever
-  such a package is loaded after \pkg{methods} and re-defined functions
+  such a namespace is loaded after \pkg{methods} and re-defined functions
   (\link{implicit generic}s) are excluded from the list of conflicts.
-  The caching  and check for conflicts require looking for a pattern of
+  The caching and check for conflicts require looking for a pattern of
   objects; the search may be avoided by defining an object
-  \code{.noGenerics} (with any value) in the package.  Naturally, if the
+  \code{.noGenerics} (with any value) in the namespace.  Naturally, if the
   package \emph{does} have any such methods, this will prevent them from
   being used.
 }
 \note{
-  \code{library} and \code{require} can only load an \emph{installed}
-  package, and this is detected by having a \file{DESCRIPTION} file
-  containing a \samp{Built:} field.
+  \code{library} and \code{require} can only load/attach an
+  \emph{installed} package, and this is detected by having a
+  \file{DESCRIPTION} file containing a \samp{Built:} field.
 
   Under Unix-alikes, the code checks that the package was installed
   under a similar operating system as given by \code{R.version$platform}
@@ -173,7 +173,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
 library()                   # list all available packages
 library(lib.loc = .Library) # list all packages in the default library
 \donttest{library(help = splines)     # documentation on package 'splines'}
-library(splines)            # load package 'splines'
+library(splines)            # attach package 'splines'
 require(splines)            # the same
 search()                    # "splines", too
 detach("package:splines")
