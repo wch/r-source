@@ -250,7 +250,7 @@
       the control characters.  (Reported by Hadley Wickham.)
 
       \item \code{rasterImage()} and \code{grid.raster()} now give
-      error on empty (zero-length) raster.  (Reported by Ben.)
+      error on empty (zero-length) raster.  (Reported by Ben North.)
     }
   }
 }
