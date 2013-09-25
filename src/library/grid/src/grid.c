@@ -2844,6 +2844,9 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
     getViewportContext(currentvp, &vpc);
     /* Convert the raster matrix to R internal colours */
     n = LENGTH(raster);
+    if (n <= 0) {
+        error(_("Empty raster"));  
+    }
     vmax = vmaxget();
     /* raster is rather inefficient so allow a native representation as
        an integer array which requires no conversion */

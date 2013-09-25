@@ -19,9 +19,15 @@
 
       \item \code{provideDimnames()} failed for arrays with a 0
       dimension. (\PR{15465})
+      
+      \item \code{rbind()} and \code{cbind()} did not handle
+      list objects correctly. (\PR{15468})
 
       \item \code{replayPlot()} now checks if it is replaying a plot
       from the same session.
+
+      \item \code{rasterImage()} and \code{grid.raster()} now give
+      error on an empty (zero-length) raster.  (Reported by Ben North.)
     }
   }
 }

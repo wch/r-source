@@ -1842,6 +1842,9 @@ SEXP C_raster(SEXP args)
 
     raster = CAR(args); args = CDR(args);
     n = LENGTH(raster);
+    if (n <= 0) {
+        error(_("Empty raster"));  
+    }
     dim = getAttrib(raster, R_DimSymbol);
 
     vmax = vmaxget();
