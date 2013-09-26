@@ -48,8 +48,7 @@ PKG_LIBS = @R_OPENMP_CFLAGS@ $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 ## </FIXME>
 
 
-all: Makefile Makedeps
-	@$(MAKE) Makedeps
+all: Makedeps
 	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

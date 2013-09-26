@@ -27,8 +27,7 @@ cairo_la = cairo$(SHLIB_EXT)
 ## AIX needs LIBM
 cairo_la_LIBADD = @CAIRO_LIBS@ @BITMAP_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
-all: Makefile Makedeps
-	@$(MAKE) Makedeps
+all: Makedeps
 	@$(MAKE) R
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status

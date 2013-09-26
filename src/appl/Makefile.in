@@ -34,7 +34,7 @@ DISTFILES = \
 Rblas_la = libRblas$(DYLIB_EXT)
 Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ -flat_namespace -undefined suppress
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES_C)
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -43,8 +43,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 	@$(MAKE) libappl.a
 
 libappl.a: $(OBJECTS)
