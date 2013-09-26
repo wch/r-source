@@ -7222,3 +7222,13 @@ elem1 1 11   13
 elem2 2 12   14  
 > ## lost the dim of M, so returned NULL entries
 > 
+> 
+> ## NA_character_ was not handled properly in min (reported by Magnus Thor Torfason)
+> str(min(NA, "bla"))
+ chr NA
+> str(min("bla", NA))
+ chr NA
+> str(min(NA_character_, "bla"))
+ chr NA
+> ## Only the first gave NA, and it was NA_integer_, not NA_character_
+> 

@@ -276,6 +276,9 @@
       
       \item \code{plot.lm} would sometimes scramble the labels
       in plot type 5.  (\PR{15458} and \PR{14837})
+      
+      \item \code{min()} did not handle \code{NA_character_} values
+      properly.  (Reported by Magnus Thor Torfason.)
     }
   }
 }

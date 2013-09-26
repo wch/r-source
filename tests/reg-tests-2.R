@@ -2775,3 +2775,10 @@ rbind(L, M)
 cbind(M, L)
 cbind(L, M)
 ## lost the dim of M, so returned NULL entries
+
+
+## NA_character_ was not handled properly in min (reported by Magnus Thor Torfason)
+str(min(NA, "bla"))
+str(min("bla", NA))
+str(min(NA_character_, "bla"))
+## Only the first gave NA, and it was NA_integer_, not NA_character_
