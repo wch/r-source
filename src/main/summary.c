@@ -561,8 +561,9 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    DbgP1(" updated:");
 		    if(ans_type == INTSXP) {
 			DbgP3(" INT: (old)icum= %ld, itmp=%ld\n", icum,itmp);
-			if (itmp == NA_INTEGER) goto na_answer;
-			if ((iop == 2 && itmp < icum) || /* min */
+			if (icum == NA_INTEGER); /* NA trumps anything */
+			else if (itmp == NA_INTEGER ||
+			    (iop == 2 && itmp < icum) || /* min */
 			    (iop == 3 && itmp > icum))   /* max */
 			    icum = itmp;
 		    } else if(ans_type == REALSXP) {
@@ -577,12 +578,13 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			    (iop == 3 && tmp > zcum.r))	zcum.r = tmp;
 		    } else if(ans_type == STRSXP) {
 			if(empty) scum = stmp;
-			else {
+			else if (scum != NA_STRING) {
 			    if(int_a)
 				stmp = StringFromInteger(itmp, &warn);
 			    if(real_a)
 				stmp = StringFromReal(tmp, &warn);
-			    if(((iop == 2 && stmp != scum && Scollate(stmp, scum) < 0)) ||
+			    if(stmp == NA_STRING ||
+			       (iop == 2 && stmp != scum && Scollate(stmp, scum) < 0) ||
 			       (iop == 3 && stmp != scum && Scollate(stmp, scum) > 0) )
 				scum = stmp;
 			}
@@ -737,7 +739,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);  /* args */
     return ans;
 
-na_answer: /* only INTSXP case currently used */
+na_answer: /* only sum(INTSXP, ...) case currently used */
     ans = allocVector(ans_type, 1);
     switch(ans_type) {
     case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
