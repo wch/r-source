@@ -248,9 +248,6 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
-
-      \item \code{rasterImage()} and \code{grid.raster()} now give
-      error on empty (zero-length) raster.  (Reported by Ben North.)
     }
   }
 }
@@ -273,6 +270,9 @@
 
       \item \code{replayPlot()} now checks if it is replaying a plot
       from the same session.
+
+      \item \code{rasterImage()} and \code{grid.raster()} now give
+      error on an empty (zero-length) raster.  (Reported by Ben North.)
     }
   }
 }
