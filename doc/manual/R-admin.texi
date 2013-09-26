@@ -519,6 +519,14 @@ hyperlinks (e.g.@: for printing the manual) or do not have @LaTeX{}
 package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 @LaTeX{} package @pkg{inconsolata} installed.
 
+Further options, e.g@: for @pkg{hyperref}, can be included in a file
+@file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example if
+you prefer the text and not the page number in the table of contents to
+be hyperlinked, use something like
+@example
+\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktocpage=false@}@}@{@}
+@end example
+
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
 @cindex Installation
