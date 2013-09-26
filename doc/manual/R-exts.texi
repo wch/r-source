@@ -6923,8 +6923,8 @@ non-empty value before the @command{INSTALL}.)
 memory checker in @command{valgrind}.  It is available with suitable
 builds of @command{gcc} 4.8.x and @command{clang} 3.1 and
 later@footnote{not including the version distributed by Apple in
-@code{Xcode} 4.6.}, on common Linux platforms and 64-bit Mac OS X.  See
-@uref{https://code.google.com/p/address-sanitizer/}.
+@code{Xcode} 4.6.x or 5}, on common Linux platforms and 64-bit Mac OS X.
+See @uref{https://code.google.com/p/address-sanitizer/}.
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address} (@command{gcc} and recent versions of
