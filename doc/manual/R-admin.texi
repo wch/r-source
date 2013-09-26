@@ -1466,8 +1466,8 @@ build which should run on all Macs from mid-2008 on.  For older Intel
 Macs and some older versions of the OS you can install @R{} from the
 sources.
 
-It is important that is you use the binary package that your OS is fully
-updated: run `Software Update' from the Apple menu to be sure.
+It is important that if you use this binary package that your OS is
+fully updated: run `Software Update' from the Apple menu to be sure.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1503,7 +1503,8 @@ There is a GUI console normally installed with the @R{} icon in
 Launchpad or Finder).  This is usually referred to as @Rapp{} to
 distinguish it from command-line @R{}: its user manual is currently part
 of the OS X FAQ at
-@uref{http://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html}
+@uref{http://cran.r-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html} and
+can be viewed from  @Rapp{}'s `Help' menu.
 
 
 You can run command-line @R{} from a Terminal like any other Unix-alike:
@@ -1904,17 +1905,17 @@ systems, but there is an additional type @code{mac.binary} (the default
 in the @acronym{CRAN} distribution but not when compiling from source)
 that can be passed to @code{install.packages} in order to download and
 install binary packages from a suitable repository.  These OS X binary
-package files have the extension @samp{tgz}.  The @Rapp{} GUI provides
+package files have the extension @samp{.tgz}.  The @Rapp{} GUI provides
 menus for installation of either binary or source packages, from
 @acronym{CRAN} or local files.
 
-Note that many binary packages including compiled code are tied to a
+Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
-work with no additional tools. For others you will need the `Command
-Line Tools' for @command{Xcode} and compilers which match those used to
-build @R{}: see @ref{OS X}.
+work with no additional tools. For others you will need the
+`Command-line Tools' for @command{Xcode} and compilers which match those
+used to build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
@@ -1951,8 +1952,9 @@ CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 @end example
 
 @noindent
-(this is expected to become necessary once Xcode 5 is released) and
-for another version of @command{gfortran-4.2} we needed
+(the first two are necessary if Xcode 5 was installed, and Xcode 4.6 was
+not previously installed) and for another version of
+@command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
 @end example
@@ -4266,7 +4268,7 @@ the configure flag @option{--disable-largefile} was needed (since
 @section OS X
 @cindex OS X
 
-You can build @R{} using Apple's `Command Line Tools for Xcode' and and
+You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
 with @option{--without-readline}).
 
@@ -4281,8 +4283,8 @@ In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
 earliest version currently tested.  32-bit Intel builds of @R{} 3.0.0
 were tested: they would be needed for Snow Leopard running on very old
-machines with Core Solo or Core Duo CPUs.  The instructions here
-concentrate on @cputype{x86_64} builds.
+machines with Core Solo or Core Duo CPUs.  The instructions here are for
+@cputype{x86_64} builds.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4298,25 +4300,22 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
-`Command Line Tools for Xcode' used to be part of the Apple
-Developer Tools (`Xcode') but nowadays need to be installed
-separately.  They can be downloaded from
-@uref{http://developer.apple.com/devcenter/mac/} (you will need to register
-there) or if you have a recent Xcode installed (from the App Store or
-from @uref{https://developer.apple.com/devcenter/mac/}) you can install
-the command-line tools from within Xcode, from the @samp{Downloads} pane
-in the @samp{Preferences}.
+`Command-line Tools for Xcode' used to be part of the Apple Developer
+Tools (`Xcode') but nowadays need to be installed separately.  They can
+be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
+will need to register there) or if you have a recent Xcode installed
+(from the App Store or from
+@uref{http://developer.apple.com/devcenter/mac/}) you can install the
+command-line tools from within Xcode, from the @samp{Downloads} pane in
+the @samp{Preferences}.
 
 Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
 is built using
 
 @itemize
 @item @command{gcc}
-from the Xcode distribution.  This is a version of gcc 4.2.1 with an
-LLVM backend.  Note that Apple have announced that Xcode 4.6 will be the
-last `release' with this compiler (4.6.2 does contain it but 5 is
-expected not to), and it is likely that @command{clang} will be used
-before @R{} 3.1.0 is released.
+from an Xcode distribution prior to version 5.  This is a version of gcc
+4.2.1 with an LLVM backend.
 
 @item @command{gfortran}
 from
@@ -4380,8 +4379,8 @@ will show the compilers and configuration options used for the
 was used.
 
 The @TeX{} implementation used by the developers is MacTeX
-(@uref{http://www.tug.org/mactex/}): the full installation is several
-gigabytes, but a smaller version (ca 300MB) is available at
+(@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
+but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
 some packages, e.g.@: @pkg{inconsolata}, @pkg{texinfo} and
 @pkg{upquote}.  @samp{TeX Live Utility} (available @emph{via} the MacTeX
@@ -4404,8 +4403,7 @@ front page) provides a graphical means to manage @TeX{} packages.
 A quirk on Snow Leopard is that the X11 libraries are not in the default
 linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
 required in @file{config.site}, or you can use the @command{configure}
-options @option{--x-includes=/usr/X11/include
---x-libraries=/usr/X11/lib.}.
+options @option{--x-includes=/usr/X11/include --x-libraries=/usr/X11/lib}.
 
 The @acronym{CRAN} binaries are built using Xcode 4.2, a version
 available only to subscribing developers.  It is expected that 3.2.6 (the
@@ -4438,8 +4436,7 @@ For some pre-compiled software, for example the GTK framework,
 @node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
 @subsection Mavericks
 
-Mavericks is associated with Xcode 5, and is said to download software
-components as needed without installing all of Xcode.
+Mavericks is associated with Xcode 5.
 
 It is likely that @command{clang} will be the preferred C compiler,
 using something like
@@ -4462,6 +4459,10 @@ install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
 Unix-alikes), which is installed as part of the CRAN binary for @R{}.
 This may need
+@example
+-with-tcltk=/usr/local/lib
+@end example
+or
 @example
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
@@ -4497,13 +4498,13 @@ reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
 Mountain Lion did not come with an installed JRE, and an upgrade to
-Mountain Lion removed one if already installed.  It is intended to be
+Mountain Lion removed one if already installed: it is intended to be
 installed at first use. Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed this should prompt you to install it.
 
-However, for security reasons you may want/need to install the latest
-Java from Oracle (currently Java 7 from
+However, you may want/need to install the latest Java from Oracle
+(currently Java 7 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
 
@@ -4535,15 +4536,12 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_40.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
-in @file{config.site}.  @env{JAVA_LD_LIBRARY_PATH} is used as part of
-@env{DYLD_FALLBACK_LIBRARY_PATH} and so is less likely to cause
-conflicts, but @file{$@{JAVA_HOME@}/jre/lib} is still best avoided as in
-some JDKs it contains libraries which conflict with system libraries.
+in @file{config.site}.
 
 Note that it is necessary to set the environment variable @env{NOAWT}
 to @code{1} to install many of the Java-using packages.
