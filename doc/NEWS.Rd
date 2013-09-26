@@ -273,6 +273,9 @@
 
       \item \code{rasterImage()} and \code{grid.raster()} now give
       error on an empty (zero-length) raster.  (Reported by Ben North.)
+      
+      \item \code{plot.lm} would sometimes scramble the labels
+      in plot type 5.  (\PR{15458} and \PR{14837})
     }
   }
 }
