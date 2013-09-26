@@ -26,7 +26,7 @@ internet_la_LIBADD = $(LIBR) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -37,8 +37,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 	@$(MAKE) $(internet_la)
 
 $(internet_la): $(OBJECTS)

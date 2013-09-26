@@ -27,7 +27,7 @@ vfonts_la_LIBADD = $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -38,8 +38,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 	@$(MAKE) $(vfonts_la)
 
 $(vfonts_la): $(OBJECTS)

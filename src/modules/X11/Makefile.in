@@ -34,7 +34,7 @@ R_X11_la_LIBADD = $(ALL_X_LIBS) @BITMAP_LIBS@ $(LIBR) $(LIBM) @DYLIB_UNDEFINED_A
 R_de_la = R_de$(SHLIB_EXT)
 R_de_la_LIBADD = $(ALL_X_LIBS) $(LIBR) $(LIBM) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
-all: Makefile Makedeps R
+all: R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -45,8 +45,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makedeps
 	@$(MAKE) $(R_X11_la) $(R_de_la)
 	@$(MAKE) rhome="$(abs_top_builddir)" install
 

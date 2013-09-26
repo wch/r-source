@@ -24,8 +24,7 @@ PKG_CFLAGS = $(C_VISIBILITY)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-all: Makefile Makedeps
-	@$(MAKE) Makedeps
+all: Makedeps
 	@$(MAKE) shlib
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
