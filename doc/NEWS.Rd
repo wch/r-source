@@ -279,6 +279,9 @@
       
       \item \code{min()} did not handle \code{NA_character_} values
       properly.  (Reported by Magnus Thor Torfason.)
+      
+      \item (Windows only.)  \code{readRegistry()} would duplicate
+      default values for keys.  (\PR{15455})
     }
   }
 }
