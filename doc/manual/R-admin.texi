@@ -524,10 +524,21 @@ package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
 @file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example if
 you prefer the text and not the page number in the table of contents to
-be hyperlinked, use something like
+be hyperlinked, use
 @example
-\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktocpage=false@}@}@{@}
+\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=section@}@}@{@}
 @end example
+
+@noindent
+or 
+@example
+\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=all@}@}@{@}
+@end example
+
+@noindent
+to hyperlink both text and page number@footnote{The @code{linktoc} 
+settings require @pkg{hyperref} version 6.78f or newer; with older versions of
+@pkg{hyperref} use @code{linktocpage=false} to hyperlink the text.}.
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
