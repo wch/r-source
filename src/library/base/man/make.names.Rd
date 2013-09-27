@@ -1,6 +1,6 @@
 % File src/library/base/man/make.names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{make.names}
@@ -67,6 +67,8 @@ make.names(c("a and b", "a_and_b"), unique = TRUE)
 # "a.and.b"  "a_and_b"
 make.names(c("a and b", "a_and_b"), unique = TRUE, allow_ = FALSE)
 # "a.and.b"  "a.and.b.1"
+make.names(c("", "X"), unique = TRUE)
+# "X.1" "X" currently; R up to 3.0.2 gave "X" "X.1"
 
 state.name[make.names(state.name) != state.name] # those 10 with a space
 }

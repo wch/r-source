@@ -89,6 +89,9 @@
       \item Added \code{utils::fileSnapshot()} and 
       \code{utils::changedFiles()} functions to allow snapshots and 
       comparison of directories of files.
+      
+      \item \code{make.names(names, unique=TRUE)} now tries to preserve
+      existing names. (Suggestion of \PR{15452}.)
     }
   }
 
