@@ -2777,8 +2777,12 @@ cbind(L, M)
 ## lost the dim of M, so returned NULL entries
 
 
-## NA_character_ was not handled properly in min (reported by Magnus Thor Torfason)
+## NA_character_ was not handled properly in min and max (reported by Magnus Thor Torfason)
 str(min(NA, "bla"))
 str(min("bla", NA))
 str(min(NA_character_, "bla"))
-## Only the first gave NA, and it was NA_integer_, not NA_character_
+str(max(NA, "bla"))
+str(max("bla", NA))
+str(max(NA_character_, "bla"))
+## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
+## be the min or max.  

@@ -7223,12 +7223,19 @@ elem2 2 12   14
 > ## lost the dim of M, so returned NULL entries
 > 
 > 
-> ## NA_character_ was not handled properly in min (reported by Magnus Thor Torfason)
+> ## NA_character_ was not handled properly in min and max(reported by Magnus Thor Torfason)
 > str(min(NA, "bla"))
  chr NA
 > str(min("bla", NA))
  chr NA
 > str(min(NA_character_, "bla"))
  chr NA
-> ## Only the first gave NA, and it was NA_integer_, not NA_character_
+> str(max(NA, "bla"))
+ chr NA
+> str(max("bla", NA))
+ chr NA
+> str(max(NA_character_, "bla"))
+ chr NA
+> ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
+> ## be the min or max.  
 > 
