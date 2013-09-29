@@ -2839,11 +2839,11 @@ function(dir, force_suggests = TRUE)
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
 
-    ## This is unsafe if the package itself is the VignetteBuilder,
-    ## as we may not have installed it yet.
-    ## But only problematic if we get an old version.
+    ## If the package itself is the VignetteBuilder,
+    ## we may not have installed it yet.
+    defer <- package_name %in%  db["VignetteBuilder"]
     vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
-                          check = TRUE)
+                          check = !defer)
 
      if(length(vigns$msg))
          bad_depends$bad_engine <- vigns$msg
