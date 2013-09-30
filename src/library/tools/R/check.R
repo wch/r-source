@@ -260,6 +260,7 @@ setRlibs <-
         haveR <- dir.exists("R") && !extra_arch
 
         if (!extra_arch) {
+            if(dir.exists("build")) check_build()
             check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
             check_detritus()
@@ -634,6 +635,34 @@ setRlibs <-
             printLog(Log, paste(out, collapse = "\n"), "\n")
         }
 
+        if (!any) resultLog(Log, "OK")
+    }
+
+    check_build <- function()
+    {
+        fv <- file.path("build", "vignette.rds")
+        if(!file.exists(fv)) return()
+        checkingLog(Log, "'build' directory")
+        any <- FALSE
+        db <- readRDS(fv)
+        ## do as CRAN-pack does
+        keep <- nzchar(db$PDF)
+        if(any(!keep)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("Vignette(s) without any output listed in 'build/vignette.rds'",
+                     strwrap(sQuote(db$file[!keep]), indent = 2L, exdent = 2L))
+            printLog(Log, paste(msg, collapse = "\n"), "\n")
+        }
+        pdfs <- file.path("inst", "doc", db[keep, ]$PDF)
+        missing <- !file.exists(pdfs)
+        if(any(missing)) {
+            if(!any) warningLog(Log)
+            any <- TRUE
+            msg <- c("Output(s) listed in 'build/vignette.rds' but not in package:",
+                     strwrap(sQuote(pdfs[missing]), indent = 2L, exdent = 2L))
+            printLog(Log, paste(msg, collapse = "\n"), "\n")
+        }
         if (!any) resultLog(Log, "OK")
     }
 

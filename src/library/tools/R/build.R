@@ -349,7 +349,7 @@ get_exclude_patterns <- function()
                     Sys.setenv(R_LIBS = libdir)
                 }
 
-                # Tangle all vignettes now. 
+                # Tangle all vignettes now.
 
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
@@ -399,7 +399,7 @@ get_exclude_patterns <- function()
                         }
                     }
                 }
-		
+
 		vignetteIndex <- .build_vignette_index(vigns)
 
 		if(NROW(vignetteIndex) > 0L) {
@@ -421,6 +421,21 @@ get_exclude_patterns <- function()
 		dir.create("build", showWarnings = FALSE)
 		saveRDS(vignetteIndex,
 			file = file.path("build", "vignette.rds"))
+            }
+        } else {
+            fv <- file.path("build", "vignette.rds")
+            if(file.exists(fv)) {
+                checkingLog(Log, "vignette meta-information")
+                db <- readRDS(fv)
+                pdfs <- file.path("inst", "doc", db[nzchar(db$PDF), ]$PDF)
+                missing <- !file.exists(pdfs)
+                if(any(missing)) {
+                    msg <- c("Output(s) listed in 'build/vignette.rds' but not in package:",
+                             strwrap(sQuote(pdfs[missing]), indent = 2L, exdent = 2L),
+                             "Run R CMD build without --no-build-vignettes to re-create")
+                    errorLog(Log, paste(msg, collapse = "\n"))
+                    do_exit(1L)
+                }
             }
         }
         if (compact_vignettes != "no" &&
