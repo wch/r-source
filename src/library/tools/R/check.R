@@ -1900,7 +1900,7 @@ setRlibs <-
             warningLog(Log)
             any <- TRUE
             msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                    strwrap(paste(sources, collapse = ", "),
+                    strwrap(paste(sQuote(sources), collapse = ", "),
                             indent = 2L, exdent = 4L),
                      "")
             printLog(Log, paste(msg, collapse = "\n"))

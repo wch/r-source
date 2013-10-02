@@ -4377,10 +4377,11 @@ OBJC="clang"
 @end example
 
 @noindent
-Full names are not needed, but help to ensure that the intended
-compilers are used.  The recommended Fortran compiler defaults to
-32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit build, use
-@code{-arch i386} for all compiler commands.)
+Full names help to ensure that the intended compilers are used.  In
+particular @command{gcc} is a copy of @command{llvm-gcc-4.2} for Xcode <
+5 but of @command{clang} in Xcode 5.  The recommended Fortran compiler
+defaults to 32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit
+build, use @code{-arch i386} for all compiler commands.)
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
