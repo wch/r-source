@@ -10266,12 +10266,12 @@ files when using these entry points.
 @end quotation
 
 This remapping can cause problems@footnote{Known problems are redefining
-@code{error}, @code{length}, @code{vector} and @code{warning}}, and can
-be eliminated by defining @code{R_NO_REMAP} and prepending @samp{Rf_} to
-@emph{all} the function names used from @file{Rinternals.h} and
-@file{R_ext/Error.h}.  These problems can usually be avoided by
-including other headers (such as system headers and those for external
-software used by the package) before @file{R.h}.
+@code{LENGTH}, @code{error}, @code{length}, @code{vector} and
+@code{warning}}, and can be eliminated by defining @code{R_NO_REMAP} and
+prepending @samp{Rf_} to @emph{all} the function names used from
+@file{Rinternals.h} and @file{R_ext/Error.h}.  These problems can
+usually be avoided by including other headers (such as system headers
+and those for external software used by the package) before @file{R.h}.
 
 We can classify the entry points as
 

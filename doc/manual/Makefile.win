@@ -29,7 +29,8 @@ OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
-MAKEINFO = LC_ALL=C makeinfo
+## Now set in MkRules
+## MAKEINFO = LC_ALL=C makeinfo
 PDFLATEX = pdflatex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
