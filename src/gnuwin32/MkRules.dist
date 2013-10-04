@@ -88,6 +88,11 @@ BUILD_HTML = NO
 # unset this if you are *not* using MiKTeX
 MIKTEX = TRUE
 
+# for texinfo < 5.0
+MAKEINFO = LC_ALL=C makeinfo
+# for texinfo >= 5.0
+# MAKEINFO = LC_ALL=C perl texi2any
+
 # additional optimization flags
 EOPTS=-mtune=core2
 
