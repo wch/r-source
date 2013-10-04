@@ -1260,6 +1260,12 @@ in your path).
 See the @ref{Making the manuals} section in the Unix-alike section for setting
 options such as the paper size and the fonts used.
 
+Version 4.x of @command{makeinfo} from Rtools is assumed by default.
+If you have version 5.x of @pkg{texinfo}, @command{makeinfo} has been
+replaced by a @command{Perl} script @command{texi2any}: file
+@file{MkRules.dist} contains alternative macros to allow that to be used
+(copy it to @file{MkRules.local} before editing).
+
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
 
