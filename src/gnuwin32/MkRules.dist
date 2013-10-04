@@ -91,7 +91,7 @@ MIKTEX = TRUE
 # for texinfo < 5.0
 MAKEINFO = LC_ALL=C makeinfo
 # for texinfo >= 5.0
-# MAKEINFO = LC_ALL=C perl texi2any
+# MAKEINFO = LC_ALL=C /path/to/perl /path/to/texi2any
 
 # additional optimization flags
 EOPTS=-mtune=core2
