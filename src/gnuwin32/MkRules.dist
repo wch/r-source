@@ -90,11 +90,11 @@ MIKTEX = TRUE
 
 # for texinfo < 5.0
 MAKEINFO = LC_ALL=C makeinfo
-# for texinfo >= 5.0
+# for texinfo >= 5.0.  Might also need -I/path/to/modules
 # MAKEINFO = LC_ALL=C /path/to/perl /path/to/texi2any
 
-# additional optimization flags
-EOPTS=-mtune=core2
+# additional optimization flags (use -mtune=native for a private build)
+EOPTS = -mtune=core2
 
 # define to -fopenmp if the toolchain has OpenMP support
 OPENMP = -fopenmp
