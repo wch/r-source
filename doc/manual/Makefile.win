@@ -67,7 +67,7 @@ all: pdf
 	@rm -f $@.tmp
 
 .texi.info:
-	LC_ALL $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+	LC_ALL=C $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 ifeq ($(strip $(TEXI2DVI)),)
 .texi.pdf:
@@ -88,7 +88,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
-	@LC_ALL $(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
+	@LC_ALL=C $(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
