@@ -89,9 +89,9 @@ BUILD_HTML = NO
 MIKTEX = TRUE
 
 # for texinfo < 5.0
-MAKEINFO = LC_ALL=C makeinfo
+MAKEINFO = makeinfo
 # for texinfo >= 5.0.  Might also need -I/path/to/modules
-# MAKEINFO = LC_ALL=C /path/to/perl /path/to/texi2any
+# MAKEINFO = /path/to/perl /path/to/texi2any
 
 # additional optimization flags (use -mtune=native for a private build)
 EOPTS = -mtune=core2

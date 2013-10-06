@@ -30,7 +30,7 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 ## Now set in MkRules
-## MAKEINFO = LC_ALL=C makeinfo
+## MAKEINFO = makeinfo
 PDFLATEX = pdflatex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
@@ -40,8 +40,8 @@ TEXINDEX = LC_ALL=C texindex
 
 MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
-TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
-TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
+TEXI2HTML = LC_ALL=C $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
+TEXI2TEXT = LC_ALL=C $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 
 R_PAPERSIZE = a4
 # omit 'hyper' to omit the hyperlinks
@@ -67,7 +67,7 @@ all: pdf
 	@rm -f $@.tmp
 
 .texi.info:
-	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+	LC_ALL $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 ifeq ($(strip $(TEXI2DVI)),)
 .texi.pdf:
@@ -88,7 +88,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
-	@$(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
+	@LC_ALL $(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
