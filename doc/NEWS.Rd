@@ -8,11 +8,15 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.0.2 patched}{
-  \subsection{BUG FIXES}{
+  \subsection{NEW FEATURES}{
     \itemize{
       \item On Windows there is support for making \file{.texi} manuals
       using \command{texinfo} 5.0 or later: the setting is in file
       \file{src/gnuwin32/MkRules.dist}.
+
+      A packaging of the Perl script and modules for \command{texinfo}
+      5.2 has been made available at
+      \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
     }
   }
   

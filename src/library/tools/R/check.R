@@ -324,7 +324,8 @@ setRlibs <-
             if(length(sources)) {
                 checkingLog(Log, "for old-style vignette sources")
                 msg <- c("Vignette sources only in 'inst/doc':",
-                         strwrap(paste(sources, collapse = ", "), indent = 2L, exdent = 4L),
+                         strwrap(paste(sQuote(sources), collapse = ", "),
+                                 indent = 2L, exdent = 4L),
                          "A 'vignettes' directory will be required as from R 3.1.0")
                 noteLog(Log, paste(msg, collapse = "\n"))
             }
