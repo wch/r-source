@@ -316,6 +316,20 @@ setRlibs <-
         }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
         if (dir.exists("vignettes")) check_vign_contents()
+        if (dir.exists("inst/doc") && !dir.exists("vignettes")) {
+            pattern <- vignetteEngine("Sweave")$pattern
+            vign_dir <- file.path(dir, "vignettes")
+            sources <- setdiff(list.files(file.path("inst", "doc"),
+                                          pattern = pattern),
+                               list.files("vignettes", pattern = pattern))
+            if(length(sources)) {
+                checkingLog(Log, "for old-style vignette sources")
+                msg <- c("Vignette sources only in 'inst/doc':",
+                         strwrap(paste(sources, collapse = ", "), indent = 2L, exdent = 4L),
+                         "A 'vignettes' directory will be required as from R 3.1.0")
+                noteLog(Log, paste(msg, collapse = "\n"))
+            } else resultLog("OK")
+        }
 
         setwd(pkgoutdir)
 
@@ -742,13 +756,14 @@ setRlibs <-
                        "BUGS", "Bugs",
                        "ChangeLog", "Changelog", "CHANGELOG", "CHANGES", "Changes",
                        "INSTALL", "README", "THANKS", "TODO", "ToDo",
-                       "README.md", # seems popular
+                       "README.md",   # seems popular
                        "configure", "configure.win", "cleanup", "cleanup.win",
                        "configure.ac", "configure.in",
                        "datafiles",
                        "R", "data", "demo", "exec", "inst", "man",
                        "po", "src", "tests", "vignettes",
-                       "build", # used by R CMD build
+                       "build",       # used by R CMD build
+                       ".aspell",     # used for spell checking packages
                        "java", "tools") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
@@ -2957,7 +2972,7 @@ setRlibs <-
         dots <- sub("^./","", dots)
         allowed <-
             c(".Rbuildignore", ".Rinstignore", "vignettes/.install_extras",
-              ".install_timestamp") # Kurt uses this
+              ".install_timestamp") # Kurt used to use this
         dots <- dots[!dots %in% allowed]
         alldirs <- list.dirs(".", full.names = TRUE, recursive = TRUE)
         alldirs <- sub("^./","", alldirs)

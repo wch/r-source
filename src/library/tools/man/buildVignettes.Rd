@@ -21,10 +21,12 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 }
 \arguments{
   \item{package}{a character string naming an installed package.  If
-    given, Sweave files are searched in subdirectory \file{doc}.}
+    given, vignette source files are by default looked for in
+    subdirectory \file{doc}.}
   \item{dir}{a character string specifying the path to a package's root
     source directory.  This subdirectory \file{vignettes} (or if it
-    does not exist \file{inst/doc}) is searched for Sweave files.}
+    does not exist \file{inst/doc}) is searched for vignette source
+    files.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
@@ -35,7 +37,9 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
     were copies there before.}
   \item{tangle}{logical.  Do tangling as well as weaving.}
   \item{subdirs}{a character vector of subdirectories of \code{dir} in which
-    to look for vignettes.  Ignored if \code{package} is used.}
+    to look for vignettes.  The first which exists is used.  Defaults to
+    \code{"doc"} if \code{package} is supplied, otherwise
+    \code{c("vignettes", "inst/doc")}.} 
   \item{output}{logical.  If \code{TRUE}, the output filename
     for each vignette in the result.}
   \item{source}{logical.  If \code{TRUE}, include the tangled output filename
@@ -47,7 +51,7 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 }
 \details{
   \code{buildVignettes} is used by \code{R CMD build} and \code{R CMD
-    check} to (re-)build vignette PDFs from their (typically Sweave) sources.
+    check} to (re-)build vignette PDFs from their sources.
 }
 \value{
   \code{buildVignettes} is called for its side effect of creating the
