@@ -327,7 +327,7 @@ setRlibs <-
                          strwrap(paste(sources, collapse = ", "), indent = 2L, exdent = 4L),
                          "A 'vignettes' directory will be required as from R 3.1.0")
                 noteLog(Log, paste(msg, collapse = "\n"))
-            } else resultLog("OK")
+            }
         }
 
         setwd(pkgoutdir)
