@@ -318,7 +318,6 @@ setRlibs <-
         if (dir.exists("vignettes")) check_vign_contents()
         if (dir.exists("inst/doc") && !dir.exists("vignettes")) {
             pattern <- vignetteEngine("Sweave")$pattern
-            vign_dir <- file.path(dir, "vignettes")
             sources <- setdiff(list.files(file.path("inst", "doc"),
                                           pattern = pattern),
                                list.files("vignettes", pattern = pattern))
