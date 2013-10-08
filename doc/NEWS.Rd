@@ -124,6 +124,9 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item Only vignettes sources in directory \file{vignettes} are
+      considered to be vignettes and hence indexed as such.
+
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
       is no longer recognized as valid. Use \samp{MIT} or
       \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
@@ -160,6 +163,10 @@
 
   \subsection{UTILITIES}{
     \itemize{
+      \item Only vignettes sources in directory \file{vignettes} are
+      considered to be vignettes and hence checked.  That has been the
+      preferred location since \R 2.14.0 and is now obligatory.
+      
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
       case-insensitively on all platforms (not just on Windows).
@@ -256,11 +263,15 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.0.2 patched}{
-  \subsection{BUG FIXES}{
+  \subsection{NEW FEATURES}{
     \itemize{
       \item On Windows there is support for making \file{.texi} manuals
       using \command{texinfo} 5.0 or later: the setting is in file
       \file{src/gnuwin32/MkRules.dist}.
+
+      A packaging of the Perl script and modules for \command{texinfo}
+      5.2 has been made available at
+      \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
     }
   }
   
