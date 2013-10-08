@@ -321,11 +321,25 @@ setRlibs <-
             sources <- setdiff(list.files(file.path("inst", "doc"),
                                           pattern = pattern),
                                list.files("vignettes", pattern = pattern))
+            buildPkgs <- .get_package_metadata(".")["VignetteBuilder"]
+            if (!is.na(buildPkgs)) {
+                buildPkgs <- unlist(strsplit(buildPkgs, ","))
+                buildPkgs <- unique(gsub('[[:space:]]', '', buildPkgs))
+                engineList <- vignetteEngine(package = buildPkgs)
+                for(nm in names(engineList)) {
+                    pattern <- engineList[[nm]]$pattern
+                    sources <- c(sources,
+                                 setdiff(list.files(file.path("inst", "doc"),
+                                                    pattern = pattern),
+                                         list.files("vignettes", pattern = pattern)))
+                }
+            }
+            sources <- unique(sources)
             if(length(sources)) {
                 checkingLog(Log, "for old-style vignette sources")
                 msg <- c("Vignette sources only in 'inst/doc':",
                          strwrap(paste(sQuote(sources), collapse = ", "),
-                                 indent = 2L, exdent = 4L),
+                                 indent = 2L, exdent = 2L),
                          "A 'vignettes' directory will be required as from R 3.1.0")
                 noteLog(Log, paste(msg, collapse = "\n"))
             }
