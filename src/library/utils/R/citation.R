@@ -1080,9 +1080,6 @@ function(package = "base", lib.loc = NULL, auto = NULL)
         ## if CITATION is available
         if(!auto) {
             return(readCitationFile(citfile, meta))
-        } else if(package == "base") {
-            ## Avoid infinite recursion for broken installation.
-            stop("broken installation, no CITATION file in the base package.")
         }
     }
 
