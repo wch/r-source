@@ -881,8 +881,8 @@ place.
 Field @samp{Depends} should nowadays be used rarely, only for packages
 which are intended to be put on the search path to make their facilities
 available to the end user (and not to the package itself): for example
-it makes sense that a user of package @pkg{latticeExtra} would want the
-functions of package @pkg{lattice} made available.
+it makes sense that a user of package @CRANpkg{latticeExtra} would want
+the functions of package @CRANpkg{lattice} made available.
 
 Almost always packages mentioned in @samp{Depends} should also be
 imported from in the @file{NAMESPACE} file: this ensures that any needed
@@ -1473,11 +1473,11 @@ versions of Autoconf in fact allow an already set @code{FLIBS} to
 override the test for the FORTRAN linker flags.)
 
 
-@strong{Note bene:} If the @command{configure} script creates files,
-e.g.@: @file{src/Makevars}, you do need a @command{cleanup} script to
-remove them.  Otherwise if the package has vignettes, @command{R CMD
-build} will ship the files that are created.  For example, package
-@pkg{RODBC} has
+@strong{N.B.}: If the @command{configure} script creates files, e.g.@:
+@file{src/Makevars}, you do need a @command{cleanup} script to remove
+them.  Otherwise if the package has vignettes, @command{R CMD build}
+will ship the files that are created.  For example, package
+@CRANpkg{RODBC} has
 
 @example
 #!/bin/sh
@@ -1603,7 +1603,7 @@ preprocessor options (for example include paths) for C/C++ files
 @code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
 (@pxref{Creating shared objects}).
 
-@strong{NB:} Include paths are preprocessor options, not compiler
+@strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.
@@ -2553,19 +2553,20 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl-like regular expressions (see
 the help for @code{regexp} in @R{} for the precise details), one per
-line, to be matched@footnote{case-insensitively on Windows.} against the
-file and directory names relative to the top-level package source
-directory.  In addition, directories from source control
-systems@footnote{called @file{CVS} or @file{.svn} or @file{.arch-ids} or
-@file{.bzr} or @file{.git} (but not files called @file{.git}) or
-@file{.hg}.} or from @command{eclipse}@footnote{called
-@file{.metadata}.}, directories with names ending @file{.Rcheck} or
-@file{Old} or @file{old} and files @file{GNUMakefile},
-@file{Read-and-delete-me} or with base names starting with @samp{.#}, or
-starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
-@samp{.swp}, are excluded by default.  In addition, those files in the
-@file{R}, @file{demo} and @file{man} directories which are flagged by
-@command{R CMD check} as having invalid names will be excluded.
+line, to be matched@footnote{case-insensitively on Windows, and on all
+platforms from @R{} 3.1.0.} against the file and directory names
+relative to the top-level package source directory.  In addition,
+directories from source control systems@footnote{called @file{CVS} or
+@file{.svn} or @file{.arch-ids} or @file{.bzr} or @file{.git} (but not
+files called @file{.git}) or @file{.hg}.} or from
+@command{eclipse}@footnote{called @file{.metadata}.}, directories with
+names ending @file{.Rcheck} or @file{Old} or @file{old} and files
+@file{GNUMakefile}, @file{Read-and-delete-me} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.  In
+addition, those files in the @file{R}, @file{demo} and @file{man}
+directories which are flagged by @command{R CMD check} as having invalid
+names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -2641,7 +2642,9 @@ build} ensures those two are recorded with execute permission.
 
 Directory @file{build} of the package sources is reserved for use by
 @command{R CMD build}: it contains information which may not easily be
-created when the package is installed.
+created when the package is installed, including index information on
+the vignettes and, rarely, information on the help pages and perhaps a
+copy of the PDF reference manual (see above).
 
 @node Building binary packages,  , Building package tarballs, Checking and building packages
 @subsection Building binary packages
@@ -2778,22 +2781,21 @@ met: many, including @acronym{CRAN}, see the omission of source
 components as incompatible with an Open Source license.}
 
 By default @code{R CMD build} will run @code{Sweave} on all Sweave
-vignette source files in @file{vignettes}, or @emph{pro tem} if that
-does not exist, @file{inst/doc} (but not in sub-directories).  If no
-@file{Makefile} is found in directory @file{inst/doc}, then
-@code{tools::texi2pdf} is run on all processed vignette sources.
-Whenever a @file{Makefile} is found in the vignette source directory,
-then @code{R CMD build} will try to run @command{make} after the
-@code{Sweave} runs.  The first target in the @file{Makefile} should take
-care of both creation of PDF/@HTML{} files and cleaning up afterwards
-(including after @code{Sweave}), i.e., delete all files that shall not
-appear in the final package archive.  Note that if the @code{make} step
-runs @R{} it needs to be careful to respect the environment values of
-@env{R_LIBS} and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to
-the @env{PATH} so that references to @command{R} or @command{Rscript} in
-the @file{Makefile} do make use of the currently running version of
-@R{}.}.  Finally, if there is a @file{Makefile} and it has a
-@samp{clean:}  target, @command{make clean} is run.
+vignette source files in the vignettes source directory.  If
+@file{Makefile} is found in the vignette source directory, then @code{R
+CMD build} will try to run @command{make} after the @code{Sweave} runs,
+otherwise @code{texi2pdf} is run on each @file{.tex} file produced.
+
+The first target in the @file{Makefile} should take care of both
+creation of PDF/@HTML{} files and cleaning up afterwards (including
+after @code{Sweave}), i.e., delete all files that shall not appear in
+the final package archive.  Note that if the @code{make} step runs @R{}
+it needs to be careful to respect the environment values of @env{R_LIBS}
+and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to the
+@env{PATH} so that references to @command{R} or @command{Rscript} in the
+@file{Makefile} do make use of the currently running version of @R{}.}.
+Finally, if there is a @file{Makefile} and it has a @samp{clean:}
+target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
 It must be portable (no @acronym{GNU} extensions), use LF line endings
@@ -2816,12 +2818,6 @@ clean:
 @noindent
 which will start removing the source files whilst @command{pdflatex} is
 working.
-
-Note that it is pointless (and potentially misleading since the files
-might be outdated) to include in @file{inst/doc} @R{} code files which
-would be generated from vignette sources, as these will be re-generated
-when the package is built (unless the vignette does not generate any
-@R{} code, in which case it is also pointless/misleading).
 
 Metadata lines can be placed in the source file, preferably in @LaTeX{}
 comments in the preamble.  One such is a @code{\VignetteIndexEntry} of
@@ -2962,8 +2958,9 @@ checked.
 
 The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
 files as output.  If it produces @file{.tex} files, @R{} will 
-call @command{pdflatex} to convert them to @file{.pdf} for display
-to the user.
+call @code{texi2pdf} to convert them to @file{.pdf} for display
+to the user (unless there is a @file{Makefile} in the @file{vignettes}
+directory).
 
 Package writers who would like to supply vignette engines need
 to register those engines in the package @code{.onLoad} function.
