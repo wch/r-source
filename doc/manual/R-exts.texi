@@ -2746,16 +2746,10 @@ other vignette engines besides Sweave are supported; see @ref{Non-Sweave
 vignettes}.
 
 Package vignettes have their sources in subdirectory @file{vignettes} of
-the package sources (@emph{pro tem}@footnote{This is expected to be
-removed in @R{} 3.1.0.} for compatibility with the layout before @R{}
-2.14.0, vignette sources will be looked for in @file{inst/doc} if
-subdirectory @file{vignettes} does not exist), with code and output
-obtained from these in @file{inst/doc}.  Note that the location of the
-vignette sources only affects @command{R CMD build} and @command{R CMD
-check}:  the tarball built by @command{R CMD build} includes in
-@file{inst/doc} the components@footnote{at least the PDF documents and
-the Sweave files so these can be tangled to produce the @R{} code.}
-intended to be installed.
+the package sources.  Note that the location of the vignette sources
+only affects @command{R CMD build} and @command{R CMD check}: the
+tarball built by @command{R CMD build} includes in @file{inst/doc} the
+components intended to be installed.
 
 Sweave vignette sources are normally given the file extension
 @file{.Rnw} or @file{.Rtex}, but for historical reasons
@@ -2781,31 +2775,31 @@ vignette) must be in the vignette source directory.
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create the
 (PDF or @HTML{} versions of the) vignettes in @file{inst/doc} for
-distribution with the package sources.  By including the vignettes in
-the package sources it is not necessary that these can be re-built at
-install time, i.e., the package author can use private @R{} packages,
-screen snapshots and @LaTeX{} extensions which are only available on his
-machine.@footnote{provided the conditions of the package's license are
-met: many, including @acronym{CRAN}, see the omission of source
-components as incompatible with an Open Source license.}
+distribution with the package sources.  By including the vignette
+outputs in the package sources it is not necessary that these can be
+re-built at install time, i.e., the package author can use private @R{}
+packages, screen snapshots and @LaTeX{} extensions which are only
+available on his machine.@footnote{provided the conditions of the
+package's license are met: many, including @acronym{CRAN}, see the
+omission of source components as incompatible with an Open Source
+license.}
 
 By default @code{R CMD build} will run @code{Sweave} on all Sweave
-vignette source files in @file{vignettes}, or @emph{pro tem} if that
-does not exist, @file{inst/doc} (but not in sub-directories).  If no
-@file{Makefile} is found in directory @file{inst/doc}, then
-@code{tools::texi2pdf} is run on all processed vignette sources.
-Whenever a @file{Makefile} is found in the vignette source directory,
-then @code{R CMD build} will try to run @command{make} after the
-@code{Sweave} runs.  The first target in the @file{Makefile} should take
-care of both creation of PDF/@HTML{} files and cleaning up afterwards
-(including after @code{Sweave}), i.e., delete all files that shall not
-appear in the final package archive.  Note that if the @code{make} step
-runs @R{} it needs to be careful to respect the environment values of
-@env{R_LIBS} and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to
-the @env{PATH} so that references to @command{R} or @command{Rscript} in
-the @file{Makefile} do make use of the currently running version of
-@R{}.}.  Finally, if there is a @file{Makefile} and it has a
-@samp{clean:}  target, @command{make clean} is run.
+vignette source files in @file{vignettes}.  If @file{Makefile} is found
+in the vignette source directory, then @code{R CMD build} will try to
+run @command{make} after the @code{Sweave} runs, otherwise
+@code{texi2pdf} is run on each @file{.tex} file produced.
+
+The first target in the @file{Makefile} should take care of both
+creation of PDF/@HTML{} files and cleaning up afterwards (including
+after @code{Sweave}), i.e., delete all files that shall not appear in
+the final package archive.  Note that if the @code{make} step runs @R{}
+it needs to be careful to respect the environment values of @env{R_LIBS}
+and @env{R_HOME}@footnote{@code{R_HOME/bin} is prepended to the
+@env{PATH} so that references to @command{R} or @command{Rscript} in the
+@file{Makefile} do make use of the currently running version of @R{}.}.
+Finally, if there is a @file{Makefile} and it has a @samp{clean:}
+target, @command{make clean} is run.
 
 All the usual @emph{caveats} about including a @file{Makefile} apply.
 It must be portable (no @acronym{GNU} extensions), use LF line endings
@@ -2828,12 +2822,6 @@ clean:
 @noindent
 which will start removing the source files whilst @command{pdflatex} is
 working.
-
-Note that it is pointless (and potentially misleading since the files
-might be outdated) to include in @file{inst/doc} @R{} code files which
-would be generated from vignette sources, as these will be re-generated
-when the package is built (unless the vignette does not generate any
-@R{} code, in which case it is also pointless/misleading).
 
 Metadata lines can be placed in the source file, preferably in @LaTeX{}
 comments in the preamble.  One such is a @code{\VignetteIndexEntry} of
@@ -2974,8 +2962,9 @@ checked.
 
 The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
 files as output.  If it produces @file{.tex} files, @R{} will 
-call @command{pdflatex} to convert them to @file{.pdf} for display
-to the user.
+call @code{texi2pdf} to convert them to @file{.pdf} for display
+to the user (unless there is a @file{Makefile} in the @file{vignettes}
+directory).
 
 Package writers who would like to supply vignette engines need
 to register those engines in the package @code{.onLoad} function.
