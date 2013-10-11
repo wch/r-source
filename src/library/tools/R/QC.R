@@ -2839,6 +2839,7 @@ function(dir, force_suggests = TRUE)
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
 
+    ## This is a check for old-location vignettes.
     ## If the package itself is the VignetteBuilder,
     ## we may not have installed it yet.
     defer <- package_name %in%  db["VignetteBuilder"]
@@ -4278,6 +4279,7 @@ function(dir, doDelete = FALSE)
         }
     }
 
+    ## FIXME: check for vignettes dir.
     subdir <- file.path("inst", "doc")
     vigns <- pkgVignettes(dir=dir, subdirs=subdir)
     if (!is.null(vigns) && length(vigns$docs) > 0L) {
@@ -5549,31 +5551,15 @@ function(dir, lib.loc = NULL)
 ### * .check_packages_used_in_vignettes
 
 .check_packages_used_in_vignettes <-
-function(package, dir, lib.loc = NULL)
+function(package, lib.loc = NULL)
 {
     ## Argument handling.
-    if(!missing(package)) {
-        if(length(package) != 1L)
-            stop("argument 'package' must be of length 1")
-        dir <- find.package(package, lib.loc)
-        subdir <- "doc"
-    }
-    else if(!missing(dir)) {
-        ## Using sources from directory @code{dir} ...
-        ## not currently used
-        ## <NOTE>
-        ## This needs unpacked sources built with R >= 3.0.0, which
-        ## apparently also tangles the vignette sources.
-        if(!file_test("-d", dir))
-            stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA)
-        else
-            dir <- file_path_as_absolute(dir)
-        subdir <- file.path("inst", "doc")
-        ## </NOTE>
-    }
+    if(missing(package) || length(package) != 1L)
+        stop("argument 'package' must be of length 1")
+    dir <- find.package(package, lib.loc)
+    ## FIXME: use Meta directory.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    vinfo <- pkgVignettes(dir = dir, subdirs = subdir, source = TRUE)
+    vinfo <- pkgVignettes(dir = dir, subdir = "doc", source = TRUE)
     Rfiles <- unique(as.character(unlist(vinfo$sources)))
     .check_packages_used_helper(db, Rfiles)
 }
@@ -6593,7 +6579,7 @@ function(x, ...)
           if(identical(x$have_vignettes_dir, FALSE))
               c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L),
-                "A 'vignettes' directory has been preferred since R 2.14.0")
+                "A 'vignettes' directory is required as from R 3.1.0")
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))

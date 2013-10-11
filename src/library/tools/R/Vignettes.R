@@ -321,6 +321,9 @@ engineMatches <- function(regengine, vigengine) {
 ### vignette source files, the registered vignette engine for
 ### each of them, and the name of the directory which contains them.
 
+### A vector of 'subdirs' is allowed for historical reasons but the
+### first which exists is used.
+
 pkgVignettes <-
 function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
          source = FALSE, check = FALSE)
@@ -339,7 +342,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     else {
 	dir <- file_path_as_absolute(dir)
 	if (is.null(subdirs))
-	    subdirs <- c("vignettes", if (missing(package)) file.path("inst", "doc") else file.path("doc") )
+	    subdirs <- if (missing(package)) "vignettes" else "doc"
 	for (subdir in subdirs) {
 	    docdir <- file.path(dir, subdir)
 	    if(file_test("-d", docdir))
@@ -563,8 +566,10 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 ### Run a weave and/or tangle on one vignette and try to
 ### remove all temporary files that were created.
 
-buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
-    quiet = TRUE, clean = TRUE, engine=NULL, buildPkg=NULL, ...) {
+buildVignette <-
+    function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
+    quiet = TRUE, clean = TRUE, engine = NULL, buildPkg = NULL, ...)
+{
 
     if (!file_test("-f", file))
 	stop(gettextf("file '%s' not found", file),
@@ -583,7 +588,7 @@ buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = 
 
     # Get the vignette engine
     if (is.character(engine))
-	engine <- vignetteEngine(engine, package=buildPkg)
+	engine <- vignetteEngine(engine, package = buildPkg)
 
     # Infer the vignette name
     names <- sapply(engine$pattern, FUN = sub, "", file)

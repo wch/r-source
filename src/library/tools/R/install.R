@@ -1151,15 +1151,15 @@
 	    res <- try(.install_package_indices(".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
-            if(file_test("-d", "vignettes") || file_test("-d", "inst/doc")) {
+            if(file_test("-d", "vignettes")) {
                 starsmsg(stars, "installing vignettes")
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
 		if (file_test("-f", file.path("build", "vignette.rds")))
-		    installer <- .install_package_vignettes3   
-		# FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
+		    installer <- .install_package_vignettes3
+		## FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
 		else
-		    installer <- .install_package_vignettes2 
+		    installer <- .install_package_vignettes2
                 res <- try(installer(".", instdir, enc))
 	    if (inherits(res, "try-error"))
 		errmsg("installing vignettes failed")
