@@ -6587,11 +6587,13 @@ function(x, ...)
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
               c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
-                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L),
+                strwrap(paste(sQuote(y), collapse = ", "),
+                        indent = 2L, exdent = 2L),
                 "A 'vignettes' directory is required as from R 3.1.0")
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
-                strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+                strwrap(paste(sQuote(y), collapse = ", "),
+                        indent = 2L, exdent = 2L))
       },
       if(length(y <- x$missing_vignette_index)) {
           "Package has non-Sweave vignettes but no prebuilt vignette index."
