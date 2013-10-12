@@ -2671,6 +2671,7 @@ function(dir, force_suggests = TRUE)
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
 
+    ## This is a check for old-location vignettes.
     ## If the package itself is the VignetteBuilder,
     ## we may not have installed it yet.
     defer <- package_name %in%  db["VignetteBuilder"]
@@ -6230,28 +6231,37 @@ function(dir)
     if (length(uses)) out$uses <- sort(unique(uses))
     if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
 
-    ## Check for vignette source (only) in old-style 'inst/doc' rather
-    ## than new-style 'vignettes'.
-    ## Currently only works for Sweave vignettes: eventually, we should
-    ## be able to use build/vignettes.rds for determining *all* package
-    ## vignettes.
+    ## Check for non-Sweave vignettes (as indicated by the presense of a
+    ## 'VignetteBuilder' field in DESCRIPTION) without
+    ## 'build/vignette.rds'.
 
-    pattern <- vignetteEngine("Sweave")$pattern
+    vds <- character()
+    if(!is.na(meta["VignetteBuilder"])) {
+        if(!file.exists(vds <- file.path(dir, "build", "vignette.rds")))
+            out$missing_vignette_index <- TRUE
+        else
+            vds <- readRDS(vds)[, "File"]
+    }
+
+    ## Check for vignette source (only) in old-style 'inst/doc' rather
+    ## than 'vignettes'.
     vign_dir <- file.path(dir, "vignettes")
-    sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
-                                  pattern = pattern),
-                       list.files(vign_dir, pattern = pattern))
+    if(length(vds)) {
+        sources <- setdiff(list.files(file.path(dir, "inst", "doc")),
+                           list.files(vign_dir))
+        sources <- intersect(vds, sources)
+    } else {
+        pattern <- vignetteEngine("Sweave")$pattern
+        sources <- setdiff(list.files(file.path(dir, "inst", "doc"),
+                                      pattern = pattern),
+                           list.files(vign_dir, pattern = pattern))
+    }
+
     if(length(sources)) {
         out$have_vignettes_dir <- file_test("-d", vign_dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
-    ## Check for excessive 'Depends'
-    deps <- strsplit(meta["Depends"], ", *")[[1]]
-    deps <- sub("[ (].*$", "", deps)
-    ## and seems some spaces get through
-    deps <- sub("^\\s+", "", deps, perl = TRUE)
-    deps <- sub("\\s+$", "", deps, perl = TRUE)
 
     deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
                             "methods", "utils", "stats"))
