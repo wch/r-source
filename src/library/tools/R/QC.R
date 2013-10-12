@@ -6262,6 +6262,12 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for excessive 'Depends'
+    deps <- strsplit(meta["Depends"], ", *")[[1]]
+    deps <- sub("[ (].*$", "", deps)
+    ## and seems some spaces get through
+    deps <- sub("^\\s+", "", deps, perl = TRUE)
+    deps <- sub("\\s+$", "", deps, perl = TRUE)
 
     deps <- setdiff(deps, c("R", "base", "datasets", "grDevices", "graphics",
                             "methods", "utils", "stats"))
