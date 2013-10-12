@@ -4279,20 +4279,21 @@ function(dir, doDelete = FALSE)
         }
     }
 
-    ## FIXME: check for vignettes dir.
+    ## check installed vignette material
     subdir <- file.path("inst", "doc")
-    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
-    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+    vigns <- pkgVignettes(dir = dir, subdirs = subdir)
+    if (!is.null(vigns) && length(vigns$docs)) {
         vignettes <- basename(vigns$docs)
 
-        # Add vignette output files, if they exist
+        ## Add vignette output files, if they exist
         tryCatch({
-            vigns <- pkgVignettes(dir=dir, subdirs=subdir, output=TRUE)
+            vigns <- pkgVignettes(dir = dir, subdirs = subdir, output = TRUE)
             vignettes <- c(vignettes, basename(vigns$outputs))
         }, error = function(ex) {})
 
-        ## we specify ASCII filenames starting with a letter in R-exts
-        ## do this in a locale-independent way.
+        ## 'the file names should start with an ASCII letter and be comprised
+        ## entirely of ASCII letters or digits or hyphen or underscore'
+        ## Do this in a locale-independent way.
         OK <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz][ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
