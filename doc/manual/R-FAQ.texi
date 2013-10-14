@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2013
-@set FAQ_DATE @value{FAQ_YEAR}-09-16
+@set FAQ_DATE @value{FAQ_YEAR}-10-14
 @set REL_YEAR 2013
 @set REL_MAJOR 3
 @set REL_MINOR 0
@@ -2130,7 +2130,7 @@ manipulation (recording and saving transcript files, manipulating and
 editing saved transcripts, and re-evaluating commands from transcript
 files).
 
-The latest stable version of @acronym{ESS} are available via @CRAN{} or
+The latest stable version of @acronym{ESS} is available via @CRAN{} or
 the @url{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
 of the documentation can be found at @url{http://stat.ethz.ch/ESS/}.
 
@@ -2349,7 +2349,7 @@ R> D(expression(x^2), "x")
 2 * x
 @end example
 
-Although this behavior may initially seem to be rather strange, is
+Although this behavior may initially seem to be rather strange, it is
 perfectly logical.  The ``intuitive'' behavior could easily be
 implemented, but problems would arise whenever the expression is
 contained in a variable, passed as a parameter, or is the result of a
@@ -2616,7 +2616,7 @@ title(bquote(hat(a) = .(ahat)))
 where subexpressions enclosed in @samp{.()} are replaced by their
 values.
 
-There are more worked examples in the mailing list archives.
+There are more examples in the mailing list archives.
 
 @node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
@@ -2635,7 +2635,7 @@ in the language:
 @item
 A @emph{syntactic name} is a string the parser interprets as this type
 of expression.  It consists of letters, numbers, and the dot and (for
-version of R at least 1.9.0) underscore characters, and starts with
+versions of R at least 1.9.0) underscore characters, and starts with
 either a letter or a dot not followed by a number.  Reserved words are
 not syntactic names.
 @item
@@ -2762,6 +2762,8 @@ then you can use @code{outer()} by writing, e.g.,
 outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 @end example
 
+Scalar functions can also be vectorized using @code{Vectorize()}.
+
 @node Why does the output from anova() depend on the order of factors in the model?, How do I produce PNG graphics in batch mode?, Why does outer() behave strangely with my function?, R Miscellanea
 @section Why does the output from anova() depend on the order of factors in the model?
 
@@ -2798,7 +2800,7 @@ available for versions of R prior to 2.7.0, or without support for
 cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
 on Mac OS X, and that too works in batch mode.
 
-Earlier versions of the @code{png()} device uses the X11 driver, which
+Earlier versions of the @code{png()} device used the X11 driver, which
 is a problem in batch mode or for remote operation.  If you have
 Ghostscript you can use @code{bitmap()}, which produces a PostScript or
 PDF file then converts it to any bitmap format supported by Ghostscript.
@@ -3207,7 +3209,7 @@ To understand this, you have to distinguish between character strings
 and @emph{representations} of character strings.  Mostly, the
 representation in R is just the string with a single or double quote at
 either end, but there are strings that cannot be represented that way,
-e.g., strings that themselves contains the quote character.  So
+e.g., strings that themselves contain the quote character.  So
 
 @example
 > str <- "This \"text\" is quoted"
