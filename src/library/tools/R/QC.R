@@ -5560,7 +5560,7 @@ function(package, lib.loc = NULL)
     dir <- find.package(package, lib.loc)
     ## FIXME: use Meta directory.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    vinfo <- pkgVignettes(dir = dir, subdir = "doc", source = TRUE)
+    vinfo <- pkgVignettes(dir = dir, subdirs = "doc", source = TRUE)
     Rfiles <- unique(as.character(unlist(vinfo$sources)))
     .check_packages_used_helper(db, Rfiles)
 }
