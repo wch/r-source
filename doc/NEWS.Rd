@@ -41,7 +41,7 @@
       \item \code{rasterImage()} and \code{grid.raster()} now give
       error on an empty (zero-length) raster.  (Reported by Ben North.)
       
-      \item \code{plot.lm} would sometimes scramble the labels
+      \item \code{plot.lm()} would sometimes scramble the labels
       in plot type 5.  (\PR{15458} and \PR{14837})
       
       \item \code{min()} did not handle \code{NA_character_} values
@@ -49,6 +49,10 @@
       
       \item (Windows only.)  \code{readRegistry()} would duplicate
       default values for keys.  (\PR{15455})
+      
+      \item \code{str(..., strict.width = "cut")} did not handle
+      it properly when more than one line needed to be cut.  (Reported
+      by Gerrit Eichner.)
     }
   }
 }
