@@ -124,6 +124,11 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item The \code{CRANextra} repository is no longer a default
+      repository on Windows: all the binary packages from CRAN are now
+      on CRAN, although \code{CRANextra} contains packages from Omegahat
+      and elsewhere used by CRAN packages on Windows.
+
       \item Only vignettes sources in directory \file{vignettes} are
       considered to be vignettes and hence indexed as such.
 
