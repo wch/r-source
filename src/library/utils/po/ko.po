@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2013-02-16 14:52-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -182,13 +182,13 @@ msgstr "메뉴가 존재하지 않습니다"
 msgid "unable to delete menu item (%s)"
 msgstr "메뉴항목 %s를 삭제할 수 없습니다"
 
-#: windows/registry.c:73 windows/registry.c:254 windows/registry.c:257
-#: windows/registry.c:260
+#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
+#: windows/registry.c:254
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 잘못되었습니다"
 
-#: windows/registry.c:272
+#: windows/registry.c:266
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "레지스트리 키 '%ls'를 찾을 수 없습니다"

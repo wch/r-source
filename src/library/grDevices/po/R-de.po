@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2013-03-01 10:55+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -252,10 +252,8 @@ msgstr "kein aktuelles Device, von dem aufgenommen werden kann"
 msgid "argument is not of class %s"
 msgstr "Argument ist nicht von Klasse %s"
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "lade Snapshot einer Version vor R-3.0.0"
-
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr "lade Snapshot einer anderen R Version"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -395,6 +393,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
 msgstr[1] "%d z Werte <= 0 ausgelassen in logarithmischem Plot"
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "lade Snapshot einer Version vor R-3.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "kann nur aus Screen-Device drucken"

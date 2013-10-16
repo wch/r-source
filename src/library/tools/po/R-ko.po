@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:44\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -228,6 +228,14 @@ msgid ""
 msgstr ""
 "버전을 표시하는 숫자들은 반드시 두 부분의 음이 아닌 정수로 되어야 하며, '.' "
 "또는 '-'으로 구분되어야 합니다."
+
+#, fuzzy
+msgid "Invalid VignetteBuilder field."
+msgstr "Priority 항목이 잘못되었습니다."
+
+msgid ""
+"This field must contain one or more packages (and no version requirement)."
+msgstr ""
 
 msgid "Invalid Priority field."
 msgstr "Priority 항목이 잘못되었습니다."

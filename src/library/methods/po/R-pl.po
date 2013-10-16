@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1281,9 +1281,11 @@ msgstr "nie można znaleźć środowiska zawierającego klasę %s"
 #                              sQuote(def@package),
 #                              sQuote(prev@package)),
 #                     domain = NA)
+#, fuzzy
 msgid ""
-"the specification for S3 class %s in package %s seems equivalent to one from "
-"package %s and is not turning on duplicate class definitions for this class"
+"Note: the specification for S3 class %s in package %s seems equivalent to "
+"one from package %s: not turning on duplicate class definitions for this "
+"class."
 msgstr ""
 "specyfikacja dla klasy S3 %s w pakiecie %s wydaje się być równoważna tej z "
 "pakietu %s i nie jest duplikatem definicji klasy dla tej klasy"
@@ -1294,9 +1296,11 @@ msgstr ""
 #                                  sQuote(def@package),
 #                                  sQuote(prev@package)),
 #                     domain = NA)
+#, fuzzy
 msgid ""
-"some superclasses of class %s in package %s have duplicate definitions.  "
-"This definition is not being treated as equivalent to that from package %s"
+"Note: some superclasses of class %s in package %s have duplicate "
+"definitions.  This definition is not being treated as equivalent to that "
+"from package %s"
 msgstr ""
 "niektóre superklasy klasy %s w pakiecie %s posiadają powtórzone definicje. "
 "Ta definicja nie jest traktowana jako równoważna tej z pakietu %s"
@@ -1307,9 +1311,10 @@ msgstr ""
 #                          sQuote(def@package),
 #                          sQuote(prev@package)),
 #                     domain = NA)
+#, fuzzy
 msgid ""
-"the specification for class %s in package %s seems equivalent to one from "
-"package %s and is not turning on duplicate class definitions for this class"
+"Note: the specification for class %s in package %s seems equivalent to one "
+"from package %s: not turning on duplicate class definitions for this class."
 msgstr ""
 "specyfikacja dla klasy %s w pakiecie %s wygląda na równoważną do tej z "
 "pakietu %s i nie jest duplikatem definicji klasy dla tej klasy"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2013-02-28 05:38+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -56,11 +56,15 @@ msgstr " Xspline 中に有限でない制御点 "
 msgid "non-finite x or y in graphics path"
 msgstr " グラフィックパスに有限でない x か y があります "
 
-#: grid.c:3297
+#: grid.c:2848
+msgid "Empty raster"
+msgstr ""
+
+#: grid.c:3300
 msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
-#: grid.c:3383
+#: grid.c:3386
 msgid "unable to clip to rotated rectangle"
 msgstr " 回転された矩形へクリップ出来ません "
 

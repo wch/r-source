@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2013-03-19 19:20-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -258,10 +258,8 @@ msgstr "нет устройства, которое надо записывать"
 msgid "argument is not of class %s"
 msgstr "аргумент не принадлежит к классу %s"
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "загрузка снимка из версии R до 3.0.0"
-
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr "загрузка снимка из другой версии R"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -406,6 +404,9 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
 msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
 msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "загрузка снимка из версии R до 3.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "могу печатать только с экранного устройства"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2013-03-19 12:06+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -258,11 +258,8 @@ msgstr "aucun périphérique à partir duquel enregistrer"
 msgid "argument is not of class %s"
 msgstr "l'argument n'est pas de classe %s"
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr ""
-"chargement d'un instantané graphique à partir d'une version de R pre-3.0.0"
-
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr ""
 "chargement d'un instantané graphique à partir d'une version de R différente"
 
@@ -410,6 +407,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr ""
+#~ "chargement d'un instantané graphique à partir d'une version de R pre-3.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "seul un périphérique écran peut être imprimé"

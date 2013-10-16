@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2013-02-21 22:26-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -62,11 +62,15 @@ msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:3297
+#: grid.c:2848
+msgid "Empty raster"
+msgstr ""
+
+#: grid.c:3300
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3383
+#: grid.c:3386
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 

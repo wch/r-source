@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -280,10 +280,7 @@ msgid "argument is not of class %s"
 msgstr "l'argomento non è di classe \"recordedplot\""
 
 #, fuzzy
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "carico snapshot di una versione di R pre-2.0.0"
-
-msgid "loading snapshot from different R version"
+msgid "loading snapshot from a different session"
 msgstr "carico uno snapshot da una versione differente di R"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -431,6 +428,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+#, fuzzy
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "carico snapshot di una versione di R pre-2.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "posso stampare solo da dispositivi schermo"

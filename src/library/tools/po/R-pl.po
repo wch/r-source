@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:44\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -588,6 +588,16 @@ msgid ""
 msgstr ""
 "Numery wersji muszą być ciągiem co najmniej dwóch nieujemnych liczb "
 "całkowitych, oddzielonych pojedynczym znakiem '.' lub '-'."
+
+# tools/R/QC.R: 2968
+# gettext("Invalid Priority field.")
+#, fuzzy
+msgid "Invalid VignetteBuilder field."
+msgstr "Niepoprawne pole priorytetu."
+
+msgid ""
+"This field must contain one or more packages (and no version requirement)."
+msgstr ""
 
 # tools/R/QC.R: 2968
 # gettext("Invalid Priority field.")

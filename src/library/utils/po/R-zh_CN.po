@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -143,6 +143,12 @@ msgstr "'file'的值必需是NULL，字符串或联结"
 msgid "bad argument"
 msgstr "参数不对"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -190,9 +196,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "没有%s这一个程序包"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "安装出错，基本程序包里没有CITATION这一文件。"
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "程序包%s里的DESCRIPTION文件中没有日期这一域"
@@ -938,6 +941,12 @@ msgstr "找不到'%s'这一文件"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid "file size is limited to 8GB"
 msgstr "文件大小限制为8GB"
 
@@ -1190,6 +1199,9 @@ msgstr[0] "罗马数字不对：%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "安装出错，基本程序包里没有CITATION这一文件。"
 
 #~ msgid "Created PDF document %s"
 #~ msgstr "建立了PDF%s文件"

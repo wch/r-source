@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-10 12:14-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -154,6 +154,12 @@ msgstr "'file'은 반드시 NULL, 문자열, 또는 연결이어야 합니다"
 msgid "bad argument"
 msgstr "잘못된 인자입니다"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -203,9 +209,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "패키지 %s를 찾을 수 없습니다"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "설치시 문제로 인하여 base 패키지 내에 CITATION 파일이 없습니다."
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜(date) 항목이 없습니다"
@@ -983,6 +986,12 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid "file size is limited to 8GB"
 msgstr "파일크기는 8GB로 제한되어 있습니다"
 
@@ -1244,6 +1253,9 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "설치시 문제로 인하여 base 패키지 내에 CITATION 파일이 없습니다."
 
 #~ msgid "Created PDF document %s"
 #~ msgstr "PDF 문서 %s가 생성되었습니다"

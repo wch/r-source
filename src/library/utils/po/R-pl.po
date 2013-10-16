@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -260,6 +260,12 @@ msgstr "'file' musi być wartością NULL, łańcuchem tekstowym lub połączeni
 msgid "bad argument"
 msgstr "niepoprawny argument"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 # utils/R/citation.R: 36
 # warning(gettextf("Not all arguments are of the same length, the following need to be recycled: %s",
 #                          paste(names(args)[!args_length_ok],
@@ -391,11 +397,6 @@ msgstr ""
 # stop(gettextf("package %s not found", sQuote(pkg)), domain = NA)
 msgid "package %s not found"
 msgstr "pakiet %s nie został znaleziony"
-
-# utils/R/citation.R: 1075
-# stop("broken installation, no CITATION file in the base package.")
-msgid "broken installation, no CITATION file in the base package."
-msgstr "uszkodzona instalacja, brak pliku CITATION w bazowym pakiecie"
 
 # utils/R/citation.R: 1095
 # warning(gettextf("no date field in DESCRIPTION file of package %s",
@@ -1897,6 +1898,12 @@ msgstr "plik '%s' nie został znaleziony"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 # utils/R/tar.R: 448
 # stop("file size is limited to 8GB")
 msgid "file size is limited to 8GB"
@@ -2510,6 +2517,11 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+# utils/R/citation.R: 1075
+# stop("broken installation, no CITATION file in the base package.")
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "uszkodzona instalacja, brak pliku CITATION w bazowym pakiecie"
 
 # utils/R/Sweave.R: 498
 # message(gettextf("Created PDF document %s", sQuote(ofile)),

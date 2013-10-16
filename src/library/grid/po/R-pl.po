@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -187,7 +187,8 @@ msgstr "potrzeba określić tylko jeden z 'font' oraz 'fontface'"
 
 # grid/R/gpar.R: 158
 # stop("invalid font face")
-msgid "invalid font face"
+#, fuzzy
+msgid "invalid fontface"
 msgstr "niepoprawny krój czcionki"
 
 # grid/R/gpar.R: 189
@@ -238,6 +239,18 @@ msgstr "poprawne tylko dla wypychanych okien ekranów"
 msgid "must specify at least one viewport"
 msgstr "potrzeba określić przynajmniej jedno okno ekranu"
 
+# grid/R/grid.R: 374
+# stop("invalid object inserted on the display list")
+#, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr "niepoprawne obiekty wstawione na listę wyświetleń"
+
+# grid/R/grid.R: 374
+# stop("invalid object inserted on the display list")
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "niepoprawne obiekty wstawione na listę wyświetleń"
+
 # grid/R/grid.R: 193
 # stop("must pop at least one viewport")
 msgid "must pop at least one viewport"
@@ -248,10 +261,8 @@ msgstr "potrzeba wyświetlić przynajmniej jedno okno ekranu"
 msgid "must navigate up at least one viewport"
 msgstr "potrzeba przenieść w górę przynajmniej jedno okno ekranu"
 
-# grid/R/grid.R: 250
-# warning("the 'vp' argument is deprecated")
-msgid "the 'vp' argument is deprecated"
-msgstr "argument 'vp' jest przestarzały"
+msgid "Invalid number of generations"
+msgstr ""
 
 # grid/R/grid.R: 374
 # stop("invalid object inserted on the display list")
@@ -287,11 +298,6 @@ msgstr "niepoprawne gniazdo 'gp'"
 # stop("invalid 'grob' class")
 msgid "invalid 'grob' class"
 msgstr "niepoprawna klasa 'grob'"
-
-# grid/R/grob.R: 119
-# warning("grid.grob() is deprecated; please use grob() instead")
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr "'grid.grob()' jest przestarzałe; proszę w zamian użyć 'grob()'"
 
 # grid/R/grob.R: 148
 # stop("a 'grob' path must contain at least one 'grob' name")
@@ -507,6 +513,18 @@ msgstr "'grob' '%s' nie został znaleziony"
 msgid "invalid element in the display list"
 msgstr "niepoprawny element w liście wyświetleń"
 
+# grid/R/grob.R: 2155
+# stop("Invalid 'order'")
+#, fuzzy
+msgid "Invalid force target"
+msgstr "Niepoprawny 'order'"
+
+# grid/R/ls.R: 64
+# stop("invalid 'print' argument")
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "niepoprawny argument 'print'"
+
 # grid/R/grob.R: 2144
 # stop("can only reorder 'children' for a \"gTree\"")
 msgid "can only reorder 'children' for a \"gTree\""
@@ -586,6 +604,12 @@ msgstr "niepoprawne listowanie"
 # stop("invalid 'listing'")
 msgid "invalid 'listing'"
 msgstr "niepoprawny 'listing'"
+
+# grid/R/grid.R: 424
+# stop("invalid modification of the display list")
+#, fuzzy
+msgid "Nothing on the display list"
+msgstr "niepoprawna modyfikacja listy wyświetleń"
 
 # grid/R/origin.R: 24
 # stop("invalid 'origin'")
@@ -718,12 +742,6 @@ msgstr "'x' oraz 'y' muszą być jednostkami lub wartościami NULL"
 # stop("corrupt 'arrows' object")
 msgid "corrupt 'arrows' object"
 msgstr "uszkodzony obiekt 'arrows'"
-
-# grid/R/primitives.R: 551
-# stop("the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr ""
-"argument 'grob' musi być jednym z 'line.to', 'lines' lub grob 'segments'"
 
 # grid/R/primitives.R: 772
 # stop("x and y must be units")
@@ -1017,6 +1035,22 @@ msgid_plural "invalid viewport names"
 msgstr[0] "niepoprawna nazwa okna ekranu"
 msgstr[1] "niepoprawne nazwy okien ekranu"
 msgstr[2] "niepoprawne nazwy okien ekranu"
+
+# grid/R/grid.R: 250
+# warning("the 'vp' argument is deprecated")
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr "argument 'vp' jest przestarzały"
+
+# grid/R/grob.R: 119
+# warning("grid.grob() is deprecated; please use grob() instead")
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr "'grid.grob()' jest przestarzałe; proszę w zamian użyć 'grob()'"
+
+# grid/R/primitives.R: 551
+# stop("the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr ""
+#~ "argument 'grob' musi być jednym z 'line.to', 'lines' lub grob 'segments'"
 
 #~ msgid "invalid 'ask' value"
 #~ msgstr "niepoprawna wartość 'ask'"

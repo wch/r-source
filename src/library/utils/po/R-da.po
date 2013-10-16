@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,6 +149,12 @@ msgstr "»file« skal være NULL, en tegnstreng eller en forbindelse"
 msgid "bad argument"
 msgstr "ugyldigt argument"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -197,9 +203,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "pakke %s blev ikke fundet"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "ødelagt installation, ingen CITATION-fil i basispakken."
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "intet datofelt i DESCRIPTION-fil for pakke %s"
@@ -934,6 +937,12 @@ msgstr ""
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid "file size is limited to 8GB"
 msgstr ""
 
@@ -1199,6 +1208,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "ødelagt installation, ingen CITATION-fil i basispakken."
 
 #, fuzzy
 #~ msgid "Created PDF document %s"

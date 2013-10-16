@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -480,11 +480,11 @@ msgstr "optim에 사용된 목적함수의 길이가 1이 아닌 %d입니다"
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "optim에 사용된 그래디언트가 길이가 %2$d가 아닌 %1$d입니다"
 
-#: optim.c:186 optim.c:391
+#: optim.c:186 optim.c:392
 msgid "'fn' is not a function"
 msgstr "'fn'은 함수가 아닙니다"
 
-#: optim.c:204 optim.c:397
+#: optim.c:204 optim.c:398
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale'의 길이가 잘못되었습니다"
 
@@ -492,19 +492,20 @@ msgstr "'parscale'의 길이가 잘못되었습니다"
 msgid "'maxit' is not an integer"
 msgstr "'maxit'은 정수가 아닙니다"
 
-#: optim.c:252
-msgid "'tmax' is not an integer"
+#: optim.c:253
+#, fuzzy
+msgid "'tmax' is not a positive integer"
 msgstr "'tmax'는 정수가 아닙니다"
 
-#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
+#: optim.c:255 optim.c:272 optim.c:297 optim.c:327 optim.c:406
 msgid "'gr' is not a function"
 msgstr "'gr'은 함수가 아닙니다"
 
-#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
+#: optim.c:278 optim.c:303 optim.c:333 optim.c:412
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps'의 길이가 잘못되었습니다"
 
-#: optim.c:362
+#: optim.c:363
 msgid "unknown 'method'"
 msgstr "알수없는 'method'입니다"
 

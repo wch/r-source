@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgid "must specify only one of 'font' and 'fontface'"
 msgstr ""
 
 #, fuzzy
-msgid "invalid font face"
+msgid "invalid fontface"
 msgstr "Ugyldig »grob«"
 
 #, fuzzy
@@ -157,13 +157,19 @@ msgstr "Ugyldig »edit-information«"
 msgid "must specify at least one viewport"
 msgstr ""
 
+msgid "Down viewport failed to record on display list"
+msgstr ""
+
+msgid "Down viewport incorrectly recorded on display list"
+msgstr ""
+
 msgid "must pop at least one viewport"
 msgstr ""
 
 msgid "must navigate up at least one viewport"
 msgstr ""
 
-msgid "the 'vp' argument is deprecated"
+msgid "Invalid number of generations"
 msgstr ""
 
 msgid "invalid object inserted on the display list"
@@ -189,9 +195,6 @@ msgstr "Ugyldig »grob«"
 #, fuzzy
 msgid "invalid 'grob' class"
 msgstr "Ugyldig »grob«"
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr ""
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr ""
@@ -281,6 +284,14 @@ msgstr ""
 msgid "invalid element in the display list"
 msgstr ""
 
+#, fuzzy
+msgid "Invalid force target"
+msgstr "Ugyldig »frame«"
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "Ugyldig »grob«"
+
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr ""
 
@@ -331,6 +342,9 @@ msgstr "Ugyldig »grob«"
 msgid "invalid 'listing'"
 msgstr "Ugyldig »grob«"
 
+msgid "Nothing on the display list"
+msgstr ""
+
 #, fuzzy
 msgid "invalid 'origin'"
 msgstr "Ugyldig »grob«"
@@ -371,9 +385,6 @@ msgid "'x' and 'y' must be units or NULL"
 msgstr ""
 
 msgid "corrupt 'arrows' object"
-msgstr ""
-
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 
 msgid "x and y must be units"

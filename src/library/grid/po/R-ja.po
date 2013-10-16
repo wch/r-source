@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-02-28 05:35+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -112,7 +112,8 @@ msgstr " 'alpha' の値が不正です "
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr " 'font' または 'fontface' のうち 1 つのみを指定しなければいけません "
 
-msgid "invalid font face"
+#, fuzzy
+msgid "invalid fontface"
 msgstr " 不正な fontface です "
 
 msgid "argument must be a 'gpar' object"
@@ -146,14 +147,22 @@ msgstr " viewports を push することだけが有効です "
 msgid "must specify at least one viewport"
 msgstr " 少なくとも 1 つの viewport を指定しなければいけません "
 
+#, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr " display list 上に不正なオブジェクトが挿入されました "
+
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr " display list 上に不正なオブジェクトが挿入されました "
+
 msgid "must pop at least one viewport"
 msgstr " 少なくとも 1 つの viewport を pop しなければいけません "
 
 msgid "must navigate up at least one viewport"
 msgstr " 少なくとも 1 つの viewport を navigate up しなければいけません "
 
-msgid "the 'vp' argument is deprecated"
-msgstr " 引数 'vp' は廃止予定です "
+msgid "Invalid number of generations"
+msgstr ""
 
 msgid "invalid object inserted on the display list"
 msgstr " display list 上に不正なオブジェクトが挿入されました "
@@ -175,9 +184,6 @@ msgstr " 不正な 'gp' スロットです "
 
 msgid "invalid 'grob' class"
 msgstr " 不正な 'grob' クラスです "
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr " grid.grob() は廃止予定です; 代わりに grob() を使って下さい "
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr ""
@@ -264,6 +270,14 @@ msgstr " grob '%s' が見つかりません "
 msgid "invalid element in the display list"
 msgstr " ディスプレイリストの中に不正な要素があります "
 
+#, fuzzy
+msgid "Invalid force target"
+msgstr " 不正な 'order' です "
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr " 不正な 'print' 引数です "
+
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr " \"gTree\" に対しては 'children' の再順序化しかできません "
 
@@ -306,6 +320,10 @@ msgstr " 不正なリスティング "
 msgid "invalid 'listing'"
 msgstr " 不正な 'listing' "
 
+#, fuzzy
+msgid "Nothing on the display list"
+msgstr " display list に不正な変更が行われました "
+
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "
 
@@ -344,11 +362,6 @@ msgstr " 'x' と 'y' は単位 (units) または NULL でなければなりま�
 
 msgid "corrupt 'arrows' object"
 msgstr " 壊れた 'arrows' オブジェクトです "
-
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr ""
-" 'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければな"
-"りません "
 
 msgid "x and y must be units"
 msgstr " x と y は単位 (units) でなければなりません "
@@ -518,6 +531,17 @@ msgstr[0] " 不正な grob 名です "
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] " 不正な viewport 名です "
+
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr " 引数 'vp' は廃止予定です "
+
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr " grid.grob() は廃止予定です; 代わりに grob() を使って下さい "
+
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr ""
+#~ " 'grob' 引数は 'line.to', 'lines', 'segments' のいずれかの grob でなければ"
+#~ "なりません "
 
 #, fuzzy
 #~ msgid "invalid 'ask' value"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:43+0100\n"
+"POT-Creation-Date: 2013-10-16 10:59+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -261,7 +261,7 @@ msgstr "不支援的 Windows 版本"
 #: src/main/seq.c:395 src/main/seq.c:399 src/main/seq.c:403
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:875 src/main/sysutils.c:251 src/main/util.c:963
+#: src/main/summary.c:877 src/main/sysutils.c:251 src/main/util.c:963
 #: src/main/util.c:968 src/main/util.c:975 src/main/util.c:978
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
@@ -823,72 +823,72 @@ msgstr "產生了 NaNs"
 msgid "non-numeric argument to mathematical function"
 msgstr "數學函數中使用了非數值引數"
 
-#: src/main/arithmetic.c:185
+#: src/main/arithmetic.c:187
 msgid "probable complete loss of accuracy in modulus"
 msgstr "係數的精確度很可能完全損失"
 
-#: src/main/arithmetic.c:346
+#: src/main/arithmetic.c:348
 msgid "NAs produced by integer overflow"
 msgstr "整數向上溢位產生了 NA"
 
-#: src/main/arithmetic.c:547
+#: src/main/arithmetic.c:549
 msgid "operator needs one or two arguments"
 msgstr "運算子需要一或兩個引數"
 
-#: src/main/arithmetic.c:563
+#: src/main/arithmetic.c:565
 msgid "non-numeric argument to binary operator"
 msgstr "二元運算子中有非數值引數"
 
-#: src/main/arithmetic.c:625 src/main/relop.c:227
+#: src/main/arithmetic.c:627 src/main/relop.c:227
 msgid "non-conformable arrays"
 msgstr "非調和陣列"
 
-#: src/main/arithmetic.c:668
+#: src/main/arithmetic.c:670
 msgid "non-conformable time-series"
 msgstr "非調和時間序列"
 
-#: src/main/arithmetic.c:690 src/main/logic.c:143 src/main/relop.c:166
+#: src/main/arithmetic.c:692 src/main/logic.c:143 src/main/relop.c:166
 #: src/main/relop.c:265
 msgid "longer object length is not a multiple of shorter object length"
 msgstr "較長的物件長度並非較短物件長度的倍數"
 
-#: src/main/arithmetic.c:761
+#: src/main/arithmetic.c:763
 msgid "invalid argument to unary operator"
 msgstr "一元運算子的引數不正確"
 
-#: src/main/arithmetic.c:790 src/main/arithmetic.c:815
-#: src/main/arithmetic.c:834
+#: src/main/arithmetic.c:792 src/main/arithmetic.c:817
+#: src/main/arithmetic.c:836
 msgid "invalid unary operator"
 msgstr "一元運算子不正確"
 
-#: src/main/arithmetic.c:1284
+#: src/main/arithmetic.c:1241
 msgid "unimplemented real function of 1 argument"
 msgstr "單引數的實數函數目前還沒有實作"
 
-#: src/main/arithmetic.c:1298 src/main/complex.c:648 src/main/complex.c:718
+#: src/main/arithmetic.c:1255 src/main/complex.c:648 src/main/complex.c:718
 msgid "unimplemented complex function"
 msgstr "尚未實作複數功能"
 
-#: src/main/arithmetic.c:1568 src/main/arithmetic.c:1919
-#: src/main/arithmetic.c:2098 src/main/arithmetic.c:2210
+#: src/main/arithmetic.c:1525 src/main/arithmetic.c:1876
+#: src/main/arithmetic.c:2055 src/main/arithmetic.c:2167
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d 個數值引數的實數函數尚未實作"
 
-#: src/main/arithmetic.c:1594
+#: src/main/arithmetic.c:1551
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d 個引數傳遞給 '%s'，但它最多只能用兩個引數"
 
-#: src/main/arithmetic.c:1612
+#: src/main/arithmetic.c:1569
 msgid "invalid second argument of length 0"
 msgstr "第二引數長度為 0，不正確"
 
-#: src/main/arithmetic.c:1681
+#: src/main/arithmetic.c:1638
 msgid "invalid argument 'base' of length 0"
 msgstr "長度為 0 的無效引數 '基底'"
 
-#: src/main/arithmetic.c:1689
+#: src/main/arithmetic.c:1646
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "給了 'log' %d 個引數，但它最多只能用兩個引數"
@@ -1277,7 +1277,7 @@ msgstr "無法從這些類型建立矩陣"
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "矩陣的列數必須相符 (參看引數 %d)"
 
-#: src/main/bind.c:1427
+#: src/main/bind.c:1428
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "矩陣的行數必須相符 (參看引數 %d)"
@@ -3653,14 +3653,14 @@ msgstr "不支援 getGraphicsEvent 的遞迴使用"
 msgid "no graphics event handlers set"
 msgstr "沒有任何圖形事件處理常式被設定"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2233
-#: src/main/gram.y:2247
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2237
+#: src/main/gram.y:2251
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "讀取 MBCS 字元於第 %d 列時遇到 EOF"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2237
-#: src/main/gram.y:2244
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2241
+#: src/main/gram.y:2248
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "在剖析器的第 %d 列中有無效的多位元組字元"
@@ -3717,71 +3717,71 @@ msgstr "未預期的 %s"
 msgid "repeated formal argument '%s' on line %d"
 msgstr "重複的形式引數 '%s' 於第 %d 列"
 
-#: src/main/gram.y:2150
+#: src/main/gram.y:2154
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "整數實文 %sL 含有十進位；使用數值"
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2158
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "非整數值 %s 以 L 資格修飾過; 使用數值"
 
-#: src/main/gram.y:2167
+#: src/main/gram.y:2171
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "整數實文 %sL 含有非必要的十進小數點"
 
-#: src/main/gram.y:2199
+#: src/main/gram.y:2203
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "無法配置緩衝區給第 %d 列的長字串"
 
-#: src/main/gram.y:2352
+#: src/main/gram.y:2356
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\x' 卻無十六進位數字"
 
-#: src/main/gram.y:2366
+#: src/main/gram.y:2370
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "在反引號內部不支援 \\uxxxx 序列 (第 %d 列)"
 
-#: src/main/gram.y:2381
+#: src/main/gram.y:2385
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\u' 卻無十六進位數字"
 
-#: src/main/gram.y:2389
+#: src/main/gram.y:2393
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "無效的 \\u{xxxx} 序列 (第 %d 列)"
 
-#: src/main/gram.y:2401
+#: src/main/gram.y:2405
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "在反引號內部不支援 \\Uxxxxxxxx 序列 (第 %d 列)"
 
-#: src/main/gram.y:2416
+#: src/main/gram.y:2420
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\U' 卻無十六進位數字"
 
-#: src/main/gram.y:2424
+#: src/main/gram.y:2428
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "無效的 \\U{xxxxxxxx} 序列 (第 %d 列)"
 
-#: src/main/gram.y:2464
+#: src/main/gram.y:2468
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "在起始 \"%2$s\" 的字串中 '\\%1$c' 是無法辨識的跳脫字元"
 
-#: src/main/gram.y:2523
+#: src/main/gram.y:2527
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "不允許在字串中混合萬國碼和八進位/十六進位跳脫字元"
 
-#: src/main/gram.y:2527
+#: src/main/gram.y:2531
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3790,13 +3790,13 @@ msgstr ""
 "第 %d 列的字串包含不存在這個語區的萬國碼跳脫字元\n"
 "長度太長 (最大 10000 字元)"
 
-#: src/main/gram.y:3125 src/main/gram.y:3132 src/main/gram.y:3138
-#: src/main/gram.y:3145
+#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
+#: src/main/gram.y:3149
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack 於第 %d 列溢位"
 
-#: src/main/gram.y:3240
+#: src/main/gram.y:3244
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "輸入緩衝區溢位於第 %d 列"
@@ -5908,39 +5908,39 @@ msgstr "整數溢位 - 請使用 sum(as.numeric(.))"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "內部錯誤 (do_summary 中的 'op = %d')。\t 請向專家請教"
 
-#: src/main/summary.c:612
+#: src/main/summary.c:614
 msgid "Integer overflow - use sum(as.numeric(.))"
 msgstr "整數溢位 - 請使用 sum(as.numeric(.))"
 
-#: src/main/summary.c:720
+#: src/main/summary.c:722
 msgid "no non-missing arguments, returning NA"
 msgstr "沒有非漏失的引數，回傳 NA"
 
-#: src/main/summary.c:723
+#: src/main/summary.c:725
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "min 中沒有無漏失的引數; 回傳 Inf"
 
-#: src/main/summary.c:725
+#: src/main/summary.c:727
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max 中沒有無漏失的引數；回傳 -Inf"
 
-#: src/main/summary.c:790
+#: src/main/summary.c:792
 msgid "non-numeric argument"
 msgstr "非數值引數"
 
-#: src/main/summary.c:834
+#: src/main/summary.c:836
 msgid "argument to 'which' is not logical"
 msgstr "'which' 的引數不是邏輯值"
 
-#: src/main/summary.c:878
+#: src/main/summary.c:880
 msgid "no arguments"
 msgstr "沒有引數"
 
-#: src/main/summary.c:889 src/main/summary.c:906
+#: src/main/summary.c:891 src/main/summary.c:908
 msgid "invalid input type"
 msgstr "無效的輸入類型"
 
-#: src/main/summary.c:923
+#: src/main/summary.c:925
 msgid "an argument will be fractionally recycled"
 msgstr "某個引數將被部分重新利用"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -480,11 +480,11 @@ msgstr ""
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr ""
 
-#: optim.c:186 optim.c:391
+#: optim.c:186 optim.c:392
 msgid "'fn' is not a function"
 msgstr ""
 
-#: optim.c:204 optim.c:397
+#: optim.c:204 optim.c:398
 msgid "'parscale' is of the wrong length"
 msgstr ""
 
@@ -492,19 +492,20 @@ msgstr ""
 msgid "'maxit' is not an integer"
 msgstr ""
 
-#: optim.c:252
-msgid "'tmax' is not an integer"
-msgstr ""
+#: optim.c:253
+#, fuzzy
+msgid "'tmax' is not a positive integer"
+msgstr "'m' skal være en liste"
 
-#: optim.c:254 optim.c:271 optim.c:296 optim.c:326 optim.c:405
+#: optim.c:255 optim.c:272 optim.c:297 optim.c:327 optim.c:406
 msgid "'gr' is not a function"
 msgstr ""
 
-#: optim.c:277 optim.c:302 optim.c:332 optim.c:411
+#: optim.c:278 optim.c:303 optim.c:333 optim.c:412
 msgid "'ndeps' is of the wrong length"
 msgstr ""
 
-#: optim.c:362
+#: optim.c:363
 msgid "unknown 'method'"
 msgstr ""
 

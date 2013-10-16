@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -112,7 +112,8 @@ msgstr "'alpha'的值不对"
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr "'font'和'fontface'两个量只能设定一个"
 
-msgid "invalid font face"
+#, fuzzy
+msgid "invalid fontface"
 msgstr "字体面设定不对"
 
 msgid "argument must be a 'gpar' object"
@@ -141,14 +142,22 @@ msgstr "只能推视口"
 msgid "must specify at least one viewport"
 msgstr "至少必需设定一个视口"
 
+#, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr "显示列里所插入的对象不对"
+
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "显示列里所插入的对象不对"
+
 msgid "must pop at least one viewport"
 msgstr "至少需要弹起一个视口"
 
 msgid "must navigate up at least one viewport"
 msgstr "至少需要往上驾一个视口"
 
-msgid "the 'vp' argument is deprecated"
-msgstr "'vp'参数已经不再有用"
+msgid "Invalid number of generations"
+msgstr ""
 
 msgid "invalid object inserted on the display list"
 msgstr "显示列里所插入的对象不对"
@@ -170,9 +179,6 @@ msgstr "'gp'槽的值不对"
 
 msgid "invalid 'grob' class"
 msgstr "'grob'的类别不对"
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr "grid.grob()已经不再有用; 请用grob()"
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr "'grob'的路径至少要包含一个'grob'名字"
@@ -258,6 +264,14 @@ msgstr "不存在grob'%s'这个值"
 msgid "invalid element in the display list"
 msgstr "显示单里的成分不对"
 
+#, fuzzy
+msgid "Invalid force target"
+msgstr "'order'的值不对"
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "'print'参数值不对"
+
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr "\"gTree\"只能给'children'设定值"
 
@@ -300,6 +314,10 @@ msgstr "表不对"
 msgid "invalid 'listing'"
 msgstr "'listing'不对"
 
+#, fuzzy
+msgid "Nothing on the display list"
+msgstr "显示单修改得不对"
+
 msgid "invalid 'origin'"
 msgstr "'origin'的值不对"
 
@@ -338,9 +356,6 @@ msgstr "'x'和'y'要么是单元值，要么是NULL"
 
 msgid "corrupt 'arrows' object"
 msgstr "'arrows'对象出了错"
-
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr "'grob'参数需要有'line.to', 'lines'或'segments'这三个grob中的一个"
 
 msgid "x and y must be units"
 msgstr "x和y必需为单元值"
@@ -500,6 +515,15 @@ msgstr[0] "'grob'名字不对"
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "视口名字不对"
+
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr "'vp'参数已经不再有用"
+
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr "grid.grob()已经不再有用; 请用grob()"
+
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr "'grob'参数需要有'line.to', 'lines'或'segments'这三个grob中的一个"
 
 #, fuzzy
 #~ msgid "invalid 'ask' value"

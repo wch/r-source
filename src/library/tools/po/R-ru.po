@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:44\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -222,6 +222,14 @@ msgid ""
 msgstr ""
 "Номера версии должны быть последовательностями по крайней мере двух "
 "неотрицательных целых, разделенных одной точкой или дефисом."
+
+#, fuzzy
+msgid "Invalid VignetteBuilder field."
+msgstr "Неправильное поле привилегий."
+
+msgid ""
+"This field must contain one or more packages (and no version requirement)."
+msgstr ""
 
 msgid "Invalid Priority field."
 msgstr "Неправильное поле привилегий."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:44\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-19 13:39+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -219,6 +219,14 @@ msgid ""
 msgstr ""
 " バージョン番号は少なくとも 2 つの非負の整数列で、'.' または '-' で区切られて"
 "いなければいけません。 "
+
+#, fuzzy
+msgid "Invalid VignetteBuilder field."
+msgstr " 不正な優先フィールドです。 "
+
+msgid ""
+"This field must contain one or more packages (and no version requirement)."
+msgstr ""
 
 msgid "Invalid Priority field."
 msgstr " 不正な優先フィールドです。 "

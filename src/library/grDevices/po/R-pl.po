@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -506,15 +506,11 @@ msgstr "brak bieżącego urządzenia z którego można nagrywać"
 msgid "argument is not of class %s"
 msgstr "argument nie jest klasy %s"
 
-# grDevices/R/recordplot.R: 42
-# stop("loading snapshot from pre-3.0.0 R version")
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "ładowanie zrzutu z wersji R przed 3.0.0"
-
 # grDevices/R/recordplot.R: 44
 # warning(gettext("loading snapshot from different R version"),
 #                 " (", version, ")", domain = NA)
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr "ładowanie zrzutu z innej wersji R"
 
 # grDevices/R/smooth2d.R: 29
@@ -844,6 +840,11 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d wartość z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[1] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
 msgstr[2] "%d wartości z <= 0 pominięto na wykresie logarytmicznym"
+
+# grDevices/R/recordplot.R: 42
+# stop("loading snapshot from pre-3.0.0 R version")
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "ładowanie zrzutu z wersji R przed 3.0.0"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "można drukować jedynie z ekranu urządzenia"

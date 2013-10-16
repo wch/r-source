@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:43+0100\n"
+"POT-Creation-Date: 2013-10-16 10:59+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -263,7 +263,7 @@ msgstr "desteklenmeyen Windows sürümü"
 #: src/main/seq.c:395 src/main/seq.c:399 src/main/seq.c:403
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:875 src/main/sysutils.c:251 src/main/util.c:963
+#: src/main/summary.c:877 src/main/sysutils.c:251 src/main/util.c:963
 #: src/main/util.c:968 src/main/util.c:975 src/main/util.c:978
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
@@ -836,72 +836,72 @@ msgstr "NaNs üretimi"
 msgid "non-numeric argument to mathematical function"
 msgstr "matematiksel fonksiyona sayısal olmayan argüman"
 
-#: src/main/arithmetic.c:185
+#: src/main/arithmetic.c:187
 msgid "probable complete loss of accuracy in modulus"
 msgstr "modülde tam doğruluk kaybı muhtemel"
 
-#: src/main/arithmetic.c:346
+#: src/main/arithmetic.c:348
 msgid "NAs produced by integer overflow"
 msgstr "Tamsayı taşmasından üretilen NAs"
 
-#: src/main/arithmetic.c:547
+#: src/main/arithmetic.c:549
 msgid "operator needs one or two arguments"
 msgstr "operatör bir veya iki argümana ihtiyaç duyar"
 
-#: src/main/arithmetic.c:563
+#: src/main/arithmetic.c:565
 msgid "non-numeric argument to binary operator"
 msgstr "ikili operatöre sayısal olmayan argüman"
 
-#: src/main/arithmetic.c:625 src/main/relop.c:227
+#: src/main/arithmetic.c:627 src/main/relop.c:227
 msgid "non-conformable arrays"
 msgstr "uygun olmayan diziler"
 
-#: src/main/arithmetic.c:668
+#: src/main/arithmetic.c:670
 msgid "non-conformable time-series"
 msgstr "uygun olmayan zaman-serileri"
 
-#: src/main/arithmetic.c:690 src/main/logic.c:143 src/main/relop.c:166
+#: src/main/arithmetic.c:692 src/main/logic.c:143 src/main/relop.c:166
 #: src/main/relop.c:265
 msgid "longer object length is not a multiple of shorter object length"
 msgstr "uzun olan nesne uzunluğu kısa olan nesne uzunluğunun bir katı değil "
 
-#: src/main/arithmetic.c:761
+#: src/main/arithmetic.c:763
 msgid "invalid argument to unary operator"
 msgstr "birli operatöre geçersiz argüman"
 
-#: src/main/arithmetic.c:790 src/main/arithmetic.c:815
-#: src/main/arithmetic.c:834
+#: src/main/arithmetic.c:792 src/main/arithmetic.c:817
+#: src/main/arithmetic.c:836
 msgid "invalid unary operator"
 msgstr "geçersiz birli operatör"
 
-#: src/main/arithmetic.c:1284
+#: src/main/arithmetic.c:1241
 msgid "unimplemented real function of 1 argument"
 msgstr "1 argümanın tanımlanmamış gerçek fonksiyonu"
 
-#: src/main/arithmetic.c:1298 src/main/complex.c:648 src/main/complex.c:718
+#: src/main/arithmetic.c:1255 src/main/complex.c:648 src/main/complex.c:718
 msgid "unimplemented complex function"
 msgstr "tanımlanmamış (uygulanamayan) kompleks fonksiyon"
 
-#: src/main/arithmetic.c:1568 src/main/arithmetic.c:1919
-#: src/main/arithmetic.c:2098 src/main/arithmetic.c:2210
+#: src/main/arithmetic.c:1525 src/main/arithmetic.c:1876
+#: src/main/arithmetic.c:2055 src/main/arithmetic.c:2167
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d sayısal argümanın tanımlanmamış gerçek fonksiyonu"
 
-#: src/main/arithmetic.c:1594
+#: src/main/arithmetic.c:1551
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d argüman aktarıldı ('%s' 1 veya 2 argüman gerektiriyor)"
 
-#: src/main/arithmetic.c:1612
+#: src/main/arithmetic.c:1569
 msgid "invalid second argument of length 0"
 msgstr "0 uzunluğunda geçersiz ikinci argüman"
 
-#: src/main/arithmetic.c:1681
+#: src/main/arithmetic.c:1638
 msgid "invalid argument 'base' of length 0"
 msgstr "0 birim uzunluğunda geçersiz argüman 'base'"
 
-#: src/main/arithmetic.c:1689
+#: src/main/arithmetic.c:1646
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "1 veya 2 argüman gerektiren 'log'a %d argüman verildi"
@@ -1294,7 +1294,7 @@ msgstr "bu tiplerden bir matris oluşturulamadı"
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "matrislerin dize sayıları eşleşmelidir (bknz arg %d)"
 
-#: src/main/bind.c:1427
+#: src/main/bind.c:1428
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "matrislerin sütun sayıları eşleşmelidir (bknz arg %d)"
@@ -3706,14 +3706,14 @@ msgstr "getGraphicsEvent 'in yinelemeli kullanımı desteklenmiyor"
 msgid "no graphics event handlers set"
 msgstr "grafik olay yöneticisi seti yok"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2233
-#: src/main/gram.y:2247
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2237
+#: src/main/gram.y:2251
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "%d dizesi ndan MBCS karakterini okurken EOF alındı"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2237
-#: src/main/gram.y:2244
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2241
+#: src/main/gram.y:2248
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "ayrıştırıcının %d dizesi nda geçersiz çokbaytlı karakter"
@@ -3770,81 +3770,81 @@ msgstr "beklenmeyen durum, %s"
 msgid "repeated formal argument '%s' on line %d"
 msgstr "Tekrarlanmış biçimsel argüman '%s' (%d dizesi nda)"
 
-#: src/main/gram.y:2150
+#: src/main/gram.y:2154
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "yalın tamsayı %sL ondalık içeriyor; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2158
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "tamsayı olmayan değer %s L ile uygun; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:2167
+#: src/main/gram.y:2171
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "tamsayı %sL gereksiz ondalık nokta içeriyor"
 
-#: src/main/gram.y:2199
+#: src/main/gram.y:2203
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d dizesinde, uzun dize için önbellek ayrılamadı"
 
-#: src/main/gram.y:2352
+#: src/main/gram.y:2356
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2366
+#: src/main/gram.y:2370
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2381
+#: src/main/gram.y:2385
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\u', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2389
+#: src/main/gram.y:2393
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "geçersiz \\u{xxxx} dizilişi (satır %d)"
 
-#: src/main/gram.y:2401
+#: src/main/gram.y:2405
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2416
+#: src/main/gram.y:2420
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2424
+#: src/main/gram.y:2428
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "geçersiz  \\U{xxxxxxxx} dizilimi (satır %d)"
 
-#: src/main/gram.y:2464
+#: src/main/gram.y:2468
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' bir tanımlanamayan kaçış karakteri (\"%s\" ile başlayan karakter "
 "dizesinde)"
 
-#: src/main/gram.y:2523
+#: src/main/gram.y:2527
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "Unicode ile sekizli/onaltılı kaçış karakterlerini karıştırmaya izin "
 "verilmiyor"
 
-#: src/main/gram.y:2527
+#: src/main/gram.y:2531
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3853,13 +3853,13 @@ msgstr ""
 "bu yerelde bulunmayan Unicode kaçışları içeren %d dizesi \n"
 "çok uzun (maks 10000 karakter)"
 
-#: src/main/gram.y:3125 src/main/gram.y:3132 src/main/gram.y:3138
-#: src/main/gram.y:3145
+#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
+#: src/main/gram.y:3149
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d dizesi nda içerikyığını taşması"
 
-#: src/main/gram.y:3240
+#: src/main/gram.y:3244
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "%d. satırda girdi önbellek taşması"
@@ -5996,39 +5996,39 @@ msgstr "Tamsayı taşması - sum(as.numeric(.)) kullanın"
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "iç hata (do_summary içinde 'op = %d') \t Bir uzman çağırın"
 
-#: src/main/summary.c:612
+#: src/main/summary.c:614
 msgid "Integer overflow - use sum(as.numeric(.))"
 msgstr "Tamsayı taşması - sum(as.numeric(.)) kullanın"
 
-#: src/main/summary.c:720
+#: src/main/summary.c:722
 msgid "no non-missing arguments, returning NA"
 msgstr "eksik olmayan argüman yok, NA döndürülüyor"
 
-#: src/main/summary.c:723
+#: src/main/summary.c:725
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "min için eksik olmayan argüman yok; Inf döndürülüyor"
 
-#: src/main/summary.c:725
+#: src/main/summary.c:727
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "max için eksik olmayan argüman yok; -Inf döndürülüyor"
 
-#: src/main/summary.c:790
+#: src/main/summary.c:792
 msgid "non-numeric argument"
 msgstr "sayısal olmayan argüman"
 
-#: src/main/summary.c:834
+#: src/main/summary.c:836
 msgid "argument to 'which' is not logical"
 msgstr "'which' verilan argüman mantıksal değil"
 
-#: src/main/summary.c:878
+#: src/main/summary.c:880
 msgid "no arguments"
 msgstr "argüman yok"
 
-#: src/main/summary.c:889 src/main/summary.c:906
+#: src/main/summary.c:891 src/main/summary.c:908
 msgid "invalid input type"
 msgstr "geçersiz giriş biçimi"
 
-#: src/main/summary.c:923
+#: src/main/summary.c:925
 #, fuzzy
 msgid "an argument will be fractionally recycled"
 msgstr "argüman '%s' görmezden gelinecek"

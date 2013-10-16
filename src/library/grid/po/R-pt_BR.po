@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -131,7 +131,7 @@ msgid "must specify only one of 'font' and 'fontface'"
 msgstr "Deve especificar somente um de 'font' e 'fontface'"
 
 #, fuzzy
-msgid "invalid font face"
+msgid "invalid fontface"
 msgstr "Superfície da fonte inválida"
 
 #, fuzzy
@@ -169,6 +169,14 @@ msgid "must specify at least one viewport"
 msgstr "Deve especificar ao menos uma vista"
 
 #, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr "Objeto inválido inserido na lista de exibição"
+
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "Objeto inválido inserido na lista de exibição"
+
+#, fuzzy
 msgid "must pop at least one viewport"
 msgstr "Deve restaurar ao menos uma vista"
 
@@ -176,9 +184,8 @@ msgstr "Deve restaurar ao menos uma vista"
 msgid "must navigate up at least one viewport"
 msgstr "Deve ao menos navegar até uma vista"
 
-#, fuzzy
-msgid "the 'vp' argument is deprecated"
-msgstr "O argumento \"vp\" é obsoleto"
+msgid "Invalid number of generations"
+msgstr ""
 
 #, fuzzy
 msgid "invalid object inserted on the display list"
@@ -206,9 +213,6 @@ msgstr "Slot 'gp' inválido"
 #, fuzzy
 msgid "invalid 'grob' class"
 msgstr "Classe 'grob' inválida"
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr "grid.grob() é obsoleta; ao invés disso, use grob()"
 
 #, fuzzy
 msgid "a 'grob' path must contain at least one 'grob' name"
@@ -318,6 +322,14 @@ msgid "invalid element in the display list"
 msgstr "Elemento Inválido na lista de exibição"
 
 #, fuzzy
+msgid "Invalid force target"
+msgstr "'frame' inválido"
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "argumento 'print' inválido"
+
+#, fuzzy
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr "Só é permitido definir 'children' para uma 'gTree'"
 
@@ -369,6 +381,10 @@ msgid "invalid 'listing'"
 msgstr "listing inválido"
 
 #, fuzzy
+msgid "Nothing on the display list"
+msgstr "Elemento Inválido na lista de exibição"
+
+#, fuzzy
 msgid "invalid 'origin'"
 msgstr "'origin' inválido"
 
@@ -411,10 +427,6 @@ msgstr "'x' e 'y' devem ser unidades ou NULL"
 #, fuzzy
 msgid "corrupt 'arrows' object"
 msgstr "Objeto 'arrows' corrupto"
-
-#, fuzzy
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr "O argumento 'grob'  deve ser 'line.to', 'lines', ou 'segments' grob"
 
 msgid "x and y must be units"
 msgstr "x e y devem ser unidades"
@@ -616,6 +628,17 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "Nome(s) de vista inválido(s)"
 msgstr[1] "Nome(s) de vista inválido(s)"
+
+#, fuzzy
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr "O argumento \"vp\" é obsoleto"
+
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr "grid.grob() é obsoleta; ao invés disso, use grob()"
+
+#, fuzzy
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr "O argumento 'grob'  deve ser 'line.to', 'lines', ou 'segments' grob"
 
 #, fuzzy
 #~ msgid "invalid 'ask' value"

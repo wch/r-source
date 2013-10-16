@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -145,6 +145,12 @@ msgstr "'file' muss NULL, eine Zeichenkette oder eine Verbindung sein"
 msgid "bad argument"
 msgstr "unbrauchbares Argument"
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -194,9 +200,6 @@ msgstr ""
 
 msgid "package %s not found"
 msgstr "Paket %s nicht gefunden"
-
-msgid "broken installation, no CITATION file in the base package."
-msgstr "defekte installation, keine Datei CITATION im Base-Paket"
 
 msgid "no date field in DESCRIPTION file of package %s"
 msgstr "kein Datumsfeld in der Datei DESCRIPTION des Paketes %s"
@@ -972,6 +975,12 @@ msgstr "File '%s' nicht gefunden"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
+msgstr ""
+
 msgid "file size is limited to 8GB"
 msgstr "Dateigröße limitiert auf 8GB"
 
@@ -1267,6 +1276,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "broken installation, no CITATION file in the base package."
+#~ msgstr "defekte installation, keine Datei CITATION im Base-Paket"
 
 #~ msgid "Created PDF document %s"
 #~ msgstr "Erzeugtes PDF Dokument %s"

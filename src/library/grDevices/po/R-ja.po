@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2013-02-28 05:58+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -253,10 +253,8 @@ msgstr " 現在、以下のものから記録することが出来るデバイ�
 msgid "argument is not of class %s"
 msgstr " 引数はクラス %s ではありません "
 
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr " R-3.0.0 以前のバージョンからのスナップショットが読み込まれています "
-
-msgid "loading snapshot from different R version"
+#, fuzzy
+msgid "loading snapshot from a different session"
 msgstr " 異なった R バージョンからのスナップショットが読み込まれています "
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -392,6 +390,10 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr ""
+#~ " R-3.0.0 以前のバージョンからのスナップショットが読み込まれています "
 
 #~ msgid "can only print from screen device"
 #~ msgstr " スクリーンデバイスからしかプリントすることが出来ません "

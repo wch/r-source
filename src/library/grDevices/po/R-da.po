@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-10 10:02\n"
+"POT-Creation-Date: 2013-10-16 10:59\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -264,10 +264,7 @@ msgid "argument is not of class %s"
 msgstr "argument er ikke af klasse »recordedplot«"
 
 #, fuzzy
-msgid "loading snapshot from pre-3.0.0 R version"
-msgstr "Indlæser øjebliksbillede fra pre-2.0.0 R version"
-
-msgid "loading snapshot from different R version"
+msgid "loading snapshot from a different session"
 msgstr "Indlæser øjebliksbillede fra anden R version"
 
 msgid "'nbin' must be numeric of length 1 or 2"
@@ -410,6 +407,10 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
 msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
+
+#, fuzzy
+#~ msgid "loading snapshot from pre-3.0.0 R version"
+#~ msgstr "Indlæser øjebliksbillede fra pre-2.0.0 R version"
 
 #~ msgid "can only print from screen device"
 #~ msgstr "kan kun udskrive fra skærmenhed"

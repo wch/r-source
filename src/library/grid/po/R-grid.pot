@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-07 08:36\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr ""
 
-msgid "invalid font face"
+msgid "invalid fontface"
 msgstr ""
 
 msgid "argument must be a 'gpar' object"
@@ -125,13 +125,19 @@ msgstr ""
 msgid "must specify at least one viewport"
 msgstr ""
 
+msgid "Down viewport failed to record on display list"
+msgstr ""
+
+msgid "Down viewport incorrectly recorded on display list"
+msgstr ""
+
 msgid "must pop at least one viewport"
 msgstr ""
 
 msgid "must navigate up at least one viewport"
 msgstr ""
 
-msgid "the 'vp' argument is deprecated"
+msgid "Invalid number of generations"
 msgstr ""
 
 msgid "invalid object inserted on the display list"
@@ -153,9 +159,6 @@ msgid "invalid 'gp' slot"
 msgstr ""
 
 msgid "invalid 'grob' class"
-msgstr ""
-
-msgid "grid.grob() is deprecated; please use grob() instead"
 msgstr ""
 
 msgid "a 'grob' path must contain at least one 'grob' name"
@@ -242,6 +245,12 @@ msgstr ""
 msgid "invalid element in the display list"
 msgstr ""
 
+msgid "Invalid force target"
+msgstr ""
+
+msgid "Invalid revert target"
+msgstr ""
+
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr ""
 
@@ -284,6 +293,9 @@ msgstr ""
 msgid "invalid 'listing'"
 msgstr ""
 
+msgid "Nothing on the display list"
+msgstr ""
+
 msgid "invalid 'origin'"
 msgstr ""
 
@@ -321,9 +333,6 @@ msgid "'x' and 'y' must be units or NULL"
 msgstr ""
 
 msgid "corrupt 'arrows' object"
-msgstr ""
-
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 
 msgid "x and y must be units"

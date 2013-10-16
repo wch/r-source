@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-02-21 20:36-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu.org>\n"
+"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
+"org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,7 +70,9 @@ msgid "invalid 'grob'"
 msgstr "유효하지 않은 'grob'입니다"
 
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr "유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없습니다)"
+msgstr ""
+"유효하지 않은 'row' 그리고/또는 'col'입니다 (프레임 레이아웃에 그런 셀은 없습"
+"니다)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col'은 존재하는 열의 범위내에서만 얻을 수 있습니다"
@@ -83,11 +86,19 @@ msgstr "'row'는 존재하는 행의 범위내에서만 얻을 수 있습니다"
 msgid "invalid 'row' specification"
 msgstr "유효하지 않은 'row'지정입니다"
 
-msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
-msgstr "'side=[\"left\", \"right\"]', 'col', 'col.before', 또는 'col.after' 중 하나 이상을 지정할 수 없습니다"
+msgid ""
+"cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
+"before', or 'col.after'"
+msgstr ""
+"'side=[\"left\", \"right\"]', 'col', 'col.before', 또는 'col.after' 중 하나 "
+"이상을 지정할 수 없습니다"
 
-msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
-msgstr "'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나만을 지정해야 합니다"
+msgid ""
+"must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
+"before', or 'row.after'"
+msgstr ""
+"'side=[\"top\", \"bottom\"]', 'row', 'row.before', 또는 'row.after' 중 하나만"
+"을 지정해야 합니다"
 
 msgid "invalid 'n'"
 msgstr "유효하지 않은 'n'입니다"
@@ -110,7 +121,8 @@ msgstr "유효하지 않은 'alpha' 값입니다"
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr "'font'와 'fontface' 중 하나만을 선택해야 합니다"
 
-msgid "invalid font face"
+#, fuzzy
+msgid "invalid fontface"
 msgstr "유효하지 않은 폰트 페이스 입니다"
 
 msgid "argument must be a 'gpar' object"
@@ -122,13 +134,17 @@ msgstr "반드시 유효한 'gpar' 이름을 지정해야 합니다"
 msgid "invalid display list element"
 msgstr "유효하지 않은 디스플레이 리스트의 구성요소입니다"
 
-msgid "one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
-msgstr "여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므로 'wrap = TRUE'을 시도해보세요)"
+msgid ""
+"one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')"
+msgstr ""
+"여러번 덮어 씌여진 grobs중 하나입니다 (grab은 정확한 것이 아닐 수도 있으므로 "
+"'wrap = TRUE'을 시도해보세요)"
 
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "덮어 씌어진 뷰포트입니다 (grab은 아마도 정확하지 못할 수도 있습니다)"
 
-msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgid ""
+"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr ""
 
 msgid "only valid to push viewports"
@@ -137,14 +153,22 @@ msgstr ""
 msgid "must specify at least one viewport"
 msgstr "적어도 하나의 뷰포트를 지정해야 합니다"
 
+#, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr "디스플레이 목록에 삽입되어 있는 유효하지 않은 객체입니다"
+
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "디스플레이 목록에 삽입되어 있는 유효하지 않은 객체입니다"
+
 msgid "must pop at least one viewport"
 msgstr "적어도 하나의 뷰포트를 띄어줘야 합니다"
 
 msgid "must navigate up at least one viewport"
 msgstr "적어도 하나의 뷰포트를 찾아야만 합니다"
 
-msgid "the 'vp' argument is deprecated"
-msgstr "'vp' 인자는 더이상 지원되지 않습니다"
+msgid "Invalid number of generations"
+msgstr ""
 
 msgid "invalid object inserted on the display list"
 msgstr "디스플레이 목록에 삽입되어 있는 유효하지 않은 객체입니다"
@@ -166,9 +190,6 @@ msgstr "유효하지 않은 'gp' 슬롯입니다"
 
 msgid "invalid 'grob' class"
 msgstr "유효하지 않은 'grob' 클래스입니다"
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr "grid.grob()는 더이상 지원되지 않으므로 대신 grob()를 사용하세요"
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr "'grob' 패스는 반드시 적어도 한개의 'grob' 이름을 포함해야 합니다"
@@ -234,7 +255,9 @@ msgid "it is only valid to edit a child of a \"gTree\""
 msgstr "\"gTree\"의 child를 수정하는 것만이 유효합니다"
 
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
-msgstr "'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않습니다"
+msgstr ""
+"'children' 또는 'childrenOrder' 슬롯을 직접적으로 수정하는 것은 유효하지 않습"
+"니다"
 
 msgid "invalid 'result'"
 msgstr "유효하지 않은 'result'입니다"
@@ -253,6 +276,14 @@ msgstr "grob '%s'를 찾을 수 없습니다"
 
 msgid "invalid element in the display list"
 msgstr "디스플레이 목록에 유효하지 않은 항목이 있습니다"
+
+#, fuzzy
+msgid "Invalid force target"
+msgstr "유효하지 않은 'order'입니다"
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "유효하지 않은 'print' 인자입니다"
 
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr "\"gTree\"에 'children'을 재정렬만을 할 수 있습니다"
@@ -282,7 +313,8 @@ msgid "invalid vertical justification"
 msgstr ""
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
-msgstr "'respect'는 반드시 논리값이거나 'nrow'행 'ncol'열을 가진 행렬이어야 합니다"
+msgstr ""
+"'respect'는 반드시 논리값이거나 'nrow'행 'ncol'열을 가진 행렬이어야 합니다"
 
 msgid "invalid 'print' argument"
 msgstr "유효하지 않은 'print' 인자입니다"
@@ -295,6 +327,10 @@ msgstr "유효하지 않은 listing입니다"
 
 msgid "invalid 'listing'"
 msgstr "유효하지 않은 'listing'입니다"
+
+#, fuzzy
+msgid "Nothing on the display list"
+msgstr "유효하지 않은 디스플레이 목록의 변경입니다"
 
 msgid "invalid 'origin'"
 msgstr "유효하지 않은 'origin'입니다"
@@ -335,9 +371,6 @@ msgstr "'x'와'y'는 반드시 유닛이거나 NULL이어야 합니다"
 msgid "corrupt 'arrows' object"
 msgstr "'arrows' 객체가 손상되었습니다"
 
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr "'grob' 인자는 반드시 'line.to', 'lines', 또는 'segments' grob 중 하나이어야 합니다"
-
 msgid "x and y must be units"
 msgstr "x 그리고 y는 반드시 유닛이어야 합니다"
 
@@ -366,7 +399,8 @@ msgid "'x' and 'y' must be 'unit' objects and have the same length"
 msgstr "'x'와 'y'는 반드시 'unit' 객체이어야 하며 같은 길이를 가져야 합니다"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr "'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니다"
+msgstr ""
+"'x', 'y', 'width', 그리고 'height' 모두가 반드시 길이가 1인 유닛이어야 합니다"
 
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x'와 'y' 모두가 반드시 길이가 1인 유닛이어야 합니다"
@@ -473,8 +507,10 @@ msgstr "'vpList'에는 오로지 뷰포트만 허용됩니다"
 msgid "only viewports allowed in 'vpStack'"
 msgstr "'vpStack'에는 오로지 뷰포트만 허용됩니다"
 
-msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr "'vpTree'에서 'parent'는 반드시 뷰포트이고 'children'은 반드시 'vpList'입니다"
+msgid ""
+"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr ""
+"'vpTree'에서 'parent'는 반드시 뷰포트이고 'children'은 반드시 'vpList'입니다"
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr "뷰포트 패스는 적어도 뷰포트 이름을 포함하고 있어야 합니다"
@@ -496,3 +532,13 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "유효하지 않은 뷰포트 이름입니다"
 
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr "'vp' 인자는 더이상 지원되지 않습니다"
+
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr "grid.grob()는 더이상 지원되지 않으므로 대신 grob()를 사용하세요"
+
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr ""
+#~ "'grob' 인자는 반드시 'line.to', 'lines', 또는 'segments' grob 중 하나이어"
+#~ "야 합니다"

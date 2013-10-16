@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-01-12 10:57\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2013-03-19 12:30+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -119,7 +119,8 @@ msgstr "valeur 'alpha' incorrecte"
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr "il faut spécifier soit 'font', soit 'fontface'"
 
-msgid "invalid font face"
+#, fuzzy
+msgid "invalid fontface"
 msgstr "police de caractères incorrecte"
 
 msgid "argument must be a 'gpar' object"
@@ -152,14 +153,22 @@ msgstr "les vues peuvent seulement être repoussées"
 msgid "must specify at least one viewport"
 msgstr "il faut sélectionner au moins une vue"
 
+#, fuzzy
+msgid "Down viewport failed to record on display list"
+msgstr "objet incorrect inséré dans la liste d'affichage"
+
+#, fuzzy
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "objet incorrect inséré dans la liste d'affichage"
+
 msgid "must pop at least one viewport"
 msgstr "il faut restaurer au moins une vue"
 
 msgid "must navigate up at least one viewport"
 msgstr "il faut naviguer dans au moins une vue"
 
-msgid "the 'vp' argument is deprecated"
-msgstr "l'argument 'vp' est obsolète"
+msgid "Invalid number of generations"
+msgstr ""
 
 msgid "invalid object inserted on the display list"
 msgstr "objet incorrect inséré dans la liste d'affichage"
@@ -181,9 +190,6 @@ msgstr "slot 'gp' incorrect"
 
 msgid "invalid 'grob' class"
 msgstr "classe 'grob' incorrecte"
-
-msgid "grid.grob() is deprecated; please use grob() instead"
-msgstr "grid.grob() est obsolète ; Veuillez utiliser grob() à la place"
 
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr "un chemin 'grob' doit contenir au moins un nom de 'grob'"
@@ -279,6 +285,14 @@ msgstr "grob '%s' introuvable"
 msgid "invalid element in the display list"
 msgstr "élément incorrect dans la liste d'affichage (display list)"
 
+#, fuzzy
+msgid "Invalid force target"
+msgstr "'order' incorrect"
+
+#, fuzzy
+msgid "Invalid revert target"
+msgstr "argument 'print' incorrect"
+
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr ""
 "il est seulement possible de définir 'children' dans  un objet \"gTree\""
@@ -323,6 +337,10 @@ msgstr "listing incorrect"
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
 
+#, fuzzy
+msgid "Nothing on the display list"
+msgstr "modification incorrecte dans la liste d'affichage (display list)"
+
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
 
@@ -362,10 +380,6 @@ msgstr "'x' et 'y' doivent être des unités ou NULL"
 
 msgid "corrupt 'arrows' object"
 msgstr "objet 'arrows' corrompu"
-
-msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
-msgstr ""
-"l'argument 'grob' doit être un grob de type 'line.to', 'lines' ou 'segments'"
 
 msgid "x and y must be units"
 msgstr "'x' et 'y' doivent être des unités"
@@ -533,6 +547,17 @@ msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
 msgstr[0] "nom de vue incorrect"
 msgstr[1] "noms de vues incorrects"
+
+#~ msgid "the 'vp' argument is deprecated"
+#~ msgstr "l'argument 'vp' est obsolète"
+
+#~ msgid "grid.grob() is deprecated; please use grob() instead"
+#~ msgstr "grid.grob() est obsolète ; Veuillez utiliser grob() à la place"
+
+#~ msgid "the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
+#~ msgstr ""
+#~ "l'argument 'grob' doit être un grob de type 'line.to', 'lines' ou "
+#~ "'segments'"
 
 #, fuzzy
 #~ msgid "invalid 'ask' value"

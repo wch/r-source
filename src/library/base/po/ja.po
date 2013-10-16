@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:43+0100\n"
+"POT-Creation-Date: 2013-10-16 10:59+0100\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -257,7 +257,7 @@ msgstr " このバージョンの Windows はサポートされていません "
 #: src/main/seq.c:395 src/main/seq.c:399 src/main/seq.c:403
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:875 src/main/sysutils.c:251 src/main/util.c:963
+#: src/main/summary.c:877 src/main/sysutils.c:251 src/main/util.c:963
 #: src/main/util.c:968 src/main/util.c:975 src/main/util.c:978
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
@@ -817,73 +817,73 @@ msgstr " 計算結果が NaN になりました "
 msgid "non-numeric argument to mathematical function"
 msgstr " 数学関数に数値でない引数が渡されました "
 
-#: src/main/arithmetic.c:185
+#: src/main/arithmetic.c:187
 msgid "probable complete loss of accuracy in modulus"
 msgstr " 絶対値で精度が完全に失われた可能性があります "
 
-#: src/main/arithmetic.c:346
+#: src/main/arithmetic.c:348
 msgid "NAs produced by integer overflow"
 msgstr " 整数の桁あふれにより NA が生成されました "
 
-#: src/main/arithmetic.c:547
+#: src/main/arithmetic.c:549
 msgid "operator needs one or two arguments"
 msgstr " 演算子は一つまたは二つの引数を必要とします "
 
-#: src/main/arithmetic.c:563
+#: src/main/arithmetic.c:565
 msgid "non-numeric argument to binary operator"
 msgstr " 二項演算子の引数が数値ではありません "
 
-#: src/main/arithmetic.c:625 src/main/relop.c:227
+#: src/main/arithmetic.c:627 src/main/relop.c:227
 msgid "non-conformable arrays"
 msgstr " 適切な配列ではありません "
 
-#: src/main/arithmetic.c:668
+#: src/main/arithmetic.c:670
 msgid "non-conformable time-series"
 msgstr " 整合した時系列ではありません "
 
-#: src/main/arithmetic.c:690 src/main/logic.c:143 src/main/relop.c:166
+#: src/main/arithmetic.c:692 src/main/logic.c:143 src/main/relop.c:166
 #: src/main/relop.c:265
 msgid "longer object length is not a multiple of shorter object length"
 msgstr " 長いオブジェクトの長さが短いオブジェクトの長さの倍数になっていません "
 
-#: src/main/arithmetic.c:761
+#: src/main/arithmetic.c:763
 msgid "invalid argument to unary operator"
 msgstr " 単項演算子に対する引数が不正です "
 
-#: src/main/arithmetic.c:790 src/main/arithmetic.c:815
-#: src/main/arithmetic.c:834
+#: src/main/arithmetic.c:792 src/main/arithmetic.c:817
+#: src/main/arithmetic.c:836
 msgid "invalid unary operator"
 msgstr " 不正な単項演算子です "
 
-#: src/main/arithmetic.c:1284
+#: src/main/arithmetic.c:1241
 msgid "unimplemented real function of 1 argument"
 msgstr " 1 個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1298 src/main/complex.c:648 src/main/complex.c:718
+#: src/main/arithmetic.c:1255 src/main/complex.c:648 src/main/complex.c:718
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
-#: src/main/arithmetic.c:1568 src/main/arithmetic.c:1919
-#: src/main/arithmetic.c:2098 src/main/arithmetic.c:2210
+#: src/main/arithmetic.c:1525 src/main/arithmetic.c:1876
+#: src/main/arithmetic.c:2055 src/main/arithmetic.c:2167
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr " %d 個の数値引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1594
+#: src/main/arithmetic.c:1551
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 " %d 個の引数が '%s' に渡されましたが、1 つまたは 2 つが必要とされています "
 
-#: src/main/arithmetic.c:1612
+#: src/main/arithmetic.c:1569
 msgid "invalid second argument of length 0"
 msgstr " 二番目の長さ 0 の引数が不正です "
 
-#: src/main/arithmetic.c:1681
+#: src/main/arithmetic.c:1638
 msgid "invalid argument 'base' of length 0"
 msgstr " 長さ 0 の 'base ' 引数です "
 
-#: src/main/arithmetic.c:1689
+#: src/main/arithmetic.c:1646
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1287,7 +1287,7 @@ msgstr " このようなタイプからは行列は作れません "
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr " 行列の行数は一致していなければなりません (%d 番目の引数を参照) "
 
-#: src/main/bind.c:1427
+#: src/main/bind.c:1428
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr " 行列の列数は一致していなければなりません (%d 番目の引数を参照) "
@@ -3676,14 +3676,14 @@ msgstr " 'getGrapshicsEvent' の再帰的使用はサポートされていませ
 msgid "no graphics event handlers set"
 msgstr " 設定されたグラフィックス event handler がありません "
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2233
-#: src/main/gram.y:2247
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2237
+#: src/main/gram.y:2251
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr " MBCS 文字を読んでいる途中に EOF に遭遇しました (%d 行) "
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2237
-#: src/main/gram.y:2244
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2241
+#: src/main/gram.y:2248
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr " 構文解析中に不正なマルチバイト文字列がありました (%d 行) "
@@ -3740,72 +3740,72 @@ msgstr " 予想外の %s です "
 msgid "repeated formal argument '%s' on line %d"
 msgstr " 形式的引数 '%s' が繰り返されています (%d 行において) "
 
-#: src/main/gram.y:2150
+#: src/main/gram.y:2154
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr " 整数リテラル %s は小数を含んでいます; 実数値を使用します "
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2158
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr " 非整数値 %s に L がついています; 実数値を使用します "
 
-#: src/main/gram.y:2167
+#: src/main/gram.y:2171
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr " 整数リテラル %s は不要な小数点を含んでいます "
 
-#: src/main/gram.y:2199
+#: src/main/gram.y:2203
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr " 文字列が長すぎるためメモリ確保ができません (%d 行) "
 
-#: src/main/gram.y:2352
+#: src/main/gram.y:2356
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\x' が使われています "
 
-#: src/main/gram.y:2366
+#: src/main/gram.y:2370
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2381
+#: src/main/gram.y:2385
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\u' が使われています "
 
-#: src/main/gram.y:2389
+#: src/main/gram.y:2393
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr " 不正な \\u{xxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2401
+#: src/main/gram.y:2405
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません (%d 行) "
 
-#: src/main/gram.y:2416
+#: src/main/gram.y:2420
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr " \"%s\" で始まる文字列の中で 8 進文字なしに '\\U' が使われています "
 
-#: src/main/gram.y:2424
+#: src/main/gram.y:2428
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です (%d 行) "
 
-#: src/main/gram.y:2464
+#: src/main/gram.y:2468
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 " \"%2$s\" で始まる文字列の中で '\\%1$c' は文字列で認識されないエスケープです "
 
-#: src/main/gram.y:2523
+#: src/main/gram.y:2527
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr " 文字列中にユニコードや 8 進・16 進エスケープ文字は許されません "
 
-#: src/main/gram.y:2527
+#: src/main/gram.y:2531
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3814,13 +3814,13 @@ msgstr ""
 " このロケールにはない Unicode エスケープを含む %d 行の文字列は \n"
 " 長すぎます (最大 10000 文字です) "
 
-#: src/main/gram.y:3125 src/main/gram.y:3132 src/main/gram.y:3138
-#: src/main/gram.y:3145
+#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
+#: src/main/gram.y:3149
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr " コンテクストスタックが溢れました (%d 行) "
 
-#: src/main/gram.y:3240
+#: src/main/gram.y:3244
 #, c-format
 msgid "internal parser error at line %d"
 msgstr " 内部パーサーエラー (%d 行) "
@@ -5945,39 +5945,39 @@ msgstr " 整数のオーバーフローがありました。sum(as.numeric(.)) �
 msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr " 内部エラー (do_summary 中の 'op = %d')。\t R の達人に相談しましょう "
 
-#: src/main/summary.c:612
+#: src/main/summary.c:614
 msgid "Integer overflow - use sum(as.numeric(.))"
 msgstr " 整数のオーバーフローがありました。sum(as.numeric(.)) を使います "
 
-#: src/main/summary.c:720
+#: src/main/summary.c:722
 msgid "no non-missing arguments, returning NA"
 msgstr " 引数に有限な値がありません: NA を返します "
 
-#: src/main/summary.c:723
+#: src/main/summary.c:725
 msgid "no non-missing arguments to min; returning Inf"
 msgstr " min の引数に有限な値がありません: Inf を返します "
 
-#: src/main/summary.c:725
+#: src/main/summary.c:727
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr " max の引数に有限な値がありません: -Inf を返します "
 
-#: src/main/summary.c:790
+#: src/main/summary.c:792
 msgid "non-numeric argument"
 msgstr " 引数が数値でありません "
 
-#: src/main/summary.c:834
+#: src/main/summary.c:836
 msgid "argument to 'which' is not logical"
 msgstr " 'which' へ渡す引数が論理型ではありません "
 
-#: src/main/summary.c:878
+#: src/main/summary.c:880
 msgid "no arguments"
 msgstr " 引数がありません "
 
-#: src/main/summary.c:889 src/main/summary.c:906
+#: src/main/summary.c:891 src/main/summary.c:908
 msgid "invalid input type"
 msgstr " 入力のタイプが不正です "
 
-#: src/main/summary.c:923
+#: src/main/summary.c:925
 msgid "an argument will be fractionally recycled"
 msgstr " 引数は部分的に再利用されます "
 

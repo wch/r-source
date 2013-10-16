@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-09 21:23+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -62,11 +62,15 @@ msgstr "Ponto de controle não-finito em Xspline"
 msgid "non-finite x or y in graphics path"
 msgstr "valores não-finitos de x ou y no caminho do gráfico"
 
-#: grid.c:3297
+#: grid.c:2848
+msgid "Empty raster"
+msgstr ""
+
+#: grid.c:3300
 msgid "invalid plotting symbol"
 msgstr "simbolo para gráfico inválido"
 
-#: grid.c:3383
+#: grid.c:3386
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"

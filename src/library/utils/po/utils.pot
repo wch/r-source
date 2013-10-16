@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-10-16 11:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,13 +172,13 @@ msgstr ""
 msgid "unable to delete menu item (%s)"
 msgstr ""
 
-#: windows/registry.c:73 windows/registry.c:254 windows/registry.c:257
-#: windows/registry.c:260
+#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
+#: windows/registry.c:254
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
 
-#: windows/registry.c:272
+#: windows/registry.c:266
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr ""

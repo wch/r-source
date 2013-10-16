@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:43+0100\n"
+"POT-Creation-Date: 2013-10-16 10:59+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1231,7 +1231,7 @@ msgstr "niewspierana wersja systemu Windows"
 #: src/main/seq.c:395 src/main/seq.c:399 src/main/seq.c:403
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:875 src/main/sysutils.c:251 src/main/util.c:963
+#: src/main/summary.c:877 src/main/sysutils.c:251 src/main/util.c:963
 #: src/main/util.c:968 src/main/util.c:975 src/main/util.c:978
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
@@ -2232,24 +2232,24 @@ msgstr "argument nieliczbowy przekazany do funkcji matematycznej"
 
 # src/main/arithmetic.c: 185
 # warning(_("probable complete loss of accuracy in modulus"))
-#: src/main/arithmetic.c:185
+#: src/main/arithmetic.c:187
 msgid "probable complete loss of accuracy in modulus"
 msgstr "prawdopodobna całkowita utrata precyzji w module"
 
 # src/main/arithmetic.c: 635
 #  _("NAs produced by integer overflow")
-#: src/main/arithmetic.c:346
+#: src/main/arithmetic.c:348
 msgid "NAs produced by integer overflow"
 msgstr ""
 "wyprodukowano wartości NA na skutek przepełnienia zakresu liczb całkowitych"
 
-#: src/main/arithmetic.c:547
+#: src/main/arithmetic.c:549
 msgid "operator needs one or two arguments"
 msgstr "operator wymaga jednego lub dwóch argumentów"
 
 # src/main/arithmetic.c: 345
 #  _("non-numeric argument to binary operator")
-#: src/main/arithmetic.c:563
+#: src/main/arithmetic.c:565
 msgid "non-numeric argument to binary operator"
 msgstr "argument nieliczbowy przekazany do operatora dwuargumentowego"
 
@@ -2257,13 +2257,13 @@ msgstr "argument nieliczbowy przekazany do operatora dwuargumentowego"
 #  _("non-conformable arrays")
 # src/main/relop.c: 130
 #  _("non-conformable arrays")
-#: src/main/arithmetic.c:625 src/main/relop.c:227
+#: src/main/arithmetic.c:627 src/main/relop.c:227
 msgid "non-conformable arrays"
 msgstr "niezgodne tablice"
 
 # src/main/arithmetic.c: 450
 #  _("non-conformable time-series")
-#: src/main/arithmetic.c:668
+#: src/main/arithmetic.c:670
 msgid "non-conformable time-series"
 msgstr "niezgodne szeregi czasowe"
 
@@ -2277,7 +2277,7 @@ msgstr "niezgodne szeregi czasowe"
 # warningcall(call, _("longer object length is not a multiple of shorter object length"))
 # src/main/relop.c: 168
 # warningcall(call, _("longer object length is not a multiple of shorter object length"))
-#: src/main/arithmetic.c:690 src/main/logic.c:143 src/main/relop.c:166
+#: src/main/arithmetic.c:692 src/main/logic.c:143 src/main/relop.c:166
 #: src/main/relop.c:265
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
@@ -2285,7 +2285,7 @@ msgstr ""
 
 # src/main/arithmetic.c: 544
 #  _("invalid argument to unary operator")
-#: src/main/arithmetic.c:761
+#: src/main/arithmetic.c:763
 msgid "invalid argument to unary operator"
 msgstr "niepoprawny argument przekazany do operatora jednoargumentowego"
 
@@ -2293,14 +2293,14 @@ msgstr "niepoprawny argument przekazany do operatora jednoargumentowego"
 #  _("invalid unary operator")
 # src/main/arithmetic.c: 588
 #  _("invalid unary operator")
-#: src/main/arithmetic.c:790 src/main/arithmetic.c:815
-#: src/main/arithmetic.c:834
+#: src/main/arithmetic.c:792 src/main/arithmetic.c:817
+#: src/main/arithmetic.c:836
 msgid "invalid unary operator"
 msgstr "niepoprawny operator jednoargumentowy"
 
 # src/main/arithmetic.c: 1113
 #  _("unimplemented real function of 1 argument")
-#: src/main/arithmetic.c:1284
+#: src/main/arithmetic.c:1241
 msgid "unimplemented real function of 1 argument"
 msgstr "niezaimplementowana rzeczywista funkcja jednego argumentu"
 
@@ -2310,7 +2310,7 @@ msgstr "niezaimplementowana rzeczywista funkcja jednego argumentu"
 #  _("unimplemented complex function")
 # src/main/complex.c: 715
 # errorcall_return(call, _("unimplemented complex function"))
-#: src/main/arithmetic.c:1298 src/main/complex.c:648 src/main/complex.c:718
+#: src/main/arithmetic.c:1255 src/main/complex.c:648 src/main/complex.c:718
 msgid "unimplemented complex function"
 msgstr "niezaimplementowana funkcja zespolona"
 
@@ -2322,8 +2322,8 @@ msgstr "niezaimplementowana funkcja zespolona"
 #  _("unimplemented real function of %d numeric arguments")
 # src/main/arithmetic.c: 2035
 #  _("unimplemented real function of %d numeric arguments")
-#: src/main/arithmetic.c:1568 src/main/arithmetic.c:1919
-#: src/main/arithmetic.c:2098 src/main/arithmetic.c:2210
+#: src/main/arithmetic.c:1525 src/main/arithmetic.c:1876
+#: src/main/arithmetic.c:2055 src/main/arithmetic.c:2167
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "niezaimplementowana rzeczywista funkcja %d argumentów liczbowych"
@@ -2331,26 +2331,26 @@ msgstr "niezaimplementowana rzeczywista funkcja %d argumentów liczbowych"
 # src/main/arithmetic.c: 1421
 # error(_("%d arguments passed to '%s' which requires 1 or 2"),
 # 	      n, PRIMNAME(op))
-#: src/main/arithmetic.c:1594
+#: src/main/arithmetic.c:1551
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d argumentów przekazanych do '%s', który wymaga 1 lub 2"
 
 # src/main/arithmetic.c: 1440
 #  _("invalid second argument of length 0")
-#: src/main/arithmetic.c:1612
+#: src/main/arithmetic.c:1569
 msgid "invalid second argument of length 0"
 msgstr "niepoprawny drugi argument o długości 0"
 
 # src/main/arithmetic.c: 1510
 #  _("invalid argument 'base' of length 0")
-#: src/main/arithmetic.c:1681
+#: src/main/arithmetic.c:1638
 msgid "invalid argument 'base' of length 0"
 msgstr "niepoprawny argument 'base' o zerowej długości"
 
 # src/main/arithmetic.c: 1518
 # error(_("%d arguments passed to 'log' which requires 1 or 2"), n)
-#: src/main/arithmetic.c:1689
+#: src/main/arithmetic.c:1646
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d argumentów przekazanych do 'log', który wymaga 1 lub 2"
@@ -3080,7 +3080,7 @@ msgstr "liczby wierszy macierzy muszą być zgodne (zobacz argument %d)"
 # src/main/bind.c: 1411
 # error(_("number of columns of matrices must match (see arg %d)"),
 # 		      na + 1)
-#: src/main/bind.c:1427
+#: src/main/bind.c:1428
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "liczby kolumn macierzy muszą być zgodne (zobacz argument %d)"
@@ -7434,8 +7434,8 @@ msgstr "nie ustawiono obsługi zdarzeń grafiki"
 # error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2238
 # error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2233
-#: src/main/gram.y:2247
+#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2237
+#: src/main/gram.y:2251
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "znak końca pliku (EOF) podczas czytania znaku MBCS w linii %d"
@@ -7456,8 +7456,8 @@ msgstr "znak końca pliku (EOF) podczas czytania znaku MBCS w linii %d"
 # error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2235
 # error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2237
-#: src/main/gram.y:2244
+#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2241
+#: src/main/gram.y:2248
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "niepoprawny wielobajtowy znak w parserze w linii %d"
@@ -7578,7 +7578,7 @@ msgstr "powtórzony formalny argument '%s' w linii %d"
 # warning(_("integer literal %s contains decimal; using numeric value"), yytext)
 # src/main/gram.y: 2141
 # warning(_("integer literal %s contains decimal; using numeric value"), yytext)
-#: src/main/gram.y:2150
+#: src/main/gram.y:2154
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "stały literał %s zawiera część dziesiętną; używanie wartości liczbowej"
@@ -7587,7 +7587,7 @@ msgstr "stały literał %s zawiera część dziesiętną; używanie wartości li
 # warning(_("non-integer value %s qualified with L; using numeric value"), yytext)
 # src/main/gram.y: 2145
 # warning(_("non-integer value %s qualified with L; using numeric value"), yytext)
-#: src/main/gram.y:2154
+#: src/main/gram.y:2158
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
@@ -7597,7 +7597,7 @@ msgstr ""
 # warning(_("integer literal %s contains unnecessary decimal point"), yytext)
 # src/main/gram.y: 2158
 # warning(_("integer literal %s contains unnecessary decimal point"), yytext)
-#: src/main/gram.y:2167
+#: src/main/gram.y:2171
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "stały literał %s zawiera niepotrzebny separator dziesiętny"
@@ -7614,7 +7614,7 @@ msgstr "stały literał %s zawiera niepotrzebny separator dziesiętny"
 # error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2190
 # error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:2199
+#: src/main/gram.y:2203
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
@@ -7623,7 +7623,7 @@ msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 #  _("'\\x' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2343
 #  _("'\\x' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2352
+#: src/main/gram.y:2356
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7634,7 +7634,7 @@ msgstr ""
 # error(_("\\uxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2357
 # error(_("\\uxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2366
+#: src/main/gram.y:2370
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
@@ -7645,7 +7645,7 @@ msgstr ""
 #  _("'\\u' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2372
 #  _("'\\u' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2381
+#: src/main/gram.y:2385
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7658,7 +7658,7 @@ msgstr ""
 # src/main/gram.y: 2380
 # error(_("invalid \\u{xxxx} sequence (line %d)"),
 # 			      ParseState.xxlineno)
-#: src/main/gram.y:2389
+#: src/main/gram.y:2393
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "niepoprawna sekwencja \\u{xxxx} (linia %d)"
@@ -7667,7 +7667,7 @@ msgstr "niepoprawna sekwencja \\u{xxxx} (linia %d)"
 # error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2392
 # error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2401
+#: src/main/gram.y:2405
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
@@ -7678,7 +7678,7 @@ msgstr ""
 #  _("'\\U' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2407
 #  _("'\\U' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2416
+#: src/main/gram.y:2420
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7689,7 +7689,7 @@ msgstr ""
 # error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2415
 # error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2424
+#: src/main/gram.y:2428
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "niepoprawny sekwencja \\U{xxxxxxxx} (linia %d)"
@@ -7698,7 +7698,7 @@ msgstr "niepoprawny sekwencja \\U{xxxxxxxx} (linia %d)"
 #  _("'\\%c' is an unrecognized escape in character string starting \"%s\"")
 # src/main/gram.y: 2455
 #  _("'\\%c' is an unrecognized escape in character string starting \"%s\"")
-#: src/main/gram.y:2464
+#: src/main/gram.y:2468
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
@@ -7709,7 +7709,7 @@ msgstr ""
 # error(_("mixing Unicode and octal/hex escapes in a string is not allowed"))
 # src/main/gram.y: 2514
 # error(_("mixing Unicode and octal/hex escapes in a string is not allowed"))
-#: src/main/gram.y:2523
+#: src/main/gram.y:2527
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "mieszanie znaków Unicode oraz ósemkowych/szestnastkowych znaków modyfikacji "
@@ -7719,7 +7719,7 @@ msgstr ""
 # error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno)
 # src/main/gram.y: 2518
 # error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno)
-#: src/main/gram.y:2527
+#: src/main/gram.y:2531
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -7745,8 +7745,8 @@ msgstr ""
 # error(_("contextstack overflow at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 3129
 # error(_("contextstack overflow at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:3125 src/main/gram.y:3132 src/main/gram.y:3138
-#: src/main/gram.y:3145
+#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
+#: src/main/gram.y:3149
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "przepełnienie stosu kontekstu w linii %d"
@@ -7755,7 +7755,7 @@ msgstr "przepełnienie stosu kontekstu w linii %d"
 # error(_("internal parser error at line %d"),  ParseState.xxlineno)
 # src/main/gram.y: 3225
 # error(_("internal parser error at line %d"),  ParseState.xxlineno)
-#: src/main/gram.y:3240
+#: src/main/gram.y:3244
 #, c-format
 msgid "internal parser error at line %d"
 msgstr "wewnętrzny błąd parsera w linii %d"
@@ -11457,25 +11457,25 @@ msgstr "wewnętrzny błąd ('op = %d' w 'do_summary').\t Wezwij Guru"
 
 # src/main/summary.c: 583
 # warningcall(call,_("Integer overflow - use sum(as.numeric(.))"))
-#: src/main/summary.c:612
+#: src/main/summary.c:614
 msgid "Integer overflow - use sum(as.numeric(.))"
 msgstr "Przepełnienie całkowitoliczbowe - użyj 'sum(as.numeric(.))'"
 
 # src/main/summary.c: 691
 # warningcall(call, _("no non-missing arguments, returning NA"))
-#: src/main/summary.c:720
+#: src/main/summary.c:722
 msgid "no non-missing arguments, returning NA"
 msgstr "brak argumentów; zwracanie wartości NA"
 
 # src/main/summary.c: 694
 # warningcall(call, _("no non-missing arguments to min; returning Inf"))
-#: src/main/summary.c:723
+#: src/main/summary.c:725
 msgid "no non-missing arguments to min; returning Inf"
 msgstr "brak argumentów w min; zwracanie wartości Inf"
 
 # src/main/summary.c: 696
 # warningcall(call, _("no non-missing arguments to max; returning -Inf"))
-#: src/main/summary.c:725
+#: src/main/summary.c:727
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "brak argumentów w max; zwracanie wartości -Inf"
 
@@ -11485,13 +11485,13 @@ msgstr "brak argumentów w max; zwracanie wartości -Inf"
 # error(_("non-numeric argument"))
 # src/main/summary.c: 761
 # error(_("non-numeric argument"))
-#: src/main/summary.c:790
+#: src/main/summary.c:792
 msgid "non-numeric argument"
 msgstr "argument nieliczbowy"
 
 # src/main/summary.c: 805
 # error(_("argument to 'which' is not logical"))
-#: src/main/summary.c:834
+#: src/main/summary.c:836
 msgid "argument to 'which' is not logical"
 msgstr "argument 'which' nie jest argumentem logicznym"
 
@@ -11501,7 +11501,7 @@ msgstr "argument 'which' nie jest argumentem logicznym"
 # stop("no arguments")
 # src/main/summary.c: 849
 # error(_("no arguments"))
-#: src/main/summary.c:878
+#: src/main/summary.c:880
 msgid "no arguments"
 msgstr "brak argumentów"
 
@@ -11509,7 +11509,7 @@ msgstr "brak argumentów"
 # error(_("invalid input type"))
 # src/main/summary.c: 877
 # error(_("invalid input type"))
-#: src/main/summary.c:889 src/main/summary.c:906
+#: src/main/summary.c:891 src/main/summary.c:908
 msgid "invalid input type"
 msgstr "niepoprawny typ wejściowy"
 
@@ -11523,7 +11523,7 @@ msgstr "niepoprawny typ wejściowy"
 # warning("an argument will be fractionally recycled")
 # src/main/summary.c: 894
 # warning(_("an argument will be fractionally recycled"))
-#: src/main/summary.c:923
+#: src/main/summary.c:925
 msgid "an argument will be fractionally recycled"
 msgstr "argument zostanie częściowo powtórzony"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -135,6 +135,12 @@ msgstr ""
 msgid "bad argument"
 msgstr ""
 
+msgid "'full.names' must be TRUE for multiple paths."
+msgstr ""
+
+msgid "Timestamp file no longer exists."
+msgstr ""
+
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
 "%s"
@@ -179,9 +185,6 @@ msgid ""
 msgstr ""
 
 msgid "package %s not found"
-msgstr ""
-
-msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 
 msgid "no date field in DESCRIPTION file of package %s"
@@ -910,6 +913,12 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "file '%s' did not have execute permissions: corrected"
+msgstr ""
+
+msgid "invalid uid value replaced by that for user 'nobody'"
+msgstr ""
+
+msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "file size is limited to 8GB"

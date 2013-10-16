@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-09-03 07:44\n"
+"POT-Creation-Date: 2013-10-16 11:00\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -210,6 +210,14 @@ msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
 msgstr "版本数目至少要由两个非负整数组成，中间用单一的'.'或'-'符号分开."
+
+#, fuzzy
+msgid "Invalid VignetteBuilder field."
+msgstr "Priority域不对."
+
+msgid ""
+"This field must contain one or more packages (and no version requirement)."
+msgstr ""
 
 msgid "Invalid Priority field."
 msgstr "Priority域不对."
