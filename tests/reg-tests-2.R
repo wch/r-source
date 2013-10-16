@@ -2786,3 +2786,16 @@ str(max("bla", NA))
 str(max(NA_character_, "bla"))
 ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
 ## be the min or max.  
+
+
+## When two entries needed to be cut to width, str() mixed up
+## the values (reported by Gerrit Eichner)
+oldopts <- options(width=70, stringsAsFactors=TRUE)
+n <- 11      # number of rows of data frame
+M <- 10000   # order of magnitude of numerical values
+longer.char.string <- "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbjp"
+X <- data.frame( A = 1:n * M,
+                 B = rep( longer.char.string, n))
+str( X, strict.width = "cut")
+options(oldopts)
+## The first row of the str() result was duplicated.
