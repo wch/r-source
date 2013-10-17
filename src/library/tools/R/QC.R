@@ -2846,16 +2846,6 @@ function(dfile)
         out <- c(out, res)
     }
 
-    ## FIXME: this was done right at the beginning
-    ## Mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-##     required_fields <- c("Package", "Version", "License", "Description",
-##                          "Title", "Author", "Maintainer")
-##     if(length(i <- which(is.na(match(required_fields, names(db))) |
-##                          !nzchar(db[required_fields]))))
-##         out$missing_required_fields <- required_fields[i]
-
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
@@ -4101,18 +4091,19 @@ function(dir, doDelete = FALSE)
     }
 
     subdir <- file.path("inst", "doc")
-    vigns <- pkgVignettes(dir=dir, subdirs=subdir)
-    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+    vigns <- pkgVignettes(dir = dir, subdirs = subdir)
+    if (!is.null(vigns) && length(vigns$docs)) {
         vignettes <- basename(vigns$docs)
 
-        # Add vignette output files, if they exist
+        ## Add vignette output files, if they exist
         tryCatch({
-            vigns <- pkgVignettes(dir=dir, subdirs=subdir, output=TRUE)
+            vigns <- pkgVignettes(dir = dir, subdirs = subdir, output = TRUE)
             vignettes <- c(vignettes, basename(vigns$outputs))
         }, error = function(ex) {})
 
-        ## we specify ASCII filenames starting with a letter in R-exts
-        ## do this in a locale-independent way.
+        ## 'the file names should start with an ASCII letter and be comprised
+        ## entirely of ASCII letters or digits or hyphen or underscore'
+        ## Do this in a locale-independent way.
         OK <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz][ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-]+$", vignettes)
         wrong <- vignettes
         if(length(OK)) wrong <- wrong[-OK]
@@ -5090,7 +5081,7 @@ function(x, ...)
           }
       },
       if(length(xx <- x$depends_not_import)) {
-          msg <- c("  These packages needs to imported from for the case when",
+          msg <- c("  These packages need to be imported from for the case when",
                    "  this namespace is loaded but not attached.")
          if(length(xx) > 1L) {
               c(gettext("Packages in Depends field not imported from:"),
