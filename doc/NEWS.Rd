@@ -313,6 +313,9 @@
       \item \code{str(..., strict.width = "cut")} did not handle
       it properly when more than one line needed to be cut.  (Reported
       by Gerrit Eichner.)
+
+      \item Removing subclass back-references when S4 classes were
+      removed or their namespace unloaded had several bugs (e.g., \PR{15481}).
     }
   }
 }
