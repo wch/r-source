@@ -197,5 +197,18 @@ provideDimnames(table(character()))
 as.data.frame(table(character()))
 ## all failed in 3.0.2
 
+## PR#15004
+n <- 10
+s <- 3
+l <- 10000
+m <- 20
+x <- data.frame(x1 = 1:n, x2 = 1:n)
+by <- data.frame(V1 = factor(rep(1:3, n %/% s + 1)[1:n], levels = 1:s))
+for(i in 1:m) {
+    by[[i + 1]] <- factor(rep(l, n), levels = 1:l)
+}
+agg <- aggregate.data.frame(x, by, mean)
+stopifnot(nrow(unique(by)) == nrow(agg))
+## rounding caused groups to be falsely merged
 
 proc.time()
