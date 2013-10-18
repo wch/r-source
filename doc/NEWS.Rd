@@ -56,6 +56,9 @@
 
       \item Removing subclass back-references when S4 classes were
       removed or their namespace unloaded had several bugs (e.g., \PR{15481}).
+      
+      \item \code{aggregate()} could fail when there were too many
+      levels present in the \code{by} argument.  (\PR{15004})
     }
   }
 }
