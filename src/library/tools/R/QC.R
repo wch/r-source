@@ -6597,7 +6597,7 @@ function(x, ...)
                         indent = 2L, exdent = 2L))
       },
       if(length(y <- x$missing_vignette_index)) {
-          "Package has non-Sweave vignettes but no prebuilt vignette index."
+          "Package has a VignetteBuilder field but no prebuilt vignette index."
       }
       )
 }
