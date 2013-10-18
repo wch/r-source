@@ -519,6 +519,11 @@ assignClassDef <-
       if(exists(mname, envir = where, inherits = FALSE) && bindingIsLocked(mname, where)) {
           if(force)
             .assignOverBinding(mname, def, where, FALSE)
+          ## called this way, e.g., from setIs()
+          ## This is old and bad.  Given that the cached version of the class
+          ## will have all the updated info about a class, we should leave
+          ## the locked version alone.  But probably too late to fix without
+          ## a lot of flack.  (JMC, 2013/10)
           else
             stop(gettextf("class %s has a locked definition in package %s",
                           dQuote(Class), sQuote(getPackageName(where))))
@@ -2127,49 +2132,59 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     if(length(classDef@contains)) {
         superclasses <- names(classDef@contains)
         for(what in superclasses) {
-            superWhere <- findClass(what, classWhere)
-            if(length(superWhere)) {
-                superWhere <- superWhere[[1L]]
-                .removeSubClass(what, Class, superWhere)
-            } else if(! what %in% c(.BasicClasses, "oldClass"))
-                warning(gettextf("could not find superclass %s to clean up when removing subclass references to class %s",
-                                 .dQ(what), .dQ(Class)))
+            cdef <- .getClassFromCache(what)
+            ## TODO:  handle the case of multiple packages with this class
+            if(is(cdef, "classRepresentation"))
+                .removeSubClass(what, Class, cdef)
         }
     }
     NULL
 }
 
 
-## remove subclass from the known subclasses of class
-## both in the package environment and in the cache
-.removeSubClass <- function(class, subclass, where) {
-    mname <- classMetaName(class)
-    where <- as.environment(where)
-    if(exists(mname, envir = where, inherits = FALSE)) {
-        cdef <- get(mname, envir = where)
+## remove subclass from the list of subclasses of class
+## in the cache and possibly in the attached package environment
+.removeSubClass <- function(class, subclass, cdef) {
+    if(is.null(cdef)) {}
+    else {
         newdef <- .deleteSubClass(cdef, subclass)
         if(!is.null(newdef))
-          assignClassDef(class, newdef,  where, TRUE)
-        else { # check the cache
-            cdef <- .getClassFromCache(cdef@className, where)
-            if(is.null(cdef)) {}
-            else {
-                newdef <- .deleteSubClass(cdef, subclass)
-                if(!is.null(newdef))
-                  .cacheClass(class, newdef, FALSE, where)
+            .cacheClass(class, newdef, FALSE, cdef@package)
+        ## the class definition in the search list may have been altered
+        ## (e.g., when classes are created in the global environment_
+        pname <- cdef@package
+        if(identical(pname, ".GlobalEnv")) {
+            pos <- 1
+        }
+        else {
+            pname <- paste0("package:", pname)
+            pos <- match(pname, search(), 0)
+        }
+        if(pos) {
+            penv <- as.environment(pname)
+            cmeta <- classMetaName(class)
+            if(exists(cmeta, envir = penv, inherits = FALSE)) {
+                cdefp <- get(cmeta, envir = penv)
+                if(subclass %in% names(cdefp@subclasses)) {
+                    newdef <- .deleteSubClass(cdefp, subclass)
+                    if(!is.null(newdef)) {
+                        ## unfortunately, assignClassDef assigns the subclass info
+                        ## even in a locked binding.  Would be nice to change that,
+                        ## but probably too much would break.
+                        if(bindingIsLocked(cmeta, penv))
+                            .assignOverBinding(cmeta, newdef, penv, FALSE)
+                        else
+                            assign(cmeta, newdef, envir = penv)
+                    }
+                }
             }
         }
-        sig <- signature(from=subclass, to=class)
-        if(existsMethod("coerce", sig))
-          .removeCachedMethod("coerce", sig)
-        if(existsMethod("coerce<-", sig))
-          .removeCachedMethod("coerce<-", sig)
-        if(is(cdef, "classRepresentation"))
-            .uncacheClass(class, cdef)
     }
-    else
-      warning(gettextf("no class %s found as expected in removing subclass %s",
-                       .dQ(class), .dQ(subclass)))
+    sig <- signature(from=subclass, to=class)
+    if(existsMethod("coerce", sig))
+        .removeCachedMethod("coerce", sig)
+    if(existsMethod("coerce<-", sig))
+        .removeCachedMethod("coerce<-", sig)
 }
 
 .deleteSubClass <- function(cdef, subclass) {
