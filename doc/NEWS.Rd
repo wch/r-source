@@ -319,6 +319,10 @@
       
       \item \code{aggregate()} could fail when there were too many
       levels present in the \code{by} argument.  (\PR{15004})
+
+      \item \code{namespaceImportFrom} needed to detect primitive
+        functions when checking for duplicated imports (reported by
+        Karl Forner).
     }
   }
 }

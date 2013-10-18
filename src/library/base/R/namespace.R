@@ -773,7 +773,7 @@ namespaceImport <- function(self, ..., from = NULL)
     for (ns in list(...))
         namespaceImportFrom(self, asNamespace(ns), from = from)
 
-namespaceImportFrom <- function(self, ns, vars, generics, packages, from = NULL)
+namespaceImportFrom <- function(self, ns, vars, generics, packages, from = "non-package environment")
 {
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
@@ -798,6 +798,11 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = NULL)
             return(numeric())
         mm <- ".__T__"
         seq_along(impvars)[substr(impvars, 1L, nchar(mm, type = "c")) == mm]
+    }
+    genericPackage <- function(f) {
+        if(methods::is(f, "genericFunction")) f@package
+        else if(is.primitive(f)) "base"
+        else "<unknown>"
     }
     if (is.character(self))
         self <- getNamespace(self)
@@ -874,10 +879,9 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages, from = NULL)
 	    if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
 		## warn only if generic overwrites a function which
 		## it was not derived from
-		genNs <- get(n, envir = ns)@package
+		genNs <- genericPackage(get(n, envir = ns))
                 genImp <- get(n, envir = impenv)
-                if(methods::is(genImp, "genericFunction") &&
-                   identical(genNs, genImp@package)) next # same generic
+                if(identical(genNs, genericPackage(genImp))) next # same generic
 		genImpenv <- environmentName(environment(genImp))
                 ## May call environment() on a non-function--an undocumented
                 ## "feature" of environment() is that it returns a special
