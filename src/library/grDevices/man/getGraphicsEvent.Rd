@@ -97,7 +97,8 @@ console.
 \value{
 When run interactively,
 \code{getGraphicsEvent} returns a non-\code{NULL} value returned from one of the event handlers.
-In a non-interactive session, \code{getGraphicsEvent} will return \code{NULL} immediately.
+In a non-interactive session, \code{getGraphicsEvent} will return \code{NULL} immediately.  It
+will also return \code{NULL} if the user closes the last window that has graphics handlers.
 
 \code{getGraphicsEventEnv} returns the current event environment for the graphics device,
 or \code{NULL} if none has been set.
