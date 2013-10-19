@@ -321,8 +321,11 @@
       levels present in the \code{by} argument.  (\PR{15004})
 
       \item \code{namespaceImportFrom} needed to detect primitive
-        functions when checking for duplicated imports (reported by
-        Karl Forner).
+      functions when checking for duplicated imports (reported by
+      Karl Forner).
+    
+      \item \code{getGraphicsEvent()} did not exit when a user closed
+      the graphics window.  (\PR{15208})
     }
   }
 }
