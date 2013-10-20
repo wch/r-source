@@ -326,6 +326,9 @@
     
       \item \code{getGraphicsEvent()} did not exit when a user closed
       the graphics window.  (\PR{15208})
+      
+      \item Errors in vignettes were not always captured and displayed
+      properly.  (\PR{15495})
     }
   }
 }
