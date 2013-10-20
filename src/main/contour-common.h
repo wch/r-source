@@ -39,7 +39,9 @@ typedef struct SEG {
 
 static int ctr_intersect(double z0, double z1, double zc, double *f)
 {
-    if ((z0 - zc) * (z1 - zc) < 0.0) {
+/*  Old test was  ((z0 - zc) * (z1 - zc) < 0.0), but rounding led to inconsistencies 
+    in PR#15454 */
+    if ( (z0 < zc) != (z1 < zc) && z0 != zc && z1 != zc ) { 
 	*f = (zc - z0) / (z1 -	z0);
 	return 1;
     }
@@ -325,7 +327,7 @@ static SEGP* contourLines(double *x, int nx, double *y, int ny,
 		    seglist = ctr_newseg(xx[0], yy[0], xx[1], yy[1], seglist);
 		    seglist = ctr_newseg(xx[2], yy[2], xx[3], yy[3], seglist);
 		}
-		else error("k != 2 or 4");
+		else error("k = %d, should be 2 or 4", k);
 	    }
 	    segmentDB[i + j * nx] = seglist;
 	}
