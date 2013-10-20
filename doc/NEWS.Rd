@@ -69,6 +69,9 @@
       
       \item Errors in vignettes were not always captured and displayed
       properly.  (\PR{15495})
+      
+      \item \code{contour()} could fail when dealing with extremely
+      small z values.  (\PR{15454})
     }
   }
 }

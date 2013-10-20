@@ -61,4 +61,10 @@ agg <- aggregate.data.frame(x, by, mean)
 stopifnot(nrow(unique(by)) == nrow(agg))
 ## rounding caused groups to be falsely merged
 
+## PR#15454
+set.seed(357)
+z <- matrix(c(runif(50, -1, 1), runif(50, -1e-190, 1e-190)), nrow = 10)
+contour(z)
+## failed because rounding made crossing tests inconsistent
+
 proc.time()
