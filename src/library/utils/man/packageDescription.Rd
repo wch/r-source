@@ -1,6 +1,6 @@
 % File src/library/utils/man/packageDescription.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Copyright 2005-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -22,7 +22,7 @@ packageVersion(pkg, lib.loc = NULL)
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
-    packages are searched before the libraries.}
+    packages and namespaces are searched before the libraries.}
   \item{fields}{a character vector giving the tags of fields to return
     (if other fields occur in the file they are ignored).}
   \item{drop}{If \code{TRUE} and the length of \code{fields} is 1, then
@@ -69,7 +69,7 @@ packageDescription("stats", fields = c("Package", "Version"))
 packageDescription("stats", fields = "Version")
 packageDescription("stats", fields = "Version", drop = FALSE)
 
-if(packageVersion("MASS") < "7.3")
+if(packageVersion("MASS") < "7.3.29")
   message("you need to update 'MASS'")
 }}
 \keyword{utilities}
