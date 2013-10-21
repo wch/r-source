@@ -3423,9 +3423,32 @@ setRlibs <-
                      })
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
-                msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
-                               nS3methods)
-                noteLog(Log, msg)
+                ## check that this is installable in R 3.0.1
+                meta <- .read_description(file.path(pkgdir, "DESCRIPTION"))
+                deps <- .split_description(meta, verbose = TRUE)$Rdepends2
+                status <- 0L
+                current <- as.numeric_version("3.0.1")
+                for(depends in deps) {
+                    ## .check_package_description will insist on these operators
+                    if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!="))
+                        next
+                    status <- if(inherits(depends$version, "numeric_version"))
+                        !do.call(depends$op, list(current, depends$version))
+                    else {
+                        ver <- R.version
+                        if (ver$status %in% c("", "Patched")) FALSE
+                        else !do.call(depends$op,
+                                      list(ver[["svn rev"]],
+                                           as.numeric(sub("^r", "", depends$version))))
+                    }
+                    if(status != 0L)  break
+                }
+                if (status == 0L) {
+                    msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
+                                   nS3methods)
+                    noteLog(Log, msg)
+                } else
+                    resultLog(Log, "OK")
             } else
                 resultLog(Log, "OK")
         }
