@@ -788,3 +788,21 @@ SEXP R_tryEvalSilent(SEXP e, SEXP env, int *ErrorOccurred)
     R_ShowErrorMessages = oldshow;
     return val;
 }
+
+SEXP R_ExecWithCleanup(SEXP (*fun)(void *), void *data,
+		       void (*cleanfun)(void *), void *cleandata)
+{
+    RCNTXT cntxt;
+    SEXP result;
+
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = cleanfun;
+    cntxt.cenddata = cleandata;
+
+    result = fun(data);
+    cleanfun(cleandata);
+
+    endcontext(&cntxt);
+    return result;
+}
