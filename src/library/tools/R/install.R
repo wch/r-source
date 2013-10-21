@@ -139,7 +139,7 @@
             "  -v, --version		print INSTALL version info and exit",
             "  -c, --clean		remove files created during installation",
             "      --preclean	remove files created during a previous run",
-            "  -d, --debug		turn on debugging messaages",
+	    "  -d, --debug		turn on debugging messages",
             if(WINDOWS) "			and build a debug DLL",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
