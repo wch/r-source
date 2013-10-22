@@ -1,7 +1,7 @@
 #  File src/library/utils/R/relist.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ relist.list <- function(flesh, skeleton=attr(flesh, "skeleton"))
     for (i in seq_along(skeleton)) {
 	size <- length(unlist(result[[i]]))
 	result[[i]] <-
-	    relist(flesh[ind:(ind + size - 1L)], result[[i]])
+	    relist(flesh[seq.int(ind, length.out = size)], result[[i]])
 	ind <- ind + size
     }
     result
@@ -133,17 +133,17 @@ relist.list <- function(flesh, skeleton=attr(flesh, "skeleton"))
 
 relist.matrix <- function(flesh, skeleton=attr(flesh, "skeleton"))
 {
-    if (is.numeric(skeleton[1,1]))
-	return(matrix(flesh, nrow=nrow(skeleton),
-		      dimnames=dimnames(skeleton)))
     n <- nrow(skeleton)
-    m <- ncol(skeleton)
+    m <- ncol(skeleton)  
+    if (n && m && is.numeric(skeleton[1,1]))
+	return(matrix(flesh, nrow = n, ncol = m,
+		      dimnames=dimnames(skeleton)))
     result <- skeleton
     ind <- 1L
-    for (j in 1L:m)
-	for (i in 1L:n) {
+    for (j in seq_len(m))
+	for (i in seq_len(n)) {
 	    size <- length(unlist(skeleton[[i, j]]))
-	    result[[i, j]] <- relist(flesh[ind:(ind + size - 1)],
+	    result[[i, j]] <- relist(flesh[seq.int(ind, length.out = size)],
 				     skeleton[[i, j]])
 	    ind <- ind + size
 	}
