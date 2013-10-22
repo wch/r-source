@@ -67,4 +67,15 @@ z <- matrix(c(runif(50, -1, 1), runif(50, -1e-190, 1e-190)), nrow = 10)
 contour(z)
 ## failed because rounding made crossing tests inconsistent
 
+## Various cases where zero length vectors were not handled properly
+## by functions in base and utils, including PR#15499
+y <- as.data.frame(list())
+format(y)
+format(I(integer()))
+gl(0, 2)
+z <- list(numeric(0), 1)
+stopifnot(identical(relist(unlist(z), z), z))
+summary(y)
+## all failed in 3.0.2
+
 proc.time()

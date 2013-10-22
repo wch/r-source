@@ -1,7 +1,7 @@
 #  File src/library/utils/R/debugger.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,6 +54,10 @@ debugger <- function(dump = last.dump)
     if (length(msg <- attr(dump, "error.message")))
         cat(gettext("Message: "), msg)
     n <- length(dump)
+    if (!n) {
+	cat(gettextf("'dump' is empty\n"))
+	return(invisible())
+    }
     calls <- names(dump)
     repeat {
         cat(gettext("Available environments had calls:\n"))

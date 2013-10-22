@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -131,8 +131,8 @@ summary.data.frame <-
     nv <- length(object)
     nm <- names(object)
     lw <- numeric(nv)
-    nr <- max(unlist(lapply(z, NROW)))
-    for(i in 1L:nv) {
+    nr <- if (nv) max(unlist(lapply(z, NROW))) else 0
+    for(i in seq_len(nv)) {
         sms <- z[[i]]
         if(is.matrix(sms)) {
             ## need to produce a single column, so collapse matrix
@@ -162,15 +162,20 @@ summary.data.frame <-
             z[[i]] <- sms
         }
     }
-    z <- unlist(z, use.names=TRUE)
-    dim(z) <- c(nr, nv)
-    if(any(is.na(lw)))
-	warning("probably wrong encoding in names(.) of column ",
+    if (nv) {
+	z <- unlist(z, use.names=TRUE)
+	dim(z) <- c(nr, nv)
+    	if(any(is.na(lw)))
+	    warning("probably wrong encoding in names(.) of column ",
 		paste(which(is.na(lw)), collapse = ", "))
-    blanks <- paste(character(max(lw, na.rm=TRUE) + 2L), collapse = " ")
-    pad <- floor(lw - ncw(nm)/2)
-    nm <- paste0(substring(blanks, 1, pad), nm)
-    dimnames(z) <- list(rep.int("", nr), nm)
+	blanks <- paste(character(max(lw, na.rm=TRUE) + 2L), collapse = " ")
+	pad <- floor(lw - ncw(nm)/2)
+	nm <- paste0(substring(blanks, 1, pad), nm)
+	dimnames(z) <- list(rep.int("", nr), nm)
+    } else {
+	z <- character()
+	dim(z) <- c(nr, nv)
+    }
     attr(z, "class") <- c("table") #, "matrix")
     z
 }
