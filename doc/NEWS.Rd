@@ -72,6 +72,9 @@
       
       \item \code{contour()} could fail when dealing with extremely
       small z values.  (\PR{15454})
+      
+      \item \code{relist()} did not handle length zero elements properly.
+      (\PR{15499})
     }
   }
 }
