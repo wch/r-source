@@ -2201,6 +2201,23 @@ compiler `accepts some Fortran 2003 features'.  Note that the compiler
 used for OS X is @command{gfortran 4.2.3} which has limited Fortran 2003
 support (@uref{http://gcc.gnu.org/onlinedocs/gcc-4.2.3/gfortran/}).
 
+Modern versions of Fortran support modules, whereby compiling one source
+file creates a module file which is then included in others. (Module
+files typically have a @file{.mod} extension: they do depend on the
+compiler used and so should never be included in a package.)  This
+creates a dependence which @command{make} will not know about and often
+causes installation with a parallel make to fail.  Thus it is necessary
+to add explicit dependencies to @file{src/Makevars} to tell
+@command{make} the constraints on the order of compilation.  For
+example, if file @file{iface.f90} creates a module @samp{iface} used by
+files @file{cmi.f90} and @file{dmi.f90} then @file{src/Makevars} needs
+to contain something like
+
+@example
+cmi.o dmi.o: iface.o
+@end example
+
+
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
 
