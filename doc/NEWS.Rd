@@ -333,8 +333,9 @@
       \item \code{contour()} could fail when dealing with extremely
       small z values.  (\PR{15454})
       
-      \item \code{relist()} did not handle length zero elements properly.
-      (\PR{15499})
+      \item Several functions did not handle length zero vectors properly,
+      including \code{browseEnv()}, \code{format()}, \code{gl()}, 
+      \code{relist()} and \code{summary.data.frame()}.  (e.g., \PR{15499})
     }
   }
 }
