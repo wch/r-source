@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -282,16 +282,15 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
 ###**********************************************************
 
-## NB: } should not be escaped in [] .
 SweaveSyntaxNoweb <-
     list(doc = "^@",
          code = "^<<(.*)>>=.*",
          coderef = "^<<(.*)>>.*",
-         docopt = "^[[:space:]]*\\\\SweaveOpts\\{([^}]*)\\}",
-         docexpr = "\\\\Sexpr\\{([^}]*)\\}",
+         docopt = "^[[:space:]]*\\\\SweaveOpts\\{([^\\}]*)\\}",
+         docexpr = "\\\\Sexpr\\{([^\\}]*)\\}",
          extension = "\\.[rsRS]?nw$",
-         syntaxname = "^[[:space:]]*\\\\SweaveSyntax\\{([^}]*)\\}",
-         input = "^[[:space:]]*\\\\SweaveInput\\{([^}]*)\\}",
+         syntaxname = "^[[:space:]]*\\\\SweaveSyntax\\{([^\\}]*)\\}",
+         input = "^[[:space:]]*\\\\SweaveInput\\{([^\\}]*)\\}",
          trans = list(
              doc = "@",
              code = "<<\\1>>=",
@@ -307,8 +306,8 @@ class(SweaveSyntaxNoweb) <- "SweaveSyntax"
 
 SweaveSyntaxLatex <- SweaveSyntaxNoweb
 SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end\\{Scode\\}"
-SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin\\{Scode\\}\\{?([^}]*)\\}?.*"
-SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef\\{([^}]*)\\}.*"
+SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin\\{Scode\\}\\{?([^\\}]*)\\}?.*"
+SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef\\{([^\\}]*)\\}.*"
 SweaveSyntaxLatex$extension <- "\\.[rsRS]tex$"
 
 SweaveSyntaxLatex$trans$doc <-  "\\\\end{Scode}"
@@ -497,7 +496,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     output <- do.call(tools::buildVignette, args)
     message("Output file:  ", output)
-    if (toPDF && compact != "no"
+    if (toPDF && compact != "no" 
         && length(output) == 1 && grepl(".pdf$", output, ignore.case=TRUE)) {
 	## <NOTE>
 	## Same code as used for --compact-vignettes in
@@ -590,7 +589,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         Usage()
         do_exit(1L)
     }
-    args <- list(file=file, tangle=TRUE, weave=FALSE, engine=engine,
+    args <- list(file=file, tangle=TRUE, weave=FALSE, engine=engine, 
                  encoding=encoding)
     if(nzchar(options)) {
         opts <- eval(parse(text = paste("list(", options, ")")))
