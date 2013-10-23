@@ -304,9 +304,10 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if (options$eval) {
                 tmpcon <- file()
                 sink(file = tmpcon)
-                err <- evalFunc(ce, options)
-                cat("\n")           # make sure final line is complete
-                sink()
+                err <- tryCatch(evalFunc(ce, options), finally = {
+                     cat("\n")           # make sure final line is complete
+                     sink()
+                })
                 output <- readLines(tmpcon)
                 close(tmpcon)
                 ## delete empty output
