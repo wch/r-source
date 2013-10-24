@@ -1,6 +1,6 @@
 % File src/library/stats/man/stepfun.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stepfun}
@@ -83,6 +83,13 @@ as.stepfun(x, \dots)
 \author{
   Martin Maechler, \email{maechler@stat.math.ethz.ch} with some basic
   code from Thomas Lumley.
+}
+\note{
+  The objects of class \code{"stepfun"} are not intended to be used for
+  permanent storage and may change structure between versions of \R (and
+  did at \R 3.0.0).  They can usually be re-created by
+  \preformatted{    eval(attr(old_obj, "call"), environment(old_obj))}
+  since the data used is stored as part of the object's environment.
 }
 \seealso{\code{\link{ecdf}} for empirical distribution functions as
   special step functions and \code{\link{plot.stepfun}} for \emph{plotting}
