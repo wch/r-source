@@ -30,6 +30,7 @@ extern Rboolean mbcslocale;
 
 #define USE_MDI 1
 extern void R_ProcessEvents(void);
+extern void R_WaitEvent(void);
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
