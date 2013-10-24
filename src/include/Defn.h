@@ -148,6 +148,9 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP y);
 #include "Errormsg.h"
 
 extern void R_ProcessEvents(void);
+#ifdef Win32
+extern void R_WaitEvent(void);
+#endif
 
 #ifdef R_USE_SIGNALS
 #ifdef Win32

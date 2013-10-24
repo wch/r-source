@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2004-7  The R Foundation
+ *  Copyright (C) 2013	  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,7 +74,7 @@ do_setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     
     if (!dd->canGenMouseDown) checkHandler(mouseHandlers[0], eventEnv);
     if (!dd->canGenMouseUp)   checkHandler(mouseHandlers[1], eventEnv);
-    if (!dd->canGenMouseMove) checkHandler(mouseHandlers[1], eventEnv);
+    if (!dd->canGenMouseMove) checkHandler(mouseHandlers[2], eventEnv);
     if (!dd->canGenKeybd)     checkHandler(keybdHandler, eventEnv);
 
     dd->eventEnv = eventEnv;
@@ -164,6 +165,9 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* make sure we still have at least one device listening for events, and throw an error if not*/
 	    if(!haveListeningDev()) 
 		return R_NilValue;
+#ifdef Win32
+	    R_WaitEvent();
+#endif
 	    R_ProcessEvents();
 	    R_CheckUserInterrupt();
 	    i = 1;

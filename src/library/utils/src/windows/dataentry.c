@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2012  The R Core Team
+ *  Copyright (C) 1998--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -292,7 +292,7 @@ SEXP Win_dataentry(SEXP args)
 
     while (R_de_up) {
 	/* avoid consuming 100% CPU time here */
-	Sleep(10);
+	R_WaitEvent();
 	R_ProcessEvents();
     }
 

@@ -220,6 +220,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item (Windows only) A function \code{R_WaitEvent()} has been
+      added (with header in \file{R.h}) to block execution until
+      the next event is received by \R.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{chol(pivot = TRUE, LINPACK = TRUE)} is defunct.
@@ -263,6 +271,9 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
+      
+      \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
+      (PR#15500)
     }
   }
 }

@@ -1581,7 +1581,7 @@ static wchar_t consolegetc(control c)
     p = getdata(c);
     while((p->numkeys == 0) && (!p->clp))
     {
-	if (!peekevent()) WaitMessage();
+	R_WaitEvent();
 	R_ProcessEvents();
     }
     if (p->sel) {

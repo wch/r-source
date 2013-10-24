@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/getGraphicsEvent.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getGraphicsEvent}
@@ -114,6 +114,8 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
     plot(..., xlim = xlim, ylim = ylim, xaxs = xaxs, yaxs = yaxs)
     startx <- NULL
     starty <- NULL
+    prevx <- NULL
+    prevy <- NULL
     usr <- NULL
 
     devset <- function()
@@ -122,6 +124,8 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
     dragmousedown <- function(buttons, x, y) {
         startx <<- x
         starty <<- y
+        prevx <<- 0
+        prevy <<- 0
         devset()
         usr <<- par("usr")
         eventEnv$onMouseMove <- dragmousemove
@@ -132,8 +136,12 @@ dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
         devset()
         deltax <- diff(grconvertX(c(startx, x), "ndc", "user"))
         deltay <- diff(grconvertY(c(starty, y), "ndc", "user"))
-        plot(..., xlim = usr[1:2]-deltax, xaxs = "i",
-                  ylim = usr[3:4]-deltay, yaxs = "i")
+	if (abs(deltax-prevx) + abs(deltay-prevy) > 0) {
+	    plot(..., xlim = usr[1:2]-deltax, xaxs = "i",
+		      ylim = usr[3:4]-deltay, yaxs = "i")
+	    prevx <<- deltax
+	    prevy <<- deltay
+	}
         NULL
     }
 
