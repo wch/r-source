@@ -3208,8 +3208,27 @@ function(dfile)
     links <- character()
     llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
     if(length(llinks)) {
-        llinks <- llinks[sapply(llinks, length) > 1L]
-        if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
+        ## See if this is installable under 3.0.1:
+        ## if so check for versioned specs
+        deps <- .split_description(db, verbose = TRUE)$Rdepends2
+        status <- 0L
+        current <- as.numeric_version("3.0.1")
+        for(depends in deps) {
+            if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!=")) next
+            status <- if(inherits(depends$version, "numeric_version"))
+                !do.call(depends$op, list(current, depends$version))
+            else {
+                ver <- R.version
+                if (ver$status %in% c("", "Patched")) FALSE
+                else !do.call(depends$op,
+                              list(ver[["svn rev"]],
+                                   as.numeric(sub("^r", "", depends$version))))
+            }
+        }
+        if(!status) {
+            llinks <- llinks[sapply(llinks, length) > 1L]
+            if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
+        }
     }
     out <- list(duplicates = unique(allpkgs[duplicated(allpkgs)]),
                 bad_links = links)
@@ -3229,11 +3248,11 @@ format.check_package_description2 <- function(x, ...)
     },
       if(length(xx <- x$bad_links)) {
           if(length(xx) > 1L)
-              c("Versioned LinkingTo values for",
+              c("Versioned 'LinkingTo' values for",
                 paste(c(" ", sQuote(xx)), collapse = " "),
                 "are only usable in R >= 3.0.2")
           else
-              sprintf("Versioned LinkingTo value for %s is only usable in R >= 3.0.2",
+              sprintf("Versioned 'LinkingTo' value for %s is only usable in R >= 3.0.2",
                       sQuote(xx))
       })
 }
