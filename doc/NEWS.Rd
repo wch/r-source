@@ -344,13 +344,15 @@
       \item \code{contour()} could fail when dealing with extremely
       small z values.  (\PR{15454})
       
-      \item Several functions did not handle length zero vectors properly,
+      \item Several functions did not handle zero-length vectors properly,
       including \code{browseEnv()}, \code{format()}, \code{gl()}, 
       \code{relist()} and \code{summary.data.frame()}.  (e.g., \PR{15499})
       
       \item \code{Sweave()} did not restore the \R{} output to the
       console if it was interrupted by a user in the middle of evaluating
       a code chunk.  (Reported by Michael Sumner.)
+
+      \item Fake installs of packages with vignettes work again.
     }
   }
 }
