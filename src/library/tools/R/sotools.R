@@ -105,6 +105,9 @@ so_symbol_names_table <-
       "osx, C, gcc, vprintf, _vprintf",
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
+      ## libcxx variants
+      "osx, C++, gxx, std::cout, __ZNSt3__14coutE",
+      "osx, C++, gxx, std::cerr, __ZNSt3__14cerrE",
       "osx, Fortran, gfortran, write, __gfortran_st_write",
       "osx, Fortran, gfortran, print, __gfortran_st_write",
       "osx, Fortran, gfortran, stop, __gfortran_stop_numeric",
