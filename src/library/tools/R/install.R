@@ -1155,7 +1155,8 @@
                 starsmsg(stars, "installing vignettes")
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
-		if (file_test("-f", file.path("build", "vignette.rds")))
+		if (!fake &&
+                    file_test("-f", file.path("build", "vignette.rds")))
 		    installer <- .install_package_vignettes3
 		# FIXME:  this handles pre-3.0.2 tarballs.  In the long run, delete the alternative.
 		else
