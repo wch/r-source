@@ -21,18 +21,17 @@ dummy.coef <- function(object, ...) UseMethod("dummy.coef")
 
 dummy.coef.lm <- function(object, use.na=FALSE, ...)
 {
+    xl <- object$xlevels
+    if(!length(xl)) # no factors in model
+	return(as.list(coef(object)))
     Terms <- terms(object)
     tl <- attr(Terms, "term.labels")
     int <- attr(Terms, "intercept")
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
     Terms <- delete.response(Terms)
-    vars <- all.vars(Terms)
-    xl <- object$xlevels
-    if(!length(xl)) {			# no factors in model
-	return(as.list(coef(object)))
-    }
+    vars <- all.vars(Terms) # e.g. drops I(.), ...
     nxl <- setNames(rep.int(1, length(vars)), vars)
-    tmp <- unlist(lapply(xl, length)) ## ?? vapply(xl, length, 1L)
+    tmp <- vapply(xl, length, 1L)
     nxl[names(tmp)] <- tmp
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
