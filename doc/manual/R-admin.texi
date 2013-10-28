@@ -4293,7 +4293,8 @@ configure with @option{--without-x}): X is part of the standard OS X
 distribution in versions prior to Mountain Lion, but not always
 installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
-on earlier versions of OS X instead of the Apple version.
+on earlier versions of OS X instead of the Apple version.  (Note that
+XQuartz will need to be re-installed after an OS upgrade.)
 
 In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
@@ -4323,7 +4324,7 @@ will need to register there) or if you have a recent Xcode installed
 (from the App Store or from
 @uref{http://developer.apple.com/devcenter/mac/}) you can install the
 command-line tools from within Xcode, from the @samp{Downloads} pane in
-the @samp{Preferences}.
+the @samp{Preferences}.  For Mavericks, see the specific section below.
 
 Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
 is built using
@@ -4383,7 +4384,9 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 @noindent
 to provide higher-performance versions of the @acronym{BLAS} and LAPACK
 routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
-not work on Snow Leopard: it may work there without.)
+not work on Snow Leopard: it may work there without.)@footnote{It is
+reported that some non-Apple toolchains @code{CPPFLAGS} has needed to
+contain @code{-D__ACCELERATE__}.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4448,8 +4451,21 @@ export PKG_CONFIG_PATH= \
   /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 
+@noindent
+or putting
+@example
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+in @file{config.site}.
+
 For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
+
+If you install the command-line tools for Xcode 4.6.3 you will get the
+compilers used for the CRAN binary distribution: those for Xcode 5 can
+be installed afterwards.
 
 @node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
 @subsection Mavericks
@@ -4472,6 +4488,10 @@ If you have a fresh installation of Mavericks, running e.g.@:
 command-line tools.  Otherwise you can run @command{xcode-select
 --install}.
 
+As far as we know the Xcode 4.6.3 compilers cannot be installed on
+Mavericks, but they will be present on an upgraded installation which
+previously had them.  They were able to compile @R{} and most packages
+(but not all using C++) when tested.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4521,10 +4541,10 @@ reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
 Mountain Lion did not come with an installed JRE, and an upgrade to
-Mountain Lion removed one if already installed: it is intended to be
-installed at first use. Check if a JRE is installed by running
-@command{java -version} in a @command{Terminal} window: if Java is not
-installed this should prompt you to install it.
+Mountain Lion or Mavericks removes one if already installed: it is
+intended to be installed at first use. Check if a JRE is installed by
+running @command{java -version} in a @command{Terminal} window: if Java
+is not installed this should prompt you to install it.
 
 However, you may want/need to install the latest Java from Oracle
 (currently Java 7 from
