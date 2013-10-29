@@ -6208,66 +6208,6 @@ CHANGES IN R VERSION 2.10.0:
       objects with a Latin-1 or UTF-8 encoding would corrupt the
       CHARSXP cache.
 
-	**************************************************
-	*						 *
-	*	       2.0 SERIES NEWS			 *
-	*						 *
-	**************************************************
-
-
-		CHANGES IN R VERSION 2.0.0
-
-
-USER-VISIBLE CHANGES
-
-    o	The stub packages from 1.9.x have been removed: the library()
-	function selects the new home for their code.
-
-    o	`Lazy loading' of R code has been implemented, and is used for
-	the standard and recommended packages by default.  Rather than
-	keep R objects in memory, they are kept in a database on disc
-	and only loaded on first use.  This accelerates startup (down
-	to 40% of the time for 1.9.x) and reduces memory usage -- the
-	latter is probably unimportant of itself, but reduces
-	commensurately the time spent in garbage collection.
-
-	Packages are by default installed using lazy loading if they
-	have more than 25Kb of R code and did not use a saved image.
-	This can be overridden by INSTALL --[no-]lazy or via a field
-	in the DESCRIPTION file.  Note that as with --save, any other
-	packages which are required must be already installed.
-
-	As the lazy-loading databases will be consulted often, R
-	will be slower if run from a slow network-mounted disc.
-
-    o	All the datasets formerly in packages 'base' and 'stats' have
-	been moved to a new package 'datasets'.	 data() does the
-	appropriate substitution, with a warning.  However, calls to
-	data() are not normally needed as the data objects are visible
-	in the 'datasets' package.
-
-	Packages can be installed to make their data objects visible
-	via R CMD INSTALL --lazy-data or via a field in the
-	DESCRIPTION file.
-
-    o	Package 'graphics' has been split into 'grDevices' (the graphics
-	devices shared between base and grid graphics) and 'graphics'
-	(base graphics).  Each of the 'graphics' and 'grid' packages
-	load 'grDevices' when they are attached.  Note that
-	ps.options() has been moved to grDevices and user hooks may
-	need to be updated.
-
-    o	The semantics of data() have changed (and were incorrectly
-	documented in recent releases) and the function has been moved
-	to package 'utils'.  Please read the help page carefully if
-	you use the 'package' or 'lib.loc' arguments.
-
-	data() now lists datasets, and not just names which data() accepts.
-
-    o	Dataset 'phones' has been renamed to 'WorldPhones'.
-
-    o	Datasets 'sunspot.month' and 'sunspot.year' are available
-
 
 	**************************************************
 	*						 *
@@ -16523,6 +16463,61 @@ BUG FIXES
     o	toLatex(sessionInfo()) produced incorrect LaTeX on some
 	platforms due to special characters in the platform
 	identifier.
+
+
+
+		CHANGES IN R VERSION 2.0.0
+
+
+USER-VISIBLE CHANGES
+
+    o	The stub packages from 1.9.x have been removed: the library()
+	function selects the new home for their code.
+
+    o	`Lazy loading' of R code has been implemented, and is used for
+	the standard and recommended packages by default.  Rather than
+	keep R objects in memory, they are kept in a database on disc
+	and only loaded on first use.  This accelerates startup (down
+	to 40% of the time for 1.9.x) and reduces memory usage -- the
+	latter is probably unimportant of itself, but reduces
+	commensurately the time spent in garbage collection.
+
+	Packages are by default installed using lazy loading if they
+	have more than 25Kb of R code and did not use a saved image.
+	This can be overridden by INSTALL --[no-]lazy or via a field
+	in the DESCRIPTION file.  Note that as with --save, any other
+	packages which are required must be already installed.
+
+	As the lazy-loading databases will be consulted often, R
+	will be slower if run from a slow network-mounted disc.
+
+    o	All the datasets formerly in packages 'base' and 'stats' have
+	been moved to a new package 'datasets'.	 data() does the
+	appropriate substitution, with a warning.  However, calls to
+	data() are not normally needed as the data objects are visible
+	in the 'datasets' package.
+
+	Packages can be installed to make their data objects visible
+	via R CMD INSTALL --lazy-data or via a field in the
+	DESCRIPTION file.
+
+    o	Package 'graphics' has been split into 'grDevices' (the graphics
+	devices shared between base and grid graphics) and 'graphics'
+	(base graphics).  Each of the 'graphics' and 'grid' packages
+	load 'grDevices' when they are attached.  Note that
+	ps.options() has been moved to grDevices and user hooks may
+	need to be updated.
+
+    o	The semantics of data() have changed (and were incorrectly
+	documented in recent releases) and the function has been moved
+	to package 'utils'.  Please read the help page carefully if
+	you use the 'package' or 'lib.loc' arguments.
+
+	data() now lists datasets, and not just names which data() accepts.
+
+    o	Dataset 'phones' has been renamed to 'WorldPhones'.
+
+    o	Datasets 'sunspot.month' and 'sunspot.year' are available
 
 
 	*********************************************************
