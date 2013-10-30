@@ -228,4 +228,9 @@ stopifnot(identical(relist(unlist(z), z), z))
 summary(y)
 ## all failed in 3.0.2
 
+## PR#15518 Parser catching errors in particular circumstance:
+(ee <- tryCatch(parse(text = "_"), error= function(e)e))
+stopifnot(inherits(ee, "error"))
+## unexpected characters caused the parser to segfault in 3.0.2
+
 proc.time()
