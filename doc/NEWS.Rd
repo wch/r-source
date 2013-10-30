@@ -82,6 +82,9 @@
       a code chunk.  (Reported by Michael Sumner.)
 
       \item Fake installs of packages with vignettes work again.
+      
+      \item Illegal characters in the input caused \code{parse()}
+      (and thus \code{source()}) to segfault.  (\PR{15518})
     }
   }
 }
