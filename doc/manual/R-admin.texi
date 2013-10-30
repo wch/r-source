@@ -1969,7 +1969,7 @@ CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
 @end example
 
 @noindent
-(the first two are necessary if Xcode 5 was installed, and Xcode 4.6 was
+(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was
 not previously installed) and for another version of
 @command{gfortran-4.2} we needed
 @example
@@ -4320,11 +4320,13 @@ library (see @code{?.libPaths()}).  Also use
 `Command-line Tools for Xcode' used to be part of the Apple Developer
 Tools (`Xcode') but nowadays need to be installed separately.  They can
 be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
-will need to register there) or if you have a recent Xcode installed
-(from the App Store or from
+will need to register there: that allows you to download older versions
+available for your OS) or if you have a suitable version of Xcode
+installed (from the App Store or from
 @uref{http://developer.apple.com/devcenter/mac/}) you can install the
 command-line tools from within Xcode, from the @samp{Downloads} pane in
-the @samp{Preferences}.  For Mavericks, see the specific section below.
+the @samp{Preferences}.  For Mavericks, see the specific sub-section
+below.
 
 Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
 is built using
@@ -4427,7 +4429,7 @@ options @option{--x-includes=/usr/X11/include
 --x-libraries=/usr/X11/lib} .
 
 The @acronym{CRAN} binaries are built using Xcode 4.2, a version
-available only to subscribing developers.  It is expected that 3.2.6 (the
+available only to subscribing developers.  It is believed that 3.2.6 (the
 last public free version for Snow Leopard) will work.
 
 @node Lion, Mountain Lion, Snow Leopard, OS X
@@ -4470,8 +4472,23 @@ be installed afterwards.
 @node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
 @subsection Mavericks
 
-Mavericks uses Xcode 5.  To use the compilers it provides with the
-recommended Fortran compiler, have in @file{config.site} something like
+Mavericks uses Xcode 5, but it does not behave in the same way as under
+Mountain Lion.  Our understanding is that Xcode is needed (not just the
+command-line tools) as parts of the toolchain are installed under the
+@file{Xcode.app} directory.  Compilers @command{clang} and
+@command{clang++} may be the same versions as Xcode 5 under Mountain
+Lion, but they utilize different SDKs (so different headers and
+libraries, and in the case of @command{clang++} very different ones from
+the @samp{libcxx} project).
+
+The command-line tools can be (re-)installed by @command{xcode-select
+--install}.  (If you have a fresh installation of Mavericks, running
+e.g.@: @command{make} in a terminal will offer the installation of the
+command-line tools.)  They are no longer available under the
+@samp{Downloads} preference pane.
+
+To use the compilers it provides with the recommended Fortran compiler,
+have in @file{config.site} something like
 
 @example
 CC="clang"
@@ -4483,15 +4500,13 @@ OBJC="clang"
 
 See the comments under Mountain Lion about X11 and GTK.
 
-If you have a fresh installation of Mavericks, running e.g.@:
-@command{make} in a terminal will offer the installation of the
-command-line tools.  Otherwise you can run @command{xcode-select
---install}.
-
 As far as we know the Xcode 4.6.3 compilers cannot be installed on
 Mavericks, but they will be present on an upgraded installation which
-previously had them.  They were able to compile @R{} and most packages
-(but not all using C++) when tested.
+previously had them.  They were able to compile @R{} and almost all
+packages when tested.
+
+There are compilers called @code{gcc} and @code{g++}, but despite their
+names they are versions of @code{clang} and @code{clang++}.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
