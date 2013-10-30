@@ -92,6 +92,10 @@
       
       \item \code{make.names(names, unique=TRUE)} now tries to preserve
       existing names. (Suggestion of \PR{15452}.)
+      
+      \item \code{write.table()} now handles matrices of
+      \eqn{2^{31}}{2^31} or more elements, for those with large amounts
+      of patience and disc space.
     }
   }
 
