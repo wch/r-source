@@ -5769,7 +5769,14 @@ static void finalizeData( ){
         int xlat = yytranslate[token];
         if (xlat == 2) /* "unknown" */
             xlat = token;
-    	SET_STRING_ELT(tokens, i, mkChar(yytname[xlat]));
+        if (xlat < (sizeof yytname/sizeof yytname[0]))
+    	    SET_STRING_ELT(tokens, i, mkChar(yytname[xlat]));
+    	else { /* we have a token which doesn't have a name, e.g. an illegal character as in PR#15518 */
+    	    char name[2];
+    	    name[0] = xlat;
+    	    name[1] = 0;
+    	    SET_STRING_ELT(tokens, i, mkChar(name));
+    	}
     	_TERMINAL(i) = xlat < YYNTOKENS;
     }
     SEXP dims, newdata, newtext;
