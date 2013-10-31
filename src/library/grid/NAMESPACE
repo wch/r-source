@@ -108,7 +108,8 @@ export(
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
 export("draw.details",
-       "grid.legend", "grid.multipanel",
+       "grid.legend", "legendGrob",
+       "grid.multipanel",
        "grid.panel", "grid.strip",
        "layoutRegion",
        "layout.widths", "layout.heights",

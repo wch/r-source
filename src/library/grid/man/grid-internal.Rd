@@ -186,6 +186,7 @@
 %% internal (or waiting for documentation to be written):
 %% <LIST>
 \alias{grid.legend}
+\alias{legendGrob}
 \alias{grid.multipanel}
 \alias{grid.panel}
 \alias{grid.strip}
