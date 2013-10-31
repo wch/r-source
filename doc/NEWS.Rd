@@ -85,6 +85,9 @@
       
       \item Illegal characters in the input caused \code{parse()}
       (and thus \code{source()}) to segfault.  (\PR{15518})
+
+      \item The nonsensical use of \code{nmax = 1} in
+      \code{duplicated()} or \code{unique()} is now silently ignored.
     }
   }
 }

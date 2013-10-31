@@ -324,7 +324,7 @@ static void MKsetup(R_xlen_t n, HashData *d, R_xlen_t nmax)
 	error(_("length %d is too large for hashing"), n);
 #endif
 
-    if (nmax != NA_INTEGER) n = nmax;
+    if (nmax != NA_INTEGER && nmax != 1) n = nmax;
     size_t n2 = 2U * (size_t) n;
     d->M = 2;
     d->K = 1;
