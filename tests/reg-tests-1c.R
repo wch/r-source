@@ -233,4 +233,9 @@ summary(y)
 stopifnot(inherits(ee, "error"))
 ## unexpected characters caused the parser to segfault in 3.0.2
 
+
+## nonsense value of nmax
+unique(1:3, nmax = 1)
+## infinite-looped in 3.0.2, now ignored.
+
 proc.time()
