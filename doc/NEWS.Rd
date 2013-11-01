@@ -88,6 +88,9 @@
 
       \item The nonsensical use of \code{nmax = 1} in
       \code{duplicated()} or \code{unique()} is now silently ignored.
+
+      \item \code{qcauchy(p, *)} is now fully accurate even when p is
+      very close to 1. (\PR{15521})
     }
   }
 }
@@ -204,7 +207,7 @@
       
       \item \code{tools::pkgVignettes()} gains argument \code{check};
       if set to \code{TRUE}, it will warn when it appears a vignette requests
-      a non-existent vignette engine. 
+      a non-existent vignette engine.
     }
   }
 

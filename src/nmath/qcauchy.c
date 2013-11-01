@@ -54,8 +54,14 @@ double qcauchy(double p, double location, double scale,
 	    p = -expm1(p);
 	} else
 	    p = exp(p);
-    } else if (p == 1.)
-	return my_INF;
+    } else {
+	if (p > 0.5) {
+	    if (p == 1.)
+		return my_INF;
+	    p = 1 - p;
+	    lower_tail = !lower_tail;
+	}
+    }
 
     return location + (lower_tail ? -scale : scale) / tan(M_PI * p);
     /*	-1/tan(pi * p) = -cot(pi * p) = tan(pi * (p - 1/2))  */
