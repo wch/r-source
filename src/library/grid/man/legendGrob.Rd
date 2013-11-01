@@ -8,7 +8,7 @@
 \alias{legendGrob}
 \alias{grid.legend}
 \usage{
-legendGrob(labels, nrow, ncol, byrow = FALSE,
+legendGrob(labels, ncol = 1, nrow, byrow = FALSE,
            do.lines = has.lty || has.lwd, lines.first = TRUE,
            hgap = unit(1, "lines"), vgap = unit(1, "lines"),
            default.units = "lines", pch, gp = gpar(), vp = NULL)
@@ -17,8 +17,9 @@ grid.legend(\dots, draw=TRUE)
 }
 \arguments{
   \item{labels}{legend labels (expressions)}
-  \item{nrow, ncol}{integer; the number of rows or columns, respectively
-    of the legend \dQuote{layout}.}
+  \item{ncol, nrow}{integer; the number of columns or rows, respectively
+    of the legend \dQuote{layout}.  \code{nrow} is optional and
+    typically computed from the number of labels and \code{ncol}.}
   \item{byrow}{logical indicating whether rows of the legend are filled first.}
   \item{do.lines}{logical indicating whether legend lines are drawn.}
   \item{lines.first}{logical indicating whether legend lines are drawn
@@ -48,6 +49,7 @@ grid.legend(\dots, draw=TRUE)
   \code{\link{pointsGrob}}, \code{\link{linesGrob}}.
 }
 \examples{
+## add !
 }
 \keyword{aplot}
 
