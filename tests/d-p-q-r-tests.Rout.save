@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-08-29 r63752) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-11-01 r64139) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -947,6 +947,9 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
 +           pcauchy(II, log=TRUE) == c(-Inf,0),
 +           qcauchy(c(-Inf,0), log=TRUE) == II)
+> ## PR#15521 :
+> p <- 1 - 1/4096
+> stopifnot(all.equal(qcauchy(p), 1303.7970381453319163, tol=1e-14))
 > 
 > pr <- 1e-23 ## PR#6757
 > stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
@@ -1315,5 +1318,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.679 0.005 0.686 0 0 
+Time elapsed:  1.742 0.046 1.804 0 0 
 > 
