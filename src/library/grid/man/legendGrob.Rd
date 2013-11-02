@@ -29,7 +29,7 @@ grid.legend(\dots, draw=TRUE)
   \item{default.units}{default units, see \code{\link{unit}}.}
   \item{pch}{legend symbol, numeric or character, passed to
     \code{\link{pointsGrob}()}; see also \code{\link[graphics]{points}} for
-    interpreation of the numeric codes.}
+    interpretation of the numeric codes.}
   \item{gp}{an \R object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}, is basically a list of
     graphical parameter settings.}
