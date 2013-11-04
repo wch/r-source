@@ -2684,9 +2684,9 @@ source to be built.  This operates by first installing the package and
 then packing the installed binaries into the appropriate binary package
 file for the particular platform.
 
-By default, @command{R CMD INSTALL --build} will attempt to install the package
-into the default library tree for the local installation of @R{}. This has two
-implications:
+By default, @command{R CMD INSTALL --build} will attempt to install the
+package into the default library tree for the local installation of
+@R{}. This has two implications:
 
 @itemize @bullet
 @item
@@ -2718,9 +2718,9 @@ CMD INSTALL --help}, and platform-specific details for special cases
 platform-specific FAQs.
 
 
-In much earlier versions of @R{}, @command{R CMD build --binary} could
-build a binary version of a package, but this approach is now deprecated
-in favour of @command{R CMD INSTALL --build}.
+@c In much earlier versions of @R{}, @command{R CMD build --binary} could
+@c build a binary version of a package, but this approach is now deprecated
+@c in favour of @command{R CMD INSTALL --build}.
 
 
 Finally, at least one web-based service is available for building binary

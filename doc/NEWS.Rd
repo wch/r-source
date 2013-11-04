@@ -147,6 +147,9 @@
       harder to split the description in the \samp{Usage} field to no
       more than 80 characters per line (some packages had over 120
       characters).
+      
+      \item \command{R CMD INSTALL --build} (not Windows) now defaults to
+      the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
     }
   }
 

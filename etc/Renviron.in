@@ -34,7 +34,7 @@ MAKE=${MAKE-'@MAKE@'}
 ## Prefer a POSIX-compliant sed on e.g. Solaris
 SED=${SED-'@SED@'}
 ## Prefer a tar that can automagically read compressed archives
-## Used in tar(), untar(), R CMD INSTALL --build, R CMD build
+## Used in R CMD INSTALL for binary packages
 TAR=${TAR-'@TAR@'}
 
 ## System and compiler types.

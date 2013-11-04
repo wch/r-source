@@ -304,30 +304,28 @@
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
+            starsmsg(stars, "creating tarball")
             version <- desc["Version"]
-            filename <- paste0(pkg_name, "_", version, "_R_",
-                               Sys.getenv("R_PLATFORM"), ".tar")
-            filepath <- shQuote(file.path(startdir, filename))
-            owd <- setwd(lib)
-            TAR <- Sys.getenv("TAR", 'tar')
-            system(paste(shQuote(TAR), "-chf", filepath,
-                         paste(curPkg, collapse = " ")))
-            GZIP <- Sys.getenv("R_GZIPCMD", "gzip")
-            system(paste(shQuote(GZIP), "-9f", filepath))
-            if (grepl("darwin", R.version$os)) {
-                filename <- paste0(filename, ".gz")
-                nfilename <- paste0(pkg_name, "_", version,".tgz")
-                file.rename(file.path(startdir, filename),
-                            file.path(startdir, nfilename))
-                message("packaged installation of ",
-                        sQuote(pkg_name), " as ", sQuote(nfilename),
-                        domain = NA)
+            filename <- if (!grepl("darwin", R.version$os)) {
+                paste0(pkg_name, "_", version, "_R_",
+                       Sys.getenv("R_PLATFORM"), ".tar.gz")
             } else {
-                message("packaged installation of ",
-                        sQuote(pkg_name), " as ",
-                        sQuote(paste0(filename, ".gz")),
-                        domain = NA)
+                paste0(pkg_name, "_", version,".tgz")
             }
+            filepath <- file.path(startdir, filename)
+            owd <- setwd(lib)
+            res <- utils::tar(filepath, curPkg, compression = "gzip",
+                              compression_level = 9L,
+                              tar = Sys.getenv("R_INSTALL_TAR"))
+            if (res) {
+                errorLog(Log,
+                         sprintf("packaging into %s failed", sQuote(filename)))
+                do_exit(1L)
+            }
+            message("packaged installation of ",
+                    sQuote(pkg_name), " as ",
+                    sQuote(paste0(filename, ".gz")),
+                    domain = NA)
             setwd(owd)
         }
 
@@ -1478,8 +1476,8 @@
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar unless over-ridden
             ## so e.g. .tar.xz works everywhere
-            if (untar(pkg, exdir = tmpdir,
-                      tar =  Sys.getenv("R_INSTALL_TAR", "internal")))
+            if (utils::untar(pkg, exdir = tmpdir,
+                             tar =  Sys.getenv("R_INSTALL_TAR", "internal")))
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
