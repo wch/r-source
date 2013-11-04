@@ -89,8 +89,8 @@ so_symbol_names_table <-
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
       ## libcxx variants
-      "linux, C++, gxx, std::cout, __ZNSt3__14coutE",
-      "linux, C++, gxx, std::cerr, __ZNSt3__14cerrE",
+      "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
+      "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
       "linux, Fortran, gfortran, write, _gfortran_st_write",
       "linux, Fortran, gfortran, print, _gfortran_st_write",
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
