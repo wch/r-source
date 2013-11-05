@@ -464,7 +464,7 @@ for the @code{nul} terminator).
 (which are 32 bits on all @R{} platforms).
 
 @item REALSXP
-@code{length}, @code{truelength} followed by a block of C @code{double}s
+@code{length}, @code{truelength} followed by a block of C @code{double}s.
 
 @item CPLXSXP
 @code{length}, @code{truelength} followed by a block of C99 @code{double
@@ -1332,7 +1332,7 @@ Each of @code{warning} and @code{stop} have two C-level equivalents,
 The relationship between the pairs is similar: @code{warning} tries to
 fathom out a suitable call, and then calls @code{warningcall} with that
 call as the first argument if it succeeds, and with @code{call =
-R_NilValue} it is does not.  When @code{warningcall} is called, it
+R_NilValue} if it does not.  When @code{warningcall} is called, it
 includes the deparsed call in its printout unless @code{call =
 R_NilValue}.
 
@@ -2291,12 +2291,12 @@ Primitives are listed in the table @code{R_FunTab} in
 @file{src/main/names.c}: primitives have @samp{Y = 0} in the @samp{eval}
 field.
 
-There needs to an a @samp{\alias} entry in a help file in the @pkg{base}
+There needs to be an @samp{\alias} entry in a help file in the @pkg{base}
 package, and the primitive needs to be added to one of the lists at the
 start of this section.
 
 Some primitives are regarded as language elements (the current ones are
-listed above).  These need to be in added to two lists of exceptions,
+listed above).  These need to be added to two lists of exceptions,
 @code{langElts} in @code{undoc()} (in file
 @file{src/library/tools/R/QC.R}) and @code{lang_elements} in
 @file{tests/primitives.R}.
@@ -3800,7 +3800,7 @@ check to a log file (@file{00install.out} by default), even when running
 interactively.
 Default: true.
 @item _R_CHECK_VIGNETTES_NLINES_
-Maximum number of lines to show of the bottom of the output when reporting
+Maximum number of lines to show at the bottom of the output when reporting
 errors in running vignettes.
 Default: 10.
 @item _R_CHECK_CODOC_S4_METHODS_
@@ -4261,7 +4261,7 @@ friends and if found records the absolute paths in the system
 @file{Renviron} file.  This used to record @samp{false} if no command
 was found, but it nowadays records the name for looking up on the path
 at run time.  The latter can be important for binary distributions: one
-does not want to be tied to, for example, TeXLive 2007.
+does not want to be tied to, for example, TeX Live 2007.
 
 
 @node Current and future directions, Function and variable index, Use of TeX dialects, Top
@@ -4411,7 +4411,7 @@ elements.  Now longer vectors are allowed, matrices with more elements
 are supported provided that each of the dimensions is no more than
 2^31-1.  However, not all applications can be supported.
 
-The main problem is linear algebra, on done by FORTRAN code compiled
+The main problem is linear algebra done by FORTRAN code compiled
 with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
 the compilers currently used with @R{} on a 64-bit platform allow
 matrices each of whose dimensions is less than 2^31 but with more than
@@ -4419,7 +4419,7 @@ matrices each of whose dimensions is less than 2^31 but with more than
 support software (such as @acronym{BLAS} and @acronym{LAPACK}) also
 work.
 
-There are exceptions: for example some complex @acronym{LAPACK})
+There are exceptions: for example some complex @acronym{LAPACK}
 auxiliary routines do use a single @code{INTEGER} index and hence
 overflow silently and segfault or give incorrect results.  One example
 is @code{svd()} on a complex matrix.
