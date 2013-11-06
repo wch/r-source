@@ -18,7 +18,6 @@ Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Associat
 Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catolica de Chile, Santiago","Fernando Quintana <quintana # mat.puc.cl>",1,cl
 "China (Beijing 1)",China,Bejing,http://ftp.ctex.org/mirrors/CRAN/,CTEX.ORG,"Aloft Wu <aloft # ctex.org>",1,cn
 "China (Beijing 2)",China,Bejing,http://mirror.bjtu.edu.cn/cran,"Beijing Jiaotong University, Beijing","idealities # gmail.com",1,cn
-"China (Guangzhou)",China,Guangzhou,http://cran.dataguru.cn,"Dataguru (a, Guangzhou","dataguru # 139.com",1,cn
 "China (Hefei)",China,Hefei,http://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Xiamen)",China,Xiamen,http://mirrors.xmu.edu.cn/CRAN/,"Xiamen University","admin # Xdmc.org",1,cn
 "Colombia (Bogota)",Colombia,Bogota,http://www.laqee.unal.edu.co/CRAN/,"National University of Colombia","Ernesto Parra Rincon <eparrar # unal.edu.co>",1,co
@@ -43,7 +42,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
-"Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp
 "Korea (Seoul 1)",Korea,Seoul,http://cran.nexr.com/,"NexR Corporation, Seoul","mining # nexr.com",1,kr
 "Korea (Seoul 2)",Korea,Seoul,http://biostat.cau.ac.kr/CRAN/,"Chung-Ang University, Seoul","Sunghow # gmail.com",1,kr
