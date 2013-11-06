@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-hooks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-hooks}
@@ -55,9 +55,9 @@
   circumvented), but objects from other packages should be imported or
   the double colon operator should be used.
   
-  \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
-  as internal objects in the namespace and should not be exported
-  (whereas \code{.Last.lib} should be).
+  \code{.onLoad}, \code{.onUnload}, \code{.onAttach} and
+  \code{.onDetach} are looked for as internal objects in the namespace
+  and should not be exported (whereas \code{.Last.lib} should be).
 
   Anything needed for the functioning of the namespace should be
   handled at load/unload times by the \code{.onLoad} and
@@ -105,5 +105,7 @@
 \seealso{
   \code{\link{setHook}} shows how users can set hooks on the same events, and
   lists the sequence of events involving all of the hooks.
+
+  \code{\link{reg.finalizer}} for hooks to be run at the end of a session.
 }
 \keyword{utilities}
