@@ -435,7 +435,7 @@ get_exclude_patterns <- function()
                              "Run R CMD build without --no-build-vignettes to re-create")
                     errorLog(Log, paste(msg, collapse = "\n"))
                     do_exit(1L)
-                }
+                } else resultLog(Log, "OK")
             }
         }
         if (compact_vignettes != "no" &&
