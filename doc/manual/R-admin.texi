@@ -1964,8 +1964,8 @@ extensive checking by having in @file{~/.R/Makevars}
 @example
 CC=clang
 CXX=clang++
-CFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
-CXXFLAGS="-mtune=native -g -O2 -Wall -pedantic -Wconversion"
+CFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
+CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 @noindent
@@ -1975,6 +1975,16 @@ not previously installed) and for another version of
 @example
 FLIBS=-lgfortran
 @end example
+
+Not all packages using C++ will compile with the default headers and
+runtime used by @command{clang++}: you @emph{may} be able to install
+these with
+
+@example
+CXX=clang++ --stdlib=libstc++
+@end example
+
+
 
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
