@@ -4204,14 +4204,19 @@ the additional flags being needed to resolve problems linking against
 @subsection Clang
 
 @R{} has been built with Linux @cputype{ix86} and @cputype{x86_64} C and
-C++ compilers (@uref{http://clang.llvm.org}, versions 3.0, 3.2 and 3.3)
-based on the Clang front-ends, invoked by @code{CC=clang CXX=clang++},
-together with @command{gfortran}.  These take very similar options to
-the corresponding GCC compilers.
+C++ compilers (@uref{http://clang.llvm.org}) based on the Clang
+front-ends, invoked by @code{CC=clang CXX=clang++}, together with
+@command{gfortran}.  These take very similar options to the
+corresponding GCC compilers.
 
 This has to be used in conjunction with a Fortran compiler: the
 @command{configure} code will remove @option{-lgcc} from @env{FLIBS},
 which is needed for some versions of @command{gfortran}.
+
+The current default for @command{clang++} is to use the C++ runtime from
+the installed @command{g++}.  Using the runtime from the @code{libcxx}
+project (@url{http://libcxx.llvm.org/}) has also been tested: for some
+@R{} packages only the variant using @code{libcxxabi} was successful.
 
 @node Intel compilers, Oracle Solaris Studio compilers, Clang, Linux
 @subsection Intel compilers
@@ -4494,8 +4499,9 @@ the @samp{libcxx} project).
 The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
 e.g.@: @command{make} in a terminal will offer the installation of the
-command-line tools.)  They are no longer available under the
-@samp{Downloads} preference pane.
+command-line tools, or perhaps use the versions from Xcode.  However,
+after an update to Mavericks, you are advised to re-installl them.)
+They are no longer available under the @samp{Downloads} preference pane.
 
 To use the compilers it provides with the recommended Fortran compiler,
 have in @file{config.site} something like
@@ -4565,11 +4571,11 @@ no longer supporting Java (and what it does support is Java 6, which has
 reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
-Mountain Lion did not come with an installed JRE, and an upgrade to
-Mountain Lion or Mavericks removes one if already installed: it is
-intended to be installed at first use. Check if a JRE is installed by
-running @command{java -version} in a @command{Terminal} window: if Java
-is not installed this should prompt you to install it.
+Mountain Lion and Mavericks do not come with an installed JRE, and an
+upgrade to either removes one if already installed: it is intended to be
+installed at first use. Check if a JRE is installed by running
+@command{java -version} in a @command{Terminal} window: if Java is not
+installed this should prompt you to install it.
 
 However, you may want/need to install the latest Java from Oracle
 (currently Java 7 from
@@ -4656,12 +4662,13 @@ configuration), or from the command-line by e.g.@:
 @example
 xcodebuild -target R -configuration SnowLeopard64
 @end example
-See also the @file{INSTALL} file in the checkout or directly at @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
+See also the @file{INSTALL} file in the checkout or directly at
+@uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
 
 @Rapp{} does not need to be installed in any specific way. Building
 @Rapp{} results in the @Rapp{} bundle which appears as one R icon. This
 application bundle can be run anywhere and it is customary to place it
-in the @emph{Applications} folder.
+in the @file{/Applications} folder.
 
 
 @node Solaris, AIX, OS X, Platform notes
