@@ -317,11 +317,8 @@
             res <- utils::tar(filepath, curPkg, compression = "gzip",
                               compression_level = 9L,
                               tar = Sys.getenv("R_INSTALL_TAR"))
-            if (res) {
-                errorLog(Log,
-                         sprintf("packaging into %s failed", sQuote(filename)))
-                do_exit(1L)
-            }
+            if (res)
+                errmsg(sprintf("packaging into %s failed", sQuote(filename)))
             message("packaged installation of ",
                     sQuote(pkg_name), " as ",
                     sQuote(paste0(filename, ".gz")),

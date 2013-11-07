@@ -1,12 +1,15 @@
 % File src/library/grid/man/legendGrob.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legendGrob}
 \title{Constructing a Legend Grob}
 \alias{legendGrob}
 \alias{grid.legend}
+\description{
+  Constructing a legend grob (in progress)
+}
 \usage{
 legendGrob(labels, ncol = 1, nrow, byrow = FALSE,
            do.lines = has.lty || has.lwd, lines.first = TRUE,
