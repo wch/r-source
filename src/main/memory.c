@@ -3565,7 +3565,7 @@ SEXP do_Rprofmem(SEXP args)
 	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     filename = STRING_ELT(CAR(args), 0);
-    threshold = REAL(CADDR(args))[0];
+    threshold = (R_size_t) REAL(CADDR(args))[0];
     if (strlen(CHAR(filename)))
 	R_InitMemReporting(filename, append_mode, threshold);
     else

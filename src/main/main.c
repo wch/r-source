@@ -703,7 +703,7 @@ void setup_Rmainloop(void)
 	R_CStackLimit = (uintptr_t)-1;
     /* make sure we have enough head room to handle errors */
     if(R_CStackLimit != -1)
-	R_CStackLimit = 0.95 * R_CStackLimit;
+	R_CStackLimit = (uintptr_t)(0.95 * R_CStackLimit);
 
     InitConnections(); /* needed to get any output at all */
 
