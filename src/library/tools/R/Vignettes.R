@@ -615,7 +615,7 @@ buildVignette <-
     output <- NULL
 
     # Weave
-    if (weave) {
+    final <- if (weave) {
 	engine$weave(file, quiet = quiet, ...)
 	setwd(dir)  # In case weave/vignette changed it
 	output <- find_vignette_product(name, by = "weave", engine = engine)
@@ -623,20 +623,17 @@ buildVignette <-
 	# Compile TeX to PDF?
 	if(latex && vignette_is_tex(output)) {
 	    texi2pdf(file = output, clean = FALSE, quiet = quiet)
-	    final <- find_vignette_product(name, by = "texi2pdf", engine = engine)
+	    find_vignette_product(name, by = "texi2pdf", engine = engine)
 	} else
-	    final <- output
-    } else {
-	final <- NULL
-    }
+	    output
+    } # else NULL
 
     # Tangle
-    if (tangle) {
+    sources <- if (tangle) {
 	engine$tangle(file, quiet = quiet, ...)
 	setwd(dir)  # In case tangle changed it
-	sources <- find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
-    } else
-	sources <- NULL
+	find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
+    } # else NULL
 
     # Cleanup
     keep <- c(sources, final)
@@ -1133,8 +1130,8 @@ function(pkgdir, mustwork = TRUE)
     pkgs <- unique(c(pkgs, "utils"))
 
     for (pkg in pkgs) {
-        res <- try(loadNamespace(pkg), silent = TRUE)
-        if (mustwork && inherits(res, "try-error"))
+	res <- tryCatch(loadNamespace(pkg), error = function(e)e)
+	if (mustwork && inherits(res, "error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
     }
     pkgs
