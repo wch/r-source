@@ -126,7 +126,8 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	}
     }
     else if (ndf < 1 + eps) { /* df ~= 1  (df < 1 excluded above): Cauchy */
-	if(P > 0)
+	if(P == 1.) q = 0;
+	else if(P > 0)
 	    q = 1/tanpi(P/2.);/* == - tan((P+1) * M_PI_2) -- suffers for P ~= 0 */
 
 	else { /* P = 0, but maybe = 2*exp(p) ! */
