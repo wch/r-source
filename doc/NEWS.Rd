@@ -375,6 +375,10 @@
 
       \item \code{qcauchy(p, *)} is now fully accurate even when p is
       very close to 1. (\PR{15521})
+
+      \item \code{tools::buildVignette(*, dir)} now also works fine
+      when \code{dir} is relative and weaving/tangling has changed the
+      directory too much. (\PR{15530}) 
     }
   }
 }

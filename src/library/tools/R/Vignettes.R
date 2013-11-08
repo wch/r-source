@@ -612,12 +612,13 @@ buildVignette <-
 	file.create(".build.timestamp")
     }
 
+    tdir <- getwd()# if 'dir' was relative, resetting to tdir will work
     output <- NULL
 
     # Weave
     final <- if (weave) {
 	engine$weave(file, quiet = quiet, ...)
-	setwd(dir)  # In case weave/vignette changed it
+	setwd(tdir)  # In case weave/vignette changed it
 	output <- find_vignette_product(name, by = "weave", engine = engine)
 
 	# Compile TeX to PDF?
@@ -631,7 +632,7 @@ buildVignette <-
     # Tangle
     sources <- if (tangle) {
 	engine$tangle(file, quiet = quiet, ...)
-	setwd(dir)  # In case tangle changed it
+	setwd(tdir)  # In case tangle changed it
 	find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
     } # else NULL
 
