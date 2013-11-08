@@ -238,4 +238,11 @@ stopifnot(inherits(ee, "error"))
 unique(1:3, nmax = 1)
 ## infinite-looped in 3.0.2, now ignored.
 
+
+## besselI() (and others), now using sinpi() etc:
+stopifnot(all.equal(besselI(2.125,-5+1/1024),
+		    0.02679209380095711, tol= 8e-16),
+	  all.equal(lgamma(-12+1/1024), -13.05327436745323, tol=8e-16))
+## rel.error was 1.5e-13 / 7.5e-14 in R <= 3.0.x
+
 proc.time()

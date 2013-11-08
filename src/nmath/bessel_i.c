@@ -60,7 +60,7 @@ double bessel_i(double x, double alpha, double expo)
 	return(bessel_i(x, -alpha, expo) +
 	       ((alpha == na) ? /* sin(pi * alpha) = 0 */ 0 :
 		bessel_k(x, -alpha, expo) *
-		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
+		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -112,7 +112,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 	return(bessel_i_ex(x, -alpha, expo, bi) +
 	       ((alpha == na) ? 0 :
 		bessel_k_ex(x, -alpha, expo, bi) *
-		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
+		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
     nb = 1 + (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);

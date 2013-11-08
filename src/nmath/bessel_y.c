@@ -55,9 +55,9 @@ double bessel_y(double x, double alpha)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_y(x, -alpha) * cos(M_PI * alpha) -
+	return(bessel_y(x, -alpha) * cospi(alpha) -
 	       ((alpha == na) ? 0 :
-		bessel_j(x, -alpha) * sin(M_PI * alpha)));
+		bessel_j(x, -alpha) * sinpi(alpha)));
     }
     nb = 1+ (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -107,9 +107,9 @@ double bessel_y_ex(double x, double alpha, double *by)
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
-	return(bessel_y_ex(x, -alpha, by) * cos(M_PI * alpha) -
+	return(bessel_y_ex(x, -alpha, by) * cospi(alpha) -
 	       ((alpha == na) ? 0 :
-		bessel_j_ex(x, -alpha, by) * sin(M_PI * alpha)));
+		bessel_j_ex(x, -alpha, by) * sinpi(alpha)));
     }
     nb = 1+ (long)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -134,7 +134,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 /* ----------------------------------------------------------------------
 
  This routine calculates Bessel functions Y_(N+ALPHA) (X)
- for non-negative argument X, and non-negative order N+ALPHA.
+v for non-negative argument X, and non-negative order N+ALPHA.
 
 
  Explanation of variables in the calling sequence
@@ -278,7 +278,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    if (fabs(nu) < M_eps_sinc)
 		c = M_1_PI;
 	    else
-		c = nu / sin(nu * M_PI);
+		c = nu / sinpi(nu);
 
 	    /* ------------------------------------------------------------
 	       Computation of sinh(f)/f
@@ -322,7 +322,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    if (fabs(c) < M_eps_sinc)
 		r = 1.;
 	    else
-		r = sin(c) / c;
+		r = sinpi(nu/2) / c;
 
 	    r = M_PI * c * r * r;
 	    c = 1.;
@@ -352,7 +352,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	       -------------------------------------------------------------- */
 	    c = (.5 - nu) * (.5 + nu);
 	    b = ex + ex;
-	    e = ex * M_1_PI * cos(nu * M_PI) / DBL_EPSILON;
+	    e = ex * M_1_PI * cospi(nu) / DBL_EPSILON;
 	    e *= e;
 	    p = 1.;
 	    q = -ex;

@@ -63,6 +63,6 @@ double qcauchy(double p, double location, double scale,
 	}
     }
 
-    return location + (lower_tail ? -scale : scale) / tan(M_PI * p);
+    return location + (lower_tail ? -scale : scale) / tanpi(p);
     /*	-1/tan(pi * p) = -cot(pi * p) = tan(pi * (p - 1/2))  */
 }

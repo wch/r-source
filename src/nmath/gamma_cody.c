@@ -154,7 +154,7 @@ double attribute_hidden gamma_cody(double x)
 	if (res != 0.) {
 	    if (yi != ftrunc(yi * .5) * 2.)
 		parity = (1);
-	    fact = -M_PI / sin(M_PI * res);
+	    fact = -M_PI / sinpi(res);
 	    y += 1.;
 	} else {
 	    return(ML_POSINF);
