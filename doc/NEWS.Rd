@@ -91,6 +91,10 @@
 
       \item \code{qcauchy(p, *)} is now fully accurate even when p is
       very close to 1. (\PR{15521})
+      
+      \item The \code{validmu()} and \code{valideta()} functions in the
+      standard \code{glm()} families now also report non-finite values,
+      rather than failing.
     }
   }
 }
