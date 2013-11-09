@@ -12121,11 +12121,11 @@ all: myfe
 
 ## The following is not needed, but avoids PIC flags.
 myfe.o: myfe.c
-	$(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
+        $(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
 
 ## replace $(LIBR) $(LIBS) by $(STATIC_LIBR) if R was build with a static libR
 myfe: myfe.o
-	$(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
+        $(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
 @end example
 
 @noindent
@@ -12164,7 +12164,7 @@ extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
 extern int  (*ptr_R_ShowFiles)(int, const char **, const char **,
-			       const char *, Rboolean, const char *);
+                               const char *, Rboolean, const char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
@@ -12318,16 +12318,16 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
     @}
     switch (saveact) @{
     case SA_SAVE:
-	if(runLast) R_dot_Last();
-	if(R_DirtyImage) R_SaveGlobalEnv();
-	/* save the console history in R_HistoryFile */
-	break;
+        if(runLast) R_dot_Last();
+        if(R_DirtyImage) R_SaveGlobalEnv();
+        /* save the console history in R_HistoryFile */
+        break;
     case SA_NOSAVE:
-	if(runLast) R_dot_Last();
-	break;
+        if(runLast) R_dot_Last();
+        break;
     case SA_SUICIDE:
     default:
-	break;
+        break;
     @}
 
     R_RunExitFinalizers();
@@ -12452,7 +12452,7 @@ extern int (*R_timeout_handler)();
 extern long R_timeout_val;
 
       if (R_timeout_handler && R_timeout_val)
-	  gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
+          gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
       gtk_main ();
 @end example
 
@@ -12625,15 +12625,15 @@ int main (int argc, char **argv)
 
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) @{
-	fprintf(stderr, "Error: R.DLL version does not match\n");
-	exit(1);
+        fprintf(stderr, "Error: R.DLL version does not match\n");
+        exit(1);
     @}
 
     R_setStartTime();
     R_DefParams(Rp);
     if((RHome = get_R_HOME()) == NULL) @{
-	 fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
-	 exit(1);
+        fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
+        exit(1);
     @}
     Rp->rhome = RHome;
     Rp->home = getRUser();
