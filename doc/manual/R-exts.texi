@@ -60,17 +60,17 @@ foreign language interfaces, and the @R{} @acronym{API}.
 @end ifnottex
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R documentation files::
-* Tidying and profiling R code::
-* Debugging::
-* System and foreign language interfaces::
-* The R API::
-* Generic functions and methods::
-* Linking GUIs and other front-ends to R::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R documentation files::  
+* Tidying and profiling R code::  
+* Debugging::                   
+* System and foreign language interfaces::  
+* The R API::                   
+* Generic functions and methods::  
+* Linking GUIs and other front-ends to R::  
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -220,17 +220,17 @@ packages to @acronym{CRAN}: current instructions are linked from
 
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Writing package vignettes::
-* Package namespaces::
-* Writing portable packages::
-* Diagnostic messages::
-* Internationalization::
-* CITATION files::
-* Package types::
-* Services::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Writing package vignettes::   
+* Package namespaces::          
+* Writing portable packages::   
+* Diagnostic messages::         
+* Internationalization::        
+* CITATION files::              
+* Package types::               
+* Services::                    
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -321,13 +321,13 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::
-* Licensing::
-* Package Dependencies::
-* The INDEX file::
-* Package subdirectories::
-* Data in packages::
-* Non-R scripts in packages::
+* The DESCRIPTION file::        
+* Licensing::                   
+* Package Dependencies::        
+* The INDEX file::              
+* Package subdirectories::      
+* Data in packages::            
+* Non-R scripts in packages::   
 @end menu
 
 @node The DESCRIPTION file, Licensing, Package structure, Package structure
@@ -345,10 +345,10 @@ Version: 0.5-1
 Date: 2004-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
-                     email = "Joe.Developer@@some.domain.net"),
-              person("Pat", "Developer", role = "aut"),
-              person("A.", "User", role = "ctb",
-	             email = "A.User@@whereever.net"))
+		     email = "Joe.Developer@@some.domain.net"),
+	      person("Pat", "Developer", role = "aut"),
+	      person("A.", "User", role = "ctb",
+		     email = "A.User@@whereever.net"))
 Author: Joe Developer and Pat Developer, with contributions from A. User
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
 Depends: R (>= 1.8.0), nlme
@@ -1571,18 +1571,18 @@ pkg-config --list-all | sort
 @end example
 
 @menu
-* Using Makevars::
-* Configure example::
-* Using F95 code::
+* Using Makevars::              
+* Configure example::           
+* Using F95 code::              
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
 @subsection Using @file{Makevars}
 
 @menu
-* OpenMP support::
-* Using pthreads::
-* Compiling in sub-directories::
+* OpenMP support::              
+* Using pthreads::              
+* Compiling in sub-directories::  
 @end menu
 
 Sometimes writing your own @file{configure} script can be avoided by
@@ -1711,7 +1711,7 @@ SLAMC_FFLAGS=$(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(SAFE_FFLAGS)
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
+	$(F77) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -1722,7 +1722,7 @@ infinite looping.  The Windows equivalent was
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
+	$(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -1741,7 +1741,7 @@ all: $(SHLIB)
 $(SHLIB): mylibs
 
 mylibs:
-        (cd subdir; make)
+	(cd subdir; make)
 @end example
 
 @noindent
@@ -2012,8 +2012,8 @@ PKG_LIBS = -LCsdp/lib -lsdp $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 $(SHLIB): Csdp/lib/libsdp.a
 
 Csdp/lib/libsdp.a
-        @@(cd Csdp/lib && $(MAKE) libsdp.a \
-          CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
+	@@(cd Csdp/lib && $(MAKE) libsdp.a \
+	  CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)")
 @end smallexample
 
 @noindent
@@ -2046,9 +2046,9 @@ AC_INIT([RODBC], 1.1.8) dnl package name, version
 dnl A user-specifiable option
 odbc_mgr=""
 AC_ARG_WITH([odbc-manager],
-            AC_HELP_STRING([--with-odbc-manager=MGR],
-                           [specify the ODBC manager, e.g. odbc or iodbc]),
-            [odbc_mgr=$withval])
+	    AC_HELP_STRING([--with-odbc-manager=MGR],
+			   [specify the ODBC manager, e.g. odbc or iodbc]),
+	    [odbc_mgr=$withval])
 
 if test "$odbc_mgr" = "odbc" ; then
   AC_PATH_PROGS(ODBC_CONFIG, odbc_config)
@@ -2057,9 +2057,9 @@ fi
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
 AC_ARG_WITH([odbc-include],
-            AC_HELP_STRING([--with-odbc-include=INCLUDE_PATH],
-                           [the location of ODBC header files]),
-            [odbc_include_path=$withval])
+	    AC_HELP_STRING([--with-odbc-include=INCLUDE_PATH],
+			   [the location of ODBC header files]),
+	    [odbc_include_path=$withval])
 RODBC_CPPFLAGS="-I."
 if test [ -n "$odbc_include_path" ] ; then
    RODBC_CPPFLAGS="-I. -I$@{odbc_include_path@}"
@@ -2071,9 +2071,9 @@ fi
 
 dnl ditto for a library path
 AC_ARG_WITH([odbc-lib],
-            AC_HELP_STRING([--with-odbc-lib=LIB_PATH],
-                           [the location of ODBC libraries]),
-            [odbc_lib_path=$withval])
+	    AC_HELP_STRING([--with-odbc-lib=LIB_PATH],
+			   [the location of ODBC libraries]),
+	    [odbc_lib_path=$withval])
 if test [ -n "$odbc_lib_path" ] ; then
    LIBS="-L$odbc_lib_path $@{LIBS@}"
 else
@@ -2227,9 +2227,9 @@ installed (which checked it can be loaded).  @code{R CMD check} will
 doing the install directly.
 
 @menu
-* Checking packages::
-* Building package tarballs::
-* Building binary packages::
+* Checking packages::           
+* Building package tarballs::   
+* Building binary packages::    
 @end menu
 
 If your package specifies an encoding in its @file{DESCRIPTION} file,
@@ -2736,8 +2736,8 @@ Windows platform.
 @cindex Sweave
 
 @menu
-* Encodings and vignettes::
-* Non-Sweave vignettes::
+* Encodings and vignettes::     
+* Non-Sweave vignettes::        
 @end menu
 
 In addition to the help files in @file{Rd} format, @R{} packages allow
@@ -2830,10 +2830,10 @@ all: pdf clean
 pdf: ABC-intro.pdf ABC-details.pdf
 
 %.pdf:  %.tex
-        texi2dvi --pdf $*
+	texi2dvi --pdf $*
 
 clean:
-        rm *.tex ABC-details-*.pdf
+	rm *.tex ABC-details-*.pdf
 @end example
 
 @noindent
@@ -2988,7 +2988,7 @@ to register those engines in the package @code{.onLoad} function.
 For example, that function could make the call
 @example
 tools::vignetteEngine("knitr", weave = vweave, tangle = vtangle,
-                      pattern = "[.]Rmd$", package = "knitr")
+		      pattern = "[.]Rmd$", package = "knitr")
 @end example
 @noindent
 (The actual registration in @CRANpkg{knitr} is more complicated, because
@@ -3039,12 +3039,12 @@ namespace was generated on installation in 2.14.x and 2.15.x.  As from
 3.0.0 a namespace is mandatory.
 
 @menu
-* Specifying imports and exports::
-* Registering S3 methods::
-* Load hooks::
-* useDynLib::
-* An example::
-* Namespaces with S4 classes and methods::
+* Specifying imports and exports::  
+* Registering S3 methods::      
+* Load hooks::                  
+* useDynLib::                   
+* An example::                  
+* Namespaces with S4 classes and methods::  
 @end menu
 
 
@@ -3486,11 +3486,11 @@ importFrom("graphics", plot)
 importFrom("stats", optim, qchisq)
 ## For these, we define methods or (AIC, BIC, nobs) an implicit generic:
 importFrom("stats", AIC, BIC, coef, confint, logLik, nobs, profile,
-           update, vcov)
+	   update, vcov)
 exportClasses(mle, profile.mle, summary.mle)
 ## All methods for imported generics:
 exportMethods(coef, confint, logLik, plot, profile, summary,
-              show, update, vcov)
+	      show, update, vcov)
 ## implicit generics which do not have any methods here
 export(AIC, BIC, nobs)
 @end example
@@ -3593,10 +3593,10 @@ platforms or for distribution (for example to be submitted to a package
 repository such as @acronym{CRAN}).
 
 @menu
-* PDF size::
-* Check timing::
-* Encoding issues::
-* Binary distribution::
+* PDF size::                    
+* Check timing::                
+* Encoding issues::             
+* Binary distribution::         
 @end menu
 
 Portable packages should have simple file names: use only alphanumeric
@@ -4080,9 +4080,9 @@ start and others use it to end).
 In @R{} messages it is also possible to use @code{sQuote} or @code{dQuote} as in
 
 @example
-        stop(gettextf("object must be of class %s or %s",
-                      dQuote("manova"), dQuote("maov")),
-             domain = NA)
+	stop(gettextf("object must be of class %s or %s",
+		      dQuote("manova"), dQuote("maov")),
+	     domain = NA)
 @end example
 
 @item
@@ -4094,12 +4094,12 @@ Slovenian has four).  So avoid constructions such as was once used in
 @example
 if((length(nopkgs) > 0) && !missing(lib.loc)) @{
     if(length(nopkgs) > 1)
-        warning("libraries ",
-                paste(sQuote(nopkgs), collapse = ", "),
-                " contain no packages")
+	warning("libraries ",
+		paste(sQuote(nopkgs), collapse = ", "),
+		" contain no packages")
     else
-        warning("library ", paste(sQuote(nopkgs)),
-                " contains no package")
+	warning("library ", paste(sQuote(nopkgs)),
+		" contains no package")
 @}
 @end example
 
@@ -4110,10 +4110,10 @@ and was replaced by
 if((length(nopkgs) > 0) && !missing(lib.loc)) @{
     pkglist <- paste(sQuote(nopkgs), collapse = ", ")
     msg <- sprintf(ngettext(length(nopkgs),
-                            "library %s contains no packages",
-                            "libraries %s contain no packages",
-                            domain = "R-base"),
-                   pkglist)
+			    "library %s contains no packages",
+			    "libraries %s contain no packages",
+			    domain = "R-base"),
+		   pkglist)
     warning(msg, domain=NA)
 @}
 @end example
@@ -4140,9 +4140,9 @@ Windows users can find pre-compiled binaries at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/goodies/gettext-tools.zip}.
 
 @menu
-* C-level messages::
-* R messages::
-* Preparing translations::
+* C-level messages::            
+* R messages::                  
+* Preparing translations::      
 @end menu
 
 @node C-level messages, R messages, Internationalization, Internationalization
@@ -4318,21 +4318,21 @@ year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste("R package version", meta$Version)
 
 citEntry(entry = "Manual",
-         title = "nlme: Linear and Nonlinear Mixed Effects Models",
-         author = personList(as.person("Jose Pinheiro"),
-                             as.person("Douglas Bates"),
-                             as.person("Saikat DebRoy"),
-                             as.person("Deepayan Sarkar"),
-                             person("R Core Team")),
-         year = year,
-         note = vers,
+	 title = "nlme: Linear and Nonlinear Mixed Effects Models",
+	 author = personList(as.person("Jose Pinheiro"),
+			     as.person("Douglas Bates"),
+			     as.person("Saikat DebRoy"),
+			     as.person("Deepayan Sarkar"),
+			     person("R Core Team")),
+	 year = year,
+	 note = vers,
 
-         textVersion =
-         paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
-                "Deepayan Sarkar and the R Core Team (",
-                year,
-                "). nlme: Linear and Nonlinear Mixed Effects Models. ",
-                vers, "."))
+	 textVersion =
+	 paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
+		"Deepayan Sarkar and the R Core Team (",
+		year,
+		"). nlme: Linear and Nonlinear Mixed Effects Models. ",
+		vers, "."))
 @end example
 
 Note the way that information that may need to be updated is picked up
@@ -4353,7 +4353,7 @@ so far in this chapter.  Currently one other type is recognized; there
 used also to be a @samp{Translation} type.
 
 @menu
-* Frontend::
+* Frontend::                    
 @end menu
 
 @node Frontend,  , Package types, Package types
@@ -4401,22 +4401,22 @@ for exchanging information between developers and/or interested useRs.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Figures::
-* Insertions::
-* Indices::
-* Platform-specific sections::
-* Conditional text::
-* Dynamic pages::
-* User-defined macros::
-* Encoding::
-* Processing documentation files::
-* Editing Rd files::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Figures::                     
+* Insertions::                  
+* Indices::                     
+* Platform-specific sections::  
+* Conditional text::            
+* Dynamic pages::               
+* User-defined macros::         
+* Encoding::                    
+* Processing documentation files::  
+* Editing Rd files::            
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -4535,10 +4535,10 @@ always do.  For the complete list of macros and rules for escapes, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
 @menu
-* Documenting functions::
-* Documenting data sets::
-* Documenting S4 classes and methods::
-* Documenting packages::
+* Documenting functions::       
+* Documenting data sets::       
+* Documenting S4 classes and methods::  
+* Documenting packages::        
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -5345,7 +5345,7 @@ The following example is from @file{Poisson.Rd}:
 @example
 @group
   \deqn@{p(x) = \frac@{\lambda^x e^@{-\lambda@}@}@{x!@}@}@{%
-        p(x) = \lambda^x exp(-\lambda)/x!@}
+	p(x) = \lambda^x exp(-\lambda)/x!@}
   for \eqn@{x = 0, 1, 2, \ldots@}.
 @end group
 @end example
@@ -5852,10 +5852,10 @@ example RStudio (@url{http://rstudio.org/}).
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::
-* Profiling R code for speed::
-* Profiling R code for memory use::
-* Profiling compiled code::
+* Tidying R code::              
+* Profiling R code for speed::  
+* Profiling R code for memory use::  
+* Profiling compiled code::     
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -5956,12 +5956,12 @@ As an example, consider the following code (from Venables & Ripley,
 @group
 library(MASS); library(boot)
 storm.fm <- nls(Time ~ b*Viscosity/(Wt - c), stormer,
-                start = c(b=30.401, c=2.2183))
+		start = c(b=30.401, c=2.2183))
 st <- cbind(stormer, fit=fitted(storm.fm))
 storm.bf <- function(rs, i) @{
     st$Time <-  st$fit + rs[i]
     tmp <- nls(Time ~ (b * Viscosity)/(Wt - c), st,
-               start = coef(storm.fm))
+	       start = coef(storm.fm))
     tmp$m$getAllPars()
 @}
 rs <- scale(resid(storm.fm), scale = FALSE) # remove the mean
@@ -6084,7 +6084,7 @@ surprising memory use. For example, in the `survey' package we have
 print.svycoxph <- function (x, ...)
 @{
     print(x$survey.design, varnames = FALSE, design.summaries = FALSE,
-        ...)
+	...)
     x$call <- x$printcall
     NextMethod()
 @}
@@ -6101,9 +6101,9 @@ collection. Memory is allocated at well-defined times in an @R{}
 program, but is freed whenever the garbage collector happens to run.
 
 @menu
-* Memory statistics from Rprof::
-* Tracking memory allocations::
-* Tracing copies of an object::
+* Memory statistics from Rprof::  
+* Tracking memory allocations::  
+* Tracing copies of an object::  
 @end menu
 
 @node Memory statistics from Rprof, Tracking memory allocations, Profiling R code for memory use, Profiling R code for memory use
@@ -6212,9 +6212,9 @@ libraries/objects as used by @R{} packages.  We know of no good way to
 profile DLLs on Windows.
 
 @menu
-* Linux::
-* Solaris::
-* OS X::
+* Linux::                       
+* Solaris::                     
+* OS X::                        
 @end menu
 
 @node Linux, Solaris, Profiling compiled code, Profiling compiled code
@@ -6334,10 +6334,10 @@ contributed packages such as @CRANpkg{debug} on @acronym{CRAN}
 which provide complementary examples to those given here.)
 
 @menu
-* Browsing::
-* Debugging R code::
-* Using gctorture and memory access::
-* Debugging compiled code::
+* Browsing::                    
+* Debugging R code::            
+* Using gctorture and memory access::  
+* Debugging compiled code::     
 @end menu
 
 
@@ -6442,7 +6442,7 @@ suite.
 Error: no valid set of coefficients has been found: please supply starting values
 > traceback()
 3: stop("no valid set of coefficients has been found: please supply
-         starting values", call. = FALSE)
+	 starting values", call. = FALSE)
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,
        mustart = mustart, offset = offset, family = family, control = control,
        intercept = attr(mt, "intercept") > 0)
@@ -6461,7 +6461,7 @@ compiled code, for example (from @code{?nls})
 
 @smallexample
 Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE) :
-        step factor 0.000488281 reduced below 'minFactor' of 0.000976563
+	step factor 0.000488281 reduced below 'minFactor' of 0.000976563
 >  traceback()
 2: .Call(R_nls_iter, m, ctrl, trace)
 1: nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321), trace = TRUE)
@@ -6486,7 +6486,7 @@ need not be the innermost call, as in
    @{
        setPars(newPars)
        assign("resid", .swts * (lhs - assign("rhs", getRHS(), envir = thisEnv)),
-           envir = thisEnv)
+	   envir = thisEnv)
        assign("dev", sum(resid^2), envir = thisEnv)
        assign("QR", qr(.swts * attr(rhs, "gradient")), envir = thisEnv)
        return(QR$rank < min(dim(QR$qr)))
@@ -6592,16 +6592,16 @@ Browse[1]> ls()
 [31] "varmu"      "w"          "weights"    "x"          "xnames"
 [36] "y"          "ynames"     "z"
 Browse[1]> eta
-            1             2             3             4             5
+	    1             2             3             4             5
  0.000000e+00 -2.235357e-06 -1.117679e-05 -5.588393e-05 -2.794197e-04
-            6             7             8             9
+	    6             7             8             9
 -1.397098e-03 -6.985492e-03 -3.492746e-02 -1.746373e-01
 Browse[1]> valideta(eta)
 [1] TRUE
 Browse[1]> mu
-        1         2         3         4         5         6         7         8
+	1         2         3         4         5         6         7         8
 1.0000000 0.9999978 0.9999888 0.9999441 0.9997206 0.9986039 0.9930389 0.9656755
-        9
+	9
 0.8397616
 Browse[1]> validmu(mu)
 [1] FALSE
@@ -6676,16 +6676,16 @@ Browse[1]> start
 [1] -2.235357e-06
 debug: eta <- drop(x %*% start)
 Browse[1]> eta
-            1             2             3             4             5
+	    1             2             3             4             5
  0.000000e+00 -2.235357e-06 -1.117679e-05 -5.588393e-05 -2.794197e-04
-            6             7             8             9
+	    6             7             8             9
 -1.397098e-03 -6.985492e-03 -3.492746e-02 -1.746373e-01
 Browse[1]>
 debug: mu <- linkinv(eta <- eta + offset)
 Browse[1]> mu
-        1         2         3         4         5         6         7         8
+	1         2         3         4         5         6         7         8
 1.0000000 0.9999978 0.9999888 0.9999441 0.9997206 0.9986039 0.9930389 0.9656755
-        9
+	9
 0.8397616
 @end smallexample
 
@@ -6754,10 +6754,10 @@ There are other memory-access-checking tools available: GCC supports
 promised soon as a plug-in.
 
 @menu
-* Using gctorture::
-* Using valgrind::
-* Using AddressSanitizer::
-* Fortran array bounds checking::
+* Using gctorture::             
+* Using valgrind::              
+* Using AddressSanitizer::      
+* Fortran array bounds checking::  
 @end menu
 
 @node Using gctorture, Using valgrind, Using gctorture and memory access, Using gctorture and memory access
@@ -7025,9 +7025,9 @@ when you run @command{R CMD check}.
 Sooner or later programmers will be faced with the need to debug
 compiled code loaded into @R{}.  This section is geared to platforms
 using @command{gdb} with code compiled by @code{gcc}, but similar things
-are possible with front-ends to @command{gdb} such as @command{ddd} and
-@command{insight}, and other debuggers such as @command{lldb} (used on
-OS X) and Sun's @command{dbx}.
+are possible with other debuggers such as @command{lldb}
+(@uref{http://lldb.llvm.org/}, used on OS X) and Sun's @command{dbx}:
+some debuggers have graphical front-ends available.
 
 Consider first `crashes', that is when @R{} terminated unexpectedly with
 an illegal memory access (a `segfault' or `bus error'), illegal
@@ -7055,9 +7055,10 @@ Selection: 3
 @end example
 
 @noindent
-Since the @R{} process may be damaged, the only really safe option is
-the first.  (Note that a core dump is only produced where enabled: a
-common default in a shell is to limit its size to 0, thereby disabling it.)
+Since the @R{} process may be damaged, the only really safe options are
+the first or third.  (Note that a core dump is only produced where
+enabled: a common default in a shell is to limit its size to 0, thereby
+disabling it.)
 
 A fairly common cause of such crashes is a package which uses @code{.C}
 or @code{.Fortran} and writes beyond (at either end) one of the
@@ -7126,11 +7127,25 @@ Program received signal SIGINT, Interrupt.
 ...
 @end example
 
+In many cases it is possible to attach a debugger to a running process:
+this is helpful if an alternative front-end is in use or to investigate
+a task that seems to be taking far too long.  This is done by something
+like
+
+@example
+gdb -p @var{pid}
+@end example
+
+@noindent
+where @code{@var{pid}} is the id of the @R{} executable or front-end.
+This stops the process so its state can be examined: use @code{continue}
+to resume execution.
+
 Some ``tricks'' worth knowing follow:
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging compiled code, Debugging compiled code
@@ -7212,7 +7227,7 @@ $2 = @{
     vecsxp = @{
       length = 2,
       type = @{c = 0x40634700 "0>X@@D>X@@0>X@@", i = 0x40634700,
-        f = 0x40634700, z = 0x40634700, s = 0x40634700@},
+	f = 0x40634700, z = 0x40634700, s = 0x40634700@},
       truelength = 1075851272,
     @},
     primsxp = @{offset = 2@},
@@ -7306,21 +7321,21 @@ currently -1 (no limit) and 5 respectively.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Registering native routines::
-* Creating shared objects::
-* Interfacing C++ code::
-* Fortran I/O::
-* Linking to other packages::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Parsing R code from C::
-* External pointers and weak references::
-* Vector accessor functions::
-* Character encoding issues::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Registering native routines::  
+* Creating shared objects::     
+* Interfacing C++ code::        
+* Fortran I/O::                 
+* Linking to other packages::   
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Parsing R code from C::       
+* External pointers and weak references::  
+* Vector accessor functions::   
+* Character encoding issues::   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -7463,10 +7478,10 @@ void convolve(double *a, int *na, double *b, int *nb, double *ab)
     int nab = *na + *nb - 1;
 
     for(int i = 0; i < nab; i++)
-        ab[i] = 0.0;
+	ab[i] = 0.0;
     for(int i = 0; i < *na; i++)
-        for(int j = 0; j < *nb; j++)
-            ab[i + j] += a[i] * b[j];
+	for(int j = 0; j < *nb; j++)
+	    ab[i + j] += a[i] * b[j];
 @}
 @end group
 @end example
@@ -7809,9 +7824,9 @@ useDynLib(stats, .registration = TRUE, .fixes = "C_")
 in its @file{NAMESPACE} file, and then @code{ansari.test}'s default
 methods can contain
 @example
-        pansari <- function(q, m, n)
-            .C(C_pansari, as.integer(length(q)), p = as.double(q),
-                as.integer(m), as.integer(n))$p
+	pansari <- function(q, m, n)
+	    .C(C_pansari, as.integer(length(q)), p = as.double(q),
+		as.integer(m), as.integer(n))$p
 @end example
 
 
@@ -7823,8 +7838,8 @@ methods can contain
 @c for more information.
 
 @menu
-* Speed considerations::
-* Linking to native routines in other packages::
+* Speed considerations::        
+* Linking to native routines in other packages::  
 @end menu
 
 @node Speed considerations, Linking to native routines in other packages, Registering native routines, Registering native routines
@@ -7906,7 +7921,7 @@ two routines declared in header @file{R_ext/Rdynload.h} as
 @findex R_GetCCallable
 @example
 void R_RegisterCCallable(const char *package, const char *name,
-                         DL_FUNC fptr);
+			 DL_FUNC fptr);
 DL_FUNC R_GetCCallable(const char *package, const char *name);
 @end example
 
@@ -8223,8 +8238,8 @@ desirable that the API provided by package @pkg{packB} remains
 backwards-compatible.
 
 @menu
-* Unix-alikes::
-* Windows::
+* Unix-alikes::                 
+* Windows::                     
 @end menu
 
 @node Unix-alikes, Windows, Linking to other packages, Linking to other packages
@@ -8365,7 +8380,7 @@ by setting
 
 @example
 library.dynam("packA", pkg, lib,
-              DLLpath = system.file("libs", package="packB"))
+	      DLLpath = system.file("libs", package="packB"))
 @end example
 
 Note that @code{DLLpath} can only set one path, and so for linking to
@@ -8487,16 +8502,16 @@ code, much use is made of coercion to force the variant object to the
 right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Handling character data::
-* Finding and setting variables::
-* Some convenience functions::
-* Named objects and copying::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Handling character data::     
+* Finding and setting variables::  
+* Some convenience functions::  
+* Named objects and copying::   
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -8742,9 +8757,9 @@ SEXP out(SEXP x, SEXP y)
     SEXP ans = PROTECT(allocMatrix(REALSXP, nx, ny));
     double *rx = REAL(x), *ry = REAL(y), *rans = REAL(ans);
     for(int i = 0; i < nx; i++) @{
-        double tmp = rx[i];
-        for(int j = 0; j < ny; j++)
-            rans[i + nx*j] = tmp * ry[j];
+	double tmp = rx[i];
+	for(int j = 0; j < ny; j++)
+	    rans[i + nx*j] = tmp * ry[j];
     @}
     UNPROTECT(1);
     return ans;
@@ -8772,7 +8787,7 @@ SEXP out(SEXP x, SEXP y)
     for(int i = 0; i < nx; i++) @{
       double tmp = rx[i];
       for(int j = 0; j < ny; j++)
-        rans[i + nx*j] = tmp * ry[j];
+	rans[i + nx*j] = tmp * ry[j];
     @}
 
     SEXP dimnames = PROTECT(allocVector(VECSXP, 2));
@@ -8916,10 +8931,10 @@ SEXP getListElement(SEXP list, const char *str)
 
 @group
     for (int i = 0; i < length(list); i++)
-        if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) @{
-           elmt = VECTOR_ELT(list, i);
-           break;
-        @}
+	if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) @{
+	   elmt = VECTOR_ELT(list, i);
+	   break;
+	@}
     return elmt;
 @}
 @end group
@@ -8985,9 +9000,9 @@ SEXP getvar(SEXP name, SEXP rho)
     SEXP ans;
 
     if(!isString(name) || length(name) != 1)
-        error("name is not a single string");
+	error("name is not a single string");
     if(!isEnvironment(rho))
-        error("rho should be an environment");
+	error("rho should be an environment");
     ans = findVar(install(CHAR(STRING_ELT(name, 0))), rho);
     Rprintf("first value is %f\n", REAL(ans)[0]);
     return R_NilValue;
@@ -9090,7 +9105,7 @@ length-one character strings to and from @code{SEXPTYPE} numbers, and
 @comment Want to encourage use of some of the more stable and useful R_*
 @comment and Rf_* functions:
 @menu
-* Semi-internal convenience functions::
+* Semi-internal convenience functions::  
 @end menu
 
 @node Semi-internal convenience functions,  , Some convenience functions, Some convenience functions
@@ -9201,9 +9216,9 @@ based on the interface of the same name in @Sl{} version 4, and
 is more complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -9240,7 +9255,7 @@ SEXP convolve2(SEXP a, SEXP b)
     xa = REAL(a); xb = REAL(b); xab = REAL(ab);
     for(int i = 0; i < nab; i++) xab[i] = 0.0;
     for(int i = 0; i < na; i++)
-        for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
+	for(int j = 0; j < nb; j++) xab[i + j] += xa[i] * xb[j];
     UNPROTECT(3);
     return ab;
 @}
@@ -9327,43 +9342,43 @@ SEXP showArgs(SEXP args)
 @{
     args = CDR(args); /* skip 'name' */
     for(int i = 0; args != R_NilValue; i++, args = CDR(args)) @{
-        const char *name =
-            isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
-        SEXP el = CAR(args);
-        if (length(el) == 0) @{
-            Rprintf("[%d] '%s' R type, length 0\n", i+1, name);
-           continue;
-        @}
+	const char *name =
+	    isNull(TAG(args)) ? "" : CHAR(PRINTNAME(TAG(args)));
+	SEXP el = CAR(args);
+	if (length(el) == 0) @{
+	    Rprintf("[%d] '%s' R type, length 0\n", i+1, name);
+	   continue;
+	@}
 @end group
 @group
-        switch(TYPEOF(el)) @{
-        case REALSXP:
-            Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
-            break;
+	switch(TYPEOF(el)) @{
+	case REALSXP:
+	    Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
+	    break;
 @end group
 @group
-        case LGLSXP:
-        case INTSXP:
-            Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
-            break;
+	case LGLSXP:
+	case INTSXP:
+	    Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
+	    break;
 @end group
 @group
-        case CPLXSXP:
-        @{
-            Rcomplex cpl = COMPLEX(el)[0];
-            Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
-        @}
-            break;
+	case CPLXSXP:
+	@{
+	    Rcomplex cpl = COMPLEX(el)[0];
+	    Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+	@}
+	    break;
 @end group
 @group
-        case STRSXP:
-            Rprintf("[%d] '%s' %s\n", i+1, name,
-                   CHAR(STRING_ELT(el, 0)));
-           break;
+	case STRSXP:
+	    Rprintf("[%d] '%s' %s\n", i+1, name,
+		   CHAR(STRING_ELT(el, 0)));
+	   break;
 @end group
 @group
-        default:
-            Rprintf("[%d] '%s' R type\n", i+1, name);
+	default:
+	    Rprintf("[%d] '%s' R type\n", i+1, name);
        @}
     @}
     return R_NilValue;
@@ -9412,10 +9427,10 @@ or @code{convolveE}:
     ...
   for(int i = 0; i < na; i++)
     for(int j = 0; j < nb; j++)
-        if(ISNA(xa[i]) || ISNA(xb[j]) || ISNA(xab[i + j]))
-            xab[i + j] = NA_REAL;
-        else
-            xab[i + j] += xa[i] * xb[j];
+	if(ISNA(xa[i]) || ISNA(xb[j]) || ISNA(xab[i + j]))
+	    xab[i + j] = NA_REAL;
+	else
+	    xab[i + j] += xa[i] * xb[j];
     ...
 @end group
 @end example
@@ -9474,8 +9489,8 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
     if(!isEnvironment(rho)) error("'rho' should be an environment");
     ans = PROTECT(allocVector(VECSXP, n));
     for(int i = 0; i < n; i++) @{
-        defineVar(install("x"), VECTOR_ELT(list, i), rho);
-        SET_VECTOR_ELT(ans, i, eval(expr, rho));
+	defineVar(install("x"), VECTOR_ELT(list, i), rho);
+	SET_VECTOR_ELT(ans, i, eval(expr, rho));
     @}
     setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
     UNPROTECT(1);
@@ -9503,8 +9518,8 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
     R_fcall = PROTECT(lang2(fn, R_NilValue));
     ans = PROTECT(allocVector(VECSXP, n));
     for(int i = 0; i < n; i++) @{
-        SETCADR(R_fcall, VECTOR_ELT(list, i));
-        SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+	SETCADR(R_fcall, VECTOR_ELT(list, i));
+	SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
     @}
     setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
     UNPROTECT(2);
@@ -9561,8 +9576,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::
-* Calculating numerical derivatives::
+* Zero-finding::                
+* Calculating numerical derivatives::  
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -9576,12 +9591,12 @@ and an example are
 @example
 zero <- function(f, guesses, tol = 1e-7) @{
     f.check <- function(x) @{
-        x <- f(x)
-        if(!is.numeric(x)) stop("Need a numeric result")
-        as.double(x)
+	x <- f(x)
+	if(!is.numeric(x)) stop("Need a numeric result")
+	as.double(x)
     @}
     .Call("zero", body(f.check), as.double(guesses), as.double(tol),
-          new.env())
+	  new.env())
 @}
 
 cube1 <- function(x) (x^2 + 1) * (x - 1.5)
@@ -9616,7 +9631,7 @@ double feval(double x, SEXP f, SEXP rho)
 SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 @{
     double x0 = REAL(guesses)[0], x1 = REAL(guesses)[1],
-           tol = REAL(stol)[0];
+	   tol = REAL(stol)[0];
     double f0, f1, fc, xc;
 @end group
 
@@ -9630,15 +9645,15 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 
 @group
     for(;;) @{
-        xc = 0.5*(x0+x1);
-        if(fabs(x0-x1) < tol) return  mkans(xc);
-        fc = feval(xc, f, rho);
-        if(fc == 0) return  mkans(xc);
-        if(f0*fc > 0.0) @{
-            x0 = xc; f0 = fc;
-        @} else @{
-            x1 = xc; f1 = fc;
-        @}
+	xc = 0.5*(x0+x1);
+	if(fabs(x0-x1) < tol) return  mkans(xc);
+	fc = feval(xc, f, rho);
+	if(fc == 0) return  mkans(xc);
+	if(f0*fc > 0.0) @{
+	    x0 = xc; f0 = fc;
+	@} else @{
+	    x1 = xc; f1 = fc;
+	@}
     @}
 @}
 @end group
@@ -9662,14 +9677,14 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
     eps <- sqrt(.Machine$double.eps)
     ans <- eval(substitute(expr), rho)
     grad <- matrix(, length(ans), length(theta),
-                   dimnames=list(NULL, theta))
+		   dimnames=list(NULL, theta))
     for (i in seq_along(theta)) @{
-        old <- get(theta[i], envir=rho)
-        delta <- eps * max(1, abs(old))
-        assign(theta[i], old+delta, envir=rho)
-        ans1 <- eval(substitute(expr), rho)
-        assign(theta[i], old, envir=rho)
-        grad[, i] <- (ans1 - ans)/delta
+	old <- get(theta[i], envir=rho)
+	delta <- eps * max(1, abs(old))
+	assign(theta[i], old+delta, envir=rho)
+	ans1 <- eval(substitute(expr), rho)
+	assign(theta[i], old, envir=rho)
+	grad[, i] <- (ans1 - ans)/delta
     @}
     attr(ans, "gradient") <- grad
     ans
@@ -9694,7 +9709,7 @@ with example usage
 
 @example
 .External("numeric_deriv", quote(sin(omega*x*y)),
-          c("x", "y"), .GlobalEnv)
+	  c("x", "y"), .GlobalEnv)
 @end example
 
 @noindent
@@ -9718,9 +9733,9 @@ SEXP numeric_deriv(SEXP args)
 @group
     expr = CADR(args);
     if(!isString(theta = CADDR(args)))
-        error("theta should be of type character");
+	error("theta should be of type character");
     if(!isEnvironment(rho = CADDDR(args)))
-        error("rho should be an environment");
+	error("rho should be an environment");
 @end group
 
 @group
@@ -9731,16 +9746,16 @@ SEXP numeric_deriv(SEXP args)
 
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
-        tt = REAL(par)[0];
-        xx = fabs(tt);
-        delta = (xx < 1) ? eps : xx*eps;
-        REAL(par)[0] += delta;
-        ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
-        for(int j = 0; j < LENGTH(ans); j++)
-            rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
-        REAL(par)[0] = tt;
-        UNPROTECT(2); /* par, ans1 */
+	par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
+	tt = REAL(par)[0];
+	xx = fabs(tt);
+	delta = (xx < 1) ? eps : xx*eps;
+	REAL(par)[0] += delta;
+	ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+	for(int j = 0; j < LENGTH(ans); j++)
+	    rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
+	REAL(par)[0] = tt;
+	UNPROTECT(2); /* par, ans1 */
     @}
 @end group
 
@@ -9761,9 +9776,9 @@ The code to handle the arguments is
 @group
     expr = CADR(args);
     if(!isString(theta = CADDR(args)))
-        error("theta should be of type character");
+	error("theta should be of type character");
     if(!isEnvironment(rho = CADDDR(args)))
-        error("rho should be an environment");
+	error("rho should be an environment");
 @end group
 @end example
 
@@ -9796,7 +9811,7 @@ arguments are the numbers of rows and columns.
 @example
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
+	par = PROTECT(findVar(install(CHAR(STRING_ELT(theta, i))), rho));
 @end group
 @end example
 
@@ -9813,11 +9828,11 @@ install the name and use @code{findVar} to find its value.
 
 @example
 @group
-        tt = REAL(par)[0];
-        xx = fabs(tt);
-        delta = (xx < 1) ? eps : xx*eps;
-        REAL(par)[0] += delta;
-        ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
+	tt = REAL(par)[0];
+	xx = fabs(tt);
+	delta = (xx < 1) ? eps : xx*eps;
+	REAL(par)[0] += delta;
+	ans1 = PROTECT(coerceVector(eval(expr, rho), REALSXP));
 @end group
 @end example
 
@@ -9832,10 +9847,10 @@ changed parameter value.
 
 @example
 @group
-        for(int j = 0; j < LENGTH(ans); j++)
-            rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
-        REAL(par)[0] = tt;
-        UNPROTECT(2);
+	for(int j = 0; j < LENGTH(ans); j++)
+	    rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
+	REAL(par)[0] = tt;
+	UNPROTECT(2);
     @}
 @end group
 @end example
@@ -9892,17 +9907,17 @@ SEXP menu_ttest3()
     ParseStatus status;
    ...
     if(done == 1) @{
-        cmdSexp = PROTECT(allocVector(STRSXP, 1));
-        SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
-        cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
-        if (status != PARSE_OK) @{
-            UNPROTECT(2);
-            error("invalid call %s", cmd);
-        @}
-        /* Loop is needed here as EXPSEXP will be of length > 1 */
-        for(int i = 0; i < length(cmdexpr); i++)
-            ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
-        UNPROTECT(2);
+	cmdSexp = PROTECT(allocVector(STRSXP, 1));
+	SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
+	cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
+	if (status != PARSE_OK) @{
+	    UNPROTECT(2);
+	    error("invalid call %s", cmd);
+	@}
+	/* Loop is needed here as EXPSEXP will be of length > 1 */
+	for(int i = 0; i < length(cmdexpr); i++)
+	    ans = eval(VECTOR_ELT(cmdexpr, i), R_GlobalEnv);
+	UNPROTECT(2);
     @}
     return ans;
 @}
@@ -9931,7 +9946,7 @@ the same length as the expression, to allow it to be echoed with its
 original formatting.
 
 @menu
-* Accessing source references::
+* Accessing source references::  
 @end menu
 
 @node Accessing source references,  , Parsing R code from C, Parsing R code from C
@@ -10055,7 +10070,7 @@ Weak reference objects are created by one of
 @example
 SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
 SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin,
-                    Rboolean onexit);
+		    Rboolean onexit);
 @end example
 
 @noindent
@@ -10080,7 +10095,7 @@ Bioconductor package uses weak references.
 
 
 @menu
-* An external pointer example::
+* An external pointer example::  
 @end menu
 
 @node An external pointer example,  , External pointers and weak references, External pointers and weak references
@@ -10100,7 +10115,7 @@ is created by
     ptr = R_MakeExternalPtr(thisHandle, install("RODBC_channel"), R_NilValue);
     PROTECT(ptr);
     R_RegisterCFinalizerEx(ptr, chanFinalizer, TRUE);
-            ...
+	    ...
     /* return the channel no */
     INTEGER(ans)[0] = nChannels;
     /* and the connection string as an attribute */
@@ -10201,7 +10216,7 @@ Function
 @findex reEnc
 @example
 const char *reEnc(const char *x, cetype_t ce_in, cetype_t ce_out,
-                  int subst);
+		  int subst);
 @end example
 
 @noindent
@@ -10228,23 +10243,23 @@ to create marked character strings of a given length.
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from FORTRAN and vice versa::
-* Numerical analysis subroutines::
-* Optimization::
-* Integration::
-* Utility functions::
-* Re-encoding::
-* Allowing interrupts::
-* Platform and version information::
-* Inlining C functions::
-* Controlling visibility::
-* Standalone Mathlib::
-* Organization of header files::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from FORTRAN and vice versa::  
+* Numerical analysis subroutines::  
+* Optimization::                
+* Integration::                 
+* Utility functions::           
+* Re-encoding::                 
+* Allowing interrupts::         
+* Platform and version information::  
+* Inlining C functions::        
+* Controlling visibility::      
+* Standalone Mathlib::          
+* Organization of header files::  
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -10321,8 +10336,8 @@ compilers/loaders when using @R{} as a shared library) not exported.
 @cindex Memory allocation from C
 
 @menu
-* Transient storage allocation::
-* User-controlled memory::
+* Transient storage allocation::  
+* User-controlled memory::      
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -10487,7 +10502,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::
+* Error handling from FORTRAN::  
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -10640,7 +10655,7 @@ when using parallel computation on a cluster of computational nodes, as
 their output will be re-directed/logged appropriately.
 
 @menu
-* Printing from FORTRAN::
+* Printing from FORTRAN::       
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -10767,10 +10782,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::
-* Mathematical functions::
-* Numerical Utilities::
-* Mathematical constants::
+* Distribution functions::      
+* Mathematical functions::      
+* Numerical Utilities::         
+* Mathematical constants::      
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -10788,9 +10803,9 @@ normal distribution:
 @group
 double dnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{give_log});
 double pnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{lower_tail},
-             int @var{give_log});
+	     int @var{give_log});
 double qnorm(double @var{p}, double @var{mu}, double @var{sigma}, int @var{lower_tail},
-             int @var{log_p});
+	     int @var{log_p});
 double rnorm(double @var{mu}, double @var{sigma});
 @end group
 @end example
@@ -11135,44 +11150,44 @@ The interfaces (defined in header @file{R_ext/Applic.h}) are
 @findex nmmin
 @example
 void nmmin(int n, double *xin, double *x, double *Fmin, optimfn fn,
-           int *fail, double abstol, double intol, void *ex,
-           double alpha, double beta, double gamma, int trace,
-           int *fncount, int maxit);
+	   int *fail, double abstol, double intol, void *ex,
+	   double alpha, double beta, double gamma, int trace,
+	   int *fncount, int maxit);
 @end example
 
 @item BFGS:
 @findex vmmin
 @example
 void vmmin(int n, double *x, double *Fmin,
-           optimfn fn, optimgr gr, int maxit, int trace,
-           int *mask, double abstol, double reltol, int nREPORT,
-           void *ex, int *fncount, int *grcount, int *fail);
+	   optimfn fn, optimgr gr, int maxit, int trace,
+	   int *mask, double abstol, double reltol, int nREPORT,
+	   void *ex, int *fncount, int *grcount, int *fail);
 @end example
 
 @item Conjugate gradients:
 @findex cgmin
 @example
 void cgmin(int n, double *xin, double *x, double *Fmin,
-           optimfn fn, optimgr gr, int *fail, double abstol,
-           double intol, void *ex, int type, int trace,
-           int *fncount, int *grcount, int maxit);
+	   optimfn fn, optimgr gr, int *fail, double abstol,
+	   double intol, void *ex, int type, int trace,
+	   int *fncount, int *grcount, int maxit);
 @end example
 
 @item Limited-memory BFGS with bounds:
 @findex lbfgsb
 @example
 void lbfgsb(int n, int lmm, double *x, double *lower,
-            double *upper, int *nbd, double *Fmin, optimfn fn,
-            optimgr gr, int *fail, void *ex, double factr,
-            double pgtol, int *fncount, int *grcount,
-            int maxit, char *msg, int trace, int nREPORT);
+	    double *upper, int *nbd, double *Fmin, optimfn fn,
+	    optimgr gr, int *fail, void *ex, double factr,
+	    double pgtol, int *fncount, int *grcount,
+	    int maxit, char *msg, int trace, int nREPORT);
 @end example
 
 @item Simulated annealing:
 @findex samin
 @example
 void samin(int n, double *x, double *Fmin, optimfn fn, int maxit,
-           int tmax, double temp, int trace, void *ex);
+	   int tmax, double temp, int trace, void *ex);
 @end example
 
 @end itemize
@@ -11218,20 +11233,20 @@ one of the integration boundaries is not finite.
 @findex Rdqags
 @example
 void Rdqags(integr_fn f, void *ex, double *a, double *b,
-            double *epsabs, double *epsrel,
-            double *result, double *abserr, int *neval, int *ier,
-            int *limit, int *lenw, int *last,
-            int *iwork, double *work);
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last,
+	    int *iwork, double *work);
 @end example
 
 @item Indefinite:
 @findex Rdqagi
 @example
 void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
-            double *epsabs, double *epsrel,
-            double *result, double *abserr, int *neval, int *ier,
-            int *limit, int *lenw, int *last,
-            int *iwork, double *work);
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last,
+	    int *iwork, double *work);
 @end example
 
 @end itemize
@@ -11853,7 +11868,7 @@ Only add parameters and defaults to the generic if they make sense in
 all possible methods implementing it.
 
 @menu
-* Adding new generics::
+* Adding new generics::         
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -11916,8 +11931,8 @@ front-ends).  Conversely some of the functions from the API (such as
 @code{R_alloc}) should not be used in front-ends.
 
 @menu
-* Embedding R under Unix-alikes::
-* Embedding R under Windows::
+* Embedding R under Unix-alikes::  
+* Embedding R under Windows::   
 @end menu
 
 @node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
@@ -12013,13 +12028,13 @@ int main(int ac, char **av)
     /* do some more setup */
 
     /* submit some code to R, which is done interactively via
-        run_Rmainloop();
+	run_Rmainloop();
 
-        A possible substitute for a pseudo-console is
+	A possible substitute for a pseudo-console is
 
-        R_ReplDLLinit();
-        while(R_ReplDLLdo1() > 0) @{
-        /* add user actions here if desired */
+	R_ReplDLLinit();
+	while(R_ReplDLLdo1() > 0) @{
+	/* add user actions here if desired */
        @}
 
      */
@@ -12061,11 +12076,11 @@ Note that @R{} expects to be run with the locale category
 not be embedded into an application which changes that.
 
 @menu
-* Compiling against the R library::
-* Setting R callbacks::
-* Registering symbols::
-* Meshing event loops::
-* Threading issues::
+* Compiling against the R library::  
+* Setting R callbacks::         
+* Registering symbols::         
+* Meshing event loops::         
+* Threading issues::            
 @end menu
 
 @node Compiling against the R library, Setting R callbacks, Embedding R under Unix-alikes, Embedding R under Unix-alikes
@@ -12106,11 +12121,11 @@ all: myfe
 
 ## The following is not needed, but avoids PIC flags.
 myfe.o: myfe.c
-        $(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
+	$(CC) $(ALL_CPPFLAGS) $(CFLAGS) -c myfe.c -o $@@
 
 ## replace $(LIBR) $(LIBS) by $(STATIC_LIBR) if R was build with a static libR
 myfe: myfe.o
-        $(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
+	$(MAIN_LINK) -o $@@ myfe.o $(LIBR) $(LIBS)
 @end example
 
 @noindent
@@ -12149,7 +12164,7 @@ extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
 extern int  (*ptr_R_ShowFiles)(int, const char **, const char **,
-                               const char *, Rboolean, const char *);
+			       const char *, Rboolean, const char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(const char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
@@ -12303,16 +12318,16 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
     @}
     switch (saveact) @{
     case SA_SAVE:
-        if(runLast) R_dot_Last();
-        if(R_DirtyImage) R_SaveGlobalEnv();
-        /* save the console history in R_HistoryFile */
-        break;
+	if(runLast) R_dot_Last();
+	if(R_DirtyImage) R_SaveGlobalEnv();
+	/* save the console history in R_HistoryFile */
+	break;
     case SA_NOSAVE:
-        if(runLast) R_dot_Last();
-        break;
+	if(runLast) R_dot_Last();
+	break;
     case SA_SUICIDE:
     default:
-        break;
+	break;
     @}
 
     R_RunExitFinalizers();
@@ -12437,7 +12452,7 @@ extern int (*R_timeout_handler)();
 extern long R_timeout_val;
 
       if (R_timeout_handler && R_timeout_val)
-          gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
+	  gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
       gtk_main ();
 @end example
 
@@ -12498,9 +12513,9 @@ All Windows interfaces to @R{} call entry points in the DLL
 easier to use the indirect route @emph{via} @acronym{(D)COM}.
 
 @menu
-* Using (D)COM::
-* Calling R.dll directly::
-* Finding R_HOME::
+* Using (D)COM::                
+* Calling R.dll directly::      
+* Finding R_HOME::              
 @end menu
 
 @node Using (D)COM, Calling R.dll directly, Embedding R under Windows, Embedding R under Windows
@@ -12610,15 +12625,15 @@ int main (int argc, char **argv)
 
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) @{
-        fprintf(stderr, "Error: R.DLL version does not match\n");
-        exit(1);
+	fprintf(stderr, "Error: R.DLL version does not match\n");
+	exit(1);
     @}
 
     R_setStartTime();
     R_DefParams(Rp);
     if((RHome = get_R_HOME()) == NULL) @{
-         fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
-         exit(1);
+	 fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
+	 exit(1);
     @}
     Rp->rhome = RHome;
     Rp->home = getRUser();
