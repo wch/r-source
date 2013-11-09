@@ -19,19 +19,19 @@
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{getParseData()} truncated the imaginary part of 
+      \item \code{getParseData()} truncated the imaginary part of
       complex number constants.  (Reported by Yihui Xie.)
-      
+
       \item \code{dbeta(x, a, b)} with \code{a} or \code{b} within a
       factor of 2 of the largest representable number could
       infinite-loop.  (Reported by Ioannis Kosmidis.)
 
       \item \code{provideDimnames()} failed for arrays with a 0
       dimension. (\PR{15465})
-      
+
       \item \code{rbind()} and \code{cbind()} did not handle
       list objects correctly. (\PR{15468})
 
@@ -40,49 +40,49 @@
 
       \item \code{rasterImage()} and \code{grid.raster()} now give
       error on an empty (zero-length) raster.  (Reported by Ben North.)
-      
+
       \item \code{plot.lm()} would sometimes scramble the labels
       in plot type 5.  (\PR{15458} and \PR{14837})
-      
+
       \item \code{min()} did not handle \code{NA_character_} values
       properly.  (Reported by Magnus Thor Torfason.)
-      
+
       \item (Windows only.)  \code{readRegistry()} would duplicate
       default values for keys.  (\PR{15455})
-      
+
       \item \code{str(..., strict.width = "cut")} did not handle
       it properly when more than one line needed to be cut.  (Reported
       by Gerrit Eichner.)
 
       \item Removing subclass back-references when S4 classes were
       removed or their namespace unloaded had several bugs (e.g., \PR{15481}).
-      
+
       \item \code{aggregate()} could fail when there were too many
       levels present in the \code{by} argument.  (\PR{15004})
 
       \item \code{namespaceImportFrom} needed to detect primitive
       functions when checking for duplicated imports (reported by
       Karl Forner).
-    
+
       \item \code{getGraphicsEvent()} did not exit when a user closed
       the graphics window.  (\PR{15208})
-      
+
       \item Errors in vignettes were not always captured and displayed
       properly.  (\PR{15495})
-      
+
       \item \code{contour()} could fail when dealing with extremely
       small z values.  (\PR{15454})
-      
+
       \item Several functions did not handle zero-length vectors properly,
-      including \code{browseEnv()}, \code{format()}, \code{gl()}, 
+      including \code{browseEnv()}, \code{format()}, \code{gl()},
       \code{relist()} and \code{summary.data.frame()}.  (e.g., \PR{15499})
-      
+
       \item \code{Sweave()} did not restore the \R{} output to the
       console if it was interrupted by a user in the middle of evaluating
       a code chunk.  (Reported by Michael Sumner.)
 
       \item Fake installs of packages with vignettes work again.
-      
+
       \item Illegal characters in the input caused \code{parse()}
       (and thus \code{source()}) to segfault.  (\PR{15518})
 
@@ -109,7 +109,7 @@
       \file{NEWS.2}.  The latter files are now installed when \R is
       installed.  An HTML version of news from 2.10.0 to 2.15.3 is
       available as \file{doc/html/NEWS.2.html}.
-      
+
       \item \code{sum()} for integer arguments now uses an integer
       accumulator of at least 64 bits and so will be more accurate in
       the very rare case that a cumulative sum exceeds
@@ -193,7 +193,7 @@
       \item \code{termplot()} now has an argument \code{transform.x}
       to control the display of individual terms in the plot.
       (\PR{15329})
-      
+
       \item \code{format()} now supports \code{digits = 0}, to
       display \code{nsmall} decimal places.
 
@@ -208,7 +208,7 @@
       \item \code{utils::modifyList()} gets a new argument \code{keep.null}
       allowing \code{NULL} components in the replacement to be retained,
       instead of causing corresponding components to be deleted.
-      
+
       \item \code{tools::pkgVignettes()} gains argument \code{check};
       if set to \code{TRUE}, it will warn when it appears a vignette requests
       a non-existent vignette engine.
@@ -232,7 +232,7 @@
       files if needed, with a warning.  This is useful on OSes and file
       systems which do not support execute permissions (notably, on
       Windows).
-      
+
       \item \command{R CMD build} now weaves and tangles all vignettes,
       so suggested packages are not required during package installation
       if the source tarball was prepared with current
@@ -290,11 +290,11 @@
 	\item objects imported by \code{:::} calls which do not exist.
       }
       See \sQuote{Writing R Extensions} for good practice.
-      
+
       \item \command{R CMD check} optionally checks for non-standard
       top-level files and directories (which are often mistakes): this
       is enabled for \option{--as-cran}.
-      
+
       \item LaTeX style file \code{upquote.sty} is no longer included
       (the version was several years old): it is no longer used in \R.
       A much later version is commonly included in LaTeX distributions
@@ -360,7 +360,7 @@
 
       \item The limit of 500 \code{S3method} entries in a
       \code{NAMESPACE} file has been removed.
-  
+
       \item The default \sQuote{version} of Bioconductor for its
       packages has been changed to the upcoming \samp{2.13}, but this
       can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
@@ -390,7 +390,7 @@
 
       \item \code{plclust()} is deprecated: use the \code{plot()} method
       for class \code{"hclust"} instead.
-      
+
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are deprecated (and they have not worked with
       current \file{NEWS} files for a long time).
@@ -580,27 +580,27 @@
       \item (Windows) \code{system2()} now respects specifying
       \code{stdout} and \code{stderr} as files if called from
       \command{Rgui}. (\PR{15393})
-      
+
       \item Closing an \code{x11()} device whilst \code{locator()} or
       \code{identify()} is in progress no longer hangs \R.  (\PR{15253})
 
       \item \code{list.dirs(full.names = FALSE)} was not implemented.
       (\PR{15170})
-      
-      \item \code{format()} sometimes added unnecessary spaces. 
+
+      \item \code{format()} sometimes added unnecessary spaces.
       (\PR{15411})
-      
+
       \item \code{all.equal(check.names = FALSE)} would ignore the request
       to ignore the names and would check them as attributes.
-      
+
       \item The symbol set by \code{tools::Rd2txt_options(itemBullet=)}
       was not respected in some locales. (\PR{15435})
 
       \item \code{mcMap()} was not exported by package
       \pkg{parallel}. (\PR{15439})
-      
+
       \item \code{plot()} for \code{TukeyHSD} objects did not balance
-      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots. 
+      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots.
       (\PR{15449})
     }
   }
