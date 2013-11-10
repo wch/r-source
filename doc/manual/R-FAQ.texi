@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2013
-@set FAQ_DATE @value{FAQ_YEAR}-10-14
+@set FAQ_DATE @value{FAQ_YEAR}-11-10
 @set REL_YEAR 2013
 @set REL_MAJOR 3
 @set REL_MINOR 0
@@ -176,7 +176,7 @@ In publications, please refer to this @acronym{FAQ} as Hornik
 @group
 @@Misc@{,
   author        = @{Kurt Hornik@},
-  title         = @{The @{R@} @{FAQ@}@},
+  title         = @{@{R@} @{FAQ@}@},
   year          = @{@value{REL_YEAR}@},
   url           = @{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
 @}
