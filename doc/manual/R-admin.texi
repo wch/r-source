@@ -4529,7 +4529,7 @@ The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
 e.g.@: @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
-after an update to Mavericks, you are advised to re-installl them.)
+after an update to Mavericks, you are advised to re-install them.)
 They are no longer available under the @samp{Downloads} preference pane.
 
 To use the compilers it provides with the recommended Fortran compiler,
