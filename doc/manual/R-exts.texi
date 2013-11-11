@@ -435,6 +435,12 @@ the @code{maintainer} function and used by @code{bug.report}.  For a
 and not a corporate entity: do ensure that it is valid and will remain
 valid for the lifetime of the package.
 
+Note that the @emph{display name} (the part before the address in angle
+brackets) should be enclosed in double quotes if it contains
+non-alphanumeric characters such as comma or period.  (The current
+standard, RFC 5322, allows periods but RFC 2822 did not and some
+current email clients do not.)
+
 Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
