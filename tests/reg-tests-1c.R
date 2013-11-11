@@ -242,7 +242,14 @@ unique(1:3, nmax = 1)
 ## besselI() (and others), now using sinpi() etc:
 stopifnot(all.equal(besselI(2.125,-5+1/1024),
 		    0.02679209380095711, tol= 8e-16),
-	  all.equal(lgamma(-12+1/1024), -13.05327436745323, tol=8e-16))
+	  all.equal(lgamma(-12+1/1024), -13.053274367453049, tol=8e-16))
 ## rel.error was 1.5e-13 / 7.5e-14 in R <= 3.0.x
+ss <- sinpi(2*(-10:10)-2^-12)
+tt <- tanpi(  (-10:10)-2^-12)
+stopifnot(ss == ss[1], tt == tt[1], # as internal arithmetic must be exact here
+	  all.equal(ss[1], -0.00076699031874270453, tol=8e-16),
+	  all.equal(tt[1], -0.00076699054434309260, tol=8e-16))
+## (checked via Rmpfr) The above failed during development
+
 
 proc.time()
