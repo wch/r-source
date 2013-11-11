@@ -301,8 +301,9 @@ FUNTAB R_FunTab[] =
 {"digamma",	do_math1,	42,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"trigamma",	do_math1,	43,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /* see "psigamma" below !*/
-{"sinpi",	do_math1,	47,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"cospi",	do_math1,	48,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+
+{"cospi",	do_math1,	47,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sinpi",	do_math1,	48,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"tanpi",	do_math1,	49,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Mathematical Functions of Two Numeric (+ 1-2 int) Variables */

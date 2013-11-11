@@ -1236,8 +1236,8 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	   case 46: return MATH1(Rf_gamma_cody); removed in 2.8.0
 	*/
-    case 47: return MATH1(sinpi);
-    case 48: return MATH1(cospi);
+    case 47: return MATH1(cospi);
+    case 48: return MATH1(sinpi);
     case 49: return MATH1(tanpi);
 
     default:
