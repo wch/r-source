@@ -6184,6 +6184,13 @@ function(dir)
         out$extensions <- extensions$components[ind]
 
     out$Maintainer <- meta["Maintainer"]
+    ## pick out 'display name'
+    display <- gsub("<.*", "", as.vector(out$Maintainer))
+    display <- sub("[[:space:]]+$", "", sub("^[[:space:]]+", "", display))
+    ## RFC 5322 allows '. in the display name, but some clients do not.
+    ## ',' separates email addresses.
+    out$Maintainer_needs_quotes <-
+        grepl("[.,]", display)  && !grepl('^".*"$', display)
 
     ver <- meta["Version"]
     if(is.na(ver))
@@ -6512,6 +6519,8 @@ function(x, ...)
       if(length(x$Maintainer))
           sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
       else "No maintainer field in DESCRIPTION file",
+      if(x$Maintainer_needs_quotes)
+          'The display-name part of the Maintainer field should be enclosed in ""',
       if(length(x$new_submission))
           "New submission",
       if(length(y <- x$bad_package))
