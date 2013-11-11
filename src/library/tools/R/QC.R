@@ -5957,6 +5957,15 @@ function(dir)
         out$extensions <- extensions$components[ind]
 
     out$Maintainer <- meta["Maintainer"]
+    ## pick out 'display name'
+    display <- gsub("<.*", "", as.vector(out$Maintainer))
+    display <- sub("[[:space:]]+$", "",
+                   sub("^[[:space:]]+", "", display, useBytes = TRUE),
+                   useBytes = TRUE)
+    ## RFC 5322 allows '. in the display name, but some clients do not.
+    ## ',' separates email addresses.
+    out$Maintainer_needs_quotes <-
+        grepl("[.,]", display, useBytes = TRUE) && !grepl('^".*"$', display, useBytes = TRUE)
 
     ver <- meta["Version"]
     if(is.na(ver))
@@ -6293,6 +6302,8 @@ function(x, ...)
       if(length(x$Maintainer))
           sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
       else "No maintainer field in DESCRIPTION file",
+      if(x$Maintainer_needs_quotes)
+          'The display-name part of the Maintainer field should be enclosed in ""',
       if(length(x$new_submission))
           "New submission",
       if(length(y <- x$bad_package))
@@ -6401,6 +6412,9 @@ function(x, ...)
           c(.pretty_format2("Depends: includes the non-default packages:", y),
             "Adding so many packages to the search path is excessive",
             "and importing selectively is preferable.")
+      },
+      if(length(y <- x$missing_vignette_index)) {
+          "Package has a VignetteBuilder field but no prebuilt vignette index."
       }
       )
 }
