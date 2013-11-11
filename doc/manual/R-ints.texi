@@ -2037,6 +2037,7 @@ cos     sin     tan
 acos    asin    atan
 cosh    sinh    tanh
 acosh   asinh   atanh
+cospi   sinpi   tanpi
 @end group
 
 @group

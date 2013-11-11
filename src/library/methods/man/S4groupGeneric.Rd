@@ -85,8 +85,10 @@ There are also
       \code{"log"}, \code{"log10"}, \code{"log2"}, \code{"log1p"},
       \code{"acos"}, \code{"acosh"},
       \code{"asin"}, \code{"asinh"}, \code{"atan"}, \code{"atanh"},
-      \code{"exp"}, \code{"expm1"}, \code{"cos"}, \code{"cosh"},
-      \code{"sin"}, \code{"sinh"}, \code{"tan"}, \code{"tanh"},
+      \code{"exp"}, \code{"expm1"},
+      \code{"cos"}, \code{"cosh"}, \code{"cospi"},
+      \code{"sin"}, \code{"sinh"}, \code{"sinpi"},
+      \code{"tan"}, \code{"tanh"}, \code{"tanpi"},
       \code{"gamma"}, \code{"lgamma"}, \code{"digamma"},
       \code{"trigamma"}
     }

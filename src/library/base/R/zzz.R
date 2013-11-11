@@ -165,7 +165,7 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
                "cos", "sin", "tan", "acos", "asin", "atan", "cosh", "sinh",
                "tanh", "acosh", "asinh", "atanh",
 	       "cospi", "sinpi", "tanpi",
-          "gamma", "lgamma", "digamma", "trigamma",
+               "gamma", "lgamma", "digamma", "trigamma",
                "cumsum", "cumprod", "cummax", "cummin")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
