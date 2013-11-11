@@ -6186,11 +6186,13 @@ function(dir)
     out$Maintainer <- meta["Maintainer"]
     ## pick out 'display name'
     display <- gsub("<.*", "", as.vector(out$Maintainer))
-    display <- sub("[[:space:]]+$", "", sub("^[[:space:]]+", "", display))
+    display <- sub("[[:space:]]+$", "",
+                   sub("^[[:space:]]+", "", display, useBytes = TRUE),
+                   useBytes = TRUE)
     ## RFC 5322 allows '. in the display name, but some clients do not.
     ## ',' separates email addresses.
     out$Maintainer_needs_quotes <-
-        grepl("[.,]", display)  && !grepl('^".*"$', display)
+        grepl("[.,]", display, useBytes = TRUE) && !grepl('^".*"$', display, useBytes = TRUE)
 
     ver <- meta["Version"]
     if(is.na(ver))
