@@ -379,6 +379,9 @@
       \item The \code{validmu()} and \code{valideta()} functions in the
       standard \code{glm()} families now also report non-finite values,
       rather than failing.
+      
+      \item Saved vignette results (in a \file{.Rout.save} file) were
+      not being compared to the new ones during \command{R CMD check}.
     }
   }
 }

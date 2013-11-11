@@ -2736,7 +2736,7 @@ setRlibs <-
                                  stdout = outfile, stderr = outfile)
                 t2b <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
-                savefile <- paste0(name, ".Rout.save")
+                savefile <- file.path(dirname(file), paste0(name, ".Rout.save"))
                 if(length(grep("^  When (running|tangling|sourcing)", out,
                                useBytes = TRUE))) {
                     cat(" failed\n")
