@@ -5962,10 +5962,10 @@ function(dir)
     display <- sub("[[:space:]]+$", "",
                    sub("^[[:space:]]+", "", display, useBytes = TRUE),
                    useBytes = TRUE)
-    ## RFC 5322 allows '. in the display name, but some clients do not.
+    ## RFC 5322 allows '.' in the display name, but 2822 did not.
     ## ',' separates email addresses.
     out$Maintainer_needs_quotes <-
-        grepl("[.,]", display, useBytes = TRUE) && !grepl('^".*"$', display, useBytes = TRUE)
+        grepl("[,]", display, useBytes = TRUE) && !grepl('^".*"$', display, useBytes = TRUE)
 
     ver <- meta["Version"]
     if(is.na(ver))
