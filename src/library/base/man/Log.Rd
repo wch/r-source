@@ -1,6 +1,6 @@
 % File src/library/base/man/Log.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{log}
@@ -36,8 +36,7 @@ expm1(x)
   \code{base}.
 
   \code{log1p(x)} computes \eqn{\log(1+x)}{log(1+x)} accurately also for
-  \eqn{|x| \ll 1}{|x| << 1} (and less accurately when \eqn{x \approx
-    -1}{x is approximately -1}).
+  \eqn{|x| \ll 1}{|x| << 1}.
 
   \code{exp} computes the exponential function.
 
