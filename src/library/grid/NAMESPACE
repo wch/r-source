@@ -65,10 +65,10 @@ export(
        "grobName",
        "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
        "grid.gedit", "grid.gremove", "grid.gget",
-       "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
+       "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob", "forceGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
        "grid.grab", "grid.grabExpr",
-       "grid.force", "grid.revert",
+       "grid.force", "grid.revert", 
        "grid.reorder", "reorderGrob",
        "grid.cap",
        "setChildren",
@@ -329,6 +329,10 @@ S3method("ascentDetails", "text")
 S3method("descentDetails", "default")
 S3method("descentDetails", "text")
 
+S3method("forceGrob", "default")
+S3method("forceGrob", "grob")
+S3method("forceGrob", "gTree")
+
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")
 S3method("depth", "vpList")
@@ -393,10 +397,6 @@ S3method("makeContext", "roundrect")
 S3method("makeContext", "frame")
 S3method("makeContext", "cellGrob")
 S3method("makeContext", "forcedgrob")
-
-S3method("force", "default")
-S3method("force", "grob")
-S3method("force", "gTree")
 
 S3method("grid.force", "default")
 S3method("grid.force", "grob")

@@ -1969,21 +1969,21 @@ grid.copy <- function(grob) {
 ################################
 # Flattening a grob
 
-force <- function(x) {
-    UseMethod("force")
+forceGrob <- function(x) {
+    UseMethod("forceGrob")
 }
 
 # The default action is to leave 'x' untouched
 # BUT it is also necessary to enforce the drawing context
 # for viewports and vpPaths
-force.default <- function(x) {
+forceGrob.default <- function(x) {
     grid.draw(x, recording=FALSE)
     x
 }
 
 # This allows 'x' to be modified, but may not
 # change 'x' at all
-force.grob <- function(x) {
+forceGrob.grob <- function(x) {
     # Copy of the original object to allow a "revert"
     originalX <- x
     # Same set up as drawGrob()
@@ -2019,7 +2019,7 @@ force.grob <- function(x) {
 
 # This allows 'x' to be modified, but may not
 # change 'x' at all
-force.gTree <- function(x) {
+forceGrob.gTree <- function(x) {
     # Copy of the original object to allow a "revert"
     originalX <- x
     # Same set up as drawGTree()
@@ -2036,7 +2036,7 @@ force.gTree <- function(x) {
     # Same drawing content set up as drawGTree() ...
     x <- makeContent(x)
     # Ensure that children are also forced
-    x$children <- do.call("gList", lapply(x$children, force))
+    x$children <- do.call("gList", lapply(x$children, forceGrob))
     # BUT NO DRAWING
     # Same context clean up as drawGTree()
     postDraw(x)
@@ -2077,7 +2077,7 @@ grid.force.default <- function(x, redraw = FALSE, ...) {
         for (i in 2:dl.index) {
             grid.Call(L_setDLindex, as.integer(i - 1))
             grid.Call(L_setDLelt,
-                      force(grid.Call(L_getDLelt, as.integer(i - 1))))
+                      forceGrob(grid.Call(L_getDLelt, as.integer(i - 1))))
         }
         grid.Call(L_setDLindex, dl.index)
     }
@@ -2091,7 +2091,7 @@ grid.force.default <- function(x, redraw = FALSE, ...) {
 }
 
 grid.force.grob <- function(x, draw = FALSE, ...) {
-    fx <- force(x)
+    fx <- forceGrob(x)
     if (draw)
         grid.draw(fx)
     fx
@@ -2116,7 +2116,7 @@ grid.force.gPath <- function(x,
         depth <- 0
         if (nchar(vpPath))
             depth <- downViewport(vpPath, recording=FALSE)
-        forcedgrob <- force(target, ...)
+        forcedgrob <- forceGrob(target, ...)
         if (depth > 0)
             upViewport(depth, recording=FALSE)
         grid.set(path, strict=TRUE, forcedgrob)

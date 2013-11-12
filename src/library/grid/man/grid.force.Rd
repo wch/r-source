@@ -8,6 +8,7 @@
 \alias{grid.force.default}
 \alias{grid.force.gPath}
 \alias{grid.force.grob}
+\alias{forceGrob}
 \alias{grid.revert}
 \alias{grid.revert.gPath}
 \alias{grid.revert.grob}
@@ -23,6 +24,7 @@ grid.force(x, ...)
 \method{grid.force}{gPath}(x, strict = FALSE, grep = FALSE, global = FALSE,
                            redraw = FALSE, ...) 
 \method{grid.force}{grob}(x, draw = FALSE, ...)
+forceGrob(x)
 grid.revert(x, ...)
 \method{grid.revert}{gPath}(x, strict = FALSE, grep = FALSE, global = FALSE,
                             redraw = FALSE, ...) 
@@ -71,6 +73,11 @@ grid.revert(x, ...)
   the tick marks
   visible to \code{grid.ls()} and accessible to \code{grid.edit()}.
 
+  The \code{forceGrob()} function is the internal work horse for
+  \code{grid.force()}, so will not normally be called directly by
+  the user.  It is exported so that methods can be written for
+  custom grob classes if necessary.
+  
   The \code{grid.revert()} function reverses the effect of
   \code{grid.force()}, replacing forced content with the original
   grob.
