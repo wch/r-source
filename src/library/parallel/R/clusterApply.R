@@ -138,8 +138,9 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
 # while minimizing changes from the results produced by the definition
 # above.
 splitIndices <- function(nx, ncl) {
-    i <- 1L:nx
-    if (ncl == 1L || nx == 1L) i
+    i <- seq_len(nx)
+    if (ncl == 0L) list()
+    else if (ncl == 1L || nx == 1L) list(i)
     else {
         fuzz <- min((nx - 1L) / 1000, 0.4 * nx / ncl)
         breaks <- seq(1 - fuzz, nx + fuzz, length = ncl + 1L)
