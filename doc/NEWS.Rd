@@ -389,6 +389,9 @@
 
       \item Improved handling of edge cases in
       \code{parallel::splitindices}. (\PR{15552})
+      
+      \item HTML display of results from \code{help.search()} and 
+      \code{??} sometimes contained badly constructed links.
     }
   }
 }
