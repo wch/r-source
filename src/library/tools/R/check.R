@@ -770,6 +770,7 @@ setRlibs <-
                        "BUGS", "Bugs",
                        "ChangeLog", "Changelog", "CHANGELOG", "CHANGES", "Changes",
                        "INSTALL", "README", "THANKS", "TODO", "ToDo",
+                       "INSTALL.windows",
                        "README.md",   # seems popular
                        "configure", "configure.win", "cleanup", "cleanup.win",
                        "configure.ac", "configure.in",
