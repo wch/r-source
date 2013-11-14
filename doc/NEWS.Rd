@@ -392,6 +392,9 @@
       
       \item HTML display of results from \code{help.search()} and 
       \code{??} sometimes contained badly constructed links.
+      
+      \item \code{c()} and related functions such as \code{unlist()}
+      converted raw vectors to invalid logical vectors. (\PR{15535})
     }
   }
 }

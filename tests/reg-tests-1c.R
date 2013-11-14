@@ -55,7 +55,7 @@ u <- as.character(runif(1e5))
 t1 <- max(0.001, system.time(str(u))[[1]]) # get a baseline > 0
 uf <- factor(u)
 (t2 <- system.time(str(uf))[[1]]) / t1 # typically around 1--2
-stopifnot(t2  / t1 < 20)
+stopifnot(t2  / t1 < 30)
 ## was around 600--850 for R <= 3.0.1
 
 
@@ -250,6 +250,11 @@ stopifnot(ss == ss[1], tt == tt[1], # as internal arithmetic must be exact here
 	  all.equal(ss[1], -0.00076699031874270453, tol=8e-16),
 	  all.equal(tt[1], -0.00076699054434309260, tol=8e-16))
 ## (checked via Rmpfr) The above failed during development
+
+
+## PR#15535 c() "promoted" raw vectors to bad logical values
+stopifnot( c(as.raw(11), TRUE) == TRUE )
+## as.raw(11) became a logical value coded as 11, and did not test equal to TRUE.
 
 
 proc.time()
