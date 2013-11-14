@@ -78,4 +78,10 @@ stopifnot(identical(relist(unlist(z), z), z))
 summary(y)
 ## all failed in 3.0.2
 
+
+## PR#15535 c() "promoted" raw vectors to bad logical values
+stopifnot( c(as.raw(11), TRUE) == TRUE )
+## as.raw(11) became a logical value coded as 11, and did not test equal to TRUE.
+
+
 proc.time()

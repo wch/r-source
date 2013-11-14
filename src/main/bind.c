@@ -278,12 +278,14 @@ LogicalAnswer(SEXP x, struct BindData *data, SEXP call)
 	    LOGICAL(data->ans_ptr)[data->ans_length++] = LOGICAL(x)[i];
 	break;
     case INTSXP:
-	for (i = 0; i < XLENGTH(x); i++)
-	    LOGICAL(data->ans_ptr)[data->ans_length++] = INTEGER(x)[i];
+	for (i = 0; i < XLENGTH(x); i++) {
+	    int v = INTEGER(x)[i];
+	    LOGICAL(data->ans_ptr)[data->ans_length++] = (v == NA_INTEGER) ? NA_LOGICAL : ( v != 0 );
+	}
 	break;
     case RAWSXP:
 	for (i = 0; i < XLENGTH(x); i++)
-	    LOGICAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i];
+	    LOGICAL(data->ans_ptr)[data->ans_length++] = (int)RAW(x)[i] != 0;
 	break;
     default:
 	errorcall(call, _("type '%s' is unimplemented in '%s'"),
