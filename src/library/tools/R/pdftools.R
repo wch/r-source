@@ -1237,7 +1237,7 @@ function(doc, ref, con = NULL)
 
     ## Figure out the position to start from.
     if(length(ref) == 1L) {
-        pos <- which(doc$xref_tabs[, "num"] == ref)[1L]
+	pos <- which.max(doc$xref_tabs[, "num"] == ref)
         gen <- doc$xref_tabs[pos, "gen"]
         pos <- doc$xref_tabs[pos, "pos"]
     }

@@ -404,7 +404,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
 
     # Determine best model
-    m <- if(aic) which(xaic == min(xaic))[1L] + order.min - 1L else order.max
+    m <- if(aic) which.max(xaic == min(xaic)) + order.min - 1L else order.max
 
     ## Recalculate residuals of best model
 
