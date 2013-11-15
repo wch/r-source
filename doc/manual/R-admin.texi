@@ -980,6 +980,10 @@ executable which can then be installed into the same location and share
 all the files except the @file{.exe} and @file{.dll} files and some
 configuration files in the @file{etc} directory.
 
+Building is only tested in a 8-bit locale: using a multi-byte locale (as
+used for CJK languages) is unsupoorted and may not work (the scripts do
+try to select a @samp{C} locale; Windows may not honour this).
+
 @menu
 * Getting the tools::           
 * Getting the source files::    
