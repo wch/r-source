@@ -146,9 +146,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         ## A helper function for echoing source.  This is simpler than the
         ## same-named one in Sweave
 	trySrcLines <- function(srcfile, showfrom, showto) {
-	    lines <- try(suppressWarnings(getSrcLines(srcfile, showfrom, showto)), silent=TRUE)
-	    if (inherits(lines, "try-error")) lines <- character()
-    	    lines
+	    lines <- tryCatch(suppressWarnings(getSrcLines(srcfile, showfrom, showto)),
+			      error = function(e)e)
+	    if (inherits(lines, "error")) character() else lines
 	}
     }
     yy <- NULL
