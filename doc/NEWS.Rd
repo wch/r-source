@@ -304,6 +304,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item Remapping in the \file{Rmath.h} header can be suppressed by
+      defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
+      names have been seen in C++11 headers.  Less remapping can be
+      selected by defining only \samp{R_NO_REMAP_RMATH2}.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of

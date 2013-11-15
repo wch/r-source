@@ -202,7 +202,7 @@ double  Rlog1p(double);
 #endif
 
 
-#ifndef MATHLIB_STANDALONE
+#if !defined(MATHLIB_STANDALONE) && !defined(R_NO_REMAP_RMATH)
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k
@@ -342,10 +342,21 @@ double  Rlog1p(double);
 #define trigamma	Rf_trigamma
 #endif
 
+#if !defined(R_NO_REMAP_RMATH)
+
+#if !defined(R_NO_REMAP_RMATH2)
+/* 'trunc' causes problems with C++ iostream headers */
 #define	rround	fround
 #define	prec	fprec
 #undef trunc
 #define	trunc	ftrunc
+#endif
+
+#define dnorm dnorm4
+#define pnorm pnorm5
+#define qnorm qnorm5
+
+#endif
 
 #ifdef  __cplusplus
 extern "C" {
@@ -366,10 +377,6 @@ void	get_seed(unsigned int *, unsigned int *);
 #endif
 
 	/* Normal Distribution */
-
-#define pnorm pnorm5
-#define qnorm qnorm5
-#define dnorm dnorm4
 
 double	dnorm(double, double, double, int);
 double	pnorm(double, double, double, int, int);

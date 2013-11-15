@@ -10895,6 +10895,9 @@ functions available, and none of the non-central distributions have
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
 similarly for the signed rank functions.
 
+(If remapping is suporessed, the Normal distribution names are
+@code{dnorm4}, @code{pnorm5} and @code{qnorm5}.)
+
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
 
@@ -11742,6 +11745,12 @@ includes) and @file{R_ext/QuartzDevice.h}. Facilities for defining
 custom connection implementations are provided in
 @file{R_ext/Connections.h}, but make sure you consult the file before
 use.
+
+Let us repeat the advice to include system headers before the @R{}
+header files, especially @file{Rinternals.h} (included by
+@file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may
+be used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
+@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
