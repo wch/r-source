@@ -238,6 +238,11 @@
       \item (Windows only) A function \code{R_WaitEvent()} has been
       added (with header in \file{R.h}) to block execution until
       the next event is received by \R.
+      
+      \item Remapping in the \file{Rmath.h} header can be suppressed by
+      defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
+      names have been seen in C++11 headers.  Less remapping can be
+      selected by defining only \samp{R_NO_REMAP_RMATH2}.)
     }
   }
 
@@ -301,15 +306,6 @@
       A packaging of the Perl script and modules for \command{texinfo}
       5.2 has been made available at
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
-    }
-  }
-
-  \subsection{C-LEVEL FACILITIES}{
-    \itemize{
-      \item Remapping in the \file{Rmath.h} header can be suppressed by
-      defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
-      names have been seen in C++11 headers.  Less remapping can be
-      selected by defining only \samp{R_NO_REMAP_RMATH2}.)
     }
   }
   

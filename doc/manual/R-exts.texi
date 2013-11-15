@@ -11746,11 +11746,11 @@ custom connection implementations are provided in
 @file{R_ext/Connections.h}, but make sure you consult the file before
 use.
 
-Let us repeat the advice to include system headers before the @R{}
+Let us re-iterate the advice to include system headers before the @R{}
 header files, especially @file{Rinternals.h} (included by
-@file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may
-be used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
-@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}).
+@file{Rdefines.h}) and @file{Rmath.h}, which redefine names which may be
+used in system headers (fewer if @samp{R_NO_REMAP} is defined, or
+@samp{R_NO_REMAP_RMATH} for @file{Rmath.h}, as from @R{} 3.1.0).
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
 @chapter Generic functions and methods
