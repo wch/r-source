@@ -1006,7 +1006,7 @@ configuration files in the @file{etc} directory.
 
 Building is only tested in a 8-bit locale: using a multi-byte locale (as
 used for CJK languages) is unsupoorted and may not work (the scripts do
-try to select a @samp{C} locale, Windows may not honour this).
+try to select a @samp{C} locale; Windows may not honour this).
 
 @menu
 * Getting the tools::           

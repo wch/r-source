@@ -10895,7 +10895,7 @@ functions available, and none of the non-central distributions have
 @code{qwilcox} the function @code{wilcox_free()} should be called, and
 similarly for the signed rank functions.
 
-(If remapping is suporessed, the Normal distribution names are
+(If remapping is suppressed, the Normal distribution names are
 @code{dnorm4}, @code{pnorm5} and @code{qnorm5}.)
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
