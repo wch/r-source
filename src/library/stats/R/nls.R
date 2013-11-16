@@ -598,7 +598,7 @@ nls <-
     }
     ## Iterate
     if (algorithm != "port") {
-	if (!missing(lower) || !missing(upper))
+	if (!identical(lower, -Inf) || !identical(upper, +Inf))
 	    warning('upper and lower bounds ignored unless algorithm = "port"')
         convInfo <- .Call(C_nls_iter, m, ctrl, trace)
 	nls.out <- list(m = m, convInfo = convInfo,
