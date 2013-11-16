@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-11-06 r64163) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-11-15 r64222) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -30,16 +30,18 @@ Type 'q()' to quit R.
 > #
 > #  A copy of the GNU General Public License is available at
 > #  http://www.r-project.org/Licenses/
-> 
+>
 > ## tests of nls, especially of weighted fits
-> 
-> .proctime00 <- proc.time()
+>
 > library(stats)
 > options(digits=5) # to avoid trivial printed differences
-> options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+> options(useFancyQuotes=FALSE) # avoid fancy quotes in o/p
 > options(show.nls.convergence=FALSE) # avoid non-diffable output
 > pdf("nls-test.pdf")
-> 
+>
+> ## utility for comparing nls() results:  [TODO: use more often below]
+> .n <- function(r) r[names(r) != "call"]
+>
 > ## selfStart.default() w/ no parameters:
 > logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
 + 		function(x, Asym, xmid, scal){} )
@@ -55,10 +57,10 @@ Type 'q()' to quit R.
 + }
 > logist <- selfStart(logist, initial = logistInit) ##-> Error in R 1.5.0
 > str(logist)
-function (x, Asym, xmid, scal)  
- - attr(*, "initial")=function (mCall, LHS, data)  
+function (x, Asym, xmid, scal)
+ - attr(*, "initial")=function (mCall, LHS, data)
  - attr(*, "class")= chr "selfStart"
-> 
+>
 > ## lower and upper in algorithm="port"
 > set.seed(123)
 > x <- runif(200)
@@ -70,8 +72,8 @@ function (x, Asym, xmid, scal)
 Nonlinear regression model
   model: y ~ a + b * x + c * I(x^2)
    data: parent.frame()
-      a       b       c 
- 1.0058  0.9824 -0.0897 
+      a       b       c
+ 1.0058  0.9824 -0.0897
  residual sum-of-squares: 0.46
 
 Algorithm "port", convergence message: relative convergence (4)
@@ -80,8 +82,8 @@ Algorithm "port", convergence message: relative convergence (4)
 Nonlinear regression model
   model: y ~ a + b * x + c * I(x^2)
    data: parent.frame()
-   a    b    c 
-1.02 0.89 0.00 
+   a    b    c
+1.02 0.89 0.00
  residual sum-of-squares: 0.468
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
@@ -91,8 +93,8 @@ Waiting for profiling to be done...
 a 1.00875 1.037847
 b 0.84138 0.914645
 c      NA 0.042807
-> 
-> 
+>
+>
 > ## weighted nls fit: unsupported < 2.3.0
 > set.seed(123)
 > y <- x <- 1:10
@@ -105,21 +107,23 @@ Call:
 lm(formula = yeps ~ x, weights = wts)
 
 Weighted Residuals:
-     Min       1Q   Median       3Q      Max 
--0.01562 -0.00723 -0.00158  0.00403  0.02413 
+     Min       1Q   Median       3Q      Max
+-0.01562 -0.00723 -0.00158  0.00403  0.02413
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)  0.00517    0.00764    0.68     0.52
-x            0.99915    0.00119  841.38   <2e-16
+x            0.99915    0.00119  841.38   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
-Multiple R-squared:     1,	Adjusted R-squared:     1 
+Multiple R-squared:     1,	Adjusted R-squared:     1
 F-statistic: 7.08e+05 on 1 and 7 DF,  p-value: <2e-16
 
 Correlation of Coefficients:
   (Intercept)
-x -0.89      
+x -0.89
 
 > cf0 <- coef(summary(fit0))[, 1:2]
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
@@ -133,12 +137,14 @@ Formula: yeps ~ a + b * x
 Parameters:
   Estimate Std. Error t value Pr(>|t|)
 a  0.00517    0.00764    0.68     0.52
-b  0.99915    0.00119  841.37   <2e-16
+b  0.99915    0.00119  841.37   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
 Correlation of Parameter Estimates:
-  a    
+  a
 b -0.89
 
 > stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
@@ -158,12 +164,14 @@ Formula: yeps ~ a + b * x
 Parameters:
   Estimate Std. Error t value Pr(>|t|)
 a  0.00517    0.00764    0.68     0.52
-b  0.99915    0.00119  841.38   <2e-16
+b  0.99915    0.00119  841.38   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0132 on 7 degrees of freedom
 
 Correlation of Parameter Estimates:
-  a    
+  a
 b -0.89
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
@@ -174,8 +182,8 @@ Algorithm "port", convergence message: both X-convergence and relative convergen
 > stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
 > stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5,
 +                     check.attributes = FALSE))
-> 
-> 
+>
+>
 > DNase1 <- subset(DNase, Run == 1)
 > DNase1$wts <- rep(8:1, each = 2)
 > fm1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal),
@@ -186,13 +194,15 @@ Formula: density ~ SSlogis(log(conc), Asym, xmid, scal)
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-> 
+>
 > ## directly
 > fm2 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
 +            data = DNase1, weights = wts,
@@ -203,9 +213,11 @@ Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -221,9 +233,9 @@ Analysis of Variance Table
 Model 1: density ~ Asym/(1 + exp((xmid - log(conc))))
 Model 2: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14     0.0186                          
+1     14     0.0186
 2     13     0.0164  1 0.00212    1.68   0.22
-> 
+>
 > ## and without using weights
 > fm3 <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal))),
 +            data = DNase1, start = list(Asym = 3, xmid = 0, scal = 1))
@@ -233,9 +245,11 @@ Formula: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -254,9 +268,9 @@ Analysis of Variance Table
 Model 1: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc)))))
 Model 2: 0 ~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal)))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14     0.0186                          
+1     14     0.0186
 2     13     0.0164  1 0.00212    1.68   0.22
-> 
+>
 > ## using conditional linearity
 > fm4 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
 +            data = DNase1, weights = wts,
@@ -267,9 +281,11 @@ Formula: density ~ 1/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
-.lin   2.3350     0.0966    24.2  3.5e-12
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+.lin   2.3350     0.0966    24.2  3.5e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -288,9 +304,9 @@ Analysis of Variance Table
 Model 1: density ~ 1/(1 + exp((xmid - log(conc))))
 Model 2: density ~ 1/(1 + exp((xmid - log(conc))/scal))
   Res.Df Res.Sum Sq Df  Sum Sq F value Pr(>F)
-1     14     0.0186                          
+1     14     0.0186
 2     13     0.0164  1 0.00212    1.68   0.22
-> 
+>
 > ## using 'port'
 > fm5 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
 +            data = DNase1, weights = wts,
@@ -302,9 +318,11 @@ Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)
-Asym   2.3350     0.0966    24.2  3.5e-12
-xmid   1.4731     0.0947    15.6  8.8e-10
-scal   1.0385     0.0304    34.1  4.2e-14
+Asym   2.3350     0.0966    24.2  3.5e-12 ***
+xmid   1.4731     0.0947    15.6  8.8e-10 ***
+scal   1.0385     0.0304    34.1  4.2e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
@@ -313,7 +331,7 @@ Algorithm "port", convergence message: relative convergence (4)
 > stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
 > stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
-> 
+>
 > ## check profiling
 > pfm1 <- profile(fm1)
 > pfm3 <- profile(fm3)
@@ -333,7 +351,7 @@ Waiting for profiling to be done...
 xmid 1.2866 1.6949
 scal 0.9757 1.1063
 > stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
-> 
+>
 > ## some low-dimensional examples
 > npts <- 1000
 > set.seed(1001)
@@ -359,28 +377,28 @@ scal 0.9757 1.1063
 Nonlinear regression model
   model: y ~ x^b
    data: parent.frame()
-    b 
-0.695 
+    b
+0.695
  residual sum-of-squares: 2.39
 Waiting for profiling to be done...
-   2.5%   97.5% 
-0.68704 0.70281 
+   2.5%   97.5%
+0.68704 0.70281
 Nonlinear regression model
   model: y ~ x^b
    data: parent.frame()
-    b 
-0.695 
+    b
+0.695
  residual sum-of-squares: 2.39
 
 Algorithm "port", convergence message: relative convergence (4)
 Waiting for profiling to be done...
-   2.5%   97.5% 
-0.68704 0.70281 
+   2.5%   97.5%
+0.68704 0.70281
 Nonlinear regression model
   model: y2 ~ a * x^b
    data: parent.frame()
-    a     b 
-0.502 0.724 
+    a     b
+0.502 0.724
  residual sum-of-squares: 2.51
 Waiting for profiling to be done...
      2.5%   97.5%
@@ -389,8 +407,8 @@ b 0.70019 0.74767
 Nonlinear regression model
   model: y2 ~ a * x^b
    data: parent.frame()
-    a     b 
-0.502 0.724 
+    a     b
+0.502 0.724
  residual sum-of-squares: 2.51
 
 Algorithm "port", convergence message: relative convergence (4)
@@ -401,8 +419,8 @@ b 0.70019 0.74767
 Nonlinear regression model
   model: y3 ~ a * (x + exp(logc))^b
    data: parent.frame()
-     a      b   logc 
- 0.558  0.603 -0.176 
+     a      b   logc
+ 0.558  0.603 -0.176
  residual sum-of-squares: 2.44
 Waiting for profiling to be done...
          2.5%   97.5%
@@ -412,8 +430,8 @@ logc -0.64627 0.40946
 Nonlinear regression model
   model: y3 ~ a * (x + exp(logc))^b
    data: parent.frame()
-     a      b   logc 
- 0.558  0.603 -0.176 
+     a      b   logc
+ 0.558  0.603 -0.176
  residual sum-of-squares: 2.44
 
 Algorithm "port", convergence message: relative convergence (4)
@@ -422,18 +440,18 @@ Waiting for profiling to be done...
 a     0.35006 0.66057
 b     0.45107 0.91473
 logc -0.64627 0.40946
-> 
+>
 > fm <- nls(y2~x^b, start=c(b=1), algorithm="plinear")
 > confint(profile(fm))
-   2.5%   97.5% 
-0.70019 0.74767 
+   2.5%   97.5%
+0.70019 0.74767
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
 b     0.45105 0.91471
 logc -0.64625 0.40933
-> 
-> 
+>
+>
 > ## more profiling with bounds
 > op <- options(digits=3)
 > npts <- 10
@@ -479,8 +497,8 @@ attr(,"original.fit")
 Nonlinear regression model
   model: y ~ gfun(a, b, x)
    data: parent.frame()
-    a     b 
-1.538 0.263 
+    a     b
+1.538 0.263
  residual sum-of-squares: 0.389
 
 Algorithm "port", convergence message: relative convergence (4)
@@ -490,20 +508,22 @@ Formula: y ~ gfun(a, b, x)
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)
-a    1.538      0.617    2.49    0.037
+a    1.538      0.617    2.49    0.037 *
 b    0.263      0.352    0.75    0.476
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
-[1] "profile.nls" "profile"    
+[1] "profile.nls" "profile"
 > confint(pr1)
   2.5% 97.5%
 a 0.96  5.20
 b   NA  1.07
-> 
+>
 > gfun <- function(a,b,x) {
 +     if(a < 0 || b < 0 || a > 1.5 || b > 1) stop("bounds violated")
 +     a*x/(1+a*b*x)
@@ -531,8 +551,8 @@ attr(,"original.fit")
 Nonlinear regression model
   model: y ~ gfun(a, b, x)
    data: parent.frame()
-    a     b 
-1.500 0.243 
+    a     b
+1.500 0.243
  residual sum-of-squares: 0.39
 
 Algorithm "port", convergence message: relative convergence (4)
@@ -542,33 +562,39 @@ Formula: y ~ gfun(a, b, x)
 
 Parameters:
   Estimate Std. Error t value Pr(>|t|)
-a    1.500      0.598    2.51    0.036
+a    1.500      0.598    2.51    0.036 *
 b    0.243      0.356    0.68    0.514
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 0.221 on 8 degrees of freedom
 
 Algorithm "port", convergence message: relative convergence (4)
 
 attr(,"class")
-[1] "profile.nls" "profile"    
+[1] "profile.nls" "profile"
 > confint(m2)
 Waiting for profiling to be done...
    2.5% 97.5%
 a 0.907    NA
 b    NA 0.611
 > options(op)
-> 
+>
 > ## scoping problems
-> test <- function()
+> test <- function(trace=TRUE)
 + {
 +     x <- seq(0,5,len=20)
 +     n <- 1
 +     y <- 2*x^2 + n + rnorm(x)
 +     xy <- data.frame(x=x,y=y)
 +     myf <- function(x,a,b,c) a*x^b+c
-+     nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=TRUE)
++     list(with.start=
++          nls(y ~ myf(x,a,b,n), data=xy, start=c(a=1,b=1), trace=trace),
++          no.start= ## cheap auto-init to 1
++ 	 suppressWarnings(
++ 	     nls(y ~ myf(x,A,B,n), data=xy)))
 + }
-> test()
+> t1 <- test(); t1$with.start
 8291.9 :  1 1
 726.02 :  0.80544 2.42971
 552.85 :  1.290 2.129
@@ -579,26 +605,34 @@ b    NA 0.611
 Nonlinear regression model
   model: y ~ myf(x, a, b, n)
    data: xy
-   a    b 
-1.98 2.00 
+   a    b
+1.98 2.00
  residual sum-of-squares: 26.5
+> ##__with.start:
 > ## failed to find n in 2.2.x
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
-> 
-> 
+> ##__no.start: failed in 3.0.2
+> stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
+> rm(a,b)
+> t2 <- test(FALSE)
+> stopifnot(all.equal(lapply(t1, .n),
++ 		    lapply(t2, .n), tol=0.16))# different random error
+>
+>
 > ## list 'start'
+> set.seed(101)# (remain independent of above)
 > getExpmat <- function(theta, t)
 + {
 +         conc <- matrix(nrow = length(t), ncol = length(theta))
 +         for(i in 1:length(theta)) conc[, i] <- exp(-theta[i] * t)
 +         conc
 + }
-> 
+>
 > expsum <- as.vector(getExpmat(c(.05,.005), 1:100) %*% c(1,1))
 > expsumNoisy <- expsum + max(expsum) *.001 * rnorm(100)
 > expsum.df <-data.frame(expsumNoisy)
-> 
+>
 > ## estimate decay rates, amplitudes with default Gauss-Newton
 > summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
 +              start = list(k = c(.6,.02), sp = c(1,2))))
@@ -607,14 +641,16 @@ Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
     Estimate Std. Error t value Pr(>|t|)
-k1  5.00e-02   3.07e-04   162.5   <2e-16
-k2  4.99e-03   5.38e-05    92.8   <2e-16
-sp1 1.00e+00   4.47e-03   224.0   <2e-16
-sp2 9.99e-01   5.00e-03   199.8   <2e-16
+k1  5.00e-02   2.73e-04     183   <2e-16 ***
+k2  4.97e-03   4.77e-05     104   <2e-16 ***
+sp1 1.00e+00   3.96e-03     253   <2e-16 ***
+sp2 9.98e-01   4.43e-03     225   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.00205 on 96 degrees of freedom
+Residual standard error: 0.00182 on 96 degrees of freedom
 
-> 
+>
 > ## didn't work with port in 2.4.1
 > summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
 +              start = list(k = c(.6,.02), sp = c(1,2)),
@@ -624,19 +660,21 @@ Formula: expsumNoisy ~ getExpmat(k, 1:100) %*% sp
 
 Parameters:
     Estimate Std. Error t value Pr(>|t|)
-k1  5.00e-02   3.07e-04   162.5   <2e-16
-k2  4.99e-03   5.38e-05    92.8   <2e-16
-sp1 1.00e+00   4.47e-03   224.0   <2e-16
-sp2 9.99e-01   5.00e-03   199.8   <2e-16
+k1  5.00e-02   2.73e-04     183   <2e-16 ***
+k2  4.97e-03   4.77e-05     104   <2e-16 ***
+sp1 1.00e+00   3.96e-03     253   <2e-16 ***
+sp2 9.98e-01   4.43e-03     225   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.00205 on 96 degrees of freedom
+Residual standard error: 0.00182 on 96 degrees of freedom
 
 Algorithm "port", convergence message: both X-convergence and relative convergence (5)
 
-> 
-> 
+>
+>
 > ## PR13540
-> 
+>
 > x <- runif(200)
 > b0 <- c(rep(0,100),runif(100))
 > b1 <- 1
@@ -654,10 +692,7 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
   Convergence failure: initial par violates constraints
 > with(fit$convInfo, ## start par. violates constraints
 +      stopifnot(isConv == FALSE, stopCode == 300))
-> 
-> cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.118 0.007 1.13 0 0 
-> 
+>
 > proc.time()
-   user  system elapsed 
-  1.215   0.025   1.233 
+   user  system elapsed
+  2.612   0.052   2.671

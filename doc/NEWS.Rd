@@ -238,7 +238,7 @@
       \item (Windows only) A function \code{R_WaitEvent()} has been
       added (with header in \file{R.h}) to block execution until
       the next event is received by \R.
-      
+
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
       names have been seen in C++11 headers.  Less remapping can be
@@ -292,6 +292,9 @@
 
       \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
       (PR#15500)
+
+      \item \code{nls()} with no \code{start} argument now may also work
+      inside another function (scoping issue).
     }
   }
 }
@@ -308,7 +311,7 @@
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of
@@ -380,11 +383,11 @@
 
       \item \code{qcauchy(p, *)} is now fully accurate even when p is
       very close to 1. (\PR{15521})
-      
+
       \item The \code{validmu()} and \code{valideta()} functions in the
       standard \code{glm()} families now also report non-finite values,
       rather than failing.
-      
+
       \item Saved vignette results (in a \file{.Rout.save} file) were
       not being compared to the new ones during \command{R CMD check}.
 
@@ -394,10 +397,10 @@
 
       \item Improved handling of edge cases in
       \code{parallel::splitindices}. (\PR{15552})
-      
-      \item HTML display of results from \code{help.search()} and 
+
+      \item HTML display of results from \code{help.search()} and
       \code{??} sometimes contained badly constructed links.
-      
+
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
     }
