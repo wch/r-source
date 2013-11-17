@@ -2229,8 +2229,6 @@ PostScriptDesc;
 
 /*  Part 3.  Graphics Support Code.  */
 
-static const char * const TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
-
 static void specialCaseCM(FILE *fp, type1fontfamily family, int familynum)
 {
 	fprintf(fp, "%% begin encoding\n");
