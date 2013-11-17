@@ -106,9 +106,9 @@ int ncols(SEXP s)
     return -1;/*NOTREACHED*/
 }
 
+#ifdef UNUSED
 const static char type_msg[] = "invalid type passed to internal function\n";
 
-#ifdef UNUSED
 void internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
 {
     if (TYPEOF(s) != type) {
