@@ -167,10 +167,17 @@ int R_finite(double x)
 void attribute_hidden InitArithmetic()
 {
     R_NaInt = INT_MIN;
-    R_NaN = 0.0/R_Zero_Hack;
     R_NaReal = R_ValueOfNA();
+// we assume C99, so
+#ifndef OLD
+    R_NaN = NAN;
+    R_PosInf = INFINITY;
+    R_NegInf = -INFINITY;
+#else
+    R_NaN = 0.0/R_Zero_Hack;
     R_PosInf = 1.0/R_Zero_Hack;
     R_NegInf = -1.0/R_Zero_Hack;
+#endif
 }
 
 /* Keep these two in step */
