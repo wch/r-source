@@ -202,7 +202,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
        incorrect "formal argument 'foo' matched by multiple actual
        arguments" error.
      */
-    int fargused[arg_i];
+    int fargused[arg_i ? arg_i : 1]; // avoid warning from clang
     memset(fargused, 0, sizeof(fargused));
 
     for(b = supplied; b != R_NilValue; b = CDR(b)) SET_ARGUSED(b, 0);
