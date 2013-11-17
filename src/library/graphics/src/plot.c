@@ -1430,7 +1430,9 @@ SEXP C_plotXY(SEXP args)
 	    GConvert(&xx, &yy, USER, INCHES, dd);
 	    if (R_FINITE(xold) && R_FINITE(yold) &&
 		R_FINITE(xx) && R_FINITE(yy)) {
-		if ((f = d/hypot(xx-xold, yy-yold)) < 0.5) {
+		// might divide by zero
+		if (d < 0.5 * hypot(xx-xold, yy-yold)) {
+		    f = d/hypot(xx-xold, yy-yold);
 		    GLine(xold + f * (xx - xold),
 			  yold + f * (yy - yold),
 			  xx + f * (xold - xx),

@@ -5096,9 +5096,10 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   pc = codebase + INTEGER(coffsets)[which];
        }
        else {
-	   int which = asInteger(value) - 1;
 	   if (TYPEOF(ioffsets) != INTSXP)
 	       errorcall(call, "bad numeric 'switch' offsets");
+	   int which = asInteger(value);
+	   if (which != NA_INTEGER) which--;
 	   if (which < 0 || which >= LENGTH(ioffsets))
 	       which = LENGTH(ioffsets) - 1;
 	   pc = codebase + INTEGER(ioffsets)[which];
