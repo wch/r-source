@@ -780,7 +780,8 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(REALSXP, n));
     for(R_xlen_t i = 0; i < n; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
-	tm.tm_sec   = (int) fsecs;
+	// avoid (int) NAN
+	tm.tm_sec   = R_FINITE(secs) ? (int) fsecs: NA_INTEGER;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
