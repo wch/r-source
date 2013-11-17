@@ -111,6 +111,12 @@
       
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
+      
+      \item (Windows only) When a call to \code{system2()} specified
+      one of \code{stdin}, \code{stdout} or \code{stderr} to be a file,
+      but the command was not found (e.g. it contained its arguments,
+      or the program was not on the \env{PATH}), it left the file open
+      and unusable until \R terminated.  (Reported by Mathew McLean.)
     }
   }
 }
