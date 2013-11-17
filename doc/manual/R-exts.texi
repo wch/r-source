@@ -6757,6 +6757,7 @@ promised soon as a plug-in.
 * Using gctorture::             
 * Using valgrind::              
 * Using AddressSanitizer::      
+* Using Undefined Behaviour Sanitizer::  
 * Fortran array bounds checking::  
 @end menu
 
@@ -6935,7 +6936,7 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
-@node Using AddressSanitizer, Fortran array bounds checking, Using valgrind, Using gctorture and memory access
+@node Using AddressSanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Using gctorture and memory access
 @subsection Using AddressSanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
@@ -6990,7 +6991,29 @@ FC = gfortran-4.8.0 -fsanitize=address
 @end example
 
 
-@node Fortran array bounds checking,  , Using AddressSanitizer, Using gctorture and memory access
+@node Using Undefined Behaviour Sanitizer, Fortran array bounds checking, Using AddressSanitizer, Using gctorture and memory access
+@subsection Using Undefined Behaviour Sanitizer
+
+`UBSanitizer' is a tool for C/C++ selected by
+@samp{-fsanitize=undefined} (or with the address sanitizer by
+@samp{-fsanitize=undefined,address}) in suitable builds of
+@command{clang}, and will appear in GCC 4.9.0.
+
+`Undefined behaviour' is where the language standard does not require
+particular behaviour from the compiler.  Examples include division by
+zero (where for doubles @R{} requires the
+@acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not) and
+out-of-range coercion.
+
+The tool does both compile-time and run-time checking.  There is also
+the compiler flag @option{-fcatch-undefined-behavior}, said to be more
+reliable in @command{clang} than @command{gcc}.
+
+See also @uref{http://blog.regehr.org/archives/213} and
+@uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
+
+
+@node Fortran array bounds checking,  , Using Undefined Behaviour Sanitizer, Using gctorture and memory access
 @subsection Fortran array bounds checking
 
 Most of the Fortran compilers used with @R{} allow code to be compiled

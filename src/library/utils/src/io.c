@@ -40,11 +40,6 @@
 #include <errno.h>
 #include <Print.h>
 
-static R_INLINE int imin2(int x, int y)
-{
-    return (x < y) ? x : y;
-}
-
 #include <rlocale.h> /* for btowc */
 
 /* The size of vector initially allocated by scan */
