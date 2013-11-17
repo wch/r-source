@@ -2547,7 +2547,8 @@ setRlibs <-
                 res <- TRUE
                 for (arch in inst_archs)
                     if (!(arch %in% R_check_skip_tests_arch)) {
-                        printLog(Log, "** running tests for arch ", sQuote(arch))
+                        printLog(Log, "** running tests for arch ",
+                                 sQuote(arch), " ...")
                         res <- res & run_one_arch(arch)
                     }
             }
