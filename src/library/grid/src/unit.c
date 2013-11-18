@@ -928,7 +928,8 @@ double transformLocation(double location, int unit, SEXP data,
 {
     double result = location;
     switch (unit) {
-    case L_NATIVE:       
+    case L_NATIVE:
+	// FIXME: can divide by zero
 	result = ((result - scalemin)/(scalemax - scalemin))*thisCM/2.54;
 	break;
     default:

@@ -1404,8 +1404,9 @@ R_removeTaskCallback(SEXP which)
     if(TYPEOF(which) == STRSXP) {
 	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
     } else {
-	id = asInteger(which) - 1;
-	val = Rf_removeTaskCallbackByIndex(id);
+	id = asInteger(which);
+	if (id != NA_INTEGER) val = Rf_removeTaskCallbackByIndex(id - 1);
+	else val = FALSE;
     }
     return ScalarLogical(val);
 }
