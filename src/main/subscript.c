@@ -662,7 +662,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 #else
 	    if (R_FINITE(ds) && ds > INT_MAX) 
 		int_ok = FALSE;
-	    if (ds != 0) cnt++;
+	    if ((R_xlen_t) ds != 0) cnt++;
 #endif
 	}
 	if (int_ok) {
