@@ -6751,13 +6751,14 @@ Java-using packages: some at least of these seem to be intentional.
 
 There are other memory-access-checking tools available: GCC supports
 @command{mudflap} and `lightweight bounds checking' (`LBC') is
-promised soon as a plug-in.
+promised as a plug-in.
 
 @menu
 * Using gctorture::             
 * Using valgrind::              
 * Using AddressSanitizer::      
 * Using Undefined Behaviour Sanitizer::  
+* Using `Dr. Memory'::          
 * Fortran array bounds checking::  
 @end menu
 
@@ -6991,7 +6992,7 @@ FC = gfortran-4.8.0 -fsanitize=address
 @end example
 
 
-@node Using Undefined Behaviour Sanitizer, Fortran array bounds checking, Using AddressSanitizer, Using gctorture and memory access
+@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using AddressSanitizer, Using gctorture and memory access
 @subsection Using Undefined Behaviour Sanitizer
 
 `UBSanitizer' is a tool for C/C++ selected by
@@ -7003,17 +7004,27 @@ FC = gfortran-4.8.0 -fsanitize=address
 particular behaviour from the compiler.  Examples include division by
 zero (where for doubles @R{} requires the
 @acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not) and
-out-of-range coercion.
+out-of-range coercion.  Not uncommon examples of out-of-range coercion
+in @R{} are attempts to coerce a @code{NaN} to type @code{int} or
+@code{NA_INTEGER} to an unsigned type such as @code{size_t}.
 
-The tool does both compile-time and run-time checking.  There is also
-the compiler flag @option{-fcatch-undefined-behavior}, said to be more
-reliable in @command{clang} than @command{gcc}.
+Selecting the tool enables both compile-time and run-time checking.
+There is also the compiler flag @option{-fcatch-undefined-behavior},
+said to be more reliable in @command{clang} than @command{gcc}.
 
 See also @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
 
+@node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Using gctorture and memory access
+@subsection Using `Dr. Memory'
 
-@node Fortran array bounds checking,  , Using Undefined Behaviour Sanitizer, Using gctorture and memory access
+`Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
+for (currently) 32-bit Windows and Linux with similar aims to
+@command{valgrind}.  It works with unmodified executables@footnote{but
+works better if inlining and frame pointer optimizations are disabled}
+and detects memory access errors, uninitialized reads and memory leaks.
+
+@node Fortran array bounds checking,  , Using `Dr. Memory', Using gctorture and memory access
 @subsection Fortran array bounds checking
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
