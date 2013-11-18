@@ -661,6 +661,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 #else
 	    if (R_FINITE(ds) && ds > INT_MAX) 
 		int_ok = FALSE;
+	    // FIXME: what about non-finite values?
 	    if ((R_xlen_t) ds != 0) cnt++;
 #endif
 	}
@@ -676,6 +677,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	} else {
 	    indx = allocVector(REALSXP, cnt);
 	    for (i = 0, cnt = 0; i < ns; i++) {
+		// FIXME: what about non-finite values?
 		R_xlen_t ia = (R_xlen_t) REAL(s)[i];
 		if (ia != 0) REAL(indx)[cnt++] = REAL(s)[i];
 	    }
