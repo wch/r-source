@@ -59,10 +59,10 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
 
     /* 2. interval (lx,ux)  halving : */
     do {
-	nx = 0.5 * (lx + ux);
+	nx = 0.5 * (lx + ux); // could be zero
 	if (pnt(nx, df, ncp, TRUE, FALSE) > p) ux = nx; else lx = nx;
     }
-    while ((ux - lx) / fabs(nx) > accu);
+    while ((ux - lx) > accu * fabs(nx));
 
     return 0.5 * (lx + ux);
 }
