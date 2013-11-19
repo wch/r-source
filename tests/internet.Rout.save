@@ -1,5 +1,5 @@
 
-R version 3.0.2 RC (2013-09-24 r63979) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2013-11-18 r64249) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 4950
+[1] 5019
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")

@@ -63,6 +63,8 @@ double qcauchy(double p, double location, double scale,
 	}
     }
 
+    if (p == 0.5) return location; // avoid 1/Inf below
+    if (p == 0.) return location + (lower_tail ? scale : -scale) * ML_NEGINF; // p = 1. is handled above
     return location + (lower_tail ? -scale : scale) / tan(M_PI * p);
     /*	-1/tan(pi * p) = -cot(pi * p) = tan(pi * (p - 1/2))  */
 }
