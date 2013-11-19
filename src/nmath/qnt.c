@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-8 The R Core Team
+ *  Copyright (C) 2006-13 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ double qnt(double p, double df, double ncp, int lower_tail, int log_p)
 	nx = 0.5 * (lx + ux); // could be zero
 	if (pnt(nx, df, ncp, TRUE, FALSE) > p) ux = nx; else lx = nx;
     }
-    while ((ux - lx) > accu * fabs(nx));
+    while ((ux - lx) > accu * fmax2(fabs(lx), fabs(ux)));
 
     return 0.5 * (lx + ux);
 }
