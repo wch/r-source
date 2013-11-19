@@ -27,8 +27,8 @@ libRgraphapp.dll.a: Rgraphapp.def
 ## MinGW symbols have trailing @, MinGW-w64 do not
 Rgraphapp.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
-	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SED) -e 's/@16//' | $(SORT) | uniq > g.def
-	@comm -23 g.def ga.hide >> $@
+	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SED) -e 's/@16//' | LC_COLLATE=C $(SORT) | uniq > g.def
+	@LC_COLLATE=C comm -23 g.def ga.hide >> $@
 	@$(RM) g.def
 
 Rgraphapp.dll: $(OBJECTS) dllversion.o Rgraphapp.def
