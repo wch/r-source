@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2013   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -202,7 +202,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
        incorrect "formal argument 'foo' matched by multiple actual
        arguments" error.
      */
-    int fargused[arg_i ? arg_i : 1]; // avoid warning from clang
+    int fargused[arg_i ? arg_i : 1]; // avoid undefined behaviour
     memset(fargused, 0, sizeof(fargused));
 
     for(b = supplied; b != R_NilValue; b = CDR(b)) SET_ARGUSED(b, 0);

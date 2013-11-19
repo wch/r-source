@@ -95,7 +95,7 @@ basis_funcs(splPTR sp, double x, double *b)
     b[0] = 1.;
     for (j = 1; j <= sp->ordm1; j++) {
 	saved = 0.;
-	for (r = 0; r < j; r++) {
+	for (r = 0; r < j; r++) { // FIXME: divides by zero
 	    term = b[r]/(sp->rdel[r] + sp->ldel[j - 1 - r]);
 	    b[r] = saved + sp->rdel[r] * term;
 	    saved = sp->ldel[j - 1 - r] * term;
@@ -114,7 +114,7 @@ evaluate(splPTR sp, double x, int nder)
     if (sp->boundary && nder == sp->ordm1) { /* value is arbitrary */
 	return 0.0;
     }
-    while(nder--) {
+    while(nder--) {  // FIXME: divides by zero
 	for(inner = outer, apt = sp->a, lpt = ti - outer; inner--; apt++, lpt++)
 	    *apt = outer * (*(apt + 1) - *apt)/(*(lpt + outer) - *lpt);
 	outer--;
@@ -123,6 +123,7 @@ evaluate(splPTR sp, double x, int nder)
     while(outer--)
 	for(apt = sp->a, lpt = sp->ldel + outer, rpt = sp->rdel, inner = outer + 1;
 	    inner--; lpt--, rpt++, apt++)
+	    // FIXME: divides by zero
 	    *apt = (*(apt + 1) * *lpt + *apt * *rpt)/(*rpt + *lpt);
     return sp->a[0];
 }
