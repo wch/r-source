@@ -7003,10 +7003,13 @@ FC = gfortran-4.8.0 -fsanitize=address
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
 zero (where for doubles @R{} requires the
-@acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not) and
-out-of-range coercion.  Not uncommon examples of out-of-range coercion
-in @R{} are attempts to coerce a @code{NaN} to type @code{int} or
-@code{NA_INTEGER} to an unsigned type such as @code{size_t}.
+@acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not), use
+of zero-length arrays, shifts too far (e.g.@: @code{int x, y; y = x <<
+31;}) and out-of-range coercion.  Not uncommon examples of out-of-range
+coercion in @R{} are attempts to coerce a @code{NaN} to type @code{int}
+or @code{NA_INTEGER} to an unsigned type such as @code{size_t}.  Also
+common is @code{y[x - 1]} forgetting that @code{x} might be
+@code{NA_INTEGER}.
 
 Selecting the tool enables both compile-time and run-time checking.
 There is also the compiler flag @option{-fcatch-undefined-behavior},
