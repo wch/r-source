@@ -6998,24 +6998,26 @@ FC = gfortran-4.8.0 -fsanitize=address
 `UBSanitizer' is a tool for C/C++ selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
 @samp{-fsanitize=undefined,address}) in suitable builds of
-@command{clang}, and will appear in GCC 4.9.0.
+@command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in a
+similar way@footnote{Setting @code{MAIN_LD} may not be needed.} to the
+address sanitizer: see the previous subsection.)
 
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
 zero (where for doubles @R{} requires the
 @acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not), use
 of zero-length arrays, shifts too far (e.g.@: @code{int x, y; y = x <<
-31;}) and out-of-range coercion.  Not uncommon examples of out-of-range
-coercion in @R{} are attempts to coerce a @code{NaN} to type @code{int}
-or @code{NA_INTEGER} to an unsigned type such as @code{size_t}.  Also
-common is @code{y[x - 1]} forgetting that @code{x} might be
-@code{NA_INTEGER}.
+31;}), out-of-range coercion, invalid C++ casts and mis-alignment.  Not
+uncommon examples of out-of-range coercion in @R{} are attempts to
+coerce a @code{NaN} to type @code{int} or @code{NA_INTEGER} to an
+unsigned type such as @code{size_t}.  Also common is @code{y[x - 1]}
+forgetting that @code{x} might be @code{NA_INTEGER}.
 
-Selecting the tool enables both compile-time and run-time checking.
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
 
-See also @uref{http://blog.regehr.org/archives/213} and
+For more details on the topic see
+@uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
 
 @node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Using gctorture and memory access
