@@ -295,9 +295,13 @@
 
       \item \code{nls()} with no \code{start} argument now may also work
       inside another function (scoping issue).
-      
+
       \item \code{pbeta()} and similar work better for very large
       (billions) \code{ncp}.
+
+      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
+      \code{"C"} (to restore the sane behavior) no longer yields a
+      warning.
     }
   }
 }

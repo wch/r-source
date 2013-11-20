@@ -1718,8 +1718,13 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case 5:
 	cat = LC_NUMERIC;
-	warning(_("setting 'LC_NUMERIC' may cause R to function strangely"));
-	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	{
+	    const char *new_lc_num = CHAR(STRING_ELT(locale, 0));
+	    if (strcmp(new_lc_num, "C")) /* do not complain about C locale - that's the only
+					    reliable way to restore sanity */
+		warning(_("setting 'LC_NUMERIC' may cause R to function strangely"));
+	    p = setlocale(cat, new_lc_num);
+	}
 	break;
     case 6:
 	cat = LC_TIME;
