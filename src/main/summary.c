@@ -301,6 +301,7 @@ static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 	    return updated;
 	}
     }
+    // This could over/underflow (does in package POT), so we rely on the compiler.
     *value = (double) s;
 
     return updated;
