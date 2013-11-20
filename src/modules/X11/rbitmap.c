@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010  Guido Masarotto and the R Core Team
+ *  Copyright (C) 1999-2013  Guido Masarotto and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -647,7 +647,9 @@ int R_SaveAsBmp(void  *d, int width, int height,
     BMPW((unsigned short) biBitCount); /* biBitCount */
     BMPDW(0); /* biCompression=BI_RGB */
     BMPDW(0); /* biSizeImage (with BI_RGB not needed)*/
-    lres = (int)(0.5 + res/0.0254);
+    if (res > 0)
+	lres = (int)(0.5 + res/0.0254);
+    else lres = 2835; // 72ppi = 2835 pixels/metre.
     BMPDW(lres); /* XPels/M */
     BMPDW(lres); /* XPels/M */
     BMPDW(biClrUsed); /* biClrUsed */

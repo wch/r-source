@@ -134,6 +134,9 @@ tiff(filename = "Rplot\%03d.tiff",
   Quartz-produced PNG and TIFF plots with a transparent background are
   recorded with a dark grey matte which will show up in some viewers,
   including \command{Preview} on OS X.
+  
+  Prior to \R 3.0.3 unknown resolutions in BMP files were sometimes
+  recorded incorrectly: they are now recorded as 72 ppi.
 }
 
 \value{
