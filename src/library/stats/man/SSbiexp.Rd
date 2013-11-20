@@ -48,28 +48,24 @@ print(getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1),
 ## Initial values are in fact the converged values
 fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
 summary(fm1)
-\dontshow{
+
+## Show the model components visually
   require(graphics)
 
   xx <- seq(0, 5, len = 101)
   y1 <- 3.5 * exp(-4*xx)
   y2 <- 1.5 * exp(-xx)
-  yy <- y1 + y2
-  par(mar = c(0, 0, 3.5, 0))
-  plot(xx, yy, type = "n", axes = FALSE, ylim = c(-0.2,6), xlim = c(0, 5),
-       xlab = "", ylab = "", main = "Components of the SSbiexp model")
-  usr <- par("usr")
-  lines(xx, y1, lty = 2, lwd = 0.75)
-  lines(xx, y2, lty = 3, lwd = 0.75)
-  lines(xx, yy, lwd = 2)
-  segments(1:5, 0, 1:5, -0.15)
-  segments(0, 1:5, -0.06, 1:5)
-  text(-0.1, 1:5, 1:5, adj = c(1, 0.25), cex = 0.7)
-  text(1:5, -0.15, 1:5, adj = c(0.5, 1), cex = 0.7)
-  arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
-  arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
-  text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
-  text(-0.1, usr[4], "y", adj = c(1, 1))
-}
+  plot(xx, y1 + y2, type = "l", lwd=2, ylim = c(-0.2,6), xlim = c(0, 5),
+       main = "Components of the SSbiexp model")
+  lines(xx, y1, lty = 2, col="tomato"); abline(v=0, h=0, col="gray40")
+  lines(xx, y2, lty = 3, col="blue2" )
+  legend("topright", c("y1+y2", "y1 = 3.5 * exp(-4*x)", "y2 = 1.5 * exp(-x)"),
+         lty=1:3, col=c("black","tomato","blue2"), bty="n")
+  axis(2, pos=0, at = c(3.5, 1.5), labels = c("A1","A2"), las=2)
+
+## and how you could have got their sum via SSbiexp():
+  ySS <- SSbiexp(xx, 3.5, log(4), 1.5, log(1))
+  ##                      ---          ---
+  stopifnot(all.equal(y1+y2, ySS, tol=1e-15))
 }
 \keyword{models}
