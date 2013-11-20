@@ -20,7 +20,7 @@ hcl.wheel <-
               is.numeric(chroma), chroma >= 0, (nch <- length(chroma)) >= 1)
     if(is.unsorted(hues)) hues <- sort(hues)
     if(nch > 1) {
-        op <- par(mfrow= n2mfrow(nch), mar = c(0,0,0,0))
+        op <- par(mfrow= n2mfrow(nch), mar = c(0,0,0,0), xpd = TRUE)
         on.exit(par(op))
     }
     for(i.c in 1:nch) {

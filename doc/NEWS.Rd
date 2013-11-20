@@ -302,6 +302,9 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer yields a
       warning.
+      
+      \item \code{hcl()} now honours \code{NA} inputs (previously they
+      were mapped to black).
     }
   }
 }
