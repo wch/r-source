@@ -120,6 +120,9 @@ tiff(filename = "Rplot\%03d.tif",
   slightly off-white background and hence the pixels are opaque.
 
   Not all PNG viewers render files with transparency correctly.
+  
+  Prior to \R 3.0.3 unknown resolutions in BMP files were sometimes
+  recorded incorrectly: they are now recorded as 72 ppi.
 }
 
 \value{

@@ -412,6 +412,9 @@
       but the command was not found (e.g. it contained its arguments,
       or the program was not on the \env{PATH}), it left the file open
       and unusable until \R terminated.  (Reported by Mathew McLean.)
+      
+      \item The \code{bmp()} device was not recording \code{res = NA}
+      correctly: it is now recorded as 72 ppi.
     }
   }
 }
