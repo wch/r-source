@@ -8325,20 +8325,20 @@ platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to the
 support it, the path to the dynamic library can be hardcoded at install
 time (which assumes that the location of package @pkg{packB} will not be
 changed) nor the package updated to a changed API).  On systems with the
-@acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X)
-this can be done by e.g.@:
+@command{gcc} or @command{clang} and the @acronym{GNU} linker (e.g.@:
+Linux) and some others (e.g.@: OS X) this can be done by e.g.@:
 
 @example
 PKGB_PATH=`echo 'library(packB);
   cat(system.file("libs", package="packB", mustWork=TRUE)))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
-PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -Wl,-rpath -Wl,"$(PKGB_PATH)$(R_ARCH)" -lpackB
+PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -Wl,-rpath,"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
 @noindent
-and on some other systems (e.g.@: Solaris with its native linker) use
-@option{-Rdir} rather than @option{-rpath dir} (and this is accepted by the
-compiler as well as the linker).
+Some other systems (e.g.@: Solaris with its native linker) use
+@option{-Rdir} rather than @option{-rpath,dir} (and this is accepted by
+the compiler as well as the linker).
 
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for

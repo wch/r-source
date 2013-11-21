@@ -7132,7 +7132,7 @@ metacharacters will need to be quoted.)
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
 is useful when running @R{} from within Emacs using the @acronym{ESS}
 (``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
-for more information.  Command-line editing is enabled by default
+for more information.  Command-line editing is enabled for default
 interactive use (see @option{--interactive}).  This option also affects
 tilde-expansion: see the help for @code{path.expand}.
 
@@ -7178,10 +7178,12 @@ terminal or @code{pty}.)  Using @option{-e}, @option{-f} or
 @option{--file} asserts non-interactive use even if
 @option{--interactive} is given.
 
+Note that this does not turn on comamnd-line editing.
+
 @item --ess
 (Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
-@acronym{ESS}, including asserting interactive use without the
-command-line editor.
+@acronym{ESS}, including asserting interactive use (without the
+command-line editor) and no buffering of @file{stdout}.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
