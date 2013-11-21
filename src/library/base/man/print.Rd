@@ -1,6 +1,6 @@
 % File src/library/base/man/print.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print}
@@ -44,7 +44,8 @@ print(x, \dots)
     \code{\link{NA}} values in printed output, see
     \code{\link{print.default}}.}
   \item{zero.print}{character specifying how zeros (\code{0}) should be
-    printed; for sparse tables, using \code{"."} can produce stronger results.}
+    printed; for sparse tables, using \code{"."} can produce more
+    readable results, similar to printing sparse matrices in \pkg{Matrix}.}
   \item{justify}{character indicating if strings should left- or
     right-justified or left alone, passed to \code{\link{format}}.}
   \item{useSource}{logical indicating if internally stored source
@@ -99,6 +100,12 @@ t1 <- round(abs(rt(200, df = 1.8)))
 t2 <- round(abs(rt(200, df = 1.4)))
 table(t1, t2) # simple
 print(table(t1, t2), zero.print = ".") # nicer to read
+
+## same for non-integer "table":
+T <- table(t2,t1)
+T <- T * (1+round(rlnorm(length(T)))/4)
+print(T, zero.print = ".") # quite nicer,
+## still slightly inferior to  Matrix::Matrix(T)  for larger T
 
 ## Corner cases with empty extents:
 table(1, NA) # < table of extent 1 x 0 >

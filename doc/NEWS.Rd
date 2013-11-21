@@ -102,6 +102,9 @@
       \code{cos(pi*x)}, etc, both in \R{} and the C API.  Using these
       gains accuracy in some cases, e.g., for \code{lgamma()} or
       \code{besselI()}.  (Suggested by Morten Wellinder in \PR{15529}.)
+
+      \item{print.table(x, zero.print=".")} now also has an effect when
+      \code{x} is not integer valued.
     }
   }
 
