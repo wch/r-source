@@ -1,4 +1,4 @@
-% File src/library/utils/man/combn.Rd
+% File src/library/utils/man/globalVariables.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2012-3 R Core Team
 % Distributed under GPL 2 or later

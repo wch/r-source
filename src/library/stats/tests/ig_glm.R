@@ -1,4 +1,4 @@
-## some tests of inverse-gaussian GLMs based on a file suppled by
+## some tests of inverse-gaussian GLMs based on a file supplied by
 ## David Firth, Feb 2009.
 
 options(digits=5)

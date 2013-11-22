@@ -3882,7 +3882,7 @@ function(package, dir, lib.loc = NULL)
     unknown <- character()
     thispkg <- anchor
     thisfile <- db[, 1L]
-    thispkg[have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
+    thispkg [have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
     thisfile[have_colon] <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
 
     use_aliases_from_CRAN <-

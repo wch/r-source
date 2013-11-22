@@ -91,7 +91,7 @@ unlist(l2) # remains a list
 ll <- list(as.name("sinc"), quote( a + b ), 1:10, letters, expression(1+x))
 utils::str(ll)
 for(x in ll)
-stopifnot(identical(x, unlist(x)))
+  stopifnot(identical(x, unlist(x)))
 }
 \keyword{list}
 \keyword{manip}
