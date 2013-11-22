@@ -111,10 +111,20 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nr = (int) lendat;
     } else if (miss_nr) {
 	if (lendat > (double) nc * INT_MAX) error("data is too long");
-	nr = (int) ceil((double) lendat / (double) nc);
+	// avoid division by zero
+	if (nc == 0) {
+	    if (lendat) error(_("nc = 0 for non-null data"));
+	    else nr = 0;
+	} else
+	    nr = (int) ceil((double) lendat / (double) nc);
     } else if (miss_nc) {
 	if (lendat > (double) nr * INT_MAX) error("data is too long");
-	nc = (int) ceil((double) lendat / (double) nr);
+	// avoid division by zero
+	if (nr == 0) {
+	    if (lendat) error(_("nr = 0 for non-null data"));
+	    else nc = 0;
+	} else
+	    nc = (int) ceil((double) lendat / (double) nr);
     }
 
     if(lendat > 0) {
