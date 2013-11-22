@@ -3694,12 +3694,12 @@ files.
 @end ifset
 
 Although there is a 2011 version of the C++ standard, it is not yet
-fully implemented (nor is it likely to be widely available for some
-years) and portable C++ code needs to follow the 1998 standard (and not
-use features from C99).
-
-Similarly, the 2011 C standard is unlikely to be widely implemented for
-several years.
+fully implemented@footnote{despite misleading claims by some compilers
+to be `feature complete'.} and portable C++ code needs to follow the
+1998 standard (and not use features from C99).  Compilers currently used
+on several @R{} platforms (including OS X, Windows and Solaris) have
+little or no support for newer C++ features, although most allow C99
+features.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
