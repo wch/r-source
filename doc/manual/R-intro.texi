@@ -7178,7 +7178,7 @@ terminal or @code{pty}.)  Using @option{-e}, @option{-f} or
 @option{--file} asserts non-interactive use even if
 @option{--interactive} is given.
 
-Note that this does not turn on comamnd-line editing.
+Note that this does not turn on command-line editing.
 
 @item --ess
 (Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
