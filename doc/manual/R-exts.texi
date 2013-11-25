@@ -6920,7 +6920,9 @@ C code can be inspected (@pxref{Inspecting R objects}).
 @command{valgrind} is good at spotting the use of uninitialized values:
 use option @option{--track-origins=yes} to show where these originated
 from.  What it cannot detect is the misuse of arrays allocated on the
-stack: this includes C automatic variables and most Fortran arrays.
+stack: this includes C automatic variables and some@footnote{small
+fixed-size arrays by default in @command{gfortran}, for example.}
+Fortran arrays.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -6966,13 +6968,12 @@ substantially more memory, often 1--2GB, at run time.  In contrast to
 use of uninitialized memory (although that may come with
 @option{-fsanitize=memory} in future versions of @command{clang}).
 
-Current versions do not return symbolic addresses for the location of
-the error without some help.  One possibility is to use an external
-symbolizer such as @command{asan_symbolize.py} from
-@url{http://llvm.org}: it makes use of @command{llvm-symbolizer} if
-available.  For example, the check output can be piped through
-@command{asan_symbolize.py} and then (for compiled C++ code)
-@command{c++filt}.
+Some versions do not return symbolic addresses for the location of the
+error.  One possibility is to use an external symbolizer such as
+@command{asan_symbolize.py} from @url{http://llvm.org}: it makes use of
+@command{llvm-symbolizer} if available.  For example, the check output
+can be piped through @command{asan_symbolize.py} and then (for compiled
+C++ code) @command{c++filt}.
 
 The simplest way to make use of this is to build a version of @R{} with
 something like

@@ -93,10 +93,6 @@
       \item \code{make.names(names, unique=TRUE)} now tries to preserve
       existing names. (Suggestion of \PR{15452}.)
 
-      \item \code{write.table()} now handles matrices of
-      \eqn{2^{31}}{2^31} or more elements, for those with large amounts
-      of patience and disc space.
-
       \item New functions \code{cospi(x)}, \code{sinpi(x)}, and
       \code{tanpi(x)}, for more accurate computation of
       \code{cos(pi*x)}, etc, both in \R{} and the C API.  Using these
@@ -110,7 +106,7 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item The included version of LAPACK has been updated to 3.4.2.
+      \item The included version of LAPACK has been updated to 3.5.0.
 
       \item There is some support for parallel testing of an
       installation, by setting \env{TEST_MC_CORES} to an integer
@@ -305,9 +301,6 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer yields a
       warning.
-      
-      \item \code{hcl()} now honours \code{NA} inputs (previously they
-      were mapped to black).
     }
   }
 }
@@ -322,6 +315,10 @@
       A packaging of the Perl script and modules for \command{texinfo}
       5.2 has been made available at
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
+
+      \item \code{write.table()} now handles matrices of
+      \eqn{2^{31}}{2^31} or more elements, for those with large amounts
+      of patience and disc space.
     }
   }
 
@@ -429,6 +426,9 @@
       \item Several potential problems with compiler-specific behaviour
       have been identified using the \sQuote{Undefined Behaviour
 	Sanitizer} in conjunction with the \command{clang} compiler.
+      
+      \item \code{hcl()} now honours \code{NA} inputs (previously they
+      were mapped to black).
     }
   }
 }

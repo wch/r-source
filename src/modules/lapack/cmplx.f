@@ -1941,7 +1941,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date November 2013
 *
 *> \ingroup complex16GEcomputational
 *
@@ -1980,10 +1980,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBAL( JOB, N, A, LDA, ILO, IHI, SCALE, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.5.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     November 2013
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOB
@@ -2014,8 +2014,8 @@
 *     .. External Functions ..
       LOGICAL            DISNAN, LSAME
       INTEGER            IZAMAX
-      DOUBLE PRECISION   DLAMCH
-      EXTERNAL           DISNAN, LSAME, IZAMAX, DLAMCH
+      DOUBLE PRECISION   DLAMCH, DZNRM2
+      EXTERNAL           DISNAN, LSAME, IZAMAX, DLAMCH, DZNRM2
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZDSCAL, ZSWAP
@@ -2144,15 +2144,9 @@
       NOCONV = .FALSE.
 *
       DO 200 I = K, L
-         C = ZERO
-         R = ZERO
 *
-         DO 150 J = K, L
-            IF( J.EQ.I )
-     $         GO TO 150
-            C = C + CABS1( A( J, I ) )
-            R = R + CABS1( A( I, J ) )
-  150    CONTINUE
+         C = DZNRM2( L-K+1, A( K, I ), 1 )
+         R = DZNRM2( L-K+1, A( I, K ), LDA )
          ICA = IZAMAX( L, A( 1, I ), 1 )
          CA = ABS( A( ICA, I ) )
          IRA = IZAMAX( N-K+1, A( I, K ), LDA )
@@ -11145,7 +11139,7 @@
 *>    Optionally Z may be postmultiplied into an input unitary
 *>    matrix Q so that this routine can give the Schur factorization
 *>    of a matrix A which has been reduced to the Hessenberg form H
-*>    by the unitary matrix Q:  A = Q*H*Q**H = (QZ)*H*(QZ)**H.
+*>    by the unitary matrix Q:  A = Q*H*Q**H = (QZ)*T*(QZ)**H.
 *> \endverbatim
 *
 *  Arguments:
@@ -11318,7 +11312,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date November 2011
+*> \date November 2013
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -11401,10 +11395,10 @@
       SUBROUTINE ZHSEQR( JOB, COMPZ, N, ILO, IHI, H, LDH, W, Z, LDZ,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.5.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     November 2013
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDH, LDZ, LWORK, N
@@ -19573,7 +19567,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date September 2012
+*> \date June 2013
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -19609,10 +19603,10 @@
       SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
      $                   T, LDT, C, LDC, WORK, LDWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.5.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     June 2013
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, SIDE, STOREV, TRANS
@@ -19631,12 +19625,11 @@
 *     ..
 *     .. Local Scalars ..
       CHARACTER          TRANST
-      INTEGER            I, J, LASTV, LASTC
+      INTEGER            I, J
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
-      INTEGER            ILAZLR, ILAZLC
-      EXTERNAL           LSAME, ILAZLR, ILAZLC
+      EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           ZCOPY, ZGEMM, ZLACGV, ZTRMM
@@ -19670,35 +19663,32 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTV = MAX( K, ILAZLR( M, K, V, LDV ) )
-               LASTC = ILAZLC( LASTV, N, C, LDC )
-*
 *              W := C**H * V  =  (C1**H * V1 + C2**H * V2)  (stored in WORK)
 *
 *              W := C1**H
 *
                DO 10 J = 1, K
-                  CALL ZCOPY( LASTC, C( J, 1 ), LDC, WORK( 1, J ), 1 )
-                  CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZLACGV( N, WORK( 1, J ), 1 )
    10          CONTINUE
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V, LDV, WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', N,
+     $                     K, ONE, V, LDV, WORK, LDWORK )
+               IF( M.GT.K ) THEN
 *
-*                 W := W + C2**H *V2
+*                 W := W + C2**H * V2
 *
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
-     $                 LASTC, K, LASTV-K, ONE, C( K+1, 1 ), LDC,
-     $                 V( K+1, 1 ), LDV, ONE, WORK, LDWORK )
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', N,
+     $                        K, M-K, ONE, C( K+1, 1 ), LDC,
+     $                        V( K+1, 1 ), LDV, ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V * W**H
 *
@@ -19707,20 +19697,19 @@
 *                 C2 := C2 - V2 * W**H
 *
                   CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTV-K, LASTC, K,
-     $                 -ONE, V( K+1, 1 ), LDV, WORK, LDWORK,
-     $                 ONE, C( K+1, 1 ), LDC )
+     $                        M-K, N, K, -ONE, V( K+1, 1 ), LDV, WORK,
+     $                        LDWORK, ONE, C( K+1, 1 ), LDC )
                END IF
 *
 *              W := W * V1**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V, LDV, WORK, LDWORK )
+     $                     'Unit', N, K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W**H
 *
                DO 30 J = 1, K
-                  DO 20 I = 1, LASTC
+                  DO 20 I = 1, N
                      C( J, I ) = C( J, I ) - DCONJG( WORK( I, J ) )
    20             CONTINUE
    30          CONTINUE
@@ -19729,57 +19718,52 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTV = MAX( K, ILAZLR( N, K, V, LDV ) )
-               LASTC = ILAZLR( M, LASTV, C, LDC )
-*
 *              W := C * V  =  (C1*V1 + C2*V2)  (stored in WORK)
 *
 *              W := C1
 *
                DO 40 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, J ), 1, WORK( 1, J ), 1 )
+                  CALL ZCOPY( M, C( 1, J ), 1, WORK( 1, J ), 1 )
    40          CONTINUE
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V, LDV, WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', M,
+     $                     K, ONE, V, LDV, WORK, LDWORK )
+               IF( N.GT.K ) THEN
 *
 *                 W := W + C2 * V2
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, K, LASTV-K,
-     $                 ONE, C( 1, K+1 ), LDC, V( K+1, 1 ), LDV,
-     $                 ONE, WORK, LDWORK )
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, K, N-K,
+     $                        ONE, C( 1, K+1 ), LDC, V( K+1, 1 ), LDV,
+     $                        ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T  or  W * T**H
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANS, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', TRANS, 'Non-unit', M, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - W * V**H
 *
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 C2 := C2 - W * V2**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, LASTV-K, K,
-     $                 -ONE, WORK, LDWORK, V( K+1, 1 ), LDV,
-     $                 ONE, C( 1, K+1 ), LDC )
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+     $                        N-K, K, -ONE, WORK, LDWORK, V( K+1, 1 ),
+     $                        LDV, ONE, C( 1, K+1 ), LDC )
                END IF
 *
 *              W := W * V1**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V, LDV, WORK, LDWORK )
+     $                     'Unit', M, K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W
 *
                DO 60 J = 1, K
-                  DO 50 I = 1, LASTC
+                  DO 50 I = 1, M
                      C( I, J ) = C( I, J ) - WORK( I, J )
    50             CONTINUE
    60          CONTINUE
@@ -19796,37 +19780,32 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTC = ILAZLC( M, N, C, LDC )
-*
 *              W := C**H * V  =  (C1**H * V1 + C2**H * V2)  (stored in WORK)
 *
 *              W := C2**H
 *
                DO 70 J = 1, K
-                  CALL ZCOPY( LASTC, C( M-K+J, 1 ), LDC,
-     $                 WORK( 1, J ), 1 )
-                  CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZLACGV( N, WORK( 1, J ), 1 )
    70          CONTINUE
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( M-K+1, 1 ), LDV,
-     $              WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', N,
+     $                     K, ONE, V( M-K+1, 1 ), LDV, WORK, LDWORK )
                IF( M.GT.K ) THEN
 *
-*                 W := W + C1**H*V1
+*                 W := W + C1**H * V1
 *
-                  CALL ZGEMM( 'Conjugate transpose', 'No transpose',
-     $                 LASTC, K, M-K,
-     $                 ONE, C, LDC, V, LDV,
-     $                 ONE, WORK, LDWORK )
+                  CALL ZGEMM( 'Conjugate transpose', 'No transpose', N,
+     $                        K, M-K, ONE, C, LDC, V, LDV, ONE, WORK,
+     $                        LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V * W**H
 *
@@ -19835,21 +19814,20 @@
 *                 C1 := C1 - V1 * W**H
 *
                   CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 M-K, LASTC, K,
-     $                 -ONE, V, LDV, WORK, LDWORK,
-     $                 ONE, C, LDC )
+     $                        M-K, N, K, -ONE, V, LDV, WORK, LDWORK,
+     $                        ONE, C, LDC )
                END IF
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( M-K+1, 1 ), LDV,
-     $              WORK, LDWORK )
+     $                     'Unit', N, K, ONE, V( M-K+1, 1 ), LDV, WORK,
+     $                     LDWORK )
 *
 *              C2 := C2 - W**H
 *
                DO 90 J = 1, K
-                  DO 80 I = 1, LASTC
+                  DO 80 I = 1, N
                      C( M-K+J, I ) = C( M-K+J, I ) -
      $                               DCONJG( WORK( I, J ) )
    80             CONTINUE
@@ -19859,35 +19837,30 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTC = ILAZLR( M, N, C, LDC )
-*
 *              W := C * V  =  (C1*V1 + C2*V2)  (stored in WORK)
 *
 *              W := C2
 *
                DO 100 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, N-K+J ), 1,
-     $                 WORK( 1, J ), 1 )
+                  CALL ZCOPY( M, C( 1, N-K+J ), 1, WORK( 1, J ), 1 )
   100          CONTINUE
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( N-K+1, 1 ), LDV,
-     $              WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', M,
+     $                     K, ONE, V( N-K+1, 1 ), LDV, WORK, LDWORK )
                IF( N.GT.K ) THEN
 *
 *                 W := W + C1 * V1
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, K, N-K,
-     $                 ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, K, N-K,
+     $                        ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T  or  W * T**H
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANS, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', TRANS, 'Non-unit', M, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - W * V**H
 *
@@ -19895,23 +19868,22 @@
 *
 *                 C1 := C1 - W * V1**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, N-K, K, -ONE, WORK, LDWORK, V, LDV,
-     $                 ONE, C, LDC )
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+     $                        N-K, K, -ONE, WORK, LDWORK, V, LDV, ONE,
+     $                        C, LDC )
                END IF
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( N-K+1, 1 ), LDV,
-     $              WORK, LDWORK )
+     $                     'Unit', M, K, ONE, V( N-K+1, 1 ), LDV, WORK,
+     $                     LDWORK )
 *
 *              C2 := C2 - W
 *
                DO 120 J = 1, K
-                  DO 110 I = 1, LASTC
-                     C( I, N-K+J ) = C( I, N-K+J )
-     $                    - WORK( I, J )
+                  DO 110 I = 1, M
+                     C( I, N-K+J ) = C( I, N-K+J ) - WORK( I, J )
   110             CONTINUE
   120          CONTINUE
             END IF
@@ -19929,58 +19901,55 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTV = MAX( K, ILAZLC( K, M, V, LDV ) )
-               LASTC = ILAZLC( LASTV, N, C, LDC )
-*
 *              W := C**H * V**H  =  (C1**H * V1**H + C2**H * V2**H) (stored in WORK)
 *
 *              W := C1**H
 *
                DO 130 J = 1, K
-                  CALL ZCOPY( LASTC, C( J, 1 ), LDC, WORK( 1, J ), 1 )
-                  CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZLACGV( N, WORK( 1, J ), 1 )
   130          CONTINUE
 *
 *              W := W * V1**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $                     'Unit', LASTC, K, ONE, V, LDV, WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+     $                     'Unit', N, K, ONE, V, LDV, WORK, LDWORK )
+               IF( M.GT.K ) THEN
 *
-*                 W := W + C2**H*V2**H
+*                 W := W + C2**H * V2**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', LASTC, K, LASTV-K,
-     $                 ONE, C( K+1, 1 ), LDC, V( 1, K+1 ), LDV,
-     $                 ONE, WORK, LDWORK )
+     $                        'Conjugate transpose', N, K, M-K, ONE,
+     $                        C( K+1, 1 ), LDC, V( 1, K+1 ), LDV, ONE,
+     $                        WORK, LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', TRANST, 'Non-unit', N, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V**H * W**H
 *
-               IF( LASTV.GT.K ) THEN
+               IF( M.GT.K ) THEN
 *
 *                 C2 := C2 - V2**H * W**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', LASTV-K, LASTC, K,
-     $                 -ONE, V( 1, K+1 ), LDV, WORK, LDWORK,
-     $                 ONE, C( K+1, 1 ), LDC )
+     $                        'Conjugate transpose', M-K, N, K, -ONE,
+     $                        V( 1, K+1 ), LDV, WORK, LDWORK, ONE,
+     $                        C( K+1, 1 ), LDC )
                END IF
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V, LDV, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', N,
+     $                     K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W**H
 *
                DO 150 J = 1, K
-                  DO 140 I = 1, LASTC
+                  DO 140 I = 1, N
                      C( J, I ) = C( J, I ) - DCONJG( WORK( I, J ) )
   140             CONTINUE
   150          CONTINUE
@@ -19989,56 +19958,52 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTV = MAX( K, ILAZLC( K, N, V, LDV ) )
-               LASTC = ILAZLR( M, LASTV, C, LDC )
-*
 *              W := C * V**H  =  (C1*V1**H + C2*V2**H)  (stored in WORK)
 *
 *              W := C1
 *
                DO 160 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, J ), 1, WORK( 1, J ), 1 )
+                  CALL ZCOPY( M, C( 1, J ), 1, WORK( 1, J ), 1 )
   160          CONTINUE
 *
 *              W := W * V1**H
 *
                CALL ZTRMM( 'Right', 'Upper', 'Conjugate transpose',
-     $                     'Unit', LASTC, K, ONE, V, LDV, WORK, LDWORK )
-               IF( LASTV.GT.K ) THEN
+     $                     'Unit', M, K, ONE, V, LDV, WORK, LDWORK )
+               IF( N.GT.K ) THEN
 *
 *                 W := W + C2 * V2**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, K, LASTV-K, ONE, C( 1, K+1 ), LDC,
-     $                 V( 1, K+1 ), LDV, ONE, WORK, LDWORK )
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+     $                        K, N-K, ONE, C( 1, K+1 ), LDC,
+     $                        V( 1, K+1 ), LDV, ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T  or  W * T**H
 *
-               CALL ZTRMM( 'Right', 'Upper', TRANS, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', TRANS, 'Non-unit', M, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - W * V
 *
-               IF( LASTV.GT.K ) THEN
+               IF( N.GT.K ) THEN
 *
 *                 C2 := C2 - W * V2
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, LASTV-K, K,
-     $                 -ONE, WORK, LDWORK, V( 1, K+1 ), LDV,
-     $                 ONE, C( 1, K+1 ), LDC )
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K, K,
+     $                        -ONE, WORK, LDWORK, V( 1, K+1 ), LDV, ONE,
+     $                        C( 1, K+1 ), LDC )
                END IF
 *
 *              W := W * V1
 *
-               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V, LDV, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Upper', 'No transpose', 'Unit', M,
+     $                     K, ONE, V, LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W
 *
                DO 180 J = 1, K
-                  DO 170 I = 1, LASTC
+                  DO 170 I = 1, M
                      C( I, J ) = C( I, J ) - WORK( I, J )
   170             CONTINUE
   180          CONTINUE
@@ -20055,36 +20020,33 @@
 *              Form  H * C  or  H**H * C  where  C = ( C1 )
 *                                                    ( C2 )
 *
-               LASTC = ILAZLC( M, N, C, LDC )
-*
 *              W := C**H * V**H  =  (C1**H * V1**H + C2**H * V2**H) (stored in WORK)
 *
 *              W := C2**H
 *
                DO 190 J = 1, K
-                  CALL ZCOPY( LASTC, C( M-K+J, 1 ), LDC,
-     $                 WORK( 1, J ), 1 )
-                  CALL ZLACGV( LASTC, WORK( 1, J ), 1 )
+                  CALL ZCOPY( N, C( M-K+J, 1 ), LDC, WORK( 1, J ), 1 )
+                  CALL ZLACGV( N, WORK( 1, J ), 1 )
   190          CONTINUE
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( 1, M-K+1 ), LDV,
-     $              WORK, LDWORK )
+     $                     'Unit', N, K, ONE, V( 1, M-K+1 ), LDV, WORK,
+     $                     LDWORK )
                IF( M.GT.K ) THEN
 *
 *                 W := W + C1**H * V1**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', LASTC, K, M-K,
-     $                 ONE, C, LDC, V, LDV, ONE, WORK, LDWORK )
+     $                        'Conjugate transpose', N, K, M-K, ONE, C,
+     $                        LDC, V, LDV, ONE, WORK, LDWORK )
                END IF
 *
 *              W := W * T**H  or  W * T
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', TRANST, 'Non-unit', N, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - V**H * W**H
 *
@@ -20093,20 +20055,19 @@
 *                 C1 := C1 - V1**H * W**H
 *
                   CALL ZGEMM( 'Conjugate transpose',
-     $                 'Conjugate transpose', M-K, LASTC, K,
-     $                 -ONE, V, LDV, WORK, LDWORK, ONE, C, LDC )
+     $                        'Conjugate transpose', M-K, N, K, -ONE, V,
+     $                        LDV, WORK, LDWORK, ONE, C, LDC )
                END IF
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( 1, M-K+1 ), LDV,
-     $              WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', N,
+     $                     K, ONE, V( 1, M-K+1 ), LDV, WORK, LDWORK )
 *
 *              C2 := C2 - W**H
 *
                DO 210 J = 1, K
-                  DO 200 I = 1, LASTC
+                  DO 200 I = 1, N
                      C( M-K+J, I ) = C( M-K+J, I ) -
      $                               DCONJG( WORK( I, J ) )
   200             CONTINUE
@@ -20116,35 +20077,32 @@
 *
 *              Form  C * H  or  C * H**H  where  C = ( C1  C2 )
 *
-               LASTC = ILAZLR( M, N, C, LDC )
-*
 *              W := C * V**H  =  (C1*V1**H + C2*V2**H)  (stored in WORK)
 *
 *              W := C2
 *
                DO 220 J = 1, K
-                  CALL ZCOPY( LASTC, C( 1, N-K+J ), 1,
-     $                 WORK( 1, J ), 1 )
+                  CALL ZCOPY( M, C( 1, N-K+J ), 1, WORK( 1, J ), 1 )
   220          CONTINUE
 *
 *              W := W * V2**H
 *
                CALL ZTRMM( 'Right', 'Lower', 'Conjugate transpose',
-     $              'Unit', LASTC, K, ONE, V( 1, N-K+1 ), LDV,
-     $              WORK, LDWORK )
+     $                     'Unit', M, K, ONE, V( 1, N-K+1 ), LDV, WORK,
+     $                     LDWORK )
                IF( N.GT.K ) THEN
 *
 *                 W := W + C1 * V1**H
 *
-                  CALL ZGEMM( 'No transpose', 'Conjugate transpose',
-     $                 LASTC, K, N-K, ONE, C, LDC, V, LDV, ONE,
-     $                 WORK, LDWORK )
+                  CALL ZGEMM( 'No transpose', 'Conjugate transpose', M,
+     $                        K, N-K, ONE, C, LDC, V, LDV, ONE, WORK,
+     $                        LDWORK )
                END IF
 *
 *              W := W * T  or  W * T**H
 *
-               CALL ZTRMM( 'Right', 'Lower', TRANS, 'Non-unit',
-     $              LASTC, K, ONE, T, LDT, WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', TRANS, 'Non-unit', M, K,
+     $                     ONE, T, LDT, WORK, LDWORK )
 *
 *              C := C - W * V
 *
@@ -20152,21 +20110,19 @@
 *
 *                 C1 := C1 - W * V1
 *
-                  CALL ZGEMM( 'No transpose', 'No transpose',
-     $                 LASTC, N-K, K, -ONE, WORK, LDWORK, V, LDV,
-     $                 ONE, C, LDC )
+                  CALL ZGEMM( 'No transpose', 'No transpose', M, N-K, K,
+     $                        -ONE, WORK, LDWORK, V, LDV, ONE, C, LDC )
                END IF
 *
 *              W := W * V2
 *
-               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit',
-     $              LASTC, K, ONE, V( 1, N-K+1 ), LDV,
-     $              WORK, LDWORK )
+               CALL ZTRMM( 'Right', 'Lower', 'No transpose', 'Unit', M,
+     $                     K, ONE, V( 1, N-K+1 ), LDV, WORK, LDWORK )
 *
 *              C1 := C1 - W
 *
                DO 240 J = 1, K
-                  DO 230 I = 1, LASTC
+                  DO 230 I = 1, M
                      C( I, N-K+J ) = C( I, N-K+J ) - WORK( I, J )
   230             CONTINUE
   240          CONTINUE
@@ -21498,7 +21454,7 @@
 *> \author Univ. of Colorado Denver 
 *> \author NAG Ltd. 
 *
-*> \date September 2012
+*> \date November 2013
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -21516,10 +21472,10 @@
 *  =====================================================================
       SUBROUTINE ZLARTG( F, G, CS, SN, R )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.5.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     November 2013
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CS
@@ -21543,7 +21499,8 @@
 *     ..
 *     .. External Functions ..
       DOUBLE PRECISION   DLAMCH, DLAPY2
-      EXTERNAL           DLAMCH, DLAPY2
+      LOGICAL            DISNAN
+      EXTERNAL           DLAMCH, DLAPY2, DISNAN
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, INT, LOG,
@@ -21552,26 +21509,17 @@
 *     .. Statement Functions ..
       DOUBLE PRECISION   ABS1, ABSSQ
 *     ..
-*     .. Save statement ..
-*     SAVE               FIRST, SAFMX2, SAFMIN, SAFMN2
-*     ..
-*     .. Data statements ..
-*     DATA               FIRST / .TRUE. /
-*     ..
 *     .. Statement Function definitions ..
       ABS1( FF ) = MAX( ABS( DBLE( FF ) ), ABS( DIMAG( FF ) ) )
       ABSSQ( FF ) = DBLE( FF )**2 + DIMAG( FF )**2
 *     ..
 *     .. Executable Statements ..
 *
-*     IF( FIRST ) THEN
-         SAFMIN = DLAMCH( 'S' )
-         EPS = DLAMCH( 'E' )
-         SAFMN2 = DLAMCH( 'B' )**INT( LOG( SAFMIN / EPS ) /
-     $            LOG( DLAMCH( 'B' ) ) / TWO )
-         SAFMX2 = ONE / SAFMN2
-*        FIRST = .FALSE.
-*     END IF
+      SAFMIN = DLAMCH( 'S' )
+      EPS = DLAMCH( 'E' )
+      SAFMN2 = DLAMCH( 'B' )**INT( LOG( SAFMIN / EPS ) /
+     $         LOG( DLAMCH( 'B' ) ) / TWO )
+      SAFMX2 = ONE / SAFMN2
       SCALE = MAX( ABS1( F ), ABS1( G ) )
       FS = F
       GS = G
@@ -21585,7 +21533,7 @@
          IF( SCALE.GE.SAFMX2 )
      $      GO TO 10
       ELSE IF( SCALE.LE.SAFMN2 ) THEN
-         IF( G.EQ.CZERO ) THEN
+         IF( G.EQ.CZERO.OR.DISNAN( ABS( G ) ) ) THEN
             CS = ONE
             SN = CZERO
             R = F

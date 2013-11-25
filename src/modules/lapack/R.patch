@@ -1,7 +1,7 @@
-diff -u /tmp/dlapack.f ./dlapack.f
---- /tmp/dlapack.f	2013-05-21 10:11:22.000000000 +0100
-+++ ./dlapack.f	2013-05-21 14:11:49.000000000 +0100
-@@ -21128,7 +21128,8 @@
+diff -u keep/dlapack.f ./dlapack.f
+--- keep/dlapack.f	2013-11-25 09:13:35.000000000 +0000
++++ ./dlapack.f	2013-11-25 09:21:56.000000000 +0000
+@@ -21126,7 +21126,8 @@
  *
  *        Compute Householder transform when N=1
  *
@@ -11,61 +11,10 @@ diff -u /tmp/dlapack.f ./dlapack.f
  *         
        ELSE
  *
-@@ -96739,19 +96740,26 @@
-          ITAUQ1 = ITAUP2 + MAX( 1, M - P )
-          ITAUQ2 = ITAUQ1 + MAX( 1, Q )
-          IORGQR = ITAUQ2 + MAX( 1, M - Q )
--         CALL DORGQR( M-Q, M-Q, M-Q, 0, MAX(1,M-Q), 0, WORK, -1,
-+c WORK is a suitable dummy
-+         CALL DORGQR( M-Q, M-Q, M-Q, WORK, MAX(1,M-Q), WORK, WORK, -1,
-      $                CHILDINFO )
-          LORGQRWORKOPT = INT( WORK(1) )
-          LORGQRWORKMIN = MAX( 1, M - Q )
-          IORGLQ = ITAUQ2 + MAX( 1, M - Q )
--         CALL DORGLQ( M-Q, M-Q, M-Q, 0, MAX(1,M-Q), 0, WORK, -1,
-+c WORK is a suitable dummy
-+         CALL DORGLQ( M-Q, M-Q, M-Q, WORK, MAX(1,M-Q), WORK, WORK, -1,
-      $                CHILDINFO )
-          LORGLQWORKOPT = INT( WORK(1) )
-          LORGLQWORKMIN = MAX( 1, M - Q )
-          IORBDB = ITAUQ2 + MAX( 1, M - Q )
--         CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12,
--     $                X21, LDX21, X22, LDX22, 0, 0, 0, 0, 0, 0, WORK,
--     $                -1, CHILDINFO )
-+c avoid compiler warnings
-+c         CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12,
-+c     $                X21, LDX21, X22, LDX22, 0, 0, 0, 0, 0, 0, WORK,
-+c     $                -1, CHILDINFO )
-+      CALL DORBDB( TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12, X21,
-+     $             LDX21, X22, LDX22, THETA, WORK(IPHI), WORK(ITAUP1),
-+     $             WORK(ITAUP2), WORK(ITAUQ1), WORK(ITAUQ2),
-+     $             WORK(IORBDB), -1, CHILDINFO )
-          LORBDBWORKOPT = INT( WORK(1) )
-          LORBDBWORKMIN = LORBDBWORKOPT
-          IB11D = ITAUQ2 + MAX( 1, M - Q )
-@@ -96763,9 +96771,15 @@
-          IB22D = IB21E + MAX( 1, Q - 1 )
-          IB22E = IB22D + MAX( 1, Q )
-          IBBCSD = IB22E + MAX( 1, Q - 1 )
--         CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 0,
--     $                0, U1, LDU1, U2, LDU2, V1T, LDV1T, V2T, LDV2T, 0,
--     $                0, 0, 0, 0, 0, 0, 0, WORK, -1, CHILDINFO )
-+c         CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 0,
-+c     $                0, U1, LDU1, U2, LDU2, V1T, LDV1T, V2T, LDV2T, 0,
-+c     $                0, 0, 0, 0, 0, 0, 0, WORK, -1, CHILDINFO )
-+        CALL DBBCSD( JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, M, P, Q, 
-+     $             THETA,
-+     $             WORK(IPHI), U1, LDU1, U2, LDU2, V1T, LDV1T, V2T,
-+     $             LDV2T, WORK(IB11D), WORK(IB11E), WORK(IB12D),
-+     $             WORK(IB12E), WORK(IB21D), WORK(IB21E), WORK(IB22D),
-+     $             WORK(IB22E), WORK(IBBCSD), -1, INFO )
-          LBBCSDWORKOPT = INT( WORK(1) )
-          LBBCSDWORKMIN = LBBCSDWORKOPT
-          LWORKOPT = MAX( IORGQR + LORGQRWORKOPT, IORGLQ + LORGLQWORKOPT,
-diff -u /tmp/cmplx.f ./cmplx.f
---- /tmp/cmplx.f	2013-05-21 10:11:22.000000000 +0100
-+++ ./cmplx.f	2013-05-21 10:16:35.000000000 +0100
-@@ -6054,24 +6054,24 @@
+diff -u keep/cmplx.f ./cmplx.f
+--- keep/cmplx.f	2013-11-25 09:09:10.000000000 +0000
++++ ./cmplx.f	2013-11-25 09:11:47.000000000 +0000
+@@ -6048,24 +6048,24 @@
  *
              MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
  *           Compute space needed for ZGEQRF
@@ -105,7 +54,7 @@ diff -u /tmp/cmplx.f ./cmplx.f
  *
              IF( M.GE.MNTHR ) THEN
                 IF( WNTUN ) THEN
-@@ -6176,20 +6176,20 @@
+@@ -6170,20 +6170,20 @@
  *
  *              Path 10 (M at least N, but not much larger)
  *
@@ -135,7 +84,7 @@ diff -u /tmp/cmplx.f ./cmplx.f
                    MAXWRK = MAX( MAXWRK, 2*N+LWORK_ZUNGBR_Q )
                 END IF
                 IF( .NOT.WNTVN ) THEN
-@@ -6203,25 +6203,26 @@
+@@ -6197,25 +6197,26 @@
  *
              MNTHR = ILAENV( 6, 'ZGESVD', JOBU // JOBVT, M, N, 0, 0 )
  *           Compute space needed for ZGELQF
@@ -177,7 +126,7 @@ diff -u /tmp/cmplx.f ./cmplx.f
              IF( N.GE.MNTHR ) THEN
                 IF( WNTVN ) THEN
  *
-@@ -6325,21 +6326,21 @@
+@@ -6319,21 +6320,21 @@
  *
  *              Path 10t(N greater than M, but not much larger)
  *

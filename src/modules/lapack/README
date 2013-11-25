@@ -1,10 +1,10 @@
 The Fortran routines here are extracted from LAPACK 3.1.0, then 3.1.1,
-3.4.1, 3.4.2.  (http://www.netlib.org/lapack and mirrors).
+3.4.1, 3.4.2, 3.5.0.  (http://www.netlib.org/lapack and mirrors).
 
 dlapack?.f are support routines for `real' LAPACK calls
 cmplx.f are support routines for LAPACK calls from complex arithmetic
 routines, that are only used if COMPLEX*16 is supported by the Fortran
-compiler and compatible with the Rcomplex type (guaranteed for f2c users).
+compiler and compatible with the Rcomplex type.
 Neither will not be compiled if an external LAPACK is used.
 
 For 'base' R addition of a new .Call()able Lapack routine,
@@ -127,4 +127,4 @@ zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
 zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
 zunmhr.f
 
-R.patch is a patch to suppress warnings.
+R.patch suppresses warnings with Fortran array bounds checking.
