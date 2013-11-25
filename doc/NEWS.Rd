@@ -17,6 +17,10 @@
       A packaging of the Perl script and modules for \command{texinfo}
       5.2 has been made available at
       \url{http://www.stats.ox.ac.uk/pub/Rtools/}.
+
+      \item \code{write.table()} now handles matrices of
+      \eqn{2^{31}}{2^31} or more elements, for those with large amounts
+      of patience and disc space.
     }
   }
 
@@ -91,11 +95,11 @@
 
       \item \code{qcauchy(p, *)} is now fully accurate even when p is
       very close to 1. (\PR{15521})
-      
+
       \item The \code{validmu()} and \code{valideta()} functions in the
       standard \code{glm()} families now also report non-finite values,
       rather than failing.
-      
+
       \item Saved vignette results (in a \file{.Rout.save} file) were
       not being compared to the new ones during \command{R CMD check}.
 
@@ -105,10 +109,10 @@
 
       \item Improved handling of edge cases in
       \code{parallel::splitindices()}. (\PR{15552})
-      
-      \item HTML display of results from \code{help.search()} and 
+
+      \item HTML display of results from \code{help.search()} and
       \code{??} sometimes contained badly constructed links.
-      
+
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
       
@@ -124,6 +128,9 @@
       \item Several potential problems with compiler-specific behaviour
       have been identified using the \sQuote{Undefined Behaviour
 	Sanitizer} in conjunction with the \command{clang} compiler.
+      
+      \item \code{hcl()} now honours \code{NA} inputs (previously they
+      were mapped to black).
     }
   }
 }

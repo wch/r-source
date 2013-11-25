@@ -1,6 +1,6 @@
 % File src/library/base/man/notyet.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NotYet}
@@ -31,11 +31,6 @@
   \code{\link{Defunct}} for outdated code.}
 \examples{
 require(graphics)
-require(stats)
-plot.mlm         # to see how the "NotYetImplemented"
-                 # reference is made automagically
-try(plot.mlm())
-
 barplot(1:5, inside = TRUE) # 'inside' is not yet used
 }
 \keyword{documentation}

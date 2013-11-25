@@ -1,5 +1,5 @@
 
-R version 3.0.2 RC (2013-09-22 r63960) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2013-11-25 r64293) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2143,7 +2143,7 @@ character(0)
 +               is.numeric(chroma), chroma >= 0, (nch <- length(chroma)) >= 1)
 +     if(is.unsorted(hues)) hues <- sort(hues)
 +     if(nch > 1) {
-+         op <- par(mfrow= n2mfrow(nch), mar = c(0,0,0,0))
++         op <- par(mfrow= n2mfrow(nch), mar = c(0,0,0,0), xpd = TRUE)
 +         on.exit(par(op))
 +     }
 +     for(i.c in 1:nch) {

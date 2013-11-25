@@ -20,13 +20,13 @@ regmatches(x, m, invert = FALSE) <- value
     matched or non-matched substrings (see \code{Details}).}
 }
 \details{
-  If \code{invert} is \code{TRUE} (default), \code{regmatches} extracts
+  If \code{invert} is \code{FALSE} (default), \code{regmatches} extracts
   the matched substrings as specified by the match data.  For vector
   match data (as obtained from \code{\link{regexpr}}), empty matches are
   dropped; for list match data, empty matches give empty components
   (zero-length character vectors).
 
-  If \code{invert} is \code{FALSE}, \code{regmatches} extracts the
+  If \code{invert} is \code{TRUE}, \code{regmatches} extracts the
   non-matched substrings, i.e., the strings are split according to the
   matches similar to \code{\link{strsplit}} (for vector match data, at
   most a single split is performed).
