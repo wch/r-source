@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-19 17:45-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -685,6 +685,10 @@ msgstr "нужны замены для несоответствующих значений"
 
 msgid "must have replacements for matches"
 msgstr "нужны замены для соответствий"
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "не определена DLL"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' сейчас всегда использует exact = FALSE"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1347,22 +1347,6 @@ msgid ""
 msgstr ""
 "brak definicji dziedziczenia z %s do %s mimo, że relacja została "
 "zasugerowana przez 'setIs()' z %s"
-
-# methods/R/RClassUtils.R: 2135
-# warning(gettextf("could not find superclass %s to clean up when removing subclass references to class %s",
-#                                  .dQ(what), .dQ(Class)))
-msgid ""
-"could not find superclass %s to clean up when removing subclass references "
-"to class %s"
-msgstr ""
-"nie można było znaleźć superklasy %s do wyczyszczenia gdy usuwano referencje "
-"podklasy do klasy %s"
-
-# methods/R/RClassUtils.R: 2171
-# warning(gettextf("no class %s found as expected in removing subclass %s",
-#                        .dQ(class), .dQ(subclass)))
-msgid "no class %s found as expected in removing subclass %s"
-msgstr "nie znaleziono klasy %s jak oczekiwano podczas usuwania podklasy %s"
 
 # methods/R/RClassUtils.R: 2248
 # stop("argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'")
@@ -3509,6 +3493,22 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+# methods/R/RClassUtils.R: 2135
+# warning(gettextf("could not find superclass %s to clean up when removing subclass references to class %s",
+#                                  .dQ(what), .dQ(Class)))
+#~ msgid ""
+#~ "could not find superclass %s to clean up when removing subclass "
+#~ "references to class %s"
+#~ msgstr ""
+#~ "nie można było znaleźć superklasy %s do wyczyszczenia gdy usuwano "
+#~ "referencje podklasy do klasy %s"
+
+# methods/R/RClassUtils.R: 2171
+# warning(gettextf("no class %s found as expected in removing subclass %s",
+#                        .dQ(class), .dQ(subclass)))
+#~ msgid "no class %s found as expected in removing subclass %s"
+#~ msgstr "nie znaleziono klasy %s jak oczekiwano podczas usuwania podklasy %s"
 
 # methods/R/BasicClasses.R: 115
 # stop("replacement value is not a matrix")

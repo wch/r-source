@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -539,6 +539,9 @@ msgstr "'dump' nie jest obiektem klasy %s"
 # gettext("Message: ")
 msgid "Message:"
 msgstr "Wiadomość:"
+
+msgid "'dump' is empty"
+msgstr ""
 
 # utils/R/debugger.R: 59
 # gettext("Available environments had calls:\n")

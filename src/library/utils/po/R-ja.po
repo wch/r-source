@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -273,6 +273,10 @@ msgstr " 'dump' はクラス %s のオブジェクトではありません "
 
 msgid "Message:"
 msgstr " メッセージ: "
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr " 'dvipsscmd' が空です "
 
 msgid "Available environments had calls:"
 msgstr " 利用可能な環境は以下の呼び出しを含んでいました: "
@@ -1549,9 +1553,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "'latexcmd' is empty"
 #~ msgstr " 'latexcmd' が空です "
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr " 'dvipsscmd' が空です "
 
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "

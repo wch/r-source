@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-02-21 22:26-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -74,11 +74,11 @@ msgstr "유효하지 않은 플랏팅 기호입니다"
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
-#: layout.c:587
+#: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr "유효하지 않은 'layout.pos.row'입니다"
 
-#: layout.c:591
+#: layout.c:593
 msgid "invalid 'layout.pos.col'"
 msgstr "유효하지 않은 'layout.pos.col'입니다"
 
@@ -90,23 +90,23 @@ msgstr ""
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 열려있나요?"
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "unimplemented unit function"
 msgstr "구현되지 않은 유닛함수입니다"
 
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 msgid "invalid unit or unit not yet implemented"
 msgstr "유효하지 않은 유닛이거나 아직 구현되지 않은 유닛입니다"
 
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr "유효하지 않은 유닛입니다"
 
-#: unit.c:1814
+#: unit.c:1816
 msgid "'units' must be character"
 msgstr "'units'은 반드시 문자이어야 합니다"
 
-#: unit.c:1817
+#: unit.c:1819
 msgid "'units' must be of length > 0"
 msgstr "유닛은 반드시 길이가 0 보다 커야 합니다"
 

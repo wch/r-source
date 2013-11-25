@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-02-16 14:52-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -24,9 +24,9 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
-#: io.c:811 io.c:1033 io.c:1034 io.c:1036 io.c:1037 io.c:1038 io.c:1039
-#: io.c:1040 io.c:1041 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:309 io.c:313 io.c:323 io.c:552 io.c:733 io.c:784 io.c:796 io.c:800
+#: io.c:806 io.c:1027 io.c:1028 io.c:1030 io.c:1031 io.c:1032 io.c:1033
+#: io.c:1034 io.c:1035 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -35,75 +35,75 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "'%s' 인자가 잘못되었습니다"
 
-#: io.c:337 io.c:798
+#: io.c:332 io.c:793
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:349 io.c:819 io.c:1021
+#: io.c:344 io.c:814 io.c:1015
 msgid "cannot open the connection"
 msgstr "연결을 열 수 없습니다"
 
-#: io.c:352 io.c:356
+#: io.c:347 io.c:351
 msgid "cannot read from this connection"
 msgstr "이 연결로부터 읽을 수 없습니다"
 
-#: io.c:403 io.c:421
+#: io.c:398 io.c:416
 #, fuzzy, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr "새로운 행 또는 EOF에 의하여 종료된 문자열입니다"
 
-#: io.c:553
+#: io.c:548
 msgid "the first argument must be of mode character"
 msgstr "첫번째 인자는 반드시 문자형이어야 합니다"
 
-#: io.c:740
+#: io.c:735
 #, c-format
 msgid "Selection: "
 msgstr "선택: "
 
-#: io.c:828 io.c:842
+#: io.c:823 io.c:837
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "'readTableHead' 내에서 버퍼를 할당할 수 없습니다"
 
-#: io.c:853
+#: io.c:848
 msgid "\\ followed by EOF"
 msgstr "\\ 가 EOF 뒤에 놓였습니다"
 
-#: io.c:900 io.c:903
+#: io.c:895 io.c:898
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 "'%s'에서 readTableHeader에 의하여 발견된 완성되지 않은 마지막 라인입니다"
 
-#: io.c:960
+#: io.c:955
 msgid "index out of range"
 msgstr ""
 
-#: io.c:1014
+#: io.c:1008
 msgid "'file' is not a connection"
 msgstr "'file'은 연결이 아닙니다"
 
-#: io.c:1017
+#: io.c:1011
 msgid "cannot write to this connection"
 msgstr "이 연결에 쓰기를 할 수 없습니다"
 
-#: io.c:1047
+#: io.c:1041
 msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
-#: io.c:1074
+#: io.c:1068
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니"
 "다"
 
-#: io.c:1104
+#: io.c:1098
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1122
+#: io.c:1116
 msgid "corrupt matrix -- dims not not match length"
 msgstr "행렬이 손상되었습니다 -- dims 가 길이가 일치하지 않습니다"
 

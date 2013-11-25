@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-19 22:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -280,6 +280,10 @@ msgstr "'dump' не является объектом класса %s"
 
 msgid "Message:"
 msgstr "Сообщение:"
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr "опция 'dvipscmd' пуста"
 
 msgid "Available environments had calls:"
 msgstr "Доступные окружения имеют вызовы:"
@@ -1588,9 +1592,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "'latexcmd' is empty"
 #~ msgstr "опция 'latexcmd' пуста"
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr "опция 'dvipscmd' пуста"
 
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "

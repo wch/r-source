@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -259,6 +259,9 @@ msgid "'dump' is not an object of class %s"
 msgstr ""
 
 msgid "Message:"
+msgstr ""
+
+msgid "'dump' is empty"
 msgstr ""
 
 msgid "Available environments had calls:"

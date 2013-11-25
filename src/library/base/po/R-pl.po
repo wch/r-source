@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1539,6 +1539,12 @@ msgstr "potrzeba mieć zamiany dla niedopasowań"
 # stop("must have replacements for matches")
 msgid "must have replacements for matches"
 msgstr "potrzeba mieć zamiany dla dopasowań"
+
+# src/library/base/R/library.R: 543
+# stop("no DLL was specified")
+#, fuzzy
+msgid "No factors specified"
+msgstr "nie określono pliku DLL"
 
 # src/library/base/R/kappa.R: 60
 # warning(gettextf("norm '%s' currently always uses exact = FALSE",

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-03-18 15:02+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -313,9 +313,9 @@ msgstr "niepoprawne określenie czcionki"
 # error(_("invalid '%s' value"), "ticktype")
 # graphics/src/plot3d.c: 1895
 # error(_("invalid '%s' value"), "method")
-#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2127 plot.c:2134
-#: plot.c:3156 plot.c:3158 plot.c:3160 plot.c:3315 plot3d.c:1155 plot3d.c:1159
-#: plot3d.c:1161 plot3d.c:1895
+#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2129 plot.c:2136
+#: plot.c:3158 plot.c:3160 plot.c:3162 plot.c:3317 plot3d.c:1159 plot3d.c:1163
+#: plot3d.c:1165 plot3d.c:1899
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
@@ -432,9 +432,9 @@ msgstr "niepoprawny typ dla etykiet osi"
 # error(_("too few arguments"))
 # graphics/src/plot3d.c: 1864
 # error(_("too few arguments"))
-#: plot.c:780 plot.c:1313 plot.c:1634 plot.c:1699 plot.c:1774 plot.c:1840
-#: plot.c:1916 plot.c:2011 plot.c:2087 plot.c:2365 plot.c:2539 plot.c:2755
-#: plot.c:3297 plot.c:3424 plot.c:3500 plot.c:3666 plot.c:3946 plot3d.c:1864
+#: plot.c:780 plot.c:1313 plot.c:1636 plot.c:1701 plot.c:1776 plot.c:1842
+#: plot.c:1918 plot.c:2013 plot.c:2089 plot.c:2367 plot.c:2541 plot.c:2757
+#: plot.c:3299 plot.c:3426 plot.c:3502 plot.c:3668 plot.c:3948 plot3d.c:1868
 msgid "too few arguments"
 msgstr "zbyt mało argumentów"
 
@@ -477,9 +477,9 @@ msgstr "'hadj' musi mieć długość jeden"
 # error(_("zero-length '%s' specified"), "font")
 # graphics/src/plot.c: 3155
 # error(_("zero-length '%s' specified"), "labels")
-#: plot.c:888 plot.c:2099 plot.c:2376 plot.c:2382 plot.c:2389 plot.c:2397
-#: plot.c:2404 plot.c:2411 plot.c:2418 plot.c:2425 plot.c:2433 plot.c:2440
-#: plot.c:3163
+#: plot.c:888 plot.c:2101 plot.c:2378 plot.c:2384 plot.c:2391 plot.c:2399
+#: plot.c:2406 plot.c:2413 plot.c:2420 plot.c:2427 plot.c:2435 plot.c:2442
+#: plot.c:3165
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr "określono '%s' o zerowej długości"
@@ -529,13 +529,13 @@ msgstr "typ '%s' wykresu zostanie przycięty do pierwszego znaku"
 # error(_("invalid plot type"))
 # graphics/src/plot.c: 3013
 # error(_("invalid plot type"))
-#: plot.c:1346 plot.c:3017
+#: plot.c:1346 plot.c:3019
 msgid "invalid plot type"
 msgstr "niepoprawny typ wykresu"
 
 # graphics/src/plot.c: 1546
 # error(_("invalid plot type '%c'"), type)
-#: plot.c:1546
+#: plot.c:1548
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "niepoprawny typ '%c' wykresu"
@@ -548,71 +548,71 @@ msgstr "niepoprawny typ '%c' wykresu"
 # stop("invalid first argument")
 # graphics/src/plot.c: 1589
 # error(_("invalid first argument"))
-#: plot.c:1589
+#: plot.c:1591
 msgid "invalid first argument"
 msgstr "niepoprawny pierwszy argument"
 
 # graphics/src/plot.c: 1596
 # error(_("invalid second argument"))
-#: plot.c:1596
+#: plot.c:1598
 msgid "invalid second argument"
 msgstr "niepoprawny drugi argument"
 
 # graphics/src/plot.c: 1604
 # error(_("invalid third argument"))
-#: plot.c:1604
+#: plot.c:1606
 msgid "invalid third argument"
 msgstr "niepoprawny trzeci argument"
 
 # graphics/src/plot.c: 1612
 # error(_("invalid fourth argument"))
-#: plot.c:1612
+#: plot.c:1614
 msgid "invalid fourth argument"
 msgstr "niepoprawny czwarty argument"
 
 # graphics/src/plot.c: 1620
 # error(_("cannot mix zero-length and non-zero-length coordinates"))
-#: plot.c:1620
+#: plot.c:1622
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "nie można mieszać współrzędnych o zerowej i niezerowej długości"
 
-#: plot.c:1846
+#: plot.c:1848
 msgid "Empty raster"
 msgstr ""
 
 # graphics/src/plot.c: 1926
 # error(_("invalid arrow head length"))
-#: plot.c:1929
+#: plot.c:1931
 msgid "invalid arrow head length"
 msgstr "niepoprawna długość grotu strzałki"
 
 # graphics/src/plot.c: 1931
 # error(_("invalid arrow head angle"))
-#: plot.c:1934
+#: plot.c:1936
 msgid "invalid arrow head angle"
 msgstr "niepoprawny kąt grotu strzałki"
 
 # graphics/src/plot.c: 1936
 # error(_("invalid arrow head specification"))
-#: plot.c:1939
+#: plot.c:1941
 msgid "invalid arrow head specification"
 msgstr "niepoprawne określenie grotu strzałki"
 
 # graphics/src/plot.c: 2170
 # error(_("no coordinates were supplied"))
-#: plot.c:2173
+#: plot.c:2175
 msgid "no coordinates were supplied"
 msgstr "nie dostarczono współrzędnych"
 
 # graphics/src/plot.c: 2793
 # error(_("invalid a=, b= specification"))
-#: plot.c:2796
+#: plot.c:2798
 msgid "invalid a=, b= specification"
 msgstr "niepoprawne określenie a=, b="
 
 # graphics/src/plot.c: 2802
 # error(_("'a' and 'b' must be finite"))
-#: plot.c:2805
+#: plot.c:2807
 msgid "'a' and 'b' must be finite"
 msgstr "'a' oraz 'b' muszą być skończone"
 
@@ -662,9 +662,9 @@ msgstr "'a' oraz 'b' muszą być skończone"
 # error(_("invalid '%s' argument"), "right")
 # graphics/src/stem.c: 210
 # error(_("invalid '%s' argument"), "include.lowest")
-#: plot.c:2940 plot.c:4066 plot.c:4070 plot.c:4073 plot.c:4093 plot.c:4097
-#: plot.c:4100 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
-#: plot3d.c:1094 plot3d.c:1098 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: plot.c:2942 plot.c:4068 plot.c:4072 plot.c:4075 plot.c:4095 plot.c:4099
+#: plot.c:4102 plot3d.c:1081 plot3d.c:1085 plot3d.c:1090 plot3d.c:1094
+#: plot3d.c:1098 plot3d.c:1102 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
@@ -674,41 +674,41 @@ msgstr "niepoprawny argument '%s'"
 # error(_("invalid number of points in %s"), "locator()")
 # graphics/src/plot.c: 3144
 # error(_("invalid number of points in %s"), "identify()")
-#: plot.c:3012 plot.c:3152
+#: plot.c:3014 plot.c:3154
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "niepoprawna liczba punktów w %s"
 
 # graphics/src/plot.c: 3146
 # error(_("incorrect argument type"))
-#: plot.c:3154
+#: plot.c:3156
 msgid "incorrect argument type"
 msgstr "niepoprawny typ argumentu"
 
 # graphics/src/plot.c: 3158
 # error(_("different argument lengths"))
-#: plot.c:3166
+#: plot.c:3168
 msgid "different argument lengths"
 msgstr "długości argumentów różnią się"
 
 # graphics/src/plot.c: 3160
 # warning(_("more 'labels' than points"))
-#: plot.c:3168
+#: plot.c:3170
 msgid "more 'labels' than points"
 msgstr "wiecej 'labels' niż punktów"
 
-#: plot.c:3217
+#: plot.c:3219
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "ostrzeżenie: brak punktu w obszarze %.2f cali\n"
 
-#: plot.c:3223
+#: plot.c:3225
 msgid "warning: nearest point already identified\n"
 msgstr "ostrzeżenie: najbliższy punkt jest już zidentyfikowany\n"
 
 # graphics/src/plot.c: 3297
 # error(_("invalid units"))
-#: plot.c:3308
+#: plot.c:3310
 msgid "invalid units"
 msgstr "niepoprawne jednostki"
 
@@ -716,31 +716,31 @@ msgstr "niepoprawne jednostki"
 # error(_("invalid dendrogram input"))
 # graphics/src/plot.c: 3580
 # error(_("invalid dendrogram input"))
-#: plot.c:3484 plot.c:3591
+#: plot.c:3486 plot.c:3593
 msgid "invalid dendrogram input"
 msgstr "niepoprawne wejście dendrogramu"
 
 # graphics/src/plot.c: 3637
 # error(_("invalid symbol parameter vector"))
-#: plot.c:3648
+#: plot.c:3650
 msgid "invalid symbol parameter vector"
 msgstr "niepoprawny wektor parametrów symboli"
 
 # graphics/src/plot.c: 3660
 # error(_("invalid symbol coordinates"))
-#: plot.c:3671
+#: plot.c:3673
 msgid "invalid symbol coordinates"
 msgstr "niepoprawne współrzędne symbolu"
 
 # graphics/src/plot.c: 3668
 # error(_("x/y/parameter length mismatch"))
-#: plot.c:3679
+#: plot.c:3681
 msgid "x/y/parameter length mismatch"
 msgstr "niezgodność długości x/y/parametru"
 
 # graphics/src/plot.c: 3687
 # error(_("invalid circles data"))
-#: plot.c:3698
+#: plot.c:3700
 msgid "invalid circles data"
 msgstr "niepoprawne dane o kółkach"
 
@@ -752,38 +752,38 @@ msgstr "niepoprawne dane o kółkach"
 # error(_("invalid symbol parameter"))
 # graphics/src/plot.c: 3765
 # error(_("invalid symbol parameter"))
-#: plot.c:3700 plot.c:3721 plot.c:3746 plot.c:3776
+#: plot.c:3702 plot.c:3723 plot.c:3748 plot.c:3778
 msgid "invalid symbol parameter"
 msgstr "niepoprawny parametr symbolu"
 
 # graphics/src/plot.c: 3708
 # error(_("invalid squares data"))
-#: plot.c:3719
+#: plot.c:3721
 msgid "invalid squares data"
 msgstr "niepoprawne dane o kwadratach"
 
 # graphics/src/plot.c: 3733
 # error(_("invalid rectangles data (need 2 columns)"))
-#: plot.c:3744
+#: plot.c:3746
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "niepoprawne dane o prostokątach (potrzeba 2 kolumn)"
 
 # graphics/src/plot.c: 3763
 # error(_("invalid stars data"))
-#: plot.c:3774
+#: plot.c:3776
 msgid "invalid stars data"
 msgstr "niepoprawne dane o gwiazdkach"
 
 # graphics/src/plot.c: 3805
 # error(_("invalid thermometers data (need 3 or 4 columns)"))
-#: plot.c:3816
+#: plot.c:3818
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "niepoprawne dane o temperaturach (potrzeba 3 lub 4 kolumn)"
 
 # graphics/src/plot.c: 3808
 # error(_("invalid 'thermometers[, %s]'"),
 # 		      (nc == 4)? "3:4" : "3")
-#: plot.c:3819
+#: plot.c:3821
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr "niepoprawne 'thermometers[,%s]'"
@@ -791,38 +791,38 @@ msgstr "niepoprawne 'thermometers[,%s]'"
 # graphics/src/plot.c: 3811
 # warning(_("'thermometers[, %s]' not in [0,1] -- may look funny"),
 # 		    (nc == 4)? "3:4" : "3")
-#: plot.c:3822
+#: plot.c:3824
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]' nie są w przedziale [0,1] -- może dziwnie wyglądać"
 
 # graphics/src/plot.c: 3814
 # error(_("invalid 'thermometers[, 1:2]'"))
-#: plot.c:3825
+#: plot.c:3827
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr "niepoprawne 'thermometers[,1:2]'"
 
 # graphics/src/plot.c: 3853
 # error(_("invalid 'boxplots' data (need 5 columns)"))
-#: plot.c:3864
+#: plot.c:3866
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "niepoprawne dane w 'boxplots' (potrzeba 5 kolumn)"
 
 # graphics/src/plot.c: 3862
 # warning(_("'boxplots[, 5]' outside [0,1] -- may look funny"))
-#: plot.c:3873
+#: plot.c:3875
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr "'boxplots[,5]' poza przedziałem [0,1] -- może dziwnie wyglądać"
 
 # graphics/src/plot.c: 3864
 # error(_("invalid 'boxplots[, 1:4]'"))
-#: plot.c:3875
+#: plot.c:3877
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr "niepoprawne 'boxplots[, 1:4]'"
 
 # graphics/src/plot.c: 3910
 # error(_("invalid symbol type"))
-#: plot.c:3921
+#: plot.c:3923
 msgid "invalid symbol type"
 msgstr "niepoprawny typ symbolu"
 
@@ -834,7 +834,7 @@ msgstr "niepoprawny typ symbolu"
 # error(_("incorrect length for '%s' argument"), "border")
 # graphics/src/plot.c: 3957
 # warning(_("incorrect length for '%s' argument"), "border")
-#: plot.c:3959 plot.c:3961 plot.c:3966 plot.c:3968
+#: plot.c:3961 plot.c:3963 plot.c:3968 plot.c:3970
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "niepoprawna długość dla argumentu '%s'"
@@ -843,7 +843,7 @@ msgstr "niepoprawna długość dla argumentu '%s'"
 # error(_("insufficient 'x' or 'y' values"))
 # graphics/src/plot3d.c: 1921
 # error(_("insufficient 'x' or 'y' values"))
-#: plot3d.c:181 plot3d.c:1921
+#: plot3d.c:181 plot3d.c:1925
 msgid "insufficient 'x' or 'y' values"
 msgstr "niewystarczające wartości 'x' lub 'y'"
 
@@ -851,7 +851,7 @@ msgstr "niewystarczające wartości 'x' lub 'y'"
 # error(_("dimension mismatch"))
 # graphics/src/plot3d.c: 1924
 # error(_("dimension mismatch"))
-#: plot3d.c:185 plot3d.c:1924
+#: plot3d.c:185 plot3d.c:1928
 msgid "dimension mismatch"
 msgstr "niezgodność wymiaru"
 
@@ -859,7 +859,7 @@ msgstr "niezgodność wymiaru"
 # error(_("no contour values"))
 # graphics/src/plot3d.c: 1927
 # error(_("no contour values"))
-#: plot3d.c:193 plot3d.c:1927
+#: plot3d.c:193 plot3d.c:1931
 msgid "no contour values"
 msgstr "brak wartości konturu"
 
@@ -879,55 +879,55 @@ msgstr "niepoprawne poziomy konturu: muszą być ściśle rosnące"
 # warning(_("Axis orientation not calculated"))
 # graphics/src/plot3d.c: 1054
 # warning(_("Axis orientation not calculated"))
-#: plot3d.c:1041 plot3d.c:1054
+#: plot3d.c:1045 plot3d.c:1058
 msgid "Axis orientation not calculated"
 msgstr "Orientacja osi nie została obliczona"
 
 # graphics/src/plot3d.c: 1074
 # error(_("too few parameters"))
-#: plot3d.c:1074
+#: plot3d.c:1078
 msgid "too few parameters"
 msgstr "zbyt mało parametrów"
 
 # graphics/src/plot3d.c: 1104
 # error(_("invalid 'x' limits"))
-#: plot3d.c:1104
+#: plot3d.c:1108
 msgid "invalid 'x' limits"
 msgstr "niepoprawne granice 'x'"
 
 # graphics/src/plot3d.c: 1106
 # error(_("invalid 'y' limits"))
-#: plot3d.c:1106
+#: plot3d.c:1110
 msgid "invalid 'y' limits"
 msgstr "niepoprawne granice 'y'"
 
 # graphics/src/plot3d.c: 1108
 # error(_("invalid 'z' limits"))
-#: plot3d.c:1108
+#: plot3d.c:1112
 msgid "invalid 'z' limits"
 msgstr "niepoprawne granice 'z'"
 
 # graphics/src/plot3d.c: 1129
 # error(_("'xlab' must be a character vector of length 1"))
-#: plot3d.c:1129
+#: plot3d.c:1133
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' musi być wektorem tekstowym o długości 1"
 
 # graphics/src/plot3d.c: 1131
 # error(_("'ylab' must be a character vector of length 1"))
-#: plot3d.c:1131
+#: plot3d.c:1135
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' musi być wektorem tekstowym o długości 1"
 
 # graphics/src/plot3d.c: 1133
 # error(_("'zlab' must be a character vector of length 1"))
-#: plot3d.c:1133
+#: plot3d.c:1137
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' musi być wektorem tekstowym o długości 1"
 
 # graphics/src/plot3d.c: 1153
 # error(_("invalid viewing parameters"))
-#: plot3d.c:1153
+#: plot3d.c:1157
 msgid "invalid viewing parameters"
 msgstr "niepoprawne parametry podglądu"
 
@@ -935,7 +935,7 @@ msgstr "niepoprawne parametry podglądu"
 # error(_("invalid '%s' specification"), "col")
 # graphics/src/plot3d.c: 1175
 # error(_("invalid '%s' specification"), "border")
-#: plot3d.c:1171 plot3d.c:1175
+#: plot3d.c:1175 plot3d.c:1179
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "niepoprawne określenie '%s'"
@@ -943,50 +943,50 @@ msgstr "niepoprawne określenie '%s'"
 # graphics/src/plot3d.c: 1521
 # warning(_("contour(): circular/long seglist -- set %s > %d?"),
 # 		        "options(\"max.contour.segments\")", max_contour_segments)
-#: plot3d.c:1521
+#: plot3d.c:1525
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "'contour()': kołowa/długa lista segmentów -- ustawić %s > %d?"
 
 # graphics/src/plot3d.c: 1931
 # error(_("missing 'x' values"))
-#: plot3d.c:1931
+#: plot3d.c:1935
 msgid "missing 'x' values"
 msgstr "brakujące wartości 'x'"
 
 # graphics/src/plot3d.c: 1933
 # error(_("increasing 'x' values expected"))
-#: plot3d.c:1933
+#: plot3d.c:1937
 msgid "increasing 'x' values expected"
 msgstr "oczekiwano rosnących wartości 'x'"
 
 # graphics/src/plot3d.c: 1938
 # error(_("missing 'y' values"))
-#: plot3d.c:1938
+#: plot3d.c:1942
 msgid "missing 'y' values"
 msgstr "brakujące wartości 'y'"
 
 # graphics/src/plot3d.c: 1940
 # error(_("increasing 'y' values expected"))
-#: plot3d.c:1940
+#: plot3d.c:1944
 msgid "increasing 'y' values expected"
 msgstr "oczekiwano rosnących wartości 'y'"
 
 # graphics/src/plot3d.c: 1945
 # error(_("invalid NA contour values"))
-#: plot3d.c:1945
+#: plot3d.c:1949
 msgid "invalid NA contour values"
 msgstr "niepoprawne wartości NA konturu"
 
 # graphics/src/plot3d.c: 1957
 # warning(_("all z values are equal"))
-#: plot3d.c:1957
+#: plot3d.c:1961
 msgid "all z values are equal"
 msgstr "wszystkie wartości 'z' są równe"
 
 # graphics/src/plot3d.c: 1959
 # warning(_("all z values are NA"))
-#: plot3d.c:1959
+#: plot3d.c:1963
 msgid "all z values are NA"
 msgstr "wszystkie wartości 'z' to NA"
 

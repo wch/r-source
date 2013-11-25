@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-10 12:14-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -285,6 +285,9 @@ msgstr "'dump'는 클래스 %s의 객체가 아닙니다"
 
 msgid "Message:"
 msgstr "메시지:"
+
+msgid "'dump' is empty"
+msgstr ""
 
 msgid "Available environments had calls:"
 msgstr "사용가능한 environments가 다음의 호출을 가집니다:"

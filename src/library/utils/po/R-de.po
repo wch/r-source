@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -276,6 +276,10 @@ msgstr "'dump' gehört nicht zur Klasse %s"
 
 msgid "Message:"
 msgstr "Nachricht:"
+
+#, fuzzy
+msgid "'dump' is empty"
+msgstr "'dvipscmd'ist leer"
 
 msgid "Available environments had calls:"
 msgstr "Verfügbare Umgebungen hatte Aufrufe:"
@@ -1556,9 +1560,6 @@ msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
 
 #~ msgid "'latexcmd' is empty"
 #~ msgstr "'latexcmd' ist leer"
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr "'dvipscmd'ist leer"
 
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "

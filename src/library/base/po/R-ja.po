@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-02 09:39+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -690,6 +690,10 @@ msgstr " 非マッチに対する置換が必要です "
 
 msgid "must have replacements for matches"
 msgstr " マッチに対する置換が必要です "
+
+#, fuzzy
+msgid "No factors specified"
+msgstr " DLL が何も指定されませんでした "
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr " norm '%s' は現在は常に exact = FALSE を使用します "

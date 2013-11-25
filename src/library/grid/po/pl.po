@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -97,13 +97,13 @@ msgstr "nie można przypiąć do obróconego prostokąta"
 
 # grid/src/layout.c: 587
 # error(_("invalid 'layout.pos.row'"))
-#: layout.c:587
+#: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr "niepoprawny 'layout.pos.row'"
 
 # grid/src/layout.c: 591
 # error(_("invalid 'layout.pos.col'"))
-#: layout.c:591
+#: layout.c:593
 msgid "invalid 'layout.pos.col'"
 msgstr "niepoprawny 'layout.pos.col'"
 
@@ -131,7 +131,7 @@ msgstr "nie można zachować stanu siatki. Zbyt duża liczba otwartych urządze�
 # error(_("unimplemented unit function"))
 # grid/src/unit.c: 1444
 # error(_("unimplemented unit function"))
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "unimplemented unit function"
 msgstr "niezaimplementowana jednostkowa funkcja"
 
@@ -139,26 +139,26 @@ msgstr "niezaimplementowana jednostkowa funkcja"
 # error(_("invalid unit or unit not yet implemented"))
 # grid/src/unit.c: 1639
 # error(_("invalid unit or unit not yet implemented"))
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
 "niedozwolona jednostka lub jednostka nie została jeszcze zaimplementowana"
 
 # grid/src/unit.c: 1798
 # error(_("Invalid unit"))
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr "Niepoprawna jednostka"
 
 # grid/src/unit.c: 1814
 # error(_("'units' must be character"))
-#: unit.c:1814
+#: unit.c:1816
 msgid "'units' must be character"
 msgstr "'units' muszą być tekstem"
 
 # grid/src/unit.c: 1817
 # error(_("'units' must be of length > 0"))
-#: unit.c:1817
+#: unit.c:1819
 msgid "'units' must be of length > 0"
 msgstr "'units' muszą mieć długość > 0"
 

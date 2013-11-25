@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -207,15 +207,15 @@ msgstr ""
 msgid "span is too small"
 msgstr "범위가 너무 작습니다"
 
-#: loglin.c:369
+#: loglin.c:370
 msgid "this should not happen"
 msgstr "이것은 일어날 수 없는 경우입니다"
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "algorithm did not converge"
 msgstr "알고리즘이 수렴하지 않습니다"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' 또는 'start'의 지정이 잘못되었습니다"
 

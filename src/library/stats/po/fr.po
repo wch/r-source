@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-03-18 22:13+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -199,15 +199,15 @@ msgstr ""
 msgid "span is too small"
 msgstr "fenêtre trop étroite"
 
-#: loglin.c:369
+#: loglin.c:370
 msgid "this should not happen"
 msgstr "ceci ne devrait pas se produire"
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "algorithm did not converge"
 msgstr "l'algorithme n'a pas convergé"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "spécification de 'table' ou 'start' incorrecte"
 

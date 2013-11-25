@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,12 +73,12 @@ msgstr "ugyldigt plotsymbol"
 msgid "unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"
 
-#: layout.c:587
+#: layout.c:589
 #, fuzzy
 msgid "invalid 'layout.pos.row'"
 msgstr "ugyldig layout.pos.row"
 
-#: layout.c:591
+#: layout.c:593
 #, fuzzy
 msgid "invalid 'layout.pos.col'"
 msgstr "ugyldig layout.pos.col"
@@ -92,26 +92,26 @@ msgstr "entalstransformationsmatrix"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "Kan ikke lagre gittertilstand.  For mange enheder åbne?"
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 #, fuzzy
 msgid "unimplemented unit function"
 msgstr "Ikke implementeret enhedsfunktion"
 
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 #, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr "Illegal enhed eller enhed er endnu ikke implementeret"
 
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr "Ugyldig enhed"
 
-#: unit.c:1814
+#: unit.c:1816
 #, fuzzy
 msgid "'units' must be character"
 msgstr "Enheder skal være tegn"
 
-#: unit.c:1817
+#: unit.c:1819
 #, fuzzy
 msgid "'units' must be of length > 0"
 msgstr "Enheder skal have længde > 0"

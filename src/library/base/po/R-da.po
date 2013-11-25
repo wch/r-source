@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-02-02 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -683,6 +683,10 @@ msgstr "skal have erstatninger for ikkematchninger"
 
 msgid "must have replacements for matches"
 msgstr "skal have erstatninger for matchninger"
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "ingen DLL angivet"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"

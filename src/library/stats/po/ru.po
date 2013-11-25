@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -203,15 +203,15 @@ msgstr ""
 msgid "span is too small"
 msgstr "перекрытие слишком мало"
 
-#: loglin.c:369
+#: loglin.c:370
 msgid "this should not happen"
 msgstr "быть такого не может"
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "algorithm did not converge"
 msgstr "алгоритм не сошелся"
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "неправильное описание 'table' или 'start'"
 

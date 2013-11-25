@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-19 12:30+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -311,6 +311,13 @@ msgstr "'hgap' doit contenir une seule unité"
 
 msgid "'vgap' must be single unit"
 msgstr "'vgap' doit contenir une seule unité"
+
+#, fuzzy
+msgid "'ncol' must be >= 1"
+msgstr "'l' doit être une mise en page (layout)"
+
+msgid "nrow * ncol < #{legend labels}"
+msgstr ""
 
 msgid "invalid justification"
 msgstr "justification incorrecte"

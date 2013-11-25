@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -753,6 +753,10 @@ msgstr ""
 
 msgid "must have replacements for matches"
 msgstr ""
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "non è stata specificata alcuna libreria condivisa"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -199,15 +199,15 @@ msgstr ""
 msgid "span is too small"
 msgstr " 範囲 (span) が小さすぎます "
 
-#: loglin.c:369
+#: loglin.c:370
 msgid "this should not happen"
 msgstr " これは起こるべきではありません "
 
-#: loglin.c:371
+#: loglin.c:372
 msgid "algorithm did not converge"
 msgstr " アルゴリズムが収束しませんでした "
 
-#: loglin.c:373
+#: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
 msgstr " 'table' または 'start' の指定が誤っています "
 

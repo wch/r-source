@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-03-18 21:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -715,6 +715,10 @@ msgstr "des remplacements doivent être fournis pour les non-correspondances"
 
 msgid "must have replacements for matches"
 msgstr "des remplacements doivent être fournis pour les correspondances"
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "aucune librarie partagée (DLL) n'est spécifiée"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norm '%s' utilise systématiquement 'exact = FALSE' pour l'instant"

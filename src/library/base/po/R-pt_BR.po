@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -734,6 +734,10 @@ msgstr ""
 
 msgid "must have replacements for matches"
 msgstr ""
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "nenhuma DLL foi especificada"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "norma '%s' atualmente sempre usa exact = FALSE"

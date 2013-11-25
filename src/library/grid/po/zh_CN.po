@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -65,11 +65,11 @@ msgstr "图画符号值不对"
 msgid "unable to clip to rotated rectangle"
 msgstr "无法修剪到旋转了的长方形上"
 
-#: layout.c:587
+#: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr "'layout.pos.row'的值不对"
 
-#: layout.c:591
+#: layout.c:593
 msgid "invalid 'layout.pos.col'"
 msgstr "'layout.pos.col'的值不对"
 
@@ -81,23 +81,23 @@ msgstr "奇异转换矩阵"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "无法保留'grid'的状况。是不是因为你打开了太多的装置?"
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "unimplemented unit function"
 msgstr "单位函数目前没有实现"
 
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 msgid "invalid unit or unit not yet implemented"
 msgstr "要么没有这种单位，要么这个单位目前没有被实现"
 
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr "单位不对"
 
-#: unit.c:1814
+#: unit.c:1816
 msgid "'units' must be character"
 msgstr "'units'必需是字符"
 
-#: unit.c:1817
+#: unit.c:1819
 msgid "'units' must be of length > 0"
 msgstr "'units'的长度必需大于零"
 

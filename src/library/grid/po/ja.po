@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-02-28 05:38+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -68,11 +68,11 @@ msgstr " 不正なプロット記号です "
 msgid "unable to clip to rotated rectangle"
 msgstr " 回転された矩形へクリップ出来ません "
 
-#: layout.c:587
+#: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr " 不正な 'layout.pos.row' です "
 
-#: layout.c:591
+#: layout.c:593
 msgid "invalid 'layout.pos.col'"
 msgstr " 不正な 'layout.pos.col' です "
 
@@ -86,23 +86,23 @@ msgstr ""
 " 現在の 'grid' の状態を保持することが出来ません。デバイスを開きすぎていません"
 "か? "
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "unimplemented unit function"
 msgstr " 未実装の単位 (unit) 関数です "
 
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 msgid "invalid unit or unit not yet implemented"
 msgstr " 不正な単位 (unit) か、まだ実装されていない単位 (unit) です "
 
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr " 不正な単位 (unit) です "
 
-#: unit.c:1814
+#: unit.c:1816
 msgid "'units' must be character"
 msgstr " 単位 ('units') は文字型でなければなりません "
 
-#: unit.c:1817
+#: unit.c:1819
 msgid "'units' must be of length > 0"
 msgstr " 単位 ('units') の長さは 0 より大きくなければなりません "
 

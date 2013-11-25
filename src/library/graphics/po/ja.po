@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-02-28 05:43+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -190,9 +190,9 @@ msgstr " プロット記号が不正です "
 msgid "invalid font specification"
 msgstr " フォントの指定が不正です "
 
-#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2127 plot.c:2134
-#: plot.c:3156 plot.c:3158 plot.c:3160 plot.c:3315 plot3d.c:1155 plot3d.c:1159
-#: plot3d.c:1161 plot3d.c:1895
+#: plot.c:291 plot.c:305 plot.c:496 plot.c:501 plot.c:2129 plot.c:2136
+#: plot.c:3158 plot.c:3160 plot.c:3162 plot.c:3317 plot3d.c:1159 plot3d.c:1163
+#: plot3d.c:1165 plot3d.c:1899
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
@@ -248,9 +248,9 @@ msgstr " 対数軸は正の限界を持たなければなりません "
 msgid "invalid type for axis labels"
 msgstr " 軸のラベルの型が不正です "
 
-#: plot.c:780 plot.c:1313 plot.c:1634 plot.c:1699 plot.c:1774 plot.c:1840
-#: plot.c:1916 plot.c:2011 plot.c:2087 plot.c:2365 plot.c:2539 plot.c:2755
-#: plot.c:3297 plot.c:3424 plot.c:3500 plot.c:3666 plot.c:3946 plot3d.c:1864
+#: plot.c:780 plot.c:1313 plot.c:1636 plot.c:1701 plot.c:1776 plot.c:1842
+#: plot.c:1918 plot.c:2013 plot.c:2089 plot.c:2367 plot.c:2541 plot.c:2757
+#: plot.c:3299 plot.c:3426 plot.c:3502 plot.c:3668 plot.c:3948 plot3d.c:1868
 msgid "too few arguments"
 msgstr " 引数が少なすぎます "
 
@@ -263,9 +263,9 @@ msgstr " 軸の番号 %d が不正です "
 msgid "'hadj' must be of length one"
 msgstr " 'hadj' は長さ1でなくてはなりません "
 
-#: plot.c:888 plot.c:2099 plot.c:2376 plot.c:2382 plot.c:2389 plot.c:2397
-#: plot.c:2404 plot.c:2411 plot.c:2418 plot.c:2425 plot.c:2433 plot.c:2440
-#: plot.c:3163
+#: plot.c:888 plot.c:2101 plot.c:2378 plot.c:2384 plot.c:2391 plot.c:2399
+#: plot.c:2406 plot.c:2413 plot.c:2420 plot.c:2427 plot.c:2435 plot.c:2442
+#: plot.c:3165
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr " 長さゼロの '%s' が指定されています "
@@ -297,188 +297,188 @@ msgstr " %s() において 'x' と 'y' の長さが異なります "
 msgid "plot type '%s' will be truncated to first character"
 msgstr " plot タイプ '%s' は最初の一文字に切りつめられます "
 
-#: plot.c:1346 plot.c:3017
+#: plot.c:1346 plot.c:3019
 msgid "invalid plot type"
 msgstr " プロットのタイプが不正です "
 
-#: plot.c:1546
+#: plot.c:1548
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr " プロットのタイプ '%c' が不正です "
 
-#: plot.c:1589
+#: plot.c:1591
 msgid "invalid first argument"
 msgstr " 一番目の引数が不正です "
 
-#: plot.c:1596
+#: plot.c:1598
 msgid "invalid second argument"
 msgstr " 二番目の引数が不正です "
 
-#: plot.c:1604
+#: plot.c:1606
 msgid "invalid third argument"
 msgstr " 三番目の引数が不正です "
 
-#: plot.c:1612
+#: plot.c:1614
 msgid "invalid fourth argument"
 msgstr " 四番目の引数が不正です "
 
-#: plot.c:1620
+#: plot.c:1622
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr " 長さ 0 と非 0 の座標は一緒に使えません "
 
-#: plot.c:1846
+#: plot.c:1848
 msgid "Empty raster"
 msgstr ""
 
-#: plot.c:1929
+#: plot.c:1931
 msgid "invalid arrow head length"
 msgstr " 矢印のやじり部分の長さが不正です "
 
-#: plot.c:1934
+#: plot.c:1936
 msgid "invalid arrow head angle"
 msgstr " 矢印のやじり部分の角度が不正です "
 
-#: plot.c:1939
+#: plot.c:1941
 msgid "invalid arrow head specification"
 msgstr " 矢印のやじり部分の指定が不正です "
 
-#: plot.c:2173
+#: plot.c:2175
 msgid "no coordinates were supplied"
 msgstr " 座標が提供されていません "
 
-#: plot.c:2796
+#: plot.c:2798
 msgid "invalid a=, b= specification"
 msgstr " a=, b= 指定が不正です "
 
-#: plot.c:2805
+#: plot.c:2807
 msgid "'a' and 'b' must be finite"
 msgstr " 'a' と 'b' は有限でなければなりません "
 
-#: plot.c:2940 plot.c:4066 plot.c:4070 plot.c:4073 plot.c:4093 plot.c:4097
-#: plot.c:4100 plot3d.c:1077 plot3d.c:1081 plot3d.c:1086 plot3d.c:1090
-#: plot3d.c:1094 plot3d.c:1098 stem.c:159 stem.c:160 stem.c:162 stem.c:163
+#: plot.c:2942 plot.c:4068 plot.c:4072 plot.c:4075 plot.c:4095 plot.c:4099
+#: plot.c:4102 plot3d.c:1081 plot3d.c:1085 plot3d.c:1090 plot3d.c:1094
+#: plot3d.c:1098 plot3d.c:1102 stem.c:159 stem.c:160 stem.c:162 stem.c:163
 #: stem.c:209 stem.c:210
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " 引数 '%s' が不正です "
 
-#: plot.c:3012 plot.c:3152
+#: plot.c:3014 plot.c:3154
 #, c-format
 msgid "invalid number of points in %s"
 msgstr " %s 中の点の個数が不正です "
 
-#: plot.c:3154
+#: plot.c:3156
 msgid "incorrect argument type"
 msgstr " 引数の型が正しくありません "
 
-#: plot.c:3166
+#: plot.c:3168
 msgid "different argument lengths"
 msgstr " 引数の長さが違います "
 
-#: plot.c:3168
+#: plot.c:3170
 msgid "more 'labels' than points"
 msgstr " 点の数より 'labels' の数が多いです "
 
-#: plot.c:3217
+#: plot.c:3219
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr " 警告: %.2f インチ内に点はありません \n"
 
-#: plot.c:3223
+#: plot.c:3225
 msgid "warning: nearest point already identified\n"
 msgstr " 警告: 近傍点がすでに同定 （identify） されています \n"
 
-#: plot.c:3308
+#: plot.c:3310
 msgid "invalid units"
 msgstr " 単位が不正です "
 
-#: plot.c:3484 plot.c:3591
+#: plot.c:3486 plot.c:3593
 msgid "invalid dendrogram input"
 msgstr " デンドログラムの入力が不正です "
 
-#: plot.c:3648
+#: plot.c:3650
 msgid "invalid symbol parameter vector"
 msgstr " シンボル記号パラメータベクトルが不正です "
 
-#: plot.c:3671
+#: plot.c:3673
 msgid "invalid symbol coordinates"
 msgstr " シンボル記号の座標が不正です "
 
-#: plot.c:3679
+#: plot.c:3681
 msgid "x/y/parameter length mismatch"
 msgstr " x、y もしくはパラメータの長さが不整合です "
 
-#: plot.c:3698
+#: plot.c:3700
 msgid "invalid circles data"
 msgstr " 円のデータが不正です "
 
-#: plot.c:3700 plot.c:3721 plot.c:3746 plot.c:3776
+#: plot.c:3702 plot.c:3723 plot.c:3748 plot.c:3778
 msgid "invalid symbol parameter"
 msgstr " シンボル記号パラメータが不正です "
 
-#: plot.c:3719
+#: plot.c:3721
 msgid "invalid squares data"
 msgstr " 正方形データが不正です "
 
-#: plot.c:3744
+#: plot.c:3746
 msgid "invalid rectangles data (need 2 columns)"
 msgstr " 長方形データが不正です (2 列必要です) "
 
-#: plot.c:3774
+#: plot.c:3776
 msgid "invalid stars data"
 msgstr " 星形データが不正です "
 
-#: plot.c:3816
+#: plot.c:3818
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr " thermometers データが不正です (3 または 4 列必要です) "
 
-#: plot.c:3819
+#: plot.c:3821
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr " 'thermometers[, %s]' が不正です "
 
-#: plot.c:3822
+#: plot.c:3824
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr ""
 " 'thermometers[, %s]' が [0, 1] の範囲外にあります。表示がおかしいかも知れま"
 "せん "
 
-#: plot.c:3825
+#: plot.c:3827
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr " 'thermometers[, 1:2]' が不正です "
 
-#: plot.c:3864
+#: plot.c:3866
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr " 'boxplots' のデータが不正です (5 列必要です) "
 
-#: plot.c:3873
+#: plot.c:3875
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr ""
 " 'boxplots[, 5]' が [0, 1] の範囲外にあります。表示がおかしいかも知れません "
 
-#: plot.c:3875
+#: plot.c:3877
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr " 'boxplots[, 1:4]' が不正です "
 
-#: plot.c:3921
+#: plot.c:3923
 msgid "invalid symbol type"
 msgstr " シンボル記号の型が不正です "
 
-#: plot.c:3959 plot.c:3961 plot.c:3966 plot.c:3968
+#: plot.c:3961 plot.c:3963 plot.c:3968 plot.c:3970
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr " '%s' 引数の長さが不正です "
 
-#: plot3d.c:181 plot3d.c:1921
+#: plot3d.c:181 plot3d.c:1925
 msgid "insufficient 'x' or 'y' values"
 msgstr " 'x' または 'y' の値が不足しています "
 
-#: plot3d.c:185 plot3d.c:1924
+#: plot3d.c:185 plot3d.c:1928
 msgid "dimension mismatch"
 msgstr " 次元が一致しません "
 
-#: plot3d.c:193 plot3d.c:1927
+#: plot3d.c:193 plot3d.c:1931
 msgid "no contour values"
 msgstr " 等高線値がありません "
 
@@ -490,77 +490,77 @@ msgstr " x または y の値または限界値が不正です "
 msgid "invalid contour levels: must be strictly increasing"
 msgstr " 等高線レベルが不正です: 狭義単調増加でなくてはなりません "
 
-#: plot3d.c:1041 plot3d.c:1054
+#: plot3d.c:1045 plot3d.c:1058
 msgid "Axis orientation not calculated"
 msgstr " 軸方向は計算されませんでした "
 
-#: plot3d.c:1074
+#: plot3d.c:1078
 msgid "too few parameters"
 msgstr " パラメータが少なすぎます "
 
-#: plot3d.c:1104
+#: plot3d.c:1108
 msgid "invalid 'x' limits"
 msgstr " 'x' の限界値が不正です "
 
-#: plot3d.c:1106
+#: plot3d.c:1110
 msgid "invalid 'y' limits"
 msgstr " 'y' の限界値が不正です "
 
-#: plot3d.c:1108
+#: plot3d.c:1112
 msgid "invalid 'z' limits"
 msgstr " 'zlim' の限界値が不正です "
 
-#: plot3d.c:1129
+#: plot3d.c:1133
 msgid "'xlab' must be a character vector of length 1"
 msgstr " 'xlab' は長さ 1 の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1131
+#: plot3d.c:1135
 msgid "'ylab' must be a character vector of length 1"
 msgstr " 'ylab' は長さ 1 の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1133
+#: plot3d.c:1137
 msgid "'zlab' must be a character vector of length 1"
 msgstr " 'zlab' は長さ 1 の文字列ベクトルでなくてはなりません "
 
-#: plot3d.c:1153
+#: plot3d.c:1157
 msgid "invalid viewing parameters"
 msgstr " 不正な viewing パラメータです "
 
-#: plot3d.c:1171 plot3d.c:1175
+#: plot3d.c:1175 plot3d.c:1179
 #, c-format
 msgid "invalid '%s' specification"
 msgstr " '%s' の指定が不正です "
 
-#: plot3d.c:1521
+#: plot3d.c:1525
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr " contour(): circular/long seglist -- %s > %d を設定してみてください "
 
-#: plot3d.c:1931
+#: plot3d.c:1935
 msgid "missing 'x' values"
 msgstr " 'x' の値が欠損しています "
 
-#: plot3d.c:1933
+#: plot3d.c:1937
 msgid "increasing 'x' values expected"
 msgstr " 増加する 'x' 値が期待されています "
 
-#: plot3d.c:1938
+#: plot3d.c:1942
 msgid "missing 'y' values"
 msgstr " 'y' の値が欠損しています "
 
-#: plot3d.c:1940
+#: plot3d.c:1944
 msgid "increasing 'y' values expected"
 msgstr " 増加する 'y' 値が期待されています "
 
-#: plot3d.c:1945
+#: plot3d.c:1949
 msgid "invalid NA contour values"
 msgstr " 不正な NA 等高線 (contour) 値です "
 
-#: plot3d.c:1957
+#: plot3d.c:1961
 msgid "all z values are equal"
 msgstr " z 変数の値が全部同じ値です "
 
-#: plot3d.c:1959
+#: plot3d.c:1963
 msgid "all z values are NA"
 msgstr " z 変数の値が全部 NA です "
 

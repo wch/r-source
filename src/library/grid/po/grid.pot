@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,11 +65,11 @@ msgstr ""
 msgid "unable to clip to rotated rectangle"
 msgstr ""
 
-#: layout.c:587
+#: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr ""
 
-#: layout.c:591
+#: layout.c:593
 msgid "invalid 'layout.pos.col'"
 msgstr ""
 
@@ -81,23 +81,23 @@ msgstr ""
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 
-#: unit.c:260 unit.c:410 unit.c:1204 unit.c:1284 unit.c:1364 unit.c:1444
+#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
 msgid "unimplemented unit function"
 msgstr ""
 
-#: unit.c:893 unit.c:1639
+#: unit.c:893 unit.c:1640
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1798
+#: unit.c:1800
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1814
+#: unit.c:1816
 msgid "'units' must be character"
 msgstr ""
 
-#: unit.c:1817
+#: unit.c:1819
 msgid "'units' must be of length > 0"
 msgstr ""
 

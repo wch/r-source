@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -664,6 +664,9 @@ msgid "must have replacements for non-matches"
 msgstr ""
 
 msgid "must have replacements for matches"
+msgstr ""
+
+msgid "No factors specified"
 msgstr ""
 
 msgid "norm '%s' currently always uses exact = FALSE"

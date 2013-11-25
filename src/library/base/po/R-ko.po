@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-08-28 07:45\n"
+"POT-Creation-Date: 2013-11-25 05:14\n"
 "PO-Revision-Date: 2013-02-17 18:18-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -690,6 +690,10 @@ msgstr ""
 
 msgid "must have replacements for matches"
 msgstr ""
+
+#, fuzzy
+msgid "No factors specified"
+msgstr "DLL이 지정되지 않았습니다"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""

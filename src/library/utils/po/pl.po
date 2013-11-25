@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00+0100\n"
+"POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2013-03-18 15:11+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -82,9 +82,9 @@ msgstr ""
 # error(_("invalid '%s' argument"), "preselect")
 # utils/src/windows/widgets.c: 86
 # error(_("invalid '%s' argument"), "preselect")
-#: io.c:314 io.c:318 io.c:328 io.c:557 io.c:738 io.c:789 io.c:801 io.c:805
-#: io.c:811 io.c:1033 io.c:1034 io.c:1036 io.c:1037 io.c:1038 io.c:1039
-#: io.c:1040 io.c:1041 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:309 io.c:313 io.c:323 io.c:552 io.c:733 io.c:784 io.c:796 io.c:800
+#: io.c:806 io.c:1027 io.c:1028 io.c:1030 io.c:1031 io.c:1032 io.c:1033
+#: io.c:1034 io.c:1035 stubs.c:39 stubs.c:59 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -97,7 +97,7 @@ msgstr "niepoprawny argument '%s'"
 # error(_("invalid quote symbol set"))
 # utils/src/io.c: 779
 # error(_("invalid quote symbol set"))
-#: io.c:337 io.c:798
+#: io.c:332 io.c:793
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
@@ -107,7 +107,7 @@ msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 # error(_("cannot open the connection"))
 # utils/src/io.c: 995
 # error(_("cannot open the connection"))
-#: io.c:349 io.c:819 io.c:1021
+#: io.c:344 io.c:814 io.c:1015
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -115,7 +115,7 @@ msgstr "nie można otworzyć połączenia"
 # error(_("cannot read from this connection"))
 # utils/src/io.c: 352
 # error(_("cannot read from this connection"))
-#: io.c:352 io.c:356
+#: io.c:347 io.c:351
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
@@ -123,20 +123,20 @@ msgstr "nie można czytać z tego połączenia"
 # error(_("string terminated by newline or EOF"))
 # utils/src/io.c: 414
 # error(_("string terminated by newline or EOF"))
-#: io.c:403 io.c:421
+#: io.c:398 io.c:416
 #, fuzzy, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr "łańcuch przerwany przez znak nowej linii lub znak końca pliku (EOF)"
 
 # utils/src/io.c: 534
 # error(_("the first argument must be of mode character"))
-#: io.c:553
+#: io.c:548
 msgid "the first argument must be of mode character"
 msgstr "pierwszy argument musi być trybu tekstowego"
 
 # utils/src/io.c: 721
 # sprintf(ConsolePrompt, _("Selection: "))
-#: io.c:740
+#: io.c:735
 #, c-format
 msgid "Selection: "
 msgstr "Wybór: "
@@ -145,13 +145,13 @@ msgstr "Wybór: "
 # error(_("cannot allocate buffer in 'readTableHead'"))
 # utils/src/io.c: 822
 # error(_("cannot allocate buffer in 'readTableHead'"))
-#: io.c:828 io.c:842
+#: io.c:823 io.c:837
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
 # utils/src/io.c: 833
 # error(_("\\ followed by EOF"))
-#: io.c:853
+#: io.c:848
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
@@ -161,49 +161,49 @@ msgstr "\\ a następnie EOF"
 # utils/src/io.c: 881
 # error(_("incomplete final line found by readTableHeader on '%s'"),
 # 		  data.con->description)
-#: io.c:900 io.c:903
+#: io.c:895 io.c:898
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
-#: io.c:960
+#: io.c:955
 msgid "index out of range"
 msgstr ""
 
 # utils/src/io.c: 988
 # error(_("'file' is not a connection"))
-#: io.c:1014
+#: io.c:1008
 msgid "'file' is not a connection"
 msgstr "'file' nie jest połączeniem"
 
 # utils/src/io.c: 991
 # error(_("cannot write to this connection"))
-#: io.c:1017
+#: io.c:1011
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
 # utils/src/io.c: 1021
 # error(_("'dec' must be a single character"))
-#: io.c:1047
+#: io.c:1041
 msgid "'dec' must be a single character"
 msgstr "'dec' musi być pojedynczym znakiem"
 
 # utils/src/io.c: 1048
 # error(_("corrupt data frame -- length of column %d does not not match nrows"), j+1)
-#: io.c:1074
+#: io.c:1068
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1104
+#: io.c:1098
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
 # utils/src/io.c: 1096
 # error(_("corrupt matrix -- dims not not match length"))
-#: io.c:1122
+#: io.c:1116
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
