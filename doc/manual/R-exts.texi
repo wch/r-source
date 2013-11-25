@@ -6756,7 +6756,7 @@ promised as a plug-in.
 @menu
 * Using gctorture::             
 * Using valgrind::              
-* Using AddressSanitizer::      
+* Using Address Sanitizer::     
 * Using Undefined Behaviour Sanitizer::  
 * Using `Dr. Memory'::          
 * Fortran array bounds checking::  
@@ -6826,7 +6826,7 @@ Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
 
 
-@node Using valgrind, Using AddressSanitizer, Using gctorture, Using gctorture and memory access
+@node Using valgrind, Using Address Sanitizer, Using gctorture, Using gctorture and memory access
 @subsection Using valgrind
 
 If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
@@ -6855,8 +6855,8 @@ versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
-On Mac OS 10.6 and later the valgrind session is liable to hang when
-@R{} terminates with @command{valgrind} prior to 3.8.1.
+@c On Mac OS 10.6 and later the valgrind session is liable to hang when
+@c @R{} terminates with @command{valgrind} prior to 3.8.1.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
@@ -6937,15 +6937,15 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
-@node Using AddressSanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Using gctorture and memory access
-@subsection Using AddressSanitizer
+@node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Using gctorture and memory access
+@subsection Using the Address Sanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds of @command{gcc} 4.8.x and @command{clang} 3.1 and
-later@footnote{not including the version distributed by Apple in
-@code{Xcode} 4.6.x or 5}, on common Linux platforms and 64-bit Mac OS X.
-See @uref{https://code.google.com/p/address-sanitizer/}.
+builds@footnote{not including the versions distributed by Apple in
+@code{Xcode} 4.6.x or 5} of @command{gcc} 4.8.0 and @command{clang} 3.1
+and later on common Linux and OS X platforms.  See
+@uref{https://code.google.com/p/address-sanitizer/}.
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address} (@command{gcc} and recent versions of
@@ -6969,38 +6969,35 @@ The simplest way to make use of this is to build a version of @R{} with
 something like
 
 @example
-CC="gcc-4.8.0 -std=gnu99 -fsanitize=address"
+CC="gcc-4.8 -std=gnu99 -fsanitize=address"
 CFLAGS="-fno-omit-frame-pointer -O2 -Wall -pedantic -mtune=native"
 @end example
 
 @noindent
 which will ensure that the @code{libasan} run-time library is compiled
-into the @R{} executable.  However, building @R{} with e.g.@:
+into the @R{} executable.  However this check can be enabled on a
+per-package basis by using a @file{~/.R/Makevars} file like
+@example
+CC = gcc-4.8 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
+CXX = g++-4.8 -fsanitize=address -fno-omit-frame-pointer
+F77 = gfortran-4.8 -fsanitize=address
+FC = gfortran-4.8 -fsanitize=address
+@end example
+(On some platforms it may be necessary to build @R{} with e.g.@:
 
 @example
-MAIN_LD="gcc-4.8.0 -std=gnu99 -fsanitize=address"
+MAIN_LD="gcc-4.8 -std=gnu99 -fsanitize=address"
 @end example
+to allow per-package checking.)
 
-@noindent
-allows this check to be enabled on a per-package basis by using a
-@file{~/.R/Makevars} file like
-@example
-CC = gcc-4.8.0 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
-CXX = g++-4.8.0 -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran-4.8.0 -fsanitize=address
-FC = gfortran-4.8.0 -fsanitize=address
-@end example
-
-
-@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using AddressSanitizer, Using gctorture and memory access
-@subsection Using Undefined Behaviour Sanitizer
+@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using Address Sanitizer, Using gctorture and memory access
+@subsection Using the Undefined Behaviour Sanitizer
 
 `UBSanitizer' is a tool for C/C++ selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
 @samp{-fsanitize=undefined,address}) in suitable builds of
 @command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in a
-similar way@footnote{Setting @code{MAIN_LD} may not be needed.} to the
-address sanitizer: see the previous subsection.)
+similar way to the address sanitizer: see the previous subsection.)
 
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
@@ -7026,7 +7023,7 @@ For more details on the topic see
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
 for (currently) 32-bit Windows and Linux with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
-works better if inlining and frame pointer optimizations are disabled}
+works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
 
 @node Fortran array bounds checking,  , Using `Dr. Memory', Using gctorture and memory access
