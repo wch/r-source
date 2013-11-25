@@ -1,5 +1,5 @@
 
-R version 3.0.2 RC (2013-09-22 r63960) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2013-11-25 r64294) -- "Frisbee Sailing"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.215   0.021   0.231 
+  0.129   0.015   0.134 
