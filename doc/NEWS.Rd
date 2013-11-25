@@ -60,7 +60,7 @@
       \item \code{aggregate()} could fail when there were too many
       levels present in the \code{by} argument.  (\PR{15004})
 
-      \item \code{namespaceImportFrom} needed to detect primitive
+      \item \code{namespaceImportFrom()} needed to detect primitive
       functions when checking for duplicated imports (reported by
       Karl Forner).
 
@@ -75,7 +75,7 @@
 
       \item Several functions did not handle zero-length vectors properly,
       including \code{browseEnv()}, \code{format()}, \code{gl()},
-      \code{relist()} and \code{summary.data.frame()}.  (e.g., \PR{15499})
+      \code{relist()} and \code{summary.data.frame()}.  (E.g., \PR{15499})
 
       \item \code{Sweave()} did not restore the \R{} output to the
       console if it was interrupted by a user in the middle of evaluating
@@ -104,7 +104,7 @@
       longer causes the window to close. (\PR{15407})
 
       \item Improved handling of edge cases in
-      \code{parallel::splitindices}. (\PR{15552})
+      \code{parallel::splitindices()}. (\PR{15552})
       
       \item HTML display of results from \code{help.search()} and 
       \code{??} sometimes contained badly constructed links.
@@ -120,6 +120,10 @@
       
       \item The \code{bmp()} device was not recording \code{res = NA}
       correctly: it is now recorded as 72 ppi.
+
+      \item Several potential problems with compiler-specific behaviour
+      have been identified using the \sQuote{Undefined Behaviour
+	Sanitizer} in conjunction with the \command{clang} compiler.
     }
   }
 }
