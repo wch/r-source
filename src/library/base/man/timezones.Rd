@@ -31,9 +31,10 @@ Sys.timezone()
   It is not in general possible to retrieve the system's own name(s) for
   the current timezone, but \code{Sys.timezone} will retrieve the name
   it uses for the current time (and the name may differ depending on
-  whether daylight saving time is in effect).
+  whether daylight saving time is in effect).  (Some hints for retrieving
+  the name from a Unix-alike OS are in the examples.)
 
-  On most platforms it is  possible to set the time zone via the
+  On almost all platforms it is possible to set the time zone via the
   environment variable \env{TZ}: see the section on \sQuote{Time zone
     names} for suitable values.
 
@@ -46,17 +47,16 @@ Sys.timezone()
 
   Time zones did not come into use until the second half of the
   nineteenth century, and DST was first introduced in the early
-  twentieth century, most widely during the First World War (in 1916).
-#ifdef unix
+  twentieth century, most widely in 1916.
+  
   The most common implementation of \code{POSIXct} is as signed 32-bit
   integers and so only goes back to the end of 1901: on such systems \R
   assumes that dates prior to that are in the same time zone as they
   were in 1902.
-#endif
 }
 
 \note{
-  There is currently (since 2007) considerable disruption over changes
+  There has been since 2007 considerable disruption over changes
   to the timings of the DST transitions, aimed at energy conservation.
   These often have short notice and timezone databases may not be up to
   date (even if the OS has been updated recently).
@@ -83,7 +83,8 @@ Sys.timezone()
   which is often at least partially supported, but there usually are
   other more user-friendly ways to specify timezones.
 
-  Many systems make use of a timezone database compiled by Arthur Olson,
+  Many systems make use of a timezone database originally compiled by
+  Arthur David Olson (and now managed by IANA),
   in which the preferred way to refer to a time zone by a location
   (typically of a city) e.g. \code{Europe/London},
   \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
@@ -103,8 +104,8 @@ Sys.timezone()
   For most Unix-alikes use the Olson database.  The system-specific
   default location in the file system varies, e.g.
   \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
-  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/usr/etc/zoneinfo},
-  \ldots.  It is likely that there is a file \file{zone.tab} in that
+  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/etc/zoneinfo},
+  \ldots.  It is likely that there is a file \file{zone.tab} under that
   directory listing the locations known as time-zone names (but not for
   example \code{EST5EDT}).  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
@@ -141,6 +142,7 @@ Sys.timezone()
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
 }
+
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
@@ -148,6 +150,8 @@ Sys.timezone()
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
+% suggested locations include those from libical sources.
+% zone_sun.tab is not quite the same format: has a "-" column before comments
 \examples{
 Sys.timezone()
 
@@ -159,13 +163,28 @@ tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
 str(tzones$name)
 #endif
 #ifdef unix
-\dontrun{
-## need to supply a suitable file path (if any) for your system
-tzfile <- "/usr/share/zoneinfo/zone.tab"
+## need to find a suitable file path (if any) for your system
+tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+            "/usr/lib/zoneinfo",   # early glibc
+            "/usr/share/lib/zoneinfo", # AIX?
+            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+tzfiles <- c(file.path(tzdirs, "zone.tab"),
+            "/usr/share/lib/zoneinfo/tab/zone_sun.tab") # Solaris
+if (any(have <- file.exists(tzfiles))) {
+tzfile <- tzfiles[have][1]
 tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
     col.names = c("country", "coords", "name", "comments"),
     as.is = TRUE, fill = TRUE, comment.char = "#")
 str(tzones$name)
+}
+
+## Try to find the system's internal name for the current timezone.
+if(nzchar(lt <- Sys.getenv("TZ"))) { # always set on Solaris, AIX
+  print(lt)
+} else {
+  lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
+  if (grepl(pat <- "^/usr/share/zoneinfo/", lt))
+     print(sub(pat, "", lt))
 }
 #endif
 }
