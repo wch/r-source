@@ -31,9 +31,10 @@ Sys.timezone()
   It is not in general possible to retrieve the system's own name(s) for
   the current timezone, but \code{Sys.timezone} will retrieve the name
   it uses for the current time (and the name may differ depending on
-  whether daylight saving time is in effect).
+  whether daylight saving time is in effect).  (Some hints for retrieving
+  the name from a Unix-alike OS are in the examples.)
 
-  On most platforms it is  possible to set the time zone via the
+  On almost all platforms it is possible to set the time zone via the
   environment variable \env{TZ}: see the section on \sQuote{Time zone
     names} for suitable values.
 
@@ -140,6 +141,7 @@ Sys.timezone()
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
 }
+
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
@@ -173,6 +175,15 @@ tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
     col.names = c("country", "coords", "name", "comments"),
     as.is = TRUE, fill = TRUE, comment.char = "#")
 str(tzones$name)
+}
+
+## Try to find the system's internal name for the current timezone.
+if(nzchar(lt <- Sys.getenv("TZ"))) { # always set on Solaris
+  print(lt)
+} else {
+  lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
+  if (grepl(pat <- "^/usr/share/zoneinfo/", lt))
+     print(sub(pat, "", lt))
 }
 #endif
 }
