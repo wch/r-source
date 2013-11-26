@@ -83,7 +83,8 @@ Sys.timezone()
   which is often at least partially supported, but there usually are
   other more user-friendly ways to specify timezones.
 
-  Many systems make use of a timezone database compiled by Arthur Olson,
+  Many systems make use of a timezone database originally compiled by
+  Arthur David Olson (and now managed by IANA),
   in which the preferred way to refer to a time zone by a location
   (typically of a city) e.g. \code{Europe/London},
   \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
@@ -178,7 +179,7 @@ str(tzones$name)
 }
 
 ## Try to find the system's internal name for the current timezone.
-if(nzchar(lt <- Sys.getenv("TZ"))) { # always set on Solaris
+if(nzchar(lt <- Sys.getenv("TZ"))) { # always set on Solaris, AIX
   print(lt)
 } else {
   lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
