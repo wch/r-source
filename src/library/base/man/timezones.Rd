@@ -46,17 +46,16 @@ Sys.timezone()
 
   Time zones did not come into use until the second half of the
   nineteenth century, and DST was first introduced in the early
-  twentieth century, most widely during the First World War (in 1916).
-#ifdef unix
+  twentieth century, most widely in 1916.
+  
   The most common implementation of \code{POSIXct} is as signed 32-bit
   integers and so only goes back to the end of 1901: on such systems \R
   assumes that dates prior to that are in the same time zone as they
   were in 1902.
-#endif
 }
 
 \note{
-  There is currently (since 2007) considerable disruption over changes
+  There has been since 2007 considerable disruption over changes
   to the timings of the DST transitions, aimed at energy conservation.
   These often have short notice and timezone databases may not be up to
   date (even if the OS has been updated recently).
@@ -103,8 +102,8 @@ Sys.timezone()
   For most Unix-alikes use the Olson database.  The system-specific
   default location in the file system varies, e.g.
   \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
-  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/usr/etc/zoneinfo},
-  \ldots.  It is likely that there is a file \file{zone.tab} in that
+  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \file{/etc/zoneinfo},
+  \ldots.  It is likely that there is a file \file{zone.tab} under that
   directory listing the locations known as time-zone names (but not for
   example \code{EST5EDT}).  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
@@ -148,6 +147,8 @@ Sys.timezone()
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
+% suggested locations include those from libical sources.
+% zone_sun.tab is not quite the same format: has a "-" column before comments
 \examples{
 Sys.timezone()
 
@@ -159,9 +160,15 @@ tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
 str(tzones$name)
 #endif
 #ifdef unix
-\dontrun{
-## need to supply a suitable file path (if any) for your system
-tzfile <- "/usr/share/zoneinfo/zone.tab"
+## need to find a suitable file path (if any) for your system
+tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+            "/usr/lib/zoneinfo",   # early glibc
+            "/usr/share/lib/zoneinfo", # AIX?
+            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+tzfiles <- c(file.path(tzdirs, "zone.tab"),
+            "/usr/share/lib/zoneinfo/tab/zone_sun.tab") # Solaris
+if (any(have <- file.exists(tzfiles))) {
+tzfile <- tzfiles[have][1]
 tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
     col.names = c("country", "coords", "name", "comments"),
     as.is = TRUE, fill = TRUE, comment.char = "#")
