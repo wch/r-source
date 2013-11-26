@@ -18,7 +18,13 @@
 
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
-Sys.timezone <- function() Sys.getenv("TZ", names = FALSE)
+## overridden on Windows
+Sys.timezone <- function(location = FALSE) {
+    tz <- Sys.getenv("TZ", names = FALSE)
+    if(!location || nzchar(tz)) return(tz)
+    lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
+    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt) else ""
+}
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
@@ -1017,4 +1023,26 @@ function(x, value)
 {
     names(x$year) <- value
     x
+}
+
+## 3.1.0
+
+OlsonNames <- function()
+{
+    if(.Platform$OS.type == "windows")
+        tzdir <- file.path(R.home("share"), "zoneinfo")
+    else {
+        tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+                    "/usr/share/lib/zoneinfo", # Solaris, AIX
+                    "/usr/lib/zoneinfo",   # early glibc
+                    "/etc/zoneinfo", "/usr/etc/zoneinfo")
+        tzdirs <- tzdirs[file.exists(tzdirs)]
+        if (!length(tzdirs)) {
+            warning("no Olson database found")
+            return(character())
+        } else tzdir <- tzdirs[1]
+    }
+    x <- list.files(tzdir, recursive = TRUE)
+    ## all auxiliary files are l/case.
+    grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
 }

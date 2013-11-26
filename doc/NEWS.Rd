@@ -99,8 +99,14 @@
       gains accuracy in some cases, e.g., for \code{lgamma()} or
       \code{besselI()}.  (Suggested by Morten Wellinder in \PR{15529}.)
 
-      \item{print.table(x, zero.print=".")} now also has an effect when
-      \code{x} is not integer valued.
+      \item \code{print.table(x, zero.print = ".")} now also has an
+      effect when \code{x} is not integer-valued.
+      
+      \item There is more support to explore the system's idea of
+      timezone names.  \code{Sys.timezone(location = TRUE)} tries to
+      give the current system setting (and suceeds at least on Linux, OS
+      X, Solaris and Windows), and \code{OlsonNames()} lists the names
+      in the system's Olson database.
     }
   }
 
