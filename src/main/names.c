@@ -649,6 +649,7 @@ FUNTAB R_FunTab[] =
 {"Sys.which",	do_syswhich,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"useInternet2",do_setInternet2,0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mkjunction", do_mkjunction,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"tzone_name", do_tzone_name,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 {"parse",	do_parse,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
