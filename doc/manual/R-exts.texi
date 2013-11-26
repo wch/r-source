@@ -4864,6 +4864,10 @@ e.g.@: @code{RShowDoc("KEYWORDS")} to inspect the standard keywords from
 within @R{}.  There can be more than one @code{\keyword} entry if the @R{}
 object being documented falls into more than one category, or none.
 
+Do strongly consider using @code{\concept} (@pxref{Indices}) instead of
+@code{\keyword} if you are about to use more than very few non standard
+keywords. 
+
 The special keyword @samp{internal} marks a page of internal objects
 that are not part of the package's API.  If the help page for object
 @code{foo} has keyword @samp{internal}, then @code{help(foo)} gives this
@@ -5846,7 +5850,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@url{http://rstudio.org/}).
+example RStudio (@uref{http://rstudio.org/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -6336,7 +6340,7 @@ which provide complementary examples to those given here.)
 @menu
 * Browsing::                    
 * Debugging R code::            
-* Using gctorture and memory access::  
+* Checking memory access::      
 * Debugging compiled code::     
 @end menu
 
@@ -6420,7 +6424,7 @@ really necessary, objects can be assigned to the workspace from the
 browser prompt (by using @code{<<-} if the name is not already in
 scope).
 
-@node Debugging R code, Using gctorture and memory access, Browsing, Debugging
+@node Debugging R code, Checking memory access, Browsing, Debugging
 @section Debugging R code
 
 @findex traceback
@@ -6736,8 +6740,8 @@ temporary code, but @code{trace} can help with functions in a namespace
 @code{trace(,edit=TRUE)} to insert code visually.
 
 
-@node Using gctorture and memory access, Debugging compiled code, Debugging R code, Debugging
-@section Using gctorture and memory access
+@node Checking memory access, Debugging compiled code, Debugging R code, Debugging
+@section Checking memory access
 
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g.,@: segfaults) on some machines.  Often
@@ -6762,12 +6766,12 @@ promised as a plug-in.
 * Fortran array bounds checking::  
 @end menu
 
-@node Using gctorture, Using valgrind, Using gctorture and memory access, Using gctorture and memory access
+@node Using gctorture, Using valgrind, Checking memory access, Checking memory access
 @subsection Using gctorture
 
 @findex gctorture
-We can help to detect memory problems earlier by running garbage
-collection as often as possible.  This is achieved by
+We can help to detect memory problems in @R{} objects earlier by running
+garbage collection as often as possible.  This is achieved by
 @code{gctorture(TRUE)}, which as described on its help page
 
 @quotation
@@ -6826,15 +6830,13 @@ Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.
 
 
-@node Using valgrind, Using Address Sanitizer, Using gctorture, Using gctorture and memory access
+@node Using valgrind, Using Address Sanitizer, Using gctorture, Checking memory access
 @subsection Using valgrind
 
-If you have access to Linux on an @cputype{ix86}, @cputype{x86_64},
-@cputype{ppc32}, @cputype{ppc64} or @cputype{s390x} platform, or (some
-versions of) OS X you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
-check for possible problems.  To run some examples under @code{valgrind}
-use something like
+If you have access to Linux on a common platform or (some versions of)
+OS X you can use @code{valgrind} (@uref{http://www.valgrind.org/},
+pronounced to rhyme with `tinned') to check for possible problems.  To
+run some examples under @code{valgrind} use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
@@ -6911,7 +6913,9 @@ C code can be inspected (@pxref{Inspecting R objects}).
 @command{valgrind} is good at spotting the use of uninitialized values:
 use option @option{--track-origins=yes} to show where these originated
 from.  What it cannot detect is the misuse of arrays allocated on the
-stack: this includes C automatic variables and most Fortran arrays.
+stack: this includes C automatic variables and some@footnote{small
+fixed-size arrays by default in @command{gfortran}, for example.}
+Fortran arrays.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
@@ -6937,14 +6941,16 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
-@node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Using gctorture and memory access
+@node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Checking memory access
 @subsection Using the Address Sanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{not including the versions distributed by Apple in
-@code{Xcode} 4.6.x or 5} of @command{gcc} 4.8.0 and @command{clang} 3.1
+@code{Xcode} 4.6.x or 5} of @command{gcc} 4.8.0 or @command{clang} 3.1
 and later on common Linux and OS X platforms.  See
+@uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
+@uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://code.google.com/p/address-sanitizer/}.
 
 It requires code to have been compiled @emph{and linked} with
@@ -6953,17 +6959,17 @@ It requires code to have been compiled @emph{and linked} with
 and using @code{-fno-omit-frame-pointer} will give more legible reports.
 It has a runtime penalty of 2--3x, extended compilation times and uses
 substantially more memory, often 1--2GB, at run time.  In contrast to
-@command{valgrind}, it can detect misuse of stack variables but not the
-use of uninitialized memory (although that may come with
-@option{-fsanitize=memory} in future versions of @command{clang}).
+@command{valgrind}, it can detect misuse of stack and global variables
+but not the use of uninitialized memory.
 
 Current versions do not return symbolic addresses for the location of
-the error without some help.  One possibility is to use an external
-symbolizer such as @command{asan_symbolize.py} from
-@url{http://llvm.org}: it makes use of @command{llvm-symbolizer} if
-available.  For example, the check output can be piped through
-@command{asan_symbolize.py} and then (for compiled C++ code)
-@command{c++filt}.
+the error.  One possibility is to use an external symbolizer such as
+@command{asan_symbolize.py}@footnote{installed on some Linux systems as
+@command{asan_symbolize}, and obtainable from
+@uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
+it makes use of @command{llvm-symbolizer} if available.}.  For example,
+the check output can be piped through @command{asan_symbolize.py} and
+then (for compiled C++ code) @command{c++filt}.
 
 The simplest way to make use of this is to build a version of @R{} with
 something like
@@ -6983,17 +6989,22 @@ CXX = g++-4.8 -fsanitize=address -fno-omit-frame-pointer
 F77 = gfortran-4.8 -fsanitize=address
 FC = gfortran-4.8 -fsanitize=address
 @end example
-(On some platforms it may be necessary to build @R{} with e.g.@:
+(Note that @code{-fsanitize=address} has to be part of the compiler
+specification to ensure it is used for linking.  These settings will not
+be honoured by packages which ignore @file{~/.R/Makevars}.)
 
-@example
-MAIN_LD="gcc-4.8 -std=gnu99 -fsanitize=address"
-@end example
-to allow per-package checking.)
+Some versions of @command{clang} also have a (currently experimental)
+memory sanitizer invoked by @option{-fsanitize=memory} which detects
+uses of uninitialized memory. See
+@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.
 
-@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using Address Sanitizer, Using gctorture and memory access
+Clang also has a Static Analyser run on the source files during
+compilation: see @uref{http://clang-analyzer.llvm.org/}.
+
+@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
 
-`UBSanitizer' is a tool for C/C++ selected by
+`UBSanitizer' is a tool for C/C++ source code selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
 @samp{-fsanitize=undefined,address}) in suitable builds of
 @command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in a
@@ -7010,6 +7021,10 @@ coerce a @code{NaN} to type @code{int} or @code{NA_INTEGER} to an
 unsigned type such as @code{size_t}.  Also common is @code{y[x - 1]}
 forgetting that @code{x} might be @code{NA_INTEGER}.
 
+Finer control of what is checked can be achieved by other options: for
+@command{clang} see
+@uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
+
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
 
@@ -7017,7 +7032,7 @@ For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
 
-@node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Using gctorture and memory access
+@node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
@@ -7026,12 +7041,12 @@ for (currently) 32-bit Windows and Linux with similar aims to
 works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
 
-@node Fortran array bounds checking,  , Using `Dr. Memory', Using gctorture and memory access
+@node Fortran array bounds checking,  , Using `Dr. Memory', Checking memory access
 @subsection Fortran array bounds checking
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Solaris Studio has @option{-C}.  This gives
+@option{-fbounds-check} and Solaris Studio has @option{-C}.  Can gives
 an error when the upper or lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
@@ -7053,7 +7068,13 @@ FFLAGS = -g -O2 -mtune=native -fbounds-check
 @noindent
 when you run @command{R CMD check}.
 
-@node Debugging compiled code,  , Using gctorture and memory access, Debugging
+This may report incorrectly errors with the way that Fortran character
+variables are passed, particularly when Fortran subroutines are called
+from C code.  This includes the use of BLAS and LAPACK subroutines in
+@R{}, so it is not advisable to build @R{} itself with bounds checking.
+
+
+@node Debugging compiled code,  , Checking memory access, Debugging
 @section Debugging compiled code
 @cindex Debugging
 
