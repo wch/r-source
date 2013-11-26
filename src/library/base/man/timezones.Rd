@@ -173,7 +173,31 @@ OlsonNames()
 Sys.timezone()
 Sys.timezone(location = TRUE)
 
-str(OlsonNames()) ## typically several hundered names
+str(OlsonNames()) ## typically 4-900 names
+
+#ifdef windows
+tzfile <- file.path(R.home("share"), "zoneinfo", "zone.tab")
+tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
+    col.names = c("country", "coords", "name", "comments"),
+    as.is = TRUE, fill = TRUE, comment.char = "#")
+str(tzones)
+#endif
+#ifdef unix
+## need to find a suitable file path (if any) for your system
+tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+            "/usr/lib/zoneinfo",   # early glibc
+            "/usr/share/lib/zoneinfo", # AIX?
+            "/etc/zoneinfo", "/usr/etc/zoneinfo")
+tzfiles <- c(file.path(tzdirs, "zone.tab"),
+            "/usr/share/lib/zoneinfo/tab/zone_sun.tab") # Solaris
+if (any(have <- file.exists(tzfiles))) {
+tzfile <- tzfiles[have][1]
+tzones <- read.delim(tzfile, row.names = NULL, header = FALSE,
+    col.names = c("country", "coords", "name", "comments"),
+    as.is = TRUE, fill = TRUE, comment.char = "#")
+str(tzones)
+}
+#endif
 }
 \keyword{utilities}
 \keyword{chron}
