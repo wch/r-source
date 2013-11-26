@@ -676,7 +676,10 @@ c sanity check needed for PR#13517
 11741 continue
       goto 11711
 11712 continue
-      if(er.lt.n .and. x(er+1)-x(er).lt.x(eb+1)-x(eb)) goto 11621
+C avoid bounds error: this was .and. but order is not guaranteed
+      if(er.lt.n) then
+        if(x(er+1)-x(er).lt.x(eb+1)-x(eb)) goto 11621
+      endif
       eb=er
       pw=w(bb)+w(eb)
       px=(x(bb)*w(bb)+x(eb)*w(eb))/pw
