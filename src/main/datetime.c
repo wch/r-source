@@ -397,7 +397,10 @@ static double mktime0 (struct tm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
-    OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
+    if(sizeof(time_t) == 8)
+	OK = !have_broken_mktime() || tm->tm_year >= 70;
+    else
+	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
 	res = (double) mktime(tm);
 	if (res == (double)-1) return res;
@@ -418,7 +421,13 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     struct tm *res= ltm;
     time_t t;
 
-    if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
+    Rboolean OK;
+    if (sizeof(time_t) == 8)
+	OK = !have_broken_mktime() || d > 0.;
+    else
+	OK = d < 2147483647.0 && 
+	    d > (have_broken_mktime() ? 0. : -2147483647.0);
+    if(OK) {
 	t = (time_t) d;
 	/* if d is negative and non-integer then t will be off by one day
 	   since we really need floor(). But floor() is slow, so we just

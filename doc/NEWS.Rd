@@ -107,6 +107,13 @@
       give the current system setting (and suceeds at least on Linux, OS
       X, Solaris and Windows), and \code{OlsonNames()} lists the names
       in the system's Olson database.
+      
+      \item Platforms with a 64-bit \code{time_t} type are allowed to
+      handle conversions between the \code{"POSIXct"} and
+      \code{"POSIXlt"} classes for date-times outside the 32-bit range
+      (before 1902 or after 2037): the existing workarounds are used on
+      other platforms.  (Note that timezone information for post-2037 is
+      speculative at best.)
     }
   }
 
