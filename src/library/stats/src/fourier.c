@@ -27,6 +27,7 @@
 
 #include <Defn.h>
 
+#undef _
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)

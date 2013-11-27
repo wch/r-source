@@ -25,6 +25,7 @@
 #include <R_ext/Applic.h>
 
 #include "statsR.h"
+#undef _
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("stats", String)

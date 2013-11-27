@@ -31,6 +31,7 @@
 #include <R_ext/RS.h>           /* for R_chk_* allocation */
 #include <ctype.h>
 #include <R_ext/Print.h>
+#undef _
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #define _(String) dgettext ("tools", String)
