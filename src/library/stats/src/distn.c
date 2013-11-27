@@ -27,6 +27,12 @@
 #include <Rmath.h>
 #include "statsR.h"
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 /* interval at which to check interrupts */
 //#define NINTERRUPT 1000000
 

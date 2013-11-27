@@ -26,6 +26,14 @@
 #include <Defn.h>
 #include "RBufferUtils.h"
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("tools", String)
+#else
+#define _(String) (String)
+#endif
+
+
 #define MAXLINE MAXELTSIZE
 #define MAXNARGS 100
 /*               ^^^ not entirely arbitrary, but strongly linked to allowing %$1 to %$99 !*/
