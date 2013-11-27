@@ -37,8 +37,8 @@
   period of 144 hours), but \code{"7 DSTdays"}) can be used as an
   alternative.  \code{"month"} and \code{"year"} allow for DST.)
 
-  The \link{timezone} of the result is taken from \code{from}: remember
-  that GMT means UTC (and not the timezone of Greenwich, England) and so
+  The \link{time zone} of the result is taken from \code{from}: remember
+  that GMT means UTC (and not the time zone of Greenwich, England) and so
   does not have daylight savings time.
 
   Using \code{"month"} first advances the month without changing the
@@ -58,7 +58,7 @@ seq(ISOdate(2000,1,1), by = "month", length.out = 12)
 seq(ISOdate(2000,1,31), by = "month", length.out = 4)
 ## quarters
 seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "3 months")
-## days vs DSTdays: use c() to lose the timezone.
+## days vs DSTdays: use c() to lose the time zone.
 seq(c(ISOdate(2000,3,20)), by = "day", length.out = 10)
 seq(c(ISOdate(2000,3,20)), by = "DSTday", length.out = 10)
 seq(c(ISOdate(2000,3,20)), by = "7 DSTdays", length.out = 4)

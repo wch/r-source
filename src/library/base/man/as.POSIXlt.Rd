@@ -39,9 +39,9 @@ as.POSIXlt(x, tz = "", \dots)
 }
 \arguments{
   \item{x}{An object to be converted.}
-  \item{tz}{A timezone specification to be used for the conversion,
+  \item{tz}{A time zone specification to be used for the conversion,
     \emph{if one is required}.  System-specific (see \link{time zones}),
-    but \code{""} is the current timezone, and \code{"GMT"} is UTC
+    but \code{""} is the current time zone, and \code{"GMT"} is UTC
     (Universal Time, Coordinated).}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
@@ -84,9 +84,9 @@ as.POSIXlt(x, tz = "", \dots)
   Character input is first converted to class \code{"POSIXlt"} by
   \code{\link{strptime}}: numeric input is first converted to
   \code{"POSIXct"}.  Any conversion that needs to go between the two
-  date-time classes requires a timezone: conversion from
+  date-time classes requires a time zone: conversion from
   \code{"POSIXlt"} to \code{"POSIXct"} will validate times in the
-  selected timezone.  One issue is what happens at transitions
+  selected time zone.  One issue is what happens at transitions
   to and from DST, for example in the UK
 \preformatted{as.POSIXct(strptime("2011-03-27 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
@@ -123,7 +123,7 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   representation (such as a named day of the week) use the
   \code{\link[base:format.POSIXlt]{format}} method.
 
-  If a timezone is needed and that specified is invalid on your system,
+  If a time zone is needed and that specified is invalid on your system,
   what happens is system-specific but attempts to set it will probably
   be ignored.
 }

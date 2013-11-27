@@ -141,7 +141,7 @@
       order) when setting the temporary directory for the session: see
       \code{\link{tempdir}}.  \env{TMPDIR} is also used by some of the
       utilities see the help for \code{\link{build}}.}
-    \item{\env{TZ}:}{Optional.  The current timezone.  See
+    \item{\env{TZ}:}{Optional.  The current time zone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}
     \item{\env{no_proxy}, \env{http_proxy}, \env{ftp_proxy}:}{
@@ -178,7 +178,7 @@
     \item{\env{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}
     \item{\env{TZDIR}:}{Optional.  The top-level directory of the
-      timezone database.  See \code{\link{Sys.timezone}}.}
+      time-zone database.  See \code{\link{Sys.timezone}}.}
   }
 }
 #endif

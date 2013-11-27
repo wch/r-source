@@ -26,7 +26,7 @@ strptime(x, format, tz = "")
 }
 \arguments{
   \item{x}{An object to be converted.}
-  \item{tz}{A character string specifying the timezone to be used for
+  \item{tz}{A character string specifying the time zone to be used for
     the conversion.  System-specific (see \code{\link{as.POSIXlt}}), but
     \code{""} is the current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default for the \code{format}
@@ -36,7 +36,7 @@ strptime(x, format, tz = "")
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{usetz}{logical.  Should the timezone be appended to the output?
+  \item{usetz}{logical.  Should the time zone be appended to the output?
     This is used in printing times, and as a workaround for problems with
     using \code{"\%Z"} on some Linux systems.}
 }
@@ -130,8 +130,8 @@ strptime(x, format, tz = "")
   optional on input.
 
   Note that when \code{\%z} or \code{\%Z} is used for output with an
-  object with an assigned timezone an attempt is made to use the values
-  for that timezone --- but it is not guaranteed to succeed.
+  object with an assigned time zone an attempt is made to use the values
+  for that time zone --- but it is not guaranteed to succeed.
 
   Also defined in the current standards but less widely implemented
   (e.g. not for output on Windows) are
@@ -198,12 +198,12 @@ strptime(x, format, tz = "")
   representing the time.  \code{NA} times are returned as \code{NA_character_}.
 
   \code{strptime} turns character representations into an object of
-  class \code{"\link{POSIXlt}"}.  The timezone is used to set the
+  class \code{"\link{POSIXlt}"}.  The time zone is used to set the
   \code{isdst} component and to set the \code{"tzone"} attribute if
   \code{tz != ""}.  If the specified time is invalid (for example
   \samp{"2010-02-30 08:00"}) all the components of the result are
   \code{NA}.  (NB: this does means exactly what it says -- if it is an
-  invalid time, not just a time that does not exist in some timezone.)
+  invalid time, not just a time that does not exist in some time zone.)
   %% One of Master B Diggs moments of infamy
 }
 \note{
@@ -216,16 +216,16 @@ strptime(x, format, tz = "")
   completely: it is assumed that unspecified seconds, minutes or hours
   are zero, and an unspecified year, month or day is the current one.
 
-  If the timezone specified is invalid on your system, what happens is
+  If the time zone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
 
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   correctly.
 
-  Remember that in most timezones some times do not occur and some occur
+  Remember that in most time zones some times do not occur and some occur
   twice because of transitions to/from \sQuote{daylight saving} (also
   known a \sQuote{summer}) time.  \code{strptime} does not validate such
-  times (it does not assume a specific timezone), but conversion by
+  times (it does not assume a specific time zone), but conversion by
   \code{\link{as.POSIXct}}) will do so.  Conversion by \code{strftime}
   and formatting/printing uses OS facilities and may (and does on
   Windows) return nonsensical results for non-existent times at DST
@@ -290,7 +290,7 @@ op <- options(digits.secs = 3)
 z
 options(op)
 
-## timezones are not portable, but 'EST5EDT' comes pretty close.
+## time zones name are not portable, but 'EST5EDT' comes pretty close.
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
                "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")

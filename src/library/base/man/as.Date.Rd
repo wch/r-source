@@ -38,7 +38,7 @@ as.Date(x, \dots)
     non-\code{NA} element, and give an error if neither works.}
   \item{origin}{a Date object, or something which can be coerced by
     \code{as.Date(origin, \dots)} to such an object.}
-  \item{tz}{a timezone name.}
+  \item{tz}{a time zone name.}
   \item{\dots}{Further arguments to be passed from or to other methods,
     including \code{format} for \code{as.character} and \code{as.Date}
     methods.}
@@ -56,7 +56,7 @@ as.Date(x, \dots)
   \code{NA} and objects of classes \code{"\link{POSIXlt}"} and
   \code{"\link{POSIXct}"}.  (The last is converted to days by ignoring
   the time after midnight in the representation of the time in specified
-  timezone, default UTC.)  Also objects of class \code{"date"} (from
+  time zone, default UTC.)  Also objects of class \code{"date"} (from
   package \pkg{\link[date:as.date]{date}}) and \code{"dates"} (from
   package \pkg{\link[chron]{chron}}).  Character strings are processed
   as far as necessary for the format specified: any trailing characters
@@ -162,10 +162,10 @@ as.Date(34519, origin = "1904-01-01") # 1998-07-05
 as.Date(734373, origin = "1970-01-01") - 719529
 ## (value from http://www.mathworks.com/help/techdoc/matlab_prog/bspgcx2-1.html)
 
-## Timezone effect
+## Time zone effect
 z <- ISOdate(2010, 04, 13, c(0,12)) # midnight and midday UTC
 as.Date(z) # in UTC
-\donttest{## these timezone names are common
+\donttest{## these time zone names are common
 as.Date(z, tz = "NZ")
 as.Date(z, tz = "HST") # Hawaii}
 }
