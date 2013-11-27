@@ -141,6 +141,9 @@
       \item More of \command{make check} will work if recommended packages
       are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
+      
+      \item (Windows only.)  The version of \samp{tzcode} included in
+      \file{src/etc/tzone} has been updated.
     }
   }
 
