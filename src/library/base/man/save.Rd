@@ -85,7 +85,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{save.image}), see also the \sQuote{Examples} section.  If a
   \code{"save.image.defaults"} option is set it is used in preference to
   \code{"save.defaults"} for function \code{save.image} (which allows
-  this to have different defaults).
+  this to have different defaults). In addition,
+  \code{compression_level} can be part of the \code{"save.defaults"}
+  option.
 
   A connection that is not already open will be opened in mode \code{"wb"}.
 }

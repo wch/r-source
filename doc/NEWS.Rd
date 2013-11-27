@@ -118,6 +118,9 @@
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
       most Unix-alike 64-bit platforms.  On 64-bit Windows it is
       \code{int64_t}.
+      
+      \item The \code{"save.defaults"} option can include a value for
+      \code{compression_level}.  (Wish of \PR{15579}.)
     }
   }
 
