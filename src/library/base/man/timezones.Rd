@@ -70,7 +70,7 @@ OlsonNames()
 \note{
   There has been since 2007 considerable disruption over changes
   to the timings of the DST transitions, aimed at energy conservation.
-  These often have short notice and time zone databases may not be up to
+  These often have short notice and time-zone databases may not be up to
   date (even if the OS has been updated recently).
 
   Note that except on Windows, the operation of time zones is an OS
@@ -113,7 +113,7 @@ OlsonNames()
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
   location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.  By convention, regions with a unique time zone
+  details and references.  By convention, regions with a unique time-zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
 
@@ -169,6 +169,8 @@ OlsonNames()
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
+% suggested locations include those from libical sources.
+% zone_sun.tab is not quite the same format: has a "-" column before comments
 \examples{
 Sys.timezone()
 Sys.timezone(location = TRUE)
