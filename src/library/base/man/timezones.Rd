@@ -124,10 +124,10 @@ OlsonNames()
   Most Unix-alikes use the Olson database.  The system-specific default
   location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
   (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
-  \file{/etc/zoneinfo}, \ldots.  It is likely that there is a file named
-  something like \file{zone.tab} under that directory listing the
-  locations known as time-zone names (but not for example
-  \code{EST5EDT}).  See also \url{http://en.wikipedia.org/wiki/Zone.tab}.
+  \ldots.  It is likely that there is a file named something like
+  \file{zone.tab} under that directory listing the locations known as
+  time-zone names (but not for example \code{EST5EDT}).  See also
+  \url{http://en.wikipedia.org/wiki/Zone.tab}.
 #endif
 #ifdef windows
 
@@ -187,6 +187,7 @@ str(tzones)
 tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
             "/usr/lib/zoneinfo",   # early glibc
             "/usr/share/lib/zoneinfo", # AIX?
+            "/usr/local/etc/zoneinfo", # tzcode default
             "/etc/zoneinfo", "/usr/etc/zoneinfo")
 tzfiles <- c(file.path(tzdirs, "zone.tab"),
             "/usr/share/lib/zoneinfo/tab/zone_sun.tab") # Solaris

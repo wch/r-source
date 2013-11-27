@@ -1035,6 +1035,7 @@ OlsonNames <- function()
         tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
                     "/usr/share/lib/zoneinfo", # Solaris, AIX
                     "/usr/lib/zoneinfo",   # early glibc
+                    "/usr/local/etc/zoneinfo", # tzcode default
                     "/etc/zoneinfo", "/usr/etc/zoneinfo")
         tzdirs <- tzdirs[file.exists(tzdirs)]
         if (!length(tzdirs)) {
