@@ -35,6 +35,14 @@
 #include <GraphicsBase.h>       /* setBaseDevice */
 #include <Rmath.h>		/* eg. fmax2() */
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#undef _
+#define _(String) dgettext ("grDevices", String)
+#else
+#define _(String) (String)
+#endif
+
 /*--->> Documentation now in  ../include/Rgraphics.h  "API" ----- */
 
 double R_Log10(double x)

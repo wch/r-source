@@ -58,6 +58,15 @@
 
 #include "cairoBM.h"
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#undef _
+#define _(String) dgettext ("grDevices", String)
+#else
+#define _(String) (String)
+#endif
+
+
 static double RedGamma	 = 1.0;
 static double GreenGamma = 1.0;
 static double BlueGamma	 = 1.0;
