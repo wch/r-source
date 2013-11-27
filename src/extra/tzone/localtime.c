@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2012  The R Core Team
+ *  Modifications copyright (C) 2007-2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,13 +24,12 @@ The orginal version of this file stated
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
 
-The modified version is copyrighted.
-Modifications include:
+The modified version is copyrighted.  Modifications include:
 setting EOVERFLOW
 where to find the zi database
-
-It is strange that long is used for offsets, but that is what
-BSD and Linux did.
+Mingw-w64 changes
+removing ATTRIBUTE_PURE, conditional parts for e.g. ALL_STATE
+use of 'unknown' isdst
 */
 
 #include "sys/types.h"	/* for time_t */
@@ -431,8 +430,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    char buf[1000];
 	    p = getenv("TZDIR");
 	    if (p == NULL) {
-		snprintf(buf, 1000, "%s/share/zoneinfo", 
-			 getenv("R_HOME"));
+		snprintf(buf, 1000, "%s/share/zoneinfo", getenv("R_HOME"));
 		buf[999] = '\0';
 		p = buf;
 	    }
@@ -1358,6 +1356,17 @@ struct tm * localtime(const time_t * const timep)
     return localsub(timep, 0L, &tm);
 }
 
+#ifdef UNUSED
+/*
+** Re-entrant version of localtime.
+*/
+
+struct tm *
+localtime_r(const time_t *const timep, struct tm *tmp)
+{
+	return localsub(timep, 0L, tmp);
+}
+#endif
 
 /*
 ** gmtsub is to gmtime as localsub is to localtime.
@@ -1382,6 +1391,27 @@ struct tm * gmtime(const time_t * const	timep)
     return gmtsub(timep, 0L, &tm);
 }
 
+#ifdef UNUSED
+/*
+* Re-entrant version of gmtime.
+*/
+
+struct tm *
+gmtime_r(const time_t *const timep, struct tm *tmp)
+{
+    return gmtsub(timep, 0L, tmp);
+}
+
+#ifdef STD_INSPIRED
+
+struct tm *
+offtime(const time_t *const timep, const long offset)
+{
+    return gmtsub(timep, offset, &tm);
+}
+
+#endif /* defined STD_INSPIRED */
+#endif
 
 /*
 ** Return the number of leap years through the end of the given year
@@ -1522,6 +1552,27 @@ timesub(const time_t *const timep, const int_fast32_t offset,
     return tmp;
 }
 
+#ifdef UNUSED
+char *
+ctime(const time_t *const timep)
+{
+/*
+** Section 4.12.3.2 of X3.159-1989 requires that
+**	The ctime function converts the calendar time pointed to by timer
+**	to local time in the form of a string. It is equivalent to
+**		asctime(localtime(timer))
+*/
+    return asctime(localtime(timep));
+}
+
+char *
+ctime_r(const time_t *const timep, char *buf)
+{
+    struct tm	mytm;
+
+    return asctime_r(localtime_r(timep, &mytm), buf);
+}
+#endif
 
 /*
 ** Adapted from code provided by Robert Elz, who writes:
@@ -1725,7 +1776,6 @@ time2sub(struct tm *const tmp,
 	    errno = EOVERFLOW;
 	    return WRONG;
 	}
-	    
 	saved_seconds = yourtm.tm_sec;
 	yourtm.tm_sec = SECSPERMIN - 1;
     } else {
@@ -1938,3 +1988,123 @@ time_t mktime(struct tm * const	tmp)
     tzset();
     return time1(tmp, localsub, 0L);
 }
+
+#ifdef STD_INSPIRED
+
+time_t
+timelocal(struct tm *const tmp)
+{
+    if (tmp != NULL)
+	tmp->tm_isdst = -1;	/* in case it wasn't initialized */
+    return mktime(tmp);
+}
+
+time_t
+timegm(struct tm *const tmp)
+{
+    if (tmp != NULL)
+	tmp->tm_isdst = 0;
+    return time1(tmp, gmtsub, 0L);
+}
+
+time_t
+timeoff(struct tm *const tmp, const long offset)
+{
+    if (tmp != NULL)
+	tmp->tm_isdst = 0;
+    return time1(tmp, gmtsub, offset);
+}
+
+#endif /* defined STD_INSPIRED */
+
+#ifdef CMUCS
+
+/*
+** The following is supplied for compatibility with
+** previous versions of the CMUCS runtime library.
+*/
+
+long
+gtime(struct tm *const tmp)
+{
+    const time_t	t = mktime(tmp);
+
+    if (t == WRONG)
+	return -1;
+    return t;
+}
+
+#endif /* defined CMUCS */
+
+/*
+** XXX--is the below the right way to conditionalize??
+*/
+
+#ifdef STD_INSPIRED
+
+/*
+** IEEE Std 1003.1-1988 (POSIX) legislates that 536457599
+** shall correspond to "Wed Dec 31 23:59:59 UTC 1986", which
+** is not the case if we are accounting for leap seconds.
+** So, we provide the following conversion routines for use
+** when exchanging timestamps with POSIX conforming systems.
+*/
+
+static int_fast64_t
+leapcorr(time_t *timep)
+{
+    struct state *		sp;
+    struct lsinfo *	lp;
+    int			i;
+
+    sp = lclptr;
+    i = sp->leapcnt;
+    while (--i >= 0) {
+	lp = &sp->lsis[i];
+	if (*timep >= lp->ls_trans)
+	    return lp->ls_corr;
+    }
+    return 0;
+}
+
+time_t
+time2posix(time_t t)
+{
+    tzset();
+    return t - leapcorr(&t);
+}
+
+time_t
+posix2time(time_t t)
+{
+	time_t	x;
+	time_t	y;
+
+	tzset();
+	/*
+	** For a positive leap second hit, the result
+	** is not unique. For a negative leap second
+	** hit, the corresponding time doesn't exist,
+	** so we return an adjacent second.
+	*/
+	x = t + leapcorr(&t);
+	y = x - leapcorr(&x);
+	if (y < t) {
+		do {
+			x++;
+			y = x - leapcorr(&x);
+		} while (y < t);
+		if (t != y)
+			return x - 1;
+	} else if (y > t) {
+		do {
+			--x;
+			y = x - leapcorr(&x);
+		} while (y > t);
+		if (t != y)
+			return x + 1;
+	}
+	return x;
+}
+
+#endif /* defined STD_INSPIRED */
