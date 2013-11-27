@@ -4507,15 +4507,23 @@ command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)
 They are no longer available under the @samp{Downloads} preference pane.
 
-To use the compilers it provides with the recommended Fortran compiler,
-have in @file{config.site} something like
+To use the compilers it provides together with the recommended Fortran
+compiler, have in @file{config.site} something like
 
 @example
-CC="clang"
-CXX="clang++"
+CC=clang
+CXX=clang++
 F77="gfortran-4.2 -arch x86_64"
 FC=$F77
-OBJC="clang"
+OBJC=clang
+@end example
+
+We have been experimenting with @command{gfortran} from GCC 4.8.2, which
+can be used by
+
+@example
+F77=gfortran-4.8
+FC=$F77
 @end example
 
 See the comments under Mountain Lion about X11 and GTK.

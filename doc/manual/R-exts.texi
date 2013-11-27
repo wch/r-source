@@ -1886,12 +1886,15 @@ Solaris platforms, but portable packages cannot assume that end users
 have recent versions.  The compilers currently used on OS X have partial
 support for OpenMP 2.5, but this is not enabled in the @acronym{CRAN}
 build. (Apple have discontinued support for those compilers, and their
-preferred alternative, @command{clang}, has no OpenMP support.)
+preferred alternative, @command{clang}, currently has no OpenMP
+support.  A project to add it has been announced at
+@uref{http://clang-omp.github.io/}, but it is unknown when or even if
+the Apple builds will incorporate it.)
 
 The performance of OpenMP varies substantially between platforms.  Both
-the Windows and OS X (where available) implementations have substantial
-overheads and are only beneficial if quite substantial tasks are run in
-parallel.
+the Windows and the Apple OS X (where available) implementations have
+substantial overheads and are only beneficial if quite substantial tasks
+are run in parallel.
 
 Calling any of the @R{} API from threaded code is `for experts only':
 they will need to read the source code to determine if it is
