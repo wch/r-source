@@ -27,6 +27,8 @@
 #define TZDEFAULT	"localtime"
 #endif /* !defined TZDEFAULT */
 
+/* We don't ship posixrules, which is usually a link to a USA timezeone.
+   So choose one instead. */
 #ifndef TZDEFRULES
 #define TZDEFRULES	"America/New_York"
 #endif /* !defined TZDEFRULES */

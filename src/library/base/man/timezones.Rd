@@ -133,7 +133,7 @@ OlsonNames()
 
   \R under Windows uses the Olson database.  The current version of the
   database will be given in file
-  \file{\var{\link{R_HOME}}\\share\\zoneinfo}.
+  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.
   Environment variable \env{TZDIR} can be used to point to a later
   \file{zoneinfo} directory.  A file listing most known time zones can be
   found at \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
