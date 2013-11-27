@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -49,7 +49,7 @@
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
-  representing calendar dates and times (to the nearest second).
+  representing calendar dates and times.
 }
 \usage{
 \method{print}{POSIXct}(x, \dots)
@@ -141,27 +141,14 @@
   attribute (e.g. by \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
-  zones and leap seconds (24 days have been 86401 seconds long so far:
-  the times of the extra seconds are in the object \code{.leap.seconds}).
-  The details of this are entrusted to the OS services where possible.
-  This always covers the period 1970--2037, and on most machines
-  back to 1902 (when time zones were in their infancy).  Outside
-  the platform limits we use our own C code.  This uses the offset from
-  GMT in use either for 1902 (when there was no DST) or that predicted
-  for one of 2030 to 2037 (chosen so that the likely DST transition days
-  are Sundays), and uses the alternate (daylight-saving) timezone only
-  if \code{isdst} is positive or (if \code{-1}) if DST was predicted to
-  be in operation in the 2030s on that day.  (There is no reason to
-  suppose that the DST rules will remain the same in the future, and
-  indeed the US legislated in 2005 to change its rules as from 2007,
-  with a possible future reversion.)
-
-  It seems that some rare systems use leap seconds, but most ignore
-  them (as required by POSIX).  This is detected and corrected for at
-  build time, so all \code{"POSIXct"} times used by \R do not include
-  leap seconds. (Conceivably this could be wrong if the system has
-  changed since build time, just possibly by changing locales or the
-  \file{zoneinfo} database.)
+  zones and leap seconds (25 days have been 86401 seconds long so far:
+  the times of the extra seconds are in the object
+  \code{.leap.seconds}).  The details of this are entrusted to the OS
+  services where possible.  It seems that some rare systems uses to use
+  leap seconds, but all known current platforms ignore them (as required
+  by POSIX).  This is detected and corrected for at build time, so
+  \code{"POSIXct"} times used by \R do not include leap seconds on any
+  platform.
 
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone, and on \code{"POSIXct"} objects drops any
@@ -190,6 +177,40 @@
 
   Fractional seconds are printed only if
   \code{\link{options}("digits.secs")} is set: see \code{\link{strftime}}.
+}
+\section{Valid ranges for times}{
+  The \code{"POSIXlt"} class can represent a very wide range of times (up
+  to billons of years), but such times can only be interpreted with
+  reference to a timezone.
+
+  % http://www.timeanddate.com/calendar/julian-gregorian-switch.html
+  The concept of timezones was first adopted in the nineteenth century,
+  and the Gregorian calendar was introduced in 1582 but not universally
+  adopted until 1927.  OS services almost invariably assume the
+  Greporian calendar and that the timezone that was first enacted for
+  the location was in force before that date.  The earliest legal
+  timezone seems to have been London on 1847-12-01.
+  % from the Olson files.
+  
+  Most operating systems represent \code{POSIXct} times as C type
+  \code{long}. This means that on 32-bit OSes this covers the period
+  1902 to 2037.  On all known 64-bit platforms (including Windows, which
+  does not use \code{long}, the range of representable times is billions
+  of years.  A few benighted OSes used a unsigned type and so cannot
+  represent times before 1970.
+
+  Currently OS services are used from 1902 (or 1970) to 2037: outside
+  the limits we use our own C code.  This uses the offset from GMT in
+  use either for 1902 (when there was no DST) or that predicted for one
+  of 2030 to 2037 (chosen so that the likely DST transition days are
+  Sundays), and uses the alternate (daylight-saving) timezone only if
+  \code{isdst} is positive or (if \code{-1}) if DST was predicted to be
+  in operation in the 2030s on that day.
+
+  There is no reason to suppose that the DST rules will remain the same
+  in the future, and indeed the US legislated in 2005 to change its
+  rules as from 2007, with a possible future reversion.  So conversions
+  for times more than a year or two ahead are speculative.  
 }
 \seealso{
   \link{Dates} for dates without times.
