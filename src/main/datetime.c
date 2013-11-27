@@ -469,19 +469,26 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_mday = day + 1;
 
     if(local) {
-	int shift;
+	double shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
 
-	/* Try to fix up timezone differences */
+	/* Try to fix up time zone differences: cf PR#15480 */
 	diff = (int)(guess_offset(res)/60);
-	shift = res->tm_min + 60*res->tm_hour;
+	// just in case secs are out of range and might affect this.
+	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
 	res->tm_min -= diff;
 	validate_tm(res);
 	res->tm_isdst = -1;
 	/* now this might be a different day */
-	if(shift - diff < 0) res->tm_yday--;
-	if(shift - diff > 24) res->tm_yday++;
+	if(shift - diff < 0.) {
+	    res->tm_yday--;
+	    res->tm_wday--;
+	}
+	else if(shift - diff > 24. * 60.) {
+	    res->tm_yday++;
+	    res->tm_wday++;
+	}
 	diff2 = (int)(guess_offset(res)/60);
 	if(diff2 != diff) {
 	    res->tm_min += (diff - diff2);
