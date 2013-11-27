@@ -42,6 +42,15 @@
 
 #include <rlocale.h> /* for btowc */
 
+#undef _
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("utils", String)
+#else
+#define _(String) (String)
+#endif
+
+
 /* The size of vector initially allocated by scan */
 #define SCAN_BLOCKSIZE		1000
 /* The size of the console buffer */
