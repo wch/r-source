@@ -39,7 +39,7 @@ OlsonNames()
   with \R on Windows.
 
   It is not in general possible to retrieve the system's own name(s) for
-  the current timezone.  By default \code{Sys.timezone} will retrieve
+  the current time zone.  By default \code{Sys.timezone} will retrieve
   the name it uses for the current time (and the name may differ
   depending on whether daylight saving time is in effect).
 
@@ -48,7 +48,7 @@ OlsonNames()
   names} for suitable values.  \code{Sys.timezone(TRUE)} will return the
   value if set (and on some OSes it is always set), otherwise it will
   try to retrieve a value which if set for \env{TZ} would give the
-  current timezone.
+  current time zone.
 
   Note that the principal difficulty with time zones is their individual
   history: over the last 100 years places have changed their affiliation
@@ -70,7 +70,7 @@ OlsonNames()
 \note{
   There has been since 2007 considerable disruption over changes
   to the timings of the DST transitions, aimed at energy conservation.
-  These often have short notice and timezone databases may not be up to
+  These often have short notice and time zone databases may not be up to
   date (even if the OS has been updated recently).
 
   Note that except on Windows, the operation of time zones is an OS
@@ -98,9 +98,9 @@ OlsonNames()
   (listed under environment variable \env{TZ} at
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08}),
   which is often at least partially supported, but there usually are
-  other more user-friendly ways to specify timezones.
+  other more user-friendly ways to specify time zones.
 
-  Many systems make use of a timezone database originally compiled by
+  Many systems make use of a time-zone database originally compiled by
   Arthur David Olson (and now managed by IANA),
   in which the preferred way to refer to a time zone by a location
   (typically of a city) e.g. \code{Europe/London},
@@ -113,7 +113,7 @@ OlsonNames()
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
   location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.  By convention, regions with a unique timezone
+  details and references.  By convention, regions with a unique time zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
 
@@ -137,7 +137,7 @@ OlsonNames()
   Environment variable \env{TZDIR} can be used to point to a later
   \file{zoneinfo} directory.  A file listing most known time zones can be
   found at \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
-  \sQuote{Examples}).   By convention, regions with a unique timezone
+  \sQuote{Examples}).   By convention, regions with a unique time-zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
 
@@ -155,7 +155,7 @@ OlsonNames()
   unreliable and gives a warning.
 #endif
 
-  Many systems support timezones of the form \samp{GMT+n} and
+  Many systems support time zones of the form \samp{GMT+n} and
   \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
   Contrary to some usage (but consistent with names such as
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,

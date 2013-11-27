@@ -6573,7 +6573,7 @@ static void PDFwritesRGBcolorspace(PDFDesc *pd)
     fclose(fp);
 }
 
-#include <time.h>
+#include <time.h>  // for time_t, time, localtime
 #include <Rversion.h>
 
 static void PDF_startfile(PDFDesc *pd)
