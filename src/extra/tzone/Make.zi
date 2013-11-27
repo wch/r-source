@@ -22,11 +22,12 @@ TZDIR = zoneinfo
 
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
-YDATA=		$(PRIMARY_YDATA) pacificnew etcetera factory backward
+YDATA=		$(PRIMARY_YDATA) pacificnew etcetera \
+		factory backward posixrules
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(TABDATA) yearistype.sh
 
 
 install: $(DATA)
 	zic -y $(YEARISTYPE) -d ../$(TZDIR) -L /dev/null $(YDATA)
-	cp iso3166.tab zone.tab ../$(TZDIR)
+	cp $(TABDATA) ../$(TZDIR)

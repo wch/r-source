@@ -78,6 +78,15 @@ BSD and Linux did.
 #define SECSPERREPEAT_BITS  34	/* ceil(log2(SECSPERREPEAT)) */
 #define is_digit(c) ((unsigned)(c) - '0' <= 9)
 #define INITIALIZE(x) (x = 0)
+/* The minimum and maximum finite time values.  */
+static time_t const time_t_min =
+  (TYPE_SIGNED(time_t)
+   ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
+   : 0);
+static time_t const time_t_max =
+  (TYPE_SIGNED(time_t)
+   ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
+   : -1);
 
 #include "tzfile.h"
 
@@ -213,7 +222,7 @@ static struct tm *	gmtsub(const time_t * timep, int_fast32_t offset,
 static struct tm *	localsub(const time_t * timep, int_fast32_t offset,
 				struct tm * tmp);
 static int		increment_overflow(int * number, int delta);
-static int		leaps_thru_end_of(int y) ATTRIBUTE_PURE;
+static int		leaps_thru_end_of(int y);
 static int		increment_overflow32(int_fast32_t * number, int delta);
 static int		increment_overflow_time(time_t *t, int_fast32_t delta);
 static int		normalize_overflow32(int_fast32_t * tensptr,
@@ -1637,9 +1646,10 @@ time2sub(struct tm *const tmp,
     *okayp = FALSE;
     yourtm = *tmp;
     if (do_norm_secs) {
-	if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
-			       SECSPERMIN))
+	if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec, SECSPERMIN)) {
+	    errno = EOVERFLOW;
 	    return WRONG;
+	}
     }
     if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR)) {
 	errno = EOVERFLOW;
@@ -1650,7 +1660,7 @@ time2sub(struct tm *const tmp,
 	return WRONG;
     }
     y = yourtm.tm_year;
-    if (long_normalize_overflow(&y, &yourtm.tm_mon, MONSPERYEAR)) {
+    if (normalize_overflow32(&y, &yourtm.tm_mon, MONSPERYEAR)) {
 	errno = EOVERFLOW;
 	return WRONG;
     }
@@ -1750,13 +1760,17 @@ time2sub(struct tm *const tmp,
 	} else	dir = tmcomp(&mytm, &yourtm);
 	if (dir != 0) {
 	    if (t == lo) {
-		if (t == time_t_max)
+		if (t == time_t_max) {
+		    errno = EOVERFLOW;
 		    return WRONG;
+		}
 		++t;
 		++lo;
 	    } else if (t == hi) {
-		if (t == time_t_min)
+		if (t == time_t_min) {
+		    errno = EOVERFLOW;
 		    return WRONG;
+		}
 		--t;
 		--hi;
 	    }
