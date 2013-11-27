@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2013-02-17 18:18-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -476,6 +476,10 @@ msgstr "'from'은 반드시 \"POSIXt\" 객체이어야 합니다"
 
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'는 반드시 \"POSIXt\" 객체이어야 합니다"
+
+#, fuzzy
+msgid "no Olson database found"
+msgstr "파일을 찾을 수 없습니다"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'은 반드시 문자열 또는 커넥션이어야 합니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1113,6 +1113,12 @@ msgstr "'from' musi być obiektem klasy \"POSIXt\""
 # stop("'to' must be a \"POSIXt\" object")
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' musi być obiektem klasy \"POSIXt\""
+
+# src/library/base/R/files.R: 185
+# stop("no file found")
+#, fuzzy
+msgid "no Olson database found"
+msgstr "nie znaleziono pliku"
 
 # src/library/base/R/dcf.R: 27
 # stop("'file' must be a character string or connection")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-02-28 05:49+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -717,11 +717,11 @@ msgstr " Rbitmap.dll をロードできません "
 msgid "invalid 'width' or 'height'"
 msgstr " 不正な幅か高さ "
 
-#: devices.c:43
+#: devices.c:51
 msgid "argument must have positive length"
 msgstr " 引数は正の長さである必要があります "
 
-#: devices.c:52
+#: devices.c:60
 msgid "invalid argument"
 msgstr " 引数が不正です "
 

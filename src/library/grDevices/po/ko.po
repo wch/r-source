@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-02-21 18:58-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -711,11 +711,11 @@ msgstr "Rbitmap.dll을 로드할 수 없습니다"
 msgid "invalid 'width' or 'height'"
 msgstr "유효하지 않은 'width' 또는 'height'입니다"
 
-#: devices.c:43
+#: devices.c:51
 msgid "argument must have positive length"
 msgstr "인자는 반드시 양의 길이를 가져야 합니다"
 
-#: devices.c:52
+#: devices.c:60
 msgid "invalid argument"
 msgstr "유효하지 않은 인자입니다"
 

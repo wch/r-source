@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: io.c:309 io.c:313 io.c:323 io.c:552 io.c:733 io.c:784 io.c:796 io.c:800
-#: io.c:806 io.c:1027 io.c:1028 io.c:1030 io.c:1031 io.c:1032 io.c:1033
-#: io.c:1034 io.c:1035 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:318 io.c:322 io.c:332 io.c:561 io.c:742 io.c:793 io.c:805 io.c:809
+#: io.c:815 io.c:1036 io.c:1037 io.c:1039 io.c:1040 io.c:1041 io.c:1042
+#: io.c:1043 io.c:1044 stubs.c:48 stubs.c:68 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -28,96 +28,96 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: io.c:332 io.c:793
+#: io.c:341 io.c:802
 msgid "invalid quote symbol set"
 msgstr ""
 
-#: io.c:344 io.c:814 io.c:1015
+#: io.c:353 io.c:823 io.c:1024
 msgid "cannot open the connection"
 msgstr ""
 
-#: io.c:347 io.c:351
+#: io.c:356 io.c:360
 msgid "cannot read from this connection"
 msgstr ""
 
-#: io.c:398 io.c:416
+#: io.c:407 io.c:425
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
 
-#: io.c:548
+#: io.c:557
 msgid "the first argument must be of mode character"
 msgstr ""
 
-#: io.c:735
+#: io.c:744
 #, c-format
 msgid "Selection: "
 msgstr ""
 
-#: io.c:823 io.c:837
+#: io.c:832 io.c:846
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr ""
 
-#: io.c:848
+#: io.c:857
 msgid "\\ followed by EOF"
 msgstr ""
 
-#: io.c:895 io.c:898
+#: io.c:904 io.c:907
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 
-#: io.c:955
+#: io.c:964
 msgid "index out of range"
 msgstr ""
 
-#: io.c:1008
+#: io.c:1017
 msgid "'file' is not a connection"
 msgstr ""
 
-#: io.c:1011
+#: io.c:1020
 msgid "cannot write to this connection"
 msgstr ""
 
-#: io.c:1041
+#: io.c:1050
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: io.c:1068
+#: io.c:1077
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: io.c:1098
+#: io.c:1107
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1116
+#: io.c:1125
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 
-#: stubs.c:48
+#: stubs.c:57
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr ""
 
-#: stubs.c:65
+#: stubs.c:74
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr ""
 
-#: stubs.c:77
+#: stubs.c:86
 msgid "invalid timestamp"
 msgstr ""
 
-#: stubs.c:143 stubs.c:151
+#: stubs.c:152 stubs.c:160
 msgid "X11 dataentry cannot be loaded"
 msgstr ""
 
-#: stubs.c:147 stubs.c:176 stubs.c:182
+#: stubs.c:156 stubs.c:185 stubs.c:191
 msgid "X11 is not available"
 msgstr ""
 
-#: stubs.c:240 stubs.c:243
+#: stubs.c:249 stubs.c:252
 #, c-format
 msgid "invalid '%s' specification"
 msgstr ""

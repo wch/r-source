@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-02-28 16:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -16,88 +16,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: base.c:38
+#: base.c:45
 msgid "no base graphics system is registered"
 msgstr "kein Basisgrafiksystem registriert"
 
-#: base.c:328 base.c:335 base.c:343
+#: base.c:335 base.c:342 base.c:350
 msgid "the base graphics system is not registered"
 msgstr "das Basisgrafiksystem ist nicht registriert"
 
-#: graphics.c:289
+#: graphics.c:297
 #, c-format
 msgid "bad units specified in '%s'"
 msgstr "unbrauchbare Einheit in '%s' spezifiziert"
 
-#: graphics.c:1783 graphics.c:1805
+#: graphics.c:1791 graphics.c:1813
 msgid "attempt to plot on null device"
 msgstr "Versuch auf das Nulldevice zu zeichnen"
 
-#: graphics.c:1835
+#: graphics.c:1843
 msgid "outer margins too large (figure region too small)"
 msgstr "äußere Ränder zu groß (figure region zu klein)"
 
-#: graphics.c:1837
+#: graphics.c:1845
 msgid "figure region too large"
 msgstr "figure region zu groß"
 
-#: graphics.c:1839
+#: graphics.c:1847
 msgid "figure margins too large"
 msgstr "Grafikränder zu groß"
 
-#: graphics.c:1841
+#: graphics.c:1849
 msgid "plot region too large"
 msgstr "plot region zu groß"
 
-#: graphics.c:1888
+#: graphics.c:1896
 #, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr "relativer Wertebereich (%4.0f * EPS) ist klein (Achse %d)"
 
-#: graphics.c:1940
+#: graphics.c:1948
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr "unendliche Achsengrenzen [GDcale(%g,%g,%d, .); log=%d]"
 
-#: graphics.c:1970
+#: graphics.c:1978
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr "Achsenstil \"%c\" nicht implementiert"
 
-#: graphics.c:2208
+#: graphics.c:2216
 msgid "no graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:2403
+#: graphics.c:2411
 msgid "plot.new has not been called yet"
 msgstr "plot.new wurde noch nicht aufgerufen"
 
-#: graphics.c:2405
+#: graphics.c:2413
 msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: graphics.c:2547
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2596
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:3055
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
 
-#: graphics.c:3136
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
 
-#: graphics.c:3153
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
-#: graphics.c:3398
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr "Metrikinformation für dieses Device nicht verfügbar"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,6 +25,10 @@ msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0, 1] の範囲外です "
+
+#: approx.c:31 rcont.c:16
+msgid "stats"
+msgstr ""
 
 #: approx.c:101
 msgid "approx(): invalid f value"
@@ -55,69 +59,69 @@ msgstr " サポートされているラグの最大値は350です "
 msgid "invalid 'type' (%s) of argument"
 msgstr " 引数 'type' (%s) が不正です "
 
-#: complete_cases.c:112
+#: complete_cases.c:120
 msgid "no input has determined the number of cases"
 msgstr " ケースの数を決定する入力がありません "
 
-#: complete_cases.c:215
+#: complete_cases.c:223
 msgid "not all arguments have the same length"
 msgstr " 引数の中に異なった長さのものがあります "
 
-#: cov.c:559
+#: cov.c:566
 msgid "missing observations in cov/cor"
 msgstr " cov/cor 関数に欠損した観測値があります "
 
-#: cov.c:637
+#: cov.c:644
 msgid "'x' is NULL"
 msgstr " 'x' が NULL です "
 
-#: cov.c:656 cov.c:662
+#: cov.c:663 cov.c:669
 msgid "incompatible dimensions"
 msgstr " 互換性のない次元です "
 
-#: cov.c:681 cov.c:722 cov.c:755
+#: cov.c:688 cov.c:729 cov.c:762
 msgid "no complete element pairs"
 msgstr " 完全な要素のペアがありません "
 
-#: cov.c:694
+#: cov.c:701
 msgid "invalid 'use' (computational method)"
 msgstr " 'use' (計算法) が不正です "
 
-#: cov.c:697
+#: cov.c:704
 msgid "'x' is empty"
 msgstr " 'x' が空です "
 
-#: cov.c:791
+#: cov.c:798
 msgid "the standard deviation is zero"
 msgstr " 標準偏差が 0 です "
 
-#: deriv.c:119
+#: deriv.c:126
 msgid "invalid form in unary minus check"
 msgstr " 単項のマイナスの検査に不正な形式があります "
 
-#: deriv.c:526
+#: deriv.c:533
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr " 関数 '%s' は導関数の表中にありません "
 
-#: deriv.c:633
+#: deriv.c:640
 msgid "variable must be a character string"
 msgstr " 変数は文字列でなければいけません "
 
-#: deriv.c:635
+#: deriv.c:642
 msgid "only the first element is used as variable name"
 msgstr " 最初の要素だけが変数名として使われました "
 
-#: deriv.c:648
+#: deriv.c:655
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr " '%s' 中の式が不正です "
 
-#: deriv.c:926 model.c:92
+#: deriv.c:933 model.c:99
 msgid "invalid variable names"
 msgstr " 変数名が不正です "
 
-#: deriv.c:935
+#: deriv.c:942
 msgid "invalid tag"
 msgstr " タグが不正です "
 
@@ -133,11 +137,11 @@ msgstr " distance(): 不正な p "
 msgid "distance(): invalid distance"
 msgstr " distance(): 不正な距離 "
 
-#: distn.c:34
+#: distn.c:41
 msgid "NaNs produced"
 msgstr " 計算結果が NaN になりました "
 
-#: distn.c:35
+#: distn.c:42
 msgid "Non-numeric argument to mathematical function"
 msgstr " 数学関数に非数値引数が渡されました "
 
@@ -156,23 +160,23 @@ msgstr " 引数 %s は空でない数値ベクトルでなければなりませ�
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
 
-#: fourier.c:54 fourier.c:141
+#: fourier.c:64 fourier.c:151
 msgid "non-numeric argument"
 msgstr " 引数が数値でありません "
 
-#: fourier.c:72 fourier.c:87 fourier.c:155
+#: fourier.c:82 fourier.c:97 fourier.c:165
 msgid "fft factorization error"
 msgstr " fft の因数分解エラーです "
 
-#: fourier.c:127
+#: fourier.c:137
 msgid "vector-valued (multivariate) series required"
 msgstr " ベクトル値 (多変量) の系列が必要です "
 
-#: fourier.c:200
+#: fourier.c:210
 msgid "no factors"
 msgstr " 因子がありません "
 
-#: fourier.c:203
+#: fourier.c:213
 msgid "invalid factors"
 msgstr " 因子 (factor) が不正です "
 
@@ -199,15 +203,15 @@ msgstr ""
 msgid "span is too small"
 msgstr " 範囲 (span) が小さすぎます "
 
-#: loglin.c:370
+#: loglin.c:371
 msgid "this should not happen"
 msgstr " これは起こるべきではありません "
 
-#: loglin.c:372
+#: loglin.c:373
 msgid "algorithm did not converge"
 msgstr " アルゴリズムが収束しませんでした "
 
-#: loglin.c:374
+#: loglin.c:375
 msgid "incorrect specification of 'table' or 'start'"
 msgstr " 'table' または 'start' の指定が誤っています "
 
@@ -239,143 +243,143 @@ msgstr " 不正な vmethod です "
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
 
-#: model.c:90
+#: model.c:97
 msgid "invalid variables"
 msgstr " 変数が不正です "
 
-#: model.c:94 model.c:99
+#: model.c:101 model.c:106
 msgid "number of variables != number of variable names"
 msgstr " 変数の個数が変数名の個数と一致していません "
 
-#: model.c:97
+#: model.c:104
 msgid "invalid extra variables"
 msgstr " 追加変数が不正です "
 
-#: model.c:101
+#: model.c:108
 msgid "invalid extra variable names"
 msgstr " 追加変数名が不正です "
 
-#: model.c:122
+#: model.c:129
 #, c-format
 msgid "overlong names in '%s'"
 msgstr " '%s' の名前が長すぎます "
 
-#: model.c:149
+#: model.c:156
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr " 型 (%s) は変数 '%s' に対しては不正です "
 
-#: model.c:154
+#: model.c:161
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr " 変数 ('%s' に基づく) の長さが異なります "
 
-#: model.c:208
+#: model.c:215
 msgid "invalid result from na.action"
 msgstr " na.action の結果が不正です "
 
-#: model.c:365 model.c:373 optim.c:190
+#: model.c:373 model.c:381 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
 
-#: model.c:384
+#: model.c:392
 msgid "invalid model frame"
 msgstr " モデルフレームが不正です "
 
-#: model.c:386
+#: model.c:394
 msgid "do not know how many cases"
 msgstr " ケースの数が幾つあるか分かりません "
 
-#: model.c:410
+#: model.c:418
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr " 変数 (%d 変数に基づく) の長さが異なります "
 
-#: model.c:414 model.c:421
+#: model.c:422 model.c:429
 #, c-format
 msgid "variable %d has no levels"
 msgstr " 変数 %d は水準を持ちません "
 
-#: model.c:533
+#: model.c:541
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr " 目的変数が右辺にあるため、捨て去られました "
 
-#: model.c:553
+#: model.c:561
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr " 項 %d は %.0g 行を必要とするかもしれません "
 
-#: model.c:557
+#: model.c:565
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr " 行列は %.0g 行を必要とするかもしれません "
 
-#: model.c:568
+#: model.c:576
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 " model.matrix 中の項 %d に問題があります: いかなる列も指定されていません "
 
-#: model.c:617 model.c:622 model.c:628 model.c:639 model.c:645 model.c:651
+#: model.c:625 model.c:630 model.c:636 model.c:647 model.c:653 model.c:659
 msgid "term names will be truncated"
 msgstr " 項の名前は切りつめらられるでしょう "
 
-#: model.c:631
+#: model.c:639
 msgid "complex variables are not currently allowed in model matrices"
 msgstr " モデル行列中では複素数は現在許されていません "
 
-#: model.c:655
+#: model.c:663
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr " タイプ '%s' の変数はモデル行列中では許されません "
 
-#: model.c:877
+#: model.c:885
 msgid "invalid formula in 'update'"
 msgstr " 'update' 中の式が不正です "
 
-#: model.c:911
+#: model.c:919
 msgid "formula expected"
 msgstr " 式が期待されています "
 
-#: model.c:1042
+#: model.c:1050
 msgid "invalid term in model formula"
 msgstr " モデル式に不正な項があります "
 
-#: model.c:1117
+#: model.c:1125
 msgid "invalid model formula"
 msgstr " モデル式が不正です "
 
-#: model.c:1143 model.c:1391
+#: model.c:1151 model.c:1399
 msgid "invalid power in formula"
 msgstr " モデル式中に不正なべき乗があります "
 
-#: model.c:1179
+#: model.c:1187
 msgid "invalid model formula in ExtractVars"
 msgstr " ExtractVars 中のモデル式が不正です "
 
-#: model.c:1514
+#: model.c:1522
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1572
+#: model.c:1580
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1658
+#: model.c:1666
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1668
+#: model.c:1676
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1680
+#: model.c:1688
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1948
+#: model.c:1956
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
@@ -457,161 +461,161 @@ msgstr " 変数 '%s' は整数です、数値ではありません "
 msgid "variable '%s' is not numeric"
 msgstr " 変数 '%s' は数値ではありません "
 
-#: optim.c:73 optim.c:100
+#: optim.c:80 optim.c:107
 msgid "non-finite value supplied by optim"
 msgstr " optim により有限でない値が与えられました "
 
-#: optim.c:80
+#: optim.c:87
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
 msgstr " optim の目的関数が 1 つではなくて %d 個の結果を評価しています "
 
-#: optim.c:107
+#: optim.c:114
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr " optim 中で勾配は長さ %d (長さ %d ではなく) で評価されました "
 
-#: optim.c:186 optim.c:392
+#: optim.c:193 optim.c:399
 msgid "'fn' is not a function"
 msgstr " 'fn' が関数ではありません "
 
-#: optim.c:204 optim.c:398
+#: optim.c:211 optim.c:405
 msgid "'parscale' is of the wrong length"
 msgstr " 'parscale' の長さが不正です "
 
-#: optim.c:233
+#: optim.c:240
 msgid "'maxit' is not an integer"
 msgstr " 'maxit' が整数ではありません "
 
-#: optim.c:253
+#: optim.c:260
 #, fuzzy
 msgid "'tmax' is not a positive integer"
 msgstr " 'tmax' が整数値ではありません "
 
-#: optim.c:255 optim.c:272 optim.c:297 optim.c:327 optim.c:406
+#: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"
 msgstr " 'gr' は関数ではありません "
 
-#: optim.c:278 optim.c:303 optim.c:333 optim.c:412
+#: optim.c:285 optim.c:310 optim.c:340 optim.c:419
 msgid "'ndeps' is of the wrong length"
 msgstr " 'ndeps' の長さが誤っています "
 
-#: optim.c:363
+#: optim.c:370
 msgid "unknown 'method'"
 msgstr " 未知の 'method' です "
 
-#: optimize.c:210 optimize.c:302 optimize.c:523
+#: optimize.c:217 optimize.c:309 optimize.c:530
 msgid "NA replaced by maximum positive value"
 msgstr " NA は正の最大値で置き換えられました "
 
-#: optimize.c:218 optimize.c:314 optimize.c:531
+#: optimize.c:225 optimize.c:321 optimize.c:538
 msgid "NA/Inf replaced by maximum positive value"
 msgstr " NA/Inf は正の最大値で置き換えられました "
 
-#: optimize.c:227
+#: optimize.c:234
 msgid "invalid function value in 'optimize'"
 msgstr " 'optimize' における関数値が不正です "
 
-#: optimize.c:245 optimize.c:343 optimize.c:716
+#: optimize.c:252 optimize.c:350 optimize.c:723
 msgid "attempt to minimize non-function"
 msgstr " 関数でないものを最小化しようとしました "
 
-#: optimize.c:252 optimize.c:259 optimize.c:268 optimize.c:348 optimize.c:353
-#: optimize.c:369
+#: optimize.c:259 optimize.c:266 optimize.c:275 optimize.c:355 optimize.c:360
+#: optimize.c:376
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
 
-#: optimize.c:261 optimize.c:354
+#: optimize.c:268 optimize.c:361
 msgid "'xmin' not less than 'xmax'"
 msgstr " 'xmin' が 'xmax' より大きいか等しいです "
 
-#: optimize.c:311
+#: optimize.c:318
 msgid "-Inf replaced by maximally negative value"
 msgstr " -Inf は負の最大値で置き換えられました "
 
-#: optimize.c:324
+#: optimize.c:331
 msgid "invalid function value in 'zeroin'"
 msgstr " 'zeroin' における関数値が不正です "
 
-#: optimize.c:359 optimize.c:364
+#: optimize.c:366 optimize.c:371
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr " '%s' に対して NA は認められません "
 
-#: optimize.c:374
+#: optimize.c:381
 msgid "'maxiter' must be positive"
 msgstr " 'maxiter' は正数でなくてはなりません "
 
-#: optimize.c:515
+#: optimize.c:522
 msgid "non-finite value supplied by 'nlm'"
 msgstr " 'nlm' により有限でない値が与えられました "
 
-#: optimize.c:550
+#: optimize.c:557
 msgid "invalid function value in 'nlm' optimizer"
 msgstr " 'nlm' 最適化における関数値が不正です "
 
-#: optimize.c:561 optimize.c:576
+#: optimize.c:568 optimize.c:583
 msgid "function value caching for optimization is seriously confused"
 msgstr " 最適化用にキャッシュされた関数値がひどく混乱しています "
 
-#: optimize.c:591
+#: optimize.c:598
 msgid "numeric parameter expected"
 msgstr " 数値パラメータが期待されています "
 
-#: optimize.c:595
+#: optimize.c:602
 msgid "conflicting parameter lengths"
 msgstr " パラメータの長さが矛盾しています "
 
-#: optimize.c:599
+#: optimize.c:606
 msgid "invalid parameter length"
 msgstr " パラメータの長さが不正です "
 
-#: optimize.c:609 optimize.c:616
+#: optimize.c:616 optimize.c:623
 msgid "missing value in parameter"
 msgstr " パラメータに欠損値があります "
 
-#: optimize.c:621
+#: optimize.c:628
 msgid "invalid parameter type"
 msgstr " パラメータのタイプが不正です "
 
-#: optimize.c:632
+#: optimize.c:639
 msgid "non-positive number of parameters in nlm"
 msgstr " nlm のパラメータが正の値ではありません "
 
-#: optimize.c:634
+#: optimize.c:641
 msgid "nlm is inefficient for 1-d problems"
 msgstr " nlm は一次元問題には効率的ではありません "
 
-#: optimize.c:636
+#: optimize.c:643
 msgid "invalid gradient tolerance in nlm"
 msgstr " nlm における勾配の許容値が不正です "
 
-#: optimize.c:638
+#: optimize.c:645
 msgid "invalid iteration limit in nlm"
 msgstr " nlm の繰り返し回数の限界値が不正です "
 
-#: optimize.c:640
+#: optimize.c:647
 msgid "minimization function has no good digits in nlm"
 msgstr " nlm 中で最小化関数は十分な桁数をもちません "
 
-#: optimize.c:642
+#: optimize.c:649
 msgid "no analytic gradient to check in nlm!"
 msgstr " nlm 中でチェックされる勾配の解析的な式がありません！ "
 
-#: optimize.c:644
+#: optimize.c:651
 msgid "no analytic Hessian to check in nlm!"
 msgstr " nlm 中でチェックすべき解析的なヘッセ行列がありません "
 
-#: optimize.c:646
+#: optimize.c:653
 msgid "probable coding error in analytic gradient"
 msgstr " 解析的な勾配式中にコーディングの間違いの可能性 "
 
-#: optimize.c:648
+#: optimize.c:655
 msgid "probable coding error in analytic Hessian"
 msgstr " 解析的なヘッセ行列式中にコーディングの間違いの可能性があります "
 
-#: optimize.c:650
+#: optimize.c:657
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -620,24 +624,24 @@ msgstr ""
 " *** nlm() 関数から未知のエラーメッセージ (msg = %d) \n"
 " *** これはあり得ないことです！ "
 
-#: optimize.c:661
+#: optimize.c:668
 msgid "Relative gradient close to zero.\n"
 msgstr " 相対勾配が 0 に近くなっています \n"
 
-#: optimize.c:662 optimize.c:666
+#: optimize.c:669 optimize.c:673
 msgid "Current iterate is probably solution.\n"
 msgstr " 現在の繰り返しでおそらく解が得られたでしょう \n"
 
-#: optimize.c:665
+#: optimize.c:672
 msgid "Successive iterates within tolerance.\n"
 msgstr " 連続した繰り返しが許容範囲内です \n"
 
-#: optimize.c:669
+#: optimize.c:676
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 " 最終の大局的ステップは x よりも小さな点を見つけることが出来ませんでした \n"
 
-#: optimize.c:670
+#: optimize.c:677
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -647,11 +651,11 @@ msgstr ""
 " 関数がこのアルゴリズムには非線形的すぎるか、 \n"
 " steptol が大きすぎます \n"
 
-#: optimize.c:675
+#: optimize.c:682
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr " 繰り返し数が上限を超えました。アルゴリズムは破綻しました。 \n"
 
-#: optimize.c:678
+#: optimize.c:685
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -664,16 +668,16 @@ msgstr ""
 " ある方向で上から漸近的に有限値に近づいているか、 \n"
 " または stepmx が小さすぎるか、です \n"
 
-#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
-#: optimize.c:761 optimize.c:766
+#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
+#: optimize.c:768 optimize.c:773
 msgid "invalid NA value in parameter"
 msgstr " パラメータ中に不正な NA 値があります "
 
-#: optimize.c:797
+#: optimize.c:804
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr " 提供されたヘッセ行列は不正な長さかモードであったため無視されました "
 
-#: optimize.c:801
+#: optimize.c:808
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr " 提供された勾配は不正な長さかモードであったので無視されました "
 

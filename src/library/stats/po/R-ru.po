@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2013-03-19 21:46-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1427,6 +1427,9 @@ msgstr "недоступен атрибут \"nobs\""
 
 msgid "no 'nobs' method is available"
 msgstr "нет доступного метода 'nobs'"
+
+msgid "'margin' must contain names or numbers corresponding to 'table'"
+msgstr ""
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' и 'table' должны быть одной длины"

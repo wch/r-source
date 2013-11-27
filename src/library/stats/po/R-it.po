@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1500,6 +1500,9 @@ msgstr ""
 #, fuzzy
 msgid "no 'nobs' method is available"
 msgstr "nessun metodo 'as.stepfun' disponibile per 'x'"
+
+msgid "'margin' must contain names or numbers corresponding to 'table'"
+msgstr ""
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' e 'table' devono avere la stessa lunghezza"

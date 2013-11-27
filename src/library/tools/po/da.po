@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2011-11-28 22:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,30 +26,30 @@ msgstr "argumentet 'files' skal være tegn"
 msgid "md5 failed on file '%s'"
 msgstr "md5 fejlede på fil '%s'"
 
-#: getfmts.c:52
+#: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr ""
 
-#: getfmts.c:57
+#: getfmts.c:66
 msgid "'fmt' is not a character vector"
 msgstr ""
 
-#: getfmts.c:60
+#: getfmts.c:69
 msgid "'fmt' must be length 1"
 msgstr ""
 
-#: getfmts.c:66
+#: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr ""
 
-#: getfmts.c:87
+#: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr ""
 
-#: getfmts.c:127
+#: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
@@ -136,12 +136,12 @@ msgstr ""
 msgid "invalid bind address specification"
 msgstr ""
 
-#: install.c:104 install.c:125 install.c:127
+#: install.c:112 install.c:133 install.c:135
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "ugyldig argumenttype"
 
-#: install.c:155
+#: install.c:163
 msgid "write error during file append"
 msgstr ""
 

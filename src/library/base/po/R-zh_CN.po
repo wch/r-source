@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -457,6 +457,10 @@ msgstr "'from'一定得是\"POSIXt\"对象"
 
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'一定得是\"POSIXt\"对象"
+
+#, fuzzy
+msgid "no Olson database found"
+msgstr "找不到文件"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'要么是字符串，要么是连接"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-03-19 12:03+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -718,11 +718,11 @@ msgstr "Impossible to charger Rbitmap.dll"
 msgid "invalid 'width' or 'height'"
 msgstr "'width' ou 'height' incorrecte"
 
-#: devices.c:43
+#: devices.c:51
 msgid "argument must have positive length"
 msgstr "l'argument doit avoir une longueur positive"
 
-#: devices.c:52
+#: devices.c:60
 msgid "invalid argument"
 msgstr "argument incorrect"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -31,40 +31,40 @@ msgstr "md5 nie powiodło się na pliku '%s'"
 
 # tools/src/getfmts.c: 51
 # error(_("only %d arguments are allowed"), MAXNARGS)
-#: getfmts.c:52
+#: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "tylko %d argumentów jest dozwolonych"
 
 # tools/src/getfmts.c: 56
 # error(_("'fmt' is not a character vector"))
-#: getfmts.c:57
+#: getfmts.c:66
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' nie jest wektorem tekstowym"
 
 # tools/src/getfmts.c: 59
 # error(_("'fmt' must be length 1"))
-#: getfmts.c:60
+#: getfmts.c:69
 msgid "'fmt' must be length 1"
 msgstr "'fmt' musi mieć długość 1"
 
 # tools/src/getfmts.c: 65
 # error(_("'fmt' length exceeds maximal format length %d"), MAXLINE)
-#: getfmts.c:66
+#: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "długość 'fmt' przekracza maksymalną długość %d formatu"
 
 # tools/src/getfmts.c: 86
 # error(_("unrecognised format specification '%s'"), curFormat)
-#: getfmts.c:87
+#: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "nierozpoznane określenie '%s' formatu"
 
 # tools/src/getfmts.c: 126
 # error(_("at most one asterisk '*' is supported in each conversion specification"))
-#: getfmts.c:127
+#: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "co najwyżej jedna gwiazdka '*' jest wspierana w każdym określeniu zamiany"
@@ -266,14 +266,14 @@ msgstr "niepoprawne określenie adresu wiążącego"
 # error(_("invalid '%s' argument"), "file1")
 # tools/src/install.c: 119
 # error(_("invalid '%s' argument"), "file2")
-#: install.c:104 install.c:125 install.c:127
+#: install.c:112 install.c:133 install.c:135
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
 # tools/src/install.c: 147
 # warning(_("write error during file append"))
-#: install.c:155
+#: install.c:163
 msgid "write error during file append"
 msgstr "błąd zapisu podczas dołączania pliku"
 

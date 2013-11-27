@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2013-03-18 10:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1424,6 +1424,9 @@ msgstr "keine \"nobs\" Attribut verfügbar"
 
 msgid "no 'nobs' method is available"
 msgstr "keine 'nobs' Methode verfügbar"
+
+msgid "'margin' must contain names or numbers corresponding to 'table'"
+msgstr ""
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' und 'table' müssen dieselbe Länge haben"

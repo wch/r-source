@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -174,9 +174,9 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/connections.c:4751 src/main/connections.c:4755
 #: src/main/connections.c:4759 src/main/connections.c:4763
 #: src/main/context.c:596 src/main/context.c:605 src/main/context.c:609
-#: src/main/datetime.c:745 src/main/datetime.c:831 src/main/datetime.c:833
-#: src/main/datetime.c:837 src/main/datetime.c:1002 src/main/datetime.c:1004
-#: src/main/datetime.c:1167 src/main/debug.c:228 src/main/deparse.c:397
+#: src/main/datetime.c:761 src/main/datetime.c:847 src/main/datetime.c:849
+#: src/main/datetime.c:853 src/main/datetime.c:1018 src/main/datetime.c:1020
+#: src/main/datetime.c:1183 src/main/debug.c:228 src/main/deparse.c:397
 #: src/main/dotcode.c:478 src/main/dotcode.c:482 src/main/dotcode.c:487
 #: src/main/dounzip.c:322 src/main/dounzip.c:329 src/main/dounzip.c:339
 #: src/main/dounzip.c:344 src/main/dounzip.c:348 src/main/dounzip.c:352
@@ -252,7 +252,7 @@ msgstr "versión de Windows no soportada"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:108 src/main/character.c:595
 #: src/main/connections.c:3325 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:676 src/main/datetime.c:747 src/main/datetime.c:1006
+#: src/main/datetime.c:692 src/main/datetime.c:763 src/main/datetime.c:1022
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1362 src/main/identical.c:66 src/main/identical.c:67
@@ -2435,21 +2435,21 @@ msgstr "min/max no definido para números complejos"
 msgid "unknown cumxxx function"
 msgstr "función cumxxx desconocida"
 
-#: src/main/datetime.c:597 src/main/datetime.c:605 src/main/datetime.c:619
-#: src/main/datetime.c:624
+#: src/main/datetime.c:613 src/main/datetime.c:621 src/main/datetime.c:635
+#: src/main/datetime.c:640
 msgid "problem with setting timezone"
 msgstr "problema  al establecer zona horaria"
 
-#: src/main/datetime.c:609
+#: src/main/datetime.c:625
 msgid "cannot set timezones on this system"
 msgstr "no se puede especificar el uso horario en este sistema"
 
-#: src/main/datetime.c:631 src/main/datetime.c:633
+#: src/main/datetime.c:647 src/main/datetime.c:649
 msgid "problem with unsetting timezone"
 msgstr "problema  al desestablecer zona horaria"
 
-#: src/main/datetime.c:769 src/main/datetime.c:771 src/main/datetime.c:866
-#: src/main/datetime.c:1175 src/main/datetime.c:1177
+#: src/main/datetime.c:785 src/main/datetime.c:787 src/main/datetime.c:882
+#: src/main/datetime.c:1191 src/main/datetime.c:1193
 #, fuzzy
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "componente de longitud cero en estructura POSIXlt no vacía"
@@ -3653,7 +3653,7 @@ msgstr "versión de bytecode incompatible"
 msgid "invalid sequence argument in for loop"
 msgstr "secuencia inválida de argumentos en el ciclo for"
 
-#: src/main/eval.c:4565 src/main/names.c:1168
+#: src/main/eval.c:4565 src/main/names.c:1169
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "no hay ninguna función interna \"%s\""
@@ -4345,24 +4345,24 @@ msgstr "Rprofmem: no puede abrir el archivo de perfil '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:993
+#: src/main/names.c:994
 msgid "string argument required"
 msgstr "se requiere el argumento del string"
 
-#: src/main/names.c:996
+#: src/main/names.c:997
 msgid "no such primitive function"
 msgstr "no existe esta función primitiva"
 
-#: src/main/names.c:1133
+#: src/main/names.c:1134
 msgid "attempt to use zero-length variable name"
 msgstr "se intenta usar un nombre de varible de longitud cero"
 
-#: src/main/names.c:1135
+#: src/main/names.c:1136
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nombres de variables se limitan a %d bytes"
 
-#: src/main/names.c:1163 src/main/names.c:1166
+#: src/main/names.c:1164 src/main/names.c:1167
 msgid "invalid .Internal() argument"
 msgstr "el argumento .Internal() no es válido"
 

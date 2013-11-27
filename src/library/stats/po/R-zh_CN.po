@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1373,6 +1373,9 @@ msgstr "没有\"nobs\"这个属性"
 
 msgid "no 'nobs' method is available"
 msgstr "没有适用于'nobs'的方法"
+
+msgid "'margin' must contain names or numbers corresponding to 'table'"
+msgstr ""
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start'和'table'的长度必需相等"

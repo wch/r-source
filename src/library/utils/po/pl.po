@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-03-18 15:11+0100\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -82,9 +82,9 @@ msgstr ""
 # error(_("invalid '%s' argument"), "preselect")
 # utils/src/windows/widgets.c: 86
 # error(_("invalid '%s' argument"), "preselect")
-#: io.c:309 io.c:313 io.c:323 io.c:552 io.c:733 io.c:784 io.c:796 io.c:800
-#: io.c:806 io.c:1027 io.c:1028 io.c:1030 io.c:1031 io.c:1032 io.c:1033
-#: io.c:1034 io.c:1035 stubs.c:39 stubs.c:59 windows/dialogs.c:170
+#: io.c:318 io.c:322 io.c:332 io.c:561 io.c:742 io.c:793 io.c:805 io.c:809
+#: io.c:815 io.c:1036 io.c:1037 io.c:1039 io.c:1040 io.c:1041 io.c:1042
+#: io.c:1043 io.c:1044 stubs.c:48 stubs.c:68 windows/dialogs.c:170
 #: windows/dialogs.c:195 windows/dialogs.c:198 windows/dialogs.c:242
 #: windows/dialogs.c:279 windows/dialogs.c:290 windows/dialogs.c:314
 #: windows/dialogs.c:322 windows/util.c:111 windows/widgets.c:78
@@ -97,7 +97,7 @@ msgstr "niepoprawny argument '%s'"
 # error(_("invalid quote symbol set"))
 # utils/src/io.c: 779
 # error(_("invalid quote symbol set"))
-#: io.c:332 io.c:793
+#: io.c:341 io.c:802
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
@@ -107,7 +107,7 @@ msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 # error(_("cannot open the connection"))
 # utils/src/io.c: 995
 # error(_("cannot open the connection"))
-#: io.c:344 io.c:814 io.c:1015
+#: io.c:353 io.c:823 io.c:1024
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -115,7 +115,7 @@ msgstr "nie można otworzyć połączenia"
 # error(_("cannot read from this connection"))
 # utils/src/io.c: 352
 # error(_("cannot read from this connection"))
-#: io.c:347 io.c:351
+#: io.c:356 io.c:360
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
@@ -123,20 +123,20 @@ msgstr "nie można czytać z tego połączenia"
 # error(_("string terminated by newline or EOF"))
 # utils/src/io.c: 414
 # error(_("string terminated by newline or EOF"))
-#: io.c:398 io.c:416
+#: io.c:407 io.c:425
 #, fuzzy, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr "łańcuch przerwany przez znak nowej linii lub znak końca pliku (EOF)"
 
 # utils/src/io.c: 534
 # error(_("the first argument must be of mode character"))
-#: io.c:548
+#: io.c:557
 msgid "the first argument must be of mode character"
 msgstr "pierwszy argument musi być trybu tekstowego"
 
 # utils/src/io.c: 721
 # sprintf(ConsolePrompt, _("Selection: "))
-#: io.c:735
+#: io.c:744
 #, c-format
 msgid "Selection: "
 msgstr "Wybór: "
@@ -145,13 +145,13 @@ msgstr "Wybór: "
 # error(_("cannot allocate buffer in 'readTableHead'"))
 # utils/src/io.c: 822
 # error(_("cannot allocate buffer in 'readTableHead'"))
-#: io.c:823 io.c:837
+#: io.c:832 io.c:846
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
 # utils/src/io.c: 833
 # error(_("\\ followed by EOF"))
-#: io.c:848
+#: io.c:857
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
@@ -161,67 +161,67 @@ msgstr "\\ a następnie EOF"
 # utils/src/io.c: 881
 # error(_("incomplete final line found by readTableHeader on '%s'"),
 # 		  data.con->description)
-#: io.c:895 io.c:898
+#: io.c:904 io.c:907
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
-#: io.c:955
+#: io.c:964
 msgid "index out of range"
 msgstr ""
 
 # utils/src/io.c: 988
 # error(_("'file' is not a connection"))
-#: io.c:1008
+#: io.c:1017
 msgid "'file' is not a connection"
 msgstr "'file' nie jest połączeniem"
 
 # utils/src/io.c: 991
 # error(_("cannot write to this connection"))
-#: io.c:1011
+#: io.c:1020
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
 # utils/src/io.c: 1021
 # error(_("'dec' must be a single character"))
-#: io.c:1041
+#: io.c:1050
 msgid "'dec' must be a single character"
 msgstr "'dec' musi być pojedynczym znakiem"
 
 # utils/src/io.c: 1048
 # error(_("corrupt data frame -- length of column %d does not not match nrows"), j+1)
-#: io.c:1068
+#: io.c:1077
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1098
+#: io.c:1107
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 
 # utils/src/io.c: 1096
 # error(_("corrupt matrix -- dims not not match length"))
-#: io.c:1116
+#: io.c:1125
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
 # utils/src/stubs.c: 48
 #  _("'savehistory' can only be used in Rgui and Rterm")
-#: stubs.c:48
+#: stubs.c:57
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
 # utils/src/stubs.c: 65
 #  _("'loadhistory' can only be used in Rgui and Rterm")
-#: stubs.c:65
+#: stubs.c:74
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' może zostać użyte jedynie w Rgui oraz Rterm"
 
 # utils/src/stubs.c: 76
 #  _("invalid timestamp")
-#: stubs.c:77
+#: stubs.c:86
 msgid "invalid timestamp"
 msgstr "niepoprawna sygnatura czasu"
 
@@ -229,7 +229,7 @@ msgstr "niepoprawna sygnatura czasu"
 # error(_("X11 dataentry cannot be loaded"))
 # utils/src/stubs.c: 149
 # error(_("X11 dataentry cannot be loaded"))
-#: stubs.c:143 stubs.c:151
+#: stubs.c:152 stubs.c:160
 msgid "X11 dataentry cannot be loaded"
 msgstr "moduł X11 nie może zostać załadowany"
 
@@ -239,7 +239,7 @@ msgstr "moduł X11 nie może zostać załadowany"
 # error(_("X11 is not available"))
 # utils/src/stubs.c: 180
 # error(_("X11 is not available"))
-#: stubs.c:147 stubs.c:176 stubs.c:182
+#: stubs.c:156 stubs.c:185 stubs.c:191
 msgid "X11 is not available"
 msgstr "X11 nie jest dostępne"
 
@@ -247,7 +247,7 @@ msgstr "X11 nie jest dostępne"
 # error(_("invalid '%s' specification"), "editor")
 # utils/src/stubs.c: 240
 # error(_("invalid '%s' specification"), "filename")
-#: stubs.c:240 stubs.c:243
+#: stubs.c:249 stubs.c:252
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "niepoprawne określenie '%s'"

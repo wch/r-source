@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -496,6 +496,10 @@ msgstr "'from' deve ser um objeto POSIXt"
 #, fuzzy
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' deve ser um objeto POSIXt"
+
+#, fuzzy
+msgid "no Olson database found"
+msgstr "nenhum arquivo encontrado"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' deve ser uma string de caracteres ou uma conexão"

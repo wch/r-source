@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: 2013-03-11 11:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -26,30 +26,30 @@ msgstr "Argument 'files' muss Zeichenkette sein"
 msgid "md5 failed on file '%s'"
 msgstr "md5 für Datei '%s' fehlgeschlagen"
 
-#: getfmts.c:52
+#: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "nur %d Argumente erlaubt"
 
-#: getfmts.c:57
+#: getfmts.c:66
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' ist kein Zeichenkettenvektor"
 
-#: getfmts.c:60
+#: getfmts.c:69
 msgid "'fmt' must be length 1"
 msgstr "'fmt' muss Länge 1 haben"
 
-#: getfmts.c:66
+#: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "Länge von 'fmt' überschreitet maximale Formatlänge %d"
 
-#: getfmts.c:87
+#: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "nicht erkannte Formatspezifikation '%s'"
 
-#: getfmts.c:127
+#: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "höchstens ein Stern '*' in jeder Konversionsspezifikation unterstützt"
 
@@ -136,12 +136,12 @@ msgstr "schlechter Textmode %d in 'deparseRd'"
 msgid "invalid bind address specification"
 msgstr "unzulässige Bindungsadressenspezifikation"
 
-#: install.c:104 install.c:125 install.c:127
+#: install.c:112 install.c:133 install.c:135
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "unzulässiges '%s' Argument"
 
-#: install.c:155
+#: install.c:163
 msgid "write error during file append"
 msgstr "Schreibfehler während Anhängen an Datei"
 

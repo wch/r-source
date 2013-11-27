@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -451,6 +451,9 @@ msgid "'from' must be a \"POSIXt\" object"
 msgstr ""
 
 msgid "'to' must be a \"POSIXt\" object"
+msgstr ""
+
+msgid "no Olson database found"
 msgstr ""
 
 msgid "'file' must be a character string or connection"

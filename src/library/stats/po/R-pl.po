@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38\n"
+"POT-Creation-Date: 2013-11-27 18:10\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -3000,6 +3000,9 @@ msgstr "brak dostępnego atrybutu 'nobs'"
 # stop("no 'nobs' method is available")
 msgid "no 'nobs' method is available"
 msgstr "brak dostępnej metody 'nobs'"
+
+msgid "'margin' must contain names or numbers corresponding to 'table'"
+msgstr ""
 
 # stats/R/loglin.R: 43
 # stop("'start' and 'table' must be same length")

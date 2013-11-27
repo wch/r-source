@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14+0000\n"
+"POT-Creation-Date: 2013-11-27 18:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,88 +17,88 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: base.c:38
+#: base.c:45
 msgid "no base graphics system is registered"
 msgstr ""
 
-#: base.c:328 base.c:335 base.c:343
+#: base.c:335 base.c:342 base.c:350
 msgid "the base graphics system is not registered"
 msgstr ""
 
-#: graphics.c:289
+#: graphics.c:297
 #, c-format
 msgid "bad units specified in '%s'"
 msgstr ""
 
-#: graphics.c:1783 graphics.c:1805
+#: graphics.c:1791 graphics.c:1813
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: graphics.c:1835
+#: graphics.c:1843
 msgid "outer margins too large (figure region too small)"
 msgstr ""
 
-#: graphics.c:1837
+#: graphics.c:1845
 msgid "figure region too large"
 msgstr ""
 
-#: graphics.c:1839
+#: graphics.c:1847
 msgid "figure margins too large"
 msgstr ""
 
-#: graphics.c:1841
+#: graphics.c:1849
 msgid "plot region too large"
 msgstr ""
 
-#: graphics.c:1888
+#: graphics.c:1896
 #, c-format
 msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
 msgstr ""
 
-#: graphics.c:1940
+#: graphics.c:1948
 #, c-format
 msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
 msgstr ""
 
-#: graphics.c:1970
+#: graphics.c:1978
 #, c-format
 msgid "axis style \"%c\" unimplemented"
 msgstr ""
 
-#: graphics.c:2208
+#: graphics.c:2216
 msgid "no graphics device is active"
 msgstr ""
 
-#: graphics.c:2403
+#: graphics.c:2411
 msgid "plot.new has not been called yet"
 msgstr ""
 
-#: graphics.c:2405
+#: graphics.c:2413
 msgid "invalid graphics state"
 msgstr ""
 
-#: graphics.c:2547
+#: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2596
+#: graphics.c:2604
 msgid "No graphics device is active"
 msgstr ""
 
-#: graphics.c:3055
+#: graphics.c:3063
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr ""
 
-#: graphics.c:3136
+#: graphics.c:3144
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr ""
 
-#: graphics.c:3153
+#: graphics.c:3161
 msgid "invalid argument to GBox"
 msgstr ""
 
-#: graphics.c:3398
+#: graphics.c:3406
 msgid "metric information not available for this device"
 msgstr ""
 
