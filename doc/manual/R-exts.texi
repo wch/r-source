@@ -6994,7 +6994,15 @@ FC = gfortran-4.8 -fsanitize=address
 @end example
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
-be honoured by packages which ignore @file{~/.R/Makevars}.)
+be honoured by packages which ignore @file{~/.R/Makevars}.)  It may (or
+may not) be necessary to build @R{} with
+
+@example
+MAIN_LD="gcc-4.8 -std=gnu99 -fsanitize=address"
+@end example
+
+@noindent
+to link the required libraries into the @R{} executable.
 
 Some versions of @command{clang} also have a (currently experimental)
 memory sanitizer invoked by @option{-fsanitize=memory} which detects

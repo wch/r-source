@@ -131,6 +131,9 @@
       
       \item \code{hcl()} now honours \code{NA} inputs (previously they
       were mapped to black).
+      
+      \item Some translations in base packages were being looked up in
+      the main catalog rather than that for the package.
     }
   }
 }
