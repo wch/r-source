@@ -93,20 +93,25 @@
 # include <config.h>
 #endif
 
-/* needed on Windows to avoid redefinition of tzname as _tzname */
-#define _NO_OLDNAMES
-#include <time.h>
-#undef _NO_OLDNAMES
 
 #include <errno.h>
 
 #ifdef Win32
-#define gmtime R_gmtime
-#define localtime R_localtime
-#define mktime R_mktime
+/* needed on Windows to avoid redefinition of tzname as _tzname */
+# define _NO_OLDNAMES
+# include <time.h>
+# undef _NO_OLDNAMES
+# define gmtime R_gmtime
+# define localtime R_localtime
+# define mktime R_mktime
 extern struct tm*  gmtime (const time_t*);
 extern struct tm*  localtime (const time_t*);
 extern time_t mktime (struct tm*);
+# ifdef WIN64
+#  define HAVE_WORKING_64BIT_MKTIME
+# endif
+#else
+# include <time.h>
 #endif
 
 #include <stdlib.h> /* for setenv or putenv */
