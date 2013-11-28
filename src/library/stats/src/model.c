@@ -240,12 +240,11 @@ static void firstfactor(double *x, int nrx, int ncx,
 			double *c, int nrc, int ncc, int *v)
 {
     double *cj, *xj;
-    int i, j;
 
-    for (j = 0; j < ncc; j++) {
-	xj = &x[j*nrx];
-	cj = &c[j*nrc];
-	for (i = 0; i < nrx; i++)
+    for (int j = 0; j < ncc; j++) {
+	xj = &x[j * (R_xlen_t)nrx];
+	cj = &c[j * (R_xlen_t)nrc];
+	for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) xj[i] = NA_REAL;
 	    else xj[i] = cj[v[i]-1];
     }
@@ -254,15 +253,14 @@ static void firstfactor(double *x, int nrx, int ncx,
 static void addfactor(double *x, int nrx, int ncx,
 		      double *c, int nrc, int ncc, int *v)
 {
-    int i, j, k;
     double *ck, *xj, *yj;
 
-    for (k = ncc - 1; k >= 0; k--) {
-	for (j = 0; j < ncx; j++) {
-	    xj = &x[j*nrx];
-	    yj = &x[(k*ncx+j)*nrx];
-	    ck = &c[k*nrc];
-	    for (i = 0; i < nrx; i++)
+    for (int k = ncc - 1; k >= 0; k--) {
+	for (int j = 0; j < ncx; j++) {
+	    xj = &x[j * (R_xlen_t)nrx];
+	    yj = &x[(k * (R_xlen_t)ncx + j)*nrx];
+	    ck = &c[k * (R_xlen_t)nrc];
+	    for (int i = 0; i < nrx; i++)
 	    if(v[i] == NA_INTEGER) yj[i] = NA_REAL;
 	    else yj[i] = ck[v[i]-1] * xj[i];
 	}
@@ -272,27 +270,25 @@ static void addfactor(double *x, int nrx, int ncx,
 static void firstvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
 {
     double *cj, *xj;
-    int i, j;
 
-    for (j = 0; j < ncc; j++) {
-	xj = &x[j*nrx];
-	cj = &c[j*nrc];
-	for (i = 0; i < nrx; i++)
+    for (int j = 0; j < ncc; j++) {
+	xj = &x[j * (R_xlen_t)nrx];
+	cj = &c[j * (R_xlen_t)nrc];
+	for (int i = 0; i < nrx; i++)
 	    xj[i] = cj[i];
     }
 }
 
 static void addvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
 {
-    int i, j, k;
     double *ck, *xj, *yj;
 
-    for (k = ncc - 1; k >= 0; k--) {
-	for (j = 0; j < ncx; j++) {
-	    xj = &x[j*nrx];
-	    yj = &x[(k*ncx+j)*nrx];
-	    ck = &c[k*nrc];
-	    for (i = 0; i < nrx; i++)
+    for (int k = ncc - 1; k >= 0; k--) {
+	for (int j = 0; j < ncx; j++) {
+	    xj = &x[j * (R_xlen_t)nrx];
+	    yj = &x[(k * (R_xlen_t)ncx + j)*nrx];
+	    ck = &c[k * (R_xlen_t)nrc];
+	    for (int i = 0; i < nrx; i++)
 		yj[i] = ck[i] * xj[i];
 	}
     }
