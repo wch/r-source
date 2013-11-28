@@ -22,6 +22,7 @@ test-src-sloppy-1 = \
 	print-tests.R \
 	lapack.R \
 	datasets.R \
+	datetime.R \
 	iec60559.R
 test-src-sloppy-auto =
 

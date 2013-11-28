@@ -1,0 +1,28 @@
+#### Test 64-bit date-time functions.
+
+## R's internal fixes are used on 32-bit platforms.
+## OS X gets these wrong: see HAVE_WORKING_64BIT_MKTIME
+
+Sys.setenv(TZ = "UTC")
+(z <- as.POSIXct("1848-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-07-01 12:00"))
+c(unclass(z))
+
+Sys.setenv(TZ = "Europe/London")  # pretty much portable.
+(z <- as.POSIXct("1848-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-07-01 12:00"))
+c(unclass(z))
+
+Sys.setenv(TZ = "EST5EDT")
+(z <- as.POSIXct("1848-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-01-01 12:00"))
+c(unclass(z))
+(z <- as.POSIXct("2040-07-01 12:00"))
+c(unclass(z))
