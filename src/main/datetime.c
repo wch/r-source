@@ -397,6 +397,7 @@ static double mktime0 (struct tm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
+/* This gives -1 for dates prior to 1902, and ignores DST after 2037 */
 #ifndef __APPLE__
     if(sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || tm->tm_year >= 70;
@@ -424,6 +425,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     time_t t;
 
     Rboolean OK;
+/* as mktime is broken, do not trust localtime */
 #ifndef __APPLE__
     if (sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || d > 0.;
@@ -821,7 +823,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    REAL(ans)[i] = ((tmp == (double)(-1))
 			    /* avoid silly gotcha at epoch minus one sec */
-			    && (tm.tm_sec == 59)
+			    && (tm.tm_sec != 59)
 			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != (double)(-2)))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
