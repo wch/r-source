@@ -28867,6 +28867,62 @@ $as_echo "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
 
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly outside 1902-2037" >&5
+$as_echo_n "checking whether mktime works correctly outside 1902-2037... " >&6; }
+if ${r_cv_working_mktime+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_working_mktime=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <time.h>
+
+main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 80; tm.tm_isdst = 0;
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(2);
+    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(3);
+    tm.tm_year = 140;
+    res = mktime(&tm);
+    if(res != 2209032000L) exit(4);
+    tm.tm_mon = 6; tm.tm_isdst = 1;
+    res = mktime(&tm);
+    if(res != 2224753200L) exit(5);
+
+    exit(0);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_working_mktime=yes
+else
+  r_cv_working_mktime=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_working_mktime" >&5
+$as_echo "$r_cv_working_mktime" >&6; }
+if test "x${r_cv_working_mktime}" = xyes; then
+
+$as_echo "#define HAVE_WORKING_64BIT_MKTIME 1" >>confdefs.h
+
+fi
+
 
 ac_fn_c_check_header_mongrel "$LINENO" "complex.h" "ac_cv_header_complex_h" "$ac_includes_default"
 if test "x$ac_cv_header_complex_h" = xyes; then :
@@ -35662,11 +35718,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35665: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35721: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35669: \$? = $ac_status" >&5
+   echo "$as_me:35725: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35761,11 +35817,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35764: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35820: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35768: \$? = $ac_status" >&5
+   echo "$as_me:35824: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35813,11 +35869,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35816: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35872: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35820: \$? = $ac_status" >&5
+   echo "$as_me:35876: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

@@ -3919,6 +3919,47 @@ fi
 AC_SUBST(R_SYSTEM_ABI)
 ]) # R_ABI
 
+## R_FUNC_MKTIME
+## ------------
+AC_DEFUN([R_FUNC_MKTIME],
+[AC_CACHE_CHECK([whether mktime works correctly outside 1902-2037],
+                [r_cv_working_mktime],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <time.h>
+
+main() {
+    if(sizeof(time_t) < 8) exit(1);
+
+    struct tm tm;
+    time_t res;
+    putenv("TZ=Europe/London");
+    tm.tm_sec = tm.tm_min = 0; tm.tm_hour = 12;
+    tm.tm_mday = 1; tm.tm_mon = 0; tm.tm_year = 80; tm.tm_isdst = 0;
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(2);
+    tm.tm_mday = 1; tm.tm_year = 01; tm.tm_isdst = 0;
+    res = mktime(&tm);
+    if(res == (time_t)-1) exit(3);
+    tm.tm_year = 140;
+    res = mktime(&tm);
+    if(res != 2209032000L) exit(4);
+    tm.tm_mon = 6; tm.tm_isdst = 1;
+    res = mktime(&tm);
+    if(res != 2224753200L) exit(5);
+
+    exit(0);
+}
+]])],
+              [r_cv_working_mktime=yes],
+              [r_cv_working_mktime=no],
+              [r_cv_working_mktime=no])])
+if test "x${r_cv_working_mktime}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_64BIT_MKTIME, 1,
+            [Define if your mktime works correctly outside 1902-2037.])
+fi
+])# R_FUNC_MKTIME
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
