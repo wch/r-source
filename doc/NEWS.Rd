@@ -113,13 +113,13 @@
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
       (before 1902 or after 2037): the existing workarounds are used on
       other platforms.  (Note that timezone information for post-2037 is
-      speculative at best.)  This has been disabled on OS X, where the
-      OS services give incorrect answers.
-      
+      speculative at best, and the OS services are tested for accuracy
+      and disabled on OS X.)
+
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
-      most Unix-alike 64-bit platforms.  On 64-bit Windows it is
-      \code{int64_t}.
-      
+      most Unix-alike 64-bit platforms.  On \R for Windows it is
+      64-bit (as from this version).
+
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
     }

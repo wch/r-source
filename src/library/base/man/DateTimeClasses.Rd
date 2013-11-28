@@ -195,11 +195,12 @@
   
   Most operating systems represent \code{POSIXct} times as C type
   \code{long}. This means that on 32-bit OSes this covers the period
-  1902 to 2037.  On all known 64-bit platforms (including Windows, which
-  does not use \code{long}, the range of representable times is billions
-  of years, but not all can convert times before 1902 or after 2037
-  correctly.  A few benighted OSes used a unsigned type and so cannot
+  1902 to 2037.  On all known 64-bit platforms and for the code we use
+  on Windows, the range of representable times is billions of years:
+  however, not all can convert correctly times before 1902 or after
+  2037.  A few benighted OSes used a unsigned type and so cannot
   represent times before 1970.
+  % glibc in 2003/4, AIX?
 
   Where possible the platform limits are detected, and outside
   the limits we use our own C code.  This uses the offset from
