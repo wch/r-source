@@ -98,6 +98,9 @@ sstr[sstr \%in\% c(letters, LETTERS)]
 
 "\%w/o\%" <- function(x, y) x[!x \%in\% y] #--  x without y
 (1:10) \%w/o\% c(3,7,12)
+## Note that setdiff() is very similar and typically makes more sense: 
+        c(1:6,7:2) \%w/o\% c(3,7,12)  # -> keeps duplicates
+setdiff(c(1:6,7:2),        c(3,7,12)) # -> unique values
 }
 \keyword{manip}
 \keyword{logic}
