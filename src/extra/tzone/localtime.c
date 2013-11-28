@@ -30,27 +30,21 @@ where to find the zi database
 Mingw-w64 changes
 removing ATTRIBUTE_PURE, conditional parts for e.g. ALL_STATE
 use of 'unknown' isdst
+use of 64-bit time_t irrespective of platform.
 */
 
-#include "sys/types.h"	/* for time_t */
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
+
 
 #define  _NO_OLDNAMES   /* avoid tznames */
 #include "time.h"
 #undef _NO_OLDNAMES
 
+
 #include <errno.h>
 #ifndef EOVERFLOW
 # define EOVERFLOW 79
-#endif
-
-#ifdef WIN32
-/* tzname is in the headers as an import in MinGW-w64 */
-#define tzname Rtzname
-#define gmtime R_gmtime
-#define localtime R_localtime
-#define mktime R_mktime
 #endif
 
 #include "stdlib.h"
@@ -58,6 +52,18 @@ use of 'unknown' isdst
 #include "stdio.h"
 #include "fcntl.h"
 #include "float.h"	/* for FLT_MAX and DBL_MAX */
+
+#ifdef WIN32
+/* tzname is in the headers as an import in MinGW-w64 */
+#define tzname Rtzname
+#define gmtime R_gmtime
+#define localtime R_localtime
+#define mktime R_mktime
+// alternatively use time64_t from Mingw-w64's time.h
+#include <stdint.h>
+typedef int64_t R_time_t;
+#define time_t R_time_t
+#endif
 
 #ifndef TRUE
 #define TRUE	1

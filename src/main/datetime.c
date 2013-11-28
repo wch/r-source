@@ -101,15 +101,16 @@
 # define _NO_OLDNAMES
 # include <time.h>
 # undef _NO_OLDNAMES
+# include <stdint.h>
+typedef int64_t R_time_t;
+#define time_t R_time_t
 # define gmtime R_gmtime
 # define localtime R_localtime
 # define mktime R_mktime
 extern struct tm*  gmtime (const time_t*);
 extern struct tm*  localtime (const time_t*);
 extern time_t mktime (struct tm*);
-# ifdef WIN64
-#  define HAVE_WORKING_64BIT_MKTIME
-# endif
+# define HAVE_WORKING_64BIT_MKTIME
 #else
 # include <time.h>
 #endif
