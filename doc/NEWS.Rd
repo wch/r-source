@@ -113,7 +113,8 @@
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
       (before 1902 or after 2037): the existing workarounds are used on
       other platforms.  (Note that timezone information for post-2037 is
-      speculative at best.)
+      speculative at best.)  This has been disabled on OS X, where the
+      OS services give incorrect answers.
       
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
       most Unix-alike 64-bit platforms.  On 64-bit Windows it is

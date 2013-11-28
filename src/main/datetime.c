@@ -397,9 +397,11 @@ static double mktime0 (struct tm *tm, const int local)
     }
     if(!local) return mktime00(tm);
 
+#ifndef __APPLE__
     if(sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || tm->tm_year >= 70;
     else
+#endif
 	OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
 	res = (double) mktime(tm);
@@ -422,9 +424,11 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     time_t t;
 
     Rboolean OK;
+#ifndef __APPLE__
     if (sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || d > 0.;
     else
+#endif
 	OK = d < 2147483647.0 && 
 	    d > (have_broken_mktime() ? 0. : -2147483647.0);
     if(OK) {

@@ -197,7 +197,8 @@
   \code{long}. This means that on 32-bit OSes this covers the period
   1902 to 2037.  On all known 64-bit platforms (including Windows, which
   does not use \code{long}, the range of representable times is billions
-  of years.  A few benighted OSes used a unsigned type and so cannot
+  of years, but not all can convert times before 1902 or after 2037
+  correctly.  A few benighted OSes used a unsigned type and so cannot
   represent times before 1970.
 
   Where possible the platform limits are detected, and outside
