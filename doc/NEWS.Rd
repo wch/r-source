@@ -134,6 +134,11 @@
       
       \item Some translations in base packages were being looked up in
       the main catalog rather than that for the package.
+
+      \item As a result of the 3.0.2 change about \sQuote{ the last
+	second before the epoch}, most conversions which should have given
+      \code{NA} returned that time.  (The platforms affected include
+      Linux and OS X, but not Windows nor Solaris.)
     }
   }
 }

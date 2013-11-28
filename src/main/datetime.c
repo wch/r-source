@@ -466,7 +466,8 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 
 	/* Try to fix up time zone differences: cf PR#15480 */
 	diff = (int)(guess_offset(res)/60);
-	shift = res->tm_min + 60.*res->tm_hour + res->tm_sec/60.;
+	// just in case secs are out of range and might affect this.
+	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
 	res->tm_min -= diff;
 	validate_tm(res);
 	res->tm_isdst = -1;
@@ -807,7 +808,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    REAL(ans)[i] = ((tmp == (double)(-1))
 			    /* avoid silly gotcha at epoch minus one sec */
-			    && (tm.tm_sec == 59)
+			    && (tm.tm_sec != 59)
 			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != (double)(-2)))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
