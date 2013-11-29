@@ -181,14 +181,14 @@
 }
 \section{Valid ranges for times}{
   The \code{"POSIXlt"} class can represent a very wide range of times (up
-  to billons of years), but such times can only be interpreted with
+  to billions of years), but such times can only be interpreted with
   reference to a timezone.
 
   % http://www.timeanddate.com/calendar/julian-gregorian-switch.html
   The concept of timezones was first adopted in the nineteenth century,
   and the Gregorian calendar was introduced in 1582 but not universally
   adopted until 1927.  OS services almost invariably assume the
-  Greporian calendar and that the timezone that was first enacted for
+  Gregorian calendar and that the timezone that was first enacted for
   the location was in force before that date.  The earliest legal
   timezone seems to have been London on 1847-12-01.
   % from the Olson files.

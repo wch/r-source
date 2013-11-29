@@ -104,7 +104,7 @@
       
       \item There is more support to explore the system's idea of
       timezone names.  \code{Sys.timezone(location = TRUE)} tries to
-      give the current system setting (and suceeds at least on Linux, OS
+      give the current system setting (and succeeds at least on Linux, OS
       X, Solaris and Windows), and \code{OlsonNames()} lists the names
       in the system's Olson database.
       
