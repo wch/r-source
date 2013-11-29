@@ -393,14 +393,14 @@ static double mktime0 (struct tm *tm, const int local)
 #else
 	errno = 79;
 #endif
-	return (double)(-1);
+	return -1.;
     }
     if(!local) return mktime00(tm);
 
     OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
     if(OK) {
 	res = (double) mktime(tm);
-	if (res == (double)-1) return res;
+	if (res == -1.) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
 	for(i = 0; i < n_leapseconds; i++)
 	    if(res > leapseconds[i]) res -= 1.0;
@@ -806,10 +806,10 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
-	    REAL(ans)[i] = ((tmp == (double)(-1))
+	    REAL(ans)[i] = ((tmp == -1.)
 			    /* avoid silly gotcha at epoch minus one sec */
 			    && (tm.tm_sec != 59)
-			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != (double)(-2)))
+			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != -2.))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
 #endif

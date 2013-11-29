@@ -78,7 +78,7 @@
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
   represents the (signed) number of seconds since the beginning of 1970
-  (in the UTC timezone) as a numeric vector.  Class \code{"POSIXlt"} is
+  (in the UTC time zone) as a numeric vector.  Class \code{"POSIXlt"} is
   a named list of vectors representing
   \describe{
     \item{\code{sec}}{0--61: seconds}
@@ -123,21 +123,21 @@
   object, but not add two date-time objects.  Subtraction of two
   date-time objects is equivalent to using \code{\link{difftime}}.  Be
   aware that \code{"POSIXlt"} objects will be interpreted as being in
-  the current timezone for these operations, unless a timezone has been
+  the current time zone for these operations, unless a time zone has been
   specified.
 
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
-  a character vector of length 3 giving the timezone name from the
-  \env{TZ} environment variable and the names of the base timezone
-  and the alternate (daylight-saving) timezone.  Sometimes this may
-  just be of length one, giving the timezone name.
+  a character vector of length 3 giving the time zone name from the
+  \env{TZ} environment variable and the names of the base time zone
+  and the alternate (daylight-saving) time zone.  Sometimes this may
+  just be of length one, giving the time zone name.
 
   \code{"POSIXct"} objects may also have an attribute \code{"tzone"}, a
   character vector of length one.  If set to a non-empty value, it will
   determine how the object is converted to class \code{"POSIXlt"} and in
   particular how it is printed.  This is usually desirable, but if you
-  want to specify an object in a particular timezone but to be printed
-  in the current timezone you may want to remove the \code{"tzone"}
+  want to specify an object in a particular time zone but to be printed
+  in the current time zone you may want to remove the \code{"tzone"}
   attribute (e.g. by \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
@@ -180,16 +180,16 @@
 }
 \section{Valid ranges for times}{
   The \code{"POSIXlt"} class can represent a very wide range of times (up
-  to billons of years), but such times can only be interpreted with
-  reference to a timezone.
+  to billions of years), but such times can only be interpreted with
+  reference to a time zone.
 
   % http://www.timeanddate.com/calendar/julian-gregorian-switch.html
-  The concept of timezones was first adopted in the nineteenth century,
+  The concept of time zones was first adopted in the nineteenth century,
   and the Gregorian calendar was introduced in 1582 but not universally
   adopted until 1927.  OS services almost invariably assume the
-  Greporian calendar and that the timezone that was first enacted for
+  Gregorian calendar and that the time zone that was first enacted for
   the location was in force before that date.  The earliest legal
-  timezone seems to have been London on 1847-12-01.
+  time zone seems to have been London on 1847-12-01.
   % from the Olson files.
   
   Most operating systems represent \code{POSIXct} times as C type
@@ -203,7 +203,7 @@
   the limits we use our own C code.  This uses the offset from GMT in
   use either for 1902 (when there was no DST) or that predicted for one
   of 2030 to 2037 (chosen so that the likely DST transition days are
-  Sundays), and uses the alternate (daylight-saving) timezone only if
+  Sundays), and uses the alternate (daylight-saving) time zone only if
   \code{isdst} is positive or (if \code{-1}) if DST was predicted to be
   in operation in the 2030s on that day.
 
@@ -238,10 +238,10 @@
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have environment
-  variable \env{TZ}
-  set, yet have internal code that expects it (as does POSIX).  We have
-  tried to work around this, but if you get unexpected results try
-  setting \env{TZ}.  See \code{\link{Sys.timezone}} for valid settings.
+  variable \env{TZ} set, yet have internal code that expects it (as does
+  POSIX).  We have tried to work around this, but if you get unexpected
+  results try setting \env{TZ}.  See \code{\link{Sys.timezone}} for
+  valid settings.
 }
 \examples{\donttest{% <-->  may fail on platforms wrongly set up
 (z <- Sys.time())             # the current date, as class "POSIXct"
@@ -249,7 +249,7 @@
 Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
-format(.leap.seconds)         # all 24 leap seconds in your timezone
+format(.leap.seconds)         # the leap seconds in your time zone
 print(.leap.seconds, tz = "PST8PDT")  # and in Seattle's
 
 ## look at *internal* representation of "POSIXlt" :
