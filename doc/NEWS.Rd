@@ -264,9 +264,12 @@
 
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
-      names have been seen in C++11 headers.  Less remapping can be
-      selected by defining only \samp{R_NO_REMAP_RMATH2}, which is done
-      for C++ code.)
+      names have been seen in C++11 headers.  The remapping of
+      \code{prec} and \code{trunc} can be suppressed by defining only
+      \samp{R_NO_REMAP_RMATH2}: this is done for C++ code.)
+      
+      \item The remapping of \code{rround()} in header \file{Rmath.h}
+      has been removed: use \code{fround()} instead.
     }
   }
 
