@@ -465,7 +465,7 @@ L230:
 	       Normalize.  Divide all BI[N] by sum.
 	       --------------------------------------------------------- */
 	    if (nu != 0.)
-		sum *= (gamma_cody(1. + nu) * pow(*x * .5, -nu));
+		sum *= (Rf_gamma_cody(1. + nu) * pow(*x * .5, -nu));
 	    if (*ize == 1)
 		sum *= exp(-(*x));
 	    aa = enmten_BESS;
@@ -494,7 +494,7 @@ L230:
 	    	halfx = 0.;
 #endif
 	    if (nu != 0.)
-		aa = pow(halfx, nu) / gamma_cody(empal);
+		aa = pow(halfx, nu) / Rf_gamma_cody(empal);
 	    if (*ize == 2)
 		aa *= exp(-(*x));
 	    bb = halfx * halfx;

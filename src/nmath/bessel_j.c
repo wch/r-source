@@ -268,7 +268,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	    alpem = 1. + nu;
 
 	    halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
-	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * gamma_cody(nu)) : 1.;
+	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * Rf_gamma_cody(nu)) : 1.;
 	    bb	  = (*x + 1. > 1.)? -halfx * halfx : 0.;
 	    b[1] = aa + aa * bb / alpem;
 	    if (*x != 0. && b[1] == 0.)
@@ -555,7 +555,7 @@ L250:
 	       ---------------------------------------------------*/
 /*	    if (nu + 1. != 1.) poor test */
 	    if(fabs(nu) > 1e-15)
-		sum *= (gamma_cody(nu) * pow(.5* *x, -nu));
+		sum *= (Rf_gamma_cody(nu) * pow(.5* *x, -nu));
 
 	    aa = enmten_BESS;
 	    if (sum > 1.)

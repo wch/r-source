@@ -4,9 +4,12 @@
  *=========== was part of	ribesl (Bessel I(.))
  *===========			~~~~~~
  */
+
+// used in bessel_i.c and bessel_j.c, hidden if possible.
+
 #include "nmath.h"
 
-double attribute_hidden gamma_cody(double x)
+double attribute_hidden Rf_gamma_cody(double x)
 {
 /* ----------------------------------------------------------------------
 
