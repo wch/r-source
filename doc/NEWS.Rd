@@ -23,7 +23,18 @@
       of patience and disc space.
     }
   }
+  
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The long undocumented remapping of \code{rround()} to
+      \code{Rf_fround()} in header \file{Rmath.h} is now formally
+      deprecated: use \code{fround()} directly.
 
+      \item The remapping of \code{round()} to \code{Rf_fround()} in
+      header \file{Rmath.h} is deprecated and may be removed in future.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of

@@ -337,6 +337,7 @@ double  Rlog1p(double);
 #define trigamma	Rf_trigamma
 #endif
 
+// NB: these remappings were deprecated for R 3.0.3.
 #define	rround	fround
 #define	prec	fprec
 #undef trunc
