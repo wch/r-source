@@ -10964,7 +10964,7 @@ functions available, and none of the non-central distributions have
 similarly for the signed rank functions.
 
 (If remapping is suppressed, the Normal distribution names are
-@code{dnorm4}, @code{pnorm5} and @code{qnorm5}.)
+@code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
