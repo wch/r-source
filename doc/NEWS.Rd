@@ -179,6 +179,14 @@
 
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
+      
+      \item There is \emph{experimental} support for compiling C++11
+      code in packages.  The file \file{src/Makevars} or
+      \file{src/Makevars.win} should define the macro \samp{USE_CXX11 =
+      true}.  Where needed, an alternative C++11 compiler can be
+      specified by setting macros \samp{CXX11}, \samp{CXX11FLAGS} and so
+      on, either when \R is configured or in a personal \file{Makevars}
+      file.  (The default is to use \samp{$(CXX) -std=c++11}.)
     }
   }
 
