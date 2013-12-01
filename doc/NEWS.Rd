@@ -350,14 +350,15 @@
     }
   }
   
-  \subsection{DEPRECATED AND DEFUNCT}{
+  \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The long undocumented remapping of \code{rround()} to
       \code{Rf_fround()} in header \file{Rmath.h} is now formally
       deprecated: use \code{fround()} directly.
-
-      \item The remapping of \code{round()} to \code{Rf_fround()} in
-      header \file{Rmath.h} is deprecated and will be removed in future.
+      
+      \item Remapping of \code{prec()} and \code{trunc()} in the
+      \file{Rmath.h} header has been disabled in C++ code (it has caused
+      breakage with \code{libc++} headers).
     }
   }
   
@@ -472,7 +473,7 @@
       \item Some translations in base packages were being looked up in
       the main catalog rather than that for the package.
 
-      \item As a result of the 3.0.2 change about \sQuote{ the last
+      \item As a result of the 3.0.2 change about \sQuote{the last
 	second before the epoch}, most conversions which should have given
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
