@@ -1535,6 +1535,33 @@ personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.0/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
+Users of @Rapp{} under Mavericks need to be aware of its `App Nap'
+feature
+(@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
+which can cause @R{} tasks to appear to run very slowly when not
+producing output in the console.  Here are three ways to avoid it:
+
+@itemize
+@item
+Ensure that the console is completely visible (or at least the activity
+indicator at the top right corner).
+
+@item
+Call @samp{Get Info} on the application (e.g.@: from Finder). This will
+have two tick boxes in the `General' panel: click the one named `Prevent
+App Nap' if it is not already ticked.
+
+@item
+In a Terminal, run
+@example
+defaults write org.R-project.R NSAppSleepDisabled -bool YES
+@end example
+(see @uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
+@end itemize
+
+The current @acronym{CRAN} build was built before Mavericks: the advice
+for a build under Mavericks will differ (and the check box in the second
+option will not be present).
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X

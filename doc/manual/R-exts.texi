@@ -2248,11 +2248,11 @@ It may be possible to compile C++11 code with @command{g++} or
 
 Note that the default compiler for OS X is based on GCC 4.2.1 and has no
 support for anything other than the GNU version of C++98 and GNU
-extensions.  The default compiler on Windows is GCC 4.6.x and supports
-the @option{-std=c++0x} flag and some C++11 features (see
-@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  It is possible to
-select a different compiler @emph{via} personal @file{Makevars}
-files.
+extensions (which include TR1).  The default compiler on Windows is GCC
+4.6.x and supports the @option{-std=c++0x} flag and some C++11 features
+(see @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  It is
+possible to select a different compiler @emph{via} personal
+@file{Makevars} files.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
  R-admin,  R Installation and Administration},
