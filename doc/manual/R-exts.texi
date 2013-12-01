@@ -1579,6 +1579,7 @@ pkg-config --list-all | sort
 * Using Makevars::              
 * Configure example::           
 * Using F95 code::              
+* Using C+11 code::             
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2170,7 +2171,7 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F95 code,  , Configure example, Configure and cleanup
+@node Using F95 code, Using C+11 code, Configure example, Configure and cleanup
 @subsection Using F95 code
 
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
@@ -2225,6 +2226,38 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
+@node Using C+11 code,  , Using F95 code, Configure and cleanup
+@subsection Using C++11 code
+
+@R{} can be built without a C++ compiler although one is available (but
+not necessarily installed) on all known platforms.  However, all that
+can be assumed is approximate support for the C++98 standard (the widely
+use @command{g++} deviates considerably from the standard).  Some
+compilers have a concept of `C++03' (`essentially a bug fix') or `C++
+Technical Report 1', an optional addition to the `C++03' revision which
+was published in 2007.  Finally a revised standard was published in 2011
+and compilers with fairly complete implementations are becoming
+available.  C++11 added all of the C99 features which are not otherwise
+implemented in C++, and C++ compilers commonly accept C99 extensions to
+C++98.
+
+It may be possible to compile C++11 code with @command{g++} or
+@command{c++11} by including @option{-std=c++11} in
+@samp{PKG_CXXFLAGS}, and earlier versions support a flag
+@option{-std=c++0x}.
+
+Note that the default compiler for OS X is based on GCC 4.2.1 and has no
+support for anything other than the GNU version of C++98 and GNU
+extensions.  The default compiler on Windows is GCC 4.6.x and supports
+the @option{-std=c++0x} flag and some C++11 features (see
+@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  It is possible to
+select a different compiler @emph{via} personal @file{Makevars}
+files.
+@ifset UseExternalXrefs
+@xref{Customizing package compilation, , Customizing package compilation,
+ R-admin,  R Installation and Administration},
+@end ifset
+For example, on OS X 10.7 or later one could select @command{clang++}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -3695,10 +3728,7 @@ files.
 Although there is a 2011 version of the C++ standard, it is not yet
 fully implemented@footnote{despite misleading claims by some compilers
 to be `feature complete'.} and portable C++ code needs to follow the
-1998 standard (and not use features from C99).  Compilers currently used
-on several @R{} platforms (including OS X, Windows and Solaris) have
-little or no support for newer C++ features, although most allow C99
-features.
+1998 standard (and not use features from C99).
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
