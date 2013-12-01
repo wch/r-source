@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -386,6 +386,7 @@ tar <- function(tarfile, files = NULL,
     files <- list.files(files, recursive = TRUE, all.files = TRUE,
                         full.names = TRUE, include.dirs = TRUE)
 
+    invalid_uid <- invalid_gid <- FALSE
     for (f in unique(files)) {
         info <- file.info(f)
         if(is.na(info$size)) {
@@ -432,20 +433,12 @@ tar <- function(tarfile, files = NULL,
         ## uids are supposed to be less than 'nobody' (32767)
         ## but it seems there are broken ones around: PR#15436
         if(!is.null(uid) && !is.na(uid)) {
-            if(uid < 0L || uid > 32767L) {
-                warning(gettextf("invalid uid value replaced by that for user 'nobody'", uid),
-                        domain = NA, call. = FALSE)
-                uid <- 32767L
-            }
+            if(uid < 0L || uid > 32767L) {invalid_uid <- TRUE; uid <- 32767L}
             header[109:115] <- charToRaw(sprintf("%07o", uid))
         }
         gid <- info$gid
         if(!is.null(gid) && !is.na(gid)) {
-            if(gid < 0L || gid > 32767L) {
-                warning(gettextf("invalid gid value replaced by that for user 'nobody'", uid),
-                        domain = NA, call. = FALSE)
-                gid <- 32767L
-            }
+            if(gid < 0L || gid > 32767L) {invalid_gid <- TRUE; gid <- 32767L}
             header[117:123] <- charToRaw(sprintf("%07o", gid))
 	}
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
@@ -497,6 +490,12 @@ tar <- function(tarfile, files = NULL,
         }
         close(inf)
     }
+    if (invalid_uid)
+        warning(gettextf("invalid uid value replaced by that for user 'nobody'", uid),
+                domain = NA, call. = FALSE)
+    if (invalid_gid)
+        warning(gettextf("invalid gid value replaced by that for user 'nobody'", uid),
+                domain = NA, call. = FALSE)
     ## trailer is two blocks of nuls.
     block <- raw(512L)
     writeBin(block, con)
