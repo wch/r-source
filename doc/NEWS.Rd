@@ -357,7 +357,7 @@
       deprecated: use \code{fround()} directly.
 
       \item The remapping of \code{round()} to \code{Rf_fround()} in
-      header \file{Rmath.h} is deprecated and may be removed in future.
+      header \file{Rmath.h} is deprecated and will be removed in future.
     }
   }
   
