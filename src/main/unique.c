@@ -1441,7 +1441,8 @@ static SEXP
 rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 {
     SEXP matches,ans;
-    int n, p, ng, offset = 0, offsetg = 0, narm;
+    int n, p, ng, narm;
+    R_xlen_t offset = 0, offsetg = 0;
     HashData data;
     data.nomatch = 0;
 
@@ -1512,13 +1513,13 @@ static SEXP
 rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 {
     SEXP matches,ans,col,xcol;
-    int n, p, ng, narm;
+    int p, narm;
     HashData data;
     data.nomatch = 0;
 
-    n = LENGTH(g);
+    R_xlen_t n = XLENGTH(g);
     p = LENGTH(x);
-    ng = length(uniqueg);
+    R_xlen_t ng = XLENGTH(uniqueg);
     narm = asLogical(snarm);
     if(narm == NA_LOGICAL) error("'na.rm' must be TRUE or FALSE");
 
@@ -1537,7 +1538,7 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 	case REALSXP:
 	    PROTECT(col = allocVector(REALSXP,ng));
 	    Memzero(REAL(col), ng);
-	    for(int j = 0; j < n; j++)
+	    for(R_xlen_t j = 0; j < n; j++)
 		if(!narm || !ISNAN(REAL(xcol)[j]))
 		    REAL(col)[INTEGER(matches)[j] - 1] += REAL(xcol)[j];
 	    SET_VECTOR_ELT(ans,i,col);
@@ -1546,7 +1547,7 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 	case INTSXP:
 	    PROTECT(col = allocVector(INTSXP, ng));
 	    Memzero(INTEGER(col), ng);
-	    for(int j = 0; j < n; j++) {
+	    for(R_xlen_t j = 0; j < n; j++) {
 		if (INTEGER(xcol)[j] == NA_INTEGER) {
 		    if(!narm)
 			INTEGER(col)[INTEGER(matches)[j] - 1] = NA_INTEGER;

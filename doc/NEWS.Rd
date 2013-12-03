@@ -485,6 +485,9 @@
 	second before the epoch}, most conversions which should have given
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
+      
+      \item \code{rowsum} has more support for matrices and dataframes
+      with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
     }
   }
 }
