@@ -122,6 +122,9 @@
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
+      
+      \item \code{colSums} and friends now have support for arrays with
+      \eqn{2^{31}}{2^31} or more elements.
     }
   }
 
