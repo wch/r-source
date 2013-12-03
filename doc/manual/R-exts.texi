@@ -7086,6 +7086,12 @@ forgetting that @code{x} might be @code{NA_INTEGER}.
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
+The current set is (on a single line):
+@example
+-fsanitize=alignment,array-bounds,bool,enum,float-cast-overflow,
+float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
+return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
+@end example
 
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
