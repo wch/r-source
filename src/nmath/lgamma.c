@@ -71,7 +71,7 @@ double lgammafn_sign(double x, int *sgn)
     if (sgn != NULL && x < 0 && fmod(floor(-x), 2.) == 0)
 	*sgn = -1;
 
-    if (x <= 0 && x == ftrunc(x)) { /* Negative integer argument */
+    if (x <= 0 && x == trunc(x)) { /* Negative integer argument */
 	ML_ERROR(ME_RANGE, "lgamma");
 	return ML_POSINF;/* +Inf, since lgamma(x) = log|gamma(x)| */
     }

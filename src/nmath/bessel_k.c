@@ -415,7 +415,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 		/* ----------------------------------------------------------
 		   Calculation of K(ALPHA+1,X)/K(ALPHA,X),  1.0 <= X <= 4.0
 		   ----------------------------------------------------------*/
-		d2 = ftrunc(estm[0] / ex + estm[1]);
+		d2 = trunc(estm[0] / ex + estm[1]);
 		m = (long) d2;
 		d1 = d2 + d2;
 		d2 -= .5;
@@ -429,7 +429,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 		   Calculation of I(|ALPHA|,X) and I(|ALPHA|+1,X) by backward
 		   recurrence and K(ALPHA,X) from the wronskian
 		   -----------------------------------------------------------*/
-		d2 = ftrunc(estm[2] * ex + estm[3]);
+		d2 = trunc(estm[2] * ex + estm[3]);
 		m = (long) d2;
 		c = fabs(nu);
 		d3 = c + c;
@@ -463,7 +463,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 		   Calculation of K(ALPHA,X) and K(ALPHA+1,X)/K(ALPHA,X), by
 		   backward recurrence, for  X > 4.0
 		   ----------------------------------------------------------*/
-		dm = ftrunc(estm[4] / ex + estm[5]);
+		dm = trunc(estm[4] / ex + estm[5]);
 		m = (long) dm;
 		d2 = dm - .5;
 		d2 *= d2;

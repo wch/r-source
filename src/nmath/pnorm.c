@@ -194,7 +194,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	temp = (xnum + c[7]) / (xden + d[7]);
 
 #define do_del(X)							\
-	xsq = ftrunc(X * SIXTEN) / SIXTEN;				\
+	xsq = trunc(X * SIXTEN) / SIXTEN;				\
 	del = (X - xsq) * (X + xsq);					\
 	if(log_p) {							\
 	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(temp);	\

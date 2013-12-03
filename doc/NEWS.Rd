@@ -276,11 +276,15 @@
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
       names have been seen in C++11 headers.  The remapping of
-      \code{prec} and \code{trunc} can be suppressed by defining only
+      \code{prec} can be suppressed by defining only
       \samp{R_NO_REMAP_RMATH2}: this is done for C++ code.)
       
       \item The remapping of \code{rround()} in header \file{Rmath.h}
       has been removed: use \code{fround()} instead.
+      
+      \item \code{ftrunc()} in header \file{Rmath.h} is now a wrapper
+      for the C99 function \code{trunc()}, which might as well be used
+      in C code: \code{ftrunc()} is still needed for portable C++ code.
     }
   }
 

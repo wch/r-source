@@ -32,7 +32,7 @@
 #define RMATH_H
 
 /* Note that on some systems we need to include math.h before the
-   defines below, to avoid redefining ftrunc */
+   defines below. */
 #ifndef NO_C_HEADERS
 # include <math.h>
 #endif
@@ -67,14 +67,16 @@ double  Rlog1p(double);
 
 	/* Undo SGI Madness */
 
-#ifdef ftrunc
-# undef ftrunc
-#endif
-#ifdef qexp
-# undef qexp
-#endif
-#ifdef qgamma
-# undef qgamma
+#ifdef __sgi
+# ifdef ftrunc
+#  undef ftrunc
+# endif
+# ifdef qexp
+#  undef qexp
+# endif
+# ifdef qgamma
+#  undef qgamma
+# endif
 #endif
 
 
@@ -346,13 +348,10 @@ double  Rlog1p(double);
 /* 
    AFAICS none of these was ever documented.
    'trunc' causes problems with C++ iostream headers
-   rround was deprecated in 3.0.3, removed in 3.1.0
+   rround and trunc were deprecated in 3.0.3, removed in 3.1.0
  */
-// #define	rround	fround
 # define	prec	fprec
-# undef trunc
-# define	trunc	ftrunc
-# endif
+#endif
 
 #define dnorm dnorm4
 #define pnorm pnorm5

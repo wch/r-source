@@ -11184,7 +11184,11 @@ This is the function used by @R{}'s @code{round()}.
 @end deftypefun
 
 @deftypefun double ftrunc (double @var{x})
-Returns the value of @var{x} truncated (to an integer value) towards zero.
+Returns the value of @var{x} truncated (to an integer value) towards
+zero.
+
+Note that this is no longer needed in C code, as C99 provide a
+@code{trunc} function.  It is needed for portable C++98 code.
 @end deftypefun
 
 @node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines

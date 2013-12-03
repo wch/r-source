@@ -152,10 +152,10 @@ double attribute_hidden Rf_gamma_cody(double x)
 	   Argument is negative
 	   ------------------------------------------------------------- */
 	y = -x;
-	yi = ftrunc(y);
+	yi = trunc(y);
 	res = y - yi;
 	if (res != 0.) {
-	    if (yi != ftrunc(yi * .5) * 2.)
+	    if (yi != trunc(yi * .5) * 2.)
 		parity = (1);
 	    fact = -M_PI / sinpi(res);
 	    y += 1.;
