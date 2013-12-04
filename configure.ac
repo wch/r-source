@@ -76,7 +76,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was OS X 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 11 being 10.7.  We no longer support < 10.4 (Tiger)
+   ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
    ## http://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
