@@ -344,15 +344,6 @@ double  Rlog1p(double);
 #define trigamma	Rf_trigamma
 #endif
 
-#if !defined(R_NO_REMAP_RMATH) && !defined(__cplusplus) && !defined(R_NO_REMAP_RMATH2)
-/* 
-   AFAICS none of these was ever documented.
-   'trunc' causes problems with C++ iostream headers
-   rround and trunc were deprecated in 3.0.3, removed in 3.1.0
- */
-# define	prec	fprec
-#endif
-
 #define dnorm dnorm4
 #define pnorm pnorm5
 #define qnorm qnorm5
