@@ -655,8 +655,9 @@ requireNamespace <- function (package, ..., quietly = FALSE)
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
     res <- TRUE
     if (is.null(ns)) {
-        packageStartupMessage(gettextf("Loading required namespace: %s",
-                                       package), domain = NA)
+        if(!quietly)
+            packageStartupMessage(gettextf("Loading required namespace: %s",
+                                           package), domain = NA)
         value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {
