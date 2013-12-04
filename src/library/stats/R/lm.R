@@ -710,10 +710,11 @@ predict.lm <-
 
     type <- match.arg(type)
     if(se.fit || interval != "none") {
+        ## w is needed for interval = "confidence"
+        w <- object$weights
 	res.var <-
 	    if (is.null(scale)) {
 		r <- object$residuals
-		w <- object$weights
 		rss <- sum(if(is.null(w)) r^2 else r^2 * w)
 		df <- object$df.residual
 		rss/df
