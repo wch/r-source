@@ -103,7 +103,7 @@
       effect when \code{x} is not integer-valued.
       
       \item There is more support to explore the system's idea of
-      timezone names.  \code{Sys.timezone(location = TRUE)} tries to
+      time-zone names.  \code{Sys.timezone(location = TRUE)} tries to
       give the current system setting (and succeeds at least on Linux, OS
       X, Solaris and Windows), and \code{OlsonNames()} lists the names
       in the system's Olson database.
@@ -112,7 +112,7 @@
       handle conversions between the \code{"POSIXct"} and
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
       (before 1902 or after 2037): the existing workarounds are used on
-      other platforms.  (Note that timezone information for post-2037 is
+      other platforms.  (Note that time-zone information for post-2037 is
       speculative at best, and the OS services are tested for accuracy
       and not used on OS X.)
 
@@ -123,8 +123,8 @@
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
       
-      \item \code{colSums} and friends now have support for arrays with
-      \eqn{2^{31}}{2^31} or more elements.
+      \item \code{colSums} and friends now have support for arrays and
+      data-frame columns with \eqn{2^{31}}{2^31} or more elements.
     }
   }
 
@@ -154,7 +154,7 @@
       thorough checking of an \R build.
       
       \item (Windows only.)  The version of \samp{tzcode} included in
-      \file{src/etc/tzone} has been updated.
+      \file{src/extra/tzone} has been updated.
     }
   }
 
@@ -274,10 +274,7 @@
       the next event is received by \R.
 
       \item Remapping in the \file{Rmath.h} header can be suppressed by
-      defining \samp{R_NO_REMAP_RMATH}.  (Problems with the remapped
-      names have been seen in C++11 headers.  The remapping of
-      \code{prec} can be suppressed by defining only
-      \samp{R_NO_REMAP_RMATH2}: this is done for C++ code.)
+      defining \samp{R_NO_REMAP_RMATH}.
       
       \item The remapping of \code{rround()} in header \file{Rmath.h}
       has been removed: use \code{fround()} instead.
@@ -285,6 +282,10 @@
       \item \code{ftrunc()} in header \file{Rmath.h} is now a wrapper
       for the C99 function \code{trunc()}, which might as well be used
       in C code: \code{ftrunc()} is still needed for portable C++ code.
+
+      \item The undocumented (and unused in known packages) remapping of
+      \code{prec()} to \code{fprec()} in header \file{Rmath.h} has been
+      removed.
     }
   }
 
@@ -1527,7 +1528,7 @@
       \item \code{untar()} has a new argument \code{restore_times} which
       if false (not the default) discards the times in the tarball.
       This is useful if they are incorrect (some tarballs submitted to
-      \acronym{CRAN} have times in a local timezone or many years in the
+      \acronym{CRAN} have times in a local time zone or many years in the
       past even though the standard required them to be in UTC).
 
       \item \code{replayplot()} cannot (and will not attempt to) replay
