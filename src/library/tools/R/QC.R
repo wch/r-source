@@ -6180,8 +6180,20 @@ function(dir)
     ## Record to notify about components extending a base license which
     ## permits extensions.
     if(length(extensions <- info$extensions) &&
-       any(ind <- extensions$extensible))
+       any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
+        out$pointers <-
+            Filter(length,
+                   lapply(info$pointers,
+                          function(p) {
+                              fp <- file.path(dir, p)
+                              if(file_test("-f", fp)) {
+                                  ## Should this use the package
+                                  ## encoding?
+                                  c(p, readLines(fp, warn = FALSE))
+                              } else NULL
+                          }))     
+    }
 
     out$Maintainer <- meta["Maintainer"]
     ## pick out 'display name'
@@ -6560,9 +6572,15 @@ function(x, ...)
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
-      if(length(y <- x$extensions))
+      if(length(y <- x$extensions)) {
           c("Components with restrictions and base license permitting such:",
-            paste(" ", y)),
+            paste(" ", y),
+            unlist(lapply(x$pointers,
+                          function(e) {
+                              c(sprintf("File '%s':", e[1L]),
+                                paste(" ", e[-1L]))
+                          })))
+      },
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
           c("Possibly mis-spelled words in DESCRIPTION:",
