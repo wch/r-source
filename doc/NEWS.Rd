@@ -496,6 +496,9 @@
       
       \item \code{rowsum} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
+  
+      \item \code{predict(<lm object>, interval = "confidence", scale =
+	<something>)} now works.  (\PR{15564})
     }
   }
 }

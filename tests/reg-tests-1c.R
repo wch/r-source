@@ -254,7 +254,14 @@ stopifnot(ss == ss[1], tt == tt[1], # as internal arithmetic must be exact here
 
 ## PR#15535 c() "promoted" raw vectors to bad logical values
 stopifnot( c(as.raw(11), TRUE) == TRUE )
-## as.raw(11) became a logical value coded as 11, and did not test equal to TRUE.
+## as.raw(11) became a logical value coded as 11,
+## and did not test equal to TRUE.
+
+
+## PR#15564
+fit <- lm(rnorm(10) ~ I(1:10))
+predict(fit, interval = "confidence", scale = 1)
+## failed in <= 3.0.2 with object 'w' not found
 
 
 proc.time()
