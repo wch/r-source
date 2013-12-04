@@ -110,7 +110,9 @@
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
         mconf <- file.path(R.home(), paste0("etc", rarch), "Makeconf")
-        sub(".*= ", "", grep("^SHLIB_EXT", readLines(mconf), value = TRUE))
+        ## PCRE needed for Debian arm* platforms
+        sub(".*= ", "", grep("^SHLIB_EXT", readLines(mconf), value = TRUE,
+                             perl = TRUE))
     }
 
     options(warn = 1)
@@ -1672,8 +1674,10 @@
         mconf <- readLines(file.path(R.home(),
                                      paste0("etc", Sys.getenv("R_ARCH")),
                                      "Makeconf"))
-        SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
-        SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
+        SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE,
+                                          perl = TRUE))
+        SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf,
+                                             value = TRUE, perl = TRUE))
         MAKE <- Sys.getenv("MAKE")
         rarch <- Sys.getenv("R_ARCH")
     } else {
