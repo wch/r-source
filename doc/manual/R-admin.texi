@@ -2866,11 +2866,11 @@ You need a means of compiling C and FORTRAN 90 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
 known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
-C99-compliant.@footnote{Note that C11 compilers (when they appear) need
-not be C99-compliant: @R{} requires support for @code{double complex}
-which is optional in C11 but is mandatory in C99.}  @R{} tries to choose
-suitable flags for the C compilers it knows about, but you may have to
-set @code{CC} or @code{CFLAGS} suitably.  For recent versions of
+C99-compliant.@footnote{Note that C11 compilers need not be
+C99-compliant: @R{} requires support for @code{double complex} which is
+optional in C11 but is mandatory in C99.}  @R{} tries to choose suitable
+flags for the C compilers it knows about, but you may have to set
+@code{CC} or @code{CFLAGS} suitably.  For recent versions of
 @command{gcc} with @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
@@ -2913,15 +2913,19 @@ development version) needs to be installed, and its headers need to be
 on the C include path (and @command{configure} tries
 @file{/usr/include/tirpc} if the headers are not found on the standard
 include path).  The @R{} sources contain a fall-back implementation of
-@acronym{XDR} which is likely to suffice on both 32- and 64-bit
-platforms.
+@acronym{XDR} which is likely to suffice.
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{wctans_t} and @code{mbstate_t} and functions @code{mbrtowc},
 @code{mbstowcs}, @code{wcrtomb}, @code{wcscoll}, @code{wcstombs},
 @code{wctrans}, @code{wctype}, and @code{iswctype}.} for wide-character
-types: this is checked at configuration.
+types: this is checked at configuration.  A small number of POSIX
+functions@footnote{including the @code{opendir}, @code{readdir},
+@code{closedir}, @code{popen}, @code{stat}, @code{glob}, @code{access},
+@code{getcwd} and @code{chdir} system calls, and either @code{putenv} or
+@code{setenv}.} are essential, and others@footnote{such as
+@code{realpath}, @code{symlink}.} will be used if available.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
