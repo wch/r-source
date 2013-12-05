@@ -232,7 +232,8 @@ SweaveReadFile <- function(file, syntax, encoding = "")
     pos <- grep(syntax$syntaxname, text)
 
     if (length(pos) > 1L)
-        warning(gettextf("more than one syntax specification found, using the first one"), domain = NA)
+        warning(gettextf("more than one syntax specification found, using the first one"),
+		domain = NA)
 
     if (length(pos) > 0L) {
         sname <- sub(syntax$syntaxname, "\\1", text[pos[1L]])
@@ -243,7 +244,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
         text <- text[-pos]
         srcLinenum <- srcLinenum[-pos]
     }
-    srcFilenum <- rep(1, length(srcLinenum))
+    srcFilenum <- rep_len(1, length(srcLinenum))
 
     if (!is.null(syntax$input)) {
         while(length(pos <- grep(syntax$input, text))) {

@@ -106,11 +106,11 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(include.mean && (nd == 0)) {
         if(is.matrix(xreg) && is.null(colnames(xreg)))
             colnames(xreg) <- paste0("xreg", 1L:ncxreg)
-        xreg <- cbind(intercept = rep(1, n), xreg = xreg)
+        xreg <- cbind(intercept = rep_len(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1
     }
 
-    if (is.null(fixed)) fixed <- rep(NA_real_, narma + ncxreg)
+    if (is.null(fixed)) fixed <- rep_len(NA_real_, narma + ncxreg)
     else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
@@ -134,8 +134,8 @@ arima0 <- function(x, order = c(0, 0, 0),
             delta <- -1
         }
 
-    init0 <- rep(0, narma)
-    parscale <- rep(1, narma)
+    init0 <- rep_len(0, narma)
+    parscale <- rep_len(1, narma)
     if (ncxreg) {
         orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1L:ncxreg])
         if(!orig.xreg) {
@@ -247,7 +247,7 @@ print.arima0 <- function(x, digits = max(3L, getOption("digits") - 3L),
     cat("Coefficients:\n")
     coef <- round(x$coef, digits = digits)
     if (se && nrow(x$var.coef)) {
-        ses <- rep(0, length(coef))
+        ses <- rep_len(0, length(coef))
         ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
         coef <- matrix(coef, 1, dimnames = list(NULL, names(coef)))
         coef <- rbind(coef, s.e. = ses)
@@ -286,8 +286,8 @@ predict.arima0 <-
     narma <- sum(arma[1L:4L])
     if(length(coefs) > narma) {
         if(names(coefs)[narma+1] == "intercept") {
-            xreg <- cbind(intercept = rep(1, n), xreg)
-            newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
+            xreg <- cbind(intercept = rep_len(1, n), xreg)
+            newxreg <- cbind(intercept = rep_len(1, n.ahead), newxreg)
             ncxreg <- ncxreg+1
         }
         data <- data - as.matrix(xreg) %*% coefs[-(1L:narma)]
@@ -305,7 +305,7 @@ predict.arima0 <-
             warning("seasonal MA part of model is not invertible")
     }
     storage.mode(data) <- "double"
-    G <- .Call(C_setup_starma, as.integer(arma), data, n, rep(0., n),
+    G <- .Call(C_setup_starma, as.integer(arma), data, n, rep_len(0., n),
                0., -1., 0., 0.)
     on.exit(.Call(C_free_starma, G))
     .Call(C_Starma_method, G, TRUE)

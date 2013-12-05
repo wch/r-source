@@ -36,7 +36,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     mt <- attr(mf, "terms")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
-    if(is.null(w)) w <- rep(1, length(y))
+    if(is.null(w)) w <- rep_len(1, length(y))
     nmx <- as.character(attr(mt, "variables"))[-(1L:2)]
     x <- mf[, nmx, drop=FALSE]
     if(any(sapply(x, is.factor))) stop("predictors must all be numeric")
@@ -106,14 +106,14 @@ simpleLoess <-
     storage.mode(y) <- "double"
     storage.mode(weights) <- "double"
     max.kd <-  max(N, 200)
-    robust <- rep(1, N)
-    divisor <- rep(1, D)
+    robust <- rep_len(1, N)
+    divisor <- rep_len(1, D)
     if(normalize && D > 1L) {
 	trim <- ceiling(0.1 * N)
 	divisor <-
 	    sqrt(apply(apply(x, 2L, sort)[seq(trim+1, N-trim), , drop = FALSE],
 		       2L, var))
-	x <- x/rep(divisor, rep(N, D))
+	x <- x/rep(divisor, rep_len(N, D))
     }
     sum.drop.sqr <- sum(drop.square)
     sum.parametric <- sum(parametric)
@@ -264,8 +264,8 @@ predLoess <-
     ## translation of pred_
     D <- NCOL(x); N <- NROW(x); M <- NROW(newx)
     x <- as.matrix(x); newx <- as.matrix(newx)
-    newx <- newx/rep(divisor, rep(M, D))
-    x <- x/rep(divisor, rep(N, D))
+    newx <- newx/rep(divisor, rep_len(M, D))
+    x <- x/rep(divisor, rep_len(N, D))
     sum.drop.sqr <- sum(drop.square)
     nonparametric <- sum(!parametric)
     order.parametric <- order(parametric)
@@ -276,7 +276,7 @@ predLoess <-
     storage.mode(y) <- "double"
     if(surface == "direct") {
         nas <- rowSums(is.na(newx)) > 0L
-        fit <- rep(NA_real_, length(nas))
+        fit <- rep_len(NA_real_, length(nas))
         x.evaluate <- x.evaluate[!nas,, drop = FALSE]
         M <- nrow(x.evaluate)
 	if(se) {
@@ -299,7 +299,7 @@ predLoess <-
 		    fit = double(M),
 		    L = double(N*M))[c("fit", "L")]
 	    fit[!nas] <- z$fit
-	    ses <- (matrix(z$L^2, M, N)/rep(weights, rep(M,N))) %*% rep(1,N)
+	    ses <- (matrix(z$L^2, M, N)/rep(weights, rep_len(M,N))) %*% rep_len(1,N)
 	    se.fit[!nas] <- drop(s * sqrt(ses))
 	} else {
 	    fit[!nas] <- .C(C_loess_dfit,
@@ -322,12 +322,12 @@ predLoess <-
 	## need to eliminate points outside original range - not in pred_
 	inside <- matrix(FALSE, M, ncol = D)
 	ranges <- apply(x, 2L, range)
-	inside <- (x.evaluate <= rep(ranges[2L,], rep(M, D))) &
-	(x.evaluate >= rep(ranges[1L,], rep(M, D)))
-	inside <- inside %*% rep(1, D) == D
+	inside <- (x.evaluate <= rep(ranges[2L,], rep_len(M, D))) &
+	(x.evaluate >= rep(ranges[1L,], rep_len(M, D)))
+	inside <- inside %*% rep_len(1, D) == D
         inside[is.na(inside)] <- FALSE
 	M1 <- sum(inside)
-	fit <- rep(NA_real_, M)
+	fit <- rep_len(NA_real_, M)
 	if(any(inside))
 	    fit[inside] <- .C(C_loess_ifit,
 			      as.integer(kd$parameter),
@@ -337,7 +337,7 @@ predLoess <-
 			      as.double(x.evaluate[inside, ]),
 			      fit = double(M1))$fit
 	if(se) {
-	    se.fit <- rep(NA_real_, M)
+	    se.fit <- rep_len(NA_real_, M)
 	    if(any(inside)) {
 		L <- .C(C_loess_ise,
 			y,
@@ -356,7 +356,7 @@ predLoess <-
 			double(M1),
 			L = double(N*M1)
 			)$L
-		tmp <- (matrix(L^2, M1, N)/rep(weights, rep(M1,N))) %*% rep(1,N)
+		tmp <- (matrix(L^2, M1, N)/rep(weights, rep_len(M1,N))) %*% rep_len(1,N)
 		se.fit[inside] <- drop(s * sqrt(tmp))
 	    }
 	}
@@ -454,7 +454,7 @@ loess.smooth <-
 
     control <- loess.control(...)
     x <- x[notna]; y <- y[notna]
-    w <- rep(1, length(y))
+    w <- rep_len(1, length(y))
     family <- match.arg(family)
     iterations <- if(family == "gaussian") 1L else control$iterations
     fit <- simpleLoess(y, x, w, span, degree, FALSE, FALSE,

@@ -358,7 +358,7 @@ Rd2txt <-
                 left <- excess %/% 2
                 right <- excess-left
             }
-            paste(c(rep(" ", left), x, rep(" ", right)), collapse = "")
+            paste(c(rep_len(" ", left), x, rep_len(" ", right)), collapse = "")
         } else x
     }
 
@@ -393,7 +393,7 @@ Rd2txt <-
     }
 
     blanks <- function(n)
-	if (n) paste(rep(" ", n), collapse="") else ""
+	if (n) paste(rep_len(" ", n), collapse="") else ""
 
     flushBuffer <- function() {
     	if (!length(buffer)) return()
@@ -509,7 +509,7 @@ Rd2txt <-
     	    buffer <<- buffer[-length(buffer)]
 	flushBuffer()
 	if (n > haveBlanks) {
-	    buffer <<- rep("", n - haveBlanks)
+	    buffer <<- rep_len("", n - haveBlanks)
 	    flushBuffer()
 	    haveBlanks <<- n
 	}
@@ -753,8 +753,8 @@ Rd2txt <-
                     })
         rows <- entries[[length(entries)]]$row
         cols <- max(sapply(entries, function(e) e$col))
-        widths <- rep(0L, cols)
-        lines <- rep(1L, rows)
+        widths <- rep_len(0L, cols)
+        lines <- rep_len(1L, rows)
         for (i in seq_along(entries)) {
             e <- entries[[i]]
             while(length(e$text) && !nzchar(e$text[length(e$text)])) {
@@ -852,7 +852,7 @@ Rd2txt <-
                                   indent <<- max(opts$minIndent,
                                                  indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
-                                  putw(paste(rep(" ", indent0), collapse=""),
+                                  putw(paste(rep_len(" ", indent0), collapse=""),
                                        frmt(paste0(DLlab),
                                             justify="left", width=indent),
                                        " ")
