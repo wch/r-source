@@ -1606,7 +1606,7 @@
 	install_libs <- FALSE
 	install_demo <- FALSE
 	install_exec <- FALSE
-	install_inst <- FALSE
+#	install_inst <- FALSE
     }
 
     build_help_types <- character()

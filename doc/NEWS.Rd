@@ -190,6 +190,12 @@
       specified by setting macros \samp{CXX11}, \samp{CXX11FLAGS} and so
       on, either when \R is configured or in a personal \file{Makevars}
       file.  (The default is to use \samp{$(CXX) -std=c++11}.)
+      
+      \item Fake installs now install the contents of directory
+      \file{inst}: some packages use this to install e.g. C++ headers
+      for use by other packages that are independent of the package
+      itself.  Option \option{--no-inst} can be used to get the previous
+      behaviour.
     }
   }
 
