@@ -29,6 +29,12 @@
 #include <stdio.h>  /* Used by several packages, remove in due course */
 #include <limits.h> /* for INT_MAX */
 #include <math.h>
+# if defined(__sun)
+# undef DO
+# undef DS
+# undef SO
+# undef SS
+# endif
 #endif
 
 #include <Rconfig.h>
