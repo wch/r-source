@@ -282,8 +282,19 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
             kp += 1;
         }
         *kpower = kp + R_print.digits - 1;
-	// kpower can be bigger than the table.
-	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower + 1];
+
+	/* Scientific format may do more rounding than fixed format, e.g.
+	   9996 with 3 digits is 1e+04 in scientific, but 9996 in fixed.
+	   This happens when the true value r is less than 10^(kpower+1)
+	   and would not round up to it in fixed format.
+	   Here rgt is the decimal place that will be cut off by rounding */
+	   
+	int rgt = R_print.digits - *kpower;
+	/* bound rgt by 0 and KP_MAX */
+	rgt = rgt < 0 ? 0 : rgt > KP_MAX ? KP_MAX : rgt;
+	double fuzz = 0.5/tbl[1 + rgt];
+	// kpower can be bigger than the table.	
+	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower + 1] - fuzz;
     }
 }
 

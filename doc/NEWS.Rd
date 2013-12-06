@@ -157,6 +157,10 @@
   
       \item \code{predict(<lm object>, interval = "confidence", scale =
 	<something>)} now works.  (\PR{15564})
+	
+      \item The bug fix in 3.0.2 for \PR{15411} was too agressive,
+      and sometimes removed spaces that should not have been removed.
+      (\PR{15583})
     }
   }
 }
