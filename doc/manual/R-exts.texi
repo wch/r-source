@@ -7055,6 +7055,15 @@ to link the required libraries into the @R{} executable.
 For options available @emph{via} an environment variable see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
 
+For more detailed information @R{} can be run under a debugger with a
+breakpoint set before the address sanitizer report is produced: for
+@command{gdb} or @command{lldb} you could use
+@example
+break __asan_report_error
+@end example
+(See
+@uref{http://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
+
 Some versions of @command{clang} also have a (currently experimental)
 memory sanitizer invoked by @option{-fsanitize=memory} which detects
 uses of uninitialized memory. See
