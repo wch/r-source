@@ -20,7 +20,7 @@ princomp(x, \dots)
 \method{princomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
-         subset = rep(TRUE, nrow(as.matrix(x))), \dots)
+         subset = rep_len(TRUE, nrow(as.matrix(x))), \dots)
 
 \method{predict}{princomp}(object, newdata, \dots)
 }
