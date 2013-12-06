@@ -153,19 +153,25 @@ if test -z "${TEXI2DVICMD}"; then
 fi
 AC_SUBST(TEXI2DVICMD)
 AC_PATH_PROGS(KPSEWHICH, [${KPSEWHICH} kpsewhich], "")
+dnl this is deliberately not cached: LaTeX packages change.
+AC_MSG_CHECKING([for latex inconsolata package])
 r_rd4pdf="times,inconsolata,hyper"
 if test -n "${KPSEWHICH}"; then
-  ${KPSEWHICH} zi4.sty
+  ${KPSEWHICH} zi4.sty > /dev/null
   if test $? -eq 0; then
      r_rd4pdf="times,inconsolata,hyper"
+     AC_MSG_RESULT([found zi4.sty])
   else
-    ${KPSEWHICH} inconsolata.sty
+    ${KPSEWHICH} inconsolata.sty > /dev/null
     if test $? -ne 0; then
        r_rd4pdf="times,hyper"
        if test -z "${R_RD4PDF}" ;  then
+         AC_MSG_RESULT([missing])
          warn_pdf3="neither inconsolata.sty nor zi4.sty found: PDF vignettes and package manuals will not be rendered optimally"
          AC_MSG_WARN([${warn_pdf3}])
        fi
+    else
+      AC_MSG_RESULT([found insonsolata.sty])
     fi
   fi
 fi
