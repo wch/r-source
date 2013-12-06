@@ -142,7 +142,7 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
 static SEXP La_rs(SEXP x, SEXP only_values)
 {
     int *xdims, n, lwork, info = 0, ov;
-    char jobv[1], uplo[1], range[1];
+    char jobv[2] = "U", uplo[2] = "L", range[2] = "A";
     SEXP z = R_NilValue;
     double *work, *rx, *rvalues, tmp, *rz = NULL;
     int liwork, *iwork, itmp, m;
@@ -151,7 +151,6 @@ static SEXP La_rs(SEXP x, SEXP only_values)
        not to be used if range='a' */
     int il, iu, *isuppz;
 
-    uplo[0] = 'L';
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
     if (n != xdims[1]) error(_("'x' must be a square numeric matrix"));
@@ -171,7 +170,6 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     SEXP values = PROTECT(allocVector(REALSXP, n));
     rvalues = REAL(values);
 
-    range[0] = 'A';
     if (!ov) {
 	z = PROTECT(allocMatrix(REALSXP, n, n));
 	rz = REAL(z);
