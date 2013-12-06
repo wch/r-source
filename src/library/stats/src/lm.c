@@ -57,7 +57,7 @@ SEXP Cdqrls(SEXP x, SEXP y, SEXP tol, SEXP chk)
     if(check && length(ans) != 2) error(_("'x' is not a matrix"));
     int *dims = INTEGER(ans);
     n = dims[0]; p = dims[1];
-    if(n) ny = XLENGTH(y)/n; /* y :  n x ny, or an n - vector */
+    if(n) ny = (int)(XLENGTH(y)/n); /* y :  n x ny, or an n - vector */
     if(check && n * ny != XLENGTH(y))
 	error(_("dimensions of 'x' (%d,%d) and 'y' (%d) do not match"),
 	      n,p, XLENGTH(y));
