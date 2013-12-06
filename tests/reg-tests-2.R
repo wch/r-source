@@ -2765,6 +2765,11 @@ xx <- c(-86870268, 107833358, 302536985, 481015309, 675718935, 854197259,
 xx
 ## dropped spaces without long doubles
 
+## and rounding was being detected improperly (PR#15583)
+1000* ((10^(1/4)) ^ c(0:4))
+7/0.07
+## Spacing was incorrect
+
 
 ## PR#15468
 M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",

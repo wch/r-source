@@ -7197,6 +7197,13 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
  [7] 1016450281 1178703303 1324731023 1454533441
 > ## dropped spaces without long doubles
 > 
+> ## and rounding was being detected improperly (PR#15583)
+> 1000* ((10^(1/4)) ^ c(0:4))
+[1]  1000.000  1778.279  3162.278  5623.413 10000.000
+> 7/0.07
+[1] 100
+> ## Spacing was incorrect
+> 
 > 
 > ## PR#15468
 > M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",
