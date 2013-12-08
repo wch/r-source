@@ -21,6 +21,9 @@
       \item \code{write.table()} now handles matrices of
       \eqn{2^{31}}{2^31} or more elements, for those with large amounts
       of patience and disc space.
+
+      \item There is a new function, \code{La_version()}, to report the
+      version of LAPACK in use.
     }
   }
   
