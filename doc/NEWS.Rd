@@ -135,6 +135,9 @@
     \itemize{
       \item The included version of LAPACK has been updated to 3.5.0.
 
+      There is a new function, \code{La_version()}, to report the
+      version of LAPACK in use.
+
       \item There is some support for parallel testing of an
       installation, by setting \env{TEST_MC_CORES} to an integer
       greater than one to indicate the maximum number of cores to be
