@@ -12222,6 +12222,10 @@ Note that @R{} expects to be run with the locale category
 @samp{LC_NUMERIC} set to its default value of @code{C}, and so should
 not be embedded into an application which changes that.
 
+It is the user's responsibility to attempt to initialize only once.  To
+protect the @R{} interpreter, @code{Rf_initialize_R} will exit the
+process if re-initializaion is attempted.
+
 @menu
 * Compiling against the R library::  
 * Setting R callbacks::         
