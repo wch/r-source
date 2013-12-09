@@ -7029,7 +7029,7 @@ be honoured by packages which ignore @file{~/.R/Makevars}.)  It will
 likely be necessary to build @R{} with
 
 @example
-MAIN_LDFLAGS="-fsanitize=address"
+MAIN_LDFLAGS = -fsanitize=address
 @end example
 
 @noindent
@@ -7060,20 +7060,21 @@ compilation: see @uref{http://clang-analyzer.llvm.org/}.
 
 `UBSanitizer' is a tool for C/C++ source code selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
-@samp{-fsanitize=undefined,address}) in suitable builds of
-@command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in a
-similar way to the address sanitizer: see the previous subsection.)
+@samp{-fsanitize=undefined,address} where supported) in suitable builds
+of @command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in
+a similar way to the address sanitizer: see the previous subsection.)
 
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
 zero (where for doubles @R{} requires the
 @acronym{ISO}/@acronym{IEC}@tie{}60559 behaviour but C/C++ do not), use
-of zero-length arrays, shifts too far (e.g.@: @code{int x, y; y = x <<
-31;}), out-of-range coercion, invalid C++ casts and mis-alignment.  Not
-uncommon examples of out-of-range coercion in @R{} are attempts to
-coerce a @code{NaN} to type @code{int} or @code{NA_INTEGER} to an
-unsigned type such as @code{size_t}.  Also common is @code{y[x - 1]}
-forgetting that @code{x} might be @code{NA_INTEGER}.
+of zero-length arrays, shifts too far for signed types (e.g.@: @code{int
+x, y; y = x << 31;}), out-of-range coercion, invalid C++ casts and
+mis-alignment.  Not uncommon examples of out-of-range coercion in @R{}
+are attempts to coerce a @code{NaN} to type @code{int} or
+@code{NA_INTEGER} to an unsigned type such as @code{size_t}.  Also
+common is @code{y[x - 1]} forgetting that @code{x} might be
+@code{NA_INTEGER}.
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
@@ -7084,6 +7085,9 @@ The current set is (on a single line):
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
 return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
+
+@noindent
+a subset of which could be combined with @code{address}.
 
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
