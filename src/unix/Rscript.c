@@ -91,7 +91,7 @@ static int verbose = 0;
 
 void usage(void)
 {
-    fprintf(stderr, "Usage: /path/to/Rscript [--options] [-e expr] file [args]\n\n");
+    fprintf(stderr, "Usage: /path/to/Rscript [--options] (-e expr [-e expr2 ...] | file) [args]\n\n");
     fprintf(stderr, "--options accepted are\n");
     fprintf(stderr, "  --help              Print usage and exit\n");
     fprintf(stderr, "  --version           Print version and exit\n");
@@ -108,6 +108,8 @@ void usage(void)
     fprintf(stderr, "  --vanilla           Combine --no-save, --no-restore, --no-site-file\n");
     fprintf(stderr, "                        --no-init-file and --no-environ\n");
     fprintf(stderr, "\n'file' may contain spaces but not shell metacharacters\n");
+    fprintf(stderr, "Expressions (one or more '-e <expr>') may be used *instead* of 'file'\n");
+    fprintf(stderr, "See also  ?Rscript  from within R\n");
 }
 
 
