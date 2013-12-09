@@ -126,8 +126,8 @@
       \item \code{colSums} and friends now have support for arrays and
       data-frame columns with \eqn{2^{31}}{2^31} or more elements.
       
-      \item The default method of \code{split()} is faster when \code{f}
-      is an integer vector (for example, when called from \code{tapply()}).
+      \item \code{as.factor()} is faster when \code{f} is an unclassed
+      integer vector (for example, when called from \code{tapply()}).
     }
   }
 
