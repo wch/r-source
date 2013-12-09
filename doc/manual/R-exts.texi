@@ -7016,7 +7016,7 @@ but not the use of uninitialized memory.
 Current versions do not return symbolic addresses for the location of
 the error.  One possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
-@command{asan_symbolize}, and obtainable from
+@command{asan-symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
 it makes use of @command{llvm-symbolizer} if available.}.  For example,
 the check output can be piped through @command{asan_symbolize.py} and
