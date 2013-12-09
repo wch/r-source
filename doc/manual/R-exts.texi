@@ -2260,7 +2260,7 @@ possible to select a different compiler @emph{via} personal
 For example, on OS X 10.7 or later one could select @command{clang++}.
 
 As from @R{} 3.1.0 there may be another way to do this (currently
-experimental).  If the packages's @file{Makevars} (or
+experimental).  If the package's @file{Makevars} (or
 @file{Makevars.win}) file defines the macro @samp{USE_CXX11},
 compilation and linking will be done with the compiler specified by the
 macro @samp{CXX11}, which can be specified when @R{} is configured or in
@@ -12231,7 +12231,7 @@ not be embedded into an application which changes that.
 
 It is the user's responsibility to attempt to initialize only once.  To
 protect the @R{} interpreter, @code{Rf_initialize_R} will exit the
-process if re-initializaion is attempted.
+process if re-initialization is attempted.
 
 @menu
 * Compiling against the R library::  
