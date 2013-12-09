@@ -7123,16 +7123,16 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Solaris Studio has @option{-C}.  Can gives
-an error when the upper or lower bound is exceeded, e.g.
+@option{-fbounds-check} and Solaris Studio has @option{-C}.  This will
+give an error when the upper or lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
 Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
 @end example
 
 One does need to be aware that lazy programmers often specify Fortran
-dimensions as @code{1} rather than @code{*} or a real bound:
-@file{stats/src/portsrc.f} was a prolific example.
+dimensions as @code{1} rather than @code{*} or a real bound and these
+will be reported.
 
 It is easy to arrange to use this check on just the code in your
 package: add to @file{~/.R/Makevars} something like (for
@@ -7147,8 +7147,11 @@ when you run @command{R CMD check}.
 
 This may report incorrectly errors with the way that Fortran character
 variables are passed, particularly when Fortran subroutines are called
-from C code.  This includes the use of BLAS and LAPACK subroutines in
-@R{}, so it is not advisable to build @R{} itself with bounds checking.
+from C code.  This may include@footnote{depending on the compiler
+version, with @command{gfortran} @code{4.8.x} doing this less than
+@code{4.7.x}.} the use of BLAS and LAPACK subroutines in @R{}, so it is
+not advisable to build @R{} itself with bounds checking (and may not
+even be possible as these subroutines are called during the @R{} build).
 
 
 @node Debugging compiled code,  , Checking memory access, Debugging
