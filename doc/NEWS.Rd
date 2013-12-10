@@ -131,6 +131,10 @@
       
       \item \code{fft()} now works with very long inputs, from the 12
       million previously supported up to 2 billion.  (\PR{15593})
+
+      \item Complex \code{svd()} now uses LAPACK subroutine
+      \code{ZGESDD}, the complex analogue of the routine use for the
+      real case.
     }
   }
 

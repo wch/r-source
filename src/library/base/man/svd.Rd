@@ -59,7 +59,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
 }
 \source{
   The main functions used are the LAPACK routines \code{DGESDD} and
-  \code{ZGESVD}.
+  \code{ZGESDD}.
 
   LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
