@@ -16,7 +16,7 @@ INSTFILES = AUTHORS COPYING COPYRIGHTS CRAN_mirrors.csv \
 DISTFILES = Makefile.in Makefile.win $(INSTFILES) R.aux Rscript.1 \
   NEWS.Rd NEWS.2.Rd
 INSTFILES2 = NEWS.rds NEWS NEWS.pdf
-NON_SVN_INSTFILES = FAQ RESOURCES
+NON_SVN_INSTFILES = FAQ RESOURCES NEWS NEWS.pdf
 ## generated later.
 SUBDIRS = html manual
 
@@ -171,7 +171,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for f in FAQ RESOURCES ; do \
+	@for f in $(NON_SVN_INSTFILES) ; do \
 	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
