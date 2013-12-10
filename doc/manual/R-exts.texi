@@ -2830,13 +2830,14 @@ code in the vignette) must be in the vignette source directory.
 @code{R CMD build} will automatically@footnote{unless inhibited by using
 @samp{BuildVignettes: no} in the @file{DESCRIPTION} file.} create the
 (PDF or @HTML{} versions of the) vignettes in @file{inst/doc} for
-distribution with the package sources.  By including the vignettes in
-the package sources it is not necessary that these can be re-built at
-install time, i.e., the package author can use private @R{} packages,
-screen snapshots and @LaTeX{} extensions which are only available on his
-machine.@footnote{provided the conditions of the package's license are
-met: many, including @acronym{CRAN}, see the omission of source
-components as incompatible with an Open Source license.}
+distribution with the package sources.  By including the vignette
+outputs in the package sources it is not necessary that these can be
+re-built at install time, i.e., the package author can use private @R{}
+packages, screen snapshots and @LaTeX{} extensions which are only
+available on his machine.@footnote{provided the conditions of the
+package's license are met: many, including @acronym{CRAN}, see the
+omission of source components as incompatible with an Open Source
+license.}
 
 By default @code{R CMD build} will run @code{Sweave} on all Sweave
 vignette source files in the vignettes source directory.  If
@@ -6999,7 +7000,7 @@ but not the use of uninitialized memory.
 Current versions do not return symbolic addresses for the location of
 the error.  One possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
-@command{asan-symbolize}, and obtainable from
+@command{asan_symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
 it makes use of @command{llvm-symbolizer} if available.}.  For example,
 the check output can be piped through @command{asan_symbolize.py} and
@@ -11166,7 +11167,11 @@ This is the function used by @R{}'s @code{round()}.
 @end deftypefun
 
 @deftypefun double ftrunc (double @var{x})
-Returns the value of @var{x} truncated (to an integer value) towards zero.
+Returns the value of @var{x} truncated (to an integer value) towards
+zero.
+
+Note that this is no longer needed in C code, as C99 provide a
+@code{trunc} function.  It is needed for portable C++98 code.
 @end deftypefun
 
 @node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines
@@ -12192,7 +12197,7 @@ not be embedded into an application which changes that.
 
 It is the user's responsibility to attempt to initialize only once.  To
 protect the @R{} interpreter, @code{Rf_initialize_R} will exit the
-process if re-initializaion is attempted.
+process if re-initialization is attempted.
 
 @menu
 * Compiling against the R library::  
