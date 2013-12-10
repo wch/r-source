@@ -7067,7 +7067,9 @@ break __asan_report_error
 Some versions of @command{clang} also have a (currently experimental)
 memory sanitizer invoked by @option{-fsanitize=memory} which detects
 uses of uninitialized memory. See
-@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.
+@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.  And some have
+an expeimental leak sanitizer for @code{x86_64} Linux: see
+@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}.
 
 Clang also has a Static Analyser run on the source files during
 compilation: see @uref{http://clang-analyzer.llvm.org/}.
