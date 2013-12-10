@@ -31,7 +31,7 @@ DISTFILES = \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) Lapack.c init_win.c \
 	vecLibg95c.c vecLibg95f.f \
-	cmplx.f dlapack.f dlamch.f
+	cmplx.f dlapack.f dlamch.f ilaver.f
 
 lapack_la = lapack$(SHLIB_EXT)
 Rlapack_la = libRlapack$(DYLIB_EXT)
