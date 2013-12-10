@@ -127,4 +127,6 @@ zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
 zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
 zunmhr.f
 
-R.patch suppresses warnings with Fortran array bounds checking.
+zgesdd.f zlacp2.f zlacrm.f zlarcm.f added 2013-12-08
+
+R.patch suppresses warnings with Fortran array-bounds checking.
