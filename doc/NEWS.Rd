@@ -128,6 +128,9 @@
       
       \item \code{as.factor()} is faster when \code{f} is an unclassed
       integer vector (for example, when called from \code{tapply()}).
+      
+      \item \code{fft()} now works with very long inputs, from the 12
+      million previously supported up to 2 billion.  (\PR{15593})
     }
   }
 
