@@ -5,7 +5,7 @@ dlapack?.f are support routines for `real' LAPACK calls
 cmplx.f are support routines for LAPACK calls from complex arithmetic
 routines, that are only used if COMPLEX*16 is supported by the Fortran
 compiler and compatible with the Rcomplex type.
-Neither will not be compiled if an external LAPACK is used.
+Neither will be compiled if an external LAPACK is used.
 
 For 'base' R addition of a new .Call()able Lapack routine,
 all these files must be updated {path relative to R's topdir}:
@@ -102,7 +102,7 @@ dggsvd.f	dlaqr5.f	dorglq.f	dsptrf.f	ilaenv.f
 dggsvp.f	dlaqsb.f	dorgql.f	dsptri.f	ilaprec.f
 dgsvj0.f	dlaqsp.f	dorgqr.f	dsptrs.f	ilatrans.f
 dgsvj1.f	dlaqsy.f	dorgr2.f	dstebz.f	iparmq.f
-dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f
+dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f	ilaver.f
 dgtrfs.f	dlar1v.f	dorgtr.f	dstegr.f
 dgtsv.f		dlar2v.f	dorm2l.f	dstein.f
 
@@ -127,6 +127,6 @@ zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
 zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
 zunmhr.f
 
-zgesdd.f zlacp2.f zlacrm.f zlarcm.f added 2013-12-08
+zgesdd.f zlacp2.f zlacrm.f zlarcm.f added for R 3.1.0.
 
 R.patch suppresses warnings with Fortran array-bounds checking.
