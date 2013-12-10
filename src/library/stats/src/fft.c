@@ -780,7 +780,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 
     /* extract 3^2, 5^2, ... */
     kchanged = 0;
-    sqrtk = sqrt(k);
+    sqrtk = (int)sqrt(k);
     for(j = 3; j <= sqrtk; j += 2) {
 	jj = j * j;
 	while(k % jj == 0) {
@@ -790,7 +790,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 	}
 	if (kchanged) {
 	    kchanged = 0;
-	    sqrtk = sqrt(k);
+	    sqrtk = (int)sqrt(k);
 	}
     }
 
