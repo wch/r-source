@@ -2867,11 +2867,11 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
 known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
 C99-compliant.@footnote{Note that C11 compilers need not be
-C99-compliant: @R{} requires support for @code{double complex} which is
-optional in C11 but is mandatory in C99.}  @R{} tries to choose suitable
-flags for the C compilers it knows about, but you may have to set
-@code{CC} or @code{CFLAGS} suitably.  For recent versions of
-@command{gcc} with @code{glibc} this means including
+C99-compliant: @R{} requires support for @code{double complex} and
+variable-length arrays which are optional in C11 but is mandatory in
+C99.}  @R{} tries to choose suitable flags for the C compilers it knows
+about, but you may have to set @code{CC} or @code{CFLAGS} suitably.  For
+recent versions of @command{gcc} with @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is

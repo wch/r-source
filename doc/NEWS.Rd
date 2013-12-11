@@ -112,13 +112,13 @@
       handle conversions between the \code{"POSIXct"} and
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
       (before 1902 or after 2037): the existing workarounds are used on
-      other platforms.  (Note that time-zone information for post-2037 is
-      speculative at best, and the OS services are tested for accuracy
-      and not used on OS X.)
+      other platforms.  (Note that time-zone information for post-2037
+      is speculative at best, and the OS services are tested for known
+      errors and so not used on OS X.)
 
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
-      most Unix-alike 64-bit platforms.  On \R for Windows it is
-      64-bit (for both architectures as from this version).
+      Unix-alike 64-bit platforms.  On \R for Windows it is 64-bit (for
+      both architectures as from this version).
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
@@ -129,11 +129,11 @@
       \item \code{as.factor()} is faster when \code{f} is an unclassed
       integer vector (for example, when called from \code{tapply()}).
       
-      \item \code{fft()} now works with very long inputs, from the 12
+      \item \code{fft()} now works with longer inputs, from the 12
       million previously supported up to 2 billion.  (\PR{15593})
 
       \item Complex \code{svd()} now uses LAPACK subroutine
-      \code{ZGESDD}, the complex analogue of the routine use for the
+      \code{ZGESDD}, the complex analogue of the routine used for the
       real case.
     }
   }
@@ -171,9 +171,9 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The \code{CRANextra} repository is no longer a default
-      repository on Windows: all the binary packages from CRAN are now
-      on CRAN, although \code{CRANextra} contains packages from Omegahat
-      and elsewhere used by CRAN packages on Windows.
+      repository on Windows: all the binary versions of packages from
+      CRAN are now on CRAN, although \code{CRANextra} contains packages
+      from Omegahat and elsewhere used by CRAN packages.
 
       \item Only vignettes sources in directory \file{vignettes} are
       considered to be vignettes and hence indexed as such.
@@ -193,13 +193,17 @@
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
       
-      \item There is \emph{experimental} support for compiling C++1x
+      \item There is \emph{experimental} support for compiling C++11
       code in packages.  The file \file{src/Makevars} or
-      \file{src/Makevars.win} should define the macro \samp{USE_CXX1X
-      =}.  Where needed, an alternative compiler can be specified by
-      setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and so on, either
-      when \R is configured or in a personal \file{Makevars} file.  (The
-      default is to use \samp{$(CXX) -std=c++11}.)
+      \file{src/Makevars.win} should define the macro \samp{USE_CXX1X}
+      (with an empty value).  Where needed, an alternative compiler can
+      be specified by setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and
+      so on, either when \R is configured or in a personal
+      \file{Makevars} file.  (The default is to use \samp{$(CXX)
+	-std=c++11} except on Windows.)
+      
+      Other standards supported by the compiler can be specified by e.g.
+      \samp{USE_CXX1X = -std=c++1y} .
       
       \item Fake installs now install the contents of directory
       \file{inst}: some packages use this to install e.g. C++ headers
@@ -286,8 +290,8 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item (Windows only) A function \code{R_WaitEvent()} has been
-      added (with header in \file{R.h}) to block execution until
-      the next event is received by \R.
+      added (with declaration in header\file{R.h}) to block execution
+      until the next event is received by \R.
 
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.
@@ -299,9 +303,8 @@
       for the C99 function \code{trunc()}, which might as well be used
       in C code: \code{ftrunc()} is still needed for portable C++ code.
 
-      \item The undocumented (and unused in known packages) remapping of
-      \code{prec()} to \code{fprec()} in header \file{Rmath.h} has been
-      removed.
+      \item The never-documented remapping of \code{prec()} to
+      \code{fprec()} in header \file{Rmath.h} has been removed.
       
       \item The included LAPACK subset now includes \code{zgesdd}.
     }
