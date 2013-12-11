@@ -164,6 +164,9 @@
       \item The bug fix in 3.0.2 for \PR{15411} was too agressive,
       and sometimes removed spaces that should not have been removed.
       (\PR{15583})
+      
+      \item Running \R code in a \pkg{tcltk} callback failed to set the
+      busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
     }
   }
 }
