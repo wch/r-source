@@ -106,24 +106,21 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
     if (TYPEOF(dims) != INTSXP) error("non-integer dims");
     int ldvt = INTEGER(dims)[0];
     double tmp;
-    /* min(n,p) large is implausible, but ... */
+    /* min(n,p) large is implausible, but cast to be sure */
     int *iwork= (int *) R_alloc(8*(size_t)(n < p ? n : p), sizeof(int));
 
     /* ask for optimal size of work array */
+    char *ju = CHAR(STRING_ELT(jobu, 0));
     int lwork = -1;
-    F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     REAL(u), &ldu,
-		     REAL(vt), &ldvt,
+    F77_CALL(dgesdd)(ju, &n, &p, xvals, &n, REAL(s),
+		     REAL(u), &ldu, REAL(vt), &ldvt,
 		     &tmp, &lwork, iwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgesdd");
     lwork = (int) tmp;
     double *work = (double *) R_alloc(lwork, sizeof(double));
-    F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     REAL(u), &ldu,
-		     REAL(vt), &ldvt,
+    F77_CALL(dgesdd)(ju, &n, &p, xvals, &n, REAL(s),
+		     REAL(u), &ldu, REAL(vt), &ldvt,
 		     work, &lwork, iwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgesdd");
@@ -750,6 +747,7 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
 	error(_("'jobu' must be a character string"));
     int *xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     int n = xdims[0], p = xdims[1];
+    char *jz = CHAR(STRING_ELT(jobu, 0));
 
     /* The underlying LAPACK, specifically ZLARF, does not work with
      * long arrays */
@@ -761,10 +759,12 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
     Memcpy(xvals, COMPLEX(x), n * (size_t) p);
 
     int *iwork= (int *) R_alloc(8*(size_t)(n < p ? n : p), sizeof(int));
-    int mn0 = (n < p ? n:p), mn1 = (n > p ? n:p);
-    int f1 = 5 * mn1 + 7, f2 = 2 * mn1 + 2 * mn0 + 1;
-    double *rwork = 
-	(double *) R_alloc((f1 > f2 ?f1:f2)*(size_t)mn0, sizeof(double));
+    size_t mn0 = (n < p ? n:p), mn1 = (n > p ? n:p), lrwork;
+    if (strcmp(jz, "N")) {
+	size_t f1 = 5 * mn1 + 7, f2 = 2 * mn1 + 2 * mn0 + 1;
+	lrwork = (f1 > f2 ? f1 : f2) * mn0;
+    } else lrwork = 5 * mn0;
+    double *rwork  = (double *) R_alloc(lrwork, sizeof(double));
     /* ask for optimal size of work array */
     int lwork = -1, info;
     Rcomplex tmp;
@@ -775,19 +775,15 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
     dims = getAttrib(v, R_DimSymbol);
     if (TYPEOF(dims) != INTSXP) error("non-integer dims");
     ldv = INTEGER(dims)[0];
-    F77_CALL(zgesdd)(CHAR(STRING_ELT(jobu, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     COMPLEX(u), &ldu,
-		     COMPLEX(v), &ldv,
+    F77_CALL(zgesdd)(jz, &n, &p, xvals, &n, REAL(s),
+		     COMPLEX(u), &ldu, COMPLEX(v), &ldv,
 		     &tmp, &lwork, rwork, iwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgesdd");
     lwork = (int) tmp.r;
     Rcomplex *work = (Rcomplex *) R_alloc(lwork, sizeof(Rcomplex));
-    F77_CALL(zgesdd)(CHAR(STRING_ELT(jobu, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     COMPLEX(u), &ldu, 
-		     COMPLEX(v), &ldv,
+    F77_CALL(zgesdd)(jz, &n, &p, xvals, &n, REAL(s),
+		     COMPLEX(u), &ldu, COMPLEX(v), &ldv,
 		     work, &lwork, rwork, iwork, &info);
     if (info != 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "zgesdd");

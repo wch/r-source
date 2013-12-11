@@ -27,11 +27,11 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
 \details{
   The singular value decomposition plays an important role in many
   statistical techniques.  \code{svd} and \code{La.svd} provide two
-  slightly different interfaces.
+  interfaces which differ in their return values.
 
   Computing the singular vectors is the slow part for large matrices.
-  The computation will be more efficient if \code{nu <= min(n, p)} and
-  \code{nv <= min(n, p)}, and even more efficient if one or both are zero.
+  The computation will be more efficient if both \code{nu <= min(n, p)}
+  and \code{nv <= min(n, p)}, and even more so if both are zero.
 
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code (most often \code{1}): these can
@@ -39,12 +39,12 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   that the algorithm failed to converge.
 }
 \value{
-  The SVD decomposition of the matrix as computed by LAPACK,
-  \deqn{ \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
-  orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
-  \eqn{\bold{D}} is a diagonal matrix with the singular
-  values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U' X V}},
-  which is verified in the examples, below.
+  The SVD decomposition of the matrix as computed by LAPACK, \deqn{
+  \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
+  orthogonal, \eqn{\bold{V'}} means \emph{V transposed} (and conjugated
+  for complex input), and \eqn{\bold{D}} is a diagonal matrix with the
+  singular values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U'
+  X V}}, which is verified in the examples.
 
   The returned value is a list with components
   \item{d}{a vector containing the singular values of \code{x}, of
@@ -61,8 +61,8 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   The main functions used are the LAPACK routines \code{DGESDD} and
   \code{ZGESDD}.
 
-  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
-  in the references.
+  LAPACK is from \url{http://www.netlib.org/lapack} and its guide is
+  listed in the references.
 }
 \references{
   Anderson. E. and ten others (1999)

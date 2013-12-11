@@ -52,8 +52,8 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
     else
        .Internal(La_svd(jobu, x, double(min(n,p)), u, vt))
     res <- res[c("d", if(nu) "u", if(nv) "vt")]
-    if(nu && nu < nu0) res$u <- res$u[, 1L:min(n, nu), drop = FALSE]
-    if(nv && nv < nv0) res$vt <- res$vt[1L:min(p, nv), , drop = FALSE]
+    if(nu && nu < nu0) res$u <- res$u[, seq_len(min(n, nu)), drop = FALSE]
+    if(nv && nv < nv0) res$vt <- res$vt[seq_len(min(p, nv)), , drop = FALSE]
     res
 }
 
