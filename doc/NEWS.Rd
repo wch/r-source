@@ -193,13 +193,13 @@
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
       
-      \item There is \emph{experimental} support for compiling C++11
+      \item There is \emph{experimental} support for compiling C++1x
       code in packages.  The file \file{src/Makevars} or
-      \file{src/Makevars.win} should define the macro \samp{USE_CXX11 =
-      true}.  Where needed, an alternative C++11 compiler can be
-      specified by setting macros \samp{CXX11}, \samp{CXX11FLAGS} and so
-      on, either when \R is configured or in a personal \file{Makevars}
-      file.  (The default is to use \samp{$(CXX) -std=c++11}.)
+      \file{src/Makevars.win} should define the macro \samp{USE_CXX1X
+      =}.  Where needed, an alternative compiler can be specified by
+      setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and so on, either
+      when \R is configured or in a personal \file{Makevars} file.  (The
+      default is to use \samp{$(CXX) -std=c++11}.)
       
       \item Fake installs now install the contents of directory
       \file{inst}: some packages use this to install e.g. C++ headers

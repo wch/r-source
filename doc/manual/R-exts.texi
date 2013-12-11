@@ -2261,15 +2261,19 @@ For example, on OS X 10.7 or later one could select @command{clang++}.
 
 As from @R{} 3.1.0 there may be another way to do this (currently
 experimental).  If the package's @file{Makevars} (or
-@file{Makevars.win}) file defines the macro @samp{USE_CXX11},
+@file{Makevars.win}) file defines the macro @samp{USE_CXX1X},
 compilation and linking will be done with the compiler specified by the
-macro @samp{CXX11}, which can be specified when @R{} is configured or in
+macro @samp{CXX1X}, which can be specified when @R{} is configured or in
 a personal or site @file{Makevars} file.  This defaults to the C++
 compiler with flag @option{-std=c++11} (@option{-std=c++0x} on Windows),
 but allows an incompatible alternative to be specified just for
 C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  (C++
 compilers, even different versions, often differ in their ABI, so their
 outputs can rarely be mixed.)
+
+If the macro @samp{CXX1X} is given a value this is appended to
+@samp{CXX1XFLAGS}.  This can be used to select a different standard, say
+@option{-std=c++1y} for those compilers which support it.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

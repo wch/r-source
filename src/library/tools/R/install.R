@@ -1713,7 +1713,7 @@
     with_f77 <- FALSE
     with_f9x <- FALSE
     with_objc <- FALSE
-    use_cxx11 <- FALSE
+    use_cxx1x <- FALSE
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -1810,20 +1810,29 @@
     }
 
     makeobjs <- paste0("OBJECTS=", shQuote(objs))
+    cxx1xflag <- NULL
     if (WINDOWS && file.exists("Makevars.win")) {
         makefiles <- c("Makevars.win", makefiles)
         lines <- readLines("Makevars.win", warn = FALSE)
-        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(grep("^USE_CXX11 *=", lines, perl=TRUE, useBytes=TRUE)))
-            use_cxx11 <- TRUE
+        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+                              value = TRUE, useBytes = TRUE))) {
+            use_cxx1x <- TRUE
+            cxx1xflag <- sub("^USE_CXX1X *= *", "", ll)
+        }
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
-        if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes=TRUE)))
+        if (length(grep("^OBJECTS *=", lines, perl = TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(grep("^USE_CXX11 *=", lines, perl=TRUE, useBytes=TRUE)))
-            use_cxx11 <- TRUE
+        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+                              value = TRUE, useBytes = TRUE))) {
+            use_cxx1x <- TRUE
+            print(ll)
+            cxx1xflag <- sub("^USE_CXX1X *= *", "", ll)
+            print(cxx1xflag)
+        }
     }
 
     makeargs <- paste0("SHLIB=", shQuote(shlib))
@@ -1831,12 +1840,12 @@
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
-        makeargs <- if (use_cxx11)
-            c("CXX='$(CXX11)'",
-              "CXXFLAGS='$(CXX11FLAGS)'",
-              "CXXPICFLAGS='$(CXX11PICFLAGS)'",
-              "SHLIB_LDFLAGS='$(SHLIB_CXX11LDFLAGS)'",
-              "SHLIB_LD='$(SHLIB_CXX11LD)'", makeargs)
+        makeargs <- if (use_cxx1x)
+            c("CXX='$(CXX1X)'",
+              sprintf("CXXFLAGS='$(CXX1XFLAGS) %s'", cxx1xflag),
+              "CXXPICFLAGS='$(CXX1XPICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX1XLDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX1XLD)'", makeargs)
         else
             c("SHLIB_LDFLAGS='$(SHLIB_CXXLDFLAGS)'",
               "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
