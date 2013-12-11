@@ -3083,6 +3083,12 @@ F77_NAME(zgesdd)(const char *jobz,
 		 Rcomplex *vt, const int *ldvt,
 		 Rcomplex *work, const int *lwork, double *rwork,
 		 int *iwork, int *info);
+La_extern void
+F77_NAME(zgelsd)(int *m, int *n, int *nrhs,
+	Rcomplex *a, int *lda, Rcomplex *b, int *ldb, double *s,
+        double *rcond, int *rank, 
+        Rcomplex *work, int *lwork, double *rwork, int *iwork, int *info);
+
 #ifdef	__cplusplus
 }
 #endif

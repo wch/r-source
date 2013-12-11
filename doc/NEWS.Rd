@@ -306,7 +306,8 @@
       \item The never-documented remapping of \code{prec()} to
       \code{fprec()} in header \file{Rmath.h} has been removed.
       
-      \item The included LAPACK subset now includes \code{zgesdd}.
+      \item The included LAPACK subset now includes \code{zgesdd} and
+      \code{zgelsd}.
     }
   }
 

@@ -34105,3 +34105,1362 @@
 *     End of ZLARCM
 *
       END
+*> \brief <b> ZGELSD computes the minimum-norm solution to a linear least squares problem for GE matrices</b>
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at 
+*            http://www.netlib.org/lapack/explore-html/ 
+*
+*> \htmlonly
+*> Download ZGELSD + dependencies 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelsd.f"> 
+*> [TGZ]</a> 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelsd.f"> 
+*> [ZIP]</a> 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelsd.f"> 
+*> [TXT]</a>
+*> \endhtmlonly 
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
+*                          WORK, LWORK, RWORK, IWORK, INFO )
+* 
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
+*       DOUBLE PRECISION   RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IWORK( * )
+*       DOUBLE PRECISION   RWORK( * ), S( * )
+*       COMPLEX*16         A( LDA, * ), B( LDB, * ), WORK( * )
+*       ..
+*  
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZGELSD computes the minimum-norm solution to a real linear least
+*> squares problem:
+*>     minimize 2-norm(| b - A*x |)
+*> using the singular value decomposition (SVD) of A. A is an M-by-N
+*> matrix which may be rank-deficient.
+*>
+*> Several right hand side vectors b and solution vectors x can be
+*> handled in a single call; they are stored as the columns of the
+*> M-by-NRHS right hand side matrix B and the N-by-NRHS solution
+*> matrix X.
+*>
+*> The problem is solved in three steps:
+*> (1) Reduce the coefficient matrix A to bidiagonal form with
+*>     Householder tranformations, reducing the original problem
+*>     into a "bidiagonal least squares problem" (BLS)
+*> (2) Solve the BLS using a divide and conquer approach.
+*> (3) Apply back all the Householder tranformations to solve
+*>     the original least squares problem.
+*>
+*> The effective rank of A is determined by treating as zero those
+*> singular values which are less than RCOND times the largest singular
+*> value.
+*>
+*> The divide and conquer algorithm makes very mild assumptions about
+*> floating point arithmetic. It will work on machines with a guard
+*> digit in add/subtract, or on those binary machines without guard
+*> digits which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or
+*> Cray-2. It could conceivably fail on hexadecimal or decimal machines
+*> without guard digits, but we know of none.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix A. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix A. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrices B and X. NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the M-by-N matrix A.
+*>          On exit, A has been destroyed.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the M-by-NRHS right hand side matrix B.
+*>          On exit, B is overwritten by the N-by-NRHS solution matrix X.
+*>          If m >= n and RANK = n, the residual sum-of-squares for
+*>          the solution in the i-th column is given by the sum of
+*>          squares of the modulus of elements n+1:m in that column.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,M,N).
+*> \endverbatim
+*>
+*> \param[out] S
+*> \verbatim
+*>          S is DOUBLE PRECISION array, dimension (min(M,N))
+*>          The singular values of A in decreasing order.
+*>          The condition number of A in the 2-norm = S(1)/S(min(m,n)).
+*> \endverbatim
+*>
+*> \param[in] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>          RCOND is used to determine the effective rank of A.
+*>          Singular values S(i) <= RCOND*S(1) are treated as zero.
+*>          If RCOND < 0, machine precision is used instead.
+*> \endverbatim
+*>
+*> \param[out] RANK
+*> \verbatim
+*>          RANK is INTEGER
+*>          The effective rank of A, i.e., the number of singular values
+*>          which are greater than RCOND*S(1).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK must be at least 1.
+*>          The exact minimum amount of workspace needed depends on M,
+*>          N and NRHS. As long as LWORK is at least
+*>              2*N + N*NRHS
+*>          if M is greater than or equal to N or
+*>              2*M + M*NRHS
+*>          if M is less than N, the code will execute correctly.
+*>          For good performance, LWORK should generally be larger.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the array WORK and the
+*>          minimum sizes of the arrays RWORK and IWORK, and returns
+*>          these values as the first entries of the WORK, RWORK and
+*>          IWORK arrays, and no error message related to LWORK is issued
+*>          by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] RWORK
+*> \verbatim
+*>          RWORK is DOUBLE PRECISION array, dimension (MAX(1,LRWORK))
+*>          LRWORK >=
+*>             10*N + 2*N*SMLSIZ + 8*N*NLVL + 3*SMLSIZ*NRHS +
+*>             MAX( (SMLSIZ+1)**2, N*(1+NRHS) + 2*NRHS )
+*>          if M is greater than or equal to N or
+*>             10*M + 2*M*SMLSIZ + 8*M*NLVL + 3*SMLSIZ*NRHS +
+*>             MAX( (SMLSIZ+1)**2, N*(1+NRHS) + 2*NRHS )
+*>          if M is less than N, the code will execute correctly.
+*>          SMLSIZ is returned by ILAENV and is equal to the maximum
+*>          size of the subproblems at the bottom of the computation
+*>          tree (usually about 25), and
+*>             NLVL = MAX( 0, INT( LOG_2( MIN( M,N )/(SMLSIZ+1) ) ) + 1 )
+*>          On exit, if INFO = 0, RWORK(1) returns the minimum LRWORK.
+*> \endverbatim
+*>
+*> \param[out] IWORK
+*> \verbatim
+*>          IWORK is INTEGER array, dimension (MAX(1,LIWORK))
+*>          LIWORK >= max(1, 3*MINMN*NLVL + 11*MINMN),
+*>          where MINMN = MIN( M,N ).
+*>          On exit, if INFO = 0, IWORK(1) returns the minimum LIWORK.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value.
+*>          > 0:  the algorithm for computing the SVD failed to converge;
+*>                if INFO = i, i off-diagonal elements of an intermediate
+*>                bidiagonal form did not converge to zero.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee 
+*> \author Univ. of California Berkeley 
+*> \author Univ. of Colorado Denver 
+*> \author NAG Ltd. 
+*
+*> \date November 2011
+*
+*> \ingroup complex16GEsolve
+*
+*> \par Contributors:
+*  ==================
+*>
+*>     Ming Gu and Ren-Cang Li, Computer Science Division, University of
+*>       California at Berkeley, USA \n
+*>     Osni Marques, LBNL/NERSC, USA \n
+*
+*  =====================================================================
+      SUBROUTINE ZGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
+     $                   WORK, LWORK, RWORK, IWORK, INFO )
+*
+*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     November 2011
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
+      DOUBLE PRECISION   RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IWORK( * )
+      DOUBLE PRECISION   RWORK( * ), S( * )
+      COMPLEX*16         A( LDA, * ), B( LDB, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE, TWO
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0, TWO = 2.0D+0 )
+      COMPLEX*16         CZERO
+      PARAMETER          ( CZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            IASCL, IBSCL, IE, IL, ITAU, ITAUP, ITAUQ,
+     $                   LDWORK, LIWORK, LRWORK, MAXMN, MAXWRK, MINMN,
+     $                   MINWRK, MM, MNTHR, NLVL, NRWORK, NWORK, SMLSIZ
+      DOUBLE PRECISION   ANRM, BIGNUM, BNRM, EPS, SFMIN, SMLNUM
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DLABAD, DLASCL, DLASET, XERBLA, ZGEBRD, ZGELQF,
+     $                   ZGEQRF, ZLACPY, ZLALSD, ZLASCL, ZLASET, ZUNMBR,
+     $                   ZUNMLQ, ZUNMQR
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      DOUBLE PRECISION   DLAMCH, ZLANGE
+      EXTERNAL           ILAENV, DLAMCH, ZLANGE
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          INT, LOG, MAX, MIN, DBLE
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments.
+*
+      INFO = 0
+      MINMN = MIN( M, N )
+      MAXMN = MAX( M, N )
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      ELSE IF( LDB.LT.MAX( 1, MAXMN ) ) THEN
+         INFO = -7
+      END IF
+*
+*     Compute workspace.
+*     (Note: Comments in the code beginning "Workspace:" describe the
+*     minimal amount of workspace needed at that point in the code,
+*     as well as the preferred amount for good performance.
+*     NB refers to the optimal block size for the immediately
+*     following subroutine, as returned by ILAENV.)
+*
+      IF( INFO.EQ.0 ) THEN
+         MINWRK = 1
+         MAXWRK = 1
+         LIWORK = 1
+         LRWORK = 1
+         IF( MINMN.GT.0 ) THEN
+            SMLSIZ = ILAENV( 9, 'ZGELSD', ' ', 0, 0, 0, 0 )
+            MNTHR = ILAENV( 6, 'ZGELSD', ' ', M, N, NRHS, -1 )
+            NLVL = MAX( INT( LOG( DBLE( MINMN ) / DBLE( SMLSIZ + 1 ) ) /
+     $                  LOG( TWO ) ) + 1, 0 )
+            LIWORK = 3*MINMN*NLVL + 11*MINMN
+            MM = M
+            IF( M.GE.N .AND. M.GE.MNTHR ) THEN
+*
+*              Path 1a - overdetermined, with many more rows than
+*                        columns.
+*
+               MM = N
+               MAXWRK = MAX( MAXWRK, N*ILAENV( 1, 'ZGEQRF', ' ', M, N,
+     $                       -1, -1 ) )
+               MAXWRK = MAX( MAXWRK, NRHS*ILAENV( 1, 'ZUNMQR', 'LC', M,
+     $                       NRHS, N, -1 ) )
+            END IF
+            IF( M.GE.N ) THEN
+*
+*              Path 1 - overdetermined or exactly determined.
+*
+               LRWORK = 10*N + 2*N*SMLSIZ + 8*N*NLVL + 3*SMLSIZ*NRHS +
+     $                  MAX( (SMLSIZ+1)**2, N*(1+NRHS) + 2*NRHS )
+               MAXWRK = MAX( MAXWRK, 2*N + ( MM + N )*ILAENV( 1,
+     $                       'ZGEBRD', ' ', MM, N, -1, -1 ) )
+               MAXWRK = MAX( MAXWRK, 2*N + NRHS*ILAENV( 1, 'ZUNMBR',
+     $                       'QLC', MM, NRHS, N, -1 ) )
+               MAXWRK = MAX( MAXWRK, 2*N + ( N - 1 )*ILAENV( 1,
+     $                       'ZUNMBR', 'PLN', N, NRHS, N, -1 ) )
+               MAXWRK = MAX( MAXWRK, 2*N + N*NRHS )
+               MINWRK = MAX( 2*N + MM, 2*N + N*NRHS )
+            END IF
+            IF( N.GT.M ) THEN
+               LRWORK = 10*M + 2*M*SMLSIZ + 8*M*NLVL + 3*SMLSIZ*NRHS +
+     $                  MAX( (SMLSIZ+1)**2, N*(1+NRHS) + 2*NRHS )
+               IF( N.GE.MNTHR ) THEN
+*
+*                 Path 2a - underdetermined, with many more columns
+*                           than rows.
+*
+                  MAXWRK = M + M*ILAENV( 1, 'ZGELQF', ' ', M, N, -1,
+     $                     -1 )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + 2*M*ILAENV( 1,
+     $                          'ZGEBRD', ' ', M, M, -1, -1 ) )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + NRHS*ILAENV( 1,
+     $                          'ZUNMBR', 'QLC', M, NRHS, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + ( M - 1 )*ILAENV( 1,
+     $                          'ZUNMLQ', 'LC', N, NRHS, M, -1 ) )
+                  IF( NRHS.GT.1 ) THEN
+                     MAXWRK = MAX( MAXWRK, M*M + M + M*NRHS )
+                  ELSE
+                     MAXWRK = MAX( MAXWRK, M*M + 2*M )
+                  END IF
+                  MAXWRK = MAX( MAXWRK, M*M + 4*M + M*NRHS )
+!     XXX: Ensure the Path 2a case below is triggered.  The workspace
+!     calculation should use queries for all routines eventually.
+                  MAXWRK = MAX( MAXWRK,
+     $                 4*M+M*M+MAX( M, 2*M-4, NRHS, N-3*M ) )
+               ELSE
+*
+*                 Path 2 - underdetermined.
+*
+                  MAXWRK = 2*M + ( N + M )*ILAENV( 1, 'ZGEBRD', ' ', M,
+     $                     N, -1, -1 )
+                  MAXWRK = MAX( MAXWRK, 2*M + NRHS*ILAENV( 1, 'ZUNMBR',
+     $                          'QLC', M, NRHS, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, 2*M + M*ILAENV( 1, 'ZUNMBR',
+     $                          'PLN', N, NRHS, M, -1 ) )
+                  MAXWRK = MAX( MAXWRK, 2*M + M*NRHS )
+               END IF
+               MINWRK = MAX( 2*M + N, 2*M + M*NRHS )
+            END IF
+         END IF
+         MINWRK = MIN( MINWRK, MAXWRK )
+         WORK( 1 ) = MAXWRK
+         IWORK( 1 ) = LIWORK
+         RWORK( 1 ) = LRWORK
+*
+         IF( LWORK.LT.MINWRK .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZGELSD', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible.
+*
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+         RANK = 0
+         RETURN
+      END IF
+*
+*     Get machine parameters.
+*
+      EPS = DLAMCH( 'P' )
+      SFMIN = DLAMCH( 'S' )
+      SMLNUM = SFMIN / EPS
+      BIGNUM = ONE / SMLNUM
+      CALL DLABAD( SMLNUM, BIGNUM )
+*
+*     Scale A if max entry outside range [SMLNUM,BIGNUM].
+*
+      ANRM = ZLANGE( 'M', M, N, A, LDA, RWORK )
+      IASCL = 0
+      IF( ANRM.GT.ZERO .AND. ANRM.LT.SMLNUM ) THEN
+*
+*        Scale matrix norm up to SMLNUM
+*
+         CALL ZLASCL( 'G', 0, 0, ANRM, SMLNUM, M, N, A, LDA, INFO )
+         IASCL = 1
+      ELSE IF( ANRM.GT.BIGNUM ) THEN
+*
+*        Scale matrix norm down to BIGNUM.
+*
+         CALL ZLASCL( 'G', 0, 0, ANRM, BIGNUM, M, N, A, LDA, INFO )
+         IASCL = 2
+      ELSE IF( ANRM.EQ.ZERO ) THEN
+*
+*        Matrix all zero. Return zero solution.
+*
+         CALL ZLASET( 'F', MAX( M, N ), NRHS, CZERO, CZERO, B, LDB )
+         CALL DLASET( 'F', MINMN, 1, ZERO, ZERO, S, 1 )
+         RANK = 0
+         GO TO 10
+      END IF
+*
+*     Scale B if max entry outside range [SMLNUM,BIGNUM].
+*
+      BNRM = ZLANGE( 'M', M, NRHS, B, LDB, RWORK )
+      IBSCL = 0
+      IF( BNRM.GT.ZERO .AND. BNRM.LT.SMLNUM ) THEN
+*
+*        Scale matrix norm up to SMLNUM.
+*
+         CALL ZLASCL( 'G', 0, 0, BNRM, SMLNUM, M, NRHS, B, LDB, INFO )
+         IBSCL = 1
+      ELSE IF( BNRM.GT.BIGNUM ) THEN
+*
+*        Scale matrix norm down to BIGNUM.
+*
+         CALL ZLASCL( 'G', 0, 0, BNRM, BIGNUM, M, NRHS, B, LDB, INFO )
+         IBSCL = 2
+      END IF
+*
+*     If M < N make sure B(M+1:N,:) = 0
+*
+      IF( M.LT.N )
+     $   CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ), LDB )
+*
+*     Overdetermined case.
+*
+      IF( M.GE.N ) THEN
+*
+*        Path 1 - overdetermined or exactly determined.
+*
+         MM = M
+         IF( M.GE.MNTHR ) THEN
+*
+*           Path 1a - overdetermined, with many more rows than columns
+*
+            MM = N
+            ITAU = 1
+            NWORK = ITAU + N
+*
+*           Compute A=Q*R.
+*           (RWorkspace: need N)
+*           (CWorkspace: need N, prefer N*NB)
+*
+            CALL ZGEQRF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+     $                   LWORK-NWORK+1, INFO )
+*
+*           Multiply B by transpose(Q).
+*           (RWorkspace: need N)
+*           (CWorkspace: need NRHS, prefer NRHS*NB)
+*
+            CALL ZUNMQR( 'L', 'C', M, NRHS, N, A, LDA, WORK( ITAU ), B,
+     $                   LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+*           Zero out below R.
+*
+            IF( N.GT.1 ) THEN
+               CALL ZLASET( 'L', N-1, N-1, CZERO, CZERO, A( 2, 1 ),
+     $                      LDA )
+            END IF
+         END IF
+*
+         ITAUQ = 1
+         ITAUP = ITAUQ + N
+         NWORK = ITAUP + N
+         IE = 1
+         NRWORK = IE + N
+*
+*        Bidiagonalize R in A.
+*        (RWorkspace: need N)
+*        (CWorkspace: need 2*N+MM, prefer 2*N+(MM+N)*NB)
+*
+         CALL ZGEBRD( MM, N, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+     $                WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
+     $                INFO )
+*
+*        Multiply B by transpose of left bidiagonalizing vectors of R.
+*        (CWorkspace: need 2*N+NRHS, prefer 2*N+NRHS*NB)
+*
+         CALL ZUNMBR( 'Q', 'L', 'C', MM, NRHS, N, A, LDA, WORK( ITAUQ ),
+     $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+*        Solve the bidiagonal least squares problem.
+*
+         CALL ZLALSD( 'U', SMLSIZ, N, NRHS, S, RWORK( IE ), B, LDB,
+     $                RCOND, RANK, WORK( NWORK ), RWORK( NRWORK ),
+     $                IWORK, INFO )
+         IF( INFO.NE.0 ) THEN
+            GO TO 10
+         END IF
+*
+*        Multiply B by right bidiagonalizing vectors of R.
+*
+         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, N, A, LDA, WORK( ITAUP ),
+     $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+      ELSE IF( N.GE.MNTHR .AND. LWORK.GE.4*M+M*M+
+     $         MAX( M, 2*M-4, NRHS, N-3*M ) ) THEN
+*
+*        Path 2a - underdetermined, with many more columns than rows
+*        and sufficient workspace for an efficient algorithm.
+*
+         LDWORK = M
+         IF( LWORK.GE.MAX( 4*M+M*LDA+MAX( M, 2*M-4, NRHS, N-3*M ),
+     $       M*LDA+M+M*NRHS ) )LDWORK = LDA
+         ITAU = 1
+         NWORK = M + 1
+*
+*        Compute A=L*Q.
+*        (CWorkspace: need 2*M, prefer M+M*NB)
+*
+         CALL ZGELQF( M, N, A, LDA, WORK( ITAU ), WORK( NWORK ),
+     $                LWORK-NWORK+1, INFO )
+         IL = NWORK
+*
+*        Copy L to WORK(IL), zeroing out above its diagonal.
+*
+         CALL ZLACPY( 'L', M, M, A, LDA, WORK( IL ), LDWORK )
+         CALL ZLASET( 'U', M-1, M-1, CZERO, CZERO, WORK( IL+LDWORK ),
+     $                LDWORK )
+         ITAUQ = IL + LDWORK*M
+         ITAUP = ITAUQ + M
+         NWORK = ITAUP + M
+         IE = 1
+         NRWORK = IE + M
+*
+*        Bidiagonalize L in WORK(IL).
+*        (RWorkspace: need M)
+*        (CWorkspace: need M*M+4*M, prefer M*M+4*M+2*M*NB)
+*
+         CALL ZGEBRD( M, M, WORK( IL ), LDWORK, S, RWORK( IE ),
+     $                WORK( ITAUQ ), WORK( ITAUP ), WORK( NWORK ),
+     $                LWORK-NWORK+1, INFO )
+*
+*        Multiply B by transpose of left bidiagonalizing vectors of L.
+*        (CWorkspace: need M*M+4*M+NRHS, prefer M*M+4*M+NRHS*NB)
+*
+         CALL ZUNMBR( 'Q', 'L', 'C', M, NRHS, M, WORK( IL ), LDWORK,
+     $                WORK( ITAUQ ), B, LDB, WORK( NWORK ),
+     $                LWORK-NWORK+1, INFO )
+*
+*        Solve the bidiagonal least squares problem.
+*
+         CALL ZLALSD( 'U', SMLSIZ, M, NRHS, S, RWORK( IE ), B, LDB,
+     $                RCOND, RANK, WORK( NWORK ), RWORK( NRWORK ),
+     $                IWORK, INFO )
+         IF( INFO.NE.0 ) THEN
+            GO TO 10
+         END IF
+*
+*        Multiply B by right bidiagonalizing vectors of L.
+*
+         CALL ZUNMBR( 'P', 'L', 'N', M, NRHS, M, WORK( IL ), LDWORK,
+     $                WORK( ITAUP ), B, LDB, WORK( NWORK ),
+     $                LWORK-NWORK+1, INFO )
+*
+*        Zero out below first M rows of B.
+*
+         CALL ZLASET( 'F', N-M, NRHS, CZERO, CZERO, B( M+1, 1 ), LDB )
+         NWORK = ITAU + M
+*
+*        Multiply transpose(Q) by B.
+*        (CWorkspace: need NRHS, prefer NRHS*NB)
+*
+         CALL ZUNMLQ( 'L', 'C', N, NRHS, M, A, LDA, WORK( ITAU ), B,
+     $                LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+      ELSE
+*
+*        Path 2 - remaining underdetermined cases.
+*
+         ITAUQ = 1
+         ITAUP = ITAUQ + M
+         NWORK = ITAUP + M
+         IE = 1
+         NRWORK = IE + M
+*
+*        Bidiagonalize A.
+*        (RWorkspace: need M)
+*        (CWorkspace: need 2*M+N, prefer 2*M+(M+N)*NB)
+*
+         CALL ZGEBRD( M, N, A, LDA, S, RWORK( IE ), WORK( ITAUQ ),
+     $                WORK( ITAUP ), WORK( NWORK ), LWORK-NWORK+1,
+     $                INFO )
+*
+*        Multiply B by transpose of left bidiagonalizing vectors.
+*        (CWorkspace: need 2*M+NRHS, prefer 2*M+NRHS*NB)
+*
+         CALL ZUNMBR( 'Q', 'L', 'C', M, NRHS, N, A, LDA, WORK( ITAUQ ),
+     $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+*        Solve the bidiagonal least squares problem.
+*
+         CALL ZLALSD( 'L', SMLSIZ, M, NRHS, S, RWORK( IE ), B, LDB,
+     $                RCOND, RANK, WORK( NWORK ), RWORK( NRWORK ),
+     $                IWORK, INFO )
+         IF( INFO.NE.0 ) THEN
+            GO TO 10
+         END IF
+*
+*        Multiply B by right bidiagonalizing vectors of A.
+*
+         CALL ZUNMBR( 'P', 'L', 'N', N, NRHS, M, A, LDA, WORK( ITAUP ),
+     $                B, LDB, WORK( NWORK ), LWORK-NWORK+1, INFO )
+*
+      END IF
+*
+*     Undo scaling.
+*
+      IF( IASCL.EQ.1 ) THEN
+         CALL ZLASCL( 'G', 0, 0, ANRM, SMLNUM, N, NRHS, B, LDB, INFO )
+         CALL DLASCL( 'G', 0, 0, SMLNUM, ANRM, MINMN, 1, S, MINMN,
+     $                INFO )
+      ELSE IF( IASCL.EQ.2 ) THEN
+         CALL ZLASCL( 'G', 0, 0, ANRM, BIGNUM, N, NRHS, B, LDB, INFO )
+         CALL DLASCL( 'G', 0, 0, BIGNUM, ANRM, MINMN, 1, S, MINMN,
+     $                INFO )
+      END IF
+      IF( IBSCL.EQ.1 ) THEN
+         CALL ZLASCL( 'G', 0, 0, SMLNUM, BNRM, N, NRHS, B, LDB, INFO )
+      ELSE IF( IBSCL.EQ.2 ) THEN
+         CALL ZLASCL( 'G', 0, 0, BIGNUM, BNRM, N, NRHS, B, LDB, INFO )
+      END IF
+*
+   10 CONTINUE
+      WORK( 1 ) = MAXWRK
+      IWORK( 1 ) = LIWORK
+      RWORK( 1 ) = LRWORK
+      RETURN
+*
+*     End of ZGELSD
+*
+      END
+*> \brief \b ZLALSD uses the singular value decomposition of A to solve the least squares problem.
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at 
+*            http://www.netlib.org/lapack/explore-html/ 
+*
+*> \htmlonly
+*> Download ZLALSD + dependencies 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlalsd.f"> 
+*> [TGZ]</a> 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlalsd.f"> 
+*> [ZIP]</a> 
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlalsd.f"> 
+*> [TXT]</a>
+*> \endhtmlonly 
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZLALSD( UPLO, SMLSIZ, N, NRHS, D, E, B, LDB, RCOND,
+*                          RANK, WORK, RWORK, IWORK, INFO )
+* 
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDB, N, NRHS, RANK, SMLSIZ
+*       DOUBLE PRECISION   RCOND
+*       ..
+*       .. Array Arguments ..
+*       INTEGER            IWORK( * )
+*       DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
+*       COMPLEX*16         B( LDB, * ), WORK( * )
+*       ..
+*  
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZLALSD uses the singular value decomposition of A to solve the least
+*> squares problem of finding X to minimize the Euclidean norm of each
+*> column of A*X-B, where A is N-by-N upper bidiagonal, and X and B
+*> are N-by-NRHS. The solution X overwrites B.
+*>
+*> The singular values of A smaller than RCOND times the largest
+*> singular value are treated as zero in solving the least squares
+*> problem; in this case a minimum norm solution is returned.
+*> The actual singular values are returned in D in ascending order.
+*>
+*> This code makes very mild assumptions about floating point
+*> arithmetic. It will work on machines with a guard digit in
+*> add/subtract, or on those binary machines without guard digits
+*> which subtract like the Cray XMP, Cray YMP, Cray C 90, or Cray 2.
+*> It could conceivably fail on hexadecimal or decimal machines
+*> without guard digits, but we know of none.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>         = 'U': D and E define an upper bidiagonal matrix.
+*>         = 'L': D and E define a  lower bidiagonal matrix.
+*> \endverbatim
+*>
+*> \param[in] SMLSIZ
+*> \verbatim
+*>          SMLSIZ is INTEGER
+*>         The maximum size of the subproblems at the bottom of the
+*>         computation tree.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>         The dimension of the  bidiagonal matrix.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>         The number of columns of B. NRHS must be at least 1.
+*> \endverbatim
+*>
+*> \param[in,out] D
+*> \verbatim
+*>          D is DOUBLE PRECISION array, dimension (N)
+*>         On entry D contains the main diagonal of the bidiagonal
+*>         matrix. On exit, if INFO = 0, D contains its singular values.
+*> \endverbatim
+*>
+*> \param[in,out] E
+*> \verbatim
+*>          E is DOUBLE PRECISION array, dimension (N-1)
+*>         Contains the super-diagonal entries of the bidiagonal matrix.
+*>         On exit, E has been destroyed.
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>         On input, B contains the right hand sides of the least
+*>         squares problem. On output, B contains the solution X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>         The leading dimension of B in the calling subprogram.
+*>         LDB must be at least max(1,N).
+*> \endverbatim
+*>
+*> \param[in] RCOND
+*> \verbatim
+*>          RCOND is DOUBLE PRECISION
+*>         The singular values of A less than or equal to RCOND times
+*>         the largest singular value are treated as zero in solving
+*>         the least squares problem. If RCOND is negative,
+*>         machine precision is used instead.
+*>         For example, if diag(S)*X=B were the least squares problem,
+*>         where diag(S) is a diagonal matrix of singular values, the
+*>         solution would be X(i) = B(i) / S(i) if S(i) is greater than
+*>         RCOND*max(S), and X(i) = 0 if S(i) is less than or equal to
+*>         RCOND*max(S).
+*> \endverbatim
+*>
+*> \param[out] RANK
+*> \verbatim
+*>          RANK is INTEGER
+*>         The number of singular values of A greater than RCOND times
+*>         the largest singular value.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension at least
+*>         (N * NRHS).
+*> \endverbatim
+*>
+*> \param[out] RWORK
+*> \verbatim
+*>          RWORK is DOUBLE PRECISION array, dimension at least
+*>         (9*N + 2*N*SMLSIZ + 8*N*NLVL + 3*SMLSIZ*NRHS +
+*>         MAX( (SMLSIZ+1)**2, N*(1+NRHS) + 2*NRHS ),
+*>         where
+*>         NLVL = MAX( 0, INT( LOG_2( MIN( M,N )/(SMLSIZ+1) ) ) + 1 )
+*> \endverbatim
+*>
+*> \param[out] IWORK
+*> \verbatim
+*>          IWORK is INTEGER array, dimension at least
+*>         (3*N*NLVL + 11*N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>         = 0:  successful exit.
+*>         < 0:  if INFO = -i, the i-th argument had an illegal value.
+*>         > 0:  The algorithm failed to compute a singular value while
+*>               working on the submatrix lying in rows and columns
+*>               INFO/(N+1) through MOD(INFO,N+1).
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee 
+*> \author Univ. of California Berkeley 
+*> \author Univ. of Colorado Denver 
+*> \author NAG Ltd. 
+*
+*> \date September 2012
+*
+*> \ingroup complex16OTHERcomputational
+*
+*> \par Contributors:
+*  ==================
+*>
+*>     Ming Gu and Ren-Cang Li, Computer Science Division, University of
+*>       California at Berkeley, USA \n
+*>     Osni Marques, LBNL/NERSC, USA \n
+*
+*  =====================================================================
+      SUBROUTINE ZLALSD( UPLO, SMLSIZ, N, NRHS, D, E, B, LDB, RCOND,
+     $                   RANK, WORK, RWORK, IWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     September 2012
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDB, N, NRHS, RANK, SMLSIZ
+      DOUBLE PRECISION   RCOND
+*     ..
+*     .. Array Arguments ..
+      INTEGER            IWORK( * )
+      DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
+      COMPLEX*16         B( LDB, * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE, TWO
+      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0, TWO = 2.0D0 )
+      COMPLEX*16         CZERO
+      PARAMETER          ( CZERO = ( 0.0D0, 0.0D0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            BX, BXST, C, DIFL, DIFR, GIVCOL, GIVNUM,
+     $                   GIVPTR, I, ICMPQ1, ICMPQ2, IRWB, IRWIB, IRWRB,
+     $                   IRWU, IRWVT, IRWWRK, IWK, J, JCOL, JIMAG,
+     $                   JREAL, JROW, K, NLVL, NM1, NRWORK, NSIZE, NSUB,
+     $                   PERM, POLES, S, SIZEI, SMLSZP, SQRE, ST, ST1,
+     $                   U, VT, Z
+      DOUBLE PRECISION   CS, EPS, ORGNRM, RCND, R, SN, TOL
+*     ..
+*     .. External Functions ..
+      INTEGER            IDAMAX
+      DOUBLE PRECISION   DLAMCH, DLANST
+      EXTERNAL           IDAMAX, DLAMCH, DLANST
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DGEMM, DLARTG, DLASCL, DLASDA, DLASDQ, DLASET,
+     $                   DLASRT, XERBLA, ZCOPY, ZDROT, ZLACPY, ZLALSA,
+     $                   ZLASCL, ZLASET
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DIMAG, INT, LOG, SIGN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+*
+      IF( N.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( NRHS.LT.1 ) THEN
+         INFO = -4
+      ELSE IF( ( LDB.LT.1 ) .OR. ( LDB.LT.N ) ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZLALSD', -INFO )
+         RETURN
+      END IF
+*
+      EPS = DLAMCH( 'Epsilon' )
+*
+*     Set up the tolerance.
+*
+      IF( ( RCOND.LE.ZERO ) .OR. ( RCOND.GE.ONE ) ) THEN
+         RCND = EPS
+      ELSE
+         RCND = RCOND
+      END IF
+*
+      RANK = 0
+*
+*     Quick return if possible.
+*
+      IF( N.EQ.0 ) THEN
+         RETURN
+      ELSE IF( N.EQ.1 ) THEN
+         IF( D( 1 ).EQ.ZERO ) THEN
+            CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, B, LDB )
+         ELSE
+            RANK = 1
+            CALL ZLASCL( 'G', 0, 0, D( 1 ), ONE, 1, NRHS, B, LDB, INFO )
+            D( 1 ) = ABS( D( 1 ) )
+         END IF
+         RETURN
+      END IF
+*
+*     Rotate the matrix if it is lower bidiagonal.
+*
+      IF( UPLO.EQ.'L' ) THEN
+         DO 10 I = 1, N - 1
+            CALL DLARTG( D( I ), E( I ), CS, SN, R )
+            D( I ) = R
+            E( I ) = SN*D( I+1 )
+            D( I+1 ) = CS*D( I+1 )
+            IF( NRHS.EQ.1 ) THEN
+               CALL ZDROT( 1, B( I, 1 ), 1, B( I+1, 1 ), 1, CS, SN )
+            ELSE
+               RWORK( I*2-1 ) = CS
+               RWORK( I*2 ) = SN
+            END IF
+   10    CONTINUE
+         IF( NRHS.GT.1 ) THEN
+            DO 30 I = 1, NRHS
+               DO 20 J = 1, N - 1
+                  CS = RWORK( J*2-1 )
+                  SN = RWORK( J*2 )
+                  CALL ZDROT( 1, B( J, I ), 1, B( J+1, I ), 1, CS, SN )
+   20          CONTINUE
+   30       CONTINUE
+         END IF
+      END IF
+*
+*     Scale.
+*
+      NM1 = N - 1
+      ORGNRM = DLANST( 'M', N, D, E )
+      IF( ORGNRM.EQ.ZERO ) THEN
+         CALL ZLASET( 'A', N, NRHS, CZERO, CZERO, B, LDB )
+         RETURN
+      END IF
+*
+      CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, N, 1, D, N, INFO )
+      CALL DLASCL( 'G', 0, 0, ORGNRM, ONE, NM1, 1, E, NM1, INFO )
+*
+*     If N is smaller than the minimum divide size SMLSIZ, then solve
+*     the problem with another solver.
+*
+      IF( N.LE.SMLSIZ ) THEN
+         IRWU = 1
+         IRWVT = IRWU + N*N
+         IRWWRK = IRWVT + N*N
+         IRWRB = IRWWRK
+         IRWIB = IRWRB + N*NRHS
+         IRWB = IRWIB + N*NRHS
+         CALL DLASET( 'A', N, N, ZERO, ONE, RWORK( IRWU ), N )
+         CALL DLASET( 'A', N, N, ZERO, ONE, RWORK( IRWVT ), N )
+         CALL DLASDQ( 'U', 0, N, N, N, 0, D, E, RWORK( IRWVT ), N,
+     $                RWORK( IRWU ), N, RWORK( IRWWRK ), 1,
+     $                RWORK( IRWWRK ), INFO )
+         IF( INFO.NE.0 ) THEN
+            RETURN
+         END IF
+*
+*        In the real version, B is passed to DLASDQ and multiplied
+*        internally by Q**H. Here B is complex and that product is
+*        computed below in two steps (real and imaginary parts).
+*
+         J = IRWB - 1
+         DO 50 JCOL = 1, NRHS
+            DO 40 JROW = 1, N
+               J = J + 1
+               RWORK( J ) = DBLE( B( JROW, JCOL ) )
+   40       CONTINUE
+   50    CONTINUE
+         CALL DGEMM( 'T', 'N', N, NRHS, N, ONE, RWORK( IRWU ), N,
+     $               RWORK( IRWB ), N, ZERO, RWORK( IRWRB ), N )
+         J = IRWB - 1
+         DO 70 JCOL = 1, NRHS
+            DO 60 JROW = 1, N
+               J = J + 1
+               RWORK( J ) = DIMAG( B( JROW, JCOL ) )
+   60       CONTINUE
+   70    CONTINUE
+         CALL DGEMM( 'T', 'N', N, NRHS, N, ONE, RWORK( IRWU ), N,
+     $               RWORK( IRWB ), N, ZERO, RWORK( IRWIB ), N )
+         JREAL = IRWRB - 1
+         JIMAG = IRWIB - 1
+         DO 90 JCOL = 1, NRHS
+            DO 80 JROW = 1, N
+               JREAL = JREAL + 1
+               JIMAG = JIMAG + 1
+               B( JROW, JCOL ) = DCMPLX( RWORK( JREAL ),
+     $                           RWORK( JIMAG ) )
+   80       CONTINUE
+   90    CONTINUE
+*
+         TOL = RCND*ABS( D( IDAMAX( N, D, 1 ) ) )
+         DO 100 I = 1, N
+            IF( D( I ).LE.TOL ) THEN
+               CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, B( I, 1 ), LDB )
+            ELSE
+               CALL ZLASCL( 'G', 0, 0, D( I ), ONE, 1, NRHS, B( I, 1 ),
+     $                      LDB, INFO )
+               RANK = RANK + 1
+            END IF
+  100    CONTINUE
+*
+*        Since B is complex, the following call to DGEMM is performed
+*        in two steps (real and imaginary parts). That is for V * B
+*        (in the real version of the code V**H is stored in WORK).
+*
+*        CALL DGEMM( 'T', 'N', N, NRHS, N, ONE, WORK, N, B, LDB, ZERO,
+*    $               WORK( NWORK ), N )
+*
+         J = IRWB - 1
+         DO 120 JCOL = 1, NRHS
+            DO 110 JROW = 1, N
+               J = J + 1
+               RWORK( J ) = DBLE( B( JROW, JCOL ) )
+  110       CONTINUE
+  120    CONTINUE
+         CALL DGEMM( 'T', 'N', N, NRHS, N, ONE, RWORK( IRWVT ), N,
+     $               RWORK( IRWB ), N, ZERO, RWORK( IRWRB ), N )
+         J = IRWB - 1
+         DO 140 JCOL = 1, NRHS
+            DO 130 JROW = 1, N
+               J = J + 1
+               RWORK( J ) = DIMAG( B( JROW, JCOL ) )
+  130       CONTINUE
+  140    CONTINUE
+         CALL DGEMM( 'T', 'N', N, NRHS, N, ONE, RWORK( IRWVT ), N,
+     $               RWORK( IRWB ), N, ZERO, RWORK( IRWIB ), N )
+         JREAL = IRWRB - 1
+         JIMAG = IRWIB - 1
+         DO 160 JCOL = 1, NRHS
+            DO 150 JROW = 1, N
+               JREAL = JREAL + 1
+               JIMAG = JIMAG + 1
+               B( JROW, JCOL ) = DCMPLX( RWORK( JREAL ),
+     $                           RWORK( JIMAG ) )
+  150       CONTINUE
+  160    CONTINUE
+*
+*        Unscale.
+*
+         CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, N, 1, D, N, INFO )
+         CALL DLASRT( 'D', N, D, INFO )
+         CALL ZLASCL( 'G', 0, 0, ORGNRM, ONE, N, NRHS, B, LDB, INFO )
+*
+         RETURN
+      END IF
+*
+*     Book-keeping and setting up some constants.
+*
+      NLVL = INT( LOG( DBLE( N ) / DBLE( SMLSIZ+1 ) ) / LOG( TWO ) ) + 1
+*
+      SMLSZP = SMLSIZ + 1
+*
+      U = 1
+      VT = 1 + SMLSIZ*N
+      DIFL = VT + SMLSZP*N
+      DIFR = DIFL + NLVL*N
+      Z = DIFR + NLVL*N*2
+      C = Z + NLVL*N
+      S = C + N
+      POLES = S + N
+      GIVNUM = POLES + 2*NLVL*N
+      NRWORK = GIVNUM + 2*NLVL*N
+      BX = 1
+*
+      IRWRB = NRWORK
+      IRWIB = IRWRB + SMLSIZ*NRHS
+      IRWB = IRWIB + SMLSIZ*NRHS
+*
+      SIZEI = 1 + N
+      K = SIZEI + N
+      GIVPTR = K + N
+      PERM = GIVPTR + N
+      GIVCOL = PERM + NLVL*N
+      IWK = GIVCOL + NLVL*N*2
+*
+      ST = 1
+      SQRE = 0
+      ICMPQ1 = 1
+      ICMPQ2 = 0
+      NSUB = 0
+*
+      DO 170 I = 1, N
+         IF( ABS( D( I ) ).LT.EPS ) THEN
+            D( I ) = SIGN( EPS, D( I ) )
+         END IF
+  170 CONTINUE
+*
+      DO 240 I = 1, NM1
+         IF( ( ABS( E( I ) ).LT.EPS ) .OR. ( I.EQ.NM1 ) ) THEN
+            NSUB = NSUB + 1
+            IWORK( NSUB ) = ST
+*
+*           Subproblem found. First determine its size and then
+*           apply divide and conquer on it.
+*
+            IF( I.LT.NM1 ) THEN
+*
+*              A subproblem with E(I) small for I < NM1.
+*
+               NSIZE = I - ST + 1
+               IWORK( SIZEI+NSUB-1 ) = NSIZE
+            ELSE IF( ABS( E( I ) ).GE.EPS ) THEN
+*
+*              A subproblem with E(NM1) not too small but I = NM1.
+*
+               NSIZE = N - ST + 1
+               IWORK( SIZEI+NSUB-1 ) = NSIZE
+            ELSE
+*
+*              A subproblem with E(NM1) small. This implies an
+*              1-by-1 subproblem at D(N), which is not solved
+*              explicitly.
+*
+               NSIZE = I - ST + 1
+               IWORK( SIZEI+NSUB-1 ) = NSIZE
+               NSUB = NSUB + 1
+               IWORK( NSUB ) = N
+               IWORK( SIZEI+NSUB-1 ) = 1
+               CALL ZCOPY( NRHS, B( N, 1 ), LDB, WORK( BX+NM1 ), N )
+            END IF
+            ST1 = ST - 1
+            IF( NSIZE.EQ.1 ) THEN
+*
+*              This is a 1-by-1 subproblem and is not solved
+*              explicitly.
+*
+               CALL ZCOPY( NRHS, B( ST, 1 ), LDB, WORK( BX+ST1 ), N )
+            ELSE IF( NSIZE.LE.SMLSIZ ) THEN
+*
+*              This is a small subproblem and is solved by DLASDQ.
+*
+               CALL DLASET( 'A', NSIZE, NSIZE, ZERO, ONE,
+     $                      RWORK( VT+ST1 ), N )
+               CALL DLASET( 'A', NSIZE, NSIZE, ZERO, ONE,
+     $                      RWORK( U+ST1 ), N )
+               CALL DLASDQ( 'U', 0, NSIZE, NSIZE, NSIZE, 0, D( ST ),
+     $                      E( ST ), RWORK( VT+ST1 ), N, RWORK( U+ST1 ),
+     $                      N, RWORK( NRWORK ), 1, RWORK( NRWORK ),
+     $                      INFO )
+               IF( INFO.NE.0 ) THEN
+                  RETURN
+               END IF
+*
+*              In the real version, B is passed to DLASDQ and multiplied
+*              internally by Q**H. Here B is complex and that product is
+*              computed below in two steps (real and imaginary parts).
+*
+               J = IRWB - 1
+               DO 190 JCOL = 1, NRHS
+                  DO 180 JROW = ST, ST + NSIZE - 1
+                     J = J + 1
+                     RWORK( J ) = DBLE( B( JROW, JCOL ) )
+  180             CONTINUE
+  190          CONTINUE
+               CALL DGEMM( 'T', 'N', NSIZE, NRHS, NSIZE, ONE,
+     $                     RWORK( U+ST1 ), N, RWORK( IRWB ), NSIZE,
+     $                     ZERO, RWORK( IRWRB ), NSIZE )
+               J = IRWB - 1
+               DO 210 JCOL = 1, NRHS
+                  DO 200 JROW = ST, ST + NSIZE - 1
+                     J = J + 1
+                     RWORK( J ) = DIMAG( B( JROW, JCOL ) )
+  200             CONTINUE
+  210          CONTINUE
+               CALL DGEMM( 'T', 'N', NSIZE, NRHS, NSIZE, ONE,
+     $                     RWORK( U+ST1 ), N, RWORK( IRWB ), NSIZE,
+     $                     ZERO, RWORK( IRWIB ), NSIZE )
+               JREAL = IRWRB - 1
+               JIMAG = IRWIB - 1
+               DO 230 JCOL = 1, NRHS
+                  DO 220 JROW = ST, ST + NSIZE - 1
+                     JREAL = JREAL + 1
+                     JIMAG = JIMAG + 1
+                     B( JROW, JCOL ) = DCMPLX( RWORK( JREAL ),
+     $                                 RWORK( JIMAG ) )
+  220             CONTINUE
+  230          CONTINUE
+*
+               CALL ZLACPY( 'A', NSIZE, NRHS, B( ST, 1 ), LDB,
+     $                      WORK( BX+ST1 ), N )
+            ELSE
+*
+*              A large problem. Solve it using divide and conquer.
+*
+               CALL DLASDA( ICMPQ1, SMLSIZ, NSIZE, SQRE, D( ST ),
+     $                      E( ST ), RWORK( U+ST1 ), N, RWORK( VT+ST1 ),
+     $                      IWORK( K+ST1 ), RWORK( DIFL+ST1 ),
+     $                      RWORK( DIFR+ST1 ), RWORK( Z+ST1 ),
+     $                      RWORK( POLES+ST1 ), IWORK( GIVPTR+ST1 ),
+     $                      IWORK( GIVCOL+ST1 ), N, IWORK( PERM+ST1 ),
+     $                      RWORK( GIVNUM+ST1 ), RWORK( C+ST1 ),
+     $                      RWORK( S+ST1 ), RWORK( NRWORK ),
+     $                      IWORK( IWK ), INFO )
+               IF( INFO.NE.0 ) THEN
+                  RETURN
+               END IF
+               BXST = BX + ST1
+               CALL ZLALSA( ICMPQ2, SMLSIZ, NSIZE, NRHS, B( ST, 1 ),
+     $                      LDB, WORK( BXST ), N, RWORK( U+ST1 ), N,
+     $                      RWORK( VT+ST1 ), IWORK( K+ST1 ),
+     $                      RWORK( DIFL+ST1 ), RWORK( DIFR+ST1 ),
+     $                      RWORK( Z+ST1 ), RWORK( POLES+ST1 ),
+     $                      IWORK( GIVPTR+ST1 ), IWORK( GIVCOL+ST1 ), N,
+     $                      IWORK( PERM+ST1 ), RWORK( GIVNUM+ST1 ),
+     $                      RWORK( C+ST1 ), RWORK( S+ST1 ),
+     $                      RWORK( NRWORK ), IWORK( IWK ), INFO )
+               IF( INFO.NE.0 ) THEN
+                  RETURN
+               END IF
+            END IF
+            ST = I + 1
+         END IF
+  240 CONTINUE
+*
+*     Apply the singular values and treat the tiny ones as zero.
+*
+      TOL = RCND*ABS( D( IDAMAX( N, D, 1 ) ) )
+*
+      DO 250 I = 1, N
+*
+*        Some of the elements in D can be negative because 1-by-1
+*        subproblems were not solved explicitly.
+*
+         IF( ABS( D( I ) ).LE.TOL ) THEN
+            CALL ZLASET( 'A', 1, NRHS, CZERO, CZERO, WORK( BX+I-1 ), N )
+         ELSE
+            RANK = RANK + 1
+            CALL ZLASCL( 'G', 0, 0, D( I ), ONE, 1, NRHS,
+     $                   WORK( BX+I-1 ), N, INFO )
+         END IF
+         D( I ) = ABS( D( I ) )
+  250 CONTINUE
+*
+*     Now apply back the right singular vectors.
+*
+      ICMPQ2 = 1
+      DO 320 I = 1, NSUB
+         ST = IWORK( I )
+         ST1 = ST - 1
+         NSIZE = IWORK( SIZEI+I-1 )
+         BXST = BX + ST1
+         IF( NSIZE.EQ.1 ) THEN
+            CALL ZCOPY( NRHS, WORK( BXST ), N, B( ST, 1 ), LDB )
+         ELSE IF( NSIZE.LE.SMLSIZ ) THEN
+*
+*           Since B and BX are complex, the following call to DGEMM
+*           is performed in two steps (real and imaginary parts).
+*
+*           CALL DGEMM( 'T', 'N', NSIZE, NRHS, NSIZE, ONE,
+*    $                  RWORK( VT+ST1 ), N, RWORK( BXST ), N, ZERO,
+*    $                  B( ST, 1 ), LDB )
+*
+            J = BXST - N - 1
+            JREAL = IRWB - 1
+            DO 270 JCOL = 1, NRHS
+               J = J + N
+               DO 260 JROW = 1, NSIZE
+                  JREAL = JREAL + 1
+                  RWORK( JREAL ) = DBLE( WORK( J+JROW ) )
+  260          CONTINUE
+  270       CONTINUE
+            CALL DGEMM( 'T', 'N', NSIZE, NRHS, NSIZE, ONE,
+     $                  RWORK( VT+ST1 ), N, RWORK( IRWB ), NSIZE, ZERO,
+     $                  RWORK( IRWRB ), NSIZE )
+            J = BXST - N - 1
+            JIMAG = IRWB - 1
+            DO 290 JCOL = 1, NRHS
+               J = J + N
+               DO 280 JROW = 1, NSIZE
+                  JIMAG = JIMAG + 1
+                  RWORK( JIMAG ) = DIMAG( WORK( J+JROW ) )
+  280          CONTINUE
+  290       CONTINUE
+            CALL DGEMM( 'T', 'N', NSIZE, NRHS, NSIZE, ONE,
+     $                  RWORK( VT+ST1 ), N, RWORK( IRWB ), NSIZE, ZERO,
+     $                  RWORK( IRWIB ), NSIZE )
+            JREAL = IRWRB - 1
+            JIMAG = IRWIB - 1
+            DO 310 JCOL = 1, NRHS
+               DO 300 JROW = ST, ST + NSIZE - 1
+                  JREAL = JREAL + 1
+                  JIMAG = JIMAG + 1
+                  B( JROW, JCOL ) = DCMPLX( RWORK( JREAL ),
+     $                              RWORK( JIMAG ) )
+  300          CONTINUE
+  310       CONTINUE
+         ELSE
+            CALL ZLALSA( ICMPQ2, SMLSIZ, NSIZE, NRHS, WORK( BXST ), N,
+     $                   B( ST, 1 ), LDB, RWORK( U+ST1 ), N,
+     $                   RWORK( VT+ST1 ), IWORK( K+ST1 ),
+     $                   RWORK( DIFL+ST1 ), RWORK( DIFR+ST1 ),
+     $                   RWORK( Z+ST1 ), RWORK( POLES+ST1 ),
+     $                   IWORK( GIVPTR+ST1 ), IWORK( GIVCOL+ST1 ), N,
+     $                   IWORK( PERM+ST1 ), RWORK( GIVNUM+ST1 ),
+     $                   RWORK( C+ST1 ), RWORK( S+ST1 ),
+     $                   RWORK( NRWORK ), IWORK( IWK ), INFO )
+            IF( INFO.NE.0 ) THEN
+               RETURN
+            END IF
+         END IF
+  320 CONTINUE
+*
+*     Unscale and sort the singular values.
+*
+      CALL DLASCL( 'G', 0, 0, ONE, ORGNRM, N, 1, D, N, INFO )
+      CALL DLASRT( 'D', N, D, INFO )
+      CALL ZLASCL( 'G', 0, 0, ORGNRM, ONE, N, NRHS, B, LDB, INFO )
+*
+      RETURN
+*
+*     End of ZLALSD
+*
+      END

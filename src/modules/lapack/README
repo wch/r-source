@@ -127,6 +127,8 @@ zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
 zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
 zunmhr.f
 
-zgesdd.f zlacp2.f zlacrm.f zlarcm.f added for R 3.1.0.
+zgesdd.f zlacp2.f zlacrm.f zlarcm.f 
+zgelsd.f zlalsd.f 
+added for R 3.1.0.
 
 R.patch suppresses warnings with Fortran array-bounds checking.
