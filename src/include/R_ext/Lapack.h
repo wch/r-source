@@ -36,6 +36,12 @@
 #include <R_ext/Complex.h>	/* for Rcomplex */
 #include <R_ext/BLAS.h>
 
+/* The LAPACK version: might change after installation with
+   external LAPACK
+*/
+extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
+
+
 /*
   LAPACK function names are [dz]<name>(), where d denotes the real
   version of the function, z the complex version.  (Only

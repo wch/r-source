@@ -29,9 +29,6 @@
 
 #include "Lapack.h"
 
-extern void F77_NAME(ilaver)(int *major, int *minor, int *patch);
-
-
 /* NB: the handling of dims is odd here.  Most are coerced to be
  * integers (which dimgets currently guarantees), but a couple were
  * used unchecked. 
@@ -110,7 +107,7 @@ static SEXP La_svd(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP vt)
     int *iwork= (int *) R_alloc(8*(size_t)(n < p ? n : p), sizeof(int));
 
     /* ask for optimal size of work array */
-    char *ju = CHAR(STRING_ELT(jobu, 0));
+    const char *ju = CHAR(STRING_ELT(jobu, 0));
     int lwork = -1;
     F77_CALL(dgesdd)(ju, &n, &p, xvals, &n, REAL(s),
 		     REAL(u), &ldu, REAL(vt), &ldvt,
@@ -739,7 +736,6 @@ static SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 #endif
 }
 
-#define NEW 
 static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
 {
 #ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
@@ -747,7 +743,7 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP x, SEXP s, SEXP u, SEXP v)
 	error(_("'jobu' must be a character string"));
     int *xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     int n = xdims[0], p = xdims[1];
-    char *jz = CHAR(STRING_ELT(jobu, 0));
+    const char *jz = CHAR(STRING_ELT(jobu, 0));
 
     /* The underlying LAPACK, specifically ZLARF, does not work with
      * long arrays */
