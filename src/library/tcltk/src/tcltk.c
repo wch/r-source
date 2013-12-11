@@ -29,6 +29,9 @@
 #define _(String) (String)
 #endif
 
+// From Defn.f
+extern void  R_Busy(int);
+
 static void RTcl_dec_refcount(SEXP R_tclobj)
 {
     Tcl_DecrRefCount((Tcl_Obj *) R_ExternalPtrAddr(R_tclobj));
@@ -67,9 +70,11 @@ static int R_eval(ClientData clientData,
     /* Note that expr becomes an EXPRSXP and hence we need the loop
        below (a straight eval(expr, R_GlobalEnv) won't work) */
     {
+	R_Busy(1);
 	int n = length(expr);
 	for(i = 0 ; i < n ; i++)
 	    ans = eval(VECTOR_ELT(expr, i), R_GlobalEnv);
+	R_Busy(0);
     }
 
     /* If return value is of class tclObj, use as Tcl result */
@@ -113,8 +118,10 @@ static int R_call(ClientData clientData,
     expr = LCONS( (SEXP)fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
+    R_Busy(1);
     ans = eval(expr, R_GlobalEnv);
-
+    R_Busy(0);
+	
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
 	Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
@@ -135,7 +142,9 @@ static int R_call_lang(ClientData clientData,
 
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
+    R_Busy(1);
     ans = eval((SEXP)expr, (SEXP)env);
+    R_Busy(0);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
