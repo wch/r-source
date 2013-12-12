@@ -1651,7 +1651,7 @@ automatically if the package contains FORTRAN source files.
 A macro containing the BLAS libraries used when building @R{}.  This may
 need to be included in @code{PKG_LIBS}.  Beware that if it is empty then
 the @R{} executable will contain all the double-precision and
-double-complex BLAS routines, but no single-precision or complex
+double-complex BLAS routines, but no single-precision nor complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
 resolves such dependencies to a static FORTRAN library when
@@ -1663,14 +1663,14 @@ libraries are written at least partially in FORTRAN.
 A macro containing the LAPACK libraries (and paths where appropriate)
 used when building @R{}.  This may need to be included in
 @code{PKG_LIBS}.  It may point to a dynamic library @code{libRlapack}
-which contains all the double-precision LAPACK routines as well as those
-double-complex LAPACK and BLAS routines needed to build @R{}, or it may
+which contains the main double-precision LAPACK routines as well as
+those double-complex LAPACK routines needed to build @R{}, or it may
 point to an external LAPACK library, or may be empty if an external BLAS
 library also contains LAPACK.
 
-[There is no guarantee that the LAPACK library will provide more than
-all the double-precision and double-complex routines, and some do not
-provide all the auxiliary routines.]
+[@code{libRlapack} includes all the double-precision LAPACK routines
+current in 2003: a list of which routines are included is in file
+@file{src/modules/lapack/README}.]
 
 For portability, the macros @code{BLAS_LIBS} and @code{FLIBS} should
 always be included @emph{after} @code{LAPACK_LIBS} (and in that order).
@@ -6805,7 +6805,8 @@ apparent at the next garbage collection (or even at later garbage
 collections after objects have been deleted).
 
 Note that memory access errors may be seen with LAPACK, BLAS and
-Java-using packages: some at least of these seem to be intentional.
+Java-using packages: some at least of these seem to be intentional, and
+some are related to passing characters to Fortran.
 
 There are other memory-access-checking tools available: GCC supports
 @command{mudflap} and `lightweight bounds checking' (`LBC') is
