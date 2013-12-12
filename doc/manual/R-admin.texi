@@ -5170,18 +5170,18 @@ There have been no reports for @R{} 3.0.0 or later.
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added.  @R{} requires C99 complex type support, which is
-available as from Cygwin 1.7.8 (March 2011).  However, the (new)
-implementation of @code{cacos} gives incorrect results, so we undefine
-@code{HAVE_CACOS} in @file{src/main/complex.c} on that platform.
+workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
 
-Many versions of Cygwin during 2011 were unable to build @R{}: 1.7.9-1
-with @acronym{GCC} 4.5.3-3 in November 2011 was able to do so.  Cygwin
-has not been tested for @R{} 3.0.0 or later.
+@R{} requires C99 complex type support, which is available as from
+Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
+@code{cacos} gives incorrect results, so we undefine @code{HAVE_CACOS}
+in @file{src/main/complex.c} on that platform.  It has been reported
+that some C99 long double mathematical functions are missing, so
+configuring with @option{--disable-long-double} was required.
 
 Only building as a shared library can possibly work,@footnote{Windows
 DLLs need to have all links resolved at build time and so cannot resolve
-against @file{R.bin}.} so use e.g@:
+against @file{R.bin}.} so use e.g.@:
 
 @example
 ./configure --disable-nls --enable-R-shlib FLIBS=-lgfortran
@@ -5211,7 +5211,7 @@ TK_LIB_SPEC='-ltk84'
 The overhead of using shell scripts makes this noticeably slower than a
 native build of @R{} on Windows.
 
-Even when @R{} can be built, not all the tests passed: there were
+Even when @R{} could be built, not all the tests passed: there were
 incorrect results from wide-character regular expressions code and from
 sourcing CR-delimited files.
 
