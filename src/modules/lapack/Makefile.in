@@ -21,7 +21,7 @@ HEADERS = Lapack.h
 
 ## Sources for the -lRlapack.  On OSX this may be linked directly to
 ## vecLib/Accelerate, so needs the zdot* fix.
-LIBSOURCES = dlamch.f dlapack.f ilaver.f \
+LIBSOURCES = dlamch.f dlapack.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
 LIBOBJECTS = $(LIBSOURCES:.f=.o) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95c.o
 

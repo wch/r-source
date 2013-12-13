@@ -105,7 +105,7 @@ dggsvd.f	dlaqr5.f	dorglq.f	dsptrf.f	ilaenv.f
 dggsvp.f	dlaqsb.f	dorgql.f	dsptri.f	ilaprec.f
 dgsvj0.f	dlaqsp.f	dorgqr.f	dsptrs.f	ilatrans.f
 dgsvj1.f	dlaqsy.f	dorgr2.f	dstebz.f	iparmq.f
-dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f
+dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f	ilaver.f
 dgtrfs.f	dlar1v.f	dorgtr.f	dstegr.f
 dgtsv.f		dlar2v.f	dorm2l.f	dstein.f
 
