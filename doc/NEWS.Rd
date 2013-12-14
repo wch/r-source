@@ -281,8 +281,6 @@
       needed to link a front-end against the (shared or static) \R
       library.
 
-      \item \command{R CMD check} analyses \code{:::} calls.
-
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
     }
   }
@@ -740,6 +738,8 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
+      
+      \item \command{R CMD check} analyses \code{:::} calls.
     }
   }
 

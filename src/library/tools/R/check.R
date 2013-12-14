@@ -3296,10 +3296,8 @@ setRlibs <-
                                   lines, invert = TRUE, value = TRUE)
                 }
 
-                ## Warnings about replacing imports are almost always
-                ## due to auto-generated namespaces
                 check_imports_flag <-
-                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "FALSE")
+                    Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "TRUE")
                 if (!config_val_to_logical(check_imports_flag))
                     lines <- grep("Warning: replacing previous import", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
@@ -4017,7 +4015,6 @@ setRlibs <-
         Sys.setenv("_R_CHECK_NO_RECOMMENDED_" = "TRUE")
         Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
         Sys.setenv("_R_CHECK_DOT_FIRSTLIB_" = "TRUE")
-        Sys.setenv("_R_CHECK_REPLACING_IMPORTS_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev))  Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
