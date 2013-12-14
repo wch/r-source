@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2013 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,8 +70,14 @@ double bessel_y(double x, double alpha)
 #endif
     Y_bessel(&x, &alpha, &nb, by, &ncalc);
     if(ncalc != nb) {/* error input */
-	if(ncalc == -1)
+	if(ncalc == -1) {
+#ifdef MATHLIB_STANDALONE
+	    free(by);
+#else
+	    vmaxset(vmax);
+#endif
 	    return ML_POSINF;
+	}
 	else if(ncalc < -1)
 	    MATHLIB_WARNING4(_("bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
 			     x, ncalc, nb, alpha);
