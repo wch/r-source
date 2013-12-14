@@ -161,7 +161,7 @@
       \item \code{predict(<lm object>, interval = "confidence", scale =
 	<something>)} now works.  (\PR{15564})
 	
-      \item The bug fix in 3.0.2 for \PR{15411} was too agressive,
+      \item The bug fix in 3.0.2 for \PR{15411} was too aggressive,
       and sometimes removed spaces that should not have been removed.
       (\PR{15583})
       
@@ -376,6 +376,8 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
+      
+      \item \command{R CMD check} analyses \code{:::} calls.
     }
   }
 
