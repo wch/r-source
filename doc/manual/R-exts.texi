@@ -3567,18 +3567,17 @@ Note that exporting methods on a generic in the namespace will also
 export the generic, and exporting a generic in the namespace will also
 export its methods.  If the generic function is not local to this
 package, either because it was imported as a generic function or because
-the non-generic version has been made generic
-solely to add S4 methods to it (as for functions such as @code{plot} in
-the example above), it can be declared @emph{via} either or
-both of @code{export} or @code{exportMethods}, but the latter is
-clearer (and is used in the @pkg{stats4} example above).
-In particular, for primitive functions there is no generic function, so
-@code{export} would export the primitive, which makes no sense.  On the other
-hand, if the generic is local to this package, it is more natural to
-export the function itself using @code{export()}, and this @emph{must} be
-done if an implicit generic
-is created without setting any
-methods for it (as is the case for @code{AIC} in @pkg{stats4}).
+the non-generic version has been made generic solely to add S4 methods
+to it (as for functions such as @code{plot} in the example above), it
+can be declared @emph{via} either or both of @code{export} or
+@code{exportMethods}, but the latter is clearer (and is used in the
+@pkg{stats4} example above).  In particular, for primitive functions
+there is no generic function, so @code{export} would export the
+primitive, which makes no sense.  On the other hand, if the generic is
+local to this package, it is more natural to export the function itself
+using @code{export()}, and this @emph{must} be done if an implicit
+generic is created without setting any methods for it (as is the case
+for @code{AIC} in @pkg{stats4}).
 
 A non-local generic function is only exported to ensure that calls to
 the function will dispatch the methods from this package (and that is
@@ -3586,9 +3585,11 @@ not done or required when the methods are for primitive functions).  For
 this reason, you do not need to document such implicitly created generic
 functions, and @code{undoc} in package @pkg{tools} will not report them.
 
-If a package uses S4 classes and methods exported from another
-package, but does not import the entire namespace of the other package,
-it needs to import the classes and methods explicitly, with directives
+If a package uses S4 classes and methods exported from another package,
+but does not import the entire namespace of the other
+package@footnote{if it does, there will be opaque warnings about
+replacing imports if the classes/methods are also imported.}, it needs
+to import the classes and methods explicitly, with directives
 
 @findex importClassesFrom
 @findex importMethodsFrom
