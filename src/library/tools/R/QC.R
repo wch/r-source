@@ -3693,7 +3693,7 @@ function(package, dir, lib.loc = NULL)
     unknown <- character()
     thispkg <- anchor
     thisfile <- db[, 1L]
-    thispkg[have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
+    thispkg [have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
     thisfile[have_colon] <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
 
     use_aliases_from_CRAN <-
@@ -5010,11 +5010,13 @@ function(package, dir, lib.loc = NULL)
 
     names(imp3f) <- imp3
     imp3 <- unique(imp3)
+    imp3self <- pkg_name %in% imp3
+    imp3selfcalls <- as.vector(imp3f[names(imp3f) == pkg_name])
     imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
         imp3f <- imp3f[names(imp3f) %in% imp3]
         imps <- split(imp3f, names(imp3f))
-        imp32 <- imp3ff <- character()
+        imp32 <- imp3 <- imp3f <- imp3ff <- unknown <- character()
         for (p in names(imps)) {
             this <- imps[[p]]
             this <- sub('^"(.*)"$', "\\1", this)
@@ -5029,22 +5031,27 @@ function(package, dir, lib.loc = NULL)
                 tryCatch(suppressWarnings(suppressMessages(loadNamespace(p))),
                          error = function(e) e)
             } else NULL
-            if (!inherits(value, "error")) {
+            if (inherits(value, "error")) {
+                unknown <- c(unknown, p)
+            } else {
                  exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
                               all.names = TRUE), extras[[p]])
                  this2 <- this %in% exps
                  if (any(this2))
                      imp32 <- c(imp32, paste(p, this[this2], sep = ":::"))
                  if (any(!this2)) {
+                     imp3 <- c(imp3, p)
                      this <- this[!this2]
                      pp <- ls(envir = asNamespace(p), all.names = TRUE)
                      this2 <- this %in% pp
+                     if(any(this2))
+                         imp3f <- c(imp3f, paste(p, this[this2], sep = ":::"))
                      if(any(!this2))
                          imp3ff <- c(imp3ff, paste(p, this[!this2], sep = ":::"))
                  }
             }
         }
-    } else imp32 <- imp3ff <- character()
+    } else imp32 <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
@@ -5052,7 +5059,11 @@ function(package, dir, lib.loc = NULL)
                 depends_not_import = depends_not_import,
                 imp2un = sort(unique(imp2un)),
                 imp32 = sort(unique(imp32)),
+                imp3 = imp3, imp3f = sort(unique(imp3f)),
                 imp3ff = sort(unique(imp3ff)),
+                imp3self = imp3self,
+                imp3selfcalls = sort(unique(imp3selfcalls)),
+                imp3unknown = unknown,
                 methods_message = methods_message)
     class(res) <- "check_packages_used"
     res
@@ -5061,6 +5072,10 @@ function(package, dir, lib.loc = NULL)
 format.check_packages_used <-
 function(x, ...)
 {
+    incoming <-
+        identical(Sys.getenv("_R_CHECK_PACKAGES_USED_CRAN_INCOMING_NOTES_",
+                             "FALSE"),
+                  "TRUE")
     c(character(),
       if(length(xx <- x$imports)) {
           if(length(xx) > 1L) {
@@ -5102,7 +5117,7 @@ function(x, ...)
       if(length(xx <- x$depends_not_import)) {
           msg <- c("  These packages need to be imported from for the case when",
                    "  this namespace is loaded but not attached.")
-         if(length(xx) > 1L) {
+          if(length(xx) > 1L) {
               c(gettext("Packages in Depends field not imported from:"),
                 .pretty_format(sort(xx)), msg)
           } else {
@@ -5137,7 +5152,44 @@ function(x, ...)
               gettextf("Missing object imported by a ':::' call: %s",
                        sQuote(xx))
           }
-       },
+     },
+      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
+          xxx <- x$imp3f
+          msg <- "See the note in ?`:::` about the use of this operator."
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(incoming) {
+              base <- unlist(.get_standard_package_names()[c("base", "recommended")])
+              if (any(xx %in% base))
+                  msg <- c(msg,
+                           "  Including base/recommended package(s):",
+                           .pretty_format(intersect(base, xx)))
+          }
+          if(length(xxx) > 1L) {
+              c(gettext("Unexported objects imported by ':::' calls:"),
+                .pretty_format(sort(xxx)), msg)
+          } else  if(length(xxx)) {
+              c(gettextf("Unexported object imported by a ':::' call: %s",
+                         sQuote(xxx)), msg)
+          }
+      },
+      if(identical(x$imp3self, TRUE)) {
+          msg <-
+              c("There are ::: calls to the package's namespace in its code.",
+                "A package almost never needs to use ::: for its own objects:")
+          c(strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L),
+            .pretty_format(sort(x$imp3selfcalls)))
+      },
+      if(length(xx <- x$imp3unknown)) {
+          msg <- "See the note in ?`:::` about the use of this operator."
+          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          if(length(xx) > 1L) {
+              c(gettext("Unavailable namespaces imported from by ':::' calls:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("Unavailable namespace imported from by a ':::' call: %s",
+                         sQuote(xx)), msg)
+          }
+      },
       if(length(xx <- x$data)) {
           if(length(xx) > 1L) {
               c(gettext("'data(package=)' calls not declared from:"),
@@ -5953,8 +6005,20 @@ function(dir)
     ## Record to notify about components extending a base license which
     ## permits extensions.
     if(length(extensions <- info$extensions) &&
-       any(ind <- extensions$extensible))
+       any(ind <- extensions$extensible)) {
         out$extensions <- extensions$components[ind]
+        out$pointers <-
+            Filter(length,
+                   lapply(info$pointers,
+                          function(p) {
+                              fp <- file.path(dir, p)
+                              if(file_test("-f", fp)) {
+                                  ## Should this use the package
+                                  ## encoding?
+                                  c(p, readLines(fp, warn = FALSE))
+                              } else NULL
+                          }))
+    }
 
     out$Maintainer <- meta["Maintainer"]
     ## pick out 'display name'
@@ -6341,9 +6405,15 @@ function(x, ...)
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
-      if(length(y <- x$extensions))
+      if(length(y <- x$extensions)) {
           c("Components with restrictions and base license permitting such:",
-            paste(" ", y)),
+            paste(" ", y),
+            unlist(lapply(x$pointers,
+                          function(e) {
+                              c(sprintf("File '%s':", e[1L]),
+                                paste(" ", e[-1L]))
+                          })))
+      },
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
           c("Possibly mis-spelled words in DESCRIPTION:",
