@@ -101,34 +101,31 @@ dggrqf.f	dlaqr4.f	dorgl2.f	dsptrd.f	iladlr.f
 dggsvd.f	dlaqr5.f	dorglq.f	dsptrf.f	ilaenv.f
 dggsvp.f	dlaqsb.f	dorgql.f	dsptri.f	ilaprec.f
 dgsvj0.f	dlaqsp.f	dorgqr.f	dsptrs.f	ilatrans.f
-dgsvj1.f	dlaqsy.f	dorgr2.f	dstebz.f	iparmq.f
-dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f	ilaver.f
+dgsvj1.f	dlaqsy.f	dorgr2.f	dstebz.f	ilaver.f
+dgtcon.f	dlaqtr.f	dorgrq.f	dstedc.f	iparmq.f
 dgtrfs.f	dlar1v.f	dorgtr.f	dstegr.f
 dgtsv.f		dlar2v.f	dorm2l.f	dstein.f
 
 cmplx.f is the concatenation of
 
-dzsum1.f	zgeqr2.f	zlahr2.f	zlarft.f	ztrtrs.f
-ilazlc.f	zgeqrf.f	zlahrd.f	zlarfx.f	zung2l.f
-ilazlr.f	zgesv.f		zlange.f	zlartg.f	zung2r.f
-izmax1.f	zgesvd.f	zlanhe.f	zlascl.f	zungbr.f
-zbdsqr.f	zgetf2.f	zlanhs.f	zlaset.f	zunghr.f
-zdrscl.f	zgetrf.f	zlantr.f	zlasr.f		zungl2.f
-zgebak.f	zgetrs.f	zlaqp2.f	zlassq.f	zunglq.f
-zgebal.f	zheev.f		zlaqps.f	zlaswp.f	zungql.f
-zgebd2.f	zhetd2.f	zlaqr0.f	zlatrd.f	zungqr.f
-zgebrd.f	zhetrd.f	zlaqr1.f	zlatrs.f	zungr2.f
-zgecon.f	zhseqr.f	zlaqr2.f	zpotf2.f	zungrq.f
-zgeev.f		zlabrd.f	zlaqr3.f	zpotrf.f	zungtr.f
-zgehd2.f	zlacgv.f	zlaqr4.f	zrot.f		zunm2r.f
-zgehrd.f	zlacn2.f	zlaqr5.f	zsteqr.f	zunmbr.f
-zgelq2.f	zlacpy.f	zlarf.f		ztrcon.f	zunml2.f
-zgelqf.f	zladiv.f	zlarfb.f	ztrevc.f	zunmlq.f
-zgeqp3.f	zlahqr.f	zlarfg.f	ztrexc.f	zunmqr.f
-zunmhr.f
-
-zgesdd.f zlacp2.f zlacrm.f zlarcm.f 
-zgelsd.f zlals0.f zlalsa.f zlalsd.f 
-added for R 3.1.0.
+dzsum1.f ilazlc.f ilazlr.f izmax1.f zbdsqr.f
+zdrscl.f zgebak.f zgebal.f zgebd2.f zgebrd.f
+zgecon.f zgeev.f  zgehd2.f zgehrd.f zgelq2.f
+zgelqf.f zgelsd.f zgeqp3.f zgeqr2.f zgeqrf.f
+zgesdd.f zgesv.f  zgesvd.f zgetf2.f zgetrf.f
+zgetrs.f zheev.f  zhetd2.f zhetrd.f zhseqr.f
+zlabrd.f zlacgv.f zlacn2.f zlacp2.f zlacpy.f
+zlacrm.f zladiv.f zlahqr.f zlahr2.f zlahrd.f
+zlals0.f zlalsa.f zlalsd.f zlange.f zlanhe.f
+zlanhs.f zlantr.f zlaqp2.f zlaqps.f zlaqr0.f
+zlaqr1.f zlaqr2.f zlaqr3.f zlaqr4.f zlaqr5.f
+zlarcm.f zlarf.f  zlarfb.f zlarfg.f zlarft.f
+zlarfx.f zlartg.f zlascl.f zlaset.f zlasr.f
+zlassq.f zlaswp.f zlatrd.f zlatrs.f zpotf2.f
+zpotrf.f zrot.f   zsteqr.f ztrcon.f ztrevc.f
+ztrexc.f ztrtrs.f zung2l.f zung2r.f zungbr.f
+zunghr.f zungl2.f zunglq.f zungql.f zungqr.f
+zungr2.f zungrq.f zungtr.f zunm2r.f zunmbr.f
+zunmhr.f zunml2.f zunmlq.f zunmqr.f
 
 R.patch suppresses warnings with Fortran array-bounds checking.
