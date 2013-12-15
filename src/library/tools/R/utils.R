@@ -1015,6 +1015,7 @@ function()
                "Packaged",
                "Priority",
                "Suggests",
+               "SysDataCompression",
                "SystemRequirements",
                "Title",
                "Type",

@@ -886,7 +886,15 @@
 
 	    if (file.exists(f <- file.path("R", "sysdata.rda"))) {
                 comp <- TRUE
-                if (file.info(f)$size > 1e6) comp <- 3 # "xz"
+                ## (We set .libPaths)
+                if(!is.na(lazycompress <- desc["SysDataCompression"])) {
+                    comp <- switch(lazycompress,
+                                   "none" = FALSE,
+                                   "gzip" = TRUE,
+                                   "bzip2" = 2L,
+                                   "xz" = 3L,
+                                   TRUE)  # default to gzip
+                } else if(file.info(f)$size > 1e6) comp <- 3L # "xz"
 		res <- try(sysdata2LazyLoadDB(f, file.path(instdir, "R"),
                                               compress = comp))
 		if (inherits(res, "try-error"))
@@ -969,8 +977,8 @@
                         data_compress <- switch(lazycompress,
                                                 "none" = FALSE,
                                                 "gzip" = TRUE,
-                                                "bzip2" = 2,
-                                                "xz" = 3,
+                                                "bzip2" = 2L,
+                                                "xz" = 3L,
                                                 TRUE)  # default to gzip
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))

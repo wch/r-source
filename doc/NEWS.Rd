@@ -389,6 +389,14 @@
     }
   }
   
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item The new field \samp{SysDataCompression} in the
+      \file{DESCRIPTION} file allows user control over the compression
+      used for \file{sysdata.rda} objects in the lazy-load database.
+    }
+  }
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item The long undocumented remapping of \code{rround()} to

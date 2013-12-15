@@ -974,9 +974,10 @@ provided that the objects created do not depend on those packages except
 
 Two exceptions are allowed: if the @file{R} subdirectory contains a file
 @file{sysdata.rda} (a saved image of one or more @R{} objects: please
-use suitable compression as suggested by @code{tools::resaveRdaFiles})
-this will be lazy-loaded into the namespace environment -- this is
-intended for system datasets that are not intended to be user-accessible
+use suitable compression as suggested by @code{tools::resaveRdaFiles},
+an see also @samp{SysDataCompression} @file{DESCRIPTION} field.)  this
+will be lazy-loaded into the namespace environment -- this is intended
+for system datasets that are not intended to be user-accessible
 @emph{via} @code{data}.  Also, files ending in @samp{.in} will be
 allowed in the @file{R} directory to allow a @file{configure} script to
 generate suitable files.
@@ -1277,6 +1278,11 @@ is best is to try them all and look at the size of the
 Lazy-loading is not supported for very large datasets (those which when
 serialized exceed 2GB, the limit for the format on 32-bit platforms and
 all platforms prior to @R{} 3.0.0).
+
+@c DESCRIPTION field SysDataCompression
+The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
+the default (since @R{} 2.12.2) is @code{xz} for files bigger than 1MB
+otherwise @code{gzip}.
 
 @node Non-R scripts in packages,  , Data in packages, Package structure
 @subsection Non-R scripts in packages
