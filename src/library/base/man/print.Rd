@@ -1,7 +1,9 @@
 % File src/library/base/man/print.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
+
+\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{print}
 \title{Print Values}
@@ -44,7 +46,8 @@ print(x, \dots)
     \code{\link{NA}} values in printed output, see
     \code{\link{print.default}}.}
   \item{zero.print}{character specifying how zeros (\code{0}) should be
-    printed; for sparse tables, using \code{"."} can produce stronger results.}
+    printed; for sparse tables, using \code{"."} can produce more
+    readable results, similar to printing sparse matrices in \CRANpkg{Matrix}.}
   \item{justify}{character indicating if strings should left- or
     right-justified or left alone, passed to \code{\link{format}}.}
   \item{useSource}{logical indicating if internally stored source
