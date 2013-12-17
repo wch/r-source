@@ -8775,6 +8775,18 @@ Note that it is dangerous to mix @code{UNPROTECT_PTR} with
 locations of objects that were protected after the one being
 unprotected.
 
+@findex R_PreserveObject
+@findex R_ReleaseObject
+There is another way to avoid the affects of garbage collection: a call
+to @code{R_PreserveObject} adds an object to an internal list of objects
+not to be collects, and a subsequent call to @code{R_ReleaseObject}
+removes it from that list.  This provides a way for objects which are
+not returned as part of @R{} objects to be protected across calls to
+compiled code: on the other hand it becomes the user's responsibility to
+release them when they are no longer needed (and this often requires the
+use of a finalizer).  It is less efficient that the normal protection
+mechanism, and should be used sparingly.
+
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
 @subsection Allocating storage
 @cindex Allocating storage
