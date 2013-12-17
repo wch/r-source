@@ -7017,22 +7017,22 @@ later on common Linux and OS X platforms.  See
 @uref{https://code.google.com/p/address-sanitizer/}.
 
 It requires code to have been compiled @emph{and linked} with
-@option{-fsanitize=address} (@command{gcc} and recent versions of
-@command{clang}) or @option{-faddress-sanitizer} (@command{clang} 3.1),
-and using @code{-fno-omit-frame-pointer} will give more legible reports.
-It has a runtime penalty of 2--3x, extended compilation times and uses
-substantially more memory, often 1--2GB, at run time.  By comparison with
-@command{valgrind}, it can detect misuse of stack and global variables
-but not the use of uninitialized memory.
+@option{-fsanitize=address}@footnote{@option{-faddress-sanitizer} in
+@command{clang} 3.1}, and using @code{-fno-omit-frame-pointer} will give
+more legible reports.  It has a runtime penalty of 2--3x, extended
+compilation times and uses substantially more memory, often 1--2GB, at
+run time.  By comparison with @command{valgrind}, it can detect misuse
+of stack and global variables but not the use of uninitialized memory.
 
-Current versions do not return symbolic addresses for the location of
-the error.  One possibility is to use an external symbolizer such as
+Most versions@footnote{@command{gcc} will from version 4.9.0.} do not
+return symbolic addresses for the location of the error.  One
+possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
 it makes use of @command{llvm-symbolizer} if available.}.  For example,
 the check output can be piped through @command{asan_symbolize.py} and
-then (for compiled C++ code) @command{c++filt}.
+perhaps then (for compiled C++ code) @command{c++filt}.
 
 The simplest way to make use of this is to build a version of @R{} with
 something like
