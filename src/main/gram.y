@@ -2276,13 +2276,8 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
 #ifdef WC_NOT_UNICODE
     {
 	char *ss;
-	size_t res;
-	for(ss = s; *wcs; wcs++) {
-	    res = ucstoutf8(ss, *wcs);
-	    if(res == (size_t)-1 || res == (size_t)-2) 
-		error("invalid UCS-2 string in parser");
-	    ss += res;
-	}
+	size_t res
+	for(ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
     }
 #else
     wcstoutf8(s, wcs, nb);
