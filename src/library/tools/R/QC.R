@@ -5014,6 +5014,16 @@ function(package, dir, lib.loc = NULL)
     imp3selfcalls <- as.vector(imp3f[names(imp3f) == pkg_name])
     imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
+        ## remove other packages which have the same maintainer,
+        ## but report references to itself.
+        maintainers <-
+            sapply(imp3,
+                   function(p) {
+                       dfile <- system.file("DESCRIPTION", package = p)
+                       if(dfile == "") return("")
+                       .read_description(dfile)["Maintainer"]
+                   })
+        imp3 <- imp3[(maintainers != db["Maintainer"])]
         imp3f <- imp3f[names(imp3f) %in% imp3]
         imps <- split(imp3f, names(imp3f))
         imp32 <- imp3 <- imp3f <- imp3ff <- unknown <- character()
