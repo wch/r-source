@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -890,7 +890,8 @@ msgstr "'x'至少必需有两行和两列"
 msgid "'x' has entries too large to be integer"
 msgstr "'x'的正数值太大"
 
-msgid "'x' has been rounded to integer: %d"
+#, fuzzy
+msgid "'x' has been rounded to integer: %s"
 msgstr "'x'被捨入成正数：%d"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1207,6 +1208,10 @@ msgstr "'iter.max'必需是正数"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x'和'centers'的列数必需相等"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "公式'%s'的形式必需是'~expr'"
 
 msgid "not enough 'x' data"
 msgstr "'x'数据不够"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -980,7 +980,7 @@ msgid "'x' has entries too large to be integer"
 msgstr "'x' contiene elementi troppo grandi per essere utilizzati con integer"
 
 #, fuzzy
-msgid "'x' has been rounded to integer: %d"
+msgid "'x' has been rounded to integer: %s"
 msgstr "'x' arrotondata a integer:"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1321,6 +1321,10 @@ msgstr "'iter.max' deve essere positivo"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x' e 'centers' devono avere lo stesso numero di colonne"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "formula '%s' deve essere della forma '~expr'"
 
 msgid "not enough 'x' data"
 msgstr "dati 'x' insufficienti"

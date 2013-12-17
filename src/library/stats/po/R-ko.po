@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2013-03-10 19:59-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -936,7 +936,8 @@ msgstr "'x'는 반드시 적어도 2개의 행과 열을 가져야 합니다"
 msgid "'x' has entries too large to be integer"
 msgstr ""
 
-msgid "'x' has been rounded to integer: %d"
+#, fuzzy
+msgid "'x' has been rounded to integer: %s"
 msgstr "'x'는 다음의 정수로 반올림 되었습니다: %d"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1263,6 +1264,10 @@ msgstr "'iter.max'는 반드시 양수이어야 합니다"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x'와 'centers'는 반드시 같은수의 열을 가져야 합니다"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "formula '%s'는 반드시 '~expr'의 형태를 가지고 있어야 합니다"
 
 msgid "not enough 'x' data"
 msgstr "충분하지 않은 'x' 데이터입니다"

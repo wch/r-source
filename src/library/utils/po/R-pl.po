@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1901,16 +1901,16 @@ msgstr "plik '%s' nie został znaleziony"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+# utils/R/tar.R: 448
+# stop("file size is limited to 8GB")
+msgid "file size is limited to 8GB"
+msgstr "rozmiar pliku jest ograniczony do 8GB"
+
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
-
-# utils/R/tar.R: 448
-# stop("file size is limited to 8GB")
-msgid "file size is limited to 8GB"
-msgstr "rozmiar pliku jest ograniczony do 8GB"
 
 # utils/R/vignette.R: 55
 # warning(gettextf("vignette %s found more than once,\nusing the one found in %s",

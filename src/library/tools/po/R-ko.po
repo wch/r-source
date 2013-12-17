@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -538,37 +538,17 @@ msgstr "'%s'에 대한 값이 잘못되었습니다 : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr ""
 
-msgid "Vignette product"
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr ""
 
-msgid "does not have a known filename extension ("
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
 msgstr ""
 
-msgid ","
-msgstr ""
-
-msgid ")"
-msgstr ""
-
-msgid "Failed to locate the"
-msgstr ""
-
-msgid "output file (by engine"
-msgstr ""
-
-msgid "%s::%s"
-msgstr ""
-
-msgid ") for vignette with name"
-msgstr ""
-
-msgid ". The following files exists in directory"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
-msgid "Located more than one"
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
 msgstr ""
 
 msgid "unable to create temp directory %s"
@@ -578,22 +558,12 @@ msgstr "임시디렉토리 %s를 생성하지 못했습니다"
 msgid "Running"
 msgstr "%s를 실행중입니다"
 
-msgid "Vignette"
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
 
-msgid "overwrites the following"
-msgstr ""
-
-msgid "output by vignette"
-msgstr ""
-
-msgid "Detected vignette source files ("
-msgstr ""
-
-msgid ") with shared names ("
-msgstr ""
-
-msgid ") and therefore risking overwriting each others output files"
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr ""
 
 msgid ""
@@ -624,61 +594,35 @@ msgid "argument 'vignette' must be of length 1"
 msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
 
 #, fuzzy
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr "에러: 지정된 패키지가 없습니다"
 
 msgid "Unsupported engine name"
 msgstr ""
 
-msgid "None of packages"
+msgid "None of packages %s have registered vignette engines"
 msgstr ""
 
-msgid "have registered vignette engines"
+#, fuzzy
+msgid "Vignette engine %s is not registered"
+msgstr "에러: 지정된 패키지가 없습니다"
+
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr ""
 
-msgid "Vignette engine"
-msgstr ""
+#, fuzzy
+msgid "Engine name %s and package %s do not match"
+msgstr "패키지 %2$s 내의 링크 %1$s 를 제자리에 위치시킬 수 없습니다"
 
-msgid "is not registered"
-msgstr ""
+#, fuzzy
+msgid "Argument %s must be a function and not %s"
+msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
 
-msgid "is not registered by any of the packages"
-msgstr ""
+#, fuzzy
+msgid "Argument %s must be a character vector or NULL and not %s"
+msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"
 
-msgid "Engine name"
-msgstr ""
-
-msgid "and package"
-msgstr ""
-
-msgid "do not match"
-msgstr ""
-
-msgid "Argument"
-msgstr ""
-
-msgid "weave"
-msgstr ""
-
-msgid "must be a function and not"
-msgstr ""
-
-msgid "tangle"
-msgstr ""
-
-msgid "pattern"
-msgstr ""
-
-msgid "must be a character vector or NULL and not"
-msgstr ""
-
-msgid "Cannot change the"
-msgstr ""
-
-msgid "Sweave"
-msgstr "Sweave"
-
-msgid "engine or use an engine of that name"
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr ""
 
 msgid "vignette builder '%s' not found"
@@ -753,6 +697,9 @@ msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
 msgid "assertCondition: caught %s"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "Got %s in evaluating %s; wanted %s"
@@ -1358,6 +1305,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "Sweave"
+#~ msgstr "Sweave"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 13:41+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -995,14 +995,14 @@ msgstr " ファイル '%s' が見付かりません "
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "file size is limited to 8GB"
+msgstr " ファイルサイズは 8GB に制限されています "
+
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
-
-msgid "file size is limited to 8GB"
-msgstr " ファイルサイズは 8GB に制限されています "
 
 msgid ""
 "vignette %s found more than once,\n"

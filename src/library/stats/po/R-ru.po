@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2013-03-19 21:46-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -930,7 +930,8 @@ msgstr "'x' должен иметь по крайней мере 2 строки и колонки"
 msgid "'x' has entries too large to be integer"
 msgstr "у 'x' есть элементы, слишком большие чтобы быть целыми"
 
-msgid "'x' has been rounded to integer: %d"
+#, fuzzy
+msgid "'x' has been rounded to integer: %s"
 msgstr "'x' был округлен до целого: %d"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1250,6 +1251,10 @@ msgstr "'iter.max' должен быть положительным"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "в 'x' и 'centers' нужно одно количество колонок"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "формула '%s' должна быть в виде '~expr'"
 
 msgid "not enough 'x' data"
 msgstr "недостаточно данных 'x'"

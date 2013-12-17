@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -931,13 +931,13 @@ msgstr ""
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "file size is limited to 8GB"
+msgstr ""
+
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "invalid gid value replaced by that for user 'nobody'"
-msgstr ""
-
-msgid "file size is limited to 8GB"
 msgstr ""
 
 msgid ""

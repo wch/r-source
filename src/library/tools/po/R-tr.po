@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -499,37 +499,17 @@ msgstr ""
 msgid "Only one Rd section per %s is supported."
 msgstr ""
 
-msgid "Vignette product"
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr ""
 
-msgid "does not have a known filename extension ("
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
 msgstr ""
 
-msgid ","
-msgstr ""
-
-msgid ")"
-msgstr ""
-
-msgid "Failed to locate the"
-msgstr ""
-
-msgid "output file (by engine"
-msgstr ""
-
-msgid "%s::%s"
-msgstr ""
-
-msgid ") for vignette with name"
-msgstr ""
-
-msgid ". The following files exists in directory"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
-msgid "Located more than one"
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
 msgstr ""
 
 msgid "unable to create temp directory %s"
@@ -538,22 +518,12 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-msgid "Vignette"
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
 
-msgid "overwrites the following"
-msgstr ""
-
-msgid "output by vignette"
-msgstr ""
-
-msgid "Detected vignette source files ("
-msgstr ""
-
-msgid ") with shared names ("
-msgstr ""
-
-msgid ") and therefore risking overwriting each others output files"
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr ""
 
 msgid ""
@@ -581,61 +551,31 @@ msgstr ""
 msgid "argument 'vignette' must be of length 1"
 msgstr ""
 
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr ""
 
 msgid "Unsupported engine name"
 msgstr ""
 
-msgid "None of packages"
+msgid "None of packages %s have registered vignette engines"
 msgstr ""
 
-msgid "have registered vignette engines"
+msgid "Vignette engine %s is not registered"
 msgstr ""
 
-msgid "Vignette engine"
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr ""
 
-msgid "is not registered"
+msgid "Engine name %s and package %s do not match"
 msgstr ""
 
-msgid "is not registered by any of the packages"
+msgid "Argument %s must be a function and not %s"
 msgstr ""
 
-msgid "Engine name"
+msgid "Argument %s must be a character vector or NULL and not %s"
 msgstr ""
 
-msgid "and package"
-msgstr ""
-
-msgid "do not match"
-msgstr ""
-
-msgid "Argument"
-msgstr ""
-
-msgid "weave"
-msgstr ""
-
-msgid "must be a function and not"
-msgstr ""
-
-msgid "tangle"
-msgstr ""
-
-msgid "pattern"
-msgstr ""
-
-msgid "must be a character vector or NULL and not"
-msgstr ""
-
-msgid "Cannot change the"
-msgstr ""
-
-msgid "Sweave"
-msgstr ""
-
-msgid "engine or use an engine of that name"
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr ""
 
 msgid "vignette builder '%s' not found"
@@ -707,6 +647,9 @@ msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
 msgid "assertCondition: caught %s"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "Got %s in evaluating %s; wanted %s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10+0000\n"
+"POT-Creation-Date: 2013-12-17 11:18+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -170,9 +170,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/connections.c:4751 src/main/connections.c:4755
 #: src/main/connections.c:4759 src/main/connections.c:4763
 #: src/main/context.c:596 src/main/context.c:605 src/main/context.c:609
-#: src/main/datetime.c:761 src/main/datetime.c:847 src/main/datetime.c:849
-#: src/main/datetime.c:853 src/main/datetime.c:1018 src/main/datetime.c:1020
-#: src/main/datetime.c:1183 src/main/debug.c:228 src/main/deparse.c:397
+#: src/main/datetime.c:776 src/main/datetime.c:862 src/main/datetime.c:864
+#: src/main/datetime.c:868 src/main/datetime.c:1033 src/main/datetime.c:1035
+#: src/main/datetime.c:1198 src/main/debug.c:228 src/main/deparse.c:397
 #: src/main/dotcode.c:478 src/main/dotcode.c:482 src/main/dotcode.c:487
 #: src/main/dounzip.c:322 src/main/dounzip.c:329 src/main/dounzip.c:339
 #: src/main/dounzip.c:344 src/main/dounzip.c:348 src/main/dounzip.c:352
@@ -221,9 +221,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/seq.c:630 src/main/seq.c:661 src/main/seq.c:665 src/main/seq.c:671
 #: src/main/seq.c:679 src/main/sort.c:175 src/main/sysutils.c:585
 #: src/main/sysutils.c:589 src/main/sysutils.c:593 src/main/sysutils.c:599
-#: src/main/sysutils.c:603 src/main/sysutils.c:1834 src/main/sysutils.c:1838
+#: src/main/sysutils.c:603 src/main/sysutils.c:1830 src/main/sysutils.c:1834
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
-#: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:577
+#: src/main/unique.c:1356 src/main/unique.c:1750 src/main/util.c:577
 #: src/main/util.c:580 src/main/util.c:1799 src/main/util.c:1968
 #: src/main/util.c:1969 src/main/util.c:1970 src/main/util.c:1987
 #: src/main/util.c:2011 src/main/util.c:2015 src/main/util.c:2017
@@ -234,9 +234,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
-#: src/modules/lapack/Lapack.c:159 src/modules/lapack/Lapack.c:266
-#: src/modules/lapack/Lapack.c:715 src/modules/lapack/Lapack.c:818
-#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1214
+#: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
+#: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
 #: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
 #, c-format
 msgid "invalid '%s' argument"
@@ -248,7 +248,7 @@ msgstr "不支持这版本的Windows"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:108 src/main/character.c:595
 #: src/main/connections.c:3325 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:692 src/main/datetime.c:763 src/main/datetime.c:1022
+#: src/main/datetime.c:707 src/main/datetime.c:778 src/main/datetime.c:1037
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1362 src/main/identical.c:66 src/main/identical.c:67
@@ -1125,7 +1125,7 @@ msgstr "'dimnames'的长度[%d]必需与陈列范围相等"
 #: src/main/attrib.c:1050 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1606 src/main/envir.c:1734 src/main/envir.c:1796
 #: src/main/envir.c:1918 src/main/paste.c:74 src/main/paste.c:292
-#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1748
+#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1749
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
@@ -1290,7 +1290,7 @@ msgstr "矢量size设得太大了"
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1537 src/main/connections.c:2836 src/main/engine.c:2967
+#: src/main/coerce.c:1537 src/main/connections.c:2836 src/main/engine.c:2968
 #: src/main/envir.c:993 src/main/envir.c:1046 src/main/envir.c:1136
 #: src/main/envir.c:1615 src/main/envir.c:1739 src/main/envir.c:1807
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
@@ -2334,21 +2334,21 @@ msgstr "'cummax'不适用于复数"
 msgid "unknown cumxxx function"
 msgstr "没有cumxxx这个功能"
 
-#: src/main/datetime.c:613 src/main/datetime.c:621 src/main/datetime.c:635
-#: src/main/datetime.c:640
+#: src/main/datetime.c:628 src/main/datetime.c:636 src/main/datetime.c:650
+#: src/main/datetime.c:655
 msgid "problem with setting timezone"
 msgstr "设定时区时出了问题"
 
-#: src/main/datetime.c:625
+#: src/main/datetime.c:640
 msgid "cannot set timezones on this system"
 msgstr "无法为本系统设时差区"
 
-#: src/main/datetime.c:647 src/main/datetime.c:649
+#: src/main/datetime.c:662 src/main/datetime.c:664
 msgid "problem with unsetting timezone"
 msgstr "取消时区设制时出了问题"
 
-#: src/main/datetime.c:785 src/main/datetime.c:787 src/main/datetime.c:882
-#: src/main/datetime.c:1191 src/main/datetime.c:1193
+#: src/main/datetime.c:800 src/main/datetime.c:802 src/main/datetime.c:897
+#: src/main/datetime.c:1206 src/main/datetime.c:1208
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "非空的\"POSIXlt\"结构里含长度为零的部件"
 
@@ -2543,7 +2543,7 @@ msgstr "参数数目不对(%1$d), ‘%3$s’只需要%2$d个参数"
 msgid "too many arguments, sorry"
 msgstr "对不起，参数太多"
 
-#: src/main/dotcode.c:1261 src/main/dotcode.c:1278 src/main/engine.c:2993
+#: src/main/dotcode.c:1261 src/main/dotcode.c:1278 src/main/engine.c:2994
 msgid "invalid graphics state"
 msgstr "图形狀態不对"
 
@@ -2812,74 +2812,74 @@ msgstr "模面%1$d不支持字模家族'%2$s'"
 msgid "no graphics device is active"
 msgstr "没有活动图形设备"
 
-#: src/main/engine.c:2050
+#: src/main/engine.c:2051
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "'%d'这个pch值在本语言环境下不适用"
 
-#: src/main/engine.c:2307
+#: src/main/engine.c:2308
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "目前没有实现pch '%d'这样一个值"
 
-#: src/main/engine.c:2330
+#: src/main/engine.c:2331
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "座标范围不对[GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2334
+#: src/main/engine.c:2335
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "座标范围不能是无限值[GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2371
+#: src/main/engine.c:2372
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo =%g <%g = x1"
 
-#: src/main/engine.c:2373
+#: src/main/engine.c:2374
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up =%g >%g = x2"
 
-#: src/main/engine.c:2773
+#: src/main/engine.c:2774
 msgid "display list redraw incomplete"
 msgstr "显示串列没有完全被刷新"
 
-#: src/main/engine.c:2777
+#: src/main/engine.c:2778
 #, fuzzy
 msgid "invalid display list"
 msgstr "参数串列不对"
 
-#: src/main/engine.c:2963
+#: src/main/engine.c:2964
 msgid "'expr' argument must be an expression"
 msgstr "'expr'参数必需是表达式"
 
-#: src/main/engine.c:2965
+#: src/main/engine.c:2966
 msgid "'list' argument must be a list"
 msgstr "'list'参数必需是串列"
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2972
 msgid "'env' argument must be an environment"
 msgstr "'env'参数必需是环境"
 
-#: src/main/engine.c:3051 src/main/engine.c:3059
+#: src/main/engine.c:3052 src/main/engine.c:3060
 msgid "invalid multibyte char in pch=\"c\""
 msgstr "pch=\"c\"里的多字节字元不对"
 
-#: src/main/engine.c:3106
+#: src/main/engine.c:3107
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "十六进制'color'设定或lty设定不对"
 
-#: src/main/engine.c:3129
+#: src/main/engine.c:3130
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行类不对: 长度必需是2, 4, 6或8"
 
-#: src/main/engine.c:3133
+#: src/main/engine.c:3134
 msgid "invalid line type: zeroes are not allowed"
 msgstr "排类别不对：不能有零值"
 
-#: src/main/engine.c:3142 src/main/engine.c:3150 src/main/engine.c:3157
+#: src/main/engine.c:3143 src/main/engine.c:3151 src/main/engine.c:3158
 msgid "invalid line type"
 msgstr "行类不对"
 
@@ -3507,7 +3507,7 @@ msgstr "位元組碼版本不配"
 msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序参数不对"
 
-#: src/main/eval.c:4565 src/main/names.c:1169
+#: src/main/eval.c:4565 src/main/names.c:1170
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "没有'%s'这个内部函数"
@@ -3690,51 +3690,51 @@ msgstr "整数文字%s里含多余的小数点"
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d行无法为长字符串分配内存"
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2357
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\x'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2371
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\uxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2386
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\u'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2394
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2406
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\Uxxxxxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2421
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\U'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2429
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2468
+#: src/main/gram.y:2469
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "由\"%2$s\"开头的字符串中存在'\\%1$c'，但没有这种逸出号"
 
-#: src/main/gram.y:2527
+#: src/main/gram.y:2528
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "在字符串中混合Unicode和八进制/十六进制转义是不允许的"
 
-#: src/main/gram.y:2531
+#: src/main/gram.y:2532
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3743,13 +3743,13 @@ msgstr ""
 "%d行字符串里包含了不属于目前语言环境的Unicode转义字符\n"
 "太长了(最多只能有10000个字符)"
 
-#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
-#: src/main/gram.y:3149
+#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
+#: src/main/gram.y:3150
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d行上下文堆叠上溢"
 
-#: src/main/gram.y:3244
+#: src/main/gram.y:3245
 #, c-format
 msgid "internal parser error at line %d"
 msgstr "%d行里输入缓冲区上溢"
@@ -4160,24 +4160,24 @@ msgstr "Rprofmem: 无法输出文件'%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr "现在还没有支持长向量：%s:%d"
 
-#: src/main/names.c:994
+#: src/main/names.c:995
 msgid "string argument required"
 msgstr "需要字符串参数"
 
-#: src/main/names.c:997
+#: src/main/names.c:998
 msgid "no such primitive function"
 msgstr "没有这种原始函数"
 
-#: src/main/names.c:1134
+#: src/main/names.c:1135
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零长度变数名"
 
-#: src/main/names.c:1136
+#: src/main/names.c:1137
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "变量名限制于%d字节"
 
-#: src/main/names.c:1164 src/main/names.c:1167
+#: src/main/names.c:1165 src/main/names.c:1168
 msgid "invalid .Internal() argument"
 msgstr ".Internal()参数不对"
 
@@ -4579,12 +4579,12 @@ msgstr "无法确定R本录位置"
 msgid "file name too long"
 msgstr "文件名太长"
 
-#: src/main/platform.c:1516 src/main/platform.c:1563 src/main/sysutils.c:1853
-#: src/main/sysutils.c:1867
+#: src/main/platform.c:1516 src/main/platform.c:1563 src/main/sysutils.c:1849
+#: src/main/sysutils.c:1863
 msgid "internal out-of-memory condition"
 msgstr "内部出现了内存不够情况"
 
-#: src/main/platform.c:1559 src/main/sysutils.c:1863
+#: src/main/platform.c:1559 src/main/sysutils.c:1859
 #, c-format
 msgid "read error on '%s'"
 msgstr "读取'%s'时出了错"
@@ -5952,31 +5952,36 @@ msgstr "不允许用\"bytes\"编码进行字符翻译”"
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "不支持从代码页%2$d里到'%1$s'的转换"
 
-#: src/main/sysutils.c:1635
+#: src/main/sysutils.c:1529
+#, fuzzy, c-format
+msgid "invalid Unicode point %u"
+msgstr "行接合出错"
+
+#: src/main/sysutils.c:1631
 msgid "cannot create 'R_TempDir'"
 msgstr "无法创建'R_TempDir'"
 
-#: src/main/sysutils.c:1639 src/main/sysutils.c:1647 src/main/sysutils.c:1650
+#: src/main/sysutils.c:1635 src/main/sysutils.c:1643 src/main/sysutils.c:1646
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "无法设制R_SESSION_TMPDIR "
 
-#: src/main/sysutils.c:1659
+#: src/main/sysutils.c:1655
 msgid "cannot allocate 'R_TempDir'"
 msgstr "无法分配'R_TempDir'"
 
-#: src/main/sysutils.c:1696
+#: src/main/sysutils.c:1692
 msgid "temporary name too long"
 msgstr "临时文件名太长"
 
-#: src/main/sysutils.c:1711
+#: src/main/sysutils.c:1707
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
-#: src/main/sysutils.c:1714
+#: src/main/sysutils.c:1710
 msgid "allocation failed in R_tmpnam2"
 msgstr "分配R_tmpnam2失败"
 
-#: src/main/sysutils.c:1841
+#: src/main/sysutils.c:1837
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "本平台不支持'dirmark = TRUE'"
 
@@ -6027,19 +6032,19 @@ msgstr "... 用于了在它不存在的地方"
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "找不到调用'match.call'的闭合"
 
-#: src/main/unique.c:1535
+#: src/main/unique.c:1536
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum里不能有非数值数据框"
 
-#: src/main/unique.c:1567
+#: src/main/unique.c:1568
 msgid "this cannot happen"
 msgstr "这不应该发生"
 
-#: src/main/unique.c:1638
+#: src/main/unique.c:1639
 msgid "'names' must be a character vector"
 msgstr "'names'必需是字符矢量"
 
-#: src/main/unique.c:1642
+#: src/main/unique.c:1643
 msgid "'sep' must be a character string"
 msgstr "'sep'必需是字符串"
 
@@ -6635,204 +6640,205 @@ msgstr "type[1]='%s'参数必需取'M','1','O','I','F'或'E'其中的一个"
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
 msgstr "type[1]='%s'参数必需取'1','O'或'I'其中的一个"
 
-#: src/modules/lapack/Lapack.c:117 src/modules/lapack/Lapack.c:126
-#: src/modules/lapack/Lapack.c:187 src/modules/lapack/Lapack.c:198
-#: src/modules/lapack/Lapack.c:281 src/modules/lapack/Lapack.c:287
-#: src/modules/lapack/Lapack.c:623 src/modules/lapack/Lapack.c:629
-#: src/modules/lapack/Lapack.c:683 src/modules/lapack/Lapack.c:690
-#: src/modules/lapack/Lapack.c:694 src/modules/lapack/Lapack.c:729
-#: src/modules/lapack/Lapack.c:736 src/modules/lapack/Lapack.c:778
-#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:895
-#: src/modules/lapack/Lapack.c:901 src/modules/lapack/Lapack.c:1134
-#: src/modules/lapack/Lapack.c:1140 src/modules/lapack/Lapack.c:1188
-#: src/modules/lapack/Lapack.c:1195 src/modules/lapack/Lapack.c:1199
-#: src/modules/lapack/Lapack.c:1227 src/modules/lapack/Lapack.c:1234
-#: src/modules/lapack/Lapack.c:1254
+#: src/modules/lapack/Lapack.c:116 src/modules/lapack/Lapack.c:123
+#: src/modules/lapack/Lapack.c:182 src/modules/lapack/Lapack.c:193
+#: src/modules/lapack/Lapack.c:275 src/modules/lapack/Lapack.c:281
+#: src/modules/lapack/Lapack.c:617 src/modules/lapack/Lapack.c:623
+#: src/modules/lapack/Lapack.c:677 src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:723
+#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:778
+#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:833
+#: src/modules/lapack/Lapack.c:839 src/modules/lapack/Lapack.c:893
+#: src/modules/lapack/Lapack.c:899 src/modules/lapack/Lapack.c:1133
+#: src/modules/lapack/Lapack.c:1139 src/modules/lapack/Lapack.c:1187
+#: src/modules/lapack/Lapack.c:1194 src/modules/lapack/Lapack.c:1198
+#: src/modules/lapack/Lapack.c:1226 src/modules/lapack/Lapack.c:1233
+#: src/modules/lapack/Lapack.c:1253
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "Lapack例行程序'%2$s'回复了%1$d错误代码"
 
-#: src/modules/lapack/Lapack.c:157 src/modules/lapack/Lapack.c:253
-#: src/modules/lapack/Lapack.c:874
+#: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
+#: src/modules/lapack/Lapack.c:873
 msgid "'x' must be a square numeric matrix"
 msgstr "'x'必需是正方形的数值矩阵"
 
-#: src/modules/lapack/Lapack.c:331 src/modules/lapack/Lapack.c:361
-#: src/modules/lapack/Lapack.c:410
+#: src/modules/lapack/Lapack.c:325 src/modules/lapack/Lapack.c:355
+#: src/modules/lapack/Lapack.c:404
 msgid "'A' must be a numeric matrix"
 msgstr "'A'必需是数值矩阵"
 
-#: src/modules/lapack/Lapack.c:333
+#: src/modules/lapack/Lapack.c:327
 msgid "'type' must be a character string"
 msgstr "'type'必需为字符串"
 
-#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:411
-#: src/modules/lapack/Lapack.c:447 src/modules/lapack/Lapack.c:504
+#: src/modules/lapack/Lapack.c:357 src/modules/lapack/Lapack.c:405
+#: src/modules/lapack/Lapack.c:441 src/modules/lapack/Lapack.c:498
 msgid "'norm' must be a character string"
 msgstr "'norm'必需是字符串"
 
-#: src/modules/lapack/Lapack.c:383
+#: src/modules/lapack/Lapack.c:377
 #, c-format
 msgid "error [%d] from Lapack 'dgetrf()'"
 msgstr "Lapack例行程序'dgetrf()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:388
+#: src/modules/lapack/Lapack.c:382
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr "精密奇异：LU-分解里产生了U[%d,%d] = 0 {Lapack 'dgetrf()'}"
 
-#: src/modules/lapack/Lapack.c:400
+#: src/modules/lapack/Lapack.c:394
 #, c-format
 msgid "error [%d] from Lapack 'dgecon()'"
 msgstr "Lapack例行程序'dgecon()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:420 src/modules/lapack/Lapack.c:452
-#: src/modules/lapack/Lapack.c:510
+#: src/modules/lapack/Lapack.c:414 src/modules/lapack/Lapack.c:446
+#: src/modules/lapack/Lapack.c:504
 msgid "'A' must be a *square* matrix"
 msgstr "'A'必需是*正方形*矩阵"
 
-#: src/modules/lapack/Lapack.c:434
+#: src/modules/lapack/Lapack.c:428
 #, c-format
 msgid "error [%d] from Lapack 'dtrcon()'"
 msgstr "Lapack例行程序'dtrcon()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:449 src/modules/lapack/Lapack.c:506
+#: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:500
 msgid "'A' must be a complex matrix"
 msgstr "'A'必需是复数矩阵"
 
-#: src/modules/lapack/Lapack.c:471 src/modules/lapack/Lapack.c:478
+#: src/modules/lapack/Lapack.c:465 src/modules/lapack/Lapack.c:472
 #, c-format
 msgid "error [%d] from Lapack 'zgetrf()'"
 msgstr "Lapack例行程序'zgetrf()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:486
+#: src/modules/lapack/Lapack.c:480
 #, c-format
 msgid "error [%d] from Lapack 'zgecon()'"
 msgstr "Lapack例行程序'zgecon()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:490 src/modules/lapack/Lapack.c:525
-#: src/modules/lapack/Lapack.c:594 src/modules/lapack/Lapack.c:654
-#: src/modules/lapack/Lapack.c:698 src/modules/lapack/Lapack.c:740
-#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:857
-#: src/modules/lapack/Lapack.c:918
+#: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
+#: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
+#: src/modules/lapack/Lapack.c:692 src/modules/lapack/Lapack.c:734
+#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:856
+#: src/modules/lapack/Lapack.c:916
 msgid "Fortran complex functions are not available on this platform"
 msgstr "本平台不能用Fortran复数功能"
 
-#: src/modules/lapack/Lapack.c:522
+#: src/modules/lapack/Lapack.c:516
 #, c-format
 msgid "error [%d] from Lapack 'ztrcon()'"
 msgstr "Lapack例行程序'ztrcon()'回复了[%d]错误代码"
 
-#: src/modules/lapack/Lapack.c:538 src/modules/lapack/Lapack.c:608
+#: src/modules/lapack/Lapack.c:532 src/modules/lapack/Lapack.c:602
 msgid "'a' must be a complex matrix"
 msgstr "'a'必需是复数矩阵"
 
-#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:1043
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1041
 msgid "'a' is 0-diml"
 msgstr "'a'是0-diml"
 
-#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1045
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1043
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'a'(%d x %d)必需是正方形的"
 
-#: src/modules/lapack/Lapack.c:549 src/modules/lapack/Lapack.c:1051
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1049
 msgid "no right-hand side in 'b'"
 msgstr "'b'在等号右手没有公式"
 
-#: src/modules/lapack/Lapack.c:552 src/modules/lapack/Lapack.c:566
-#: src/modules/lapack/Lapack.c:1054 src/modules/lapack/Lapack.c:1070
+#: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:560
+#: src/modules/lapack/Lapack.c:1052 src/modules/lapack/Lapack.c:1068
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "'b' (%d x %d)必需与'a'(%d x %d)相容"
 
-#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:949
-#: src/modules/lapack/Lapack.c:963 src/modules/lapack/Lapack.c:1018
-#: src/modules/lapack/Lapack.c:1092
+#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:947
+#: src/modules/lapack/Lapack.c:961 src/modules/lapack/Lapack.c:1016
+#: src/modules/lapack/Lapack.c:1090
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "Lapack例行程序%2$s里的%1$d参数值不对"
 
-#: src/modules/lapack/Lapack.c:668 src/modules/lapack/Lapack.c:713
+#: src/modules/lapack/Lapack.c:662 src/modules/lapack/Lapack.c:707
 msgid "'b' must be a complex matrix"
 msgstr "'b'必需是复数矩阵"
 
-#: src/modules/lapack/Lapack.c:676 src/modules/lapack/Lapack.c:722
-#: src/modules/lapack/Lapack.c:1181 src/modules/lapack/Lapack.c:1220
+#: src/modules/lapack/Lapack.c:670 src/modules/lapack/Lapack.c:716
+#: src/modules/lapack/Lapack.c:1180 src/modules/lapack/Lapack.c:1219
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "公式右手应该有%d而不是%d行"
 
-#: src/modules/lapack/Lapack.c:749
-msgid "'jobu' and 'jobv' must be character strings"
-msgstr "'jobu'和'jobv'必需是字符对象"
+#: src/modules/lapack/Lapack.c:743
+#, fuzzy
+msgid "'jobu' must be a character string"
+msgstr "'norm'必需是字符串"
 
-#: src/modules/lapack/Lapack.c:756
+#: src/modules/lapack/Lapack.c:751
 msgid "matrices of 2^31 or more elements are not supported"
 msgstr "不支持2 ^ 31个或更多的元素矩阵"
 
-#: src/modules/lapack/Lapack.c:816
+#: src/modules/lapack/Lapack.c:815
 msgid "'x' must be a square complex matrix"
 msgstr "'x'必需是正方形的复数矩阵"
 
-#: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:1001
-#: src/modules/lapack/Lapack.c:1040 src/modules/lapack/Lapack.c:1114
-#: src/modules/lapack/Lapack.c:1245
+#: src/modules/lapack/Lapack.c:925 src/modules/lapack/Lapack.c:999
+#: src/modules/lapack/Lapack.c:1038 src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1244
 msgid "'a' must be a numeric matrix"
 msgstr "'a'必需是数值矩阵"
 
-#: src/modules/lapack/Lapack.c:934 src/modules/lapack/Lapack.c:1250
+#: src/modules/lapack/Lapack.c:932 src/modules/lapack/Lapack.c:1249
 msgid "'a' must be a square matrix"
 msgstr "'a'必需是正方形矩阵"
 
-#: src/modules/lapack/Lapack.c:935
+#: src/modules/lapack/Lapack.c:933
 msgid "'a' must have dims > 0"
 msgstr "'a'的dims必需大于零"
 
-#: src/modules/lapack/Lapack.c:947
+#: src/modules/lapack/Lapack.c:945
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "%d数位主次为非正定"
 
-#: src/modules/lapack/Lapack.c:961
+#: src/modules/lapack/Lapack.c:959
 msgid "the matrix is either rank-deficient or indefinite"
 msgstr "矩阵的秩亏或不确定"
 
-#: src/modules/lapack/Lapack.c:988
+#: src/modules/lapack/Lapack.c:986
 msgid "'size' argument must be a positive integer"
 msgstr "'size'参数必需是正整数"
 
-#: src/modules/lapack/Lapack.c:1003
+#: src/modules/lapack/Lapack.c:1001
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size'不能超过ncol(x)=%d"
 
-#: src/modules/lapack/Lapack.c:1004
+#: src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size'不能超过nrow(x)=%d"
 
-#: src/modules/lapack/Lapack.c:1016
+#: src/modules/lapack/Lapack.c:1014
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "元素(%d,%d)为零, 因此无法求逆"
 
-#: src/modules/lapack/Lapack.c:1095
+#: src/modules/lapack/Lapack.c:1093
 #, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack例行程序%s: 系统正好是奇异的: U[%d,%d] = 0"
 
-#: src/modules/lapack/Lapack.c:1102
+#: src/modules/lapack/Lapack.c:1101
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "系统计算上是奇异的: 倒条件数=%g"
 
-#: src/modules/lapack/Lapack.c:1174 src/modules/lapack/Lapack.c:1212
+#: src/modules/lapack/Lapack.c:1173 src/modules/lapack/Lapack.c:1211
 msgid "'b' must be a numeric matrix"
 msgstr "'b'必需是数值矩阵"
 
-#: src/modules/lapack/Lapack.c:1246
+#: src/modules/lapack/Lapack.c:1245
 msgid "argument 'logarithm' must be logical"
 msgstr "参数'logarithm'必需是逻辑值"
 
@@ -6882,12 +6888,12 @@ msgstr "bessel_k(%g,nu=%g): 结果的精确度有损害\n"
 msgid "bessel_y allocation error"
 msgstr "bessel_y分配错误"
 
-#: src/nmath/bessel_y.c:76 src/nmath/bessel_y.c:121
+#: src/nmath/bessel_y.c:82 src/nmath/bessel_y.c:127
 #, c-format
 msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr "bessel_y(%g): ncalc (=%ld)!= nb (=%ld); alpha=%g. 参数在范围外?\n"
 
-#: src/nmath/bessel_y.c:79 src/nmath/bessel_y.c:124
+#: src/nmath/bessel_y.c:85 src/nmath/bessel_y.c:130
 #, c-format
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): 结果的精确度有损害\n"
@@ -7104,6 +7110,9 @@ msgstr "为'-e'建立临时文件失败"
 #: src/unix/system.c:470
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改文件串列中的第一个元素"
+
+#~ msgid "'jobu' and 'jobv' must be character strings"
+#~ msgstr "'jobu'和'jobv'必需是字符对象"
 
 #~ msgid ""
 #~ "bad target context--should NEVER happen;\n"

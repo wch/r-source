@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2013-02-17 18:18-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -57,12 +57,6 @@ msgstr "'x'에 무한한 값이 있거나 결측치가 있습니다"
 
 msgid "a dimension is zero"
 msgstr "차원이 0입니다"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu'는 반드시 0, nrow(x) 또는 ncol(x)이어야 합니다. "
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv'는 반드시 0, nrow(x) 또는 ncol(x)이어야 합니다"
 
 msgid "second argument must be a list"
 msgstr "두번째 인수는 반드시 리스트이어야 합니다"
@@ -1654,6 +1648,12 @@ msgstr[0] "%s는 TRUE가 아닙니다"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 메시지:\n"
+
+#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nu'는 반드시 0, nrow(x) 또는 ncol(x)이어야 합니다. "
+
+#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nv'는 반드시 0, nrow(x) 또는 ncol(x)이어야 합니다"
 
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "'chol'에 비정방행렬이 존재합니다"

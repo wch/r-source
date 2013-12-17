@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -557,38 +557,19 @@ msgstr "valeur inexacte pour '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Seulement une section Rd par %s est supportée."
 
-msgid "Vignette product"
-msgstr "Vignette produit"
-
-msgid "does not have a known filename extension ("
+#, fuzzy
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "n'a pas une extension de fichier connue ("
 
-msgid ","
-msgstr ","
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
+msgstr ""
 
-msgid ")"
-msgstr ")"
-
-msgid "Failed to locate the"
-msgstr "impossible de créer"
-
-msgid "output file (by engine"
-msgstr "fichier en sortie (par engin"
-
-msgid "%s::%s"
-msgstr "%s::%s"
-
-msgid ") for vignette with name"
-msgstr ") pour la vignette avec le nom"
-
-msgid ". The following files exists in directory"
-msgstr ". Les fichiers sont dans ce répertoire"
-
-msgid ":"
-msgstr " :"
-
-msgid "Located more than one"
-msgstr "Localisation plus d'une fois"
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
+msgstr ""
 
 msgid "unable to create temp directory %s"
 msgstr "impossible de créer le répertoire temporaire %s"
@@ -597,22 +578,13 @@ msgstr "impossible de créer le répertoire temporaire %s"
 msgid "Running"
 msgstr "Exécution de %s"
 
-msgid "Vignette"
-msgstr "Vignette"
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
+msgstr ""
 
-msgid "overwrites the following"
-msgstr "remplace le suivant"
-
-msgid "output by vignette"
-msgstr "sortie par vignette"
-
-msgid "Detected vignette source files ("
-msgstr "Fichiers source de vignettes détectés ("
-
-msgid ") with shared names ("
-msgstr ") avec les mêmes noms ("
-
-msgid ") and therefore risking overwriting each others output files"
+#, fuzzy
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr ""
 ") et qui risquent donc de remplacer mutuellement leurs fichiers en sortie"
 
@@ -646,61 +618,38 @@ msgid "argument 'vignette' must be of length 1"
 msgstr "l'argument 'vignette' doit être de longueur 1"
 
 #, fuzzy
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr "Dependences de vignette non requises :"
 
 msgid "Unsupported engine name"
 msgstr "Module de traitement non supporté"
 
-msgid "None of packages"
-msgstr "Aucun des packages"
-
-msgid "have registered vignette engines"
+#, fuzzy
+msgid "None of packages %s have registered vignette engines"
 msgstr "a enregisté les modules de traitement de vignettes"
 
-msgid "Vignette engine"
-msgstr "Module de traitement de vignette"
+#, fuzzy
+msgid "Vignette engine %s is not registered"
+msgstr "Dependences de vignette non requises :"
 
-msgid "is not registered"
-msgstr "n'est pas enregisté"
-
-msgid "is not registered by any of the packages"
+#, fuzzy
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr "n'est enregisté par aucun des packages"
 
-msgid "Engine name"
-msgstr "Nom du module de traitement"
+#, fuzzy
+msgid "Engine name %s and package %s do not match"
+msgstr "Le lien %s dans le package %s ne peut être localisé"
 
-msgid "and package"
-msgstr "et le package"
-
-msgid "do not match"
-msgstr "ne correspond pas"
-
-msgid "Argument"
-msgstr "Argument"
-
-msgid "weave"
-msgstr "weave"
-
-msgid "must be a function and not"
+#, fuzzy
+msgid "Argument %s must be a function and not %s"
 msgstr "doit être une fonction et pas"
 
-msgid "tangle"
-msgstr "tangle"
-
-msgid "pattern"
-msgstr "motif"
-
-msgid "must be a character vector or NULL and not"
+#, fuzzy
+msgid "Argument %s must be a character vector or NULL and not %s"
 msgstr "doit être une chaîne de caractères ou NULL et pas"
 
-msgid "Cannot change the"
-msgstr "impossible de changer le"
-
-msgid "Sweave"
-msgstr "Sweave"
-
-msgid "engine or use an engine of that name"
+#, fuzzy
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr "module de traitement ou utilise un module de ce nom"
 
 msgid "vignette builder '%s' not found"
@@ -780,6 +729,9 @@ msgstr ""
 
 msgid "assertCondition: caught %s"
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
@@ -1443,6 +1395,84 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "Vignette product"
+#~ msgstr "Vignette produit"
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "Failed to locate the"
+#~ msgstr "impossible de créer"
+
+#~ msgid "output file (by engine"
+#~ msgstr "fichier en sortie (par engin"
+
+#~ msgid "%s::%s"
+#~ msgstr "%s::%s"
+
+#~ msgid ") for vignette with name"
+#~ msgstr ") pour la vignette avec le nom"
+
+#~ msgid ". The following files exists in directory"
+#~ msgstr ". Les fichiers sont dans ce répertoire"
+
+#~ msgid ":"
+#~ msgstr " :"
+
+#~ msgid "Located more than one"
+#~ msgstr "Localisation plus d'une fois"
+
+#~ msgid "Vignette"
+#~ msgstr "Vignette"
+
+#~ msgid "overwrites the following"
+#~ msgstr "remplace le suivant"
+
+#~ msgid "output by vignette"
+#~ msgstr "sortie par vignette"
+
+#~ msgid "Detected vignette source files ("
+#~ msgstr "Fichiers source de vignettes détectés ("
+
+#~ msgid ") with shared names ("
+#~ msgstr ") avec les mêmes noms ("
+
+#~ msgid "None of packages"
+#~ msgstr "Aucun des packages"
+
+#~ msgid "Vignette engine"
+#~ msgstr "Module de traitement de vignette"
+
+#~ msgid "is not registered"
+#~ msgstr "n'est pas enregisté"
+
+#~ msgid "Engine name"
+#~ msgstr "Nom du module de traitement"
+
+#~ msgid "and package"
+#~ msgstr "et le package"
+
+#~ msgid "do not match"
+#~ msgstr "ne correspond pas"
+
+#~ msgid "Argument"
+#~ msgstr "Argument"
+
+#~ msgid "weave"
+#~ msgstr "weave"
+
+#~ msgid "tangle"
+#~ msgstr "tangle"
+
+#~ msgid "pattern"
+#~ msgstr "motif"
+
+#~ msgid "Cannot change the"
+#~ msgstr "impossible de changer le"
+
+#~ msgid "Sweave"
+#~ msgstr "Sweave"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file' doit être une chaîne de caractères ou une connexion"

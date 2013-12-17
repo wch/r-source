@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -544,38 +544,19 @@ msgstr "неправильное значение '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Поддерживается только один раздел Rd на %s."
 
-msgid "Vignette product"
-msgstr "Продукт миниатюры"
-
-msgid "does not have a known filename extension ("
+#, fuzzy
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "не имеет известного расширения имени файла ("
 
-msgid ","
-msgstr ","
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
+msgstr ""
 
-msgid ")"
-msgstr ")"
-
-msgid "Failed to locate the"
-msgstr "Не могу найти"
-
-msgid "output file (by engine"
-msgstr "файл вывода (в соответствии с устройством"
-
-msgid "%s::%s"
-msgstr "%s::%s"
-
-msgid ") for vignette with name"
-msgstr ") для очерка с именем"
-
-msgid ". The following files exists in directory"
-msgstr ". Следующие файлы есть в папке"
-
-msgid ":"
-msgstr ":"
-
-msgid "Located more than one"
-msgstr "Нашел больше одного"
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
+msgstr ""
 
 msgid "unable to create temp directory %s"
 msgstr "не могу создать временную папку %s"
@@ -584,22 +565,13 @@ msgstr "не могу создать временную папку %s"
 msgid "Running"
 msgstr "Запускаю %s"
 
-msgid "Vignette"
-msgstr "Миниатюра"
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
+msgstr ""
 
-msgid "overwrites the following"
-msgstr "переписывает следующее"
-
-msgid "output by vignette"
-msgstr "вывод очерка"
-
-msgid "Detected vignette source files ("
-msgstr "Обнаружены исходники очерка ("
-
-msgid ") with shared names ("
-msgstr ") с общими именами ("
-
-msgid ") and therefore risking overwriting each others output files"
+#, fuzzy
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr ") и поэтому есть риск перезаписи чужих файлов вывода"
 
 msgid ""
@@ -632,61 +604,38 @@ msgid "argument 'vignette' must be of length 1"
 msgstr "аргумент 'vignette' должен быть единичной длины"
 
 #, fuzzy
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr "Зависимости очерка не требуются:"
 
 msgid "Unsupported engine name"
 msgstr "Неподдерживаемое имя устройства"
 
-msgid "None of packages"
-msgstr "Ни один из пакетов"
-
-msgid "have registered vignette engines"
+#, fuzzy
+msgid "None of packages %s have registered vignette engines"
 msgstr "имеет зарегистрированные устройства очерков"
 
-msgid "Vignette engine"
-msgstr "Устройство очерка"
+#, fuzzy
+msgid "Vignette engine %s is not registered"
+msgstr "Зависимости очерка не требуются:"
 
-msgid "is not registered"
-msgstr "не зарегистрировано"
-
-msgid "is not registered by any of the packages"
+#, fuzzy
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr "не зарегистрировано ни одним пакетом"
 
-msgid "Engine name"
-msgstr "Имя устройства"
+#, fuzzy
+msgid "Engine name %s and package %s do not match"
+msgstr "Ссылка %s в пакете %s не найдена"
 
-msgid "and package"
-msgstr "и пакет"
-
-msgid "do not match"
-msgstr "не соответствует"
-
-msgid "Argument"
-msgstr "Аргумент"
-
-msgid "weave"
-msgstr "weave"
-
-msgid "must be a function and not"
+#, fuzzy
+msgid "Argument %s must be a function and not %s"
 msgstr "должно быть функцией и не"
 
-msgid "tangle"
-msgstr "tangle"
-
-msgid "pattern"
-msgstr "паттерн"
-
-msgid "must be a character vector or NULL and not"
+#, fuzzy
+msgid "Argument %s must be a character vector or NULL and not %s"
 msgstr "должен быть текстовой строкой или NULL и не"
 
-msgid "Cannot change the"
-msgstr "Не могу изменить файл"
-
-msgid "Sweave"
-msgstr "Sweave"
-
-msgid "engine or use an engine of that name"
+#, fuzzy
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr "устройство или использование устройства с этим именем"
 
 msgid "vignette builder '%s' not found"
@@ -765,6 +714,9 @@ msgstr ""
 
 msgid "assertCondition: caught %s"
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
@@ -1429,6 +1381,84 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+#~ msgid "Vignette product"
+#~ msgstr "Продукт миниатюры"
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "Failed to locate the"
+#~ msgstr "Не могу найти"
+
+#~ msgid "output file (by engine"
+#~ msgstr "файл вывода (в соответствии с устройством"
+
+#~ msgid "%s::%s"
+#~ msgstr "%s::%s"
+
+#~ msgid ") for vignette with name"
+#~ msgstr ") для очерка с именем"
+
+#~ msgid ". The following files exists in directory"
+#~ msgstr ". Следующие файлы есть в папке"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "Located more than one"
+#~ msgstr "Нашел больше одного"
+
+#~ msgid "Vignette"
+#~ msgstr "Миниатюра"
+
+#~ msgid "overwrites the following"
+#~ msgstr "переписывает следующее"
+
+#~ msgid "output by vignette"
+#~ msgstr "вывод очерка"
+
+#~ msgid "Detected vignette source files ("
+#~ msgstr "Обнаружены исходники очерка ("
+
+#~ msgid ") with shared names ("
+#~ msgstr ") с общими именами ("
+
+#~ msgid "None of packages"
+#~ msgstr "Ни один из пакетов"
+
+#~ msgid "Vignette engine"
+#~ msgstr "Устройство очерка"
+
+#~ msgid "is not registered"
+#~ msgstr "не зарегистрировано"
+
+#~ msgid "Engine name"
+#~ msgstr "Имя устройства"
+
+#~ msgid "and package"
+#~ msgstr "и пакет"
+
+#~ msgid "do not match"
+#~ msgstr "не соответствует"
+
+#~ msgid "Argument"
+#~ msgstr "Аргумент"
+
+#~ msgid "weave"
+#~ msgstr "weave"
+
+#~ msgid "tangle"
+#~ msgstr "tangle"
+
+#~ msgid "pattern"
+#~ msgstr "паттерн"
+
+#~ msgid "Cannot change the"
+#~ msgstr "Не могу изменить файл"
+
+#~ msgid "Sweave"
+#~ msgstr "Sweave"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file' должен быть текстовой строкой или соединением"

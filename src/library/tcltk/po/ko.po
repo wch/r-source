@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-12-17 11:19+0000\n"
 "PO-Revision-Date: 2013-02-21 20:55-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -24,31 +24,31 @@ msgstr ""
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: tcltk.c:63
+#: tcltk.c:66
 msgid "parse error in R expression"
 msgstr "R 표현식을 구문분석하는 도중에 에러가 발생했습니다"
 
-#: tcltk.c:159 tcltk.c:236
+#: tcltk.c:168 tcltk.c:245
 msgid "tcl error.\n"
 msgstr "tcl 에러입니다.\n"
 
-#: tcltk.c:188 tcltk.c:733
+#: tcltk.c:197 tcltk.c:742
 msgid "invalid argument"
 msgstr "인자가 잘못되었습니다"
 
-#: tcltk.c:292 tcltk.c:310 tcltk.c:383 tcltk.c:446 tcltk.c:498
+#: tcltk.c:301 tcltk.c:319 tcltk.c:392 tcltk.c:455 tcltk.c:507
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "tclObj이 잘못되었습니다 -- 혹시 다른 세션으로부터 저장된것이 아닐까요?"
 
-#: tcltk.c:608
+#: tcltk.c:617
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "tcltk 내부 함수 'callback_closure'에 있는 인자목록이 너무 깁니다"
 
-#: tcltk.c:641
+#: tcltk.c:650
 msgid "argument is not of correct type"
 msgstr "올바른 유형의 인자가 아닙니다"
 
-#: tcltk.c:692
+#: tcltk.c:701
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "DISPLAY 변수가 없기 때문에 Tk를 사용할 수 없습니다"
 

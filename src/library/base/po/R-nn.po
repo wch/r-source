@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -43,12 +43,6 @@ msgstr "uendelege eller manglande verdiar i «x»"
 
 msgid "a dimension is zero"
 msgstr ""
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "«nu» må vera 0, nrow(x) eller ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "«nv» må vera 0, nrow(x) eller ncol(x)"
 
 msgid "second argument must be a list"
 msgstr "det andre argumentet må vera ei liste"
@@ -1762,6 +1756,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "«nu» må vera 0, nrow(x) eller ncol(x)"
+
+#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "«nv» må vera 0, nrow(x) eller ncol(x)"
 
 #~ msgid "too many 'S3method' directives"
 #~ msgstr "for mange «S3method»-direktiv"

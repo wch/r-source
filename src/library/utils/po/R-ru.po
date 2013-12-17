@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 22:58-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -982,14 +982,14 @@ msgstr "файл '%s' не найден"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "file size is limited to 8GB"
+msgstr "размер файла ограничен 8GB"
+
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
-
-msgid "file size is limited to 8GB"
-msgstr "размер файла ограничен 8GB"
 
 msgid ""
 "vignette %s found more than once,\n"

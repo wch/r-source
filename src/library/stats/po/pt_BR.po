@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10+0000\n"
+"POT-Creation-Date: 2013-12-17 11:19+0000\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -162,23 +162,23 @@ msgstr "Argumento %s deve ser um vetor numérico não-vazio"
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argumento %s deve ser um vetor numérico com comprimento 1 ou %d"
 
-#: fourier.c:64 fourier.c:151
+#: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
 msgstr "argumento não numérico"
 
-#: fourier.c:82 fourier.c:97 fourier.c:165
+#: fourier.c:84 fourier.c:102 fourier.c:175
 msgid "fft factorization error"
 msgstr "erro de fatoração em fft"
 
-#: fourier.c:137
+#: fourier.c:147
 msgid "vector-valued (multivariate) series required"
 msgstr "série com valores vetoriais (multivariada) necessária"
 
-#: fourier.c:210
+#: fourier.c:223
 msgid "no factors"
 msgstr "não há fatores"
 
-#: fourier.c:213
+#: fourier.c:226
 msgid "invalid factors"
 msgstr "fatores inválidos"
 
@@ -281,110 +281,110 @@ msgstr "comprimentos das variáveis diferem (encontradas em '%s')"
 msgid "invalid result from na.action"
 msgstr "resultado inválido de na.action"
 
-#: model.c:373 model.c:381 optim.c:197
+#: model.c:369 model.c:377 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
 
-#: model.c:392
+#: model.c:388
 msgid "invalid model frame"
 msgstr "estrutura de modelo inválida"
 
-#: model.c:394
+#: model.c:390
 msgid "do not know how many cases"
 msgstr "não é possível determinar o número de casos"
 
-#: model.c:418
+#: model.c:414
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "comprimentos das variáveis diferem (encontrados para a variável %d)"
 
-#: model.c:422 model.c:429
+#: model.c:418 model.c:425
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variável %d não tem níveis"
 
-#: model.c:541
+#: model.c:537
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "a resposta apareceu no lado direito e foi descartada"
 
-#: model.c:561
+#: model.c:557
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "termo %d requeriria %.0g colunas"
 
-#: model.c:565
+#: model.c:561
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "matrix requeriria %.0g colunas"
 
-#: model.c:576
+#: model.c:572
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "problema com o termo %d na matriz do modelo: nenhuma coluna foi atribuida"
 
-#: model.c:625 model.c:630 model.c:636 model.c:647 model.c:653 model.c:659
+#: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
 msgid "term names will be truncated"
 msgstr "nomes dos termos serão truncados"
 
-#: model.c:639
+#: model.c:635
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 "variáveis complexas não são atualmente permitidas em matrizes de modelo"
 
-#: model.c:663
+#: model.c:659
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "variáveis de tipo '%s' não são permitidas em matrizes de modelo"
 
-#: model.c:885
+#: model.c:881
 msgid "invalid formula in 'update'"
 msgstr "fórmula inválida em 'update'"
 
-#: model.c:919
+#: model.c:915
 msgid "formula expected"
 msgstr "fórmula esperada"
 
-#: model.c:1050
+#: model.c:1046
 msgid "invalid term in model formula"
 msgstr "termo inválido na fórmula de modelo"
 
-#: model.c:1125
+#: model.c:1121
 msgid "invalid model formula"
 msgstr "fórmula de modelo inválida"
 
-#: model.c:1151 model.c:1399
+#: model.c:1147 model.c:1395
 msgid "invalid power in formula"
 msgstr "potenciação inválida na fórmula"
 
-#: model.c:1187
+#: model.c:1183
 msgid "invalid model formula in ExtractVars"
 msgstr "fórmula de modelo inválida em ExtractVars"
 
-#: model.c:1522
+#: model.c:1518
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nome duplicado '%s' em data frame usando '.'"
 
-#: model.c:1580
+#: model.c:1576
 msgid "invalid model formula in EncodeVars"
 msgstr "fórmula de modelo inválida em EncodeVars"
 
-#: model.c:1666
+#: model.c:1662
 msgid "argument is not a valid model"
 msgstr "argumento não é um modelo válido"
 
-#: model.c:1676
+#: model.c:1672
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
-#: model.c:1688
+#: model.c:1684
 msgid "'data' argument is of the wrong type"
 msgstr "argumento 'data' é do tipo errado"
 
-#: model.c:1956
+#: model.c:1952
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' na fórmula e nenhum argumento 'data'"
 

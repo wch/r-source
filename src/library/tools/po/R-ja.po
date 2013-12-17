@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-19 13:39+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -546,38 +546,19 @@ msgstr " '%s' に対する不正な値 : %s "
 msgid "Only one Rd section per %s is supported."
 msgstr " %s は Rd セクションを 1 つしか持てません。 "
 
-msgid "Vignette product"
-msgstr " ビニエットプロダクト "
-
-msgid "does not have a known filename extension ("
+#, fuzzy
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr " 既知の拡張子を持っていません( "
 
-msgid ","
-msgstr " , "
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
+msgstr ""
 
-msgid ")"
-msgstr " ) "
-
-msgid "Failed to locate the"
-msgstr " 見つかりません: "
-
-msgid "output file (by engine"
-msgstr " 出力ファイル (エンジン "
-
-msgid "%s::%s"
-msgstr " %s::%s "
-
-msgid ") for vignette with name"
-msgstr " ) , ビニエット "
-
-msgid ". The following files exists in directory"
-msgstr " . ディレクトリには以下のファイルがあります "
-
-msgid ":"
-msgstr " ： "
-
-msgid "Located more than one"
-msgstr " 1個以上が見つかりました "
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
+msgstr ""
 
 msgid "unable to create temp directory %s"
 msgstr " 一時ディレクトリ %s を生成することが出来ません "
@@ -586,22 +567,13 @@ msgstr " 一時ディレクトリ %s を生成することが出来ません "
 msgid "Running"
 msgstr " %s を実行中 "
 
-msgid "Vignette"
-msgstr " ビニエット "
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
+msgstr ""
 
-msgid "overwrites the following"
-msgstr " 以下を上書きします "
-
-msgid "output by vignette"
-msgstr " ビニエットによる出力 "
-
-msgid "Detected vignette source files ("
-msgstr " ビニエットのソースファイルを検出しました ( "
-
-msgid ") with shared names ("
-msgstr " ) 共有名 ( "
-
-msgid ") and therefore risking overwriting each others output files"
+#, fuzzy
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr " ) 、したがってお互いの出力を上書きする危険があります "
 
 msgid ""
@@ -635,62 +607,39 @@ msgid "argument 'vignette' must be of length 1"
 msgstr " 引数 'vignette' は長さ1でなければなりません "
 
 #, fuzzy
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr " ビニエットの依存性は不要です: "
 
 msgid "Unsupported engine name"
 msgstr " 未サポートのエンジン名 "
 
-msgid "None of packages"
-msgstr " どのパッケージもしていません "
-
-msgid "have registered vignette engines"
+#, fuzzy
+msgid "None of packages %s have registered vignette engines"
 msgstr " ビニエットエンジンを登録 "
 
-msgid "Vignette engine"
-msgstr " ビニエットエンジン "
+#, fuzzy
+msgid "Vignette engine %s is not registered"
+msgstr " ビニエットの依存性は不要です: "
 
-msgid "is not registered"
-msgstr " は登録されていません "
-
-msgid "is not registered by any of the packages"
+#, fuzzy
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr " を登録しているパッケージはありません "
 
-msgid "Engine name"
-msgstr " エンジン名 "
+#, fuzzy
+msgid "Engine name %s and package %s do not match"
+msgstr " リンク %s (パッケージ %s 中の) は所在不明です "
 
-msgid "and package"
-msgstr " とパッケージ "
-
-msgid "do not match"
-msgstr " が合致しません "
-
-msgid "Argument"
-msgstr " 以下に対する引数 "
-
-msgid "weave"
-msgstr " weave "
-
-msgid "must be a function and not"
+#, fuzzy
+msgid "Argument %s must be a function and not %s"
 msgstr " は関数でなくてはならず、以下ではいけません: "
 
-msgid "tangle"
-msgstr " tangle "
-
-msgid "pattern"
-msgstr " pattern "
-
-msgid "must be a character vector or NULL and not"
+#, fuzzy
+msgid "Argument %s must be a character vector or NULL and not %s"
 msgstr ""
 " は文字列ベクトルか、あるいはNULLでなくてはならず、以下ではいけません: "
 
-msgid "Cannot change the"
-msgstr " 以下を変更できません "
-
-msgid "Sweave"
-msgstr " Sweave "
-
-msgid "engine or use an engine of that name"
+#, fuzzy
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr " エンジンもしくはその名前のエンジン "
 
 msgid "vignette builder '%s' not found"
@@ -770,6 +719,9 @@ msgstr ""
 
 msgid "assertCondition: caught %s"
 msgstr ""
+
+msgid ","
+msgstr " , "
 
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
@@ -1395,6 +1347,84 @@ msgstr[0] " トピック '%s' に関するヘルプが以下のパッケージ�
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "Vignette product"
+#~ msgstr " ビニエットプロダクト "
+
+#~ msgid ")"
+#~ msgstr " ) "
+
+#~ msgid "Failed to locate the"
+#~ msgstr " 見つかりません: "
+
+#~ msgid "output file (by engine"
+#~ msgstr " 出力ファイル (エンジン "
+
+#~ msgid "%s::%s"
+#~ msgstr " %s::%s "
+
+#~ msgid ") for vignette with name"
+#~ msgstr " ) , ビニエット "
+
+#~ msgid ". The following files exists in directory"
+#~ msgstr " . ディレクトリには以下のファイルがあります "
+
+#~ msgid ":"
+#~ msgstr " ： "
+
+#~ msgid "Located more than one"
+#~ msgstr " 1個以上が見つかりました "
+
+#~ msgid "Vignette"
+#~ msgstr " ビニエット "
+
+#~ msgid "overwrites the following"
+#~ msgstr " 以下を上書きします "
+
+#~ msgid "output by vignette"
+#~ msgstr " ビニエットによる出力 "
+
+#~ msgid "Detected vignette source files ("
+#~ msgstr " ビニエットのソースファイルを検出しました ( "
+
+#~ msgid ") with shared names ("
+#~ msgstr " ) 共有名 ( "
+
+#~ msgid "None of packages"
+#~ msgstr " どのパッケージもしていません "
+
+#~ msgid "Vignette engine"
+#~ msgstr " ビニエットエンジン "
+
+#~ msgid "is not registered"
+#~ msgstr " は登録されていません "
+
+#~ msgid "Engine name"
+#~ msgstr " エンジン名 "
+
+#~ msgid "and package"
+#~ msgstr " とパッケージ "
+
+#~ msgid "do not match"
+#~ msgstr " が合致しません "
+
+#~ msgid "Argument"
+#~ msgstr " 以下に対する引数 "
+
+#~ msgid "weave"
+#~ msgstr " weave "
+
+#~ msgid "tangle"
+#~ msgstr " tangle "
+
+#~ msgid "pattern"
+#~ msgstr " pattern "
+
+#~ msgid "Cannot change the"
+#~ msgstr " 以下を変更できません "
+
+#~ msgid "Sweave"
+#~ msgstr " Sweave "
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr " 'file' は文字列ベクトルかコネクションでなければなりません "

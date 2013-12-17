@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1919,7 +1919,8 @@ msgstr "'x' posiada wpisy zbyt duże aby były liczbami całkowitymi"
 # stats/R/fisher.test.R: 40
 # warning(gettextf("'x' has been rounded to integer: %d", ax),
 #                         domain = NA)
-msgid "'x' has been rounded to integer: %d"
+#, fuzzy
+msgid "'x' has been rounded to integer: %s"
 msgstr "'x' został zaokrąglony do wartości całkowitej: %d"
 
 # stats/R/fisher.test.R: 47
@@ -2690,6 +2691,13 @@ msgstr "'iter.max' musi być dodatnia"
 # stop("must have same number of columns in 'x' and 'centers'")
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "potrzeba mieć tę samą liczbę kolumn w 'x' oraz 'centers'"
+
+# stats/R/nlsFunc.R: 38
+# stop(gettextf("formula '%s' must be of the form '~expr'",
+#                           deparse(as.vector(object))), domain = NA)
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "formuła '%s' musi mieć formę '~expr'"
 
 # stats/R/ks.test.R: 28
 # stop("not enough 'x' data")

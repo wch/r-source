@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2013-03-10 12:14-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -989,14 +989,14 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 msgid "file '%s' did not have execute permissions: corrected"
 msgstr ""
 
+msgid "file size is limited to 8GB"
+msgstr "파일크기는 8GB로 제한되어 있습니다"
+
 msgid "invalid uid value replaced by that for user 'nobody'"
 msgstr ""
 
 msgid "invalid gid value replaced by that for user 'nobody'"
 msgstr ""
-
-msgid "file size is limited to 8GB"
-msgstr "파일크기는 8GB로 제한되어 있습니다"
 
 msgid ""
 "vignette %s found more than once,\n"

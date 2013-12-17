@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2013-03-19 13:40+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -919,7 +919,8 @@ msgstr " 'x' は少なくとも 2 つの行及び列を持たなければなり�
 msgid "'x' has entries too large to be integer"
 msgstr " 'x' は整数とするにはあまりに多くの項目を持っています "
 
-msgid "'x' has been rounded to integer: %d"
+#, fuzzy
+msgid "'x' has been rounded to integer: %s"
 msgstr " 'x' は整数に丸められました: %d "
 
 msgid "if 'x' is not a matrix, 'y' must be given"
@@ -1243,6 +1244,10 @@ msgstr " 'iter.max' は正でなければなりません "
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr " 'x' と中心 ('centers') の列数は同じでなければなりません "
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr " 式 '%s' は形式 '~expr' でなければなりません "
 
 msgid "not enough 'x' data"
 msgstr " 'x' データの数が十分ではありません "

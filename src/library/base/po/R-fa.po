@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -44,12 +44,6 @@ msgid "infinite or missing values in 'x'"
 msgstr ""
 
 msgid "a dimension is zero"
-msgstr ""
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr ""
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
 msgid "second argument must be a list"

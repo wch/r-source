@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2013-12-17 11:19+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 # tcltk/src/tcltk.c: 63
 #  _("parse error in R expression")
-#: tcltk.c:63
+#: tcltk.c:66
 msgid "parse error in R expression"
 msgstr "Błąd składni w wyrażeniu R"
 
-#: tcltk.c:159 tcltk.c:236
+#: tcltk.c:168 tcltk.c:245
 msgid "tcl error.\n"
 msgstr "błąd 'tcl'.\n"
 
@@ -30,7 +30,7 @@ msgstr "błąd 'tcl'.\n"
 # error(_("invalid argument"))
 # tcltk/src/tcltk.c: 714
 # error(_("invalid argument"))
-#: tcltk.c:188 tcltk.c:733
+#: tcltk.c:197 tcltk.c:742
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
@@ -44,13 +44,13 @@ msgstr "niepoprawny argument"
 # error(_("invalid tclObj -- perhaps saved from another session?"))
 # tcltk/src/tcltk.c: 485
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-#: tcltk.c:292 tcltk.c:310 tcltk.c:383 tcltk.c:446 tcltk.c:498
+#: tcltk.c:301 tcltk.c:319 tcltk.c:392 tcltk.c:455 tcltk.c:507
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "niepoprawny 'tclObj' -- być może zapisany z innej sesji?"
 
 # tcltk/src/tcltk.c: 589
 # error(_("argument list is too long in tcltk internal function 'callback_closure'"))
-#: tcltk.c:608
+#: tcltk.c:617
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
@@ -58,13 +58,13 @@ msgstr ""
 
 # tcltk/src/tcltk.c: 622
 # error(_("argument is not of correct type"))
-#: tcltk.c:641
+#: tcltk.c:650
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
 # tcltk/src/tcltk.c: 673
 # warning(_("no DISPLAY variable so Tk is not available"))
-#: tcltk.c:692
+#: tcltk.c:701
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "brak zmiennej 'DISPLAY' więc Tk nie jest dostępne"
 

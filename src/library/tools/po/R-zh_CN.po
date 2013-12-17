@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 11:00\n"
+"POT-Creation-Date: 2013-12-17 11:19\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -516,38 +516,19 @@ msgstr "'%s'值无效：%s"
 msgid "Only one Rd section per %s is supported."
 msgstr "每%s只支持一个Rd章节"
 
-msgid "Vignette product"
-msgstr "产品简介："
-
-msgid "does not have a known filename extension ("
+#, fuzzy
+msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "没有一个已知的文件扩展名"
 
-msgid ","
-msgstr ","
+msgid ""
+"Failed to locate the %s output file (by engine %s) for vignette with name "
+"%s. The following files exist in directory %s: %s"
+msgstr ""
 
-msgid ")"
-msgstr ")"
-
-msgid "Failed to locate the"
-msgstr "无法找到"
-
-msgid "output file (by engine"
-msgstr "输出文件（由引擎"
-
-msgid "%s::%s"
-msgstr "%s::%s"
-
-msgid ") for vignette with name"
-msgstr ")为带这个名字的简介"
-
-msgid ". The following files exists in directory"
-msgstr "。目录里有这些文件"
-
-msgid ":"
-msgstr "："
-
-msgid "Located more than one"
-msgstr "找到一个以上的"
+msgid ""
+"Located more than one %s output file (by engine %s) for vignette with name "
+"%s: %s"
+msgstr ""
 
 msgid "unable to create temp directory %s"
 msgstr "无法建立临时目录%s"
@@ -556,22 +537,13 @@ msgstr "无法建立临时目录%s"
 msgid "Running"
 msgstr "执行%s"
 
-msgid "Vignette"
-msgstr "简介："
+msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
+msgstr ""
 
-msgid "overwrites the following"
-msgstr "覆盖下面的"
-
-msgid "output by vignette"
-msgstr "简介输出的"
-
-msgid "Detected vignette source files ("
-msgstr "找到了简介的源代码（"
-
-msgid ") with shared names ("
-msgstr "）和分用的名字（"
-
-msgid ") and therefore risking overwriting each others output files"
+#, fuzzy
+msgid ""
+"Detected vignette source files (%s) with shared names (%s) and therefore "
+"risking overwriting each others output files"
 msgstr "）因此可以冒险各个输出文件"
 
 msgid ""
@@ -604,61 +576,38 @@ msgid "argument 'vignette' must be of length 1"
 msgstr "参数'vignette'的长度必需为一"
 
 #, fuzzy
-msgid "Vignette engine package not specified."
+msgid "Vignette engine package not specified"
 msgstr "不需要标头从属:"
 
 msgid "Unsupported engine name"
 msgstr "不支持这样的引擎名"
 
-msgid "None of packages"
-msgstr "所有的程序包都没有"
-
-msgid "have registered vignette engines"
+#, fuzzy
+msgid "None of packages %s have registered vignette engines"
 msgstr "注册简介引擎"
 
-msgid "Vignette engine"
-msgstr "小简介引擎"
+#, fuzzy
+msgid "Vignette engine %s is not registered"
+msgstr "不需要标头从属:"
 
-msgid "is not registered"
-msgstr "没有注册"
-
-msgid "is not registered by any of the packages"
+#, fuzzy
+msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr "没有被它所要用的程序包所注册"
 
-msgid "Engine name"
-msgstr "引擎名字"
+#, fuzzy
+msgid "Engine name %s and package %s do not match"
+msgstr "程序包%s里的链结%s不存在"
 
-msgid "and package"
-msgstr "和程辑包"
-
-msgid "do not match"
-msgstr "不匹配"
-
-msgid "Argument"
-msgstr "参数"
-
-msgid "weave"
-msgstr "weave"
-
-msgid "must be a function and not"
+#, fuzzy
+msgid "Argument %s must be a function and not %s"
 msgstr "必需是个函数，还不能"
 
-msgid "tangle"
-msgstr "纠缠"
-
-msgid "pattern"
-msgstr "模式"
-
-msgid "must be a character vector or NULL and not"
+#, fuzzy
+msgid "Argument %s must be a character vector or NULL and not %s"
 msgstr "必需是字符串或联结"
 
-msgid "Cannot change the"
-msgstr "无法改变"
-
-msgid "Sweave"
-msgstr "Sweave"
-
-msgid "engine or use an engine of that name"
+#, fuzzy
+msgid "Cannot change the %s engine or use an engine of that name"
 msgstr "引擎或用带那个名字的引擎"
 
 msgid "vignette builder '%s' not found"
@@ -735,6 +684,9 @@ msgstr ""
 
 msgid "assertCondition: caught %s"
 msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
@@ -1336,6 +1288,84 @@ msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "Vignette product"
+#~ msgstr "产品简介："
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "Failed to locate the"
+#~ msgstr "无法找到"
+
+#~ msgid "output file (by engine"
+#~ msgstr "输出文件（由引擎"
+
+#~ msgid "%s::%s"
+#~ msgstr "%s::%s"
+
+#~ msgid ") for vignette with name"
+#~ msgstr ")为带这个名字的简介"
+
+#~ msgid ". The following files exists in directory"
+#~ msgstr "。目录里有这些文件"
+
+#~ msgid ":"
+#~ msgstr "："
+
+#~ msgid "Located more than one"
+#~ msgstr "找到一个以上的"
+
+#~ msgid "Vignette"
+#~ msgstr "简介："
+
+#~ msgid "overwrites the following"
+#~ msgstr "覆盖下面的"
+
+#~ msgid "output by vignette"
+#~ msgstr "简介输出的"
+
+#~ msgid "Detected vignette source files ("
+#~ msgstr "找到了简介的源代码（"
+
+#~ msgid ") with shared names ("
+#~ msgstr "）和分用的名字（"
+
+#~ msgid "None of packages"
+#~ msgstr "所有的程序包都没有"
+
+#~ msgid "Vignette engine"
+#~ msgstr "小简介引擎"
+
+#~ msgid "is not registered"
+#~ msgstr "没有注册"
+
+#~ msgid "Engine name"
+#~ msgstr "引擎名字"
+
+#~ msgid "and package"
+#~ msgstr "和程辑包"
+
+#~ msgid "do not match"
+#~ msgstr "不匹配"
+
+#~ msgid "Argument"
+#~ msgstr "参数"
+
+#~ msgid "weave"
+#~ msgstr "weave"
+
+#~ msgid "tangle"
+#~ msgstr "纠缠"
+
+#~ msgid "pattern"
+#~ msgstr "模式"
+
+#~ msgid "Cannot change the"
+#~ msgstr "无法改变"
+
+#~ msgid "Sweave"
+#~ msgstr "Sweave"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "参数'file'必需是字符串或联结"

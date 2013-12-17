@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10\n"
+"POT-Creation-Date: 2013-12-17 11:18\n"
 "PO-Revision-Date: 2013-03-18 21:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -47,12 +47,6 @@ msgstr "valeurs infinies ou manquantes dans 'x'"
 
 msgid "a dimension is zero"
 msgstr "une dimension est nulle"
-
-msgid "'nu' must be 0, nrow(x) or ncol(x)"
-msgstr "'nu' doit être 0, nrow(x) ou ncol(x)"
-
-msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr "'nv' doit être 0, nrow(x) ou ncol(x)"
 
 msgid "second argument must be a list"
 msgstr "le second argument doit être une liste"
@@ -1756,6 +1750,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nu' doit être 0, nrow(x) ou ncol(x)"
+
+#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
+#~ msgstr "'nv' doit être 0, nrow(x) ou ncol(x)"
 
 #~ msgid "too many 'S3method' directives"
 #~ msgstr "trop de directives 'S3method'"

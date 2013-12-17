@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r-2-15-branch\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10+0000\n"
+"POT-Creation-Date: 2013-12-17 11:18+0000\n"
 "PO-Revision-Date: 2011-11-29 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -175,9 +175,9 @@ msgstr "problem med visning af '%ls'"
 #: src/main/connections.c:4751 src/main/connections.c:4755
 #: src/main/connections.c:4759 src/main/connections.c:4763
 #: src/main/context.c:596 src/main/context.c:605 src/main/context.c:609
-#: src/main/datetime.c:761 src/main/datetime.c:847 src/main/datetime.c:849
-#: src/main/datetime.c:853 src/main/datetime.c:1018 src/main/datetime.c:1020
-#: src/main/datetime.c:1183 src/main/debug.c:228 src/main/deparse.c:397
+#: src/main/datetime.c:776 src/main/datetime.c:862 src/main/datetime.c:864
+#: src/main/datetime.c:868 src/main/datetime.c:1033 src/main/datetime.c:1035
+#: src/main/datetime.c:1198 src/main/debug.c:228 src/main/deparse.c:397
 #: src/main/dotcode.c:478 src/main/dotcode.c:482 src/main/dotcode.c:487
 #: src/main/dounzip.c:322 src/main/dounzip.c:329 src/main/dounzip.c:339
 #: src/main/dounzip.c:344 src/main/dounzip.c:348 src/main/dounzip.c:352
@@ -226,9 +226,9 @@ msgstr "problem med visning af '%ls'"
 #: src/main/seq.c:630 src/main/seq.c:661 src/main/seq.c:665 src/main/seq.c:671
 #: src/main/seq.c:679 src/main/sort.c:175 src/main/sysutils.c:585
 #: src/main/sysutils.c:589 src/main/sysutils.c:593 src/main/sysutils.c:599
-#: src/main/sysutils.c:603 src/main/sysutils.c:1834 src/main/sysutils.c:1838
+#: src/main/sysutils.c:603 src/main/sysutils.c:1830 src/main/sysutils.c:1834
 #: src/main/unique.c:966 src/main/unique.c:1289 src/main/unique.c:1349
-#: src/main/unique.c:1356 src/main/unique.c:1749 src/main/util.c:577
+#: src/main/unique.c:1356 src/main/unique.c:1750 src/main/util.c:577
 #: src/main/util.c:580 src/main/util.c:1799 src/main/util.c:1968
 #: src/main/util.c:1969 src/main/util.c:1970 src/main/util.c:1987
 #: src/main/util.c:2011 src/main/util.c:2015 src/main/util.c:2017
@@ -239,9 +239,9 @@ msgstr "problem med visning af '%ls'"
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
-#: src/modules/lapack/Lapack.c:159 src/modules/lapack/Lapack.c:266
-#: src/modules/lapack/Lapack.c:715 src/modules/lapack/Lapack.c:818
-#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1214
+#: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
+#: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
 #: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
 #, c-format
 msgid "invalid '%s' argument"
@@ -253,7 +253,7 @@ msgstr "Windowsversion er ikke understøttet"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:108 src/main/character.c:595
 #: src/main/connections.c:3325 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:692 src/main/datetime.c:763 src/main/datetime.c:1022
+#: src/main/datetime.c:707 src/main/datetime.c:778 src/main/datetime.c:1037
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1362 src/main/identical.c:66 src/main/identical.c:67
@@ -1128,7 +1128,7 @@ msgstr ""
 #: src/main/attrib.c:1050 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1606 src/main/envir.c:1734 src/main/envir.c:1796
 #: src/main/envir.c:1918 src/main/paste.c:74 src/main/paste.c:292
-#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1748
+#: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1749
 msgid "invalid first argument"
 msgstr ""
 
@@ -1293,7 +1293,7 @@ msgstr ""
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1537 src/main/connections.c:2836 src/main/engine.c:2967
+#: src/main/coerce.c:1537 src/main/connections.c:2836 src/main/engine.c:2968
 #: src/main/envir.c:993 src/main/envir.c:1046 src/main/envir.c:1136
 #: src/main/envir.c:1615 src/main/envir.c:1739 src/main/envir.c:1807
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
@@ -2340,21 +2340,21 @@ msgstr ""
 msgid "unknown cumxxx function"
 msgstr ""
 
-#: src/main/datetime.c:613 src/main/datetime.c:621 src/main/datetime.c:635
-#: src/main/datetime.c:640
+#: src/main/datetime.c:628 src/main/datetime.c:636 src/main/datetime.c:650
+#: src/main/datetime.c:655
 msgid "problem with setting timezone"
 msgstr ""
 
-#: src/main/datetime.c:625
+#: src/main/datetime.c:640
 msgid "cannot set timezones on this system"
 msgstr ""
 
-#: src/main/datetime.c:647 src/main/datetime.c:649
+#: src/main/datetime.c:662 src/main/datetime.c:664
 msgid "problem with unsetting timezone"
 msgstr ""
 
-#: src/main/datetime.c:785 src/main/datetime.c:787 src/main/datetime.c:882
-#: src/main/datetime.c:1191 src/main/datetime.c:1193
+#: src/main/datetime.c:800 src/main/datetime.c:802 src/main/datetime.c:897
+#: src/main/datetime.c:1206 src/main/datetime.c:1208
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr ""
 
@@ -2551,7 +2551,7 @@ msgstr ""
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1261 src/main/dotcode.c:1278 src/main/engine.c:2993
+#: src/main/dotcode.c:1261 src/main/dotcode.c:1278 src/main/engine.c:2994
 msgid "invalid graphics state"
 msgstr ""
 
@@ -2828,74 +2828,74 @@ msgstr ""
 msgid "no graphics device is active"
 msgstr ""
 
-#: src/main/engine.c:2050
+#: src/main/engine.c:2051
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: src/main/engine.c:2307
+#: src/main/engine.c:2308
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: src/main/engine.c:2330
+#: src/main/engine.c:2331
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr ""
 
-#: src/main/engine.c:2334
+#: src/main/engine.c:2335
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
-#: src/main/engine.c:2371
+#: src/main/engine.c:2372
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ""
 
-#: src/main/engine.c:2373
+#: src/main/engine.c:2374
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ""
 
-#: src/main/engine.c:2773
+#: src/main/engine.c:2774
 msgid "display list redraw incomplete"
 msgstr ""
 
-#: src/main/engine.c:2777
+#: src/main/engine.c:2778
 #, fuzzy
 msgid "invalid display list"
 msgstr "ugyldig plottype"
 
-#: src/main/engine.c:2963
+#: src/main/engine.c:2964
 msgid "'expr' argument must be an expression"
 msgstr ""
 
-#: src/main/engine.c:2965
+#: src/main/engine.c:2966
 msgid "'list' argument must be a list"
 msgstr ""
 
-#: src/main/engine.c:2971
+#: src/main/engine.c:2972
 msgid "'env' argument must be an environment"
 msgstr ""
 
-#: src/main/engine.c:3051 src/main/engine.c:3059
+#: src/main/engine.c:3052 src/main/engine.c:3060
 msgid "invalid multibyte char in pch=\"c\""
 msgstr ""
 
-#: src/main/engine.c:3106
+#: src/main/engine.c:3107
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
-#: src/main/engine.c:3129
+#: src/main/engine.c:3130
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/engine.c:3133
+#: src/main/engine.c:3134
 msgid "invalid line type: zeroes are not allowed"
 msgstr ""
 
-#: src/main/engine.c:3142 src/main/engine.c:3150 src/main/engine.c:3157
+#: src/main/engine.c:3143 src/main/engine.c:3151 src/main/engine.c:3158
 msgid "invalid line type"
 msgstr ""
 
@@ -3526,7 +3526,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:4565 src/main/names.c:1169
+#: src/main/eval.c:4565 src/main/names.c:1170
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
@@ -3709,64 +3709,64 @@ msgstr ""
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2357
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2371
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2386
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2394
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2406
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2421
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2429
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2468
+#: src/main/gram.y:2469
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2527
+#: src/main/gram.y:2528
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 
-#: src/main/gram.y:2531
+#: src/main/gram.y:2532
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
 
-#: src/main/gram.y:3129 src/main/gram.y:3136 src/main/gram.y:3142
-#: src/main/gram.y:3149
+#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
+#: src/main/gram.y:3150
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr ""
 
-#: src/main/gram.y:3244
+#: src/main/gram.y:3245
 #, c-format
 msgid "internal parser error at line %d"
 msgstr ""
@@ -4173,24 +4173,24 @@ msgstr ""
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:994
+#: src/main/names.c:995
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:997
+#: src/main/names.c:998
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1134
+#: src/main/names.c:1135
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1136
+#: src/main/names.c:1137
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1164 src/main/names.c:1167
+#: src/main/names.c:1165 src/main/names.c:1168
 msgid "invalid .Internal() argument"
 msgstr ""
 
@@ -4596,12 +4596,12 @@ msgstr ""
 msgid "file name too long"
 msgstr "filnavn er for langt"
 
-#: src/main/platform.c:1516 src/main/platform.c:1563 src/main/sysutils.c:1853
-#: src/main/sysutils.c:1867
+#: src/main/platform.c:1516 src/main/platform.c:1563 src/main/sysutils.c:1849
+#: src/main/sysutils.c:1863
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1559 src/main/sysutils.c:1863
+#: src/main/platform.c:1559 src/main/sysutils.c:1859
 #, c-format
 msgid "read error on '%s'"
 msgstr "læsefejl på '%s'"
@@ -5978,32 +5978,37 @@ msgstr ""
 msgid "unsupported conversion to '%s' from codepage %d"
 msgstr ""
 
-#: src/main/sysutils.c:1635
+#: src/main/sysutils.c:1529
+#, c-format
+msgid "invalid Unicode point %u"
+msgstr ""
+
+#: src/main/sysutils.c:1631
 msgid "cannot create 'R_TempDir'"
 msgstr ""
 
-#: src/main/sysutils.c:1639 src/main/sysutils.c:1647 src/main/sysutils.c:1650
+#: src/main/sysutils.c:1635 src/main/sysutils.c:1643 src/main/sysutils.c:1646
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr ""
 
-#: src/main/sysutils.c:1659
+#: src/main/sysutils.c:1655
 #, fuzzy
 msgid "cannot allocate 'R_TempDir'"
 msgstr "kan ikke allokere mellemlager"
 
-#: src/main/sysutils.c:1696
+#: src/main/sysutils.c:1692
 msgid "temporary name too long"
 msgstr ""
 
-#: src/main/sysutils.c:1711
+#: src/main/sysutils.c:1707
 msgid "cannot find unused tempfile name"
 msgstr ""
 
-#: src/main/sysutils.c:1714
+#: src/main/sysutils.c:1710
 msgid "allocation failed in R_tmpnam2"
 msgstr ""
 
-#: src/main/sysutils.c:1841
+#: src/main/sysutils.c:1837
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr ""
 
@@ -6055,19 +6060,19 @@ msgstr ""
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 
-#: src/main/unique.c:1535
+#: src/main/unique.c:1536
 msgid "non-numeric data frame in rowsum"
 msgstr ""
 
-#: src/main/unique.c:1567
+#: src/main/unique.c:1568
 msgid "this cannot happen"
 msgstr ""
 
-#: src/main/unique.c:1638
+#: src/main/unique.c:1639
 msgid "'names' must be a character vector"
 msgstr ""
 
-#: src/main/unique.c:1642
+#: src/main/unique.c:1643
 msgid "'sep' must be a character string"
 msgstr ""
 
@@ -6651,205 +6656,206 @@ msgstr ""
 msgid "argument type[1]='%s' must be one of '1','O', or 'I'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:117 src/modules/lapack/Lapack.c:126
-#: src/modules/lapack/Lapack.c:187 src/modules/lapack/Lapack.c:198
-#: src/modules/lapack/Lapack.c:281 src/modules/lapack/Lapack.c:287
-#: src/modules/lapack/Lapack.c:623 src/modules/lapack/Lapack.c:629
-#: src/modules/lapack/Lapack.c:683 src/modules/lapack/Lapack.c:690
-#: src/modules/lapack/Lapack.c:694 src/modules/lapack/Lapack.c:729
-#: src/modules/lapack/Lapack.c:736 src/modules/lapack/Lapack.c:778
-#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:834
-#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:895
-#: src/modules/lapack/Lapack.c:901 src/modules/lapack/Lapack.c:1134
-#: src/modules/lapack/Lapack.c:1140 src/modules/lapack/Lapack.c:1188
-#: src/modules/lapack/Lapack.c:1195 src/modules/lapack/Lapack.c:1199
-#: src/modules/lapack/Lapack.c:1227 src/modules/lapack/Lapack.c:1234
-#: src/modules/lapack/Lapack.c:1254
+#: src/modules/lapack/Lapack.c:116 src/modules/lapack/Lapack.c:123
+#: src/modules/lapack/Lapack.c:182 src/modules/lapack/Lapack.c:193
+#: src/modules/lapack/Lapack.c:275 src/modules/lapack/Lapack.c:281
+#: src/modules/lapack/Lapack.c:617 src/modules/lapack/Lapack.c:623
+#: src/modules/lapack/Lapack.c:677 src/modules/lapack/Lapack.c:684
+#: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:723
+#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:778
+#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:833
+#: src/modules/lapack/Lapack.c:839 src/modules/lapack/Lapack.c:893
+#: src/modules/lapack/Lapack.c:899 src/modules/lapack/Lapack.c:1133
+#: src/modules/lapack/Lapack.c:1139 src/modules/lapack/Lapack.c:1187
+#: src/modules/lapack/Lapack.c:1194 src/modules/lapack/Lapack.c:1198
+#: src/modules/lapack/Lapack.c:1226 src/modules/lapack/Lapack.c:1233
+#: src/modules/lapack/Lapack.c:1253
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:157 src/modules/lapack/Lapack.c:253
-#: src/modules/lapack/Lapack.c:874
+#: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
+#: src/modules/lapack/Lapack.c:873
 msgid "'x' must be a square numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:331 src/modules/lapack/Lapack.c:361
-#: src/modules/lapack/Lapack.c:410
+#: src/modules/lapack/Lapack.c:325 src/modules/lapack/Lapack.c:355
+#: src/modules/lapack/Lapack.c:404
 msgid "'A' must be a numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:333
+#: src/modules/lapack/Lapack.c:327
 msgid "'type' must be a character string"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:411
-#: src/modules/lapack/Lapack.c:447 src/modules/lapack/Lapack.c:504
+#: src/modules/lapack/Lapack.c:357 src/modules/lapack/Lapack.c:405
+#: src/modules/lapack/Lapack.c:441 src/modules/lapack/Lapack.c:498
 msgid "'norm' must be a character string"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:383
+#: src/modules/lapack/Lapack.c:377
 #, c-format
 msgid "error [%d] from Lapack 'dgetrf()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:388
+#: src/modules/lapack/Lapack.c:382
 #, c-format
 msgid "exact singularity: U[%d,%d] = 0 in LU-decomposition {Lapack 'dgetrf()'}"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:400
+#: src/modules/lapack/Lapack.c:394
 #, c-format
 msgid "error [%d] from Lapack 'dgecon()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:420 src/modules/lapack/Lapack.c:452
-#: src/modules/lapack/Lapack.c:510
+#: src/modules/lapack/Lapack.c:414 src/modules/lapack/Lapack.c:446
+#: src/modules/lapack/Lapack.c:504
 msgid "'A' must be a *square* matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:434
+#: src/modules/lapack/Lapack.c:428
 #, c-format
 msgid "error [%d] from Lapack 'dtrcon()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:449 src/modules/lapack/Lapack.c:506
+#: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:500
 msgid "'A' must be a complex matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:471 src/modules/lapack/Lapack.c:478
+#: src/modules/lapack/Lapack.c:465 src/modules/lapack/Lapack.c:472
 #, c-format
 msgid "error [%d] from Lapack 'zgetrf()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:486
+#: src/modules/lapack/Lapack.c:480
 #, c-format
 msgid "error [%d] from Lapack 'zgecon()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:490 src/modules/lapack/Lapack.c:525
-#: src/modules/lapack/Lapack.c:594 src/modules/lapack/Lapack.c:654
-#: src/modules/lapack/Lapack.c:698 src/modules/lapack/Lapack.c:740
-#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:857
-#: src/modules/lapack/Lapack.c:918
+#: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
+#: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
+#: src/modules/lapack/Lapack.c:692 src/modules/lapack/Lapack.c:734
+#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:856
+#: src/modules/lapack/Lapack.c:916
 msgid "Fortran complex functions are not available on this platform"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:522
+#: src/modules/lapack/Lapack.c:516
 #, c-format
 msgid "error [%d] from Lapack 'ztrcon()'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:538 src/modules/lapack/Lapack.c:608
+#: src/modules/lapack/Lapack.c:532 src/modules/lapack/Lapack.c:602
 msgid "'a' must be a complex matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:541 src/modules/lapack/Lapack.c:1043
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1041
 msgid "'a' is 0-diml"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1045
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1043
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:549 src/modules/lapack/Lapack.c:1051
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1049
 msgid "no right-hand side in 'b'"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:552 src/modules/lapack/Lapack.c:566
-#: src/modules/lapack/Lapack.c:1054 src/modules/lapack/Lapack.c:1070
+#: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:560
+#: src/modules/lapack/Lapack.c:1052 src/modules/lapack/Lapack.c:1068
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:587 src/modules/lapack/Lapack.c:949
-#: src/modules/lapack/Lapack.c:963 src/modules/lapack/Lapack.c:1018
-#: src/modules/lapack/Lapack.c:1092
+#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:947
+#: src/modules/lapack/Lapack.c:961 src/modules/lapack/Lapack.c:1016
+#: src/modules/lapack/Lapack.c:1090
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:668 src/modules/lapack/Lapack.c:713
+#: src/modules/lapack/Lapack.c:662 src/modules/lapack/Lapack.c:707
 msgid "'b' must be a complex matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:676 src/modules/lapack/Lapack.c:722
-#: src/modules/lapack/Lapack.c:1181 src/modules/lapack/Lapack.c:1220
+#: src/modules/lapack/Lapack.c:670 src/modules/lapack/Lapack.c:716
+#: src/modules/lapack/Lapack.c:1180 src/modules/lapack/Lapack.c:1219
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:749
-msgid "'jobu' and 'jobv' must be character strings"
-msgstr ""
+#: src/modules/lapack/Lapack.c:743
+#, fuzzy
+msgid "'jobu' must be a character string"
+msgstr "'msg1' skal være en tegnstreng"
 
-#: src/modules/lapack/Lapack.c:756
+#: src/modules/lapack/Lapack.c:751
 msgid "matrices of 2^31 or more elements are not supported"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:816
+#: src/modules/lapack/Lapack.c:815
 #, fuzzy
 msgid "'x' must be a square complex matrix"
 msgstr "'text' skal være en tegnstreng"
 
-#: src/modules/lapack/Lapack.c:927 src/modules/lapack/Lapack.c:1001
-#: src/modules/lapack/Lapack.c:1040 src/modules/lapack/Lapack.c:1114
-#: src/modules/lapack/Lapack.c:1245
+#: src/modules/lapack/Lapack.c:925 src/modules/lapack/Lapack.c:999
+#: src/modules/lapack/Lapack.c:1038 src/modules/lapack/Lapack.c:1113
+#: src/modules/lapack/Lapack.c:1244
 msgid "'a' must be a numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:934 src/modules/lapack/Lapack.c:1250
+#: src/modules/lapack/Lapack.c:932 src/modules/lapack/Lapack.c:1249
 msgid "'a' must be a square matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:935
+#: src/modules/lapack/Lapack.c:933
 msgid "'a' must have dims > 0"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:947
+#: src/modules/lapack/Lapack.c:945
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:961
+#: src/modules/lapack/Lapack.c:959
 msgid "the matrix is either rank-deficient or indefinite"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:988
+#: src/modules/lapack/Lapack.c:986
 msgid "'size' argument must be a positive integer"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1003
+#: src/modules/lapack/Lapack.c:1001
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1004
+#: src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1016
+#: src/modules/lapack/Lapack.c:1014
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1095
+#: src/modules/lapack/Lapack.c:1093
 #, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1102
+#: src/modules/lapack/Lapack.c:1101
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1174 src/modules/lapack/Lapack.c:1212
+#: src/modules/lapack/Lapack.c:1173 src/modules/lapack/Lapack.c:1211
 msgid "'b' must be a numeric matrix"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:1246
+#: src/modules/lapack/Lapack.c:1245
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 
@@ -6899,12 +6905,12 @@ msgstr ""
 msgid "bessel_y allocation error"
 msgstr ""
 
-#: src/nmath/bessel_y.c:76 src/nmath/bessel_y.c:121
+#: src/nmath/bessel_y.c:82 src/nmath/bessel_y.c:127
 #, c-format
 msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr ""
 
-#: src/nmath/bessel_y.c:79 src/nmath/bessel_y.c:124
+#: src/nmath/bessel_y.c:85 src/nmath/bessel_y.c:130
 #, c-format
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr ""
