@@ -5253,7 +5253,7 @@ function(package, dir, lib.loc = NULL)
                        })
             imp3f <- imp3f[(maintainers != db["Maintainer"])]
         }
-    } else imp32 <- imp3ff <- unknown <- character()
+    } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
                 in_depends = unique(bad_deps),
