@@ -4370,36 +4370,43 @@ examples.
 
 A @file{CITATION} file will contain calls to function @code{bibentry}.
 
-Here is that for @CRANpkg{nlme}, re-formatted:
+Here is that for @CRANpkg{nlme}:
 
 @example
-citHeader("To cite package 'nlme' in publications use:")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
 
-year <- sub(".*(2[[:digit:]]@{3@})-.*", "\\1", meta$Date, perl = TRUE)
-vers <- paste("R package version", meta$Version)
-
-citEntry(entry = "Manual",
-	 title = "nlme: Linear and Nonlinear Mixed Effects Models",
-	 author = personList(as.person("Jose Pinheiro"),
-			     as.person("Douglas Bates"),
-			     as.person("Saikat DebRoy"),
-			     as.person("Deepayan Sarkar"),
-			     person("R Core Team")),
-	 year = year,
-	 note = vers,
-
-	 textVersion =
-	 paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
-		"Deepayan Sarkar and the R Core Team (",
-		year,
-		"). nlme: Linear and Nonlinear Mixed Effects Models. ",
-		vers, "."))
+bibentry(bibtype = "Manual",
+         title = "@{nlme@}: Linear and Nonlinear Mixed Effects Models",
+         author = c(person("Jose", "Pinheiro"),
+                    person("Douglas", "Bates"),
+                    person("Saikat", "DebRoy"),
+                    person("Deepayan", "Sarkar"),
+                    person("R Core Team")),
+         year = year,
+         note = note,
+         url = "http://CRAN.R-project.org/package=nlme")
 @end example
 
 Note the way that information that may need to be updated is picked up
 from the @file{DESCRIPTION} file -- it is tempting to hardcode such
 information, but it normally then gets outdated.  See @code{?bibentry}
 for further details of the information which can be provided.
+
+In case a bibentry contains @LaTeX{} markup (e.g., for accented
+characters or mathematical symbols), it may be necessary to provide a
+text representation to be used for printing via the @code{textVersion}
+argument to @code{bibentry}.  E.g., earlier versions of
+@CRANpkg{nlme} additionally used
+
+@example
+         textVersion =
+         paste0("Jose Pinheiro, Douglas Bates, Saikat DebRoy,",
+                "Deepayan Sarkar and the R Core Team (",
+                year,
+                "). nlme: Linear and Nonlinear Mixed Effects Models. ",
+                note, ".")
+@end example
 
 The @file{CITATION} file should itself produce no output when
 @code{source}-d.
