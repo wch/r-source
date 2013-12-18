@@ -5205,7 +5205,7 @@ function(package, dir, lib.loc = NULL)
     imp3 <- setdiff(imp3, pkg_name)
     if(length(imp3)) {
         ## remove other packages which have the same maintainer,
-        ## but report references to itself.
+        ## but report references to itself.  Unless they should be :: .
         maintainers <-
             sapply(imp3,
                    function(p) {
@@ -5213,7 +5213,6 @@ function(package, dir, lib.loc = NULL)
                        if(dfile == "") return("")
                        .read_description(dfile)["Maintainer"]
                    })
-        imp3 <- imp3[(maintainers != db["Maintainer"])]
         imp3f <- imp3f[names(imp3f) %in% imp3]
         imps <- split(imp3f, names(imp3f))
         imp32 <- imp3 <- imp3f <- imp3ff <- unknown <- character()
@@ -5251,6 +5250,7 @@ function(package, dir, lib.loc = NULL)
                  }
             }
         }
+        imp3f <- imp3f[(maintainers != db["Maintainer"])]
     } else imp32 <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
@@ -5353,13 +5353,12 @@ function(x, ...)
                        sQuote(xx))
           }
      },
-      if(length(xx <- x$imp3)) { ## ' ' seems to get converted to dir quotes
-          xxx <- x$imp3f
+      if(length(xxx <- x$imp3f)) { ## ' ' seems to get converted to dir quotes
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(incoming) {
               base <- unlist(.get_standard_package_names()[c("base", "recommended")])
-              if (any(xx %in% base))
+              if (any(xxx %in% base))
                   msg <- c(msg,
                            "  Including base/recommended package(s):",
                            .pretty_format(intersect(base, xx)))
@@ -6192,7 +6191,7 @@ function(dir)
                                   ## encoding?
                                   c(p, readLines(fp, warn = FALSE))
                               } else NULL
-                          }))     
+                          }))
     }
 
     out$Maintainer <- meta["Maintainer"]
