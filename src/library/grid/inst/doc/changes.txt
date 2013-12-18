@@ -37,6 +37,9 @@ Changes from grid_3.0.* to grid_3.1.0:
 
 11. Exported generic forceGrob().
 
+12. Better defenses against division-by-zero in unit resolution/conversion
+    (see ./DivByZero.txt).
+
 
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------

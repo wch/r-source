@@ -47,10 +47,10 @@ valid.viewport <- function(x, y, width, height, just,
                    inherit=FALSE,
                    stop("invalid 'clip' value"))
   if (!is.numeric(xscale) || length(xscale) != 2 ||
-      any(!is.finite(xscale)))
+      any(!is.finite(xscale)) || diff(xscale) == 0)
     stop("invalid 'xscale' in viewport")
   if (!is.numeric(yscale) || length(yscale) != 2 ||
-      any(!is.finite(yscale)))
+      any(!is.finite(yscale)) || diff(yscale) == 0)
     stop("invalid 'yscale' in viewport")
   if (!is.numeric(angle) || length(angle) != 1 ||
       !is.finite(angle))
