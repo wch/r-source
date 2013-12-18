@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -180,7 +180,7 @@ msgid "invalid 'family' argument"
 msgstr "argomento 'family' non valido"
 
 #, fuzzy
-msgid "invalid 'file'"
+msgid "invalid 'file' argument '%s'"
 msgstr "argomento 'family' non valido"
 
 msgid "invalid PDF version"
@@ -338,6 +338,10 @@ msgstr ""
 
 #, fuzzy
 msgid "invalid 'title'"
+msgstr "argomento 'family' non valido"
+
+#, fuzzy
+msgid "invalid 'file'"
 msgstr "argomento 'family' non valido"
 
 msgid "invalid Quartz font:  must be 4 strings"

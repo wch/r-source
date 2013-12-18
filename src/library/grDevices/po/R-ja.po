@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2013-02-28 05:58+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -166,8 +166,9 @@ msgstr " フォントファミリー '%s' は未知です "
 msgid "invalid 'family' argument"
 msgstr " 不正な 'family' 引数です "
 
-msgid "invalid 'file'"
-msgstr " 不正な 'file' です "
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr " 不正な 'family' 引数です "
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
@@ -310,6 +311,9 @@ msgstr " 'res' は 'units = \"px\"' で無い限り指定される必要があ�
 
 msgid "invalid 'title'"
 msgstr " 不正な 'title' です "
+
+msgid "invalid 'file'"
+msgstr " 不正な 'file' です "
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr " 不正な Quartz font です: 4 つの文字列でなければなりません "

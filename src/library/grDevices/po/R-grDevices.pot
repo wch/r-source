@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 msgid "invalid 'family' argument"
 msgstr ""
 
-msgid "invalid 'file'"
+msgid "invalid 'file' argument '%s'"
 msgstr ""
 
 msgid "invalid PDF version"
@@ -300,6 +300,9 @@ msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr ""
 
 msgid "invalid 'title'"
+msgstr ""
+
+msgid "invalid 'file'"
 msgstr ""
 
 msgid "invalid Quartz font:  must be 4 strings"

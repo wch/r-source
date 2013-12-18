@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2013-03-09 17:03-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -172,8 +172,9 @@ msgstr "알 수 없는 페밀리 '%s'입니다"
 msgid "invalid 'family' argument"
 msgstr "유효하지 않은 'family' 인자입니다"
 
-msgid "invalid 'file'"
-msgstr "유효하지 않은 'file'입니다"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "유효하지 않은 'family' 인자입니다"
 
 msgid "invalid PDF version"
 msgstr "유효하지 않은 PDF 버전입니다"
@@ -318,6 +319,9 @@ msgstr "만약 'units = \"px\"'이 아니라면 'res'는 반드시 지정되야 
 
 msgid "invalid 'title'"
 msgstr "유효하지 않은 'title'입니다"
+
+msgid "invalid 'file'"
+msgstr "유효하지 않은 'file'입니다"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "유효하지 않은 Quartz 폰트이므로 반드시 4 문자열이어야 합니다"

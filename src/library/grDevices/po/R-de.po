@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2013-03-01 10:55+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -164,8 +164,9 @@ msgstr "unbekannte Familie '%s'"
 msgid "invalid 'family' argument"
 msgstr "ungültiges 'family' Argument"
 
-msgid "invalid 'file'"
-msgstr "ungültiges 'file' Argument"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "ungültiges 'family' Argument"
 
 msgid "invalid PDF version"
 msgstr "ungültige PDF Version"
@@ -309,6 +310,9 @@ msgstr "'res' muss angegeben werden, außer 'units = \"px\"'"
 
 msgid "invalid 'title'"
 msgstr "unzulässiger 'title'"
+
+msgid "invalid 'file'"
+msgstr "ungültiges 'file' Argument"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "ungültiger Quartz Zeichensatz: müssen 4 Zeichenketten sein"

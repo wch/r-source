@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -335,16 +335,13 @@ msgstr "nieznana rodzina '%s'"
 msgid "invalid 'family' argument"
 msgstr "niepoprawny argument 'family'"
 
-# grDevices/R/postscript.R: 263
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 285
-# stop("invalid 'file'")
-# grDevices/R/postscript.R: 363
-# stop("invalid 'file'")
-# grDevices/R/unix/quartz.R: 64
-# stop("invalid 'file'")
-msgid "invalid 'file'"
-msgstr "niepoprawna wartość 'file'"
+# grDevices/R/postscript.R: 258
+# stop("invalid 'family' argument")
+# grDevices/R/postscript.R: 351
+# stop("invalid 'family' argument")
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "niepoprawny argument 'family'"
 
 # grDevices/R/postscript.R: 360
 # stop("invalid PDF version")
@@ -664,6 +661,17 @@ msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
 # stop("invalid 'title'")
 msgid "invalid 'title'"
 msgstr "niepoprawna wartość 'title'"
+
+# grDevices/R/postscript.R: 263
+# stop("invalid 'file'")
+# grDevices/R/postscript.R: 285
+# stop("invalid 'file'")
+# grDevices/R/postscript.R: 363
+# stop("invalid 'file'")
+# grDevices/R/unix/quartz.R: 64
+# stop("invalid 'file'")
+msgid "invalid 'file'"
+msgstr "niepoprawna wartość 'file'"
 
 # grDevices/R/unix/quartz.R: 83
 # stop("invalid Quartz font:  must be 4 strings")

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,8 +169,9 @@ msgstr "ukendt familie »%s«"
 msgid "invalid 'family' argument"
 msgstr "ugyldigt argument for »family«"
 
-msgid "invalid 'file'"
-msgstr "ugyldig »file«"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "ugyldigt argument for »family«"
 
 msgid "invalid PDF version"
 msgstr "ugyldig PDF-version"
@@ -320,6 +321,9 @@ msgstr "»res« skal angives med mindre »units = \"px\"«"
 
 msgid "invalid 'title'"
 msgstr "ugyldig »title«"
+
+msgid "invalid 'file'"
+msgstr "ugyldig »file«"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "ugyldig Quartz-skrift: skal være 4 strenge"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-10-16 10:59\n"
+"POT-Creation-Date: 2013-12-18 14:41\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -171,8 +171,9 @@ msgstr "família desconhecida '%s'"
 msgid "invalid 'family' argument"
 msgstr "argumento 'family' inválido"
 
-msgid "invalid 'file'"
-msgstr "'file' inválido"
+#, fuzzy
+msgid "invalid 'file' argument '%s'"
+msgstr "argumento 'family' inválido"
 
 msgid "invalid PDF version"
 msgstr "versão PDF inválida"
@@ -322,6 +323,9 @@ msgstr "'res' deve ser especificada a não ser 'units = \"px\"'"
 
 msgid "invalid 'title'"
 msgstr "'title' inválido"
+
+msgid "invalid 'file'"
+msgstr "'file' inválido"
 
 msgid "invalid Quartz font:  must be 4 strings"
 msgstr "fonte Quartz inválido: deve ser 4 cadeias"
