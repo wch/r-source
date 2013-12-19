@@ -171,6 +171,9 @@
       
       \item (Windows only.)  The version of \samp{tzcode} included in
       \file{src/extra/tzone} has been updated.
+      
+      \item The HTML version of \sQuote{An Introduction to R} now has
+      links to PNG versions of the figures.
     }
   }
 

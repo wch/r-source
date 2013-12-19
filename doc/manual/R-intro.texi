@@ -3102,9 +3102,9 @@ smoothing (it usually does for ``interesting'' densities).  (Better
 automated methods of bandwidth choice are available, and in this example
 @code{bw = "SJ"} gives a good result.)
 
-@iftex
+@ifnotinfo
 @image{images/hist,9cm}
-@end iftex
+@end ifnotinfo
 
 We can plot the empirical cumulative distribution function by using the
 function @code{ecdf}.
@@ -3126,9 +3126,9 @@ Let us fit a normal distribution and overlay the fitted CDF.
 > lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
 @end example
 
-@iftex
+@ifnotinfo
 @image{images/ecdf,9cm}
-@end iftex
+@end ifnotinfo
 
 Quantile-quantile (Q-Q) plots can help us examine this more carefully.
 @cindex Quantile-quantile plots
@@ -3145,9 +3145,9 @@ which shows a reasonable fit but a shorter right tail than one would
 expect from a normal distribution.  Let us compare this with some
 simulated data from a @math{t} distribution
 
-@iftex
+@ifnotinfo
 @image{images/QQ,7cm}
-@end iftex
+@end ifnotinfo
 
 @example
 x <- rt(250, df = 5)
@@ -3238,9 +3238,9 @@ boxplot(A, B)
 which indicates that the first group tends to give higher results than
 the second.
 
-@iftex
+@ifnotinfo
 @image{images/ice,7cm}
-@end iftex
+@end ifnotinfo
 
 To test for the equality of the means of the two examples, we can use
 an @emph{unpaired} @math{t}-test by
@@ -6125,11 +6125,11 @@ A single plot in @R{} is known as a @code{figure} and comprises a
 @emph{plot region} surrounded by margins (possibly containing axis
 labels, titles, etc.) and (usually) bounded by the axes themselves.
 
-@iftex
+@ifnotinfo
 A typical figure is
 
 @image{images/fig11,7cm}
-@end iftex
+@end ifnotinfo
 
 Graphics parameters controlling figure layout include:
 
@@ -6162,9 +6162,9 @@ single page.  Each figure has its own margins, and the array of figures
 is optionally surrounded by an @emph{outer margin}, as shown in the
 following figure.
 
-@iftex
+@ifnotinfo
 @image{images/fig12,6cm}
-@end iftex
+@end ifnotinfo
 
 The graphical parameters relating to multiple figures are as follows:
 

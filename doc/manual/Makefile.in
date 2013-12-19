@@ -169,7 +169,7 @@ html: $(OBJECTS_HTML)
 R-admin.html: $(texiincludes) $(srcdir)/Rman.css
 R-data.html: $(texiincludes) $(srcdir)/Rman.css
 R-exts.html: $(texiincludes) $(srcdir)/Rman.css
-R-intro.html: $(texiincludes) $(srcdir)/Rman.css
+R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css
 R-FAQ.html: $(srcdir)/Rfaq.css
@@ -259,12 +259,22 @@ stamp-images-pdf:
 	@touch $@
 R-lang.pdf: $(texiincludes)
 
-install: install-message installdirs install-html
+install: install-message installdirs install-html install-images-html
 install-message:
 	@$(ECHO) "installing $(subdir) ..."
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual"
 install-strip: install
+install-images-html: installdirs
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
+	@-for f in $(srcdir)/images/*.png; do \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
+	done
+stamp-images-html:
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-html; \
+	fi
+	@touch $@
 install-images-pdf: installdirs
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.pdf; do \
