@@ -685,8 +685,20 @@ buildVignette <-
 
 getVignetteEncoding <-  function(file, ...)
 {
+    # Look for inputen[cx] first, then %\SweaveUTF8.  Complain about 
+    # inconsistencies.
+    
     lines <- readLines(file, warn = FALSE)
-    .getVignetteEncoding(lines, ...)
+    result1 <- .getVignetteEncoding(lines, ...)
+    
+    poss <- grep("^[[:space:]]*%\\\\SweaveUTF8[[:space:]]*$", lines)
+    if (length(poss)) {
+    	result <- "UTF-8"
+    	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
+    	    stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
+    } else 
+    	result <- result1
+    result
 }
 
 .getVignetteEncoding <- function(lines, convert = FALSE)

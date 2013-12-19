@@ -135,6 +135,12 @@
       \item Complex \code{svd()} now uses LAPACK subroutine
       \code{ZGESDD}, the complex analogue of the routine used for the
       real case.
+      
+      \item Sweave now outputs \file{.tex} files in UTF-8 if the 
+      input encoding is declared to be UTF-8, regardless of the 
+      local encoding.  The UTF-8 encoding may now be declared using
+      a LaTeX comment containing the string \code{\%\\SweaveUTF8}
+      on a line by itself.
     }
   }
 

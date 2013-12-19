@@ -397,7 +397,7 @@ stabilized).
 
 \subsection{Encoding}
 
-\LaTeX{} documents are normally written entirely in ASCII, using
+\LaTeX{} documents are traditionally written entirely in ASCII, using
 \LaTeX{} escapes such as \verb|\'e| for accented characters.  This
 can be inconvenient when writing a non-English document, and an
 alternative input encoding can be selected by using a statement such as
@@ -417,8 +417,16 @@ coverage\footnote{including Eastern European, Greek and Hebrew
   \verb|\input{ix-utf8enc.dfu}|
 \end{quote}
 
+As from \R{} 3.1.0, the UTF-8 encoding is handled preferentially to
+other encodings.  Whereas Sweave will convert R code to the local
+encoding in general, it leaves UTF-8 code in that encoding, and 
+outputs in that encoding as well.  Besides the declaration scheme
+above, a UTF-8 encoding may be obtained by the \LaTeX{} comment
+\begin{quote}
+  \verb|%\SweaveUTF8|
+\end{quote}
 
-The previous paragraph covered the documentation sections, but what of
+The previous paragraphs covered the documentation sections, but what of
 the code sections where \LaTeX{} escapes cannot be used?  The first
 piece of advice is to use only ASCII code sections as anything else
 will reduce the portability of your document.  But \R{} code can be
@@ -433,7 +441,10 @@ encoding to be changed by
 \begin{quote}
   \verb|\inputencoding{something}|
 \end{quote}
-statements: these may not work well in Sweave processing.
+statements: these may not work well in Sweave processing.  Since
+\verb|\usepackage[latin1]{inputenc}| is typically not legal \LaTeX{} code 
+in an included file, it is easiest to declare the encoding to Sweave
+using the \verb|%\SweaveUTF8| comment.
 
 It is all too easy for BiBTeX to pick up UTF-8-encoded references for
 a Latin-1 document, or \emph{vice versa}.

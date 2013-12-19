@@ -226,7 +226,9 @@ SweaveReadFile <- function(file, syntax, encoding = "")
                  " declares an encoding that Sweave does not know about",
                  domain = NA, call. = FALSE)
         }
-        if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
+        if (enc != "UTF-8") {
+            if (nzchar(enc)) text <- iconv(text, enc, "") else enc <- "ASCII"
+        }
     } else enc <- "bytes"
 
     pos <- grep(syntax$syntaxname, text)

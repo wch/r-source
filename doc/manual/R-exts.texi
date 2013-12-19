@@ -2967,18 +2967,27 @@ to the encoding of the current @R{} session.
 encoding: for a non-@acronym{ASCII} vignette what that is recorded in a
 comment at the top of the file.
 
-@code{Sweave()} will produce a @file{.tex} file in the current locale's
-encoding.  That needs to be declared to @LaTeX{} via a line like
+@code{Sweave()} will produce a @file{.tex} file in the current
+encoding, or in UTF-8 if that is declared.  Non-@acronym{ASCII} encodings
+need to be declared to @LaTeX{} via a line like
 @example
 \usepackage[utf8]@{inputenc@}
 @end example
 @noindent
 (It is also possible to use the more recent @samp{inputenx} @LaTeX{}
-package.)  @command{R CMD check} will warn about any non-@acronym{ASCII}
-vignettes it finds which do not have such a declaration.
+package.)  If the encoding is UTF-8, this can also be declared using
+the declaration
+@example
+%!\SweaveUTF8
+@end example
+@noindent
+but be aware that @LaTeX{} may require the @samp{usepackage} declaration.
+@command{R CMD check} will warn about any non-@acronym{ASCII}
+vignettes it finds which do not have one of these declarations.
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
-chunk.  The @R{} output will also be in the current locale, and should
+chunk.  The @R{} output will also be in the current locale (or @acronym{UTF-8}
+if so declared), and should
 be covered by the @samp{inputenc} declaration.  One thing people often
 forget is that the @R{} output may not be @acronym{ASCII} even for
 @acronym{ASCII} @R{} sources, for many possible reasons.  One common one
