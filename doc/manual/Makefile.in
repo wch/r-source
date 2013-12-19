@@ -29,6 +29,8 @@ SUBDIRS_WITH_NO_BUILD = images
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
+OBJECTS_EPUB = $(OBJECTS_HTML:.html=.epub)
+OBJECTS_MOBI = $(OBJECTS_HTML:.html=.mobi)
 
 MAKEINDEX = @MAKEINDEX@
 MAKEINFO = @MAKEINFO@
@@ -44,6 +46,14 @@ PDFLATEX = @PDFLATEX@
 PDFTEX = @PDFTEX@
 
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
+
+## experimental support of ebook conversion.
+## ebook-convert is part of 'calibre'
+## (http://calibre-ebook.com/download, or Debian/Fedora/... packages)
+EBOOK = ebook-convert
+## or on OS X
+## EBOOK = /Applications/calibre.app/Contents/MacOS/ebook-convert
+EBOOK_OPTS = --language en --publisher "R Core Team"
 
 datarootdir = @datarootdir@
 infodir = @infodir@
@@ -61,7 +71,7 @@ SVN_REV = $(top_builddir)/SVN-REVISION
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
 .SUFFIXES:
-.SUFFIXES: .html .info .texi .pdf
+.SUFFIXES: .html .info .texi .pdf .epub .mobi
 
 all: Makefile R docs
 
@@ -100,6 +110,36 @@ docs: html
 	  exit 1; \
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
+
+## It seems ebook-convert converts the directory, 
+## so we populate a temporary dir.
+.html.epub:
+	@mkdir -p tmp
+	@cp $< tmp
+	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
+	@mv tmp/$@ .
+	@rm -r tmp
+
+.html.mobi:
+	@mkdir -p tmp
+	@cp $< tmp
+	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
+	@mv tmp/$@ .
+	@rm -r tmp
+
+R-intro.epub: R-intro.html
+	@mkdir -p tmp
+	@cp -r images $< tmp
+	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
+	@mv tmp/$@ .
+	@rm -r tmp
+
+R-intro.mobi: R-intro.html
+	@mkdir -p tmp
+	@cp -r images $< tmp
+	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
+	@mv tmp/$@ .
+	@rm -r tmp
 
 R-admin.html: $(srcdir)/R-admin.texi
 	@if test -z "$(MAKEINFO)"; then \
@@ -166,6 +206,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(SVN_REV)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
+
 R-admin.html: $(texiincludes) $(srcdir)/Rman.css
 R-data.html: $(texiincludes) $(srcdir)/Rman.css
 R-exts.html: $(texiincludes) $(srcdir)/Rman.css
@@ -173,6 +214,9 @@ R-intro.html: stamp-images-html $(texiincludes) $(srcdir)/Rman.css
 R-ints.html: $(texiincludes) $(srcdir)/Rman.css
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css
 R-FAQ.html: $(srcdir)/Rfaq.css
+
+ebooks: html
+	@$(MAKE) $(OBJECTS_EPUB) $(OBJECTS_MOBI)
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)

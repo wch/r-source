@@ -174,6 +174,9 @@
       
       \item The HTML version of \sQuote{An Introduction to R} now has
       links to PNG versions of the figures.
+
+      \item There is experimental support to produce manuals in ebook
+      formats. (See \file{doc/manual/Makefile}.)
     }
   }
 
