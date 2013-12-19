@@ -66,10 +66,11 @@ imagedir:
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
-	$(MKDIR) -p $(RPREFIX)/doc/manual
+	$(MKDIR) -p $(RPREFIX)/doc/manual/images
 	$(CP) -pR $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
+	$(CP) -p $(R_HOME)/doc/manual/images/*.png $(RPREFIX)/doc/manual/images
 #	html copies of these are in doc/manual, and we don't have FAQ PDF on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) $(RPREFIX)/doc/html/R-admin.html 
