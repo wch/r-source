@@ -171,9 +171,6 @@
       
       \item (Windows only.)  The version of \samp{tzcode} included in
       \file{src/extra/tzone} has been updated.
-      
-      \item The HTML version of \sQuote{An Introduction to R} now has
-      links to PNG versions of the figures.
 
       \item There is experimental support to produce manuals in ebook
       formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
@@ -405,9 +402,13 @@
 
       \item There is a new function, \code{La_version()}, to report the
       version of LAPACK in use.
+      
+      \item The HTML version of \sQuote{An Introduction to R} now has
+      links to PNG versions of the figures.
     }
   }
   
+      
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The new field \samp{SysDataCompression} in the
