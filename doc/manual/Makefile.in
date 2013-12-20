@@ -215,8 +215,13 @@ R-ints.html: $(texiincludes) $(srcdir)/Rman.css
 R-lang.html: $(texiincludes) $(srcdir)/Rman.css
 R-FAQ.html: $(srcdir)/Rfaq.css
 
-ebooks: html
-	@$(MAKE) $(OBJECTS_EPUB) $(OBJECTS_MOBI)
+ebooks: epub mobi
+
+epub: html
+	@$(MAKE) $(OBJECTS_EPUB)
+
+mobi: html
+	@$(MAKE) $(OBJECTS_MOBI)
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
