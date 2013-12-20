@@ -176,7 +176,8 @@
       links to PNG versions of the figures.
 
       \item There is experimental support to produce manuals in ebook
-      formats. (See \file{doc/manual/Makefile}.)
+      formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
+      Cavalcanti.)
     }
   }
 
