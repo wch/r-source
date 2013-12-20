@@ -154,12 +154,11 @@ strptime(x, format, tz = "")
     \item{\code{\%l}}{The 12-hour clock time with single digits preceded
       by a blank.}
     \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
-    \item{\code{\%P}}{Like \code{\%p}, but in lower case.}
     \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
       PM).  Only defined in some locales.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%s}}{(Output only.) The number of seconds since the
-      epoch. Not widely implemented.}
+      epoch. Not POSIX, not widely implemented.}
     \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
     \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
