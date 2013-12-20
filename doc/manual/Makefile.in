@@ -29,8 +29,8 @@ SUBDIRS_WITH_NO_BUILD = images
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
-OBJECTS_EPUB = $(OBJECTS_HTML:.html=.epub)
-OBJECTS_MOBI = $(OBJECTS_HTML:.html=.mobi)
+OBJECTS_EPUB = $(SOURCES_TEXI:.texi=.epub)
+OBJECTS_MOBI = $(SOURCES_TEXI:.texi=.mobi)
 
 MAKEINDEX = @MAKEINDEX@
 MAKEINFO = @MAKEINFO@
@@ -113,32 +113,38 @@ docs: html
 
 ## It seems ebook-convert converts the directory, 
 ## so we populate a temporary dir.
-.html.epub:
+.texi.epub:
 	@mkdir -p tmp
-	@cp $< tmp
-	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
-	@mv tmp/$@ .
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
+	@rm -f $@.tmp
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
 	@rm -r tmp
 
-.html.mobi:
+.texi.mobi:
 	@mkdir -p tmp
-	@cp $< tmp
-	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
-	@mv tmp/$@ .
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
+	@rm -f $@.tmp
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
 	@rm -r tmp
 
-R-intro.epub: R-intro.html
+R-intro.epub: R-intro.texi
 	@mkdir -p tmp
-	@cp -r images $< tmp
-	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
-	@mv tmp/$@ .
+	@cp -r images tmp
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
+	@rm -f $@.tmp
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
 	@rm -r tmp
 
-R-intro.mobi: R-intro.html
+R-intro.mobi: R-intro.texi
 	@mkdir -p tmp
-	@cp -r images $< tmp
-	$(EBOOK) tmp/$< tmp/$@ $(EBOOK_OPTS)
-	@mv tmp/$@ .
+	@cp -r images tmp
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
+	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
+	@rm -f $@.tmp
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
 	@rm -r tmp
 
 R-admin.html: $(srcdir)/R-admin.texi
@@ -217,11 +223,9 @@ R-FAQ.html: $(srcdir)/Rfaq.css
 
 ebooks: epub mobi
 
-epub: html
-	@$(MAKE) $(OBJECTS_EPUB)
+epub: $(OBJECTS_EPUB)
 
-mobi: html
-	@$(MAKE) $(OBJECTS_MOBI)
+mobi: $(OBJECTS_MOBI)
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
