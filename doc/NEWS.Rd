@@ -24,6 +24,9 @@
 
       \item There is a new function, \code{La_version()}, to report the
       version of LAPACK in use.
+      
+      \item The HTML version of \sQuote{An Introduction to R} now has
+      links to PNG versions of the figures.
     }
   }
   
