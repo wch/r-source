@@ -210,7 +210,8 @@
       be specified by setting macros \samp{CXX1X}, \samp{CXX1XFLAGS} and
       so on, either when \R is configured or in a personal
       \file{Makevars} file.  (The default is to use \samp{$(CXX)
-	-std=c++11} except on Windows.)
+	-std=c++11} except on Windows where \option{-std=c++0x} is used,
+      as supported by \code{g++ 4.6.x}.)
       
       Other standards supported by the compiler can be specified by e.g.
       \samp{USE_CXX1X = -std=c++1y} .

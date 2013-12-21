@@ -393,6 +393,7 @@ clean:
 	  version.tex version.texi
 	-@rm -f stamp-*
 distclean: clean
+	-@rm -f *.epub *.mobi
 	-@rm -f Makefile
 maintainer-clean: distclean
 
