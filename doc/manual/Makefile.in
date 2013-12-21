@@ -118,7 +118,7 @@ docs: html
 	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
 	@rm -r tmp
 
 .texi.mobi:
@@ -126,7 +126,7 @@ docs: html
 	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
 	@rm -r tmp
 
 R-intro.epub: R-intro.texi
@@ -135,7 +135,8 @@ R-intro.epub: R-intro.texi
 	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
+  "W.N. Venables, D.M. Smith, R Core Team"
 	@rm -r tmp
 
 R-intro.mobi: R-intro.texi
@@ -144,7 +145,8 @@ R-intro.mobi: R-intro.texi
 	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
-	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS)
+	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
+  "W.N. Venables, D.M. Smith, R Core Team"
 	@rm -r tmp
 
 R-admin.html: $(srcdir)/R-admin.texi
