@@ -550,7 +550,7 @@ make mobi
 
 @noindent
 This requires @command{ebook-convert} from @command{Calibre}
-(@uref{(http://calibre-ebook.com/download}, or from most Linux
+(@uref{http://calibre-ebook.com/download}), or from most Linux
 distributions).  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
 (which contains a commented value suitable for OS X).
