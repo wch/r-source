@@ -522,10 +522,37 @@ package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
 @file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example if
 you prefer the text and not the page number in the table of contents to
-be hyperlinked, use something like
+be hyperlinked, use
 @example
-\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktocpage=false@}@}@{@}
+\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=section@}@}@{@}
 @end example
+
+@noindent
+or 
+@example
+\ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=all@}@}@{@}
+@end example
+
+@noindent
+to hyperlink both text and page number@footnote{The @code{linktoc} 
+settings require @pkg{hyperref} version 6.78f or newer; with older versions of
+@pkg{hyperref} use @code{linktocpage=false} to hyperlink the text.}.
+
+Ebook versions in one or both of @file{.epub} and @file{.mobi} formats
+can be made by running in @file{doc/manual} one of
+@example
+make ebooks
+make epub
+make mobi
+@end example
+
+@noindent
+This requires @command{ebook-convert} from @command{Calibre}
+(@uref{(http://calibre-ebook.com/download}, or from most Linux
+distributions).  If necessary the path to @command{ebook-convert} can be
+set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
+(which contains a commented value suitable for OS X).
+
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
@@ -2838,11 +2865,11 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
 known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
 C99-compliant.@footnote{Note that C11 compilers need not be
-C99-compliant: @R{} requires support for @code{double complex} which is
-optional in C11 but is mandatory in C99.}  @R{} tries to choose suitable
-flags for the C compilers it knows about, but you may have to set
-@code{CC} or @code{CFLAGS} suitably.  For recent versions of
-@command{gcc} with @code{glibc} this means including
+C99-compliant: @R{} requires support for @code{double complex} and
+variable-length arrays which are optional in C11 but is mandatory in
+C99.}  @R{} tries to choose suitable flags for the C compilers it knows
+about, but you may have to set @code{CC} or @code{CFLAGS} suitably.  For
+recent versions of @command{gcc} with @code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is
