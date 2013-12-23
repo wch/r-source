@@ -4,6 +4,7 @@
 ## the end of a pipeline.
 ##
 ## PAGER is determined at configure time and recorded in `etc/Renviron'.
+## This is documented to be a 'command line' so we do not quote it.
 if test -n "${1}"; then
   exec ${PAGER} < ${1}
 else
