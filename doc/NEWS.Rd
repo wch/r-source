@@ -372,12 +372,6 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer yields a
       warning.
-
-      \item Extra checks have been added for units in \pkg{grid} to
-      catch instances of division-by-zero.  This may introduce error
-      messages in existing code and/or produce a different result
-      in existing code (but only where an infinite location or
-      dimension may now become zero).
     }
   }
 }
