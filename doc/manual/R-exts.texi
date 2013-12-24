@@ -2236,19 +2236,19 @@ cmi.o dmi.o: iface.o
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) on all known platforms.  However, all that
-can be assumed is approximate support for the C++98 standard (the widely
-use @command{g++} deviates considerably from the standard).  Some
-compilers have a concept of `C++03' (`essentially a bug fix') or `C++
-Technical Report 1', an optional addition to the `C++03' revision which
-was published in 2007.  Finally a revised standard was published in 2011
-and compilers with fairly complete implementations are becoming
+not necessarily installed) for all known @R{}platforms.  However, all
+that can be assumed is approximate support for the C++98 standard (the
+widely uses @command{g++} deviates considerably from the standard).
+Some compilers have a concept of `C++03' (`essentially a bug fix') or
+`C++ Technical Report 1', an optional addition to the `C++03' revision
+which was published in 2007.  Finally a revised standard was published
+in 2011 and compilers with fairly complete implementations are becoming
 available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-It may be possible to compile C++11 code with @command{g++} or
-@command{c++11} by including @option{-std=c++11} in
+It may be possible to compile C++11 code with recent versions of
+@command{g++} or @command{clang++} by including @option{-std=c++11} in
 @samp{PKG_CXXFLAGS}, and earlier versions support a flag
 @option{-std=c++0x}.
 
@@ -2265,21 +2265,20 @@ possible to select a different compiler @emph{via} personal
 @end ifset
 For example, on OS X 10.7 or later one could select @command{clang++}.
 
-As from @R{} 3.1.0 there may be another way to do this (currently
-experimental).  If the package's @file{Makevars} (or
-@file{Makevars.win}) file defines the macro @samp{USE_CXX1X},
-compilation and linking will be done with the compiler specified by the
-macro @samp{CXX1X}, which can be specified when @R{} is configured or in
-a personal or site @file{Makevars} file.  This defaults to the C++
-compiler with flag @option{-std=c++11} (@option{-std=c++0x} on Windows),
-but allows an incompatible alternative to be specified just for
-C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  (C++
+As from @R{} 3.1.0 there is another way to do this.  If the package's
+@file{Makevars} (or @file{Makevars.win}) file defines the macro
+@samp{USE_CXX1X}, compilation and linking will be done with the compiler
+specified by the macro @samp{CXX1X}, which can be specified when @R{} is
+configured or in a personal or site @file{Makevars} file.  This defaults
+to the C++ compiler with flag @option{-std=c++11} (@option{-std=c++0x}
+on Windows), but allows an incompatible alternative to be specified just
+for C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  (C++
 compilers, even different versions, often differ in their ABI, so their
 outputs can rarely be mixed.)
 
-If the macro @samp{CXX1X} is given a value this is appended to
-@samp{CXX1XFLAGS}.  This can be used to select a different standard, say
-@option{-std=c++1y} for those compilers which support it.
+If the macro @samp{CXX1X} is given a value this is use to set
+@samp{CXX1XSTD} to select a different standard, say @option{-std=c++1y}
+for those compilers which support it.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -7126,7 +7125,7 @@ common is @code{y[x - 1]} forgetting that @code{x} might be
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
-The current set is (on a single line):
+The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,array-bounds,bool,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
@@ -7142,6 +7141,8 @@ said to be more reliable in @command{clang} than @command{gcc}.
 For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
+
+This option does not currently compile OpenMP code.
 
 @node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Using `Dr. Memory'
