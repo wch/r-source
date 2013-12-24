@@ -30,7 +30,7 @@
 #include <R_ext/Print.h>
 
 #if !defined(__STDC_ISO_10646__) && (defined(__APPLE__) || defined(__FreeBSD__))
-/* This may not be 100% true (see the comment in rlocales.h),
+/* This may not be 100% true (see the comment in rlocale.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__
 #endif
@@ -2211,6 +2211,9 @@ static int NumericValue(int c)
 /* The idea here is that if a string contains \u escapes that are not
    valid in the current locale, we should switch to UTF-8 for that
    string.  Needs Unicode wide-char support.
+
+   Defining __STDC_ISO_10646__ is done by the OS (nor to) in wchar.t.
+   Some (e.g. Solaris, FreeBSD) have Unicode wchar_t but do not define it.
 */
 
 #if defined(Win32) || defined(__STDC_ISO_10646__)
@@ -2274,10 +2277,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     char s[nb];
     memset(s, 0, nb); /* safety */
 #ifdef WC_NOT_UNICODE
-    {
-	char *ss;
-	for(ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
-    }
+    for(char *ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
 #else
     wcstoutf8(s, wcs, nb);
 #endif

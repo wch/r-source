@@ -1398,6 +1398,7 @@ invalidate_cached_recodings(void)
 }
 
 
+/* in C11 these could use char32_t */
 #ifdef WORDS_BIGENDIAN
 static const char UNICODE[] = "UCS-4BE";
 #else
