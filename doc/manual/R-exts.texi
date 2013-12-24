@@ -2238,7 +2238,7 @@ cmi.o dmi.o: iface.o
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) for all known @R{}platforms.  However, all
 that can be assumed is approximate support for the C++98 standard (the
-widely uses @command{g++} deviates considerably from the standard).
+widely used @command{g++} deviates considerably from the standard).
 Some compilers have a concept of `C++03' (`essentially a bug fix') or
 `C++ Technical Report 1', an optional addition to the `C++03' revision
 which was published in 2007.  Finally a revised standard was published
