@@ -305,8 +305,10 @@ static Rboolean iprod(int *x, R_xlen_t n, double *value, Rboolean narm)
 	    return updated;
 	}
     }
-    // This could over/underflow (does in package POT), so we rely on the compiler.
-    *value = (double) s;
+    // This could over/underflow (does in package POT)
+    if(s > DBL_MAX) *value = R_PosInf;
+    else if (s < -DBL_MAX) *value = R_NegInf;
+    else *value = (double) s;
 
     return updated;
 }
