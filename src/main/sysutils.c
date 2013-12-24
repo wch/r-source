@@ -1523,15 +1523,11 @@ size_t ucstoutf8(char *s, const unsigned int wc)
 
     if (status == (size_t) -1) {
 	switch(errno){
-	case EINVAL:
-	    return (size_t) -2;
-	case EILSEQ:
-	    return (size_t) -1;
 	case E2BIG:
 	    break;
 	default:
-	    errno = EILSEQ;
-	    return (size_t) -1;
+	    error(_("invalid Unicode point %u"), wc);
+	    return (size_t) -1; // Not reached
 	}
     }
     *outbuf = '\0';

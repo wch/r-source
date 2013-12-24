@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -173,8 +173,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    x_char <- sapply(X = x, FUN = format, ...)
-    print(x_char)
+    print(format(x, ...))
     invisible(x)
 }
 
@@ -534,7 +533,7 @@ function(x, force = FALSE)
 
 bibentry_attribute_names <-
     c("bibtype", "textVersion", "header", "footer", "key")
-    
+
 bibentry_list_attribute_names <-
     c("mheader", "mfooter")
 
