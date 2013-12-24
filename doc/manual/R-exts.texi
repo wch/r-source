@@ -6384,6 +6384,10 @@ the times spent in each section, if the appropriate source code was
 compiled with debugging support, and @command{opreport -c} to generate a
 callgraph (if collection was enabled and the platform supports this).
 
+Versions 0.9.8 and later of @command{oprofile} contain another tool,
+@command{operf}, which can be used without running the root daemon
+@command{opcontrol}: its output can be analysed in the same way.
+
 @node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
 
