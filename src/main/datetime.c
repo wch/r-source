@@ -476,7 +476,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	    res->tm_yday--;
 	    res->tm_wday--;
 	}
-	else if(shift - diff > 24. * 60.) {
+	else if(shift - diff >= 24. * 60.) {
 	    res->tm_yday++;
 	    res->tm_wday++;
 	}
