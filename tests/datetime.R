@@ -26,3 +26,7 @@ c(unclass(z))
 c(unclass(z))
 (z <- as.POSIXct("2040-07-01 12:00"))
 c(unclass(z))
+
+## PR15613: had day as > 24hrs.
+as.POSIXlt(ISOdate(2071,1,13,0,0,tz="Etc/GMT-1"))$wday
+as.POSIXlt(ISOdate(2071,1,13,0,1,tz="Etc/GMT-1"))$wday

@@ -404,7 +404,7 @@ static double mktime0 (struct tm *tm, const int local)
     if(!local) return mktime00(tm);
 
 /* OS X 10.9 gives -1 for dates prior to 1902, and ignores DST after 2037 */
-#ifdef HAVE_WORKING_64BIT_MKDIR
+#ifdef HAVE_WORKING_64BIT_MKTIME
     if(sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || tm->tm_year >= 70;
     else
@@ -432,7 +432,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 
     Rboolean OK;
 /* as mktime is broken, do not trust localtime */
-#ifdef HAVE_WORKING_64BIT_MKDIR
+#ifdef HAVE_WORKING_64BIT_MKTIME
     if (sizeof(time_t) == 8)
 	OK = !have_broken_mktime() || d > 0.;
     else
@@ -497,7 +497,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	    res->tm_yday--;
 	    res->tm_wday--;
 	}
-	else if(shift - diff > 24. * 60.) {
+	else if(shift - diff >= 24. * 60.) {
 	    res->tm_yday++;
 	    res->tm_wday++;
 	}
