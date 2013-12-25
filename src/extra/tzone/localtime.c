@@ -459,7 +459,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	}
 		
     }
-    nread = read(fid, up->buf, sizeof up->buf);
+    nread = (int) read(fid, up->buf, sizeof up->buf);
     if (close(fid) < 0 || nread <= 0)
 	return -1;
     for (stored = 4; stored <= 8; stored *= 2) {
@@ -602,7 +602,8 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    while (i < ts.timecnt &&
 		   sp->timecnt < TZ_MAX_TIMES) {
 		sp->ats[sp->timecnt] = ts.ats[i];
-		sp->types[sp->timecnt] = sp->typecnt + ts.types[i];
+		sp->types[sp->timecnt] = 
+		    (unsigned char)(sp->typecnt + ts.types[i]);
 		++sp->timecnt;
 		++i;
 	    }
@@ -1063,7 +1064,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0] = sp->ttis[1] = zttinfo;
 	    sp->ttis[0].tt_gmtoff = -dstoffset;
 	    sp->ttis[0].tt_isdst = 1;
-	    sp->ttis[0].tt_abbrind = stdlen + 1;
+	    sp->ttis[0].tt_abbrind = (int)(stdlen + 1);
 	    sp->ttis[1].tt_gmtoff = -stdoffset;
 	    sp->ttis[1].tt_isdst = 0;
 	    sp->ttis[1].tt_abbrind = 0;
@@ -1077,7 +1078,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 		int_fast32_t
 		    yearsecs = (year_lengths[isleap(year)]
 				* SECSPERDAY);
-		int reversed = endtime < starttime;
+		unsigned char reversed = endtime < starttime;
 		if (reversed) {
 		    int_fast32_t swap = starttime;
 		    starttime = endtime;
@@ -1150,7 +1151,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    */
 	    for (i = 0; i < sp->timecnt; ++i) {
 		j = sp->types[i];
-		sp->types[i] = sp->ttis[j].tt_isdst;
+		sp->types[i] = (unsigned char)(sp->ttis[j].tt_isdst);
 		if (sp->ttis[j].tt_ttisgmt) {
 		    /* No adjustment to transition time */
 		} else {
@@ -1190,7 +1191,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0].tt_abbrind = 0;
 	    sp->ttis[1].tt_gmtoff = -dstoffset;
 	    sp->ttis[1].tt_isdst = TRUE;
-	    sp->ttis[1].tt_abbrind = stdlen + 1;
+	    sp->ttis[1].tt_abbrind = (int)(stdlen + 1);
 	    sp->typecnt = 2;
 	}
     } else {
@@ -1202,7 +1203,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	sp->ttis[0].tt_isdst = 0;
 	sp->ttis[0].tt_abbrind = 0;
     }
-    sp->charcnt = stdlen + 1;
+    sp->charcnt = (int)(stdlen + 1);
     if (dstlen != 0)
 	sp->charcnt += dstlen + 1;
     if ((size_t) sp->charcnt > sizeof sp->chars)
@@ -1310,7 +1311,7 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	    return NULL;	/* "cannot happen" */
 	result = localsub(&newt, offset, tmp);
 	if (result == tmp) {
-	    time_t	newy;
+	    int	newy;
 
 	    newy = tmp->tm_year;
 	    if (t < sp->ats[0])
