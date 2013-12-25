@@ -114,6 +114,8 @@ extern void R_tzset(void);
 extern char *R_tzname[2];
 # undef HAVE_WORKING_64BIT_MKTIME
 # define HAVE_WORKING_64BIT_MKTIME 1
+# undef MKTIME_SETS_ERRNO
+# define MKTIME_SETS_ERRNO
 
 #else
 

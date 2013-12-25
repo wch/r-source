@@ -4805,6 +4805,12 @@ by software emulation.  On such systems @command{configure} option
 @option{--disable-long-double} can be used for faster but less accurate
 computations.
 
+The Solaris time-zone conversion services seem to be unreliable pre-1916
+in Europe (when daylight-savings time was first introduced): most often
+reporting in the non-existent DST variant.  Using @command{configure}
+option @option{--with-internal-tzcode} is recommended if such times are
+to be used.
+
 
 When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
@@ -5190,7 +5196,7 @@ workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
 
 @R{} requires C99 complex type support, which is available as from
 Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
-@code{cacos} gives incorrect results, so we undefine @code{HAVE_CACOS}
+@code{cacos} gives incorrect results, so we defineine @code{HAVE_CACOS}
 in @file{src/main/complex.c} on that platform.  It has been reported
 that some C99 long double mathematical functions are missing, so
 configuring with @option{--disable-long-double} was required.
