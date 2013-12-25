@@ -240,6 +240,8 @@
  R_sysframe
  R_sysfunction
  R_sysparent
+ R_tzname
+ R_tzset
  R_unary
  R_unserialize
  R_warn_partial_match_args
@@ -401,7 +403,6 @@
  Rsockselect
  Rstrlen
  Rstrwid
- Rtzname
  Rwin_rename
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT

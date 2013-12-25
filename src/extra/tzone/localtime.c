@@ -35,12 +35,7 @@ use of 64-bit time_t irrespective of platform.
 
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
-
-
-#define  _NO_OLDNAMES   /* avoid tznames */
 #include "time.h"
-#undef _NO_OLDNAMES
-
 
 #include <errno.h>
 #ifndef EOVERFLOW
@@ -53,17 +48,14 @@ use of 64-bit time_t irrespective of platform.
 #include "fcntl.h"
 #include "float.h"	/* for FLT_MAX and DBL_MAX */
 
-#ifdef WIN32
-/* tzname is in the headers as an import in MinGW-w64 */
-#define tzname Rtzname
+#define tzname R_tzname
 #define gmtime R_gmtime
 #define localtime R_localtime
 #define mktime R_mktime
-// alternatively use time64_t from Mingw-w64's time.h
+#define tzset R_tzset
 #include <stdint.h>
 typedef int64_t R_time_t;
 #define time_t R_time_t
-#endif
 
 #ifndef TRUE
 #define TRUE	1

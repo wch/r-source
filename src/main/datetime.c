@@ -97,22 +97,36 @@
 #include <errno.h>
 
 #ifdef Win32
-/* needed on Windows to avoid redefinition of tzname as _tzname */
-# define _NO_OLDNAMES
+# define USE_INTERNAL_MKTME 1
+#endif
+
 # include <time.h>
-# undef _NO_OLDNAMES
+
+#ifdef USE_INTERNAL_MKTME
+
 # include <stdint.h>
 typedef int64_t R_time_t;
 #define time_t R_time_t
 # define gmtime R_gmtime
 # define localtime R_localtime
 # define mktime R_mktime
+#define tzset R_tzset
 extern struct tm*  gmtime (const time_t*);
 extern struct tm*  localtime (const time_t*);
 extern time_t mktime (struct tm*);
+extern void R_tzset(void);
+#define tzname R_tzname
+extern char *R_tzname[2];
 # define HAVE_WORKING_64BIT_MKTIME
+
 #else
-# include <time.h>
+
+# if defined(__CYGWIN__)
+extern __declspec(dllimport) char *tzname[2];
+# else
+extern char *tzname[2];
+# endif
+
 #endif
 
 #include <stdlib.h> /* for setenv or putenv */
@@ -606,19 +620,6 @@ unsigned int TimeToSeed(void)
     seed ^= (pid <<16);
     return seed;
 }
-
-
-#ifdef Win32
-extern void tzset(void);
-/* tzname is in the headers as an import on MinGW-w64 */
-#define tzname Rtzname
-extern char *Rtzname[2];
-#elif defined(__CYGWIN__)
-extern __declspec(dllimport) char *tzname[2];
-#else
-extern char *tzname[2];
-#endif
-
 static int set_tz(const char *tz, char *oldtz)
 {
     char *p = NULL;
