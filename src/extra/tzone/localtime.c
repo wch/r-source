@@ -48,6 +48,10 @@ use of 64-bit time_t irrespective of platform.
 #include "fcntl.h"
 #include "float.h"	/* for FLT_MAX and DBL_MAX */
 
+#ifndef WIN32
+# include <unistd.h>
+#endif
+
 #define tzname R_tzname
 #define gmtime R_gmtime
 #define localtime R_localtime
