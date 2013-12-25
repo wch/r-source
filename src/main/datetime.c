@@ -112,7 +112,8 @@ extern time_t mktime (struct tm*);
 extern void R_tzset(void);
 #define tzname R_tzname
 extern char *R_tzname[2];
-# define HAVE_WORKING_64BIT_MKTIME
+# undef HAVE_WORKING_64BIT_MKTIME
+# define HAVE_WORKING_64BIT_MKTIME 1
 
 #else
 
