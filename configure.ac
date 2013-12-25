@@ -431,6 +431,12 @@ AC_ARG_WITH([valgrind-instrumentation],
 [valgrind_level=${withval}],
 [valgrind_level=0])
 
+AC_ARG_WITH([internal-tzcode],
+[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no@:>@])],
+[use_internal_tzcode=${withval}],
+[use_internal_tzcode=0])
+
+
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
 ## fully supports Fortran and C++.
@@ -2267,6 +2273,12 @@ if test ${valgrind_level} -eq 0; then
 fi
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
+if test ${use_internal_tzcode} = yes; then
+  AC_DEFINE(USE_INTERNAL_MKTME, 1, [Define to use internal time-zone code])
+fi
+AM_CONDITIONAL(BUILD_TZONE, [test "x${use_internal_tzcode}" = xyes])
+
+
 ## KERN_USRSTACK support (BSD, Darwin, ...)
 R_KERN_USRSTACK
 
@@ -2612,6 +2624,7 @@ AC_CONFIG_FILES(
   src/extra/intl/Makefile
   src/extra/pcre/Makefile
   src/extra/tre/Makefile
+  src/extra/tzone/Makefile
   src/extra/xdr/Makefile
   src/extra/xz/Makefile
   src/extra/zlib/Makefile
