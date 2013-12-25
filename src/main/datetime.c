@@ -426,7 +426,7 @@ static double mktime0 (struct tm *tm, const int local)
 static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
-    int y, tmp, mon, left, diff, diff2;
+    int y, tmp;
     struct tm *res = ltm;
     time_t t;
 
@@ -446,13 +446,13 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	   fix t instead as needed. */
 	if (d < 0.0 && (double) t != d) t--;
 #ifndef HAVE_POSIX_LEAPSECONDS
-	for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
+	for(int y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
 
     int day = (int) floor(d/86400.0);
-    left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
+    int left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
 
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
@@ -474,6 +474,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_yday = day;
 
     /* month within year */
+    int mon;
     for (mon = 0;
 	 day >= (tmp = (days_in_month[mon]) + ((mon==1 && isleap(y+1900))?1:0));
 	 day -= tmp, mon++);
@@ -486,10 +487,12 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	res->tm_isdst = -1;
 
 	/* Try to fix up time zone differences: cf PR#15480 */
-	diff = (int)(guess_offset(res)/60);
+	int sdiff = (int)guess_offset(res);
+	int diff = sdiff/60;
 	// just in case secs are out of range and might affect this.
 	shift = 60.*res->tm_hour + res->tm_min + res->tm_sec/60.;
 	res->tm_min -= diff;
+	res->tm_sec -= (sdiff % 60);
 	validate_tm(res);
 	res->tm_isdst = -1;
 	/* now this might be a different day */
@@ -501,11 +504,15 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	    res->tm_yday++;
 	    res->tm_wday++;
 	}
-	diff2 = (int)(guess_offset(res)/60);
+	int sdiff2 = (int)guess_offset(res);
+	int diff2 = sdiff2/60;
 	if(diff2 != diff) {
 	    res->tm_min += (diff - diff2);
+	    res->tm_sec += (sdiff % 60) - (sdiff2 % 60);
 	    validate_tm(res);
 	}
+	// No DST before 1916
+	if(res->tm_year < 16) res->tm_isdst = 0;
 	return res;
     } else {
 	res->tm_isdst = 0; /* no dst in GMT */

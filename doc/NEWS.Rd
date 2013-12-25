@@ -550,6 +550,10 @@
       
       \item Running \R code in a \pkg{tcltk} callback failed to set the
       busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
+      
+      \item The code for date-times before 1902 assumed that the offset
+      from GMT in 1902 was a whole number of minutes: that was not true
+      of Paris.
     }
   }
 }
