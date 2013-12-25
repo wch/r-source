@@ -97,12 +97,12 @@
 #include <errno.h>
 
 #ifdef Win32
-# define USE_INTERNAL_MKTME 1
+# define USE_INTERNAL_MKTIME 1
 #endif
 
 # include <time.h>
 
-#ifdef USE_INTERNAL_MKTME
+#ifdef USE_INTERNAL_MKTIME
 
 # include <stdint.h>
 typedef int64_t R_time_t;

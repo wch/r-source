@@ -88,11 +88,13 @@ R_TRE = ../extra/tre/libtre.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 R_XZ = @BUILD_XZ_TRUE@  ../extra/xz/liblzma.a
 R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
+R_TZONE = @BUILD_TZONE_TRUE@ ../extra/tzone/localtime.o
 
 MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 MAIN_OBJS = `ls ../unix/*.o ../appl/*.o ../nmath/*.o`
 EXTRA_STATIC_LIBS = \
-  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL)
+  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL) \
+  $(R_TZONE)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)

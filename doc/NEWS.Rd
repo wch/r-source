@@ -169,8 +169,15 @@
       are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
       
-      \item (Windows only.)  The version of \samp{tzcode} included in
-      \file{src/extra/tzone} has been updated.
+      \item The version of \samp{tzcode} included in
+      \file{src/extra/tzone} has been updated.  (Formerly used only on
+      Windows.)
+      
+      \item There is experimental support to use the shipped Olson
+      time-zone database and (64-bit) time-zone conversion code: use
+      \command{configure} option \option{--with-internal-tzcode}. (It
+      might be necessary to set environment variable \env{TZ} on OSes
+      where this is not already set.)
     }
   }
 

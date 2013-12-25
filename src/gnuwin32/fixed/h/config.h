@@ -835,6 +835,9 @@
 /* Define if you have the 'wint_t' type. (For intl) */
 #define HAVE_WINT_T 1
 
+/* Define if your mktime works correctly outside 1902-2037. */
+#define HAVE_WORKING_64BIT_MKTIME 1
+
 /* Define to 1 if you have cairo. */
 /* #undef HAVE_WORKING_CAIRO */
 
@@ -1030,6 +1033,9 @@
 
 /* Define to use Apple's ICU. */
 /* #undef USE_ICU_APPLE */
+
+/* Define to use internal time-zone code */
+#define USE_INTERNAL_MKTME 1
 
 /* Define if the POSIX multithreading library can be used. (For intl) */
 /* #undef USE_POSIX_THREADS */

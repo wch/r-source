@@ -942,7 +942,23 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+#ifdef USE_INTERNAL_MKTIME
+const char *getTZinfo(void)
+{
+    const char *p = getenv("TZ");
+    if(p) return p;
+#ifdef HAVE_REALPATH
+    static char abspath[PATH_MAX+1] = "";
+    if(!abspath[0] && realpath("/etc/localtime", abspath))
+	return abspath + 20; // strip /usr/share/zoneinfo/
 #endif
+    warning("system timezone name is unknown: set environment variable TZ");
+    return "unknown";
+}
+#endif
+
+#endif // not Win32
 
 
 /* encodeString(x, w, quote, justify) */

@@ -2274,7 +2274,7 @@ fi
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
 if test ${use_internal_tzcode} = yes; then
-  AC_DEFINE(USE_INTERNAL_MKTME, 1, [Define to use internal time-zone code])
+  AC_DEFINE(USE_INTERNAL_MKITME, 1, [Define to use internal time-zone code])
 fi
 AM_CONDITIONAL(BUILD_TZONE, [test "x${use_internal_tzcode}" = xyes])
 

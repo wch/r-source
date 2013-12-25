@@ -53,6 +53,7 @@ use of 64-bit time_t irrespective of platform.
 #define localtime R_localtime
 #define mktime R_mktime
 #define tzset R_tzset
+#define tzsetwall R_tzsetwall
 #include <stdint.h>
 typedef int64_t R_time_t;
 #define time_t R_time_t
