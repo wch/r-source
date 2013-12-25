@@ -91,10 +91,9 @@ R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
 R_TZONE = @BUILD_TZONE_TRUE@ ../extra/tzone/localtime.o
 
 MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
-MAIN_OBJS = `ls ../unix/*.o ../appl/*.o ../nmath/*.o`
+MAIN_OBJS = `ls ../unix/*.o ../appl/*.o ../nmath/*.o` $(R_TZONE)
 EXTRA_STATIC_LIBS = \
-  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL) \
-  $(R_TZONE)
+  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)
