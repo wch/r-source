@@ -1,5 +1,5 @@
-localtime.c is a stripped-down version of that from tzcode2007k, from
-ftp://elsie.nci.nih.gov/pub/ .  Apart from removing unused code and
+localtime.c is a stripped-down version of that from tzcode, from
+http://www.iana.org/time-zones .  Apart from removing unused code and
 merging in the parts of private.h which are needed, the main changes
 are
 
@@ -9,13 +9,13 @@ are
 - to call getTZinfo() to get the default timezone if TZ is unset.
 
 
-zoneinfo.zip was formed by installing tzcode/tzdata on x86_64 Linux,
-and zipping up the results, after adding a file VERSION giving the
+zoneinfo.zip is formed by installing tzcode/tzdata on Linux, and
+zipping up the results, after adding a file VERSION giving the
 version.  It should be possible to build the compiled databases on
-Windows, but zic.c assumes links and so would need a lot of work.
-(It look like the binary databases are byte streams, and so do not
-depend on the architecture.  There are some comments about whether
-time_t is signed, which it is on all sensible platforms.)
+Windows, but zic.c assumes links and so would need a lot of work.  (It
+look like the binary databases are byte streams, and so do not depend
+on the architecture.  There are some comments about whether time_t is
+signed, which it is on all sensible platforms.)
 
 To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
 Copy the current version of tzdataXXXXx.tar.gz to this directory and run
@@ -23,5 +23,3 @@ Copy the current version of tzdataXXXXx.tar.gz to this directory and run
 make -f Make.zi VERSION=2013h
 
 for the appropriate version.
-
-[The database is now available from http://www.iana.org/time-zones .]
