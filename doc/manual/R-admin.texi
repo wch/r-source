@@ -857,7 +857,7 @@ version of @R{} installed (since this tells the package installation
 code the architecture needed).
 
 At present there is a potential problem with packages using Java, as
-the post-install for a @cputype{i386} RPM on @cputype{x86_64} Linux
+the post-install for a @cputype{i686} RPM on @cputype{x86_64} Linux
 reconfigures Java and will find the @cputype{x86_64} Java.  If you know
 where a 32-bit Java is installed you may be able to run (as root)
 
@@ -890,6 +890,13 @@ and recommended packages are lazyloaded but not byte-compiled.
 (Alternatively the (make or environment) variable
 @env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
 of the build.)
+
+Option @option{--with-internal-tzcode} makes use of the internal code
+and copy of the Olson database for managing timezones.  This will be
+preferred where there are issues with the system implemntation, usually
+involving times after 2037 or before 1916.  An alternative time-zone
+directory can be used, pointed to by environment variable @env{TZDIR}:
+this should contain files such as @file{Europe/London}.
 
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
@@ -4402,9 +4409,9 @@ To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
 would only be used for the data editor/viewer.  (This needs an
-Objective-C compiler@footnote{Apple's @code{clang} should be able to:
-some builds of @code{gcc} can, but not all built with Objective C
-support work.} which can compile the code for @code{quartz()}.)
+Objective-C compiler@footnote{These days that is defined by Apple's
+implementation of @code{clang}, so it is strongly reommended to use
+that.} which can compile the code for @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4423,8 +4430,8 @@ command-line tools from within Xcode, from the @samp{Downloads} pane in
 the @samp{Preferences}.  For Mavericks, see the specific sub-section
 below.
 
-Various compilers can be used.  The @acronym{CRAN} distribution of @R{}
-is built using
+Various compilers can be used.  The current @acronym{CRAN} distribution
+of @R{} is built using
 
 @itemize
 @item @command{gcc}
@@ -4494,6 +4501,11 @@ will show the compilers and configuration options used for the
 @end example
 @noindent
 was used.
+
+A 64-bit @code{time_t} is used but the implementation of time zones does
+not work correctly for times after 2037 so it is not used in @R{}: those
+making use of such dates are recommended to use the option
+@option{--with-internal-tzcode}.
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
