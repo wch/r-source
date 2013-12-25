@@ -210,6 +210,10 @@
   if \code{isdst} is positive or (if \code{-1}) if DST was predicted to
   be in operation in the 2030s on that day.
 
+  Note that there are places (e.g. Rome) whose offset from GMT varied
+  in the years prior to 1902, and these will be handled correctly only
+  where there is OS support.
+
   There is no reason to suppose that the DST rules will remain the same
   in the future, and indeed the US legislated in 2005 to change its
   rules as from 2007, with a possible future reversion.  So conversions
