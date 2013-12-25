@@ -1030,9 +1030,11 @@ function(x, value)
 OlsonNames <- function()
 {
     if(.Platform$OS.type == "windows")
-        tzdir <- file.path(R.home("share"), "zoneinfo")
+        tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
     else {
-        tzdirs <- c("/usr/share/zoneinfo", # Linux, OS X, FreeBSD
+        tzdirs <- c(Sys.getenv("TZDIR"),
+                    file.path(R.home("share"), "zoneinfo"),
+                    "/usr/share/zoneinfo", # Linux, OS X, FreeBSD
                     "/usr/share/lib/zoneinfo", # Solaris, AIX
                     "/usr/lib/zoneinfo",   # early glibc
                     "/usr/local/etc/zoneinfo", # tzcode default

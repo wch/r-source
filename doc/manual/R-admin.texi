@@ -891,12 +891,14 @@ and recommended packages are lazyloaded but not byte-compiled.
 @env{R_NO_BASE_COMPILE} can be set to a non-empty value for the duration
 of the build.)
 
-Option @option{--with-internal-tzcode} makes use of the internal code
-and copy of the Olson database for managing timezones.  This will be
+Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
+copy of the Olson database for managing timezones.  This will be
 preferred where there are issues with the system implemntation, usually
 involving times after 2037 or before 1916.  An alternative time-zone
 directory can be used, pointed to by environment variable @env{TZDIR}:
-this should contain files such as @file{Europe/London}.
+this should contain files such as @file{Europe/London}.  On all tested
+OSes the system timezone was deduced correctly, but if necessary it can
+be set as the value of environment variable @env{TZ}.
 
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes

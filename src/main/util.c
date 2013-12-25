@@ -949,10 +949,11 @@ const char *getTZinfo(void)
     const char *p = getenv("TZ");
     if(p) return p;
 #ifdef HAVE_REALPATH
+    // This works on Linux, OS X and *BSD: other known OSes set TZ.
     static char abspath[PATH_MAX+1] = "";
     if(abspath[0]) return abspath + 20;
     if(realpath("/etc/localtime", abspath))
-	return abspath + 20; // strip /usr/share/zoneinfo/
+	return abspath + 20; // strip prefix of /usr/share/zoneinfo/
 #endif
     warning("system timezone name is unknown: set environment variable TZ");
     return "unknown";

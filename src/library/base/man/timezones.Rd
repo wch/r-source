@@ -128,6 +128,12 @@ OlsonNames()
   \file{zone.tab} under that directory listing the locations known as
   time-zone names (but not for example \code{EST5EDT}).  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
+
+  Where \R was configured with option \option{--with-internal-tzcode},
+  the database at \code{file.path(R.home("share"), "zoneinfo")} is used
+  by default: file \file{VERSION} in that directory gives the version.
+  An alternative directory can be specified \emph{via} environment
+  variable \env{TZDIR}.
 #endif
 #ifdef windows
 
