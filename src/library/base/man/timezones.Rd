@@ -38,7 +38,7 @@ OlsonNames()
   platforms use similar underlying code, used by Linux, OS X,
   Solaris, AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed
   with \R on Windows.  Unfortunately there are many system-specific
-  errors in the implementation.
+  errors in the implementations.
 
   It should be possible to set the time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
@@ -49,6 +49,10 @@ OlsonNames()
   \code{Sys.timezone} will retrieve the abbreviation used for the
   current time (and the name may differ depending on whether daylight
   saving time is in effect).
+
+  If \env{TZ} is set but empty or invalid, most platforms default to
+  \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
+  \url{http://en.wikipedia.org/wiki/Coordinated_Universal_Time}).
 
   Time zones did not come into use until the second half of the
   nineteenth century and were not widely adopted until the twentieth,
@@ -62,7 +66,7 @@ OlsonNames()
   32-bit integers and so only goes back to the end of 1901: on such
   systems \R assumes that dates prior to that are in the same time zone
   as they were in 1902.  Most of the world had not adopted time zones by
-  1902 but for some places there had been time-zone changes before 1902.
+  1902 but for some places there had been time-zone changes before then.
   64-bit representations are becoming common (and \R can be configured
   to use one on a Unix-alike and does on Windows); unfortunately on some
   OSes the database information is only available for the range
@@ -90,13 +94,13 @@ OlsonNames()
 
   Many systems make use of a time-zone database originally compiled by
   Arthur David Olson (and now managed by IANA),
-  in which the preferred way to refer to a time zone by a location
+  in which the preferred way to refer to a time zone is by a location
   (typically of a city) e.g. \code{Europe/London},
   \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
   designations are also allowed such as \code{EST5EDT} or
   \code{GB}.  (Beware that some of these designations may not be what you
   think: in particular \code{EST} is a time zone used in Canada
-  \emph{without} daylight savings time, and not \code{EST5EDT} nor
+  \emph{without} daylight saving time, and not \code{EST5EDT} nor
   (Australian) Eastern Standard Time.)  The designation can also be an
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
@@ -116,7 +120,7 @@ OlsonNames()
   database on the current system.
 #ifdef unix
 
-  Most Unix-alikes use the Olson database.  The system-specific default
+  Most Unix-alikes use the Olson database.  The system-specific
   location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
   (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
   \ldots.  It is likely that there is a file named something like
@@ -164,10 +168,9 @@ OlsonNames()
 }
 
 \note{
-  There has been since 2007 considerable disruption over changes
-  to the timings of the DST transitions, aimed at energy conservation.
-  These often have short notice and time-zone databases may not be up to
-  date.
+  Since 2007 there has been considerable disruption over changes to the
+  timings of the DST transitions, aimed at energy conservation.  These
+  often have short notice and time-zone databases may not be up to date.
 
   Note that except on Windows, the operation of time zones is an OS
   service, and even on Windows a third-party database is used and can be
