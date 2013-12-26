@@ -57,9 +57,13 @@ browseURL(url, browser = getOption("browser"),
 
   It is the caller's responsibility to encode \code{url} if necessary
   (see \code{\link{URLencode}}).  This can be tricky for file URLs,
-  where the format accepted can depend on the browser and OS.
+  where the format accepted can depend on both browser and OS.
 
   To suppress showing URLs altogether, set \code{browser = "false"}.
+  
+  The behaviour for arguments \code{url} which are not URLs is
+  platform-dependent.  Some platforms accept absolute file paths; fewer
+  accept relative file paths.
 }
 \examples{
 \dontrun{## for KDE users who want to open files in a new tab
