@@ -1,7 +1,7 @@
 localtime.c is a stripped-down version of that from tzcode, from
-http://www.iana.org/time-zones .  Apart from removing unused code and
-merging in the parts of private.h which are needed, the main changes
-are
+http://www.iana.org/time-zones, converted to use a 64-bit time_t on
+all platforms.  Apart from removing unused code and merging in the
+parts of private.h which are needed, the other main changes are
 
 - to use environment variable TZDIR to point to the zoneinfo files, and
   failing that, R_HOME/share/zoneinfo.
@@ -9,17 +9,22 @@ are
 - to call getTZinfo() to get the default timezone if TZ is unset.
 
 
-zoneinfo.zip is formed by installing tzcode/tzdata on Linux, and
+zoneinfo.zip was formed by installing tzdata on a system with zic, and
 zipping up the results, after adding a file VERSION giving the
 version.  It should be possible to build the compiled databases on
-Windows, but zic.c assumes links and so would need a lot of work.  (It
-look like the binary databases are byte streams, and so do not depend
-on the architecture.  There are some comments about whether time_t is
-signed, which it is on all sensible platforms.)
+Windows, but zic.c assumes links and so would need work.  (The binary
+databases are byte streams, and so do not depend on the architecture.
+There are some comments about whether time_t is signed, which it is on
+all sensible platforms.)
 
-To remake it, use a machine with zic in the path (it may be /usr/sbin/zic).
-Copy the current version of tzdataXXXXx.tar.gz to this directory and run
+To remake it, download the current version of tzdataXXXXx.tar.gz from
+http://www.iana.org/time-zones to this directory and run
 
-make -f Make.zi VERSION=2013h
+make -f Make.zi VERSION=2013i
 
-for the appropriate version.
+for the appropriate version.  If zic is not on the path, use something like
+
+make -f Make.zi VERSION=2013i ZIC=/usr/sbin/zic
+
+NB: it seems that this needs to be done on a system with 64-bit time_t
+or the catalogs will be confined to 1902-2038.
