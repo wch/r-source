@@ -22,9 +22,10 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 Sys.timezone <- function(location = TRUE)
 {
     tz <- Sys.getenv("TZ", names = FALSE)
-    if(!location || nzchar(tz)) return(tz)
+    if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
     lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
-    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt) else ""
+    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
+    else NA_character_
 }
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")

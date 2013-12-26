@@ -407,6 +407,10 @@
       \item There is some support to produce manuals in ebook
       formats. (See \file{doc/manual/Makefile}.  Suggested by Mauro
       Cavalcanti.)
+
+      \item On a Unix-alike \code{Sys.timezone()} returns \code{NA} if
+      the environment variable \env{TZ} is unset, to distinguish it from
+      an empty string which on some OSes means the \samp{UTC} time zone.
     }
   }
   

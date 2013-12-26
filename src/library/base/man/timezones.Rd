@@ -74,9 +74,11 @@ OlsonNames()
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string. For \code{location = TRUE} this will be a location
-  such as \code{"Europe/London"}.  For \code{location = FALSE} this may
-  be an abbreviation such as \code{"EST"} or \code{"CEST"}
+  \code{NA} or an empty string (which on some OSes means \samp{UTC})..
+  For the defaulr \code{location = TRUE} this will be a location such as
+  \code{"Europe/London"} if one can be ascertained.  For \code{location
+  = FALSE} this may be an abbreviation such as \code{"EST"} or
+  \code{"CEST"} on Windows.
 
   \code{OlsonNames} returns a character vector.
 }
@@ -188,7 +190,7 @@ OlsonNames()
 \examples{
 Sys.timezone()
 
-str(OlsonNames()) ## 4-900 names
+str(OlsonNames()) ## a few hundred names
 }
 \keyword{utilities}
 \keyword{chron}
