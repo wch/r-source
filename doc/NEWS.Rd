@@ -142,6 +142,8 @@
       local encoding.  The UTF-8 encoding may now be declared using
       a LaTeX comment containing the string \code{\%\\SweaveUTF8}
       on a line by itself.
+      
+      \item \code{file.copy()} gains a \code{copy.date} argument.
     }
   }
 

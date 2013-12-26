@@ -25,7 +25,7 @@ file.remove(\dots)
 file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = recursive, recursive = FALSE,
-          copy.mode = TRUE)
+          copy.mode = TRUE, copy.date = TRUE)
 file.symlink(from, to)
 file.link(from, to)
 #ifdef windows
@@ -47,6 +47,8 @@ Sys.junction(from, to)
     \command{cp -R} on POSIX OSes.)}
   \item{copy.mode}{logical:  should file permission bits be copied where
     possible?  This applies to both files and directories.}
+  \item{copy.date}{logical:  should file dates be preserved where
+    possible? See \code{\link{Sys.setFileTime}}.}
 }
 \description{
   These functions provide a low-level interface to the computer's

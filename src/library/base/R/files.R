@@ -101,7 +101,7 @@ file.choose <- function(new=FALSE) .Internal(file.choose(new))
 
 file.copy <- function(from, to,
                       overwrite = recursive, recursive = FALSE,
-                      copy.mode = TRUE)
+                      copy.mode = TRUE, copy.date = FALSE)
 {
     if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to copy to")
@@ -114,7 +114,8 @@ file.copy <- function(from, to,
             from <- gsub("/", "\\", from, fixed = TRUE)
             to <- gsub("/", "\\", to, fixed = TRUE)
         }
-        return(.Internal(file.copy(from, to, overwrite, recursive, copy.mode)))
+        return(.Internal(file.copy(from, to, overwrite, recursive,
+                                   copy.mode, copy.date)))
     } else if (nf > nt) stop("more 'from' files than 'to' files")
     else if (recursive)
         warning("'recursive' will be ignored as 'to' is not a single existing directory")
@@ -129,6 +130,8 @@ file.copy <- function(from, to,
             okay[okay] <- file.append(to[okay], from[okay])
             if(copy.mode)
                 Sys.chmod(to[okay], file.info(from[okay])$mode, TRUE)
+            if(copy.date)
+                Sys.setFileTime(to[okay], file.info(from[okay])$mtime)
         }
     }
     okay
