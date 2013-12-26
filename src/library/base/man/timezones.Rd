@@ -22,14 +22,14 @@
 }
 
 \usage{
-Sys.timezone(location = FALSE)
+Sys.timezone(location = TRUE)
 
 OlsonNames()
 }
 
 \arguments{
   \item{location}{logical: should an attempt be made to find the
-    location name as per the Olson database?  (See \sQuote{Time zone
+    location name as used in the Olson database?  (See \sQuote{Time zone
       names} below.)}
 }
 
@@ -42,13 +42,12 @@ OlsonNames()
 
   It should be possible to set the time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
-  suitable values.  \code{Sys.timezone(TRUE)} will return the value of
+  suitable values.  \code{Sys.timezone()} will return the value of
   \env{TZ} if set (and on some OSes it is always set), otherwise it will
   try to retrieve a value which if set for \env{TZ} would give the
-  current time zone.  This is not in general possible, and by default
-  \code{Sys.timezone} will retrieve the abbreviation used for the
-  current time (and the name may differ depending on whether daylight
-  saving time is in effect).
+  current time zone.  This is not in general possible, and
+  \code{Sys.timezone(FALSE)} on Windows will retrieve the abbreviation
+  used for the current time.
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
@@ -75,10 +74,9 @@ OlsonNames()
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.  For POSIX-compliant OSes this is an abbreviation such
-  as \code{"EST"}.  For \code{location = TRUE} on Windows and many
-  Unix-alike OSes this will be a location such as
-  \code{"Europe/London"}.
+  an empty string. For \code{location = TRUE} this will be a location
+  such as \code{"Europe/London"}.  For \code{location = FALSE} this may
+  be an abbreviation such as \code{"EST"} or \code{"CEST"}
 
   \code{OlsonNames} returns a character vector.
 }
@@ -160,7 +158,7 @@ OlsonNames()
   unreliable and gives a warning.
 #endif
 
-  Many systems support time zones of the form \samp{GMT+n} and
+  Most platforms support time zones of the form \samp{GMT+n} and
   \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
   Contrary to some usage (but consistent with names such as
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
@@ -187,11 +185,8 @@ OlsonNames()
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
 }
 
-% suggested locations include those from libical sources.
-% zone_sun.tab is not quite the same format: has a "-" column before comments
 \examples{
 Sys.timezone()
-Sys.timezone(location = TRUE)
 
 str(OlsonNames()) ## 4-900 names
 }

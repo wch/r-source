@@ -103,10 +103,11 @@
       effect when \code{x} is not integer-valued.
       
       \item There is more support to explore the system's idea of
-      time-zone names.  \code{Sys.timezone(location = TRUE)} tries to
-      give the current system setting (and succeeds at least on Linux, OS
-      X, Solaris and Windows), and \code{OlsonNames()} lists the names
-      in the system's Olson database.
+      time-zone names.  \code{Sys.timezone()} tries to give the current
+      system setting (and succeeds at least on Linux, OS X, Solaris and
+      Windows), and \code{OlsonNames()} lists the names in the system's
+      Olson database. \code{Sys.timezone(location = FALSE)} gives the
+      previous behaviour.
       
       \item Platforms with a 64-bit \code{time_t} type are allowed to
       handle conversions between the \code{"POSIXct"} and

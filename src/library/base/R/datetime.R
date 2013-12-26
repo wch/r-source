@@ -19,7 +19,8 @@
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
 ## overridden on Windows
-Sys.timezone <- function(location = FALSE) {
+Sys.timezone <- function(location = TRUE)
+{
     tz <- Sys.getenv("TZ", names = FALSE)
     if(!location || nzchar(tz)) return(tz)
     lt <- normalizePath("/etc/localtime") # Linux, OS X, ...
