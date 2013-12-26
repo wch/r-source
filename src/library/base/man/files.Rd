@@ -46,7 +46,7 @@ Sys.junction(from, to)
     directories in \code{from} be copied (and their contents)?  (Like
     \command{cp -R} on POSIX OSes.)}
   \item{copy.mode}{logical:  should file permission bits be copied where
-    possible?  This applies to both files and directories.}
+    possible?}
   \item{copy.date}{logical:  should file dates be preserved where
     possible? See \code{\link{Sys.setFileTime}}.}
 }
@@ -107,9 +107,9 @@ Sys.junction(from, to)
   the arguments in the natural order for copying.  Copying to existing
   destination files is skipped unless \code{overwrite = TRUE}.  The
   \code{to} argument can specify a single existing directory.  If
-  \code{copy.mode = TRUE} (added in \R 2.13.0) file read/write/execute
-  permissions are copied where possible, restricted by
-  \sQuote{\link{umask}}.  Other security attributes such as ACLs are not
+  \code{copy.mode = TRUE} file read/write/execute permissions are copied
+  where possible, restricted by \sQuote{\link{umask}}.  (On Windows this
+  applies only to files.) Other security attributes such as ACLs are not
   copied.  On a POSIX filesystem the targets of symbolic links will be
   copied rather than the links themselves, and hard links are copied
   separately.
