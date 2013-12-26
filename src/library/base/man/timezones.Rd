@@ -35,10 +35,11 @@ Sys.timezone()
   suitable values.
 
   It is not in general possible to retrieve the system's own name(s) for
-  the current time zone, but \code{Sys.timezone} will retrieve the name
-  it uses for the current time (and the name may differ depending on
-  whether daylight saving time is in effect).  (Some hints for retrieving
-  the name from a Unix-alike OS are in the examples.)
+  the current time zone if environment variable \env{TZ} is not set, but
+  on Windows \code{Sys.timezone} will retrieve the name it uses for the
+  current time (and the name may differ depending on whether daylight
+  saving time is in effect).  (Some hints for retrieving the name from a
+  Unix-alike OS are in the examples.)
 
   Time zones did not come into use until the second half of the
   nineteenth century and were not widely adopted until the twentieth,
@@ -59,8 +60,8 @@ Sys.timezone()
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
-  an empty string.  For POSIX-compliant OSes this is an abbreviation such
-  as \code{"EST"}.
+  \code{NA} or an empty string (which on some OSes means \samp{UTC})..
+  For Windows this is an abbreviation such as \code{"EST"}.
 }
 
 \section{Time zone names}{

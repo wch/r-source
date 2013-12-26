@@ -18,7 +18,7 @@
 
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
-Sys.timezone <- function() Sys.getenv("TZ", names = FALSE)
+Sys.timezone <- function() Sys.getenv("TZ", unset = NA_character_)
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
