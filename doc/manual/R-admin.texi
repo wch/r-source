@@ -893,7 +893,7 @@ of the build.)
 
 Option @option{--with-internal-tzcode} makes use of @R{}'s own code and
 copy of the Olson database for managing timezones.  This will be
-preferred where there are issues with the system implemntation, usually
+preferred where there are issues with the system implementation, usually
 involving times after 2037 or before 1916.  An alternative time-zone
 directory@footnote{How to prepare such a directory is described in file
 @file{src/extra/tzone/Notes} in the @R{} sources.} can be used, pointed
@@ -4414,7 +4414,7 @@ To use the @code{quartz()} graphics device you need to configure with
 becomes the default device when running @R{} at the console and X11
 would only be used for the data editor/viewer.  (This needs an
 Objective-C compiler@footnote{These days that is defined by Apple's
-implementation of @code{clang}, so it is strongly reommended to use
+implementation of @code{clang}, so it is strongly recommended to use
 that.} which can compile the code for @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
@@ -5212,7 +5212,7 @@ workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
 
 @R{} requires C99 complex type support, which is available as from
 Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
-@code{cacos} gives incorrect results, so we defineine @code{HAVE_CACOS}
+@code{cacos} gives incorrect results, so we define @code{HAVE_CACOS}
 in @file{src/main/complex.c} on that platform.  It has been reported
 that some C99 long double mathematical functions are missing, so
 configuring with @option{--disable-long-double} was required.

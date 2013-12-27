@@ -75,7 +75,7 @@ OlsonNames()
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
   \code{NA} or an empty string (which on some OSes means \samp{UTC})..
-  For the defaulr \code{location = TRUE} this will be a location such as
+  For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
   = FALSE} this may be an abbreviation such as \code{"EST"} or
   \code{"CEST"} on Windows.
