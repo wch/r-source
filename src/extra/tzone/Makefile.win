@@ -6,11 +6,11 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps libtz.a zinfo
 
-CPPFLAGS = -I../../include -I ../../main
+CPPFLAGS = -I../../include -I../../main
 
-SOURCES = localtime.c registryTZ.c
-OBJECTS = $(SOURCES:.c=.o)
-libtz.a: $(OBJECTSS)
+CSOURCES = localtime.c registryTZ.c
+OBJECTS = $(CSOURCES:.c=.o)
+libtz.a: $(OBJECTS)
 
 zinfo: ../../../share/zoneinfo
 
