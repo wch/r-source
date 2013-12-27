@@ -52,15 +52,19 @@ use of 64-bit time_t irrespective of platform.
 # include <unistd.h>
 #endif
 
+#include "datetime.h"
+/*
 #define tzname R_tzname
 #define gmtime R_gmtime
 #define localtime R_localtime
 #define mktime R_mktime
 #define tzset R_tzset
-#define tzsetwall R_tzsetwall
 #include <stdint.h>
 typedef int64_t R_time_t;
 #define time_t R_time_t
+*/
+/* avoid definition in time.h, if present */
+#define tzsetwall R_tzsetwall
 
 #ifndef TRUE
 #define TRUE	1

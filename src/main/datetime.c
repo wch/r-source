@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2012  The R Core Team.
+ *  Copyright (C) 2000-2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *  http://www.r-project.org/Licenses/
  *
  *
- *      Interfaces to POSIX date and time functions.
+ *      Interfaces to POSIX date-time conversion functions.
  */
 
 /*
@@ -35,59 +35,7 @@
     if it is not set (or even if it is: see the workaround below).  We
     use unsetenv() to work around this: that is a BSD (and POSIX 2001)
     construct but seems to be available on the affected platforms.
-
-    Notes on various time functions:
-    ===============================
-
-    The current (2008) POSIX recommendation to find the calendar time
-    is to call clock_gettime(), defined in <time.h>.  This may also be
-    used to find time since some unspecified starting point
-    (e.g. machine reboot), but is not currently so used in R.  It
-    returns in second and nanoseconds, although not necessarily to
-    more than clock-tick accuracy.
-
-    C11 adds 'struct timespec' to <time.h>.  And timespec_get() can get
-    the current time or interval after a base time.
-
-    The previous POSIX recommendation was gettimeofday(), defined in
-    <sys/time.h>.  This returns in seconds and microseconds (with
-    unspecified granularity).
-
-    Many systems (including AIX, FreeBSD, Linux, Solaris) have
-    clock_gettime().  Mac OS X and Cygwin have gettimeofday().
-
-    Function time() is C99 and defined in <time.h>.  C99 does not
-    mandate the units, but POSIX does (as the number of seconds since
-    the epoch: although not mandated, time_t seems always to be an
-    integer type).
-
-    Function clock() is C99 and defined in <time.h>.  It measures CPU
-    time at CLOCKS_PER_SEC: there is a small danger of integer
-    overflow.
-
-    Function times() is POSIX and defined in <sys/times.h>.  It
-    returns the elapsed time in clock ticks, plus CPU times in a
-    struct tms* argument (also in clock ticks).
-
-    More precise information on CPU times may be available from the
-    POSIX function getrusage() defined in <sys/resource.h>.  This
-    returns the same time structure as gettimeofday() and on some
-    systems offers millisecond resolution.
-    It is available on Cygwin, FreeBSD, Mac OS X, Linux and Solaris.
-
-    currentTime() (in this file) uses
-    clock_gettime(): AIX, FreeBSD, Linux, Solaris
-    gettimeofday():  Mac OS X, Windows, Cygwin
-    time() (as ultimate fallback, AFAIK unused).
-
-    proc.time() uses currentTime() for elapsed time,
-    and getrusage, then times for CPU times on a Unix-alike,
-    GetProcessTimes on Windows.
-
-    devPS.c uses time() and localtime() for timestamps.
-
-    do_date (platform.c) uses ctime.
- */
+*/
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -98,25 +46,11 @@
 # include <time.h>
 
 #ifdef USE_INTERNAL_MKTIME
-
-# include <stdint.h>
-typedef int64_t R_time_t;
-#define time_t R_time_t
-# define gmtime R_gmtime
-# define localtime R_localtime
-# define mktime R_mktime
-#define tzset R_tzset
-extern struct tm*  gmtime (const time_t*);
-extern struct tm*  localtime (const time_t*);
-extern time_t mktime (struct tm*);
-extern void R_tzset(void);
-#define tzname R_tzname
-extern char *R_tzname[2];
+# include "datetime.h"
 # undef HAVE_WORKING_64BIT_MKTIME
 # define HAVE_WORKING_64BIT_MKTIME 1
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
-
 #else
 
 # if defined(__CYGWIN__)
@@ -532,92 +466,6 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     }
 }
 
-
-/* clock_gettime, timespec_get time are in <time.h>, already included */
-#ifdef HAVE_SYS_TIME_H
-/* gettimeoday, including on Windows */
-# include <sys/time.h>
-#endif
-
-double currentTime(void)
-{
-    double ans = NA_REAL;
-
-#ifdef HAVE_TIMESPEC_GET
-    struct timespec tp;
-    int res = timespec_get(&tp, TIME_UTC);
-    if(res != 0)
-	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
-#elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
-    /* Has 2038 issue if time_t: tv.tv_sec is 32-bit. */
-    struct timespec tp;
-    int res = clock_gettime(CLOCK_REALTIME, &tp);
-    if(res == 0)
-	ans = (double) tp.tv_sec + 1e-9 * (double) tp.tv_nsec;
-
-#elif defined(HAVE_GETTIMEOFDAY)
-    /* Mac OS X, mingw.org, used on mingw-w64.
-       Has 2038 issue if time_t: tv.tv_sec is 32-bit.
-     */
-    struct timeval tv;
-    int res = gettimeofday(&tv, NULL);
-    if(res == 0)
-	ans = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
-
-#else
-    /* No known current OSes */
-    time_t res = time(NULL);
-    if(res != (time_t)(-1)) /* -1 must be an error as the real value -1
-			       was ca 1969 */
-	ans = (double) res;
-#endif
-
-#ifndef HAVE_POSIX_LEAPSECONDS
-    /* No known current OSes */
-    /* Disallowed by POSIX (1988-):
-       http://www.mail-archive.com/leapsecs@rom.usno.navy.mil/msg00109.html
-       http://en.wikipedia.org/wiki/Unix_time
-    */
-    if (!ISNAN(ans)) {
-	ans -= n_leapseconds;
-    }
-#endif
-    return ans;
-}
-
-SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    return ScalarReal(currentTime());
-}
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h> /* for getpid */
-#endif
-
-/* For RNG.c, main.c, mkdtemp.c */
-attribute_hidden
-unsigned int TimeToSeed(void)
-{
-    unsigned int seed, pid = getpid();
-#if defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_REALTIME)
-    {
-	struct timespec tp;
-	clock_gettime(CLOCK_REALTIME, &tp);
-	seed = (unsigned int)(((uint_least64_t) tp.tv_nsec << 16) ^ tp.tv_sec);
-    }
-#elif defined(HAVE_GETTIMEOFDAY)
-    {
-	struct timeval tv;
-	gettimeofday (&tv, NULL);
-	seed = (unsigned int)(((uint_least64_t) tv.tv_usec << 16) ^ tv.tv_sec);
-    }
-#else
-    /* C89, so must work */
-    seed = (Int32) time(NULL);
-#endif
-    seed ^= (pid <<16);
-    return seed;
-}
 static int set_tz(const char *tz, char *oldtz)
 {
     char *p = NULL;
@@ -673,6 +521,44 @@ static void reset_tz(char *tz)
     tzset();
 }
 
+static void glibc_fix(struct tm *tm, int *invalid)
+{
+    /* set mon and mday which glibc does not always set.
+       Use current year/... if none has been specified.
+
+       Specifying mon but not mday nor yday is invalid.
+    */
+    time_t t = time(NULL);
+    struct tm *tm0;
+    int tmp;
+#ifndef HAVE_POSIX_LEAPSECONDS
+    t -= n_leapseconds;
+#endif
+    tm0 = localtime(&t);
+    if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;
+    if(tm->tm_mon != NA_INTEGER && tm->tm_mday != NA_INTEGER) return;
+    /* at least one of the month and the day of the month is missing */
+    if(tm->tm_yday != NA_INTEGER) {
+	/* since we have yday, let that take precedence over mon/mday */
+	int yday = tm->tm_yday, mon = 0;
+	while(yday >= (tmp = days_in_month[mon] +
+		      ((mon==1 && isleap(1900+tm->tm_year))? 1 : 0))) {
+	    yday -= tmp;
+	    mon++;
+	}
+	tm->tm_mon = mon;
+	tm->tm_mday = yday + 1;
+    } else {
+	if(tm->tm_mday == NA_INTEGER) {
+	    if(tm->tm_mon != NA_INTEGER) {
+		*invalid = 1;
+		return;
+	    } else tm->tm_mday = tm0->tm_mday;
+	}
+	if(tm->tm_mon == NA_INTEGER) tm->tm_mon = tm0->tm_mon;
+    }
+}
+
 
 static const char ltnames [][6] =
 { "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst" };
@@ -699,6 +585,8 @@ makelt(struct tm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
     }
 }
 
+
+             /* --------- R interfaces --------- */
 
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -983,44 +871,6 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     if(settz) reset_tz(oldtz);
     return ans;
-}
-
-static void glibc_fix(struct tm *tm, int *invalid)
-{
-    /* set mon and mday which glibc does not always set.
-       Use current year/... if none has been specified.
-
-       Specifying mon but not mday nor yday is invalid.
-    */
-    time_t t = time(NULL);
-    struct tm *tm0;
-    int tmp;
-#ifndef HAVE_POSIX_LEAPSECONDS
-    t -= n_leapseconds;
-#endif
-    tm0 = localtime(&t);
-    if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;
-    if(tm->tm_mon != NA_INTEGER && tm->tm_mday != NA_INTEGER) return;
-    /* at least one of the month and the day of the month is missing */
-    if(tm->tm_yday != NA_INTEGER) {
-	/* since we have yday, let that take precedence over mon/mday */
-	int yday = tm->tm_yday, mon = 0;
-	while(yday >= (tmp = days_in_month[mon] +
-		      ((mon==1 && isleap(1900+tm->tm_year))? 1 : 0))) {
-	    yday -= tmp;
-	    mon++;
-	}
-	tm->tm_mon = mon;
-	tm->tm_mday = yday + 1;
-    } else {
-	if(tm->tm_mday == NA_INTEGER) {
-	    if(tm->tm_mon != NA_INTEGER) {
-		*invalid = 1;
-		return;
-	    } else tm->tm_mday = tm0->tm_mday;
-	}
-	if(tm->tm_mon == NA_INTEGER) tm->tm_mon = tm0->tm_mon;
-    }
 }
 
 

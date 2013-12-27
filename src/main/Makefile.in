@@ -33,6 +33,7 @@ SOURCES_C = \
 	random.c raw.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
+	times.c \
 	unique.c util.c \
 	version.c vfonts.c
 
@@ -51,6 +52,7 @@ HEADERS = \
 	arithmetic.h \
 	basedecl.h \
 	contour-common.h \
+	datetime.h \
 	gzio.h \
 	qsort-body.c \
 	rlocale_data.h \

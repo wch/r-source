@@ -64,8 +64,8 @@
                 is_subdir(lp, lockdir)) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
-                    file.copy(lp, dirname(pkgdir), recursive = TRUE)
-                    Sys.setFileTime(pkgdir, file.info(lp)$mtime)
+                    file.copy(lp, dirname(pkgdir), recursive = TRUE,
+                              copy.date = TRUE)
                     unlink(lp, recursive = TRUE)
                 } else {
                     ## some shells require that they be run in a known dir
@@ -593,15 +593,15 @@
             if (nzchar(lockdir)) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
-                    file.copy(instdir, lockdir, recursive = TRUE)
-                    Sys.setFileTime(file.path(lockdir, pkg_name),
-                                    file.info(instdir)$mtime)
+                    file.copy(instdir, lockdir, recursive = TRUE,
+                              copy.date = TRUE)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
                     system(paste("mv", shQuote(instdir),
                                  shQuote(file.path(lockdir, pkg_name))))
                 else
-                    file.copy(instdir, lockdir, recursive = TRUE)
+                    file.copy(instdir, lockdir, recursive = TRUE,
+                              copy.date = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
