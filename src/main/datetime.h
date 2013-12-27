@@ -19,7 +19,8 @@
  */
 
 # include <stdint.h>
-typedef int64_t R_time_t;
+// C99/C11 require this to be implemented.
+typedef int_fast64_t R_time_t;
 #define time_t R_time_t
 # define gmtime R_gmtime
 # define localtime R_localtime
