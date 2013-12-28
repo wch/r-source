@@ -858,19 +858,23 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		const char *q = CHAR(STRING_ELT(sformat, i%m));
 		int n = (int) strlen(q) + 50;
 		char buf2[n];
+		const char *p;
 #ifdef Win32
 		/* We want to override Windows' TZ names */
 		p = strstr(q, "%Z");
 		if (p) {
 		    memset(buf2, 0, n);
 		    strncpy(buf2, q, p - q);
-		    strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
+		    if(have_zone) 
+			strcat(buf2, tm_zone);
+		    else
+			strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
 		    strcat(buf2, p+2);
 		} else
 #endif
 		    strcpy(buf2, q);
 
-		const char *p = strstr(q, "%OS");
+		p = strstr(q, "%OS");
 		if(p) {
 		    /* FIXME some of this should be outside the loop */
 		    int ns, nused = 4;
