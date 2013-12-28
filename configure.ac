@@ -2007,7 +2007,7 @@ R_FUNC_MKTIME
 
 R_C99_COMPLEX
 
-## BSD extension
+## BSD extensions
 AC_CACHE_CHECK([whether 'struct tm' includes tm_zone],
                 [r_cv_have_tm_zone],
 [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
@@ -2024,6 +2024,24 @@ int main() {
               [r_cv_have_tm_zone=no])])
 if test "x${r_cv_have_tm_zone}" = xyes; then
   AC_DEFINE(HAVE_TM_ZONE, 1, [Define to 1 if your 'struct tm' has tm_zone.])
+fi
+
+AC_CACHE_CHECK([whether 'struct tm' includes tm_gmtoff],
+                [r_cv_have_tm_gmtoff],
+[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+// glibc needs this defined.
+#define _BSD_SOURCE
+#include <time.h>
+
+int main() {
+    struct tm x;
+    x.tm_gmtoff = +3600;
+}
+]])],
+              [r_cv_have_tm_gmtoff=yes],
+              [r_cv_have_tm_gmtoff=no])])
+if test "x${r_cv_have_tm_gmtoff}" = xyes; then
+  AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define to 1 if your 'struct tm' has tm_gmtoff.])
 fi
 
 

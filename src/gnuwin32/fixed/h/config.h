@@ -743,6 +743,9 @@
 /* Define to 1 if you have the `timespec_get' function. */
 /* #undef HAVE_TIMESPEC_GET */
 
+/* Define to 1 if your 'struct tm' has tm_gmtoff. */
+/* #undef HAVE_TM_GMTOFF */
+
 /* Define to 1 if your 'struct tm' has tm_zone. */
 /* #undef HAVE_TM_ZONE */
 

@@ -29046,7 +29046,7 @@ done
 
 
 
-## BSD extension
+## BSD extensions
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether 'struct tm' includes tm_zone" >&5
 $as_echo_n "checking whether 'struct tm' includes tm_zone... " >&6; }
 if ${r_cv_have_tm_zone+:} false; then :
@@ -29077,6 +29077,39 @@ $as_echo "$r_cv_have_tm_zone" >&6; }
 if test "x${r_cv_have_tm_zone}" = xyes; then
 
 $as_echo "#define HAVE_TM_ZONE 1" >>confdefs.h
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether 'struct tm' includes tm_gmtoff" >&5
+$as_echo_n "checking whether 'struct tm' includes tm_gmtoff... " >&6; }
+if ${r_cv_have_tm_gmtoff+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+// glibc needs this defined.
+#define _BSD_SOURCE
+#include <time.h>
+
+int main() {
+    struct tm x;
+    x.tm_gmtoff = +3600;
+}
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  r_cv_have_tm_gmtoff=yes
+else
+  r_cv_have_tm_gmtoff=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_tm_gmtoff" >&5
+$as_echo "$r_cv_have_tm_gmtoff" >&6; }
+if test "x${r_cv_have_tm_gmtoff}" = xyes; then
+
+$as_echo "#define HAVE_TM_GMTOFF 1" >>confdefs.h
 
 fi
 
@@ -35812,11 +35845,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35815: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35848: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35819: \$? = $ac_status" >&5
+   echo "$as_me:35852: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35911,11 +35944,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35914: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35947: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35918: \$? = $ac_status" >&5
+   echo "$as_me:35951: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35963,11 +35996,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35966: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35999: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35970: \$? = $ac_status" >&5
+   echo "$as_me:36003: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
