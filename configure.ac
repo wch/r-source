@@ -2012,11 +2012,11 @@ AC_CACHE_CHECK([whether 'struct tm' includes tm_zone],
                 [r_cv_have_tm_zone],
 [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
 // glibc needs this defined.
-// #define _BSD_SOURCE
+#define _BSD_SOURCE
 #include <time.h>
 
-{
-    struct tm x; 
+int main() {
+    struct tm x;
     x.tm_zone = "";
 }
 ]])],

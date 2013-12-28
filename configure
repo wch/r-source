@@ -29056,10 +29056,10 @@ else
 /* end confdefs.h.  */
 
 // glibc needs this defined.
-// #define _BSD_SOURCE
+#define _BSD_SOURCE
 #include <time.h>
 
-{
+int main() {
     struct tm x;
     x.tm_zone = "";
 }
