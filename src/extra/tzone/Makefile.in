@@ -20,7 +20,13 @@ ALL_CPPFLAGS=$(R_XTRA_CPPFLAGS) -I$(srcdir) -I$(top_srcdir)/src/main $(CPPFLAGS)
 
 R all: Makefile 
 	@$(MAKE) Makedeps
-	@$(MAKE) $(OBJECTS)
+	@$(MAKE) libtz.a
+
+libtz.a: $(OBJECTS)
+	@rm -f $@
+	$(AR) cr $@ $(OBJECTS)
+	@$(RANLIB) $@
+
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -37,3 +43,5 @@ distclean: clean
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check:
+
+## Automagically generated dependencies:
