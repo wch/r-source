@@ -30,29 +30,16 @@ Sys.timezone <- function(location = TRUE)
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
-as.POSIXlt.Date <- function(x, ...)
-{
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(Date2POSIXlt(x))
-    names(y$year) <- names(x)
-    y
-    ## </FIXME>
-}
+as.POSIXlt.Date <- function(x, ...) .Internal(Date2POSIXlt(x))
 
 as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
     as.POSIXlt(as.POSIXct(x), ...)
 
 as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
-    tzone <- attr(x, "tzone")
-    if((missing(tz) || is.null(tz)) && !is.null(tzone)) tz <- tzone[1L]
-    ## <FIXME>
-    ## Move names handling to C code eventually ...
-    y <- .Internal(as.POSIXlt(x, tz))
-    names(y$year) <- names(x)
-    y
-    ## </FIXME>
+    if((missing(tz) || is.null(tz)) &&
+       !is.null(tzone <- attr(x, "tzone"))) tz <- tzone[1L]
+    .Internal(as.POSIXlt(x, tz))
 }
 
 as.POSIXlt.factor <- function(x, ...)
