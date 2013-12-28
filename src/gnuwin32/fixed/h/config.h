@@ -743,6 +743,9 @@
 /* Define to 1 if you have the `timespec_get' function. */
 /* #undef HAVE_TIMESPEC_GET */
 
+/* Define to 1 if your 'struct tm' has tm_zone. */
+/* #undef HAVE_TM_ZONE */
+
 /* Define to 1 if you have the `tsearch' function. */
 #if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 #define HAVE_TSEARCH 1

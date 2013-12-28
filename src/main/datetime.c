@@ -37,14 +37,21 @@
 # include <config.h>
 #endif
 
-#include <errno.h>
+#ifdef __GLIBC__
+// to get tm_zone defined
+# define _BSD_SOURCE
+#endif
 #include <time.h>
+
+#include <errno.h>
 
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
 #else
+
+#define R_tzname tzname
 
 # if defined(__CYGWIN__)
 extern __declspec(dllimport) char *tzname[2];
@@ -215,6 +222,7 @@ static struct tm * localtime0(const double *tp, const int local)
     time_t t = (time_t) *tp;
     return local ? R_localtime(&t) : R_gmtime(&t);
 }
+
 #else
 /* The glibc in RH8.0 was broken and assumed that dates before
    1970-01-01 do not exist.  So does Windows, but its code was replaced
@@ -572,7 +580,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
 
 
 static const char ltnames [][6] =
-{ "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst" };
+{ "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst", "zone"};
 
 
 static void 
@@ -630,17 +638,19 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	PROTECT(tzone = allocVector(STRSXP, 3));
 	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
     }
 
     R_xlen_t n = XLENGTH(x);
-    PROTECT(ans = allocVector(VECSXP, 9));
+    int nans = 10 - isgmt;
+    PROTECT(ans = allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
+    if(!isgmt) SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
 
-    PROTECT(ansnames = allocVector(STRSXP, 9));
-    for(int i = 0; i < 9; i++)
+    PROTECT(ansnames = allocVector(STRSXP, nans));
+    for(int i = 0; i < nans; i++)
 	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
 
     for(R_xlen_t i = 0; i < n; i++) {
@@ -654,6 +664,14 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    valid = (ptm != NULL);
 	} else valid = 0;
 	makelt(ptm, ans, i, valid, d - floor(d));
+	if(!isgmt) {
+	    char *p = "";
+	    if(valid && ptm->tm_isdst >= 0) p = R_tzname[ptm->tm_isdst];
+	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+#ifdef HAVE_TM_ZONE
+//	    if(valid) printf("tm_zone = %s\n", ptm->tm_zone);
+#endif
+	}
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
@@ -762,7 +780,6 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     int UseTZ, settz = 0;
     char buff[300];
     char oldtz[20] = "";
-    const char *p, *tz1;
     struct tm tm;
 
     checkArity(op, args);
@@ -777,6 +794,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "usetz");
     tz = getAttrib(x, install("tzone"));
 
+    const char *tz1;
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
 	/* If the format includes %Z or %z
 	   we need to try to set TZ accordingly */
@@ -807,6 +825,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 0) N = (m > n) ? m:n; else N = 0;
     PROTECT(ans = allocVector(STRSXP, N));
+    char tm_zone[20];
+    Rboolean have_zone = LENGTH(x) >= 10 && LENGTH(VECTOR_ELT(x, 9)) == n;
     for(R_xlen_t i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	// avoid (int) NAN
@@ -819,6 +839,15 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday  = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday  = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
+	if(have_zone) {
+	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i)), 20);
+#ifdef HAVE_TM_ZONE
+	    tm.tm_zone = tm_zone;
+#else
+	    // The system one, as we use system strftime here
+	    if(tm.tm_isdst >= 0) tzname[tm.tm_isdst] = tm_zone;
+#endif
+	}
 	if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
@@ -835,13 +864,13 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (p) {
 		    memset(buf2, 0, n);
 		    strncpy(buf2, q, p - q);
-		    strcat(buf2, tm.tm_isdst > 0 ? tzname[1] : tzname[0]);
+		    strcat(buf2, tm.tm_isdst > 0 ? R_tzname[1] : R_tzname[0]);
 		    strcat(buf2, p+2);
 		} else
 #endif
 		    strcpy(buf2, q);
 
-		p = strstr(q, "%OS");
+		const char *p = strstr(q, "%OS");
 		if(p) {
 		    /* FIXME some of this should be outside the loop */
 		    int ns, nused = 4;
@@ -866,17 +895,19 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		}
 		strftime(buff, 256, buf2, &tm);
-		if(UseTZ && !isNull(tz)) {
-		    int ii = 0;
-		    if(LENGTH(tz) == 3) {
-			if(tm.tm_isdst > 0) ii = 2;
-			else if(tm.tm_isdst == 0) ii = 1;
-			else ii = 0; /* Use base timezone name */
-		    }
-		    p = CHAR(STRING_ELT(tz, ii));
-		    if(strlen(p)) {
-			strcat(buff, " ");
-			strcat(buff, p);
+		if(UseTZ) {
+		    if(LENGTH(x) >= 10) {
+			const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i));
+			if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
+		    } else if(!isNull(tz)) {
+			int ii = 0;
+			if(LENGTH(tz) == 3) {
+			    if(tm.tm_isdst > 0) ii = 2;
+			    else if(tm.tm_isdst == 0) ii = 1;
+			    else ii = 0; /* Use base timezone name */
+			}
+			const char *p = CHAR(STRING_ELT(tz, ii));
+			if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
 		    }
 		}
 		SET_STRING_ELT(ans, i, mkChar(buff));
@@ -926,20 +957,22 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if(strlen(tz)) {
 	PROTECT(tzone = allocVector(STRSXP, 3));
 	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));
 	
     } else PROTECT(tzone); // for balance
 
     n = XLENGTH(x); m = XLENGTH(sformat);
     if(n > 0) N = (m > n) ? m : n; else N = 0;
 
-    PROTECT(ans = allocVector(VECSXP, 9));
+    int nans = 10 - isgmt;
+    PROTECT(ans = allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
+    if(!isgmt) SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
 
-    PROTECT(ansnames = allocVector(STRSXP, 9));
-    for(int i = 0; i < 9; i++)
+    PROTECT(ansnames = allocVector(STRSXP, nans));
+    for(int i = 0; i < nans; i++)
 	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
 
 
@@ -984,6 +1017,11 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    invalid = validate_tm(&tm) != 0;
 	}
 	makelt(ptm, ans, i, !invalid, psecs - floor(psecs));
+	if(!isgmt) {
+	    char *p = "";
+	    if(!invalid && tm.tm_isdst >= 0) p = R_tzname[tm.tm_isdst];
+	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
+	}
     }
 
     setAttrib(ans, R_NamesSymbol, ansnames);

@@ -92,6 +92,8 @@
     \item{\code{yday}}{0--365: day of the year.}
     \item{\code{isdst}}{Daylight Saving Time flag.  Positive if in
       force, zero if not, negative if unknown.}
+    \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
+      force at that time: \code{""} is unknown.}
   }
   Note that the internal list structure is somewhat hidden, as many
   methods, including \code{\link{print}()} or \code{\link{str}}, apply

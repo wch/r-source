@@ -144,6 +144,13 @@
       on a line by itself.
       
       \item \code{file.copy()} gains a \code{copy.date} argument.
+      
+      \item Printing of date-times will make use of the time-zone
+      abbreviation in use at the time, if known.  For example, for Paris
+      pre-1940 this could be \samp{LMT}, \samp{PMT}, \samp{WET} or
+      \samp{WEST}.  To enable this, the \code{"POSIXlt"} class has an
+      optional tenth component (as do BSD variants of the C structure)
+      recording the abbreviation.
     }
   }
 
