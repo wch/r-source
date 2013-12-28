@@ -26,9 +26,10 @@ typedef int_fast64_t R_time_t;
 # define localtime R_localtime
 # define mktime R_mktime
 #define tzset R_tzset
-extern struct tm*  gmtime (const time_t*);
-extern struct tm*  localtime (const time_t*);
-extern time_t mktime (struct tm*);
+extern struct tm* R_gmtime (const R_time_t*);
+extern struct tm* R_localtime (const R_time_t*);
+extern R_time_t R_mktime (struct tm*);
 extern void R_tzset(void);
 #define tzname R_tzname
 extern char *R_tzname[2];
+

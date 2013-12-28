@@ -381,6 +381,12 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer yields a
       warning.
+ 
+      \item Where time zones have changed abbreviations over the years,
+      the software tries to more consistently use the current
+      abbreviation.  On some platforms where the C function
+      \code{localtime} changed the \code{tzname} variables the reported
+      abbreviation could have been that of the last time converted.
     }
   }
 }

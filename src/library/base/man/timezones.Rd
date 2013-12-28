@@ -112,7 +112,7 @@ OlsonNames()
 
   Note that that the abbreviations have changed over the years: for
   example France used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to
-  1911 then \samp{CET/CEST}, but\samp{WET/WEST} for parts of 1940--5.
+  1911 then \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.
   Software will generally use the current abbreviation(s), and the POSIX
   standard allows only one or two abbreviations per time zone.
   

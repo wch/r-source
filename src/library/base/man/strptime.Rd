@@ -123,8 +123,9 @@ strptime(x, format, tz = "")
       with agreement of the parties involved.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
-    \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available).}
+    \item{\code{\%Z}}{(output only.) Time zone abbreviation as a
+      character string (empty if not available).  This may not be reliable
+      when a time zone has changed abbreviations over the years.}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
