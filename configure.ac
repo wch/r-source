@@ -2007,6 +2007,26 @@ R_FUNC_MKTIME
 
 R_C99_COMPLEX
 
+## BSD extension
+AC_CACHE_CHECK([whether 'struct tm' includes tm_zone],
+                [r_cv_have_tm_zone],
+[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+// glibc needs this defined.
+// #define _BSD_SOURCE
+#include <time.h>
+
+{
+    struct tm x; 
+    x.tm_zone = "";
+}
+]])],
+              [r_cv_have_tm_zone=yes],
+              [r_cv_have_tm_zone=no])])
+if test "x${r_cv_have_tm_zone}" = xyes; then
+  AC_DEFINE(HAVE_TM_ZONE, 1, [Define to 1 if your 'struct tm' has tm_zone.])
+fi
+
+
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
 ## Apple's Mac OS X is known to provide it
