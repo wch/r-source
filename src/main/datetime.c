@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2012  The R Core Team.
+ *  Copyright (C) 2000-2013  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -677,6 +677,8 @@ makelt(struct tm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
 }
 
 
+             /* --------- R interfaces --------- */
+
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, klass, tzone;
@@ -701,6 +703,16 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+
+    // localtime may change tzname.
+    if (isgmt) {
+	PROTECT(tzone = mkString(tz));
+    } else {
+	PROTECT(tzone = allocVector(STRSXP, 3));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+    }
 
     R_xlen_t n = XLENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
@@ -728,15 +740,9 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
-    if (isgmt) {
-	PROTECT(tzone = mkString(tz));
-    } else {
-	PROTECT(tzone = allocVector(STRSXP, 3));
-	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
-    }
     setAttrib(ans, install("tzone"), tzone);
+    SEXP nm = getAttrib(x, R_NamesSymbol);
+    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
     UNPROTECT(6);
 
     if(settz) reset_tz(oldtz);
@@ -941,13 +947,13 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		strftime(buff, 256, buf2, &tm);
 		if(UseTZ && !isNull(tz)) {
-		    int i = 0;
+		    int ii = 0;
 		    if(LENGTH(tz) == 3) {
-			if(tm.tm_isdst > 0) i = 2;
-			else if(tm.tm_isdst == 0) i = 1;
-			else i = 0; /* Use base timezone name */
+			if(tm.tm_isdst > 0) ii = 2;
+			else if(tm.tm_isdst == 0) ii = 1;
+			else ii = 0; /* Use base timezone name */
 		    }
-		    p = CHAR(STRING_ELT(tz, i));
+		    p = CHAR(STRING_ELT(tz, ii));
 		    if(strlen(p)) {
 			strcat(buff, " ");
 			strcat(buff, p);
@@ -1003,7 +1009,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
 
 SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, ansnames, klass, stz, tzone;
+    SEXP x, sformat, ans, ansnames, klass, stz, tzone = R_NilValue;
     int invalid, isgmt = 0, settz = 0, offset;
     struct tm tm, tm2, *ptm = &tm;
     const char *tz = NULL;
@@ -1031,6 +1037,17 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+
+    // in case this gets changed by conversions.
+    if (isgmt) {
+	PROTECT(tzone = mkString(tz));
+    } else if(strlen(tz)) {
+	PROTECT(tzone = allocVector(STRSXP, 3));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+	
+    } else PROTECT(tzone); // for balance
 
     n = XLENGTH(x); m = XLENGTH(sformat);
     if(n > 0) N = (m > n) ? m : n; else N = 0;
@@ -1092,21 +1109,10 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
-    if (isgmt) {
-	PROTECT(tzone = mkString(tz));
-	setAttrib(ans, install("tzone"), tzone);
-	UNPROTECT(1);
-    } else if(strlen(tz)) {
-	PROTECT(tzone = allocVector(STRSXP, 3));
-	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
-	setAttrib(ans, install("tzone"), tzone);
-	UNPROTECT(1);
-    }
     if(settz) reset_tz(oldtz);
+    if(isString(tzone)) setAttrib(ans, install("tzone"), tzone);
 
-    UNPROTECT(4);
+    UNPROTECT(5);
     return ans;
 }
 
@@ -1164,6 +1170,8 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
     setAttrib(ans, install("tzone"), mkString("UTC"));
+    SEXP nm = getAttrib(x, R_NamesSymbol);
+    if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
     UNPROTECT(4);
 
     return ans;
