@@ -592,7 +592,8 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    while (i < ts.timecnt &&
 		   sp->timecnt < TZ_MAX_TIMES) {
 		sp->ats[sp->timecnt] = ts.ats[i];
-		sp->types[sp->timecnt] = sp->typecnt + ts.types[i];
+		sp->types[sp->timecnt] = 
+		    (unsigned char)(sp->typecnt + ts.types[i]);
 		++sp->timecnt;
 		++i;
 	    }
@@ -1053,7 +1054,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0] = sp->ttis[1] = zttinfo;
 	    sp->ttis[0].tt_gmtoff = -dstoffset;
 	    sp->ttis[0].tt_isdst = 1;
-	    sp->ttis[0].tt_abbrind = stdlen + 1;
+	    sp->ttis[0].tt_abbrind = (int)(stdlen + 1);
 	    sp->ttis[1].tt_gmtoff = -stdoffset;
 	    sp->ttis[1].tt_isdst = 0;
 	    sp->ttis[1].tt_abbrind = 0;
@@ -1085,7 +1086,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 		    if (increment_overflow_time
 			(&sp->ats[timecnt], starttime))
 			break;
-		    sp->types[timecnt++] = reversed;
+		    sp->types[timecnt++] = (unsigned char) reversed;
 		    sp->ats[timecnt] = janfirst;
 		    if (increment_overflow_time
 			(&sp->ats[timecnt], endtime))
@@ -1140,7 +1141,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    */
 	    for (i = 0; i < sp->timecnt; ++i) {
 		j = sp->types[i];
-		sp->types[i] = sp->ttis[j].tt_isdst;
+		sp->types[i] = (unsigned char)sp->ttis[j].tt_isdst;
 		if (sp->ttis[j].tt_ttisgmt) {
 		    /* No adjustment to transition time */
 		} else {
@@ -1180,7 +1181,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	    sp->ttis[0].tt_abbrind = 0;
 	    sp->ttis[1].tt_gmtoff = -dstoffset;
 	    sp->ttis[1].tt_isdst = TRUE;
-	    sp->ttis[1].tt_abbrind = stdlen + 1;
+	    sp->ttis[1].tt_abbrind = (int)(stdlen + 1);
 	    sp->typecnt = 2;
 	}
     } else {
@@ -1192,7 +1193,7 @@ tzparse(const char * name, struct state * const sp, const int lastditch)
 	sp->ttis[0].tt_isdst = 0;
 	sp->ttis[0].tt_abbrind = 0;
     }
-    sp->charcnt = stdlen + 1;
+    sp->charcnt = (int)(stdlen + 1);
     if (dstlen != 0)
 	sp->charcnt += dstlen + 1;
     if ((size_t) sp->charcnt > sizeof sp->chars)
@@ -1306,7 +1307,7 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	    if (t < sp->ats[0])
 		newy -= years;
 	    else	newy += years;
-	    tmp->tm_year = newy;
+	    tmp->tm_year = (int)newy;
 	    if (tmp->tm_year != newy)
 		return NULL;
 	}
@@ -1468,7 +1469,7 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	if (! ((! TYPE_SIGNED(time_t) || INT_MIN <= tdelta)
 	       && tdelta <= INT_MAX))
 	    return NULL;
-	idelta = tdelta;
+	idelta = (int)tdelta;
 	if (idelta == 0)
 	    idelta = (tdays < 0) ? -1 : 1;
 	newy = y;
@@ -1483,14 +1484,14 @@ timesub(const time_t *const timep, const int_fast32_t offset,
     {
 	int_fast32_t	seconds;
 
-	seconds = tdays * SECSPERDAY;
+	seconds = (int_fast32_t)(tdays * SECSPERDAY);
 	tdays = seconds / SECSPERDAY;
 	rem += seconds - tdays * SECSPERDAY;
     }
     /*
     ** Given the range, we can now fearlessly cast...
     */
-    idays = tdays;
+    idays = (int)tdays;
     rem += offset - corr;
     while (rem < 0) {
 	rem += SECSPERDAY;
