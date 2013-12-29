@@ -46,7 +46,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 /* Keep the original link size. */
-static int real_link_size = 2; // LINK_SIZE;
+static int real_link_size = 2; //LINK_SIZE;
 
 #include "pcre_internal.h"
 
@@ -159,6 +159,10 @@ switch (what)
 
   case PCRE_CONFIG_POSIX_MALLOC_THRESHOLD:
   *((int *)where) = POSIX_MALLOC_THRESHOLD;
+  break;
+
+  case PCRE_CONFIG_PARENS_LIMIT:
+  *((unsigned long int *)where) = PARENS_NEST_LIMIT;
   break;
 
   case PCRE_CONFIG_MATCH_LIMIT:

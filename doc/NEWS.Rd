@@ -196,6 +196,8 @@
       \command{configure} option \option{--with-internal-tzcode}. (It
       might be necessary to set environment variable \env{TZ} on OSes
       where this is not already set.)
+      
+      \item The included version of PCRE has been updated to 8.34.
     }
   }
 
