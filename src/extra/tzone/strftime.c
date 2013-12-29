@@ -32,9 +32,10 @@
 #include <string.h> // memcpy
 
 # include <stdint.h>
-extern int_fast64_t R_mktime (struct tm*);
+extern int_fast64_t R_mktime(const struct tm*);
 extern char *R_tzname[2];
 extern void R_tzset(void);
+extern int_fast64_t R_timegm(const struct tm*);
 
 struct lc_time_T {
     char mon[MONSPERYEAR][10];
@@ -443,38 +444,8 @@ _fmt(const char *format, const struct tm *const t, char * pt,
 #ifdef HAVE_TM_GMTOFF
 		diff = t->tm_gmtoff;
 #else
-		/*
-		** C99 says that the UT offset must
-		** be computed by looking only at
-		** tm_isdst. This requirement is
-		** incorrect, since it means the code
-		** must rely on magic (in this case
-		** altzone and timezone), and the
-		** magic might not have the correct
-		** offset. Doing things correctly is
-		** tricky and requires disobeying C99;
-		** see GNU C strftime for details.
-		** For now, punt and conform to the
-		** standard, even though it's incorrect.
-		**
-		** C99 says that %z must be replaced by the
-		** empty string if the time zone is not
-		** determinable, so output nothing if the
-		** appropriate variables are not available.
-		*/
-		if (t->tm_isdst == 0)
-#ifdef USG_COMPAT
-		    diff = -timezone;
-#else /* !defined USG_COMPAT */
-		continue;
-#endif /* !defined USG_COMPAT */
-		else
-#ifdef ALTZONE
-		    diff = -altzone;
-#else /* !defined ALTZONE */
-		continue;
-#endif /* !defined ALTZONE */
-#endif /* !defined HAVE_TM_GMTOFF */
+		diff = R_timegm(t) - R_mktime(t);
+#endif
 		if (diff < 0) {
 		    sign = "-";
 		    diff = -diff;

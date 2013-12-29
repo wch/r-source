@@ -240,6 +240,7 @@
  R_sysframe
  R_sysfunction
  R_sysparent
+ R_timegm
  R_tzname
  R_tzset
  R_unary
