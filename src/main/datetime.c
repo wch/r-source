@@ -645,13 +645,19 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     R_xlen_t n = XLENGTH(x);
+#ifdef HAVE_TM_GMTOFF
     int nans = 11 - 2 * isgmt;
+#else
+    int nans = 10 - isgmt;
+#endif
     PROTECT(ans = allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
     if(!isgmt) {
 	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+#ifdef HAVE_TM_GMTOFF
 	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
+#endif
     }
 
     PROTECT(ansnames = allocVector(STRSXP, nans));
@@ -676,8 +682,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		p = R_tzname[ptm->tm_isdst];
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
 #ifdef HAVE_TM_GMTOFF
-	    if(valid)
-		INTEGER(VECTOR_ELT(ans, 10))[i] = (int)ptm->tm_gmtoff;
+	    INTEGER(VECTOR_ELT(ans, 10))[i] = valid ? (int)ptm->tm_gmtoff : 0;
 #endif
 	}
     }
@@ -980,13 +985,19 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     n = XLENGTH(x); m = XLENGTH(sformat);
     if(n > 0) N = (m > n) ? m : n; else N = 0;
 
-    int nans = 11 - 2*isgmt;
+#ifdef HAVE_TM_GMTOFF
+    int nans = 11 - 2 * isgmt;
+#else
+    int nans = 10 - isgmt;
+#endif
     PROTECT(ans = allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
     if(!isgmt) {
 	SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+#ifdef HAVE_TM_GMTOFF
 	SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
+#endif
     }
 
     PROTECT(ansnames = allocVector(STRSXP, nans));
@@ -1047,8 +1058,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(p));
 #ifdef HAVE_TM_GMTOFF
-	    if(!invalid)
-		INTEGER(VECTOR_ELT(ans, 10))[i] = (int)tm.tm_gmtoff;
+	    INTEGER(VECTOR_ELT(ans, 10))[i] = invalid ? 0 : (int)tm.tm_gmtoff;
 #endif
 	}
     }
