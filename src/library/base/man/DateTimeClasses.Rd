@@ -92,15 +92,15 @@
     \item{\code{isdst}}{Daylight Saving Time flag.  Positive if in
       force, zero if not, negative if unknown.}
   }
-  Note that the internal list structure is somewhat hidden, as many
-  methods, including \code{\link{print}()} or \code{\link{str}}, apply
-  to the abstract date-time vector, as for \code{"POSIXct"}.  The
+  (There may be other components).  Note that the internal list
+  structure is somewhat hidden, as many methods (including
+  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
+  apply to the abstract date-time vector, as for \code{"POSIXct"}.  The
   classes correspond to the POSIX/C99 constructs of \sQuote{calendar
-  time} (the \code{time_t} data type) and \sQuote{local time} (or
+    time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
   also inherit their names.  The components of \code{"POSIXlt"} are
-  integer vectors, except \code{sec}.  Note that \code{\link{length}(x)}
-  is the length of the corresponding (abstract) date/time vector.
+  integer vectors, except \code{sec} .
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
