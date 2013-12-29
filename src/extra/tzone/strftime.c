@@ -21,8 +21,6 @@
 
 #include <config.h>
 
-#define XPG4_1994_04_09 1
-
 #include "tzfile.h"
 #include <fcntl.h>
 #include <locale.h>
@@ -271,11 +269,8 @@ _fmt(const char *format, const struct tm *const t, char * pt,
 
 		tm = *t;
 		mkt = R_mktime(&tm);
-#ifdef WIN32
+		// will be limited in range for 32-bit long.
 		(void) sprintf(buf, "%ld", (long) mkt);
-#else
-		(void) sprintf(buf, "%ld", (int_fast64_t) mkt);
-#endif
 		pt = _add(buf, pt, ptlim);
 	    }
 	    continue;

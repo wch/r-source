@@ -20,3 +20,12 @@ for(i in seq_along(z))
     print(strftime(as.POSIXlt(z[i], tz="Europe/Paris"), "%Y-%m-%d %H:%M:%S %z"))
 
 strptime("1920-12-27 08:18:23", "%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
+
+## check %V etc
+
+d <- expand.grid(day = 1:7, year = 2000:2010)
+z1 <- with(d, ISOdate(year, 1, day))
+d <- expand.grid(day = 25:31, year = 2000:2010)
+z2 <- with(d, ISOdate(year, 12, day))
+z <- sort(c(z1, z2))
+strftime(z, "%G %g %W %U %u %V %W %w")
