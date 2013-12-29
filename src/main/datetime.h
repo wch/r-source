@@ -32,3 +32,8 @@ extern R_time_t R_mktime (struct tm*);
 extern void R_tzset(void);
 extern char *R_tzname[2];
 
+extern size_t
+R_strftime(char * const s, const size_t maxsize, const char *const format,
+	   const struct tm *const t);
+
+

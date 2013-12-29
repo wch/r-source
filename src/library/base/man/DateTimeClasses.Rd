@@ -94,16 +94,20 @@
       force, zero if not, negative if unknown.}
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
       force at that time: \code{""} is unknown.}
+    \item{\code{gmtoff}}{(Optional.) The offset in minutes from GMT:
+      positive values are East of the meridian.}
   }
-  Note that the internal list structure is somewhat hidden, as many
-  methods, including \code{\link{print}()} or \code{\link{str}}, apply
-  to the abstract date-time vector, as for \code{"POSIXct"}.  The
+  (The last two components not present for times in UTC and are
+  platform-dependent: they are fully supported on platforms based on BSD
+  or \code{glibc}, including Linux and OS X .).  Note that the internal
+  list structure is somewhat hidden, as many methods (including
+  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
+  apply to the abstract date-time vector, as for \code{"POSIXct"}.  The
   classes correspond to the POSIX/C99 constructs of \sQuote{calendar
   time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
   also inherit their names.  The components of \code{"POSIXlt"} are
-  integer vectors, except \code{sec}.  Note that \code{\link{length}(x)}
-  is the length of the corresponding (abstract) date/time vector.
+  integer vectors, except \code{sec} and \code{zone}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class

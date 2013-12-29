@@ -149,8 +149,11 @@
       abbreviation in use at the time, if known.  For example, for Paris
       pre-1940 this could be \samp{LMT}, \samp{PMT}, \samp{WET} or
       \samp{WEST}.  To enable this, the \code{"POSIXlt"} class has an
-      optional tenth component (as do BSD variants of the C structure)
-      recording the abbreviation.
+      optional component \code{"zone"} recording the abbreviation for
+      each element.
+
+      For suitable platforms, there is also a component \code{"gmtoff"}
+      recording the offset from GMT where known.
     }
   }
 

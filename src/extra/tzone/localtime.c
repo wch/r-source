@@ -36,6 +36,11 @@ use of 64-bit time_t irrespective of platform.
 #include <config.h>
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
+
+#ifdef __GLIBC__
+// to get tm_zone, tm_gmtoff defined
+# define _BSD_SOURCE
+#endif
 #include <time.h>
 
 #include <errno.h>
@@ -1542,9 +1547,9 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	idays -= ip[tmp->tm_mon];
     tmp->tm_mday = (int) (idays + 1);
     tmp->tm_isdst = 0;
-#ifdef TM_GMTOFF
-    tmp->TM_GMTOFF = offset;
-#endif /* defined TM_GMTOFF */
+#ifdef HAVE_TM_GMTOFF
+    tmp->tm_gmtoff = offset;
+#endif
     return tmp;
 }
 

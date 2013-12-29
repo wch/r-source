@@ -122,7 +122,9 @@ strptime(x, format, tz = "")
       also says that years before 1582 in its calendar should only be used
       with agreement of the parties involved.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
-      \code{-0800} is 8 hours behind UTC.}
+      \code{-0800} is 8 hours behind UTC. Note that offsets are not
+      necessarily in whole minutes, and that this may output
+      \code{+0000} when offsets are unknown.}
     \item{\code{\%Z}}{(output only.) Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
