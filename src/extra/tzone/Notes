@@ -8,6 +8,9 @@ parts of private.h which are needed, the other main changes are
 
 - to call getTZinfo() to get the default timezone if TZ is unset.
 
+strftime.c is a stripped-down version of that from tzcode, using the
+system version for locale-dependent day/month/am/pm names.
+
 
 zoneinfo.zip was formed by installing tzdata on a system with zic, and
 zipping up the results, after adding a file VERSION giving the

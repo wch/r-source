@@ -137,7 +137,7 @@ strptime(x, format, tz = "")
   for that time zone --- but it is not guaranteed to succeed.
 
   Also defined in the current standards but less widely implemented
-  (e.g. not for output on Windows) are
+  are
   \describe{
     \item{\code{\%C}}{Century (00--99): the integer part of the year
       divided by 100.}

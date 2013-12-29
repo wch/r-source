@@ -10,7 +10,7 @@ subdir = src/extra/tzone
 
 include $(top_builddir)/Makeconf
 
-SOURCES = localtime.c
+SOURCES = localtime.c strftime.c
 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)

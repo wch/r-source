@@ -154,6 +154,11 @@
 
       For suitable platforms, there is also a component \code{"gmtoff"}
       recording the offset from GMT where known.
+
+      \item (Windows, and as a substitute on OS X and perhaps
+      elsewhere.) The system C function \code{strftime} has been
+      replaced by a more comprehensive version.
+      
     }
   }
 

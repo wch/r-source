@@ -914,7 +914,11 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 			strcat(buf2, p+nused);
 		    }
 		}
+#ifdef USE_INTERNAL_MKTIME
+		R_strftime(buff, 256, buf2, &tm);
+#else
 		strftime(buff, 256, buf2, &tm);
+#endif
 		if(UseTZ) {
 		    if(LENGTH(x) >= 10) {
 			const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i));

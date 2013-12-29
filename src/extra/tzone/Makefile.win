@@ -8,7 +8,7 @@ all: makeMakedeps libtz.a zinfo
 
 CPPFLAGS = -I../../include -I../../main
 
-CSOURCES = localtime.c registryTZ.c
+CSOURCES = localtime.c registryTZ.c strftime.c
 OBJECTS = $(CSOURCES:.c=.o)
 libtz.a: $(OBJECTS)
 
@@ -25,7 +25,7 @@ distclean: clean
 	@$(RM) -Rf ../../../share/zoneinfo
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

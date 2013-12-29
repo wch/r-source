@@ -216,6 +216,8 @@ test-Vgct: $(test-out-valgct)
 
 test-DateTime:
 	@$(ECHO) "running tests of date-time printing"
+	@$(ECHO) "  expect platform-specific differences"
+	@$(RM) -f $(test-out-dt)
 	@$(MK) $(test-out-dt) RVAL_IF_DIFF=0
 
 test-Docs:
