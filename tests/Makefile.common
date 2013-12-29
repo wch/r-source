@@ -33,6 +33,7 @@ test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
+test-src-dt = datetime2.R
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
@@ -55,6 +56,7 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
+test-out-dt = $(test-src-dt:.R=.Rout)
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
@@ -153,8 +155,8 @@ test-all-basics:
 	  $(MK) test-$${name} || exit 1; \
 	done
 
-all-devel-tests = Docs IsAs Random Demo Primitive Regexp Segfault \
-   Standalone Packages
+all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
+    Segfault Standalone Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -211,6 +213,10 @@ stamp-Packages: $(PKG_OBJECTS)
 test-Gct: $(test-out-gct)
 
 test-Vgct: $(test-out-valgct)
+
+test-DateTime:
+	@$(ECHO) "running tests of date-time printing"
+	@$(MK) $(test-out-dt) RVAL_IF_DIFF=0
 
 test-Docs:
 	@$(ECHO) "running tests of documentation examples"
@@ -423,6 +429,7 @@ INSTFILES = README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
+	$(test-src-dt) datetime2.Rout.save \
 	$(test-src-demo) demos.Rout.save \
 	$(test-src-internet) internet.Rout.save \
 	$(test-src-primitive) \
