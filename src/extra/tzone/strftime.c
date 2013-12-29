@@ -27,7 +27,7 @@
 #include <fcntl.h>
 #include <locale.h>
 #include <time.h>
-#include <stdlib.h> // intmax_t
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h> // memcpy
 
@@ -267,12 +267,15 @@ _fmt(const char *format, const struct tm *const t, char * pt,
 	    {
 		struct tm  tm;
 		char   buf[22];
-		time_t	mkt;
+		int_fast64_t mkt;
 
 		tm = *t;
 		mkt = R_mktime(&tm);
-		// maybe not Windows
-		(void) sprintf(buf, "%ld", (intmax_t) mkt);
+#ifdef WIN32
+		(void) sprintf(buf, "%ld", (long) mkt);
+#else
+		(void) sprintf(buf, "%ld", (int_fast64_t) mkt);
+#endif
 		pt = _add(buf, pt, ptlim);
 	    }
 	    continue;

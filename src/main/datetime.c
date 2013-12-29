@@ -856,6 +856,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i)), 20);
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
+#elif defined USE_INTERNAL_MKTIME
+	    if(tm.tm_isdst >= 0) R_tzname[tm.tm_isdst] = tm_zone;
 #else
 	    // The system one, as we use system strftime here
 	    if(tm.tm_isdst >= 0) tzname[tm.tm_isdst] = tm_zone;
@@ -875,7 +877,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		int n = (int) strlen(q) + 50;
 		char buf2[n];
 		const char *p;
-#ifdef Win32
+#ifdef OLD_Win32
 		/* We want to override Windows' TZ names */
 		p = strstr(q, "%Z");
 		if (p) {
