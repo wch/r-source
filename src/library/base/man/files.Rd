@@ -25,7 +25,7 @@ file.remove(\dots)
 file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = recursive, recursive = FALSE,
-          copy.mode = TRUE, copy.date = TRUE)
+          copy.mode = TRUE, copy.date = FALSE)
 file.symlink(from, to)
 file.link(from, to)
 #ifdef windows
