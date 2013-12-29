@@ -94,7 +94,9 @@ static void get_locale_strings(struct lc_time_T *Loc)
     struct tm tm;
 
     memset(&tm, 0, sizeof(tm));
+#if HAVE_TM_ZONE
     tm.tm_zone = "";
+#endif
     tm.tm_year = 30;
     for(int i = 0; i < 12; i++) {
 	tm.tm_mon = i;
