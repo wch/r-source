@@ -226,7 +226,10 @@ strptime(x, format, tz = "")
   system-specific but it will probably be ignored.
 
   OS facilities will probably not print years before 1 CE (aka 1 AD)
-  correctly.
+  correctly (they tend to assume the existence of a year 0, and some
+  OSes get them completely wrong).  Years before 1000 may or may not be
+  printed with a leading zero (and on some OSes this can be assured by
+  using the POSIX-2008 notation \code{"\%04Y"}).
 
   Remember that in most time zones some times do not occur and some
   occur twice because of transitions to/from \sQuote{daylight saving}
@@ -238,8 +241,7 @@ strptime(x, format, tz = "")
   times at DST transitions
 }
 \references{
-  International Organization for Standardization (2004, 2000, 1988, 1997,
-  \dots)
+  International Organization for Standardization (2004, 2000, \dots)
   \emph{ISO 8601.  Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
