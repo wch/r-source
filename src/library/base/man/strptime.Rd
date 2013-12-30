@@ -137,6 +137,9 @@ strptime(x, format, tz = "")
   object with an assigned time zone an attempt is made to use the values
   for that time zone --- but it is not guaranteed to succeed.
 
+  The \sQuote{current locale} might mean the locale in use at the start
+  of the \R session or when these functions are first used.
+  
   Also defined in the current standards but less widely implemented
   are
   \describe{
@@ -193,12 +196,8 @@ strptime(x, format, tz = "")
 
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
-  specifications) is system-specific.
-#ifdef windows
-  For output on Windows, a conversion specification is \code{\%}
-  optionally followed by \code{#} and then by a single letter.  Any
-  conversion specification which is unimplemented is ignored.
-#endif
+  specifications) is system-specific.  Some systems document that the
+  use of multi-byte characters in \code{format} is not supported.
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors
@@ -229,14 +228,15 @@ strptime(x, format, tz = "")
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   correctly.
 
-  Remember that in most time zones some times do not occur and some occur
-  twice because of transitions to/from \sQuote{daylight saving} (also
-  known a \sQuote{summer}) time.  \code{strptime} does not validate such
-  times (it does not assume a specific time zone), but conversion by
-  \code{\link{as.POSIXct}}) will do so.  Conversion by \code{strftime}
-  and formatting/printing uses OS facilities and may (and does on
-  Windows) return nonsensical results for non-existent times at DST
-  transitions.
+  Remember that in most time zones some times do not occur and some
+  occur twice because of transitions to/from \sQuote{daylight saving}
+  (also known as \sQuote{summer}) time.  \code{strptime} does not
+  validate such times (it does not assume a specific time zone), but
+  conversion by \code{\link{as.POSIXct}}) will do so.  Conversion by
+  \code{strftime} and formatting/printing uses OS facilities and may
+  return nonsensical results for non-existent times at DST transitions.
+  
+  
 }
 \references{
   International Organization for Standardization (2004, 2000, 1988, 1997,
@@ -244,10 +244,10 @@ strptime(x, format, tz = "")
   \emph{ISO 8601.  Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
   For links to versions available on-line see (at the time of writing)
-  \url{http://dotat.at/tmp/ISO_8601-2004_E.pdf} abd
+  \url{http://dotat.at/tmp/ISO_8601-2004_E.pdf} and
   \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
   current official version, see
-  \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
+  \url{http://www.iso.org/iso/iso8601}.
 
   The POSIX 1003.1 standard, which is in some respects stricter than ISO 8601.
 }
@@ -258,15 +258,13 @@ strptime(x, format, tz = "")
   Your system's help pages on \code{strftime} and \code{strptime} to
   see how to specify their formats.
 
-  (On some Unix-like systems \code{strptime} is replaced by corrected
-  code from \samp{glibc}, when all the conversion specifications
-  described here are supported, but with no alternative number
-  representation nor era available in any locale.)
+  \code{strptime} is replaced by corrected code from \samp{glibc}, when
+  all the conversion specifications described here are supported, but
+  with no alternative number representation nor era available in any
+  locale.
 
-  Windows users will find no help page for \code{strptime}: code based
-  on \samp{glibc} is used (with corrections), so all the conversion
-  specifications described here are supported, but with no alternative
-  number representation nor era available in any locale.
+  On some systems, including Windows, \code{strftime} is replaced by
+  more comprehensive internal code.
 }
 \examples{\donttest{
 ## locale-specific version of date()
