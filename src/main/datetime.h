@@ -21,19 +21,36 @@
 # include <stdint.h>
 // C99/C11 require this to be implemented.
 typedef int_fast64_t R_time_t;
+
+struct Rtm
+{
+  int tm_sec;
+  int tm_min;
+  int tm_hour;
+  int tm_mday;
+  int tm_mon;
+  int tm_year;
+  int tm_wday;
+  int tm_yday;
+  int tm_isdst;
+  long tm_gmtoff;
+  const char *tm_zone;
+};
+
+typedef struct Rtm stm;
+
 #define time_t R_time_t
-# define gmtime R_gmtime
-# define localtime R_localtime
-# define mktime R_mktime
+#define gmtime R_gmtime
+#define localtime R_localtime
+#define mktime R_mktime
 #define tzset R_tzset
-extern struct tm* R_gmtime (const R_time_t*);
-extern struct tm* R_localtime (const R_time_t*);
-extern R_time_t R_mktime (struct tm*);
+extern stm* R_gmtime (const R_time_t*);
+extern stm* R_localtime (const R_time_t*);
+extern R_time_t R_mktime (stm*);
 extern void R_tzset(void);
 extern char *R_tzname[2];
+extern int_fast64_t R_timegm(stm*);
 
 extern size_t
 R_strftime(char * const s, const size_t maxsize, const char *const format,
-	   const struct tm *const t);
-
-
+	   const stm *const t);

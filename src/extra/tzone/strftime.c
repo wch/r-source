@@ -29,11 +29,7 @@
 #include <stdio.h>
 #include <string.h> // memcpy
 
-# include <stdint.h>
-extern int_fast64_t R_mktime(const struct tm*);
-extern char *R_tzname[2];
-extern void R_tzset(void);
-extern int_fast64_t R_timegm(const struct tm*);
+#include "datetime.h"
 
 struct lc_time_T {
     char mon[MONSPERYEAR][10];
@@ -77,19 +73,9 @@ C_time_locale = {
 
 static  struct lc_time_T current, *Locale = NULL;
 
-static char * _add(const char *, char *, const char *);
-static char * _conv(int, const char *, char *, const char *);
-static char * _fmt(const char *, const struct tm *, char *, const char *, int *);
-static char * _yconv(int, int, int, int, char *, const char *);
-
-
-#define IN_NONE	0
-#define IN_SOME	1
-#define IN_THIS	2
-#define IN_ALL	3
-
 static void get_locale_strings(struct lc_time_T *Loc)
 {
+    // use system struct tm and system strftime here
     struct tm tm;
 
     memset(&tm, 0, sizeof(tm));
@@ -115,9 +101,27 @@ static void get_locale_strings(struct lc_time_T *Loc)
     strftime(Loc->pm, 4, "%p", &tm);
 }
 
+#undef HAVE_TM_ZONE
+#define HAVE_TM_ZONE 1
+#undef HAVE_TM_GMTOFF
+#define HAVE_TM_GMTOFF 1
+
+
+static char * _add(const char *, char *, const char *);
+static char * _conv(int, const char *, char *, const char *);
+static char * _fmt(const char *, const stm *, char *, const char *, int *);
+static char * _yconv(int, int, int, int, char *, const char *);
+
+
+#define IN_NONE	0
+#define IN_SOME	1
+#define IN_THIS	2
+#define IN_ALL	3
+
+
 size_t
 R_strftime(char * const s, const size_t maxsize, const char *const format,
-	   const struct tm *const t)
+	   const stm *const t)
 {
     char *p;
     int	warn;
@@ -138,7 +142,7 @@ R_strftime(char * const s, const size_t maxsize, const char *const format,
 }
 
 static char *
-_fmt(const char *format, const struct tm *const t, char * pt,
+_fmt(const char *format, const stm *const t, char * pt,
      const char *const ptlim, int *warnp)
 {
     for ( ; *format; ++format) {
@@ -263,7 +267,7 @@ _fmt(const char *format, const struct tm *const t, char * pt,
 		continue;
 	    case 's':
 	    {
-		struct tm  tm;
+		stm  tm;
 		char   buf[22];
 		int_fast64_t mkt;
 

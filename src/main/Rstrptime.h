@@ -130,7 +130,7 @@ enum locale_status { Not, loc, raw };
 
 /* Compute the day of the week.  */
 static void
-day_of_the_week (struct tm *tm)
+day_of_the_week (stm *tm)
 {
     /* We know that January 1st 1970 was a Thursday (= 4).  Compute the
        the difference between this data in the one on TM and so determine
@@ -155,7 +155,7 @@ day_of_the_week (struct tm *tm)
 
 /* Compute the day of the year.  */
 static void
-day_of_the_year (struct tm *tm)
+day_of_the_year (stm *tm)
 {
     /* R bug fix: day_of_the_year needs year, month, mday set */
     if(tm->tm_year == NA_INTEGER ||
@@ -210,7 +210,7 @@ static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
    && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs, poffset)) != NULL)
 
 static wchar_t *
-w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
+w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		     enum locale_status *decided, double *psecs, 
 		     int *poffset)
 {
@@ -673,7 +673,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 
 
 static char *
-strptime_internal (const char *rp, const char *fmt, struct tm *tm,
+strptime_internal (const char *rp, const char *fmt, stm *tm,
 		   enum locale_status *decided, double *psecs,
 		   int *poffset)
 {
@@ -1138,11 +1138,8 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 
 
 #ifdef HAVE_LOCALE_H
-# include <locale.h>
 
-/* We check for a changed locale here, as setting the locale strings is
-   on some systems slow compared to the conversions. */
-
+/* use system stuct tm and strftime/wcstime here */
 static void get_locale_strings(void)
 {
     int i;
@@ -1211,7 +1208,7 @@ static void get_locale_w_strings(void)
 
 /* We only care if the result is null or not */
 static char *
-R_strptime (const char *buf, const char *format, struct tm *tm, 
+R_strptime (const char *buf, const char *format, stm *tm, 
 	    double *psecs, int *poffset)
 {
     enum locale_status decided;

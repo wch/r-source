@@ -43,16 +43,21 @@
 #endif
 #include <time.h>
 
+
 #include <errno.h>
 
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"
+# undef HAVE_TM_ZONE
+# define HAVE_TM_ZONE 1
+# undef HAVE_TM_GMTOFF
+# define HAVE_TM_GMTOFF 1
 # undef MKTIME_SETS_ERRNO
 # define MKTIME_SETS_ERRNO
 #else
 
+typedef struct tm stm;
 #define R_tzname tzname
-
 # if defined(__CYGWIN__)
 extern __declspec(dllimport) char *tzname[2];
 # else
@@ -79,7 +84,7 @@ static const int days_in_month[12] =
   Return 0 if valid, -1 if invalid and uncorrectable, or a positive
   integer approximating the number of corrections needed.
   */
-static int validate_tm (struct tm *tm)
+static int validate_tm (stm *tm)
 {
     int tmp, res = 0;
 
@@ -165,7 +170,7 @@ static int validate_tm (struct tm *tm)
 
 
 /* Substitute for mktime -- no checking, always in GMT */
-static double mktime00 (struct tm *tm)
+static double mktime00 (stm *tm)
 {
     int day = 0;
     int year, year0;
@@ -203,7 +208,7 @@ static double mktime00 (struct tm *tm)
 
 #ifdef USE_INTERNAL_MKTIME
 /* Interface to mktime or mktime00 */
-static double mktime0 (struct tm *tm, const int local)
+static double mktime0 (stm *tm, const int local)
 {
     if(validate_tm(tm) < 0) {
 #ifdef EOVERFLOW
@@ -217,7 +222,7 @@ static double mktime0 (struct tm *tm, const int local)
 }
 
 /* Interface to localtime or gmtime */
-static struct tm * localtime0(const double *tp, const int local)
+static stm * localtime0(const double *tp, const int local)
 {
     time_t t = (time_t) *tp;
     return local ? R_localtime(&t) : R_gmtime(&t);
@@ -541,7 +546,7 @@ static void reset_tz(char *tz)
     tzset();
 }
 
-static void glibc_fix(struct tm *tm, int *invalid)
+static void glibc_fix(stm *tm, int *invalid)
 {
     /* set mon and mday which glibc does not always set.
        Use current year/... if none has been specified.
@@ -549,7 +554,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
        Specifying mon but not mday nor yday is invalid.
     */
     time_t t = time(NULL);
-    struct tm *tm0;
+    stm *tm0;
     int tmp;
 #ifndef HAVE_POSIX_LEAPSECONDS
     t -= n_leapseconds;
@@ -586,7 +591,7 @@ static const char ltnames [][6] =
 
 
 static void 
-makelt(struct tm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
+makelt(stm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
 {
     if(valid) {
 	REAL(VECTOR_ELT(ans, 0))[i] = tm->tm_sec + frac_secs;
@@ -665,7 +670,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
 
     for(R_xlen_t i = 0; i < n; i++) {
-	struct tm *ptm = NULL;
+	stm *ptm = NULL;
 	double d = REAL(x)[i];
 	if(R_FINITE(d)) {
 	    ptm = localtime0(&d, 1 - isgmt);
@@ -707,7 +712,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     int isgmt = 0, settz = 0;
     char oldtz[20] = "";
     const char *tz = NULL;
-    struct tm tm;
+    stm tm;
     double tmp;
 
     checkArity(op, args);
@@ -793,7 +798,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     int UseTZ, settz = 0;
     char buff[300];
     char oldtz[20] = "";
-    struct tm tm;
+    stm tm;
 
     checkArity(op, args);
     PROTECT(x = duplicate(CAR(args))); /* coerced below */
@@ -950,7 +955,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, ansnames, klass, stz, tzone = R_NilValue;
     int invalid, isgmt = 0, settz = 0, offset;
-    struct tm tm, tm2, *ptm = &tm;
+    stm tm, tm2, *ptm = &tm;
     const char *tz = NULL;
     char oldtz[20] = "";
     double psecs = 0.0;
@@ -1014,7 +1019,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     for(R_xlen_t i = 0; i < N; i++) {
 	/* for glibc's sake. That only sets some unspecified fields,
 	   sometimes. */
-	memset(&tm, 0, sizeof(struct tm));
+	memset(&tm, 0, sizeof(stm));
 	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
 	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday =
 	    tm.tm_wday = NA_INTEGER;
@@ -1035,7 +1040,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		   so all we can do is to convert to time_t,
 		   adjust and convert back */
 		double t0;
-		memcpy(&tm2, &tm, sizeof(struct tm));
+		memcpy(&tm2, &tm, sizeof(stm));
 		t0 = mktime0(&tm2, 0);
 		if (t0 != -1) {
 		    t0 -= offset; /* offset = -0800 is Seattle */
@@ -1044,7 +1049,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else {
 		/* we do want to set wday, yday, isdst, but not to
 		   adjust structure at DST boundaries */
-		memcpy(&tm2, &tm, sizeof(struct tm));
+		memcpy(&tm2, &tm, sizeof(stm));
 		mktime0(&tm2, 1-isgmt); /* set wday, yday, isdst */
 		tm.tm_wday = tm2.tm_wday;
 		tm.tm_yday = tm2.tm_yday;
@@ -1086,7 +1091,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, ans, ansnames, klass;
     R_xlen_t n;
     int valid, day, y, tmp, mon;
-    struct tm tm;
+    stm tm;
 
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), REALSXP));
@@ -1146,7 +1151,7 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, klass;
     R_xlen_t n = 0, nlen[9];
-    struct tm tm;
+    stm tm;
 
     checkArity(op, args);
     PROTECT(x = duplicate(CAR(args)));
