@@ -191,13 +191,11 @@
       \file{src/extra/tzone} has been updated.  (Formerly used only on
       Windows.)
       
-      \item There is experimental support to use the shipped Olson
+      \item There is support to use the shipped Olson
       time-zone database and (64-bit) time-zone conversion code: use
       \command{configure} option \option{--with-internal-tzcode}. (It
       might be necessary to set environment variable \env{TZ} on OSes
       where this is not already set.)
-      
-      \item The included version of PCRE has been updated to 8.34.
     }
   }
 
@@ -432,7 +430,16 @@
       an empty string which on some OSes means the \samp{UTC} time zone.
     }
   }
-  
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included version of PCRE has been updated to 8.34.  This
+      fixes bugs and makes the behaviour closer to Perl 5.18.  In
+      particular, the concept of \sQuote{space} includes \samp{VT} and
+      hence agrees with POSIX's.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The new field \samp{SysDataCompression} in the

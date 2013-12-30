@@ -257,11 +257,11 @@
   any decimal digit, space character and \sQuote{word} character
   (letter, digit or underscore in the current locale: in UTF-8 mode only
   ASCII letters and digits are considered) respectively, and their
-  upper-case versions represent their negation.  Unlike POSIX, vertical
-  tab is not regarded as a space character.  Sequences \samp{\\h},
-  \samp{\\v}, \samp{\\H} and \samp{\\V} match horizontal and vertical
-  space or the negation.  (In UTF-8 mode, these do match non-ASCII
-  Unicode points.)
+  upper-case versions represent their negation.  Vertical tab is not
+  regarded as a space character before PCRE 8.34 (included in \R 3.0.3).
+  Sequences \samp{\\h}, \samp{\\v}, \samp{\\H} and \samp{\\V} match
+  horizontal and vertical space or the negation.  (In UTF-8 mode, these
+  do match non-ASCII Unicode points.)
 
   There are additional escape sequences: \samp{\\cx} is
   \samp{cntrl-x} for any \samp{x}, \samp{\\ddd} is the
