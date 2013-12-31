@@ -507,6 +507,9 @@ static struct tm * localtime0(const double *tp, const int local)
 	    res->tm_sec += (sdiff % 60) - (sdiff2 % 60);
 	    validate_tm(res);
 	}
+//#ifdef HAVE_TM_GMTOFF
+//	res->tm_gmtoff = -sdiff2;
+//#endif
 	// No DST before 1916
 	if(res->tm_year < 16) res->tm_isdst = 0;
 	return res;

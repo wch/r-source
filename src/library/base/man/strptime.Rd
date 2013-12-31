@@ -122,10 +122,7 @@ strptime(x, format, tz = "")
       also says that years before 1582 in its calendar should only be used
       with agreement of the parties involved.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
-      \code{-0800} is 8 hours behind UTC. Note that offsets are not
-      necessarily in whole minutes (and might be truncated or rounded),
-      and that this should output an empty string when offsets are unknown
-      (although \code{+0000} has been seen).}
+      \code{-0800} is 8 hours behind UTC.}
     \item{\code{\%Z}}{(output only.) Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
@@ -191,13 +188,11 @@ strptime(x, format, tz = "")
   including fractional seconds.  Note that \code{\%S} ignores (and not
   rounds) fractional parts on output.
 
-  Even when conversion specifications are implemented they may not be
-  implemented correctly: \code{\%z} seems particularly unreliable.
-
   The behaviour of other conversion specifications (and even if other
   character sequences commencing with \code{\%} \emph{are} conversion
   specifications) is system-specific.  Some systems document that the
-  use of multi-byte characters in \code{format} is not supported.
+  use of multi-byte characters in \code{format} is unsupported: UTF-8
+  locales are unlikely to cause a problem.
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors
@@ -212,6 +207,49 @@ strptime(x, format, tz = "")
   invalid time, not just a time that does not exist in some time zone.)
   %% One of Master B Diggs moments of infamy
 }
+
+\section{Printing years}{
+  Everyone agrees that years from 1000 to 9999 should be printed with 4
+  digits, but the standards do not define what is to be done outside
+  that range.  For years 0 to 999 some OSes use leading zeros, some pad
+  with spaces to 4 characters, and some output just the number. For
+  negative years
+  
+  OS facilities will probably not print years before 1 CE (aka 1 AD)
+  correctly (they tend to assume the existence of a year 0, and some
+  OSes get them completely wrong).  Common formats are \code{-45} and
+  \code{-045}.)
+
+  Years after 9999 and before -999 are normally printed with five or
+  more characters.
+
+  Some platforms support modifiers from POSIX 2008 (and others).  On
+  Linux the format \code{"\%04Y"}) assures a minimum of four characters
+  and zero-padding.  The internal code (as used on Windows and by
+  default on OS X) uses zero-padding by default, and formats
+  \code{\%_4Y} and \code{\%_Y} can be used for space padding and no
+  padding.
+}
+
+\section{Time zone offsets}{
+  Offsets from GMT (also known as UTC) are part of the conversion
+  between timezones and to/from class \code{"POSIXct"}, but cause
+  difficulties as they often computed incorrectly.
+
+  They conventionally have the opposite sign from time-zone
+  specifications (see \code{\link{Sys.timezone}}): positive values are
+  East of the meridian.  Although there have been time zones with
+  offsets like 00:09:21 (Paris in 1900), offsets are often treated as
+  whole numbers of minutes, and are most often seen in RFC 822 email
+  headers.
+  
+  Format \code{\%z} can be used for input or output: it is a character
+  string, conventionally plus or minus followed by four digits: the
+  standards say that an empty string should be output if the offset is
+  unknown, but some systems use the offsets for the time zone in use
+  for the current year.
+}
+
 \note{
   The default formats follow the rules of the ISO 8601 international
   standard which expresses a day as \code{"2001-02-28"} and a time as
@@ -224,12 +262,6 @@ strptime(x, format, tz = "")
 
   If the time zone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
-
-  OS facilities will probably not print years before 1 CE (aka 1 AD)
-  correctly (they tend to assume the existence of a year 0, and some
-  OSes get them completely wrong).  Years before 1000 may or may not be
-  printed with leading zero(s) (and on some OSes, e.g. Linux, this can
-  be assured by using the POSIX-2008 notation \code{"\%4Y"}).
 
   Remember that in most time zones some times do not occur and some
   occur twice because of transitions to/from \sQuote{daylight saving}
