@@ -211,14 +211,13 @@ strptime(x, format, tz = "")
 \section{Printing years}{
   Everyone agrees that years from 1000 to 9999 should be printed with 4
   digits, but the standards do not define what is to be done outside
-  that range.  For years 0 to 999 some OSes use leading zeros, some pad
-  with spaces to 4 characters, and some output just the number. For
-  negative years
+  that range.  For years 0 to 999 most OSes pad with zeros or spaces to
+  4 characters, and Linux outputs just the number.
   
   OS facilities will probably not print years before 1 CE (aka 1 AD)
-  correctly (they tend to assume the existence of a year 0, and some
-  OSes get them completely wrong).  Common formats are \code{-45} and
-  \code{-045}.)
+  \sQuote{correctly} (they tend to assume the existence of a year 0: see
+  \url{http://en.wikipedia.org/wiki/0_(year)}, and some OSes get them
+  completely wrong).  Common formats are \code{-45} and \code{-045}.)
 
   Years after 9999 and before -999 are normally printed with five or
   more characters.
@@ -239,15 +238,15 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), offsets are often treated as
+  offsets like 00:09:21 (Paris in 1900), offsets are usually treated as
   whole numbers of minutes, and are most often seen in RFC 822 email
-  headers.
+  headers in the form \code{-0800} (Pacific coast of US in winter).
   
   Format \code{\%z} can be used for input or output: it is a character
-  string, conventionally plus or minus followed by four digits: the
-  standards say that an empty string should be output if the offset is
-  unknown, but some systems use the offsets for the time zone in use
-  for the current year.
+  string, conventionally plus or minus followed by two digits for
+  hours and two for minutes: the standards say that an empty string
+  should be output if the offset is unknown, but some systems use the
+  offsets for the time zone in use for the current year.
 }
 
 \note{
