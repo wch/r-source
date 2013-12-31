@@ -4506,10 +4506,9 @@ will show the compilers and configuration options used for the
 @noindent
 was used.
 
-A 64-bit @code{time_t} is available but the implementation of time zones
-does not work correctly for times after 2037 so it is not used in @R{}:
-those making use of such dates are recommended to use the option
-@option{--with-internal-tzcode}.
+Configure option @option{--with-internal-tzcode} is the default, as a
+64-bit @code{time_t} is available but the system implementation of time
+zones does not work correctly for times after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,

@@ -4278,7 +4278,7 @@ fi
 if test "${with_internal_tzcode+set}" = set; then :
   withval=$with_internal_tzcode; use_internal_tzcode=${withval}
 else
-  use_internal_tzcode=0
+  use_internal_tzcode=default
 fi
 
 
@@ -34605,7 +34605,15 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-if test ${use_internal_tzcode} = yes; then
+if test x${use_internal_tzcode} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_tzcode=yes;
+     ;;
+esac
+fi
+
+if test "x${use_internal_tzcode}" = xyes; then
 
 $as_echo "#define USE_INTERNAL_MKTIME 1" >>confdefs.h
 
@@ -35845,11 +35853,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35848: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35856: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35852: \$? = $ac_status" >&5
+   echo "$as_me:35860: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35944,11 +35952,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35947: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35955: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35951: \$? = $ac_status" >&5
+   echo "$as_me:35959: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35996,11 +36004,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35999: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36007: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36003: \$? = $ac_status" >&5
+   echo "$as_me:36011: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

@@ -434,7 +434,7 @@ AC_ARG_WITH([valgrind-instrumentation],
 AC_ARG_WITH([internal-tzcode],
 [AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no@:>@])],
 [use_internal_tzcode=${withval}],
-[use_internal_tzcode=0])
+[use_internal_tzcode=default])
 
 
 ## <FIXME>
@@ -2311,7 +2311,15 @@ if test ${valgrind_level} -eq 0; then
 fi
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
-if test ${use_internal_tzcode} = yes; then
+if test x${use_internal_tzcode} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_tzcode=yes;
+     ;; 
+esac
+fi
+
+if test "x${use_internal_tzcode}" = xyes; then
   AC_DEFINE(USE_INTERNAL_MKTIME, 1, [Define to use internal time-zone code])
 fi
 AM_CONDITIONAL(BUILD_TZONE, [test "x${use_internal_tzcode}" = xyes])

@@ -158,7 +158,6 @@
       \item (Windows, and as a substitute on OS X and perhaps
       elsewhere.) The system C function \code{strftime} has been
       replaced by a more comprehensive version.
-      
     }
   }
 
@@ -186,16 +185,19 @@
       \item More of \command{make check} will work if recommended packages
       are not installed: but recommended packages remain needed for
       thorough checking of an \R build.
-      
+
       \item The version of \samp{tzcode} included in
       \file{src/extra/tzone} has been updated.  (Formerly used only on
       Windows.)
       
-      \item There is support to use the shipped Olson
-      time-zone database and (64-bit) time-zone conversion code: use
-      \command{configure} option \option{--with-internal-tzcode}. (It
-      might be necessary to set environment variable \env{TZ} on OSes
-      where this is not already set.)
+      \item There is support to use the included (64-bit) time-zone
+      conversion code and Olson time-zone database: use
+      \command{configure} option \option{--with-internal-tzcode}.  This
+      is the default on Windows and OS X.
+      
+      (It might be necessary to set environment variable \env{TZ} on
+      OSes where this is not already set.)
+      
     }
   }
 
