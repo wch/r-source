@@ -29,3 +29,8 @@ d <- expand.grid(day = 25:31, year = 2000:2010)
 z2 <- with(d, ISOdate(year, 12, day))
 z <- sort(c(z1, z2))
 strftime(z, "%G %g %W %U %u %V %W %w")
+
+## tests of earlier years.  Default format is OS-dependent, so don't test it.
+z <- as.Date(ISOdate(c(0, 8, 9, 10, 11, 20, 110, 1010), 1, 10)) - 3630
+strftime(z, "%4Y-%m-%d") # with leading zero(s)
+strftime(z, "%_Y-%m-%d") # without

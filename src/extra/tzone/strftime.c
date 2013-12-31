@@ -1,6 +1,28 @@
 /*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (c) 1989 The Regents of the University of California.
+ *  Copyright (C) 2013 The R Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, a copy is available at
+ *  http://www.r-project.org/Licenses/
+ */
+
+/*
   Based on code from tzcode, which is turn said to be
   'Based on the UCB version with the copyright notice appearing below.'
+
+  Extensive changes for use with R.
 
 ** Copyright (c) 1989 The Regents of the University of California.
 ** All rights reserved.
@@ -28,6 +50,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h> // memcpy
+#include <ctype.h>
+#include <limits.h> // for INT_MAX
 
 #include "datetime.h"
 
@@ -137,6 +161,36 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 {
     for ( ; *format; ++format) {
 	if (*format == '%') {
+	    /* Check for POSIX 2008 modifiers */
+	    char pad = '+'; int width = -1;
+	    while (1)
+	    {
+		switch (*++format) {
+		case '_': // pad with spaces: GNU extension
+		case '0':
+		case '+': // pad with zeroes, and more (not here)
+		    pad = *format;
+		    continue;
+		default:
+		    break;
+		}
+		break;
+	    }
+	    if (isdigit (*format))
+	    {
+		width = 0;
+		do
+		{
+		    if (width > INT_MAX / 10 || 
+			(width == INT_MAX / 10 && *format - '0' > INT_MAX % 10))
+			width = INT_MAX;
+		    else {width *= 10; width += *format - '0';}
+		    format++;
+		}
+		while (isdigit (*format));
+	    }
+	    --format;
+
 	label:
 	    switch (*++format) {
 	    case '\0':
@@ -327,8 +381,16 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1, pt, ptlim);
 		continue;
 	    case 'Y':
-		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1, pt, ptlim);
-		continue;
+//		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1, pt, ptlim);
+	    {
+		char buf[20] = "%";
+		if (pad == '0' || pad == '+') strcat(buf, "0");
+		if (pad == '+' && width < 0) width = 4;
+		if (width > 0) sprintf(buf+strlen(buf), "%u", width);
+		strcat(buf, "d");
+		pt = _conv(TM_YEAR_BASE + t->tm_year, buf, pt, ptlim);
+	    }
+	    continue;
 	    case 'Z':
 #ifdef HAVE_TM_ZONE
 		if (t->tm_zone != NULL)
@@ -366,6 +428,8 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    }
 	    continue;
 	    case '+':
+		// BSD extension
+		// '%+ is replaced by national representation of the date and time'
 		pt = _fmt(Locale->date_fmt, t, pt, ptlim);
 		continue;
 	    case '%':
@@ -409,10 +473,11 @@ _add(const char *str, char *pt, const char *const ptlim)
 */
 
 static char *
-_yconv(const int a, const int b, const int convert_top, const int convert_yy,
+_yconv(const int a, const int b, 
+       const int convert_top, const int convert_yy,
        char *pt, const char *const ptlim)
 {
-    int lead,trail;
+    int lead, trail;
 
 #define DIVISOR	100
     trail = a % DIVISOR + b % DIVISOR;
@@ -428,7 +493,7 @@ _yconv(const int a, const int b, const int convert_top, const int convert_yy,
     if (convert_top) {
 	if (lead == 0 && trail < 0)
 	    pt = _add("-0", pt, ptlim);
-	else	pt = _conv(lead, "%02d", pt, ptlim);
+	else pt = _conv(lead, "%02d", pt, ptlim);
     }
     if (convert_yy)
 	pt = _conv(((trail < 0) ? -trail : trail), "%02d", pt, ptlim);

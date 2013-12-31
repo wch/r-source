@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-12-29 r64581) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-12-30 r64588) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin13.0.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -217,4 +217,13 @@ Type 'q()' to quit R.
 [149] "2010 10 51 52 7 51 51 0" "2010 10 52 52 1 52 52 1"
 [151] "2010 10 52 52 2 52 52 2" "2010 10 52 52 3 52 52 3"
 [153] "2010 10 52 52 4 52 52 4" "2010 10 52 52 5 52 52 5"
+> 
+> ## tests of earlier years.  Default format is OS-dependent, so don't test it.
+> z <- as.Date(ISOdate(c(0, 8, 9, 10, 11, 20, 110, 1010), 1, 10)) - 3630
+> strftime(z, "%4Y-%m-%d") # with leading zero(s)
+[1] "-010-02-01" "-002-02-01" "-001-02-02" "0000-02-02" "0001-02-01"
+[6] "0010-02-01" "0100-02-01" "1000-02-01"
+> strftime(z, "%_Y-%m-%d") # without
+[1] "-10-02-01"  "-2-02-01"   "-1-02-02"   "0-02-02"    "1-02-01"   
+[6] "10-02-01"   "100-02-01"  "1000-02-01"
 > 

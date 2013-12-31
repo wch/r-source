@@ -43,8 +43,34 @@
 #endif
 #include <time.h>
 
-
 #include <errno.h>
+
+/* 
+
+There are two implementation paths here.
+
+1) Use the system functions for mktime, gmtime, localtime, strftime.
+   Use the system's time_t and struct tm and time-zone tables.
+
+2) Use substitutes from src/extra/tzone for mktime, gmtime, localtime,
+   strftime with a R_ prefix.  The system strftime is used for
+   locale-dependent names in R_strptime and R_strftime.  This uses the
+   time-zone tables shipped with R and installed into
+   R_HOME/share/zoneinfo .
+
+   Our own versions of time_t (64-bit) and struct tm (including the
+   BSD-style fields tm_zone and tm_gmtoff) are used.
+
+For path 1), the system facilities are used for 1902-2037 and outside
+those limits where there is a 64-bit time_t and the conversions work
+(most OSes currently have only 32-bit time-zone tables).  Otherwise
+there is code below to extrapolate from 1902-2037.
+
+Path 2) was added for R 3.1.0 and is the only one supported on
+Windows: it is the default on OS X.  The only currently (Jan 2014)
+known OS with 64-bit time_t and complete tables is Linux.
+
+*/
 
 #ifdef USE_INTERNAL_MKTIME
 # include "datetime.h"

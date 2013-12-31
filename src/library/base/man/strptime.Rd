@@ -228,8 +228,8 @@ strptime(x, format, tz = "")
   OS facilities will probably not print years before 1 CE (aka 1 AD)
   correctly (they tend to assume the existence of a year 0, and some
   OSes get them completely wrong).  Years before 1000 may or may not be
-  printed with a leading zero (and on some OSes this can be assured by
-  using the POSIX-2008 notation \code{"\%04Y"}).
+  printed with leading zero(s) (and on some OSes, e.g. Linux, this can
+  be assured by using the POSIX-2008 notation \code{"\%4Y"}).
 
   Remember that in most time zones some times do not occur and some
   occur twice because of transitions to/from \sQuote{daylight saving}
