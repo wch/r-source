@@ -31,7 +31,7 @@ strptime(x, format, tz = "")
     \code{""} is the current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default for the \code{format}
     methods is
-    \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
+    \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any element has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
@@ -63,16 +63,18 @@ strptime(x, format, tz = "")
   where appropriate and available.  This affects the names of the days
   and months, the AM/PM indicator (if used) and the separators in
   formats such as \code{\%x} and \code{\%X} (via the setting of the
-  \code{LC_TIME} locale category).
-
+  \code{LC_TIME} locale category).  The \sQuote{current locale} of the
+  descriptions might mean the locale in use at the start of the \R
+  session or when these functions are first used.
+  
+  % strftime is C99: strptime is POSIX.
   The details of the formats are system-specific, but the following are
-  defined by the ISO C99 / POSIX standard for \code{strftime} and are
-  likely to be widely available.  A \emph{conversion specification} is
-  introduced by \code{\%}, usually followed by a single letter or
-  \code{O} or \code{E} and then a single letter.
-  Any character in the format string not part of a conversion specification
-  is interpreted literally (and \code{\%\%} gives \code{\%}).  Widely
-  implemented conversion specifications include
+  defined by the POSIX standard and are likely to be widely available.
+  A \emph{conversion specification} is introduced by \code{\%}, usually
+  followed by a single letter or \code{O} or \code{E} and then a single
+  letter.  Any character in the format string not part of a conversion
+  specification is interpreted literally (and \code{\%\%} gives
+  \code{\%}).  Widely implemented conversion specifications include
   \describe{
     \item{\code{\%a}}{Abbreviated weekday name in the current
       locale.  (Also matches full name on input.)}
@@ -84,7 +86,20 @@ strptime(x, format, tz = "")
       matches abbreviated name on input.)}
     \item{\code{\%c}}{Date and time.   Locale-specific on output,
       \code{"\%a \%b \%e \%H:\%M:\%S \%Y"} on input.}
+    \item{\code{\%C}}{Century (00--99): the integer part of the year
+      divided by 100.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
+    \item{\code{\%D}}{Date format such as \code{\%m/\%d/\%y}: ISO C99
+      says it should be that exact format.}
+    \item{\code{\%e}}{Day of the month as decimal number (1--31), with
+      a leading space for a single-digit number.}
+    \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
+      format).}
+    \item{\code{\%g}}{The last two digits of the week-based year
+      (see \code{\%V}).  (Accepted but ignored on input.)}
+    \item{\code{\%G}}{The week-based year (see \code{\%V}) as a decimal
+      number.  (Accepted but ignored on input.)}
+    \item{\code{\%h}}{Equivalent to \code{\%b}.}
     \item{\code{\%H}}{Hours as decimal number (00--23).  As a special
       exception times such as \samp{24:00:00} are accepted for input,
       since ISO 8601 allows these.}
@@ -92,16 +107,29 @@ strptime(x, format, tz = "")
     \item{\code{\%j}}{Day of year as decimal number (001--366).}
     \item{\code{\%m}}{Month as decimal number (01--12).}
     \item{\code{\%M}}{Minute as decimal number (00--59).}
+    \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
       conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
       empty string in some locales.}
+    \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
+      PM).  Only defined in some locales.}
+    \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
       will ignore leap seconds).}
     % see http://en.wikipedia.org/wiki/Week_number#Week_number
+    \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
+    \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
+    \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       Sunday as the first day 1 of the week (and typically with the
       first Sunday of the year as day 1 of week 1).  The US convention.}
+    \item{\code{\%V}}{Week of the year as decimal number (00--53) as
+      defined in ISO 8601.
+      If the week (starting on Monday) containing 1 January has four or
+      more days in the new year, then it is considered week 1.  Otherwise, it
+      is the last week of the previous year, and the next week is week
+      1.  (Accepted but ignored on input.)}
     \item{\code{\%w}}{Weekday as decimal number (0--6, Sunday is 0).}
     \item{\code{\%W}}{Week of the year as decimal number (00--53) using
       Monday as the first day of week (and typically with the
@@ -118,60 +146,30 @@ strptime(x, format, tz = "")
     \item{\code{\%Y}}{Year with century.  Note that whereas there was no
       zero in the original Gregorian calendar, ISO 8601:2004 defines it
       to be valid (interpreted as 1BC): see
-      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standard
-      also says that years before 1582 in its calendar should only be used
+      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
+      also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.}
-    \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
-      \code{-0800} is 8 hours behind UTC.}
-    \item{\code{\%Z}}{(output only.) Time zone abbreviation as a
+    \item{\code{\%z}}{(Output only.) Signed offset in hours and minutes
+      from UTC, so \code{-0800} is 8 hours behind UTC.} 
+    \item{\code{\%Z}}{(Output only.) Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
 
-  Note that when \code{\%z} or \code{\%Z} is used for output with an
+  When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
   for that time zone --- but it is not guaranteed to succeed.
-
-  The \sQuote{current locale} might mean the locale in use at the start
-  of the \R session or when these functions are first used.
   
-  Also defined in the current standards but less widely implemented
-  are
+  Not in the standards and less widely implemented are
   \describe{
-    \item{\code{\%C}}{Century (00--99): the integer part of the year
-      divided by 100.}
-    \item{\code{\%D}}{Date format such as \code{\%m/\%d/\%y}: ISO C99
-      says it should be that exact format.}
-    \item{\code{\%e}}{Day of the month as decimal number (1--31), with
-      a leading space for a single-digit number.}
-    \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
-      format).}
-    \item{\code{\%g}}{The last two digits of the week-based year
-      (see \code{\%V}).  (Accepted but ignored on input.)}
-    \item{\code{\%G}}{The week-based year (see \code{\%V}) as a decimal
-      number.  (Accepted but ignored on input.)}
-    \item{\code{\%h}}{Equivalent to \code{\%b}.}
     \item{\code{\%k}}{The 24-hour clock time with single digits preceded
       by a blank.}
     \item{\code{\%l}}{The 12-hour clock time with single digits preceded
       by a blank.}
-    \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
-    \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
-      PM).  Only defined in some locales.}
-    \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%s}}{(Output only.) The number of seconds since the
-      epoch. Not POSIX, not widely implemented.}
-    \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
-    \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
-    \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
-    \item{\code{\%V}}{Week of the year as decimal number (00--53) as
-      defined in ISO 8601.
-      If the week (starting on Monday) containing 1 January has four or
-      more days in the new year, then it is considered week 1.  Otherwise, it
-      is the last week of the previous year, and the next week is week
-      1.  (Accepted but ignored on input.)}
+      epoch.}
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman
@@ -238,9 +236,10 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), offsets are usually treated as
-  whole numbers of minutes, and are most often seen in RFC 822 email
-  headers in the form \code{-0800} (Pacific coast of US in winter).
+  offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
+  1972), offsets are usually treated as whole numbers of minutes, and
+  are most often seen in RFC 822 email headers in forms like
+  \code{-0800} (Pacific coast of US in winter).
   
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
@@ -269,7 +268,11 @@ strptime(x, format, tz = "")
   conversion by \code{\link{as.POSIXct}}) will do so.  Conversion by
   \code{strftime} and formatting/printing uses OS facilities and may
   return nonsensical results for non-existent times at DST transitions.
+  
+  Much less comprehensive support for output specifications was provided
+  on Windows before \R 3.1.0.
 }
+
 \references{
   International Organization for Standardization (2004, 2000, \dots)
   \emph{ISO 8601.  Data elements and interchange formats --
