@@ -292,8 +292,8 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		char buf[22]; // <= 19 digs + sign + terminator
 		int_fast64_t mkt = R_mktime(&tm);
 #ifdef WIN32
-		// will be limited in range for 32-bit long.
-		(void) snprintf(buf, 22, "%ld", (long) mkt);
+		// not ISO C99, so warns
+		(void) snprintf(buf, 22, "%I64d", mkt);
 #else
 		(void) snprintf(buf, 22, "%lld", (long long) mkt);
 #endif
