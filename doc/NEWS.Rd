@@ -205,6 +205,10 @@
       abbreviation.  On some platforms where the C function
       \code{localtime} changed the \code{tzname} variables the reported
       abbreviation could have been that of the last time converted.
+
+      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
+      \code{"C"} (to restore the sane behavior) no longer yields a
+      warning.
     }
   }
 }
