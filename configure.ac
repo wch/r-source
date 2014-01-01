@@ -1871,6 +1871,7 @@ if test "${ac_cv_have_decl_stat}" = "no"; then
 fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>

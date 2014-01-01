@@ -325,6 +325,9 @@
 /* Define to 1 if you have the <glob.h> header file. */
 #undef HAVE_GLOB_H
 
+/* Define to 1 if you have the `gmtime_r' function. */
+#undef HAVE_GMTIME_R
+
 /* Define to 1 if you have the <grp.h> header file. */
 #undef HAVE_GRP_H
 
@@ -437,6 +440,9 @@
 
 /* Define to 1 if you have the <locale.h> header file. */
 #undef HAVE_LOCALE_H
+
+/* Define to 1 if you have the `localtime_r' function. */
+#undef HAVE_LOCALTIME_R
 
 /* Define to 1 if you have the `log10' function. */
 #undef HAVE_LOG10
