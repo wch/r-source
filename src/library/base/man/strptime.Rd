@@ -113,7 +113,7 @@ strptime(x, format, tz = "")
       empty string in some locales.
 
       Some platforms accept \code{\%P} for output, which uses a lower-case
-      version: other will output \code{P}.} 
+      version: others will output \code{P}.} 
     \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
       PM).  Only defined in some locales.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}

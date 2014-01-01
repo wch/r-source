@@ -157,7 +157,8 @@
 
       \item (Windows, and as a substitute on OS X and perhaps
       elsewhere.) The system C function \code{strftime} has been
-      replaced by a more comprehensive version.
+      replaced by a more comprehensive version with closer conformance
+      to the POSIX 2008 standard.
 
       \item \code{dnorm(x, log=FALSE)} is more accurate (but somewhat
       slower) for |x| > 5; as suggested in \PR{15620}.
@@ -397,10 +398,6 @@
 
       \item \code{pbeta()} and similar work better for very large
       (billions) \code{ncp}.
-
-      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
-      \code{"C"} (to restore the sane behavior) no longer yields a
-      warning.
     }
   }
 }
@@ -603,6 +600,10 @@
       abbreviation.  On some platforms where the C function
       \code{localtime} changed the \code{tzname} variables the reported
       abbreviation could have been that of the last time converted.
+
+      \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
+      \code{"C"} (to restore the sane behavior) no longer yields a
+      warning.
     }
   }
 }
