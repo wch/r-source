@@ -5498,12 +5498,12 @@ expert form), the following could be used:
 @end example
 
 The files containing the figures should be stored in the directory
-@file{man/figures}.  Files with extensions @file{.jpg}, @file{.pdf},
-@file{.png} and @file{.svg} from that directory will be copied to the
-@file{help/figures} directory at install time. (Figures
-in PDF format will not display in most @HTML{} browsers, but
-might be the best choice in reference manuals.)  Specify the filename
-relative to @file{man/figures} in the @code{\figure} directive.
+@file{man/figures}.  Files with extensions @file{.jpg}, @file{.jpeg},
+@file{.pdf}, @file{.png} and @file{.svg} from that directory will be
+copied to the @file{help/figures} directory at install time. (Figures in
+PDF format will not display in most @HTML{} browsers, but might be the
+best choice in reference manuals.)  Specify the filename relative to
+@file{man/figures} in the @code{\figure} directive.
 
 @node Insertions, Indices, Figures, Writing R documentation files
 @section Insertions

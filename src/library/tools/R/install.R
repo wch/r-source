@@ -1145,6 +1145,7 @@
 		dir.create(destdir <- file.path(instdir, "help", "figures"))
 		file.copy(Sys.glob(c(file.path(figdir, "*.png"),
 		                     file.path(figdir, "*.jpg"),
+		                     file.path(figdir, "*.jpeg"),
 				     file.path(figdir, "*.svg"),
 				     file.path(figdir, "*.pdf"))), destdir)
 	    }
