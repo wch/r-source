@@ -802,7 +802,8 @@ AC_HEADER_SYS_WAIT
 ## sys/param.h is one way to get PATH_MAX.
 ## sched.h is POSIX, but we use it for Linux-specific features (affinity)
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h netdb.h netinet/in.h pwd.h sched.h strings.h \
+  fpu_control.h glob.h grp.h langinfo.h \
+  netdb.h netinet/in.h pwd.h sched.h strings.h \
   sys/param.h sys/resource.h sys/select.h sys/socket.h \
   sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h utime.h)
 ## </NOTE>
@@ -1872,6 +1873,7 @@ fi
 R_CHECK_FUNCS([gettimeofday utimes], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
 R_CHECK_FUNCS([gmtime_r localtime_r], [#include <time.h>])
+R_CHECK_FUNCS([nl_langinfo], [#include <langinfo.h>])
 R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
