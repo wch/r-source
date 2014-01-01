@@ -328,6 +328,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 			break;
 		    case L'\'':
 		    case L'"':
+		    case L'`':
 			len += (quote == *p) ? 2 : 1;
 			break;
 		    default:
@@ -376,6 +377,7 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 			len += 2; break;
 		    case '\'':
 		    case '"':
+		    case '`':
 			len += (quote == *p)? 2 : 1; break;
 		    default:
 			len++; break;
@@ -550,6 +552,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			break;
 		    case L'\'':
 		    case L'"':
+		    case L'`':
 			if(quote == *p)  *q++ = '\\'; *q++ = *p++;
 			break;
 		    default:
@@ -620,6 +623,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    case '\\': *q++ = '\\'; *q++ = '\\'; break;
 		    case '\'':
 		    case '"':
+		    case '`':
 			if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
 		    default: *q++ = *p; break;
 		    }

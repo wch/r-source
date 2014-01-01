@@ -47,6 +47,7 @@
     \samp{\\\\}\tab backslash \samp{\\}\cr
     \samp{\\'}\tab ASCII apostrophe \samp{'}\cr
     \samp{\\"}\tab ASCII quotation mark \samp{"}\cr
+    \samp{\\`}\tab ASCII grave accent (backtick) \samp{`}\cr
     \samp{\\nnn}\tab character with given octal code (1, 2 or 3 digits)\cr
     \samp{\\xnn}\tab character with given hex code (1 or 2 hex digits)\cr
     \samp{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr

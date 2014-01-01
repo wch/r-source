@@ -430,6 +430,9 @@
       \item On a Unix-alike \code{Sys.timezone()} returns \code{NA} if
       the environment variable \env{TZ} is unset, to distinguish it from
       an empty string which on some OSes means the \samp{UTC} time zone.
+      
+      \item The backtick may now be escaped in strings, to allow names
+      containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
     }
   }
 

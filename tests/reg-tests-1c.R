@@ -290,4 +290,11 @@ assert.reparsable(complex(real=NA, i=1))
 assert.reparsable(complex(real=1, i=NA))
 ## last 7 all failed
 
+## PR#15621 backticks could not be escaped
+stopifnot(deparse(as.name("`"), backtick=TRUE) == "`\\``")
+assign("`", TRUE)
+`\``
+tools::assertError(parse("```"))
+## 
+
 proc.time()
