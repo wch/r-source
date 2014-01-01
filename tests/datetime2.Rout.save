@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2013-12-30 r64588) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R Under development (unstable) (2014-01-01 r64606) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin13.0.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -226,4 +226,21 @@ Type 'q()' to quit R.
 > strftime(z, "%_Y-%m-%d") # without
 [1] "-10-02-01"  "-2-02-01"   "-1-02-02"   "0-02-02"    "1-02-01"   
 [6] "10-02-01"   "100-02-01"  "1000-02-01"
+> 
+> 
+> ## more test of strftime
+> x <- ISOdate(2014, 3, 10, c(7, 13))
+> fmts <- c("%Y-%m-%d %H:%M:%S", "%F", "%A %a %b %h %e %I %j",
++           ## locale-dependent ones
++           "%X", # but the same in all English locales
++           "%c", "%x", "%p", "%r")
+> for (f in fmts) print(format(x, f))
+[1] "2014-03-10 07:00:00" "2014-03-10 13:00:00"
+[1] "2014-03-10" "2014-03-10"
+[1] "Monday Mon Mar Mar 10 07 069" "Monday Mon Mar Mar 10 01 069"
+[1] "07:00:00" "13:00:00"
+[1] "Mon Mar 10 07:00:00 2014" "Mon Mar 10 13:00:00 2014"
+[1] "03/10/14" "03/10/14"
+[1] "AM" "PM"
+[1] "07:00:00 AM" "01:00:00 PM"
 > 

@@ -34,3 +34,12 @@ strftime(z, "%G %g %W %U %u %V %W %w")
 z <- as.Date(ISOdate(c(0, 8, 9, 10, 11, 20, 110, 1010), 1, 10)) - 3630
 strftime(z, "%4Y-%m-%d") # with leading zero(s)
 strftime(z, "%_Y-%m-%d") # without
+
+
+## more test of strftime
+x <- ISOdate(2014, 3, 10, c(7, 13))
+fmts <- c("%Y-%m-%d %H:%M:%S", "%F", "%A %a %b %h %e %I %j",
+          ## locale-dependent ones
+          "%X", # but the same in all English locales
+          "%c", "%x", "%p", "%r")
+for (f in fmts) print(format(x, f))

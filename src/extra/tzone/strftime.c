@@ -43,6 +43,11 @@
 
 #include <config.h>
 
+#undef HAVE_TM_ZONE
+#define HAVE_TM_ZONE 1
+#undef HAVE_TM_GMTOFF
+#define HAVE_TM_GMTOFF 1
+
 #include "tzfile.h"
 #include <fcntl.h>
 #include <locale.h>
@@ -55,87 +60,10 @@
 
 #include "datetime.h"
 
-struct lc_time_T {
-    char mon[12][10];
-    char month[12][20];
-    char wday[7][10];
-    char weekday[7][20];
-    char *X_fmt;
-    char am[4];
-    char pm[4];
-    char *date_fmt;
-};
-
-static const struct lc_time_T
-C_time_locale = {
-    {
-	"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-	"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    }, {
-	"January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December"
-    }, {
-	"Sun", "Mon", "Tue", "Wed",
-	"Thu", "Fri", "Sat"
-    }, {
-	"Sunday", "Monday", "Tuesday", "Wednesday",
-	"Thursday", "Friday", "Saturday"
-    },
-
-    /* X_fmt */
-    "%H:%M:%S",
-
-    /* am */
-    "AM",
-
-    /* pm */
-    "PM",
-
-    /* date_fmt */
-    "%a %b %e %H:%M:%S %Z %Y"
-};
-
-static  struct lc_time_T current, *Locale = NULL;
-
-static void get_locale_strings(struct lc_time_T *Loc)
-{
-    // use system struct tm and system strftime here
-    struct tm tm;
-
-    memset(&tm, 0, sizeof(tm));
-#if HAVE_TM_ZONE
-    tm.tm_zone = "";
-#endif
-    tm.tm_year = 30;
-    for(int i = 0; i < 12; i++) {
-	tm.tm_mon = i;
-	strftime(Loc->mon[i], 10, "%b", &tm);
-	strftime(Loc->month[i], 20, "%B", &tm);
-    }
-    tm.tm_mon = 0;
-    for(int i = 0; i < 7; i++) {
-	tm.tm_mday = tm.tm_yday = i+1; /* 2000-01-02 was a Sunday */
-	tm.tm_wday = i;
-	strftime(Loc->wday[i], 10, "%a", &tm);
-	strftime(Loc->weekday[i], 20, "%A", &tm);
-    }
-    tm.tm_hour = 1;
-    strftime(Loc->am, 4, "%p", &tm);
-    tm.tm_hour = 13;
-    strftime(Loc->pm, 4, "%p", &tm);
-}
-
-#undef HAVE_TM_ZONE
-#define HAVE_TM_ZONE 1
-#undef HAVE_TM_GMTOFF
-#define HAVE_TM_GMTOFF 1
-
-
 static char * _add(const char *, char *, const char *);
 static char * _conv(int, const char *, char *, const char *);
 static char * _fmt(const char *, const stm *, char *, const char *);
 static char * _yconv(int, int, int, int, char *, const char *);
-
 
 size_t
 R_strftime(char * const s, const size_t maxsize, const char *const format,
@@ -144,17 +72,31 @@ R_strftime(char * const s, const size_t maxsize, const char *const format,
     char *p;
     R_tzset();
 
-    if(!Locale) {
-	memcpy(&current, &C_time_locale, sizeof(struct lc_time_T));
-	Locale = &current;
-	get_locale_strings(Locale);
-    }
     p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize);
     if (p == s + maxsize)
 	return 0;
     *p = '\0';
     return p - s;
 }
+
+#ifdef HAVE_NL_LANGINFO
+// This was part of the configure check
+# include <langinfo.h>
+
+#else
+static char *orig(const char *fmt, const stm *const t)
+{
+    static char buff[100];
+    struct tm tm;
+    memset(&tm, 0, sizeof(struct tm));
+    tm.tm_sec = t->tm_sec; tm.tm_min = t->tm_min; tm.tm_hour = t->tm_hour;
+    tm.tm_mday = t->tm_mday; tm.tm_mon = t->tm_mon; tm.tm_year = t->tm_year;
+    tm.tm_wday = t->tm_wday; tm.tm_yday = t->tm_yday;
+    tm.tm_isdst = t->tm_isdst;
+    strftime(buff, 100, fmt, &tm);
+    return buff;
+}
+#endif
 
 static char *
 _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
@@ -196,32 +138,81 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case '\0':
 		--format;
 		break;
+
+		/* now the locale-dependent cases */
+#ifdef HAVE_NL_LANGINFO
 	    case 'A':
 		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
-			  "?" : Locale->weekday[t->tm_wday],
+			  "?" : nl_langinfo(DAY_1 + t->tm_wday),
 			  pt, ptlim);
 		continue;
 	    case 'a':
 		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
-			  "?" : Locale->wday[t->tm_wday],
+			  "?" : nl_langinfo(ABDAY_1 + t->tm_wday),
 			  pt, ptlim);
 		continue;
 	    case 'B':
 		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
-			  "?" : Locale->month[t->tm_mon],
+			  "?" : nl_langinfo(MON_1 + t->tm_mon),
 			  pt, ptlim);
 		continue;
 	    case 'b':
 	    case 'h':
 		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
-			  "?" : Locale->mon[t->tm_mon],
+			  "?" : nl_langinfo(ABMON_1 + t->tm_mon),
 			  pt, ptlim);
 		continue;
-	    case 'C':
-		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0, pt, ptlim);
+	    case 'c':
+		pt = _fmt(nl_langinfo(D_T_FMT), t, pt, ptlim);
+		continue;
+	    case 'p':
+		pt = _add(nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
+			  pt, ptlim);
+		continue;
+	    case 'X':
+		pt = _fmt(nl_langinfo(T_FMT), t, pt, ptlim);
+		continue;
+	    case 'x':
+		pt = _fmt(nl_langinfo(D_FMT), t, pt, ptlim);
+		continue;
+#else
+	    case 'A':
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+			  "?" : orig("%A", t),
+			  pt, ptlim);
+		continue;
+	    case 'a':
+		pt = _add((t->tm_wday < 0 || t->tm_wday >= 7) ?
+			  "?" : orig("%a", t),
+			  pt, ptlim);
+		continue;
+	    case 'B':
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+			  "?" : orig("%B", t),
+			  pt, ptlim);
+		continue;
+	    case 'b':
+	    case 'h':
+		pt = _add((t->tm_mon < 0 || t->tm_mon >= 12) ?
+			  "?" : orig("%b", t),
+			  pt, ptlim);
 		continue;
 	    case 'c':
-		pt = _fmt("%a %b %e %T %Y", t, pt, ptlim);
+		pt = _fmt(orig("%c", t), t, pt, ptlim);
+		continue;
+	    case 'p':
+		pt = _add(orig("%p", t), pt, ptlim);
+		continue;
+	    case 'X':
+		pt = _fmt(orig("%X", t), t, pt, ptlim);
+		continue;
+	    case 'x':
+		pt = _fmt(orig("%x", t), t, pt, ptlim);
+		continue;
+#endif
+		/* now the locale-independent ones */
+	    case 'C':
+		pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0, pt, ptlim);
 		continue;
 	    case 'D':
 		pt = _fmt("%m/%d/%y", t, pt, ptlim);
@@ -272,10 +263,6 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		continue;
 	    case 'n':
 		pt = _add("\n", pt, ptlim);
-		continue;
-	    case 'p':
-		pt = _add((t->tm_hour >= 12) ? Locale->pm : Locale->am,
-			  pt, ptlim);
 		continue;
 	    case 'R':
 		pt = _fmt("%H:%M", t, pt, ptlim);
@@ -371,12 +358,6 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'w':
 		pt = _conv(t->tm_wday, "%d", pt, ptlim);
 		continue;
-	    case 'X':
-		pt = _fmt(Locale->X_fmt, t, pt, ptlim);
-		continue;
-	    case 'x':
-		pt = _fmt("%m/%d/%y", t, pt, ptlim);
-		continue;
 	    case 'y':
 		pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1, pt, ptlim);
 		continue;
@@ -427,11 +408,6 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _conv((int) diff, "%04d", pt, ptlim);
 	    }
 	    continue;
-	    case '+':
-		// BSD extension
-		// '%+ is replaced by national representation of the date and time'
-		pt = _fmt(Locale->date_fmt, t, pt, ptlim);
-		continue;
 	    case '%':
 	    default:
 		break;
