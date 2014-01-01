@@ -169,6 +169,15 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		pt = _add(nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
 			  pt, ptlim);
 		continue;
+	    case 'P':
+		{
+		    char *p = nl_langinfo(t->tm_hour < 12 ? AM_STR : PM_STR),
+			*q, buff[20];
+		    for (q = buff; *p; ) *q++ = (char) tolower(*p++);
+		    *q = '\0'; 
+		    pt = _add(buff, pt, ptlim);
+		}
+		continue;
 	    case 'X':
 		pt = _fmt(nl_langinfo(T_FMT), t, pt, ptlim);
 		continue;
@@ -198,10 +207,24 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 			  pt, ptlim);
 		continue;
 	    case 'c':
+		// In a C locale this is supposed to be
+		// "%a %b %e %T %Y". It is not on Windows ....
+#ifdef WIN32
+		pt = _fmt("%a %b %e %T %Y", t, pt, ptlim);
+#else
 		pt = _fmt(orig("%c", t), t, pt, ptlim);
+#endif
 		continue;
 	    case 'p':
 		pt = _add(orig("%p", t), pt, ptlim);
+		continue;
+	    case 'P':
+		{
+		    char *p = orig("%p", t), *q, buff[20];
+		    for (q = buff; *p; ) *q++ = (char) tolower(*p++);
+		    *q = '\0'; 
+		    pt = _add(buff, pt, ptlim);
+		}
 		continue;
 	    case 'X':
 		pt = _fmt(orig("%X", t), t, pt, ptlim);

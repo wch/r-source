@@ -110,17 +110,20 @@ strptime(x, format, tz = "")
     \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
       conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
-      empty string in some locales.}
+      empty string in some locales.
+
+      Some platforms accept \code{\%P} for output, which uses a lower-case
+      version: other will output \code{P}.} 
     \item{\code{\%r}}{The 12-hour clock time (using the locale's AM or
       PM).  Only defined in some locales.}
     \item{\code{\%R}}{Equivalent to \code{\%H:\%M}.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
       will ignore leap seconds).}
-    % see http://en.wikipedia.org/wiki/Week_number#Week_number
     \item{\code{\%t}}{Tab on output, arbitrary whitespace on input.}
     \item{\code{\%T}}{Equivalent to \code{\%H:\%M:\%S}.}
     \item{\code{\%u}}{Weekday as a decimal number (1--7, Monday is 1).}
+    % see http://en.wikipedia.org/wiki/Week_number#Week_number
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       Sunday as the first day 1 of the week (and typically with the
       first Sunday of the year as day 1 of week 1).  The US convention.}
@@ -271,6 +274,11 @@ strptime(x, format, tz = "")
   
   Much less comprehensive support for output specifications was provided
   on Windows before \R 3.1.0.
+  
+  In a C locale \code{\%c} is required to be
+  \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
+  uses a date format not understood outside N. America), this value is
+  used there in all locales.
 }
 
 \references{
