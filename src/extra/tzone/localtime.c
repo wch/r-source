@@ -1304,7 +1304,6 @@ stm * localtime(const time_t * const timep)
     return localsub(timep, 0L, &tm);
 }
 
-#ifdef UNUSED
 /*
 ** Re-entrant version of localtime.
 */
@@ -1314,7 +1313,6 @@ localtime_r(const time_t *const timep, stm *tmp)
 {
 	return localsub(timep, 0L, tmp);
 }
-#endif
 
 /*
 ** gmtsub is to gmtime as localsub is to localtime.
@@ -1338,7 +1336,6 @@ stm * gmtime(const time_t * const timep)
     return gmtsub(timep, 0L, &tm);
 }
 
-#ifdef UNUSED
 /*
 * Re-entrant version of gmtime.
 */
@@ -1348,7 +1345,6 @@ gmtime_r(const time_t *const timep, stm *tmp)
 {
     return gmtsub(timep, 0L, tmp);
 }
-#endif
 
 /*
 ** Return the number of leap years through the end of the given year

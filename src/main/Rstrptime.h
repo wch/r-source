@@ -405,9 +405,11 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    }
 	    while (*rp >= L'0' && *rp <= L'9');
 
-	    if ((tm = localtime (&secs)) == NULL)
-		/* Error in function.  */
-		return NULL;
+#ifdef HAVE_LOCALTIME_R
+	    if ((tm = localtime_r (&secs, tm)) == NULL) return NULL;
+#else
+	    if ((tm = localtime (&secs)) == NULL) return NULL;
+#endif
 	}
 	break;
 	case L'S':
@@ -868,9 +870,11 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    }
 	    while (*rp >= '0' && *rp <= '9');
 
-	    if ((tm = localtime (&secs)) == NULL)
-		/* Error in function.  */
-		return NULL;
+#ifdef HAVE_LOCALTIME_R
+	    if ((tm = localtime_r (&secs, tm)) == NULL) return NULL;
+#else
+	    if ((tm = localtime (&secs)) == NULL) return NULL;
+#endif
 	}
 	break;
 	case 'S':

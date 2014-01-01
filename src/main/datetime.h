@@ -41,11 +41,15 @@ typedef struct Rtm stm;
 
 #define time_t R_time_t
 #define gmtime R_gmtime
+#define gmtime_r R_gmtime_r
 #define localtime R_localtime
+#define localtime_r R_localtime_r
 #define mktime R_mktime
 #define tzset R_tzset
-extern stm* R_gmtime (const R_time_t*);
+extern stm* Rgmtime (const R_time_t*);
+extern stm* R_gmtime_r (const R_time_t*, stm*);
 extern stm* R_localtime (const R_time_t*);
+extern stm* R_localtime_r(const R_time_t*, stm*);
 extern R_time_t R_mktime (stm*);
 extern void R_tzset(void);
 extern char *R_tzname[2];
