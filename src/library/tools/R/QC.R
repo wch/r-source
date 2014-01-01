@@ -5359,11 +5359,12 @@ function(x, ...)
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
           if(incoming) {
+              z <- sub(":::.*", "", xxx)
               base <- unlist(.get_standard_package_names()[c("base", "recommended")])
-              if (any(xxx %in% base))
+              if (any(z %in% base))
                   msg <- c(msg,
                            "  Including base/recommended package(s):",
-                           .pretty_format(intersect(base, xx)))
+                           .pretty_format(intersect(base, z)))
           }
           if(length(xxx) > 1L) {
               c(gettext("Unexported objects imported by ':::' calls:"),
