@@ -207,6 +207,7 @@
  R_getS4DataSlot
  R_getSymbolInfo
  R_gmtime
+ R_gmtime_r
  R_has_methods
  R_init_base
  R_init_jit_enabled
@@ -218,6 +219,7 @@
  R_jit_enabled
  R_lazyLoadDBinsertValue
  R_localtime
+ R_localtime_r
  R_max_memory
  R_max_num_math_threads
  R_mktime
@@ -235,6 +237,7 @@
  R_seemsOldStyleS4Object
  R_serialize
  R_serializeb
+ R_strftime
  R_subset3_dflt
  R_syscall
  R_sysframe
