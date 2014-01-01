@@ -272,7 +272,7 @@ static Rboolean have_broken_mktime(void)
     static int test_result = -1;
 
     if (test_result == -1) {
-	struct tm t;
+	stm t;
 	time_t res;
 	t.tm_sec = t.tm_min = t.tm_hour = 0;
 	t.tm_mday = t.tm_mon = 1;
@@ -298,11 +298,11 @@ static const time_t leapseconds[] =
    915148800,1136073600,1230768000,1341100800};
 #endif
 
-static double guess_offset (struct tm *tm)
+static double guess_offset (stm *tm)
 {
     double offset, offset1, offset2;
     int i, wday, year, oldmonth, oldisdst, oldmday;
-    struct tm oldtm;
+    stm oldtm;
     /*
        Adjust as best we can for timezones: if isdst is unknown, use
        the smaller offset at same day in Jan or July of a valid year.
@@ -314,12 +314,12 @@ static double guess_offset (struct tm *tm)
        in 1902, if available.
     */
 
-    memcpy(&oldtm, tm, sizeof(struct tm));
+    memcpy(&oldtm, tm, sizeof(stm));
     if(!have_broken_mktime() && tm->tm_year < 2) { /* no DST */
 	tm->tm_year = 2;
 	mktime(tm);
 	offset1 = (double) mktime(tm) - mktime00(tm);
-	memcpy(tm, &oldtm, sizeof(struct tm));
+	memcpy(tm, &oldtm, sizeof(stm));
 	tm->tm_isdst = 0;
 	return offset1;
     }
@@ -376,14 +376,14 @@ static double guess_offset (struct tm *tm)
 	if(oldisdst) offset = offset1;
     }
     /* restore all as mktime might alter it */
-    memcpy(tm, &oldtm, sizeof(struct tm));
+    memcpy(tm, &oldtm, sizeof(stm));
     /* and then set isdst */
     tm->tm_isdst = oldisdst;
     return offset;
 }
 
 /* Interface to mktime or mktime00 */
-static double mktime0 (struct tm *tm, const int local)
+static double mktime0 (stm *tm, const int local)
 {
     double res;
     Rboolean OK;
@@ -418,7 +418,7 @@ static double mktime0 (struct tm *tm, const int local)
 }
 
 /* Interface for localtime or gmtime or internal substitute */
-static struct tm * localtime0(const double *tp, const int local)
+static stm * localtime0(const double *tp, const int local)
 {
     double d = *tp;
     int y, tmp;
@@ -444,12 +444,15 @@ static struct tm * localtime0(const double *tp, const int local)
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
+    
+    /* internal substitute code.
+       Like localtime, this returns a pointer to a static struct tm */
 
     int day = (int) floor(d/86400.0);
     int left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
 
-    static struct tm ltm0, *res = &ltm0;
-    memset(res, 0, sizeof(struct tm));
+    static stm ltm0, *res = &ltm0;
+    memset(res, 0, sizeof(stm));
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
     left %= 3600;
