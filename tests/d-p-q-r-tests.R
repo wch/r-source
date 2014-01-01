@@ -781,5 +781,9 @@ stopifnot(-1094 < pbx, pbx < -481.66,
           )
 ## pbx had two -Inf; y was all Inf  for R <= 2.15.3;  PR#15162
 
+## dnorm(x) for "large" |x|
+stopifnot(abs(1 - dnorm(35+3^-9)/ 3.933395747534971e-267) < 1e-15)
+## has been losing up to 8 bit precision for R <= 3.0.x
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -101,14 +101,14 @@
 
       \item \code{print.table(x, zero.print = ".")} now also has an
       effect when \code{x} is not integer-valued.
-      
+
       \item There is more support to explore the system's idea of
       time-zone names.  \code{Sys.timezone()} tries to give the current
       system setting (and succeeds at least on Linux, OS X, Solaris and
       Windows), and \code{OlsonNames()} lists the names in the system's
       Olson database. \code{Sys.timezone(location = FALSE)} gives the
       previous behaviour.
-      
+
       \item Platforms with a 64-bit \code{time_t} type are allowed to
       handle conversions between the \code{"POSIXct"} and
       \code{"POSIXlt"} classes for date-times outside the 32-bit range
@@ -123,28 +123,28 @@
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
-      
+
       \item \code{colSums} and friends now have support for arrays and
       data-frame columns with \eqn{2^{31}}{2^31} or more elements.
-      
+
       \item \code{as.factor()} is faster when \code{f} is an unclassed
       integer vector (for example, when called from \code{tapply()}).
-      
+
       \item \code{fft()} now works with longer inputs, from the 12
       million previously supported up to 2 billion.  (\PR{15593})
 
       \item Complex \code{svd()} now uses LAPACK subroutine
       \code{ZGESDD}, the complex analogue of the routine used for the
       real case.
-      
-      \item Sweave now outputs \file{.tex} files in UTF-8 if the 
-      input encoding is declared to be UTF-8, regardless of the 
+
+      \item Sweave now outputs \file{.tex} files in UTF-8 if the
+      input encoding is declared to be UTF-8, regardless of the
       local encoding.  The UTF-8 encoding may now be declared using
       a LaTeX comment containing the string \code{\%\\SweaveUTF8}
       on a line by itself.
-      
+
       \item \code{file.copy()} gains a \code{copy.date} argument.
-      
+
       \item Printing of date-times will make use of the time-zone
       abbreviation in use at the time, if known.  For example, for Paris
       pre-1940 this could be \samp{LMT}, \samp{PMT}, \samp{WET} or
@@ -158,6 +158,9 @@
       \item (Windows, and as a substitute on OS X and perhaps
       elsewhere.) The system C function \code{strftime} has been
       replaced by a more comprehensive version.
+
+      \item \code{dnorm(x, log=FALSE)} is more accurate (but somewhat
+      slower) for |x| > 5; as suggested in \PR{15620}.
     }
   }
 
@@ -189,15 +192,15 @@
       \item The version of \samp{tzcode} included in
       \file{src/extra/tzone} has been updated.  (Formerly used only on
       Windows.)
-      
+
       \item There is support to use the included (64-bit) time-zone
       conversion code and Olson time-zone database: use
       \command{configure} option \option{--with-internal-tzcode}.  This
       is the default on Windows and OS X.
-      
+
       (It might be necessary to set environment variable \env{TZ} on
       OSes where this is not already set.)
-      
+
     }
   }
 
@@ -225,7 +228,7 @@
 
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
-      
+
       \item There is some support for compiling C++11 code in packages.
       The file \file{src/Makevars} or \file{src/Makevars.win} should
       define the macro \samp{USE_CXX1X} (with an empty value).  Where
@@ -234,10 +237,10 @@
       configured or in a personal/site \file{Makevars} file.  (The
       default is to use \samp{$(CXX) -std=c++11} except on Windows where
       \option{-std=c++0x} is used, as supported by \code{g++ 4.6.x}.)
-      
+
       Other standards supported by the compiler can be specified by e.g.
       \samp{USE_CXX1X = -std=c++1y} .
-      
+
       \item Fake installs now install the contents of directory
       \file{inst}: some packages use this to install e.g. C++ headers
       for use by other packages that are independent of the package
@@ -326,17 +329,17 @@
 
       \item Remapping in the \file{Rmath.h} header can be suppressed by
       defining \samp{R_NO_REMAP_RMATH}.
-      
+
       \item The remapping of \code{rround()} in header \file{Rmath.h}
       has been removed: use \code{fround()} instead.
-      
+
       \item \code{ftrunc()} in header \file{Rmath.h} is now a wrapper
       for the C99 function \code{trunc()}, which might as well be used
       in C code: \code{ftrunc()} is still needed for portable C++ code.
 
       \item The never-documented remapping of \code{prec()} to
       \code{fprec()} in header \file{Rmath.h} has been removed.
-      
+
       \item The included LAPACK subset now includes \code{zgesdd} and
       \code{zgelsd}.
     }
@@ -419,7 +422,7 @@
 
       \item There is a new function, \code{La_version()}, to report the
       version of LAPACK in use.
-      
+
       \item The HTML version of \sQuote{An Introduction to R} now has
       links to PNG versions of the figures.
 
@@ -455,13 +458,13 @@
       \item The long undocumented remapping of \code{rround()} to
       \code{Rf_fround()} in header \file{Rmath.h} is now formally
       deprecated: use \code{fround()} directly.
-      
+
       \item Remapping of \code{prec()} and \code{trunc()} in the
       \file{Rmath.h} header has been disabled in C++ code (it has caused
       breakage with \code{libc++} headers).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of
@@ -553,23 +556,23 @@
 
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
-      
+
       \item (Windows only) When a call to \code{system2()} specified
       one of \code{stdin}, \code{stdout} or \code{stderr} to be a file,
       but the command was not found (e.g. it contained its arguments,
       or the program was not on the \env{PATH}), it left the file open
       and unusable until \R terminated.  (Reported by Mathew McLean.)
-      
+
       \item The \code{bmp()} device was not recording \code{res = NA}
       correctly: it is now recorded as 72 ppi.
 
       \item Several potential problems with compiler-specific behaviour
       have been identified using the \sQuote{Undefined Behaviour
 	Sanitizer} in conjunction with the \command{clang} compiler.
-      
+
       \item \code{hcl()} now honours \code{NA} inputs (previously they
       were mapped to black).
-      
+
       \item Some translations in base packages were being looked up in
       the main catalog rather than that for the package.
 
@@ -577,24 +580,24 @@
 	second before the epoch}, most conversions which should have given
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
-      
+
       \item \code{rowsum} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
-  
+
       \item \code{predict(<lm object>, interval = "confidence", scale =
 	<something>)} now works.  (\PR{15564})
-	
+
       \item The bug fix in 3.0.2 for \PR{15411} was too aggressive,
       and sometimes removed spaces that should not have been removed.
       (\PR{15583})
-      
+
       \item Running \R code in a \pkg{tcltk} callback failed to set the
       busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
-      
+
       \item The code for date-times before 1902 assumed that the offset
       from GMT in 1902 was a whole number of minutes: that was not true
       of Paris (as recorded on some platforms).
- 
+
       \item Where time zones have changed abbreviations over the years,
       the software tries to more consistently use the current
       abbreviation.  On some platforms where the C function
@@ -809,7 +812,7 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
-      
+
       \item \command{R CMD check} analyses \code{:::} calls.
     }
   }

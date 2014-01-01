@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2013-12-25 r64541) -- "Unsuffered Consequences"
+R Under development (unstable) (2013-12-31 r64596) -- "Unsuffered Consequences"
 Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1316,7 +1316,11 @@ Warning messages:
 +           )
 > ## pbx had two -Inf; y was all Inf  for R <= 2.15.3;  PR#15162
 > 
+> ## dnorm(x) for "large" |x|
+> stopifnot(abs(1 - dnorm(35+3^-9)/ 3.933395747534971e-267) < 1e-15)
+> ## has been losing up to 8 bit precision for R <= 3.0.x
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.67 0.011 0.683 0 0 
+Time elapsed:  1.3 0.016 1.319 0 0 
 > 

@@ -1595,6 +1595,7 @@ if(FALSE) { ## if you want to see how it *did* go wrong:
     ff1 <- function(x) {r <- log(g(x)); print(c(x,r)); r}
     str(ur <- uniroot(ff1, c(-90,100)))
 }
+assertWarning(uniroot(function(x) log(g(x)), c(-90,100)))
 str(ur <- uniroot(function(x) log(g(x)), c(-90,100)))# -> 2 warnings .. -Inf replaced ..
 stopifnot(abs(ur$root) < 0.001)
 ## failed badly in R < 2.13.0, as -Inf was replaced by +1e308
