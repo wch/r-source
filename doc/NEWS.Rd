@@ -24,7 +24,7 @@
 
       \item There is a new function, \code{La_version()}, to report the
       version of LAPACK in use.
-      
+
       \item The HTML version of \sQuote{An Introduction to R} now has
       links to PNG versions of the figures.
 
@@ -60,13 +60,13 @@
       \item The long undocumented remapping of \code{rround()} to
       \code{Rf_fround()} in header \file{Rmath.h} is now formally
       deprecated: use \code{fround()} directly.
-      
+
       \item Remapping of \code{prec()} and \code{trunc()} in the
       \file{Rmath.h} header has been disabled in C++ code (it has caused
       breakage with \code{libc++} headers).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} truncated the imaginary part of
@@ -158,23 +158,23 @@
 
       \item \code{c()} and related functions such as \code{unlist()}
       converted raw vectors to invalid logical vectors. (\PR{15535})
-      
+
       \item (Windows only) When a call to \code{system2()} specified
       one of \code{stdin}, \code{stdout} or \code{stderr} to be a file,
       but the command was not found (e.g. it contained its arguments,
       or the program was not on the \env{PATH}), it left the file open
       and unusable until \R terminated.  (Reported by Mathew McLean.)
-      
+
       \item The \code{bmp()} device was not recording \code{res = NA}
       correctly: it is now recorded as 72 ppi.
 
       \item Several potential problems with compiler-specific behaviour
       have been identified using the \sQuote{Undefined Behaviour
 	Sanitizer} in conjunction with the \command{clang} compiler.
-      
+
       \item \code{hcl()} now honours \code{NA} inputs (previously they
       were mapped to black).
-      
+
       \item Some translations in base packages were being looked up in
       the main catalog rather than that for the package.
 
@@ -182,24 +182,24 @@
 	second before the epoch}, most conversions which should have given
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
-      
+
       \item \code{rowsum} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
-  
+
       \item \code{predict(<lm object>, interval = "confidence", scale =
 	<something>)} now works.  (\PR{15564})
-	
+
       \item The bug fix in 3.0.2 for \PR{15411} was too aggressive,
       and sometimes removed spaces that should not have been removed.
       (\PR{15583})
-      
+
       \item Running \R code in a \pkg{tcltk} callback failed to set the
       busy flag, which will be needed to tell OS X not to \sQuote{App Nap}.
-      
+
       \item The code for date-times before 1902 assumed that the offset
       from GMT in 1902 was a whole number of minutes: that was not true
       of Paris (as recorded on some platforms).
- 
+
       \item Where time zones have changed abbreviations over the years,
       the software tries to more consistently use the current
       abbreviation.  On some platforms where the C function
@@ -207,7 +207,7 @@
       abbreviation could have been that of the last time converted.
 
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
-      \code{"C"} (to restore the sane behavior) no longer yields a
+      \code{"C"} (to restore the sane behavior) no longer gives a
       warning.
       
       \item \code{deparse()} now deparses complex vectors more
@@ -422,7 +422,7 @@
       \item \command{R CMD build} makes more use of the \file{build}
       sub-directory of package sources, for example to record
       information about the vignettes.
-      
+
       \item \command{R CMD check} analyses \code{:::} calls.
     }
   }
