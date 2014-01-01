@@ -604,6 +604,10 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer yields a
       warning.
+      
+      \item \code{deparse()} now deparses complex vectors more
+      accurately; they will now re-parse to the original values.
+      (\PR{15534}, patch based on code submitted by Alex Bertram.)      
     }
   }
 }

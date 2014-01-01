@@ -264,4 +264,30 @@ predict(fit, interval = "confidence", scale = 1)
 ## failed in <= 3.0.2 with object 'w' not found
 
 
+## PR#15534 deparse() did not produce reparseable complex vectors
+assert.reparsable <- function(sexp) {
+  deparsed <- paste(deparse(sexp), collapse=" ")
+  reparsed <- tryCatch(eval(parse(text=deparsed)[[1]]), error = function(e) NULL)
+  if (is.null(reparsed))
+    stop(sprintf("Deparsing produced invalid syntax: %s", deparsed))
+  if(!identical(reparsed, sexp)) 
+    stop(sprintf("Deparsing produced change: value is not %s", reparsed))
+}
+
+assert.reparsable(1)
+assert.reparsable("string")
+assert.reparsable(2+3i)
+assert.reparsable(1:10)
+assert.reparsable(c(NA, 12, NA, 14))
+assert.reparsable(as.complex(NA))
+assert.reparsable(complex(real=Inf, i=4))
+assert.reparsable(complex(real=Inf, i=Inf))
+assert.reparsable(complex(real=Inf, i=-Inf))
+assert.reparsable(complex(real=3, i=-Inf))
+assert.reparsable(complex(real=3, i=NaN))
+assert.reparsable(complex(r=NaN, i=0))
+assert.reparsable(complex(real=NA, i=1))
+assert.reparsable(complex(real=1, i=NA))
+## last 7 all failed
+
 proc.time()

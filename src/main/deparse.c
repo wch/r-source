@@ -1246,10 +1246,37 @@ static void print2buff(const char *strng, LocalParseData *d)
     d->len += (int) tlen;
 }
 
+/*
+ * Encodes a complex value as a syntactically correct
+ * string that can be reparsed by R. This is required
+ * because by default strings like '1+Infi' or '3+NaNi' 
+ * are produced which are not valid complex literals.
+ */
+
+#define NB 1000  /* Same as printutils.c */
+static const char *EncodeNonFiniteComplexElement(Rcomplex x, char* buff)
+{
+    int w, d, e, wi, di, ei;
+
+    // format a first time to get width/decimals
+    formatComplex(&x, 1, &w, &d, &e, &wi, &di, &ei, 0);
+	
+    char Re[NB];
+    char Im[NB];
+
+    strcpy(Re, EncodeReal(x.r, w, d, e, '.'));
+    strcpy(Im, EncodeReal(x.i, wi, di, ei, '.'));
+    
+    snprintf(buff, NB, "complex(real=%s, imaginary=%s)", Re, Im);
+    buff[NB-1] = '\0';
+    return buff;
+}
+
 static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
     const char *strp;
+    char *buff = 0;
     Rboolean surround = FALSE, allNA, addL = TRUE;
 
     tlen = length(vector);
@@ -1363,10 +1390,15 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    if(allNA && TYPEOF(vector) == REALSXP &&
 	       ISNA(REAL(vector)[i])) {
 		strp = "NA_real_";
-	    } else if (allNA && TYPEOF(vector) == CPLXSXP &&
+	    } else if (TYPEOF(vector) == CPLXSXP &&
 		       (ISNA(COMPLEX(vector)[i].r)
-			|| ISNA(COMPLEX(vector)[i].i)) ) {
-		strp = "NA_complex_";
+			&& ISNA(COMPLEX(vector)[i].i)) ) {
+		strp = allNA ? "NA_complex_" : EncodeElement(vector, i, quote, '.');
+	    } else if(TYPEOF(vector) == CPLXSXP && 
+	    	      (ISNAN(COMPLEX(vector)[i].r) || !R_FINITE(COMPLEX(vector)[i].i)) ) {
+	    	if (!buff)
+	    	    buff = alloca(NB);
+		strp = EncodeNonFiniteComplexElement(COMPLEX(vector)[i], buff);
 	    } else if (allNA && TYPEOF(vector) == STRSXP &&
 		       STRING_ELT(vector, i) == NA_STRING) {
 		strp = "NA_character_";
