@@ -448,7 +448,7 @@ static struct tm * localtime0(const double *tp, const int local)
     int day = (int) floor(d/86400.0);
     int left = (int) (d - day * 86400.0 + 1e-6); // allow for fractional secs
 
-    struct tm ltm0, *res = &ltm0;
+    static struct tm ltm0, *res = &ltm0;
     memset(res, 0, sizeof(struct tm));
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
@@ -507,9 +507,9 @@ static struct tm * localtime0(const double *tp, const int local)
 	    res->tm_sec += (sdiff % 60) - (sdiff2 % 60);
 	    validate_tm(res);
 	}
-//#ifdef HAVE_TM_GMTOFF
-//	res->tm_gmtoff = -sdiff2;
-//#endif
+#ifdef HAVE_TM_GMTOFF
+	res->tm_gmtoff = -sdiff2;
+#endif
 	// No DST before 1916
 	if(res->tm_year < 16) res->tm_isdst = 0;
 	return res;
