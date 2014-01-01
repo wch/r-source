@@ -84,4 +84,11 @@ stopifnot( c(as.raw(11), TRUE) == TRUE )
 ## as.raw(11) became a logical value coded as 11, and did not test equal to TRUE.
 
 
+## PR#15621 backticks could not be escaped
+stopifnot(deparse(as.name("`"), backtick=TRUE) == "`\\``")
+assign("`", TRUE)
+`\``
+tools::assertError(parse("```"))
+## 
+
 proc.time()
