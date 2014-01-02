@@ -3205,9 +3205,14 @@ function(dfile)
     enhances <- .get_requires_from_package_db(db, "Enhances")
     allpkgs <- c(depends, imports, suggests, enhances)
     out <- unique(allpkgs[duplicated(allpkgs)])
-    links <- character()
+    links <- missing_incs <- character()
     llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
+    have_src <- TRUE # dummy
     if(length(llinks)) {
+        ## This is pointless unless there is compilable code
+        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+        have_src <- dir.exists(file.path(dirname(dfile), "src"))
+
         ## See if this is installable under 3.0.1:
         ## if so check for versioned specs
         deps <- .split_description(db, verbose = TRUE)$Rdepends2
@@ -3229,9 +3234,14 @@ function(dfile)
             llinks <- llinks[sapply(llinks, length) > 1L]
             if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
         }
+        ## and check if we can actually link to these.
+        llinks <-  .get_requires_from_package_db(db, "LinkingTo")
+        incs <- lapply(llinks, function(x) system.file("include", package = x))
+        missing_incs <- as.vector(llinks[!nzchar(incs)])
     }
     out <- list(duplicates = unique(allpkgs[duplicated(allpkgs)]),
-                bad_links = links)
+                bad_links = links, missing_incs = missing_incs,
+                have_src = have_src)
     class(out) <- "check_package_description2"
     out
 }
@@ -3246,6 +3256,7 @@ format.check_package_description2 <- function(x, ...)
           paste(c(" ", sQuote(xx)), collapse = " "),
           "A package should be listed in only one of these fields.")
     },
+      if(!x$have_src) "'LinkingTo' field is unused: package has no 'src' directory",
       if(length(xx <- x$bad_links)) {
           if(length(xx) > 1L)
               c("Versioned 'LinkingTo' values for",
@@ -3254,6 +3265,14 @@ format.check_package_description2 <- function(x, ...)
           else
               sprintf("Versioned 'LinkingTo' value for %s is only usable in R >= 3.0.2",
                       sQuote(xx))
+      },
+      if(x$have_src && length(xx <- x$missing_incs)) {
+          if(length(xx) > 1L)
+              c("'LinkingTo' for",
+                paste(c(" ", sQuote(xx)), collapse = " "),
+                "are unused as they have no 'include' directory")
+          else
+              sprintf("'LinkingTo' for %s is unused as it has no 'include' directory", sQuote(xx))
       })
 }
 

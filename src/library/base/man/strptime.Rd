@@ -176,8 +176,7 @@ strptime(x, format, tz = "")
     \item{\code{\%s}}{(Output only.) The number of seconds since the
       epoch.}
     \item{\code{\%+}}{(Output only.) Similar to \code{\%c}, often
-      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}.
-     }
+      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}. May depend on the locale.}
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman
