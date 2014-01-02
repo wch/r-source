@@ -124,7 +124,7 @@
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
 
-      \item \code{colSums} and friends now have support for arrays and
+      \item \code{colSums()} and friends now have support for arrays and
       data-frame columns with \eqn{2^{31}}{2^31} or more elements.
 
       \item \code{as.factor()} is faster when \code{f} is an unclassed
@@ -160,7 +160,7 @@
       replaced by a more comprehensive version with closer conformance
       to the POSIX 2008 standard.
 
-      \item \code{dnorm(x, log=FALSE)} is more accurate (but somewhat
+      \item \code{dnorm(x, log = FALSE)} is more accurate (but somewhat
       slower) for |x| > 5; as suggested in \PR{15620}.
     }
   }
@@ -200,7 +200,8 @@
       is the default on Windows and OS X.
 
       (It might be necessary to set environment variable \env{TZ} on
-      OSes where this is not already set.)
+      OSes where this is not already set, although the system timzone is
+      deduced correctly on at least Linux, OS X and Windows.)
 
     }
   }
@@ -341,7 +342,7 @@
       \item The never-documented remapping of \code{prec()} to
       \code{fprec()} in header \file{Rmath.h} has been removed.
 
-      \item The included LAPACK subset now includes \code{zgesdd} and
+      \item The included LAPACK subset now contains \code{zgesdd} and
       \code{zgelsd}.
     }
   }
@@ -605,7 +606,7 @@
       abbreviation could have been that of the last time converted.
 
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
-      \code{"C"} (to restore the sane behavior) no longer yields a
+      \code{"C"} (to restore the sane behavior) no longer gives a
       warning.
       
       \item \code{deparse()} now deparses complex vectors more

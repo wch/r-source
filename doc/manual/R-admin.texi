@@ -101,9 +101,9 @@ tar -xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @noindent
 on systems that have a suitable@footnote{e.g.@: @acronym{GNU}
 @command{tar} version 1.15 or later, or that from the @samp{libarchive}
-(as used on OS 10.6 and later) or `Heirloom Toolchest' distributions.}
-@command{tar} installed.  On other systems you need to have the
-@command{gzip} program installed, when you can use
+(as used on OS X versions 10.6 and later) or `Heirloom Toolchest'
+distributions.}  @command{tar} installed.  On other systems you need to
+have the @command{gzip} program installed, when you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar -xf -
@@ -2930,18 +2930,6 @@ for @code{glibc} but not of most commercial Unixes.  However, you can
 make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
 replacement: see @uref{http://www.gnu.org/@/software/@/libiconv/}).
 
-An implementation of @acronym{XDR} is required.  This is part of
-@acronym{RPC} and historically has been part of @file{libc} on a
-Unix-alike: however some builds@footnote{apparently when built by
-default, but not for example as built for Fedora 15.} of @code{glibc
-2.14} hide it.  The intention seems to be that the @acronym{TI-RPC}
-library be used instead, in which case @code{libtirpc} (and its
-development version) needs to be installed, and its headers need to be
-on the C include path (and @command{configure} tries
-@file{/usr/include/tirpc} if the headers are not found on the standard
-include path).  The @R{} sources contain a fall-back implementation of
-@acronym{XDR} which is likely to suffice.
-
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{wctans_t} and @code{mbstate_t} and functions @code{mbrtowc},
@@ -2984,8 +2972,8 @@ shell script.  Some versions, e.g.@: that from @pkg{texinfo} 4.13a and
 on, say, Solaris.}  Further, the versions of @command{texi2dvi} and
 @file{texinfo.tex} need to be compatible: we have seen problems with
 older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
-@pkg{texinfo} 4.13.  It should be possible to use @command{makeinfo}
-version 5.x.
+@pkg{texinfo} 4.13.  It is possible to use @pkg{texinfo} version 5.x,
+preferably 5.2 or later.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -3000,9 +2988,9 @@ and @pkg{inconsolata} are desirable (and without them you may need to change
 @R{}'s defaults: @pxref{Making the manuals}).
 
 
+@cindex Subversion
 If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
-@cindex Subversion
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
@@ -3078,16 +3066,28 @@ If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
 PCRE will be used if specified by @option{--with-system-zlib} (version
 1.2.5 or later), @option{--with-system-bzlib} or
-@option{--with-system-pcre} (version 8.10 or later, preferably 8.33
-which is what is supplied with @R{}): otherwise versions in the @R{}
-sources will be compiled in.  As the latter suffice and are tested with
-@R{} you should not need to change this.
+@option{--with-system-pcre} (version 8.10 or later, preferably
+8.34@footnote{which is what is supplied with @R{}: PCRE must be built
+with UTF-8 support (not the default) and support for Unicode properties
+is assumed by some @R{} packages. Neither are tested by
+@command{configure}.}): otherwise versions in the @R{} sources will be
+compiled in.  As the latter suffice and are tested with @R{} you should
+not need to change this.
 
 @code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
 configuring with @option{--with-system-xz=no}.  Systems differ in what
 they call the package including this: e.g.@: on Fedora the library is in
 @samp{xz-libs} and the headers in @samp{xz-devel}.
+
+An implementation of @acronym{XDR} is required, and the @R{} sources
+contain one which is likely to suffice (although a system version may
+have higher peformance).  @acronym{XDR} is part of @acronym{RPC} and
+historically has been part of @file{libc} on a Unix-alike.  However some
+builds of @code{glibc} hide it with the intention that the
+@acronym{TI-RPC} library be used instead, in which case @code{libtirpc}
+(and its development version) needs to be installed, and its headers
+need to be on the C include path or in @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3106,7 +3106,7 @@ or @code{icu4c}.  It will be used by default where available (including
 on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
 
-The @code{bitmap} and @code{dev2bitmap} devices and also
+The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
 (@uref{http://www.ghostscript.com/}).  This should either be in your
 path when the command is run, or its full path specified by the
