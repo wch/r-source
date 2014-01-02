@@ -1,6 +1,6 @@
 % File src/library/base/man/ISOdatetime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ISOdatetime}
@@ -28,6 +28,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   would normally be better to use the \code{"\link{Date}"} class.
 
   The main arguments will be recycled using the usual recycling rules.
+
+  Because these make use of \code{\link{strptime}}, only years in the
+  range \code{0:9999} are accepted.
 }
 \value{
   An object of class \code{"\link{POSIXct}"}.

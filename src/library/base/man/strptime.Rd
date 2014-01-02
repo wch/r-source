@@ -31,7 +31,7 @@ strptime(x, format, tz = "")
     \code{""} is the current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default for the \code{format}
     methods is
-    \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
+    \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any element has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
@@ -63,8 +63,11 @@ strptime(x, format, tz = "")
   where appropriate and available.  This affects the names of the days
   and months, the AM/PM indicator (if used) and the separators in
   formats such as \code{\%x} and \code{\%X} (via the setting of the
-  \code{LC_TIME} locale category).
-
+  \code{LC_TIME} locale category).  The \sQuote{current locale} of the
+  descriptions might mean the locale in use at the start of the \R
+  session or when these functions are first used.
+  
+  % strftime is C99: strptime is POSIX.
   The details of the formats are system-specific, but the following are
   defined by the ISO C99 / POSIX standard for \code{strftime} and are
   likely to be widely available.  A \emph{conversion specification} is
@@ -94,8 +97,11 @@ strptime(x, format, tz = "")
     \item{\code{\%M}}{Minute as decimal number (00--59).}
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
       conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
-      empty string in some locales.}
-    \item{\code{\%S}}{Second as decimal number (00--61), allowing for
+      empty string in some locales.
+  
+      Some platforms accept \code{\%P} for output, which uses a lower-case
+      version: others will output \code{P}.} 
+   \item{\code{\%S}}{Second as decimal number (00--61), allowing for
       up to two leap-seconds (but POSIX-compliant implementations
       will ignore leap seconds).}
     % see http://en.wikipedia.org/wiki/Week_number#Week_number
@@ -120,22 +126,21 @@ strptime(x, format, tz = "")
       to be valid (interpreted as 1BC): see
       \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standard
       also says that years before 1582 in its calendar should only be used
-      with agreement of the parties involved.}
+      with agreement of the parties involved.
+
+      For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
       \code{-0800} is 8 hours behind UTC.}
-    \item{\code{\%Z}}{(output only.) Time zone abbreviation as a
+    \item{\code{\%Z}}{(Output only.) Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
 
-  Note that when \code{\%z} or \code{\%Z} is used for output with an
+  When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
   for that time zone --- but it is not guaranteed to succeed.
-
-  The \sQuote{current locale} might mean the locale in use at the start
-  of the \R session or when these functions are first used.
   
   Also defined in the current standards but less widely implemented
   (e.g. not for output on Windows) are
@@ -172,6 +177,9 @@ strptime(x, format, tz = "")
       more days in the new year, then it is considered week 1.  Otherwise, it
       is the last week of the previous year, and the next week is week
       1.  (Accepted but ignored on input.)}
+    \item{\code{\%+}}{(Output only.) Similar to \code{\%c}, often
+      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}.
+      }
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman
@@ -235,9 +243,10 @@ strptime(x, format, tz = "")
   They conventionally have the opposite sign from time-zone
   specifications (see \code{\link{Sys.timezone}}): positive values are
   East of the meridian.  Although there have been time zones with
-  offsets like 00:09:21 (Paris in 1900), offsets are usually treated as
-  whole numbers of minutes, and are most often seen in RFC 822 email
-  headers in the form \code{-0800} (Pacific coast of US in winter).
+  offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
+  1972), offsets are usually treated as whole numbers of minutes, and
+  are most often seen in RFC 822 email headers in forms like
+  \code{-0800} (Pacific coast of US in winter).
   
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
