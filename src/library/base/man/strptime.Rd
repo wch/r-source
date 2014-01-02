@@ -151,7 +151,9 @@ strptime(x, format, tz = "")
       to be valid (interpreted as 1BC): see
       \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
       also say that years before 1582 in its calendar should only be used
-      with agreement of the parties involved.}
+      with agreement of the parties involved.
+  
+      For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{(Output only.) Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC.} 
     \item{\code{\%Z}}{(Output only.) Time zone abbreviation as a
@@ -173,6 +175,9 @@ strptime(x, format, tz = "")
       by a blank.}
     \item{\code{\%s}}{(Output only.) The number of seconds since the
       epoch.}
+    \item{\code{\%+}}{(Output only.) Similar to \code{\%c}, often
+      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}.
+     }
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman

@@ -31,9 +31,11 @@ z <- sort(c(z1, z2))
 strftime(z, "%G %g %W %U %u %V %W %w")
 
 ## tests of earlier years.  Default format is OS-dependent, so don't test it.
+## ISOdate only accepts positive years.
 z <- as.Date(ISOdate(c(0, 8, 9, 10, 11, 20, 110, 1010), 1, 10)) - 3630
-strftime(z, "%4Y-%m-%d") # with leading zero(s)
-strftime(z, "%_Y-%m-%d") # without
+strftime(z, "%04Y-%m-%d") # with leading zero(s)
+strftime(z, "%_4Y-%m-%d") # with leading space(s)
+strftime(z, "%0Y-%m-%d") # without
 
 
 ## more test of strftime
