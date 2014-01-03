@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/install.packages.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -244,7 +244,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    pkgs <- getDependencies(pkgs, dependencies, available, lib)
+    pkgs <- getDependencies(pkgs, dependencies, available, lib, binary = TRUE)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,

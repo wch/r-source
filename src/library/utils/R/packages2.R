@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@ if (.Platform$OS.type == "windows")
     .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
 
 getDependencies <-
-    function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L])
+    function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
+             binary = FALSE)
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
@@ -30,8 +31,13 @@ getDependencies <-
     depends <-
         is.character(dependencies) || (is.logical(dependencies) && dependencies)
     if(depends && is.logical(dependencies)) {
-        dependencies <-  c("Depends", "Imports", "LinkingTo", "Suggests")
-        dep2 <- c("Depends", "Imports", "LinkingTo")
+        if(binary) {
+            dependencies <-  c("Depends", "Imports", "Suggests")
+            dep2 <- c("Depends", "Imports")
+        } else {
+            dependencies <-  c("Depends", "Imports", "LinkingTo", "Suggests")
+            dep2 <- c("Depends", "Imports", "LinkingTo")
+        }
     }
     if(depends && !oneLib) {
         warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
