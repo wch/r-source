@@ -100,6 +100,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     this installs all the packages needed to run \code{pkgs}, their
     examples, tests and vignettes (if the package author specified them
     correctly).
+
+    In all of these, \code{"LinkingTo"} is omitted for binary packages.
   }
   \item{type}{character, indicating the type of package to download and
     install.

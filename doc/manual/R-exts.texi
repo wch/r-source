@@ -8127,10 +8127,11 @@ needs to declare them as a comma-separated list in the field
 that the @file{include} directories in the installed linked-to packages
 are added to the include paths for C and C++ code.
 
-It must also specify @samp{Imports}@footnote{with a corresponding
-@code{import} or @code{importFrom} entry in the @file{NAMESPACE} file.}
-or @samp{Depends} of those packages, for they have to be loaded prior to
-this one (so the path to their compiled code has been registered).
+It must specify@footnote{whether or not @samp{LinkingTo} is used.}
+@samp{Imports} or @samp{Depends} of those packages, for they have to be
+loaded@footnote{so there needs to be a corresponding @code{import} or
+@code{importFrom} entry in the @file{NAMESPACE} file.} prior to this one
+(so the path to their compiled code has been registered).
 
 
 A @acronym{CRAN} example of the use of this mechanism is package

@@ -248,6 +248,10 @@
       for use by other packages that are independent of the package
       itself.  Option \option{--no-inst} can be used to get the previous
       behaviour.
+      
+      \item \code{install.packages(dependencies = value)} for \code{value =
+	NA} (the default) or \code{value = TRUE} omits packages only in
+      \code{LinkingTo} for binary package installs.
     }
   }
 
