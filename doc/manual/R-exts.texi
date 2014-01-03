@@ -2280,6 +2280,10 @@ If the macro @samp{CXX1X} is given a value this is use to set
 @samp{CXX1XSTD} to select a different standard, say @option{-std=c++1y}
 for those compilers which support it.
 
+To make this easier to use with @command{R CMD SHLIB}, the environment
+variable @env{USE_CXX1X} will be consulted if there is no
+@file{Makevars} file (nor @file{Makevars.win} on Windows).
+
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
 

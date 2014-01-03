@@ -1841,6 +1841,12 @@
             cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
             if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
         }
+    } else if (!use_cxx1x) {
+        val <- Sys.getenv("USE_CXX1X", NA)
+        if(!is.na(val)) {
+            use_cxx1x <- TRUE
+            cxx1xstd <- if(nzchar(val)) val else "$(CXX1XSTD)"
+        }
     }
 
     makeargs <- paste0("SHLIB=", shQuote(shlib))
