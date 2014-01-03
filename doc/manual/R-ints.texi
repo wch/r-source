@@ -3958,8 +3958,8 @@ with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{see the previous footnote.} to the installed copies of
 all the Depends/Imports and (for the second only) Suggests packages
-which are not in @code{.Library}.  Default: false (but true for CRAN
-checks).
+which are not in @code{.Library}.  Default: false (but
+@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
