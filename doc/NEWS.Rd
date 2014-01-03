@@ -324,6 +324,11 @@
       library.
 
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
+      
+      \item \command{R CMD check} customizations such as
+      \env{_R_CHECK_DEPENDS_ONLY_} make available packages only in
+      \samp{LinkingTo} only for installation, and not for
+      loading/runtime tests.
     }
   }
 
