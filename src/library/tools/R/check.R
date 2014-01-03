@@ -57,7 +57,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
 setRlibs <-
     function(lib0 = "", pkgdir = ".", suggests = FALSE, libdir = NULL,
-             self = FALSE, self2 = TRUE, quote = FALSE)
+             self = FALSE, self2 = TRUE, quote = FALSE, LinkingTo = FALSE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
     useJunctions <- WINDOWS && !nzchar(Sys.getenv("R_WIN_NO_JUNCTIONS"))
@@ -107,7 +107,8 @@ setRlibs <-
         }
     }
 
-    deps <- unique(c(names(pi$Depends), names(pi$Imports), names(pi$LinkingTo),
+    deps <- unique(c(names(pi$Depends), names(pi$Imports),
+                     if(LinkingTo) names(pi$LinkingTo),
                      if(suggests) names(pi$Suggests)))
     if(length(libdir) && self2) flink(file.path(libdir, thispkg), tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.

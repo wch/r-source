@@ -1102,7 +1102,7 @@
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             if(deps_only) {
-                env <- setRlibs()
+                env <- setRlibs(LinkingTo = TRUE)
                 libs0 <- .libPaths()
 		env <- sub("^.*=", "", env[1L])
                 .libPaths(c(lib0, env))
