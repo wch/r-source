@@ -129,10 +129,11 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
                               conditionMessage(res)),
                      call. = FALSE, domain = NA)
             }
-        } else if (exists(".First.lib", envir = env, inherits = FALSE) &&
-                   nsname == Sys.getenv("R_INSTALL_PKG"))
-            warning(sprintf("ignoring .First.lib() for package %s",
-                            sQuote(nsname)), domain = NA, call. = FALSE)
+        }
+##         else if (exists(".First.lib", envir = env, inherits = FALSE) &&
+##                  nsname == Sys.getenv("R_INSTALL_PKG"))
+##             warning(sprintf("ignoring .First.lib() for package %s",
+##                             sQuote(nsname)), domain = NA, call. = FALSE)
     }
     runUserHook <- function(pkgname, pkgpath) {
         hook <- getHook(packageEvent(pkgname, "attach")) # might be list()
@@ -655,8 +656,9 @@ requireNamespace <- function (package, ..., quietly = FALSE)
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
     res <- TRUE
     if (is.null(ns)) {
-        packageStartupMessage(gettextf("Loading required namespace: %s",
-                                       package), domain = NA)
+        if(!quietly)
+            packageStartupMessage(gettextf("Loading required namespace: %s",
+                                           package), domain = NA)
         value <- tryCatch(loadNamespace(package, ...), error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {
