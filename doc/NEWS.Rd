@@ -74,10 +74,10 @@
 
       \item \code{object.size()} gains a \code{format()} method.
 
-      \item There is a new family, \code{"ArialMT"} for the \code{pdf()}
-      and \code{postscript()} devices.  This will only be rendered
-      correctly on viewers which have access to Monotype TrueType fonts
-      (but are sometimes requested by journals).
+      \item There is a new family, \code{"ArialMT"}, for the
+      \code{pdf()} and \code{postscript()} devices.  This will only be
+      rendered correctly on viewers which have access to Monotype
+      TrueType fonts (which are sometimes requested by journals).
 
       \item The text and PDF news files, including \file{NEWS} and
       \file{NEWS.2}, have been moved to the \file{doc} directory.
@@ -155,10 +155,10 @@
       For suitable platforms, there is also a component \code{"gmtoff"}
       recording the offset from GMT where known.
 
-      \item (Windows, and as a substitute on OS X and perhaps
-      elsewhere.) The system C function \code{strftime} has been
-      replaced by a more comprehensive version with closer conformance
-      to the POSIX 2008 standard.
+      \item (On Windows, by default on OS X and optionally elsewhere.)
+      The system C function \code{strftime} has been replaced by a more
+      comprehensive version with closer conformance to the POSIX 2008
+      standard.
 
       \item \code{dnorm(x, log = FALSE)} is more accurate (but somewhat
       slower) for |x| > 5; as suggested in \PR{15620}.
@@ -203,6 +203,8 @@
       OSes where this is not already set, although the system timzone is
       deduced correctly on at least Linux, OS X and Windows.)
 
+      This option also switches to the version of \code{strftime}
+      included in directory \file{src/extra/tzone}.
     }
   }
 
@@ -274,8 +276,8 @@
   \subsection{UTILITIES}{
     \itemize{
       \item Only vignettes sources in directory \file{vignettes} are
-      considered to be vignettes and hence checked.  That has been the
-      preferred location since \R 2.14.0 and is now obligatory.
+      considered to be vignettes by \command{R CMD check}.  That has
+      been the preferred location since \R 2.14.0 and is now obligatory.
 
       \item For consistency, \command{R CMD build} now matches entries
       in \file{.Rbuildignore}  and \file{vignettes/.install_extras}
@@ -295,9 +297,9 @@
       have been added to allow package authors to suppress false
       positive reports.
 
-      \item \command{R CMD check --as-cran} warns about a false value of the
-      \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
-      packages, and ignores it (as an Open Source package needs to have
+      \item \command{R CMD check --as-cran} warns about a false value of
+      the \file{DESCRIPTION} field \samp{BuildVignettes} for Open Source
+      packages, and ignores it.  (An Open Source package needs to have
       complete sources for its vignettes which should be usable on a
       suitably well-equipped system).
 
@@ -347,8 +349,8 @@
       \item The never-documented remapping of \code{prec()} to
       \code{fprec()} in header \file{Rmath.h} has been removed.
 
-      \item The included LAPACK subset now contains \code{zgesdd} and
-      \code{zgelsd}.
+      \item The included LAPACK subset now contains \code{ZGESDD} and
+      \code{ZGELSD}.
     }
   }
 
