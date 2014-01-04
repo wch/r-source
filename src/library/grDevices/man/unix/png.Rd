@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -54,7 +54,8 @@ tiff(filename = "Rplot\%03d.tiff",
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
     percentage.  Smaller values will give more compression but also more
     degradation of the image.}
-  \item{compression}{the type of compression to be used.}
+  \item{compression}{the type of compression to be used.  Ignored for
+     \code{type = "quartz"}.}
   \item{res}{The nominal resolution in ppi which will be recorded in the
     bitmap file, if a positive integer.  Also used for \code{units}
     other than the default, and to convert points to pixels.}
@@ -94,7 +95,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{png} supports transparent backgrounds: use \code{bg =
   "transparent"}.  (Not all PNG viewers render files with transparency
   correctly.)  When transparency is in use in the \code{type = "Xlib"}
-  variant a very light grey is used as the background and so appear as
+  variant a very light grey is used as the background and so appears as
   transparent if used in the plot. This allows opaque white to be used,
   as in the example.  The \code{type = "cairo"}, \code{type =
   "cairo-png"} and \code{type = "quartz"} variants allow
@@ -103,7 +104,8 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \code{tiff} with types \code{"cairo"} and \code{"quartz"} supports
   semi-transparent colours, including on a transparent or
-  semi-transparent background.
+  semi-transparent background.  Compression type \code{"zip"} is
+  \sQuote{deflate (Adobe-style)}.
 
   \R can be compiled without support for some or all of the types for
   each of these devices: this will be reported if you attempt to use
@@ -114,18 +116,18 @@ tiff(filename = "Rplot\%03d.tiff",
   and so is only available where that is (on some OS X builds: see
   \code{\link{capabilities}("aqua")}).
 
-  By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72ppi when none is recorded.  As
-  resolutions in PNG files are recorded in pixels/metre, the reported
-  ppi value will be changed slightly.
+  By default no resolution is recorded in the file, except for BMP.
+  Viewers will often assume a nominal resolution of 72 ppi when none is
+  recorded.  As resolutions in PNG files are recorded in pixels/metre,
+  the reported ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches
   (including font sizes in points) the resolution used is \code{res} (or
-  72ppi if unset).
+  72 ppi if unset).
 
   \code{png} will normally use a palette if there are less than 256
   colours on the page, and record a 24-bit RGB file otherwise (or a
-  32-bit RGBA file if \code{type = "cairo"} and non-opaque colours are
+  32-bit ARGB file if \code{type = "cairo"} and non-opaque colours are
   used).  However, \code{type = "cairo-png"} uses cairographics' PNG
   backend which will never use a palette and normally creates a larger
   32-bit ARGB file---this may work better for specialist uses with
