@@ -94,10 +94,10 @@ tiff(filename = "Rplot\%03d.tif",
   \eqn{2^{15}-1}{2^15-1}.  In addition, there are limits on the total
   number of pixels which depend on the graphics hardware.
 
-  By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72 ppi when none is recorded.  As
-  resolutions in PNG files are recorded in pixels/metre, the reported
-  ppi value will be changed slightly.
+  By default no resolution is recorded in the file (except for BMP).
+  Viewers will often assume a nominal resolution of 72 ppi when none is
+  recorded.  As resolutions in PNG files are recorded in pixels/metre,
+  the reported ppi value will be changed slightly.
 
   For graphics parameters that make use of dimensions in inches,
   \code{res} ppi (default 72) is assumed.
@@ -120,10 +120,11 @@ tiff(filename = "Rplot\%03d.tif",
   slightly off-white background and hence the pixels are opaque.
 
   Not all PNG viewers render files with transparency correctly.
-  
- \code{tiff} compression types \code{"lzw+p"} and \code{"zip+p"} use
-  horizontal differencing (\sQuote{prediction}) in combination with the
-  compression method, which is effective for continuous-tone images.
+
+  \code{tiff} compression types \code{"lzw+p"} and \code{"zip+p"} use
+  horizontal differencing (\sQuote{differencing predictor}, section 14
+  of the TIFF specification) in combination with the compression method,
+  which is effective for continuous-tone images, especially colour ones.
   
   Prior to \R 3.0.3 unknown resolutions in BMP files were sometimes
   recorded incorrectly: they are now recorded as 72 ppi.
@@ -152,7 +153,7 @@ tiff(filename = "Rplot\%03d.tif",
     \item On platforms with support for X11, plotting to a hidden X11
     display.
 
-    \item On Mac OS X when working at the console and when \R is
+    \item On OS X when working at the console and when \R is
     compiled with suitable support, using Apple's Quartz plotting
     system.
 
@@ -184,6 +185,12 @@ tiff(filename = "Rplot\%03d.tif",
   compact files
 }
 
+\references{
+  The PNG specification, \url{http://www.w3.org/TR/PNG/}.
+  
+  The TIFF specification, including extensions, at
+  \url{http://partners.adobe.com/public/developer/tiff/}.
+}
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}
 
