@@ -139,7 +139,8 @@ jpeg <-
 tiff <-
     function(filename = "Rplot%03d.tif",
              width = 480, height = 480, units = "px", pointsize = 12,
-             compression = c("none", "rle", "lzw", "jpeg", "zip"),
+             compression = c("none", "rle", "lzw", "jpeg", "zip",
+                             "lzw+p", "zip+p"),
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
              antialias = c("default", "none", "cleartype", "grey", "subpixel"))
