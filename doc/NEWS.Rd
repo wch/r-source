@@ -162,6 +162,9 @@
 
       \item \code{dnorm(x, log = FALSE)} is more accurate (but somewhat
       slower) for |x| > 5; as suggested in \PR{15620}.
+      
+      \item Some versions of the \code{tiff()} device have further
+      compression options.
     }
   }
 

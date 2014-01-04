@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -31,7 +31,7 @@ png(filename = "Rplot\%03d.png",
 
 tiff(filename = "Rplot\%03d.tif",
      width = 480, height = 480, units = "px", pointsize = 12,
-     compression = c("none", "rle", "lzw", "jpeg", "zip"),
+     compression = c("none", "rle", "lzw", "jpeg", "zip", "lzw+p", "zip+p"),
      bg = "white", res = NA, family = "", restoreConsole = TRUE,
      type = c("windows", "cairo"), antialias)
 }
@@ -120,6 +120,10 @@ tiff(filename = "Rplot\%03d.tif",
   slightly off-white background and hence the pixels are opaque.
 
   Not all PNG viewers render files with transparency correctly.
+  
+ \code{tiff} compression types \code{"lzw+p"} and \code{"zip+p"} use
+  horizontal differencing (\sQuote{prediction}) in combination with the
+  compression method, which is effective for continuous-tone images.
   
   Prior to \R 3.0.3 unknown resolutions in BMP files were sometimes
   recorded incorrectly: they are now recorded as 72 ppi.

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -31,7 +31,7 @@ png(filename = "Rplot\%03d.png",
 
 tiff(filename = "Rplot\%03d.tiff",
      width = 480, height = 480, units = "px", pointsize = 12,
-     compression = c("none", "rle", "lzw", "jpeg", "zip"),
+     compression = c("none", "rle", "lzw", "jpeg", "zip", "lzw+p", "zip+p"),
      bg = "white", res = NA,  \dots,
      type = c("cairo", "Xlib", "quartz"), antialias)
 }
@@ -103,7 +103,10 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \code{tiff} with types \code{"cairo"} and \code{"quartz"} supports
   semi-transparent colours, including on a transparent or
-  semi-transparent background.
+  semi-transparent background.  Compression types \code{"lzw+p"} and
+  \code{"zip+p"} (not for \code{"quartz"}) use horizontal differencing
+  (\sQuote{prediction}) in combination with the compression method,
+  which is effective for continuous-tone images.
 
   \R can be compiled without support for some or all of the types for
   each of these devices: this will be reported if you attempt to use
@@ -115,7 +118,7 @@ tiff(filename = "Rplot\%03d.tiff",
   \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file.  Viewers will often
-  assume a nominal resolution of 72ppi when none is recorded.  As
+  assume a nominal resolution of 72 ppi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the reported
   ppi value will be changed slightly.
 
