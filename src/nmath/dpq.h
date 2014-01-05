@@ -112,8 +112,13 @@
 
 /* additions for density functions (C.Loader) */
 #define R_D_fexp(f,x)     (give_log ? -0.5*log(f)+(x) : exp(x)/sqrt(f))
-#define R_D_forceint(x)   floor((x) + 0.5)
-#define R_D_nonint(x) 	  (fabs((x) - floor((x)+0.5)) > 1e-7)
+#ifdef HAVE_NEARYINT
+# define R_D_forceint(x)   nearbyint()
+#define R_D_nonint(x) 	  (fabs((x) - nearbyint(x)) > 1e-7)
+#else
+# define R_D_forceint(x)   round(x)
+#define R_D_nonint(x) 	  (fabs((x) - round(x)) > 1e-7)
+#endif
 /* [neg]ative or [non int]eger : */
 #define R_D_negInonint(x) (x < 0. || R_D_nonint(x))
 
