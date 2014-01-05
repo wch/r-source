@@ -1,4 +1,4 @@
-#  Copyright (C) 1997-2010 The R Core Team
+#  Copyright (C) 1997-2013 The R Core Team
 
 ## being a 'builtin' function is not the same as being in base
 ls.base <- ls("package:base", all=TRUE)

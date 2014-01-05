@@ -1,7 +1,7 @@
 #  File src/library/base/R/time.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@ date <- function() .Internal(date())
 summary.proc_time <-
 function(object, ...)
 {
-    if(!is.na(object[4L])) 
+    if(!is.na(object[4L]))
         object[1L] <- object[1L] + object[4L]
-    if(!is.na(object[5L])) 
+    if(!is.na(object[5L]))
         object[2L] <- object[2L] + object[5L]
     object <- object[1L : 3L]
     names(object) <-

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/modifyList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ modifyList <- function(x, val, keep.null = FALSE)
                 else val[v]
         }
     }
-    else { 
+    else {
         for (v in vnames) {
             x[[v]] <-
                 if (v %in% xnames && is.list(x[[v]]) && is.list(val[[v]]))

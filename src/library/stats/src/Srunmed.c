@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995--2002 Martin Maechler <maechler@stat.math.ethz.ch>
  *  Copyright (C) 2003       The R Foundation
- *  Copyright (C) 2012       The R Core Team
+ *  Copyright (C) 2012-2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2014  Guido Masarotto and the R Core Team
+ *  Copyright (C) 1999       Guido Masarotto
+ *  Copyright (C) 1999-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
