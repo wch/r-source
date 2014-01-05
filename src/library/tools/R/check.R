@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 # NB: also copyright date in Usage.
 #

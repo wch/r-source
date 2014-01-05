@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/palette.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2012 R Core Team
 % Copyright 2002-2010 The R Foundation
 % Distributed under GPL 2 or later
 
