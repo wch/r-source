@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2012 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *  Copyright (C) 2005	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,7 @@
  */
 
 #include "nmath.h"
+#include "dpq.h"
 
 /* afc(i) :=  ln( i! )	[logarithm of the factorial i.
  *	   If (i > 7), use Stirling's approximation, otherwise use table lookup.
@@ -111,9 +112,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
 
-    nn1 = (int) floor(nn1in+0.5);
-    nn2 = (int) floor(nn2in+0.5);
-    kk	= (int) floor(kkin +0.5);
+    nn1 = (int) R_D_forceint(nn1in);
+    nn2 = (int) R_D_forceint(nn2in);
+    kk	= (int) R_D_forceint(kkin);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2)
 	ML_ERR_return_NAN;

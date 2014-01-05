@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2012  The R Core Team
+ *  Copyright (C) 1999-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -120,13 +120,13 @@ double dsignrank(double x, double n, int give_log)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(n)) return(x + n);
 #endif
-    n = floor(n + 0.5);
+    n = R_D_forceint(n);
     if (n <= 0)
 	ML_ERR_return_NAN;
 
-    if (fabs(x - floor(x + 0.5)) > 1e-7)
+    if (fabs(x - R_D_forceint(x)) > 1e-7)
 	return(R_D__0);
-    x = floor(x + 0.5);
+    x = R_D_forceint(x);
     if ((x < 0) || (x > (n * (n + 1) / 2)))
 	return(R_D__0);
 
@@ -147,10 +147,10 @@ double psignrank(double x, double n, int lower_tail, int log_p)
     return(x + n);
 #endif
     if (!R_FINITE(n)) ML_ERR_return_NAN;
-    n = floor(n + 0.5);
+    n = R_D_forceint(n);
     if (n <= 0) ML_ERR_return_NAN;
 
-    x = floor(x + 1e-7);
+    x = R_D_forceint(x + 1e-7);
     if (x < 0.0)
 	return(R_DT_0);
     if (x >= n * (n + 1) / 2)
@@ -186,7 +186,7 @@ double qsignrank(double x, double n, int lower_tail, int log_p)
 	ML_ERR_return_NAN;
     R_Q_P01_check(x);
 
-    n = floor(n + 0.5);
+    n = R_D_forceint(n);
     if (n <= 0)
 	ML_ERR_return_NAN;
 
@@ -236,7 +236,7 @@ double rsignrank(double n)
     /* NaNs propagated correctly */
     if (ISNAN(n)) return(n);
 #endif
-    n = floor(n + 0.5);
+    n = R_D_forceint(n);
     if (n < 0) ML_ERR_return_NAN;
 
     if (n == 0)

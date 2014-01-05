@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2002 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *  Copyright (C) 2007 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,6 +36,7 @@
  */
 
 #include "nmath.h"
+#include "dpq.h"
 #include <stdlib.h>
 #include <limits.h>
 
@@ -57,7 +58,7 @@ double rbinom(double nin, double pp)
     int i, ix, k, n;
 
     if (!R_FINITE(nin)) ML_ERR_return_NAN;
-    r = floor(nin + 0.5);
+    r = R_D_forceint(nin);
     if (r != nin) ML_ERR_return_NAN;
     if (!R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2009 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,7 +86,11 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 
     /* y := approx.value (Cornish-Fisher expansion) :  */
     z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
-    y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
+#ifdef HAVE_NEARBYINT
+    y = nearbyint(mu + sigma * (z + gamma * (z*z - 1) / 6));
+#else
+    y = round(mu + sigma * (z + gamma * (z*z - 1) / 6));
+#endif
 
     z = ppois(y, lambda, /*lower_tail*/TRUE, /*log_p*/FALSE);
 

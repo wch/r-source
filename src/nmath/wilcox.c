@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2012  The R Core Team
+  Copyright (C) 1999-2014  The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -169,14 +169,14 @@ double dwilcox(double x, double m, double n, int give_log)
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
 #endif
-    m = floor(m + 0.5);
-    n = floor(n + 0.5);
+    m = R_D_forceint(m);
+    n = R_D_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
-    if (fabs(x - floor(x + 0.5)) > 1e-7)
+    if (fabs(x - R_D_forceint(x)) > 1e-7)
 	return(R_D__0);
-    x = floor(x + 0.5);
+    x = R_D_forceint(x);
     if ((x < 0) || (x > m * n))
 	return(R_D__0);
 
@@ -201,8 +201,8 @@ double pwilcox(double q, double m, double n, int lower_tail, int log_p)
 #endif
     if (!R_FINITE(m) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-    m = floor(m + 0.5);
-    n = floor(n + 0.5);
+    m = R_D_forceint(m);
+    n = R_D_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
@@ -246,8 +246,8 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 	ML_ERR_return_NAN;
     R_Q_P01_check(x);
 
-    m = floor(m + 0.5);
-    n = floor(n + 0.5);
+    m = R_D_forceint(m);
+    n = R_D_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
@@ -298,8 +298,8 @@ double rwilcox(double m, double n)
     if (ISNAN(m) || ISNAN(n))
 	return(m + n);
 #endif
-    m = floor(m + 0.5);
-    n = floor(n + 0.5);
+    m = R_D_forceint(m);
+    n = R_D_forceint(n);
     if ((m < 0) || (n < 0))
 	ML_ERR_return_NAN;
 
