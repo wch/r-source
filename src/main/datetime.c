@@ -631,7 +631,7 @@ static void glibc_fix(stm *tm, int *invalid)
 }
 
 
-static const char ltnames [][6] =
+static const char ltnames [][7] =
 { "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst", 
   "zone",  "gmtoff"};
 
