@@ -39,7 +39,8 @@
 
 #include <Rmath.h> // exp10
 
-#ifdef __GLIBC__
+// some other header, e.g. math.h, might define it
+#if defined(__GLIBC__) && !defined(_BSD_SOURCE)
 // to get tm_zone, tm_gmtoff defined
 # define _BSD_SOURCE
 #endif
