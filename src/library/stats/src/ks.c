@@ -176,7 +176,7 @@ K(int n, double d)
 	   eQ -= 140;
        }
    }
-   s *= pow(10., eQ);
+   s *= exp10(eQ);
    Free(H);
    Free(Q);
    return(s);

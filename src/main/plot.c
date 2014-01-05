@@ -27,8 +27,7 @@
 #include <float.h>  /* for DBL_MAX */
 #include <Graphics.h>
 #include <Print.h>
-
-#define imax2(x, y) ((x < y) ? y : x)
+#include <Rmath.h> // for exp10, imax2
 
 /* used in graphics and grid */
 SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
@@ -110,7 +109,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 		      "ne = %d <= 0 !!\n"
 		      "\t axp[0:1]=(%g,%g) ==> i = %d;	nint = %d",
 		      ne, axp[0],axp[1], i, nint);
-	    rng = pow(10., (double)ne);/* >= 10 */
+	    rng = exp10((double)ne); /* >= 10 */
 	    n = 0;
 	    while (dn < umax) {
 		n++;

@@ -37,6 +37,8 @@
 # include <config.h>
 #endif
 
+#include <Rmath.h> // exp10
+
 #ifdef __GLIBC__
 // to get tm_zone, tm_gmtoff defined
 # define _BSD_SOURCE
@@ -955,7 +957,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(ns > 6) ns = 6;
 		    if(ns > 0) {
 			/* truncate to avoid nuisances such as PR#14579 */
-			double s = secs, t = pow(10.0, (double) ns);
+			double s = secs, t = exp10((double) ns);
 			s = ((int) (s*t))/t;
 			sprintf(p2, "%0*.*f", ns+3, ns, s);
 			strcat(buf2, p+nused);

@@ -584,8 +584,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	if (gpptr(dd)->xlog) {
 	    R_DEV_2(logusr[0]) = REAL(value)[0];
 	    R_DEV_2(logusr[1]) = REAL(value)[1];
-	    R_DEV_2(usr[0]) = pow(10., REAL(value)[0]);
-	    R_DEV_2(usr[1]) = pow(10., REAL(value)[1]);
+	    R_DEV_2(usr[0]) = exp10(REAL(value)[0]);
+	    R_DEV_2(usr[1]) = exp10(REAL(value)[1]);
 	}
 	else {
 	    R_DEV_2(usr[0]) = REAL(value)[0];
@@ -596,8 +596,8 @@ static void Specify(const char *what, SEXP value, pGEDevDesc dd)
 	if (gpptr(dd)->ylog) {
 	    R_DEV_2(logusr[2]) = REAL(value)[2];
 	    R_DEV_2(logusr[3]) = REAL(value)[3];
-	    R_DEV_2(usr[2]) = pow(10., REAL(value)[2]);
-	    R_DEV_2(usr[3]) = pow(10., REAL(value)[3]);
+	    R_DEV_2(usr[2]) = exp10(REAL(value)[2]);
+	    R_DEV_2(usr[3]) = exp10(REAL(value)[3]);
 	}
 	else {
 	    R_DEV_2(usr[2]) = REAL(value)[2];

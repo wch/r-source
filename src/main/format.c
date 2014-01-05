@@ -232,9 +232,9 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
             r_prec /= powl(10.0, (long double) kp);
 #else
         else if (kp <= R_dec_min_exponent)
-            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
+            r_prec = (r_prec * 1e+303)/exp10((double)(kp+303));
         else
-            r_prec /= pow(10.0, (double) kp);
+            r_prec /= exp10((double) kp);
 #endif
         if (r_prec < tbl[R_print.digits]) {
             r_prec *= 10.0;
@@ -256,9 +256,9 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
            is in range. Representation of 1e+303 has low error.
          */
         else if (kp <= R_dec_min_exponent)
-            r_prec = (r_prec * 1e+303)/pow(10.0, (double)(kp+303));
+            r_prec = (r_prec * 1e+303)/exp10((double)(kp+303));
         else
-            r_prec /= pow(10.0, (double)kp);
+            r_prec /= exp10((double)kp);
         if (r_prec < tbl[R_print.digits]) {
             r_prec *= 10.0;
             kp--;

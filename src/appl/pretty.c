@@ -114,7 +114,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
       warning(_("Internal(pretty()): very large range.. corrected"));
       cell = .1*DBL_MAX;
     }
-    base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */
+    base = exp10(floor(log10(cell))); /* base <= cell < 10*base */
 
     /* unit : from { 1,2,5,10 } * base
      *	 such that |u - cell| is small,
