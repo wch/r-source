@@ -203,7 +203,7 @@
       is the default on Windows and OS X.
 
       (It might be necessary to set environment variable \env{TZ} on
-      OSes where this is not already set, although the system timzone is
+      OSes where this is not already set, although the system timezone is
       deduced correctly on at least Linux, OS X and Windows.)
 
       This option also switches to the version of \code{strftime}
