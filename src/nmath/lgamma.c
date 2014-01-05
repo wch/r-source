@@ -127,6 +127,10 @@ double lgammafn(double x)
 
 // ------------ Further numeric auxiliaries -----------------------
 
+/* These are system functions when 
+   __STDC_WANT_IEC_60559_TYPES_EXT__ is defined */
+
+#ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
 // cos(pi * x)  -- exact when x = k/2  for all integer k
 double cospi(double x) {
 #ifdef IEEE_754
@@ -172,3 +176,17 @@ double tanpi(double x) {
     if(x <= -0.5) x++; else if(x > 0.5) x--;
     return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
 }
+#else
+double Rtanpi(double x) {
+#ifdef IEEE_754
+    if (ISNAN(x)) return x;
+#endif
+    if(!R_FINITE(x)) ML_ERR_return_NAN;
+
+    x = fmod(x, 1.); // tan(pi(x + k)) == tan(pi x)  for all integer k
+    // map (-1,1) --> (-1/2, 1/2] :
+    if(x <= -0.5) x++; else if(x > 0.5) x--;
+    // This is our convention, not required by the draft C11 extension
+    return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
+}
+#endif

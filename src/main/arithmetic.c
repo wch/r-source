@@ -1238,7 +1238,11 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	*/
     case 47: return MATH1(cospi);
     case 48: return MATH1(sinpi);
+#ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
     case 49: return MATH1(tanpi);
+#else
+    case 49: return MATH1(Rtanpi);
+#endif
 
     default:
 	errorcall(call, _("unimplemented real function of 1 argument"));

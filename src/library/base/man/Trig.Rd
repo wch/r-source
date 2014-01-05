@@ -1,6 +1,6 @@
 % File src/library/base/man/Trig.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Trig}
@@ -22,17 +22,18 @@
   arc-tangent, and the two-argument arc-tangent.
 
   \code{cospi(x)}, \code{sinpi(x)}, and \code{tanpi(x)}, compute
-  \code{cos(pi*x)}, \code{sin(pi*x)}, and \code{tan(pi*x)} slightly more
-  accurately, notably for (half) integer \code{x}.
+  \code{cos(pi*x)}, \code{sin(pi*x)}, and \code{tan(pi*x)}.
 }
 \usage{
 cos(x)
 sin(x)
 tan(x)
+
 acos(x)
 asin(x)
 atan(x)
 atan2(y, x)
+
 cospi(x)
 sinpi(x)
 tanpi(x)
@@ -47,11 +48,20 @@ tanpi(x)
 
   Angles are in radians, not degrees (i.e., a right angle is
   \eqn{\pi/2}).
-
+  
+  \code{cospi(x)}, \code{sinpi(x)}, and \code{tanpi(x)} are accurate
+  for \code{x} which are multiples of a half.
+   
   All except \code{atan2} are \link{internal generic} \link{primitive}
   functions: methods can be defined for them individually or via the
   \code{\link[=S3groupGeneric]{Math}} group generic.
 }
+
+\value{
+  \code{tanpi(0.5)} is \code{\link{NaN}}.  Similarly for other inputs
+  with fractional part \code{0.5}.
+}
+
 \section{Complex values}{
    For the inverse trigonometric functions, branch cuts are defined as in
    Abramowitz and Stegun, figure 4.4, page 79.
@@ -68,7 +78,7 @@ tanpi(x)
    requires continuity coming round the endpoint in a counter-clockwise
    direction.
 
-   For \code{cospi}, \code{sinpi}, and \code{tanpi}, complex arguments
+   Complex arguments for  \code{cospi}, \code{sinpi}, and \code{tanpi}
    are not yet implemented.% but patches are welcome
 }
 \section{S4 methods}{
@@ -85,6 +95,10 @@ tanpi(x)
     Mathematical Functions}. New York: Dover.\cr
   Chapter 4. Elementary Transcendental Functions: Logarithmic,
   Exponential, Circular and Hyperbolic Functions
+
+  For \code{cospi}, \code{sinpi}, and \code{tanpi} the draft C11
+  extension ISO/IEC TS 18661
+  (\url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1785.pdf}).
 }
 \examples{
 x <- seq(-3, 7, by = 1/8)
