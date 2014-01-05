@@ -3053,7 +3053,7 @@ they call the package including this: e.g.@: on Fedora the library is in
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
-have higher peformance).  @acronym{XDR} is part of @acronym{RPC} and
+have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
 historically has been part of @file{libc} on a Unix-alike.  However some
 builds of @code{glibc} hide it with the intention that the
 @acronym{TI-RPC} library be used instead, in which case @code{libtirpc}
@@ -4786,6 +4786,10 @@ quad-precision arithmetic, and this is usually slow because it is done
 by software emulation.  On such systems @command{configure} option
 @option{--disable-long-double} can be used for faster but less accurate
 computations.
+
+The Solaris time-zone conversion services seem to be unreliable pre-1916
+in Europe (when daylight-savings time was first introduced): most often
+reporting in the non-existent DST variant.
 
 
 When using the Oracle compilers@footnote{including @command{gcc} for
