@@ -630,7 +630,7 @@ else
 fi
 AC_SUBST(CXXCPP0)
 R_GCC4_VISIBILITY
-AC_GNU_SOURCE ## needed to libintl
+AC_GNU_SOURCE ## needed for libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
@@ -1849,6 +1849,12 @@ if test "${ac_cv_have_decl_va_copy}" = "no"; then
 fi
 ## isblank should be a macro according to C99.  It was missing on Solaris 8
 AC_CHECK_FUNCS(isblank)
+
+## Functions from draft C11 extensions, some of which are already in glibc
+## For now, do not define _GNU_SOURCE here.
+R_CHECK_FUNCS([exp10 pown], 
+[#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
+#include <math.h>])
 
 ## fseeko/ftello are POSIX, may be macros
 ## matherr is SVID, redefined in arithmetic.c if present

@@ -235,6 +235,9 @@
 /* Define to 1 if you have the `execv' function. */
 #undef HAVE_EXECV
 
+/* Define to 1 if you have the `exp10' function. */
+#undef HAVE_EXP10
+
 /* Define to 1 if you have the `expm1' function. */
 #undef HAVE_EXPM1
 
@@ -561,6 +564,9 @@
 
 /* Define to 1 if you have the `powl' function. */
 #undef HAVE_POWL
+
+/* Define to 1 if you have the `pown' function. */
+#undef HAVE_POWN
 
 /* Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE. (For intl) */
 #undef HAVE_PTHREAD_MUTEX_RECURSIVE
