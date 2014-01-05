@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2012 The R Core Team
+ *  Copyright (C) 2000-2013 The R Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  by Russell V. Lenth

@@ -4,8 +4,8 @@
  *   October 23, 2000.
  *
  *  Merge in to R and further tweaks :
- *	Copyright (C) 2000, The R Core Team
- *	Copyright (C) 2008, The R Foundation
+ *	Copyright (C) 2000-2013 The R Core Team
+ *	Copyright (C) 2008 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
