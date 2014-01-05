@@ -46,8 +46,9 @@ tanpi(x)
   between the x-axis and the vector from the origin to \eqn{(x, y)},
   i.e., for positive arguments \code{atan2(y, x) == atan(y/x)}.
 
-  Angles are in radians, not degrees (i.e., a right angle is
-  \eqn{\pi/2}).
+  Angles are in radians, not degrees, for the standard versions (i.e., a
+  right angle is \eqn{\pi/2}), and in \sQuote{half-rotations} for
+  \code{cospi} etc.
   
   \code{cospi(x)}, \code{sinpi(x)}, and \code{tanpi(x)} are accurate
   for \code{x} which are multiples of a half.
