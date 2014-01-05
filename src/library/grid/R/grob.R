@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grob.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -2066,7 +2066,7 @@ grid.force <- function(x, ...) {
 }
 
 grid.force.default <- function(x, redraw = FALSE, ...) {
-    if (!missing(x)) 
+    if (!missing(x))
         stop("Invalid force target")
     # Must upViewport(0) otherwise you risk running the display
     # list from something other than the ROOT viewport
@@ -2101,7 +2101,7 @@ grid.force.character <- function(x, ...) {
     grid.force(gPath(x), ...)
 }
 
-grid.force.gPath <- function(x, 
+grid.force.gPath <- function(x,
                              strict=FALSE, grep=FALSE, global=FALSE,
                              redraw = FALSE, ...) {
     # Use viewports=TRUE so that get vpPaths in result
@@ -2135,7 +2135,7 @@ grid.force.gPath <- function(x,
         # Try to go back to original context
         if (length(oldcontext))
             seekViewport(oldcontext, recording=FALSE)
-    } 
+    }
     invisible()
 }
 
@@ -2163,7 +2163,7 @@ grid.revert <- function(x, ...) {
 }
 
 grid.revert.default <- function(x, redraw=FALSE, ...) {
-    if (!missing(x)) 
+    if (!missing(x))
         stop("Invalid revert target")
     dl.index <- grid.Call(L_getDLindex)
     if (dl.index > 1) {
@@ -2192,7 +2192,7 @@ grid.revert.character <- function(x, ...) {
     grid.revert(gPath(x), ...)
 }
 
-grid.revert.gPath <- function(x, 
+grid.revert.gPath <- function(x,
                               strict=FALSE, grep=FALSE, global=FALSE,
                               redraw = FALSE, ...) {
     paths <- grid.grep(x, strict = strict, grep = grep, global = global)
@@ -2209,7 +2209,7 @@ grid.revert.gPath <- function(x,
         if (redraw) {
             draw.all()
         }
-    } 
+    }
     invisible()
 }
 
