@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ if (.Platform$OS.type == "windows") {
     utils::globalVariables(c("C_cairoProps", "C_makeQuartzDefault"))
     utils::suppressForeignCheck(c("C_cairoProps", "C_makeQuartzDefault"))
 }
-    
+
 .onLoad <- function(libname, pkgname)
 {
     op <- options()

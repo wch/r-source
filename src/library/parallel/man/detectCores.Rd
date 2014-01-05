@@ -1,6 +1,6 @@
 % File src/library/parallel/man/detectCores.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2011 R Core Team
+% Copyright 2011-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detectCores}

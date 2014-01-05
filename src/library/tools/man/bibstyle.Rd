@@ -1,6 +1,6 @@
 % File src/library/tools/man/bibstyle.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-3 R Core Team
+% Copyright 2010-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibstyle}

@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grid.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
 buildPath <- function(desc, anc, depth) {
     path <- desc$name
     while (!identical(desc$parent, anc)) {
-        if (is.null(desc$parent)) 
+        if (is.null(desc$parent))
             stop("Down viewport failed to record on display list")
         desc <- desc$parent
         path <- c(desc$name, path)

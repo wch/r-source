@@ -1,7 +1,7 @@
 #  File src/library/grid/R/ls.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -821,10 +821,10 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
     searchMatches <- vector("list", length(matchingDepths))
     # For each name of the correct path length
     for (i in matchingDepths) {
-        dlPathPieces <- 
-            if (dl$depth[i] > 0) 
+        dlPathPieces <-
+            if (dl$depth[i] > 0)
                 c(explode(dl$path[i]), dl$name[i])
-            else 
+            else
                 dl$name[i]
         matches <- logical(depth)
         if (!strict) {
