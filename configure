@@ -27115,9 +27115,77 @@ fi
 done
 
 
+## Solaris libsunmath: not yet used.
+for ac_header in sunmath.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "sunmath.h" "ac_cv_header_sunmath_h" "$ac_includes_default"
+if test "x$ac_cv_header_sunmath_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SUNMATH_H 1
+_ACEOF
+
+fi
+
+done
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for cospi in -lsunmath" >&5
+$as_echo_n "checking for cospi in -lsunmath... " >&6; }
+if ${ac_cv_lib_sunmath_cospi+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lsunmath  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char cospi ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+return cospi ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_sunmath_cospi=yes
+else
+  ac_cv_lib_sunmath_cospi=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_sunmath_cospi" >&5
+$as_echo "$ac_cv_lib_sunmath_cospi" >&6; }
+if test "x$ac_cv_lib_sunmath_cospi" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBSUNMATH 1
+_ACEOF
+
+  LIBS="-lsunmath $LIBS"
+
+fi
+
+
 ## Functions from draft C11 extensions, some of which are already in glibc
 ## For now, do not define _GNU_SOURCE here.
-for ac_func in exp10 pown
+## Most of these have long been in libsunmath: add later
+for ac_func in atanpi atan2pi cospi exp10 pown sinpi tanpi
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -36008,11 +36076,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36011: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36079: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36015: \$? = $ac_status" >&5
+   echo "$as_me:36083: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36107,11 +36175,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36110: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36178: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36114: \$? = $ac_status" >&5
+   echo "$as_me:36182: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36159,11 +36227,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36162: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36230: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36166: \$? = $ac_status" >&5
+   echo "$as_me:36234: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
