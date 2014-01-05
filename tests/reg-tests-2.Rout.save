@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-12-25 r64541) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2014-01-05 r64650) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.0.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -7244,7 +7244,7 @@ elem2 2 12   14
 > str(max(NA_character_, "bla"))
  chr NA
 > ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
-> ## be the min or max.  
+> ## be the min or max.
 > 
 > 
 > ## When two entries needed to be cut to width, str() mixed up
@@ -7261,4 +7261,12 @@ elem2 2 12   14
  $ B: Factor w/ 1 level "zjtvorkmoydsepnxkabmeondrjaanutjmfxlgzmrbj"..
 > options(oldopts)
 > ## The first row of the str() result was duplicated.
+> 
+> ## PR15624: rounding in extreme cases
+> dpois(2^52,1,1)
+[1] -1.578226e+17
+> dpois(2^52+1,1,1)
+[1] -1.578226e+17
+> ## second warned in R 3.0.2.
+> 
 > 

@@ -626,6 +626,11 @@
       \item \code{deparse()} now deparses complex vectors more
       accurately; they will now re-parse to the original values.
       (\PR{15534}, patch based on code submitted by Alex Bertram.)      
+    
+      \item In some extreme cases (more than \eqn{10^{15}}{10^15})
+      integer inputs to dpqrxxx functions might have been rounded up by
+      one (with a warning about being non-integer).  (\PR{15624})
+      
     }
   }
 }

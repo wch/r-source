@@ -2790,7 +2790,7 @@ str(max(NA, "bla"))
 str(max("bla", NA))
 str(max(NA_character_, "bla"))
 ## NA_character_ could be treated as "NA"; depending on the locale, it would not necessarily
-## be the min or max.  
+## be the min or max.
 
 
 ## When two entries needed to be cut to width, str() mixed up
@@ -2804,3 +2804,9 @@ X <- data.frame( A = 1:n * M,
 str( X, strict.width = "cut")
 options(oldopts)
 ## The first row of the str() result was duplicated.
+
+## PR15624: rounding in extreme cases
+dpois(2^52,1,1)
+dpois(2^52+1,1,1)
+## second warned in R 3.0.2.
+
