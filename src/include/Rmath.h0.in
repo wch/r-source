@@ -618,9 +618,8 @@ double  tanpi(double);
 double  logspace_add(double logx, double logy);
 double  logspace_sub(double logx, double logy);
 
-#ifndef HAVE_EXP10
+// for reproducibility for now
 # define exp10(x) pow(10.0, x)
-#endif
 
 
 /* ----------------- Private part of the header file ------------------- */
