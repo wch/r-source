@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq.POSIXt}

@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/choose.dir.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007-10 R Core Team
+% Copyright 2007-13 R Core Team
 % Distributed under GPL 2 or later
 
 \name{choose.dir}

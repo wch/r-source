@@ -1,7 +1,7 @@
 #  File src/library/stats/R/termplot.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     pf <- envir
     carrier <- function(term, transform) { # used for non-factor ones
 	if (length(term) > 1L){
-	    if (transform) tms[,i] 
+	    if (transform) tms[,i]
 	    else carrier(term[[2L]], transform)
 	} else
 	    eval(term, data, enclos = pf)
