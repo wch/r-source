@@ -11198,14 +11198,24 @@ accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @deftypefun double cospi (double @var{x})
 Computes @code{cos(pi * x)} (where @code{pi} is 3.14159...),
 accurately, notably for half integer @var{x}.
+
+This might be provided by your platform@footnote{It is an optional C11
+extension.}, in which case it is not included in @file{Rmath.h}, but is
+in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double sinpi (double @var{x})
 Computes @code{sin(pi * x)} accurately, notably for (half) integer @var{x}.
+
+This might be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double tanpi (double @var{x})
 Computes @code{tan(pi * x)} accurately, notably for (half) integer @var{x}.
+
+This might be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double logspace_add (double @var{logx}, double @var{logy})

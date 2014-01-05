@@ -1852,7 +1852,7 @@ AC_CHECK_FUNCS(isblank)
 
 ## Functions from draft C11 extensions, some of which are already in glibc
 ## For now, do not define _GNU_SOURCE here.
-R_CHECK_FUNCS([exp10 pown], 
+R_CHECK_FUNCS([atanpi atan2pi exp10 pown], 
 [#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
 #include <math.h>])
 
