@@ -37,7 +37,7 @@
 # include <config.h>
 #endif
 
-#include <Rmath.h> // exp10
+#include <Rmath.h> // Rexp10
 
 // some other header, e.g. math.h, might define it
 #if defined(__GLIBC__) && !defined(_BSD_SOURCE)
@@ -958,7 +958,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(ns > 6) ns = 6;
 		    if(ns > 0) {
 			/* truncate to avoid nuisances such as PR#14579 */
-			double s = secs, t = exp10((double) ns);
+			double s = secs, t = Rexp10((double) ns);
 			s = ((int) (s*t))/t;
 			sprintf(p2, "%0*.*f", ns+3, ns, s);
 			strcat(buf2, p+nused);

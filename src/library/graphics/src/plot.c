@@ -27,7 +27,7 @@
 #include <float.h>  /* for DBL_MAX */
 #include <Graphics.h>
 #include <Print.h>
-#include <Rmath.h>  // exp10, fmin2, fmax2, imax2
+#include <Rmath.h>  // Rexp10, fmin2, fmax2, imax2
 
 #include "graphics.h"
 
@@ -2854,8 +2854,8 @@ SEXP C_abline(SEXP args)
 		y[0] = aa + (xlog ? log10(x[0]) : x[0]) * bb;
 		y[1] = aa + (xlog ? log10(x[1]) : x[1]) * bb;
 		if (ylog) {
-		    y[0] = exp10(y[0]);
-		    y[1] = exp10(y[1]);
+		    y[0] = Rexp10(y[0]);
+		    y[1] = Rexp10(y[1]);
 		}
 
 		GLine(x[0], y[0], x[1], y[1], USER, dd);

@@ -2262,10 +2262,10 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 			*/
 			double xxx = fabs(xx), X;
 			iex = (int)floor(log10(xxx) + 1e-12);
-			X = fround(xxx/exp10((double)iex) + 1e-12,
+			X = fround(xxx/Rexp10((double)iex) + 1e-12,
 				   (double)(dig-1));
 			if(iex > 0 &&  X >= 10) {
-			    xx = X * exp10((double)iex);
+			    xx = X * Rexp10((double)iex);
 			    iex++;
 			}
 			if(iex == -4 && fabs(xx)< 1e-4) {/* VERY rare case */

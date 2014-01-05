@@ -82,7 +82,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
     int i, j;
     double tempi, tempj, fii, eta, fij;
 
-    eta = exp10(-ndigit/3.0);
+    eta = Rexp10(-ndigit/3.0);
     for (i = 0; i < n; ++i) {
 	step[i] = eta * fmax2(x[i], typx[i]);
 	if (typx[i] < 0.)
@@ -2250,7 +2250,7 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
     for (i = 0; i < n; ++i)
 	p[i] = 0.;
 
-    rnf = exp10(-(double)ndigit);
+    rnf = Rexp10(-(double)ndigit);
     rnf = fmax2(rnf, epsm);
     analtl = sqrt(rnf);
     analtl = fmax2(0.1, analtl);
