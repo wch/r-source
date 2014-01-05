@@ -31,7 +31,7 @@
 #include <rlocale.h>
 
 
-#include <Rmath.h>
+#include <Rmath.h> // provides M_2PI
 #include <R_ext/GraphicsEngine.h>
 
 
@@ -1523,7 +1523,7 @@ static BBOX RenderWideTilde(SEXP expr, int draw, mathContext *mc,
     double start = DELTA * totalwidth;
     double accentGap = ACCENT_GAP * XHeight(gc, dd);
     double hatHeight = 0.5 * HAT_HEIGHT * XHeight(gc, dd);
-    double c = 8 * atan(1.0) / NTILDE;
+    double c = M_2PI / NTILDE;
     double x[NTILDE + 3], y[NTILDE + 3];
     double baseX, baseY, xval, yval;
     int i;
