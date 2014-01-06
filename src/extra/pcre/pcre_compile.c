@@ -4450,7 +4450,7 @@ for (;; ptr++)
   int class_has_8bitchar;
   int class_one_char;
   int newoptions;
-  int recno;
+  int recno = 0;
   int refsign;
   int skipbytes;
   pcre_uint32 subreqchar, subfirstchar;
@@ -6506,9 +6506,9 @@ for (;; ptr++)
 
     else if (*ptr == CHAR_QUESTION_MARK)
       {
-      int i, set, unset, namelen;
+      int i, set, unset, namelen = 0; // -Wall
       int *optset;
-      const pcre_uchar *name;
+      const pcre_uchar *name = NULL; // -Wall
       pcre_uchar *slot;
 
       switch (*(++ptr))
