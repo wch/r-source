@@ -189,7 +189,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	/* use	Abramowitz & Stegun 6.4.7 "Reflection Formula"
 	 *	psi(k, x) = (-1)^k psi(k, 1-x)	-  pi^{n+1} (d/dx)^n cot(x)
 	 */
-	if (x == (long)x) {
+	if (x == round(x)) {
 	    /* non-positive integer : +Inf or NaN depends on n */
 	    for(j=0; j < m; j++) /* k = j + n : */
 		ans[j] = ((j+n) % 2) ? ML_POSINF : ML_NAN;

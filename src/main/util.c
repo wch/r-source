@@ -422,7 +422,7 @@ SEXP attribute_hidden EnsureString(SEXP s)
     return s;
 }
 
-
+/* FIXME: ngettext reguires unsigned long, but %u would seem appropriate */
 void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
 {
     if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args)) {
