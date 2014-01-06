@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2012 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2014 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,13 +32,13 @@
 
 #define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
-static void I_bessel(double *x, double *alpha, long *nb,
-		     long *ize, double *bi, long *ncalc);
+static void I_bessel(double *x, double *alpha, int *nb,
+		     int *ize, double *bi, int *ncalc);
 
 /* .Internal(besselI(*)) : */
 double bessel_i(double x, double alpha, double expo)
 {
-    long nb, ncalc, ize;
+    int nb, ncalc, ize;
     double na, *bi;
 #ifndef MATHLIB_STANDALONE
     const void *vmax;
@@ -52,7 +52,7 @@ double bessel_i(double x, double alpha, double expo)
 	ML_ERROR(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
-    ize = (long)expo;
+    ize = (int)expo;
     na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
@@ -62,7 +62,7 @@ double bessel_i(double x, double alpha, double expo)
 		bessel_k(x, -alpha, expo) *
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
-    nb = 1 + (long)na;/* nb-1 <= alpha < nb */
+    nb = 1 + (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bi = (double *) calloc(nb, sizeof(double));
@@ -93,7 +93,7 @@ double bessel_i(double x, double alpha, double expo)
    allocating one. */
 double bessel_i_ex(double x, double alpha, double expo, double *bi)
 {
-    long nb, ncalc, ize;
+    int nb, ncalc, ize;
     double na;
 
 #ifdef IEEE_754
@@ -104,7 +104,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 	ML_ERROR(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
-    ize = (long)expo;
+    ize = (int)expo;
     na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
@@ -114,7 +114,7 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 		bessel_k_ex(x, -alpha, expo, bi) *
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
-    nb = 1 + (long)na;/* nb-1 <= alpha < nb */
+    nb = 1 + (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
@@ -129,8 +129,8 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
     return x;
 }
 
-static void I_bessel(double *x, double *alpha, long *nb,
-		     long *ize, double *bi, long *ncalc)
+static void I_bessel(double *x, double *alpha, int *nb,
+		     int *ize, double *bi, int *ncalc)
 {
 /* -------------------------------------------------------------------
 
@@ -229,7 +229,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
     const static double const__ = 1.585;
 
     /* Local variables */
-    long nend, intx, nbmx, k, l, n, nstart;
+    int nend, intx, nbmx, k, l, n, nstart;
     double pold, test,	p, em, en, empal, emp2al, halfx,
 	aa, bb, cc, psave, plast, tover, psavel, sum, nu, twonu;
 
@@ -255,7 +255,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 		bi[k]= 0.; /* The limit exp(-x) * I_nu(x) --> 0 : */
 	    return;
 	}
-	intx = (long) (*x);/* fine, since *x <= xlrg_BESS_IJ <<< LONG_MAX */
+	intx = (int) (*x);/* fine, since *x <= xlrg_BESS_IJ <<< LONG_MAX */
 	if (*x >= rtnsig_BESS) { /* "non-small" x ( >= 1e-4 ) */
 /* -------------------------------------------------------------------
    Initialize the forward sweep, the P-sequence of Olver
@@ -272,7 +272,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 	    if (intx << 1 > nsig_BESS * 5) {
 		test = sqrt(test * p);
 	    } else {
-		test /= pow(const__, (double)intx);
+		test /= R_pow_di(const__, intx);
 	    }
 	    if (nbmx >= 3) {
 		/* --------------------------------------------------
