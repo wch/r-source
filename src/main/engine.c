@@ -2008,7 +2008,9 @@ void GESymbol(double x, double y, int pch, double size,
 	char str[16];
 	if(gc->fontface == 5)
 	    error("use of negative pch with symbol font is invalid");
-	res = ucstoutf8(str, -pch); // errors if unsuccessful
+	res = ucstoutf8(str, -pch);
+	if(res == (size_t)-1 || res == (size_t)-2) 
+	    error("invalid Unicode pch '%d'", pch);
 	str[res] = '\0';
 	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
     } else if(' ' <= pch && pch <= maxchar) {
@@ -2194,12 +2196,13 @@ void GESymbol(double x, double y, int pch, double size,
 
 	case 14: /* S square and point-up triangle superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
-	    xx[0] = x; yy[0] = y+xc;
-	    xx[1] = x+xc; yy[1] = y-xc;
-	    xx[2] = x-xc; yy[2] = y-xc;
+	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
+	    xx[0] = x; yy[0] = y+yc;
+	    xx[1] = x+xc; yy[1] = y-yc;
+	    xx[2] = x-xc; yy[2] = y-yc;
 	    gc->fill = R_TRANWHITE;
 	    GEPolygon(3, xx, yy, gc, dd);
-	    GERect(x-xc, y-xc, x+xc, y+xc, gc, dd);
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 15: /* S filled square */
