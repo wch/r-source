@@ -292,7 +292,7 @@ scientific(double *x, int *sgn, int *kpower, int *nsig, int *roundingwidens)
 	int rgt = R_print.digits - *kpower;
 	/* bound rgt by 0 and KP_MAX */
 	rgt = rgt < 0 ? 0 : rgt > KP_MAX ? KP_MAX : rgt;
-	double fuzz = 0.5/tbl[1 + rgt];
+	double fuzz = (double) 0.5/tbl[1 + rgt];
 	// kpower can be bigger than the table.	
 	*roundingwidens = *kpower > 0 && *kpower <= KP_MAX && r < tbl[*kpower + 1] - fuzz;
     }

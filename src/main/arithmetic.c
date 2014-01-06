@@ -1175,6 +1175,9 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     return sy;
 }
 
+#ifdef HAVE_TANPI
+double Rtanpi(double);
+#endif
 
 SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
