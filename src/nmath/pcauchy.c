@@ -25,8 +25,7 @@
 
 #include <config.h>
 
-#ifdef HAVE_SUNMATH_H
-// cpp cannot find the header
+#ifdef HAVE_ATANPI
 double atanpi(double);
 #endif
 

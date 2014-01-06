@@ -34,6 +34,7 @@
 /* Note that on some systems we need to include math.h before the
    defines below. */
 #ifndef NO_C_HEADERS
+# define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
 # include <math.h>
 #endif
 
@@ -600,13 +601,17 @@ double	ftrunc(double);
 double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
 double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
 
-// More accurate cos(pi*x), sin(pi*x), tan(pi*x)
-// These clash with future C11 extensions
-#ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
-double  cospi(double);
-double  sinpi(double);
-double  tanpi(double);
-#endif
+/* More accurate cos(pi*x), sin(pi*x), tan(pi*x)
+
+   In future these declarations could clash with system headers if
+   someone had already included math.h with
+   __STDC_WANT_IEC_60559_TYPES_EXT__ defined.
+   We can add a check for that via the value of
+   __STDC_IEC_60559_FUNCS__ (>= 201ymmL, exact value not yet known).
+*/
+double cospi(double);
+double sinpi(double);
+double tanpi(double);
 
 /* Compute the log of a sum or difference from logs of terms, i.e.,
  *
