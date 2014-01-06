@@ -114,7 +114,9 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
       warning(_("Internal(pretty()): very large range.. corrected"));
       cell = .1*DBL_MAX;
     }
-    base = Rexp10(floor(log10(cell))); /* base <= cell < 10*base */
+    /* NB: the power can be negative and this relies on exact
+       calculation, which glibc's exp10 does not achieve */
+    base = pow(10.0, floor(log10(cell))); /* base <= cell < 10*base */
 
     /* unit : from { 1,2,5,10 } * base
      *	 such that |u - cell| is small,

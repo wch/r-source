@@ -618,9 +618,6 @@ double  tanpi(double);
 double  logspace_add(double logx, double logy);
 double  logspace_sub(double logx, double logy);
 
-// for reproducibility for now: use exp10 later.
-# define Rexp10(x) pow(10.0, x)
-
 
 /* ----------------- Private part of the header file ------------------- */
 

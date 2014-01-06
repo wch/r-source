@@ -1296,6 +1296,9 @@ extern void *alloca(size_t);
 # define LONG_INT_MAX INT_FAST64_MAX
 #endif
 
+// for reproducibility for now: use exp10 or pown later if accurate enough.
+#define Rexp10(x) pow(10.0, x)
+
 #endif /* DEFN_H_ */
 /*
  *- Local Variables:

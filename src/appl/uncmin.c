@@ -35,6 +35,7 @@
 #include <R_ext/PrtUtil.h> /* printRealVector */
 #include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
 #include <Rmath.h>
+#define Rexp10(x) pow(10.0, x)
 
 /* CC	 subroutines  mvmlt[lsu] should be REPLACED by BLAS ones!
  * CC

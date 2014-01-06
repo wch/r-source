@@ -62,35 +62,36 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
     Rprintf("\n");
     if(x[n-1] > x[0]) {
-	r = atom+(x[n-1]-x[0])/scale;
-	c = Rexp10((11.-(int)(log10(r)+10)));
+	r = atom + (x[n-1] - x[0])/scale;
+	// this needs to be exact: exp10 in glibc is not accurate
+	c = pow(10.0, 1.0 - floor(log10(r)));
 	mm = imin2(2, imax2(0, (int)(r*c/25)));
-	k = 3*mm + 2 - 150/(n+50);
-	if ((k-1)*(k-2)*(k-5)==0)
+	k = 3*mm + 2 - 150/(n + 50);
+	if ((k-1)*(k-2)*(k-5) == 0)
 	    c *= 10.;
 	/* need to ensure that x[i]*c does not integer overflow */
 	x1 = fabs(x[0]); x2 = fabs(x[n-1]);
 	if(x2 > x1) x1 = x2;
 	while(x1*c > INT_MAX) c /= 10;
-	if (k*(k-4)*(k-8)==0) mu = 5;
-	if ((k-1)*(k-5)*(k-6)==0) mu = 20;
+	if (k*(k-4)*(k-8) == 0) mu = 5;
+	if ((k-1)*(k-5)*(k-6) == 0) mu = 20;
     } else {
 	r = atom + fabs(x[0])/scale;
-	c = Rexp10((11.-(int)(log10(r)+10)));
-	k = 2; /* not important what */
+	c = pow(10.0, 1.0 - floor(log10(r)));
+	k = 2; // not important what
     }
     
     mu = 10;
-    if (k*(k-4)*(k-8)==0) mu = 5;
-    if ((k-1)*(k-5)*(k-6)==0) mu = 20;
+    if (k*(k-4)*(k-8) == 0) mu = 5;
+    if ((k-1)*(k-5)*(k-6) == 0) mu = 20;
 
 
     /* Find the print width of the stem. */
 
-    lo = floor(x[0]  *c/mu)*mu;
+    lo = floor(x[0]*c/mu)*mu;
     hi = floor(x[n-1]*c/mu)*mu;
-    ldigits = (lo < 0) ? (int) floor(log10(-(double)lo))+1 : 0;
-    hdigits = (hi > 0) ? (int) floor(log10((double)hi))    : 0;
+    ldigits = (lo < 0) ? (int) floor(log10(-(double)lo)) + 1 : 0;
+    hdigits = (hi > 0) ? (int) floor(log10((double)hi)): 0;
     ndigits = (ldigits < hdigits) ? hdigits : ldigits;
 
     /* Starting cell */
@@ -104,7 +105,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
     /* Print out the info about the decimal place */
 
-    pdigits = 1 - (int) floor(log10(c)+0.5);
+    pdigits = 1 - (int) floor(log10(c) + 0.5);
 
     Rprintf("  The decimal point is ");
     if(pdigits == 0)
@@ -129,14 +130,12 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 		break;
 
 	    j++;
-	    if(j <= width-12) {
-		Rprintf("%1d", abs(xi)%10);
-	    }
+	    if(j <= width-12)
+		Rprintf("%1d", abs(xi) % 10);
 	    i++;
 	} while(i < n);
-	if(j > width) {
-	    Rprintf("+%d", j-width);
-	}
+	if(j > width)
+	    Rprintf("+%d", j - width);
 	Rprintf("\n");
 	if(i >= n)
 	    break;

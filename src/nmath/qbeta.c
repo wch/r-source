@@ -131,7 +131,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
      * ---- i.e.,  "new acu" = sqrt(old acu)
 
     */
-    acu = fmax2(acu_min, Rexp10(-13 - 2.5/(pp * pp) - 0.5/(a * a)));
+    acu = fmax2(acu_min, pow(10.0, -13.0 - 2.5/(pp * pp) - 0.5/(a * a)));
     tx = prev = 0.;	/* keep -Wall happy */
 
     for (i_pb=0; i_pb < 1000; i_pb++) {
