@@ -112,9 +112,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
 
-    nn1 = (int) R_D_forceint(nn1in);
-    nn2 = (int) R_D_forceint(nn2in);
-    kk	= (int) R_D_forceint(kkin);
+    nn1 = (int) R_forceint(nn1in);
+    nn2 = (int) R_forceint(nn2in);
+    kk	= (int) R_forceint(kkin);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2)
 	ML_ERR_return_NAN;

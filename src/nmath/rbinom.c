@@ -58,7 +58,7 @@ double rbinom(double nin, double pp)
     int i, ix, k, n;
 
     if (!R_FINITE(nin)) ML_ERR_return_NAN;
-    r = R_D_forceint(nin);
+    r = R_forceint(nin);
     if (r != nin) ML_ERR_return_NAN;
     if (!R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/

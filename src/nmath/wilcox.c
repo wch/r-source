@@ -169,14 +169,14 @@ double dwilcox(double x, double m, double n, int give_log)
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
 #endif
-    m = R_D_forceint(m);
-    n = R_D_forceint(n);
+    m = R_forceint(m);
+    n = R_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
-    if (fabs(x - R_D_forceint(x)) > 1e-7)
+    if (fabs(x - R_forceint(x)) > 1e-7)
 	return(R_D__0);
-    x = R_D_forceint(x);
+    x = R_forceint(x);
     if ((x < 0) || (x > m * n))
 	return(R_D__0);
 
@@ -201,8 +201,8 @@ double pwilcox(double q, double m, double n, int lower_tail, int log_p)
 #endif
     if (!R_FINITE(m) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-    m = R_D_forceint(m);
-    n = R_D_forceint(n);
+    m = R_forceint(m);
+    n = R_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
@@ -246,8 +246,8 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 	ML_ERR_return_NAN;
     R_Q_P01_check(x);
 
-    m = R_D_forceint(m);
-    n = R_D_forceint(n);
+    m = R_forceint(m);
+    n = R_forceint(n);
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
@@ -298,8 +298,8 @@ double rwilcox(double m, double n)
     if (ISNAN(m) || ISNAN(n))
 	return(m + n);
 #endif
-    m = R_D_forceint(m);
-    n = R_D_forceint(n);
+    m = R_forceint(m);
+    n = R_forceint(n);
     if ((m < 0) || (n < 0))
 	ML_ERR_return_NAN;
 

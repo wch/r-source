@@ -38,10 +38,10 @@ double qhyper(double p, double NR, double NB, double n,
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
 	ML_ERR_return_NAN;
 
-    NR = R_D_forceint(NR);
-    NB = R_D_forceint(NB);
+    NR = R_forceint(NR);
+    NB = R_forceint(NB);
     N = NR + NB;
-    n = R_D_forceint(n);
+    n = R_forceint(n);
     if (NR < 0 || NB < 0 || n < 0 || n > N)
 	ML_ERR_return_NAN;
 

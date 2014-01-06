@@ -4,7 +4,7 @@
  *   October 23, 2000.
  *
  *  Merge in to R and further tweaks :
- *	Copyright (C) 2000-2013 The R Core Team
+ *	Copyright (C) 2000-2014 The R Core Team
  *	Copyright (C) 2008 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -85,8 +85,8 @@ double dbinom(double x, double n, double p, int give_log)
     R_D_nonint_check(x);
     if (x < 0 || !R_FINITE(x)) return R_D__0;
 
-    n = R_D_forceint(n);
-    x = R_D_forceint(x);
+    n = R_forceint(n);
+    x = R_forceint(x);
 
     return dbinom_raw(x, n, p, 1-p, give_log);
 }

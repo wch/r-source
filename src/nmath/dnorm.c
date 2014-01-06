@@ -86,8 +86,8 @@ double dnorm4(double x, double mu, double sigma, int give_log)
 
      * If we do not have IEEE this is still an improvement over the naive formula.
      */
-    double x1 = //  R_D_forceint(x * 65536) / 65536 =
-	ldexp( R_D_forceint(ldexp(x, 16)), -16);
+    double x1 = //  R_forceint(x * 65536) / 65536 =
+	ldexp( R_forceint(ldexp(x, 16)), -16);
     double x2 = x - x1;
     return M_1_SQRT_2PI / sigma *
 	(exp(-0.5 * x1 * x1) * exp( (-0.5 * x2 - x1) * x2 ) );

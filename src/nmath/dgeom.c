@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, 2001, 2006 The R Core Team
+ *	Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ double dgeom(double x, double p, int give_log)
 
     R_D_nonint_check(x);
     if (x < 0 || !R_FINITE(x) || p == 0) return R_D__0;
-    x = R_D_forceint(x);
+    x = R_forceint(x);
 
     /* prob = (1-p)^x, stable for small p */
     prob = dbinom_raw(0.,x, p,1-p, give_log);

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-6     The R Core Team
+ *  Copyright (C) 2000-2014  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,8 +33,8 @@ double pbinom(double x, double n, double p, int lower_tail, int log_p)
     if (!R_FINITE(n) || !R_FINITE(p)) ML_ERR_return_NAN;
 
 #endif
-    if(R_D_nonint(n)) ML_ERR_return_NAN;
-    n = R_D_forceint(n);
+    if(R_nonint(n)) ML_ERR_return_NAN;
+    n = R_forceint(n);
     /* PR#8560: n=0 is a valid value */
     if(n < 0 || p < 0 || p > 1) ML_ERR_return_NAN;
 

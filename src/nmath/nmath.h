@@ -47,6 +47,14 @@ double	Rf_gamma_cody(double);
 /* possibly needed for debugging */
 #include <R_ext/Print.h>
 
+/* moved from dpq.h */
+#ifdef HAVE_NEARYINT
+# define R_forceint(x)   nearbyint()
+#else
+# define R_forceint(x)   round(x)
+#endif
+# define R_nonint(x) 	  (fabs((x) - R_forceint(x)) > 1e-7)
+
 
 #ifndef MATHLIB_STANDALONE
 

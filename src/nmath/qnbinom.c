@@ -105,7 +105,7 @@ double qnbinom(double p, double size, double prob, int lower_tail, int log_p)
 
     /* y := approx.value (Cornish-Fisher expansion) :  */
     z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
-    y = R_D_forceint(mu + sigma * (z + gamma * (z*z - 1) / 6));
+    y = R_forceint(mu + sigma * (z + gamma * (z*z - 1) / 6));
 
     z = pnbinom(y, size, prob, /*lower_tail*/TRUE, /*log_p*/FALSE);
 
