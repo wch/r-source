@@ -73,7 +73,7 @@
 
 
 #ifndef VALGRIND_LEVEL
-#define VALGRIND_LEVEL 0
+# define VALGRIND_LEVEL 0
 #endif
 
 #define R_USE_SIGNALS 1
@@ -81,6 +81,7 @@
 #include <Internal.h>
 #include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEgetDevice */
 #include <R_ext/Rdynload.h>
+#include <Rmath.h> // R_pow_di
 
 #if defined(Win32) && defined(LEA_MALLOC)
 /*#include <stddef.h> */
