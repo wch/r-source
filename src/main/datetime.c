@@ -704,16 +704,6 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
-    // localtime may change tzname.
-    if (isgmt) {
-	PROTECT(tzone = mkString(tz));
-    } else {
-	PROTECT(tzone = allocVector(STRSXP, 3));
-	SET_STRING_ELT(tzone, 0, mkChar(tz));
-	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
-    }
-
     R_xlen_t n = XLENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
     for(int i = 0; i < 9; i++)
@@ -740,6 +730,14 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(klass, 0, mkChar("POSIXlt"));
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));
     classgets(ans, klass);
+    if (isgmt) {
+	PROTECT(tzone = mkString(tz));
+    } else {
+	PROTECT(tzone = allocVector(STRSXP, 3));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+    }
     setAttrib(ans, install("tzone"), tzone);
     SEXP nm = getAttrib(x, R_NamesSymbol);
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm);
