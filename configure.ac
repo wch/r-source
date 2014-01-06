@@ -1850,16 +1850,19 @@ fi
 ## isblank should be a macro according to C99.  It was missing on Solaris 8
 AC_CHECK_FUNCS(isblank)
 
-## Solaris libsunmath: not yet used.
+## Solaris libsunmath
 AC_CHECK_HEADERS(sunmath.h)
 AC_CHECK_LIB(sunmath, cospi)
 
 ## Functions from draft C11 extensions, some of which are already in glibc
 ## For now, do not define _GNU_SOURCE here.
-## Most of these have long been in libsunmath: add later
-R_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi], 
+## All but pown have long been in libsunmath
+AC_CHECK_FUNCS([atanpi atan2pi cospi exp10 pown sinpi tanpi], 
 [#define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
-#include <math.h>])
+#include <math.h>
+#ifdef HAVE_SUNMATH_H
+#include <sunmath.h>
+#endif])
 
 ## fseeko/ftello are POSIX, may be macros
 ## matherr is SVID, redefined in arithmetic.c if present
