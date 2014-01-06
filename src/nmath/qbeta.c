@@ -96,7 +96,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     } else {
 	r = qq + qq;
 	t = 1. / (9. * qq);
-	t = r * pow(1. - t + y * sqrt(t), 3.0);
+	t = r * R_pow_di(1. - t + y * sqrt(t), 3);
 	if (t <= 0.)
 	    xinbta = 1. - exp((log1p(-a)+ log(qq) + logbeta) / qq);
 	else {

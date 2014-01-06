@@ -210,11 +210,11 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	if (n == 0)
 	    tt = cos(x)/sin(x);
 	else if (n == 1)
-	    tt = -1/pow(sin(x),2);
+	    tt = -1/R_pow_di(sin(x), 2);
 	else if (n == 2)
-	    tt = 2*cos(x)/pow(sin(x),3);
+	    tt = 2*cos(x)/R_pow_di(sin(x), 3);
 	else if (n == 3)
-	    tt = -2*(2*pow(cos(x),2) + 1)/pow(sin(x),4);
+	    tt = -2*(2*R_pow_di(cos(x), 2) + 1.)/R_pow_di(sin(x), 4);
 	else /* can not happen! */
 	    tt = ML_NAN;
 	/* end cheat */
@@ -274,7 +274,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	}
 	else {
 	    if (x < wdtol) {
-		ans[0] = pow(x, -n-1.0);
+		ans[0] = R_pow_di(x, -n-1);
 		if (mm != 1) {
 		    for(k = 1; k < mm ; k++)
 			ans[k] = ans[k-1] / x;

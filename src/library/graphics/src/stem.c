@@ -64,7 +64,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
     if(x[n-1] > x[0]) {
 	r = atom + (x[n-1] - x[0])/scale;
 	// this needs to be exact: exp10 in glibc is not accurate
-	c = pow(10.0, 1.0 - floor(log10(r)));
+	c = R_pow_di(10.0, 1.0 - floor(log10(r)));
 	mm = imin2(2, imax2(0, (int)(r*c/25)));
 	k = 3*mm + 2 - 150/(n + 50);
 	if ((k-1)*(k-2)*(k-5) == 0)
@@ -77,7 +77,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 	if ((k-1)*(k-5)*(k-6) == 0) mu = 20;
     } else {
 	r = atom + fabs(x[0])/scale;
-	c = pow(10.0, 1.0 - floor(log10(r)));
+	c = R_pow_di(10.0, 1.0 - floor(log10(r)));
 	k = 2; // not important what
     }
     

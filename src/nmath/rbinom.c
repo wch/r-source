@@ -89,7 +89,7 @@ double rbinom(double nin, double pp)
 	nsave = n;
 	if (np < 30.0) {
 	    /* inverse cdf logic for mean less than 30 */
-	    qn = pow(q, (double) n);
+	    qn = R_pow_di(q, n);
 	    goto L_np_small;
 	} else {
 	    ffm = np + p;

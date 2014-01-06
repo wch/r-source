@@ -146,7 +146,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 
 	Rboolean P_ok1 = P > DBL_MIN || !log_p,  P_ok = P_ok1;
 	if(P_ok1) {
-	    y = pow(d * P, 2 / ndf);
+	    y = pow(d * P, 2.0 / ndf);
 	    P_ok = (y >= DBL_EPSILON);
 	}
 	if(!P_ok) {// log.p && P very.small  ||  (d*P)^(2/df) =: y < eps_c
