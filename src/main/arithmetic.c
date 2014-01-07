@@ -1176,6 +1176,8 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
 }
 
 #ifdef HAVE_TANPI
+// we document that tanpi(0.5) is NaN, but the draft C11 extension
+// does not require this and the Solaris version gives Inf.
 double Rtanpi(double);
 #endif
 

@@ -56,22 +56,14 @@ double sinpi(double x) {
 }
 #endif
 
-#ifndef HAVE_TANPI
 // tan(pi * x)  -- exact when x = k/2  for all integer k
-double tanpi(double x) {
-#ifdef IEEE_754
-    if (ISNAN(x)) return x;
-#endif
-    if(!R_FINITE(x)) ML_ERR_return_NAN;
-
-    x = fmod(x, 1.); // tan(pi(x + k)) == tan(pi x)  for all integer k
-    // map (-1,1) --> (-1/2, 1/2] :
-    if(x <= -0.5) x++; else if(x > 0.5) x--;
-    return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
-}
+#ifndef HAVE_TANPI
+double tanpi(double x)
 #else
-// for use in arithmetic.c
-double Rtanpi(double x) {
+// for use in arithmetic.c, half-values documented to give NaN
+double Rtanpi(double x)
+#endif
+{
 #ifdef IEEE_754
     if (ISNAN(x)) return x;
 #endif
@@ -80,7 +72,5 @@ double Rtanpi(double x) {
     x = fmod(x, 1.); // tan(pi(x + k)) == tan(pi x)  for all integer k
     // map (-1,1) --> (-1/2, 1/2] :
     if(x <= -0.5) x++; else if(x > 0.5) x--;
-    // This is our convention, not required by the draft C11 extension
     return (x == 0.) ? 0. : ((x == 0.5) ? ML_NAN : tan(M_PI * x));
 }
-#endif
