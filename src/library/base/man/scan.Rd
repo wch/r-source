@@ -180,7 +180,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
 
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
-  carriage return and line feed.  It does not include form feed or
+  carriage return and line feed.  It does not include form feed nor
   vertical tab, but in Latin-1 and Windows 8-bit locales 'space'
   includes non-breaking space.
 
@@ -237,6 +237,9 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   non-default \code{encoding} argument, the text is converted to UTF-8
   and declared as such (and the \code{encoding} argument to \code{scan}
   is ignored).  See the examples of \code{\link{readLines}}.
+
+  Embedded nuls in the input stream will terminate the field currently
+  being read, with a warning once per call to \code{scan}.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as

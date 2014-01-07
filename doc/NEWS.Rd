@@ -454,6 +454,11 @@
       
       \item The backtick may now be escaped in strings, to allow names
       containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
+      
+      \item \code{read.table()}, \code{readLines()} and \code{scan()}
+      now warn when an embedded nul is found in the input.  (Related to
+      \PR{15625} which was puzzled by the behaviour in this unsupported
+      case.)
     }
   }
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/readLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readLines}
@@ -50,6 +50,9 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   Whatever mode the connection is opened in, any of LF, CRLF or CR will
   be accepted as the EOL marker for a line.
 
+  Embedded nuls in the input stream will terminate the line currently
+  being read, with a warning.
+  
   If \code{con} is a not-already-open \link{connection} with a non-default
   \code{encoding} argument, the text is converted to UTF-8 and declared
   as such (and the \code{encoding} argument to \code{readLines} is ignored).

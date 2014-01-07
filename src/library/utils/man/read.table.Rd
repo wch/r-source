@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -243,7 +243,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   column.
 
   Quoted fields with embedded newlines are supported except after a
-  comment character.
+  comment character.  On the other hand, embedded nuls in the input
+  stream are not supported, and in some cases will give a warning and in
+  all cases terminate the line or field.
 }
 
 \value{
