@@ -888,6 +888,8 @@ SEXP readtablehead(SEXP args)
 	if(!empty || (c != R_EOF && !blskip)) { /* see previous comment */
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;
+	    if (strlen(buf) < nbuf) // PR#15625
+		warning("line %d appears to contain embedded nulls", nread);
 	}
 	if(c == R_EOF) goto no_more_lines;
     }
