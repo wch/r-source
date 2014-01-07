@@ -270,7 +270,7 @@ assert.reparsable <- function(sexp) {
   reparsed <- tryCatch(eval(parse(text=deparsed)[[1]]), error = function(e) NULL)
   if (is.null(reparsed))
     stop(sprintf("Deparsing produced invalid syntax: %s", deparsed))
-  if(!identical(reparsed, sexp)) 
+  if(!identical(reparsed, sexp))
     stop(sprintf("Deparsing produced change: value is not %s", reparsed))
 }
 
@@ -290,11 +290,17 @@ assert.reparsable(complex(real=NA, i=1))
 assert.reparsable(complex(real=1, i=NA))
 ## last 7 all failed
 
+
 ## PR#15621 backticks could not be escaped
 stopifnot(deparse(as.name("`"), backtick=TRUE) == "`\\``")
 assign("`", TRUE)
 `\``
 tools::assertError(parse("```"))
-## 
+##
+
+
+## We dcoument tanpi(0.5) etc to be NaN
+stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
+## That is not required for system implementations, and some give +/-Inf
 
 proc.time()
