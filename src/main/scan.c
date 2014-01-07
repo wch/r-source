@@ -970,7 +970,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
     if (data.quoteset[0]) free(data.quoteset);
-    if (!skipNul && data.embedWarn) 
+    if (data.embedWarn) 
 	warning(_("embedded nul(s) found in input"));
     return ans;
 }
