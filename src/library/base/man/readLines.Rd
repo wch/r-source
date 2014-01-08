@@ -11,7 +11,7 @@
 }
 \usage{
 readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
-          encoding = "unknown")
+          encoding = "unknown", skipNul = FALSE)
 }
 \arguments{
   \item{con}{a \link{connection} object or a character string.}
@@ -30,6 +30,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 #ifdef windows
     See also \sQuote{Details}.
 #endif
+  \item{skipNul}{logical: should nuls be skipped?}
   }
 }
 \details{
@@ -51,7 +52,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   be accepted as the EOL marker for a line.
 
   Embedded nuls in the input stream will terminate the line currently
-  being read, with a warning.
+  being read, with a warning (unless \code{skipNul = TRUE}).
   
   If \code{con} is a not-already-open \link{connection} with a non-default
   \code{encoding} argument, the text is converted to UTF-8 and declared

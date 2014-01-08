@@ -23,7 +23,7 @@ function(file = "", what = double(), nmax = -1L, n = -1L, sep = "",
          na.strings = "NA", flush = FALSE, fill = FALSE,
          strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE,
          multi.line = TRUE, comment.char = "", allowEscapes = FALSE,
-         fileEncoding = "", encoding = "unknown", text)
+         fileEncoding = "", encoding = "unknown", text, skipNul = FALSE)
 {
     na.strings <- as.character(na.strings)# allow it to be NULL
     if(!missing(n)) {
@@ -49,5 +49,5 @@ function(file = "", what = double(), nmax = -1L, n = -1L, sep = "",
     .Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
                    na.strings, flush, fill, strip.white, quiet,
                    blank.lines.skip, multi.line, comment.char,
-                   allowEscapes, encoding))
+                   allowEscapes, encoding, skipNul))
 }

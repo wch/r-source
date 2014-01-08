@@ -24,7 +24,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            comment.char = "#",
            allowEscapes = FALSE, flush = FALSE,
            stringsAsFactors = default.stringsAsFactors(),
-           fileEncoding = "", encoding = "unknown", text)
+           fileEncoding = "", encoding = "unknown", text, skipNul = FALSE)
 
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", \dots)
@@ -196,6 +196,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     within R code.
   }
 
+  \item{skipNul}{logical: should nuls be skipped?}
+  
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
 
@@ -243,9 +245,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   column.
 
   Quoted fields with embedded newlines are supported except after a
-  comment character.  On the other hand, embedded nuls in the input
-  stream are not supported, and in some cases will give a warning and in
-  all cases terminate the line or field.
+  comment character.  Embedded nuls are unsupported: skipping them (with
+  \code{skipNul = TRUE}) may work.
 }
 
 \value{

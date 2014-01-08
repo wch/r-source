@@ -82,6 +82,7 @@ typedef struct {
     int save; /* = 0; */
     Rboolean isLatin1; /* = FALSE */
     Rboolean isUTF8; /* = FALSE */
+    Rboolean skipNul;
     char convbuf[100];
 } LocalData;
 
@@ -208,8 +209,17 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 
 static R_INLINE int scanchar_raw(LocalData *d)
 {
-    return (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
+    int c = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
 	Rconn_fgetc(d->con);
+    if(c == 0) {
+	if(d->skipNul) {
+	    do {
+		c = (d->ttyflag) ? ConsoleGetcharWithPushBack(d->con) :
+		    Rconn_fgetc(d->con);
+	    } while(c == 0);
+	}
+    }
+    return c;
 }
 
 static R_INLINE void unscanchar(int c, LocalData *d)
@@ -773,11 +783,12 @@ SEXP menu(SEXP choices)
 SEXP readtablehead(SEXP args)
 {
     SEXP file, comstr, ans = R_NilValue, ans2, quotes, sep;
-    int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
+    int nlines, i, c, quote = 0, nread, nbuf, buf_size = BUF_SIZE,
+	blskip, skipNul;
     const char *p; char *buf;
     Rboolean empty, skip, firstnonwhite;
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE};
+		      FALSE, 0, FALSE, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     args = CDR(args);
@@ -787,7 +798,8 @@ SEXP readtablehead(SEXP args)
     comstr = CAR(args);		   args = CDR(args);
     blskip = asLogical(CAR(args)); args = CDR(args);
     quotes = CAR(args);		   args = CDR(args);
-    sep = CAR(args);
+    sep = CAR(args);		   args = CDR(args);
+    skipNul = asLogical(CAR(args));
 
     if (nlines <= 0 || nlines == NA_INTEGER)
 	error(_("invalid '%s' argument"), "nlines");
@@ -813,6 +825,8 @@ SEXP readtablehead(SEXP args)
 	else data.sepchar = (unsigned char) translateChar(STRING_ELT(sep, 0))[0];
 	/* gets compared to chars: bug prior to 1.7.0 */
     } else error(_("invalid '%s' argument"), "sep");
+    if (skipNul == NA_LOGICAL) error(_("invalid '%s' argument"), "skipNul");
+    data.skipNul = skipNul;
 
     i = asInteger(file);
     data.con = getConnection(i);

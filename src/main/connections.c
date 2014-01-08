@@ -3299,7 +3299,7 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int ok, warn, c, nbuf, buf_size = BUF_SIZE;
+    int ok, warn, skipNul, c, nbuf, buf_size = BUF_SIZE;
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
@@ -3311,19 +3311,23 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'con' is not a connection"));
-    con = getConnection(asInteger(CAR(args)));
-    n = asVecSize(CADR(args));
+    con = getConnection(asInteger(CAR(args))); args = CDR(args);
+    n = asVecSize(CAR(args)); args = CDR(args);
     if(n == -999)
 	error(_("invalid '%s' argument"), "n");
-    ok = asLogical(CADDR(args));
+    ok = asLogical(CAR(args));  args = CDR(args);
     if(ok == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "ok");
-    warn = asLogical(CADDDR(args));
+    warn = asLogical(CAR(args));  args = CDR(args);
     if(warn == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "warn");
-    if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAD4R(args), 0)); /* ASCII */
+    encoding = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args); /* ASCII */
+    skipNul = asLogical(CAR(args));
+    if(skipNul == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "skipNul");
+
     wasopen = con->isopen;
     if(!wasopen) {
 	char mode[5];
@@ -3368,7 +3372,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	nbuf = 0;
 	while((c = Rconn_fgetc(con)) != R_EOF) {
-	    if(nbuf == buf_size-1) {  /* need space for the null */
+	    if(nbuf == buf_size-1) {  /* need space for the terminator */
 		buf_size *= 2;
 		char *tmp = (char *) realloc(buf, buf_size);
 		if(!buf) {
@@ -3376,6 +3380,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("cannot allocate buffer in readLines"));
 		} else buf = tmp;
 	    }
+	    if(skipNul && c == '\0') continue;
 	    if(c != '\n') buf[nbuf++] = (char) c; else break;
 	}
 	buf[nbuf] = '\0';
@@ -3384,7 +3389,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (nread == 0 && utf8locale &&
 	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
 	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
-	if (strlen(qbuf) < nbuf)
+	if (strlen(buf) < nbuf)
 	    warning(_("line %d appears to contain an embedded nul"), nread + 1);
 	if(c == R_EOF) goto no_more_lines;
     }

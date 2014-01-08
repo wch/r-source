@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -16,7 +16,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
      comment.char = "", allowEscapes = FALSE,
-     fileEncoding = "", encoding = "unknown", text)
+     fileEncoding = "", encoding = "unknown", text, skipNul = FALSE)
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -167,6 +167,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     then data are read from the value of \code{text} via a text connection.
   }
 
+  \item{skipNul}{logical: should nuls be skipped when reading character
+    fields?}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -239,7 +241,8 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   is ignored).  See the examples of \code{\link{readLines}}.
 
   Embedded nuls in the input stream will terminate the field currently
-  being read, with a warning once per call to \code{scan}.
+  being read, with a warning once per call to \code{scan}.  Setting
+  \code{skipNul = TRUE} causes them to be ignored.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as

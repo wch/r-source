@@ -165,6 +165,9 @@
       
       \item Some versions of the \code{tiff()} device have further
       compression options.
+      
+      \item \code{read.table()}, \code{readLines()} and \code{scan()}
+      have a new argument to control the treatment of embedded nuls.
     }
   }
 
