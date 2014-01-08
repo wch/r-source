@@ -30,8 +30,8 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 #ifdef windows
     See also \sQuote{Details}.
 #endif
-  \item{skipNul}{logical: should nuls be skipped?}
   }
+  \item{skipNul}{logical: should nuls be skipped?}
 }
 \details{
   If the \code{con} is a character string, the function calls
