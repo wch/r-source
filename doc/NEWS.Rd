@@ -224,6 +224,9 @@
       integer inputs to dpqrxxx functions might have been rounded up by
       one (with a warning about being non-integer).  (\PR{15624})
       
+      \item Plotting symbol \code{pch = 14} had the triangle upside down
+      on some devices (typically screen devices). The triangle is
+      supposed to be point up.  (Reported by Bill Venables.)
     }
   }
 }
