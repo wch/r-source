@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sourceutils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,10 @@ getSrcDirectory <- function(x, unique=TRUE) {
 getSrcref <- function(x) {
     if (inherits(x, "srcref")) return(x)
     if (!is.null(srcref <- attr(x, "srcref"))) return(srcref)
-    if (is.function(x)) return(getSrcref(body(x)))
+    if (is.function(x) && !is.null(srcref <- getSrcref(body(x)))) 
+	return(srcref)
+    if (methods::is(x, "MethodDefinition")) 
+	return(getSrcref(unclass(methods::unRematchDefinition(x))))
     NULL
 }
 

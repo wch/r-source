@@ -601,3 +601,22 @@ stopifnot(length(a) == 6, identical(a[[5]], aa[[5]]),
 ## Up to R 2.15.2, internally 'a' is treated as if it was of length 1
 ## because internal dispatch did not work for length().
 
+
+# getSrcref failed when rematchDefinition was used
+text <- '
+setClass("MyClass", representation(val = "numeric"))
+setMethod("plot", signature(x = "MyClass"), 
+    function(x, y, ...) { 
+        # comment
+	NULL
+    })
+setMethod("initialize", signature = "MyClass",
+    function(.Object, value) {
+	# comment
+	.Object@val <- value
+	return(.Object)
+    })
+'
+source(textConnection(text), keep.source = TRUE)
+getSrcref(getMethod("plot", "MyClass"))
+getSrcref(getMethod("initialize", "MyClass"))
