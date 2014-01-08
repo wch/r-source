@@ -2805,8 +2805,18 @@ str( X, strict.width = "cut")
 options(oldopts)
 ## The first row of the str() result was duplicated.
 
+
 ## PR15624: rounding in extreme cases
 dpois(2^52,1,1)
 dpois(2^52+1,1,1)
 ## second warned in R 3.0.2.
+
+
+## Example from PR15625
+f <- file.path(Sys.getenv('SRCDIR'), 'EmbeddedNuls.csv')
+## This is a file with a UTF-8 BOM and some fields which are a single nul.
+## The output does rely on this being run in a non-UTF-8 locale (C in tests).
+read.csv(f) # warns
+read.csv(f, skipNul = TRUE, fileEncoding = "UTF-8-BOM")
+## 'skipNul' is new in 3.1.0.  Should not warn on BOM, ignore in second.
 
