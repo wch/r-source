@@ -1,7 +1,7 @@
 #  File src/library/base/R/rle.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 rle <- function(x)
 {
     if (!is.vector(x) && !is.list(x))
-        stop("'x' must be an atomic vector")
+        stop("'x' must be a vector of an atomic type")
     n <- length(x)
     if (n == 0L)
 	return(structure(list(lengths = integer(), values = x),
