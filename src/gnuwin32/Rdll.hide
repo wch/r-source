@@ -49,6 +49,7 @@
  IS_LATIN1
  IS_UTF8
  InitDynload
+ InitParser
  Init_R_Variables
  LOCK_BINDING
  LoadInitFile
@@ -77,11 +78,11 @@
  R_DotEnvSymbol
  R_DoubleColonSymbol
  R_ErrorCon
+ R_EvalDepth
  R_ExactSymbol
  R_Expressions
  R_Expressions_keep
  R_ExternalPtrAddrFn
- R_EvalDepth
  R_FileMtime
  R_FinalizeSrcRefState
  R_FreeSEXP
@@ -96,7 +97,6 @@
  R_GetVarLocValue
  R_HandlerStack
  R_HiddenFile
- R_IoBufferReadOffset
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
@@ -105,6 +105,7 @@
  R_IoBufferInit
  R_IoBufferPutc
  R_IoBufferPuts
+ R_IoBufferReadOffset
  R_IoBufferReadReset
  R_IoBufferWriteReset
  R_Is_Running
@@ -155,6 +156,7 @@
  R_ShowErrorMessages
  R_ShowFiles
  R_ShowWarnCalls
+ R_SignalHandlers
  R_StdinEnc
  R_StringHash
  R_SymbolTable
@@ -169,6 +171,7 @@
  R_UseNamesSymbol
  R_VSize
  R_Verbose
+ R_WaitEvent
  R_WarnLength
  R_Warnings
  R_WholeSrcrefSymbol
@@ -209,6 +212,7 @@
  R_gmtime
  R_gmtime_r
  R_has_methods
+ R_initAsignSymbols
  R_init_base
  R_init_jit_enabled
  R_initialize_bcode
@@ -305,6 +309,7 @@
  Rf_PrintVersion
  Rf_PrintVersionString
  Rf_PrintVersion_part_1
+ Rf_PrintWarnings
  Rf_RealFromComplex
  Rf_RealFromInteger
  Rf_RealFromLogical
@@ -365,9 +370,9 @@
  Rf_osDynSymbol
  Rf_pbeta_raw
  Rf_printArray
- Rf_printMatrix
  Rf_printComplexVector
  Rf_printIntegerVector
+ Rf_printMatrix
  Rf_printNamedVector
  Rf_printRealVector
  Rf_printVector
@@ -386,8 +391,8 @@
  Rf_tsConform
  Rf_tspgets
  Rf_ucstomb
- Rf_usemethod
  Rf_unbindVar
+ Rf_usemethod
  Rf_utf8toucs
  Rf_vectorIndex
  Rf_yychar
@@ -422,9 +427,9 @@
  Sys_TempDir
  TimeToSeed
  UNLOCK_BINDING
+ UNIMPLEMENTED_TYPEt
  UTF8in
  UTF8out
- UNIMPLEMENTED_TYPEt
  UseInternet2
  WinCheckUTF8
  WinUTF8out
@@ -551,6 +556,7 @@
  do_adist
  do_agrep
  do_allnames
+ do_anyNA
  do_aperm
  do_aregexec
  do_args
@@ -579,9 +585,9 @@
  do_bincode
  do_bind
  do_bindtextdomain
+ do_bitwise
  do_bndIsActive
  do_bndIsLocked
- do_bitwise
  do_body
  do_bodyCode
  do_break
@@ -749,8 +755,8 @@
  do_isunsorted
  do_isvector
  do_l10n_info
- do_lapply
  do_lapack
+ do_lapply
  do_lazyLoadDBfetch
  do_lazyLoadDBflush
  do_lazyLoadDBinsertValue
@@ -1267,6 +1273,7 @@
  lzma_vli_encode
  lzma_vli_size
  mallinfo
+ max_contour_segments
  mb_char_len
  mbcsValid
  menuclear
@@ -1305,6 +1312,7 @@
  pcre_get_substring
  pcre_get_substring_list
  pcre_jit_exec
+ pcre_jit_free_unused_memory
  pcre_jit_stack_alloc
  pcre_jit_stack_free
  pcre_maketables
