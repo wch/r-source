@@ -458,6 +458,10 @@
       now warn when an embedded nul is found in the input.  (Related to
       \PR{15625} which was puzzled by the behaviour in this unsupported
       case.)
+      
+      \item (Windows.)  \code{file.symlink()} works around the
+      undocumented restriction of the Windows system call to
+      backslashes.  (Wish of \PR{15631}.)
     }
   }
 

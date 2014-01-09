@@ -184,7 +184,8 @@ Sys.junction(from, to)
   reports insufficient permissions.  Second, the interface needs to know
   if \code{from} is a file or a directory (and it need not yet exist):
   we have implemented this to allow linking from a directory only if it
-  currently exists.
+  currently exists.  Prior to \R 3.0.3 the paths had to use backslashes
+  (an undocumented restriction of the Windows system call).
 
   Care is needed with removing a junction (and most likely also a
   symbolic link): many tools will remove the target and its contents
