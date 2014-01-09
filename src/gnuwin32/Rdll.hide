@@ -49,6 +49,7 @@
  IS_LATIN1
  IS_UTF8
  InitDynload
+ InitParser
  Init_R_Variables
  LOCK_BINDING
  LoadInitFile
@@ -77,11 +78,11 @@
  R_DotEnvSymbol
  R_DoubleColonSymbol
  R_ErrorCon
+ R_EvalDepth
  R_ExactSymbol
  R_Expressions
  R_Expressions_keep
  R_ExternalPtrAddrFn
- R_EvalDepth
  R_FileMtime
  R_FinalizeSrcRefState
  R_FreeSEXP
@@ -96,7 +97,6 @@
  R_GetVarLocValue
  R_HandlerStack
  R_HiddenFile
- R_IoBufferReadOffset
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
@@ -105,6 +105,7 @@
  R_IoBufferInit
  R_IoBufferPutc
  R_IoBufferPuts
+ R_IoBufferReadOffset
  R_IoBufferReadReset
  R_IoBufferWriteReset
  R_Is_Running
@@ -209,6 +210,7 @@
  R_gmtime
  R_gmtime_r
  R_has_methods
+ R_initAsignSymbols
  R_init_base
  R_init_jit_enabled
  R_initialize_bcode
@@ -365,9 +367,9 @@
  Rf_osDynSymbol
  Rf_pbeta_raw
  Rf_printArray
- Rf_printMatrix
  Rf_printComplexVector
  Rf_printIntegerVector
+ Rf_printMatrix
  Rf_printNamedVector
  Rf_printRealVector
  Rf_printVector
@@ -386,8 +388,8 @@
  Rf_tsConform
  Rf_tspgets
  Rf_ucstomb
- Rf_usemethod
  Rf_unbindVar
+ Rf_usemethod
  Rf_utf8toucs
  Rf_vectorIndex
  Rf_yychar
@@ -422,9 +424,9 @@
  Sys_TempDir
  TimeToSeed
  UNLOCK_BINDING
+ UNIMPLEMENTED_TYPEt
  UTF8in
  UTF8out
- UNIMPLEMENTED_TYPEt
  UseInternet2
  WinCheckUTF8
  WinUTF8out
