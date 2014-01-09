@@ -1171,7 +1171,7 @@ gmtload(struct state * const sp)
 	(void) tzparse(gmt, sp, TRUE);
 }
 
-static void
+void
 R_tzsetwall(void)
 {
     if (lcl_is_set < 0) return;

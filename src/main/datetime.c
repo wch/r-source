@@ -684,6 +684,9 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+#ifdef USE_INTERNAL_MKTIME
+    else R_tzsetwall(); // to get the system timezone recorded
+#endif
 
     // localtime may change tzname.
     if (isgmt) {
@@ -781,6 +784,9 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+#ifdef USE_INTERNAL_MKTIME
+    else R_tzsetwall(); // to get the system timezone recorded
+#endif
 
     for(int i = 0; i < 6; i++)
 	if((nlen[i] = XLENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
@@ -1027,6 +1033,9 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
+#ifdef USE_INTERNAL_MKTIME
+    else R_tzsetwall(); // to get the system timezone recorded
+#endif
 
     // in case this gets changed by conversions.
     if (isgmt) {

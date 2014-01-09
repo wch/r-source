@@ -246,6 +246,7 @@
  R_timegm
  R_tzname
  R_tzset
+ R_tzsetwall
  R_unary
  R_unserialize
  R_warn_partial_match_args
