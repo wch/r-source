@@ -143,6 +143,50 @@ SEXP duplicate(SEXP s){
 
 /*****************/
 
+/* Detect cycles that would be created by assigning 'child' as a
+   component of 's' in a complex assignment without duplicating
+   'child'.  This is called quite often but almost always returns
+   FALSE. Could be made more efficient, at least with partial
+   inlining, but probably not worth while until it starts showing up
+   significantly in profiling. Based on code from Michael Lawrence. */
+Rboolean R_cycle_detected(SEXP s, SEXP child) {
+    if (s == child) {
+	switch (TYPEOF(child)) {
+	case NILSXP:
+	case SYMSXP:
+	case ENVSXP:
+	case SPECIALSXP:
+	case BUILTINSXP:
+	case EXTPTRSXP:
+	case BCODESXP:
+	case WEAKREFSXP:
+	    /* it's a cycle but one that is OK */
+	    return FALSE; 
+	default:
+        return TRUE;
+	}
+    }
+    if (ATTRIB(child) != R_NilValue) {
+        if (R_cycle_detected(s, ATTRIB(child)))
+            return TRUE;
+    }
+    if (isPairList(child)) {
+        SEXP el = child;
+        while(el != R_NilValue) {
+	    if (s == el || R_cycle_detected(s, CAR(el)))
+                return TRUE;
+	    if (ATTRIB(el) != R_NilValue && R_cycle_detected(s, ATTRIB(el)))
+		return TRUE;		
+	    el = CDR(el);
+	}
+    } else if (isVectorList(child)) {
+        for(int i = 0 ; i < length(child); i++)
+	    if (R_cycle_detected(s, VECTOR_ELT(child, i)))
+                return TRUE;
+    }
+    return FALSE;
+}
+
 static SEXP duplicate1(SEXP s)
 {
     SEXP h, t,  sp;

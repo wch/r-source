@@ -679,4 +679,20 @@ INLINE_FUN SEXP mkString(const char *s)
     UNPROTECT(1);
     return t;
 }
+
+/* duplicate RHS value of complex assignment if necessary to prevent cycles */
+INLINE_FUN SEXP R_FixupRHS(SEXP x, SEXP y)
+{
+    if( y != R_NilValue && NAMED(y) ) {
+	if (R_cycle_detected(x, y)) {
+#ifdef WARNING_ON_CYCLE_DETECT
+	    warning("cycle detected");
+	    R_cycle_detected(x, y);
+#endif
+	    y = duplicate(y);
+	}
+	else if (NAMED(y) < 2) SET_NAMED(y, 2);
+    }
+    return y;
+}
 #endif /* R_INLINES_H_ */

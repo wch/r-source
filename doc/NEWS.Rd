@@ -168,6 +168,10 @@
       
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
       have a new argument to control the treatment of embedded nuls.
+
+      Avoid duplicating the right hand side values in complex
+      assignments when possible. Based on suggestions from Michael
+      Lawrence.
     }
   }
 

@@ -746,6 +746,8 @@ SEXP Rf_asS4(SEXP, Rboolean, int);
 SEXP Rf_S3Class(SEXP);
 int Rf_isBasicClass(const char *);
 
+Rboolean R_cycle_detected(SEXP s, SEXP child);
+
 typedef enum {
     CE_NATIVE = 0,
     CE_UTF8   = 1,
@@ -1173,6 +1175,7 @@ void Rf_unprotect(int);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
+SEXP R_FixupRHS(SEXP x, SEXP y);
 #endif
 
 #ifdef USE_RINTERNALS

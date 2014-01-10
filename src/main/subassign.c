@@ -1770,8 +1770,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
-	    if( NAMED(y) ) y = duplicate(y);
-	    SET_VECTOR_ELT(x, offset, y);
+	    SET_VECTOR_ELT(x, offset, R_FixupRHS(x, y));
 	    break;
 
 	case 2424:      /* raw <- raw */
@@ -1801,8 +1800,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (isPairList(x)) {
-	/* if (NAMED(y)) */
-	y = duplicate(y);
+	y = R_FixupRHS(x, y);
 	PROTECT(y);
 	if (nsubs == 1) {
 	    if (isNull(y)) {
@@ -1917,7 +1915,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     if (NAMED(val) == 2)
 	maybe_duplicate=TRUE;
     else if (NAMED(val)==1)
-	REPROTECT(val = duplicate(val), pvalidx);
+	REPROTECT(val = R_FixupRHS(x, val), pvalidx);
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
 	xS4 = x;
@@ -1929,7 +1927,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     if ((isList(x) || isLanguage(x)) && !isNull(x)) {
 	/* Here we do need to duplicate */
 	if (maybe_duplicate)
-	    REPROTECT(val = duplicate(val), pvalidx);
+	    REPROTECT(val = R_FixupRHS(x, val), pvalidx);
 	if (TAG(x) == nlist) {
 	    if (val == R_NilValue) {
 		SET_ATTRIB(CDR(x), ATTRIB(x));
@@ -2032,7 +2030,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	    if (imatch >= 0) {
 		/* We are just replacing an element */
 		if (maybe_duplicate)
-		    REPROTECT(val = duplicate(val), pvalidx);
+		    REPROTECT(val = R_FixupRHS(x, val), pvalidx);
 		SET_VECTOR_ELT(x, imatch, val);
 	    }
 	    else {
