@@ -106,13 +106,13 @@ dates <- sprintf('\%04d-\%02d-\%02d', as.integer(2000+rnorm(N)),
 
 system.time(a <- as.POSIXct(dates))
 # This ought to be faster, but system overhead can be high
-# - and is on OS X Lion
+# - and is on recent versions of  OS X
 system.time(b <- pvec(dates, as.POSIXct))
 stopifnot(all(a == b))
 
 # using mclapply for this would much slower because each value
 # will require a separate call to as.POSIXct()
 # as lapply(dates, as.POSIXct) does
-system.time(c <- unlist(mclapply(dates, as.POSIXct))
+system.time(c <- unlist(mclapply(dates, as.POSIXct)))
 }}
 \keyword{interface}
