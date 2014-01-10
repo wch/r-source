@@ -3249,8 +3249,9 @@ for(;;)
       return FALSE;
       }
 
-    /* Compare 4 bytes to improve speed. */
-    set_end = set1 + (32 / 4);
+    /* Because the sets are unaligned, we need
+    to perform byte comparison here. */
+    set_end = set1 + 32;
     if (invert_bits)
       {
       do
