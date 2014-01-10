@@ -2293,6 +2293,14 @@ setRlibs <-
     {
         run_one_arch <- function(exfile, exout, arch = "")
         {
+            any <- FALSE
+            ## moved here to avoid WARNING + OK
+            if (nzchar(enc) && is_ascii) {
+                warningLog(Log,
+                           paste("checking a package with encoding ",
+                                 sQuote(e), " in an ASCII locale\n"))
+                any <- TRUE
+            }
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             t1 <- proc.time()
@@ -2337,7 +2345,6 @@ setRlibs <-
             ## the time being, report warnings about use of
             ## deprecated , as the next release will make
             ## them defunct and hence using them an error.
-            any <- FALSE
             lines <- readLines(exout, warn = FALSE)
             bad_lines <- grep("^Warning: .*is deprecated.$", lines,
                               useBytes = TRUE, value = TRUE)
@@ -2412,10 +2419,6 @@ setRlibs <-
             exfile <- paste0(pkgname, "-Ex.R")
             if (file.exists(exfile)) {
                 enc <- if (!is.na(e <- desc["Encoding"])) {
-                    if (is_ascii)
-                        warningLog(Log,
-                                   paste("checking a package with encoding ",
-                                         sQuote(e), " in an ASCII locale\n"))
                     paste("--encoding", e, sep="=")
                 } else ""
                 if (!this_multiarch) {
