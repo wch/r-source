@@ -144,7 +144,7 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
-	-@rm -f $(INSTFILES2) NEWS2.rds NEWS.2.html NEWS.2.pdf
+	-@rm -f $(INSTFILES2) NEWS.2.rds NEWS.2.html NEWS.2.pdf
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
