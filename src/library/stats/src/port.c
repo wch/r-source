@@ -368,6 +368,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 {
     int i, n = LENGTH(d);
     SEXP xpt;
+    SEXP dot_par_symbol = install(".par");
     double *b = (double *) NULL, *g = (double *) NULL,
 	*h = (double *) NULL, fx = R_PosInf;
     if (isNull(rho)) {
@@ -380,13 +381,13 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	error(_("'d' must be a nonempty numeric vector"));
     if (hs != R_NilValue && gr == R_NilValue)
 	error(_("When Hessian defined must also have gradient defined"));
-    if (R_NilValue == (xpt = findVarInFrame(rho, install(".par"))) ||
+    if (R_NilValue == (xpt = findVarInFrame(rho, dot_par_symbol)) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
 	error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 	      n);
     /* We are going to alter .par, so must duplicate it */
-    defineVar(install(".par"), duplicate(xpt), rho);
-    PROTECT(xpt = findVarInFrame(rho, install(".par")));
+    defineVar(dot_par_symbol, duplicate(xpt), rho);
+    xpt = findVarInFrame(rho, dot_par_symbol);
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
@@ -414,10 +415,14 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		fx = R_PosInf;
 	    }
 	}
+
+	/* duplicate .par value again in case a callback has stored
+	   value (package varComp does this) */
+	defineVar(dot_par_symbol, duplicate(xpt), rho);
+	xpt = findVarInFrame(rho, dot_par_symbol);
     } while(INTEGER(iv)[0] < 3);
 
     if (b) Free(b); if (g) Free(g); if (h) Free(h);
-    UNPROTECT(1);
     return R_NilValue;
 }
 
