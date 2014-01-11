@@ -94,7 +94,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   In particular, \code{KalmanLike} alters the objects passed as
   the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
-  should not be shared. Use \code{fast=FALSE} to prevent this.
+  should not be shared. Use \code{fast = FALSE} to prevent this.
 }
 
 \references{

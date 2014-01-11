@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -11,8 +11,8 @@
   Fit an ARIMA model to a univariate time series.
 }
 \usage{
-arima(x, order = c(0, 0, 0),
-      seasonal = list(order = c(0, 0, 0), period = NA),
+arima(x, order = c(0L, 0L, 0L),
+      seasonal = list(order = c(0L, 0L, 0L), period = NA),
       xreg = NULL, include.mean = TRUE,
       transform.pars = TRUE,
       fixed = NULL, init = NULL,
@@ -24,7 +24,7 @@ arima(x, order = c(0, 0, 0),
   \item{x}{a univariate time series}
 
   \item{order}{A specification of the non-seasonal part of the ARIMA
-    model: the three components \eqn{(p, d, q)} are the AR order, the
+    model: the three integer components \eqn{(p, d, q)} are the AR order, the
     degree of differencing, and the MA order.}
 
   \item{seasonal}{A specification of the seasonal part of the ARIMA

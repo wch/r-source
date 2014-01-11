@@ -17,11 +17,12 @@
 #  http://www.r-project.org/Licenses/
 
 
+## There is a bare-bones version of this in StructTS.
 KalmanLike <- function(y, mod, nit = 0L, fast = TRUE)
 {
     ## next call changes objects a, P, Pn if fast == TRUE: beware!
     x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, as.integer(nit), FALSE, fast = fast)
+               mod$Pn, nit, FALSE, fast = fast)
     s2 <- x[1L]/length(y)
     list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
 }
@@ -29,12 +30,11 @@ KalmanLike <- function(y, mod, nit = 0L, fast = TRUE)
 KalmanRun <- function(y, mod, nit = 0L, fast = TRUE)
 {
     ## next call changes objects a, P, Pn if fast == TRUE: beware!
-    z <- setNames(.Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit), TRUE, fast=fast),
-		  c("values", "resid", "states"))
+    z <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+               mod$Pn, nit, TRUE, fast = fast)
     x <- z$values
-    s2 <- x[1L]/length(y)
-    z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
+    z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)),
+                 s2 = x[1L]/length(y))
     z
 }
 
@@ -52,9 +52,8 @@ KalmanForecast <- function(n.ahead = 10L, mod, fast = TRUE)
 
 KalmanSmooth <- function(y, mod, nit = 0L)
 {
-    z <- setNames(.Call(C_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit)),
-		  c("smooth", "var"))
+    z <- .Call(C_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+               mod$Pn, as.integer(nit))
     dn <- dim(z$smooth)
     dim(z$var) <- dn[c(1L, 2L, 2L)]
     z

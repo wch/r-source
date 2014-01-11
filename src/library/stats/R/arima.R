@@ -1,7 +1,7 @@
 #  File src/library/stats/R/arima.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-2013 The R Core Team
+#  Copyright (C) 2002-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-arima <- function(x, order = c(0, 0, 0),
-                  seasonal = list(order = c(0, 0, 0), period = NA),
+arima <- function(x, order = c(0L, 0L, 0L),
+                  seasonal = list(order = c(0L, 0L, 0L), period = NA),
                   xreg = NULL, include.mean = TRUE,
                   transform.pars = TRUE, fixed = NULL, init = NULL,
                   method = c("CSS-ML", "ML", "CSS"), n.cond,
@@ -38,7 +38,6 @@ arima <- function(x, order = c(0, 0, 0),
             mod$Pn[1L, 1L] <- 1/(1 - phi^2)
         else
             mod$Pn[1,1] <- 1
-        # End change
         mod$a[] <- 0
         mod
     }
