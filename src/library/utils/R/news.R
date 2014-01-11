@@ -124,7 +124,7 @@ function(x, ...)
                 cchunks <-
                     split(vchunk,
                           factor(category, levels = unique(category)))
-                Map(c, names(cchunks), sapply(cchunks, format_items),
+                Map(c, names(cchunks), lapply(cchunks, format_items),
                     USE.NAMES = FALSE)
             } else {
                 format_items(vchunk)
