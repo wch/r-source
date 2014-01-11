@@ -1,7 +1,7 @@
 #  File src/library/stats/R/Kalman.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-12 The R Core Team
+#  Copyright (C) 2002-14 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,19 +17,18 @@
 #  http://www.r-project.org/Licenses/
 
 
-KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
+KalmanLike <- function(y, mod, nit = 0L, fast = TRUE)
 {
-    ## next call changes objects a, P, Pn if fast==TRUE: beware!
-    x <- setNames(.Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-			mod$Pn, as.integer(nit), FALSE, fast=fast),
-		  c("ssq", "sumlog"))
+    ## next call changes objects a, P, Pn if fast == TRUE: beware!
+    x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
+               mod$Pn, as.integer(nit), FALSE, fast = fast)
     s2 <- x[1L]/length(y)
     list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
 }
 
-KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
+KalmanRun <- function(y, mod, nit = 0L, fast = TRUE)
 {
-    ## next call changes objects a, P, Pn if fast==TRUE: beware!
+    ## next call changes objects a, P, Pn if fast == TRUE: beware!
     z <- setNames(.Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
 			mod$Pn, as.integer(nit), TRUE, fast=fast),
 		  c("values", "resid", "states"))
@@ -39,7 +38,7 @@ KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
     z
 }
 
-KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
+KalmanForecast <- function(n.ahead = 10L, mod, fast = TRUE)
 {
     a <- numeric(p <- length(mod$a))
     P <- matrix(0, p, p)
@@ -51,12 +50,12 @@ KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
 	     c("pred", "var"))
 }
 
-KalmanSmooth <- function(y, mod, nit = 0)
+KalmanSmooth <- function(y, mod, nit = 0L)
 {
     z <- setNames(.Call(C_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
 			mod$Pn, as.integer(nit)),
 		  c("smooth", "var"))
     dn <- dim(z$smooth)
-    dim(z$var) <- dn[c(1, 2, 2)]
+    dim(z$var) <- dn[c(1L, 2L, 2L)]
     z
 }

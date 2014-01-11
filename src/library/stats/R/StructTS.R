@@ -1,7 +1,7 @@
 #  File src/library/stats/R/StructTS.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-12 The R Core Team
+#  Copyright (C) 2002-14 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 StructTS <- function(x, type = c("level", "trend", "BSM"),
                      init = NULL, fixed = NULL, optim.control = NULL)
 {
-    KalmanLike2 <- function (y, mod, nit = 0)
+    KalmanLike2 <- function (y, mod, nit = 0L)
     {
         x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V,
-                   mod$h, mod$Pn, as.integer(nit), FALSE, fast=TRUE)
+                   mod$h, mod$Pn, as.integer(nit), FALSE, fast = TRUE)
         0.5 * sum(x)/length(y)
     }
     makeLevel <- function(x)

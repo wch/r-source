@@ -1,6 +1,6 @@
 % File src/library/stats/man/KalmanLike.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{KalmanLike}
@@ -15,17 +15,17 @@
   forecasting or smoothing.
 }
 \usage{
-KalmanLike(y, mod, nit = 0, fast = TRUE)
-KalmanRun(y, mod, nit = 0, fast = TRUE)
-KalmanSmooth(y, mod, nit = 0)
-KalmanForecast(n.ahead = 10, mod, fast = TRUE)
+KalmanLike(y, mod, nit = 0L, fast = TRUE)
+KalmanRun(y, mod, nit = 0L, fast = TRUE)
+KalmanSmooth(y, mod, nit = 0L)
+KalmanForecast(n.ahead = 10L, mod, fast = TRUE)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
   \item{y}{a univariate time series.}
   \item{mod}{A list describing the state-space model: see \sQuote{Details}.}
   \item{nit}{The time at which the initialization is computed.
-    \code{nit = 0} implies that the initialization is for a one-step
+    \code{nit = 0L} implies that the initialization is for a one-step
     prediction, so \code{Pn} should not be computed at the first step.}
   \item{n.ahead}{The number of steps ahead for which prediction is
     required.}
