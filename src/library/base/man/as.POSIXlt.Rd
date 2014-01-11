@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -126,6 +126,10 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   If a time zone is needed and that specified is invalid on your system,
   what happens is system-specific but attempts to set it will probably
   be ignored.
+  
+  Conversion from character needs to find a suitable format unless one
+  is supplied (by trying common formats in turn): this can be slow for
+  long inputs.
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes;
