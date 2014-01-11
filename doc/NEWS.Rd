@@ -170,8 +170,10 @@
       have a new argument to control the treatment of embedded nuls.
 
       \item Avoid duplicating the right hand side values in complex
-      assignments when possible. Based on suggestions from Michael
-      Lawrence.
+      assignments when possible.  This also reduces copying of
+      replacement values in subassignments such as \code{Z$a <- a0} and
+      \code{ans[[i]] <- tmp}.
+      (Based on suggestions from Michael Lawrence.)
     }
   }
 
