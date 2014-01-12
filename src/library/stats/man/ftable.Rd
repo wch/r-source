@@ -71,8 +71,8 @@ ftable(x, \dots)
   Function \code{\link{ftable.formula}} provides a formula method for
   creating flat contingency tables.
 
-  There are methods for \code{\link{as.table}} and
-  \code{\link{as.data.frame}}.
+  There are methods for \code{\link{as.table}}, \code{\link{as.matrix}}
+  and \code{\link{as.data.frame}}.
 }
 \seealso{
   \code{\link{ftable.formula}} for the formula interface (which allows a
