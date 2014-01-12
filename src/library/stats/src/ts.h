@@ -83,8 +83,7 @@ SEXP ARIMA_undoPars(SEXP sin, SEXP sarma);
 SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans);
 SEXP ARIMA_Invtrans(SEXP in, SEXP sarma);
 SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma);
-SEXP ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta, SEXP sa,
-		SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid);
+SEXP ARIMA_Like(SEXP sy, SEXP mod, SEXP sUP, SEXP giveResid);
 SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond,
 	       SEXP giveResid);
 SEXP TSconv(SEXP a, SEXP b);

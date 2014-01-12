@@ -70,7 +70,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(ARIMA_transPars, 3),
     CALLDEF(ARIMA_Invtrans, 2),
     CALLDEF(ARIMA_Gradtrans, 2),
-    CALLDEF(ARIMA_Like, 9),
+    CALLDEF(ARIMA_Like, 4),
     CALLDEF(ARIMA_CSS, 6),
     CALLDEF(TSconv, 2),
     CALLDEF(getQ0, 2),
