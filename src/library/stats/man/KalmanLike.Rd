@@ -19,6 +19,7 @@ KalmanLike(y, mod, nit = 0L, update = TRUE)
 KalmanRun(y, mod, nit = 0L, update = TRUE)
 KalmanSmooth(y, mod, nit = 0L)
 KalmanForecast(n.ahead = 10L, mod, update = FALSE)
+
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
@@ -27,16 +28,17 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   \item{nit}{The time at which the initialization is computed.
     \code{nit = 0L} implies that the initialization is for a one-step
     prediction, so \code{Pn} should not be computed at the first step.}
+  \item{update}{If \code{TRUE} the \code{mod} object will be modified to
+    the state at the end of fitting/prediction.}
   \item{n.ahead}{The number of steps ahead for which prediction is
     required.}
+  
   \item{phi, theta}{numeric vectors of length \eqn{\ge 0} giving AR
     and MA parameters.}
   \item{Delta}{vector of differencing coefficients, so an ARMA model is
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}
   \item{kappa}{the prior variance (as a multiple of the innovations
     variance) for the past observations in a differenced model.}
-  \item{update}{If \code{TRUE} the \code{mod} object will be modified to
-    the state at the end of fitting/prediction.}
 }
 \details{
   These functions work with a general univariate state-space model
@@ -56,7 +58,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     \item{\code{a}}{the current state estimate}
     \item{\code{P}}{the current estimate of the state uncertainty matrix}
     \item{\code{Pn}}{the estimate at time \eqn{t-1} of the state
-      uncertainty matrix}
+      uncertainty matrix (not updated by \code{KalmanForecast}.}
   }
 
   \code{KalmanSmooth} is the workhorse function for \code{\link{tsSmooth}}.
@@ -72,7 +74,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   For \code{KalmanRun}, a list with components \code{values}, a vector
   of length 2 giving the output of \code{KalmanLike}, \code{resid} (the
   residuals) and \code{states}, the contemporaneous state estimates,
-  a matrix with one row for each time.
+  a matrix with one row for each observation time.
 
   For \code{KalmanSmooth}, a list with two components.
   Component \code{smooth} is a \code{n} by \code{p} matrix of state

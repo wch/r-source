@@ -21,16 +21,14 @@
 KalmanLike <- function(y, mod, nit = 0L, update = TRUE)
 {
     ## next call changes objects a, P, Pn if update == TRUE: beware!
-    x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, FALSE, update)
+    x <- .Call(C_KalmanLike, y, mod, nit, FALSE, update)
     list(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
 }
 
 KalmanRun <- function(y, mod, nit = 0L, update = TRUE)
 {
     ## next call changes objects a, P, Pn if update == TRUE: beware!
-    z <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, TRUE, update)
+    z <- .Call(C_KalmanLike, y, mod, nit, TRUE, update)
     x <- z$values
     z[[1L]] <- c(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
     z
@@ -38,14 +36,12 @@ KalmanRun <- function(y, mod, nit = 0L, update = TRUE)
 
 ## used by predict.Arima
 KalmanForecast <- function(n.ahead = 10L, mod, update = FALSE)
-    .Call(C_KalmanFore, as.integer(n.ahead), mod$Z, mod$a, mod$P,
-          mod$T, mod$V, mod$h, update)
+    .Call(C_KalmanFore, as.integer(n.ahead), mod, update)
 
 
 KalmanSmooth <- function(y, mod, nit = 0L)
 {
-    z <- .Call(C_KalmanSmooth, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, as.integer(nit))
+    z <- .Call(C_KalmanSmooth, y, mod, as.integer(nit))
     dn <- dim(z$smooth)
     dim(z$var) <- dn[c(1L, 2L, 2L)]
     z

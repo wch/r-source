@@ -76,12 +76,9 @@ SEXP Invtrans(SEXP pG, SEXP x);
 
 SEXP ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max);
 
-SEXP KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT, SEXP sV,
-		SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast);
-SEXP KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT,
-		SEXP sV, SEXP sh, SEXP fast);
-SEXP KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-		  SEXP sV, SEXP sh, SEXP sPn, SEXP sUP);
+SEXP KalmanLike(SEXP sy, SEXP mod, SEXP sUP, SEXP op, SEXP fast);
+SEXP KalmanFore(SEXP nahead, SEXP mod, SEXP fast);
+SEXP KalmanSmooth(SEXP sy, SEXP mod, SEXP sUP);
 SEXP ARIMA_undoPars(SEXP sin, SEXP sarma);
 SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans);
 SEXP ARIMA_Invtrans(SEXP in, SEXP sarma);

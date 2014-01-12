@@ -75,8 +75,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         Z$h <- p[np+1L]*vx
         Z$P[] <- 1e6*vx
         Z$a[] <- a0 # $<- no longer duplicates in >= 3.1.0
-        0.5 * sum(.Call(C_KalmanLike, y, Z$Z, Z$a, Z$P, Z$T, Z$V,
-                        Z$h, Z$Pn, -1L, FALSE, TRUE))
+        0.5 * sum(.Call(C_KalmanLike, y, Z, -1L, FALSE, TRUE))
     }
 
     series <- deparse(substitute(x))
