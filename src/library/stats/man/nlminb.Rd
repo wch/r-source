@@ -55,8 +55,8 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
 
   The parameter vector passed to \code{objective}, \code{gradient} and
-  \code{hessian} has special semantics and is shared between calls.  The
-  functions should not copy it.
+  \code{hessian} had special semantics prior to \R 3.1.0 and was shared
+  between calls.  The functions should not copy it.
 
   If any of the functions returns \code{NA} or \code{NaN} the internal code
   could infinite-loop in \R prior to 2.15.2: this is now an error for
