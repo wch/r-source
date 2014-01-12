@@ -177,7 +177,7 @@
       
       \item The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast} has been replaced to
-      \code{update}, which instead of updating \cod{mod} in place,
+      \code{update}, which instead of updating \code{mod} in place,
       optionally returns the updated model in an attribute \code{"mod"}
       of the return value.
     }
@@ -474,6 +474,10 @@
       \item (Windows.)  \code{file.symlink()} works around the
       undocumented restriction of the Windows system call to
       backslashes.  (Wish of \PR{15631}.)
+      
+      \item \code{KalmanForecast(fast = FALSE)} is now the default, and
+      the help contains an example of how \code{fast = TRUE} can be used
+      in this version.
     }
   }
 
@@ -664,6 +668,9 @@
       
       \item \code{KalmanForecast(fast = FALSE)} reported a stack
       imbalance.
+
+      \item The count of observations used by \code{KalmanRun} did not
+      take missing values into account.
     }
   }
 }
