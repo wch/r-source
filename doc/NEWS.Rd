@@ -175,7 +175,7 @@
       \code{ans[[i]] <- tmp}.
       (Based on suggestions from Michael Lawrence.)
       
-      \item  The \code{fast} arrugment of \code{KalmanLike()},
+      \item  The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast} has been renamed to
       \code{update} to better reflect its purpose (to update the state
       of the \code{mod} argument).
