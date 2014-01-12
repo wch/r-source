@@ -28,7 +28,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         a <- xm
         P <- Pn <- matrix(0., 1L, 1L)
         h <- 1.0
-        V <- diag(1)
+        V <- diag(1L)
         return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
     }
 
@@ -41,7 +41,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         a <- c(xm, 0)
         P <- Pn <- matrix(0., 2L, 2L)
         h <- 1.0
-        V <- diag(2)
+        V <- diag(2L)
         return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
     }
 
@@ -74,7 +74,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         Z$V[cbind(1L:np, 1L:np)] <- p[-(np+1L)]*vx
         Z$h <- p[np+1L]*vx
         Z$P[] <- 1e6*vx
-        Z$a <- a0
+        Z$a[] <- a0
         0.5 * sum(.Call(C_KalmanLike, y, Z$Z, Z$a, Z$P, Z$T, Z$V,
                         Z$h, Z$Pn, -1L, FALSE, TRUE))/length(y)
     }

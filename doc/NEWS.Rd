@@ -235,6 +235,8 @@
       \item \code{getSrcref()} did not work on method definitions if
       \code{rematchDefinition()} had been used.
       
+      \item The \code{fast} argument of \code{KalmanForecast()} had not
+      make any difference for years, and has been removed.
     }
   }
 }
