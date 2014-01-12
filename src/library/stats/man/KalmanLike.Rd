@@ -18,7 +18,7 @@
 KalmanLike(y, mod, nit = 0L, fast = TRUE)
 KalmanRun(y, mod, nit = 0L, fast = TRUE)
 KalmanSmooth(y, mod, nit = 0L)
-KalmanForecast(n.ahead = 10L, mod)
+KalmanForecast(n.ahead = 10L, mod, fast = TRUE)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
@@ -85,9 +85,6 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   For \code{makeARIMA}, a model list including components for
   its arguments.
-
-  \strong{NB}: When \code{fast = TRUE} (the default) the object
-  \code{mod} is updated to reflect the current state.
 }
 
 \section{Warning}{

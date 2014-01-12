@@ -39,10 +39,16 @@ KalmanRun <- function(y, mod, nit = 0L, fast = TRUE)
 }
 
 ## used by predict.Arima
-KalmanForecast <- function(n.ahead = 10L, mod)
-    .Call(C_KalmanFore, as.integer(n.ahead), mod$Z, mod$a, mod$P,
-          mod$T, mod$V, mod$h, FALSE)
-
+KalmanForecast <- function(n.ahead = 10L, mod, fast = TRUE)
+{
+    a <- numeric(p <- length(mod$a))
+    P <- matrix(0, p, p)
+    a[] <- mod$a
+    P[] <- mod$P
+    ## next call changes objects a, P if fast==TRUE
+    .Call(C_KalmanFore, as.integer(n.ahead), mod$Z, a, P,
+		   mod$T, mod$V, mod$h, fast=fast)
+}
 
 KalmanSmooth <- function(y, mod, nit = 0L)
 {
