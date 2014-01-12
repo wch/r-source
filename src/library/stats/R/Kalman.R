@@ -22,7 +22,7 @@ KalmanLike <- function(y, mod, nit = 0L, fast = TRUE)
 {
     ## next call changes objects a, P, Pn if fast == TRUE: beware!
     x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, FALSE, fast = fast)
+               mod$Pn, nit, FALSE, fast)
     s2 <- x[1L]/length(y)
     list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
 }
@@ -31,24 +31,18 @@ KalmanRun <- function(y, mod, nit = 0L, fast = TRUE)
 {
     ## next call changes objects a, P, Pn if fast == TRUE: beware!
     z <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, TRUE, fast = fast)
+               mod$Pn, nit, TRUE, fast)
     x <- z$values
     z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)),
                  s2 = x[1L]/length(y))
     z
 }
 
-KalmanForecast <- function(n.ahead = 10L, mod, fast = TRUE)
-{
-    a <- numeric(p <- length(mod$a))
-    P <- matrix(0, p, p)
-    a[] <- mod$a
-    P[] <- mod$P
-    ## next call changes objects a, P if fast==TRUE
-    setNames(.Call(C_KalmanFore, as.integer(n.ahead), mod$Z, a, P,
-		   mod$T, mod$V, mod$h, fast=fast),
-	     c("pred", "var"))
-}
+## used by predict.Arima
+KalmanForecast <- function(n.ahead = 10L, mod)
+    .Call(C_KalmanFore, as.integer(n.ahead), mod$Z, mod$a, mod$P,
+          mod$T, mod$V, mod$h, FALSE)
+
 
 KalmanSmooth <- function(y, mod, nit = 0L)
 {

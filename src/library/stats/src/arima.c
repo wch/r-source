@@ -39,6 +39,15 @@ extern double atanh(double x);
 #endif
 
 
+/* 
+  KalmanLike, internal to StructTS:
+  .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h, mod$Pn,
+        nit, FALSE, fast)
+  KalmanRun:
+  .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h, mod$Pn,
+        nit, TRUE, fast)
+*/
+
 /* y vector length n of observations
    Z vector length p for observation equation y_t = Za_t +  eps_t
    a vector length p of initial state
@@ -50,8 +59,11 @@ extern double atanh(double x);
    Pnew used for P[t|t -1]
    M used for M = P[t|t -1]Z
 
+   op is FALSE for KalmanLike, TRUE for KalmanRun
+
    No checking here!
  */
+
 SEXP
 KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast)
@@ -155,8 +167,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     if(lop) {
 	SET_VECTOR_ELT(ans, 0, res = allocVector(REALSXP, 2));
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
-	UNPROTECT(1);
-	if (!lFast) UNPROTECT(3);
+	UNPROTECT(lFast ? 1 : 4);
 	return ans;
     } else {
 	res = allocVector(REALSXP, 2);
@@ -347,23 +358,23 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     return res;
 }
 
+
+// Only used with fast = FALSE at present.
 SEXP
 KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
 	   SEXP sh, SEXP fast)
 {
-    SEXP res, forecasts, se;
-    int  n = asInteger(nahead), p = LENGTH(sa0);
-    double *Z = REAL(sZ), *a = REAL(sa0), *P = REAL(sP0), *T = REAL(sT),
-	*V = REAL(sV), h = asReal(sh);
-    int i, j, k, l;
-    double fc, tmp, *mm, *anew, *Pnew;
-
-    /* It would be better to check types before using LENGTH and REAL
-       on these, but should still work this way.  LT */
     if (TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa0) != REALSXP || TYPEOF(sP0) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
 	error(_("invalid argument type"));
+
+    SEXP res, forecasts, se;
+    int  n = asInteger(nahead), p = LENGTH(sa0), lFast = asLogical(fast);
+    double *Z = REAL(sZ), *a = REAL(sa0), *P = REAL(sP0), *T = REAL(sT),
+	*V = REAL(sV), h = asReal(sh);
+    int i, j, k, l;
+    double fc, tmp, *mm, *anew, *Pnew;
 
     anew = (double *) R_alloc(p, sizeof(double));
     Pnew = (double *) R_alloc(p * p, sizeof(double));
@@ -371,11 +382,19 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
     PROTECT(res = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(res, 0, forecasts = allocVector(REALSXP, n));
     SET_VECTOR_ELT(res, 1, se = allocVector(REALSXP, n));
-    if (!LOGICAL(fast)[0]){
-	PROTECT(sa0=duplicate(sa0));
-	a=REAL(sa0);
-	PROTECT(sP0=duplicate(sP0));
-	P=REAL(sP0);
+    {
+	SEXP nm = PROTECT(allocVector(STRSXP, 2));
+	SET_STRING_ELT(nm, 0, mkChar("pred"));
+	SET_STRING_ELT(nm, 1, mkChar("var"));
+	setAttrib(res, R_NamesSymbol, nm);
+	UNPROTECT(1);
+    }
+
+    if (!lFast) {
+	PROTECT(sa0 = duplicate(sa0));
+	a = REAL(sa0);
+	PROTECT(sP0 = duplicate(sP0));
+	P = REAL(sP0);
     }
     for (l = 0; l < n; l++) {
 	fc = 0.0;
@@ -412,7 +431,7 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
 	    }
 	REAL(se)[l] = tmp;
     }
-    UNPROTECT(1);
+    UNPROTECT(lFast ? 1 : 3);
     return res;
 }
 

@@ -18,7 +18,7 @@
 KalmanLike(y, mod, nit = 0L, fast = TRUE)
 KalmanRun(y, mod, nit = 0L, fast = TRUE)
 KalmanSmooth(y, mod, nit = 0L)
-KalmanForecast(n.ahead = 10L, mod, fast = TRUE)
+KalmanForecast(n.ahead = 10L, mod)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
@@ -85,6 +85,9 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   For \code{makeARIMA}, a model list including components for
   its arguments.
+
+  \strong{NB}: When \code{fast = TRUE} (the default) the object
+  \code{mod} is updated to reflect the current state.
 }
 
 \section{Warning}{
@@ -94,7 +97,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   In particular, \code{KalmanLike} alters the objects passed as
   the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
-  should not be shared. Use \code{fast = FALSE} to prevent this.
+  should not be shared.  Use \code{fast = FALSE} to prevent this.
 }
 
 \references{
