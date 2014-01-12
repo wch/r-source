@@ -123,7 +123,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     z <- KalmanRun(y, Z, -1)
     resid <- ts(z$resid)
     tsp(resid) <- xtsp
-    Z0 <- Z; Z0$P[] <- 1e6*vx; Z0$a <- a0
+    Z0 <- Z; Z0$P[] <- 1e6*vx; Z0$Pn[] <- 0; Z0$a <- a0
 
     cn <- switch(type,
                  "level" = c("level"),
