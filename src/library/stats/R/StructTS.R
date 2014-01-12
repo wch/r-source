@@ -29,7 +29,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0., 1L, 1L)
         h <- 1.0
         V <- diag(1L)
-        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
+        return(list(Z = Z, a = a, P = P, T = T, V = V, h = h, Pn = Pn))
     }
 
     makeTrend <- function(x)
@@ -42,7 +42,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0., 2L, 2L)
         h <- 1.0
         V <- diag(2L)
-        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
+        return(list(Z = Z, a = a, P = P, T = T, V = V, h = h, Pn = Pn))
     }
 
     makeBSM <- function(x, nf)
@@ -63,7 +63,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0., nf+1L, nf+1L)
         h <- 1.
         V <- diag(c(1., 1., 1., rep(0., nf-2L)))
-        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
+        return(list(Z = Z, a = a, P = P, T = T, V = V, h = h, Pn = Pn))
     }
 
     getLike <- function(par)
@@ -73,9 +73,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         if(all(p == 0)) return(1000)
         Z$V[cbind(1L:np, 1L:np)] <- p[-(np+1L)]*vx
         Z$h <- p[np+1L]*vx
-        Z$P[] <- 1e6*vx
-        Z$a[] <- a0 # $<- no longer duplicates in >= 3.1.0
-        0.5 * sum(.Call(C_KalmanLike, y, Z, -1L, FALSE, TRUE))
+        z <- .Call(C_KalmanLike, y, Z, -1L, FALSE, FALSE)
+        0.5 * sum(z)
     }
 
     series <- deparse(substitute(x))
@@ -97,8 +96,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
                 "trend" = makeTrend(x),
                 "BSM" = makeBSM(x, nf)
                 )
-    a0 <- Z$a
-    vx <- var(x, na.rm=TRUE)/100
+    vx <- var(x, na.rm = TRUE)/100
+    Z$P[] <- 1e6*vx
     np <- switch(type, "level" = 1L, "trend" = 2L, "BSM" = 3L)
     if (is.null(fixed)) fixed <- rep(NA_real_, np+1L)
     mask <- is.na(fixed)
@@ -117,12 +116,9 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     coef[mask] <- res$par
     Z$V[cbind(1L:np, 1L:np)] <- coef[1L:np]*vx
     Z$h <- coef[np+1L]*vx
-    Z$P[] <- 1e6*vx
-    Z$a <- a0
-    z <- KalmanRun(y, Z, -1)
+    z <- KalmanRun(y, Z, -1, update = TRUE)
     resid <- ts(z$resid)
     tsp(resid) <- xtsp
-    Z0 <- Z; Z0$P[] <- 1e6*vx; Z0$a <- a0
 
     cn <- switch(type,
                  "level" = c("level"),
@@ -145,7 +141,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     res <- list(coef = coef, loglik = loglik, loglik0 = loglik0, data = y,
                 residuals = resid, fitted = states,
                 call = match.call(), series = series,
-                code = res$convergence, model = Z, model0 = Z0, xtsp = xtsp)
+                code = res$convergence, model = attr(z, "mod"),
+                model0 = Z, xtsp = xtsp)
     class(res) <- "StructTS"
     res
 }

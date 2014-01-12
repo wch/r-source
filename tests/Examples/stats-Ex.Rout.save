@@ -542,10 +542,12 @@ $se
  [1]  9.00655 11.25606 13.43389 14.51516 15.25538 15.65611 15.90158 16.03792
  [9] 16.11764 16.16229 16.18785 16.20220
 > ## and now do it year by year
+> mod <- fit3$model
 > for(y in 1:3) {
-+   pr <- KalmanForecast(4, fit3$model, TRUE)
-+   print(list(pred = pr$pred + fit3$coef[4], 
++   pr <- KalmanForecast(4, mod, TRUE)
++   print(list(pred = pr$pred + fit3$coef["intercept"], 
 +              se = sqrt(pr$var * fit3$sigma2)))
++   mod <- attr(pr, "mod")
 + }
 $pred
 [1] 29.84194 34.41014 39.30815 43.02779

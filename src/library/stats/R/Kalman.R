@@ -18,16 +18,16 @@
 
 
 ## There is a bare-bones version of this in StructTS.
-KalmanLike <- function(y, mod, nit = 0L, update = TRUE)
+KalmanLike <- function(y, mod, nit = 0L, update = FALSE)
 {
-    ## next call changes objects a, P, Pn if update == TRUE: beware!
     x <- .Call(C_KalmanLike, y, mod, nit, FALSE, update)
-    list(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
+    z <- list(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
+    if(update) attr(z, "mod") <- attr(x, "mod")
+    z
 }
 
-KalmanRun <- function(y, mod, nit = 0L, update = TRUE)
+KalmanRun <- function(y, mod, nit = 0L, update = FALSE)
 {
-    ## next call changes objects a, P, Pn if update == TRUE: beware!
     z <- .Call(C_KalmanLike, y, mod, nit, TRUE, update)
     x <- z$values
     z[[1L]] <- c(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])

@@ -15,8 +15,8 @@
   forecasting or smoothing.
 }
 \usage{
-KalmanLike(y, mod, nit = 0L, update = TRUE)
-KalmanRun(y, mod, nit = 0L, update = TRUE)
+KalmanLike(y, mod, nit = 0L, update = FALSE)
+KalmanRun(y, mod, nit = 0L, update = FALSE)
 KalmanSmooth(y, mod, nit = 0L)
 KalmanForecast(n.ahead = 10L, mod, update = FALSE)
 
@@ -28,8 +28,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   \item{nit}{The time at which the initialization is computed.
     \code{nit = 0L} implies that the initialization is for a one-step
     prediction, so \code{Pn} should not be computed at the first step.}
-  \item{update}{If \code{TRUE} the \code{mod} object will be modified to
-    the state at the end of fitting/prediction.}
+  \item{update}{If \code{TRUE} the update \code{mod} object will be
+    returned as attribute \code{"mod"} of the result.}
   \item{n.ahead}{The number of steps ahead for which prediction is
     required.}
   
@@ -94,10 +94,6 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   These functions are designed to be called from other functions which
   check the validity of the arguments passed, so very little checking is
   done.
-
-  In particular, \code{KalmanLike} alters the objects passed as
-  the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
-  should not be shared.  Use \code{update = FALSE} to prevent this.
 }
 
 \references{
@@ -118,10 +114,12 @@ pr <- KalmanForecast(12, fit3$model)
 pr$pred + fit3$coef[4]
 sqrt(pr$var * fit3$sigma2)
 ## and now do it year by year
+mod <- fit3$model
 for(y in 1:3) {
-  pr <- KalmanForecast(4, fit3$model, TRUE)
-  print(list(pred = pr$pred + fit3$coef[4], 
+  pr <- KalmanForecast(4, mod, TRUE)
+  print(list(pred = pr$pred + fit3$coef["intercept"], 
              se = sqrt(pr$var * fit3$sigma2)))
+  mod <- attr(pr, "mod")
 }
 }
 

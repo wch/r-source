@@ -175,15 +175,11 @@
       \code{ans[[i]] <- tmp}.
       (Based on suggestions from Michael Lawrence.)
       
-      \item  The \code{fast} argument of \code{KalmanLike()},
-      \code{KalmanRun()} and \code{KalmanForecast} has been renamed to
-      \code{update} to better reflect its purpose (to update the state
-      of the \code{mod} argument).
-
-      The default has been switched to \code{KalmanForecast(mod, update
-	= FALSE)}, and \code{update = TRUE} now results in the
-      \code{mod} argument being updated to the state at the end of the
-      predictions.
+      \item The \code{fast} argument of \code{KalmanLike()},
+      \code{KalmanRun()} and \code{KalmanForecast} has been replaced to
+      \code{update}, which instead of updating \cod{mod} in place,
+      optionally returns the updated model in an attribute \code{"mod"}
+      of the return value.
     }
   }
 
