@@ -1,7 +1,7 @@
 #  File src/library/stats/R/StructTS.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-14 The R Core Team
+#  Copyright (C) 2002-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         Z$P[] <- 1e6*vx
         Z$a[] <- a0 # $<- no longer duplicates in >= 3.1.0
         0.5 * sum(.Call(C_KalmanLike, y, Z$Z, Z$a, Z$P, Z$T, Z$V,
-                        Z$h, Z$Pn, -1L, FALSE, TRUE))/length(y)
+                        Z$h, Z$Pn, -1L, FALSE, TRUE))
     }
 
     series <- deparse(substitute(x))

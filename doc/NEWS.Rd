@@ -174,6 +174,16 @@
       replacement values in subassignments such as \code{Z$a <- a0} and
       \code{ans[[i]] <- tmp}.
       (Based on suggestions from Michael Lawrence.)
+      
+      \item  The \code{fast} arrugment of \code{KalmanLike()},
+      \code{KalmanRun()} and \code{KalmanForecast} has been renamed to
+      \code{update} to better reflect its purpose (to update the state
+      of the \code{mod} argument).
+
+      The default has been switched to \code{KalmanForecast(mod, update
+	= FALSE)}, and \code{update = TRUE} now results in the
+      \code{mod} argument being updated to the state at the end of the
+      predictions.
     }
   }
 
@@ -656,6 +666,8 @@
       \item \code{getSrcref()} did not work on method definitions if
       \code{rematchDefinition()} had been used.
       
+      \item \code{KalmanForecast(fast = FALSE)} reported a stack
+      imbalance.
     }
   }
 }

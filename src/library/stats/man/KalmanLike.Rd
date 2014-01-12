@@ -15,10 +15,10 @@
   forecasting or smoothing.
 }
 \usage{
-KalmanLike(y, mod, nit = 0L, fast = TRUE)
-KalmanRun(y, mod, nit = 0L, fast = TRUE)
+KalmanLike(y, mod, nit = 0L, update = TRUE)
+KalmanRun(y, mod, nit = 0L, update = TRUE)
 KalmanSmooth(y, mod, nit = 0L)
-KalmanForecast(n.ahead = 10L, mod)
+KalmanForecast(n.ahead = 10L, mod, update = FALSE)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
@@ -35,7 +35,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}
   \item{kappa}{the prior variance (as a multiple of the innovations
     variance) for the past observations in a differenced model.}
-  \item{fast}{If \code{TRUE} the \code{mod} object may be modified.}
+  \item{update}{If \code{TRUE} the \code{mod} object will be modified to
+    the state at the end of fitting/prediction.}
 }
 \details{
   These functions work with a general univariate state-space model
@@ -85,9 +86,6 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   For \code{makeARIMA}, a model list including components for
   its arguments.
-
-  \strong{NB}: When \code{fast = TRUE} (the default) the object
-  \code{mod} is updated to reflect the current state.
 }
 
 \section{Warning}{
@@ -97,7 +95,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   In particular, \code{KalmanLike} alters the objects passed as
   the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
-  should not be shared.  Use \code{fast = FALSE} to prevent this.
+  should not be shared.  Use \code{update = FALSE} to prevent this.
 }
 
 \references{
@@ -108,4 +106,21 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 \seealso{
    \code{\link{arima}}, \code{\link{StructTS}}. \code{\link{tsSmooth}}.
  }
-\keyword{ts}
+
+ \examples{
+## an ARIMA fit
+fit3 <- arima(presidents, c(3, 0, 0))
+predict(fit3, 12)
+## reconstruct this
+pr <- KalmanForecast(12, fit3$model)
+pr$pred + fit3$coef[4]
+sqrt(pr$var * fit3$sigma2)
+## and now do it year by year
+for(y in 1:3) {
+  pr <- KalmanForecast(4, fit3$model, TRUE)
+  print(list(pred = pr$pred + fit3$coef[4], 
+             se = sqrt(pr$var * fit3$sigma2)))
+}
+}
+
+ \keyword{ts}

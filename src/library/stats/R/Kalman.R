@@ -1,7 +1,7 @@
 #  File src/library/stats/R/Kalman.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-14 The R Core Team
+#  Copyright (C) 2002-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,30 +18,28 @@
 
 
 ## There is a bare-bones version of this in StructTS.
-KalmanLike <- function(y, mod, nit = 0L, fast = TRUE)
+KalmanLike <- function(y, mod, nit = 0L, update = TRUE)
 {
-    ## next call changes objects a, P, Pn if fast == TRUE: beware!
+    ## next call changes objects a, P, Pn if update == TRUE: beware!
     x <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, FALSE, fast)
-    s2 <- x[1L]/length(y)
-    list(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)), s2 = s2)
+               mod$Pn, nit, FALSE, update)
+    list(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
 }
 
-KalmanRun <- function(y, mod, nit = 0L, fast = TRUE)
+KalmanRun <- function(y, mod, nit = 0L, update = TRUE)
 {
-    ## next call changes objects a, P, Pn if fast == TRUE: beware!
+    ## next call changes objects a, P, Pn if update == TRUE: beware!
     z <- .Call(C_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, nit, TRUE, fast)
+               mod$Pn, nit, TRUE, update)
     x <- z$values
-    z[[1L]] <- c(Lik = 0.5*(log(x[1L]/length(y)) + x[2L]/length(y)),
-                 s2 = x[1L]/length(y))
+    z[[1L]] <- c(Lik = 0.5*(log(x[1L]) + x[2L]), s2 = x[1L])
     z
 }
 
 ## used by predict.Arima
-KalmanForecast <- function(n.ahead = 10L, mod)
+KalmanForecast <- function(n.ahead = 10L, mod, update = FALSE)
     .Call(C_KalmanFore, as.integer(n.ahead), mod$Z, mod$a, mod$P,
-          mod$T, mod$V, mod$h, FALSE)
+          mod$T, mod$V, mod$h, update)
 
 
 KalmanSmooth <- function(y, mod, nit = 0L)

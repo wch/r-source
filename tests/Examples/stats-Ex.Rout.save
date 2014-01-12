@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2013-12-25 r64541) -- "Unsuffered Consequences"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R Under development (unstable) (2014-01-12 r64740) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.0.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -502,6 +502,69 @@ s12   0.92099
 > 
 > IQR(rivers)
 [1] 370
+> 
+> 
+> 
+> cleanEx()
+> nameEx("KalmanLike")
+> ### * KalmanLike
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: KalmanLike
+> ### Title: Kalman Filtering
+> ### Aliases: KalmanLike KalmanRun KalmanSmooth KalmanForecast makeARIMA
+> ### Keywords: ts
+> 
+> ### ** Examples
+> 
+> ## an ARIMA fit
+> fit3 <- arima(presidents, c(3, 0, 0))
+> predict(fit3, 12)
+$pred
+         Qtr1     Qtr2     Qtr3     Qtr4
+1975 29.84194 34.41014 39.30815 43.02779
+1976 46.18808 48.56947 50.44866 51.86064
+1977 52.94295 53.75521 54.37019 54.83150
+
+$se
+         Qtr1     Qtr2     Qtr3     Qtr4
+1975  9.00655 11.25606 13.43389 14.51516
+1976 15.25538 15.65611 15.90158 16.03792
+1977 16.11764 16.16229 16.18785 16.20220
+
+> ## reconstruct this
+> pr <- KalmanForecast(12, fit3$model)
+> pr$pred + fit3$coef[4]
+ [1] 29.84194 34.41014 39.30815 43.02779 46.18808 48.56947 50.44866 51.86064
+ [9] 52.94295 53.75521 54.37019 54.83150
+> sqrt(pr$var * fit3$sigma2)
+ [1]  9.00655 11.25606 13.43389 14.51516 15.25538 15.65611 15.90158 16.03792
+ [9] 16.11764 16.16229 16.18785 16.20220
+> ## and now do it year by year
+> for(y in 1:3) {
++   pr <- KalmanForecast(4, fit3$model, TRUE)
++   print(list(pred = pr$pred + fit3$coef[4], 
++              se = sqrt(pr$var * fit3$sigma2)))
++ }
+$pred
+[1] 29.84194 34.41014 39.30815 43.02779
+
+$se
+[1]  9.00655 11.25606 13.43389 14.51516
+
+$pred
+[1] 46.18808 48.56947 50.44866 51.86064
+
+$se
+[1] 15.25538 15.65611 15.90158 16.03792
+
+$pred
+[1] 52.94295 53.75521 54.37019 54.83150
+
+$se
+[1] 16.11764 16.16229 16.18785 16.20220
+
 > 
 > 
 > 
@@ -3407,7 +3470,7 @@ s.e.  0.1414   0.1702   0.1473     0.0983
 
 sigma^2 estimated as 0.1905:  part log likelihood = -28.31
 > 
-> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
+> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)))
 
 Call:
 arima(x = USAccDeaths, order = c(0, 1, 1), seasonal = list(order = c(0, 1, 1)))
@@ -3418,7 +3481,7 @@ Coefficients:
 s.e.   0.1228   0.1784
 
 sigma^2 estimated as 99347:  log likelihood = -425.44,  aic = 856.88
-> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)),
+> arima(USAccDeaths, order = c(0,1,1), seasonal = list(order = c(0,1,1)),
 +       method = "CSS") # drops first 13 observations.
 
 Call:
@@ -3433,7 +3496,7 @@ s.e.   0.1366   0.1436
 sigma^2 estimated as 110330:  part log likelihood = -426.25
 > # for a model with as few years as this, we want full ML
 > 
-> arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
+> arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron) - 1920)
 
 Call:
 arima(x = LakeHuron, order = c(2, 0, 0), xreg = time(LakeHuron) - 1920)
@@ -3472,6 +3535,17 @@ s.e.  0.0936  0.1140   0.0946     4.2845
 
 sigma^2 estimated as 81.12:  log likelihood = -414.08,  aic = 838.16
 > tsdiag(fit3)
+> 
+> ## An example of ARIMA forecasting:
+> predict(fit3, 3)
+$pred
+         Qtr1     Qtr2     Qtr3
+1975 29.84194 34.41014 39.30815
+
+$se
+         Qtr1     Qtr2     Qtr3
+1975  9.00655 11.25606 13.43389
+
 > 
 > 
 > 
