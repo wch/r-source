@@ -104,6 +104,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	setAttrib(ans, R_NamesSymbol, nm);
 	UNPROTECT(1);
     }
+    int nu = 0;
     for (l = 0; l < n; l++) {
 	for (i = 0; i < p; i++) {
 	    tmp = 0.0;
@@ -128,6 +129,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		}
 	}
 	if (!ISNAN(y[l])) {
+	    nu++;
 	    double *rr = NULL /* -Wall */;
 	    if(lop) rr = REAL(resid);
 	    resid0 = y[l];
@@ -164,14 +166,13 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	}
     }
 
+    res = allocVector(REALSXP, 3);
+    REAL(res)[0] = ssq; REAL(res)[1] = sumlog, REAL(res)[2] = (double)nu;
     if(lop) {
-	SET_VECTOR_ELT(ans, 0, res = allocVector(REALSXP, 2));
-	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
+	SET_VECTOR_ELT(ans, 0, res);
 	UNPROTECT(lFast ? 1 : 4);
 	return ans;
     } else {
-	res = allocVector(REALSXP, 2);
-	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
 	if (!lFast) UNPROTECT(3);
 	return res;
     }
