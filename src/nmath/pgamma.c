@@ -295,7 +295,7 @@ pgamma_smallx (double x, double alph, int lower_tail, int log_p)
     } while (fabs (term) > DBL_EPSILON * fabs (sum));
 
 #ifdef DEBUG_p
-    REprintf (" %d terms --> conv.sum=%g;", n, sum);
+    REprintf ("%5.0f terms --> conv.sum=%g;", n, sum);
 #endif
     if (lower_tail) {
 	double f1 = log_p ? log1p (sum) : 1 + sum;
@@ -718,4 +718,3 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 
  * MM: I've not (yet?) taken  logcf(), but the other four
  */
-
