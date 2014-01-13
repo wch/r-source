@@ -107,6 +107,7 @@ print(table(t1, t2), zero.print = ".") # nicer to read
 T <- table(t2,t1)
 T <- T * (1+round(rlnorm(length(T)))/4)
 print(T, zero.print = ".") # quite nicer,
+print.table(T[,2:8] * 1e9, digits=3, zero.print = ".")
 ## still slightly inferior to  Matrix::Matrix(T)  for larger T
 
 ## Corner cases with empty extents:

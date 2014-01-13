@@ -135,7 +135,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 
     if(zero.print != "0" && any(i0 <- !ina & x == 0))
 	## MM thinks this should be an option for many more print methods...
-	xx[i0] <- sub(if(all(x == round(x)))"0" else "0\\.0+", zero.print, xx[i0])
+	xx[i0] <- zero.print ## keep it simple;  was sub(..., xx[i0])
 
     ## Numbers get right-justified by format(), irrespective of 'justify'.
     ## We need to keep column headers aligned.
