@@ -477,7 +477,7 @@
       
       \item \code{KalmanForecast(fast = FALSE)} is now the default, and
       the help contains an example of how \code{fast = TRUE} can be used
-      in this version.
+      in this version.  (The usage will change in 3.1.0.)
     }
   }
 
@@ -666,10 +666,10 @@
       \item \code{getSrcref()} did not work on method definitions if
       \code{rematchDefinition()} had been used.
       
-      \item \code{KalmanForecast(fast = FALSE)} reported a stack
-      imbalance.
+      \item \code{KalmanForecast(fast = FALSE)} reported a (harmless)
+      stack imbalance.
 
-      \item The count of observations used by \code{KalmanRun} did not
+      \item The count of observations used by \code{KalmanRun()} did not
       take missing values into account.
     }
   }

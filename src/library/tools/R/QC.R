@@ -2738,9 +2738,37 @@ function(x, ...)
 
 ## changed in 2.3.0 to refer to a source dir.
 
+
 .check_package_depends <-
 function(dir, force_suggests = TRUE)
 {
+    .check_dependency_cycles <-
+        function(db, available = available.packages(),
+                 dependencies = c("Depends", "Imports", "LinkingTo"))
+        {
+            ## given a package, find its recursive dependencies.
+            ## We want the dependencies of the current package,
+            ## not of a version on the repository.
+            pkg <- db[["Package"]]
+            this <- db[dependencies]; names(this) <- dependencies;
+            known <- setdiff(utils:::.clean_up_dependencies(this), "R")
+            info <- available[, dependencies, drop = FALSE]
+            rn <- rownames(info)
+            deps <- function(p) {
+                if(!(p %in% rn)) return(character())
+                this <- utils:::.clean_up_dependencies(info[p, ])
+                setdiff(this, "R")
+            }
+            extra <- known
+            repeat {
+                extra <- unlist(lapply(extra, deps))
+                extra <- setdiff(extra, known)
+                if(!length(extra)) break
+                known <- c(known, extra)
+            }
+            known
+        }
+
     if(length(dir) != 1L)
         stop("argument 'package' must be of length 1")
 
@@ -2752,10 +2780,18 @@ function(dir, force_suggests = TRUE)
     if(!identical(package_name, dir_name) &&
        (!is.character(package_name) || !nzchar(package_name))) {
 	message(sprintf(
-	"package name '%s' seems invalid; using directory name '%s' instead",
-			package_name, dir_name))
+            "package name '%s' seems invalid; using directory name '%s' instead",
+            package_name, dir_name))
 	package_name <- dir_name
     }
+
+    bad_depends <- list()
+    ## and we cannot have cycles
+    ad <- .check_dependency_cycles(db)
+    pkgname <- db[["Package"]]
+    if(pkgname %in% ad)
+        bad_depends$all_depends <- setdiff(ad, pkgname)
+
     ldepends <-  .get_requires_with_version_from_package_db(db, "Depends")
     limports <-  .get_requires_with_version_from_package_db(db, "Imports")
     llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
@@ -2769,8 +2805,6 @@ function(dir, force_suggests = TRUE)
     suggests <- sapply(lsuggests, `[[`, 1L)
 
     standard_package_names <- .get_standard_package_names()
-
-    bad_depends <- list()
 
     ## Are all packages listed in Depends/Suggests/Imports/LinkingTo installed?
     lreqs <- c(ldepends, limports, llinks,
@@ -2814,7 +2848,7 @@ function(dir, force_suggests = TRUE)
                     if(!length(where)) next
                     ## want the first one
                     desc <- readRDS(file.path(installed_in[where[1L]], pkg,
-                                               "Meta", "package.rds"))
+                                              "Meta", "package.rds"))
                     current <- desc$DESCRIPTION["Version"]
                     target <- as.package_version(r[[3L]])
                     if(eval(parse(text = paste("!(current", op, "target)"))))
@@ -2846,9 +2880,9 @@ function(dir, force_suggests = TRUE)
     vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
                           check = !defer)
 
-     if(length(vigns$msg))
-         bad_depends$bad_engine <- vigns$msg
-   if (!is.null(vigns) && length(vigns$docs) > 0L) {
+    if(length(vigns$msg))
+        bad_depends$bad_engine <- vigns$msg
+    if (!is.null(vigns) && length(vigns$docs) > 0L) {
         reqs <- unique(unlist(.build_vignette_index(vigns)$Depends))
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
@@ -2879,7 +2913,7 @@ function(dir, force_suggests = TRUE)
     ## Check for excessive 'Depends'
 
     deps <- setdiff(depends, c("R", "base", "datasets", "grDevices", "graphics",
-                            "methods", "utils", "stats"))
+                               "methods", "utils", "stats"))
     if(length(deps) > 5L) bad_depends$many_depends <- deps
 
     class(bad_depends) <- "check_package_depends"
@@ -2890,6 +2924,11 @@ format.check_package_depends <-
 function(x, ...)
 {
     c(character(),
+      if(length(x$all_depends)) {
+          c("There is circular dependency in the installation order:",
+            .pretty_format2("  One or more packages in", x$all_depends),
+            "  depend on this package.", "")
+      },
       if(length(bad <- x$required_but_not_installed) > 1L) {
           c(.pretty_format2("Packages required but not available:", bad), "")
       } else if(length(bad)) {
@@ -7579,6 +7618,7 @@ function(x)
 
     out
 }
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

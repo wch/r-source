@@ -311,7 +311,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
                 oldcode <- res$convergence
                 res <- optim(coef[mask], armafn, method = optim.method,
                              hessian = TRUE,
-                             control = list(maxit = 0,
+                             control = list(maxit = 0L,
                              parscale = optim.control$parscale),
                              trans = TRUE)
                 res$convergence <- oldcode

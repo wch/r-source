@@ -963,7 +963,7 @@ compareVersion <- function(a, b)
     ## If recursive = TRUE, do this recursively.
     if(!length(pkgs)) return(NULL)
     if(is.null(available))
-        stop(gettextf("%s must be supplied", sQuote(available)), domain = NA)
+        stop(gettextf("%s must be supplied", sQuote("available")), domain = NA)
     info <- available[pkgs, dependencies, drop = FALSE]
     x <- vector("list", length(pkgs)); names(x) <- pkgs
     if(recursive) {

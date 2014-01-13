@@ -102,10 +102,10 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 
 \seealso{
-   \code{\link{arima}}, \code{\link{StructTS}}. \code{\link{tsSmooth}}.
- }
+  \code{\link{arima}}, \code{\link{StructTS}}. \code{\link{tsSmooth}}.
+}
 
- \examples{
+\examples{
 ## an ARIMA fit
 fit3 <- arima(presidents, c(3, 0, 0))
 predict(fit3, 12)
@@ -123,4 +123,4 @@ for(y in 1:3) {
 }
 }
 
- \keyword{ts}
+\keyword{ts}
