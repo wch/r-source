@@ -5147,17 +5147,16 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
-    bad_imp <- depends_not_import <- character()
+    depends_not_import <- character()
+    bad_imp <- setdiff(imports0, all_imports)
     if(length(ns)) {
         imp <- c(ns$imports, ns$importClasses, ns$importMethods)
         if (length(imp)) {
             imp <- sapply(imp, function(x) x[[1L]])
             all_imports <- unique(c(imp, all_imports))
-            bad_imp <- setdiff(imports0, all_imports)
             depends_not_import <-
                 setdiff(depends, c(imp, standard_package_names))
         }
-
     }
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
