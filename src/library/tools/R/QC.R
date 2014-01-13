@@ -5148,7 +5148,6 @@ function(package, dir, lib.loc = NULL)
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
     depends_not_import <- character()
-    bad_imp <- setdiff(imports0, all_imports)
     if(length(ns)) {
         imp <- c(ns$imports, ns$importClasses, ns$importMethods)
         if (length(imp)) {
@@ -5158,6 +5157,8 @@ function(package, dir, lib.loc = NULL)
                 setdiff(depends, c(imp, standard_package_names))
         }
     }
+    bad_imp <- setdiff(imports0, all_imports)
+
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
             gettext("package 'methods' is used but not declared")
