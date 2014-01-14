@@ -5193,11 +5193,10 @@ function(package, dir, lib.loc = NULL)
         if (length(imp)) {
             imp <- sapply(imp, function(x) x[[1L]])
             all_imports <- unique(c(imp, all_imports))
-            depends_not_import <-
-                setdiff(depends, c(imp, standard_package_names))
         }
-    }
+    } else imp <- character()
     bad_imp <- setdiff(imports0, all_imports)
+    depends_not_import <- setdiff(depends, c(imp, standard_package_names))
 
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
