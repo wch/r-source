@@ -10069,7 +10069,9 @@ We then allocate space for the calculated derivative by
 @noindent
 The first argument to @code{allocMatrix} gives the @code{SEXPTYPE} of
 the matrix: here we want it to be @code{REALSXP}.  The other two
-arguments are the numbers of rows and columns.
+arguments are the numbers of rows and columns.  (Note that @code{LENGTH}
+is intended to be used for vectors: @code{length} is more generally
+applicable.)
 
 @example
 @group
