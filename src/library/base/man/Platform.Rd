@@ -50,8 +50,9 @@
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary.leopard"} and \code{"win.binary"} are currently in
-    use.
+    \code{"mac.binary"} and \code{"win.binary"} are currently in use.
+
+    This should \strong{not} be used to identify the OS.
   }
   \item{path.sep}{
     character string, giving the \bold{path} \bold{sep}arator,
