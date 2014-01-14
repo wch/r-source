@@ -2927,7 +2927,8 @@ function(x, ...)
       if(length(x$all_depends)) {
           c("There is circular dependency in the installation order:",
             .pretty_format2("  One or more packages in", x$all_depends),
-            "  depend on this package.", "")
+            "  depend on this package (for the versions on the repositories).",
+            "")
       },
       if(length(bad <- x$required_but_not_installed) > 1L) {
           c(.pretty_format2("Packages required but not available:", bad), "")
