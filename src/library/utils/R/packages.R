@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -963,7 +963,7 @@ compareVersion <- function(a, b)
     ## If recursive = TRUE, do this recursively.
     if(!length(pkgs)) return(NULL)
     if(is.null(available))
-        stop(gettextf("%s must be supplied", sQuote(available)), domain = NA)
+        stop(gettextf("%s must be supplied", sQuote("available")), domain = NA)
     info <- available[pkgs, dependencies, drop = FALSE]
     x <- vector("list", length(pkgs)); names(x) <- pkgs
     if(recursive) {
