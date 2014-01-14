@@ -6338,7 +6338,7 @@ rm /path/to/R_HOME/library/stats/libs/stats.so.profile
 It is possible that root access is needed to create the directories used
 for the profile data.
 
-@subsubsection oprofile
+@subsubsection oprofile and operf
 
 @code{oprofile} works by running a daemon which collects information.
 The daemon must be started as root, e.g.
@@ -6390,7 +6390,77 @@ callgraph (if collection was enabled and the platform supports this).
 
 Versions 0.9.8 and later of @command{oprofile} contain another tool,
 @command{operf}, which can be used without running the root daemon
-@command{opcontrol}: its output can be analysed in the same way.
+@command{opcontrol}: its output can be analysed in the same way.  Here
+is an example on @code{x86_64} Linux.  File @file{pvec.R} contains the
+part of the examples from @code{pvec} in package @pkg{parallel}:
+@example
+library(parallel)
+N <- 1e5
+dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
+                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
+system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
+@end example
+with timings from the final step
+@example
+   user  system elapsed 
+  0.371   0.237   0.612 
+@end example
+
+Profiling shows
+@example
+                     self.time self.pct total.time total.pct
+"strptime"                0.56    52.83       0.56     52.83
+"as.POSIXct.POSIXlt"      0.24    22.64       0.26     24.53
+"sprintf"                 0.18    16.98       0.20     18.87
+...
+@end example
+so as expected the conversion from character to @code{POSIXlt} takes
+most of the time.
+
+This can be run under @command{operf} and analysed by
+@example
+operf R -f pvec.R
+opreprt
+opreport -l /path/to/R_HOME/bin/exec/R
+opannotate --source /path/to/R_HOME/bin/exec/R
+## And for the system time
+opreport -l /lib64/libc.so.6 
+@end example
+The time is spent
+@example
+CPU_CLK_UNHALT...|
+  samples|      %|
+------------------
+    45435 99.6447 R
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	    17999 39.6148 libc-2.16.so
+	    15069 33.1661 no-vmlinux
+	    11903 26.1979 R
+	      174  0.3830 stats.so
+	      123  0.2707 libm-2.16.so
+...
+@end example
+
+Most of the time within @R{} is spent in
+@example
+samples  %        image name               symbol name
+4149     35.6351  R                        R_gc_internal
+692       5.9435  R                        do_sprintf
+589       5.0588  R                        Rf_mkCharLenCE
+585       5.0245  R                        do_asPOSIXct
+380       3.2638  R                        R_strptime
+308       2.6454  R                        bcEval
+305       2.6196  R                        do_strptime
+266       2.2846  R                        w_strptime_internal
+227       1.9497  R                        validate_tm
+166       1.4257  R                        Rf_allocVector
+...
+@end example
+@command{opannotate} shows that 42% of the time in @R{} is spent in
+@file{memory.c}, 11% in @file{datetime.c} and 7% in
+@file{Rstrptime.h}.
 
 @node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
