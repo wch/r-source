@@ -236,6 +236,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	    SEXP elt = duplicate(VECTOR_ELT(s, i));
 	    for (j = 0; j < INTEGER(t)[i]; j++)
 		SET_VECTOR_ELT(a, n++, elt);
+	    if (j > 1) SET_NAMED(elt, 2);
 	}
 	break;
     case RAWSXP:
