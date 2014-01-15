@@ -3535,12 +3535,14 @@ setRlibs <-
         ## package vignette must require its own package, which OTOH is
         ## not required in the package DESCRIPTION file.
         ## Namespace imports must really be in Depends.
-        res <- .check_package_depends(pkgdir, R_check_force_suggests)
+        res <- .check_package_depends(pkgdir, R_check_force_suggests,
+                                      check_incoming)
         if(any(sapply(res, length) > 0L)) {
             out <- format(res)
             allowed <- c("suggests_but_not_installed",
                          "enhances_but_not_installed",
                          "many_depends",
+                         "skipped",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)

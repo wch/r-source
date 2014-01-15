@@ -2740,7 +2740,7 @@ function(x, ...)
 
 
 .check_package_depends <-
-function(dir, force_suggests = TRUE)
+function(dir, force_suggests = TRUE, check_incoming = FALSE)
 {
     .check_dependency_cycles <-
         function(db, available = available.packages(),
@@ -2787,10 +2787,15 @@ function(dir, force_suggests = TRUE)
 
     bad_depends <- list()
     ## and we cannot have cycles
-    ad <- .check_dependency_cycles(db)
-    pkgname <- db[["Package"]]
-    if(pkgname %in% ad)
-        bad_depends$all_depends <- setdiff(ad, pkgname)
+    ## this check needs a package db from repository(s), so
+    if(!any(grepl("@CRAN@", getOption("repos")))) {
+        ad <- .check_dependency_cycles(db)
+        pkgname <- db[["Package"]]
+        if(pkgname %in% ad)
+            bad_depends$all_depends <- setdiff(ad, pkgname)
+    } else if (check_incoming)
+        bad_depends$skipped <-
+            "  No repository set, so cyclic dependency check skipped"
 
     ldepends <-  .get_requires_with_version_from_package_db(db, "Depends")
     limports <-  .get_requires_with_version_from_package_db(db, "Imports")
@@ -2924,6 +2929,7 @@ format.check_package_depends <-
 function(x, ...)
 {
     c(character(),
+      if(length(x$skipped)) c(x$skipped, ""),
       if(length(x$all_depends)) {
           c("There is circular dependency in the installation order:",
             .pretty_format2("  One or more packages in", x$all_depends),
