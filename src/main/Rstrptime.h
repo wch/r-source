@@ -36,6 +36,13 @@
 #ifndef HAVE_LOCALE_H
 # define HAVE_LOCALE_H 1
 #endif
+
+static int locale_strings_set = 0;
+static int locale_w_strings_set = 0;
+static void get_locale_strings(void);
+static void get_locale_w_strings(void);
+
+
 #ifdef HAVE_STRINGS_H
 #include <strings.h>  /* for strncasecmp */
 #endif
@@ -264,6 +271,9 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	case L'a':
 	case L'A':
 	    /* Match day of week.  */
+#if defined(HAVE_WCSFTIME)
+	    if(!locale_w_strings_set) get_locale_w_strings();
+#endif
 	    for (cnt = 0; cnt < 7; ++cnt)
 	    {
 		if (*decided != loc
@@ -284,6 +294,9 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	case L'B':
 	case L'h':
 	    /* Match month name.  */
+#if defined(HAVE_WCSFTIME)
+	    if(!locale_w_strings_set) get_locale_w_strings();
+#endif
 	    for (cnt = 0; cnt < 12; ++cnt)
 	    {
 		if (w_match_string (w_month_name[cnt], rp)
@@ -372,6 +385,9 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	  break;
 	case L'p':
 	  /* Match locale's equivalent of AM/PM.  */
+#if defined(HAVE_WCSFTIME)
+	  if(!locale_w_strings_set) get_locale_w_strings();
+#endif
 	  if (!w_match_string (w_am_pm[0], rp)) {
 	    if (w_match_string (w_am_pm[1], rp))
 	      is_pm = 1;
@@ -727,6 +743,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	case 'a':
 	case 'A':
 	    /* Match day of week.  */
+	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 7; ++cnt)
 	    {
 		if (*decided != loc
@@ -747,6 +764,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	case 'B':
 	case 'h':
 	    /* Match month name.  */
+	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 12; ++cnt)
 	    {
 		if (match_string (month_name[cnt], rp)
@@ -835,6 +853,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	  break;
 	case 'p':
 	  /* Match locale's equivalent of AM/PM.  */
+	  if(!locale_strings_set) get_locale_strings();
 	  if (!match_string (am_pm[0], rp)) {
 	    if (match_string (am_pm[1], rp))
 	      is_pm = 1;
@@ -1137,18 +1156,11 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 }
 
 
-static int locale_strings_set = 0;
-static int w_locale_strings_set = 0;
-
 void dt_invalidate_locale() // used in plaform.c
 {
     locale_strings_set = 0;
-    w_locale_strings_set = 0;
+    locale_w_strings_set = 0;
 }
-
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-
 
 /* use system stuct tm and strftime/wcstime here */
 static void get_locale_strings(void)
@@ -1213,10 +1225,9 @@ static void get_locale_w_strings(void)
     tm.tm_hour = 13;
     wcsftime(buff, 4, L"%p", &tm);
     if(wcslen(buff)) wcscpy(w_am_pm[1], buff);
-    w_locale_strings_set = 1;
+    locale_w_strings_set = 1;
 }
 #endif
-#endif /* HAVE_LOCALE_H */
 
 
 /* We only care if the result is null or not */
@@ -1229,9 +1240,6 @@ R_strptime (const char *buf, const char *format, struct tm *tm,
 #if defined(HAVE_WCSTOD)
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
-#if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
-	if(!w_locale_strings_set) get_locale_w_strings();
-#endif
 	n = mbstowcs(NULL, buf, 1000);
 	if(n > 1000) error(_("input string is too long"));
 	n = mbstowcs(wbuf, buf, 1000);
@@ -1245,9 +1253,6 @@ R_strptime (const char *buf, const char *format, struct tm *tm,
     } else
 #endif
     {
-#ifdef HAVE_LOCALE_H
-	if(!locale_strings_set) get_locale_strings();
-#endif
 	return strptime_internal (buf, format, tm, &decided, psecs, poffset);
     }
 }

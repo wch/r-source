@@ -1428,7 +1428,7 @@ r_cv_OBJCXX="${OBJCXX}"
 ])
 OBJCXX="${r_cv_OBJCXX}"
 if test -z "${OBJCXX}"; then
-  AC_MSG_RESULT([no working compiler found])
+  AC_MSG_RESULT([no working ObjC++ compiler found])
 else
   AC_MSG_RESULT([${OBJCXX}])
 fi

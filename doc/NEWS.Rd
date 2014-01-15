@@ -51,6 +51,11 @@
       \item \code{KalmanForecast(fast = FALSE)} is now the default, and
       the help contains an example of how \code{fast = TRUE} can be used
       in this version.  (The usage will change in 3.1.0.)
+      
+      \item \code{strptime()} now checks the locale only when
+      locale-specific formats are used and caches the locale in use:
+      this can halve the time taken on OSes with slow system
+      functions (e.g. OS X).
     }
   }
 
