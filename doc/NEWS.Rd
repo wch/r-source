@@ -167,24 +167,24 @@
       compression options.
       
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
-      have a new argument to control the treatment of embedded nuls.
+      have a new argument to influence the treatment of embedded nuls.
 
       \item Avoid duplicating the right hand side values in complex
-      assignments when possible.  This also reduces copying of
-      replacement values in subassignments such as \code{Z$a <- a0} and
-      \code{ans[[i]] <- tmp}.
+      assignments when possible.  This reduces copying of replacement
+      values in expressions such as \code{Z$a <- a0} and \code{ans[[i]]
+      <- tmp}: some package code has relied on there being copies.
       (Based on suggestions from Michael Lawrence.)
       
       \item The \code{fast} argument of \code{KalmanLike()},
-      \code{KalmanRun()} and \code{KalmanForecast} has been replaced to
-      \code{update}, which instead of updating \code{mod} in place,
+      \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
+      by \code{update}, which instead of updating \code{mod} in place,
       optionally returns the updated model in an attribute \code{"mod"}
       of the return value.
 
       \item \code{arima()} and \code{makeARIMA()} get a new optional
-      argument \code{SSinit}, allowing to choose a different
+      argument \code{SSinit}, allowing the choice of a different
       \bold{s}tate \bold{s}pace initialization which has been observed
-      to be more reliable close to non-stationarity, see \PR{14682}.
+      to be more reliable close to non-stationarity: see \PR{14682}.
     }
   }
 
@@ -491,7 +491,7 @@
       
       \item \code{strptime()} now checks the locale only when
       locale-specific formats are used and caches the locale in use:
-      this can halve the time taken on certain OSes with slow system
+      this can halve the time taken on OSes with slow system
       functions (e.g. OS X).
     }
   }
@@ -645,7 +645,7 @@
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
 
-      \item \code{rowsum} has more support for matrices and dataframes
+      \item \code{rowsum()} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
 
       \item \code{predict(<lm object>, interval = "confidence", scale =
