@@ -180,6 +180,11 @@
       \code{update}, which instead of updating \code{mod} in place,
       optionally returns the updated model in an attribute \code{"mod"}
       of the return value.
+
+      \item \code{arima()} and \code{makeARIMA()} get a new optional
+      argument \code{SSinit}, allowing to choose a different
+      \bold{s}tate \bold{s}pace initialization which has been observed
+      to be more reliable close to non-stationarity, see \PR{14682}.
     }
   }
 

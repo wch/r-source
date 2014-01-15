@@ -74,6 +74,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(ARIMA_CSS, 6),
     CALLDEF(TSconv, 2),
     CALLDEF(getQ0, 2),
+    CALLDEF(getQ0bis, 3),
     CALLDEF(port_ivset, 3),
     CALLDEF(port_nlminb, 9),
     CALLDEF(port_nlsb, 7),

@@ -88,6 +88,7 @@ SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond,
 	       SEXP giveResid);
 SEXP TSconv(SEXP a, SEXP b);
 SEXP getQ0(SEXP sPhi, SEXP sTheta);
+SEXP getQ0bis(SEXP sPhi, SEXP sTheta, SEXP sTol);
 
 SEXP acf(SEXP x, SEXP lmax, SEXP sCor);
 SEXP pacf1(SEXP acf, SEXP lmax);
