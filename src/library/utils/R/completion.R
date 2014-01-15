@@ -455,6 +455,10 @@ matchAvailableTopics <- function(prefix, text)
     aliases <- .CompletionEnv[["help_topics"]]
     ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), aliases)
     if (nzchar(prefix)) {
+        ## FIXME: This is a little unsafe.  We are not protecting
+        ## prefix to make sure that we do not get any special
+        ## characters (like ? or + or *).  However, these are unlikely
+        ## in practice.
         tmp <- grep(sprintf("-%s$", prefix), ans, value = TRUE)
         if (length(tmp)) substring(tmp, 1, nchar(tmp) - nchar(prefix) - 1L)
         else character(0)
