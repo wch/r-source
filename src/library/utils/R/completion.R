@@ -469,6 +469,8 @@ matchAvailableTopics <- function(prefix, text)
 
 helpCompletions <- function(prefix = "", suffix)
 {
+    ## Do not attempt to complete ??<foo> (help.search) or ???<foo> (invalid)
+    if (prefix %in% c("?", "??")) return (character(0))
     nc <-
         if (.CompletionEnv$settings[["help"]])
             matchAvailableTopics(prefix, suffix)
