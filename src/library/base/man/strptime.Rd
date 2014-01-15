@@ -125,8 +125,8 @@ strptime(x, format, tz = "")
     \item{\code{\%Y}}{Year with century.  Note that whereas there was no
       zero in the original Gregorian calendar, ISO 8601:2004 defines it
       to be valid (interpreted as 1BC): see
-      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standard
-      also says that years before 1582 in its calendar should only be used
+      \url{http://en.wikipedia.org/wiki/0_(year)}.  Note that the standards
+      also say that years before 1582 in its calendar should only be used
       with agreement of the parties involved.
 
       For input, only years \code{0:9999} are accepted.}
@@ -139,7 +139,10 @@ strptime(x, format, tz = "")
   Where leading zeros are shown they will be used on output but are
   optional on input.  Names are matched case-insensitively on input:
   whether they are capitalized on output depends on the platform and the
-  locale.
+  locale.  Note that abbreviated names are platform-specific (although
+  the standards specify that they must be the first three letters of the
+  capitalized English names in the \samp{C} locale and this convention
+  is widely used in English-language locales).
 
   When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
