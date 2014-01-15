@@ -369,6 +369,11 @@
 
       \item The included LAPACK subset now contains \code{ZGESDD} and
       \code{ZGELSD}.
+      
+      \item The function \code{LENGTH()} now checks that it is only
+      applied to vector arguments.  However, in packages \code{length()}
+      should be used. (In \R{} itself \code{LENGTH()} is a macro without
+      the function overhead of \code{length()}.)
     }
   }
 
@@ -478,6 +483,11 @@
       \item \code{KalmanForecast(fast = FALSE)} is now the default, and
       the help contains an example of how \code{fast = TRUE} can be used
       in this version.  (The usage will change in 3.1.0.)
+      
+      \item \code{strptime()} now checks the locale only when
+      locale-specific formats are used and caches the locale in use:
+      this can halve the time taken on certain OSes with slow system
+      functions (e.g. OS X).
     }
   }
 
