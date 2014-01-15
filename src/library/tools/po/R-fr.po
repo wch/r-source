@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19\n"
+"POT-Creation-Date: 2014-01-15 09:09\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -609,6 +609,13 @@ msgid "file '%s' not found"
 msgstr "le fichier '%s' est introuvable"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
+#, fuzzy
+msgid "Inconsistent encoding specifications:"
+msgstr "Spécification de licence non standard :"
+
+msgid "with %\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"

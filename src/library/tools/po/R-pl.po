@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19\n"
+"POT-Creation-Date: 2014-01-15 09:09\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1239,6 +1239,15 @@ msgid "file '%s' not found"
 msgstr "nie znaleziono pliku '%s'"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
+msgstr ""
+
+# tools/R/QC.R: 3181
+# gettext("Non-standard license specification:")
+#, fuzzy
+msgid "Inconsistent encoding specifications:"
+msgstr "Specyfikacja niestandardowej licencji:"
+
+msgid "with %\\SweaveUTF8"
 msgstr ""
 
 # tools/R/Vignettes.R: 637

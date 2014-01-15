@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-15 09:08\n"
 "PO-Revision-Date: 2013-02-17 18:18-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -1198,7 +1198,8 @@ msgstr ""
 msgid "invalid NCOL(R)"
 msgstr "유효하지 않은 NCOL(R)입니다"
 
-msgid "'x' must be an atomic vector"
+#, fuzzy
+msgid "'x' must be a vector of an atomic type"
 msgstr "'x'는 반드시 atomic 벡터이어야 합니다"
 
 msgid "invalid 'rle' structure"

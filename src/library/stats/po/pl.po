@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19+0000\n"
+"POT-Creation-Date: 2014-01-15 09:09+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -56,7 +56,7 @@ msgstr "approx(): próbowano interpolować wartości NA"
 # error(_("invalid argument type"))
 # stats/src/arima.c: 359
 # error(_("invalid argument type"))
-#: arima.c:69 arima.c:183 arima.c:359
+#: arima.c:81 arima.c:192 arima.c:377 arima.c:608
 msgid "invalid argument type"
 msgstr "niepoprawny typ argumentu"
 
@@ -68,13 +68,13 @@ msgstr "niepoprawny typ argumentu"
 # error(_("can only transform 100 pars in arima0"))
 # stats/src/pacf.c: 371
 # error(_("can only transform 100 pars in arima0"))
-#: arima.c:418 arima.c:502 pacf.c:331 pacf.c:371
+#: arima.c:444 arima.c:530 pacf.c:331 pacf.c:371
 msgid "can only transform 100 pars in arima0"
 msgstr "można przekształcić tylko do 100 par w 'arima0'"
 
 # stats/src/arima.c: 838
 # error(_("maximum supported lag is 350"))
-#: arima.c:838
+#: arima.c:873
 msgid "maximum supported lag is 350"
 msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
 
@@ -716,7 +716,7 @@ msgstr "'theta' powinna być znakiem"
 # error(_("use of NULL environment is defunct"))
 # stats/src/port.c: 374
 # error(_("use of NULL environment is defunct"))
-#: nls.c:290 port.c:374
+#: nls.c:290 port.c:375
 msgid "use of NULL environment is defunct"
 msgstr "użycie wartości NULL dla środowiska zostało zlikwidowane"
 
@@ -1180,7 +1180,7 @@ msgstr "Funkcja hesjana musi zwrócić kwadratową macierz liczbową rzędu %d"
 
 # stats/src/port.c: 378
 # error(_("'rho' must be an environment"))
-#: port.c:378
+#: port.c:379
 msgid "'rho' must be an environment"
 msgstr "'rho' musi być środowiskiem"
 
@@ -1188,39 +1188,39 @@ msgstr "'rho' musi być środowiskiem"
 # error(_("'d' must be a nonempty numeric vector"))
 # stats/src/port.c: 537
 # error(_("'d' must be a nonempty numeric vector"))
-#: port.c:380 port.c:537
+#: port.c:381 port.c:542
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' musi być niepustym wektorem liczbowym"
 
 # stats/src/port.c: 382
 # error(_("When Hessian defined must also have gradient defined"))
-#: port.c:382
+#: port.c:383
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Kiedy jest zdefiniowany Hesjan musi być również zdefiniowany gradient"
 
 # stats/src/port.c: 385
 # error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
 # 	      n)
-#: port.c:385
+#: port.c:386
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "środowisko 'rho' musi zawierać wektor liczbowy '.par' o długości %d"
 
 # stats/src/port.c: 399
 # error(_("'lower' and 'upper' must be numeric vectors"))
-#: port.c:399
+#: port.c:400
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' oraz 'upper' muszą być wektorami liczbowymi"
 
 # stats/src/port.c: 451
 # error(_("'getElement' applies only to named lists"))
-#: port.c:451
+#: port.c:456
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' stosuje się jedynie do nazwanych list"
 
 # stats/src/port.c: 472
 # error(_("%s$%s() not found"), lnm, enm)
-#: port.c:472
+#: port.c:477
 #, c-format
 msgid "%s$%s() not found"
 msgstr "nie znaleziono '%s$%s()'"
@@ -1228,7 +1228,7 @@ msgstr "nie znaleziono '%s$%s()'"
 # stats/src/port.c: 485
 # error(_("'gradient' must be a numeric matrix of dimension (%d,%d)"),
 # 	      gdims[0], gdims[1])
-#: port.c:485
+#: port.c:490
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
@@ -1236,7 +1236,7 @@ msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
 # stats/src/port.c: 506
 # error(_("fcn produced mode %d, length %d - wanted mode %d, length %d"),
 # 	      TYPEOF(v), LENGTH(v), TYPEOF(vv), LENGTH(vv))
-#: port.c:506
+#: port.c:511
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
@@ -1244,19 +1244,19 @@ msgstr ""
 
 # stats/src/port.c: 519
 # error(_("invalid type for eval_check_store"))
-#: port.c:519
+#: port.c:524
 msgid "invalid type for eval_check_store"
 msgstr "niepoprawny typ dla 'eval_check_store'"
 
 # stats/src/port.c: 538
 # error(_("m must be a list"))
-#: port.c:538
+#: port.c:543
 msgid "m must be a list"
 msgstr "'m' musi być listą"
 
 # stats/src/port.c: 558
 # error(_("'lowerb' and 'upperb' must be numeric vectors"))
-#: port.c:558
+#: port.c:563
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' oraz 'upperb' muszą być wektorami liczbowymi"
 

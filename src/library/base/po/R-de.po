@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-15 09:08\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1214,7 +1214,8 @@ msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 msgid "invalid NCOL(R)"
 msgstr "unzulässige NCOL(R)"
 
-msgid "'x' must be an atomic vector"
+#, fuzzy
+msgid "'x' must be a vector of an atomic type"
 msgstr "'x' muss ein atomarer Vektor sein"
 
 msgid "invalid 'rle' structure"

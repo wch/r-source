@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19+0000\n"
+"POT-Creation-Date: 2014-01-15 09:09+0000\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -48,15 +48,15 @@ msgstr "approx(): 유효하지 않은 보간법입니다"
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): NA값들의 보간을 시도했습니다"
 
-#: arima.c:69 arima.c:183 arima.c:359
+#: arima.c:81 arima.c:192 arima.c:377 arima.c:608
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 타입입니다"
 
-#: arima.c:418 arima.c:502 pacf.c:331 pacf.c:371
+#: arima.c:444 arima.c:530 pacf.c:331 pacf.c:371
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서는 최대 100개의 파라미터들을 변환할 수 있습니다"
 
-#: arima.c:838
+#: arima.c:873
 msgid "maximum supported lag is 350"
 msgstr "지원되는 최대 lag의 크기는 350입니다"
 
@@ -444,7 +444,7 @@ msgstr "수렴했습니다"
 msgid "'theta' should be of type character"
 msgstr "'theta'는 반드시 문자형이어야 합니다"
 
-#: nls.c:290 port.c:374
+#: nls.c:290 port.c:375
 msgid "use of NULL environment is defunct"
 msgstr "NULL environment의 사용은 더 이상 지원되지 않습니다"
 
@@ -719,58 +719,58 @@ msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
 
-#: port.c:378
+#: port.c:379
 msgid "'rho' must be an environment"
 msgstr "'rho'는 반드시 environment이어야 합니다"
 
-#: port.c:380 port.c:537
+#: port.c:381 port.c:542
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
-#: port.c:382
+#: port.c:383
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Hessian이 정의되었다면, 반드시 gradient 또한 정의되어져야 합니다"
 
-#: port.c:385
+#: port.c:386
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
-#: port.c:399
+#: port.c:400
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'와 'upper'는 반드시 수치형 벡터들이어야 합니다"
 
-#: port.c:451
+#: port.c:456
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:472
+#: port.c:477
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()를 찾을 수 없습니다"
 
-#: port.c:485
+#: port.c:490
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 합니다"
 
-#: port.c:506
+#: port.c:511
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
 "였습니다"
 
-#: port.c:519
+#: port.c:524
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store에 유효하지 않은 타입입니다"
 
-#: port.c:538
+#: port.c:543
 msgid "m must be a list"
 msgstr "m은 반드시 리스트이어야 합니다"
 
-#: port.c:558
+#: port.c:563
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'와 'upperb'는 반드시 수치형 벡터들이어야 합니다"
 

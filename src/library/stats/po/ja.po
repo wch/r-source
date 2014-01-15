@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19+0000\n"
+"POT-Creation-Date: 2014-01-15 09:09+0000\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -42,15 +42,15 @@ msgstr " approx(): 不正な補間法 "
 msgid "approx(): attempted to interpolate NA values"
 msgstr " approx(): NA 値を補間しようとしました "
 
-#: arima.c:69 arima.c:183 arima.c:359
+#: arima.c:81 arima.c:192 arima.c:377 arima.c:608
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "
 
-#: arima.c:418 arima.c:502 pacf.c:331 pacf.c:371
+#: arima.c:444 arima.c:530 pacf.c:331 pacf.c:371
 msgid "can only transform 100 pars in arima0"
 msgstr " arima0 では 100 個のパラメータまでしか変換出来ません "
 
-#: arima.c:838
+#: arima.c:873
 msgid "maximum supported lag is 350"
 msgstr " サポートされているラグの最大値は350です "
 
@@ -435,7 +435,7 @@ msgstr " 収束しました "
 msgid "'theta' should be of type character"
 msgstr " 'theta' は文字型でなければなりません "
 
-#: nls.c:290 port.c:374
+#: nls.c:290 port.c:375
 msgid "use of NULL environment is defunct"
 msgstr " NULL 環境の使用は廃止されました "
 
@@ -714,56 +714,56 @@ msgstr " グラディエント関数は長さ %d の数値ベクトルを返さ�
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなければなりません "
 
-#: port.c:378
+#: port.c:379
 msgid "'rho' must be an environment"
 msgstr " 'rho' は環境 (environment) でなければなりません "
 
-#: port.c:380 port.c:537
+#: port.c:381 port.c:542
 msgid "'d' must be a nonempty numeric vector"
 msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
-#: port.c:382
+#: port.c:383
 msgid "When Hessian defined must also have gradient defined"
 msgstr " ヘッシアンを定義した際は、グラディエントも定義しなければなりません "
 
-#: port.c:385
+#: port.c:386
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr " 環境 'rho' は長さが %d の数値ベクトル '.par' を含まねばなりません "
 
-#: port.c:399
+#: port.c:400
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr " 'lower' と 'upper' は数値ベクトルでなければなりません "
 
-#: port.c:451
+#: port.c:456
 msgid "'getElement' applies only to named lists"
 msgstr " 'getElement' は名前つきリストにだけ適用されます "
 
-#: port.c:472
+#: port.c:477
 #, c-format
 msgid "%s$%s() not found"
 msgstr " %s$%s() が見つかりません "
 
-#: port.c:485
+#: port.c:490
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりません "
 
-#: port.c:506
+#: port.c:511
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 " モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
 
-#: port.c:519
+#: port.c:524
 msgid "invalid type for eval_check_store"
 msgstr " eval_check_store に対する不正なタイプです "
 
-#: port.c:538
+#: port.c:543
 msgid "m must be a list"
 msgstr " m はリストでなければなりません "
 
-#: port.c:558
+#: port.c:563
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 
