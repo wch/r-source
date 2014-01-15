@@ -6388,7 +6388,7 @@ most of the time.
 This can be run under @command{operf} and analysed by
 @example
 operf R -f pvec.R
-opreprt
+opreport
 opreport -l /path/to/R_HOME/bin/exec/R
 opannotate --source /path/to/R_HOME/bin/exec/R
 ## And for the system time
