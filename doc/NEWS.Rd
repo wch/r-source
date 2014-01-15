@@ -56,6 +56,11 @@
       locale-specific formats are used and caches the locale in use:
       this can halve the time taken on OSes with slow system
       functions (e.g. OS X).
+      
+      \item \code{strptime()} and the \code{format()} methods for
+      classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"Date"}
+      recognize strings with marked encodings: this allows, for example,
+      UTF-8 French month names to be read on (French) Windows.
     }
   }
 
@@ -208,7 +213,7 @@
       \code{NA} returned that time.  (The platforms affected include
       Linux and OS X, but not Windows nor Solaris.)
 
-      \item \code{rowsum} has more support for matrices and dataframes
+      \item \code{rowsum()} has more support for matrices and dataframes
       with \eqn{2^{31}}{2^31} or more elements. (\PR{15587})
 
       \item \code{predict(<lm object>, interval = "confidence", scale =
@@ -249,6 +254,12 @@
 
       \item The count of observations used by \code{KalmanRun()} did not
       take missing values into account.
+      
+      \item In locales where the abbreviated name of one month is a
+      partial match for the full name of a later one, the \code{\%B}
+      format in \code{strptime()} could fail.  An example was French on
+      OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
+      matches \code{juillet}.  Similarly for weekday names.
     }
   }
 }
