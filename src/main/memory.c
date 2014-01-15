@@ -3148,14 +3148,29 @@ int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
 void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(CHK(x)); }
 void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(CHK(x)); }
 
+static int nvec[32] = {
+    0,1,1,1,1,1,1,1,  // does NILSXP really count?
+    1,0,0,1,1,0,0,0,
+    0,1,1,0,0,1,1,0,
+    0,1,1,1,1,1,1,1
+};
+
+static R_INLINE SEXP CHK2(SEXP x)
+{
+    x = CHK(x);
+    if(nvec[TYPEOF(x)])
+	error("LENGTH or similar applied to %s object", type2char(TYPEOF(x)));
+    return x;
+}
+ 
 /* Vector Accessors */
-int (LENGTH)(SEXP x) { return LENGTH(CHK(x)); }
-int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK(x)); }
-void (SETLENGTH)(SEXP x, int v) { SETLENGTH(CHK(x), v); }
-void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK(x), v); }
-R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK(x)); }
-R_xlen_t (XTRUELENGTH)(SEXP x) { return XTRUELENGTH(CHK(x)); }
-int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK(x)); }
+int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
+int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
+void (SETLENGTH)(SEXP x, int v) { SETLENGTH(CHK2(x), v); }
+void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(CHK2(x), v); }
+R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK2(x)); }
+R_xlen_t (XTRUELENGTH)(SEXP x) { return XTRUELENGTH(CHK2(x)); }
+int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 
 const char *(R_CHAR)(SEXP x) {
     if(TYPEOF(x) != CHARSXP)
