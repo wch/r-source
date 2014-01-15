@@ -1141,7 +1141,17 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 }
 
 
+static int locale_strings_set = 0;
+static int w_locale_strings_set = 0;
+
+void dt_invalidate_locale() // used in plaform.c
+{
+    locale_strings_set = 0;
+    w_locale_strings_set = 0;
+}
+
 #ifdef HAVE_LOCALE_H
+
 
 /* use system stuct tm and strftime/wcstime here */
 static void get_locale_strings(void)
@@ -1173,6 +1183,7 @@ static void get_locale_strings(void)
     tm.tm_hour = 13;
     strftime(buff, 4, "%p", &tm);
     if(strlen(buff)) strcpy(am_pm[1], buff);
+    locale_strings_set = 1;
 }
 
 #if defined(HAVE_WCSTOD) && defined(HAVE_WCSFTIME)
@@ -1205,6 +1216,7 @@ static void get_locale_w_strings(void)
     tm.tm_hour = 13;
     wcsftime(buff, 4, L"%p", &tm);
     if(wcslen(buff)) wcscpy(w_am_pm[1], buff);
+    w_locale_strings_set = 1;
 }
 #endif
 #endif /* HAVE_LOCALE_H */
@@ -1221,7 +1233,7 @@ R_strptime (const char *buf, const char *format, stm *tm,
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
 #if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
-	get_locale_w_strings();
+	if(!w_locale_strings_set) get_locale_w_strings();
 #endif
 	n = mbstowcs(NULL, buf, 1000);
 	if(n > 1000) error(_("input string is too long"));
@@ -1237,8 +1249,8 @@ R_strptime (const char *buf, const char *format, stm *tm,
 #endif
     {
 #ifdef HAVE_LOCALE_H
-    get_locale_strings();
+	if(!locale_strings_set) get_locale_strings();
 #endif
-    return strptime_internal (buf, format, tm, &decided, psecs, poffset);
+	return strptime_internal (buf, format, tm, &decided, psecs, poffset);
     }
 }

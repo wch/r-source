@@ -1676,6 +1676,8 @@ extern void invalidate_cached_recodings(void);  /* from sysutils.c */
 
 extern void resetICUcollator(void); /* from util.c */
 
+extern void dt_invalidate_locale(); /* from Rstrptime.h */
+
 /* Locale specs are always ASCII */
 SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1731,6 +1733,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 6:
 	cat = LC_TIME;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	dt_invalidate_locale();
 	break;
 #if defined LC_MESSAGES
     case 7:

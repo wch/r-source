@@ -6395,7 +6395,7 @@ is an example on @code{x86_64} Linux.  File @file{pvec.R} contains the
 part of the examples from @code{pvec} in package @pkg{parallel}:
 @example
 library(parallel)
-N <- 1e5
+N <- 1e6
 dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
 system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
@@ -6409,9 +6409,9 @@ with timings from the final step
 Profiling shows
 @example
                      self.time self.pct total.time total.pct
-"strptime"                0.56    52.83       0.56     52.83
-"as.POSIXct.POSIXlt"      0.24    22.64       0.26     24.53
-"sprintf"                 0.18    16.98       0.20     18.87
+"strptime"                1.70    41.06       1.70     41.06
+"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
+"sprintf"                 0.74    17.87       0.98     23.67
 ...
 @end example
 so as expected the conversion from character to @code{POSIXlt} takes
@@ -6420,7 +6420,7 @@ most of the time.
 This can be run under @command{operf} and analysed by
 @example
 operf R -f pvec.R
-opreprt
+opreport
 opreport -l /path/to/R_HOME/bin/exec/R
 opannotate --source /path/to/R_HOME/bin/exec/R
 ## And for the system time
@@ -6431,36 +6431,37 @@ The time is spent
 CPU_CLK_UNHALT...|
   samples|      %|
 ------------------
-    45435 99.6447 R
+   166761 99.9161 Rdev
 	CPU_CLK_UNHALT...|
 	  samples|      %|
 	------------------
-	    17999 39.6148 libc-2.16.so
-	    15069 33.1661 no-vmlinux
-	    11903 26.1979 R
-	      174  0.3830 stats.so
-	      123  0.2707 libm-2.16.so
+	    70586 42.3276 no-vmlinux
+	    56963 34.1585 libc-2.16.so
+	    36922 22.1407 R
+	     1584  0.9499 stats.so
+	      624  0.3742 libm-2.16.so
 ...
 @end example
 
 Most of the time within @R{} is spent in
 @example
-samples  %        image name               symbol name
-4149     35.6351  R                        R_gc_internal
-692       5.9435  R                        do_sprintf
-589       5.0588  R                        Rf_mkCharLenCE
-585       5.0245  R                        do_asPOSIXct
-380       3.2638  R                        R_strptime
-308       2.6454  R                        bcEval
-305       2.6196  R                        do_strptime
-266       2.2846  R                        w_strptime_internal
-227       1.9497  R                        validate_tm
-166       1.4257  R                        Rf_allocVector
+samples  %        image name symbol name
+10397    28.5123  R           R_gc_internal
+5683     15.5848  R           do_sprintf
+3036      8.3258  R           do_asPOSIXct
+2427      6.6557  R           do_strptime
+2421      6.6392  R           Rf_mkCharLenCE
+1480      4.0587  R           w_strptime_internal
+1202      3.2963  R           Rf_qnorm5
+1165      3.1948  R           unif_rand
+675       1.8511  R           mktime0
+617       1.6920  R           makelt
+617       1.6920  R           validate_tm
+584       1.6015  R           day_of_the_week
 ...
 @end example
-@command{opannotate} shows that 42% of the time in @R{} is spent in
-@file{memory.c}, 11% in @file{datetime.c} and 7% in
-@file{Rstrptime.h}.
+@command{opannotate} shows that 31% of the time in @R{} is spent in
+@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
 
 @node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
@@ -7946,7 +7947,7 @@ takes 5 arguments.  The first is the @code{DllInfo} object passed by
 information about the methods.  The remaining 4 arguments are arrays
 describing the routines for each of the 4 different interfaces:
 @code{.C}, @code{.Call}, @code{.Fortran} and @code{.External}.  Each
-argument is a @code{NULL}-terminated array of the element types given in
+argument is a @code{FIND}-terminated array of the element types given in
 the following table:
 
 @quotation
