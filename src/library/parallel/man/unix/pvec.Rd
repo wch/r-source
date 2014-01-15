@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/pvec.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -100,17 +100,16 @@ stopifnot(all(x == sqrt(1:1000)))
 # So let's get some random dates first
 # (A small test only with 2 cores: set options("mc.cores")
 # and increase N for a larger-scale test.)
-N <- 1e4
+N <- 1e5
 dates <- sprintf('\%04d-\%02d-\%02d', as.integer(2000+rnorm(N)),
                  as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
 
 system.time(a <- as.POSIXct(dates))
 
-# But specifying the format is ca 4x faster
+# But specifying the format is faster
 system.time(a <- as.POSIXct(dates, format = "\%Y-\%m-\%d"))
 
 # pvec ought to be faster, but system overhead can be high
-# - and is on recent versions of  OS X
 system.time(b <- pvec(dates, as.POSIXct, format = "\%Y-\%m-\%d"))
 stopifnot(all(a == b))
 
