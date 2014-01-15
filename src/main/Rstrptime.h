@@ -87,7 +87,7 @@ static void get_locale_w_strings(void);
   get_number(from, to, n)
 #define recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = strptime_internal (rp, (new_fmt), tm, decided, psecs, poffset)) != NULL)
+   && (rp = strptime_internal (rp, (new_fmt), tm, psecs, poffset)) != NULL)
 
 /* This version: may overwrite these with versions for the locale,
  * hence the extra length of the fields
@@ -128,9 +128,6 @@ static const unsigned short int __mon_yday[2][13] =
     { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
 };
 
-
-/* Status of lookup: do we use the locale data or the raw data?  */
-enum locale_status { Not, loc, raw };
 
 # define __isleap(year)	\
   ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
@@ -214,12 +211,11 @@ static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 
 #define w_recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs, poffset)) != NULL)
+   && (rp = w_strptime_internal (rp, (new_fmt), tm, psecs, poffset)) != NULL)
 
 static wchar_t *
 w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
-		     enum locale_status *decided, double *psecs, 
-		     int *poffset)
+		     double *psecs, int *poffset)
 {
     int cnt;
     int val;
@@ -274,24 +270,11 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
 	    for (cnt = 0; cnt < 7; ++cnt)
-	    {
-		if (*decided != loc
-		    && w_match_string (w_weekday_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (w_match_string (w_weekday_name[cnt], rp)) break;
+	    
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
-		{
-		    if (*decided != loc
-			&& w_match_string (w_ab_weekday_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
 	    }
 		
 	    if (cnt == 7)
@@ -306,24 +289,10 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
 	    for (cnt = 0; cnt < 7; ++cnt)
-	    {
-		if (*decided != loc
-		    && w_match_string (w_ab_weekday_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
-		{
-		    if (*decided != loc
-			&& w_match_string (w_weekday_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (w_match_string (w_weekday_name[cnt], rp)) break;
 	    }
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
@@ -337,23 +306,11 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
 	    for (cnt = 0; cnt < 12; ++cnt)
-	    {
-		if (w_match_string (w_month_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (w_match_string (w_month_name[cnt], rp)) break;
 	    if (cnt == 12) {
 		/* Try abbreviated names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		{
-		    if (w_match_string (w_ab_month_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (w_match_string (w_ab_month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12) 
 		/* Does not match a month name.  */
@@ -368,23 +325,11 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
 	    for (cnt = 0; cnt < 12; ++cnt)
-	    {
-		if (w_match_string (w_ab_month_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (w_match_string (w_ab_month_name[cnt], rp)) break;
 	    if (cnt == 12) {
 		/* Try full names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		{
-		    if (w_match_string (w_month_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (w_match_string (w_month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12)
 		/* Does not match a month name.  */
@@ -772,8 +717,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 
 static char *
 strptime_internal (const char *rp, const char *fmt, stm *tm,
-		   enum locale_status *decided, double *psecs,
-		   int *poffset)
+		   double *psecs, int *poffset)
 {
     int cnt;
     int val;
@@ -826,24 +770,10 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* Match day of week.  */
 	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 7; ++cnt)
-	    {
-		if (*decided != loc
-		    && match_string (weekday_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if  (match_string (weekday_name[cnt], rp)) break;
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
-		{
-		    if (*decided != loc
-			&& match_string (ab_weekday_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (match_string (ab_weekday_name[cnt], rp)) break;
 	    }
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
@@ -855,24 +785,10 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* Match day of week.  */
 	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 7; ++cnt)
-	    {
-		if (*decided != loc
-		    && match_string (ab_weekday_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (match_string (ab_weekday_name[cnt], rp)) break;
 	    if (cnt == 7) {
 		for (cnt = 0; cnt < 7; ++cnt)
-		{
-		    if (*decided != loc
-			&& match_string (weekday_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (match_string (weekday_name[cnt], rp)) break;
 	    }
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
@@ -884,23 +800,11 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* Match month name.  */
 	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 12; ++cnt)
-	    {
-		if (match_string (month_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (match_string (month_name[cnt], rp)) break;
 	    if (cnt == 12) {
 		/* Try abbreviated names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		{
-		    if (match_string (ab_month_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (match_string (ab_month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12)
 		/* Does not match a month name.  */
@@ -913,23 +817,11 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* Match month name.  */
 	    if(!locale_strings_set) get_locale_strings();
 	    for (cnt = 0; cnt < 12; ++cnt)
-	    {
-		if (match_string (ab_month_name[cnt], rp))
-		{
-		    *decided = raw;
-		    break;
-		}
-	    }
+		if (match_string (ab_month_name[cnt], rp)) break;
 	    if (cnt == 12) {
 		/* Try full names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		{
-		    if (match_string (month_name[cnt], rp))
-		    {
-			*decided = raw;
-			break;
-		    }
-		}
+		    if (match_string (month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12)
 		/* Does not match a month name.  */
@@ -1394,8 +1286,6 @@ static char *
 R_strptime (const char *buf, const char *format, stm *tm, 
 	    double *psecs, int *poffset)
 {
-    enum locale_status decided;
-    decided = raw;
 #if defined(HAVE_WCSTOD)
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
@@ -1408,10 +1298,10 @@ R_strptime (const char *buf, const char *format, stm *tm,
 	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
 	if(n == -1) error(_("invalid multibyte format string"));
-	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided, psecs, poffset);
+	return (char *) w_strptime_internal (wbuf, wfmt, tm, psecs, poffset);
     } else
 #endif
     {
-	return strptime_internal (buf, format, tm, &decided, psecs, poffset);
+	return strptime_internal (buf, format, tm, psecs, poffset);
     }
 }
