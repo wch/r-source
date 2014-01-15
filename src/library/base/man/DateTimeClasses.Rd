@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -95,19 +95,21 @@
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
       force at that time: \code{""} is unknown.}
     \item{\code{gmtoff}}{(Optional.) The offset in minutes from GMT:
-      positive values are East of the meridian.}
+      positive values are East of the meridian.  Usually \code{NA} if
+      unknown, but \code{0} could mean unknown.}
   }
   (The last two components not present for times in UTC and are
-  platform-dependent: they are fully supported on platforms based on BSD
-  or \code{glibc}, including Linux and OS X .).  Note that the internal
-  list structure is somewhat hidden, as many methods (including
-  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
-  apply to the abstract date-time vector, as for \code{"POSIXct"}.  The
-  classes correspond to the POSIX/C99 constructs of \sQuote{calendar
-  time} (the \code{time_t} data type) and \sQuote{local time} (or
-  broken-down time, the \code{struct tm} data type), from which they
-  also inherit their names.  The components of \code{"POSIXlt"} are
-  integer vectors, except \code{sec} and \code{zone}.
+  platform-dependent: they are supported on platforms based on BSD or
+  \code{glibc}, including Linux and OS X, but are not necessarily set.).
+  Note that the internal list structure is somewhat hidden, as many
+  methods (including \code{\link{length}(x)}, \code{\link{print}()} and
+  \code{\link{str}}) apply to the abstract date-time vector, as for
+  \code{"POSIXct"}.  The classes correspond to the POSIX/C99 constructs
+  of \sQuote{calendar time} (the \code{time_t} data type) and
+  \sQuote{local time} (or broken-down time, the \code{struct tm} data
+  type), from which they also inherit their names.  The components of
+  \code{"POSIXlt"} are integer vectors, except \code{sec} and
+  \code{zone}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
@@ -250,12 +252,18 @@
   \bold{1/2}, 8--11.
   \url{http://www.r-project.org/doc/Rnews/Rnews_2001-2.pdf}
 }
-\section{Warning}{
+
+\section{Warnings}{
   Some Unix-like systems (especially Linux ones) do not have environment
   variable \env{TZ} set, yet have internal code that expects it (as does
   POSIX).  We have tried to work around this, but if you get unexpected
   results try setting \env{TZ}.  See \code{\link{Sys.timezone}} for
   valid settings.
+
+  Great care is needed when comparing objects of class \code{"POSIXlt"}.
+  Not only are components and attributes optional; several components
+  may have values meaning \sQuote{not yet determined} and the same time
+  represented in different time zones will look quite different.
 }
 \examples{\donttest{% <-->  may fail on platforms wrongly set up
 (z <- Sys.time())             # the current date, as class "POSIXct"

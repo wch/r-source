@@ -164,7 +164,10 @@ strptime(x, format, tz = "")
   Where leading zeros are shown they will be used on output but are
   optional on input.  Names are matched case-insensitively on input:
   whether they are capitalized on output depends on the platform and the
-  locale.
+  locale.  Note that abbreviated names are platform-specific (although
+  the standards specify that they must be the first three letters of the
+  capitalized English names in the \samp{C} locale and this convention
+  is widely used in English-language locales).
 
   When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
