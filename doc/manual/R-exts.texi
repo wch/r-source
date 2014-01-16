@@ -2565,8 +2565,13 @@ a set of these customizations similar to those used by @acronym{CRAN}
 can be selected by the option @option{--as-cran} (which works best if
 Internet access is available@footnote{Windows users behind proxies may
 want to set environment variable @env{R_WIN_INTERNET2} to a non-empty
-value, e.g.@: in @file{~/.R/check_environ}.  Some Windows users may need
-to set @env{R_WIN_NO_JUNCTIONS} to a non-empty value.}).
+value, e.g.@: in @file{~/.R/check_environ}.}).  Some Windows users may
+need to set environment variable @env{R_WIN_NO_JUNCTIONS} to a non-empty
+value.  The test of cyclic declarations@footnote{For example, in early
+2014 @pkg{gdata} declared @samp{Imports: gtools} and @pkg{gtools}
+declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
+repositories (including @acronym{CRAN}) set: do this in
+@file{~/.Rprofile}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
