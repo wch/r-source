@@ -1207,6 +1207,12 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
     return (char *) rp;
 }
 
+/*
+  We could use nl_langinfo() here: see src/extra/timezone/strftime.c
+  But we would stil need to do it this way on Windows, and it is not clear
+  if nl_langinfo() has wchar_t versions (some OSes do, some do not).
+*/
+
 attribute_hidden
 void dt_invalidate_locale() // used in plaform.c
 {
