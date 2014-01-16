@@ -1,6 +1,6 @@
 
-R version 3.0.2 Patched (2013-11-25 r64294) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.0.2 Patched (2014-01-16 r64798) -- "Frisbee Sailing"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -656,8 +656,8 @@ In nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 +      stopifnot(isConv == FALSE, stopCode == 300))
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.236 0.015 1.255 0 0 
+Time elapsed:  1.266 0.006 1.276 0 0 
 > 
 > proc.time()
    user  system elapsed 
-  1.359   0.030   1.383 
+  1.380   0.027   1.401 

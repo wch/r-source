@@ -1,7 +1,7 @@
 
-R version 3.0.2 Patched (2014-01-12 r64748) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-16 r64798) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin13.0.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3748,7 +3748,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3ba8b10>
+<environment: 0x2a13508>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4711,7 +4711,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x45e7ea0>
+<bytecode: 0x3d5c268>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7128,7 +7128,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x48ca0a0>
+<environment: 0x3a7eb48>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11596,14 +11596,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x2e364b8>
-<environment: 0x3a07808>
+<bytecode: 0x54ee308>
+<environment: 0x54d4b38>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x2ee4458>
-<environment: 0x3a07808>
+<bytecode: 0x54ee458>
+<environment: 0x54d4b38>
 
 > 
 > 
@@ -15371,8 +15371,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x41ff798>
-<environment: 0x4dfdaf0>
+<bytecode: 0x29426c8>
+<environment: 0x3620f28>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17579,7 +17579,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.686 0.12 5.835 0 0 
+Time elapsed:  5.678 0.146 5.852 0 0 
 > grDevices::dev.off()
 null device 
           1 

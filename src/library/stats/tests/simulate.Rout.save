@@ -1,6 +1,6 @@
 
-R version 3.0.2 Patched (2013-11-25 r64294) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.0.2 Patched (2014-01-16 r64798) -- "Frisbee Sailing"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.228   0.015   0.233 
+  0.230   0.020   0.239 
