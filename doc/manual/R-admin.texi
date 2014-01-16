@@ -1656,8 +1656,7 @@ pkgutil --files org.r-project.x86_64.tcltk.x11
 @end example
 
 @noindent
-Note that some but not all of these files replace those in the Tcl/Tk 8.5.5
-installation used for @R{} 2.x, so care is needed if removing either.
+These are paths relative to @file{/}, the root of the file system.
 
 @node Multiple versions,  , Uninstalling under OS X, Installing R under OS X
 @section Multiple versions
@@ -2056,22 +2055,11 @@ CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
 @end example
 
 @noindent
-(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was
-not previously installed) and for another version of
-@command{gfortran-4.2} we needed
+%(the first two are necessary if Xcode 5 was installed and Xcode 4.6 was not previously installed) 
+and for another version of @command{gfortran-4.2} we needed
 @example
 FLIBS=-lgfortran
 @end example
-
-Not all packages using C++ will compile with the default headers and
-runtime used by @command{clang++}: you @emph{may} be able to install
-these with
-
-@example
-CXX=clang++ --stdlib=libstc++
-@end example
-
-
 
 
 @node Customizing package compilation, Multiple sub-architectures, OS X packages, Installing packages
@@ -2157,9 +2145,10 @@ with a source tarball.
 @subsection Byte-compilation
 
 The base and recommended packages are byte-compiled by default.  Other
-packages can be byte-compiled on installation by using the option
-@option{--byte-compile} with @command{R CMD INSTALL} or with
-@code{install.packages(type = "source")}.
+packages can be byte-compiled on installation by using @command{R CMD
+INSTALL}with option @option{--byte-compile} or by
+@code{install.packages(type = "source", INSTALL_opts =
+"--byte-compile")}.
 
 Not all contributed packages work correctly when byte-compiled (for
 example because they interfere with the sealing of namespaces).  For
@@ -4400,7 +4389,7 @@ distribution in versions prior to Mountain Lion, but not always
 installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}: some people prefer to use XQuartz
 on earlier versions of OS X instead of the Apple version.  (Note that
-XQuartz will need to be re-installed after an OS upgrade.)
+XQuartz will likely need to be re-installed after an OS upgrade.)
 
 In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
 but this has not been tested recently: 10.6 (Snow Leopard) is the
@@ -4595,11 +4584,12 @@ The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
 e.g.@: @command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
-after an update to Mavericks, you are advised to re-install them.)
-They are no longer available under the @samp{Downloads} preference pane.
+after an update to Mavericks, you are advised to re-install them.)  They
+are no longer available under the @samp{Downloads} preference pane in
+Xcode.
 
-To use the compilers it provides together with the recommended Fortran
-compiler, have in @file{config.site} something like
+To use the compiler Xcode 5 provides together with the recommended
+Fortran compiler, have in @file{config.site} something like
 
 @example
 CC=clang
@@ -4625,7 +4615,16 @@ previously had them.  They were able to compile @R{} and almost all
 packages when tested.
 
 There are compilers called @code{gcc} and @code{g++}, but despite their
-names they are versions of @code{clang} and @code{clang++}.
+names they are variants of @code{clang} and @code{clang++}.  The
+@acronym{CRAN} binary package installer changes its settings in
+@file{etc/Makeconf} to
+@example
+CC="gcc -arch x86_64"
+CXX="g++ -arch x86_64"
+CXX=clang++
+F77="gfortran-4.2 -arch x86_64"
+@end example
+when installing on Mavericks.
 
 @node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4930,21 +4929,21 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
 higher optimization levels with version 12.3.
 
-The Solaris Studio compilers provide several implementations of the C++
-standard which select both the set of headers and a C++ runtime library.
-These are selected by the @option{-library} flag, which as it is needed
-for both compiling and linking is best specified as part of the
-compiler.  The examples above use @samp{stlport4}, currently the most
-modern of the options: the default (but still needed to be specified as
-it is needed for linking) is @samp{Cstd}: see
+The Solaris Studio compilers provide several implementations of the
+C++98 standard which select both the set of headers and a C++ runtime
+library.  These are selected by the @option{-library} flag, which as it
+is needed for both compiling and linking is best specified as part of
+the compiler.  The examples above use @samp{stlport4}, currently the
+most modern of the options: the default (but still needed to be
+specified as it is needed for linking) is @samp{Cstd}: see
 @uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
-needs to be.  Occasionally the flag @option{-library=stlport4,Crun} has
-been needed.
+needs to be.  Occasionally the option @option{-library=stlport4,Crun}
+has been needed.
 
-Several @acronym{CRAN} packages using C++ need the more liberal interpretation
-given by adding
+Several @acronym{CRAN} packages using C++ need the more liberal
+interpretation given by adding
 
 @example
 CXXFLAGS="-features=tmplrefstatic"
@@ -4968,9 +4967,9 @@ places.  At the time of writing it fails in @file{tests/reg-BLAS.R}, and on
 some builds, including for @cputype{amd64}, it fails in
 @code{example(eigen)}.
 
-Parsing very complex expressions needs a lot of stack space when the
-Oracle compilers are used: several packages require the stack increased
-to say 20MB.
+Parsing very complex @R{} expressions needs a lot of stack space when
+the Oracle compilers are used: several packages require the stack
+increased to at least 20MB.
 
 
 @menu
