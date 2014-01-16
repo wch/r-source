@@ -1099,6 +1099,9 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		glibc_fix(&tm, &invalid);
 	    tm.tm_isdst = -1;
 	    if (offset != NA_INTEGER) {
+#ifdef HAVE_TM_GMTOFF
+		tm.tm_gmtoff = offset;
+#endif
 		/* we know the offset, but not the timezone
 		   so all we can do is to convert to time_t,
 		   adjust and convert back */
