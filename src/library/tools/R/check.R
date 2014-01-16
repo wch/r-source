@@ -1099,7 +1099,8 @@ setRlibs <-
             ## that source files have the predefined extensions.
             ## </NOTE>
             if (!any(file.exists(file.path("src",
-                                           c("Makefile", "Makefile.win"))))) {
+                                           c("Makefile", "Makefile.win",
+                                             "install.libs.R"))))) {
                 if (!length(dir("src", pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)"))) {
                     if (!any) warningLog(Log)
                     printLog(Log, "Subdirectory 'src' contains no source files.\n")

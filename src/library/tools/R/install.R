@@ -491,7 +491,7 @@
                                "R CMD SHLIB ", paste(args, collapse = " "),
                                domain = NA)
             if (.shlib_internal(args) == 0L) {
-                if(WINDOWS) {
+                if(WINDOWS && !file.exists("install.libs.R")) {
                     files <- Sys.glob(paste0("*", SHLIB_EXT))
                     if(!length(files)) return(TRUE)
                 }
