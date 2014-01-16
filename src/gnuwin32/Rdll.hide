@@ -1016,6 +1016,7 @@
  dos_wglobfree
  dpois_raw
  drawconsole
+ dt_invalidate_locale
  editorchecksave
  editorcleanall
  editorsetfont
