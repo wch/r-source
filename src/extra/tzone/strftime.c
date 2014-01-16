@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (c) 1989 The Regents of the University of California.
- *  Copyright (C) 2013 The R Core Team
+ *  Copyright (C) 2013-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ R_strftime(char * const s, const size_t maxsize, const char *const format,
 #else
 static char *orig(const char *fmt, const stm *const t)
 {
-    static char buff[100];
+    static char buff[100]; // no known name is over 20 bytes
     struct tm tm;
     memset(&tm, 0, sizeof(struct tm));
     tm.tm_sec = t->tm_sec; tm.tm_min = t->tm_min; tm.tm_hour = t->tm_hour;
