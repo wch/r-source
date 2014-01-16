@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2014-01-12 r64740) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-01-16 r64798) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin13.0.0 (64-bit)
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3755,7 +3755,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2aeb8b8>
+<environment: 0x3241438>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4718,7 +4718,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x3b8e250>
+<bytecode: 0x5070520>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7135,7 +7135,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x3be55e0>
+<environment: 0x29597d0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11619,14 +11619,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x300b700>
-<environment: 0x2ffef70>
+<bytecode: 0x45eefd8>
+<environment: 0x4bb2848>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x300b818>
-<environment: 0x2ffef70>
+<bytecode: 0x45f1f38>
+<environment: 0x4bb2848>
 
 > 
 > 
@@ -15394,8 +15394,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x18f4fa8>
-<environment: 0x398f8f8>
+<bytecode: 0x3dceb38>
+<environment: 0x2dc7bd8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17697,7 +17697,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.794 0.148 4.959 0 0 
+Time elapsed:  4.859 0.125 5.006 0 0 
 > grDevices::dev.off()
 null device 
           1 
