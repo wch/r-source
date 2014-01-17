@@ -176,8 +176,6 @@
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
-	    ## "      --group-writable	set file permissions to group-writable,",
-	    ## "			such that group members can update.packages()",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -456,16 +454,14 @@
                 file.copy(files, dest, overwrite = TRUE)
                 ## not clear if this is still necessary, but sh version did so
 		if (!WINDOWS)
-		    Sys.chmod(file.path(dest, files),
-			      if(group.writable) "775" else "755")
+		    Sys.chmod(file.path(dest, files), dmode)
 		## OS X does not keep debugging symbols in binaries
 		## anymore so optionally we can create dSYMs. This is
 		## important since we will blow away .o files so there
 		## is no way to create it later.
 
 		if (dsym && length(grep("^darwin", R.version$os)) ) {
-		    message(gettextf("generating debug symbols (%s)",
-                                     "dSYM"),
+		    message(gettextf("generating debug symbols (%s)", "dSYM"),
                             domain = NA)
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
                     for (file in dylib) system(paste0("dsymutil ", file))
@@ -491,9 +487,10 @@
                                "R CMD SHLIB ", paste(args, collapse = " "),
                                domain = NA)
             if (.shlib_internal(args) == 0L) {
-                if(WINDOWS && !file.exists("install.libs.R")) {
-                    files <- Sys.glob(paste0("*", SHLIB_EXT))
-                    if(!length(files)) return(TRUE)
+                if(WINDOWS && !file.exists("install.libs.R")
+                   && !length(Sys.glob("*.dll"))) {
+                    message("no DLL was created")
+                    return(TRUE)
                 }
                 shlib_install(instdir, arch)
                 return(FALSE)
@@ -1560,8 +1557,8 @@
 
     group.writable <- if(WINDOWS) FALSE else {
 	## install package group-writable  iff  in group-writable lib
-	m <- file.info(lib)$mode
-	(m & "020") == as.octmode("020") ## TRUE  iff  g-bit is "w"
+        d <-  as.octmode("020")
+	(file.info(lib)$mode & d) == d ## TRUE  iff  g-bit is "w"
     }
 
     if (libs_only) {
