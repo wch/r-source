@@ -294,6 +294,9 @@ strptime(x, format, tz = "")
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), this value is
   used there in all locales.
+  
+  That \code{\%A \%a \%B \%b} match both full and abbreviated names is a
+  GNU extension: it caused problems in some locales prior to \R 3.0.3.
 }
 
 \references{

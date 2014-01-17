@@ -265,11 +265,13 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    /* Match the `%' character itself.  */
 	    match_char (L'%', *rp++);
 	    break;
+	case L'a':
 	case L'A':
 	    /* Match day of week.  */
 #if defined(HAVE_WCSFTIME)
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
+	/* try full name first */
 	    for (cnt = 0; cnt < 7; ++cnt)
 		if (w_match_string (w_weekday_name[cnt], rp)) break;
 	    
@@ -284,53 +286,20 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    tm->tm_wday = cnt;
 	    have_wday = 1;
 	    break;
-	case L'a':
-	    /* Match day of week.  */
-#if defined(HAVE_WCSFTIME)
-	    if(!locale_w_strings_set) get_locale_w_strings();
-#endif
-	    for (cnt = 0; cnt < 7; ++cnt)
-		if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
-	    if (cnt == 7) {
-		for (cnt = 0; cnt < 7; ++cnt)
-		    if (w_match_string (w_weekday_name[cnt], rp)) break;
-	    }
-	    if (cnt == 7)
-		/* Does not match a weekday name.  */
-		return NULL;
-	    tm->tm_wday = cnt;
-	    have_wday = 1;
-	    break;
+	case L'b':
 	case L'B':
+	case L'h':
 	    /* Match month name.  */
 #if defined(HAVE_WCSFTIME)
 	    if(!locale_w_strings_set) get_locale_w_strings();
 #endif
+	    /* try full name first */
 	    for (cnt = 0; cnt < 12; ++cnt)
 		if (w_match_string (w_month_name[cnt], rp)) break;
 	    if (cnt == 12) {
-		/* Try abbreviated names */
-		for (cnt = 0; cnt < 12; ++cnt)
-		    if (w_match_string (w_ab_month_name[cnt], rp)) break;
-	    }
-	    if (cnt == 12) 
-		/* Does not match a month name.  */
-		return NULL;
-	    tm->tm_mon = cnt;
-	    want_xday = 1;
-	    break;
-	case L'b':
-	case L'h':
-	    /* Match abbreviated month name.  */
-#if defined(HAVE_WCSFTIME)
-	    if(!locale_w_strings_set) get_locale_w_strings();
-#endif
-	    for (cnt = 0; cnt < 12; ++cnt)
-		if (w_match_string (w_ab_month_name[cnt], rp)) break;
-	    if (cnt == 12) {
 		/* Try full names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		    if (w_match_string (w_month_name[cnt], rp)) break;
+		    if (w_match_string (w_ab_month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12)
 		/* Does not match a month name.  */
@@ -767,9 +736,11 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* Match the `%' character itself.  */
 	    match_char ('%', *rp++);
 	    break;
+	case 'a':
 	case 'A':
 	    /* Match day of week.  */
 	    if(!locale_strings_set) get_locale_strings();
+	    /* try full name first */
 	    for (cnt = 0; cnt < 7; ++cnt)
 		if  (match_string (weekday_name[cnt], rp)) break;
 	    if (cnt == 7) {
@@ -782,47 +753,18 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    tm->tm_wday = cnt;
 	    have_wday = 1;
 	    break;
-	case 'a':
-	    /* Match day of week.  */
-	    if(!locale_strings_set) get_locale_strings();
-	    for (cnt = 0; cnt < 7; ++cnt)
-		if (match_string (ab_weekday_name[cnt], rp)) break;
-	    if (cnt == 7) {
-		for (cnt = 0; cnt < 7; ++cnt)
-		    if (match_string (weekday_name[cnt], rp)) break;
-	    }
-	    if (cnt == 7)
-		/* Does not match a weekday name.  */
-		return NULL;
-	    tm->tm_wday = cnt;
-	    have_wday = 1;
-	    break;
-	case 'B':
-	    /* Match month name.  */
-	    if(!locale_strings_set) get_locale_strings();
-	    for (cnt = 0; cnt < 12; ++cnt)
-		if (match_string (month_name[cnt], rp)) break;
-	    if (cnt == 12) {
-		/* Try abbreviated names */
-		for (cnt = 0; cnt < 12; ++cnt)
-		    if (match_string (ab_month_name[cnt], rp)) break;
-	    }
-	    if (cnt == 12)
-		/* Does not match a month name.  */
-		return NULL;
-	    tm->tm_mon = cnt;
-	    want_xday = 1;
-	    break;
 	case 'b':
+	case 'B':
 	case 'h':
 	    /* Match month name.  */
 	    if(!locale_strings_set) get_locale_strings();
+	    /* try full name first */
 	    for (cnt = 0; cnt < 12; ++cnt)
-		if (match_string (ab_month_name[cnt], rp)) break;
+		if (match_string (month_name[cnt], rp)) break;
 	    if (cnt == 12) {
 		/* Try full names */
 		for (cnt = 0; cnt < 12; ++cnt)
-		    if (match_string (month_name[cnt], rp)) break;
+		    if (match_string (ab_month_name[cnt], rp)) break;
 	    }
 	    if (cnt == 12)
 		/* Does not match a month name.  */
