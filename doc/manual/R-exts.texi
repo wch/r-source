@@ -1093,19 +1093,30 @@ containing the following variables: @code{R_PACKAGE_NAME} (the name of
 the package), @code{R_PACKAGE_SOURCE} (the path to the source directory
 of the package), @code{R_PACKAGE_DIR} (the path of the target
 installation directory of the package), @code{R_ARCH} (the
-arch-dependent part of the path), @code{SHLIB_EXT} (the extension of
-shared objects) and @code{WINDOWS} (@code{TRUE} on Windows, @code{FALSE}
-elsewhere).  Something close to the default behavior could be replicated
-with the following @file{src/install.libs.R} file:
+arch-dependent part of the path, often empty), @code{SHLIB_EXT} (the
+extension of shared objects) and @code{WINDOWS} (@code{TRUE} on Windows,
+@code{FALSE} elsewhere).  Something close to the default behavior could
+be replicated with the following @file{src/install.libs.R} file:
 
 @example
-files <- Sys.glob(paste("*", SHLIB_EXT, sep=''))
-libarch <- if (nzchar(R_ARCH)) paste('libs', R_ARCH, sep='') else 'libs'
-dest <- file.path(R_PACKAGE_DIR, libarch)
+files <- Sys.glob(paste0("*", SHLIB_EXT))
+dest <- file.path(R_PACKAGE_DIR, paste0('libs', R_ARCH))
 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
 file.copy(files, dest, overwrite = TRUE)
 if(file.exists("symbols.rds"))
     file.copy("symbols.rds", dest, overwrite = TRUE)
+@end example
+@noindent
+On the other hand, executable programs could be installed along the
+lines of
+@example
+execs <- c("one", "two", "three")
+if(WINDOWS) execs <- paste0(execs, ".exe")
+if ( any(file.exists(execs)) ) @{
+  dest <- file.path(R_PACKAGE_DIR,  paste0('bin', R_ARCH)
+  dir.create(dest, recursive = TRUE, showWarnings = FALSE)
+  file.copy(execs, dest, overwrite = TRUE)
+@}
 @end example
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
@@ -1198,10 +1209,11 @@ Perl, or Tcl.  This mechanism is currently used only by a very few
 packages.  NB: only files (and not directories) under @file{exec} are
 installed (and those with names starting with a dot are ignored), and
 they are all marked as executable (mode @code{755}, moderated by
-@samp{umask}) on POSIX platforms.  Note too that this may not be
-suitable for executable @emph{programs} since some platforms (including
-OS X and Windows) support multiple architectures using the same
-installed package directory.
+@samp{umask}) on POSIX platforms.  Note too that this is not suitable
+for executable @emph{programs} since some platforms (including OS X and
+Windows) support multiple architectures using the same installed package
+directory.  The suggestion is that programs are installed under
+@file{bin} in a sub-directory which depends on the architecture.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -6336,7 +6348,7 @@ Each sample counts as 0.01 seconds.
  16.67      0.39     0.07        0     0.00           nls_iter
   7.14      0.42     0.03        0     0.00           getListElement
 
-rm /path/to/R_HOME/library/stats/libs/stats.so.profile
+rm /var/tmp/path/to/R_HOME/library/stats/libs/stats.so.profile
 ... to clean up ...
 @end example
 
@@ -6345,8 +6357,133 @@ for the profile data.
 
 @subsubsection oprofile and operf
 
-@code{oprofile} works by running a daemon which collects information.
-The daemon must be started as root, e.g.
+The @command{oprofile} project has two modes of operation.  In what is
+now called `legacy' mode, it is uses a daemon to collect information on
+a process (see below).  Since version 0.9.8 (August 2012), the preferred
+mode is to use @command{operf}, so we discuss that first.  The modes
+differ in how the profiling data is collected: it is analysed by tools
+such as @command{opreport} and @command{oppannote} in both.
+
+Here is an example on @code{x86_64} Linux using @R{} 3.0.2.  File
+@file{pvec.R} contains the part of the examples from @code{pvec} in
+package @pkg{parallel}:
+@example
+library(parallel)
+N <- 1e6
+dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
+                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
+system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
+@end example
+with timings from the final step
+@example
+   user  system elapsed 
+  0.371   0.237   0.612 
+@end example
+
+@R{}-levell profiling by @code{Rprof} shows
+@example
+                     self.time self.pct total.time total.pct
+"strptime"                1.70    41.06       1.70     41.06
+"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
+"sprintf"                 0.74    17.87       0.98     23.67
+...
+@end example
+so the conversion from character to @code{POSIXlt} takes most of the
+time.
+
+This can be run under @command{operf} and analysed by
+@example
+operf R -f pvec.R
+opreport
+opreport -l /path/to/R_HOME/bin/exec/R
+opannotate --source /path/to/R_HOME/bin/exec/R
+## And for the system time
+opreport -l /lib64/libc.so.6 
+@end example
+The first report shows where (which library etc) the time was spent:
+@example
+CPU_CLK_UNHALT...|
+  samples|      %|
+------------------
+   166761 99.9161 Rdev
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	    70586 42.3276 no-vmlinux
+	    56963 34.1585 libc-2.16.so
+	    36922 22.1407 R
+	     1584  0.9499 stats.so
+	      624  0.3742 libm-2.16.so
+...
+@end example
+
+@noindent
+The rest of the output is voluminous, and only extracts are shown below.
+
+Most of the time within @R{} is spent in
+@example
+samples  %        image name symbol name
+10397    28.5123  R           R_gc_internal
+5683     15.5848  R           do_sprintf
+3036      8.3258  R           do_asPOSIXct
+2427      6.6557  R           do_strptime
+2421      6.6392  R           Rf_mkCharLenCE
+1480      4.0587  R           w_strptime_internal
+1202      3.2963  R           Rf_qnorm5
+1165      3.1948  R           unif_rand
+675       1.8511  R           mktime0
+617       1.6920  R           makelt
+617       1.6920  R           validate_tm
+584       1.6015  R           day_of_the_week
+...
+@end example
+@command{opannotate} shows that 31% of the time in @R{} is spent in
+@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
+The analysis for @file{libc} showed that calls to @code{wcsftime}
+dominated, so those calls were cached for @R{} 3.0.3: the time spent in
+@code{no-vmlinux} (the kernel) was the reduced dramatically.
+
+On platforms which support it, callgraphs can be produced by
+@command{opcontrol --callgraph} if collected via @command{operf
+--callgraph}.
+
+The profiling data is by default stored in sub-directory
+@file{oprofile_data} of the current directory, which can be removed at
+the end of the session.
+
+Another example, from @CRANpkg{sm} version 2.2-5.4.  The example for
+@code{sm.variogram} took a long time:
+@example
+system.time(example(sm.variogram))
+...
+   user  system elapsed
+  5.543   3.202   8.785  
+@end example
+
+@noindent
+including a lot of system time.  Profiling just the slow part, the
+second plot, showed
+
+@example
+  samples|      %|
+------------------
+   381845 99.9885 R
+	CPU_CLK_UNHALT...|
+	  samples|      %|
+	------------------
+	   187484 49.0995 sm.so
+	   169627 44.4230 no-vmlinux
+	    12636  3.3092 libgfortran.so.3.0.0
+	     6455  1.6905 R
+@end example
+
+@noindent
+so the system time was almost all in the Linux kernel.  It is possible
+to dig deeper if you have a matching uncompressed kernel with debug
+symbols to specify @emph{via} @option{--vmlinux}: we did not.
+
+In `legacy' mode @code{oprofile} works by running a daemon which
+collects information.  The daemon must be started as root, e.g.
 
 @example
 % su
@@ -6388,85 +6525,8 @@ samples  %        symbol name
 @end example
 
 Shutting down the profiler and clearing the records needs to be done as
-root.  You can use @command{opannotate} to annotate the source code with
-the times spent in each section, if the appropriate source code was
-compiled with debugging support, and @command{opreport -c} to generate a
-callgraph (if collection was enabled and the platform supports this).
+root.
 
-Versions 0.9.8 and later of @command{oprofile} contain another tool,
-@command{operf}, which can be used without running the root daemon
-@command{opcontrol}: its output can be analysed in the same way.  Here
-is an example on @code{x86_64} Linux.  File @file{pvec.R} contains the
-part of the examples from @code{pvec} in package @pkg{parallel}:
-@example
-library(parallel)
-N <- 1e6
-dates <- sprintf('%04d-%02d-%02d', as.integer(2000+rnorm(N)),
-                 as.integer(runif(N, 1, 12)), as.integer(runif(N, 1, 28)))
-system.time(a <- as.POSIXct(dates, format = "%Y-%m-%d"))
-@end example
-with timings from the final step
-@example
-   user  system elapsed 
-  0.371   0.237   0.612 
-@end example
-
-Profiling shows
-@example
-                     self.time self.pct total.time total.pct
-"strptime"                1.70    41.06       1.70     41.06
-"as.POSIXct.POSIXlt"      1.40    33.82       1.42     34.30
-"sprintf"                 0.74    17.87       0.98     23.67
-...
-@end example
-so as expected the conversion from character to @code{POSIXlt} takes
-most of the time.
-
-This can be run under @command{operf} and analysed by
-@example
-operf R -f pvec.R
-opreport
-opreport -l /path/to/R_HOME/bin/exec/R
-opannotate --source /path/to/R_HOME/bin/exec/R
-## And for the system time
-opreport -l /lib64/libc.so.6 
-@end example
-The time is spent
-@example
-CPU_CLK_UNHALT...|
-  samples|      %|
-------------------
-   166761 99.9161 Rdev
-	CPU_CLK_UNHALT...|
-	  samples|      %|
-	------------------
-	    70586 42.3276 no-vmlinux
-	    56963 34.1585 libc-2.16.so
-	    36922 22.1407 R
-	     1584  0.9499 stats.so
-	      624  0.3742 libm-2.16.so
-...
-@end example
-
-Most of the time within @R{} is spent in
-@example
-samples  %        image name symbol name
-10397    28.5123  R           R_gc_internal
-5683     15.5848  R           do_sprintf
-3036      8.3258  R           do_asPOSIXct
-2427      6.6557  R           do_strptime
-2421      6.6392  R           Rf_mkCharLenCE
-1480      4.0587  R           w_strptime_internal
-1202      3.2963  R           Rf_qnorm5
-1165      3.1948  R           unif_rand
-675       1.8511  R           mktime0
-617       1.6920  R           makelt
-617       1.6920  R           validate_tm
-584       1.6015  R           day_of_the_week
-...
-@end example
-@command{opannotate} shows that 31% of the time in @R{} is spent in
-@file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
 
 @node Solaris, OS X, Linux, Profiling compiled code
 @subsection Solaris
