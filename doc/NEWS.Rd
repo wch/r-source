@@ -697,6 +697,10 @@
       format in \code{strptime()} could fail.  An example was French on
       OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
       matches \code{juillet}.  Similarly for weekday names.
+
+      \item \code{pbeta(x, a,b, log.p=TRUE)} sometimes lost all
+      precision for very small and very differently sized a,b.
+      (\PR{15641})
     }
   }
 }

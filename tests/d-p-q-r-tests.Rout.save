@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-01-16 r64798) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-01-16 r64804) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1320,7 +1320,12 @@ Warning messages:
 > stopifnot(abs(1 - dnorm(35+3^-9)/ 3.933395747534971e-267) < 1e-15)
 > ## has been losing up to 8 bit precision for R <= 3.0.x
 > 
+> ## pbeta(x, <small a>,<small b>, .., log):
+> ldp <- diff(log(diff(pbeta(0.5, 2^-(90+ 1:25), 2^-60, log.p=TRUE))))
+> stopifnot(abs(ldp - log(1/2)) < 1e-9)
+> ## pbeta(*, log) lost all precision here, for R <= 3.0.x (PR#15641)
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.687 0.006 0.694 0 0 
+Time elapsed:  0.72 0.003 0.725 0 0 
 > 

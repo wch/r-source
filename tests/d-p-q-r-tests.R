@@ -785,5 +785,10 @@ stopifnot(-1094 < pbx, pbx < -481.66,
 stopifnot(abs(1 - dnorm(35+3^-9)/ 3.933395747534971e-267) < 1e-15)
 ## has been losing up to 8 bit precision for R <= 3.0.x
 
+## pbeta(x, <small a>,<small b>, .., log):
+ldp <- diff(log(diff(pbeta(0.5, 2^-(90+ 1:25), 2^-60, log.p=TRUE))))
+stopifnot(abs(ldp - log(1/2)) < 1e-9)
+## pbeta(*, log) lost all precision here, for R <= 3.0.x (PR#15641)
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
