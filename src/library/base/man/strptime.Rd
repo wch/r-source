@@ -170,7 +170,9 @@ strptime(x, format, tz = "")
   locale.  Note that abbreviated names are platform-specific (although
   the standards specify that in the \samp{C} locale they must be the
   first three letters of the capitalized English name: this convention
-  is widely used in English-language locales).
+  is widely used in English-language locales but for example French
+  month abbreviations are not the same on any of Linux, OS X, Solaris
+  and Windows).
 
   When \code{\%z} or \code{\%Z} is used for output with an
   object with an assigned time zone an attempt is made to use the values
@@ -295,8 +297,10 @@ strptime(x, format, tz = "")
   uses a date format not understood outside N. America), this value is
   used there in all locales.
   
-  That \code{\%A \%a \%B \%b} match both full and abbreviated names is a
-  GNU extension: it caused problems in some locales prior to \R 3.0.3.
+  That \code{\%A \%a \%B \%b} match both full and abbreviated names
+  caused problems in some locales prior to \R 3.0.3: e.g. in French on
+  OS X \samp{juillet} was matched by \code{jui}, the abbreviation for
+  June.
 }
 
 \references{
