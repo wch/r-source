@@ -303,4 +303,8 @@ tools::assertError(parse("```"))
 stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
 ## That is not required for system implementations, and some give +/-Inf
 
+## PR#15642 segfault when parsing overflowing reals
+as.double("1e1000")
+
+
 proc.time()
