@@ -286,6 +286,9 @@ strptime(x, format, tz = "")
   \code{strftime} and formatting/printing uses OS facilities and may
   (and does on Windows) return nonsensical results for non-existent
   times at DST transitions
+  
+  That \code{\%A \%a \%B \%b} match both full and abbreviated names is a
+  GNU extension: it caused problems in some locales prior to \R 3.0.3.
 }
 \references{
   International Organization for Standardization (2004, 2000, \dots)
