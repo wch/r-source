@@ -82,9 +82,9 @@
   (in the UTC time zone) as a numeric vector.  Class \code{"POSIXlt"} is
   a named list of vectors representing
   \describe{
-    \item{\code{sec}}{0--61: seconds}
-    \item{\code{min}}{0--59: minutes}
-    \item{\code{hour}}{0--23: hours}
+    \item{\code{sec}}{0--61: seconds.}
+    \item{\code{min}}{0--59: minutes.}
+    \item{\code{hour}}{0--23: hours.}
     \item{\code{mday}}{1--31: day of the month}
     \item{\code{mon}}{0--11: months after the first of the year.}
     \item{\code{year}}{years since 1900.}
@@ -93,7 +93,8 @@
     \item{\code{isdst}}{Daylight Saving Time flag.  Positive if in
       force, zero if not, negative if unknown.}
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
-      force at that time: \code{""} is unknown.}
+      force at that time: \code{""} if unknown (but \code{""} might also
+      be used for UTC).}
     \item{\code{gmtoff}}{(Optional.) The offset in minutes from GMT:
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}

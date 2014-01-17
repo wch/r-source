@@ -104,7 +104,7 @@ strptime(x, format, tz = "")
       number.  (Accepted but ignored on input.)}
     \item{\code{\%h}}{Equivalent to \code{\%b}.}
     \item{\code{\%H}}{Hours as decimal number (00--23).  As a special
-      exception times such as \samp{24:00:00} are accepted for input,
+      exception strings such as \samp{24:00:00} are accepted for input,
       since ISO 8601 allows these.}
     \item{\code{\%I}}{Hours as decimal number (01--12).}
     \item{\code{\%j}}{Day of year as decimal number (001--366).}
