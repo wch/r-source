@@ -6547,9 +6547,7 @@ function(dir)
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
         p <- strsplit(meta[field], " *, *")[[1L]]
-        print(p)
         p2 <- grep("^(multicore|snow|igraph0)( |\\(|$)", p, value = TRUE)
-        print(p2)
         uses <- c(uses, p2)
         p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS)( |\\(|$)", p, value = TRUE)
         BUGS <- c(BUGS, p2)
