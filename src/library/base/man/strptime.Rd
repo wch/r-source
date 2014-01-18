@@ -113,7 +113,7 @@ strptime(x, format, tz = "")
     \item{\code{\%n}}{Newline on output, arbitrary whitespace on input.}
     \item{\code{\%p}}{AM/PM indicator in the locale.  Used in
       conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
-      empty string in some locales (and the behviour is undefined if
+      empty string in some locales (and the behaviour is undefined if
       used for input in such a locale).
 
       Some platforms accept \code{\%P} for output, which uses a lower-case

@@ -6380,7 +6380,7 @@ with timings from the final step
   0.371   0.237   0.612 
 @end example
 
-@R{}-levell profiling by @code{Rprof} shows
+@R{}-level profiling by @code{Rprof} shows
 @example
                      self.time self.pct total.time total.pct
 "strptime"                1.70    41.06       1.70     41.06
