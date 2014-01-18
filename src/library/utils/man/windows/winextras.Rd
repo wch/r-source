@@ -1,13 +1,13 @@
 % File src/library/utils/man/windows/winextras.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winextras}
 \alias{win.version}
-\title{Auxiliary Functions for the Windows Port}
+\title{Get Windows Version}
 \description{
-  Auxiliary functions for the Windows port
+Get the self-reported Windows version number.  
 }
 \usage{
 win.version()
@@ -15,9 +15,13 @@ win.version()
 \details{
   \code{win.version} is an auxiliary function for
   \code{\link{bug.report}} which returns a character string describing
-  the version of Windows in use.
+  the version of Windows in use. 
 }
 \note{
-    These functions are only available on Windows.
+This function is only available on Microsoft Windows.  
+    
+The result is based on the Windows
+\code{GetVersionEx} API function which reports 
+erroneous information in Windows 8.1 and later.
 }
 \keyword{utilities}
