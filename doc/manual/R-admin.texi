@@ -5208,6 +5208,9 @@ The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
 workarounds added.  Cygwin has not been tested for @R{} 3.0.0 or later.
 
+The 64-bit version is completely unsupported.  The 32-bit version has
+never worked well enough to pass @R{}'s @command{make check}.
+
 @R{} requires C99 complex type support, which is available as from
 Cygwin 1.7.8 (March 2011).  However, the (then) implementation of
 @code{cacos} gives incorrect results, so we undefine @code{HAVE_CACOS}
