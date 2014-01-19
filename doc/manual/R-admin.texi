@@ -3628,6 +3628,7 @@ gfortran}.
 * Using make::                  
 * Using FORTRAN::               
 * Compile and load flags::      
+* Maintainer mode::             
 @end menu
 
 @node Configuration options, Internationalization support, Configuration on a Unix-alike, Configuration on a Unix-alike
@@ -3964,7 +3965,7 @@ The default @code{FFLAGS} and @code{FCFLAGS} chosen (by
 @command{gfortran 4.4.4} and later: for @code{gfortran 4.3.x} set
 @code{FFLAGS} and @code{FCFLAGS} to use at most @samp{-O}.
 
-@node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
+@node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
 
 A wide range of flags can be set in the file @file{config.site} or as
@@ -4045,6 +4046,44 @@ On some platforms @command{configure} will select additional flags for
 which are always required, for example to force @acronym{IEC}@tie{}60559
 compliance.
 
+@node Maintainer mode,  , Compile and load flags, Configuration on a Unix-alike
+@section Maintainer mode
+
+There are several files that are part of the @R{} sources but can be
+re-generated from their own sources by configuring with option
+@option{--enable-maintainer-mode} and then running @command{make} in the
+build directory.  This requires other tools to be installed, discussed
+in the rest of this section.
+
+File @code{configure} is created from @code{configure.ac} and the files
+under @file{m4} by @command{autoconf} and @command{aclocal}.  There is a
+formal version requirement on @command{autoconf} of 2.62 or later, but
+it is unlikely that anything other than the most recent versions have
+been throroughly tested.
+
+File @code{src/include/config.h} is created by @command{autoheader}.
+
+Grammar files @file{*.y} are converted to C sources by an implementation
+of @command{yacc}, usually @command{bison -y}: these are found in
+@file{src/main} and @file{src/library/tools/src}.  It is known that
+earlier versions of @command{bison} generate code which reads (and in
+some cases writes) outside array bounds: @command{bison} 2.6.1 was found
+to be satisfactory.
+
+The ultimate sources for package @pkg{compiler} are in its @file{noweb}
+directory.  To re-create the sources from
+@file{src/library/compiler/noweb/compiler.nw}, the command
+@command{notangle} is required.  This is likely to need to be installed
+from the sources at @url{http://www.cs.tufts.edu/~nr/noweb/} (and can
+also be found on CTAN).  The package sources are only re-created even in
+maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
+been updated.
+
+It is likely that in future creating @code{configure} will need the GNU
+`autoconf archive'.  This can be found at
+@url{http://www.gnu.org/software/autoconf-archive/} and as a package
+(usually called @pkg{autoconf-archive}) in most packaged distributions,
+for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
 
 @node Platform notes, The Windows toolset, Configuration on a Unix-alike, Top
 @appendix Platform notes
