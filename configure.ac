@@ -1733,10 +1733,32 @@ AC_SUBST(FW_VERSION)
 AC_SUBST(STATICR1)
 AC_SUBST(STATICR2)
 
+r_save_CXX="${CXX}"
+r_save_CXXFLAGS="${CXXFLAGS}"
+
 : ${CXX1X=${CXX}}
 : ${CXX1XFLAGS=${CXXFLAGS}}
 : ${CXX1XPICFLAGS=${CXXPICFLAGS}}
-: ${CXX1XSTD=-std=c++11}
+: ${CXX1XSTD}
+
+CXX="${CXX1X} ${CXX1XSTD}"
+CXXFLAGS="${CXX1XFLAGS} ${CXX1XPICFLAGS}"
+AC_LANG_PUSH([C++])dnl
+AX_CXX_COMPILE_STDCXX_11(noext, optional)
+AC_LANG_POP([C++])
+CXX="${r_save_CXX}"
+CXXFLAGS="${r_save_CXXFLAGS}"
+if test x${ax_cv_cxx_compile_cxx11} = xyes -o x${ax_cv_cxx_compile_cxx11__std_cpp11} = xyes -o x${ax_cv_cxx_compile_cxx11__std_cpp0x} = xyes; then
+  if test x${CXX1XSTD} = x; then
+    CXX1XSTD=${switch}
+  fi
+else
+  CXX1X=""
+  CXX1XSTD=""
+  CXX1XFLAGS=""
+  CXX1XPICFLAGS=""
+fi
+
 AC_SUBST(CXX1X)
 AC_SUBST(CXX1XFLAGS)
 AC_SUBST(CXX1XPICFLAGS)

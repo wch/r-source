@@ -522,10 +522,14 @@ tools/config.sub
    Copyright 1992-2013 Free Software Foundation.  
    The Exception to GPL-3 applies.
 
-tools/install-sh:
+tools/install-sh
 
    Copyright (C) 1994 X Consortium
 
+m4/cxx_11.m4
+#   Copyright (c) 2008 Benjamin Kosnik <bkoz@redhat.com>
+#   Copyright (c) 2012 Zack Weinberg <zackw@panix.com>
+#   Copyright (c) 2013 Roy Stogner <roystgnr@ices.utexas.edu>
 
 m4/stat-time.m4
 
