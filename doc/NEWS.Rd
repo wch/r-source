@@ -240,7 +240,7 @@
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX}, but an alternative compiler,
       options and standard can be specified by variables \samp{CXX1X},
-      \samp[CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
+      \samp{CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
       \samp{-std=gnu++11}).
     }
   }
