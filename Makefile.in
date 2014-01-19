@@ -35,6 +35,7 @@ ACINCLUDE_DEPENDENCIES = \
 	m4/cairo.m4 \
 	m4/clibs.m4 \
 	m4/codeset.m4 \
+	m4/cxx_11.m4 \
 	m4/gettext.m4 m4/gettext-lib.m4 \
 	m4/libtool.m4 m4/ltoptions.m4 m4/ltversion.m4 m4/ltsugar.m4 m4/lt~obsolete.m4 \
 	m4/stat-time.m4

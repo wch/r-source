@@ -153,6 +153,9 @@
 /* Define to 1 if you have the `ctanh' function. */
 #undef HAVE_CTANH
 
+/* define if the compiler supports basic C++11 syntax */
+#undef HAVE_CXX11
+
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
 #undef HAVE_DCGETTEXT
