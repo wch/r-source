@@ -187,7 +187,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     used to mark character strings as known to be in
     Latin-1 or UTF-8 (see \code{\link{Encoding}}): it is not used to
     re-encode the input, but allows \R to handle encoded strings in
-    their native encoding (if one of those two).  See \sQuote{Value}.
+    their native encoding (if one of those two).  See \sQuote{Value}
+    and \sQuote{Note}.
   }
 
   \item{text}{character string: if \code{file} is not supplied and this is,
@@ -291,14 +292,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   The columns referred to in \code{as.is} and \code{colClasses} include
   the column of row names (if any).
 
-  Because this function uses \code{\link{pushBack}} it can only handle
-  character strings which can be represented in the current locale.  So
-  although \code{fileEncoding} can be used to specify the encoding of
-  the input file (or a connection can be specified which re-encodes),
-  the implied re-encoding must be possible.  This is not a problem in
-  UTF-8 locales, but it can be on Windows --- \code{\link{readLines}} or
-  \code{\link{scan}} can be used to avoid this limitation since they have
-  special provisions to convert input to UTF-8.
+  There are two approaches for reading input that is not in the local
+  encoding.  If the input is known to be UTF-8 or Latin1, use the 
+  \code{encoding} argument to declare that.  If the input is in some 
+  other encoding, then it may be translated on input.  The \code{fileEncoding} 
+  argument achieves this by setting up a connection to do the re-encoding 
+  into the current locale.  Note that on Windows or other systems not running
+  in a UTF-8 locale, this may not be possible.
 }
 
 \seealso{

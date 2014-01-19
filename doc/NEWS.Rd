@@ -188,6 +188,10 @@
       
       \item \code{warning()} has a new argument \code{noBreaks.}, to
       simplify post-processing of output with \code{options(warn = 1)}.
+      
+      \item \code{pushBack()} gains an argument \code{encoding}, to
+      support proper reading of UTF-8 characters using \code{scan()},
+      \code{read.table()} and related functions in a non-UTF-8 locale.
     }
   }
 
