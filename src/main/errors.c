@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2013  The R Core Team.
+ *  Copyright (C) 1995--2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ static int inError = 0;
 static int inWarning = 0;
 static int inPrintWarnings = 0;
 static int immediateWarning = 0;
+static int noBreakWarning = 0;
 
 static void try_jump_to_restart(void);
 // The next is crucial to the use of NORET attributes.
@@ -356,10 +357,9 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    strcat(buf, " [... truncated]");
 	if(dcall[0] == '\0')
 	    REprintf(_("Warning: %s\n"), buf);
-	else if(mbcslocale &&
-		18 + wd(dcall) + wd(buf) <= LONGWARN)
-	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
-	else if(18+strlen(dcall)+strlen(buf) <= LONGWARN)
+	else if(noBreakWarning || 
+		(mbcslocale && 18 + wd(dcall) + wd(buf) <= LONGWARN) ||
+		(!mbcslocale && 18+strlen(dcall)+strlen(buf) <= LONGWARN) )
 	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
 	else
 	    REprintf(_("Warning in %s :\n  %s\n"), dcall, buf);
@@ -1151,6 +1151,11 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	immediateWarning = 0;
     args = CDR(args);
+    if(asLogical(CAR(args))) { /* noBreak = TRUE */
+	noBreakWarning = 1;
+    } else
+	noBreakWarning = 0;
+    args = CDR(args);
     if (CAR(args) != R_NilValue) {
 	SETCAR(args, coerceVector(CAR(args), STRSXP));
 	if(!isValidString(CAR(args)))
@@ -1161,6 +1166,7 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	warningcall(c_call, "");
     immediateWarning = 0; /* reset to internal calls */
+    noBreakWarning = 0;
 
     return CAR(args);
 }

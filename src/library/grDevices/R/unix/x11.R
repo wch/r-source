@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/x11.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
         if (identical(check, "stop"))
             stop(msg, domain = NA)
         else if (identical(check, "warn"))
-            warning(msg, immediate. = TRUE, domain = NA)
+            warning(msg, immediate. = TRUE, noBreaks. = TRUE, domain = NA)
     }
 
     if(display == "" && .Platform$GUI == "AQUA" &&

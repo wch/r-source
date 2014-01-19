@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-20123 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,8 @@ stopifnot <- function(...)
     invisible()
 }
 
-warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
+warning <- function(..., call. = TRUE, immediate. = FALSE,
+                    noBreaks. = FALSE, domain = NULL)
 {
     args <- list(...)
     if (length(args) == 1L && inherits(args[[1L]], "condition")) {
@@ -66,6 +67,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
         invisible(message)
     } else
         .Internal(warning(as.logical(call.), as.logical(immediate.),
+                          as.logical(noBreaks.),
                           .makeMessage(..., domain = domain)))
 }
 

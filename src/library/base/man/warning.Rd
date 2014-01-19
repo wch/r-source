@@ -1,6 +1,6 @@
 % File src/library/base/man/warning.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{warning}
@@ -12,7 +12,8 @@
   (optionally) the expression or function from which it was called.
 }
 \usage{
-warning(\dots, call. = TRUE, immediate. = FALSE, domain = NULL)
+warning(\dots, call. = TRUE, immediate. = FALSE, noBreaks. = FALSE,
+        domain = NULL)
 suppressWarnings(expr)
 }
 \arguments{
@@ -23,6 +24,8 @@ suppressWarnings(expr)
     warning message.}
   \item{immediate.}{logical, indicating if the call should be output
     immediately, even if \code{\link{getOption}("warn") <= 0}.}
+  \item{noBreaks.}{logical, indicating as far as possible the message should
+    be output as a single line when \code{options(warn = 1)}.}
   \item{expr}{expression to evaluate.}
   \item{domain}{see \code{\link{gettext}}.  If \code{NA}, messages will
     not be translated, see also the note in \code{\link{stop}}.}

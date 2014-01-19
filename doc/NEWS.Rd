@@ -185,6 +185,9 @@
       argument \code{SSinit}, allowing the choice of a different
       \bold{s}tate \bold{s}pace initialization which has been observed
       to be more reliable close to non-stationarity: see \PR{14682}.
+      
+      \item \code{warning()} has a new argument \code{noBreaks.}, to
+      simplify post-processing of output with \code{options(warn = 1)}.
     }
   }
 
