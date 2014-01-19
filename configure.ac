@@ -1770,6 +1770,22 @@ AC_SUBST(SHLIB_CXX1XLD)
 : ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
 AC_SUBST(SHLIB_CXX1XLDFLAGS)
 
+AC_ARG_VAR([CXX1X],
+           [C++11 compiler command])
+AC_ARG_VAR([CXX1XSTD],
+           [special flag for compiling or linking C++11 code, e.g. -std=c++11])
+AC_ARG_VAR([CXX1FLAGS],
+           [C++11 compiler flags])
+AC_ARG_VAR([CXX1XPICFLAGS],
+           [special flags for compiling C++11 code to be turned into a
+            shared object])
+AC_ARG_VAR([SHLIB_CXX1XLD],
+           [command for linking shared objects which contain object
+            files from the C++11 compiler])
+AC_ARG_VAR([SHLIB_CXX1XLDFLAGS],
+           [special flags used by SHLIB_CXX1XLD])
+
+
 ### OpenMP.
 
 ## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,

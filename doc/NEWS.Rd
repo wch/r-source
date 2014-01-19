@@ -190,7 +190,7 @@
       simplify post-processing of output with \code{options(warn = 1)}.
       
       \item \code{pushBack()} gains an argument \code{encoding}, to
-      support proper reading of UTF-8 characters using \code{scan()},
+      support reading of UTF-8 characters using \code{scan()},
       \code{read.table()} and related functions in a non-UTF-8 locale.
     }
   }
@@ -235,6 +235,13 @@
 
       This option also switches to the version of \code{strftime}
       included in directory \file{src/extra/tzone}.
+      
+      \item \command{configure} now tests for a C++11-compliant compiler
+      by testing some basic features.  This by default tries flags for
+      the compiler specified by \samp{CXX}, but an alternative compiler,
+      options and standard can be specified by variables \samp{CXX1X},
+      \samp[CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
+      \samp{-std=gnu++11}).
     }
   }
 
@@ -270,8 +277,8 @@
       \samp{CXX1X}, \samp{CXX1XFLAGS} and so on, either when \R is
       configured or in a personal/site \file{Makevars} file.  The
       default is to use \samp{$(CXX) -std=c++11} otherwise
-      \option{-std=c++0x} (including on Windows, as supported by
-      \code{g++ 4.6.x}.)
+      \option{-std=c++0x} if supported, (the latter on Windows, as
+      supported by \code{g++ 4.6.x}.)
 
       Other standards supported by the compiler can be specified by e.g.
       \samp{USE_CXX1X = -std=c++1y} .

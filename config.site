@@ -229,11 +229,28 @@
 ## read compressed archives.  The default is to choose 'gtar' or
 ## 'gnutar'(normally GNU tar) then 'tar'.
 ## Note that 'bsdtar' (from the libarchive project) is known to create
-## archives in a non-POSIX format that untar() cannot read,
-## so should be avoided.
+## archives in a non-POSIX format that other tars and untar() cannot
+## read, so should be avoided.
 ## TAR=
 
 ## Library path
 ## This is be default created from libraries added to LIBS.
 ## Allow user to override.
 ## R_LD_LIBRARY_PATH=
+
+## C++11 compiler, optional for use in packages.
+## Introduced in R 3.1.0
+## The command which runs the C++11 compiler: defaults to $(CXX), but
+## empty if that (plus standard) cannot compile the tested C++11 code.
+## CXX1X=
+
+## The 'standard' for the C++11 compilier, which is invoked as
+## $(CXX1X) $(CXX1XSTD).  '-std=c++11' and '-std=c++0x' are tried in
+## turn.  Experimental support such as '-std=c++1y' could be used.
+## CXX1XSTD=
+
+## Analogues for the C++11 compiler: default to the settings for C++
+## CXX1XFLAGS=
+## CXXiXPICFLAGS=
+## SHLIB_CXXIXLD=
+## SHLIB_CXXiXLDFLAGS=
