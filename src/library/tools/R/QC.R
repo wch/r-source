@@ -6509,7 +6509,7 @@ function(dir)
     }
 
     ## Is this an update for a package already on CRAN?
-    ## Thinks from now on should be.
+    ## Things from this point down should be.
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
              is.na(db[, "Path"]), , drop = FALSE]
