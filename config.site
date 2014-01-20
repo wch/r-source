@@ -233,8 +233,9 @@
 ## read, so should be avoided.
 ## TAR=
 
-## Library path
+## Dynamic library path
 ## This is be default created from libraries added to LIBS.
+## Used for DYLD_FALLBACK_LIBRARY_PATH on OS X and LD_LIBRARY_PATH elsewhere.
 ## Allow user to override.
 ## R_LD_LIBRARY_PATH=
 
@@ -245,8 +246,10 @@
 ## CXX1X=
 
 ## The 'standard' for the C++11 compilier, which is invoked as
-## $(CXX1X) $(CXX1XSTD).  '-std=c++11' and '-std=c++0x' are tried in
-## turn.  Experimental support such as '-std=c++1y' could be used.
+## $(CXX1X) $(CXX1XSTD) for both compiling and linking DSOs/DLLs.  
+## '-std=c++11' and '-std=c++0x' are tried in turn by configure.
+## '-std=gnu++11' is another possibility.
+## Experimental support such as '-std=c++1y' could be used.
 ## CXX1XSTD=
 
 ## Analogues for the C++11 compiler: default to the settings for C++
