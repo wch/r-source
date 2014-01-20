@@ -3985,7 +3985,7 @@ AX_CXX_COMPILE_STDCXX_11([noext], [optional])
 AC_LANG_POP([C++])
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
-if test x${ax_cv_cxx_compile_cxx11} = xyes -o x${ax_cv_cxx_compile_cxx11__std_cpp11} = xyes -o x${ax_cv_cxx_compile_cxx11__std_cpp0x} = xyes; then
+if test "${HAVE_CXX11}" = "1"; then
   if test x${CXX1XSTD} = x; then
     CXX1XSTD=${switch}
   fi
