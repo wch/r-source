@@ -1774,7 +1774,7 @@ AC_ARG_VAR([CXX1X],
            [C++11 compiler command])
 AC_ARG_VAR([CXX1XSTD],
            [special flag for compiling or linking C++11 code, e.g. -std=c++11])
-AC_ARG_VAR([CXX1FLAGS],
+AC_ARG_VAR([CXX1XFLAGS],
            [C++11 compiler flags])
 AC_ARG_VAR([CXX1XPICFLAGS],
            [special flags for compiling C++11 code to be turned into a

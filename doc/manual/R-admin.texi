@@ -4080,7 +4080,7 @@ maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
 been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
-`autoconf archive'.  This can be found at
+`autoconf archive' installed.  This can be found at
 @url{http://www.gnu.org/software/autoconf-archive/} and as a package
 (usually called @pkg{autoconf-archive}) in most packaged distributions,
 for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.

@@ -28,7 +28,7 @@ stop <- function(..., call. = TRUE, domain = NULL)
         .Internal(.signalCondition(cond, message, call))
         .Internal(.dfltStop(message, call))
     } else
-        .Internal(stop(as.logical(call.), .makeMessage(..., domain = domain)))
+        .Internal(stop(call., .makeMessage(..., domain = domain)))
 }
 
 stopifnot <- function(...)
@@ -66,8 +66,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE,
             }, muffleWarning = function() NULL) #**** allow simpler form??
         invisible(message)
     } else
-        .Internal(warning(as.logical(call.), as.logical(immediate.),
-                          as.logical(noBreaks.),
+        .Internal(warning(call., immediate., noBreaks.,
                           .makeMessage(..., domain = domain)))
 }
 
