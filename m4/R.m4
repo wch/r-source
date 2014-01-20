@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2013 R Core Team
+### Copyright (C) 1998-2014 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -3976,19 +3976,16 @@ r_save_CXXFLAGS="${CXXFLAGS}"
 : ${CXX1X=${CXX}}
 : ${CXX1XFLAGS=${CXXFLAGS}}
 : ${CXX1XPICFLAGS=${CXXPICFLAGS}}
-: ${CXX1XSTD}
 
 CXX="${CXX1X} ${CXX1XSTD}"
 CXXFLAGS="${CXX1XFLAGS} ${CXX1XPICFLAGS}"
 AC_LANG_PUSH([C++])dnl
 AX_CXX_COMPILE_STDCXX_11([noext], [optional])
-AC_LANG_POP([C++])
+AC_LANG_POP([C++])dnl Seems the macro does not always get this right
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX11}" = "1"; then
-  if test x${CXX1XSTD} = x; then
-    CXX1XSTD=${switch}
-  fi
+  CXX1XSTD="${CXX1XSTD} ${switch}"
 else
   CXX1X=""
   CXX1XSTD=""
@@ -3997,9 +3994,9 @@ else
 fi
 
 AC_SUBST(CXX1X)
+AC_SUBST(CXX1XSTD)
 AC_SUBST(CXX1XFLAGS)
 AC_SUBST(CXX1XPICFLAGS)
-AC_SUBST(CXX1XSTD)
 if test -z "${SHLIB_CXX1XLD}"; then
   SHLIB_CXX1XLD="\$(CXX1X) \$(CXX1XSTD)"
 fi
@@ -4007,20 +4004,17 @@ AC_SUBST(SHLIB_CXX1XLD)
 : ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
 AC_SUBST(SHLIB_CXX1XLDFLAGS)
 
-AC_ARG_VAR([CXX1X],
-           [C++11 compiler command])
+AC_ARG_VAR([CXX1X], [C++11 compiler command])
 AC_ARG_VAR([CXX1XSTD],
            [special flag for compiling and for linking C++11 code, e.g. -std=c++11])
-AC_ARG_VAR([CXX1XFLAGS],
-           [C++11 compiler flags])
+AC_ARG_VAR([CXX1XFLAGS], [C++11 compiler flags])
 AC_ARG_VAR([CXX1XPICFLAGS],
            [special flags for compiling C++11 code to be turned into a
             shared object])
 AC_ARG_VAR([SHLIB_CXX1XLD],
            [command for linking shared objects which contain object
             files from the C++11 compiler])
-AC_ARG_VAR([SHLIB_CXX1XLDFLAGS],
-           [special flags used by SHLIB_CXX1XLD])
+AC_ARG_VAR([SHLIB_CXX1XLDFLAGS], [special flags used by SHLIB_CXX1XLD])
 ])# R_CXX1X
 
 
