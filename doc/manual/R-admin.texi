@@ -2090,7 +2090,7 @@ CFLAGS=-g -O -mtune=native
 CXXFLAGS=-g -O -mtune=native
 ## @r{for Fortran code}
 FFLAGS=-g -O -mtune=native
-## @r{for Fortran 95 code}
+## @r{for Fortran 9x code}
 FCFLAGS=-g -O -mtune=native
 @end example
 
@@ -2879,15 +2879,15 @@ installed.
 @section Essential programs and libraries
 
 You need a means of compiling C and FORTRAN 90 (see @ref{Using
-FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
-compiler should be @acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also
-known as @acronym{IEEE}@tie{}754}, POSIX 1003.1 and
-C99-compliant.@footnote{Note that C11 compilers need not be
-C99-compliant: @R{} requires support for @code{double complex} and
-variable-length arrays which are optional in C11 but is mandatory in
-C99.}  @R{} tries to choose suitable flags for the C compilers it knows
-about, but you may have to set @code{CC} or @code{CFLAGS} suitably.  For
-recent versions of @command{gcc} with @code{glibc} this means including
+FORTRAN}).  Your C compiler should be
+@acronym{ISO}/@acronym{IEC}@tie{}60059@footnote{also known as
+@acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
+that C11 compilers need not be C99-compliant: @R{} requires support for
+@code{double complex} and variable-length arrays which are optional in
+C11 but is mandatory in C99.}  @R{} tries to choose suitable flags for
+the C compilers it knows about, but you may have to set @code{CC} or
+@code{CFLAGS} suitably.  For recent versions of @command{gcc} with
+@code{glibc} this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality.}.  If the compiler is
@@ -3106,6 +3106,7 @@ environment variable @env{R_GSCMD} at that time.
 @menu
 * Tcl/Tk::                      
 * Java support::                
+* Other compiled languages::    
 @end menu
 
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
@@ -3135,7 +3136,7 @@ files may be necessary to avoid confusion between them.
 Versions of Tcl/Tk up to 8.5.12 and 8.6.0 have been tested (including
 most versions of 8.4.x, but not recently).
 
-@node Java support,  , Tcl/Tk, Useful libraries and programs
+@node Java support, Other compiled languages, Tcl/Tk, Useful libraries and programs
 @subsection Java support
 
 The build process looks for Java support on the host system, and if it
@@ -3183,6 +3184,33 @@ JAVA_HOME=/usr/lib/jvm/java-1.7.0/jre
 @noindent
 worked.
 
+@node Other compiled languages,  , Java support, Useful libraries and programs
+@subsection Other compiled languages
+
+Some add-on packages need a C++ compiler.  This is specified by the
+configure variables @code{CXX}, @code{CXXFLAGS} and similar.
+@command{configure} will normally find a suitable compiler.  However, in
+most cases this will be a C++98 compiler, and as from @R{} 3.1.0 it is
+possible to specify an alternative compiler for use with C++11 by the
+configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
+similar.  Again, @command{configure} will normally find a suitable value
+for @code{CXX1XSTD} if the compiler given by @code{CXX} is capable of
+compiling C++11 code, but it is possible that a completely different
+compiler will be needed (it is for OS X < 10.9 and Solaris, for
+example).
+
+Other packages need full Fortran 90 (or later) support.  For source
+files with extension @file{.f90} or @file{.f95}, the compiler defined by
+the macro @code{FC} is used by @command{R CMD INSTALL}.  This is found
+when @R{} is configured and is often the same as @code{F77}: note that
+it is detected by the name of the command without a test that it can
+actually compile Fortran 90 code.  Set the configure variable @code{FC}
+to override this if necessary: variables @code{FCFLAGS},
+@code{FCPICFLAGS}, @code{FCLIBS}, @code{SHLIB_FCLD} and
+@code{SHLIB_FCLDFLAGS} might also need to be set.
+
+See file @file{config.site} in the @R{} source for more details about
+these variables.
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike
 @section Linear algebra
