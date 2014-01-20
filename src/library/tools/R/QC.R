@@ -6477,7 +6477,7 @@ function(dir)
     if (length(uses)) out$uses <- sort(unique(uses))
     if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
 
-    ## Check for non-Sweave vignettes (as indicated by the presense of a
+    ## Check for non-Sweave vignettes (as indicated by the presence of a
     ## 'VignetteBuilder' field in DESCRIPTION) without
     ## 'build/vignette.rds'.
 
@@ -6509,7 +6509,6 @@ function(dir)
     }
 
     ## Is this an update for a package already on CRAN?
-    ## Things from this point down should be.
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
              is.na(db[, "Path"]), , drop = FALSE]
@@ -6530,6 +6529,9 @@ function(dir)
             out$bad_license <- meta["License"]
         return(out)
     }
+
+    ## Checks from this point down should be for a package already on CRAN
+
     ## For now, there should be no duplicates ...
 
     ## Package versions should be newer than what we already have on CRAN.
