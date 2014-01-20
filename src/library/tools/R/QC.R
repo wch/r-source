@@ -6465,84 +6465,6 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
-    ## Is this an update for a package already on CRAN?
-    db <- db[(packages == package) &
-             (db[, "Repository"] == CRAN) &
-             is.na(db[, "Path"]), , drop = FALSE]
-    ## This drops packages in version-specific subdirectories.
-    ## It also does not know about archived versions.
-    if(!NROW(db)) {
-        v_m <- package_version(meta["Version"])
-        if(package %in% packages_in_CRAN_archive) {
-            out$CRAN_archive <- TRUE
-            v_a <- sub("^.*_(.*)\\.tar.gz$", "\\1",
-                       basename(rownames(CRAN_archive_db[[package]])))
-            v_a <- max(package_version(v_a, strict = FALSE),
-                       na.rm = TRUE)
-            if(v_m <= v_a)
-                out$bad_version <- list(v_m, v_a)
-        }
-        if(!foss)
-            out$bad_license <- meta["License"]
-        ## For now, there should be no duplicates ...
-
-        ## Package versions should be newer than that we already have on CRAN.
-        v_d <- max(package_version(db[, "Version"]))
-        if(length(v_d)) {
-            if((v_m <= v_d) &&
-               !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_VERSIONS_",
-                                                 FALSE)))
-                out$bad_version <- list(v_m, v_d)
-            if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
-                out$version_with_jump_in_minor <- list(v_m, v_d)
-        }
-        ## Check submission recency and frequency.
-        con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
-                         "rb"))
-        CRAN_current_db <- readRDS(con)
-        close(con)
-        mtimes <- c(CRAN_current_db[match(package,
-                                          sub("_.*", "",
-                                              rownames(CRAN_current_db)),
-                                          nomatch = 0L),
-                                    "mtime"],
-                    CRAN_archive_db[[package]]$mtime)
-        if(length(mtimes)) {
-            deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
-            ## Number of days since last update.
-            recency <- as.numeric(deltas[1L])
-            if(recency < 7)
-                out$recency <- recency
-            ## Number of updates in past 6 months.
-            frequency <- sum(deltas <= 180)
-            if(frequency > 6)
-                out$frequency <- frequency
-        }
-
-        ## Watch out for maintainer changes.
-        ## Note that we cannot get the maintainer info from the PACKAGES
-        ## files.
-        con <- gzcon(url(sprintf("%s/web/packages/packages.rds", CRAN), "rb"))
-        db <- tryCatch(readRDS(con), error = identity)
-        close(con)
-        if(inherits(db, "error")) return(out)
-
-        m_m <- as.vector(meta["Maintainer"]) # drop name
-        m_d <- db[db[, "Package"] == package, "Maintainer"]
-                                        # There may be white space differences here
-        m_m_1 <- gsub("[[:space:]]+", " ", m_m)
-        m_d_1 <- gsub("[[:space:]]+", " ", m_d)
-        if(!all(m_m_1== m_d_1)) {
-            ## strwrap is used below, so we need to worry about encodings.
-            ## m_d is in UTF-8 already
-            if(Encoding(m_m) == "latin1") m_m <- iconv(m_m, "latin1")
-            out$new_maintainer <- list(m_m, m_d)
-        }
-        l_d <- db[db[, "Package"] == package, "License"]
-        if(!foss && analyze_license(l_d)$is_verified)
-            out$new_license <- list(meta["License"], l_d)
-    }
-
     uses <- character()
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
@@ -6585,6 +6507,88 @@ function(dir)
         out$have_vignettes_dir <- file_test("-d", vign_dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
+
+    ## Is this an update for a package already on CRAN?
+    ## Thinks from now on should be.
+    db <- db[(packages == package) &
+             (db[, "Repository"] == CRAN) &
+             is.na(db[, "Path"]), , drop = FALSE]
+    ## This drops packages in version-specific subdirectories.
+    ## It also does not know about archived versions.
+    if(!NROW(db)) {
+        if(package %in% packages_in_CRAN_archive) {
+            out$CRAN_archive <- TRUE
+            v_m <- package_version(meta["Version"])
+            v_a <- sub("^.*_(.*)\\.tar.gz$", "\\1",
+                       basename(rownames(CRAN_archive_db[[package]])))
+            v_a <- max(package_version(v_a, strict = FALSE),
+                       na.rm = TRUE)
+            if(v_m <= v_a)
+                out$bad_version <- list(v_m, v_a)
+        }
+        if(!foss)
+            out$bad_license <- meta["License"]
+        return(out)
+    }
+    ## For now, there should be no duplicates ...
+
+    ## Package versions should be newer than what we already have on CRAN.
+
+    v_m <- package_version(meta["Version"])
+    v_d <- max(package_version(db[, "Version"]))
+    if((v_m <= v_d) &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_VERSIONS_",
+                                         FALSE)))
+        out$bad_version <- list(v_m, v_d)
+    if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
+        out$version_with_jump_in_minor <- list(v_m, v_d)
+
+    ## Check submission recency and frequency.
+    con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
+                     "rb"))
+    CRAN_current_db <- readRDS(con)
+    close(con)
+    mtimes <- c(CRAN_current_db[match(package,
+                                      sub("_.*", "",
+                                          rownames(CRAN_current_db)),
+                                      nomatch = 0L),
+                                "mtime"],
+                CRAN_archive_db[[package]]$mtime)
+    if(length(mtimes)) {
+        deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
+        ## Number of days since last update.
+        recency <- as.numeric(deltas[1L])
+        if(recency < 7)
+            out$recency <- recency
+        ## Number of updates in past 6 months.
+        frequency <- sum(deltas <= 180)
+        if(frequency > 6)
+            out$frequency <- frequency
+    }
+
+    ## Watch out for maintainer changes.
+    ## Note that we cannot get the maintainer info from the PACKAGES
+    ## files.
+    con <- gzcon(url(sprintf("%s/web/packages/packages.rds", CRAN), "rb"))
+    db <- tryCatch(readRDS(con), error = identity)
+    close(con)
+    if(inherits(db, "error")) return(out)
+
+    m_m <- as.vector(meta["Maintainer"]) # drop name
+    m_d <- db[db[, "Package"] == package, "Maintainer"]
+    # There may be white space differences here
+    m_m_1 <- gsub("[[:space:]]+", " ", m_m)
+    m_d_1 <- gsub("[[:space:]]+", " ", m_d)
+    if(!all(m_m_1== m_d_1)) {
+        ## strwrap is used below, so we need to worry about encodings.
+        ## m_d is in UTF-8 already
+        if(Encoding(m_m) == "latin1") m_m <- iconv(m_m, "latin1")
+        out$new_maintainer <- list(m_m, m_d)
+    }
+
+    l_d <- db[db[, "Package"] == package, "License"]
+    if(!foss && analyze_license(l_d)$is_verified)
+        out$new_license <- list(meta["License"], l_d)
 
     out
 }
