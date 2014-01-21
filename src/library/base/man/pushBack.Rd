@@ -40,12 +40,12 @@ clearPushBack(connection)
   commands from the console and \code{\link{scan}("")} ignore pushbacks on
   \code{\link{stdin}}.
 
-  When character strings with a marked encoding (see \code{\link{
-  Encoding}}) are pushed back they are converted to the current
-  encoding if \code{encoding = ""}.  This may involve representing
-  characters as \samp{<U+xxxx>} if they cannot be converted.  They
-  will be converted to UTF-8 if \code{encoding = "UTF-8"} or left 
-  as-is if \code{encoding = "bytes"}.
+  When character strings with a marked encoding (see
+  \code{\link{Encoding}}) are pushed back they are converted to the
+  current encoding if \code{encoding = ""}.  This may involve
+  representing characters as \samp{<U+xxxx>} if they cannot be
+  converted.  They will be converted to UTF-8 if \code{encoding =
+  "UTF-8"} or left as-is if \code{encoding = "bytes"}.
 }
 \value{
   \code{pushBack} and \code{clearPushBack()} return nothing, invisibly.
