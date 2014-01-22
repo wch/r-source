@@ -386,7 +386,7 @@ test-undoc:
 	  fi; \
 	done
 
-## There is a potential name clash here on a case-insensitive FS
+## survival 2.35-6 has a vignette depending on survey, hence --no-vignettes
 test-Packages-Recommended:
 	@if test -n "${TEST_MC_CORES}"; then \
 	  $(ECHO) "Using ${TEST_MC_CORES} cores to check packages"; \
@@ -399,10 +399,16 @@ test-Packages1-Recommended:
 	@test -d RecPackages || mkdir RecPackages
 	@for p in $(R_PKGS_RECOMMENDED); do \
 	  rm -rf RecPackages/$${p}; \
+	  if test $${p} = survival; then \
+	    OPTS=--no-vignettes; \
+	  else \
+	    OPTS=; \
+	  fi; \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd RecPackages && $(TAR) xf -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
-	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
+	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
+	    _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip $${OPTS} \
 	    --library="$(top_builddir)/library" RecPackages/$${p} || $(ECHO); \
 	done
 
@@ -419,11 +425,15 @@ stamp-Packages2: $(PKG_ROBJECTS)
 
 .trin.log:
 	@p=`basename $@ .log`; \
+	if test $${p} = survival; then \
+	  OPTS=--no-vignettes; \
+	fi; \
 	rm -rf RecPackages/$${p}; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
 	    (cd RecPackages && $(TAR) xf -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \
-	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
+	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
+	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip $${OPTS} \
 	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1
 	@cat $@
 
