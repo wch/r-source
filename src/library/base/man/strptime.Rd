@@ -158,7 +158,7 @@ strptime(x, format, tz = "")
       with agreement of the parties involved.
   
       For input, only years \code{0:9999} are accepted.}
-    \item{\code{\%z}}{(Output only.) Signed offset in hours and minutes
+    \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC.} 
     \item{\code{\%Z}}{(Output only.) Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
@@ -270,7 +270,7 @@ strptime(x, format, tz = "")
   The default formats follow the rules of the ISO 8601 international
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  (The ISO form uses no
-  space to separate dates and times:\R does by default.)
+  space to separate dates and times: \R does by default.)
 
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
@@ -294,13 +294,14 @@ strptime(x, format, tz = "")
   
   In a C locale \code{\%c} is required to be
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
-  uses a date format not understood outside N. America), this value is
-  used there in all locales.
+  uses a date format not understood outside N. America), that format is
+  used on Windows in all locales.
   
-  That \code{\%A \%a \%B \%b} match both full and abbreviated names
+  That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
   caused problems in some locales prior to \R 3.0.3: e.g. in French on
   OS X \samp{juillet} was matched by \code{jui}, the abbreviation for
   June.
+  
 }
 
 \references{
@@ -318,16 +319,9 @@ strptime(x, format, tz = "")
   \link{DateTimeClasses} for details of the date-time classes;
   \link{locales} to query or set a locale.
 
-  Your system's help pages on \code{strftime} and \code{strptime} to
-  see how to specify their formats.
-
-  On all platforms \code{strptime} is replaced by corrected code from
-  \samp{glibc}, when all the conversion specifications described here
-  are supported, but with no alternative number representation nor era
-  available in any locale.
-
-  On some systems, including Windows, \code{strftime} is replaced by
-  more comprehensive internal code.
+  Your system's help page on \code{strftime} to see how to specify their
+  formats.  (On some systems, including Windows, \code{strftime} is
+  replaced by more comprehensive internal code.)
 }
 \examples{\donttest{
 ## locale-specific version of date()
