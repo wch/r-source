@@ -3502,8 +3502,8 @@ function(dfile, dir)
             ok <- FALSE
         }
         ## Components which need extensions:
-        if(any(ind <- status$components %in%
-               c("MIT", "BSD_2_clause", "BSD_3_clause"))) {
+        if(any(ind <- grepl("^(MIT|BSD_2_clause|BSD_3_clause)",
+                            status$components))) {
             status$miss_extension <- status$components[ind]
             ok <- FALSE
         }
@@ -3556,7 +3556,7 @@ function(x, ...)
             paste(" ", y))
       },
       if(length(y <- x$miss_extension)) {
-          c(gettext("Licenses which are templates and need '+ file LICENSE':"),
+          c(gettext("License components which are templates and need '+ file LICENSE':"),
             paste(" ", y))
       }
       )
