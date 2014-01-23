@@ -188,26 +188,30 @@ all.equal.language <- function(target, current, ...)
     if(is.null(msg)) TRUE else msg
 }
 
-all.equal.list <- function(target, current, check.attributes = TRUE, ...)
+all.equal.list <- function(target, current, check.attributes = TRUE,
+			   use.names = TRUE, ...)
 {
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
     ## Unclass to ensure we get the low-level components
     target <- unclass(target)
     current <- unclass(current)
-    iseq <-
-	if(length(target) == length(current)) {
-	    seq_along(target)
-	} else {
-            if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
-	    nc <- min(length(target), length(current))
-	    msg <- c(msg, paste("Length mismatch: comparison on first",
-				nc, "components"))
-	    seq_len(nc)
-	}
+    if((n <- length(target)) != length(current)) {
+	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
+	n <- min(n, length(current))
+	msg <- c(msg, paste("Length mismatch: comparison on first",
+			    n, "components"))
+    }
+    iseq <- seq_len(n)
+    if(use.names)
+	use.names <- (length(nt <- names(target [iseq])) == n &&
+		      length(nc <- names(current[iseq])) == n)
     for(i in iseq) {
-	mi <- all.equal(target[[i]], current[[i]], check.attributes = check.attributes, ...)
+	mi <- all.equal(target[[i]], current[[i]],
+			check.attributes = check.attributes, ...)
 	if(is.character(mi))
-	    msg <- c(msg, paste0("Component ", i, ": ", mi))
+	    msg <- c(msg, paste0("Component ",
+				 if(use.names && nt[i] == nc[i]) dQuote(nt[i]) else i,
+				 ": ", mi))
     }
     if(is.null(msg)) TRUE else msg
 }

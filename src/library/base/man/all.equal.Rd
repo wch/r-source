@@ -26,6 +26,9 @@ all.equal(target, current, \dots)
           tolerance = .Machine$double.eps ^ 0.5,
           scale = NULL, check.attributes = TRUE, \dots)
 
+\method{all.equal}{list}(target, current,
+          check.attributes = TRUE, use.names = TRUE, \dots)
+
 attr.all.equal(target, current,
                check.attributes = TRUE, check.names = TRUE, \dots)
 }
@@ -40,6 +43,9 @@ attr.all.equal(target, current,
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
+  \item{use.names}{logical indicating if \code{\link{list}} comparison
+    should report differing components by name (if matching) instead of
+    integer index.} 
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }

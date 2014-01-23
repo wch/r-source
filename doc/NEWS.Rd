@@ -4,7 +4,7 @@
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
-\title{ R News}
+\title{R News}
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
@@ -192,6 +192,11 @@
       \item \code{pushBack()} gains an argument \code{encoding}, to
       support reading of UTF-8 characters using \code{scan()},
       \code{read.table()} and related functions in a non-UTF-8 locale.
+
+      \item \code{all.equal.list()} gets new argument \code{use.names = TRUE}
+      which labels differing components by names (if they match) rather
+      than integer index.  This change may need adaption of saved \R
+      outputs in checks.
     }
   }
 
@@ -713,9 +718,8 @@
       OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
       matches \code{juillet}.  Similarly for weekday names.
 
-      \item \code{pbeta(x, a,b, log.p=TRUE)} sometimes lost all
-      precision for very small and very differently sized a,b.
-      (\PR{15641})
+      \item \code{pbeta(x, a,b, log.p=TRUE)} sometimes underflowed to
+      zero for very small and very differently sized a,b.  (\PR{15641})
     }
   }
 }

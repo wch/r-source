@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-01-16 r64798) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-01-23 r64859) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -5837,8 +5837,8 @@ structure(list(X1.4 = 1:4), .Names = "X1.4", row.names = c("1",
 > identical(d0, d1)
 [1] FALSE
 > all.equal(d0, d1)
-[1] "Attributes: < Component 2: Modes: numeric, character >"              
-[2] "Attributes: < Component 2: target is numeric, current is character >"
+[1] "Attributes: < Component \"row.names\": Modes: numeric, character >"              
+[2] "Attributes: < Component \"row.names\": target is numeric, current is character >"
 > ## identical used internal representation prior to 2.5.0
 > 
 > 
@@ -6402,15 +6402,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x35ce2b8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3791420> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x35e4d38> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x37e2718> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x35e4d38> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x37e2718> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
