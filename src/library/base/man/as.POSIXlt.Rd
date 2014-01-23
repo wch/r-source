@@ -161,6 +161,12 @@ as.POSIXct(z, origin = "1960-01-01", tz = "GMT")    # in UTC
 z <- c(10485849600, 10477641600, 10561104000, 10562745600)
 as.Date(as.POSIXct(z, origin = "1582-10-14", tz = "GMT"))
 
+## Stata date-times: milliseconds since 1960-01-01 00:00:00 GMT
+z <- 1579598122120
+op <- options(digits.secs = 3)
+as.POSIXct((z+0.1)/1000, origin = "1960-01-01") # avoid rounding down
+options(op)
+
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 }
 \dontrun{## These may not be correct names on your system
