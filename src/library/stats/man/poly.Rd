@@ -1,6 +1,6 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{poly}
@@ -17,7 +17,7 @@ polym(\dots, degree = 1, raw = FALSE)
 }
 \description{
   Returns or evaluates orthogonal polynomials of degree 1 to
-  \code{degree} over the specified set of points \code{x}. These are all
+  \code{degree} over the specified set of points \code{x}: these are all
   orthogonal to the constant polynomial of degree 0.  Alternatively,
   evaluate raw polynomials.
 }
@@ -44,8 +44,8 @@ polym(\dots, degree = 1, raw = FALSE)
   constants used in constructing the orthogonal polynomials.  The matrix
   has given class \code{c("poly", "matrix")}.
 
-  Other cases of \code{poly} and \code{polym}, and \code{predict.poly}:
-  a matrix.
+  For \code{poly} and \code{polym} with more than one input, and
+  \code{predict.poly}: a matrix.
 }
 \details{
   Although formally \code{degree} should be named (as it follows
@@ -56,6 +56,11 @@ polym(\dots, degree = 1, raw = FALSE)
   be used to evaluate it via the three-term recursion given in Kennedy
   & Gentle (1980, pp. 343--4), and used in the \code{predict} part of
   the code.
+
+  \code{poly} using \code{\dots} is just a convenience wrapper for
+  \code{polym}: \code{coef} is ignored.  Coversely, if \code{polym} is
+  called with a single argument in \code{\dots} it is a wrapper for
+  \code{poly}.
 }
 \note{
   This routine is intended for statistical purposes such as
