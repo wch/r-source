@@ -3503,7 +3503,7 @@ function(dfile, dir)
         }
         ## Components which need extensions:
         if(any(ind <- grepl("^(MIT|BSD_2_clause|BSD_3_clause)",
-                            status$components) &&
+                            status$components) &
                !grep("+ file", status$components))) {
             status$miss_extension <- status$components[ind]
             ok <- FALSE
