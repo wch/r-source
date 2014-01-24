@@ -306,5 +306,9 @@ stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
 ## PR#15642 segfault when parsing overflowing reals
 as.double("1e1000")
 
+ali <- all.equal(list(), identity)# failed in R-devel for ~ 30 hours
+stopifnot(length(ali) == 2, grepl("list", ali[1]),
+	  grepl("length", ali[2], ignore.case=TRUE))
+
 
 proc.time()

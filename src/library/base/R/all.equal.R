@@ -203,8 +203,8 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
     }
     iseq <- seq_len(n)
     if(use.names)
-	use.names <- (length(nt <- names(target [iseq])) == n &&
-		      length(nc <- names(current[iseq])) == n)
+	use.names <- (length(nt <- names(target )[iseq]) == n &&
+		      length(nc <- names(current)[iseq]) == n)
     for(i in iseq) {
 	mi <- all.equal(target[[i]], current[[i]],
 			check.attributes = check.attributes, ...)
@@ -283,7 +283,7 @@ attr.all.equal <- function(target, current,
 	ax[["names"]] <- NULL
 	ay[["names"]] <- NULL
     }
-	
+
     if(check.attributes && (length(ax) || length(ay))) {# some (more) attributes
 	## order by names before comparison:
 	nx <- names(ax)
