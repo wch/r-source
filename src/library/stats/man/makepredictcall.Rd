@@ -1,6 +1,6 @@
 % File src/library/stats/man/makepredictcall.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makepredictcall}
@@ -10,8 +10,8 @@
 \title{Utility Function for Safe Prediction}
 \description{
   A utility to help \code{\link{model.frame.default}} create the right
-  matrices when predicting from models with terms like \code{poly} or
-  \code{ns}.
+  matrices when predicting from models with terms like (univariate)
+  \code{poly} or \code{ns}.
 }
 \usage{
 makepredictcall(var, call)
