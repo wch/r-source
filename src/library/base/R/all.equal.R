@@ -193,8 +193,13 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
 {
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
     ## Unclass to ensure we get the low-level components
-    target <- unclass(target)
-    current <- unclass(current)
+    target <- unclass(target) # "list"
+    current <- unclass(current)# ??
+    if(data.class(target) != data.class(current)) {
+	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
+			     data.class(current)))
+	return(msg)
+    }
     if((n <- length(target)) != length(current)) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	n <- min(n, length(current))
