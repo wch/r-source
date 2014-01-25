@@ -4083,13 +4083,13 @@ re-generated from their own sources by configuring with option
 build directory.  This requires other tools to be installed, discussed
 in the rest of this section.
 
-File @code{configure} is created from @code{configure.ac} and the files
+File @file{configure} is created from @file{configure.ac} and the files
 under @file{m4} by @command{autoconf} and @command{aclocal}.  There is a
 formal version requirement on @command{autoconf} of 2.62 or later, but
 it is unlikely that anything other than the most recent versions have
-been throroughly tested.
+been thoroughly tested.
 
-File @code{src/include/config.h} is created by @command{autoheader}.
+File @file{src/include/config.h} is created by @command{autoheader}.
 
 Grammar files @file{*.y} are converted to C sources by an implementation
 of @command{yacc}, usually @command{bison -y}: these are found in

@@ -3649,7 +3649,7 @@ The @code{quartz()} device is built (other than as a stub) in package
 access to the OS X screen.
 
 @item
-File @code{src/unix/aqua.c} is compiled.  This now only contains an
+File @file{src/unix/aqua.c} is compiled.  This now only contains an
 interface pointer for the @code{quartz()} device(s).
 
 @item
