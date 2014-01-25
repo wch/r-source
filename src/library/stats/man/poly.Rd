@@ -58,7 +58,7 @@ polym(\dots, degree = 1, raw = FALSE)
   the code.
 
   \code{poly} using \code{\dots} is just a convenience wrapper for
-  \code{polym}: \code{coef} is ignored.  Coversely, if \code{polym} is
+  \code{polym}: \code{coef} is ignored.  Conversely, if \code{polym} is
   called with a single argument in \code{\dots} it is a wrapper for
   \code{poly}.
 }
