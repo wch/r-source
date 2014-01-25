@@ -46,7 +46,7 @@ attr.all.equal(target, current,
   \item{use.names}{logical indicating if \code{\link{list}} comparison
     should report differing components by name (if matching) instead of
     integer index.  Note that this comes after \code{\dots} and so must
-    be specified by its full name.} 
+    be specified by its full name.}
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }
@@ -77,6 +77,11 @@ attr.all.equal(target, current,
   For complex \code{target}, the modulus (\code{\link{Mod}}) of the
   difference is used: \code{all.equal.numeric} is called so arguments
   \code{tolerance} and \code{scale} are available.
+
+  The \code{\link{list}} method compares components of
+  \code{target} and \code{current} recursively, passing all other
+  arguments, as long as both are \dQuote{list-like}, i.e., fulfill
+  either \code{\link{is.vector}} or \code{\link{is.list}}.
 
   The method for the date-time class \code{"\link{POSIXct}"} by default
   allows a tolerance of \code{tolerance = 0.001} seconds.

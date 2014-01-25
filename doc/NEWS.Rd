@@ -162,10 +162,10 @@
 
       \item \code{dnorm(x, log = FALSE)} is more accurate (but somewhat
       slower) for |x| > 5; as suggested in \PR{15620}.
-      
+
       \item Some versions of the \code{tiff()} device have further
       compression options.
-      
+
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
       have a new argument to influence the treatment of embedded nuls.
 
@@ -174,7 +174,7 @@
       values in expressions such as \code{Z$a <- a0} and \code{ans[[i]]
       <- tmp}: some package code has relied on there being copies.
       (Based on suggestions from Michael Lawrence.)
-      
+
       \item The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
       by \code{update}, which instead of updating \code{mod} in place,
@@ -185,10 +185,10 @@
       argument \code{SSinit}, allowing the choice of a different
       \bold{s}tate \bold{s}pace initialization which has been observed
       to be more reliable close to non-stationarity: see \PR{14682}.
-      
+
       \item \code{warning()} has a new argument \code{noBreaks.}, to
       simplify post-processing of output with \code{options(warn = 1)}.
-      
+
       \item \code{pushBack()} gains an argument \code{encoding}, to
       support reading of UTF-8 characters using \code{scan()},
       \code{read.table()} and related functions in a non-UTF-8 locale.
@@ -240,7 +240,7 @@
 
       This option also switches to the version of \code{strftime}
       included in directory \file{src/extra/tzone}.
-      
+
       \item \command{configure} now tests for a C++11-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX}, but an alternative compiler,
@@ -365,7 +365,7 @@
       library.
 
       \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
-      
+
       \item \command{R CMD check} customizations such as
       \env{_R_CHECK_DEPENDS_ONLY_} make available packages only in
       \samp{LinkingTo} only for installation, and not for
@@ -394,7 +394,7 @@
 
       \item The included LAPACK subset now contains \code{ZGESDD} and
       \code{ZGELSD}.
-      
+
       \item The function \code{LENGTH()} now checks that it is only
       applied to vector arguments.  However, in packages \code{length()}
       should be used. (In \R{} itself \code{LENGTH()} is a macro without
@@ -460,6 +460,8 @@
       abbreviation.  On some platforms where the C function
       \code{localtime} changed the \code{tzname} variables the reported
       abbreviation could have been that of the last time converted.
+
+      \item \code{all.equal(list(1), identity)} now works.
     }
   }
 }
@@ -492,28 +494,28 @@
       \item On a Unix-alike \code{Sys.timezone()} returns \code{NA} if
       the environment variable \env{TZ} is unset, to distinguish it from
       an empty string which on some OSes means the \samp{UTC} time zone.
-      
+
       \item The backtick may now be escaped in strings, to allow names
       containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
-      
+
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
       now warn when an embedded nul is found in the input.  (Related to
       \PR{15625} which was puzzled by the behaviour in this unsupported
       case.)
-      
+
       \item (Windows.)  \code{file.symlink()} works around the
       undocumented restriction of the Windows system call to
       backslashes.  (Wish of \PR{15631}.)
-      
+
       \item \code{KalmanForecast(fast = FALSE)} is now the default, and
       the help contains an example of how \code{fast = TRUE} can be used
       in this version.  (The usage will change in 3.1.0.)
-      
+
       \item \code{strptime()} now checks the locale only when
       locale-specific formats are used and caches the locale in use:
       this can halve the time taken on OSes with slow system
       functions (e.g. OS X).
-      
+
       \item \code{strptime()} and the \code{format()} methods for
       classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"Date"}
       recognize strings with marked encodings: this allows, for example,
@@ -535,7 +537,7 @@
       \item The new field \samp{SysDataCompression} in the
       \file{DESCRIPTION} file allows user control over the compression
       used for \file{sysdata.rda} objects in the lazy-load database.
-      
+
       \item \code{install.packages(dependencies = value)} for \code{value =
 	NA} (the default) or \code{value = TRUE} omits packages only in
       \code{LinkingTo} for binary package installs.
@@ -690,28 +692,28 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer gives a
       warning.
-      
+
       \item \code{deparse()} now deparses complex vectors more
       accurately; they will now re-parse to the original values.
-      (\PR{15534}, patch based on code submitted by Alex Bertram.)      
-    
+      (\PR{15534}, patch based on code submitted by Alex Bertram.)
+
       \item In some extreme cases (more than \eqn{10^{15}}{10^15})
       integer inputs to dpqrxxx functions might have been rounded up by
       one (with a warning about being non-integer).  (\PR{15624})
-      
+
       \item Plotting symbol \code{pch = 14} had the triangle upside down
       on some devices (typically screen devices). The triangle is
       supposed to be point up.  (Reported by Bill Venables.)
-      
+
       \item \code{getSrcref()} did not work on method definitions if
       \code{rematchDefinition()} had been used.
-      
+
       \item \code{KalmanForecast(fast = FALSE)} reported a (harmless)
       stack imbalance.
 
       \item The count of observations used by \code{KalmanRun()} did not
       take missing values into account.
-      
+
       \item In locales where the abbreviated name of one month is a
       partial match for the full name of a later one, the \code{\%B}
       format in \code{strptime()} could fail.  An example was French on

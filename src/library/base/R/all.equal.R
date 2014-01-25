@@ -196,12 +196,11 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
     ## Unclass to ensure we get the low-level components
     target <- unclass(target) # "list"
     current <- unclass(current)# ??
-## this breaks several packages, and a list matrix is 'matrix' not 'list' here
-#    if(data.class(target) != data.class(current)) {
-#	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
-#			     data.class(current)))
-#	return(msg)
-#    }
+    ## Comparing the data.class() is not ok, as a list matrix is 'matrix' not 'list'
+    if(!is.list(target) && !is.vector(target))
+	return(c(msg, "target is not list-like"))
+    if(!is.list(current) && !is.vector(current))
+	return(c(msg, "current is not list-like"))
     if((n <- length(target)) != length(current)) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	n <- min(n, length(current))
@@ -214,7 +213,7 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
 		      length(nc <- names(current)[iseq]) == n)
     for(i in iseq) {
 	mi <- all.equal(target[[i]], current[[i]],
-			check.attributes = check.attributes, ...)
+			check.attributes=check.attributes, use.names=use.names, ...)
 	if(is.character(mi))
 	    msg <- c(msg, paste0("Component ",
 				 if(use.names && nt[i] == nc[i]) dQuote(nt[i]) else i,
