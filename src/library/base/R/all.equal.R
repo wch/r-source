@@ -196,11 +196,12 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
     ## Unclass to ensure we get the low-level components
     target <- unclass(target) # "list"
     current <- unclass(current)# ??
-    if(data.class(target) != data.class(current)) {
-	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
-			     data.class(current)))
-	return(msg)
-    }
+## this breaks several packages, and a list matrix is 'matrix' not 'list' here
+#    if(data.class(target) != data.class(current)) {
+#	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
+#			     data.class(current)))
+#	return(msg)
+#    }
     if((n <- length(target)) != length(current)) {
 	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
 	n <- min(n, length(current))
