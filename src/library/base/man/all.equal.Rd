@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -27,7 +27,7 @@ all.equal(target, current, \dots)
           scale = NULL, check.attributes = TRUE, \dots)
 
 \method{all.equal}{list}(target, current,
-          check.attributes = TRUE, use.names = TRUE, \dots)
+          check.attributes = TRUE, \dots, use.names = TRUE)
 
 attr.all.equal(target, current,
                check.attributes = TRUE, check.names = TRUE, \dots)
@@ -45,7 +45,8 @@ attr.all.equal(target, current,
     (other than the names) should be compared.}
   \item{use.names}{logical indicating if \code{\link{list}} comparison
     should report differing components by name (if matching) instead of
-    integer index.} 
+    integer index.  Note that this comes after \code{\dots} and so must
+    be specified by its full name.} 
   \item{check.names}{logical indicating if the \code{\link{names}(.)}
     of \code{target} and \code{current} should be compared.}
 }

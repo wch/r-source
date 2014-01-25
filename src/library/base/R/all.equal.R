@@ -1,7 +1,7 @@
 #  File src/library/base/R/all.equal.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -188,8 +188,9 @@ all.equal.language <- function(target, current, ...)
     if(is.null(msg)) TRUE else msg
 }
 
+## use.names is new in 3.1.0: avoid partial/positional matching
 all.equal.list <- function(target, current, check.attributes = TRUE,
-			   use.names = TRUE, ...)
+			   ..., use.names = TRUE)
 {
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
     ## Unclass to ensure we get the low-level components
