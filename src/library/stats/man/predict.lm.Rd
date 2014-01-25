@@ -145,6 +145,6 @@ npk.aov <- aov(yield ~ block + N*P*K, npk)
 (pt <- predict(npk.aov, type = "terms"))
 pt. <- predict(npk.aov, type = "terms", terms = termL[1:4])
 stopifnot(all.equal(pt[,1:4], pt.,
-                    check.attr = FALSE, tol = 1e-12))
+                    tolerance = 1e-12, check.attributes = FALSE))
 }
 \keyword{regression}
