@@ -3490,7 +3490,7 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
-        depr <- "BSD"
+        depr <- c("Modified BSD License", "BSD")
         if(any(status$components %in% depr)) {
             status$deprecated <- intersect(status$components, depr)
             ok <- FALSE
@@ -3501,10 +3501,12 @@ function(dfile, dir)
             status$bad_extensions <- extensions$components[ind]
             ok <- FALSE
         }
-        ## Components which need extensions:
-        if(any(ind <- grepl("^(MIT|BSD_2_clause|BSD_3_clause)",
-                            status$components) &
-               !grepl("+ file", status$components))) {
+        ## Components which need extensions (note that such components
+        ## could use the name or abbrev from the license db):
+        if(any(ind <- status$components %in%
+               c("MIT License", "MIT",
+                 "BSD 2-clause License", "BSD_2_clause",
+                 "BSD 3-clause License", "BSD_3_clause"))) {
             status$miss_extension <- status$components[ind]
             ok <- FALSE
         }
