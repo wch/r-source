@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-01-16 r64798) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-25 r64887) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2562,6 +2562,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.402 0.012 0.417 0 0 
+Time elapsed:  0.402 0.015 0.418 0 0 
 > 
 > 

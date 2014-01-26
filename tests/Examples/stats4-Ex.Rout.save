@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-01-16 r64798) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-25 r64887) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -184,7 +184,7 @@ Coefficients:
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.437 0.003 0.442 0 0 
+Time elapsed:  0.478 0.007 0.486 0 0 
 > grDevices::dev.off()
 null device 
           1 
