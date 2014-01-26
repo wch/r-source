@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -83,6 +83,10 @@ attr.all.equal(target, current,
   of \code{\link{mode}} \code{"character"} describing the differences
   between \code{target} and \code{current}.
 }
+\section{Warning}{
+  Arguments other than \code{target} and \code{current} should be
+  specified via their full name: this will be required as from \R 3.1.0.
+}
 \references{
   Chambers, J. M. (1998)
   \emph{Programming with Data. A Guide to the S Language}.
@@ -99,7 +103,7 @@ d45 <- pi*(1/4 + 1:10)
 stopifnot(
 all.equal(tan(d45), rep(1, 10)))          # TRUE, but
 all      (tan(d45) == rep(1, 10))         # FALSE, since not exactly
-all.equal(tan(d45), rep(1, 10), tol = 0)  # to see difference
+all.equal(tan(d45), rep(1, 10), tolerance = 0)  # to see difference
 }
 \keyword{programming}% is.*
 \keyword{utilities}
