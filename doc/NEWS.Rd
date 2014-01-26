@@ -193,10 +193,10 @@
       support reading of UTF-8 characters using \code{scan()},
       \code{read.table()} and related functions in a non-UTF-8 locale.
 
-      \item \code{all.equal.list()} gets new argument \code{use.names = TRUE}
-      which labels differing components by names (if they match) rather
-      than integer index.  This change may need adaption of saved \R
-      outputs in checks.
+      \item \code{all.equal.list()} gets a new argument \code{use.names}
+      which by default labels differing components by names (if they
+      match) rather than by integer index.  Saved \R output in packages may
+      need to be updated.
     }
   }
 
