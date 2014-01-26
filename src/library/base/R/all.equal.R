@@ -259,8 +259,8 @@ all.equal.raw <-
 
 
 ## attributes are a pairlist, so never 'long'
-attr.all.equal <- function(target, current,
-                           check.attributes = TRUE, check.names = TRUE, ...)
+attr.all.equal <- function(target, current, ...,
+                           check.attributes = TRUE, check.names = TRUE)
 {
     ##--- "all.equal(.)" for attributes ---
     ##---  Auxiliary in all.equal(.) methods --- return NULL or character()
@@ -296,7 +296,7 @@ attr.all.equal <- function(target, current,
 	ny <- names(ay)
 	if(length(nx)) ax <- ax[order(nx)]
 	if(length(ny)) ay <- ay[order(ny)]
-	tt <- all.equal(ax, ay, check.attributes = check.attributes, ...)
+	tt <- all.equal(ax, ay, ..., check.attributes = check.attributes)
 	if(is.character(tt)) msg <- c(msg, paste("Attributes: <", tt, ">"))
     }
     msg # NULL or character

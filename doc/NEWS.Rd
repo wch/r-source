@@ -197,6 +197,10 @@
       which by default labels differing components by names (if they
       match) rather than by integer index.  Saved \R output in packages may
       need to be updated.
+
+      \item \code{attr.all.equal()} now has argument
+      \code{check.attributes} after \code{\dots} so it cannot be
+      partially matched.
     }
   }
 

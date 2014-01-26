@@ -29,8 +29,8 @@ all.equal(target, current, \dots)
 \method{all.equal}{list}(target, current,
           check.attributes = TRUE, \dots, use.names = TRUE)
 
-attr.all.equal(target, current,
-               check.attributes = TRUE, check.names = TRUE, \dots)
+attr.all.equal(target, current, \dots,
+               check.attributes = TRUE, check.names = TRUE)
 }
 \arguments{
   \item{target}{\R object.}
