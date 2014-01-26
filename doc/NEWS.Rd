@@ -201,6 +201,9 @@
       \item \code{attr.all.equal()} now has argument
       \code{check.attributes} after \code{\dots} so it cannot be
       partially matched.
+
+      [The same change will be made to \code{all.equal()} methods prior
+      to release.]
     }
   }
 
