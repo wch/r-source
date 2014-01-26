@@ -1209,7 +1209,7 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ## and how you could have got their sum via SSbiexp():
 >   ySS <- SSbiexp(xx, 3.5, log(4), 1.5, log(1))
 >   ##                      ---          ---
->   stopifnot(all.equal(y1+y2, ySS, tol=1e-15))
+>   stopifnot(all.equal(y1+y2, ySS, tolerance = 1e-15))
 > 
 > 
 > 
@@ -1857,7 +1857,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 [1] TRUE
 > ## Cumulative hazard H():
 > all.equal(pweibull(x, 2.5, pi, lower.tail = FALSE, log.p = TRUE),
-+           -(x/pi)^2.5, tol = 1e-15)
++           -(x/pi)^2.5, tolerance = 1e-15)
 [1] TRUE
 > all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 [1] TRUE
@@ -8688,7 +8688,7 @@ List of 8
 >   ## might not do them the same way twice, and if seems serial MKL does not.
 >   lm.. <- .lm.fit(X,y)
 >   lm.w <- .lm.fit(X*sqrt(w), y*sqrt(w))
->   id <- function(x, y) all.equal(x, y, tol = 1e-15, scale = 1)
+>   id <- function(x, y) all.equal(x, y, tolerance = 1e-15, scale = 1)
 >   stopifnot(id(unname(lm.$coef), lm..$coef),
 + 	    id(unname(lmw$coef), lm.w$coef))
 > ## End Don't show
@@ -13665,11 +13665,12 @@ Female 1st             0     4     1   140
 >  stopifnot(dim(format(ft)) == 4:5,
 + 	   dim(format(ftable(UCBAdmissions))) == c(6,9))
 >  meths <- c("non.compact", "row.compact", "col.compact", "compact")
->  dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
->  m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+>  dimform <-
++     function(ft) sapply(meths, function(M) dim(format(ft, method = M)))
+>  m.eq    <- function(M,m) all.equal(unname(M), m, tolerance = 0)
 >  ## All format(..) w/o warnings:
 >  stopifnot(m.eq(print(dimform(ft22)),
-+ 		rbind(11:10, rep(7:6, each=2))),
++ 		rbind(11:10, rep(7:6, each = 2))),
 + 	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
 + 		rbind(rep(6:5,2), 33)))
      non.compact row.compact col.compact compact
@@ -15008,7 +15009,7 @@ Penalized Criterion: 0.4973656
 > 
 > ## Don't show: 
 > stopifnot(all.equal(predict(s02, xx),
-+ 		    predict(s02., xx), tol = 1e-15))
++ 		    predict(s02., xx), tolerance = 1e-15))
 > ## End Don't show
 > 
 > 

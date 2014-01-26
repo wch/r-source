@@ -92,10 +92,10 @@ Influence measures of
 [1] TRUE
 > 
 > all.equal(rstandard(roller.lm9),
-+           rstandard(roller.lm0),tol=1e-14)
++           rstandard(roller.lm0),tolerance = 1e-14)
 [1] TRUE
 > all.equal(rstudent(roller.lm9),
-+           rstudent(roller.lm0),tol=1e-14)
++           rstudent(roller.lm0),tolerance = 1e-14)
 [1] TRUE
 > all.equal(rstudent(roller.lm),
 +           rstudent(roller.glm))
@@ -106,10 +106,10 @@ Influence measures of
 > 
 > 
 > all.equal(summary(roller.lm0)$coefficients,
-+           summary(roller.lm9)$coefficients, tol=1e-14)
++           summary(roller.lm9)$coefficients, tolerance = 1e-14)
 [1] TRUE
 > all.equal(print(anova(roller.lm0), signif.st=FALSE),
-+                 anova(roller.lm9), tol=1e-14)
++                 anova(roller.lm9), tolerance = 1e-14)
 Analysis of Variance Table
 
 Response: weight
@@ -245,7 +245,7 @@ Zambia         0.06
 Libya          0.53_*
 > ## colnames will differ in the next line
 > all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
-+           tol = 1e-12)
++           tolerance = 1e-12)
 [1] TRUE
 > 
 > signif(dfbeta(lm.SR), 3)
@@ -325,6 +325,6 @@ Malaysia            0.2720 -8.88e-03  0.03520 -4.63e-05 -1.42e-02
 > ## predict.lm(.)
 > 
 > all.equal(predict(roller.lm,                 se.fit=TRUE)$se.fit,
-+           predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tol= 1e-14)
++           predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tolerance =  1e-14)
 [1] TRUE
 > 

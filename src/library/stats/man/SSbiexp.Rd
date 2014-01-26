@@ -1,6 +1,6 @@
 % File src/library/stats/man/SSbiexp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSbiexp}
@@ -66,6 +66,6 @@ summary(fm1)
 ## and how you could have got their sum via SSbiexp():
   ySS <- SSbiexp(xx, 3.5, log(4), 1.5, log(1))
   ##                      ---          ---
-  stopifnot(all.equal(y1+y2, ySS, tol=1e-15))
+  stopifnot(all.equal(y1+y2, ySS, tolerance = 1e-15))
 }
 \keyword{models}

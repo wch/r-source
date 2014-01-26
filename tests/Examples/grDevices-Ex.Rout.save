@@ -3460,7 +3460,7 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ## confirm the equivalence:
 > all.equal(rgb2hsv (rgb3),
-+           rgb2hsvR(rgb3), tol = 1e-14) # TRUE
++           rgb2hsvR(rgb3), tolerance = 1e-14) # TRUE
 [1] TRUE
 > 
 > 

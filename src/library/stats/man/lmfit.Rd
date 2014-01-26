@@ -1,6 +1,6 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
@@ -89,7 +89,7 @@ str(lm. <- lm.fit (x = X, y = y))
   ## might not do them the same way twice, and if seems serial MKL does not.
   lm.. <- .lm.fit(X,y)
   lm.w <- .lm.fit(X*sqrt(w), y*sqrt(w))
-  id <- function(x, y) all.equal(x, y, tol = 1e-15, scale = 1)
+  id <- function(x, y) all.equal(x, y, tolerance = 1e-15, scale = 1)
   stopifnot(id(unname(lm.$coef), lm..$coef),
 	    id(unname(lmw$coef), lm.w$coef))
 }

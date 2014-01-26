@@ -96,7 +96,7 @@ Max.     3  5
 +        apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)),
 +        aa == apply(aa,2:3,function(x) x),
 +        all.equal(apply(apply(aa,2:3, sum),2,sum),
-+                  10+16*0:4, tol=4*.Machine$double.eps)
++                  10+16*0:4, tolerance = 4*.Machine$double.eps)
 + )
 > marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
 > for(m in marg) print(apply(arr, print(m), sum))
@@ -5471,7 +5471,7 @@ character(0)
 +            data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
 > for(z in c("response", "working", "deviance", "pearson"))
 +     stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
-+                         scale = 1, tol = 1e-10))
++                         scale = 1, tolerance = 1e-10))
 > 
 > ## apply on arrays with zero extents
 > ## Robin Hankin, R-help, 2006-02-13
