@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-01-26 09:09+0000\n"
 "PO-Revision-Date: 2013-03-01 05:19+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -50,7 +50,7 @@ msgstr " 不正な引数の型です "
 msgid "can only transform 100 pars in arima0"
 msgstr " arima0 では 100 個のパラメータまでしか変換出来ません "
 
-#: arima.c:873
+#: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr " サポートされているラグの最大値は350です "
 

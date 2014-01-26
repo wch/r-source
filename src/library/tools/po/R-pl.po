@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -696,8 +696,11 @@ msgstr "Niepoprawne wskaźniki pliku licencji: %s"
 msgid "License components with restrictions not permitted:"
 msgstr "Komponenty z ograniczeniami nie są dozwolone:"
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
-msgstr ""
+# tools/R/QC.R: 3194
+# gettext("Components with restrictions not permitted:")
+#, fuzzy
+msgid "License components which are templates and need '+ file LICENSE':"
+msgstr "Komponenty z ograniczeniami nie są dozwolone:"
 
 # tools/R/QC.R: 3264
 # gettextf("Non-portable flags in variable '%s':",
@@ -1879,6 +1882,10 @@ msgstr ""
 #                             domain = NA)
 msgid "generating debug symbols (%s)"
 msgstr "tworzenie symboli debugowania (%s)"
+
+#, fuzzy
+msgid "no DLL was created"
+msgstr "plik '%s' nie został utworzony"
 
 # tools/R/install.R: 570
 # gettextf("package %s successfully unpacked and MD5 sums checked",
@@ -3086,9 +3093,6 @@ msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 
 #~ msgid "engine"
 #~ msgstr " "
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "plik '%s' nie został utworzony"
 
 #~ msgid "found %s"
 #~ msgstr "znaleziono %s"

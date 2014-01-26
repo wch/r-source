@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -276,8 +276,9 @@ msgstr "执照文件指示器无效：%s"
 msgid "License components with restrictions not permitted:"
 msgstr "不允许有限制的组件"
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
-msgstr ""
+#, fuzzy
+msgid "License components which are templates and need '+ file LICENSE':"
+msgstr "不允许有限制的组件"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -848,6 +849,10 @@ msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
 msgid "generating debug symbols (%s)"
 msgstr "产生调试符号(%s)"
 
+#, fuzzy
+msgid "no DLL was created"
+msgstr "无法产生文件'%s'"
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "成功将%s程序包解包并MD5和检查"
 
@@ -1382,9 +1387,6 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "engine"
 #~ msgstr "引擎"
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "无法产生文件'%s'"
 
 #~ msgid "found %s"
 #~ msgstr "找到了%s"

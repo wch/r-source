@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-01-26 09:09+0000\n"
 "PO-Revision-Date: 2013-03-11 16:08+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -48,7 +48,7 @@ msgstr "unzulässiger Argumenttyp"
 msgid "can only transform 100 pars in arima0"
 msgstr "kann nur 100 Parameter in arima0 transformieren"
 
-#: arima.c:873
+#: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "maximal unterstützter Lag ist 350"
 

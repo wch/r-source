@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -335,6 +335,14 @@ msgstr "模型的MA部分非可逆"
 
 msgid "seasonal MA part of model is not invertible"
 msgstr "模型季節性的MA部分非可逆"
+
+#, fuzzy
+msgid "NAs in '%s'"
+msgstr "'x'里不能有NA"
+
+#, fuzzy
+msgid "invalid 'SSinit'"
+msgstr "'nb'不对"
 
 msgid "converting non-invertible initial MA values"
 msgstr "转换非可逆的MA初始值"

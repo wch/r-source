@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -800,6 +800,34 @@ msgstr "część średniej kroczącej modelu nie jest odwracalna"
 # warning("seasonal MA part of model is not invertible")
 msgid "seasonal MA part of model is not invertible"
 msgstr "sezonowa część średniej kroczącej modelu nie jest odwracalna"
+
+# stats/R/acf.R: 78
+# stop("NAs in 'x'")
+# stats/R/ar.R: 54
+# stop("NAs in 'x'")
+# stats/R/ar.R: 263
+# stop("NAs in 'x'")
+# stats/R/ar.R: 338
+# stop("NAs in 'x'")
+# stats/R/ar.R: 477
+# stop("NAs in 'x'")
+# stats/R/ar.R: 542
+# stop("NAs in 'x'")
+# stats/R/ar.R: 597
+# stop("NAs in 'x'")
+#, fuzzy
+msgid "NAs in '%s'"
+msgstr "wartości NA w 'x'"
+
+# stats/R/bandwidths.R: 48
+# stop("invalid 'nb'")
+# stats/R/bandwidths.R: 100
+# stop("invalid 'nb'")
+# stats/R/bandwidths.R: 120
+# stop("invalid 'nb'")
+#, fuzzy
+msgid "invalid 'SSinit'"
+msgstr "niepoprawne 'nb'"
 
 # stats/R/arma0.R: 49
 # warning("converting non-invertible initial MA values")

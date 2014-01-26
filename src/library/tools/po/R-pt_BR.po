@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -272,7 +272,7 @@ msgstr ""
 msgid "License components with restrictions not permitted:"
 msgstr ""
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
+msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -816,6 +816,9 @@ msgid ""
 msgstr ""
 
 msgid "generating debug symbols (%s)"
+msgstr ""
+
+msgid "no DLL was created"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2013-03-19 21:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -299,8 +299,9 @@ msgstr "Pointeur de fichier licence incorrect : %s"
 msgid "License components with restrictions not permitted:"
 msgstr "Le composants avec restrictions ne sont pas autorisés :"
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
-msgstr ""
+#, fuzzy
+msgid "License components which are templates and need '+ file LICENSE':"
+msgstr "Le composants avec restrictions ne sont pas autorisés :"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
@@ -899,6 +900,10 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr "génération des symboles de débogage (%s)"
 
+#, fuzzy
+msgid "no DLL was created"
+msgstr "le fichier '%s' n'a pas été créé"
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "package %s correctement décompressé et sommes MD5 vérifiées"
 
@@ -1487,9 +1492,6 @@ msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
 #, fuzzy
 #~ msgid "not found"
 #~ msgstr "introuvable"
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "le fichier '%s' n'a pas été créé"
 
 #~ msgid "found %s"
 #~ msgstr "trouvé(s) %s"

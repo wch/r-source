@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-01-26 09:09+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -49,7 +49,7 @@ msgstr "参数种类不对"
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0里只能转换100个参数"
 
-#: arima.c:873
+#: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "滞后不能大于350"
 

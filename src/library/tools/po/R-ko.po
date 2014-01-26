@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -296,7 +296,7 @@ msgstr ""
 msgid "License components with restrictions not permitted:"
 msgstr ""
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
+msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -866,6 +866,10 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr "디버그 기호 %s를 생성합니다"
 
+#, fuzzy
+msgid "no DLL was created"
+msgstr "파일 '%s'은 생성되지 않았습니다"
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
 
@@ -1317,6 +1321,3 @@ msgstr[1] ""
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "파일 '%s'은 생성되지 않았습니다"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-01-26 09:09+0000\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -56,7 +56,7 @@ msgstr "유효하지 않은 인자 타입입니다"
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서는 최대 100개의 파라미터들을 변환할 수 있습니다"
 
-#: arima.c:873
+#: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "지원되는 최대 lag의 크기는 350입니다"
 

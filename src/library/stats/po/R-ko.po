@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2013-03-10 19:59-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -358,6 +358,14 @@ msgstr "모델의 MA부분은 invertible 합니다"
 
 msgid "seasonal MA part of model is not invertible"
 msgstr "모델의 계절 MA 부분은 invertible 하지 않습니다"
+
+#, fuzzy
+msgid "NAs in '%s'"
+msgstr "'x'내에 NA가 있습니다"
+
+#, fuzzy
+msgid "invalid 'SSinit'"
+msgstr "유효하지 않은 'nb'입니다"
 
 msgid "converting non-invertible initial MA values"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2013-03-19 22:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -292,8 +292,9 @@ msgstr "Неправильные указатели файла лицензии: %s"
 msgid "License components with restrictions not permitted:"
 msgstr "Компоненты с ограничениями не разрешены:"
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
-msgstr ""
+#, fuzzy
+msgid "License components which are templates and need '+ file LICENSE':"
+msgstr "Компоненты с ограничениями не разрешены:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -881,6 +882,10 @@ msgstr ""
 
 msgid "generating debug symbols (%s)"
 msgstr "создаю символы отладки (%s)"
+
+#, fuzzy
+msgid "no DLL was created"
+msgstr "файл '%s' не создан"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "пакет %s удачно распакован, MD5 sums проверены"
@@ -1473,9 +1478,6 @@ msgstr[2] "объекты %s созданы больше чем за один вызов данных"
 #, fuzzy
 #~ msgid "not found"
 #~ msgstr "не найден"
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "файл '%s' не создан"
 
 #~ msgid "found %s"
 #~ msgstr "найден %s"

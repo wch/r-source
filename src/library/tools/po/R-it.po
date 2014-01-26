@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -280,7 +280,7 @@ msgstr ""
 msgid "License components with restrictions not permitted:"
 msgstr ""
 
-msgid "Licenses which are templates and need '+ file LICENSE':"
+msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -858,6 +858,10 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr ""
 
+#, fuzzy
+msgid "no DLL was created"
+msgstr "il file '%s' non è stato creato"
+
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
@@ -1370,9 +1374,6 @@ msgstr[1] "creati da più di una chiamata data"
 #, fuzzy
 #~ msgid "not found"
 #~ msgstr "file '%s' non trovato"
-
-#~ msgid "file '%s' was not created"
-#~ msgstr "il file '%s' non è stato creato"
 
 #, fuzzy
 #~ msgid "package must be loaded"

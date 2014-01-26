@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:18\n"
+"POT-Creation-Date: 2014-01-26 09:09\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -342,6 +342,14 @@ msgstr ""
 
 msgid "seasonal MA part of model is not invertible"
 msgstr ""
+
+#, fuzzy
+msgid "NAs in '%s'"
+msgstr "'x' de NAs"
+
+#, fuzzy
+msgid "invalid 'SSinit'"
+msgstr "geçersiz 'x'"
 
 msgid "converting non-invertible initial MA values"
 msgstr ""
