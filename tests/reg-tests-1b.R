@@ -438,8 +438,8 @@ stopifnot(identical(row.names(data.frame(x=c(a=1,b=2), row.names=NULL)),
 stopifnot(identical(row.names(data.frame(x=c(a=1,b=2))), c("a", "b")))
 ## same as default in 2.5.0 <= R < 2.7.2
 
-stopifnot(all.equal(chol2inv(2), matrix(0.25, 1), tol = 4*Meps),
-	  all.equal(solve(chol2inv(chol(4))), matrix(4, 1), tol = 10*Meps))
+stopifnot(all.equal(chol2inv(2), matrix(0.25, 1), tolerance = 4*Meps),
+	  all.equal(solve(chol2inv(chol(4))), matrix(4, 1), tolerance = 10*Meps))
 ## chol2inv() did not accept non-matrices up to 2.7.*
 
 
@@ -766,7 +766,7 @@ stopifnot(inherits(e, "error"), inherits(e2, "error"),inherits(e3, "error"),
 
 ## bw.SJ on extreme example
 ep <- 1e-3
-stopifnot(all.equal(bw.SJ(c(1:99, 1e6), tol=ep), 0.725, tol=ep))
+stopifnot(all.equal(bw.SJ(c(1:99, 1e6), tol = ep), 0.725, tolerance = ep))
 ## bw.SJ(x) failed for R <= 2.9.0 (in two ways!), when x had extreme outlier
 
 
@@ -1157,7 +1157,7 @@ stopifnot(is.na(mean(c(1,10,100,NA), trim=0.1)),
 a <- structure(1:17, xtras = c(pi, exp(1)))
 b <- a * (II <- (1 + 1e-7))
 attr(b,"xtras") <- attr(a,"xtras") * II
-stopifnot(all.equal(a,b, tol=2e-7))
+stopifnot(all.equal(a,b, tolerance = 2e-7))
 ## gave  "Attributes: .... relative difference: 1e-07"  in R <= 2.10.x
 
 
@@ -1812,7 +1812,7 @@ d[] <- d[] * sample(1 + (-4:4)/100, length(d), replace=TRUE)
 hc <- hclust(d, method = "median")
 stopifnot(all.equal(hc$height[5:11],
                     c(1.69805, 1.75134375, 1.34036875, 1.47646406,
-                      3.21380039, 2.9653438476, 6.1418258), tol = 1e-9))
+                      3.21380039, 2.9653438476, 6.1418258), tolerance = 1e-9))
 ## Also ensure that hclust() remains fast:
 set.seed(1); nn <- 2000
 tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1), nn, nn)))

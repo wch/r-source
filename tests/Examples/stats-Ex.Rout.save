@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-01-16 r64798) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-01-25 r64882) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -13552,12 +13552,12 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > dim(R)  #  10 10  1000
 [1]   10   10 1000
 > mR <- apply(R, 1:2, mean)  # ~= E[ Wish(S, 20) ] = 20 * S
-> stopifnot(all.equal(mR, 20*S, tol = .009))
+> stopifnot(all.equal(mR, 20*S, tolerance = .009))
 > 
 > ## See Details, the variance is
 > Va <- 20*(S^2 + tcrossprod(diag(S)))
 > vR <- apply(R, 1:2, var)
-> stopifnot(all.equal(vR, Va, tol = 1/16))
+> stopifnot(all.equal(vR, Va, tolerance = 1/16))
 > 
 > 
 > 
@@ -16805,8 +16805,8 @@ search in [0,2]
  .. modified lower,upper: (      -0.000127,           4.54)
  .. modified lower,upper: (      -0.000255,            7.1)
  .. modified lower,upper: (      -0.000511,          12.22)
-> stopifnot(all.equal(u1$root, 11, tol = 1e-5),
-+           all.equal(u2$root, 12, tol = 6e-6))
+> stopifnot(all.equal(u1$root, 11, tolerance = 1e-5),
++           all.equal(u2$root, 12, tolerance = 6e-6))
 > 
 > ## The *danger* of interval extension:
 > ## No way to find a zero of a positive function, but
@@ -16856,7 +16856,7 @@ Asserted error: _NOT_ converged in 4 iterations
 > ru2 <- sapply(u, function(x)
 +    uniroot(froot, u=x, a=a, b=b, interval= c(0.01,  10),
 +            extendInt="yes")$root)
-> stopifnot(all.equal(ru, ru2, tol = 6e-6))
+> stopifnot(all.equal(ru, ru2, tolerance = 6e-6))
 > 
 > r1 <- uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.01, 10),
 +              extendInt="up")

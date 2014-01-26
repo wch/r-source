@@ -44,8 +44,8 @@ all.equal.default <-
 }
 
 all.equal.numeric <-
-    function(target, current, tolerance = .Machine$double.eps ^ .5,
-             scale = NULL, check.attributes = TRUE, ...)
+    function(target, current, ..., tolerance = .Machine$double.eps ^ .5,
+             scale = NULL, check.attributes = TRUE)
 {
     msg <- if(check.attributes)
 	attr.all.equal(target, current, tolerance=tolerance, scale=scale, ...)
@@ -102,7 +102,7 @@ all.equal.numeric <-
 }
 
 all.equal.character <-
-    function(target, current, check.attributes = TRUE, ...)
+    function(target, current, ..., check.attributes = TRUE)
 {
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
@@ -136,7 +136,7 @@ all.equal.character <-
 }
 
 ## visible, so need to test both args
-all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
+all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
 {
     if(!inherits(target, "factor"))
 	return("'target' is not a factor")
@@ -189,8 +189,8 @@ all.equal.language <- function(target, current, ...)
 }
 
 ## use.names is new in 3.1.0: avoid partial/positional matching
-all.equal.list <- function(target, current, check.attributes = TRUE,
-			   ..., use.names = TRUE)
+all.equal.list <- function(target, current, ..., check.attributes = TRUE,
+			   use.names = TRUE)
 {
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
     ## Unclass to ensure we get the low-level components
@@ -224,7 +224,7 @@ all.equal.list <- function(target, current, check.attributes = TRUE,
 
 ## also used for logical
 all.equal.raw <-
-    function(target, current, check.attributes = TRUE, ...)
+    function(target, current, ..., check.attributes = TRUE)
 {
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {

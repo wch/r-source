@@ -152,8 +152,8 @@ try(uniroot(f2, c(0, 2)))
 ## where as  'extendInt="yes"'  simply first enlarges the search interval:
 u1 <- uniroot(f1, c(0,10),extendInt="yes", trace=1)
 u2 <- uniroot(f2, c(0,2), extendInt="yes", trace=2)
-stopifnot(all.equal(u1$root, 11, tol = 1e-5),
-          all.equal(u2$root, 12, tol = 6e-6))
+stopifnot(all.equal(u1$root, 11, tolerance = 1e-5),
+          all.equal(u2$root, 12, tolerance = 6e-6))
 
 ## The *danger* of interval extension:
 ## No way to find a zero of a positive function, but
@@ -191,7 +191,7 @@ ru <- sapply(u, function(x)
 ru2 <- sapply(u, function(x)
    uniroot(froot, u=x, a=a, b=b, interval= c(0.01,  10),
            extendInt="yes")$root)
-stopifnot(all.equal(ru, ru2, tol = 6e-6))
+stopifnot(all.equal(ru, ru2, tolerance = 6e-6))
 
 r1 <- uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.01, 10),
              extendInt="up")
