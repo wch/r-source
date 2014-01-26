@@ -132,8 +132,8 @@ all.equal(psigamma(1, deriv=c(1,3,5)),
           pi^(2*(1:3)) * c(1/6, 1/15, 8/63), tolerance = 32*Meps)
 x <- c(-100,-3:2, -99.9, -7.7, seq(-3,3, length=61), 5.1, 77)
 ## Intel icc showed a < 1ulp difference in the second.
-stopifnot(all.equal( digamma(x), psigamma(x,0), 2*Meps),
-          all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
+stopifnot(all.equal( digamma(x), psigamma(x,0), tolerance = 2*Meps),
+          all.equal(trigamma(x), psigamma(x,1), tolerance = 2*Meps))# TRUE (+ NaN warnings)
 ## very large x:
 x <- 1e30 ^ (1:10)
 a.relE <- function(appr, true) abs(1 - appr/true)

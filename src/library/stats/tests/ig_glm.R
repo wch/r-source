@@ -42,8 +42,8 @@ coef(summary(fit2))
 ci1 <- rev(1/(confint(fit2, 1, level = 0.95)))
 sterr <- (summary(fit2)$coefficients)[, "Std. Error"]
 ci2 <- 1/(coef(fit2) - (1.96 * sterr * c(-1, 1)))
-stopifnot(all.equal(as.vector(ci), as.vector(ci1), 1e-5),
-          all.equal(as.vector(ci), ci2, 1e-3))
+stopifnot(all.equal(as.vector(ci), as.vector(ci1), tolerance = 1e-5),
+          all.equal(as.vector(ci), ci2, tolerance = 1e-3))
 
 ##  because the log likelihood for 1/beta is exactly quadratic.
 
