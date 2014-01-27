@@ -1,6 +1,6 @@
 % File src/library/stats/man/read.ftable.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Copyright 2002-2013 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -143,11 +143,12 @@ write.ftable(ft22, quote = FALSE, method="compact")
  stopifnot(dim(format(ft)) == 4:5,
 	   dim(format(ftable(UCBAdmissions))) == c(6,9))
  meths <- c("non.compact", "row.compact", "col.compact", "compact")
- dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
- m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+ dimform <-
+    function(ft) sapply(meths, function(M) dim(format(ft, method = M)))
+ m.eq    <- function(M,m) all.equal(unname(M), m, tolerance = 0)
  ## All format(..) w/o warnings:
  stopifnot(m.eq(print(dimform(ft22)),
-		rbind(11:10, rep(7:6, each=2))),
+		rbind(11:10, rep(7:6, each = 2))),
 	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
 		rbind(rep(6:5,2), 33)))
  options(op)

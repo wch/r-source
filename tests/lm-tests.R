@@ -44,9 +44,9 @@ all.equal(unname(im.lm0 $ infmat),
                  ))
 
 all.equal(rstandard(roller.lm9),
-          rstandard(roller.lm0),tol=1e-14)
+          rstandard(roller.lm0),tolerance = 1e-14)
 all.equal(rstudent(roller.lm9),
-          rstudent(roller.lm0),tol=1e-14)
+          rstudent(roller.lm0),tolerance = 1e-14)
 all.equal(rstudent(roller.lm),
           rstudent(roller.glm))
 all.equal(cooks.distance(roller.lm),
@@ -54,9 +54,9 @@ all.equal(cooks.distance(roller.lm),
 
 
 all.equal(summary(roller.lm0)$coefficients,
-          summary(roller.lm9)$coefficients, tol=1e-14)
+          summary(roller.lm9)$coefficients, tolerance = 1e-14)
 all.equal(print(anova(roller.lm0), signif.st=FALSE),
-                anova(roller.lm9), tol=1e-14)
+                anova(roller.lm9), tolerance = 1e-14)
 
 
 ###  more regression tests for lm(), glm(), etc :
@@ -67,7 +67,7 @@ lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 summary(IM)
 ## colnames will differ in the next line
 all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
-          tol = 1e-12)
+          tolerance = 1e-12)
 
 signif(dfbeta(lm.SR), 3)
 covratio (lm.SR)
@@ -75,4 +75,4 @@ covratio (lm.SR)
 ## predict.lm(.)
 
 all.equal(predict(roller.lm,                 se.fit=TRUE)$se.fit,
-          predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tol= 1e-14)
+          predict(roller.lm, newdata=roller, se.fit=TRUE)$se.fit, tolerance =  1e-14)

@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-01-26 r64889) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-25 r64887) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1861,7 +1861,7 @@ L-M 10.000000  0.6465793 19.35342 0.0336262
 [1] TRUE
 > ## Cumulative hazard H():
 > all.equal(pweibull(x, 2.5, pi, lower.tail = FALSE, log.p = TRUE),
-+           -(x/pi)^2.5, tol = 1e-15)
++           -(x/pi)^2.5, tolerance = 1e-15)
 [1] TRUE
 > all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 [1] TRUE
@@ -13529,12 +13529,12 @@ Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 > dim(R)  #  10 10  1000
 [1]   10   10 1000
 > mR <- apply(R, 1:2, mean)  # ~= E[ Wish(S, 20) ] = 20 * S
-> stopifnot(all.equal(mR, 20*S, tolerance = .009))
+> stopifnot(all.equal(mR, 20*S, tol = .009))
 > 
 > ## See Details, the variance is
 > Va <- 20*(S^2 + tcrossprod(diag(S)))
 > vR <- apply(R, 1:2, var)
-> stopifnot(all.equal(vR, Va, tolerance = 1/16))
+> stopifnot(all.equal(vR, Va, tol = 1/16))
 > 
 > 
 > 
@@ -13642,11 +13642,12 @@ Female 1st             0     4     1   140
 >  stopifnot(dim(format(ft)) == 4:5,
 + 	   dim(format(ftable(UCBAdmissions))) == c(6,9))
 >  meths <- c("non.compact", "row.compact", "col.compact", "compact")
->  dimform <- function(ft) sapply(meths, function(M) dim(format(ft, method=M)))
->  m.eq    <- function(M,m) all.equal(unname(M), m, tol=0)
+>  dimform <-
++     function(ft) sapply(meths, function(M) dim(format(ft, method = M)))
+>  m.eq    <- function(M,m) all.equal(unname(M), m, tolerance = 0)
 >  ## All format(..) w/o warnings:
 >  stopifnot(m.eq(print(dimform(ft22)),
-+ 		rbind(11:10, rep(7:6, each=2))),
++ 		rbind(11:10, rep(7:6, each = 2))),
 + 	   m.eq(print(dimform(ftable(Titanic, row.vars = integer()))),
 + 		rbind(rep(6:5,2), 33)))
      non.compact row.compact col.compact compact
@@ -14985,7 +14986,7 @@ Penalized Criterion: 0.4973656
 > 
 > ## Don't show: 
 > stopifnot(all.equal(predict(s02, xx),
-+ 		    predict(s02., xx), tol = 1e-15))
++ 		    predict(s02., xx), tolerance = 1e-15))
 > ## End Don't show
 > 
 > 

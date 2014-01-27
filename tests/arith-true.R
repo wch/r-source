@@ -121,19 +121,19 @@ all(choose(0:4,2) == c(0,0,1,3,6))
 ## psi == digamma:
 gEuler <- 0.577215664901532860606512# = Euler's gamma
 abs(digamma(1) + gEuler) <   32*Meps # i386 Lx: = 2.5*Meps
-all.equal(digamma(1) - digamma(1/2), log(4), tol=32*Meps)# Linux: < 1*Meps!
+all.equal(digamma(1) - digamma(1/2), log(4), tolerance = 32*Meps)# Linux: < 1*Meps!
 n <- 1:12
 all.equal(digamma(n),
-         - gEuler + c(0, cumsum(1/n)[-length(n)]),tol=32*Meps)#i386 Lx: 1.3 Meps
+         - gEuler + c(0, cumsum(1/n)[-length(n)]),tolerance = 32*Meps)#i386 Lx: 1.3 Meps
 all.equal(digamma(n + 1/2),
-          - gEuler - log(4) + 2*cumsum(1/(2*n-1)),tol=32*Meps)#i386 Lx: 1.8 Meps
+          - gEuler - log(4) + 2*cumsum(1/(2*n-1)),tolerance = 32*Meps)#i386 Lx: 1.8 Meps
 ## higher psigamma:
 all.equal(psigamma(1, deriv=c(1,3,5)),
-          pi^(2*(1:3)) * c(1/6, 1/15, 8/63), tol=32*Meps)
+          pi^(2*(1:3)) * c(1/6, 1/15, 8/63), tolerance = 32*Meps)
 x <- c(-100,-3:2, -99.9, -7.7, seq(-3,3, length=61), 5.1, 77)
 ## Intel icc showed a < 1ulp difference in the second.
-stopifnot(all.equal( digamma(x), psigamma(x,0), 2*Meps),
-          all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
+stopifnot(all.equal( digamma(x), psigamma(x,0), tolerance = 2*Meps),
+          all.equal(trigamma(x), psigamma(x,1), tolerance = 2*Meps))# TRUE (+ NaN warnings)
 ## very large x:
 x <- 1e30 ^ (1:10)
 a.relE <- function(appr, true) abs(1 - appr/true)
@@ -162,7 +162,7 @@ ok
 for(n in 2:10)
     print(all.equal(n*(n-1)*var(diag(n)),
 		    matrix(c(rep(c(n-1,rep(-1,n)),n-1), n-1), nr=n, nc=n),
-		    tol = 20*Meps))# use tol=0	to see rel.error
+		    tolerance = 20*Meps)) # use tolerance = 0 to see rel.error
 
 ## pmin() & pmax() -- "attributes" !
 v1 <- c(a=2)
@@ -197,7 +197,7 @@ for(j in 1:2) x12[j, -1] <- round(rnorm(n-1), dig = rpois(n-1, lam=3.5) - 2)
 for(i in 1:n) {
     lp <- length(p <- pretty(x <- sort(x12[,i])))
     stopifnot(p[1] <= x[1] & x[2] <= p[lp],
-              all(x==0) || all.equal(p, rev(-pretty(-x)), tol = 10*Meps))
+              all(x==0) || all.equal(p, rev(-pretty(-x)), tolerance = 10*Meps))
 }
 
 ## PR#741:
