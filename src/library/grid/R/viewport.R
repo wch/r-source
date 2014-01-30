@@ -95,8 +95,11 @@ valid.viewport <- function(x, y, width, height, just,
 # at the time of being pushed (this is all used to return to this
 # viewport without having to repush it)
 pushedvp <- function(vp) {
-  pvp <- c(vp, list(gpar = NULL,
-                    trans = NULL,
+    # NOTE that this function is only called from C code:
+    # either directly from L_setviewport() or indirectly from initVP()
+    # via grid.top.level.vp()
+    # vp$gpar and vp$parentgpar are both set previously in push.vp.viewport()
+  pvp <- c(vp, list(trans = NULL,
                     widths = NULL,
                     heights = NULL,
                     width.cm = NULL,
@@ -111,10 +114,7 @@ pushedvp <- function(vp) {
                     # be pushed "properly" the first time, calculating
                     # transformations, etc ...
                     devwidthcm = 0,
-                    devheightcm = 0,
-                    # This is down here because need to keep
-                    # #defines in grid.h consistent with order here
-                    parentgpar = NULL))
+                    devheightcm = 0))
   class(pvp) <- c("pushedvp", class(vp))
   pvp
 }

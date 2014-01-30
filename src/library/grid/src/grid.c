@@ -313,6 +313,7 @@ SEXP doSetViewport(SEXP vp,
 SEXP L_setviewport(SEXP invp, SEXP hasParent)
 {
     SEXP vp;
+    SEXP pushedvp, fcall;
     /* Get the current device 
      */
     pGEDevDesc dd = getDevice();
@@ -321,13 +322,19 @@ SEXP L_setviewport(SEXP invp, SEXP hasParent)
      * to modify it to hell and gone.
      */
     PROTECT(vp = duplicate(invp));
-    vp = doSetViewport(vp, !LOGICAL(hasParent)[0], TRUE, dd);
+    /* 
+     * Call R function pushedvp() 
+     */
+    PROTECT(fcall = lang2(install("pushedvp"),
+			  vp));
+    PROTECT(pushedvp = eval(fcall, R_gridEvalEnv)); 
+    pushedvp = doSetViewport(pushedvp, !LOGICAL(hasParent)[0], TRUE, dd);
     /* Set the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
      */
-    setGridStateElement(dd, GSS_VP, vp);
-    UNPROTECT(1);
+    setGridStateElement(dd, GSS_VP, pushedvp);
+    UNPROTECT(3);
     return R_NilValue;
 }
 

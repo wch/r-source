@@ -469,6 +469,13 @@
       abbreviation could have been that of the last time converted.
 
       \item \code{all.equal(list(1), identity)} now works.
+
+      \item Bug fix for pushing viewports in \pkg{grid} (reported by
+      JJ Allaire and Kevin Ushey).
+
+      NOTE for anyone poking around within the graphics engine display
+      list (despite the warnings not to) that this fix changes what
+      is recorded by \pkg{grid} on the graphics engine display list. 
     }
   }
 }

@@ -37,6 +37,13 @@ Changes from grid_3.0.* to grid_3.1.0:
 
 11. Exported generic forceGrob().
 
+12. Bug fix for recording viewport pushes on the graphics engine display
+    list (reported by the friendly folks from RStudio).
+
+    The bug could be tickled by copying a grid scene from one graphics
+    device to another and then attempting to navigate within 
+    viewports on the original graphics device.
+
 
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------

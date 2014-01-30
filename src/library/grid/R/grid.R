@@ -32,22 +32,24 @@ push.vp.viewport <- function(vp, recording) {
   # Record on the display list
   if (recording)
     record(vp)
-  # Create a pushedvp object for the system to keep track of
-  pvp <- pushedvp(vp)
   # Store the entire set of gpar settings JUST PRIOR to push
   # We refer to this when calculating the viewport transform
   # We cannot simply rely on parent's gpar because we may be
   # being pushed from within a gTree which has enforced gpar
   # settings (i.e., the gTree$gp is enforced between this viewport
   # and the this viewport's parent$gp)
-  pvp$parentgpar <- grid.Call(L_getGPar)
+  vp$parentgpar <- grid.Call(L_getGPar)
   # Enforce gpar settings
   set.gpar(vp$gp)
   # Store the entire set of gpar settings for this viewport
-  pvp$gpar <- grid.Call(L_getGPar)
+  vp$gpar <- grid.Call(L_getGPar)
   # Pass in the pushedvp structure which will be used to store
   # things like the viewport transformation, parent-child links, ...
-  grid.Call.graphics(L_setviewport, pvp, TRUE)
+  # In C code, a pushedvp object is created, with a call to pushedvp(),
+  # for the system to keep track of
+  # (it happens in C code so that a "normal" vp gets recorded on the
+  #  display list rather than a "pushedvp")
+  grid.Call.graphics(L_setviewport, vp, TRUE)
 }
 
 # For all but the last viewport, push the
