@@ -17,9 +17,10 @@
 ## tests of nls, especially of weighted fits
 
 library(stats)
-options(digits=5) # to avoid trivial printed differences
-options(useFancyQuotes=FALSE) # avoid fancy quotes in o/p
-options(show.nls.convergence=FALSE) # avoid non-diffable output
+options(digits = 5) # to avoid trivial printed differences
+options(useFancyQuotes = FALSE) # avoid fancy quotes in o/p
+options(show.nls.convergence = FALSE) # avoid non-diffable output
+options(warn = 1)
 pdf("nls-test.pdf")
 
 ## utility for comparing nls() results:  [TODO: use more often below]
@@ -65,7 +66,7 @@ cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
 summary(fit, cor = TRUE)
-stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
+stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e5,
                     check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
@@ -75,8 +76,9 @@ summary(fit2, cor = TRUE)
 cf2 <- coef(summary(fit2))[, 1:2]
 rownames(cf0) <- c("a", "b")
 # expect relative errors ca 2e-08
-stopifnot(all.equal(cf1, cf0, 1e-6),  all.equal(cf1, cf0, 1e-6))
-stopifnot(all.equal(residuals(fit2), residuals(fit0), 1e5,
+stopifnot(all.equal(cf1, cf0, tolerance = 1e-6),
+          all.equal(cf1, cf0, tolerance = 1e-6))
+stopifnot(all.equal(residuals(fit2), residuals(fit0), tolerance = 1e5,
                     check.attributes = FALSE))
 
 
@@ -91,9 +93,9 @@ fm2 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
            data = DNase1, weights = wts,
            start = list(Asym = 3, xmid = 0, scal = 1))
 summary(fm2)
-stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
-stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
-stopifnot(all.equal(fitted(fm2), fitted(fm1), tol = 1e-6))
+stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tolerance = 1e-6))
+stopifnot(all.equal(residuals(fm2), residuals(fm1), tolerance = 1e-5))
+stopifnot(all.equal(fitted(fm2), fitted(fm1), tolerance = 1e-6))
 fm2a <- nls(density ~ Asym/(1 + exp((xmid - log(conc)))),
             data = DNase1, weights = wts,
             start = list(Asym = 3, xmid = 0))
@@ -103,12 +105,12 @@ anova(fm2a, fm2)
 fm3 <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))/scal))),
            data = DNase1, start = list(Asym = 3, xmid = 0, scal = 1))
 summary(fm3)
-stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
+stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tolerance = 1e-6))
 ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
-stopifnot(all.equal(ft, fitted(fm1), tol = 1e-6))
+stopifnot(all.equal(ft, fitted(fm1), tolerance = 1e-6))
 # sign of residuals is reversed
 r <- with(DNase1, -residuals(fm3)/sqrt(wts))
-all.equal(r, residuals(fm1), tol = 1e05)
+all.equal(r, residuals(fm1), tolerance = 1e05)
 fm3a <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))))),
             data = DNase1, start = list(Asym = 3, xmid = 0))
 anova(fm3a, fm3)
@@ -120,10 +122,10 @@ fm4 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
 summary(fm4)
 cf <- coef(summary(fm4))[c(3,1,2), ]
 rownames(cf)[2] <- "Asym"
-stopifnot(all.equal(cf, coef(summary(fm1)), tol = 1e-6,
+stopifnot(all.equal(cf, coef(summary(fm1)), tolerance = 1e-6,
                     check.attributes = FALSE))
-stopifnot(all.equal(residuals(fm4), residuals(fm1), tol = 1e-5))
-stopifnot(all.equal(fitted(fm4), fitted(fm1), tol = 1e-6))
+stopifnot(all.equal(residuals(fm4), residuals(fm1), tolerance = 1e-5))
+stopifnot(all.equal(fitted(fm4), fitted(fm1), tolerance = 1e-6))
 fm4a <- nls(density ~ 1/(1 + exp((xmid - log(conc)))),
             data = DNase1, weights = wts,
             start = list(xmid = 0), algorithm = "plinear")
@@ -135,20 +137,21 @@ fm5 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
            start = list(Asym = 3, xmid = 0, scal = 1),
            algorithm = "port")
 summary(fm5)
-stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tol = 1e-6))
-stopifnot(all.equal(residuals(fm5), residuals(fm1), tol = 1e-5))
-stopifnot(all.equal(fitted(fm5), fitted(fm1), tol = 1e-6))
+stopifnot(all.equal(coef(summary(fm5)), coef(summary(fm1)), tolerance = 1e-6))
+stopifnot(all.equal(residuals(fm5), residuals(fm1), tolerance = 1e-5))
+stopifnot(all.equal(fitted(fm5), fitted(fm1), tolerance = 1e-6))
 
 ## check profiling
 pfm1 <- profile(fm1)
 pfm3 <- profile(fm3)
-for(m in names(pfm1)) stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tol=1e-5))
+for(m in names(pfm1))
+    stopifnot(all.equal(pfm1[[m]], pfm3[[m]], tolerance = 1e-5))
 pfm5 <- profile(fm5)
 for(m in names(pfm1))
-    stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tol=1e-5))
+    stopifnot(all.equal(pfm1[[m]], pfm5[[m]], tolerance = 1e-5))
 (c1 <- confint(fm1))
 (c4 <- confint(fm4, 1:2))
-stopifnot(all.equal(c1[2:3, ], c4, tol = 1e-3))
+stopifnot(all.equal(c1[2:3, ], c4, tolerance = 1e-3))
 
 ## some low-dimensional examples
 npts <- 1000
@@ -230,7 +233,7 @@ stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
 rm(a,b)
 t2 <- test(FALSE)
 stopifnot(all.equal(lapply(t1, .n),
-		    lapply(t2, .n), tol=0.16))# different random error
+		    lapply(t2, .n), tolerance = 0.16))# different random error
 
 
 ## list 'start'
