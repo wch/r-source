@@ -39,8 +39,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.}
  \item{nknots}{integer giving the number of knots to use when
-   \code{all.knots = FALSE}.  By default for \eqn{n > 49} this is less
-   than \eqn{n}, the number of unique \code{x} values.}
+   \code{all.knots = FALSE}.  Per default, this is less than \eqn{n}, the
+   number of unique \code{x} values for \eqn{n > 49}.}
  \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
    residuals are available from the result.}
