@@ -406,6 +406,10 @@
       applied to vector arguments.  However, in packages \code{length()}
       should be used. (In \R{} itself \code{LENGTH()} is a macro without
       the function overhead of \code{length()}.)
+
+      \item Calls to \code{SET_VECTOR_ELT()} and \code{SET_STRING_ELT()}
+      are now checked for indices which are in-range: several packages
+      were writing one element beyond the allocated length.
     }
   }
 

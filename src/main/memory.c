@@ -3248,6 +3248,9 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
     CHECK_OLD_TO_NEW(x, v);
+    if (i < 0 || i >= XLENGTH(x)) 
+	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
+	      i, XLENGTH(x));
     STRING_ELT(x, i) = v;
 }
 
@@ -3260,6 +3263,9 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
     CHECK_OLD_TO_NEW(x, v);
+    if (i < 0 || i >= XLENGTH(x)) 
+	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"), 
+	      i, XLENGTH(x));
     return VECTOR_ELT(x, i) = v;
 }
 
