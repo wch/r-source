@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-01-25 r64887) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-31 r64903) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1320,5 +1320,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.907 0.01 0.919 0 0 
+Time elapsed:  0.844 0.013 0.86 0 0 
 > 

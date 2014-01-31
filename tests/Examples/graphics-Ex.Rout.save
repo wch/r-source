@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-01-25 r64887) -- "Frisbee Sailing"
+R version 3.0.2 Patched (2014-01-31 r64903) -- "Frisbee Sailing"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2027,7 +2027,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1dd93b0>
+<bytecode: 0x246f3b0>
 <environment: namespace:graphics>
 > 
 > 
@@ -2898,7 +2898,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3784bd8>
+<bytecode: 0x3e1ac10>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2978,7 +2978,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.693 0.05 2.754 0 0 
+Time elapsed:  2.493 0.037 2.538 0 0 
 > grDevices::dev.off()
 null device 
           1 
