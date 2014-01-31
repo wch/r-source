@@ -291,6 +291,19 @@
         ## Figure out whether this is a source or binary package.
         is_source_package <- is.na(desc["Built"])
 
+        if (is_source_package) {
+            ## Find out if C++11 is requested in DESCRIPTION file
+            sys_requires <- desc["SystemRequirements"]
+            if (!is.na(sys_requires)) {
+                sys_requires <- unlist(strsplit(sys_requires, ","))
+                if(any(grepl("^[[:space:]]*C[+][+]11[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("PKG_CXX_STD"="CXX11")
+                    on.exit(Sys.unsetenv("PKG_CXX_STD"))
+                }
+            }
+        }
+        
         if (!is_first_package) cat("\n")
 
         if (is_source_package)
@@ -1843,6 +1856,13 @@
         if(!is.na(val)) {
             use_cxx1x <- TRUE
             cxx1xstd <- if(nzchar(val)) val else "$(CXX1XSTD)"
+        }
+    }
+    if (!use_cxx1x) {
+        cxxstd <- Sys.getenv("PKG_CXX_STD")
+        if (cxxstd == "CXX11") {
+            use_cxx1x <- TRUE
+            cxx1xstd <- "$(CXX1XSTD)"
         }
     }
 

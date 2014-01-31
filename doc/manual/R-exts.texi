@@ -2296,7 +2296,10 @@ If the macro @samp{USE_CXX1X} is given a value this is used to set
 
 To make this easier to use with @command{R CMD SHLIB}, the environment
 variable @env{USE_CXX1X} will be consulted if there is no
-@file{Makevars} file (nor @file{Makevars.win} on Windows).
+@file{Makevars} file (nor @file{Makevars.win} on Windows). Packages without
+a @file{Makevars} file may specify that they require C++11 by
+including @samp{C++11} in the @samp{SystemRequirements} field of the
+@file{DESCRIPTION} file.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
