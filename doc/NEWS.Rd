@@ -202,6 +202,10 @@
       \code{attr.all.equal()} now have argument \code{check.attributes}
       after \code{\dots} so it cannot be partially nor positionally
       matched (as it has been, unintentionally).
+
+      A side effect is that some previously undetected errors of passing
+      empty arguments (no object between commas) to \code{all.equal()}
+      are detected and reported.
     }
   }
 
@@ -519,7 +523,7 @@
       \PR{15625} which was puzzled by the behaviour in this unsupported
       case.)
 
-      \item (Windows.)  \code{file.symlink()} works around the
+      \item (Windows only.)  \code{file.symlink()} works around the
       undocumented restriction of the Windows system call to
       backslashes.  (Wish of \PR{15631}.)
 
