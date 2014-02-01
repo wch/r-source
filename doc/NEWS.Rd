@@ -35,28 +35,28 @@
       \item On a Unix-alike \code{Sys.timezone()} returns \code{NA} if
       the environment variable \env{TZ} is unset, to distinguish it from
       an empty string which on some OSes means the \samp{UTC} time zone.
-      
+
       \item The backtick may now be escaped in strings, to allow names
       containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
-      
+
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
       now warn when an embedded nul is found in the input.  (Related to
       \PR{15625} which was puzzled by the behaviour in this unsupported
       case.)
-      
-      \item (Windows.)  \code{file.symlink()} works around the
+
+      \item (Windows only.)  \code{file.symlink()} works around the
       undocumented restriction of the Windows system call to
       backslashes.  (Wish of \PR{15631}.)
-      
+
       \item \code{KalmanForecast(fast = FALSE)} is now the default, and
       the help contains an example of how \code{fast = TRUE} can be used
       in this version.  (The usage will change in 3.1.0.)
-      
+
       \item \code{strptime()} now checks the locale only when
       locale-specific formats are used and caches the locale in use:
       this can halve the time taken on OSes with slow system
       functions (e.g. OS X).
-      
+
       \item \code{strptime()} and the \code{format()} methods for
       classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"Date"}
       recognize strings with marked encodings: this allows, for example,
@@ -78,7 +78,7 @@
       \item The new field \samp{SysDataCompression} in the
       \file{DESCRIPTION} file allows user control over the compression
       used for \file{sysdata.rda} objects in the lazy-load database.
-      
+
       \item \code{install.packages(dependencies = value)} for \code{value =
 	NA} (the default) or \code{value = TRUE} omits packages only in
       \code{LinkingTo} for binary package installs.
@@ -233,36 +233,37 @@
       \item Using \code{Sys.setlocale} to set \code{LC_NUMERIC} to
       \code{"C"} (to restore the sane behavior) no longer gives a
       warning.
-      
-      \item \code{deparse()} now deparses complex vectors more
-      accurately; they will now re-parse to the original values.
-      (\PR{15534}, patch based on code submitted by Alex Bertram.)      
-    
+
+      \item \code{deparse()} now deparses complex vectors in a way that
+      re-parse to the original values.  (\PR{15534}, patch based on code
+      submitted by Alex Bertram.)
+
       \item In some extreme cases (more than \eqn{10^{15}}{10^15})
-      integer inputs to dpqrxxx functions might have been rounded up by
-      one (with a warning about being non-integer).  (\PR{15624})
-      
+      integer inputs to \code{dpqrxxx()} functions might have been
+      rounded up by one (with a warning about being non-integer).
+      (\PR{15624})
+
       \item Plotting symbol \code{pch = 14} had the triangle upside down
       on some devices (typically screen devices). The triangle is
       supposed to be point up.  (Reported by Bill Venables.)
-      
+
       \item \code{getSrcref()} did not work on method definitions if
       \code{rematchDefinition()} had been used.
-      
+
       \item \code{KalmanForecast(fast = FALSE)} reported a (harmless)
       stack imbalance.
 
       \item The count of observations used by \code{KalmanRun()} did not
       take missing values into account.
-      
+
       \item In locales where the abbreviated name of one month is a
       partial match for the full name of a later one, the \code{\%B}
       format in \code{strptime()} could fail.  An example was French on
       OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
       matches \code{juillet}.  Similarly for weekday names.
 
-      \item \code{pbeta(x, a,b, log.p=TRUE)} sometimes lost all
-      precision for very small and very differently sized a,b.
+      \item \code{pbeta(x, a, b, log.p = TRUE)} sometimes underflowed to
+      zero for very small and very differently sized \code{a}, \code{b}.
       (\PR{15641})
     }
   }
