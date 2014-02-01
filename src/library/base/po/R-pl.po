@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:08\n"
+"POT-Creation-Date: 2014-02-01 09:36\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -150,6 +150,50 @@ msgstr "zniekształcony łańcuch wersji"
 #                                 data.class(target), data.class(current))
 msgid "target is %s, current is %s"
 msgstr "cel: %s, bieżące: %s"
+
+# src/library/base/R/cut.R: 25
+# stop("'x' must be numeric")
+# src/library/base/R/jitter.R: 28
+# stop("'x' must be numeric")
+# src/library/base/R/rowsum.R: 23
+# stop("'x' must be numeric")
+# src/library/graphics/R/hist.R: 33
+# stop("'x' must be numeric")
+# src/library/graphics/R/stem.R: 21
+# stop("'x' must be numeric")
+# src/library/stats/R/acf.R: 36
+# stop("'x' must be numeric")
+# src/library/stats/R/acf.R: 68
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.R: 53
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.R: 265
+# stop("'x' must be numeric")
+# src/library/stats/R/ar.R: 343
+# stop("'x' must be numeric")
+# src/library/stats/R/arima.R: 108
+# stop("'x' must be numeric")
+# src/library/stats/R/arma0.R: 63
+# stop("'x' must be numeric")
+# src/library/stats/R/cor.R: 35
+# stop("'x' must be numeric")
+# src/library/stats/R/StructTS.R: 89
+# stop("'x' must be numeric")
+# src/library/stats/R/wilcox.test.R: 37
+# stop("'x' must be numeric")
+# src/main/array.c: 1265
+# error(_("'x' must be numeric"))
+#, fuzzy
+msgid "'tolerance' should be numeric"
+msgstr "'x' musi być liczbą"
+
+# src/library/base/R/match.R: 50
+# stop(gettextf("'arg' should be one of %s",
+#                       paste(dQuote(choices), collapse = ", ")),
+#              domain = NA)
+#, fuzzy
+msgid "'scale' should be numeric or NULL"
+msgstr "'arg' powinien być jednym z %s"
 
 # src/library/base/R/apply.R: 25
 # stop("dim(X) must have a positive length")

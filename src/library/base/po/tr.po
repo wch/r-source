@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:08+0000\n"
+"POT-Creation-Date: 2014-02-01 09:36+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -194,7 +194,7 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3581 src/main/paste.c:96 src/main/paste.c:384
+#: src/main/memory.c:3587 src/main/paste.c:96 src/main/paste.c:384
 #: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
 #: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
 #: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
@@ -3720,145 +3720,145 @@ msgstr "getGraphicsEvent 'in yinelemeli kullanımı desteklenmiyor"
 msgid "no graphics event handlers set"
 msgstr "grafik olay yöneticisi seti yok"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2240
-#: src/main/gram.y:2254
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
+#: src/main/gram.y:2236
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "%d dizesi ndan MBCS karakterini okurken EOF alındı"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2244
-#: src/main/gram.y:2251
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
+#: src/main/gram.y:2233
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "ayrıştırıcının %d dizesi nda geçersiz çokbaytlı karakter"
 
-#: src/main/gram.y:467
+#: src/main/gram.y:466
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "%d. satırda girdi önbellek taşması"
 
-#: src/main/gram.y:1056
+#: src/main/gram.y:1050
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "dize %d 'de geçersiz etiket tipi"
 
-#: src/main/gram.y:1671
+#: src/main/gram.y:1653
 msgid "contextstack overflow"
 msgstr "içerikyığını taşması"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1890
 msgid "input"
 msgstr "giriş"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1891
 msgid "end of input"
 msgstr "giriş sonu"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1892
 msgid "string constant"
 msgstr "dize sabiti"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1893
 msgid "numeric constant"
 msgstr "sayısal sabit"
 
-#: src/main/gram.y:1912
+#: src/main/gram.y:1894
 msgid "symbol"
 msgstr "sembol"
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1895
 msgid "assignment"
 msgstr "atama"
 
-#: src/main/gram.y:1914
+#: src/main/gram.y:1896
 msgid "end of line"
 msgstr "satır sonu"
 
-#: src/main/gram.y:1928 src/main/gram.y:1934
+#: src/main/gram.y:1910 src/main/gram.y:1916
 #, c-format
 msgid "unexpected %s"
 msgstr "beklenmeyen durum, %s"
 
-#: src/main/gram.y:1944
+#: src/main/gram.y:1926
 #, fuzzy, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "Tekrarlanmış biçimsel argüman '%s' (%d dizesi nda)"
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2136
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "yalın tamsayı %sL ondalık içeriyor; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2140
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "tamsayı olmayan değer %s L ile uygun; sayısal değer kullanılıyor"
 
-#: src/main/gram.y:2171
+#: src/main/gram.y:2153
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "tamsayı %sL gereksiz ondalık nokta içeriyor"
 
-#: src/main/gram.y:2203
+#: src/main/gram.y:2185
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d dizesinde, uzun dize için önbellek ayrılamadı"
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2338
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\x', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2352
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\u', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2375
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "geçersiz \\u{xxxx} dizilişi (satır %d)"
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2387
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U', \"%s\" ile başlayan bir karakter dizesinde onaltılı haneler olmadan "
 "kullanıldı"
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2410
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "geçersiz  \\U{xxxxxxxx} dizilimi (satır %d)"
 
-#: src/main/gram.y:2469
+#: src/main/gram.y:2451
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' bir tanımlanamayan kaçış karakteri (\"%s\" ile başlayan karakter "
 "dizesinde)"
 
-#: src/main/gram.y:2528
+#: src/main/gram.y:2510
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "Unicode ile sekizli/onaltılı kaçış karakterlerini karıştırmaya izin "
 "verilmiyor"
 
-#: src/main/gram.y:2532
+#: src/main/gram.y:2514
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3867,13 +3867,13 @@ msgstr ""
 "bu yerelde bulunmayan Unicode kaçışları içeren %d dizesi \n"
 "çok uzun (maks 10000 karakter)"
 
-#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
-#: src/main/gram.y:3150
+#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
+#: src/main/gram.y:3132
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d dizesi nda içerikyığını taşması"
 
-#: src/main/gram.y:3245
+#: src/main/gram.y:3227
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "%d. satırda girdi önbellek taşması"
@@ -3994,9 +3994,9 @@ msgstr "internet rutinlerine bu modülden erişilemez"
 msgid "internet routines cannot be loaded"
 msgstr "internet rutinleri yüklenemez"
 
-#: src/main/internet.c:118 src/main/memory.c:3285 src/main/memory.c:3294
-#: src/main/memory.c:3305 src/main/memory.c:3318 src/main/memory.c:3334
-#: src/main/memory.c:3351
+#: src/main/internet.c:118 src/main/memory.c:3291 src/main/memory.c:3300
+#: src/main/memory.c:3311 src/main/memory.c:3324 src/main/memory.c:3340
+#: src/main/memory.c:3357
 msgid "bad value"
 msgstr "hatalı değer"
 
@@ -4277,16 +4277,26 @@ msgstr "Realloc bellekte (%d boyutunda) yeniden yer ayırm yapamadı"
 msgid "not safe to return vector pointer"
 msgstr "vektör işaretçisine geri döndürme güvenli değil"
 
-#: src/main/memory.c:3503
+#: src/main/memory.c:3252
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
+msgstr ""
+
+#: src/main/memory.c:3267
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
+msgstr ""
+
+#: src/main/memory.c:3509
 msgid "memory profiling is not available on this system"
 msgstr "bellek profilleme bu sistemde mevcut değil"
 
-#: src/main/memory.c:3568
+#: src/main/memory.c:3574
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: çıktı dosyası '%s' açılamadı"
 
-#: src/main/memory.c:3675
+#: src/main/memory.c:3681
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""

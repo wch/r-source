@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:08+0000\n"
+"POT-Creation-Date: 2014-02-01 09:36+0000\n"
 "PO-Revision-Date: 2013-03-18 10:13+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -188,7 +188,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3581 src/main/paste.c:96 src/main/paste.c:384
+#: src/main/memory.c:3587 src/main/paste.c:96 src/main/paste.c:384
 #: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
 #: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
 #: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
@@ -3680,145 +3680,145 @@ msgstr "rekursive Nutzung von 'getGraphicsEvent' wird nicht unterstützt"
 msgid "no graphics event handlers set"
 msgstr "keine Verarbeitung für Grafikereignisse gesetzt"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2240
-#: src/main/gram.y:2254
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
+#: src/main/gram.y:2236
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF beim Lesen von MBCS Zeichen in Zeile %d"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2244
-#: src/main/gram.y:2251
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
+#: src/main/gram.y:2233
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "ungültiges multibyte Zeichen im Parser in Zeile %d"
 
-#: src/main/gram.y:467
+#: src/main/gram.y:466
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "Überlauf des Eingabebuffers in Zeile %d"
 
-#: src/main/gram.y:1056
+#: src/main/gram.y:1050
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "ungültiger tag-Typ in Zeile %d"
 
-#: src/main/gram.y:1671
+#: src/main/gram.y:1653
 msgid "contextstack overflow"
 msgstr "Kontextstacküberlauf"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1890
 msgid "input"
 msgstr "Eingabe"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1891
 msgid "end of input"
 msgstr "Ende der Eingabe"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1892
 msgid "string constant"
 msgstr "Zeichenkettenkonstante"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1893
 msgid "numeric constant"
 msgstr "numerische Konstante"
 
-#: src/main/gram.y:1912
+#: src/main/gram.y:1894
 msgid "symbol"
 msgstr "Symbol"
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1895
 msgid "assignment"
 msgstr "Zuweisung"
 
-#: src/main/gram.y:1914
+#: src/main/gram.y:1896
 msgid "end of line"
 msgstr "Zeilenende"
 
-#: src/main/gram.y:1928 src/main/gram.y:1934
+#: src/main/gram.y:1910 src/main/gram.y:1916
 #, c-format
 msgid "unexpected %s"
 msgstr "Unerwartete(s) %s"
 
-#: src/main/gram.y:1944
+#: src/main/gram.y:1926
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "wiederholtes formales Argument '%s' in Zeile %d"
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2136
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "ganzzahliges Literal %s enthält ein Komma; nutze den numerischen Wert"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2140
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 "nicht-ganzzahliger Wert %s mit L qualifiziert; nutze den numerischen Wert"
 
-#: src/main/gram.y:2171
+#: src/main/gram.y:2153
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "ganzzahliges Literal %s enthält unnötiges Komma"
 
-#: src/main/gram.y:2203
+#: src/main/gram.y:2185
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 "kann nicht genug Speicher für lange Zeichenkette in Zeile %d allozieren"
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2338
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 "\\x' ohne Hex-Ziffern in der Zeichenkette beginnened mit \"%s\" genutzt"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2352
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\uxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "\\u' ohne Hex-Ziffern in der Zeichekette beginnend mit \"%s\" genutzt"
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2375
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "ungültige \\u{xxxx} Sequenz (Zeile %d)"
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2387
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\Uxxxxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 "'\\U' ohne Hex-Ziffern in der Zeichenkette beginnend mit \"%s\" genutzt"
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2410
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "ungültige \\U{xxxxxxxx} Sequenz (Zeile %d)"
 
-#: src/main/gram.y:2469
+#: src/main/gram.y:2451
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 "'\\%c' ist eine unbekannte Escape-Sequenz in der Zeichenkette beginnend mit "
 "\"%s\""
 
-#: src/main/gram.y:2528
+#: src/main/gram.y:2510
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "Unicode und oktale bzw. hexadezimale Escapecodes in einer Zeichenkette zu "
 "mischen ist nicht zulässig."
 
-#: src/main/gram.y:2532
+#: src/main/gram.y:2514
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3827,13 +3827,13 @@ msgstr ""
 "Zeichenkette in Zeile %d mit Unicodeescapes nicht aus dieser Lokalisierung\n"
 "ist zu lang (max. 1000 Zeichen)"
 
-#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
-#: src/main/gram.y:3150
+#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
+#: src/main/gram.y:3132
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "Kontextstack-Überlauf in Zeile %d"
 
-#: src/main/gram.y:3245
+#: src/main/gram.y:3227
 #, c-format
 msgid "internal parser error at line %d"
 msgstr "interner Parserfehler in Zeile %d"
@@ -3956,9 +3956,9 @@ msgstr "Internetroutinen können nicht im Modul angesprochen werden"
 msgid "internet routines cannot be loaded"
 msgstr "Internet Routinen können nicht geladen werden"
 
-#: src/main/internet.c:118 src/main/memory.c:3285 src/main/memory.c:3294
-#: src/main/memory.c:3305 src/main/memory.c:3318 src/main/memory.c:3334
-#: src/main/memory.c:3351
+#: src/main/internet.c:118 src/main/memory.c:3291 src/main/memory.c:3300
+#: src/main/memory.c:3311 src/main/memory.c:3324 src/main/memory.c:3340
+#: src/main/memory.c:3357
 msgid "bad value"
 msgstr "unbrauchbarer Wert"
 
@@ -4240,16 +4240,26 @@ msgstr "'Realloc' konnte keinen Speicher re-allozieren (%.0f Bytes)"
 msgid "not safe to return vector pointer"
 msgstr "Vektorzeigerrückgabe ist unsicher"
 
-#: src/main/memory.c:3503
+#: src/main/memory.c:3252
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
+msgstr ""
+
+#: src/main/memory.c:3267
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
+msgstr ""
+
+#: src/main/memory.c:3509
 msgid "memory profiling is not available on this system"
 msgstr "Speicherprofiling ist auf diesem System nicht verfügbar"
 
-#: src/main/memory.c:3568
+#: src/main/memory.c:3574
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: kann die Ausgabedatei '%s' nicht öffnen"
 
-#: src/main/memory.c:3675
+#: src/main/memory.c:3681
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "lange Vektoren noch nicht unterstützt: %s:%d"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:08+0000\n"
+"POT-Creation-Date: 2014-02-01 09:36+0000\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -192,7 +192,7 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3581 src/main/paste.c:96 src/main/paste.c:384
+#: src/main/memory.c:3587 src/main/paste.c:96 src/main/paste.c:384
 #: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
 #: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
 #: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
@@ -3667,135 +3667,135 @@ msgstr "不支援 getGraphicsEvent 的遞迴使用"
 msgid "no graphics event handlers set"
 msgstr "沒有任何圖形事件處理常式被設定"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2240
-#: src/main/gram.y:2254
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
+#: src/main/gram.y:2236
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "讀取 MBCS 字元於第 %d 列時遇到 EOF"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2244
-#: src/main/gram.y:2251
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
+#: src/main/gram.y:2233
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "在剖析器的第 %d 列中有無效的多位元組字元"
 
-#: src/main/gram.y:467
+#: src/main/gram.y:466
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "輸入緩衝區溢位於第 %d 列"
 
-#: src/main/gram.y:1056
+#: src/main/gram.y:1050
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "第 %d 列有不正確的標記類型"
 
-#: src/main/gram.y:1671
+#: src/main/gram.y:1653
 msgid "contextstack overflow"
 msgstr "contextstack 溢位"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1890
 msgid "input"
 msgstr "輸入"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1891
 msgid "end of input"
 msgstr "輸入結束"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1892
 msgid "string constant"
 msgstr "字串常數"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1893
 msgid "numeric constant"
 msgstr "數值常數"
 
-#: src/main/gram.y:1912
+#: src/main/gram.y:1894
 msgid "symbol"
 msgstr "符號"
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1895
 msgid "assignment"
 msgstr "指派"
 
-#: src/main/gram.y:1914
+#: src/main/gram.y:1896
 msgid "end of line"
 msgstr "列尾"
 
-#: src/main/gram.y:1928 src/main/gram.y:1934
+#: src/main/gram.y:1910 src/main/gram.y:1916
 #, c-format
 msgid "unexpected %s"
 msgstr "未預期的 %s"
 
-#: src/main/gram.y:1944
+#: src/main/gram.y:1926
 #, fuzzy, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "重複的形式引數 '%s' 於第 %d 列"
 
-#: src/main/gram.y:2154
+#: src/main/gram.y:2136
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "整數實文 %sL 含有十進位；使用數值"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2140
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "非整數值 %s 以 L 資格修飾過; 使用數值"
 
-#: src/main/gram.y:2171
+#: src/main/gram.y:2153
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "整數實文 %sL 含有非必要的十進小數點"
 
-#: src/main/gram.y:2203
+#: src/main/gram.y:2185
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "無法配置緩衝區給第 %d 列的長字串"
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2338
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\x' 卻無十六進位數字"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2352
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "在反引號內部不支援 \\uxxxx 序列 (第 %d 列)"
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\u' 卻無十六進位數字"
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2375
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "無效的 \\u{xxxx} 序列 (第 %d 列)"
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2387
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "在反引號內部不支援 \\Uxxxxxxxx 序列 (第 %d 列)"
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "在起始 \"%s\" 的字串中使用了 '\\U' 卻無十六進位數字"
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2410
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "無效的 \\U{xxxxxxxx} 序列 (第 %d 列)"
 
-#: src/main/gram.y:2469
+#: src/main/gram.y:2451
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "在起始 \"%2$s\" 的字串中 '\\%1$c' 是無法辨識的跳脫字元"
 
-#: src/main/gram.y:2528
+#: src/main/gram.y:2510
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "不允許在字串中混合萬國碼和八進位/十六進位跳脫字元"
 
-#: src/main/gram.y:2532
+#: src/main/gram.y:2514
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3804,13 +3804,13 @@ msgstr ""
 "第 %d 列的字串包含不存在這個語區的萬國碼跳脫字元\n"
 "長度太長 (最大 10000 字元)"
 
-#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
-#: src/main/gram.y:3150
+#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
+#: src/main/gram.y:3132
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack 於第 %d 列溢位"
 
-#: src/main/gram.y:3245
+#: src/main/gram.y:3227
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "輸入緩衝區溢位於第 %d 列"
@@ -3931,9 +3931,9 @@ msgstr "無法讀寫模組中的網際網路例行程式"
 msgid "internet routines cannot be loaded"
 msgstr "無法載入網際網路例行程式"
 
-#: src/main/internet.c:118 src/main/memory.c:3285 src/main/memory.c:3294
-#: src/main/memory.c:3305 src/main/memory.c:3318 src/main/memory.c:3334
-#: src/main/memory.c:3351
+#: src/main/internet.c:118 src/main/memory.c:3291 src/main/memory.c:3300
+#: src/main/memory.c:3311 src/main/memory.c:3324 src/main/memory.c:3340
+#: src/main/memory.c:3357
 msgid "bad value"
 msgstr "不當的值"
 
@@ -4210,16 +4210,26 @@ msgstr "Realloc 無法重新配置記憶體 (%.0f 位元組)"
 msgid "not safe to return vector pointer"
 msgstr "回傳向量指標不是安全的做法"
 
-#: src/main/memory.c:3503
+#: src/main/memory.c:3252
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
+msgstr ""
+
+#: src/main/memory.c:3267
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
+msgstr ""
+
+#: src/main/memory.c:3509
 msgid "memory profiling is not available on this system"
 msgstr "這個系統上無法取得記憶體側寫檔"
 
-#: src/main/memory.c:3568
+#: src/main/memory.c:3574
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem：無法開啟輸出檔案 '%s'"
 
-#: src/main/memory.c:3675
+#: src/main/memory.c:3681
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""

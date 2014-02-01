@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:08\n"
+"POT-Creation-Date: 2014-02-01 09:36\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -69,6 +69,14 @@ msgstr "ugyldig versjonsstreng"
 
 msgid "target is %s, current is %s"
 msgstr "målet er «%s» og gjeldande er «%s»"
+
+#, fuzzy
+msgid "'tolerance' should be numeric"
+msgstr "«x» må vera numerisk"
+
+#, fuzzy
+msgid "'scale' should be numeric or NULL"
+msgstr "«arg» skal vera éin av %s"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) må ha lengd større enn 0"

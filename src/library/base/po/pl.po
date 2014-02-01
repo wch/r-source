@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:08+0000\n"
+"POT-Creation-Date: 2014-02-01 09:36+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -994,7 +994,7 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3581 src/main/paste.c:96 src/main/paste.c:384
+#: src/main/memory.c:3587 src/main/paste.c:96 src/main/paste.c:384
 #: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
 #: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
 #: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
@@ -7448,8 +7448,8 @@ msgstr "nie ustawiono obsługi zdarzeń grafiki"
 # error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2238
 # error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2240
-#: src/main/gram.y:2254
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
+#: src/main/gram.y:2236
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "znak końca pliku (EOF) podczas czytania znaku MBCS w linii %d"
@@ -7470,8 +7470,8 @@ msgstr "znak końca pliku (EOF) podczas czytania znaku MBCS w linii %d"
 # error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2235
 # error(_("invalid multibyte character in parser at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2244
-#: src/main/gram.y:2251
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
+#: src/main/gram.y:2233
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "niepoprawny wielobajtowy znak w parserze w linii %d"
@@ -7480,7 +7480,7 @@ msgstr "niepoprawny wielobajtowy znak w parserze w linii %d"
 # error(_("input buffer overflow at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 465
 # error(_("input buffer overflow at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:467
+#: src/main/gram.y:466
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "przepełnienie bufora wejściowego w linii %d"
@@ -7489,7 +7489,7 @@ msgstr "przepełnienie bufora wejściowego w linii %d"
 # error(_("incorrect tag type at line %d"), lloc->first_line)
 # src/main/gram.y: 1054
 # error(_("incorrect tag type at line %d"), lloc->first_line)
-#: src/main/gram.y:1056
+#: src/main/gram.y:1050
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "niepoprawny typ tagu w linii %d"
@@ -7498,7 +7498,7 @@ msgstr "niepoprawny typ tagu w linii %d"
 # error(_("contextstack overflow"))
 # src/main/gram.y: 1668
 # error(_("contextstack overflow"))
-#: src/main/gram.y:1671
+#: src/main/gram.y:1653
 msgid "contextstack overflow"
 msgstr "przepełniony stos kontekstu"
 
@@ -7506,7 +7506,7 @@ msgstr "przepełniony stos kontekstu"
 #  _("input")
 # src/main/gram.y: 1905
 #  _("input")
-#: src/main/gram.y:1908
+#: src/main/gram.y:1890
 msgid "input"
 msgstr "wejście"
 
@@ -7514,7 +7514,7 @@ msgstr "wejście"
 #  _("end of input")
 # src/main/gram.y: 1906
 #  _("end of input")
-#: src/main/gram.y:1909
+#: src/main/gram.y:1891
 msgid "end of input"
 msgstr "koniec wejścia"
 
@@ -7522,7 +7522,7 @@ msgstr "koniec wejścia"
 #  _("string constant")
 # src/main/gram.y: 1907
 #  _("string constant")
-#: src/main/gram.y:1910
+#: src/main/gram.y:1892
 msgid "string constant"
 msgstr "stała tekstowa"
 
@@ -7530,7 +7530,7 @@ msgstr "stała tekstowa"
 #  _("numeric constant")
 # src/main/gram.y: 1908
 #  _("numeric constant")
-#: src/main/gram.y:1911
+#: src/main/gram.y:1893
 msgid "numeric constant"
 msgstr "stała liczbowa"
 
@@ -7540,7 +7540,7 @@ msgstr "stała liczbowa"
 #  _("symbol")
 # src/main/gram.y: 1909
 #  _("symbol")
-#: src/main/gram.y:1912
+#: src/main/gram.y:1894
 msgid "symbol"
 msgstr "symbol"
 
@@ -7548,7 +7548,7 @@ msgstr "symbol"
 #  _("assignment")
 # src/main/gram.y: 1910
 #  _("assignment")
-#: src/main/gram.y:1913
+#: src/main/gram.y:1895
 msgid "assignment"
 msgstr "przypisanie"
 
@@ -7556,7 +7556,7 @@ msgstr "przypisanie"
 #  _("end of line")
 # src/main/gram.y: 1911
 #  _("end of line")
-#: src/main/gram.y:1914
+#: src/main/gram.y:1896
 msgid "end of line"
 msgstr "koniec linii"
 
@@ -7572,7 +7572,7 @@ msgstr "koniec linii"
 # 				    : yytname_translations[i+1])
 # src/main/gram.y: 1931
 # sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1)
-#: src/main/gram.y:1928 src/main/gram.y:1934
+#: src/main/gram.y:1910 src/main/gram.y:1916
 #, c-format
 msgid "unexpected %s"
 msgstr "nieoczekiwano: %s"
@@ -7583,7 +7583,7 @@ msgstr "nieoczekiwano: %s"
 # src/main/gram.y: 1941
 # error(_("repeated formal argument '%s' on line %d"), CHAR(PRINTNAME(_new)),
 # 								 lloc->first_line)
-#: src/main/gram.y:1944
+#: src/main/gram.y:1926
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "powtórzony formalny argument '%s' w linii %d"
@@ -7592,7 +7592,7 @@ msgstr "powtórzony formalny argument '%s' w linii %d"
 # warning(_("integer literal %s contains decimal; using numeric value"), yytext)
 # src/main/gram.y: 2141
 # warning(_("integer literal %s contains decimal; using numeric value"), yytext)
-#: src/main/gram.y:2154
+#: src/main/gram.y:2136
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "stały literał %s zawiera część dziesiętną; używanie wartości liczbowej"
@@ -7601,7 +7601,7 @@ msgstr "stały literał %s zawiera część dziesiętną; używanie wartości li
 # warning(_("non-integer value %s qualified with L; using numeric value"), yytext)
 # src/main/gram.y: 2145
 # warning(_("non-integer value %s qualified with L; using numeric value"), yytext)
-#: src/main/gram.y:2158
+#: src/main/gram.y:2140
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
@@ -7611,7 +7611,7 @@ msgstr ""
 # warning(_("integer literal %s contains unnecessary decimal point"), yytext)
 # src/main/gram.y: 2158
 # warning(_("integer literal %s contains unnecessary decimal point"), yytext)
-#: src/main/gram.y:2171
+#: src/main/gram.y:2153
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "stały literał %s zawiera niepotrzebny separator dziesiętny"
@@ -7628,7 +7628,7 @@ msgstr "stały literał %s zawiera niepotrzebny separator dziesiętny"
 # error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 2190
 # error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:2203
+#: src/main/gram.y:2185
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
@@ -7637,7 +7637,7 @@ msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 #  _("'\\x' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2343
 #  _("'\\x' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2356
+#: src/main/gram.y:2338
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7648,7 +7648,7 @@ msgstr ""
 # error(_("\\uxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2357
 # error(_("\\uxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2370
+#: src/main/gram.y:2352
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
@@ -7659,7 +7659,7 @@ msgstr ""
 #  _("'\\u' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2372
 #  _("'\\u' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2385
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7672,7 +7672,7 @@ msgstr ""
 # src/main/gram.y: 2380
 # error(_("invalid \\u{xxxx} sequence (line %d)"),
 # 			      ParseState.xxlineno)
-#: src/main/gram.y:2393
+#: src/main/gram.y:2375
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "niepoprawna sekwencja \\u{xxxx} (linia %d)"
@@ -7681,7 +7681,7 @@ msgstr "niepoprawna sekwencja \\u{xxxx} (linia %d)"
 # error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2392
 # error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2405
+#: src/main/gram.y:2387
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
@@ -7692,7 +7692,7 @@ msgstr ""
 #  _("'\\U' used without hex digits in character string starting \"%s\"")
 # src/main/gram.y: 2407
 #  _("'\\U' used without hex digits in character string starting \"%s\"")
-#: src/main/gram.y:2420
+#: src/main/gram.y:2402
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
@@ -7703,7 +7703,7 @@ msgstr ""
 # error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), ParseState.xxlineno)
 # src/main/gram.y: 2415
 # error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), ParseState.xxlineno)
-#: src/main/gram.y:2428
+#: src/main/gram.y:2410
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "niepoprawny sekwencja \\U{xxxxxxxx} (linia %d)"
@@ -7712,7 +7712,7 @@ msgstr "niepoprawny sekwencja \\U{xxxxxxxx} (linia %d)"
 #  _("'\\%c' is an unrecognized escape in character string starting \"%s\"")
 # src/main/gram.y: 2455
 #  _("'\\%c' is an unrecognized escape in character string starting \"%s\"")
-#: src/main/gram.y:2469
+#: src/main/gram.y:2451
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
@@ -7723,7 +7723,7 @@ msgstr ""
 # error(_("mixing Unicode and octal/hex escapes in a string is not allowed"))
 # src/main/gram.y: 2514
 # error(_("mixing Unicode and octal/hex escapes in a string is not allowed"))
-#: src/main/gram.y:2528
+#: src/main/gram.y:2510
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "mieszanie znaków Unicode oraz ósemkowych/szestnastkowych znaków modyfikacji "
@@ -7733,7 +7733,7 @@ msgstr ""
 # error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno)
 # src/main/gram.y: 2518
 # error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno)
-#: src/main/gram.y:2532
+#: src/main/gram.y:2514
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -7759,8 +7759,8 @@ msgstr ""
 # error(_("contextstack overflow at line %d"), ParseState.xxlineno)
 # src/main/gram.y: 3129
 # error(_("contextstack overflow at line %d"), ParseState.xxlineno)
-#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
-#: src/main/gram.y:3150
+#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
+#: src/main/gram.y:3132
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "przepełnienie stosu kontekstu w linii %d"
@@ -7769,7 +7769,7 @@ msgstr "przepełnienie stosu kontekstu w linii %d"
 # error(_("internal parser error at line %d"),  ParseState.xxlineno)
 # src/main/gram.y: 3225
 # error(_("internal parser error at line %d"),  ParseState.xxlineno)
-#: src/main/gram.y:3245
+#: src/main/gram.y:3227
 #, c-format
 msgid "internal parser error at line %d"
 msgstr "wewnętrzny błąd parsera w linii %d"
@@ -8021,9 +8021,9 @@ msgstr "procedury internetowe nie mogą zostać załadowane"
 # error(_("bad value"))
 # src/main/memory.c: 3284
 # error(_("bad value"))
-#: src/main/internet.c:118 src/main/memory.c:3285 src/main/memory.c:3294
-#: src/main/memory.c:3305 src/main/memory.c:3318 src/main/memory.c:3334
-#: src/main/memory.c:3351
+#: src/main/internet.c:118 src/main/memory.c:3291 src/main/memory.c:3300
+#: src/main/memory.c:3311 src/main/memory.c:3324 src/main/memory.c:3340
+#: src/main/memory.c:3357
 msgid "bad value"
 msgstr "niepoprawna wartość"
 
@@ -8473,22 +8473,32 @@ msgstr "'Realloc' nie mógł ponownie przydzielić pamięci (%.0f bajtów)"
 msgid "not safe to return vector pointer"
 msgstr "nie jest bezpiecznie zwracać wskaźnik wektora"
 
+#: src/main/memory.c:3252
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
+msgstr ""
+
+#: src/main/memory.c:3267
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
+msgstr ""
+
 # src/main/memory.c: 3424
 # error(_("memory profiling is not available on this system"))
-#: src/main/memory.c:3503
+#: src/main/memory.c:3509
 msgid "memory profiling is not available on this system"
 msgstr "profilowanie pamięci nie jest dostępne na tym systemie"
 
 # src/main/memory.c: 3489
 # error(_("Rprofmem: cannot open output file '%s'"), filename)
-#: src/main/memory.c:3568
+#: src/main/memory.c:3574
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: nie można otworzyć pliku wyjściowego '%s'"
 
 # src/main/memory.c: 3596
 # error(_("long vectors not supported yet: %s:%d"), file, line)
-#: src/main/memory.c:3675
+#: src/main/memory.c:3681
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "długie wektory nie są jeszcze wspierane: %s:%d"

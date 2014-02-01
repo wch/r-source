@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:08+0000\n"
+"POT-Creation-Date: 2014-02-01 09:36+0000\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -192,7 +192,7 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3581 src/main/paste.c:96 src/main/paste.c:384
+#: src/main/memory.c:3587 src/main/paste.c:96 src/main/paste.c:384
 #: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
 #: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
 #: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
@@ -3766,141 +3766,141 @@ msgstr "el modo '%s' no es soportado en call_R"
 msgid "no graphics event handlers set"
 msgstr "ningún dispositivo gráfico está ativo"
 
-#: src/main/gram.y:223 src/main/gram.y:238 src/main/gram.y:2240
-#: src/main/gram.y:2254
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
+#: src/main/gram.y:2236
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF mientras se lee tarea MBCS en la linea %d"
 
-#: src/main/gram.y:227 src/main/gram.y:235 src/main/gram.y:2244
-#: src/main/gram.y:2251
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
+#: src/main/gram.y:2233
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "carácter multibyte inválido en la linea %d"
 
-#: src/main/gram.y:467
+#: src/main/gram.y:466
 #, c-format
 msgid "input buffer overflow at line %d"
 msgstr "buffer de entrada desbordado en la linea %d"
 
-#: src/main/gram.y:1056
+#: src/main/gram.y:1050
 #, c-format
 msgid "incorrect tag type at line %d"
 msgstr "tipo de etiqueta incorreto en la linea %d"
 
-#: src/main/gram.y:1671
+#: src/main/gram.y:1653
 msgid "contextstack overflow"
 msgstr "desbordamiento contextstack"
 
-#: src/main/gram.y:1908
+#: src/main/gram.y:1890
 msgid "input"
 msgstr "entrada"
 
-#: src/main/gram.y:1909
+#: src/main/gram.y:1891
 msgid "end of input"
 msgstr "fin de entrada"
 
-#: src/main/gram.y:1910
+#: src/main/gram.y:1892
 msgid "string constant"
 msgstr "string constante"
 
-#: src/main/gram.y:1911
+#: src/main/gram.y:1893
 msgid "numeric constant"
 msgstr "constante numérica"
 
-#: src/main/gram.y:1912
+#: src/main/gram.y:1894
 msgid "symbol"
 msgstr "símbolo"
 
-#: src/main/gram.y:1913
+#: src/main/gram.y:1895
 msgid "assignment"
 msgstr "asignación"
 
-#: src/main/gram.y:1914
+#: src/main/gram.y:1896
 msgid "end of line"
 msgstr "fin de linea"
 
-#: src/main/gram.y:1928 src/main/gram.y:1934
+#: src/main/gram.y:1910 src/main/gram.y:1916
 #, c-format
 msgid "unexpected %s"
 msgstr "inesperado %s"
 
-#: src/main/gram.y:1944
+#: src/main/gram.y:1926
 #, fuzzy, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "Argumento formal '%s' repetido en la linea %d"
 
 # No se si esta instruccion y la siguiente están bien. Por favor fijate.
-#: src/main/gram.y:2154
+#: src/main/gram.y:2136
 #, fuzzy, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "%sL contiene decimales; use un valor numérico"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2140
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "valor no entero %s califica con L; use un valor numérico"
 
-#: src/main/gram.y:2171
+#: src/main/gram.y:2153
 #, fuzzy, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "%sL contiene un punto decimal innecesario"
 
-#: src/main/gram.y:2203
+#: src/main/gram.y:2185
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "no se puede asignar memoria para una cadena larga en la linea %d"
 
-#: src/main/gram.y:2356
+#: src/main/gram.y:2338
 #, fuzzy, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2352
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\uxxxx secuencias no soportada dentro de comillas simples invertidas (línea "
 "%d)"
 
-#: src/main/gram.y:2385
+#: src/main/gram.y:2367
 #, fuzzy, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2393
+#: src/main/gram.y:2375
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "secuencia \\u{xxxx} inválida (linea %d)"
 
-#: src/main/gram.y:2405
+#: src/main/gram.y:2387
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\Uxxxxxxxx secuencias no soportada dentro de comillas simples invertidas "
 "(línea %d)"
 
-#: src/main/gram.y:2420
+#: src/main/gram.y:2402
 #, fuzzy, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2428
+#: src/main/gram.y:2410
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "inválido \\U{xxxxxxxx} secuencia (línea %d)"
 
-#: src/main/gram.y:2469
+#: src/main/gram.y:2451
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "'\\%c' es un escape no reconocido en una cadena de caracteres"
 
-#: src/main/gram.y:2528
+#: src/main/gram.y:2510
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 "mesclar escapes Unicode y octal / hexadecimal en una cadena no está permitido"
 
-#: src/main/gram.y:2532
+#: src/main/gram.y:2514
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3909,13 +3909,13 @@ msgstr ""
 "cadena en la línea %d contiene escapes Unicode en esta localidad\n"
 "es demasiado largo (máximo 10000 caracteres) "
 
-#: src/main/gram.y:3130 src/main/gram.y:3137 src/main/gram.y:3143
-#: src/main/gram.y:3150
+#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
+#: src/main/gram.y:3132
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "desbordamiento contextstack en la línea %d"
 
-#: src/main/gram.y:3245
+#: src/main/gram.y:3227
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "buffer de entrada desbordado en la linea %d"
@@ -4042,9 +4042,9 @@ msgstr "rutinas de internet no pueden ser abiertas en el módulo"
 msgid "internet routines cannot be loaded"
 msgstr "rutinas de internet no pueden ser cargadas"
 
-#: src/main/internet.c:118 src/main/memory.c:3285 src/main/memory.c:3294
-#: src/main/memory.c:3305 src/main/memory.c:3318 src/main/memory.c:3334
-#: src/main/memory.c:3351
+#: src/main/internet.c:118 src/main/memory.c:3291 src/main/memory.c:3300
+#: src/main/memory.c:3311 src/main/memory.c:3324 src/main/memory.c:3340
+#: src/main/memory.c:3357
 msgid "bad value"
 msgstr "valor incorrecto"
 
@@ -4336,17 +4336,27 @@ msgstr "Realloc no puede re-asignar memoria (tamaño %d)"
 msgid "not safe to return vector pointer"
 msgstr "no es seguro devolver un puntero de vector"
 
-#: src/main/memory.c:3503
+#: src/main/memory.c:3252
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
+msgstr ""
+
+#: src/main/memory.c:3267
+#, c-format
+msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
+msgstr ""
+
+#: src/main/memory.c:3509
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "'R profiling' no disponible en este sistema"
 
-#: src/main/memory.c:3568
+#: src/main/memory.c:3574
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: no puede abrir el archivo de perfil '%s'"
 
-#: src/main/memory.c:3675
+#: src/main/memory.c:3681
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""

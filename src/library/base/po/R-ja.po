@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:08\n"
+"POT-Creation-Date: 2014-02-01 09:36\n"
 "PO-Revision-Date: 2013-03-02 09:39+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -66,6 +66,14 @@ msgstr " 正しい形式のバージョン文字列ではありません "
 
 msgid "target is %s, current is %s"
 msgstr " 引数 target は %s、引数 current は %s です "
+
+#, fuzzy
+msgid "'tolerance' should be numeric"
+msgstr " 'x' は数値でなければなりません "
+
+#, fuzzy
+msgid "'scale' should be numeric or NULL"
+msgstr " 'arg' は %s の一つでなければなりません： "
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:08\n"
+"POT-Creation-Date: 2014-02-01 09:36\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -71,6 +71,14 @@ msgstr "string de versão mal formada"
 
 msgid "target is %s, current is %s"
 msgstr "alvo é %s, atual é %s"
+
+#, fuzzy
+msgid "'tolerance' should be numeric"
+msgstr "'x' deve ser numérico"
+
+#, fuzzy
+msgid "'scale' should be numeric or NULL"
+msgstr "'arg' deve ser um dentre %s"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve ter um comprimento positivo"
