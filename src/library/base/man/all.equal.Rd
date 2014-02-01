@@ -23,11 +23,14 @@
 all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
-          tolerance = .Machine$double.eps ^ 0.5,
-          scale = NULL, check.attributes = TRUE, \dots)
+          tolerance = .Machine$double.eps ^ 0.5, scale = NULL,
+          \dots, check.attributes = TRUE)
 
-\method{all.equal}{list}(target, current,
-          check.attributes = TRUE, \dots, use.names = TRUE)
+\method{all.equal}{list}(target, current, \dots,
+          check.attributes = TRUE, use.names = TRUE)
+
+\method{all.equal}{POSIXct}(target, current, \dots, tolerance = 1e-3, scale = 1)
+
 
 attr.all.equal(target, current, \dots,
                check.attributes = TRUE, check.names = TRUE)
@@ -38,7 +41,8 @@ attr.all.equal(target, current, \dots,
   \item{\dots}{Further arguments for different methods, notably the
     following two, for numerical comparison:}
   \item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
-    \code{tolerance} are not considered.}
+    \code{tolerance} are not reported.  The default value is close to
+    \code{1.5e-8}.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
@@ -54,7 +58,7 @@ attr.all.equal(target, current, \dots,
     \code{all.equal(x, y)} is a utility to compare \R objects \code{x}
     and \code{y} testing \sQuote{near equality}.  If they are different,
     comparison is still made to some extent, and a report of the
-    differences is returned.    Don't use \code{all.equal} directly in
+    differences is returned.    Do not use \code{all.equal} directly in
     \code{if} expressions---either use \code{isTRUE(all.equal(....))} or
     \code{\link{identical}} if appropriate.
 }
@@ -64,7 +68,12 @@ attr.all.equal(target, current, \dots,
   \code{\link{methods}("all.equal")}, but note that the default method
   also does some dispatching, e.g. using the raw method for logical
   targets.
-
+  
+  Remember that arguments which follow \code{\dots} must be specified by
+  (unabbreviated) name: some of them were before \code{\dots} prior to
+  \R 3.1.0.  It is inadvisable to pass unnamed arguments in \code{\dots}
+  as these will match different arguments in different methods.
+  
   Numerical comparisons for \code{scale = NULL} (the default) are done
   by first computing the mean absolute difference of the two numerical
   vectors.  If this is smaller than \code{tolerance} or not finite,
