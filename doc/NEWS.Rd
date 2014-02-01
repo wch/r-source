@@ -96,7 +96,7 @@
       \item New functions \code{cospi(x)}, \code{sinpi(x)}, and
       \code{tanpi(x)}, for more accurate computation of
       \code{cos(pi*x)}, etc, both in \R{} and the C API.  Using these
-      gains accuracy in some cases, e.g., for \code{lgamma()} or
+      gains accuracy in some cases, e.g., inside \code{lgamma()} or
       \code{besselI()}.  (Suggested by Morten Wellinder in \PR{15529}.)
 
       \item \code{print.table(x, zero.print = ".")} now also has an
@@ -171,9 +171,9 @@
 
       \item Avoid duplicating the right hand side values in complex
       assignments when possible.  This reduces copying of replacement
-      values in expressions such as \code{Z$a <- a0} and \code{ans[[i]]
-      <- tmp}: some package code has relied on there being copies.
-      (Based on suggestions from Michael Lawrence.)
+      values in expressions such as \code{Z$a <- a0} and
+      \code{ans[[i]] <- tmp}: some package code has relied on there
+      being copies.  (Based on suggestions from Michael Lawrence.)
 
       \item The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
@@ -234,8 +234,8 @@
       \file{src/extra/tzone} has been updated.  (Formerly used only on
       Windows.)
 
-      \item There is support to use the included (64-bit) time-zone
-      conversion code and Olson time-zone database: use
+      \item The included (64-bit) time-zone conversion code and Olson
+      time-zone database can be used instead of the system version: use
       \command{configure} option \option{--with-internal-tzcode}.  This
       is the default on Windows and OS X.
 
@@ -458,7 +458,7 @@
       \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
       (PR#15500)
 
-      \item \code{nls()} with no \code{start} argument now may also work
+      \item \code{nls()} with no \code{start} argument may now work
       inside another function (scoping issue).
 
       \item \code{pbeta()} and similar work better for very large
@@ -476,7 +476,7 @@
       JJ Allaire and Kevin Ushey).
 
       NOTE for anyone poking around within the graphics engine display
-      list (despite the warnings not to) that this fix changes what
+      list (despite the warnings not to) that this changes what
       is recorded by \pkg{grid} on the graphics engine display list. 
     }
   }
@@ -709,13 +709,14 @@
       \code{"C"} (to restore the sane behavior) no longer gives a
       warning.
 
-      \item \code{deparse()} now deparses complex vectors more
-      accurately; they will now re-parse to the original values.
-      (\PR{15534}, patch based on code submitted by Alex Bertram.)
+      \item \code{deparse()} now deparses complex vectors in a way that
+      re-parse to the original values.  (\PR{15534}, patch based on code
+      submitted by Alex Bertram.)
 
       \item In some extreme cases (more than \eqn{10^{15}}{10^15})
-      integer inputs to dpqrxxx functions might have been rounded up by
-      one (with a warning about being non-integer).  (\PR{15624})
+      integer inputs to \code{dpqrxxx()} functions might have been
+      rounded up by one (with a warning about being non-integer).
+      (\PR{15624})
 
       \item Plotting symbol \code{pch = 14} had the triangle upside down
       on some devices (typically screen devices). The triangle is
@@ -736,8 +737,9 @@
       OS X, where \samp{juin} is abbreviated to \samp{jui} and partially
       matches \code{juillet}.  Similarly for weekday names.
 
-      \item \code{pbeta(x, a,b, log.p=TRUE)} sometimes underflowed to
-      zero for very small and very differently sized a,b.  (\PR{15641})
+      \item \code{pbeta(x, a, b, log.p = TRUE)} sometimes underflowed to
+      zero for very small and very differently sized \code{a}, \code{b}.
+      (\PR{15641})
     }
   }
 }
