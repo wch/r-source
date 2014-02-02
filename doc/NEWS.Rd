@@ -206,6 +206,10 @@
       A side effect is that some previously undetected errors of passing
       empty arguments (no object between commas) to \code{all.equal()}
       are detected and reported.
+
+      There are explicit checks that \code{check.attributes} is logical,
+      \code{tolerance} is numeric and \code{scale} is \code{NULL} or
+      numeric.  This catches some unintended positional matching.
     }
   }
 

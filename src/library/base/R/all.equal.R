@@ -48,9 +48,11 @@ all.equal.numeric <-
              scale = NULL, ..., check.attributes = TRUE)
 {
     if (!is.numeric(tolerance))
-        warning("'tolerance' should be numeric")
+        stop("'tolerance' should be numeric")
     if (!is.numeric(scale) && !is.null(scale))
-        warning("'scale' should be numeric or NULL")
+        stop("'scale' should be numeric or NULL")
+    if (!is.logical(check.attributes))
+        stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
     msg <- if(check.attributes)
 	attr.all.equal(target, current, tolerance = tolerance, scale = scale,
                        ...)
@@ -109,6 +111,8 @@ all.equal.numeric <-
 all.equal.character <-
     function(target, current, ..., check.attributes = TRUE)
 {
+    if (!is.logical(check.attributes))
+        stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
 	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
@@ -197,6 +201,11 @@ all.equal.language <- function(target, current, ...)
 all.equal.list <- function(target, current, ...,
                            check.attributes = TRUE, use.names = TRUE)
 {
+    if (!is.logical(check.attributes))
+        stop(gettextf("'%s' must be logical", "check.attributes"),
+             domain = NA)
+    if (!is.logical(use.names))
+        stop(gettextf("'%s' must be logical", "use.names"), domain = NA)
     msg <- if(check.attributes) attr.all.equal(target, current, ...)
     ## Unclass to ensure we get the low-level components
     target <- unclass(target) # "list"
@@ -231,6 +240,8 @@ all.equal.list <- function(target, current, ...,
 all.equal.raw <-
     function(target, current, ..., check.attributes = TRUE)
 {
+    if (!is.logical(check.attributes))
+        stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     if(data.class(target) != data.class(current)) {
 	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
@@ -269,6 +280,10 @@ attr.all.equal <- function(target, current, ...,
 {
     ##--- "all.equal(.)" for attributes ---
     ##---  Auxiliary in all.equal(.) methods --- return NULL or character()
+    if (!is.logical(check.attributes))
+        stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
+    if (!is.logical(check.names))
+        stop(gettextf("'%s' must be logical", "check.names"), domain = NA)
     msg <- NULL
     if(mode(target) != mode(current))
 	msg <- paste0("Modes: ", mode(target), ", ", mode(current))
