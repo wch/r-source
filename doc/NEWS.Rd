@@ -718,7 +718,7 @@
       warning.
 
       \item \code{deparse()} now deparses complex vectors in a way that
-      re-parse to the original values.  (\PR{15534}, patch based on code
+      re-parses to the original values.  (\PR{15534}, patch based on code
       submitted by Alex Bertram.)
 
       \item In some extreme cases (more than \eqn{10^{15}}{10^15})
