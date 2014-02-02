@@ -4383,6 +4383,11 @@ setRlibs <-
             message(""); summaryLog(Log)
         }
 
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
+                                            "FALSE"))) {
+            .summarize_CRAN_check_status(pkgname, Log$con, "")
+        }
+            
         closeLog(Log)
         message("")
 
@@ -4394,6 +4399,78 @@ setRlibs <-
 function(x)
     paste0("  ", x, collapse = "\n")
     ## Hard-wire indent of 2 for now.
+
+.summarize_CRAN_check_status <-
+function(package, con = stdout(), header = character())
+{
+    rds <- gzcon(url(sprintf("%s/%s",
+                             getOption("repos")["CRAN"],
+                             "web/checks/check_results.rds"),
+                     open = "rb"))
+    ## We could make the location of the local CRAN web/checks rsync
+    ## settable via some env var.
+    rdb <- readRDS(rds)
+    close(rds)
+
+    results <- rdb[rdb$Package == package, ]
+    if(!NROW(results)) return()
+
+    tab <- table(results$Status)[c("ERROR", "WARN", "NOTE", "OK")]
+    tab <- tab[!is.na(tab)]
+    writeLines(c(header,
+                 sprintf("Current CRAN status: %s",
+                         paste(sprintf("%s: %s", names(tab), tab),
+                               collapse = ", "))),
+               con)
+
+    ## Not sure how useful these actually are ...
+    results <- results[results$Status != "OK", ]
+    if(!NROW(results)) return()
+    writeLines(sprintf("  %s: %s <http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                       results$Flavor,
+                       results$Status,
+                       results$Flavor,
+                       package),
+               con)
+
+    writeLines("", con)
+    
+    rds <- gzcon(url(sprintf("%s/%s",
+                             getOption("repos")["CRAN"],
+                             "web/checks/check_details.rds"),
+                     open = "rb"))
+    ## We could make the location of the local CRAN web/checks rsync
+    ## settable via some env var.
+    ddb <- readRDS(rds)
+    close(rds)
+
+    ddb <- ddb[ddb$Package == package, ]
+
+    flags <- ddb$Flags
+    flavor <- ddb$Flavor
+    if(is.null(flavor))
+        flavor <- NA_character_
+    out <- cbind(sprintf("Package: %s %s%s",
+                         ddb$Package, ddb$Version,
+                         ifelse(is.na(flavor), "",
+                                sprintf(", Flavor: %s", flavor))),
+                 ifelse(nzchar(flags),
+                        sprintf("Flags: %s\n", flags),
+                        ""),
+                 ## Using
+                 ##   sprintf("Check: %s ... %s", ddb$Check, ddb$Status),
+                 ## might be more natural (but causes problems for the
+                 ## check log analysis using R 3.0.x).
+                 ## Maybe change eventually.
+                 sprintf("Check: %s, Result: %s", ddb$Check, ddb$Status),
+                 c(ddb$Output),
+                 sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                         ddb$Flavor,
+                         ddb$Package)
+                 )
+    cat(t(out), sep = c("\n", "", "\n", "\n", "\n\n"), file = con)
+}
+
 
 ### Local variables:
 ### mode: R
