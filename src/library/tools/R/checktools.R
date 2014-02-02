@@ -437,7 +437,7 @@ function(dir, all = TRUE)
     for(d in outdirs) {
         pname <- sub("\\.Rcheck$", "", basename(d))
         log <- readLines(file.path(d, "00check.log"), warn = FALSE)
-        m <- regexpr("\\.\\.\\. *(\\[.*\\])? *(NOTE|WARN|ERROR)", log,
+        m <- regexpr("^\\*.*\\.\\.\\. *(\\[.*\\])? *(NOTE|WARN|ERROR)", log,
                      useBytes = TRUE)
         ind <- (m > 0L)
         if(any(ind)) {
