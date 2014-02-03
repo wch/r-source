@@ -4,7 +4,7 @@
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
-\title{ R News}
+\title{R News}
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.0.2 patched}{
@@ -235,7 +235,7 @@
       warning.
 
       \item \code{deparse()} now deparses complex vectors in a way that
-      re-parse to the original values.  (\PR{15534}, patch based on code
+      re-parses to the original values.  (\PR{15534}, patch based on code
       submitted by Alex Bertram.)
 
       \item In some extreme cases (more than \eqn{10^{15}}{10^15})
