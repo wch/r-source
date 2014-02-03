@@ -4446,29 +4446,39 @@ function(package, con = stdout(), header = character())
 
     ddb <- ddb[ddb$Package == package, ]
 
-    flags <- ddb$Flags
-    flavor <- ddb$Flavor
-    if(is.null(flavor))
-        flavor <- NA_character_
-    out <- cbind(sprintf("Package: %s %s%s",
-                         ddb$Package, ddb$Version,
-                         ifelse(is.na(flavor), "",
-                                sprintf(", Flavor: %s", flavor))),
-                 ifelse(nzchar(flags),
-                        sprintf("Flags: %s\n", flags),
-                        ""),
-                 ## Using
-                 ##   sprintf("Check: %s ... %s", ddb$Check, ddb$Status),
-                 ## might be more natural (but causes problems for the
-                 ## check log analysis using R 3.0.x).
-                 ## Maybe change eventually.
-                 sprintf("Check: %s, Result: %s", ddb$Check, ddb$Status),
-                 c(ddb$Output),
-                 sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-                         ddb$Flavor,
-                         ddb$Package)
-                 )
-    cat(t(out), sep = c("\n", "", "\n", "\n", "\n\n"), file = con)
+    ## Remove trailing white space from outputs ... remove eventually
+    ## when this is done on CRAN.
+    ddb$Output <- sub("[[:space:]]+$", "", ddb$Output)
+
+    pos <- which(names(ddb) == "Flavor")
+    txt <- apply(ddb[-pos], 1L, paste, collapse = "\r")
+    ## Regularize fancy quotes.
+    ## Could also try using iconv(to = "ASCII//TRANSLIT"))
+    txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
+                perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
+                perl = TRUE, useBytes = TRUE)
+    out <- lapply(split(seq_len(NROW(ddb)), match(txt, unique(txt))),
+                  function(e) {
+                      tmp <- ddb[e[1L], ]
+                      flags <- tmp$Flags
+                      flavors <- ddb$Flavor[e]
+                      c(sprintf("Version: %s%s",
+                                tmp$Version,
+                                ifelse(nzchar(flags),
+                                       sprintf("Flags: %s", flags),
+                                       "")),
+                        sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
+                        c(tmp$Output),
+                        sprintf("See: %s",
+                                paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                                              flavors,
+                                              tmp$Package),
+                                      collapse = ",\n     ")))
+                  })
+    writeLines(paste(unlist(lapply(out, paste, collapse = "\n")),
+                     collapse = "\n\n"),
+               con)
 }
 
 
