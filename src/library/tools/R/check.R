@@ -4420,18 +4420,22 @@ function(package, con = stdout(), header = character())
     writeLines(c(header,
                  sprintf("Current CRAN status: %s",
                          paste(sprintf("%s: %s", names(tab), tab),
-                               collapse = ", "))),
+                               collapse = ", ")),
+                 sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
+                         package)),
                con)
 
-    ## Not sure how useful these actually are ...
     results <- results[results$Status != "OK", ]
-    if(!NROW(results)) return()
-    writeLines(sprintf("  %s: %s <http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-                       results$Flavor,
-                       results$Status,
-                       results$Flavor,
-                       package),
-               con)
+    if(!NROW(results)) return()    
+
+    ## Not sure how useful these actually are ...
+    ## Simply point to the package check results web page (as done above).
+    ## writeLines(sprintf("  %s: %s <http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+    ##                    results$Flavor,
+    ##                    results$Status,
+    ##                    results$Flavor,
+    ##                    package),
+    ##            con)
 
     writeLines("", con)
     
