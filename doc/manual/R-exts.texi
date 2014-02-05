@@ -10389,6 +10389,9 @@ It is probably not a good idea to allow an external pointer to be
 @code{save}d and then reloaded, but if this happens the pointer will be
 set to the C @code{NULL} pointer.
 
+Finalizers can be run at many places in the code base and much of it,
+including the @R{} interpreter, is not re-entrant.  So great care is
+needed in choosing the code to be run in a finalizer.
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information
