@@ -748,6 +748,9 @@
       \item \code{pbeta(x, a, b, log.p = TRUE)} sometimes underflowed to
       zero for very small and very differently sized \code{a}, \code{b}.
       (\PR{15641})
+      
+      \item \code{approx()} and \code{approxfun()} now handle infinite
+      values with the \code{"constant"} method. (\PR{15655})
     }
   }
 }

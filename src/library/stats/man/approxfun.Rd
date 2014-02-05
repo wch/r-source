@@ -42,11 +42,13 @@ approxfun(x, y = NULL,       method = "linear",
     is used.  Use, e.g., \code{rule = 2:1}, if the left and right side
     extrapolation should differ.}
   \item{f}{for \code{method = "constant"} a number between 0 and 1
-    inclusive, indicating a compromise between left- and
-    right-continuous step functions. If \code{y0} and \code{y1} are the
-    values to the left and right of the point then the value is
-    \code{y0*(1-f)+y1*f} so that \code{f = 0} is right-continuous and
-    \code{f = 1} is left-continuous.}
+    inclusive, indicating a compromise between left- and 
+    right-continuous step functions. If \code{y0} and \code{y1} are
+    the values to the left and right of the point then the value is
+    \code{y0} if \code{f == 0}, \code{y1} if \code{f == 1}, and
+    \code{ y0*(1-f)+y1*f} for intermediate values. In this way the result is
+    right-continuous for \code{f == 0} and left-continuous for \code{f
+    == 1}, even for non-finite \code{y} values.}
   \item{ties}{Handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
     the string \code{"ordered"}.}
