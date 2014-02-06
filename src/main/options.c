@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,14 +81,17 @@
  * "scrap"
  */
 
+
 static SEXP Options(void)
 {
-    return install(".Options");
+    static SEXP sOptions = NULL;
+    if(!sOptions) sOptions = install(".Options");
+    return sOptions;
 }
 
 static SEXP FindTaggedItem(SEXP lst, SEXP tag)
 {
-    for ( ; lst!=R_NilValue ; lst=CDR(lst)) {
+    for ( ; lst != R_NilValue ; lst = CDR(lst)) {
 	if (TAG(lst) == tag)
 	    return lst;
     }
@@ -113,7 +116,7 @@ SEXP GetOption(SEXP tag, SEXP rho)
 
 SEXP GetOption1(SEXP tag)
 {
-    SEXP opt = findVar(Options(), R_BaseEnv);
+    SEXP opt = SYMVALUE(Options());
     if (!isList(opt)) error(_("corrupted options list"));
     opt = FindTaggedItem(opt, tag);
     return CAR(opt);
@@ -328,10 +331,7 @@ void attribute_hidden InitOptions(void)
 /* This needs to manage R_Visible */
 SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,
-	names, options, s, tag, value; /* = R_Nil..: -Wall */
-    SEXP sind, names2, value2;
-    int i, k, n, *indx;
+    SEXP names, value, options;
 
     /* Locate the options values in the symbol table.
        This will need to change if options are to live in the session
@@ -342,23 +342,23 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (args == R_NilValue) {
 	/* This is the zero argument case.
-	   We alloc up a real list and write the system values into it.
+	   We alloc up a vector list and write the system values into it.
 	*/
-	n = length(options);
+	int n = length(options);
 	PROTECT(value = allocVector(VECSXP, n));
 	PROTECT(names = allocVector(STRSXP, n));
-	i = 0;
-	while (options != R_NilValue) {
+	for (int i = 0; i < n; i++) {
 	    SET_STRING_ELT(names, i, PRINTNAME(TAG(options)));
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
-	    options = CDR(options); i++;
+	    options = CDR(options);
 	}
-	PROTECT(sind = allocVector(INTSXP, n));  indx = INTEGER(sind);
-	for (i = 0; i < n; i++) indx[i] = i;
+	SEXP sind = PROTECT(allocVector(INTSXP, n));  
+	int *indx = INTEGER(sind);
+	for (int i = 0; i < n; i++) indx[i] = i;
 	orderVector1(indx, n, names, TRUE, FALSE, R_NilValue);
-	PROTECT(value2 = allocVector(VECSXP, n));
-	PROTECT(names2 = allocVector(STRSXP, n));
-	for(i = 0; i < n; i++) {
+	SEXP value2 = PROTECT(allocVector(VECSXP, n));
+	SEXP names2 = PROTECT(allocVector(STRSXP, n));
+	for(int i = 0; i < n; i++) {
 	    SET_STRING_ELT(names2, i, STRING_ELT(names, indx[i]));
 	    SET_VECTOR_ELT(value2, i, VECTOR_ELT(value, indx[i]));
 	}
@@ -374,7 +374,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
        [ Vomits quietly onto shoes ... ]
        */
 
-    n = length(args);
+    int n = length(args);
     if (n == 1 && (isPairList(CAR(args)) || isVectorList(CAR(args)))
 	&& TAG(args) == R_NilValue ) {
 	args = CAR(args);
@@ -383,10 +383,10 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(value = allocVector(VECSXP, n));
     PROTECT(names = allocVector(STRSXP, n));
 
+    SEXP argnames = R_NilValue;
     switch (TYPEOF(args)) {
     case NILSXP:
     case LISTSXP:
-	argnames = R_NilValue;
 	break;
     case VECSXP:
 	argnames = getAttrib(args, R_NamesSymbol);
@@ -398,8 +398,8 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     R_Visible = FALSE;
-    for (i = 0 ; i < n ; i++) { /* i-th argument */
-
+    for (int i = 0 ; i < n ; i++) { /* i-th argument */
+	SEXP argi = R_NilValue, namei = R_NilValue;
 	switch (TYPEOF(args)) {
 	case LISTSXP:
 	    argi = CAR(args);
@@ -415,27 +415,27 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 
 	if (*CHAR(namei)) { /* name = value  ---> assignment */
-	    tag = installTrChar(namei);
+	    SEXP tag = installTrChar(namei);
 	    if (streql(CHAR(namei), "width")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
 		    error(_("invalid 'width' parameter, allowed %d...%d"),
 			  R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "deparse.cutoff")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "digits")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
 		    error(_("invalid 'digits' parameter, allowed %d...%d"),
 			  R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
 		    error(_("'expressions' parameter invalid, allowed %d...%d"),
 			  R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
@@ -445,18 +445,18 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "keep.source")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_KeepSource = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "editor") && isString(argi)) {
-		s = asChar(argi);
+		SEXP s =  asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
 	    }
 	    else if (streql(CHAR(namei), "continue")) {
-		s = asChar(argi);
+		SEXP s =  asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
@@ -464,7 +464,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 			       SetOption(tag, mkString(translateChar(s))));
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
-		s = asChar(argi);
+		SEXP s =  asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		/* We want to make sure these are in the native encoding */
@@ -479,7 +479,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "check.bounds")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		/* R_CheckBounds = k; */
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
@@ -489,7 +489,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "warning.length")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < 100 || k > 8170)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		R_WarnLength = k;
@@ -501,12 +501,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if (streql(CHAR(namei), "max.print")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < 1) error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else if (streql(CHAR(namei), "nwarnings")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < 1) error(_("invalid value for '%s'"), CHAR(namei));
 		R_nwarnings = k;
 		R_CollectWarnings = 0; /* force a reset */
@@ -529,7 +529,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "echo")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		/* Should be quicker than checking options(echo)
 		   every time R prompts for input:
 		   */
@@ -544,7 +544,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else if (streql(CHAR(namei), "max.contour.segments")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < 0) // also many times above: rely on  NA_INTEGER  <  <finite_int>
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		max_contour_segments = k;
@@ -561,40 +561,40 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "warnPartialMatchDollar")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_warn_partial_match_dollar = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "warnPartialMatchArgs")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_warn_partial_match_args = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "warnPartialMatchAttr")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_warn_partial_match_attr = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "showWarnCalls")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_ShowWarnCalls = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "showErrorCalls")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_ShowErrorCalls = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "showNCalls")) {
-		k = asInteger(argi);
+		int k = asInteger(argi);
 		if (k < 30 || k > 500 || k == NA_INTEGER || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		R_NShowCalls = k;
@@ -606,7 +606,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "browserNLdisabled")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		if (k == NA_LOGICAL)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		R_DisableNLinBrowser = k;
@@ -615,7 +615,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "CBoundsCheck")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
-		k = asLogical(argi);
+		int k = asLogical(argi);
 		R_CBoundsCheck = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
