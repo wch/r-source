@@ -342,7 +342,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* This code is not re-entrant and people have used it in
        finalizers.  So GC here to reduce nasty surprises */
-    R_gc();
+    //R_gc();
 
     if (args == R_NilValue) {
 	/* This is the zero argument case.
