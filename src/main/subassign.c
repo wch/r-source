@@ -1417,7 +1417,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* over always duplicating. */
     /* Shouldn't x be protected?  It is (as args is)! */
 
-    if (NAMED(CAR(args)) == 2)
+    if (MAYBE_SHARED(CAR(args)))
 	x = SETCAR(args, duplicate(CAR(args)));
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
@@ -1569,7 +1569,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Ensure that the LHS is a local variable. */
     /* If it is not, then make a local copy. */
 
-    if (NAMED(x) == 2)
+    if (MAYBE_SHARED(x))
 	SETCAR(args, x = duplicate(x));
 
     xtop = xup = x; /* x will be the element which is assigned to */
@@ -1904,15 +1904,15 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     PROTECT_WITH_INDEX(val, &pvalidx);
     S4 = IS_S4_OBJECT(x);
 
-    if (NAMED(x) == 2)
+    if (MAYBE_SHARED(x))
 	REPROTECT(x = duplicate(x), pxidx);
 
     /* If we aren't creating a new entry and NAMED>0
        we need to duplicate to prevent cycles.
        If we are creating a new entry we could duplicate
-       or increase NAMED. We duplicate if NAMED==1, but
-       not if NAMED==2 */
-    if (NAMED(val) == 2)
+       or increase NAMED. We duplicate if NAMED == 1, but
+       not if NAMED > 1 */
+    if (MAYBE_SHARED(val))
 	maybe_duplicate=TRUE;
     else if (NAMED(val)==1)
 	REPROTECT(val = R_FixupRHS(x, val), pvalidx);
