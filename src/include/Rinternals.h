@@ -280,13 +280,6 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
 
-/* Macros for common NAMED and SET_NAMED idioms. */
-#define NAMEDMAX 2
-#define MAYBE_SHARED(x) (NAMED(x) > 1)
-#define NO_REFERENCES(x) (NAMED(x) == 0)
-#define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
-#define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
-
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
 #define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
@@ -426,6 +419,13 @@ Rboolean (Rf_isObject)(SEXP s);
 	if (NAMED(__x__) != 2)				\
 	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
     } while (0)
+
+/* Macros for common NAMED and SET_NAMED idioms. */
+#define NAMEDMAX 2
+#define MAYBE_SHARED(x) (NAMED(x) > 1)
+#define NO_REFERENCES(x) (NAMED(x) == 0)
+#define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
 
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
