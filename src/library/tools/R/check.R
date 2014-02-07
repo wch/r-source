@@ -4402,23 +4402,38 @@ function(x)
 
 
 summarize_CRAN_check_status <-
-function(package, con = stdout(), header = character())
+function(package, con = stdout(), header = character(), drop = TRUE,
+         results = NULL, details = NULL)
 {
-    results <- CRAN_check_results()
+    ## Be nice.
+    if(is.character(con)) {
+        con <- file(con, "w")
+        on.exit(close(con))
+    }
+
+    if(is.null(results))
+        results <- CRAN_check_results()
     results <-
         results[!is.na(match(results$Package, package)), ]
 
     if(!NROW(results)) return(invisible())
 
     if(any(results$Status != "OK")) {
-        details <- CRAN_check_details()
+        if(is.null(details))
+            details <- CRAN_check_details()
         details <- details[!is.na(match(details$Package, package)), ]
         ## Remove trailing white space from outputs ... remove eventually
         ## when this is done on CRAN.
         details$Output <- sub("[[:space:]]+$", "", details$Output)
 
     } else {
-        details <- NULL
+        ## Create empty details directly to avoid the cost of reading
+        ## and subscripting the actual details db.
+        details <- as.data.frame(matrix(character(), ncol = 7L),
+                                 stringsAsFactors = FALSE)
+        names(details) <-
+            c("Package", "Version", "Flavor", "Check", "Status", "Output", 
+              "Flags")
     }
 
     summarize <- function(p, r, d) {
@@ -4472,6 +4487,13 @@ function(package, con = stdout(), header = character())
     writeLines(header, con)
 
     if(length(package) == 1L) {
+        if(!drop) {
+            s <- paste("Package:", package)
+            writeLines(c(s,
+                         paste(rep.int("*", nchar(s)), collapse = ""),
+                         ""),
+                       con)
+        }
         summarize(package, results, details)
     } else {
         results <- split(results, results$Package)
@@ -4489,6 +4511,8 @@ function(package, con = stdout(), header = character())
             first <- FALSE
         }
     }
+
+    invisible()
 }
 
 CRAN_check_results <-
