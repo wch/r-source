@@ -4385,7 +4385,7 @@ setRlibs <-
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
                                             "FALSE"))) {
-            .summarize_CRAN_check_status(pkgname, Log$con, "")
+            summarize_CRAN_check_status(pkgname, Log$con, "")
         }
             
         closeLog(Log)
@@ -4400,8 +4400,99 @@ function(x)
     paste0("  ", x, collapse = "\n")
     ## Hard-wire indent of 2 for now.
 
-.summarize_CRAN_check_status <-
+
+summarize_CRAN_check_status <-
 function(package, con = stdout(), header = character())
+{
+    results <- CRAN_check_results()
+    results <-
+        results[!is.na(match(results$Package, package)), ]
+
+    if(!NROW(results)) return(invisible())
+
+    if(any(results$Status != "OK")) {
+        details <- CRAN_check_details()
+        details <- details[!is.na(match(details$Package, package)), ]
+        ## Remove trailing white space from outputs ... remove eventually
+        ## when this is done on CRAN.
+        details$Output <- sub("[[:space:]]+$", "", details$Output)
+
+    } else {
+        details <- NULL
+    }
+
+    summarize <- function(p, r, d) {
+        tab <- table(r$Status)[c("ERROR", "WARN", "NOTE", "OK")]
+        tab <- tab[!is.na(tab)]
+        writeLines(c(sprintf("Current CRAN status: %s",
+                             paste(sprintf("%s: %s", names(tab), tab),
+                                   collapse = ", ")),
+                     sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
+                             p)),
+                   con)
+
+        if(!NROW(d)) return()
+
+        writeLines("", con)
+
+        pos <- which(names(d) == "Flavor")
+        txt <- apply(d[-pos], 1L, paste, collapse = "\r")
+        ## Regularize fancy quotes.
+        ## Could also try using iconv(to = "ASCII//TRANSLIT"))
+        txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
+                    perl = TRUE, useBytes = TRUE)
+        txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
+                    perl = TRUE, useBytes = TRUE)
+        out <-
+            lapply(split(seq_len(NROW(d)), match(txt, unique(txt))),
+                   function(e) {
+                       tmp <- d[e[1L], ]
+                       flags <- tmp$Flags
+                       flavors <- d$Flavor[e]
+                       c(sprintf("Version: %s%s",
+                                 tmp$Version,
+                                 ifelse(nzchar(flags),
+                                        sprintf("Flags: %s", flags),
+                                        "")),
+                         sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
+                         sprintf("  %s",
+                                 gsub("\n", "\n  ", tmp$Output,
+                                      perl = TRUE, useBytes = TRUE)),
+                         sprintf("See: %s",
+                                 paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+                                               flavors,
+                                               p),
+                                       collapse = ",\n     ")))
+                   })
+        writeLines(paste(unlist(lapply(out, paste, collapse = "\n")),
+                         collapse = "\n\n"),
+                   con)
+    }
+
+    writeLines(header, con)
+
+    if(length(package) == 1L) {
+        summarize(package, results, details)
+    } else {
+        results <- split(results, results$Package)
+        package <- names(results)
+        details <- split(details, factor(details$Package, package))
+        first <- TRUE
+        for(p in package) {
+            if(!first) writeLines("", con)
+            s <- paste("Package:", p)
+            writeLines(c(s,
+                         paste(rep.int("*", nchar(s)), collapse = ""),
+                         ""),
+                       con)
+            summarize(p, results[[p]], details[[p]])
+            first <- FALSE
+        }
+    }
+}
+
+CRAN_check_results <-
+function()
 {
     rds <- gzcon(url(sprintf("%s/%s",
                              getOption("repos")["CRAN"],
@@ -4409,82 +4500,26 @@ function(package, con = stdout(), header = character())
                      open = "rb"))
     ## We could make the location of the local CRAN web/checks rsync
     ## settable via some env var.
-    rdb <- readRDS(rds)
+    results <- readRDS(rds)
     close(rds)
 
-    results <- rdb[rdb$Package == package, ]
-    if(!NROW(results)) return()
+    results
+}    
 
-    tab <- table(results$Status)[c("ERROR", "WARN", "NOTE", "OK")]
-    tab <- tab[!is.na(tab)]
-    writeLines(c(header,
-                 sprintf("Current CRAN status: %s",
-                         paste(sprintf("%s: %s", names(tab), tab),
-                               collapse = ", ")),
-                 sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
-                         package)),
-               con)
-
-    results <- results[results$Status != "OK", ]
-    if(!NROW(results)) return()    
-
-    ## Not sure how useful these actually are ...
-    ## Simply point to the package check results web page (as done above).
-    ## writeLines(sprintf("  %s: %s <http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-    ##                    results$Flavor,
-    ##                    results$Status,
-    ##                    results$Flavor,
-    ##                    package),
-    ##            con)
-
-    writeLines("", con)
-    
+CRAN_check_details <-
+function()
+{
     rds <- gzcon(url(sprintf("%s/%s",
                              getOption("repos")["CRAN"],
                              "web/checks/check_details.rds"),
                      open = "rb"))
     ## We could make the location of the local CRAN web/checks rsync
     ## settable via some env var.
-    ddb <- readRDS(rds)
+    details <- readRDS(rds)
     close(rds)
 
-    ddb <- ddb[ddb$Package == package, ]
-
-    ## Remove trailing white space from outputs ... remove eventually
-    ## when this is done on CRAN.
-    ddb$Output <- sub("[[:space:]]+$", "", ddb$Output)
-
-    pos <- which(names(ddb) == "Flavor")
-    txt <- apply(ddb[-pos], 1L, paste, collapse = "\r")
-    ## Regularize fancy quotes.
-    ## Could also try using iconv(to = "ASCII//TRANSLIT"))
-    txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
-                perl = TRUE, useBytes = TRUE)
-    txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
-                perl = TRUE, useBytes = TRUE)
-    out <- lapply(split(seq_len(NROW(ddb)), match(txt, unique(txt))),
-                  function(e) {
-                      tmp <- ddb[e[1L], ]
-                      flags <- tmp$Flags
-                      flavors <- ddb$Flavor[e]
-                      c(sprintf("Version: %s%s",
-                                tmp$Version,
-                                ifelse(nzchar(flags),
-                                       sprintf("Flags: %s", flags),
-                                       "")),
-                        sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
-                        c(tmp$Output),
-                        sprintf("See: %s",
-                                paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-                                              flavors,
-                                              tmp$Package),
-                                      collapse = ",\n     ")))
-                  })
-    writeLines(paste(unlist(lapply(out, paste, collapse = "\n")),
-                     collapse = "\n\n"),
-               con)
-}
-
+    details
+}    
 
 ### Local variables:
 ### mode: R
