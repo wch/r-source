@@ -141,6 +141,27 @@ SEXP duplicate(SEXP s){
     return t;
 }
 
+SEXP shallow_duplicate(SEXP list)
+{
+    if (TYPEOF(list) != LISTSXP)
+	error("'shallow_duplicate' can only handle LISTSXP objects for now.");
+    SEXP new = R_NilValue;
+    SEXP next, a;
+    /**** Could be done in a single pass */
+    /**** Don't need to protect since CONS does */
+    for (next = list; next != R_NilValue; next = CDR(next))
+	new = CONS(R_NilValue, new);
+    for (next = list, a = new;
+	 next != R_NilValue;
+	 next = CDR(next), a = CDR(a)) {
+	SETCAR(a, CAR(next));
+	SET_TAG(a, TAG(next));
+	/**** ATTRIB?? */
+	SET_NAMED(CAR(a), 2); /* may not be necessary */
+    }
+    return new;
+}
+
 /*****************/
 
 /* Detect cycles that would be created by assigning 'child' as a

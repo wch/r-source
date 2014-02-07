@@ -209,7 +209,7 @@ SEXP do_copyDFattr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     SEXP in = CAR(args), out = CADR(args);
-    SET_ATTRIB(out, ATTRIB(in));
+    SET_ATTRIB(out, shallow_duplicate(ATTRIB(in)));
     IS_S4_OBJECT(in) ?  SET_S4_OBJECT(out) : UNSET_S4_OBJECT(out);
     SET_OBJECT(out, OBJECT(in));
     return out;
