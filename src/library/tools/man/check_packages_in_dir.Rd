@@ -24,7 +24,8 @@ check_packages_in_dir(dir,
                       clean = TRUE,
                       ...)
 
-summarize_check_packages_in_dir_results(dir, all = TRUE)
+summarize_check_packages_in_dir_results(dir, all = TRUE,
+                                        full = FALSE)
 summarize_check_packages_in_dir_timings(dir, all = FALSE,
                                         full = FALSE)
 summarize_check_packages_in_dir_depends(dir, all = FALSE)
@@ -61,8 +62,9 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE)
   \item{...}{currently not used.}
   \item{all}{a logical indicating whether to also summarize the reverse
     dependencies checked.}
-  \item{full}{a logical indicating whether to also summarize check
-    example timings (if available).}
+  \item{full}{a logical indicating whether to also give details for
+    checks with non-ok results, or summarize check example timings (if
+    available).}
 }
 \details{
   \code{check_packages_in_dir} allows to conveniently check source
