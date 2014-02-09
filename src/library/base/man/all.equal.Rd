@@ -29,7 +29,7 @@ all.equal(target, current, \dots)
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
 
-\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3)
+\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3, scale)
 
 
 attr.all.equal(target, current, \dots,
@@ -93,7 +93,7 @@ attr.all.equal(target, current, \dots,
   either \code{\link{is.vector}} or \code{\link{is.list}}.
 
   The methods for the date-time classes by default allow a tolerance of
-  \code{tolerance = 0.001} seconds.
+  \code{tolerance = 0.001} seconds, and ignore \code{scale}.
 
   \code{attr.all.equal} is used for comparing
   \code{\link{attributes}}, returning \code{NULL} or a

@@ -324,7 +324,7 @@ attr.all.equal <- function(target, current, ...,
 
 ## formerly in datetime.R
 ## force absolute comparisons
-all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3)
+all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3, scale)
 {
     target <- as.POSIXct(target); current <- as.POSIXct(current)
     check_tzones(target, current)
