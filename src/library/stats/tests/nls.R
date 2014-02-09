@@ -66,7 +66,7 @@ cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
 summary(fit, cor = TRUE)
-stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e5,
+stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
                     check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
@@ -110,7 +110,7 @@ ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
 stopifnot(all.equal(ft, fitted(fm1), tolerance = 1e-6))
 # sign of residuals is reversed
 r <- with(DNase1, -residuals(fm3)/sqrt(wts))
-all.equal(r, residuals(fm1), tolerance = 1e05)
+all.equal(r, residuals(fm1), tolerance = 1e-5)
 fm3a <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))))),
             data = DNase1, start = list(Asym = 3, xmid = 0))
 anova(fm3a, fm3)

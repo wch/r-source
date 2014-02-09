@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-02-09 r64944) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -148,7 +148,7 @@ Correlation of Parameter Estimates:
   a    
 b -0.89
 
-> stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e5,
+> stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
 +                     check.attributes = FALSE))
 > stopifnot(df.residual(fit) == df.residual(fit0))
 > cf1 <- coef(summary(fit))[, 1:2]
@@ -260,7 +260,7 @@ Residual standard error: 0.0355 on 13 degrees of freedom
 > stopifnot(all.equal(ft, fitted(fm1), tolerance = 1e-6))
 > # sign of residuals is reversed
 > r <- with(DNase1, -residuals(fm3)/sqrt(wts))
-> all.equal(r, residuals(fm1), tolerance = 1e05)
+> all.equal(r, residuals(fm1), tolerance = 1e-5)
 [1] TRUE
 > fm3a <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))))),
 +             data = DNase1, start = list(Asym = 3, xmid = 0))
