@@ -210,6 +210,12 @@
       There are explicit checks that \code{check.attributes} is logical,
       \code{tolerance} is numeric and \code{scale} is \code{NULL} or
       numeric.  This catches some unintended positional matching.
+
+      The message for \code{all.equal.numberic()} reports a
+      \code{"scaled difference"} only for \code{scale != 1}.
+      
+      \item \code{all.equal()} now has a \code{"POSIXt"} method
+      replacing the \code{"POSIXct"} method.
     }
   }
 

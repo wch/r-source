@@ -13,7 +13,7 @@
 \alias{all.equal.formula}
 \alias{all.equal.list}
 \alias{all.equal.language}
-\alias{all.equal.POSIXct}
+\alias{all.equal.POSIXt}
 \alias{all.equal.raw}
 \alias{attr.all.equal}
 \concept{numerical equality}
@@ -29,7 +29,7 @@ all.equal(target, current, \dots)
 \method{all.equal}{list}(target, current, \dots,
           check.attributes = TRUE, use.names = TRUE)
 
-\method{all.equal}{POSIXct}(target, current, \dots, tolerance = 1e-3, scale = 1)
+\method{all.equal}{POSIXt}(target, current, \dots, tolerance = 1e-3)
 
 
 attr.all.equal(target, current, \dots,
@@ -92,8 +92,8 @@ attr.all.equal(target, current, \dots,
   arguments, as long as both are \dQuote{list-like}, i.e., fulfill
   either \code{\link{is.vector}} or \code{\link{is.list}}.
 
-  The method for the date-time class \code{"\link{POSIXct}"} by default
-  allows a tolerance of \code{tolerance = 0.001} seconds.
+  The methods for the date-time classes by default allow a tolerance of
+  \code{tolerance = 0.001} seconds.
 
   \code{attr.all.equal} is used for comparing
   \code{\link{attributes}}, returning \code{NULL} or a

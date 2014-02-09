@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-01-26 r64887) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-02-07 r64939) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7303,5 +7303,20 @@ Warning messages:
 5    e   NA    1
 6    f   NA    1
 > ## 'skipNul' is new in 3.1.0.  Should not warn on BOM, ignore in second.
+> 
+> 
+> ## all.equal datetime method
+> x <- Sys.time()
+> all.equal(x,x)
+[1] TRUE
+> all.equal(x, as.POSIXlt(x))
+[1] TRUE
+> all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))
+[1] TRUE
+> all.equal(x, x+1e-4)
+[1] TRUE
+> isTRUE(all.equal(x, x+0.002)) # message will depend on representation error
+[1] FALSE
+> ## as.POSIXt method is new in 3.1.0.
 > 
 > 

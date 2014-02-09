@@ -2820,3 +2820,13 @@ read.csv(f) # warns
 read.csv(f, skipNul = TRUE, fileEncoding = "UTF-8-BOM")
 ## 'skipNul' is new in 3.1.0.  Should not warn on BOM, ignore in second.
 
+
+## all.equal datetime method
+x <- Sys.time()
+all.equal(x,x)
+all.equal(x, as.POSIXlt(x))
+all.equal(x, as.POSIXlt(x, tz = "EST5EDT"))
+all.equal(x, x+1e-4)
+isTRUE(all.equal(x, x+0.002)) # message will depend on representation error
+## as.POSIXt method is new in 3.1.0.
+

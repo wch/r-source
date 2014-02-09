@@ -98,7 +98,7 @@ all.equal.numeric <-
 	    } else "absolute"
 	} else {
 	    xy <- xy/scale
-	    "scaled"
+	    if(scale == 1) "absolute" else "scaled"
 	}
 
     if (cplx) what <- paste(what, "Mod") # PR#10575
@@ -320,4 +320,14 @@ attr.all.equal <- function(target, current, ...,
 	if(is.character(tt)) msg <- c(msg, paste("Attributes: <", tt, ">"))
     }
     msg # NULL or character
+}
+
+## formerly in datetime.R
+## force absolute comparisons
+all.equal.POSIXt <- function(target, current, ..., tolerance = 1e-3)
+{
+    target <- as.POSIXct(target); current <- as.POSIXct(current)
+    check_tzones(target, current)
+    attr(target, "tzone") <- attr(current, "tzone") <- NULL
+    all.equal.numeric(target, current, ..., tolerance = tolerance, scale = 1)
 }
