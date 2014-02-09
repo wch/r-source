@@ -18,10 +18,9 @@
 
 .proctime00 <- proc.time()
 library(stats)
-options(digits = 5) # to avoid trivial printed differences
-options(useFancyQuotes = FALSE) # avoid fancy quotes in o/p
-options(show.nls.convergence = FALSE) # avoid non-diffable output
-options(warn = 1)
+options(digits=5) # to avoid trivial printed differences
+options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+options(show.nls.convergence=FALSE) # avoid non-diffable output
 pdf("nls-test.pdf")
 
 ## selfStart.default() w/ no parameters:
@@ -64,7 +63,7 @@ cf0 <- coef(summary(fit0))[, 1:2]
 fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
            weights = wts, trace = TRUE)
 summary(fit, cor = TRUE)
-stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e5,
+stopifnot(all.equal(residuals(fit), residuals(fit0), tolerance = 1e-5,
                     check.attributes = FALSE))
 stopifnot(df.residual(fit) == df.residual(fit0))
 cf1 <- coef(summary(fit))[, 1:2]
@@ -108,7 +107,7 @@ ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
 stopifnot(all.equal(ft, fitted(fm1), tolerance = 1e-6))
 # sign of residuals is reversed
 r <- with(DNase1, -residuals(fm3)/sqrt(wts))
-all.equal(r, residuals(fm1), tolerance = 1e05)
+all.equal(r, residuals(fm1), tolerance = 1e-5)
 fm3a <- nls(~ sqrt(wts) * (density - Asym/(1 + exp((xmid - log(conc))))),
             data = DNase1, start = list(Asym = 3, xmid = 0))
 anova(fm3a, fm3)
@@ -221,12 +220,6 @@ test()
 ## failed to find n in 2.2.x
 ## found wrong n in 2.3.x
 ## finally worked in 2.4.0
-##__no.start: failed in 3.0.2
-stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
-rm(a,b)
-t2 <- test(FALSE)
-stopifnot(all.equal(lapply(t1, .n),
-		    lapply(t2, .n), tolerance = 0.16))# different random error
 
 
 ## list 'start'
