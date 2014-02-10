@@ -28,7 +28,7 @@
 ## subscripting more cumbersome ...)
 
 ## (In fact, the underlying mechanism could easily be extended to more
-## general alphanumberic version specs.  E.g., one could allow "letters"
+## general alphanumeric version specs.  E.g., one could allow "letters"
 ## in version numbers by replacing the non-sep characters in the version
 ## string by their ASCII codes.  However, this is not straightforward:
 ## alternatively, one could use an extended scheme with special markup
