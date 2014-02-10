@@ -455,6 +455,8 @@
 
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
+      
+      \item \code{download.file(method = "lynx")} is deprecated.
     }
   }
 

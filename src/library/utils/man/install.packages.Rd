@@ -53,7 +53,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{repos}{
     character vector, the base URL(s) of the repositories
     to use, e.g., the URL of a CRAN mirror such as
-    \code{"http://cran.us.r-project.org"}.
+    \code{"http://cran.us.r-project.org"}.  For more details on
+    supported URL schemes see \code{\link{url}}.
 
     Can be \code{NULL} to install from local files
     (with extension \file{.tar.gz} for source packages).
