@@ -41,6 +41,8 @@
   that GMT means UTC (and not the time zone of Greenwich, England) and so
   does not have daylight savings time.
 
+  Quarterly increments are specified by \code{by = "3months"}.
+
   Using \code{"month"} first advances the month without changing the
   day: if this results in an invalid day of the month, it is counted
   forward into the next month: see the examples.

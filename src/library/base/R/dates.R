@@ -231,13 +231,13 @@ as.data.frame.Date <- as.data.frame.vector
 as.list.Date <- function(x, ...)
     lapply(seq_along(x), function(i) x[i])
 
-c.Date <- function(..., recursive=FALSE)
-    structure(c(unlist(lapply(list(...), unclass))), class="Date")
+c.Date <- function(..., recursive = FALSE)
+    structure(c(unlist(lapply(list(...), unclass))), class = "Date")
 
 mean.Date <- function (x, ...)
     structure(mean(unclass(x), ...), class = "Date")
 
-seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
+seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
 {
     if (missing(from)) stop("'from' must be specified")
     if (!inherits(from, "Date")) stop("'from' must be a \"Date\" object")
@@ -253,7 +253,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         length.out <- ceiling(length.out)
     }
     status <- c(!missing(to), !missing(by), !is.null(length.out))
-    if(sum(status) != 2)
+    if(sum(status) != 2L)
         stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
     if (missing(by)) {
         from <- unclass(as.Date(from))
@@ -292,10 +292,10 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
             res <- seq.int(0, to0 - from, by) + from
         }
         res <- structure(res, class="Date")
-    } else {  # months or years or DSTdays
+    } else {  # months or years
         r1 <- as.POSIXlt(from)
-        if(valid == 4L) {
-            if(missing(to)) { # years
+        if(valid == 4L) { # years
+            if(missing(to)) {
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
                 to0 <- as.POSIXlt(to)
@@ -335,7 +335,7 @@ cut.Date <-
     } else if(is.numeric(breaks) && length(breaks) == 1L) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1L) {
-	by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
+	by2 <- strsplit(breaks, " ", fixed = TRUE)[[1L]]
 	if(length(by2) > 2L || length(by2) < 1L)
 	    stop("invalid specification of 'breaks'")
 	valid <-
