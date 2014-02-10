@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -94,17 +94,21 @@ as.difftime(tim, format = "\%X", units = "auto")
   units are changed, the numerical value is scaled accordingly.  The
   replacement version keeps attributes such as names and dimensions.
 
+  Note that \code{units = "days"} means a period of 24 hours, hence
+  takes no account of Daylight Savings Time.  Differences in objects
+  of class \code{"\link{Date}"} are computed as if in the UTC time zone.
+
   The \code{as.double} method returns the numeric value expressed in
   the specified units.  Using  \code{units = "auto"} means the units of the
   object.
 
   The \code{format} method simply formats the numeric value and appends
   the units as a text string.
-
-  The default behaviour when \code{time1} or \code{time2} was a
-  \code{"POSIXlt"} object changed in \R 2.12.0: previously such objects
-  were regarded as in the time zone given by \code{tz} which defaulted to
-  the current time zone.
+}
+\note{
+  Units such as \code{"months"} are not possible as they are not of
+  constant length.  To create intervals of months, quarters or years
+  use \code{\link{seq.Date}} or \code{\link{seq.POSIXt}}.
 }
 \seealso{
   \code{\link{DateTimeClasses}}.
@@ -113,11 +117,11 @@ as.difftime(tim, format = "\%X", units = "auto")
 (z <- Sys.time() - 3600)
 Sys.time() - z                # just over 3600 seconds.
 
-## time interval between releases of R 1.2.2 and 1.2.3.
+## time interval between release days of R 1.2.2 and 1.2.3.
 ISOdate(2001, 4, 26) - ISOdate(2001, 2, 26)
 
 as.difftime(c("0:3:20", "11:23:15"))
-as.difftime(c("3:20", "23:15", "2:"), format= "\%H:\%M") # 3rd gives NA
+as.difftime(c("3:20", "23:15", "2:"), format = "\%H:\%M") # 3rd gives NA
 (z <- as.difftime(c(0,30,60), units = "mins"))
 as.numeric(z, units = "secs")
 as.numeric(z, units = "hours")
