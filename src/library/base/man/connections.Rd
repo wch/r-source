@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -217,8 +217,8 @@ isIncomplete(con)
   No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
 
-  Note that \samp{https://} connections are not supported except on
-  Windows.  There they are only supported if \option{--internet2} or
+  Note that the \samp{https://} URL scheme is not supported except on
+  Windows.  There it is only supported if \option{--internet2} or
 #ifdef unix
   \code{setInternet2(TRUE)}
 #endif
@@ -229,9 +229,10 @@ isIncomplete(con)
   if the certificate is considered to be valid.  With that option only,
   the \samp{http://user:pass@site} notation for sites requiring
   authentication is also accepted.
-
-  Contributed package \CRANpkg{RCurl} provides more comprehensive facilities
-  to download from URLs.
+  
+  Function \code{\link{download.file}} and contributed package
+  \CRANpkg{RCurl} provide more comprehensive facilities to download
+  from URLs.
 }
 
 \value{
