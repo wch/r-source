@@ -108,7 +108,7 @@ static CONST int lw = 0;
 
 static double R_ValueOfNA(void)
 {
-    /* The gcc shipping with RedHat 9 gets this wrong without
+    /* The gcc shipping with Fedora 9 gets this wrong without
      * the volatile declaration. Thanks to Marc Schwartz. */
     volatile ieee_double x;
     x.word[hw] = 0x7ff00000;
