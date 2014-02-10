@@ -61,9 +61,11 @@ is.na(x) <- value
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 
-  Computations using \code{NA} will normally result in \code{NA}: a
+  Numerical computations using \code{NA} will normally result in \code{NA}: a
   possible exception is where \code{\link{NaN}} is also involved, in
-  which case either might result.
+  which case either might result.  Logical computations treat \code{NA}
+  as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
+  \code{FALSE} if the expression does not depend on the \code{NA} operand.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
@@ -111,6 +113,10 @@ is.na(paste(c(1, NA))) #> FALSE FALSE
 is.na(xx) <- c(2, 4)
 xx                     #> 0 NA  2 NA  4
 anyNA(xx) # TRUE
+
+# Some logical operations do not return NA
+c(TRUE, FALSE) & NA
+c(TRUE, FALSE) | NA
 
 \donttest{
 ## Measure speed difference in an extreme case:
