@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -268,13 +268,13 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
         by <- switch(attr(by,"units"), secs = 1/86400, mins = 1/1440,
                      hours = 1/24, days = 1, weeks = 7) * unclass(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
+        by2 <- strsplit(by, " ", fixed = TRUE)[[1L]]
         if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
-                        c("days", "weeks", "months", "years"))
+                        c("days", "weeks", "months", "quarters", "years"))
         if(is.na(valid)) stop("invalid string for 'by'")
-        if(valid <= 2) {
+        if(valid <= 2L) {
             by <- c(1, 7)[valid]
             if (length(by2) == 2L) by <- by * as.integer(by2[1L])
         } else
@@ -291,10 +291,10 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
             ## defeat test in seq.default
             res <- seq.int(0, to0 - from, by) + from
         }
-        res <- structure(res, class="Date")
-    } else {  # months or years
+        res <- structure(res, class = "Date")
+    } else {  # months or quarters or years
         r1 <- as.POSIXlt(from)
-        if(valid == 4L) { # years
+        if(valid == 5L) { # years
             if(missing(to)) {
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
@@ -303,7 +303,8 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
             }
             r1$year <- yr
             res <- as.Date(r1)
-        } else if(valid == 3L) { # months
+        } else { # months or quarters
+            if (valid == 4L) by <- by * 3
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {

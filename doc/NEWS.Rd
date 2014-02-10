@@ -216,6 +216,10 @@
       
       \item \code{all.equal()} now has a \code{"POSIXt"} method
       replacing the \code{"POSIXct"} method.
+      
+      \item The \code{"Date"} and \code{"POSIXt"} methods of
+      \code{seq()} allows \code{by = "quarter"} for completeness
+      (\code{by = "3 months"} always worked).
     }
   }
 

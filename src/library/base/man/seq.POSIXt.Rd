@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq.POSIXt}
@@ -27,9 +27,9 @@
     \item A object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"sec"},
     \code{"min"}, \code{"hour"}, \code{"day"}, \code{"DSTday"},
-    \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
-    preceded by a (positive or negative) integer and a space,
-    or followed by \code{"s"}.
+    \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}.
+    This can optionally be preceded by a (positive or negative) integer
+    and a space, or followed by \code{"s"}.
   }
   The difference between \code{"day"} and \code{"DSTday"} is that the
   former ignores changes to/from daylight savings time and the latter takes
@@ -41,8 +41,6 @@
   that GMT means UTC (and not the time zone of Greenwich, England) and so
   does not have daylight savings time.
 
-  Quarterly increments are specified by \code{by = "3months"}.
-
   Using \code{"month"} first advances the month without changing the
   day: if this results in an invalid day of the month, it is counted
   forward into the next month: see the examples.
@@ -50,6 +48,11 @@
 \value{
   A vector of class \code{"POSIXct"}.
 }
+\note{
+  Quarterly increments were specified by \code{by = "3 months"} prior to
+  \R 3.1.0.
+}
+
 \seealso{\code{\link{DateTimeClasses}}}
 
 \examples{
@@ -59,7 +62,7 @@ seq(ISOdate(1910,1,1), ISOdate(1999,1,1), "years")
 seq(ISOdate(2000,1,1), by = "month", length.out = 12)
 seq(ISOdate(2000,1,31), by = "month", length.out = 4)
 ## quarters
-seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "3 months")
+seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "quarter") # or "3 months"
 ## days vs DSTdays: use c() to lose the time zone.
 seq(c(ISOdate(2000,3,20)), by = "day", length.out = 10)
 seq(c(ISOdate(2000,3,20)), by = "DSTday", length.out = 10)

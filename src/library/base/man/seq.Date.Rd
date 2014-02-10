@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.Date.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seq.Date}
@@ -27,15 +27,19 @@
     \item A number, taken to be in days.
     \item A object of class \code{\link{difftime}}
     \item A character string, containing one of \code{"day"},
-    \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
-    preceded by a (positive or negative) integer and a space,
-    or followed by \code{"s"}.
+    \code{"week"}, \code{"month"}, \code{"quarter"} or \code{"year"}.
+    This can optionally be preceded by a (positive or negative) integer
+    and a space, or followed by \code{"s"}.
 
     See \code{\link{seq.POSIXt}} for the details of \code{"month"}.
   }
 }
 \value{
   A vector of class \code{"Date"}.
+}
+\note{
+  Quarterly increments were specified by \code{by = "3 months"} prior to
+  \R 3.1.0.
 }
 \seealso{\code{\link{Date}}}
 
@@ -45,7 +49,7 @@ seq(as.Date("1910/1/1"), as.Date("1999/1/1"), "years")
 ## by month
 seq(as.Date("2000/1/1"), by = "month", length.out = 12)
 ## quarters
-seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by = "3 months")
+seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by = "quarter")
 
 ## find all 7th of the month between two dates, the last being a 7th.
 st <- as.Date("1998-12-17")

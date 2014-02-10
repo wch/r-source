@@ -696,7 +696,7 @@ seq.POSIXt <-
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
                         c("secs", "mins", "hours", "days", "weeks",
-                          "months", "years", "DSTdays"))
+                          "months", "years", "DSTdays", "quarters"))
         if(is.na(valid)) stop("invalid string for 'by'")
         if(valid <= 5L) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
@@ -716,7 +716,7 @@ seq.POSIXt <-
             res <- seq.int(0, to0 - from, by) + from
         }
         return(.POSIXct(res, tz))
-    } else {  # months or years or DSTdays
+    } else {  # months or years or DSTdays or quarters
         r1 <- as.POSIXlt(from)
         if(valid == 7L) { # years
             if(missing(to)) { # years
@@ -726,7 +726,8 @@ seq.POSIXt <-
                 yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
-        } else if(valid == 6L) { # months
+        } else if(valid %in% c(6L, 9L)) { # months or quarters
+            if (valid == 9L) by <- by * 3
             if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
