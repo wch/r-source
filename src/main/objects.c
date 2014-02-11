@@ -1612,7 +1612,7 @@ SEXP asS4(SEXP s, Rboolean flag, int complete)
 	return s;
     PROTECT(s);
     if(MAYBE_SHARED(s))
-	s = duplicate(s);
+	s = shallow_duplicate(s);
     UNPROTECT(1);
     if(flag) SET_S4_OBJECT(s);
     else {

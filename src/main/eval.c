@@ -1228,7 +1228,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
     if ((vl = findVarInFrame3(rho, symbol, TRUE)) != R_UnboundValue) {
 	vl = eval(symbol, rho);	/* for promises */
 	if(MAYBE_SHARED(vl)) {
-	    PROTECT(vl = duplicate(vl));
+	    PROTECT(vl = shallow_duplicate(vl));
 	    defineVar(symbol, vl, rho);
 	    UNPROTECT(1);
 	    SET_NAMED(vl, 1);
@@ -1240,7 +1240,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
     if (vl == R_UnboundValue)
 	error(_("object '%s' not found"), EncodeChar(PRINTNAME(symbol)));
 
-    PROTECT(vl = duplicate(vl));
+    PROTECT(vl = shallow_duplicate(vl));
     defineVar(symbol, vl, rho);
     UNPROTECT(1);
     SET_NAMED(vl, 1);
@@ -1767,7 +1767,7 @@ static void tmp_cleanup(void *data)
 	SEXP __lhs__ = (lhs); \
 	SEXP __v__ = CAR(__lhs__); \
 	if (MAYBE_SHARED(__v__)) { \
-	    __v__ = duplicate(__v__); \
+	    __v__ = shallow_duplicate(__v__); \
 	    SET_NAMED(__v__, 1); \
 	    SETCAR(__lhs__, __v__); \
 	} \
@@ -3803,7 +3803,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   SEXP lhs = GETSTACK(-2); \
   SEXP rhs = GETSTACK(-1); \
   if (MAYBE_SHARED(lhs)) { \
-    lhs = duplicate(lhs); \
+    lhs = shallow_duplicate(lhs); \
     SETSTACK(-2, lhs); \
     SET_NAMED(lhs, 1); \
   } \
@@ -3862,7 +3862,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 	SEXP call = VECTOR_ELT(constants, callidx); \
 	SEXP rhs = GETSTACK(-1); \
 	if (MAYBE_SHARED(lhs)) { \
-	    lhs = duplicate(lhs); \
+	    lhs = shallow_duplicate(lhs); \
 	    SETSTACK(-2, lhs); \
 	    SET_NAMED(lhs, 1); \
 	} \
@@ -4824,7 +4824,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP x = GETSTACK(-2);
 	SEXP rhs = GETSTACK(-1);
 	if (MAYBE_SHARED(x)) {
-	    x = duplicate(x);
+	    x = shallow_duplicate(x);
 	    SETSTACK(-2, x);
 	    SET_NAMED(x, 1);
 	}
@@ -4956,7 +4956,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP vexpr = VECTOR_ELT(constants, GETOP());
 	SEXP args, prom, last;
 	if (MAYBE_SHARED(lhs)) {
-	  lhs = duplicate(lhs);
+	  lhs = shallow_duplicate(lhs);
 	  SETSTACK(-5, lhs);
 	  SET_NAMED(lhs, 1);
 	}

@@ -2181,7 +2181,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (TAG(x) == R_NilValue)
 		    error(_("all elements of a list must be named"));
 	    PROTECT(s = allocSExp(ENVSXP));
-	    SET_FRAME(s, duplicate(CAR(args)));
+	    SET_FRAME(s, shallow_duplicate(CAR(args)));
 	} else if (isEnvironment(CAR(args))) {
 	    SEXP p, loadenv = CAR(args);
 

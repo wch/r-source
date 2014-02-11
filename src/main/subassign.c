@@ -514,7 +514,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (x == y)
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -793,7 +793,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (x == y)
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -1084,7 +1084,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* objects.  A full duplication is wasteful. */
 
     if (x == y)
-	PROTECT(y = duplicate(y));
+	PROTECT(y = shallow_duplicate(y));
     else
 	PROTECT(y);
 
@@ -1411,6 +1411,8 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(args);
 
+    nsubs = SubAssignArgs(args, &x, &subs, &y);
+
     /* If there are multiple references to an object we must */
     /* duplicate it so that only the local version is mutated. */
     /* This will duplicate more often than necessary, but saves */
@@ -1418,9 +1420,8 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Shouldn't x be protected?  It is (as args is)! */
 
     if (MAYBE_SHARED(CAR(args)))
-	x = SETCAR(args, duplicate(CAR(args)));
+	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
-    nsubs = SubAssignArgs(args, &x, &subs, &y);
     S4 = IS_S4_OBJECT(x);
 
     oldtype = 0;
@@ -1570,7 +1571,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* If it is not, then make a local copy. */
 
     if (MAYBE_SHARED(x))
-	SETCAR(args, x = duplicate(x));
+	SETCAR(args, x = shallow_duplicate(x));
 
     xtop = xup = x; /* x will be the element which is assigned to */
 
@@ -1905,7 +1906,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     S4 = IS_S4_OBJECT(x);
 
     if (MAYBE_SHARED(x))
-	REPROTECT(x = duplicate(x), pxidx);
+	REPROTECT(x = shallow_duplicate(x), pxidx);
 
     /* If we aren't creating a new entry and NAMED>0
        we need to duplicate to prevent cycles.

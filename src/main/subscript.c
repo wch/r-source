@@ -315,14 +315,14 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    cx = nthcdr(x, (int) offset);
 	    x = CAR(cx);
 	    if (dup && NAMED(x) > 1) {
-		x = duplicate(x);
+		x = shallow_duplicate(x);
 		SETCAR(cx, x);
 	    }
 	} else {
 	    cx = x;
 	    x = VECTOR_ELT(x, offset);
 	    if (dup && NAMED(x) > 1) {
-		x = duplicate(x);
+		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
 	    }
     	}
