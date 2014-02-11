@@ -220,6 +220,9 @@
       \item The \code{"Date"} and \code{"POSIXt"} methods of
       \code{seq()} allows \code{by = "quarter"} for completeness
       (\code{by = "3 months"} always worked).
+
+      \item A number of changes to reduce copying of objects contributed by
+      Michael Lawrence.
     }
   }
 
