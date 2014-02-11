@@ -604,6 +604,12 @@ function(log, drop_ok = TRUE)
         lines <- lines[-len]
         len <- len - 1L
     }
+    num <- length(grep("^(NOTE|WARNING): There",
+                       lines[c(len - 1L, len)]))
+    if(num > 0L) {
+        pos <- seq.int(len - num + 1L, len)
+        lines <- lines[-pos]
+    }
 
     re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
     if(length(pos <- grep(re, lines, perl = TRUE, useBytes = TRUE))) {
