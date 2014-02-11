@@ -7320,3 +7320,15 @@ Warning messages:
 > ## as.POSIXt method is new in 3.1.0.
 > 
 > 
+> 
+> ## Misuse of PR#15633
+> try(bartlett.test(yield ~ block*N, data = npk))
+Error in bartlett.test.formula(yield ~ block * N, data = npk) : 
+  'formula' should be of the form response ~ group
+> try(fligner.test (yield ~ block*N, data = npk))
+Error in fligner.test.formula(yield ~ block * N, data = npk) : 
+  'formula' should be of the form response ~ group
+> ## used the first factor with an incorrect description in R < 3.0.3
+> 
+> 
+> 

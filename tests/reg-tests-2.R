@@ -2830,3 +2830,11 @@ all.equal(x, x+1e-4)
 isTRUE(all.equal(x, x+0.002)) # message will depend on representation error
 ## as.POSIXt method is new in 3.1.0.
 
+
+
+## Misuse of PR#15633
+try(bartlett.test(yield ~ block*N, data = npk))
+try(fligner.test (yield ~ block*N, data = npk))
+## used the first factor with an incorrect description in R < 3.0.3
+
+

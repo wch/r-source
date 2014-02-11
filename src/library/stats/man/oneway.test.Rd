@@ -1,6 +1,6 @@
 % File src/library/stats/man/oneway.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{oneway.test}
@@ -40,6 +40,10 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   \item{p.value}{the p-value of the test.}
   \item{method}{a character string indicating the test performed.}
   \item{data.name}{a character string giving the names of the data.}
+}
+\description{
+  If the right-hand side of the formula contains more than one term,
+  their interaction is taken to form the grouping.
 }
 \references{
   B. L. Welch (1951),
