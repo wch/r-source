@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/colorRamp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -71,7 +71,7 @@ colorRampPalette(colors, \dots)
 colorRamp(c("red", "green"))( (0:4)/4 ) ## (x) , x in [0,1]
 colorRampPalette(c("blue", "red"))( 4 ) ## (n)
 ## a ramp in opacity of blue values
-colorRampPalette(c(rgb(0,0,1,1), rgb(0,0,1,0)), alpha=TRUE)(6)
+colorRampPalette(c(rgb(0,0,1,1), rgb(0,0,1,0)), alpha = TRUE)(8)
 
 require(graphics)
 

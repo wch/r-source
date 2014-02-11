@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-09 r64942) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-02-10 r64960) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1517,8 +1517,9 @@ List of 150
 > colorRampPalette(c("blue", "red"))( 4 ) ## (n)
 [1] "#0000FF" "#5500AA" "#AA0055" "#FF0000"
 > ## a ramp in opacity of blue values
-> colorRampPalette(c(rgb(0,0,1,1), rgb(0,0,1,0)), alpha=TRUE)(6)
-[1] "#0000FFFF" "#0000FFCC" "#0000FF99" "#0000FF65" "#0000FF32" "#0000FF00"
+> colorRampPalette(c(rgb(0,0,1,1), rgb(0,0,1,0)), alpha = TRUE)(8)
+[1] "#0000FFFF" "#0000FFDA" "#0000FFB6" "#0000FF91" "#0000FF6D" "#0000FF48"
+[7] "#0000FF24" "#0000FF00"
 > 
 > require(graphics)
 > 
