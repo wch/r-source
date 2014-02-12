@@ -1,6 +1,6 @@
 % File src/library/graphics/man/stripchart.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stripchart}
@@ -45,8 +45,9 @@ stripchart(x, \dots)
     when the data contain \code{NA}s.  The default is to ignore missing
     values in either the response or the group.}
   \item{\dots}{additional parameters passed to the default method, or by
-    it to \code{plot}, \code{points}, \code{axis} and \code{title} to
-    control the appearance of the plot.}
+    it to \code{\link{plot.window}}, \code{\link{points}},
+    \code{\link{axis}} and \code{\link{title}} to control the appearance
+    of the plot.} 
   \item{method}{the method to be used to separate coincident points.
     The default method \code{"overplot"} causes such points to be
     overplotted, but it is also possible to specify \code{"jitter"} to
@@ -70,7 +71,7 @@ stripchart(x, \dots)
   \item{log}{on which axes to use a log scale:  see
     \code{\link{plot.default}}}
   \item{pch, col, cex}{Graphical parameters: see \code{\link{par}}.}
-  \item{axes, frame.plot}{Axis control:  see \code{\link{plot.default}}}
+  \item{axes, frame.plot}{Axis control:  see \code{\link{plot.default}}.}
 }
 \details{
   Extensive examples of the use of this kind of plot can be found in

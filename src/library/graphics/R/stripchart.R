@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/stripchart.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 stripchart <- function(x, ...) UseMethod("stripchart")
 
 stripchart.default <-
-function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
+function(x, method = "overplot", jitter = 0.1, offset = 1/3, vertical = FALSE,
 	 group.names, add = FALSE, at = NULL,
-	 xlim=NULL, ylim=NULL, ylab=NULL, xlab=NULL, dlab="", glab="",
-	 log="", pch=0, col=par("fg"), cex=par("cex"), axes=TRUE,
-	 frame.plot=axes, ...)
+	 xlim = NULL, ylim = NULL, ylab = NULL, xlab = NULL,
+         dlab = "", glab = "", log = "", pch = 0, col = par("fg"),
+         cex = par("cex"), axes = TRUE, frame.plot = axes, ...)
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1L]
     if(is.na(method) || method == 0L)
@@ -57,12 +57,12 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	    xlim <- if(vertical) glim else dlim
 	if(is.null(ylim))
 	    ylim <- if(vertical) dlim else glim
-	plot(xlim, ylim, xlim = xlim, ylim = ylim,
-             type = "n", ann = FALSE, axes = FALSE, log = log, ...)
-	if (frame.plot) box()
+        plot.new()
+        plot.window(xlim, ylim, log, ...)
+        if(frame.plot) box() # maybe (...)
 	if(vertical) {
 	    if (axes) {
-		if(n > 1L) axis(1, at=at, labels=names(groups), ...)
+		if(n > 1L) axis(1, at = at, labels = names(groups), ...)
 		Axis(x, side = 2, ...)
 	    }
 	    if (is.null(ylab)) ylab <- dlab
@@ -71,16 +71,16 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	else {
 	    if (axes) {
 		Axis(x, side = 1, ...)
-		if(n > 1L) axis(2, at=at, labels=names(groups), ...)
+		if(n > 1L) axis(2, at = at, labels = names(groups), ...)
 	    }
 	    if (is.null(xlab)) xlab <- dlab
 	    if (is.null(ylab)) ylab <- glab
 	}
 	title(xlab = xlab, ylab = ylab, ...)
     }
-    csize <- cex*
+    csize <- cex *
 	if(vertical) xinch(par("cin")[1L]) else yinch(par("cin")[2L])
-    for(i in 1L:n) {
+    for(i in seq_len(n)) {
 	x <- groups[[i]]
 	y <- rep.int(at[i], length(x))
 	if(method == 2L) ## jitter
