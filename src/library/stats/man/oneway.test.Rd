@@ -41,7 +41,7 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   \item{method}{a character string indicating the test performed.}
   \item{data.name}{a character string giving the names of the data.}
 }
-\description{
+\details{
   If the right-hand side of the formula contains more than one term,
   their interaction is taken to form the grouping.
 }
