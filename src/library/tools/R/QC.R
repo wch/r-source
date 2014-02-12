@@ -1762,7 +1762,7 @@ function(x, ...)
 
 checkFF <-
 function(package, dir, file, lib.loc = NULL,
-         registration = FALSE,
+         registration = FALSE, check_DUP = FALSE,
          verbose = getOption("verbose"))
 {
     allow_suppress <- !nzchar(Sys.getenv("_R_CHECK_FF_AS_CRAN_"))
@@ -1864,6 +1864,7 @@ function(package, dir, file, lib.loc = NULL,
     bad_exprs <- empty_exprs <- wrong_pkg <- other_problem <- list()
     other_desc <- character()
     bad_pkg <- character()
+    dup_false <- list()
     FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
                                  ".Call.graphics", ".External.graphics")
     ## As pointed out by DTL, packages could use non-base FF calls for
@@ -2021,9 +2022,10 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
-                if(registration) {
-                    check_registration(e, fr)
-                }
+                if(registration) check_registration(e, fr)
+                dup <- e[["DUP"]]
+                if(identical(dup, FALSE))
+                    dup_false <<- c(dup_false, e)
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
                 if (!is.na(pkg) && is.character(parg) &&
@@ -2121,6 +2123,7 @@ function(package, dir, file, lib.loc = NULL,
     attr(bad_exprs, "empty") <- empty_exprs
     attr(bad_exprs, "other_problem") <- other_problem
     attr(bad_exprs, "other_desc") <- other_desc
+    if(check_DUP) attr(bad_exprs, "dup_false") <- dup_false
     if (length(bad_pkg)) {              # check against dependencies.
         bases <- .get_standard_package_names()$base
         bad <- bad_pkg[!bad_pkg %in% bases]
@@ -2220,7 +2223,18 @@ function(x, ...)
                           paste0("   ", deparse(other_problem[[i]])))
         }
     }
-    res
+    z3 <- attr(x, "dup_false")
+     if (length(z3)) {
+    	msg <- ngettext(length(z3),
+    		        "Call with DUP = FALSE:",
+    		        "Calls with DUP = FALSE:",
+    		        domain = NA)
+        res <- c(res, msg)
+        for (i in seq_along(z3)) {
+            res <- c(res, paste0("   ", deparse(z3[[i]])))
+        }
+    }
+   res
 }
 
 ### * checkS3methods

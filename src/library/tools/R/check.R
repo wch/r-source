@@ -1323,14 +1323,18 @@ setRlibs <-
             registration <-
                 identical(R_check_FF, "registration") && install != "fake"
             checkingLog(Log, "foreign function calls")
-            if(as_cran) Sys.setenv("_R_CHECK_FF_AS_CRAN_" = "TRUE")
+            DUP <- R_check_FF_DUP
+            if(as_cran) {
+                Sys.setenv("_R_CHECK_FF_AS_CRAN_" = "TRUE")
+                DUP <- TRUE
+            }
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
-                          sprintf("tools::checkFF(package = \"%s\", registration = %s)\n",
-                                  pkgname, registration)
+                          sprintf("tools::checkFF(package = \"%s\", registration = %s, check_DUP = %s)\n",
+                                  pkgname, registration, DUP)
                           else
-                          sprintf("tools::checkFF(dir = \"%s\", registration = %s)\n",
-                                  pkgdir, "FALSE"))
+                          sprintf("tools::checkFF(dir = \"%s\", registration = %s, check_DUP = %s)\n",
+                                  pkgdir, "FALSE", DUP))
             out <- R_runR2(Rcmd)
             Sys.unsetenv("_R_CHECK_FF_AS_CRAN_")
             if (length(out)) {
@@ -4007,6 +4011,8 @@ setRlibs <-
     R_check_suggests_only <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
+    R_check_FF_DUP <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "FALSE"))
     R_check_toplevel_files <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
 
@@ -4387,7 +4393,7 @@ setRlibs <-
                                             "FALSE"))) {
             summarize_CRAN_check_status(pkgname, Log$con, "")
         }
-            
+
         closeLog(Log)
         message("")
 
@@ -4432,7 +4438,7 @@ function(package, con = stdout(), header = character(), drop = TRUE,
         details <- as.data.frame(matrix(character(), ncol = 7L),
                                  stringsAsFactors = FALSE)
         names(details) <-
-            c("Package", "Version", "Flavor", "Check", "Status", "Output", 
+            c("Package", "Version", "Flavor", "Check", "Status", "Output",
               "Flags")
     }
 
@@ -4459,7 +4465,7 @@ function(package, con = stdout(), header = character(), drop = TRUE,
             pos <- c(pos, which(names(d) == "Output"))
             txt[ind] <- apply(d[ind, -pos], 1L, paste, collapse = "\r")
         }
-        
+
         ## Regularize fancy quotes.
         ## Could also try using iconv(to = "ASCII//TRANSLIT"))
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
@@ -4536,7 +4542,7 @@ function()
     close(rds)
 
     results
-}    
+}
 
 CRAN_check_details <-
 function()
@@ -4551,7 +4557,7 @@ function()
     close(rds)
 
     details
-}    
+}
 
 ### Local variables:
 ### mode: R

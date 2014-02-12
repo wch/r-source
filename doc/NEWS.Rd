@@ -221,8 +221,8 @@
       \code{seq()} allows \code{by = "quarter"} for completeness
       (\code{by = "3 months"} always worked).
 
-      \item A number of changes to reduce copying of objects contributed by
-      Michael Lawrence.
+      \item A number of changes to reduce copying of objects, contributed
+      by Michael Lawrence.
     }
   }
 
@@ -396,6 +396,11 @@
       \env{_R_CHECK_DEPENDS_ONLY_} make available packages only in
       \samp{LinkingTo} only for installation, and not for
       loading/runtime tests.
+      
+      \item \command{tools::checkFF()} reports on \code{.C} and
+      \code{.Fortran} calls with \code{DUP = FALSE} if argument
+      \code{check_DUP} is true.  This is selected by
+      \command{R CMD check --as-cran}.
     }
   }
 
