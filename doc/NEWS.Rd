@@ -563,6 +563,10 @@
       \item \code{iconv(to = "utf8")} is now accepted on all platforms
       (some implementations did already, but GNU \pkg{libiconv} did
       not).  The official name, \code{"UTF-8"} is still preferred.
+
+      \item \code{available.packages()} is better protected against
+      corrupt metadata files (A recurring problem on Debian:
+      \PR{14713}).
     }
   }
 

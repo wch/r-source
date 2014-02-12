@@ -529,7 +529,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
             }
             if("Built" %in% fields) {
                 ## This should not be missing.
-                if(is.null(md$Built$R)) {
+                if(is.null(md$Built$R) || !("Built" %in% names(desc))) {
                     warning(gettextf("metadata of %s is corrupt",
                                      sQuote(pkgpath)), domain = NA)
                     next
