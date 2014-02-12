@@ -779,6 +779,9 @@
       
       \item \code{approx()} and \code{approxfun()} now handle infinite
       values with the \code{"constant"} method. (\PR{15655})
+      
+      \item \code{stripchart()} again respects reversed limits in
+      \code{xlim} and \code{ylim}.  (\PR{15664})
     }
   }
 }

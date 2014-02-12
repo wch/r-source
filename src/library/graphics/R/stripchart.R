@@ -57,7 +57,8 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	    xlim <- if(vertical) glim else dlim
 	if(is.null(ylim))
 	    ylim <- if(vertical) dlim else glim
-	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log, ...)
+	plot(xlim, ylim, xlim = xlim, ylim = ylim,
+             type = "n", ann = FALSE, axes = FALSE, log = log, ...)
 	if (frame.plot) box()
 	if(vertical) {
 	    if (axes) {
