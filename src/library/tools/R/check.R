@@ -4420,7 +4420,7 @@ function(package, con = stdout(), header = character(), drop = TRUE,
     if(is.null(results))
         results <- CRAN_check_results()
     results <-
-        results[!is.na(match(results$Package, package)), ]
+        results[!is.na(match(results$Package, package)) & !is.na(results$Status), ]
 
     if(!NROW(results)) return(invisible())
 
