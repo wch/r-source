@@ -1,6 +1,6 @@
 % File src/library/stats/man/loadings.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loadings}
@@ -13,7 +13,7 @@
   components analysis).
 }
 \usage{
-loadings(x)
+loadings(x, ...)
 
 \method{print}{loadings}(x, digits = 3, cutoff = 0.1, sort = FALSE, \dots)
 
@@ -31,7 +31,8 @@ loadings(x)
     than 0.5 (in modulus) is assigned to the factor with the largest
     loading, and the variables are printed in the order of the factor
     they are assigned to, then those unassigned.}
-  \item{\dots}{further arguments for other methods.}
+  \item{\dots}{further arguments for other methods,
+    ignored for \code{loadings}.}
 }
 
 \details{
@@ -46,6 +47,12 @@ loadings(x)
   The \code{print} method for class \code{"\link{factanal}"} calls the
   \code{"loadings"} method to print the loadings, and so passes down
   arguments such as \code{cutoff} and \code{sort}.
+}
+
+\note{
+  There are other functions called \code{loadings} in contributed
+  packages which are S3 or S4 generic: the \code{\dots} argument is to
+  make it easier for this one to become a default method.
 }
 
 \seealso{
