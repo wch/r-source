@@ -247,9 +247,25 @@ Rboolean R_cycle_detected(SEXP s, SEXP child) {
     return FALSE;
 }
 
+static R_INLINE SEXP duplicate_list(SEXP s, Rboolean deep)
+{
+    SEXP sp, h, t;
+    PROTECT(sp = s);
+    PROTECT(h = t = CONS(R_NilValue, R_NilValue));
+    while(sp != R_NilValue) {
+	SETCDR(t, CONS(duplicate_child(CAR(sp), deep), R_NilValue));
+	t = CDR(t);
+	COPY_TAG(t, sp);
+	DUPLICATE_ATTRIB(t, sp, deep);
+	sp = CDR(sp);
+    }
+    UNPROTECT(2);
+    return CDR(h);
+}
+
 static SEXP duplicate1(SEXP s, Rboolean deep)
 {
-    SEXP h, t,  sp;
+    SEXP t;
     R_xlen_t i, n;
 
     switch (TYPEOF(s)) {
@@ -280,44 +296,20 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 	UNPROTECT(2);
 	break;
     case LISTSXP:
-	PROTECT(sp = s);
-	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate_child(CAR(sp), deep), R_NilValue));
-	    t = CDR(t);
-	    COPY_TAG(t, sp);
-	    DUPLICATE_ATTRIB(t, sp, deep);
-	    sp = CDR(sp);
-	}
-	t = CDR(h);
-	UNPROTECT(2);
+	PROTECT(s);
+	t = duplicate_list(s, deep);
+	UNPROTECT(1);
 	break;
     case LANGSXP:
-	PROTECT(sp = s);
-	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate_child(CAR(sp), deep), R_NilValue));
-	    t = CDR(t);
-	    COPY_TAG(t, sp);
-	    DUPLICATE_ATTRIB(t, sp, deep);
-	    sp = CDR(sp);
-	}
-	t = CDR(h);
+	PROTECT(s);
+	PROTECT(t = duplicate_list(s, deep));
 	SET_TYPEOF(t, LANGSXP);
 	DUPLICATE_ATTRIB(t, s, deep);
 	UNPROTECT(2);
 	break;
     case DOTSXP:
-	PROTECT(sp = s);
-	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate_child(CAR(sp), deep), R_NilValue));
-	    t = CDR(t);
-	    COPY_TAG(t, sp);
-	    DUPLICATE_ATTRIB(t, sp, deep);
-	    sp = CDR(sp);
-	}
-	t = CDR(h);
+	PROTECT(s);
+	PROTECT(t = duplicate_list(s, deep));
 	SET_TYPEOF(t, DOTSXP);
 	DUPLICATE_ATTRIB(t, s, deep);
 	UNPROTECT(2);
