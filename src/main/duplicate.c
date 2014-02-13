@@ -249,18 +249,21 @@ Rboolean R_cycle_detected(SEXP s, SEXP child) {
 
 static R_INLINE SEXP duplicate_list(SEXP s, Rboolean deep)
 {
-    SEXP sp, h, t;
-    PROTECT(sp = s);
-    PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-    while(sp != R_NilValue) {
-	SETCDR(t, CONS(duplicate_child(CAR(sp), deep), R_NilValue));
-	t = CDR(t);
-	COPY_TAG(t, sp);
-	DUPLICATE_ATTRIB(t, sp, deep);
-	sp = CDR(sp);
+    SEXP sp, vp, val;
+    PROTECT(s);
+
+    val = R_NilValue;
+    for (sp = s; sp != R_NilValue; sp = CDR(sp))
+	val = CONS(R_NilValue, val);
+
+    PROTECT(val);
+    for (sp = s, vp = val; sp != R_NilValue; sp = CDR(sp), vp = CDR(vp)) {
+	SETCAR(vp, duplicate_child(CAR(sp), deep));
+	COPY_TAG(vp, sp);
+	DUPLICATE_ATTRIB(vp, sp, deep);
     }
     UNPROTECT(2);
-    return CDR(h);
+    return val;
 }
 
 static SEXP duplicate1(SEXP s, Rboolean deep)
