@@ -1287,7 +1287,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
 static SEXP listRemove(SEXP x, SEXP s, int ind)
 {
-    SEXP a, pa, px, val;
+    SEXP pv, px, val;
     int i, ii, *indx, ns, nx;
     R_xlen_t stretch=0;
     const void *vmax = vmaxget();
@@ -1308,28 +1308,28 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 	    if (ii != NA_INTEGER) indx[ii - 1] = 0;
 	}
     }
-    PROTECT(a = CONS(R_NilValue, R_NilValue));
+
     px = x;
-    pa = a;
+    pv = val = R_NilValue;
     for (i = 0; i < nx; i++) {
 	if (indx[i]) {
-	    SETCDR(pa, px);
-	    px = CDR(px);
-	    pa = CDR(pa);
-	    SETCDR(pa, R_NilValue);
+	    if (val == R_NilValue)
+		val = px;
+	    pv = px;
 	}
 	else {
-	    px = CDR(px);
+	    if (pv != R_NilValue)
+		SETCDR(pv, CDR(px));
 	}
+	px = CDR(px);
     }
-    val = CDR(a);
     if (val != R_NilValue) {
 	SET_ATTRIB(val, ATTRIB(x));
 	IS_S4_OBJECT(x) ?  SET_S4_OBJECT(val) : UNSET_S4_OBJECT(val);
 	SET_OBJECT(val, OBJECT(x));
 	SET_NAMED(val, NAMED(x));
     }
-    UNPROTECT(3);
+    UNPROTECT(2);
     vmaxset(vmax);
     return val;
 }
