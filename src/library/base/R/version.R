@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 ## subscripting more cumbersome ...)
 
 ## (In fact, the underlying mechanism could easily be extended to more
-## general alphanumberic version specs.  E.g., one could allow "letters"
+## general alphanumeric version specs.  E.g., one could allow "letters"
 ## in version numbers by replacing the non-sep characters in the version
 ## string by their ASCII codes.  However, this is not straightforward:
 ## alternatively, one could use an extended scheme with special markup

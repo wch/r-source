@@ -507,7 +507,7 @@ tools/config.sub
    Copyright 1992-2013 Free Software Foundation.  
    The Exception to GPL-3 applies.
 
-tools/install-sh:
+tools/install-sh
 
    Copyright (C) 1994 X Consortium
 

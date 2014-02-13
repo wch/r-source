@@ -81,10 +81,10 @@
   (in the UTC time zone) as a numeric vector.  Class \code{"POSIXlt"} is
   a named list of vectors representing
   \describe{
-    \item{\code{sec}}{0--61: seconds}
-    \item{\code{min}}{0--59: minutes}
-    \item{\code{hour}}{0--23: hours}
-    \item{\code{mday}}{1--31: day of the month}
+    \item{\code{sec}}{0--61: seconds.}
+    \item{\code{min}}{0--59: minutes.}
+    \item{\code{hour}}{0--23: hours.}
+    \item{\code{mday}}{1--31: day of the month.}
     \item{\code{mon}}{0--11: months after the first of the year.}
     \item{\code{year}}{years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}

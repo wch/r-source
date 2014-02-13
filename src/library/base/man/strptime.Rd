@@ -92,7 +92,7 @@ strptime(x, format, tz = "")
       \code{"\%a \%b \%e \%H:\%M:\%S \%Y"} on input.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
     \item{\code{\%H}}{Hours as decimal number (00--23).  As a special
-      exception times such as \samp{24:00:00} are accepted for input,
+      exception strings such as \samp{24:00:00} are accepted for input,
       since ISO 8601 allows these.}
     \item{\code{\%I}}{Hours as decimal number (01--12).}
     \item{\code{\%j}}{Day of year as decimal number (001--366).}
@@ -189,8 +189,7 @@ strptime(x, format, tz = "")
       is the last week of the previous year, and the next week is week
       1.  (Accepted but ignored on input.)}
     \item{\code{\%+}}{(Output only.) Similar to \code{\%c}, often
-      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}.
-      }
+      \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}. May depend on the locale.}
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman
@@ -270,7 +269,7 @@ strptime(x, format, tz = "")
   The default formats follow the rules of the ISO 8601 international
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  (The ISO form uses no
-  space to separate dates and times:\R does by default.)
+  space to separate dates and times: \R does by default.)
 
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
@@ -289,7 +288,7 @@ strptime(x, format, tz = "")
   (and does on Windows) return nonsensical results for non-existent
   times at DST transitions
   
-  That \code{\%A \%a \%B \%b} match both full and abbreviated names
+  That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
   caused problems in some locales prior to \R 3.0.3: e.g. in French on
   OS X \samp{juillet} was matched by \code{jui}, the abbreviation for
   June.

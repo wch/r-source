@@ -46,7 +46,7 @@ clearPushBack(connection)
 \value{
   \code{pushBack} and \code{clearPushBack()} return nothing, invisibly.
 
-  \code{pushBackLength} returns number of lines currently pushed back.
+  \code{pushBackLength} returns the number of lines currently pushed back.
 }
 \seealso{\code{\link{connections}}, \code{\link{readLines}}.}
 
