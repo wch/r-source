@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36\n"
+"POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2013-03-02 09:39+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -74,6 +74,10 @@ msgstr " 'x' は数値でなければなりません "
 #, fuzzy
 msgid "'scale' should be numeric or NULL"
 msgstr " 'arg' は %s の一つでなければなりません： "
+
+#, fuzzy
+msgid "'%s' must be logical"
+msgstr " 'subset' は論理値でなければなりません "
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "

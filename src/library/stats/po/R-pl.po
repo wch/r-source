@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -939,6 +939,13 @@ msgstr "wszystkie obserwacje są w tej samej grupie"
 # stop("there must be at least 2 observations in each group")
 msgid "there must be at least 2 observations in each group"
 msgstr "muszą być przynajmniej 2 obserwacje w każdej grupie"
+
+# stats/R/nlsFunc.R: 38
+# stop(gettextf("formula '%s' must be of the form '~expr'",
+#                           deparse(as.vector(object))), domain = NA)
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "formuła '%s' musi mieć formę '~expr'"
 
 # stats/R/binom.test.R: 27
 # stop("'x' must be nonnegative and integer")
@@ -2719,13 +2726,6 @@ msgstr "'iter.max' musi być dodatnia"
 # stop("must have same number of columns in 'x' and 'centers'")
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "potrzeba mieć tę samą liczbę kolumn w 'x' oraz 'centers'"
-
-# stats/R/nlsFunc.R: 38
-# stop(gettextf("formula '%s' must be of the form '~expr'",
-#                           deparse(as.vector(object))), domain = NA)
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr "formuła '%s' musi mieć formę '~expr'"
 
 # stats/R/ks.test.R: 28
 # stop("not enough 'x' data")

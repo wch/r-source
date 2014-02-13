@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09+0000\n"
+"POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -32,15 +32,15 @@ msgstr "probabilidades em qansari() fora do intervalo [0,1] "
 msgid "stats"
 msgstr ""
 
-#: approx.c:101
+#: approx.c:102
 msgid "approx(): invalid f value"
 msgstr "approx(): valor de f inválido"
 
-#: approx.c:104
+#: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): método de interpolação inválido"
 
-#: approx.c:110
+#: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): tentativa de interpolar valores NA"
 

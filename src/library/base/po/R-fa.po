@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36\n"
+"POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -74,6 +74,9 @@ msgid "'tolerance' should be numeric"
 msgstr ""
 
 msgid "'scale' should be numeric or NULL"
+msgstr ""
+
+msgid "'%s' must be logical"
 msgstr ""
 
 msgid "dim(X) must have a positive length"

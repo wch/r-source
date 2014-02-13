@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09+0000\n"
+"POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -29,15 +29,15 @@ msgstr "qansari()里的概率值在[0,1]范围外"
 msgid "stats"
 msgstr ""
 
-#: approx.c:101
+#: approx.c:102
 msgid "approx(): invalid f value"
 msgstr "approx(): f值不对"
 
-#: approx.c:104
+#: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): 内插方法不对"
 
-#: approx.c:110
+#: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): 不能内插NA值"
 

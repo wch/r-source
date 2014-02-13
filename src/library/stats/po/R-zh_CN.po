@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -388,6 +388,10 @@ msgstr "所有的观察量都属于同一个组"
 
 msgid "there must be at least 2 observations in each group"
 msgstr "每组至少需要有两个观察量"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "公式'%s'的形式必需是'~expr'"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x'必需是非负的整数"
@@ -1216,10 +1220,6 @@ msgstr "'iter.max'必需是正数"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x'和'centers'的列数必需相等"
-
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr "公式'%s'的形式必需是'~expr'"
 
 msgid "not enough 'x' data"
 msgstr "'x'数据不够"

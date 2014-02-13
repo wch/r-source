@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2013-03-18 10:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -397,6 +397,10 @@ msgstr "alle Beobachtungen sind in derselben Gruppe"
 
 msgid "there must be at least 2 observations in each group"
 msgstr "es müssen zumindest 2 Beobachtungen in jeder Gruppe sein"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "Formel '%s' muss von der Form '~expr' sein"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' muss nicht-negativ und ganzzahlig sein"
@@ -1256,10 +1260,6 @@ msgstr "'iter.max' muss positiv sein"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x' und 'centers' müssen die selbe Zahl von Spalten haben"
-
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr "Formel '%s' muss von der Form '~expr' sein"
 
 msgid "not enough 'x' data"
 msgstr "zu wenig 'x' Daten"

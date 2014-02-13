@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09+0000\n"
+"POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,15 +29,15 @@ msgstr "sandsynligheder uden for [0,1] i qansari()"
 msgid "stats"
 msgstr ""
 
-#: approx.c:101
+#: approx.c:102
 msgid "approx(): invalid f value"
 msgstr "approx(): ugyldig f-værdi"
 
-#: approx.c:104
+#: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): ugyldig interpolationsmetode"
 
-#: approx.c:110
+#: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): forsøgte at interpolere NA-værdier"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2013-03-19 21:46-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -408,6 +408,10 @@ msgstr "все наблюдения находятся в одной группе"
 
 msgid "there must be at least 2 observations in each group"
 msgstr "тут должно быть как минимум 2 наблюдения в каждой группе"
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr "формула '%s' должна быть в виде '~expr'"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' должен быть неотрицательным и целым"
@@ -1259,10 +1263,6 @@ msgstr "'iter.max' должен быть положительным"
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "в 'x' и 'centers' нужно одно количество колонок"
-
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr "формула '%s' должна быть в виде '~expr'"
 
 msgid "not enough 'x' data"
 msgstr "недостаточно данных 'x'"

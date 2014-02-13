@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36\n"
+"POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2013-03-18 21:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -80,6 +80,10 @@ msgstr "'x' doit être numérique"
 #, fuzzy
 msgid "'scale' should be numeric or NULL"
 msgstr "'arg' doit être un de %s"
+
+#, fuzzy
+msgid "'%s' must be logical"
+msgstr "'subset' doit être une valeur logique"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) doit avoir un longueur positive"

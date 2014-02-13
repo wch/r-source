@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09+0000\n"
+"POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -36,15 +36,15 @@ msgstr "qansari()내에 있는 확률의 값들이 [0,1] 범위외에 있습니�
 msgid "stats"
 msgstr ""
 
-#: approx.c:101
+#: approx.c:102
 msgid "approx(): invalid f value"
 msgstr "approx(): 유효하지 않은 f 값입니다"
 
-#: approx.c:104
+#: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): 유효하지 않은 보간법입니다"
 
-#: approx.c:110
+#: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): NA값들의 보간을 시도했습니다"
 

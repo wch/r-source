@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36+0000\n"
+"POT-Creation-Date: 2014-02-13 14:10+0000\n"
 "PO-Revision-Date: 2013-03-19 19:17-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1248,42 +1248,42 @@ msgstr ""
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr "получившийся в '%s' вектор превышает предел длины вектора"
 
-#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
-#: src/main/bind.c:449 src/main/bind.c:477
+#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
+#: src/main/bind.c:460 src/main/bind.c:488
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "тип '%s' в '%s' не реализован"
 
-#: src/main/bind.c:685
+#: src/main/bind.c:696
 msgid "repeated formal argument 'recursive'"
 msgstr "повторный формальный аргумент 'recursive'"
 
-#: src/main/bind.c:696
+#: src/main/bind.c:707
 msgid "repeated formal argument 'use.names'"
 msgstr "повторный формальный аргумент 'use.names'"
 
-#: src/main/bind.c:894
+#: src/main/bind.c:905
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:1038 src/main/eval.c:2652 src/main/eval.c:2661
+#: src/main/bind.c:1049 src/main/eval.c:2652 src/main/eval.c:2661
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "слишком длинное имя класса в '%s'"
 
-#: src/main/bind.c:1114
+#: src/main/bind.c:1125
 #, fuzzy, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "не могу создать матрицу из этих типов данных"
 
-#: src/main/bind.c:1185
+#: src/main/bind.c:1196
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "количества строк матриц должны соответствовать (см. аргумент %d)"
 
-#: src/main/bind.c:1430
+#: src/main/bind.c:1441
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "количества колонок матриц должны соответствовать (см. аргумент %d)"
@@ -1313,7 +1313,7 @@ msgstr "указанный размер вектора слишком велик
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
 #: src/main/envir.c:2922 src/main/envir.c:2951 src/main/envir.c:2972
 #: src/main/envir.c:2995 src/main/envir.c:3030 src/main/envir.c:3051
-#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5242
+#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5233
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2364 src/main/serialize.c:2709
 msgid "use of NULL environment is defunct"
@@ -1375,7 +1375,7 @@ msgstr "вектор: не могу сделать вектор типа '%s'."
 msgid "cannot set length of non-vector"
 msgstr "установить длину для не-вектора"
 
-#: src/main/builtin.c:897 src/main/builtin.c:907 src/main/options.c:630
+#: src/main/builtin.c:897 src/main/builtin.c:907 src/main/options.c:634
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
@@ -1387,7 +1387,7 @@ msgstr "неправильное значение"
 #: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
 #: src/main/eval.c:558 src/main/eval.c:678 src/main/eval.c:2061
 #: src/main/eval.c:2138 src/main/eval.c:2198 src/main/eval.c:2531
-#: src/main/eval.c:4635 src/main/eval.c:4755
+#: src/main/eval.c:4632 src/main/eval.c:4752
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
@@ -1400,7 +1400,7 @@ msgstr "повторяющиеся значения по умолчанию в �
 msgid "'EXPR' is missing"
 msgstr "'EXPR' отсутствует"
 
-#: src/main/builtin.c:1000 src/main/eval.c:5079
+#: src/main/builtin.c:1000 src/main/eval.c:5070
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
 
@@ -1561,7 +1561,7 @@ msgstr "попытка конверсии не-фактора"
 msgid "list argument expected"
 msgstr "ожидается аргумент-список"
 
-#: src/main/coerce.c:1541 src/main/eval.c:5246
+#: src/main/coerce.c:1541 src/main/eval.c:5237
 msgid "invalid environment"
 msgstr "неправильное окружение"
 
@@ -3397,7 +3397,7 @@ msgstr ""
 msgid "argument is missing, with no default"
 msgstr "аргумент пропущен, умолчаний нет"
 
-#: src/main/eval.c:674 src/main/eval.c:4583
+#: src/main/eval.c:674 src/main/eval.c:4580
 msgid "attempt to apply non-function"
 msgstr "попытка применить не-функцию"
 
@@ -3569,77 +3569,77 @@ msgstr "несоответствие версии байтового кода"
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:4565 src/main/names.c:1170
+#: src/main/eval.c:4562 src/main/names.c:1170
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "нет .Internal функции '%s'"
 
-#: src/main/eval.c:4672 src/main/eval.c:5016 src/main/eval.c:5058
+#: src/main/eval.c:4669 src/main/eval.c:5007 src/main/eval.c:5049
 msgid "bad function"
 msgstr "неправильная функция"
 
-#: src/main/eval.c:4687
+#: src/main/eval.c:4684
 msgid "not a BUILTIN function"
 msgstr "не BUILTIN-функция"
 
-#: src/main/eval.c:5083
+#: src/main/eval.c:5074
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "числовое EXPR требуется для 'switch' без именованных альтернатив"
 
-#: src/main/eval.c:5179
+#: src/main/eval.c:5170
 msgid "cannot find index for threaded code address"
 msgstr "не могу найти индекс для нитевого адреса кода"
 
-#: src/main/eval.c:5239
+#: src/main/eval.c:5230
 msgid "invalid body"
 msgstr "неправильное тело"
 
-#: src/main/eval.c:5259
+#: src/main/eval.c:5250
 msgid "invalid symbol"
 msgstr "неправильный символ"
 
-#: src/main/eval.c:5303
+#: src/main/eval.c:5294
 msgid "argument is not a byte code object"
 msgstr "аргумент не является объектом байтового кода"
 
-#: src/main/eval.c:5324
+#: src/main/eval.c:5315
 msgid "bad file name"
 msgstr "неправильное имя файла"
 
-#: src/main/eval.c:5328 src/main/eval.c:5349
+#: src/main/eval.c:5319 src/main/eval.c:5340
 msgid "unable to open 'file'"
 msgstr "не могу открыть 'file'"
 
-#: src/main/eval.c:5343 src/main/saveload.c:1942
+#: src/main/eval.c:5334 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#: src/main/eval.c:5345 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:5336 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2149
 msgid "'ascii' must be logical"
 msgstr "'ascii' должно быть логическим"
 
-#: src/main/eval.c:5416 src/main/eval.c:5435 src/main/eval.c:5465
+#: src/main/eval.c:5407 src/main/eval.c:5426 src/main/eval.c:5456
 msgid "constant buffer must be a generic vector"
 msgstr "константный буфер должен быть общим вектором"
 
-#: src/main/eval.c:5467
+#: src/main/eval.c:5458
 msgid "bad constant count"
 msgstr "неверное число констант"
 
-#: src/main/eval.c:5503
+#: src/main/eval.c:5494
 msgid "profile timer in use"
 msgstr "используется профильный таймер"
 
-#: src/main/eval.c:5505
+#: src/main/eval.c:5496
 msgid "already byte code profiling"
 msgstr "уже есть побайтное профилирование"
 
-#: src/main/eval.c:5523
+#: src/main/eval.c:5514
 msgid "setting profile timer failed"
 msgstr "установить профильный таймер не удалось"
 
-#: src/main/eval.c:5540
+#: src/main/eval.c:5531
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
@@ -4493,59 +4493,59 @@ msgstr "попытка создать объект из виртуального
 msgid "object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "объект класса \"%s\" не является правильным объектом S3"
 
-#: src/main/options.c:117 src/main/options.c:177
+#: src/main/options.c:120 src/main/options.c:180
 msgid "corrupted options list"
 msgstr "лист опций поврежден"
 
-#: src/main/options.c:127
+#: src/main/options.c:130
 msgid "invalid printing width, used 80"
 msgstr "неправильная ширина печати, использую 80"
 
-#: src/main/options.c:138
+#: src/main/options.c:141
 msgid "invalid printing digits, used 7"
 msgstr "неправильное количество цифр после запятой, использую 7"
 
-#: src/main/options.c:150
+#: src/main/options.c:153
 msgid "invalid 'deparse.cutoff', used 60"
 msgstr "неправильное 'deparse.cutoff', использовал 60"
 
-#: src/main/options.c:162
+#: src/main/options.c:165
 msgid "invalid value for \"device.ask.default\", using FALSE"
 msgstr "неправильное значение для \"device.ask.default\", использую FALSE"
 
-#: src/main/options.c:394
+#: src/main/options.c:398
 msgid "list argument has no valid names"
 msgstr "у аргумента списка нет правильных имен"
 
-#: src/main/options.c:422
+#: src/main/options.c:426
 #, c-format
 msgid "invalid 'width' parameter, allowed %d...%d"
 msgstr "неправильный параметр 'width', разрешается %d...%d"
 
-#: src/main/options.c:433
+#: src/main/options.c:437
 #, c-format
 msgid "invalid 'digits' parameter, allowed %d...%d"
 msgstr "неправильный параметр 'digits', разрешается %d...%d"
 
-#: src/main/options.c:440
+#: src/main/options.c:444
 #, c-format
 msgid "'expressions' parameter invalid, allowed %d...%d"
 msgstr "неправильный параметр 'expressions', разрешается %d...%d"
 
-#: src/main/options.c:447 src/main/options.c:455 src/main/options.c:461
-#: src/main/options.c:469 src/main/options.c:476 src/main/options.c:481
-#: src/main/options.c:488 src/main/options.c:494 src/main/options.c:500
-#: src/main/options.c:505 src/main/options.c:510 src/main/options.c:519
-#: src/main/options.c:525 src/main/options.c:531 src/main/options.c:542
-#: src/main/options.c:549 src/main/options.c:555 src/main/options.c:563
-#: src/main/options.c:570 src/main/options.c:577 src/main/options.c:584
-#: src/main/options.c:591 src/main/options.c:599 src/main/options.c:608
-#: src/main/options.c:611 src/main/options.c:617
+#: src/main/options.c:451 src/main/options.c:459 src/main/options.c:465
+#: src/main/options.c:473 src/main/options.c:480 src/main/options.c:485
+#: src/main/options.c:492 src/main/options.c:498 src/main/options.c:504
+#: src/main/options.c:509 src/main/options.c:514 src/main/options.c:523
+#: src/main/options.c:529 src/main/options.c:535 src/main/options.c:546
+#: src/main/options.c:553 src/main/options.c:559 src/main/options.c:567
+#: src/main/options.c:574 src/main/options.c:581 src/main/options.c:588
+#: src/main/options.c:595 src/main/options.c:603 src/main/options.c:612
+#: src/main/options.c:615 src/main/options.c:621
 #, c-format
 msgid "invalid value for '%s'"
 msgstr "неправильное значение '%s'"
 
-#: src/main/options.c:604 src/main/options.c:633
+#: src/main/options.c:608 src/main/options.c:637
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"par.ask.default\" заменен на \"device.ask.default\""
 
@@ -5753,7 +5753,7 @@ msgid "NAs are not allowed in subscripted assignments"
 msgstr "в подгруппах присвоений NA не разрешены"
 
 #: src/main/subassign.c:505 src/main/subassign.c:781 src/main/subassign.c:1053
-#: src/main/subassign.c:1615
+#: src/main/subassign.c:1619
 msgid "replacement has length zero"
 msgstr "замена имеет нулевую длину"
 
@@ -5788,51 +5788,51 @@ msgstr "неправильная подгруппа списка присвое�
 msgid "invalid number of subscripts to list assign"
 msgstr "неправильное количество подгрупп присвоения списка"
 
-#: src/main/subassign.c:1338
+#: src/main/subassign.c:1341
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "'SubAssignArgs': неправильное количество аргументов"
 
-#: src/main/subassign.c:1480
+#: src/main/subassign.c:1484
 msgid "result is zero-length and so cannot be a language object"
 msgstr "результат нулевой длины и поэтому не может быть объектом языка"
 
-#: src/main/subassign.c:1585
+#: src/main/subassign.c:1589
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
 "[[<- для объектов типа \"S4\" определено только для подклассов окружения"
 
-#: src/main/subassign.c:1591
+#: src/main/subassign.c:1595
 msgid "wrong args for environment subassignment"
 msgstr "неправильные аргументы в подгруппах присвоения для окружения"
 
-#: src/main/subassign.c:1617
+#: src/main/subassign.c:1621
 msgid "more elements supplied than there are to replace"
 msgstr "дано больше элементов, чем можно их заменить"
 
-#: src/main/subassign.c:1619
+#: src/main/subassign.c:1623
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] с пропущенным индексом"
 
-#: src/main/subassign.c:1631 src/main/subassign.c:1649
+#: src/main/subassign.c:1635 src/main/subassign.c:1653
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] индекс за пределами"
 
-#: src/main/subassign.c:1637 src/main/subassign.c:1815
+#: src/main/subassign.c:1641 src/main/subassign.c:1819
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] неправильное количество подгрупп"
 
-#: src/main/subassign.c:1782
+#: src/main/subassign.c:1786
 #, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
 msgstr "несовместимые типы (от %s до %s) в [[ присвоении"
 
-#: src/main/subassign.c:1826
+#: src/main/subassign.c:1830
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] индекс (%d) за пределами"
 
-#: src/main/subassign.c:1879 src/main/subscript.c:143 src/main/subscript.c:145
+#: src/main/subassign.c:1883 src/main/subscript.c:143 src/main/subscript.c:145
 #: src/main/subscript.c:274 src/main/subscript.c:276 src/main/subscript.c:826
 #: src/main/subscript.c:828 src/main/subscript.c:919 src/main/subscript.c:921
 #: src/main/subset.c:1107
@@ -5840,11 +5840,11 @@ msgstr "[[ ]] индекс (%d) за пределами"
 msgid "invalid subscript type '%s'"
 msgstr "неправильный тип подгруппы '%s'"
 
-#: src/main/subassign.c:1924
+#: src/main/subassign.c:1928
 msgid "no method for assigning subsets of this S4 class"
 msgstr "отсутствует метод класса S4 для назначения подмножеств"
 
-#: src/main/subassign.c:1982
+#: src/main/subassign.c:1986
 msgid "Coercing LHS to a list"
 msgstr "Преобразование левой стороны выражения в список"
 

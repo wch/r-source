@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2013-03-19 13:40+0200 \n"
 "Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -397,6 +397,10 @@ msgstr " 全ての観測値が同じグループ中にあります "
 
 msgid "there must be at least 2 observations in each group"
 msgstr " 各グループに少なくとも 2 つの観測値がなければなりません "
+
+#, fuzzy
+msgid "'formula' should be of the form response ~ group"
+msgstr " 式 '%s' は形式 '~expr' でなければなりません "
 
 msgid "'x' must be nonnegative and integer"
 msgstr " 'x' は非負整数でなければなりません "
@@ -1252,10 +1256,6 @@ msgstr " 'iter.max' は正でなければなりません "
 
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr " 'x' と中心 ('centers') の列数は同じでなければなりません "
-
-#, fuzzy
-msgid "'formula' should be of the form response ~ group"
-msgstr " 式 '%s' は形式 '~expr' でなければなりません "
 
 msgid "not enough 'x' data"
 msgstr " 'x' データの数が十分ではありません "

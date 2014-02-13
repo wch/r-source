@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36+0000\n"
+"POT-Creation-Date: 2014-02-13 14:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1223,42 +1223,42 @@ msgstr ""
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr ""
 
-#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
-#: src/main/bind.c:449 src/main/bind.c:477
+#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
+#: src/main/bind.c:460 src/main/bind.c:488
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr ""
 
-#: src/main/bind.c:685
+#: src/main/bind.c:696
 msgid "repeated formal argument 'recursive'"
 msgstr ""
 
-#: src/main/bind.c:696
+#: src/main/bind.c:707
 msgid "repeated formal argument 'use.names'"
 msgstr ""
 
-#: src/main/bind.c:894
+#: src/main/bind.c:905
 msgid "argument not a list"
 msgstr ""
 
-#: src/main/bind.c:1038 src/main/eval.c:2652 src/main/eval.c:2661
+#: src/main/bind.c:1049 src/main/eval.c:2652 src/main/eval.c:2661
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
 msgid "class name too long in '%s'"
 msgstr ""
 
-#: src/main/bind.c:1114
+#: src/main/bind.c:1125
 #, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr ""
 
-#: src/main/bind.c:1185
+#: src/main/bind.c:1196
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr ""
 
-#: src/main/bind.c:1430
+#: src/main/bind.c:1441
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -1288,7 +1288,7 @@ msgstr ""
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
 #: src/main/envir.c:2922 src/main/envir.c:2951 src/main/envir.c:2972
 #: src/main/envir.c:2995 src/main/envir.c:3030 src/main/envir.c:3051
-#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5242
+#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5233
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2364 src/main/serialize.c:2709
 msgid "use of NULL environment is defunct"
@@ -1350,7 +1350,7 @@ msgstr ""
 msgid "cannot set length of non-vector"
 msgstr ""
 
-#: src/main/builtin.c:897 src/main/builtin.c:907 src/main/options.c:630
+#: src/main/builtin.c:897 src/main/builtin.c:907 src/main/options.c:634
 msgid "invalid argument"
 msgstr ""
 
@@ -1362,7 +1362,7 @@ msgstr ""
 #: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
 #: src/main/eval.c:558 src/main/eval.c:678 src/main/eval.c:2061
 #: src/main/eval.c:2138 src/main/eval.c:2198 src/main/eval.c:2531
-#: src/main/eval.c:4635 src/main/eval.c:4755
+#: src/main/eval.c:4632 src/main/eval.c:4752
 msgid "'...' used in an incorrect context"
 msgstr ""
 
@@ -1375,7 +1375,7 @@ msgstr ""
 msgid "'EXPR' is missing"
 msgstr ""
 
-#: src/main/builtin.c:1000 src/main/eval.c:5079
+#: src/main/builtin.c:1000 src/main/eval.c:5070
 msgid "EXPR must be a length 1 vector"
 msgstr ""
 
@@ -1536,7 +1536,7 @@ msgstr ""
 msgid "list argument expected"
 msgstr ""
 
-#: src/main/coerce.c:1541 src/main/eval.c:5246
+#: src/main/coerce.c:1541 src/main/eval.c:5237
 msgid "invalid environment"
 msgstr ""
 
@@ -3329,7 +3329,7 @@ msgstr ""
 msgid "argument is missing, with no default"
 msgstr ""
 
-#: src/main/eval.c:674 src/main/eval.c:4583
+#: src/main/eval.c:674 src/main/eval.c:4580
 msgid "attempt to apply non-function"
 msgstr ""
 
@@ -3501,77 +3501,77 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:4565 src/main/names.c:1170
+#: src/main/eval.c:4562 src/main/names.c:1170
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
 
-#: src/main/eval.c:4672 src/main/eval.c:5016 src/main/eval.c:5058
+#: src/main/eval.c:4669 src/main/eval.c:5007 src/main/eval.c:5049
 msgid "bad function"
 msgstr ""
 
-#: src/main/eval.c:4687
+#: src/main/eval.c:4684
 msgid "not a BUILTIN function"
 msgstr ""
 
-#: src/main/eval.c:5083
+#: src/main/eval.c:5074
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr ""
 
-#: src/main/eval.c:5179
+#: src/main/eval.c:5170
 msgid "cannot find index for threaded code address"
 msgstr ""
 
-#: src/main/eval.c:5239
+#: src/main/eval.c:5230
 msgid "invalid body"
 msgstr ""
 
-#: src/main/eval.c:5259
+#: src/main/eval.c:5250
 msgid "invalid symbol"
 msgstr ""
 
-#: src/main/eval.c:5303
+#: src/main/eval.c:5294
 msgid "argument is not a byte code object"
 msgstr ""
 
-#: src/main/eval.c:5324
+#: src/main/eval.c:5315
 msgid "bad file name"
 msgstr ""
 
-#: src/main/eval.c:5328 src/main/eval.c:5349
+#: src/main/eval.c:5319 src/main/eval.c:5340
 msgid "unable to open 'file'"
 msgstr ""
 
-#: src/main/eval.c:5343 src/main/saveload.c:1942
+#: src/main/eval.c:5334 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr ""
 
-#: src/main/eval.c:5345 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:5336 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2149
 msgid "'ascii' must be logical"
 msgstr ""
 
-#: src/main/eval.c:5416 src/main/eval.c:5435 src/main/eval.c:5465
+#: src/main/eval.c:5407 src/main/eval.c:5426 src/main/eval.c:5456
 msgid "constant buffer must be a generic vector"
 msgstr ""
 
-#: src/main/eval.c:5467
+#: src/main/eval.c:5458
 msgid "bad constant count"
 msgstr ""
 
-#: src/main/eval.c:5503
+#: src/main/eval.c:5494
 msgid "profile timer in use"
 msgstr ""
 
-#: src/main/eval.c:5505
+#: src/main/eval.c:5496
 msgid "already byte code profiling"
 msgstr ""
 
-#: src/main/eval.c:5523
+#: src/main/eval.c:5514
 msgid "setting profile timer failed"
 msgstr ""
 
-#: src/main/eval.c:5540
+#: src/main/eval.c:5531
 msgid "not byte code profiling"
 msgstr ""
 
@@ -4393,59 +4393,59 @@ msgstr ""
 msgid "object of class \"%s\" does not correspond to a valid S3 object"
 msgstr ""
 
-#: src/main/options.c:117 src/main/options.c:177
+#: src/main/options.c:120 src/main/options.c:180
 msgid "corrupted options list"
 msgstr ""
 
-#: src/main/options.c:127
+#: src/main/options.c:130
 msgid "invalid printing width, used 80"
 msgstr ""
 
-#: src/main/options.c:138
+#: src/main/options.c:141
 msgid "invalid printing digits, used 7"
 msgstr ""
 
-#: src/main/options.c:150
+#: src/main/options.c:153
 msgid "invalid 'deparse.cutoff', used 60"
 msgstr ""
 
-#: src/main/options.c:162
+#: src/main/options.c:165
 msgid "invalid value for \"device.ask.default\", using FALSE"
 msgstr ""
 
-#: src/main/options.c:394
+#: src/main/options.c:398
 msgid "list argument has no valid names"
 msgstr ""
 
-#: src/main/options.c:422
+#: src/main/options.c:426
 #, c-format
 msgid "invalid 'width' parameter, allowed %d...%d"
 msgstr ""
 
-#: src/main/options.c:433
+#: src/main/options.c:437
 #, c-format
 msgid "invalid 'digits' parameter, allowed %d...%d"
 msgstr ""
 
-#: src/main/options.c:440
+#: src/main/options.c:444
 #, c-format
 msgid "'expressions' parameter invalid, allowed %d...%d"
 msgstr ""
 
-#: src/main/options.c:447 src/main/options.c:455 src/main/options.c:461
-#: src/main/options.c:469 src/main/options.c:476 src/main/options.c:481
-#: src/main/options.c:488 src/main/options.c:494 src/main/options.c:500
-#: src/main/options.c:505 src/main/options.c:510 src/main/options.c:519
-#: src/main/options.c:525 src/main/options.c:531 src/main/options.c:542
-#: src/main/options.c:549 src/main/options.c:555 src/main/options.c:563
-#: src/main/options.c:570 src/main/options.c:577 src/main/options.c:584
-#: src/main/options.c:591 src/main/options.c:599 src/main/options.c:608
-#: src/main/options.c:611 src/main/options.c:617
+#: src/main/options.c:451 src/main/options.c:459 src/main/options.c:465
+#: src/main/options.c:473 src/main/options.c:480 src/main/options.c:485
+#: src/main/options.c:492 src/main/options.c:498 src/main/options.c:504
+#: src/main/options.c:509 src/main/options.c:514 src/main/options.c:523
+#: src/main/options.c:529 src/main/options.c:535 src/main/options.c:546
+#: src/main/options.c:553 src/main/options.c:559 src/main/options.c:567
+#: src/main/options.c:574 src/main/options.c:581 src/main/options.c:588
+#: src/main/options.c:595 src/main/options.c:603 src/main/options.c:612
+#: src/main/options.c:615 src/main/options.c:621
 #, c-format
 msgid "invalid value for '%s'"
 msgstr ""
 
-#: src/main/options.c:604 src/main/options.c:633
+#: src/main/options.c:608 src/main/options.c:637
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr ""
 
@@ -5629,7 +5629,7 @@ msgid "NAs are not allowed in subscripted assignments"
 msgstr ""
 
 #: src/main/subassign.c:505 src/main/subassign.c:781 src/main/subassign.c:1053
-#: src/main/subassign.c:1615
+#: src/main/subassign.c:1619
 msgid "replacement has length zero"
 msgstr ""
 
@@ -5663,50 +5663,50 @@ msgstr ""
 msgid "invalid number of subscripts to list assign"
 msgstr ""
 
-#: src/main/subassign.c:1338
+#: src/main/subassign.c:1341
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr ""
 
-#: src/main/subassign.c:1480
+#: src/main/subassign.c:1484
 msgid "result is zero-length and so cannot be a language object"
 msgstr ""
 
-#: src/main/subassign.c:1585
+#: src/main/subassign.c:1589
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr ""
 
-#: src/main/subassign.c:1591
+#: src/main/subassign.c:1595
 msgid "wrong args for environment subassignment"
 msgstr ""
 
-#: src/main/subassign.c:1617
+#: src/main/subassign.c:1621
 msgid "more elements supplied than there are to replace"
 msgstr ""
 
-#: src/main/subassign.c:1619
+#: src/main/subassign.c:1623
 msgid "[[ ]] with missing subscript"
 msgstr ""
 
-#: src/main/subassign.c:1631 src/main/subassign.c:1649
+#: src/main/subassign.c:1635 src/main/subassign.c:1653
 msgid "[[ ]] subscript out of bounds"
 msgstr ""
 
-#: src/main/subassign.c:1637 src/main/subassign.c:1815
+#: src/main/subassign.c:1641 src/main/subassign.c:1819
 msgid "[[ ]] improper number of subscripts"
 msgstr ""
 
-#: src/main/subassign.c:1782
+#: src/main/subassign.c:1786
 #, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
 msgstr ""
 
-#: src/main/subassign.c:1826
+#: src/main/subassign.c:1830
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr ""
 
-#: src/main/subassign.c:1879 src/main/subscript.c:143 src/main/subscript.c:145
+#: src/main/subassign.c:1883 src/main/subscript.c:143 src/main/subscript.c:145
 #: src/main/subscript.c:274 src/main/subscript.c:276 src/main/subscript.c:826
 #: src/main/subscript.c:828 src/main/subscript.c:919 src/main/subscript.c:921
 #: src/main/subset.c:1107
@@ -5714,11 +5714,11 @@ msgstr ""
 msgid "invalid subscript type '%s'"
 msgstr ""
 
-#: src/main/subassign.c:1924
+#: src/main/subassign.c:1928
 msgid "no method for assigning subsets of this S4 class"
 msgstr ""
 
-#: src/main/subassign.c:1982
+#: src/main/subassign.c:1986
 msgid "Coercing LHS to a list"
 msgstr ""
 

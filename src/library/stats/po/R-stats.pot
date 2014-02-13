@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -375,6 +375,9 @@ msgid "all observations are in the same group"
 msgstr ""
 
 msgid "there must be at least 2 observations in each group"
+msgstr ""
+
+msgid "'formula' should be of the form response ~ group"
 msgstr ""
 
 msgid "'x' must be nonnegative and integer"
@@ -1182,9 +1185,6 @@ msgid "'iter.max' must be positive"
 msgstr ""
 
 msgid "must have same number of columns in 'x' and 'centers'"
-msgstr ""
-
-msgid "'formula' should be of the form response ~ group"
 msgstr ""
 
 msgid "not enough 'x' data"

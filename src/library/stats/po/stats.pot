@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09+0000\n"
+"POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,15 +29,15 @@ msgstr ""
 msgid "stats"
 msgstr ""
 
-#: approx.c:101
+#: approx.c:102
 msgid "approx(): invalid f value"
 msgstr ""
 
-#: approx.c:104
+#: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr ""
 
-#: approx.c:110
+#: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr ""
 

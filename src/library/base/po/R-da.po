@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:36\n"
+"POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2013-02-02 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -82,6 +82,10 @@ msgstr "'x' skal være numerisk"
 #, fuzzy
 msgid "'scale' should be numeric or NULL"
 msgstr "'arg' skal være en af %s"
+
+#, fuzzy
+msgid "'%s' must be logical"
+msgstr "'subset' skal være logisk"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) skal have en positiv længde"
