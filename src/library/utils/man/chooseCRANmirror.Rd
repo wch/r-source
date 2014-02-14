@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseCRANmirror.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
@@ -29,9 +29,9 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \details{
   A list of mirrors is stored in file
-  \file{\var{\link{R_HOME}}/doc/CRAN_mirrors.csv}, but first an on-line list of
-  current mirrors is consulted, and the file copy used only if the
-  on-line list is inaccessible.
+  \file{\var{\link{R_HOME}}/doc/CRAN_mirrors.csv}, but first an on-line
+  list of current mirrors is consulted, and the file copy used only if
+  the on-line list is inaccessible.
 
   This function was originally written to support a Windows GUI menu
   item, but is also called by \code{\link{contrib.url}} if it finds the
