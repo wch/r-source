@@ -570,8 +570,8 @@
       not).  The official name, \code{"UTF-8"} is still preferred.
 
       \item \code{available.packages()} is better protected against
-      corrupt metadata files (A recurring problem on Debian:
-      \PR{14713}).
+      corrupt metadata files (A recurring problem with Debian package
+      shogun-r: \PR{14713}).
     }
   }
 
