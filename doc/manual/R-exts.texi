@@ -7023,14 +7023,14 @@ It is possible to run all the examples, tests and vignettes covered by
 The function @code{gctorture2} provides more refined control over the GC
 torture process.  Its arguments @code{step}, @code{wait} and
 @code{inhibit_release} are documented on its help page.  Environment
-variables can also be used to turn on GC torture: @env{R_GCTORTURE}
-corresponds to the @code{step} argument to @code{gctorture},
-@env{R_GCTORTURE_WAIT} to @code{wait}, and
+variables can also be used at the start of the @R{} session to turn on
+GC torture: @env{R_GCTORTURE} corresponds to the @code{step} argument to
+@code{gctorture2}, @env{R_GCTORTURE_WAIT} to @code{wait}, and
 @env{R_GCTORTURE_INHIBIT_RELEASE} to @code{inhibit_release}.
 
 If @R{} is configured with @option{--enable-strict-barrier} then a
 variety of tests for the integrity of the write barrier are enabled.  In
-addition tests to help detect protect issues are enabled as well:
+addition tests to help detect protect issues are enabled:
 
 @itemize @bullet
 
@@ -7051,6 +7051,11 @@ The address of the node and the old type are included in the error
 message.
 
 @end itemize
+
+@code{R CMD check --use-gct} can be set to use
+@code{gctorture2(@var(n))} rather than @code{gctorture(TRUE)} by
+environment variable @env{_R_CHECK_GCT_N_} to a positive integer value
+to be used as @code{@var{n}}.
 
 Used with a debugger and with @code{gctorture} or @code{gctorture2} this
 mechanism can be helpful in isolating memory protect problems.

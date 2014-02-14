@@ -4042,6 +4042,10 @@ in `Writing R Extensions' nor are commonly understood (like
 @file{COPYRIGHT}) are also reported.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_GCT_N_
+Should the @option{--use-gct} use @code{gctorture2(@var{n})} rather than
+@code{gctorture(TRUE)}?  Use to a positive integer to enable this.
+Default: @code{0}.
 @end vtable
 
 CRAN's submission checks use something like

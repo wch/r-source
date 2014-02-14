@@ -401,6 +401,10 @@
       \code{.Fortran} calls with \code{DUP = FALSE} if argument
       \code{check_DUP} is true.  This is selected by
       \command{R CMD check --as-cran}.
+      
+      \item \command{R CMD check --use-gct} can be tuned to
+      garbage-collect less frequently using \code{gctorture2()} using
+      the setting of environment variable \env{_R_CHECK_GCT_N_}.
     }
   }
 
