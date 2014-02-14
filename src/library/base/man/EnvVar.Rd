@@ -186,5 +186,8 @@
 \seealso{
   \code{\link{Sys.getenv}} and \code{\link{Sys.setenv}} to read and set
   environmental variables in an \R session.
+
+  \code{\link{gctorture}} for environment variables controlling garbage
+  collection.
 }
 \keyword{utilities}

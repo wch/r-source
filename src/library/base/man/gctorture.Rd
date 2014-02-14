@@ -4,13 +4,16 @@
 % Distributed under GPL 2 or later
 
 \name{gctorture}
+\alias{gctorture}
+\alias{gctorture2}
+\alias{R_GCTORTURE}
+\alias{R_GCTORTURE_WAIT}
+\alias{R_GCTORTURE_INHIBIT_RELEASE}
 \title{Torture Garbage Collector}
 \usage{
 gctorture(on = TRUE)
 gctorture2(step, wait = step, inhibit_release = FALSE)
 }
-\alias{gctorture}
-\alias{gctorture2}
 \arguments{
   \item{on}{logical; turning it on/off.}
   \item{step}{integer; run GC every \code{step} allocations; \code{step
