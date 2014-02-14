@@ -419,7 +419,7 @@ coverage\footnote{including Eastern European, Greek and Hebrew
 
 As from \R{} 3.1.0, the UTF-8 encoding is handled preferentially to
 other encodings.  Whereas Sweave will convert R code to the local
-encoding in general, it leaves UTF-8 code in that encoding, and 
+encoding in general, it leaves UTF-8 code in that encoding, and
 outputs in that encoding as well.  Besides the declaration scheme
 above, a UTF-8 encoding may be obtained by the \LaTeX{} comment
 \begin{quote}
@@ -442,7 +442,7 @@ encoding to be changed by
   \verb|\inputencoding{something}|
 \end{quote}
 statements: these may not work well in Sweave processing.  Since
-\verb|\usepackage[latin1]{inputenc}| is typically not legal \LaTeX{} code 
+\verb|\usepackage[latin1]{inputenc}| is typically not legal \LaTeX{} code
 in an included file, it is easiest to declare the encoding to Sweave
 using the \verb|%\SweaveUTF8| comment.
 
@@ -466,9 +466,6 @@ The encoding of figures is not usually an issue as they are either
 bitmaps or include encoding information: it may be necessary to use
 the \texttt{pdf.encoding} Sweave option to set the \texttt{pdf()}
 device up appropriately.
-
-Handling non-ASCII vignettes is a work in progress: they do not work
-well before \R{} 2.13.0.
 
 
 \section{Tangling and weaving}
@@ -572,17 +569,15 @@ width is controlled by option \texttt{"width"}.
 
 The default graphics device for \texttt{fig=TRUE} chunks is
 \texttt{pdf()}: the standard options \texttt{pdf}, \texttt{eps},
-\texttt{png} and \texttt{jpg}\footnote{the latter two available only
-  from \R{} 2.13.0.} allow one or more of these to be selected for a
-particular chunk or (via \verb|\SweaveOpts|) for the whole document.
-It can be convenient to select PNG for a particular figure chunk by
-something like \verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE>>|:
-\texttt{pdflatex} should automatically include the PNG file for that
-chunk.
+\texttt{png} and \texttt{jpg} allow one or more of these to be
+selected for a particular chunk or (via \verb|\SweaveOpts|) for the
+whole document.  It can be convenient to select PNG for a particular
+figure chunk by something like
+\verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE>>|: \texttt{pdflatex}
+should automatically include the PNG file for that chunk.
 
-You can define your own graphics devices\footnote{in \R{} 2.13.0 and
-  later.} and select one of them by the option
-\texttt{grdevice=my.Swd} where the device function (here
+You can define your own graphics devices and select one of them by the
+option \texttt{grdevice=my.Swd} where the device function (here
 \texttt{my.Swd}) is defined in a hidden code chunk. For example, we
 could make use of the \texttt{cairo\_pdf} device by
 \begin{verbatim}
@@ -591,9 +586,9 @@ my.Swd <- function(name, width, height, ...)
                        width = width, height = height)
 \end{verbatim}
 Specialized custom graphics devices may need a customized way to shut
-them down in place of \verb|graphics.off()|: this can be
-supplied\footnote{from \R{} 2.13.1} \emph{via} a companion function
-\verb|my.Swd.off|, which is called with no arguments.
+them down in place of \verb|graphics.off()|: this can be supplied
+\emph{via} a companion function \verb|my.Swd.off|, which is called
+with no arguments.
 
 For a complete example see the file
 \file{src/library/utils/tests/customgraphics.Rnw} in the \R{} sources.
