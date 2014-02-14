@@ -7053,7 +7053,7 @@ message.
 @end itemize
 
 @code{R CMD check --use-gct} can be set to use
-@code{gctorture2(@var(n))} rather than @code{gctorture(TRUE)} by
+@code{gctorture2(@var{n})} rather than @code{gctorture(TRUE)} by
 environment variable @env{_R_CHECK_GCT_N_} to a positive integer value
 to be used as @code{@var{n}}.
 
