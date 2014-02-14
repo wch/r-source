@@ -1818,6 +1818,18 @@ static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
     return installAssignFcnSymbol(fun);
 }
 
+static R_INLINE SEXP mkEVPROMISE(SEXP expr, SEXP val, SEXP rho)
+{
+    SEXP prom = mkPROMISE(expr, rho);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
+static R_INLINE SEXP mkRHSPROMISE(SEXP expr, SEXP rhs, SEXP rho)
+{
+    return mkEVPROMISE(expr, rhs, rho);
+}
+
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, afun, rhsprom;
@@ -1894,8 +1906,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
-    PROTECT(rhsprom = mkPROMISE(CADR(args), rho));
-    SET_PRVALUE(rhsprom, rhs);
+    PROTECT(rhsprom = mkRHSPROMISE(CADR(args), rhs, rho));
 
     while (isLanguage(CADR(expr))) {
 	nprot = 1; /* the PROTECT of rhs below from this iteration */
@@ -3757,8 +3768,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
     last = ncall;
     while (CDR(last) != R_NilValue)
 	last = CDR(last);
-    prom = mkPROMISE(CAR(last), rho);
-    SET_PRVALUE(prom, rhs);
+    prom = mkRHSPROMISE(CAR(last), rhs, rho);
     SETCAR(last, prom);
     result = tryDispatch(generic, ncall, lhs, rho, pv);
     UNPROTECT(1);
@@ -4833,8 +4843,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    PROTECT(ncall = duplicate(call));
 	    /**** hack to avoid evaluating the symbol */
 	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
-	    prom = mkPROMISE(CADDDR(ncall), rho);
-	    SET_PRVALUE(prom, rhs);
+	    prom = mkRHSPROMISE(CADDDR(ncall), rhs, rho);
 	    SETCAR(CDR(CDDR(ncall)), prom);
 	    dispatched = tryDispatch("$<-", ncall, x, rho, &value);
 	    UNPROTECT(1);
@@ -4977,28 +4986,24 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = duplicate(CDR(call));
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
-	  prom = mkPROMISE(R_TmpvalSymbol, rho);
-	  SET_PRVALUE(prom, lhs);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho);
 	  SETCAR(args, prom);
 	  /* insert evaluated promise for RHS as last argument */
 	  last = args;
 	  while (CDR(last) != R_NilValue)
 	      last = CDR(last);
-	  prom = mkPROMISE(vexpr, rho);
-	  SET_PRVALUE(prom, rhs);
+	  prom = mkRHSPROMISE(vexpr, rhs, rho);
 	  SETCAR(last, prom);
 	  /* make the call */
 	  value = PRIMFUN(fun) (call, fun, args, rho);
 	  break;
 	case CLOSXP:
 	  /* push evaluated promise for RHS onto arguments with 'value' tag */
-	  prom = mkPROMISE(vexpr, rho);
-	  SET_PRVALUE(prom, rhs);
+	  prom = mkRHSPROMISE(vexpr, rhs, rho);
 	  PUSHCALLARG(prom);
 	  SET_TAG(GETSTACK(-1), R_valueSym);
 	  /* replace first argument with evaluated promise for LHS */
-	  prom = mkPROMISE(R_TmpvalSymbol, rho);
-	  SET_PRVALUE(prom, lhs);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);
 	  /* make the call */
@@ -5031,16 +5036,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = duplicate(CDR(call));
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
-	  prom = mkPROMISE(R_TmpvalSymbol, rho);
-	  SET_PRVALUE(prom, lhs);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho);
 	  SETCAR(args, prom);
 	  /* make the call */
 	  value = PRIMFUN(fun) (call, fun, args, rho);
 	  break;
 	case CLOSXP:
 	  /* replace first argument with evaluated promise for LHS */
-	  prom = mkPROMISE(R_TmpvalSymbol, rho);
-	  SET_PRVALUE(prom, lhs);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);
 	  /* make the call */
