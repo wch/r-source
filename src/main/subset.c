@@ -611,6 +611,7 @@ static R_INLINE
 int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 		    SEXP rho, SEXP *ans)
 {
+    SEXP prom = NULL;
     if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
@@ -619,7 +620,7 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
 	    UNPROTECT(1);
 	    return FALSE;
 	}
-	SEXP prom = mkPROMISE(CAR(args), R_GlobalEnv);
+	prom = mkPROMISE(CAR(args), R_GlobalEnv);
 	SET_PRVALUE(prom, x);
 	args = CONS(prom, CDR(args));
 	UNPROTECT(1);
