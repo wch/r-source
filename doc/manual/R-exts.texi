@@ -2559,7 +2559,8 @@ can be selected by the option @option{--as-cran} (which works best if
 Internet access is available@footnote{Windows users behind proxies may
 want to set environment variable @env{R_WIN_INTERNET2} to a non-empty
 value, e.g.@: in @file{~/.R/check_environ}.  Some Windows users may need
-to set @env{R_WIN_NO_JUNCTIONS} to a non-empty value.}).
+to set environment variable @env{R_WIN_NO_JUNCTIONS} to a non-empty
+value.}).
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -6981,14 +6982,14 @@ It is possible to run all the examples, tests and vignettes covered by
 The function @code{gctorture2} provides more refined control over the GC
 torture process.  Its arguments @code{step}, @code{wait} and
 @code{inhibit_release} are documented on its help page.  Environment
-variables can also be used to turn on GC torture: @env{R_GCTORTURE}
-corresponds to the @code{step} argument to @code{gctorture},
-@env{R_GCTORTURE_WAIT} to @code{wait}, and
+variables can also be used at the start of the @R{} session to turn on
+GC torture: @env{R_GCTORTURE} corresponds to the @code{step} argument to
+@code{gctorture2}, @env{R_GCTORTURE_WAIT} to @code{wait}, and
 @env{R_GCTORTURE_INHIBIT_RELEASE} to @code{inhibit_release}.
 
 If @R{} is configured with @option{--enable-strict-barrier} then a
 variety of tests for the integrity of the write barrier are enabled.  In
-addition tests to help detect protect issues are enabled as well:
+addition tests to help detect protect issues are enabled:
 
 @itemize @bullet
 
