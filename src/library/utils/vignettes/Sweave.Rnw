@@ -1,6 +1,6 @@
 % File src/library/utils/vignettes/Sweave.Rnw
 % Part of the R package, http://www.R-project.org
-% Copyright 2002-13 Friedrich Leisch and the R Core Team
+% Copyright 2002-2014 Friedrich Leisch and the R Core Team
 % Distributed under GPL 2 or later
 
 \documentclass[a4paper]{article}
@@ -397,7 +397,7 @@ stabilized).
 
 \subsection{Encoding}
 
-\LaTeX{} documents are normally written entirely in ASCII, using
+\LaTeX{} documents are traditionally written entirely in ASCII, using
 \LaTeX{} escapes such as \verb|\'e| for accented characters.  This
 can be inconvenient when writing a non-English document, and an
 alternative input encoding can be selected by using a statement such as
@@ -455,9 +455,6 @@ The encoding of figures is not usually an issue as they are either
 bitmaps or include encoding information: it may be necessary to use
 the \texttt{pdf.encoding} Sweave option to set the \texttt{pdf()}
 device up appropriately.
-
-Handling non-ASCII vignettes is a work in progress: they do not work
-well before \R{} 2.13.0.
 
 
 \section{Tangling and weaving}
@@ -561,17 +558,15 @@ width is controlled by option \texttt{"width"}.
 
 The default graphics device for \texttt{fig=TRUE} chunks is
 \texttt{pdf()}: the standard options \texttt{pdf}, \texttt{eps},
-\texttt{png} and \texttt{jpg}\footnote{the latter two available only
-  from \R{} 2.13.0.} allow one or more of these to be selected for a
-particular chunk or (via \verb|\SweaveOpts|) for the whole document.
-It can be convenient to select PNG for a particular figure chunk by
-something like \verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE>>|:
-\texttt{pdflatex} should automatically include the PNG file for that
-chunk.
+\texttt{png} and \texttt{jpg} allow one or more of these to be
+selected for a particular chunk or (via \verb|\SweaveOpts|) for the
+whole document.  It can be convenient to select PNG for a particular
+figure chunk by something like
+\verb|<<figN, fig=TRUE, pdf=FALSE, png=TRUE>>|: \texttt{pdflatex}
+should automatically include the PNG file for that chunk.
 
-You can define your own graphics devices\footnote{in \R{} 2.13.0 and
-  later.} and select one of them by the option
-\texttt{grdevice=my.Swd} where the device function (here
+You can define your own graphics devices and select one of them by the
+option \texttt{grdevice=my.Swd} where the device function (here
 \texttt{my.Swd}) is defined in a hidden code chunk. For example, we
 could make use of the \texttt{cairo\_pdf} device by
 \begin{verbatim}
@@ -580,9 +575,9 @@ my.Swd <- function(name, width, height, ...)
                        width = width, height = height)
 \end{verbatim}
 Specialized custom graphics devices may need a customized way to shut
-them down in place of \verb|graphics.off()|: this can be
-supplied\footnote{from \R{} 2.13.1} \emph{via} a companion function
-\verb|my.Swd.off|, which is called with no arguments.
+them down in place of \verb|graphics.off()|: this can be supplied
+\emph{via} a companion function \verb|my.Swd.off|, which is called
+with no arguments.
 
 For a complete example see the file
 \file{src/library/utils/tests/customgraphics.Rnw} in the \R{} sources.
