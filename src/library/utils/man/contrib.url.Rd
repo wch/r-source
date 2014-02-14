@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{contrib.url}
@@ -25,6 +25,9 @@ contrib.url(repos, type = getOption("pkgType"))
   A character vector of the same length as \code{repos}.
 }
 \seealso{
+  \code{\link{setRepositories}} to set \code{\link{options}("repos")},
+  the most common value used for argument \code{repos}.
+
   \code{\link{available.packages}}, \code{\link{download.packages}},
   \code{\link{install.packages}}.
 

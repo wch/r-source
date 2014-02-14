@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -572,7 +572,8 @@ getOption(x, default = NULL)
                    options(repos = r)})}.
 
       Note that you can add more repositories (Bioconductor and
-      Omegahat, notably) using \code{\link{setRepositories}()}.
+      Omegahat, R-Forge, Rforge.net \dots)
+      using \code{\link{setRepositories}}.
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
