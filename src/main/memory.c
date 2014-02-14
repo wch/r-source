@@ -1289,7 +1289,7 @@ SEXP R_WeakRefValue(SEXP w)
     if (TYPEOF(w) != WEAKREFSXP)
 	error(_("not a weak reference"));
     v = WEAKREF_VALUE(w);
-    if (v != R_NilValue && NAMED(v) != 2)
+    if (v != R_NilValue && NAMED(v) <= 1)
 	SET_NAMED(v, 2);
     return v;
 }
@@ -2332,7 +2332,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    TYPEOF(s) = type;
 	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length); // is 1
 	    SET_SHORT_VEC_TRUELENGTH(s, 0);
-	    NAMED(s) = 0;
+	    SET_NAMED(s, 0);
 	    return(s);
 	}
     }
@@ -2549,7 +2549,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
     }
     SET_SHORT_VEC_TRUELENGTH(s, 0);
-    NAMED(s) = 0;
+    SET_NAMED(s, 0);
 
     /* The following prevents disaster in the case */
     /* that an uninitialised string vector is marked */
@@ -3274,10 +3274,10 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if(TYPEOF(v) != CHARSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
-    CHECK_OLD_TO_NEW(x, v);
     if (i < 0 || i >= XLENGTH(x)) 
 	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
 	      i, XLENGTH(x));
+    CHECK_OLD_TO_NEW(x, v);
     STRING_ELT(x, i) = v;
 }
 
@@ -3289,10 +3289,10 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
-    CHECK_OLD_TO_NEW(x, v);
     if (i < 0 || i >= XLENGTH(x)) 
 	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"), 
 	      i, XLENGTH(x));
+    CHECK_OLD_TO_NEW(x, v);
     return VECTOR_ELT(x, i) = v;
 }
 
