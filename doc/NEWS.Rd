@@ -579,9 +579,9 @@
       
       \item Finalizers are marked to be run at garbage collection, but
       run only at a somewhat safer later time (when interrupts are next
-      checked).  This avoids problems with finalizers running arbitrary
-      code during garbage collection (the known instance was running
-      \code{options()} re-entrantly.
+      checked).  This circumvents some problems with finalizers running
+      arbitrary code during garbage collection (the known instance being
+      running \code{options()} re-entrantly).
     }
   }
 
