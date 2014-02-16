@@ -10396,7 +10396,9 @@ set to the C @code{NULL} pointer.
 
 Finalizers can be run at many places in the code base and much of it,
 including the @R{} interpreter, is not re-entrant.  So great care is
-needed in choosing the code to be run in a finalizer.
+needed in choosing the code to be run in a finalizer. As from @R{} 3.0.3
+finalizers are marked to be run at garbage collection but only run at a
+somewhat safe point thereafter. 
 
 @cindex weak reference
 Weak references are used to allow the programmer to maintain information
