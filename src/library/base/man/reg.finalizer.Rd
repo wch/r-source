@@ -33,7 +33,9 @@
   Note that as \R's interpreter is not re-entrant and the finalizer may
   be run in the middle of a computation.  So there are many functions
   which it is not safe to call from \code{f}: one example which caused
-  trouble is \code{\link{options}}.
+  trouble is \code{\link{options}}. As from \R 3.0.3 finalizers are
+  marked to be run at garbage collection but only run at a relatively
+  safe time thereafter.
 }
 \seealso{
   \code{\link{gc}} and \code{\link{Memory}} for garbage collection and

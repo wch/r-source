@@ -1886,7 +1886,7 @@ SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     reset_max = asLogical(CADR(args));
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
     R_gc();
-#ifndef IMMEDIATE_FILANIZERS
+#ifndef IMMEDIATE_FINALIZERS
     R_RunPendingFinalizers();
 #endif
     gc_reporting = ogc;
@@ -2684,7 +2684,7 @@ static void R_gc_internal(R_size_t size_needed)
     SEXP first_bad_sexp_type_sexp = NULL;
     int first_bad_sexp_type_line = 0;
 
-#ifdef IMMEDIATE_FILANIZERS
+#ifdef IMMEDIATE_FINALIZERS
     Rboolean first = TRUE;
  again:
 #endif
@@ -2725,7 +2725,7 @@ static void R_gc_internal(R_size_t size_needed)
 		 vcells, (int) (vfrac + 0.5));
     }
 
-#ifdef IMMEDIATE_FILANIZERS
+#ifdef IMMEDIATE_FINALIZERS
     if (first) {
 	first = FALSE;
 	/* Run any eligible finalizers.  The return result of
