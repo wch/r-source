@@ -509,7 +509,14 @@
 
       NOTE for anyone poking around within the graphics engine display
       list (despite the warnings not to) that this changes what
-      is recorded by \pkg{grid} on the graphics engine display list. 
+      is recorded by \pkg{grid} on the graphics engine display list.
+
+      \item Extra checks have been added for unit resolution and
+      conversion in \pkg{grid}, to catch instances of division-by-zero.
+      This may introduce error messages in existing code and/or produce
+      a different result in existing code (but only where a non-finite
+      location or dimension may now become zero).
+
     }
   }
 }

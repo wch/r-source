@@ -332,6 +332,10 @@ void location(double x, double y, LLocation v);
 void trans(LLocation vin, LTransform m, LLocation vout);
 
 /* From unit.c */
+int isUnitArithmetic(SEXP ua);
+
+int isUnitList(SEXP ul);
+
 SEXP unit(double value, int unit);
 
 double unitValue(SEXP unit, int index);
@@ -417,6 +421,14 @@ double transformWidthHeightFromINCHES(double value, int unit,
 				      const pGEcontext gc,
 				      double thisCM, double otherCM,
 				      pGEDevDesc dd);
+
+double transformXYtoNPC(double x, int from, double min, double max);
+
+double transformWHtoNPC(double x, int from, double min, double max);
+
+double transformXYfromNPC(double x, int to, double min, double max);
+
+double transformWHfromNPC(double x, int to, double min, double max);
 
 /* From just.c */
 double justifyX(double x, double width, double hjust);

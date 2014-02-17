@@ -44,6 +44,9 @@ Changes from grid_3.0.* to grid_3.1.0:
     device to another and then attempting to navigate within 
     viewports on the original graphics device.
 
+13. Better defenses against division-by-zero in unit resolution/conversion
+    (see ./DivByZero.txt).
+
 
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------

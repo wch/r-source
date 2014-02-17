@@ -1094,6 +1094,8 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
     R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
+    int TOunit, FROMaxis, TOaxis;
+    Rboolean relConvert;
     /* 
      * Get the current device 
      */
@@ -1111,106 +1113,156 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
     getViewportContext(currentvp, &vpc);
     nx = unitLength(x);
     PROTECT(answer = allocVector(REALSXP, nx));
-    /* 
-     * First, convert the unit object passed in to a value in INCHES
-     * (within the current viewport)
-     */
-    switch (INTEGER(whatfrom)[0]) {
-    case 0:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformXtoINCHES(x, i, vpc, &gc,
-				   vpWidthCM, vpHeightCM, 
-				   dd);
-	}
-	break;
-    case 1:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformYtoINCHES(x, i, vpc, &gc,
-				   vpWidthCM, vpHeightCM, 
-				   dd);
-	}
-	break;
-    case 2:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformWidthtoINCHES(x, i, vpc, &gc,
-				       vpWidthCM, vpHeightCM, 
-				       dd);
-	}
-	break;
-    case 3:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformHeighttoINCHES(x, i, vpc, &gc,
-					vpWidthCM, vpHeightCM, 
-					dd);
-	}
-	break;
-    }
-    /* 
-     * Now, convert the values in INCHES to a value in the specified
-     * coordinate system 
-     * (within the current viewport)
-     */
-    switch (INTEGER(whatto)[0]) {
-    case 0:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformXYFromINCHES(REAL(answer)[i],
-				      INTEGER(unitto)[i % LENGTH(unitto)],
-				      vpc.xscalemin,
-				      vpc.xscalemax,
-				      &gc,
-				      vpWidthCM, vpHeightCM, 
-				      dd);
-	}
-	break;
-    case 1:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformXYFromINCHES(REAL(answer)[i],
-				      INTEGER(unitto)[i % LENGTH(unitto)],
-				      vpc.yscalemin,
-				      vpc.yscalemax,
-				      &gc,
-				      vpHeightCM, vpWidthCM, 
-				      dd);
-	}
-	break;
-    case 2:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformWidthHeightFromINCHES(REAL(answer)[i],
-					       INTEGER(unitto)[i % LENGTH(unitto)],
-					       vpc.xscalemin,
-					       vpc.xscalemax,
-					       &gc,
-					       vpWidthCM, vpHeightCM, 
-					       dd);
-	}
-	break;
-    case 3:
-	for (i=0; i<nx; i++) {
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    REAL(answer)[i] = 
-		transformWidthHeightFromINCHES(REAL(answer)[i],
-					       INTEGER(unitto)[i % LENGTH(unitto)],
-					       vpc.yscalemin,
-					       vpc.yscalemax,
-					       &gc,
-					       vpHeightCM, vpWidthCM, 
-					       dd);
-	}
-	break;
+    for (i=0; i<nx; i++) {
+        gcontextFromgpar(currentgp, i, &gc, dd);
+        TOunit = INTEGER(unitto)[i % LENGTH(unitto)];
+        FROMaxis = INTEGER(whatfrom)[0];
+        TOaxis = INTEGER(whatto)[0];
+        /* 
+         * Special case: FROM unit is just a plain, relative unit AND
+         *               TO unit is relative AND
+         *               NOT converting from 'x' to 'y' (or vice versa) ...
+         * 
+         *               ... AND relevant widthCM or heightCM is zero
+         *
+         * In these cases do NOT transform thru INCHES 
+         * (to avoid divide-by-zero, but still do something useful)
+         */
+        relConvert = (!isUnitArithmetic(x) && !isUnitList(x) &&
+                      (unitUnit(x, i) == L_NATIVE || unitUnit(x, i) == L_NPC) &&
+                      (TOunit == L_NATIVE || TOunit == L_NPC) &&
+                      ((FROMaxis == TOaxis) ||
+                       (FROMaxis == 0 && TOaxis == 2) ||
+                       (FROMaxis == 2 && TOaxis == 0) ||
+                       (FROMaxis == 1 && TOaxis == 3) ||
+                       (FROMaxis == 3 && TOaxis == 1)));
+        /* 
+         * First, convert the unit object passed in to a value in INCHES
+         * (within the current viewport)
+         */
+        switch (FROMaxis) {
+        case 0:
+            if (relConvert && vpWidthCM < 1e-6) {
+                REAL(answer)[i] = 
+                    transformXYtoNPC(unitValue(x, i), unitUnit(x, i),
+                                     vpc.xscalemin, vpc.xscalemax);
+            } else {
+                relConvert = FALSE;
+                REAL(answer)[i] = 
+                    transformXtoINCHES(x, i, vpc, &gc,
+                                       vpWidthCM, vpHeightCM, 
+                                       dd);
+            }
+            break;
+        case 1:
+            if (relConvert && vpHeightCM < 1e-6) {
+                REAL(answer)[i] = 
+                    transformXYtoNPC(unitValue(x, i), unitUnit(x, i),
+                                     vpc.yscalemin, vpc.yscalemax);
+            } else {
+                relConvert = FALSE;
+                REAL(answer)[i] = 
+                    transformYtoINCHES(x, i, vpc, &gc,
+                                       vpWidthCM, vpHeightCM, 
+                                       dd);
+            }
+            break;
+        case 2:
+            if (relConvert && vpWidthCM < 1e-6) {
+                REAL(answer)[i] = 
+                    transformWHtoNPC(unitValue(x, i), unitUnit(x, i),
+                                     vpc.xscalemin, vpc.xscalemax);
+            } else {
+                relConvert = FALSE;
+                REAL(answer)[i] = 
+                    transformWidthtoINCHES(x, i, vpc, &gc,
+                                           vpWidthCM, vpHeightCM, 
+                                           dd);
+            }
+            break;
+        case 3:
+            if (relConvert && vpHeightCM < 1e-6) {
+                REAL(answer)[i] = 
+                    transformWHtoNPC(unitValue(x, i), unitUnit(x, i),
+                                     vpc.yscalemin, vpc.yscalemax);
+            } else {
+                relConvert = FALSE;
+                REAL(answer)[i] = 
+                    transformHeighttoINCHES(x, i, vpc, &gc,
+                                            vpWidthCM, vpHeightCM, 
+                                            dd);
+            }
+            break;
+        }
+        /* 
+         * Now, convert the values in INCHES to a value in the specified
+         * coordinate system 
+         * (within the current viewport)
+         *
+         * BUT do NOT do this step for the special "relConvert" case
+         */
+        switch (TOaxis) {
+        case 0:
+            if (relConvert) {
+                REAL(answer)[i] = transformXYfromNPC(REAL(answer)[i], TOunit,
+                                                     vpc.xscalemin,
+                                                     vpc.xscalemax);
+            } else {
+                REAL(answer)[i] = 
+                    transformXYFromINCHES(REAL(answer)[i], TOunit,
+                                          vpc.xscalemin,
+                                          vpc.xscalemax,
+                                          &gc,
+                                          vpWidthCM, vpHeightCM, 
+                                          dd);
+            }
+            break;
+        case 1:
+            if (relConvert) {
+                REAL(answer)[i] = transformXYfromNPC(REAL(answer)[i], TOunit,
+                                                     vpc.yscalemin,
+                                                     vpc.yscalemax);
+            } else {
+                REAL(answer)[i] = 
+                    transformXYFromINCHES(REAL(answer)[i], TOunit,
+                                          vpc.yscalemin,
+                                          vpc.yscalemax,
+                                          &gc,
+                                          vpHeightCM, vpWidthCM, 
+                                          dd);
+            }
+            break;
+        case 2:
+            if (relConvert) {
+                REAL(answer)[i] = transformWHfromNPC(REAL(answer)[i], TOunit,
+                                                     vpc.xscalemin,
+                                                     vpc.xscalemax);
+            } else {
+                REAL(answer)[i] = 
+                    transformWidthHeightFromINCHES(REAL(answer)[i], TOunit,
+                                                   vpc.xscalemin,
+                                                   vpc.xscalemax,
+                                                   &gc,
+                                                   vpWidthCM, vpHeightCM, 
+                                                   dd);
+            }
+            break;
+        case 3:
+            if (relConvert) {
+                REAL(answer)[i] = transformWHfromNPC(REAL(answer)[i], TOunit,
+                                                     vpc.yscalemin,
+                                                     vpc.yscalemax);
+            } else {
+                REAL(answer)[i] = 
+                    transformWidthHeightFromINCHES(REAL(answer)[i], TOunit,
+                                                   vpc.yscalemin,
+                                                   vpc.yscalemax,
+                                                   &gc,
+                                                   vpHeightCM, vpWidthCM, 
+                                                   dd);
+                break;
+            }
+        }
     }
     UNPROTECT(1);
     return answer;
