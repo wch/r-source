@@ -497,7 +497,8 @@
       (billions) \code{ncp}.
 
       \item Where time zones have changed abbreviations over the years,
-      the software tries to more consistently use the current
+      the software tries to more consistently use the abbreviation
+      appopriate to the time or if that is unknown, the current
       abbreviation.  On some platforms where the C function
       \code{localtime} changed the \code{tzname} variables the reported
       abbreviation could have been that of the last time converted.
@@ -581,8 +582,8 @@
       not).  The official name, \code{"UTF-8"} is still preferred.
 
       \item \code{available.packages()} is better protected against
-      corrupt metadata files (A recurring problem with Debian package
-      \code{shogun-r}: \PR{14713}).
+      corrupt metadata files.  (A recurring problem with Debian package
+      \pkg{shogun-r}: \PR{14713}.)
       
       \item Finalizers are marked to be run at garbage collection, but
       run only at a somewhat safer later time (when interrupts are next
