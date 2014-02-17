@@ -403,7 +403,7 @@ static R_INLINE double R_integer_divide(int x, int y)
 
 static R_INLINE SEXP ScalarValue1(SEXP x)
 {
-    if (NAMED(x) == 0)
+    if (NO_REFERENCES(x))
 	return x;
     else
 	return allocVector(TYPEOF(x), 1);
@@ -411,9 +411,9 @@ static R_INLINE SEXP ScalarValue1(SEXP x)
 
 static R_INLINE SEXP ScalarValue2(SEXP x, SEXP y)
 {
-    if (NAMED(x) == 0)
+    if (NO_REFERENCES(x))
 	return x;
-    else if (NAMED(y) == 0)
+    else if (NO_REFERENCES(y))
 	return y;
     else
 	return allocVector(TYPEOF(x), 1);
@@ -597,7 +597,6 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 
     /* FIXME: Danger Will Robinson.
      * -----  We might be trashing arguments here.
-     * If we have NAMED(x) or NAMED(y) we should duplicate!
      */
     if (xarray != yarray) {
 	if (xarray && nx==1 && ny!=1) {
@@ -794,7 +793,7 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     case PLUSOP:
 	return s1;
     case MINUSOP:
-	ans = NAMED(s1) == 0 ? s1 : duplicate(s1);
+	ans = NO_REFERENCES(s1) ? s1 : duplicate(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    x = INTEGER(s1)[i];
@@ -816,7 +815,7 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
     switch (code) {
     case PLUSOP: return s1;
     case MINUSOP:
-	ans = NAMED(s1) == 0 ? s1 : duplicate(s1);
+	ans = NO_REFERENCES(s1) ? s1 : duplicate(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++)
 	    REAL(ans)[i] = -REAL(s1)[i];
@@ -1154,7 +1153,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     n = XLENGTH(sa);
     /* coercion can lose the object bit */
     PROTECT(sa = coerceVector(sa, REALSXP));
-    PROTECT(sy = NAMED(sa) == 0 ? sa : allocVector(REALSXP, n));
+    PROTECT(sy = NO_REFERENCES(sa) ? sa : allocVector(REALSXP, n));
     a = REAL(sa);
     y = REAL(sy);
     naflag = 0;
@@ -1277,14 +1276,15 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* integer or logical ==> return integer,
 	   factor was covered by Math.factor. */
 	R_xlen_t i, n = XLENGTH(x);
-	s = (NAMED(x) == 0 && TYPEOF(x) == INTSXP) ? x : allocVector(INTSXP, n);
+	s = (NO_REFERENCES(x) && TYPEOF(x) == INTSXP) ?
+	    x : allocVector(INTSXP, n);
 	PROTECT(s);
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
 	for(i = 0 ; i < n ; i++)
 	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
     } else if (TYPEOF(x) == REALSXP) {
 	R_xlen_t i, n = XLENGTH(x);
-	PROTECT(s = NAMED(x) == 0 ? x : allocVector(REALSXP, n));
+	PROTECT(s = NO_REFERENCES(x) ? x : allocVector(REALSXP, n));
 	for(i = 0 ; i < n ; i++)
 	    REAL(s)[i] = fabs(REAL(x)[i]);
     } else if (isComplex(x)) {

@@ -43,7 +43,7 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
        attributes will then take precedence when copied. */
 
     if (n == n2) {
-        if (TYPEOF(s2) == type && NAMED(s2) == 0) {
+        if (TYPEOF(s2) == type && NO_REFERENCES(s2)) {
 	    if (ATTRIB(s2) != R_NilValue)
 		/* need to remove 'names' attribute if present to
 		   match what copyMostAttrib does. copyMostAttributes
@@ -56,11 +56,11 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
         else
             /* Can use 1st arg's space only if 2nd arg has no attributes, else
                we may not get attributes of result right. */
-            if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0
+            if (n == n1 && TYPEOF(s1) == type && NO_REFERENCES(s1)
 		&& ATTRIB(s2) == R_NilValue)
                 return s1;
     }
-    else if (n == n1 && TYPEOF(s1) == type && NAMED(s1) == 0)
+    else if (n == n1 && TYPEOF(s1) == type && NO_REFERENCES(s1))
 	return s1;
 
     return allocVector(type, n);
