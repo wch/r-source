@@ -1486,7 +1486,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	   the data pointer of the return value for the other atomic
 	   vectors, and anything else is supposed to be read-only.
 
-	   We do not need to copy if the inputs have NAMED = 0 */
+	   We do not need to copy if the inputs have no references */
 
 #ifdef LONG_VECTOR_SUPPORT
 	if (isVector(s) && IS_LONG_VEC(s))
@@ -1503,7 +1503,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		ptr += NG;
 		memcpy(ptr, RAW(s), n);
 		cargs[na] = (void *) ptr;
-	    } else if (dup && NAMED(s)) {
+	    } else if (dup && MAYBE_REFERENCED(s)) {
 		n = XLENGTH(s);
 		SEXP ss = allocVector(t, n);
 		memcpy(RAW(ss), RAW(s), n * sizeof(Rbyte));
@@ -1528,7 +1528,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		ptr += NG;
 		memcpy(ptr, INTEGER(s), n * sizeof(int));
 		cargs[na] = (void*) ptr;
-	    } else if (dup && NAMED(s)) {
+	    } else if (dup && MAYBE_REFERENCED(s)) {
 		SEXP ss = allocVector(t, n);
 		memcpy(INTEGER(ss), INTEGER(s), n * sizeof(int));
 		SET_VECTOR_ELT(ans, na, ss);
@@ -1559,7 +1559,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		ptr += NG;
 		memcpy(ptr, REAL(s), n * sizeof(double));
 		cargs[na] = (void*) ptr;
-	    } else if (dup && NAMED(s)) {
+	    } else if (dup && MAYBE_REFERENCED(s)) {
 		SEXP ss  = allocVector(t, n);
 		memcpy(REAL(ss), REAL(s), n * sizeof(double));
 		SET_VECTOR_ELT(ans, na, ss);
@@ -1582,7 +1582,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		ptr += NG;
 		memcpy(ptr, COMPLEX(s), n * sizeof(Rcomplex));
 		cargs[na] = (void*) ptr;
-	    } else if (dup && NAMED(s)) {
+	    } else if (dup && MAYBE_REFERENCED(s)) {
 		SEXP ss = allocVector(t, n);
 		memcpy(COMPLEX(ss), COMPLEX(s), n * sizeof(Rcomplex));
 		SET_VECTOR_ELT(ans, na, ss);

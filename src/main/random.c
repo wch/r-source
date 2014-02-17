@@ -491,7 +491,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
 	PROTECT(y = allocVector(INTSXP, k));
 	prob = coerceVector(prob, REALSXP);
-	if (NAMED(prob)) prob = duplicate(prob);
+	if (MAYBE_REFERENCED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
 	double *p = REAL(prob);
 	if (length(prob) != n)
