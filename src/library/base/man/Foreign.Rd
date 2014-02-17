@@ -146,7 +146,7 @@
   even with \code{DUP = TRUE}).  If the \code{input} variable is not
   changed in the C code of \code{Cfunction} you are safe.
 
-  However, in recent versions of \R most unnecesary copying is avoided:
+  However, in recent versions of \R most unnecessary copying is avoided:
   on the other hand using \code{DUP = FALSE} can omit \emph{necessary}
   copying.
 }
