@@ -6943,13 +6943,13 @@ parts @dots{}
 
 @item plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+",xlab="x", ylab="y")
 @itemx lines(z)
-@itemx All points are inside the unit circle, but the distribution is not
+All points are inside the unit circle, but the distribution is not
 uniform.
 
 @item w <- sqrt(runif(100))*exp(2*pi*runif(100)*1i)
 @itemx plot(w, xlim=c(-1,1), ylim=c(-1,1), pch="+", xlab="x", ylab="y")
 @itemx lines(z)
-@itemx The second method uses the uniform distribution.  The points should now
+The second method uses the uniform distribution.  The points should now
 look more evenly spaced over the disc.
 
 @item rm(th, w, z)
