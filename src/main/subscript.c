@@ -282,7 +282,7 @@ get1index(SEXP s, SEXP names, R_xlen_t len, int pok, int pos, SEXP call)
 /* This is used for [[ and [[<- with a vector of indices of length > 1 .
    x is a list or pairlist, and it is indexed recusively from 
    level start to level stop-1.  ( 0...len-1 or 0..len-2 then len-1).
-   For [[<- it needs to duplicate if substructure has NAMED > 1.
+   For [[<- it needs to duplicate if substructure might be shared.
  */
 SEXP attribute_hidden
 vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
@@ -293,7 +293,7 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
     SEXP cx;
 
     /* sanity check */
-    if (dup && NAMED(x) > 1)
+    if (dup && MAYBE_SHARED(x))
 	error("should only be called in an assignment context.");
 
     for(i = start; i < stop; i++) {
@@ -314,14 +314,14 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 #endif
 	    cx = nthcdr(x, (int) offset);
 	    x = CAR(cx);
-	    if (dup && NAMED(x) > 1) {
+	    if (dup && MAYBE_SHARED(x)) {
 		x = shallow_duplicate(x);
 		SETCAR(cx, x);
 	    }
 	} else {
 	    cx = x;
 	    x = VECTOR_ELT(x, offset);
-	    if (dup && NAMED(x) > 1) {
+	    if (dup && MAYBE_SHARED(x)) {
 		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
 	    }

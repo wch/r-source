@@ -1919,7 +1919,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
        not if NAMED > 1 */
     if (MAYBE_SHARED(val))
 	maybe_duplicate=TRUE;
-    else if (NAMED(val)==1)
+    else if (MAYBE_REFERENCED(val))
 	REPROTECT(val = R_FixupRHS(x, val), pvalidx);
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {

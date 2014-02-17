@@ -683,7 +683,7 @@ INLINE_FUN SEXP mkString(const char *s)
 /* duplicate RHS value of complex assignment if necessary to prevent cycles */
 INLINE_FUN SEXP R_FixupRHS(SEXP x, SEXP y)
 {
-    if( y != R_NilValue && NAMED(y) ) {
+    if( y != R_NilValue && MAYBE_REFERENCED(y) ) {
 	if (R_cycle_detected(x, y)) {
 #ifdef WARNING_ON_CYCLE_DETECT
 	    warning("cycle detected");
