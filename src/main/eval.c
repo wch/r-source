@@ -4940,7 +4940,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	value = GETSTACK(-1);
-	if (NAMED(value)) {
+	if (MAYBE_REFERENCED(value)) {
 	    value = duplicate(value);
 	    SETSTACK(-1, value);
 	}
