@@ -897,7 +897,7 @@ SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    if (NAMED(CAR(args)) > 1) SETCAR(args, shallow_duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args))) SETCAR(args, shallow_duplicate(CAR(args)));
     setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
     UNPROTECT(1);
     SET_NAMED(CAR(args), 0);
@@ -1032,7 +1032,7 @@ SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (s == R_NilValue) return x;
     }
     PROTECT(args = ans);
-    if (NAMED(x) > 1) SETCAR(args, x = shallow_duplicate(x));
+    if (MAYBE_SHARED(x)) SETCAR(args, x = shallow_duplicate(x));
     setAttrib(x, R_DimSymbol, CADR(args));
     setAttrib(x, R_NamesSymbol, R_NilValue);
     UNPROTECT(1);
@@ -1142,7 +1142,7 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	warningcall(call, "duplicated levels in factors are deprecated");
 /* TODO errorcall(call, _("duplicated levels are not allowed in factors anymore")); */
     PROTECT(args = ans);
-    if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
+    if (MAYBE_SHARED(CAR(args))) SETCAR(args, duplicate(CAR(args)));
     setAttrib(CAR(args), R_LevelsSymbol, CADR(args));
     UNPROTECT(1);
     return CAR(args);
@@ -1193,7 +1193,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	   As from R 2.7.0 we don't optimize NAMED == 1 _if_ we are
 	   setting any attributes as an error later on would leave
 	   'obj' changed */
-	if (NAMED(object) > 1 || (NAMED(object) == 1 && nattrs))
+	if (MAYBE_SHARED(object) || (MAYBE_REFERENCED(object) && nattrs))
 	    object = shallow_duplicate(object);
 	PROTECT(object);
     }
@@ -1648,7 +1648,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 	/* simplified version of setAttrib(obj, name, value);
 	   here we do *not* treat "names", "dimnames", "dim", .. specially : */
 	PROTECT(name);
-	if (NAMED(value)) value = R_FixupRHS(obj, value);
+	if (MAYBE_REFERENCED(value)) value = R_FixupRHS(obj, value);
 	SET_NAMED(value, NAMED(value) | NAMED(obj));
 	UNPROTECT(1);
 	installAttrib(obj, name, value);
@@ -1716,7 +1716,7 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
     if(s3class == R_NilValue && type == S4SXP)
       return R_NilValue;
     PROTECT(s3class);
-    if(NAMED(obj)) obj = shallow_duplicate(obj);
+    if(MAYBE_REFERENCED(obj)) obj = shallow_duplicate(obj);
     UNPROTECT(1);
     if(s3class != R_NilValue) {/* replace class with S3 class */
       setAttrib(obj, R_ClassSymbol, s3class);
