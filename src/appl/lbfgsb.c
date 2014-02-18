@@ -17,6 +17,11 @@
  *  http://www.r-project.org/Licenses/
  */
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
+
+  The code for method ‘"L-BFGS-B"’ is based on Fortran code by Zhu,
+  Byrd, Lu-Chen and Nocedal obtained from Netlib (file 'opt/lbfgs_bcm.shar')
+
+  The Fortran files contained no copyright information.
 */
 
 /* <UTF8> all char uses here are ASCII */
