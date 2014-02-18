@@ -503,6 +503,11 @@ SEXP eval(SEXP e, SEXP rho)
     R_CheckStack();
     if (++evalcount > 1000) { /* was 100 before 2.8.0 */
 	R_CheckUserInterrupt();
+#ifndef IMMEDIATE_FINALIZERS
+	/* finalizers are run here since this should only be called at
+	   points where running arbitrary code should be safe */
+	R_RunPendingFinalizers();
+#endif
 	evalcount = 0 ;
     }
 
@@ -3821,12 +3826,24 @@ static int opcode_counts[OPCOUNT];
 
 #define BC_COUNT_DELTA 1000
 
+#ifndef IMMEDIATE_FINALIZERS
+/* finalizers are run here since this should only be called at
+   points where running arbitrary code should be safe */
+#define BC_CHECK_SIGINT() do { \
+  if (++evalcount > BC_COUNT_DELTA) { \
+      R_CheckUserInterrupt(); \
+      R_RunPendingFinalizers(); \
+      evalcount = 0; \
+  } \
+} while (0)
+#else
 #define BC_CHECK_SIGINT() do { \
   if (++evalcount > BC_COUNT_DELTA) { \
       R_CheckUserInterrupt(); \
       evalcount = 0; \
   } \
 } while (0)
+#endif
 
 static void loopWithContext(volatile SEXP code, volatile SEXP rho)
 {
