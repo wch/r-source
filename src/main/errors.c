@@ -146,12 +146,6 @@ void R_CheckUserInterrupt(void)
 #ifndef Win32
     if (R_interrupts_pending) onintr();
 #endif
-
-#ifndef IMMEDIATE_FINALIZERS
-    /* finalizers are run here since this should only be called at
-       points where running arbitrary code should be safe */
-    R_RunPendingFinalizers();
-#endif
 }
 
 void onintr()
