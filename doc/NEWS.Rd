@@ -578,18 +578,20 @@
       UTF-8 French month names to be read on (French) Windows.
       
       \item \code{iconv(to = "utf8")} is now accepted on all platforms
-      (some implementations did already, but GNU \pkg{libiconv} did
-      not).  The official name, \code{"UTF-8"} is still preferred.
+      (some implementations did already, but GNU \pkg{libiconv} did not:
+      however converted strings were not marked as being in UTF-8).  The
+      official name, \code{"UTF-8"} is still preferred.
 
       \item \code{available.packages()} is better protected against
       corrupt metadata files.  (A recurring problem with Debian package
       \pkg{shogun-r}: \PR{14713}.)
       
       \item Finalizers are marked to be run at garbage collection, but
-      run only at a somewhat safer later time (when interrupts are next
+      run only at a somewhat safer later time (when interrupts are
       checked).  This circumvents some problems with finalizers running
-      arbitrary code during garbage collection (the known instance being
-      running \code{options()} re-entrantly).
+      arbitrary code during garbage collection (the known instances being
+      running \code{options()} and (C-level) \code{path.expand()}
+      re-entrantly).
     }
   }
 
