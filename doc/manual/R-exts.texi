@@ -3901,15 +3901,18 @@ Only test the accuracy of results if you have done a formal error
 analysis.  Things such as checking that probabilities numerically sum to
 one are silly: numerical tests should always have a tolerance.  That the
 tests on your platform achieve a particular tolerance says little about
-other platforms.  Most @R{} platforms use @cputype{ix86} or
+other platforms.  @R{} is configured by default to make use of long
+doubles where available, but they may not be available or be too slow
+for routine use.  Most @R{} platforms use @cputype{ix86} or
 @cputype{x86_64} CPUs: these use extended precision registers on some
 but not all of their FPU instructions.  Thus the achieved precision can
 depend on the compiler version and optimization flags---our experience
 is that 32-bit builds tend to be less precise than 64-bit ones.  But not
 all platforms use those CPUs, and not all@footnote{Not doing so is the
 default on Windows, overridden for the @R{} executables.  It is also the
-default on some Solaris compilers.}  which use them configure them allow
-the use of extended precision.
+default on some Solaris compilers.} which use them configure them to
+allow the use of extended precision.  In particular, ARM CPUs do not
+(currently) have extended precsion nor long doubles.
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-doubles} and use appropriate
