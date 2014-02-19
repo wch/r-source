@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plot.window.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.window}
@@ -39,7 +39,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 
       Note that in this case, \code{\link{par}("usr")} is no longer
       determined by, e.g., \code{par("xaxs")}, but rather by \code{asp} and
-      the device's aspect ratio. (See what happens if you interactively
+      the device's aspect ratio.  (See what happens if you interactively
       resize the plot device after running the example below!)
 
       The special case \code{asp == 1} produces plots where distances
@@ -50,7 +50,7 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 
   Note that the coordinate ranges will be extended by 4\% if the
   appropriate \link{graphical parameter} \code{xaxs} or \code{yaxs} has value
-  \code{"s"} (which is the default).
+  \code{"r"} (which is the default).
 
   To reverse an axis, use \code{xlim} or \code{ylim} of the form
   \code{c(hi, lo)}.

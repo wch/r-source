@@ -107,9 +107,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{type}{character, indicating the type of package to download and
     install.
 
-    Possible values are \code{"source"}, \code{"mac.binary.leopard"} and
-    \code{"win.binary"}: the binary types can be listed and downloaded
-    but not installed on other platforms.
+    Possible values are (currently) \code{"source"}, \code{"mac.binary"}
+    and \code{"win.binary"}: the binary types can be listed and
+    downloaded but not installed on other platforms.
 
     The default is the appropriate binary type on Windows and on the
     CRAN binary OS X distribution, otherwise \code{"source"}.  For
