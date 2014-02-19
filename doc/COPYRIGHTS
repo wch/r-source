@@ -560,3 +560,6 @@ are part of LINPACK, with authors J.J. Dongarra, Cleve Moler and
 G.W. Stewart
 
 src/appl/dqrdc2.f is based on dqrdc.f by G.W. Stewart.
+
+src/appl/lbfgsb.c is based on the work of Zhu, Byrd, Lu-Chen and
+Nocedal, which does not state any copyright.
