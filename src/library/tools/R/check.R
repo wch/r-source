@@ -4409,7 +4409,7 @@ function(x)
 
 summarize_CRAN_check_status <-
 function(package, con = stdout(), header = character(), drop = TRUE,
-         results = NULL, details = NULL)
+         results = NULL, details = NULL, mtnotes = NULL)
 {
     ## Be nice.
     if(is.character(con)) {
@@ -4442,7 +4442,10 @@ function(package, con = stdout(), header = character(), drop = TRUE,
               "Flags")
     }
 
-    summarize <- function(p, r, d) {
+    if(is.null(mtnotes))
+        mtnotes <- CRAN_memtest_notes()
+
+    summarize <- function(p, r, d, m) {
         tab <- table(r$Status)[c("ERROR", "WARN", "NOTE", "OK")]
         tab <- tab[!is.na(tab)]
         writeLines(c(sprintf("Current CRAN status: %s",
@@ -4452,6 +4455,23 @@ function(package, con = stdout(), header = character(), drop = TRUE,
                              p)),
                    con)
 
+        if(length(m)) {
+            tests <- m[, "Test"]
+            paths <- m[, "Path"]
+            isdir <- !grepl("-Ex.Rout$", paths)
+            if(any(isdir))
+                paths[isdir] <- sprintf("%s/", paths[isdir])
+            writeLines(c("",
+                         paste("Memtest notes:",
+                               paste(unique(tests), collapse = " ")),
+                         sprintf("See: %s",                         
+                                 paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
+                                               tests,
+                                               paths),
+                                       collapse = ",\n     "))),
+                       con)
+        }
+                         
         if(!NROW(d)) return()
 
         writeLines("", con)
@@ -4508,7 +4528,7 @@ function(package, con = stdout(), header = character(), drop = TRUE,
                          ""),
                        con)
         }
-        summarize(package, results, details)
+        summarize(package, results, details, mtnotes[[package]])
     } else {
         results <- split(results, results$Package)
         package <- names(results)
@@ -4521,7 +4541,7 @@ function(package, con = stdout(), header = character(), drop = TRUE,
                          paste(rep.int("*", nchar(s)), collapse = ""),
                          ""),
                        con)
-            summarize(p, results[[p]], details[[p]])
+            summarize(p, results[[p]], details[[p]], mtnotes[[p]])
             first <- FALSE
         }
     }
@@ -4557,6 +4577,21 @@ function()
     close(rds)
 
     details
+}
+
+CRAN_memtest_notes <-
+function()
+{
+    rds <- gzcon(url(sprintf("%s/%s",
+                             getOption("repos")["CRAN"],
+                             "web/checks/memtest_notes.rds"),
+                     open = "rb"))
+    ## We could make the location of the local CRAN web/checks rsync
+    ## settable via some env var.
+    mtnotes <- readRDS(rds)
+    close(rds)
+
+    mtnotes
 }
 
 ### Local variables:
