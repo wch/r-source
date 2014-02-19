@@ -21,7 +21,7 @@ INT_HEADERS = Defn.h Errormsg.h Fileio.h Graphics.h GraphicsBase.h \
    IOStuff.h Internal.h Parse.h Print.h Rconnections.h \
    Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h rlocale.h
 
-DISTFILES = Makefile.in Makefile.win README $(INT_HEADERS) $(SRC_HEADERS) \
+DISTFILES = Makefile.in Makefile.win $(INT_HEADERS) $(SRC_HEADERS) \
   config.h.in stamp-h.in Rmath.h0.in memcheck.h valgrind.h
 
 SUBDIRS = R_ext
