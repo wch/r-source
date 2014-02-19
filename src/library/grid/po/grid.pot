@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:37+0000\n"
+"POT-Creation-Date: 2014-02-19 07:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,39 +29,39 @@ msgstr ""
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1250
+#: grid.c:1302
 msgid "there is no layout defined"
 msgstr ""
 
-#: grid.c:1470
+#: grid.c:1522
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1479
+#: grid.c:1531
 msgid "polygon edge not found"
 msgstr ""
 
-#: grid.c:1633
+#: grid.c:1685
 msgid "require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:1949
+#: grid.c:2001
 msgid "non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2814
+#: grid.c:2866
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:2855
+#: grid.c:2907
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3307
+#: grid.c:3359
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:3393
+#: grid.c:3445
 msgid "unable to clip to rotated rectangle"
 msgstr ""
 
@@ -81,23 +81,31 @@ msgstr ""
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr ""
 
-#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
+#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
 msgid "unimplemented unit function"
 msgstr ""
 
-#: unit.c:893 unit.c:1640
+#: unit.c:893 unit.c:1645
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
 
-#: unit.c:1800
+#: unit.c:1702 unit.c:1733
+msgid "Viewport has zero dimension(s)"
+msgstr ""
+
+#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+msgid "Unsupported unit conversion"
+msgstr ""
+
+#: unit.c:1898
 msgid "Invalid unit"
 msgstr ""
 
-#: unit.c:1816
+#: unit.c:1914
 msgid "'units' must be character"
 msgstr ""
 
-#: unit.c:1819
+#: unit.c:1917
 msgid "'units' must be of length > 0"
 msgstr ""
 

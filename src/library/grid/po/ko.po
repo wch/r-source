@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-01 09:37+0000\n"
+"POT-Creation-Date: 2014-02-19 07:55+0000\n"
 "PO-Revision-Date: 2013-02-21 22:26-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -38,39 +38,39 @@ msgstr ""
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1250
+#: grid.c:1302
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1470
+#: grid.c:1522
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1479
+#: grid.c:1531
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:1633
+#: grid.c:1685
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:1949
+#: grid.c:2001
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:2814
+#: grid.c:2866
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:2855
+#: grid.c:2907
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3307
+#: grid.c:3359
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3393
+#: grid.c:3445
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
@@ -90,23 +90,31 @@ msgstr ""
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "'grid'상태를 저장할 수 없는데 혹시 너무 많은 장치가 열려있나요?"
 
-#: unit.c:260 unit.c:410 unit.c:1205 unit.c:1285 unit.c:1365 unit.c:1445
+#: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
 msgid "unimplemented unit function"
 msgstr "구현되지 않은 유닛함수입니다"
 
-#: unit.c:893 unit.c:1640
+#: unit.c:893 unit.c:1645
 msgid "invalid unit or unit not yet implemented"
 msgstr "유효하지 않은 유닛이거나 아직 구현되지 않은 유닛입니다"
 
-#: unit.c:1800
+#: unit.c:1702 unit.c:1733
+msgid "Viewport has zero dimension(s)"
+msgstr ""
+
+#: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
+msgid "Unsupported unit conversion"
+msgstr ""
+
+#: unit.c:1898
 msgid "Invalid unit"
 msgstr "유효하지 않은 유닛입니다"
 
-#: unit.c:1816
+#: unit.c:1914
 msgid "'units' must be character"
 msgstr "'units'은 반드시 문자이어야 합니다"
 
-#: unit.c:1819
+#: unit.c:1917
 msgid "'units' must be of length > 0"
 msgstr "유닛은 반드시 길이가 0 보다 커야 합니다"
 
