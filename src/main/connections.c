@@ -1046,6 +1046,7 @@ static Rboolean pipe_open(Rconnection con)
 {
     FILE *fp;
     char mode[3];
+    Rfileconn this = con->private;
 
 #ifdef Win32
     strncpy(mode, con->mode, 2);
@@ -1075,12 +1076,14 @@ static Rboolean pipe_open(Rconnection con)
 		strerror(errno));
 	return FALSE;
     }
-    ((Rfileconn)(con->private))->fp = fp;
+    this->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w');
     con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    this->last_was_write = !con->canread;
+    this->rpos = this->wpos = 0;
     set_iconv(con);
     con->save = -1000;
     return TRUE;

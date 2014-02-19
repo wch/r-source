@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4 The R Core Team
+ *  Copyright (C) 2000-14 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
 
+  From ?optim:
   The code for method ‘"L-BFGS-B"’ is based on Fortran code by Zhu,
   Byrd, Lu-Chen and Nocedal obtained from Netlib (file 'opt/lbfgs_bcm.shar')
 
