@@ -2007,6 +2007,7 @@ void attribute_hidden InitMemory()
     CDR(R_NilValue) = R_NilValue;
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
+    MARK_NOT_MUTABLE(R_NilValue);
 
     R_BCNodeStackBase = (SEXP *) malloc(R_BCNODESTACKSIZE * sizeof(SEXP));
     if (R_BCNodeStackBase == NULL)
@@ -2036,12 +2037,12 @@ void attribute_hidden InitMemory()
 
     /* R_TrueValue and R_FalseValue */
     R_TrueValue = mkTrue();
-    SET_NAMED(R_TrueValue, 2);
+    MARK_NOT_MUTABLE(R_TrueValue);
     R_FalseValue = mkFalse();
-    SET_NAMED(R_FalseValue, 2);
+    MARK_NOT_MUTABLE(R_FalseValue);
     R_LogicalNAValue = allocVector(LGLSXP, 1);
     LOGICAL(R_LogicalNAValue)[0] = NA_LOGICAL;
-    SET_NAMED(R_LogicalNAValue, 2);
+    MARK_NOT_MUTABLE(R_LogicalNAValue);
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
