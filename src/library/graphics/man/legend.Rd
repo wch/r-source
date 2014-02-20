@@ -137,7 +137,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   See the examples for how to right-justify labels.
 
   Since they are not used for Unicode code points, values \code{-31:-1}
-  are still silently omitted, as are \code{NA} and \code{""} values.
+  are silently omitted, as are \code{NA} and \code{""} values.
 }
 \value{
   A list with list components
