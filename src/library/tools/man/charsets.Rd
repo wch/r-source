@@ -9,11 +9,11 @@
 \docType{data}
 \title{Conversion Tables between Character Sets}
 \description{
-  \code{charset_to_Unicode} is a matrix of Unicode points with columns
-  for the common 8-bit encodings.
+  \code{charset_to_Unicode} is a matrix of Unicode code points with
+  columns for the common 8-bit encodings.
 
   \code{Adobe_glyphs} is a data frame which gives Adobe glyph names for
-  Unicode points. It has two character columns, \code{"adobe"} and
+  Unicode code points.  It has two character columns, \code{"adobe"} and
   \code{"unicode"} (a 4-digit hex representation).
 }
 \usage{
@@ -28,10 +28,10 @@ Adobe_glyphs
   in the way quotes and minus/hyphen are mapped between sources (and the
   postscript encoding files use a different mapping).
 
-  \code{Adobe_glyphs} include all the Adobe glyph names which correspond to
-  single Unicode characters.  It is sorted by Unicode point and within a
-  point alphabetically on the glyph (there can be more than one name for
-  a Unicode point).  The data are in the file
+  \code{Adobe_glyphs} includes all the Adobe glyph names which correspond
+  to single Unicode characters.  It is sorted by Unicode code point and
+  within a point alphabetically on the glyph (there can be more than one
+  name for a Unicode code point).  The data are in the file
   \file{\var{\link{R_HOME}}/share/encodings/Adobe_glyphlist}.
 }
 \source{

@@ -45,7 +45,7 @@ x != y
   letter, after \code{z}.  In Welsh \code{ng} may or may not be a single
   sorting unit: if it is it follows \code{g}.  Some platforms may
   not respect the locale and always sort in numerical order of the bytes
-  in an 8-bit locale, or in Unicode point order for a UTF-8 locale (and
+  in an 8-bit locale, or in Unicode code-point order for a UTF-8 locale (and
   may not sort in the same order for the same language in different
   character sets).  Collation of non-letters (spaces, punctuation signs,
   hyphens, fractions and so on) is even more problematic.

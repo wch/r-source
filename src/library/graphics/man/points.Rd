@@ -81,7 +81,7 @@ points(x, \dots)
     \item \code{128:255} native characters \emph{only in a
       single-byte locale and for the symbol font}.  (\code{128:159} are
     only used on Windows.)
-    \item \code{-32 \dots} Unicode point (where supported).
+    \item \code{-32 \dots} Unicode code point (where supported).
   }
   Note that unlike S (which uses octagons), symbols \code{1}, \code{10},
   \code{13} and \code{16} use circles.  The filled shapes \code{15:18}
@@ -121,12 +121,12 @@ points(x, \dots)
   give the ASCII characters.  In a single-byte locale
   \code{pch = 128:255} give the corresponding character (if any) in
   the locale's character set.  Where supported by the OS, negative
-  values specify a Unicode point, so e.g. \code{-0x2642L}
+  values specify a Unicode code point, so e.g. \code{-0x2642L}
   is a \sQuote{male sign} and \code{-0x20ACL} is the Euro.
 
   A character string consisting of a single character is converted to an
   integer: \code{32:127} for ASCII characters, and usually to the
-  Unicode point number otherwise.  (In non-Latin-1 single-byte locales,
+  Unicode code point otherwise.  (In non-Latin-1 single-byte locales,
   \code{128:255} will be used for 8-bit characters.)
 
   If \code{pch} supplied is a logical, integer or character
@@ -147,9 +147,10 @@ points(x, \dots)
   \code{pch = 128:255}, and if it does, a font may not include all (or
   even any) of them.
 
-  Not all negative numbers are valid as Unicode points, and no check is
-  done.  A display device is likely to use a rectangle for (or omit)
-  Unicode points that do not exist or which it does not have a glyph.
+  Not all negative numbers are valid as Unicode code points, and no
+  check is done.  A display device is likely to use a rectangle for (or
+  omit) Unicode code points which are invalid or for which it does not
+  have a glyph in the font used.
 
   What happens for very small or zero values of \code{cex} is
   device-dependent: symbols or characters may become invisible or

@@ -46,7 +46,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   equivalent.  The definition of \sQuote{character} here depends on the
   locale: in a single-byte locale it is a byte, and in a multi-byte
   locale it is the unit represented by a \sQuote{wide character} (almost
-  always a Unicode point).
+  always a Unicode code point).
 
   A missing value of \code{split} does not split the corresponding
   element(s) of \code{x} at all.

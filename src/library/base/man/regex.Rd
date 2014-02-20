@@ -220,10 +220,10 @@
   more than 9 backreferences (but the replacement in \code{\link{sub}}
   can only refer to the first 9).
 
-  Character ranges are interpreted in the numerical order of
-  the characters, either as bytes in a single-byte locale or as Unicode
-  points in UTF-8 mode.  So in either case \samp{[A-Za-z]} specifies
-  the set of ASCII letters.
+  Character ranges are interpreted in the numerical order of the
+  characters, either as bytes in a single-byte locale or as Unicode code
+  points in UTF-8 mode.  So in either case \samp{[A-Za-z]} specifies the
+  set of ASCII letters.
 
   In UTF-8 mode the named character classes only match ASCII characters:
   see \samp{\\p} below for an alternative.
@@ -261,14 +261,14 @@
   regarded as a space character before PCRE 8.34 (included in \R 3.0.3).
   Sequences \samp{\\h}, \samp{\\v}, \samp{\\H} and \samp{\\V} match
   horizontal and vertical space or the negation.  (In UTF-8 mode, these
-  do match non-ASCII Unicode points.)
+  do match non-ASCII Unicode code points.)
 
   There are additional escape sequences: \samp{\\cx} is
   \samp{cntrl-x} for any \samp{x}, \samp{\\ddd} is the
   octal character (for up to three digits unless
   interpretable as a backreference, as \samp{\\1} to \samp{\\7} always
   are), and \samp{\\xhh} specifies a character by two hex digits.
-  In a UTF-8 locale, \samp{\\x\{h...\}} specifies a Unicode point
+  In a UTF-8 locale, \samp{\\x\{h...\}} specifies a Unicode code point
   by one or more hex digits.  (Note that some of these will be
   interpreted by \R's parser in literal character strings.)
 
