@@ -3005,7 +3005,9 @@ setRlibs <-
                 ## known false positives
                 for(fp in  c("foreign/tests/datefactor.dta",
                              "msProcess/inst/data[12]/.*.txt",
-                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
+                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid",
+                             "bayeslife/inst/ex-data/bayesLife.output/predictions/traj_country104.rda" # file 5.16
+                             ) )
                     known <- known | grepl(fp, pexecs)
                 execs <- execs[!known]
             }
@@ -4510,14 +4512,14 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
             paths[isdir] <- sprintf("%s/", paths[isdir])
         paste(c(paste("Memtest notes:",
                       paste(unique(tests), collapse = " ")),
-                sprintf("See: %s",                         
+                sprintf("See: %s",
                         paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
                                       tests,
                                       paths),
                               collapse = ",\n     "))),
               collapse = "\n")
     }
-    
+
     summarize <- function(p, r, d, m) {
         paste(c(summarize_results(p, r),
                 summarize_mtnotes(p, m),
