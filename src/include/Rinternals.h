@@ -232,6 +232,17 @@ struct promsxp_struct {
 /* Every node must start with a set of sxpinfo flags and an attribute
    field. Under the generational collector these are followed by the
    fields used to maintain the collector's linked list structures. */
+
+/* Define SWITH_TO_REFCNT to use reference counting instead of the
+   'NAMED' mechanism. This uses the R-devel binary layout. The two
+   'named' field bits are used for the REFCNT, so REFCNTMAX is 3. */
+//#define SWITCH_TO_REFCNT
+
+#if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
+# define COMPUTE_REFCNT_VALUES
+#endif
+#define REFCNTMAX (4 - 1)
+
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
     struct SEXPREC *attrib; \
@@ -279,6 +290,21 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
 #define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
+
+#if defined(COMPUTE_REFCNT_VALUES)
+# define REFCNT(x) ((x)->sxpinfo.named)
+# define TRACKREFS(x) (TYPEOF(x) == CLOSXP ? TRUE : ! (x)->sxpinfo.spare)
+#else
+# define REFCNT(x) 0
+# define TRACKREFS(x) FALSE
+#endif
+
+#ifdef SWITCH_TO_REFCNT
+# undef NAMED
+# undef SET_NAMED
+# define NAMED(x) REFCNT(x)
+# define SET_NAMED(x, v) do {} while (0)
+#endif
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
@@ -414,17 +440,50 @@ Rboolean (Rf_isObject)(SEXP s);
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && XLENGTH(x) == 1)
 #endif /* USE_RINTERNALS */
 
+#define NAMEDMAX 2
 #define INCREMENT_NAMED(x) do {				\
 	SEXP __x__ = (x);				\
-	if (NAMED(__x__) != 2)				\
-	    SET_NAMED(__x__, NAMED(__x__) ? 2 : 1);	\
+	if (NAMED(__x__) != NAMEDMAX)			\
+	    SET_NAMED(__x__, NAMED(__x__) + 1);		\
     } while (0)
 
-/* Macros for common NAMED and SET_NAMED idioms. */
-#define NAMEDMAX 2
-#define MAYBE_SHARED(x) (NAMED(x) > 1)
-#define NO_REFERENCES(x) (NAMED(x) == 0)
-#define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#if defined(COMPUTE_REFCNT_VALUES)
+# define SET_REFCNT(x,v) (REFCNT(x) = (v))
+# if defined(EXTRA_REFCNT_FIELDS)
+#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
+# else
+#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
+# endif
+# define DECREMENT_REFCNT(x) do {					\
+	SEXP drc__x__ = (x);						\
+	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
+	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
+    } while (0)
+# define INCREMENT_REFCNT(x) do {			      \
+	SEXP irc__x__ = (x);				      \
+	if (REFCNT(irc__x__) < REFCNTMAX)		      \
+	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
+    } while (0)
+#else
+# define SET_REFCNT(x,v) do {} while(0)
+# define SET_TRACKREFS(x,v) do {} while(0)
+# define DECREMENT_REFCNT(x) do {} while(0)
+# define INCREMENT_REFCNT(x) do {} while(0)
+#endif
+
+#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
+#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
+
+/* Macros for some common idioms. */
+#ifdef SWITCH_TO_REFCNT
+# define MAYBE_SHARED(x) (REFCNT(x) > 1)
+# define NO_REFERENCES(x) (REFCNT(x) == 0)
+# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
+#else
+# define MAYBE_SHARED(x) (NAMED(x) > 1)
+# define NO_REFERENCES(x) (NAMED(x) == 0)
+# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+#endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
 
 /* Accessor functions.  Many are declared using () to avoid the macro
@@ -496,6 +555,8 @@ SEXP SETCADR(SEXP x, SEXP y);
 SEXP SETCADDR(SEXP x, SEXP y);
 SEXP SETCADDDR(SEXP x, SEXP y);
 SEXP SETCAD4R(SEXP e, SEXP y);
+
+SEXP CONS_NR(SEXP a, SEXP b);
 
 /* Closure Access Functions */
 SEXP (FORMALS)(SEXP x);

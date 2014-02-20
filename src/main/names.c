@@ -1032,7 +1032,17 @@ static void SymbolShortcuts(void)
     R_DollarSymbol = install("$");
     R_DotsSymbol = install("...");
     R_DropSymbol = install("drop");
+
+    /* The last value symbol is used by the interpreter for recording
+       the value of the most recently evaluated top level
+       expression. To avoid creating an additional reference that
+       would requires duplicating on modification this symbol does not
+       increment reference counts on its symbol value.  This is safe
+       since the symbol value corresponds to the base environment
+       where complex assignments are not allowed.  */
     R_LastvalueSymbol = install(".Last.value");
+    DISABLE_REFCNT(R_LastvalueSymbol);
+
     R_LevelsSymbol = install("levels");
     R_ModeSymbol = install("mode");
     R_NameSymbol  = install("name");

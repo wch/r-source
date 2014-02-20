@@ -223,6 +223,10 @@
 
       \item A number of changes to reduce copying of objects, contributed
       by Michael Lawrence.
+
+      \item \R{} can now optionally be compiled to use reference counting
+      instead of the \code{NAMED} mechanism by defining
+      \code{SWITCH_TO_REFCNT}. This may become the default in the future.
     }
   }
 

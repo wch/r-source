@@ -827,6 +827,15 @@ static void DEBUG_RELEASE_PRINT(int rel_pages, int maxrel_pages, int i)
 #define DEBUG_RELEASE_PRINT(rel_pages, maxrel_pages, i)
 #endif /* DEBUG_RELEASE_MEM */
 
+#ifdef COMPUTE_REFCNT_VALUES
+#define INIT_REFCNT(x) do {			\
+	SEXP __x__ = (x);			\
+	SET_REFCNT(__x__, 0);			\
+	SET_TRACKREFS(__x__, TRUE);		\
+    } while (0)
+#else
+#define INIT_REFCNT(x) do {} while (0)
+#endif
 
 /* Page Allocation and Release. */
 
@@ -871,6 +880,7 @@ static void GetNewPage(int node_class)
 #endif
 #endif
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	INIT_REFCNT(s);
 	SET_NODE_CLASS(s, node_class);
 #ifdef PROTECTCHECK
 	TYPEOF(s) = NEWSXP;
@@ -1104,6 +1114,21 @@ static void old_to_new(SEXP x, SEXP y)
     SNAP_NODE(x, R_GenHeap[NODE_CLASS(x)].OldToNew[NODE_GENERATION(x)]);
 #endif
 }
+
+#ifdef COMPUTE_REFCNT_VALUES
+#define FIX_REFCNT(x, old, new) do {					\
+	if (TRACKREFS(x)) {						\
+	    SEXP __old__ = (old);					\
+	    SEXP __new__ = (new);					\
+	    if (__old__ != __new__) {					\
+		if (__old__) DECREMENT_REFCNT(__old__);			\
+		if (__new__) INCREMENT_REFCNT(__new__);			\
+	    }								\
+	}								\
+    } while (0)
+#else
+#define FIX_REFCNT(x, old, new) do {} while (0)
+#endif
 
 #define CHECK_OLD_TO_NEW(x,y) do { \
   if (NODE_IS_OLDER(CHK(x), CHK(y))) old_to_new(x,y);  } while (0)
@@ -2002,6 +2027,8 @@ void attribute_hidden InitMemory()
        because of checks for nil */
     GET_FREE_NODE(R_NilValue);
     R_NilValue->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(R_NilValue);
+    SET_REFCNT(R_NilValue, REFCNTMAX);
     TYPEOF(R_NilValue) = NILSXP;
     CAR(R_NilValue) = R_NilValue;
     CDR(R_NilValue) = R_NilValue;
@@ -2126,6 +2153,7 @@ SEXP allocSExp(SEXPTYPE t)
     }
     GET_FREE_NODE(s);
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(s);
     TYPEOF(s) = t;
     CAR(s) = R_NilValue;
     CDR(s) = R_NilValue;
@@ -2149,6 +2177,7 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     }
     GET_FREE_NODE(s);
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(s);
     TYPEOF(s) = t;
     TAG(s) = R_NilValue;
 #if VALGRIND_LEVEL > 2
@@ -2180,6 +2209,35 @@ SEXP cons(SEXP car, SEXP cdr)
     VALGRIND_MAKE_WRITABLE(s,3);
 #endif
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(s);
+    TYPEOF(s) = LISTSXP;
+    CAR(s) = CHK(car); if (car) INCREMENT_REFCNT(car);
+    CDR(s) = CHK(cdr); if (cdr) INCREMENT_REFCNT(cdr);
+    TAG(s) = R_NilValue;
+    ATTRIB(s) = R_NilValue;
+    return s;
+}
+
+SEXP CONS_NR(SEXP car, SEXP cdr)
+{
+    SEXP s;
+    if (FORCE_GC || NO_FREE_NODES()) {
+	PROTECT(car);
+	PROTECT(cdr);
+	R_gc_internal(0);
+	UNPROTECT(2);
+	if (NO_FREE_NODES())
+	    mem_err_cons();
+    }
+    GET_FREE_NODE(s);
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_WRITABLE(&ATTRIB(s), sizeof(void *));
+    VALGRIND_MAKE_WRITABLE(&(s->u), 3*(sizeof(void *)));
+    VALGRIND_MAKE_WRITABLE(s,3);
+#endif
+    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(s);
+    DISABLE_REFCNT(s);
     TYPEOF(s) = LISTSXP;
     CAR(s) = CHK(car);
     CDR(s) = CHK(cdr);
@@ -2226,6 +2284,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
     VALGRIND_MAKE_WRITABLE(newrho,3);
 #endif
     newrho->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(newrho);
     TYPEOF(newrho) = ENVSXP;
     FRAME(newrho) = valuelist;
     ENCLOS(newrho) = CHK(rho);
@@ -2266,6 +2325,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     if (NAMED(expr) < 2) SET_NAMED(expr, 2);
 
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+    INIT_REFCNT(s);
     TYPEOF(s) = PROMSXP;
     PRCODE(s) = CHK(expr);
     PRENV(s) = CHK(rho);
@@ -2334,6 +2394,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length); // is 1
 	    SET_SHORT_VEC_TRUELENGTH(s, 0);
 	    SET_NAMED(s, 0);
+	    INIT_REFCNT(s);
 	    return(s);
 	}
     }
@@ -2474,6 +2535,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	    INIT_REFCNT(s);
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
 	    SET_SHORT_VEC_LENGTH(s, (R_len_t) length);
@@ -2536,6 +2598,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 			      dsize);
 	    }
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	    INIT_REFCNT(s);
 	    SET_NODE_CLASS(s, LARGE_NODE_CLASS);
 	    R_LargeVallocSize += size;
 	    R_GenHeap[LARGE_NODE_CLASS].AllocCount++;
@@ -2551,6 +2614,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
     }
     SET_SHORT_VEC_TRUELENGTH(s, 0);
     SET_NAMED(s, 0);
+    INIT_REFCNT(s);
 
     /* The following prevents disaster in the case */
     /* that an uninitialised string vector is marked */
@@ -3104,12 +3168,14 @@ void R_SetExternalPtrAddr(SEXP s, void *p)
 
 void R_SetExternalPtrTag(SEXP s, SEXP tag)
 {
+    FIX_REFCNT(s, EXTPTR_TAG(s), tag);
     CHECK_OLD_TO_NEW(s, tag);
     EXTPTR_TAG(s) = tag;
 }
 
 void R_SetExternalPtrProtected(SEXP s, SEXP p)
 {
+    FIX_REFCNT(s, EXTPTR_PROT(s), p);
     CHECK_OLD_TO_NEW(s, p);
     EXTPTR_PROT(s) = p;
 }
@@ -3157,6 +3223,7 @@ void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
 	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'",
 	      type2char(TYPEOF(x)));
+    FIX_REFCNT(x, ATTRIB(x), v);
     CHECK_OLD_TO_NEW(x, v);
     ATTRIB(x) = v;
 }
@@ -3278,6 +3345,7 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if (i < 0 || i >= XLENGTH(x)) 
 	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
 	      i, XLENGTH(x));
+    FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
     STRING_ELT(x, i) = v;
 }
@@ -3293,6 +3361,7 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if (i < 0 || i >= XLENGTH(x)) 
 	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"), 
 	      i, XLENGTH(x));
+    FIX_REFCNT(x, VECTOR_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
     return VECTOR_ELT(x, i) = v;
 }
@@ -3311,12 +3380,13 @@ SEXP (CADDDR)(SEXP e) { return CHK(CADDDR(CHK(e))); }
 SEXP (CAD4R)(SEXP e) { return CHK(CAD4R(CHK(e))); }
 int (MISSING)(SEXP x) { return MISSING(CHK(x)); }
 
-void (SET_TAG)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); TAG(x) = v; }
+void (SET_TAG)(SEXP x, SEXP v) { FIX_REFCNT(x, TAG(x), v); CHECK_OLD_TO_NEW(x, v); TAG(x) = v; }
 
 SEXP (SETCAR)(SEXP x, SEXP y)
 {
     if (x == NULL || x == R_NilValue)
 	error(_("bad value"));
+    FIX_REFCNT(x, CAR(x), y);
     CHECK_OLD_TO_NEW(x, y);
     CAR(x) = y;
     return y;
@@ -3326,6 +3396,7 @@ SEXP (SETCDR)(SEXP x, SEXP y)
 {
     if (x == NULL || x == R_NilValue)
 	error(_("bad value"));
+    FIX_REFCNT(x, CDR(x), y);
     CHECK_OLD_TO_NEW(x, y);
     CDR(x) = y;
     return y;
@@ -3338,6 +3409,7 @@ SEXP (SETCADR)(SEXP x, SEXP y)
 	CDR(x) == NULL || CDR(x) == R_NilValue)
 	error(_("bad value"));
     cell = CDR(x);
+    FIX_REFCNT(cell, CAR(cell), y);
     CHECK_OLD_TO_NEW(cell, y);
     CAR(cell) = y;
     return y;
@@ -3351,6 +3423,7 @@ SEXP (SETCADDR)(SEXP x, SEXP y)
 	CDDR(x) == NULL || CDDR(x) == R_NilValue)
 	error(_("bad value"));
     cell = CDDR(x);
+    FIX_REFCNT(cell, CAR(cell), y);
     CHECK_OLD_TO_NEW(cell, y);
     CAR(cell) = y;
     return y;
@@ -3367,6 +3440,7 @@ SEXP (SETCADDDR)(SEXP x, SEXP y)
 	CHK(CDDDR(x)) == NULL || CDDDR(x) == R_NilValue)
 	error(_("bad value"));
     cell = CDDDR(x);
+    FIX_REFCNT(cell, CAR(cell), y);
     CHECK_OLD_TO_NEW(cell, y);
     CAR(cell) = y;
     return y;
@@ -3384,6 +3458,7 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
 	CHK(CD4R(x)) == NULL || CD4R(x) == R_NilValue)
 	error(_("bad value"));
     cell = CD4R(x);
+    FIX_REFCNT(cell, CAR(cell), y);
     CHECK_OLD_TO_NEW(cell, y);
     CAR(cell) = y;
     return y;
@@ -3398,9 +3473,9 @@ SEXP (CLOENV)(SEXP x) { return CHK(CLOENV(CHK(x))); }
 int (RDEBUG)(SEXP x) { return RDEBUG(CHK(x)); }
 int (RSTEP)(SEXP x) { return RSTEP(CHK(x)); }
 
-void (SET_FORMALS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
-void (SET_BODY)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
-void (SET_CLOENV)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
+void (SET_FORMALS)(SEXP x, SEXP v) { FIX_REFCNT(x, FORMALS(x), v); CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
+void (SET_BODY)(SEXP x, SEXP v) { FIX_REFCNT(x, BODY(x), v); CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
+void (SET_CLOENV)(SEXP x, SEXP v) { FIX_REFCNT(x, CLOENV(x), v); CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(CHK(x), v); }
 void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 
@@ -3418,9 +3493,9 @@ SEXP (SYMVALUE)(SEXP x) { return CHK(SYMVALUE(CHK(x))); }
 SEXP (INTERNAL)(SEXP x) { return CHK(INTERNAL(CHK(x))); }
 int (DDVAL)(SEXP x) { return DDVAL(CHK(x)); }
 
-void (SET_PRINTNAME)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); PRINTNAME(x) = v; }
-void (SET_SYMVALUE)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); SYMVALUE(x) = v; }
-void (SET_INTERNAL)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); INTERNAL(x) = v; }
+void (SET_PRINTNAME)(SEXP x, SEXP v) { FIX_REFCNT(x, PRINTNAME(x), v); CHECK_OLD_TO_NEW(x, v); PRINTNAME(x) = v; }
+void (SET_SYMVALUE)(SEXP x, SEXP v) { FIX_REFCNT(x, SYMVALUE(x), v); CHECK_OLD_TO_NEW(x, v); SYMVALUE(x) = v; }
+void (SET_INTERNAL)(SEXP x, SEXP v) { FIX_REFCNT(x, INTERNAL(x), v); CHECK_OLD_TO_NEW(x, v); INTERNAL(x) = v; }
 void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
 
 /* Environment Accessors */
@@ -3429,9 +3504,9 @@ SEXP (ENCLOS)(SEXP x) { return CHK(ENCLOS(CHK(x))); }
 SEXP (HASHTAB)(SEXP x) { return CHK(HASHTAB(CHK(x))); }
 int (ENVFLAGS)(SEXP x) { return ENVFLAGS(CHK(x)); }
 
-void (SET_FRAME)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
-void (SET_ENCLOS)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); ENCLOS(x) = v; }
-void (SET_HASHTAB)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); HASHTAB(x) = v; }
+void (SET_FRAME)(SEXP x, SEXP v) { FIX_REFCNT(x, FRAME(x), v); CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
+void (SET_ENCLOS)(SEXP x, SEXP v) { FIX_REFCNT(x, ENCLOS(x), v); CHECK_OLD_TO_NEW(x, v); ENCLOS(x) = v; }
+void (SET_HASHTAB)(SEXP x, SEXP v) { FIX_REFCNT(x, HASHTAB(x), v); CHECK_OLD_TO_NEW(x, v); HASHTAB(x) = v; }
 void (SET_ENVFLAGS)(SEXP x, int v) { SET_ENVFLAGS(x, v); }
 
 /* Promise Accessors */
@@ -3440,9 +3515,9 @@ SEXP (PRENV)(SEXP x) { return CHK(PRENV(CHK(x))); }
 SEXP (PRVALUE)(SEXP x) { return CHK(PRVALUE(CHK(x))); }
 int (PRSEEN)(SEXP x) { return PRSEEN(CHK(x)); }
 
-void (SET_PRENV)(SEXP x, SEXP v){ CHECK_OLD_TO_NEW(x, v); PRENV(x) = v; }
-void (SET_PRVALUE)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); PRVALUE(x) = v; }
-void (SET_PRCODE)(SEXP x, SEXP v) { CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
+void (SET_PRENV)(SEXP x, SEXP v){ FIX_REFCNT(x, PRENV(x), v); CHECK_OLD_TO_NEW(x, v); PRENV(x) = v; }
+void (SET_PRVALUE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRVALUE(x), v); CHECK_OLD_TO_NEW(x, v); PRVALUE(x) = v; }
+void (SET_PRCODE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRCODE(x), v); CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
 void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
 
 /* Hashing Accessors */

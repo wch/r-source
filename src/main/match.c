@@ -191,7 +191,10 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 
     actuals = R_NilValue;
     for (f = formals ; f != R_NilValue ; f = CDR(f), arg_i++) {
-	actuals = CONS(R_MissingArg, actuals);
+	/* CONS_NR is used since argument lists created here are only
+	   used internally and so should not increment reference
+	   counts */
+	actuals = CONS_NR(R_MissingArg, actuals);
 	SET_MISSING(actuals, 1);
     }
     /* We use fargused instead of ARGUSED/SET_ARGUSED on elements of
