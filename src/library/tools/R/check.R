@@ -4391,7 +4391,10 @@ setRlibs <-
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
                                             "FALSE"))) {
-            summarize_CRAN_check_status(pkgname, Log$con, "")
+            s <- summarize_CRAN_check_status(pkgname)
+            if(nzchar(s)) {
+                writeLines(c("", s), Log$con)
+            }
         }
 
         closeLog(Log)
@@ -4408,21 +4411,18 @@ function(x)
 
 
 summarize_CRAN_check_status <-
-function(package, con = stdout(), header = character(), drop = TRUE,
-         results = NULL, details = NULL, mtnotes = NULL)
+function(package, results = NULL, details = NULL, mtnotes = NULL)
 {
-    ## Be nice.
-    if(is.character(con)) {
-        con <- file(con, "w")
-        on.exit(close(con))
-    }
-
     if(is.null(results))
         results <- CRAN_check_results()
     results <-
         results[!is.na(match(results$Package, package)) & !is.na(results$Status), ]
 
-    if(!NROW(results)) return(invisible())
+    if(!NROW(results)) {
+        s <- character(length(package))
+        names(s) <- package
+        return(s)
+    }
 
     if(any(results$Status != "OK")) {
         if(is.null(details))
@@ -4445,37 +4445,21 @@ function(package, con = stdout(), header = character(), drop = TRUE,
     if(is.null(mtnotes))
         mtnotes <- CRAN_memtest_notes()
 
-    summarize <- function(p, r, d, m) {
+
+    summarize_results <- function(p, r) {
+        if(!NROW(r)) return(character())
         tab <- table(r$Status)[c("ERROR", "WARN", "NOTE", "OK")]
         tab <- tab[!is.na(tab)]
-        writeLines(c(sprintf("Current CRAN status: %s",
-                             paste(sprintf("%s: %s", names(tab), tab),
-                                   collapse = ", ")),
-                     sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
-                             p)),
-                   con)
+        paste(c(sprintf("Current CRAN status: %s",
+                        paste(sprintf("%s: %s", names(tab), tab),
+                              collapse = ", ")),
+                sprintf("See: <http://CRAN.R-project.org/web/checks/check_results_%s.html>",
+                        p)),
+              collapse = "\n")
+    }
 
-        if(length(m)) {
-            tests <- m[, "Test"]
-            paths <- m[, "Path"]
-            isdir <- !grepl("-Ex.Rout$", paths)
-            if(any(isdir))
-                paths[isdir] <- sprintf("%s/", paths[isdir])
-            writeLines(c("",
-                         paste("Memtest notes:",
-                               paste(unique(tests), collapse = " ")),
-                         sprintf("See: %s",                         
-                                 paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
-                                               tests,
-                                               paths),
-                                       collapse = ",\n     "))),
-                       con)
-        }
-                         
-        if(!NROW(d)) return()
-
-        writeLines("", con)
-
+    summarize_details <- function(p, d) {
+        if(!NROW(d)) return(character())
         pos <- which(names(d) == "Flavor")
         txt <- apply(d[-pos], 1L, paste, collapse = "\r")
         ## Outputs from checking "installed package size" will vary
@@ -4513,41 +4497,71 @@ function(package, con = stdout(), header = character(), drop = TRUE,
                                                p),
                                        collapse = ",\n     ")))
                    })
-        writeLines(paste(unlist(lapply(out, paste, collapse = "\n")),
-                         collapse = "\n\n"),
-                   con)
+        paste(unlist(lapply(out, paste, collapse = "\n")),
+              collapse = "\n\n")
     }
 
-    writeLines(header, con)
+    summarize_mtnotes <- function(p, m) {
+        if(!length(m)) return(character())
+        tests <- m[, "Test"]
+        paths <- m[, "Path"]
+        isdir <- !grepl("-Ex.Rout$", paths)
+        if(any(isdir))
+            paths[isdir] <- sprintf("%s/", paths[isdir])
+        paste(c(paste("Memtest notes:",
+                      paste(unique(tests), collapse = " ")),
+                sprintf("See: %s",                         
+                        paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
+                                      tests,
+                                      paths),
+                              collapse = ",\n     "))),
+              collapse = "\n")
+    }
+    
+    summarize <- function(p, r, d, m) {
+        paste(c(summarize_results(p, r),
+                summarize_mtnotes(p, m),
+                summarize_details(p, d)),
+              collapse = "\n\n")
+    }
 
-    if(length(package) == 1L) {
-        if(!drop) {
-            s <- paste("Package:", package)
-            writeLines(c(s,
-                         paste(rep.int("*", nchar(s)), collapse = ""),
-                         ""),
-                       con)
-        }
+    s <- if(length(package) == 1L) {
         summarize(package, results, details, mtnotes[[package]])
     } else {
-        results <- split(results, results$Package)
-        package <- names(results)
+        results <- split(results, factor(results$Package, package))
         details <- split(details, factor(details$Package, package))
-        first <- TRUE
-        for(p in package) {
-            if(!first) writeLines("", con)
-            s <- paste("Package:", p)
-            writeLines(c(s,
-                         paste(rep.int("*", nchar(s)), collapse = ""),
-                         ""),
-                       con)
-            summarize(p, results[[p]], details[[p]], mtnotes[[p]])
-            first <- FALSE
-        }
+        unlist(lapply(package,
+                      function(p) {
+                          summarize(p,
+                                    results[[p]],
+                                    details[[p]],
+                                    mtnotes[[p]])
+                      }))
     }
 
-    invisible()
+    names(s) <- package
+    class(s) <- "summarize_CRAN_check_status"
+    s
 }
+
+format.summarize_CRAN_check_status <-
+function(x, header = NA, ...)
+{
+    if(is.na(header)) header <- (length(x) > 1L)
+    if(header) {
+        s <- sprintf("Package: %s", names(x))
+        x <- sprintf("%s\n%s\n\n%s", s, gsub(".", "*", s), x)
+    }
+    x
+}
+
+print.summarize_CRAN_check_status <-
+function(x, ...)
+{
+    writeLines(paste(format(x, ...), collapse = "\n\n"))
+    invisible(x)
+}
+
 
 CRAN_check_results <-
 function()
