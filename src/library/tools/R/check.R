@@ -2937,7 +2937,9 @@ setRlibs <-
                 ## known false positives
                 for(fp in  c("foreign/tests/datefactor.dta",
                              "msProcess/inst/data[12]/.*.txt",
-                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
+                             "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid",
+                             "bayeslife/inst/ex-data/bayesLife.output/predictions/traj_country104.rda" # file 5.16
+                             ) )
                     known <- known | grepl(fp, pexecs)
                 execs <- execs[!known]
             }
