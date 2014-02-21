@@ -223,10 +223,12 @@
 
       \item A number of changes to reduce copying of objects, contributed
       by Michael Lawrence.
-
-      \item \R{} can now optionally be compiled to use reference counting
-      instead of the \code{NAMED} mechanism by defining
-      \code{SWITCH_TO_REFCNT}. This may become the default in the future.
+      
+      \item \code{file.path()} removes any trailing separator on
+      Windows, where it invalid (although sometimes accepted).  This is
+      intended to enhance the portability of code written by those using
+      POSIX file systems (where a trailing \code{/} can be used to
+      confine path matching to directories).
     }
   }
 
@@ -277,6 +279,11 @@
       options and standard can be specified by variables \samp{CXX1X},
       \samp{CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
       \samp{-std=gnu++11}).
+
+      \item \R{} can now optionally be compiled to use reference
+      counting instead of the \code{NAMED} mechanism by defining
+      \code{SWITCH_TO_REFCNT} in \file{Rinternals.h}. This may become
+      the default in the future.
     }
   }
 

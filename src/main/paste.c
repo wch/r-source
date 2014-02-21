@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -281,7 +281,8 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, sep, x;
     int i, j, k, ln, maxlen, nx, nzero, pwidth, sepw;
-    const char *s, *csep, *cbuf; char *buf;
+    const char *s, *csep, *cbuf; 
+    char *buf;
 
     checkArity(op, args);
 
@@ -347,6 +348,12 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += sepw;
 	    }
 	}
+#ifdef Win32
+	// Trailing spaces are never valid for file paths
+	if(streql(csep, "/") || streql(csep, "\\")) {
+	    if(*(--buf) == csep[0]) *buf = '\0';
+	}
+#endif
 	SET_STRING_ELT(ans, i, mkChar(cbuf));
     }
     R_FreeStringBufferL(&cbuff);
