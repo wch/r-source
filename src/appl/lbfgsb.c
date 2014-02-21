@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-14 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,10 @@
   Byrd, Lu-Chen and Nocedal obtained from Netlib (file 'opt/lbfgs_bcm.shar')
 
   The Fortran files contained no copyright information.
+
+  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
+  memory algorithm for bound constrained optimization.
+  \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
 */
 
 /* <UTF8> all char uses here are ASCII */
