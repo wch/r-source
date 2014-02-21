@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -48,6 +48,11 @@ bindtextdomain(domain, dirname = NULL)
   will often contain a single instance of \code{\%d} to be used in
   \code{\link{sprintf}}.  If English is used, \code{msg1} is returned if
   \code{n == 1} and \code{msg2} in all other cases.
+
+  \code{bindtextdomain} is a wrapper for the C function of the same
+  name: your system may have a \command{man} page for it.  With a
+  non-\code{NULL} \code{dirname} it specifies where to look for message
+  catalogues: with \code{domain = NULL} it returns the current location.
 }
 \value{
   For \code{gettext}, a character vector, one element per string in
