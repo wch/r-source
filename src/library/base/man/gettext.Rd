@@ -29,12 +29,15 @@ bindtextdomain(domain, dirname = NULL)
     catalogs for the domain.}
 }
 \details{
-  If \code{domain} is \code{NULL} or \code{""}, a domain is searched for
-  based on the namespace which contains the function calling
-  \code{gettext} or \code{ngettext}.  If a suitable domain can be found,
-  each character string is offered for translation, and replaced by its
-  translation into the current language if one is found.  The value
-  (logical) \code{NA} suppresses any translation.
+  If \code{domain} is \code{NULL} or \code{""}, and \code{gettext} is
+  called from a function in the namespace of package \pkg{pkg} the
+  domain is set to \code{"R-pkg"}.  Otherwise there is no default
+  domain.
+
+  If a suitable domain is found, each character string is offered for
+  translation, and replaced by its translation into the current language
+  if one is found.  The value (logical) \code{NA} suppresses any
+  translation.
 
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.
