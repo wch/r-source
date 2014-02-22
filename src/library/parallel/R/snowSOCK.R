@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snowSOCK.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -115,6 +115,7 @@ recvOneData.SOCKcluster <- function(cl)
 makePSOCKcluster <- function(names, ...)
 {
     if (is.numeric(names)) names <- rep('localhost', names[1])
+    .check_ncores(length(names))
     options <- addClusterOptions(defaultClusterOptions, list(...))
     cl <- vector("list", length(names))
     for (i in seq_along(cl))

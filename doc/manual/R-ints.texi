@@ -4017,6 +4017,11 @@ in `Writing R Extensions' nor are commonly understood (like
 @file{COPYRIGHT}) are also reported.
 Default: false (but true for CRAN submission checks).
 
+
+@item _R_CHECK_LIMIT_CORES_
+If set, check the usage of too many cores in package @pkg{parallel}.  If
+set to @samp{warn} gives a warning, and any other non-empty value an error.
+Default: false
 @end vtable
 
 CRAN's submission checks use something like
