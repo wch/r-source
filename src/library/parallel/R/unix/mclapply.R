@@ -25,6 +25,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     env <- parent.frame()
     cores <- as.integer(mc.cores)
     if(cores < 1L) stop("'mc.cores' must be >= 1")
+    .check_ncores(cores)
 
     if (isChild() && !isTRUE(mc.allow.recursive))
         return(lapply(X = X, FUN = FUN, ...))
