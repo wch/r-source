@@ -5398,8 +5398,8 @@ function(x, ...)
           }
       },
       if(length(xx <- x$depends_not_import)) {
-          msg <- c("  These packages need to be imported from for the case when",
-                   "  this namespace is loaded but not attached.")
+          msg <- c("  These packages need to be imported from (in the NAMESPACE file)",
+                   "  for when this namespace is loaded but not attached.")
           if(length(xx) > 1L) {
               c(gettext("Packages in Depends field not imported from:"),
                 .pretty_format(sort(xx)), msg)
