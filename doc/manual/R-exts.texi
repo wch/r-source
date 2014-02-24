@@ -3912,7 +3912,7 @@ all platforms use those CPUs, and not all@footnote{Not doing so is the
 default on Windows, overridden for the @R{} executables.  It is also the
 default on some Solaris compilers.} which use them configure them to
 allow the use of extended precision.  In particular, ARM CPUs do not
-(currently) have extended precsion nor long doubles.
+(currently) have extended precision nor long doubles.
 
 If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-doubles} and use appropriate
