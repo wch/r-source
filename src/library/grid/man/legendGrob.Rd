@@ -11,7 +11,7 @@
   Constructing a legend grob (in progress)
 }
 \usage{
-legendGrob(labels, ncol = 1, nrow, byrow = FALSE,
+legendGrob(labels, nrow, ncol, byrow = FALSE,
            do.lines = has.lty || has.lwd, lines.first = TRUE,
            hgap = unit(1, "lines"), vgap = unit(1, "lines"),
            default.units = "lines", pch, gp = gpar(), vp = NULL)
@@ -20,7 +20,7 @@ grid.legend(\dots, draw=TRUE)
 }
 \arguments{
   \item{labels}{legend labels (expressions)}
-  \item{ncol, nrow}{integer; the number of columns or rows, respectively
+  \item{nrow, ncol}{integer; the number of rows or columns, respectively
     of the legend \dQuote{layout}.  \code{nrow} is optional and
     typically computed from the number of labels and \code{ncol}.}
   \item{byrow}{logical indicating whether rows of the legend are filled first.}
@@ -50,9 +50,28 @@ grid.legend(\dots, draw=TRUE)
 \seealso{
   \link{Grid}, \code{\link{viewport}};
   \code{\link{pointsGrob}}, \code{\link{linesGrob}}.
+
+  \code{\link{grid.plot.and.legend}} contains a simple example.
 }
 \examples{
-## add !
+  ## Data:
+  n <- 10
+  x <- stats::runif(n) ; y1 <- stats::runif(n) ; y2 <- stats::runif(n)
+  ## Construct the grobs :
+  plot <- gTree(children=gList(rectGrob(),
+                  pointsGrob(x, y1, pch=21, gp=gpar(col=2, fill="gray")),
+                  pointsGrob(x, y2, pch=22, gp=gpar(col=3, fill="gray")),
+                  xaxisGrob(),
+                  yaxisGrob()))
+  legd <- legendGrob(c("Girls", "Boys", "Other"), pch=21:23,
+                     gp=gpar(col = 2:4, fill = "gray"))
+  gg <- packGrob(packGrob(frameGrob(), plot),
+                 legd, height=unit(1,"null"), side="right")
+
+  ## Now draw it on a new device page:
+  grid.newpage()
+  pushViewport(viewport(width=0.8, height=0.8))
+  grid.draw(gg)
 }
 \keyword{aplot}
 

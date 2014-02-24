@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-02-17 r65021) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-02-24 r65066) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1601,7 +1601,24 @@ List of 6
 > 
 > ### ** Examples
 > 
-> ## add !
+>   ## Data:
+>   n <- 10
+>   x <- stats::runif(n) ; y1 <- stats::runif(n) ; y2 <- stats::runif(n)
+>   ## Construct the grobs :
+>   plot <- gTree(children=gList(rectGrob(),
++                   pointsGrob(x, y1, pch=21, gp=gpar(col=2, fill="gray")),
++                   pointsGrob(x, y2, pch=22, gp=gpar(col=3, fill="gray")),
++                   xaxisGrob(),
++                   yaxisGrob()))
+>   legd <- legendGrob(c("Girls", "Boys", "Other"), pch=21:23,
++                      gp=gpar(col = 2:4, fill = "gray"))
+>   gg <- packGrob(packGrob(frameGrob(), plot),
++                  legd, height=unit(1,"null"), side="right")
+> 
+>   ## Now draw it on a new device page:
+>   grid.newpage()
+>   pushViewport(viewport(width=0.8, height=0.8))
+>   grid.draw(gg)
 > 
 > 
 > 
@@ -2050,7 +2067,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.208 0.018 1.231 0 0 
+Time elapsed:  1.628 0.022 1.673 0 0 
 > grDevices::dev.off()
 null device 
           1 
