@@ -2350,11 +2350,12 @@ setRlibs <-
             ## the time being, report warnings about use of
             ## deprecated , as the next release will make
             ## them defunct and hence using them an error.
+            bad <- FALSE
             lines <- readLines(exout, warn = FALSE)
-            bad_lines <- grep("^Warning: .*is deprecated.$", lines,
-                              useBytes = TRUE, value = TRUE)
+            bad_lines <- grep("^Warning: .*is deprecated.$",
+                              lines, useBytes = TRUE, value = TRUE)
             if(length(bad_lines)) {
-                any <- TRUE
+                bad <- TRUE
                 warningLog(Log, "Found the following significant warnings:\n")
                 printLog(Log, .format_lines_with_indent(bad_lines), "\n")
                 wrapLog("Deprecated functions may be defunct as",
@@ -2365,12 +2366,28 @@ setRlibs <-
                               lines, useBytes = TRUE, value = TRUE)
 
             if(length(bad_lines)) {
-                any <- TRUE
-                warningLog(Log, "Found the following significant warnings:")
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
                 printLog(Log, .format_lines_with_indent(bad_lines), "\n")
                 wrapLog("dev.new() is the preferred way to open a new device,",
                         "in the unlikely event one is needed.")
             }
+            bad_lines <- grep("^Warning: .*simultaneous processes spawned$",
+                              lines, useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
+                printLog(Log, .format_lines_with_indent(bad_lines), "\n")
+                wrapLog("Note that CRAN packages must never use more than two",
+                        "cores simultaneously during their checks.")
+            }
+            any <- any || bad
             if (!any) resultLog(Log, "OK")
 
             ## Try to compare results from running the examples to
