@@ -49,7 +49,7 @@ detectCores <-
 .check_ncores <- function(nc)
 {
     chk <- tolower(Sys.getenv("_R_CHECK_LIMIT_CORES_", ""))
-    if (nzchar(chk) && nc > 2L) {
+    if (nzchar(chk) && (chk != "false") && nc > 2L) {
         msg <- sprintf("%d simultaneous processes spawned", nc)
         if(chk == "warn") warning(msg, call. = FALSE, immediate. = TRUE)
         else stop(msg, call. = TRUE)

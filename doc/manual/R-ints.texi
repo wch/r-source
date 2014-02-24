@@ -4049,8 +4049,9 @@ Default: @code{0}.
 
 @item _R_CHECK_LIMIT_CORES_
 If set, check the usage of too many cores in package @pkg{parallel}.  If
-set to @samp{warn} gives a warning, and any other non-empty value an
-error when more than 2 children are spawned.
+set to @samp{warn} gives a warning, to @samp{false} or @samp{FALSE} the
+check is skipped, and any other non-empty value gives an error when more
+than 2 children are spawned.
 Default: unset (but @samp{TRUE} for CRAN submission checks).
 @end vtable
 
