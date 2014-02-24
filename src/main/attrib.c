@@ -965,6 +965,11 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	UNPROTECT(1);
 	PROTECT(val = newval);
     }
+    if (MAYBE_REFERENCED(val)) {
+	newval = shallow_duplicate(val);
+	UNPROTECT(1);
+	PROTECT(val = newval);
+    }	
     if (k != length(val))
 	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 	      length(val), k);
