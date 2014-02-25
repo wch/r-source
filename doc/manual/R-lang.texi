@@ -4631,10 +4631,12 @@ $ @@
 =                  @r{(as assignment)}
 <- <<-
 @end example
+Note that @code{:} precedes binary +/-, but not @code{^}. Hence,
+@code{1:3-1} is @math{0 1 2}, but @code{1:2^3} is @code{1:8}. 
 
 The exponentiation operator @samp{^} and the
 @cindex assignment
-left assignment operators
+left assignment plus minus operators
 @samp{<- - = <<-} group right to left, all other operators group left to
 right.  That is, @code{2 ^ 2 ^ 3} is @math{2 ^ 8}, not @math{4 ^ 3},
 whereas @code{1 - 1 - 1} is @math{-1}, not 1.
