@@ -711,9 +711,9 @@ includes it.
 Examples of standardized specifications include
 @example
 License: GPL-2
-License: GPL (>= 2) | BSD
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 License: GPL-2 | file LICENCE
+License: GPL (>= 2) | BSD_3_clause + file LICENSE
 License: Artistic-2.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license,

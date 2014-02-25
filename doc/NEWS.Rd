@@ -68,8 +68,8 @@
       official name, \code{"UTF-8"} is still preferred.
 
       \item \code{available.packages()} is better protected against
-      corrupt metadata files (a recurring problem with Debian package
-      \code{shogun-r}: \PR{14713}).
+      corrupt metadata files.  (A recurring problem with Debian package
+      \pkg{shogun-r}: \PR{14713}.)
       
       \item Finalizers are marked to be run at garbage collection, but
       run only at a somewhat safer later time (when interrupts are
