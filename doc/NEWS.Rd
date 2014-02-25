@@ -7,7 +7,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.0.2 patched}{
+\section{\Rlogo CHANGES IN R 3.0.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item On Windows there is support for making \file{.texi} manuals
