@@ -118,13 +118,14 @@
   read-only, and all apart from vectors (including lists), functions and
   environments are now deprecated.
 }
-%%-- This note by Thomas Lumley, (minimally edited by MM,
-%%      edited by BDR for 1.2.0's non-moving garbage collector):
-\section{Warning}{
-  \emph{\code{DUP = FALSE} is dangerous.}
 
-  People concerned about memory usage are strongly recommended to use
-  the \code{\link{.Call}} interface instead of these interfaces.
+\section{Warning}{
+  \emph{\code{DUP = FALSE} is dangerous} and may be disabled in future
+  versions of \R.
+
+  People concerned about performance and especially memory usage are
+  strongly recommended to use the \code{\link{.Call}} interface instead
+  of these interfaces.
 
   If you pass a local variable to \code{.C}/\code{.Fortran} with
   \code{DUP = FALSE}, your compiled code can alter the local variable and
