@@ -120,7 +120,7 @@
 }
 
 \section{Warning}{
-  \emph{\code{DUP = FALSE} is dangerous} and may be disabled in future
+  \code{DUP = FALSE} \emph{is dangerous} and may be disabled in future
   versions of \R.
 
   People concerned about performance and especially memory usage are

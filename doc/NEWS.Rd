@@ -225,10 +225,10 @@
       by Michael Lawrence.
       
       \item \code{file.path()} removes any trailing separator on
-      Windows, where it invalid (although sometimes accepted).  This is
-      intended to enhance the portability of code written by those using
-      POSIX file systems (where a trailing \code{/} can be used to
-      confine path matching to directories).
+      Windows, where they are invalid (although sometimes accepted).
+      This is intended to enhance the portability of code written by
+      those using POSIX file systems (where a trailing \code{/} can be
+      used to confine path matching to directories).
     }
   }
 
@@ -414,8 +414,9 @@
       \command{R CMD check --as-cran}.
       
       \item \command{R CMD check --use-gct} can be tuned to
-      garbage-collect less frequently using \code{gctorture2()} using
-      the setting of environment variable \env{_R_CHECK_GCT_N_}.
+      garbage-collect less frequently using \code{gctorture2()}
+      \emph{via} the setting of environment variable
+      \env{_R_CHECK_GCT_N_}.
     }
   }
 
@@ -533,7 +534,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.0.2 patched}{
+\section{\Rlogo CHANGES IN R 3.0.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item On Windows there is support for making \file{.texi} manuals
