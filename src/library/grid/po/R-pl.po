@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -560,6 +560,12 @@ msgstr "'hgap' musi być pojedynczą jednostką"
 # stop("'vgap' must be single unit")
 msgid "'vgap' must be single unit"
 msgstr "'vgap' musi być pojedynczą jednostką"
+
+# grid/R/highlevel.R: 138
+# stop("'l' must be a layout")
+#, fuzzy
+msgid "'nrow' must be >= 1"
+msgstr "'l' musi być layoutem"
 
 # grid/R/highlevel.R: 138
 # stop("'l' must be a layout")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-02-27 17:13+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -34,31 +34,31 @@ msgstr "REPORT必需大于零 (method = \"BFGS\")"
 msgid "initial value in 'vmmin' is not finite"
 msgstr "'vmmin'的初始值不能为无穷大"
 
-#: src/appl/optim.c:295
+#: src/appl/optim.c:297
 msgid "function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/appl/optim.c:492
+#: src/appl/optim.c:497
 msgid "unknown 'type' in \"CG\" method of 'optim'"
 msgstr "'optim'的\"CG\"方法中没有这种'type'"
 
-#: src/appl/optim.c:505
+#: src/appl/optim.c:510
 msgid "Function cannot be evaluated at initial parameters"
 msgstr "无法用初始参数来评估函数"
 
-#: src/appl/optim.c:560
+#: src/appl/optim.c:565
 msgid "unknown type in \"CG\" method of 'optim'"
 msgstr "'optim'的\"CG\"方法中没有这一种类"
 
-#: src/appl/optim.c:660
+#: src/appl/optim.c:665
 msgid "REPORT must be > 0 (method = \"L-BFGS-B\")"
 msgstr "REPORT必需大于零 (method = \"L-BFGS-B\")"
 
-#: src/appl/optim.c:683
+#: src/appl/optim.c:688
 msgid "L-BFGS-B needs finite values of 'fn'"
 msgstr "L-BFGS-B不能有'fn'的无限值"
 
-#: src/appl/optim.c:739
+#: src/appl/optim.c:744
 msgid "trace, REPORT must be >= 0 (method = \"SANN\")"
 msgstr "迹,REPORT必需大于零 (method = \"SANN\")"
 
@@ -188,10 +188,10 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3614 src/main/paste.c:96 src/main/paste.c:384
-#: src/main/paste.c:391 src/main/paste.c:398 src/main/paste.c:403
-#: src/main/paste.c:408 src/main/paste.c:413 src/main/paste.c:416
-#: src/main/paste.c:424 src/main/paste.c:590 src/main/paste.c:595
+#: src/main/memory.c:3690 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
+#: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
+#: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
 #: src/main/platform.c:306 src/main/platform.c:308 src/main/platform.c:310
 #: src/main/platform.c:326 src/main/platform.c:337 src/main/platform.c:390
 #: src/main/platform.c:392 src/main/platform.c:705 src/main/platform.c:707
@@ -1108,119 +1108,119 @@ msgstr "'dimnames'只能用于陈列"
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'必需是串列"
 
-#: src/main/attrib.c:946 src/main/attrib.c:969
+#: src/main/attrib.c:946 src/main/attrib.c:974
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'的长度[%d]必需同'dims'的长度[%d]相等"
 
-#: src/main/attrib.c:975
+#: src/main/attrib.c:980
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "设'dimnames'时的种类(%s)不对(必需为矢量)"
 
-#: src/main/attrib.c:978
+#: src/main/attrib.c:983
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'的长度[%d]必需与陈列范围相等"
 
-#: src/main/attrib.c:1050 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1055 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1606 src/main/envir.c:1734 src/main/envir.c:1796
-#: src/main/envir.c:1918 src/main/paste.c:74 src/main/paste.c:292
+#: src/main/envir.c:1918 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:487 src/main/random.c:516 src/main/unique.c:1749
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
-#: src/main/attrib.c:1053
+#: src/main/attrib.c:1058
 msgid "invalid second argument"
 msgstr "第二个参数不对"
 
-#: src/main/attrib.c:1061
+#: src/main/attrib.c:1066
 msgid "length-0 dimension vector is invalid"
 msgstr "不能有零长度的大小矢量"
 
-#: src/main/attrib.c:1066
+#: src/main/attrib.c:1071
 msgid "the dims contain missing values"
 msgstr "dims不能包含缺少值"
 
-#: src/main/attrib.c:1068
+#: src/main/attrib.c:1073
 msgid "the dims contain negative values"
 msgstr "dims不能包含负值级"
 
-#: src/main/attrib.c:1073
+#: src/main/attrib.c:1078
 msgid "dims do not match the length of object"
 msgstr "dims与对象长度不匹配"
 
-#: src/main/attrib.c:1075
+#: src/main/attrib.c:1080
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]与对象长度[%d]不匹配"
 
-#: src/main/attrib.c:1172
+#: src/main/attrib.c:1177
 msgid "attributes must be a list or NULL"
 msgstr "属性必需是串列或NULL值"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 msgid "attributes must be named"
 msgstr "属性必需取名"
 
-#: src/main/attrib.c:1181
+#: src/main/attrib.c:1186
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的属性都必需有名字[%d没有]"
 
-#: src/main/attrib.c:1280
+#: src/main/attrib.c:1285
 msgid "'which' must be of mode character"
 msgstr "'which'属性的状态必需是字符"
 
-#: src/main/attrib.c:1282
+#: src/main/attrib.c:1287
 msgid "exactly one attribute 'which' must be given"
 msgstr "只能给一个'which'属性"
 
-#: src/main/attrib.c:1340 src/main/attrib.c:1363 src/main/subscript.c:240
-#: src/main/subscript.c:244 src/main/subset.c:1187 src/main/subset.c:1238
+#: src/main/attrib.c:1345 src/main/attrib.c:1368 src/main/subscript.c:240
+#: src/main/subscript.c:244 src/main/subset.c:1188 src/main/subset.c:1239
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'部分匹配到'%s'"
 
-#: src/main/attrib.c:1401
+#: src/main/attrib.c:1406
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "槽名字的类别'%s'不对"
 
-#: src/main/attrib.c:1439
+#: src/main/attrib.c:1444
 msgid "'name' must be non-null character string"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1563 src/main/attrib.c:1634 src/main/attrib.c:1671
+#: src/main/attrib.c:1568 src/main/attrib.c:1639 src/main/attrib.c:1676
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
-#: src/main/attrib.c:1597
+#: src/main/attrib.c:1602
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "类别\"%2$s\"的对象中没有\"%1$s\"这样一个槽"
 
-#: src/main/attrib.c:1608
+#: src/main/attrib.c:1613
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别对象中"
 
-#: src/main/attrib.c:1625
+#: src/main/attrib.c:1630
 msgid "attempt to set slot on NULL object"
 msgstr "不能为NULL目标对象设属性"
 
-#: src/main/attrib.c:1666
+#: src/main/attrib.c:1671
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "一定要有'methods'程序包才能用正式类别"
 
-#: src/main/attrib.c:1678
+#: src/main/attrib.c:1683
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1682
+#: src/main/attrib.c:1687
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1250,7 +1250,7 @@ msgstr "不能有重复的正式参数'use.names' "
 msgid "argument not a list"
 msgstr "参数不是串列"
 
-#: src/main/bind.c:1049 src/main/eval.c:2668 src/main/eval.c:2677
+#: src/main/bind.c:1049 src/main/eval.c:2691 src/main/eval.c:2700
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
@@ -1297,7 +1297,7 @@ msgstr "矢量size设得太大了"
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
 #: src/main/envir.c:2922 src/main/envir.c:2951 src/main/envir.c:2972
 #: src/main/envir.c:2995 src/main/envir.c:3030 src/main/envir.c:3051
-#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5253
+#: src/main/envir.c:3357 src/main/envir.c:3362 src/main/eval.c:5318
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2364 src/main/serialize.c:2709
 msgid "use of NULL environment is defunct"
@@ -1369,9 +1369,9 @@ msgid "invalid value"
 msgstr "值不对"
 
 #: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
-#: src/main/eval.c:563 src/main/eval.c:683 src/main/eval.c:2077
-#: src/main/eval.c:2154 src/main/eval.c:2214 src/main/eval.c:2547
-#: src/main/eval.c:4659 src/main/eval.c:4779
+#: src/main/eval.c:563 src/main/eval.c:683 src/main/eval.c:2099
+#: src/main/eval.c:2176 src/main/eval.c:2236 src/main/eval.c:2569
+#: src/main/eval.c:4694 src/main/eval.c:4814
 msgid "'...' used in an incorrect context"
 msgstr "'...'用在的上下文不对"
 
@@ -1384,7 +1384,7 @@ msgstr "重复'switch'默认值：'%s'和'%s'"
 msgid "'EXPR' is missing"
 msgstr "缺少'EXPR'"
 
-#: src/main/builtin.c:1000 src/main/eval.c:5090
+#: src/main/builtin.c:1000 src/main/eval.c:5155
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR必需是长度为一的矢量"
 
@@ -1545,7 +1545,7 @@ msgstr "不能强迫改变非因子"
 msgid "list argument expected"
 msgstr "需要串列参数"
 
-#: src/main/coerce.c:1541 src/main/eval.c:5257
+#: src/main/coerce.c:1541 src/main/eval.c:5322
 msgid "invalid environment"
 msgstr "环境不对"
 
@@ -2437,7 +2437,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts'必需是小的非负整数"
 
 #: src/main/deparse.c:411 src/main/envir.c:1764 src/main/envir.c:1846
-#: src/main/eval.c:569 src/main/eval.c:1246 src/main/eval.c:3604
+#: src/main/eval.c:569 src/main/eval.c:1251 src/main/eval.c:3627
 #: src/main/saveload.c:1978 src/main/saveload.c:2309 src/main/serialize.c:2727
 #, c-format
 msgid "object '%s' not found"
@@ -2930,7 +2930,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d所在的上下文出了错, 没有可以搜索的..."
 
 #: src/main/envir.c:1390 src/main/envir.c:1842 src/main/eval.c:573
-#: src/main/eval.c:3595
+#: src/main/eval.c:3618
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少参数\"%s\",也没有缺省值"
@@ -3337,11 +3337,11 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 
-#: src/main/eval.c:575 src/main/eval.c:3596
+#: src/main/eval.c:575 src/main/eval.c:3619
 msgid "argument is missing, with no default"
 msgstr "缺少参数, 也没有缺省值"
 
-#: src/main/eval.c:679 src/main/eval.c:4607
+#: src/main/eval.c:679 src/main/eval.c:4642
 msgid "attempt to apply non-function"
 msgstr "不适用于非函数"
 
@@ -3350,240 +3350,240 @@ msgstr "不适用于非函数"
 msgid "%s at %s#%d: "
 msgstr "%s在%s#%d: "
 
-#: src/main/eval.c:1173
+#: src/main/eval.c:1178
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "类属函数环境里没有这个\"%s\"符号"
 
-#: src/main/eval.c:1191
+#: src/main/eval.c:1196
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "方法环境里没有\"%s\"这个符号"
 
-#: src/main/eval.c:1303
+#: src/main/eval.c:1308
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "条件的长度大于一，因此只能用其第一元素"
 
-#: src/main/eval.c:1320
+#: src/main/eval.c:1325
 msgid "missing value where TRUE/FALSE needed"
 msgstr "需要TRUE/FALSE值的地方不可以用缺少值"
 
-#: src/main/eval.c:1321
+#: src/main/eval.c:1326
 msgid "argument is not interpretable as logical"
 msgstr "参数不能作为逻辑值来用"
 
-#: src/main/eval.c:1322
+#: src/main/eval.c:1327
 msgid "argument is of length zero"
 msgstr "参数长度为零"
 
-#: src/main/eval.c:1413
+#: src/main/eval.c:1418
 msgid "non-symbol loop variable"
 msgstr "非符号循环变数"
 
-#: src/main/eval.c:1504 src/main/eval.c:4378
+#: src/main/eval.c:1510 src/main/eval.c:4408
 msgid "invalid for() loop sequence"
 msgstr "for()循环顺序不对"
 
-#: src/main/eval.c:1645
+#: src/main/eval.c:1652
 msgid "multi-argument returns are not permitted"
 msgstr "不允许多参数回覆值"
 
-#: src/main/eval.c:1694
+#: src/main/eval.c:1701
 msgid "invalid (NULL) left side of assignment"
 msgstr "赋值公式左手不能是(NULL)值"
 
-#: src/main/eval.c:1716
+#: src/main/eval.c:1734
 msgid "target of assignment expands to non-language object"
 msgstr "赋值目标擴充到非语言对象"
 
-#: src/main/eval.c:1799
+#: src/main/eval.c:1817
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s'中的名字太长"
 
-#: src/main/eval.c:1895
+#: src/main/eval.c:1915
 msgid "cannot do complex assignments in base namespace"
 msgstr "无法在基本名字空间里赋复数值"
 
-#: src/main/eval.c:1897
+#: src/main/eval.c:1917
 msgid "cannot do complex assignments in base environment"
 msgstr "无法在基本环境里赋复数值"
 
-#: src/main/eval.c:1933 src/main/eval.c:1960
+#: src/main/eval.c:1954 src/main/eval.c:1981
 msgid "invalid function in complex assignment"
 msgstr "复数赋值里的函数不对"
 
-#: src/main/eval.c:2019
+#: src/main/eval.c:2041
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "(do_set)赋值公式左手不对"
 
-#: src/main/eval.c:2081
+#: src/main/eval.c:2103
 #, c-format
 msgid "argument %d is empty"
 msgstr "%d元素是空的"
 
-#: src/main/eval.c:2094
+#: src/main/eval.c:2116
 #, c-format
 msgid "'%s' is missing"
 msgstr "缺少'%s'"
 
-#: src/main/eval.c:2245
+#: src/main/eval.c:2267
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"正式参数串列不对"
 
-#: src/main/eval.c:2303 src/main/eval.c:2334 src/main/eval.c:2339
+#: src/main/eval.c:2325 src/main/eval.c:2356 src/main/eval.c:2361
 #, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "种类'%2$s'的参数'%1$s'不对"
 
-#: src/main/eval.c:2331
+#: src/main/eval.c:2353
 msgid "numeric 'envir' arg not of length one"
 msgstr "数值'envir'参数的长度不是一"
 
-#: src/main/eval.c:2355 src/main/eval.c:2377
+#: src/main/eval.c:2377 src/main/eval.c:2399
 msgid "restarts not supported in 'eval'"
 msgstr "'eval'不支持重新启动"
 
-#: src/main/eval.c:2434 src/main/eval.c:2447
+#: src/main/eval.c:2456 src/main/eval.c:2469
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall'在封閉包外调用"
 
-#: src/main/eval.c:2540
+#: src/main/eval.c:2562
 msgid "value in '...' is not a promise"
 msgstr "'... '里的值不是允諾"
 
-#: src/main/eval.c:2731 src/main/objects.c:720
+#: src/main/eval.c:2754 src/main/objects.c:720
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'里调用的名字太长"
 
-#: src/main/eval.c:2752
+#: src/main/eval.c:2775
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s'里的类属名字太长"
 
-#: src/main/eval.c:2817
+#: src/main/eval.c:2840
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不可兼容的方法(\"%s\", \"%s\")和\"%s\""
 
-#: src/main/eval.c:2883
+#: src/main/eval.c:2906
 msgid "dispatch error in group dispatch"
 msgstr "组分派错误"
 
-#: src/main/eval.c:3178
+#: src/main/eval.c:3201
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "\"%s\"不是%s函数"
 
-#: src/main/eval.c:3407
+#: src/main/eval.c:3430
 msgid "node stack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/eval.c:3413
+#: src/main/eval.c:3436
 msgid "integer stack overflow"
 msgstr "整数堆叠上溢"
 
-#: src/main/eval.c:3467
+#: src/main/eval.c:3490
 msgid "bad opcode"
 msgstr "opcode不对"
 
-#: src/main/eval.c:4195
+#: src/main/eval.c:4219
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %2$s y'中%1$s种类不对"
 
-#: src/main/eval.c:4280
+#: src/main/eval.c:4310
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不配; 用eval"
 
-#: src/main/eval.c:4285
+#: src/main/eval.c:4315
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太旧"
 
-#: src/main/eval.c:4286
+#: src/main/eval.c:4316
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:4320
+#: src/main/eval.c:4350
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不配"
 
-#: src/main/eval.c:4446
+#: src/main/eval.c:4477
 msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序参数不对"
 
-#: src/main/eval.c:4589 src/main/names.c:1170
+#: src/main/eval.c:4624 src/main/names.c:1180
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "没有'%s'这个内部函数"
 
-#: src/main/eval.c:4696 src/main/eval.c:5029 src/main/eval.c:5069
+#: src/main/eval.c:4731 src/main/eval.c:5077 src/main/eval.c:5119
 msgid "bad function"
 msgstr "函数不对"
 
-#: src/main/eval.c:4711
+#: src/main/eval.c:4746
 msgid "not a BUILTIN function"
 msgstr "非BUILTIN函数"
 
-#: src/main/eval.c:5094
+#: src/main/eval.c:5159
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "没有名字替代的'switch'需要数值EXPR"
 
-#: src/main/eval.c:5190
+#: src/main/eval.c:5255
 msgid "cannot find index for threaded code address"
 msgstr "找不到线程代码地址的索引"
 
-#: src/main/eval.c:5250
+#: src/main/eval.c:5315
 msgid "invalid body"
 msgstr "函数体不对"
 
-#: src/main/eval.c:5270
+#: src/main/eval.c:5335
 msgid "invalid symbol"
 msgstr "符号不对"
 
-#: src/main/eval.c:5314
+#: src/main/eval.c:5379
 msgid "argument is not a byte code object"
 msgstr "参数不是位元组码对象"
 
-#: src/main/eval.c:5335
+#: src/main/eval.c:5400
 msgid "bad file name"
 msgstr "文件名字不对"
 
-#: src/main/eval.c:5339 src/main/eval.c:5360
+#: src/main/eval.c:5404 src/main/eval.c:5425
 msgid "unable to open 'file'"
 msgstr "无法打开'file'"
 
-#: src/main/eval.c:5354 src/main/saveload.c:1942
+#: src/main/eval.c:5419 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "'file'必需是非空字符串"
 
-#: src/main/eval.c:5356 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:5421 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2149
 msgid "'ascii' must be logical"
 msgstr "'ascii’必需是逻辑值"
 
-#: src/main/eval.c:5427 src/main/eval.c:5446 src/main/eval.c:5476
+#: src/main/eval.c:5492 src/main/eval.c:5511 src/main/eval.c:5541
 msgid "constant buffer must be a generic vector"
 msgstr "常量缓冲区必须是矢量类属"
 
-#: src/main/eval.c:5478
+#: src/main/eval.c:5543
 msgid "bad constant count"
 msgstr "常量数目不对"
 
-#: src/main/eval.c:5514
+#: src/main/eval.c:5579
 msgid "profile timer in use"
 msgstr "程序概要分析计时器在运行中"
 
-#: src/main/eval.c:5516
+#: src/main/eval.c:5581
 msgid "already byte code profiling"
 msgstr "已经在进行位元组码程序概要分析"
 
-#: src/main/eval.c:5534
+#: src/main/eval.c:5599
 msgid "setting profile timer failed"
 msgstr "程序概要分析计时器设制失败"
 
-#: src/main/eval.c:5551
+#: src/main/eval.c:5616
 msgid "not byte code profiling"
 msgstr "非位元组码程序概要分析"
 
@@ -3876,9 +3876,9 @@ msgstr "无法读写模块里的互联网例行程序"
 msgid "internet routines cannot be loaded"
 msgstr "无法载入互联网例行程序"
 
-#: src/main/internet.c:118 src/main/memory.c:3318 src/main/memory.c:3327
-#: src/main/memory.c:3338 src/main/memory.c:3351 src/main/memory.c:3367
-#: src/main/memory.c:3384
+#: src/main/internet.c:118 src/main/memory.c:3388 src/main/memory.c:3398
+#: src/main/memory.c:3410 src/main/memory.c:3424 src/main/memory.c:3441
+#: src/main/memory.c:3459
 msgid "bad value"
 msgstr "值不对"
 
@@ -4018,160 +4018,160 @@ msgstr "长参数的长度不是短参数的长度的整倍数"
 msgid "invalid partial string match"
 msgstr "部分字符串比较不对"
 
-#: src/main/match.c:225 src/main/match.c:265 src/main/objects.c:56
+#: src/main/match.c:228 src/main/match.c:268 src/main/objects.c:56
 #: src/main/objects.c:66
 #, c-format
 msgid "formal argument \"%s\" matched by multiple actual arguments"
 msgstr "正式参数\"%s\"有多个与之相对应的实际参数"
 
-#: src/main/match.c:228 src/main/match.c:263
+#: src/main/match.c:231 src/main/match.c:266
 #, c-format
 msgid "argument %d matches multiple formal arguments"
 msgstr "参数%d有多个与之相对应的正式参数"
 
-#: src/main/match.c:269
+#: src/main/match.c:272
 #, c-format
 msgid "partial argument match of '%s' to '%s'"
 msgstr "'%s'部分匹配为'%s'"
 
-#: src/main/match.c:380
+#: src/main/match.c:383
 #, c-format
 msgid "unused argument %s"
 msgid_plural "unused arguments %s"
 msgstr[0] "参数没有用%s"
 
-#: src/main/memory.c:1192
+#: src/main/memory.c:1217
 msgid "can only weakly reference/finalize reference objects"
 msgstr "只能微弱引用或定局引用对象"
 
-#: src/main/memory.c:1226
+#: src/main/memory.c:1251
 msgid "finalizer must be a function or NULL"
 msgstr "定局器必需是函数或NULL"
 
-#: src/main/memory.c:1282 src/main/memory.c:1290 src/main/memory.c:1301
+#: src/main/memory.c:1307 src/main/memory.c:1315 src/main/memory.c:1326
 msgid "not a weak reference"
 msgstr "非微弱引用"
 
-#: src/main/memory.c:1432
+#: src/main/memory.c:1457
 msgid "first argument must be environment or external pointer"
 msgstr "第一参数必需是环境或外部指针"
 
-#: src/main/memory.c:1434
+#: src/main/memory.c:1459
 msgid "second argument must be a function"
 msgstr "第二参数必需是函数"
 
-#: src/main/memory.c:1438
+#: src/main/memory.c:1463
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "第三个的值要么是TRUE要么是FALSE"
 
-#: src/main/memory.c:1928
+#: src/main/memory.c:1953
 msgid "vector memory exhausted (limit reached?)"
 msgstr "矢量内存用完了(达到了极限?)"
 
-#: src/main/memory.c:1934
+#: src/main/memory.c:1959
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons内存用完了(达到了极限?)"
 
-#: src/main/memory.c:1939
+#: src/main/memory.c:1964
 msgid "memory exhausted (limit reached?)"
 msgstr "内存用完了(达到了极限?)"
 
-#: src/main/memory.c:2071
+#: src/main/memory.c:2099
 #, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "无法分配大小为%0.f Tb的内存块"
 
-#: src/main/memory.c:2076
+#: src/main/memory.c:2104
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的内存块"
 
-#: src/main/memory.c:2342
+#: src/main/memory.c:2404
 msgid "vector is too large"
 msgstr "矢量设得太大了"
 
-#: src/main/memory.c:2345
+#: src/main/memory.c:2407
 msgid "negative length vectors are not allowed"
 msgstr "不能有负长度矢量"
 
-#: src/main/memory.c:2371 src/main/memory.c:2384 src/main/memory.c:2397
-#: src/main/memory.c:2412
+#: src/main/memory.c:2433 src/main/memory.c:2446 src/main/memory.c:2459
+#: src/main/memory.c:2474
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "无法分配长度为%d的矢量"
 
-#: src/main/memory.c:2433
+#: src/main/memory.c:2495
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "矢量分配的种类/长度(%s/%d)不对"
 
-#: src/main/memory.c:2526
+#: src/main/memory.c:2589
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "无法分配大小为%0.1f Gb的矢量"
 
-#: src/main/memory.c:2530
+#: src/main/memory.c:2593
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "无法分配大小为%0.1f Mb的矢量"
 
-#: src/main/memory.c:2534
+#: src/main/memory.c:2597
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "无法分配大小为%0.f Kb的矢量"
 
-#: src/main/memory.c:2890
+#: src/main/memory.c:2955
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
-#: src/main/memory.c:2897
+#: src/main/memory.c:2962
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect():只有%d个保护项"
 
-#: src/main/memory.c:2930
+#: src/main/memory.c:2995
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到指针"
 
-#: src/main/memory.c:2968
+#: src/main/memory.c:3033
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "R_Reprotect:只有%d个保护项, 不能重新保护索引%d"
 
-#: src/main/memory.c:3018
+#: src/main/memory.c:3083
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc'无法分配(%2$u字节的%1$.0f)内存"
 
-#: src/main/memory.c:3029
+#: src/main/memory.c:3094
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc'无法重新分配(大小为%.0f字节)的内存"
 
-#: src/main/memory.c:3266
+#: src/main/memory.c:3334
 msgid "not safe to return vector pointer"
 msgstr "回覆矢量指针不是安全的做法"
 
-#: src/main/memory.c:3278
+#: src/main/memory.c:3346
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3293
+#: src/main/memory.c:3362
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3536
+#: src/main/memory.c:3612
 msgid "memory profiling is not available on this system"
 msgstr "本系统没有记忆概要分析这个功能"
 
-#: src/main/memory.c:3601
+#: src/main/memory.c:3677
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 无法输出文件'%s'"
 
-#: src/main/memory.c:3708
+#: src/main/memory.c:3784
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "现在还没有支持长向量：%s:%d"
@@ -4184,16 +4184,16 @@ msgstr "需要字符串参数"
 msgid "no such primitive function"
 msgstr "没有这种原始函数"
 
-#: src/main/names.c:1135
+#: src/main/names.c:1145
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零长度变数名"
 
-#: src/main/names.c:1137
+#: src/main/names.c:1147
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "变量名限制于%d字节"
 
-#: src/main/names.c:1165 src/main/names.c:1168
+#: src/main/names.c:1175 src/main/names.c:1178
 msgid "invalid .Internal() argument"
 msgstr ".Internal()参数不对"
 
@@ -4468,7 +4468,7 @@ msgstr "'%s'的值不对"
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"device.ask.default\"代替了\"par.ask.default\" "
 
-#: src/main/paste.c:80 src/main/paste.c:299
+#: src/main/paste.c:80 src/main/paste.c:300
 msgid "invalid separator"
 msgstr "分隔符不对"
 
@@ -4480,19 +4480,19 @@ msgstr "内部'paste'的参数不是字符串"
 msgid "result would exceed 2^31-1 bytes"
 msgstr "结果将会超过2^31-1个字节"
 
-#: src/main/paste.c:320
+#: src/main/paste.c:321
 msgid "non-string argument to Internal paste"
 msgstr "内部貼補的参数不是字符串"
 
-#: src/main/paste.c:379
+#: src/main/paste.c:390
 msgid "first argument must be atomic"
 msgstr "第一个参数必需是基元"
 
-#: src/main/paste.c:549
+#: src/main/paste.c:560
 msgid "Impossible mode ( x )"
 msgstr "不可能出现这种状态(x)"
 
-#: src/main/paste.c:634
+#: src/main/paste.c:645
 msgid "atomic vector arguments only"
 msgstr "只能用原子矢量参数"
 
@@ -5636,116 +5636,116 @@ msgstr "不支持这一种类"
 msgid "R_LibraryFileName: buffer too small"
 msgstr "R_Library文件名字不对: 缓冲区太小"
 
-#: src/main/subassign.c:102
+#: src/main/subassign.c:117
 msgid "attempt to enlarge non-vector"
 msgstr "不能把非矢量变大"
 
-#: src/main/subassign.c:107
+#: src/main/subassign.c:122
 #, c-format
 msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr "不能在矢量/串列极限外赋值(%d加大到%d)"
 
-#: src/main/subassign.c:352
+#: src/main/subassign.c:367
 #, c-format
 msgid "incompatible types (from %s to %s) in subassignment type fix"
 msgstr "下赋值fix种类里有不可兼容的种类(从%s到%s)"
 
-#: src/main/subassign.c:487 src/main/subassign.c:767 src/main/subassign.c:770
-#: src/main/subassign.c:1061
+#: src/main/subassign.c:502 src/main/subassign.c:782 src/main/subassign.c:785
+#: src/main/subassign.c:1076
 msgid "NAs are not allowed in subscripted assignments"
 msgstr "下标赋值里不允许NA"
 
-#: src/main/subassign.c:505 src/main/subassign.c:781 src/main/subassign.c:1053
-#: src/main/subassign.c:1620
+#: src/main/subassign.c:520 src/main/subassign.c:796 src/main/subassign.c:1068
+#: src/main/subassign.c:1641
 msgid "replacement has length zero"
 msgstr "更换参数长度为零"
 
-#: src/main/subassign.c:507 src/main/subassign.c:783 src/main/subassign.c:1055
+#: src/main/subassign.c:522 src/main/subassign.c:798 src/main/subassign.c:1070
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr "被替换的项目不是替换值长度的倍数"
 
-#: src/main/subassign.c:751
+#: src/main/subassign.c:766
 msgid "incorrect number of subscripts on matrix"
 msgstr "矩阵里的下标数目不对"
 
-#: src/main/subassign.c:1007
+#: src/main/subassign.c:1022
 #, c-format
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr "矩阵子集赋值里有不可兼容的种类(从%s到%s)"
 
-#: src/main/subassign.c:1023 src/main/subset.c:927
+#: src/main/subassign.c:1038 src/main/subset.c:928
 msgid "incorrect number of subscripts"
 msgstr "下标数目不对"
 
-#: src/main/subassign.c:1199
+#: src/main/subassign.c:1214
 #, c-format
 msgid "incompatible types (from %s to %s) in array subset assignment"
 msgstr "陈列子集赋值有不可兼容的种类(从%s到%s)"
 
-#: src/main/subassign.c:1234 src/main/subassign.c:1255
+#: src/main/subassign.c:1249 src/main/subassign.c:1270
 msgid "invalid subscript in list assign"
 msgstr "串列赋值里的下标不对"
 
-#: src/main/subassign.c:1248
+#: src/main/subassign.c:1263
 msgid "invalid number of subscripts to list assign"
 msgstr "串列赋值里的下标数目不对"
 
-#: src/main/subassign.c:1341
+#: src/main/subassign.c:1361
 msgid "SubAssignArgs: invalid number of arguments"
 msgstr "SubAssignArgs: 参数数目不对"
 
-#: src/main/subassign.c:1485
+#: src/main/subassign.c:1506
 msgid "result is zero-length and so cannot be a language object"
 msgstr "计算结果的长度为零，因此不可能是语言目标对象"
 
-#: src/main/subassign.c:1590
+#: src/main/subassign.c:1611
 msgid ""
 "[[<- defined for objects of type \"S4\" only for subclasses of environment"
 msgstr "给\"S4\"类型的对象所定义的[[<-只能在环境子类内有用"
 
-#: src/main/subassign.c:1596
+#: src/main/subassign.c:1617
 msgid "wrong args for environment subassignment"
 msgstr "环境下赋值的参数不对"
 
-#: src/main/subassign.c:1622
+#: src/main/subassign.c:1643
 msgid "more elements supplied than there are to replace"
 msgstr "用来替换的元素比所要替换的值多"
 
-#: src/main/subassign.c:1624
+#: src/main/subassign.c:1645
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] 缺少下标"
 
-#: src/main/subassign.c:1636 src/main/subassign.c:1654
+#: src/main/subassign.c:1657 src/main/subassign.c:1675
 msgid "[[ ]] subscript out of bounds"
 msgstr "[[ ]] 下标在界限外"
 
-#: src/main/subassign.c:1642 src/main/subassign.c:1820
+#: src/main/subassign.c:1663 src/main/subassign.c:1841
 msgid "[[ ]] improper number of subscripts"
 msgstr "[[ ]] 下标数目不对"
 
-#: src/main/subassign.c:1787
+#: src/main/subassign.c:1808
 #, c-format
 msgid "incompatible types (from %s to %s) in [[ assignment"
 msgstr " [[ 赋值里有不可兼容的种类(从%s到%s)"
 
-#: src/main/subassign.c:1831
+#: src/main/subassign.c:1852
 #, c-format
 msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] 下标(%d)在界限外"
 
-#: src/main/subassign.c:1884 src/main/subscript.c:143 src/main/subscript.c:145
+#: src/main/subassign.c:1905 src/main/subscript.c:143 src/main/subscript.c:145
 #: src/main/subscript.c:274 src/main/subscript.c:276 src/main/subscript.c:826
 #: src/main/subscript.c:828 src/main/subscript.c:919 src/main/subscript.c:921
-#: src/main/subset.c:1108
+#: src/main/subset.c:1109
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "类别为'%s'的下标不对"
 
-#: src/main/subassign.c:1929
+#: src/main/subassign.c:1950
 msgid "no method for assigning subsets of this S4 class"
 msgstr "不存在给这个S4类别分配子集的方法"
 
-#: src/main/subassign.c:1987
+#: src/main/subassign.c:2008
 msgid "Coercing LHS to a list"
 msgstr "把公式左手强迫变成串列"
 
@@ -5818,19 +5818,19 @@ msgstr "这一种类不能有矩阵下标"
 msgid "array subscripting not handled for this type"
 msgstr "这一种类不能有阵列下标"
 
-#: src/main/subset.c:826
+#: src/main/subset.c:827
 msgid "incorrect number of dimensions"
 msgstr "量度数目不对"
 
-#: src/main/subset.c:923
+#: src/main/subset.c:924
 msgid "no index specified"
 msgstr "没有索引设定"
 
-#: src/main/subset.c:933
+#: src/main/subset.c:934
 msgid "this S4 class is not subsettable"
 msgstr "S4对象不可以取子集"
 
-#: src/main/subset.c:939
+#: src/main/subset.c:940
 msgid "wrong arguments for subsetting an environment"
 msgstr "取子集环境时的参数不对"
 

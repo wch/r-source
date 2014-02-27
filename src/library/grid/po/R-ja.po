@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: 2013-02-28 05:35+0200 \n"
 "Last-Translator: Triad sou <triadsou@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -295,6 +295,10 @@ msgstr " 'hgap' は 1 つの単位 (unit) でなければなりません "
 
 msgid "'vgap' must be single unit"
 msgstr " 'vgap' は 1 つの単位 (unit) でなければなりません "
+
+#, fuzzy
+msgid "'nrow' must be >= 1"
+msgstr " 'l' は layout でなければなりません "
 
 #, fuzzy
 msgid "'ncol' must be >= 1"

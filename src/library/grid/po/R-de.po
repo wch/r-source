@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: 2013-03-01 15:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -294,6 +294,10 @@ msgstr "'hgap' muss eine einzelne Stelle sein"
 
 msgid "'vgap' must be single unit"
 msgstr "'vgap' muss eine einzelne Stelle sein"
+
+#, fuzzy
+msgid "'nrow' must be >= 1"
+msgstr "'l' muss ein Layout sein"
 
 #, fuzzy
 msgid "'ncol' must be >= 1"

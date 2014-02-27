@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1365,8 +1365,9 @@ msgstr "pliki: %s"
 # warning(gettextf("installation of one of more packages failed,\n  probably %s",
 #                                  paste(sQuote(failed), collapse = ", ")),
 #                         domain = NA)
+#, fuzzy
 msgid ""
-"installation of one of more packages failed,\n"
+"installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
 "instalacja jednego lub więcej pakietów nie powiodła się,\n"
