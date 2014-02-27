@@ -2173,11 +2173,11 @@
                             warning = .whandler)
     
     files <- names(db) # not full file names
-    for(f in files) {
+    for(nf in files) {
         .messages <- character()
-        Rd <- db[[f]]
+        Rd <- db[[nf]]
         attr(Rd, "source") <- NULL
-	bf <- sub("\\.[Rr]d$", "", basename(f)) # e.g. f = "unix/Signals.Rd"
+	bf <- sub("\\.[Rr]d$", "", basename(nf)) # e.g. nf = "unix/Signals.Rd"
 	f <- attr(Rd, "Rdfile")# full file name
 
         shown <- FALSE
