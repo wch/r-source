@@ -25,6 +25,8 @@
 # include <config.h>
 #endif
 
+#define LAZY_DUPLICATE_OK
+
 #include <Defn.h>
 #include <Internal.h>
 #include <R_ext/PrtUtil.h> // for IndexWidth
