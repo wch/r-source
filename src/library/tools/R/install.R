@@ -2123,7 +2123,7 @@
     }
 
     dirname <- c("html", "latex", "R-ex")
-    ext <- c(".html", ".tex", ".R", ".html")
+    ext     <- c(".html", ".tex", ".R")
     names(dirname) <- names(ext) <- c("html", "latex", "example")
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir)) return()
@@ -2156,10 +2156,7 @@
                    error = function(e) NULL)
     ## If not, we build the Rd db from the sources:
     if (is.null(db)) db <- Rd_db(dir = dir)
-
     if (!length(db)) return()
-
-    files <- names(db)
 
     .whandler <-  function(e) {
         .messages <<- c(.messages,
@@ -2174,12 +2171,14 @@
     .convert <- function(expr)
         withCallingHandlers(tryCatch(expr, error = .ehandler),
                             warning = .whandler)
-
+    
+    files <- names(db) # not full file names
     for(f in files) {
         .messages <- character()
         Rd <- db[[f]]
         attr(Rd, "source") <- NULL
-        bf <- sub("\\.[Rr]d$", "", basename(f))
+	bf <- sub("\\.[Rr]d$", "", basename(f)) # e.g. f = "unix/Signals.Rd"
+	f <- attr(Rd, "Rdfile")# full file name
 
         shown <- FALSE
 
