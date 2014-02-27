@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-02-19 r65035) -- "Frisbee Sailing"
+R version 3.0.3 RC (2014-02-27 r65086) -- "Warm Puppy"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -187,7 +187,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x270ab20>
+<environment: 0x1f22e80>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -917,7 +917,7 @@ List of 5
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.304 0.006 0.311 0 0 
+Time elapsed:  0.305 0.005 0.312 0 0 
 > grDevices::dev.off()
 null device 
           1 

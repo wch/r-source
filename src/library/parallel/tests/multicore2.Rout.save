@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-02-19 r65035) -- "Frisbee Sailing"
+R version 3.0.3 RC (2014-02-27 r65086) -- "Warm Puppy"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -43,4 +43,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.142   0.019   0.247 
+  0.147   0.019   0.254 

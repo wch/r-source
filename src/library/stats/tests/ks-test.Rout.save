@@ -1,5 +1,5 @@
 
-R version 3.0.2 Patched (2014-02-19 r65035) -- "Frisbee Sailing"
+R version 3.0.3 RC (2014-02-27 r65086) -- "Warm Puppy"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.138   0.015   0.142 
+  0.132   0.020   0.142 
