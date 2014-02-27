@@ -24,9 +24,10 @@ file.path(\dots, fsep = .Platform$file.sep)
   It can also be used for environment paths such as \env{PATH} and
   \env{R_LIBS} with \code{fsep = .Platform$path.sep}.
 
-  Trailing path separators are never valid for Windows file paths
-  (although some functions/utilities do accept them), so as from \R 3.1.0
-  a trailing \code{/} or \code{\\} is removed.
+  Trailing path separators are invalid for Windows file paths apart from
+  \file{/} and \file{d:/} (although some functions/utilities do accept
+  them), so as from \R 3.1.0 a trailing \code{/} or \code{\\} is
+  removed.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and

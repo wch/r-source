@@ -349,9 +349,13 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 #ifdef Win32
-	// Trailing spaces are never valid for file paths
+	// Trailing seps are invalid for file paths except for / and d:/
 	if(streql(csep, "/") || streql(csep, "\\")) {
-	    if(*(--buf) == csep[0]) *buf = '\0';
+	    if(buf > cbuf) {
+		buf--;
+		if(*buf == csep[0] && buf > cbuf &&
+		   (buf != cbuf+2 || cbuf[1] != ':')) *buf = '\0';
+	    }
 	}
 #endif
 	SET_STRING_ELT(ans, i, mkChar(cbuf));
