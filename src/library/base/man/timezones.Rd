@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -11,9 +11,7 @@
 \alias{time zone}
 \alias{time zones}
 \alias{TZ}
-#ifdef windows
 \alias{TZDIR}
-#endif
 
 \title{Time Zones}
 \description{
@@ -29,8 +27,8 @@ OlsonNames()
 
 \arguments{
   \item{location}{logical: should an attempt be made to find the
-    location name as used in the Olson database?  (See \sQuote{Time zone
-      names} below.)}
+    location name as used in the Olson/IANA database?
+    (See \sQuote{Time zone names} below.)}
 }
 
 \details{
@@ -93,57 +91,58 @@ OlsonNames()
   user-friendly ways to specify time zones.
 
   Many systems make use of a time-zone database originally compiled by
-  Arthur David Olson (and now managed by IANA),
-  in which the preferred way to refer to a time zone is by a location
-  (typically of a city) e.g. \code{Europe/London},
-  \code{America/Los_Angeles}, \code{Pacific/Easter}.  Some traditional
-  designations are also allowed such as \code{EST5EDT} or
-  \code{GB}.  (Beware that some of these designations may not be what you
-  think: in particular \code{EST} is a time zone used in Canada
-  \emph{without} daylight saving time, and not \code{EST5EDT} nor
-  (Australian) Eastern Standard Time.)  The designation can also be an
-  optional colon prepended to the path to a file giving complied zone
-  information (and the examples above are all files in a system-specific
-  location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.  By convention, regions with a unique time-zone
-  history since 1970 have specific names, but those with different
-  earlier histories may not.  Each time zone has one or two (the second
-  for DST) abbreviations used when formatting times.
+  Arthur David Olson and now managed by IANA, in which the preferred way
+  to refer to a time zone is by a location (typically of a city)
+  e.g. \code{Europe/London}, \code{America/Los_Angeles},
+  \code{Pacific/Easter}.  Some traditional designations are also allowed
+  such as \code{EST5EDT} or \code{GB}.  (Beware that some of these
+  designations may not be what you think: in particular \code{EST} is a
+  time zone used in Canada \emph{without} daylight saving time, and not
+  \code{EST5EDT} nor (Australian) Eastern Standard Time.)  The
+  designation can also be an optional colon prepended to the path to a
+  file giving complied zone information (and the examples above are all
+  files in a system-specific location).  See
+  \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
+  references.  By convention, regions with a unique time-zone history
+  since 1970 have specific names, but those with different earlier
+  histories may not.  Each time zone has one or two (the second for DST)
+  abbreviations used when formatting times.
 
   Note that that the abbreviations have changed over the years: for
   example France used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to
   1911 then \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.
-  Software will generally use the current abbreviation(s), and the POSIX
-  standard allows only one or two abbreviations per time zone.
+  The POSIX standard allows only one or two abbreviations per time zone,
+  so you may see the current abbreviation(s) used even for pre-1970 times.
   
-  The function \code{OlsonNames} returns the names known to the Olson
-  database on the current system.
+  The function \code{OlsonNames} returns the names known to the
+  Olson/IANA database on the current system.
 #ifdef unix
 
-  Most Unix-alikes use the Olson database.  The system-specific
-  location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
-  (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
-  \ldots.  It is likely that there is a file named something like
-  \file{zone.tab} under that directory listing the locations known as
-  time-zone names (but not for example \code{EST5EDT}): this is read by
-  \code{OlsonNames}.  See also
+  Almost all Unix-alikes use the Olson/IANA database.  The
+  system-specific location in the file system varies, e.g.
+  \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
+  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
+  that there is a file named something like \file{zone.tab} under that
+  directory listing the locations known as time-zone names (but not for
+  example \code{EST5EDT}): this is read by \code{OlsonNames}.  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
 
-  Where \R was configured with option \option{--with-internal-tzcode},
-  the database at \code{file.path(R.home("share"), "zoneinfo")} is used
-  by default: file \file{VERSION} in that directory gives the version.
+  Where \R was configured with option \option{--with-internal-tzcode}
+  (the default on OS X and Windows: recommended on Solaris), the
+  database at \code{file.path(R.home("share"), "zoneinfo")} is used by
+  default: file \file{VERSION} in that directory contains the version.
   An alternative directory can be specified \emph{via} environment
   variable \env{TZDIR}.
 #endif
 #ifdef windows
 
-  \R under Windows uses the Olson database.  The current version of the
-  database will be given in file
-  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.
-  Environment variable \env{TZDIR} can be used to point to a later
-  \file{zoneinfo} directory.  A file listing most known time zones can be
-  found at \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
-  \sQuote{Examples}).   By convention, regions with a unique time-zone
+  \R under Windows uses the Olson/IANA database.  The current version of
+  the database will be given in file
+  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.  Environment
+  variable \env{TZDIR} can be used to point to a later \file{zoneinfo}
+  directory.  A file listing most known time zones can be found at
+  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
+  \sQuote{Examples}).  By convention, regions with a unique time-zone
   history since 1970 have specific names, but those with different
   earlier histories may not.
 
@@ -171,12 +170,14 @@ OlsonNames()
   Since 2007 there has been considerable disruption over changes to the
   timings of the DST transitions, aimed at energy conservation.  These
   often have short notice and time-zone databases may not be up to date.
+  (Chile has in the recent past announced changes at \emph{5 days}
+  notice, and in 2014 Turkey gave only a month's notice.)
 
-  Note that except on Windows, the operation of time zones is an OS
-  service, and even on Windows a third-party database is used and can be
-  updated (see the section on \sQuote{Time zone names}).  Incorrect
-  results will never be an \R issue, so please ensure that you have the
-  courtesy not to blame \R for them.
+  Note that except where replaced, the operation of time zones is an OS
+  service, and even where replaced a third-party database is used and
+  can be updated (see the section on \sQuote{Time zone names}).
+  Incorrect results will never be an \R issue, so please ensure that you
+  have the courtesy not to blame \R for them.
 }
 % Unlike Tony Plate.
 
