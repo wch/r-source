@@ -691,7 +691,7 @@ getVignetteEncoding <-  function(file, ...)
     lines <- readLines(file, warn = FALSE)
     result1 <- .getVignetteEncoding(lines, ...)
     
-    poss <- grep("^[[:space:]]*%\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
+    poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
     if (length(poss)) {
     	result <- "UTF-8"
     	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
