@@ -229,6 +229,9 @@
       This is intended to enhance the portability of code written by
       those using POSIX file systems (where a trailing \code{/} can be
       used to confine path matching to directories).
+      
+      \item New function \code{agrepl()} which like \code{grepl()}
+      returns a logical vector.
     }
   }
 

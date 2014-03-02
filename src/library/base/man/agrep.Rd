@@ -1,10 +1,11 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
 \alias{agrep}
+\alias{agrepl}
 \alias{fuzzy matching}
 \alias{.amatch_bounds}
 \alias{.amatch_costs}
@@ -20,6 +21,9 @@
 agrep(pattern, x, max.distance = 0.1, costs = NULL,
       ignore.case = FALSE, value = FALSE, fixed = TRUE,
       useBytes = FALSE)
+
+agrepl(pattern, x, max.distance = 0.1, costs = NULL,
+       ignore.case = FALSE, fixed = TRUE, useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{a non-empty character string or a character string
@@ -71,9 +75,9 @@ agrep(pattern, x, max.distance = 0.1, costs = NULL,
   deletions and substitutions required to transform one string into
   another.
 
-  As from \R 2.10.0 this uses \code{tre} by Ville Laurikari
+  Yhis uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
-  character matching much better than the previous version.
+  character matching.
 
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches in multibyte locales.
@@ -84,20 +88,22 @@ agrep(pattern, x, max.distance = 0.1, costs = NULL,
   Since someone who read the description carelessly even filed a bug
   report on it, do note that this matches substrings of each element of
   \code{x} (just as \code{\link{grep}} does) and \bold{not} whole
-  elements.  See \code{\link{adist}} in package \pkg{utils}, which
+  elements.  See also \code{\link{adist}} in package \pkg{utils}, which
   optionally returns the offsets of the matched substrings.
 }
 \value{
-  Either a vector giving the indices of the elements that yielded a
-  match, or, if \code{value} is \code{TRUE}, the matched elements (after
-  coercion, preserving names but no other attributes).
+  \code{agrep} returns a vector giving the indices of the elements that
+  yielded a match, or, if \code{value} is \code{TRUE}, the matched
+  elements (after coercion, preserving names but no other attributes).
+
+  \code{agrepl} returns a logical vector.
 }
 \author{
-  Original version by David Meyer.
+  Original version in \R < 2.10.0 by David Meyer.
   Current version by Brian Ripley and Kurt Hornik.
 }
 \seealso{
-  \code{\link{grep}}
+  \code{\link{grep}}, \code{\link{adist}}.
 }
 \examples{
 agrep("lasy", "1 lazy 2")

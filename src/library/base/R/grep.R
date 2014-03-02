@@ -95,8 +95,7 @@ function(pattern, x, max.distance = 0.1, costs = NULL,
          useBytes = FALSE)
 {
     pattern <- as.character(pattern)
-    if(!is.character(x))
-        x <- as.character(x)
+    if(!is.character(x)) x <- as.character(x)
 
     ## TRE needs integer costs: coerce here for simplicity.
     costs <- as.integer(.amatch_costs(costs))
@@ -104,6 +103,21 @@ function(pattern, x, max.distance = 0.1, costs = NULL,
 
     .Internal(agrep(pattern, x, ignore.case, value, costs, bounds,
                     useBytes, fixed))
+}
+
+agrepl <-
+function(pattern, x, max.distance = 0.1, costs = NULL,
+         ignore.case = FALSE, fixed = TRUE, useBytes = FALSE)
+{
+    pattern <- as.character(pattern)
+    if(!is.character(x)) x <- as.character(x)
+
+    ## TRE needs integer costs: coerce here for simplicity.
+    costs <- as.integer(.amatch_costs(costs))
+    bounds <- .amatch_bounds(max.distance)
+
+    .Internal(agrepl(pattern, x, ignore.case, FALSE, costs, bounds,
+                     useBytes, fixed))
 }
 
 .amatch_bounds <-
