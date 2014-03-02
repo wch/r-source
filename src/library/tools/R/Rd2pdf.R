@@ -66,7 +66,7 @@
                          "}\\\\email{\\1@\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
         if(f == "URL")
-            text <- gsub("(http://|ftp://)([^[:space:],]+)",
+            text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
                          "}\\\\url{\\1\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
         text <- paste0("\\AsIs{", text, "}")
