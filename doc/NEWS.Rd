@@ -290,7 +290,8 @@
       
       \item There is a new option \option{--use-system-tre} to use a
       suitable system \pkg{tre} library: at present this means a version
-      from their \command{git} repository.
+      from their \command{git} repository, after corrections.
+      (Wish of \PR{15660}.)
     }
   }
 
@@ -536,7 +537,9 @@
       This may introduce error messages in existing code and/or produce
       a different result in existing code (but only where a non-finite
       location or dimension may now become zero).
-
+      
+      \item Some bugs in TRE have been corrected by updating from the
+      \command{git} repository.
     }
   }
 }

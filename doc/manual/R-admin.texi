@@ -3064,8 +3064,9 @@ compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
 Option @option{--with-system-tre} is also available: it needs a recent
-version of TRE (currently only from the @command{git} repository at
-@url{https://github.com/laurikari/tre/}).
+version of TRE. (The current sources are in the @command{git} repository
+at @url{https://github.com/laurikari/tre/}, but at the time of writing
+the resulting build will not pass its checks.).
 
 @code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
