@@ -118,36 +118,29 @@ OlsonNames()
   \R prior to 3.1.0.
   
   The function \code{OlsonNames} returns the time-zone names known to
-  the Olson/IANA database on the current system.
-#ifdef unix
-
-  Almost all Unix-alikes use the Olson/IANA database.  The
-  system-specific location in the file system varies, e.g.
-  \file{/usr/share/zoneinfo} (Linux, OS X, FreeBSD),
-  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
-  that there is a file named something like \file{zone.tab} under that
-  directory listing the locations known as time-zone names (but not for
-  example \code{EST5EDT}): this is read by \code{OlsonNames}.  See also
+  the Olson/IANA database on the current system. The system-specific
+  location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
+  (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
+  \ldots.  It is likely that there is a file named something like
+  \file{zone.tab} under that directory listing the locations known as
+  time-zone names (but not for example \code{EST5EDT}): this is read by
+  \code{OlsonNames}.  See also
   \url{http://en.wikipedia.org/wiki/Zone.tab}.
+#ifdef unix
 
   Where \R was configured with option \option{--with-internal-tzcode}
   (the default on OS X and Windows: recommended on Solaris), the
   database at \code{file.path(R.home("share"), "zoneinfo")} is used by
-  default: file \file{VERSION} in that directory contains the version.
-  An alternative \file{zoneinfo} directory can be specified \emph{via}
-  environment variable \env{TZDIR}.
+  default: file \file{VERSION} in that directory states the version.
+  Environment variable \env{TZDIR} can be used to point to a different
+  \file{zoneinfo} directory.
 #endif
 #ifdef windows
 
-  \R under Windows uses the Olson/IANA database.  The current version of
-  the database will be given in file
-  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.  Environment
-  variable \env{TZDIR} can be used to point to a later \file{zoneinfo}
-  directory.  A file listing most known time zones can be found at
-  \file{\var{\link{R_HOME}}\\share\\zoneinfo\\zone.tab} (see
-  \sQuote{Examples}).  By convention, regions with a unique time-zone
-  history since 1970 have specific names, but those with different
-  earlier histories may not.
+  Under Windows the current version of the database is stated in
+  file \file{\var{\link{R_HOME}}\\share\\zoneinfo\\VERSION}.
+  Environment variable \env{TZDIR} can be used to point to a different
+  \file{zoneinfo} directory.
 
   An attempt is made (once only per session) to map Windows' idea of the
   current time zone to a location, following an earlier version of
