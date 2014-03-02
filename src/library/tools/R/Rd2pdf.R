@@ -61,11 +61,11 @@
         ## \AsIs is per-para.
         text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
         Encoding(text) <- "unknown"
-        if(f %in% c("Author", "Maintainer"))
+        if(f %in% c("Author", "Maintainer", "Contact"))
             text <- gsub("<([^@ ]+)@([^> ]+)>",
                          "}\\\\email{\\1@\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
-        if(f == "URL")
+        if(f %in% c("URL", "BugReports", "Contact"))
             text <- gsub("(http://|ftp://|https://)([^[:space:],]+)",
                          "}\\\\url{\\1\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
