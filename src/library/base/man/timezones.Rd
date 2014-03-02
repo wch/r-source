@@ -16,7 +16,7 @@
 \title{Time Zones}
 \description{
   Information about time zones in \R.  \code{Sys.timezone} returns
-  the current time zone.
+  the name of the current time zone.
 }
 
 \usage{
@@ -33,10 +33,12 @@ OlsonNames()
 
 \details{
   Time zones are a system-specific topic, but these days almost all \R
-  platforms use similar underlying code, used by Linux, OS X,
-  Solaris, AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed
-  with \R on Windows.  Unfortunately there are many system-specific
-  errors in the implementations.
+  platforms use similar underlying code, used by Linux, OS X, Solaris,
+  AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed with \R on
+  Windows.  Unfortunately there are many system-specific errors in the
+  implementations.  It is possible to use \R's own version of the code
+  on Unix-alikes as well as on Windows: this is the default for OS X and
+  recommended for Solaris.
 
   It should be possible to set the time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
@@ -57,17 +59,16 @@ OlsonNames()
   time}) was first introduced in the early twentieth century, most
   widely in 1916. Over the last 100 years places have changed their
   affiliation between major time zones, have opted out of (or in to) DST
-  in various years or adopted rule changes late or not at all.
+  in various years or adopted DST rule changes late or not at all.
   
   The most common system implementation of \code{POSIXct} is as signed
   32-bit integers and so only goes back to the end of 1901: on such
   systems \R assumes that dates prior to that are in the same time zone
   as they were in 1902.  Most of the world had not adopted time zones by
-  1902 but for some places there had been time-zone changes before then.
-  64-bit representations are becoming common (and \R can be configured
-  to use one on a Unix-alike and does on Windows); unfortunately on some
-  OSes the database information is only available for the range
-  1901--2038.
+  1902 (so used local \sQuote{mean time} based on longitude) but for
+  some places there had been time-zone changes before then.  64-bit
+  representations are becoming common; unfortunately on some 64-bit OSes
+  the database information is only available for the range 1901--2038.
 }
 
 \value{
@@ -90,10 +91,10 @@ OlsonNames()
   which is often at least partially supported, but there are other more
   user-friendly ways to specify time zones.
 
-  Many systems make use of a time-zone database originally compiled by
-  Arthur David Olson and now managed by IANA, in which the preferred way
-  to refer to a time zone is by a location (typically of a city)
-  e.g. \code{Europe/London}, \code{America/Los_Angeles},
+  Almost all \R platforms make use of a time-zone database originally
+  compiled by Arthur David Olson and now managed by IANA, in which the
+  preferred way to refer to a time zone is by a location (typically of a
+  city) e.g. \code{Europe/London}, \code{America/Los_Angeles},
   \code{Pacific/Easter}.  Some traditional designations are also allowed
   such as \code{EST5EDT} or \code{GB}.  (Beware that some of these
   designations may not be what you think: in particular \code{EST} is a
@@ -104,18 +105,20 @@ OlsonNames()
   files in a system-specific location).  See
   \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
   references.  By convention, regions with a unique time-zone history
-  since 1970 have specific names, but those with different earlier
-  histories may not.  Each time zone has one or two (the second for DST)
-  abbreviations used when formatting times.
+  since 1970 have specific names in the database, but those with
+  different earlier histories may not.  Each time zone has one or two
+  (the second for DST) \emph{abbreviations} used when formatting times.
 
-  Note that that the abbreviations have changed over the years: for
-  example France used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to
-  1911 then \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.
-  The POSIX standard allows only one or two abbreviations per time zone,
-  so you may see the current abbreviation(s) used even for pre-1970 times.
+  The abbreviations used have changed over the years: for example France
+  used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to 1911 then
+  \samp{WET/WEST} up to 1940 and \samp{CET/CEST} from 1946.  (In almost
+  all time zones they have been stable since 1970.)  The POSIX standard
+  allows only one or two abbreviations per time zone, so you may see the
+  current abbreviation(s) used for older times: more so in versions of
+  \R prior to 3.1.0.
   
-  The function \code{OlsonNames} returns the names known to the
-  Olson/IANA database on the current system.
+  The function \code{OlsonNames} returns the time-zone names known to
+  the Olson/IANA database on the current system.
 #ifdef unix
 
   Almost all Unix-alikes use the Olson/IANA database.  The
@@ -131,8 +134,8 @@ OlsonNames()
   (the default on OS X and Windows: recommended on Solaris), the
   database at \code{file.path(R.home("share"), "zoneinfo")} is used by
   default: file \file{VERSION} in that directory contains the version.
-  An alternative directory can be specified \emph{via} environment
-  variable \env{TZDIR}.
+  An alternative \file{zoneinfo} directory can be specified \emph{via}
+  environment variable \env{TZDIR}.
 #endif
 #ifdef windows
 
@@ -149,19 +152,19 @@ OlsonNames()
   An attempt is made (once only per session) to map Windows' idea of the
   current time zone to a location, following an earlier version of
   \url{http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml}
-  It can be overridden by setting the \env{TZ} environment variable.
+  It can be overridden by setting the \env{TZ} environment variable
+  before any date-times are used in the session.
 
   Windows documents a specification of the form \code{GST-1GDT}: this is
   interpreted as POSIX-like and hence the \sQuote{US rules} for changing
-  to/from DST are applied (and are incorrect for Germany).  Versions of
-  \R prior to 2.7.0 used Windows' system functions and hence this form:
-  it is still accepted for backwards compatibility but was (and remains)
-  unreliable and gives a warning.
+  to/from DST are applied (and are incorrect for Germany).  This is
+  accepted for backwards compatibility but is unreliable and gives a
+  warning.
 #endif
 
   Most platforms support time zones of the form \samp{GMT+n} and
-  \samp{GMT-n}, which are at a fixed offset from UTC (hence no DST).
-  Contrary to some usage (but consistent with names such as
+  \samp{GMT-n}, which assume at a fixed offset from UTC (hence no DST).
+  Contrary to some expectations (but consistent with names such as
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
 }
