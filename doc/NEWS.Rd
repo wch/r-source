@@ -287,6 +287,10 @@
       counting instead of the \code{NAMED} mechanism by defining
       \code{SWITCH_TO_REFCNT} in \file{Rinternals.h}. This may become
       the default in the future.
+      
+      \item There is a new option \option{--use-system-tre} to use a
+      suitable system \pkg{tre} library: at present this means a version
+      from their \command{git} repository.
     }
   }
 
