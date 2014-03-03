@@ -540,6 +540,9 @@
       
       \item Some bugs in TRE have been corrected by updating from the
       \command{git} repository.
+
+      \item \code{?} applied to a call to an S4 generic failed in
+      several cases. (\PR{15680})
       
       \item The implicit S4 generics for primitives with \code{\dots} in
       their argument list were incorrect. (\PR{15690})

@@ -134,14 +134,18 @@ function(expr, envir, doEval = TRUE)
         }
         else
             fdef <- methods::getGeneric(f, where = where)
-        call <- match.call(fdef, expr)
+        args <- formals(fdef)
+        call <- match.call(fdef, expr, expand.dots=FALSE)
+        args[names(call[-1L])] <- call[-1L]
+        if ("..." %in% names(call))
+            args$... <- args$...[[1L]]        
         ## make the signature
         sigNames <- fdef@signature
-        sigClasses <- rep.int("ANY", length(sigNames))
+        sigClasses <- rep.int("missing", length(sigNames))
         names(sigClasses) <- sigNames
         for(arg in sigNames) {
-            argExpr <- methods::elNamed(call, arg)
-            if(!is.null(argExpr)) {
+            argExpr <- methods::elNamed(args, arg)
+            if(!missing(argExpr) && !is.null(argExpr)) {
                 simple <- (is.character(argExpr) || is.name(argExpr))
                 ## TODO:  ideally, if doEval is TRUE, we would like to
                 ## create the same context used by applyClosure in
@@ -157,7 +161,7 @@ function(expr, envir, doEval = TRUE)
                         stop(gettextf("error in trying to evaluate the expression for argument %s (%s)",
                                       sQuote(arg), deparse(argExpr)),
                              domain = NA)
-                    sigClasses[[arg]] <- class(argVal)
+                    sigClasses[[arg]] <- class(argVal)[1L]
                 }
                 else
                     sigClasses[[arg]] <- as.character(argExpr)
