@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-02 r65097) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-03 r65105) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -882,8 +882,8 @@ Creating a generic function for 'is.unsorted' from package 'base' in the global 
 > # getSrcref failed when rematchDefinition was used
 > text <- '
 + setClass("MyClass", representation(val = "numeric"))
-+ setMethod("plot", signature(x = "MyClass"), 
-+     function(x, y, ...) { 
++ setMethod("plot", signature(x = "MyClass"),
++     function(x, y, ...) {
 +         # comment
 + 	NULL
 +     })
@@ -896,7 +896,7 @@ Creating a generic function for 'is.unsorted' from package 'base' in the global 
 + '
 > source(textConnection(text), keep.source = TRUE)
 > getSrcref(getMethod("plot", "MyClass"))
-function(x, y, ...) { 
+function(x, y, ...) {
         # comment
 	NULL
     }
@@ -906,4 +906,18 @@ function(.Object, value) {
 	.Object@val <- value
 	return(.Object)
     }
+> 
+> ## PR#15691
+> setGeneric("fun", function(x, ...) standardGeneric("fun"))
+[1] "fun"
+> setMethod("fun", "character", identity)
+[1] "fun"
+> setMethod("fun", "numeric", function(x) {
++   x <- as.character(x)
++   callGeneric()
++ })
+[1] "fun"
+> 
+> stopifnot(identical(fun(1), do.call(fun, list(1))))
+> ## failed in R < 3.1.0
 > 

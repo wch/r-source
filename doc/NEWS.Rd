@@ -540,6 +540,11 @@
       
       \item Some bugs in TRE have been corrected by updating from the
       \command{git} repository.
+      
+      \item The implicit S4 generics for primitives with \code{\dots} in
+      their argument list were incorrect. (\PR{15690})
+      
+      \item Bug fixes to methods::callGeneric. (\PR{15691})
     }
   }
 }

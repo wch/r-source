@@ -1195,21 +1195,21 @@ callGeneric <- function(...)
     ## the  lines below this comment do what the previous version
     ## did in the expression fdef <- sys.function(frame)
     if(exists(".Generic", envir = envir, inherits = FALSE))
-	fname <- get(".Generic", envir = envir)
+	fdef <- get(get(".Generic", envir = envir), envir = envir)
     else { # in a local method (special arguments), or	an error
         localArgs <- identical(as.character(call[[1L]]), ".local")
 	if(localArgs)
 	    call <- sys.call(sys.parent(2))
-	fname <- as.character(call[[1L]])
+	if (is.name(call[[1L]]))
+	    fdef <- get(as.character(call[[1L]]), envir = envir)
+	else fdef <- call[[1L]]
     }
-    fdef <- get(fname, envir = envir)
 
     if(is.primitive(fdef)) {
         if(nargs() == 0)
             stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
         else {
-            fname <- as.name(fname)
-            call <- substitute(fname(...))
+            call <- substitute(fdef(...))
         }
     }
     else {
