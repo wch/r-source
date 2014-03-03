@@ -1,4 +1,3 @@
-
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -144,8 +143,6 @@ int R_gc_running() { return R_in_gc; }
 #define OLDTYPE(s) LEVELS(s)
 #define SETOLDTYPE(s, t) SETLEVELS(s, t)
 
-static const char *sexptype2char(SEXPTYPE type);
-
 static R_INLINE SEXP CHK(SEXP x)
 {
     /* **** NULL check because of R_CurrentExpr */
@@ -181,8 +178,8 @@ static R_INLINE void register_bad_sexp_type(SEXP s, int line)
     }
 }
 
-/* slight modification of typename() from install.c -- should probably merge */
-static const char *sexptype2char(SEXPTYPE type) {
+/* also called from typename() in inspect.c */
+const char *sexptype2char(SEXPTYPE type) {
     switch (type) {
     case NILSXP:	return "NILSXP";
     case SYMSXP:	return "SYMSXP";
