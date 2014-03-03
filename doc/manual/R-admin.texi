@@ -1638,8 +1638,8 @@ rm -rf /Library/Frameworks/R.framework /Applications/R.app \
 @end example
 
 The installation consisted of three Apple packages:
-@code{org.r-project.R.Leopard.fw.pkg},
-@code{org.r-project.R.Leopard.GUI.pkg} and
+@code{org.r-project.R.x86_64.fw.pkg},
+@code{org.r-project.R.x86_64.GUI.pkg} and
 @code{org.r-project.x86_64.tcltk.x11} (not all of which need be
 installed). You can use @code{pkgutil --unlink} (not supported by Lion
 or later) to remove their files or @code{pkgutil --forget} if you want
