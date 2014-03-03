@@ -721,8 +721,8 @@ SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocVector(SEXPTYPE, R_xlen_t);
-int  Rf_any_duplicated(SEXP x, Rboolean from_last);
-int  Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
+R_xlen_t Rf_any_duplicated(SEXP x, Rboolean from_last);
+R_xlen_t Rf_any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
