@@ -1064,7 +1064,7 @@ used for their side effects, e.g., printing and plotting functions.
 @cindex function
 @cindex function arguments
 Function calls can have @emph{tagged} (or @emph{named}) arguments, as in
-@code{plot(x, y, pch = 3)} arguments without tags are known as
+@code{plot(x, y, pch = 3)}.  Arguments without tags are known as
 @emph{positional} since the function must distinguish their meaning from
 their sequential positions among the arguments of the call, e.g., that
 @code{x} denotes the abscissa variable and @code{y} the ordinate.  The
@@ -1308,10 +1308,10 @@ Only the first element of @var{value1} is used.  All other elements are
 ignored.  If @var{value1} has any type other than a logical or a numeric
 vector an error is signalled.
 
-If/else statements can be used to avoid numeric problems such as taking
-the logarithm of a negative number.  Because if/else statements are the
-same as other statements you can assign the value of them.  The two
-examples below are equivalent.
+@code{if}/@code{else} statements can be used to avoid numeric problems
+such as taking the logarithm of a negative number.  Because
+@code{if}/@code{else} statements are the same as other statements you
+can assign the value of them.  The two examples below are equivalent.
 
 @example
 > if( any(x <= 0) ) y <- log(1+x) else y <- log(x)
@@ -1327,7 +1327,7 @@ complete statement that is evaluated.  A simple solution is to use a
 compound statement wrapped in braces, putting the @code{else} on the
 same line as the closing brace that marks the end of the statement.
 
-If/else statements can be nested.
+@code{if}/@code{else} statements can be nested.
 
 @example
 if ( @var{statement1} ) @{
@@ -1342,7 +1342,7 @@ if ( @var{statement1} ) @{
 
 One of the even numbered statements will be evaluated and the resulting
 value returned.  If the optional @code{else} clause is omitted and all
-the odd numbered @var{statement}'s evaluate to @code{FALSE} no statement
+the odd numbered @var{statement}s evaluate to @code{FALSE} no statement
 will be evaluated and @code{NULL} is returned.
 
 The odd numbered @var{statement}s are evaluated, in order, until one
@@ -1378,7 +1378,7 @@ causes control to return to the start of the loop.  The next iteration
 of the loop (if there is one) is then executed.  No statement below
 @code{next} in the current loop is evaluated.
 
-The value returned by a loop statement statement is always @code{NULL}
+The value returned by a loop statement is always @code{NULL}
 and is returned invisibly.
 
 @node repeat, while, Looping, Control structures
@@ -1451,7 +1451,7 @@ switch (@var{statement}, @var{list})
 where the elements of @var{list} may be named.  First, @var{statement}
 is evaluated and the result, @var{value}, obtained.  If @var{value} is a
 number between 1 and the length of @var{list} then the corresponding
-element @var{list} is evaluated and the result returned.  If @var{value}
+element of @var{list} is evaluated and the result returned.  If @var{value}
 is too large or too small @code{NULL} is returned.
 
 @example
@@ -1529,10 +1529,6 @@ vector is not a multiple of the shorter one, a warning is given.
 
 As from @R{} 1.4.0, any arithmetic operation involving a zero-length
 vector has a zero-length result.
-
-One exception is that when adding vectors to matrices, a warning is not
-given if the lengths are incompatible.
-@c Is that a bug?
 
 @node Propagation of names, Dimensional attributes, Recycling rules, Elementary arithmetic operations
 @subsection Propagation of names
@@ -1842,7 +1838,7 @@ the same way as the basic methods, for example with respect to partial
 matching.
 
 The most important example of a class method for @code{[} is that used
-for data frames.  It is not be described in detail here (see the help
+for data frames.  It is not described in detail here (see the help
 page for @code{[.data.frame}, but in broad terms, if two indices are
 supplied (even if one is empty) it creates matrix-like indexing for a
 structure that is basically a list of vectors of the same length.  If a
@@ -1865,7 +1861,7 @@ mechanism for complex assignment:
 @example
 x[3:5] <- 13:15
 @end example
-The result of this commands is as if the following had been executed
+The result of this command is as if the following had been executed
 @example
 `*tmp*` <- x
 x <- "[<-"(`*tmp*`, 3:5, value=13:15)
@@ -1943,9 +1939,9 @@ value of @code{e} on the RHS of the superassignment statement.  It sets
 @end example
 That is, the superassignment is equivalent to the four lines
 @example
-`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get(e, envir=parent.env(), inherits=TRUE)
 `*tmp*`[i] <- e[i]+1
-x <<- `*tmp*`
+e <<- `*tmp*`
 rm(`*tmp*`)
 @end example
 
@@ -2246,7 +2242,7 @@ The value returned by the call to @code{function} is a function.  If
 this is not given a name it is referred to as an
 @cindex function, anonymous
 anonymous
-function. Anonymous functions are most frequently used as arguments
+function. Anonymous functions are most frequently used as arguments to
 other functions such as the @code{apply} family or @code{outer}.
 
 Here is a simple function: @code{echo <- function(x) print(x)}.  So
@@ -2455,7 +2451,7 @@ to the local environment.
 The process of filling the value slot of a promise by
 @cindex evaluation
 evaluating the
-contents of the expression slot in the promises environment is called
+contents of the expression slot in the promise's environment is called
 @emph{forcing} the promise.  A promise will only be forced once, the
 value slot content being used directly later on.
 
@@ -2697,10 +2693,10 @@ objects are @code{.Generic}, @code{.Class}, @code{.Method} and
 functions and types that will be discussed elsewhere.
 
 The class system is facilitated through the @code{class} attribute.
-This attribute is a list of class names.  So to create an object of
-class @code{"foo"} one simply attaches a class attribute with the string
-@samp{"foo"} in it.  Thus, virtually anything can be turned in to an
-object of class @code{"foo"}.
+This attribute is a character vector of class names.  So to create an
+object of class @code{"foo"} one simply attaches a class attribute with
+the string @samp{"foo"} in it.  Thus, virtually anything can be turned
+in to an object of class @code{"foo"}.
 
 The object system makes use of
 @cindex function, generic
@@ -2826,7 +2822,7 @@ new generic function only the methods.  This makes it easy to add to
 existing systems since the user is only responsible for dealing with the
 new representation and not with any of the existing representations.
 
-The bulk of the uses of this methodology are to provided specialized
+The bulk of the uses of this methodology are to provide specialized
 printing for objects of different types; there are about 40 methods for
 @code{print}.
 
@@ -2952,10 +2948,6 @@ return to the generic and hence any expressions after a call to
 Any arguments to the generic that were evaluated prior to the call to
 @code{UseMethod} remain evaluated.
 
-The arguments in the call to the generic are rematched with the
-arguments for the method using the standard argument matching mechanism.
-The first argument, i.e.@: the object, will have been evaluated.
-
 If the first argument to @code{UseMethod} is not supplied it is assumed
 to be the name of the current function.  If two arguments are supplied
 to @code{UseMethod} then the first is the name of the method and the
@@ -2963,7 +2955,7 @@ second is assumed to be the object that will be dispatched on.  It is
 evaluated so that the required method can be determined.  In this case
 the first argument in the call to the generic is not evaluated and is
 discarded.  There is no way to change the other arguments in the call to
-the method these remain as they were in the call to the generic.  This
+the method; these remain as they were in the call to the generic.  This
 is in contrast to @code{NextMethod} where the arguments in the call to
 the next method can be altered.
 
@@ -3405,7 +3397,7 @@ logplot <- function(y, ylab = deparse(substitute(y))) @{
 
 This looks straightforward, but one will discover that the y label
 becomes an ugly @code{c(...)} expression.  It happens because the rules
-of lazy evaluation causes the evaluation of the @code{ylab} expression
+of lazy evaluation cause the evaluation of the @code{ylab} expression
 to happen @emph{after} @code{y} has been modified.  The solution is to
 force @code{ylab} to be evaluated first, i.e.,
 
@@ -3975,7 +3967,7 @@ evaluated when the function is exited.
 @section Error options
 
 There are a number of @code{options} variables that can be used to
-control how @R{} handles errors and warnings.  The are listed in the
+control how @R{} handles errors and warnings.  They are listed in the
 table below.
 
 @table @samp
@@ -4414,8 +4406,8 @@ scanned but ignored.
 
 @cindex identifier
 Identifiers consist of a sequence of letters, digits, the period
-(@samp{.}) and the underscore.  They must not start with a digit nor
-underscore, nor with a period followed by a digit.
+(@samp{.}) and the underscore.  They must not start with a digit or
+an underscore, or with a period followed by a digit.
 
 The definition of a letter depends on the current locale: the precise
 set of characters allowed is given by the C expression @code{(isalnum(c)
@@ -4542,7 +4534,7 @@ function definitions, conditional expressions, and iterative constructs.
 @node Indexing tokens,  , Grouping, Tokens
 @subsection Indexing tokens
 
-Indexing of arrays and vectors performed using the single and double
+Indexing of arrays and vectors is performed using the single and double
 brackets, @samp{[]} and @samp{[[]]}.  Also, indexing tagged lists
 may be done using the @samp{$} operator.
 
@@ -4611,7 +4603,7 @@ g(tag = value, , 5)
 @node Infix and prefix operators, Index constructions, Function calls (expressions), Expressions
 @subsection Infix and prefix operators
 
-The order of precedence (highest first) of the operators are
+The order of precedence (highest first) of the operators is
 
 @example
 ::
@@ -4666,7 +4658,7 @@ operator precedence (e.g., @code{a * (b + c)}).
 Notice that the
 @cindex assignment
 assignment symbols are operators just like the arithmetic, relational,
-and logical ones.  Any expressions is allowed also on the target side of
+and logical ones.  Any expression is allowed also on the target side of
 an assignment, as far as the parser is concerned (@code{2 + 2 <- 5} is a
 valid expression as far as the parser is concerned.  The evaluator will
 object, though).  Similar comments apply to the model formula operator.
