@@ -55,16 +55,11 @@ typedef struct {
    tags, matching parameter settings, and all expressions that match one
    character. */
 typedef struct {
-#if 0 /* [i_a] must be able to carry the full span of all [Unicode] character codes *PLUS* these 'specials': TAG, PARAMETER, BACKREF, ASSERTION and EMPTY */
-  tre_cint_t code_min;
-  tre_cint_t code_max;
-#else
-  int /* long */ code_min;
-  int /* long */ code_max;
-#endif
+  long code_min;
+  long code_max;
   int position;
   union {
-    tre_ctype_t classt; /* [i_a] wrong syntax colouring prevention */
+    tre_ctype_t class;
     int *params;
   } u;
   tre_ctype_t *neg_classes;

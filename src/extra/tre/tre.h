@@ -279,8 +279,7 @@ enum {
   TRE_CONFIG_WCHAR,
   TRE_CONFIG_MULTIBYTE,
   TRE_CONFIG_SYSTEM_ABI,
-  TRE_CONFIG_VERSION,
-  TRE_MB_CUR_MAX_VALUE  /* [i_a] - derived from MULTIBYTE and WCHAR, but still handy to have: no need to copy logic in TRE header files, etc. in order to know this */
+  TRE_CONFIG_VERSION
 };
 
 /* Returns 1 if the compiled pattern has back references, 0 if not. */

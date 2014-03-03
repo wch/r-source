@@ -328,7 +328,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
   GET_NEXT_WCHAR();
   pos = 0;
 
-  while (/*CONSTCOND*/1)
+  while (/*CONSTCOND*/(void)1,1)
     {
       DPRINT(("%03d:%2lc/%05d\n", pos, (tre_cint_t)next_c, (int)next_c));
 

@@ -22,9 +22,9 @@
 
 #ifdef TRE_DEBUG
 #include <stdio.h>
-#define DPRINT(msg) do {printf msg; fflush(stdout);} while(/*CONSTCOND*/0)
+#define DPRINT(msg) do {printf msg; fflush(stdout);} while(/*CONSTCOND*/(void)0,0)
 #else /* !TRE_DEBUG */
-#define DPRINT(msg) do { } while(/*CONSTCOND*/0)
+#define DPRINT(msg) do { } while(/*CONSTCOND*/(void)0,0)
 #endif /* !TRE_DEBUG */
 
 #define elementsof(x)	( sizeof(x) / sizeof(x[0]) )
@@ -151,13 +151,8 @@ typedef struct tnfa_transition tre_tnfa_transition_t;
 
 struct tnfa_transition {
   /* Range of accepted characters. */
-#if 0 /* [i_a] must be able to carry the full span of all [Unicode] character codes *PLUS* these 'specials': TAG, PARAMETER, BACKREF, ASSERTION and EMPTY */
   tre_cint_t code_min;
   tre_cint_t code_max;
-#else
-  int code_min;
-  int code_max;
-#endif
   /* Pointer to the destination state. */
   tre_tnfa_transition_t *state;
   /* ID number of the destination state. */
@@ -171,7 +166,7 @@ struct tnfa_transition {
   /* Assertion parameters. */
   union {
     /* Character class assertion. */
-    tre_ctype_t classt;
+    tre_ctype_t class;
     /* Back reference assertion. */
     int backref;
   } u;
