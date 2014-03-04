@@ -1184,9 +1184,9 @@
 	}
 
 	## Install a dump of the parsed NAMESPACE file
-        ## FIXME: why is this not done for a fake install
-	if (install_R && file.exists("NAMESPACE") && !fake) {
-	    res <- try(.install_package_namespace_info(".", instdir))
+        ## For a fake install, use the modified NAMESPACE file we installed
+	if (install_R && file.exists("NAMESPACE")) {
+	    res <- try(.install_package_namespace_info(if(fake) instdir else ".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing namespace metadata failed")
 	}
