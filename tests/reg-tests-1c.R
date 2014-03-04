@@ -299,7 +299,7 @@ tools::assertError(parse("```"))
 ##
 
 
-## We dcoument tanpi(0.5) etc to be NaN
+## We document tanpi(0.5) etc to be NaN
 stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
 ## That is not required for system implementations, and some give +/-Inf
 
@@ -316,5 +316,8 @@ stopifnot(length(ali) == 3, grepl("list", ali[1]),
 	  all.equal(ll, ml, check.attributes=FALSE))
 
 
+## PR#15699 aggregate failed when there were no grouping variables 
+dat <- data.frame(Y=runif(10), X=sample(LETTERS[1:3], 10, TRUE))
+aggregate(Y ~ 1, FUN=mean, data=dat)
 
 proc.time()
