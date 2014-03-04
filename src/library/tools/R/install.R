@@ -303,7 +303,7 @@
                 }
             }
         }
-        
+
         if (!is_first_package) cat("\n")
 
         if (is_source_package)
@@ -1184,6 +1184,7 @@
 	}
 
 	## Install a dump of the parsed NAMESPACE file
+        ## FIXME: why is this not done for a fake install
 	if (install_R && file.exists("NAMESPACE") && !fake) {
 	    res <- try(.install_package_namespace_info(".", instdir))
 	    if (inherits(res, "try-error"))
@@ -2171,7 +2172,7 @@
     .convert <- function(expr)
         withCallingHandlers(tryCatch(expr, error = .ehandler),
                             warning = .whandler)
-    
+
     files <- names(db) # not full file names
     for(nf in files) {
         .messages <- character()

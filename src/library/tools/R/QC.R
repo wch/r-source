@@ -5064,8 +5064,14 @@ function(package, dir, lib.loc = NULL)
             .package_env(package)
         dfile <- file.path(dir, "DESCRIPTION")
         db <- .read_description(dfile)
+        ## fake installs do not have this.
         nsfile <- file.path(dir, "Meta", "nsInfo.rds")
         if (file.exists(nsfile)) ns <- readRDS(nsfile)
+        else {
+            nsfile <- file.path(dir, "NAMESPACE")
+            if(file.exists(nsfile))
+                ns <- parseNamespaceFile(basename(dir), dirname(dir))
+        }
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
