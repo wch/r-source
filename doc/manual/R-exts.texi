@@ -3915,9 +3915,10 @@ allow the use of extended precision.  In particular, ARM CPUs do not
 (currently) have extended precision nor long doubles.
 
 If you must try to establish a tolerance empirically, configure and
-build @R{} with @option{--disable-long-doubles} and use appropriate
-compiler flags (such as @option{-ffloat-store} for @command{gcc}) to
-mitigate the effects of extended-precision calculations.
+build @R{} with @option{--disable-long-double} and use appropriate
+compiler flags (such as @option{-ffloat-store} and
+@option{-fexcess-precision=standard} for @command{gcc}) to mitigate the
+effects of extended-precision calculations.
 
 @end itemize
 
@@ -7290,7 +7291,12 @@ return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 
 @noindent
-a subset of which could be combined with @code{address}.
+a subset of which could be combined with @code{address}, or use something
+like
+
+@example
+-fsanitize=undefined -fno-sanitize=float-divide-by-zero
+@end example
 
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
