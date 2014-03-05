@@ -5159,9 +5159,10 @@ To obtain the approximate standard errors (SE) of the estimates we do:
 > sqrt(diag(2*out$minimum/(length(y) - 2) * solve(out$hessian)))
 @end example
 
-The 2 in the line above represents the number of parameters.  A 95%
-confidence interval would be the parameter estimate @eqn{\pm, +/-} 1.96
-SE.  We can superimpose the least squares fit on a new plot:
+The @code{2} which is subtracted in the line above represents the number
+of parameters.  A 95% confidence interval would be the parameter
+estimate @eqn{\pm, +/-} 1.96 SE.  We can superimpose the least squares
+fit on a new plot:
 
 @example
 > plot(x, y)
