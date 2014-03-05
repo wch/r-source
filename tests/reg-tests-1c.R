@@ -332,4 +332,17 @@ Y <- data.frame(Date = c("2013-12-10", "2013-12-11", "2013-12-12"),
 merge(X, Y, by = "Date", all = TRUE)
 ## failed in R < 3.1.0: now warns (correctly).
 
+
+## PR#15679
+badstructure <- function(depth, key)
+{
+    ch <- if (depth == 1L) list() else list(badstructure(depth-1,key))
+    r <- list()
+    r[[key]] <- ch
+    r
+}
+badstructure(20, "children")
+## overran, segfaulted for the original reporter.
+
+
 proc.time()

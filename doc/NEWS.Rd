@@ -556,6 +556,9 @@
       
       \item The bug fix to \code{aggregrate()} in \PR{15004} introduced 
       a new bug in the case of no grouping variables. (\PR{15699})
+      
+      \item In rare cases printing deeply nested lists overran a buffer
+      by one byte and on a few platforms segfaulted. (\PR{15679})
     }
   }
 }
