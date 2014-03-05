@@ -323,7 +323,7 @@ dat <- data.frame(Y = runif(10), X = sample(LETTERS[1:3], 10, TRUE))
 aggregate(Y ~ 1, FUN = mean, data = dat)
 
 
-## merge() with duplicated column names, similar to PR#15644
+## merge() with duplicated column names, similar to PR#15618
 X <- data.frame(Date = c("1967-02-01", "1967-02-02", "1967-02-03"),
                 Settle.x = c(NA, NA, NA), Settle.y = c(NA, NA, NA),
                 Settle = c(35.4, 35.15, 34.95))
