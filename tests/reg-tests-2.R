@@ -2838,3 +2838,10 @@ try(fligner.test (yield ~ block*N, data = npk))
 ## used the first factor with an incorrect description in R < 3.0.3
 
 
+## Misguided expectation of PR#15687
+xx <- window(AirPassengers, start = 1960)
+cbind(xx, xx)
+op <- options(digits = 2)
+cbind(xx, xx)
+options(op)
+## 'digits' was applied to the time.

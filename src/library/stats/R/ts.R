@@ -414,7 +414,8 @@ print.ts <- function(x, calendar, ...)
 	if(calendar && fr.x > 1) {
 	    tm <- time(x)
 	    t2 <- 1 + round(fr.x*((tm+0.001) %%1))
-	    p1 <- format(floor(zapsmall(tm)))# yr
+            ## protect people against themselves if they set options(digits=2)
+	    p1 <- format(floor(zapsmall(tm, digits = 7))) # yr
 	    rownames(x) <-
 		if(fr.x == 12)
 		    paste(month.abb[t2], p1, sep=" ")

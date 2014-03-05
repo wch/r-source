@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-02 r65097) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-04 r65116) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7331,4 +7331,37 @@ Error in fligner.test.formula(yield ~ block * N, data = npk) :
 > ## used the first factor with an incorrect description in R < 3.0.3
 > 
 > 
+> ## Misguided expectation of PR#15687
+> xx <- window(AirPassengers, start = 1960)
+> cbind(xx, xx)
+          xx  xx
+Jan 1960 417 417
+Feb 1960 391 391
+Mar 1960 419 419
+Apr 1960 461 461
+May 1960 472 472
+Jun 1960 535 535
+Jul 1960 622 622
+Aug 1960 606 606
+Sep 1960 508 508
+Oct 1960 461 461
+Nov 1960 390 390
+Dec 1960 432 432
+> op <- options(digits = 2)
+> cbind(xx, xx)
+          xx  xx
+Jan 1960 417 417
+Feb 1960 391 391
+Mar 1960 419 419
+Apr 1960 461 461
+May 1960 472 472
+Jun 1960 535 535
+Jul 1960 622 622
+Aug 1960 606 606
+Sep 1960 508 508
+Oct 1960 461 461
+Nov 1960 390 390
+Dec 1960 432 432
+> options(op)
+> ## 'digits' was applied to the time.
 > 
