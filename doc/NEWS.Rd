@@ -232,6 +232,8 @@
       
       \item New function \code{agrepl()} which like \code{grepl()}
       returns a logical vector.
+      
+      \item \code{fifo()} is now supported on Windows. (\PR{15600})
     }
   }
 
@@ -547,7 +549,7 @@
       \item The implicit S4 generics for primitives with \code{\dots} in
       their argument list were incorrect. (\PR{15690})
       
-      \item Bug fixes to methods::callGeneric. (\PR{15691})
+      \item Bug fixes to methods::callGeneric(). (\PR{15691})
       
       \item The bug fix to \code{aggregrate()} in \PR{15004} introduced 
       a new bug in the case of no grouping variables. (\PR{15699})

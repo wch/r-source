@@ -150,17 +150,13 @@ isIncomplete(con)
   from.  This is run in a shell, on Windows that specified by the
   \env{COMSPEC} environment variable.
 
-  For \code{fifo} the description is the path of the fifo.  (Windows
-  does not have fifos, so attempts to use this function there are an
-  error.  It was possible to use \code{file} with fifos prior to \R
-  2.10.0, but \code{raw = TRUE} is now required for reading, and
-  \code{fifo} was always the documented interface.) % PR#14366
+  For \code{fifo} the description is the path of the fifo.
 
   All platforms support \code{file}, \code{pipe}, \code{gzfile},
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{url("file://")}
   connections.  The other connections may be partially implemented or
   not implemented at all.  (They do work on most Unix platforms, and all
-  but \code{fifo} on Windows.)
+  on Windows.)
 
   The intention is that \code{file} and \code{gzfile} can be used
   generally for text input (from files and URLs) and binary input
@@ -186,11 +182,11 @@ isIncomplete(con)
   write/append (where implemented, currently for file and clipboard
   connections, \code{\link{stdout}} and \code{\link{stderr}}).
 
-  If for a \code{file} or \code{fifo} connection the description is
-  \code{""}, the file/fifo is immediately opened (in \code{"w+"} mode
-  unless \code{open = "w+b"} is specified) and unlinked from the file
-  system.  This provides a temporary file/fifo to write to and then read
-  from.
+  If for a \code{file} or (on a Unix-alike) a\code{fifo} connection the
+  description is \code{""}, the file/fifo is immediately opened (in
+  \code{"w+"} mode unless \code{open = "w+b"} is specified) and unlinked
+  from the file system.  This provides a temporary file/fifo to write to
+  and then read from.
 }
 
 \section{URLs}{
