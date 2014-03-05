@@ -303,12 +303,14 @@ tools::assertError(parse("```"))
 stopifnot(is.nan(tanpi(c(0.5, 1.5, -0.5, -1.5))))
 ## That is not required for system implementations, and some give +/-Inf
 
+
 ## PR#15642 segfault when parsing overflowing reals
 as.double("1e1000")
 
+
 ll <- ml <- list(1,2); dim(ml) <- 2:1
-ali <- all.equal(list( ), identity)# failed in R-devel for ~ 30 hours
-al1 <- all.equal(list(1), identity)# failed in R < 3.1.0
+ali <- all.equal(list( ), identity)  # failed in R-devel for ~ 30 hours
+al1 <- all.equal(list(1), identity)  # failed in R < 3.1.0
 stopifnot(length(ali) == 3, grepl("list", ali[1]),
 	  grepl("length", ali[2], ignore.case=TRUE),
 	  is.character(al1), length(al1) >= 2,
@@ -316,8 +318,18 @@ stopifnot(length(ali) == 3, grepl("list", ali[1]),
 	  all.equal(ll, ml, check.attributes=FALSE))
 
 
-## PR#15699 aggregate failed when there were no grouping variables 
-dat <- data.frame(Y=runif(10), X=sample(LETTERS[1:3], 10, TRUE))
-aggregate(Y ~ 1, FUN=mean, data=dat)
+## PR#15699 aggregate failed when there were no grouping variables
+dat <- data.frame(Y = runif(10), X = sample(LETTERS[1:3], 10, TRUE))
+aggregate(Y ~ 1, FUN = mean, data = dat)
+
+
+## merge() with duplicated column names, similar to PR#15644
+X <- data.frame(Date = c("1967-02-01", "1967-02-02", "1967-02-03"),
+                Settle.x = c(NA, NA, NA), Settle.y = c(NA, NA, NA),
+                Settle = c(35.4, 35.15, 34.95))
+Y <- data.frame(Date = c("2013-12-10", "2013-12-11", "2013-12-12"),
+                Settle = c(16.44, 16.65, 16.77))
+merge(X, Y, by = "Date", all = TRUE)
+## failed in R < 3.1.0: now warns (correctly).
 
 proc.time()
