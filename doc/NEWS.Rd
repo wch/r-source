@@ -234,6 +234,9 @@
       returns a logical vector.
       
       \item \code{fifo()} is now supported on Windows. (\PR{15600})
+      
+      \item \code{sort.list(method = "radix")} now allows negative
+      integers (wish of \PR{15644}).
     }
   }
 
