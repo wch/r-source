@@ -7781,11 +7781,6 @@ values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
 of these generates an error.  If it is true, these values are passed
 unchecked.
 
-Argument @code{DUP} can be used to suppress copying.  It is dangerous:
-see the on-line help for arguments against its use.  It is not possible
-to pass numeric vectors as @code{float *} or @code{REAL} if
-@code{DUP = FALSE}, and character vectors cannot be used.
-
 Argument @code{PACKAGE} confines the search for the symbol name to a
 specific shared object (or use @code{"base"} for code compiled into
 @R{}).  Its use is highly desirable, as there is no way to avoid two
@@ -7841,18 +7836,17 @@ storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
 
 Special care is needed in handling @code{character} vector arguments in
-C (or C++).  Since only @code{DUP = TRUE} is allowed, on entry the
-contents of the elements are duplicated and assigned to the elements of
-a @code{char **} array, and on exit the elements of the C array are
-copied to create new elements of a character vector.  This means that
-the contents of the character strings of the @code{char **} array can be
-changed, including to @code{\0} to shorten the string, but the strings
-cannot be lengthened.  It is possible@footnote{Note that this is then
-not checked for over-runs by option @code{CBoundsCheck = TRUE}.} to
-allocate a new string @emph{via} @code{R_alloc} and replace an entry in
-the @code{char **} array by the new string.  However, when character
-vectors are used other than in a read-only way, the @code{.Call}
-interface is much to be preferred.
+C (or C++).  On entry the contents of the elements are duplicated and
+assigned to the elements of a @code{char **} array, and on exit the
+elements of the C array are copied to create new elements of a character
+vector.  This means that the contents of the character strings of the
+@code{char **} array can be changed, including to @code{\0} to shorten
+the string, but the strings cannot be lengthened.  It is
+possible@footnote{Note that this is then not checked for over-runs by
+option @code{CBoundsCheck = TRUE}.} to allocate a new string @emph{via}
+@code{R_alloc} and replace an entry in the @code{char **} array by the
+new string.  However, when character vectors are used other than in a
+read-only way, the @code{.Call} interface is much to be preferred.
 
 Passing character strings to FORTRAN code needs even more care, and
 should be avoided where possible.  Only the first element of the

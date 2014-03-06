@@ -1352,6 +1352,9 @@ setRlibs <-
                             "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
+                else if(any(grepl("^Calls with DUP = FALSE", out)))
+                    wrapLog("DUP = FALSE is deprecated and may be",
+                            "disabled in future versions of R.")
                 else
                     wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
@@ -4031,7 +4034,7 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SUGGESTS_ONLY_", "FALSE"))
     R_check_FF <- Sys.getenv("_R_CHECK_FF_CALLS_", "true")
     R_check_FF_DUP <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
     R_check_toplevel_files <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
 

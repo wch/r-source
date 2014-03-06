@@ -498,6 +498,12 @@
       package \pkg{tools} are defunct.
       
       \item \code{download.file(method = "lynx")} is deprecated.
+      
+      \item \code{.C(DUP = FALSE)} and \code{.Fortran(DUP = FALSE)} are
+      now deprecated, and may be disabled in future versions of \R.  As
+      their help has long said, \code{.Call()} is much preferred.
+
+      \command{R CMD check} notes such usages (by default).
     }
   }
 

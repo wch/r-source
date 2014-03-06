@@ -3831,7 +3831,7 @@ such calls provided the package is installed.
 Default: true.
 @item _R_CHECK_FF_DUP_
 Controls @code{checkFF(check_DUP)}
-Default: false (but true for CRAN submission checks).
+Default: true (and forced to be true for CRAN submission checks).
 @item _R_CHECK_LICENSE_
 Control whether/how license checks are performed. A possible value is
 @samp{maybe} (warn in case of problems, but not about standardizable
