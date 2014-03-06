@@ -117,17 +117,17 @@ as.ts.default <- function(x, ...)
 
 .cbind.ts <- function(sers, nmsers, dframe = FALSE, union = TRUE)
 {
-    nulls <- sapply(sers, is.null)
+    nulls <- vapply(sers, is.null, NA)
     sers <- sers[!nulls]
     nser <- length(sers)
     if(nser == 0L) return(NULL)
     if(nser == 1L)
         if(dframe) return(as.data.frame(sers[[1L]])) else return(sers[[1L]])
-    tsser <-  sapply(sers, function(x) length(tsp(x)) > 0L)
+    tsser <- vapply(sers, function(x) length(tsp(x)) > 0L, NA)
     if(!any(tsser))
         stop("no time series supplied")
     sers <- lapply(sers, as.ts)
-    nsers <- sapply(sers, NCOL)
+    nsers <- vapply(sers, NCOL, 1)
     tsps <- sapply(sers[tsser], tsp)
     freq <- mean(tsps[3,])
     if(max(abs(tsps[3,] - freq)) > getOption("ts.eps")) {
@@ -147,7 +147,7 @@ as.ts.default <- function(x, ...)
     p <- c(st, en, freq)
     n <- round(freq * (en - st) + 1)
     if(any(!tsser)) {
-        ln <- sapply(sers[!tsser], NROW)
+        ln <- vapply(sers[!tsser], NROW, 1)
         if(any(ln != 1 && ln != n))
             stop("non-time series not of the correct length")
         for(i in (1L:nser)[!tsser]) {
@@ -350,17 +350,13 @@ cycle.ts <- function (x, ...) as.ts(cycle.default(x, ...))
 
 print.ts <- function(x, calendar, ...)
 {
-    x.orig <- x
     x <- as.ts(x)
-    fr.x <- frequency(x)
-    if(missing(calendar))
-	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2L
     ## sanity check
     Tsp <- tsp(x)
     if(is.null(Tsp)) {
-        warning("series is corrupt, with no 'tsp' attribute")
-        print(unclass(x))
-        return(invisible(x))
+	warning("series is corrupt, with no 'tsp' attribute")
+	print(unclass(x), ...)
+	return(invisible(x))
     }
     nn <- 1 + round((Tsp[2L] - Tsp[1L]) * Tsp[3L])
     if(NROW(x) != nn) {
@@ -368,17 +364,38 @@ print.ts <- function(x, calendar, ...)
                          NROW(x), nn), domain=NA, call.=FALSE)
         calendar <- FALSE
     }
-    if(!calendar)
-        header <- function(x) {
-            if((fr.x <- frequency(x))!= 1)
-                cat("Time Series:\nStart =", deparse(start(x)),
-                    "\nEnd =", deparse(end(x)),
-                    "\nFrequency =", deparse(fr.x), "\n")
-            else
-                cat("Time Series:\nStart =", format(tsp(x)[1L]),
-                    "\nEnd =", format(tsp(x)[2L]),
-                    "\nFrequency =", deparse(fr.x), "\n")
-        }
+    fr.x <- frequency(x)
+    if(missing(calendar))
+	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2L
+    if(!calendar) {
+        if(fr.x != 1)
+            cat("Time Series:\nStart =", deparse(start(x)),
+                "\nEnd =", deparse(end(x)),
+                "\nFrequency =", deparse(fr.x), "\n")
+        else
+            cat("Time Series:\nStart =", format(tsp(x)[1L]),
+                "\nEnd =", format(tsp(x)[2L]),
+                "\nFrequency =", deparse(fr.x), "\n")
+    }
+    print(.preformat.ts(x, calendar, ...), quote = FALSE, right = TRUE, ...)
+    invisible(x)
+}
+
+## To be used in a  format.ts():
+.preformat.ts <- function(x, calendar, ...)
+{
+    fr.x <- frequency(x)
+    if(missing(calendar))
+	calendar <- any(fr.x == c(4,12)) && length(start(x)) == 2L
+    ## sanity check
+    Tsp <- tsp(x)
+    if(is.null(Tsp)) stop("series is corrupt, with no 'tsp' attribute")
+    nn <- 1 + round((Tsp[2L] - Tsp[1L]) * Tsp[3L])
+    if(NROW(x) != nn) {
+        warning(gettextf("series is corrupt: length %d with 'tsp' implying %d",
+                         NROW(x), nn), domain=NA, call.=FALSE)
+        calendar <- FALSE
+    }
     if(NCOL(x) == 1) { # could be 1-col matrix
         if(calendar) {
             if(fr.x > 1) {
@@ -407,31 +424,26 @@ print.ts <- function(x, calendar, ...)
                 names(x) <- tx
             }
         } else { ##-- no 'calendar' --
-            header(x)
             attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
         }
     } else { # multi-column matrix
-	if(calendar && fr.x > 1) {
-	    tm <- time(x)
-	    t2 <- 1 + round(fr.x*((tm+0.001) %%1))
-            ## protect people against themselves if they set options(digits=2)
-	    p1 <- format(floor(zapsmall(tm, digits = 7))) # yr
-	    rownames(x) <-
+        rownames(x) <-
+	    if(calendar && fr.x > 1) {
+		tm <- time(x)
+		t2 <- 1 + round(fr.x*((tm+0.001) %%1))
+                ## protect people against themselves if they set options(digits=2)
+                p1 <- format(floor(zapsmall(tm, digits = 7))) # yr
 		if(fr.x == 12)
-		    paste(month.abb[t2], p1, sep=" ")
+		    paste(month.abb[t2], p1)
 		else
 		    paste(p1, if(fr.x == 4) c("Q1", "Q2", "Q3", "Q4")[t2]
-			      else format(t2),
-			  sep=" ")
-        } else {
-            if(!calendar) header(x)
-            rownames(x) <- format(time(x))
-        }
+			  else format(t2))
+	    } else
+		format(time(x))
         attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
     }
-    NextMethod("print", x, quote = FALSE, right = TRUE, ...)
-    invisible(x.orig)
-}
+    x
+}## {.preformat.ts}
 
 plot.ts <-
     function (x, y = NULL, plot.type = c("multiple", "single"),

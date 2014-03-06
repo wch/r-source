@@ -237,6 +237,9 @@
       
       \item \code{sort.list(method = "radix")} now allows negative
       integers (wish of \PR{15644}).
+
+      \item Some functionality of \code{print.ts()} is now available in 
+      \code{.preformat.ts()} for more modularity.% and format.ts() might follow
     }
   }
 
