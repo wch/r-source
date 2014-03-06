@@ -1,6 +1,6 @@
 % File src/library/base/man/Comparison.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Comparison}
@@ -53,6 +53,9 @@ x != y
   Character strings can be compared  with different marked encodings
   (see \code{\link{Encoding}}): they are translated to UTF-8 before
   comparison.
+
+  Raw vectors should not really be considered to have an order, but the
+  numeric order of the byte representation is used.
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic

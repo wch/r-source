@@ -34,9 +34,9 @@ is.raw(x)
 \details{
   The raw type is intended to hold raw bytes.  It is possible to extract
   subsequences of bytes, and to replace elements (but only by elements
-  of a raw vector).  The relational operators (see \link{Comparison})
-  work, as do the logical operators (see \link{Logic}) with a bitwise
-  interpretation.
+  of a raw vector).  The relational operators (see \link{Comparison},
+  using the numerical order of the byte represenation) work, as do the
+  logical operators (see \link{Logic}) with a bitwise interpretation.
 
   A raw vector is printed with each byte separately represented as a
   pair of hex digits.  If you want to see a character representation

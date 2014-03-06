@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.unsorted}
@@ -33,6 +33,8 @@ is.unsorted(x, na.rm = FALSE, strictly = FALSE)
   This function is designed for objects with one-dimensional indices, as
   described above.  Data frames, matrices and other arrays may give
   surprising results.
+  
+  Support for raw vectors was added in \R 3.1.0.
 }
 \seealso{\code{\link{sort}}, \code{\link{order}}.}
 
