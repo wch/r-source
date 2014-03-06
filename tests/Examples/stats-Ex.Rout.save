@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-02 r65097) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-05 r65125) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -5692,6 +5692,101 @@ NULL
      '--[dendrogram w/ 2 branches and 2 members at h = 13.3]
         |--leaf "Michigan" 
         '--leaf "Nevada" 
+> 
+> ## to peak at the inner structure "if you must", use '[..]' indexing :
+> str(d3[2][[1]]) ## or the full
+List of 2
+ $ :List of 2
+  ..$ : atomic [1:1] 13
+  .. ..- attr(*, "label")= chr "Illinois"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ : atomic [1:1] 32
+  .. ..- attr(*, "label")= chr "New York"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..- attr(*, "members")= int 2
+  ..- attr(*, "midpoint")= num 0.5
+  ..- attr(*, "height")= num 6.24
+ $ :List of 2
+  ..$ : atomic [1:1] 22
+  .. ..- attr(*, "label")= chr "Michigan"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ : atomic [1:1] 28
+  .. ..- attr(*, "label")= chr "Nevada"
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..- attr(*, "members")= int 2
+  ..- attr(*, "midpoint")= num 0.5
+  ..- attr(*, "height")= num 13.3
+ - attr(*, "members")= int 4
+ - attr(*, "midpoint")= num 1.5
+ - attr(*, "height")= num 18.4
+> str(d3[])
+List of 2
+ $ :List of 2
+  ..$ : atomic [1:1] 8
+  .. ..- attr(*, "members")= int 1
+  .. ..- attr(*, "height")= num 0
+  .. ..- attr(*, "label")= chr "Delaware"
+  .. ..- attr(*, "leaf")= logi TRUE
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 1
+  .. .. ..- attr(*, "label")= chr "Alabama"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 18
+  .. .. ..- attr(*, "label")= chr "Louisiana"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 15.5
+  ..- attr(*, "members")= int 3
+  ..- attr(*, "midpoint")= num 0.75
+  ..- attr(*, "height")= num 16.9
+ $ :List of 2
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 13
+  .. .. ..- attr(*, "label")= chr "Illinois"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 32
+  .. .. ..- attr(*, "label")= chr "New York"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 6.24
+  ..$ :List of 2
+  .. ..$ : atomic [1:1] 22
+  .. .. ..- attr(*, "label")= chr "Michigan"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..$ : atomic [1:1] 28
+  .. .. ..- attr(*, "label")= chr "Nevada"
+  .. .. ..- attr(*, "members")= int 1
+  .. .. ..- attr(*, "height")= num 0
+  .. .. ..- attr(*, "leaf")= logi TRUE
+  .. ..- attr(*, "members")= int 2
+  .. ..- attr(*, "midpoint")= num 0.5
+  .. ..- attr(*, "height")= num 13.3
+  ..- attr(*, "members")= int 4
+  ..- attr(*, "midpoint")= num 1.5
+  ..- attr(*, "height")= num 18.4
+ - attr(*, "members")= int 7
+ - attr(*, "midpoint")= num 2.62
+ - attr(*, "height")= num 26.4
 > 
 > ## merge() to join dendrograms:
 > (d13 <- merge(dend2$lower[[1]], dend2$lower[[3]]))

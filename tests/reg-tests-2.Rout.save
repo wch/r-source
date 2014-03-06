@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-04 r65116) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-05 r65125) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3273,8 +3273,9 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [41] subset        summary       t             tail          transform    
 [46] unique        unstack       within       
 > meth2gen("dendrogram")
- [1] [[         as.hclust  cophenetic cut        labels     merge     
- [7] plot       print      reorder    rev        str       
+ [1] [[            as.dendrogram as.hclust     cophenetic    cut          
+ [6] labels        merge         plot          print         reorder      
+[11] rev           str          
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
@@ -6402,15 +6403,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x35e1a78> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x35b51f0> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3774f10> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3586ec8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3774f10> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3586ec8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

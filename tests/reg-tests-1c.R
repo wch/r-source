@@ -345,4 +345,13 @@ badstructure(20, "children")
 ## overran, segfaulted for the original reporter.
 
 
+## PR#15702 and PR#15703
+d <- as.dendrogram(hclust(dist(sin(1:7))))
+(dl <- d[[c(2,1,2)]]) # single-leaf dendrogram
+stopifnot(inherits(dl, "dendrogram"), is.leaf(dl),
+	  identical(order.dendrogram(dl), as.vector(dl)),
+	  identical(d, as.dendrogram(d)))
+## as.dendrogram() was hidden;  order.*() failed for leaf
+
+
 proc.time()

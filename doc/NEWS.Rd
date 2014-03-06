@@ -849,6 +849,10 @@
       
       \item \code{stripchart()} again respects reversed limits in
       \code{xlim} and \code{ylim}.  (\PR{15664})
+
+      \item The dendrogram method of \code{as.dendrogram()} was hidden
+      accidentally, (\PR{15703}), and \code{order.dendrogram(d)} gave
+      too much for a leaf \code{d}. (\PR{15702}) 
     }
   }
 }
