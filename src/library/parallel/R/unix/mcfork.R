@@ -22,17 +22,23 @@
 
 ## all not exported in parallel.
 
+## FIXME: mc_pids doesn't really work, because children stay in the
+## pid list even after they die, so innocent processes may
+## may get killed instead!
 mc_pids <- new.env()
 assign("pids", integer(), envir = mc_pids)
 clean_pids <- function(e)
     if(length(pids <- get("pids", envir = e))) tools::pskill(pids, tools::SIGKILL)
 
-mcfork <- function() {
-    r <- .Call(C_mc_fork)
-    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
-    structure(list(pid = r[1L], fd = r[2:3]),
-              class = c(if(r[1L]) "childProcess"
-                        else "masterProcess", "process"))
+mcfork <- function(estranged = FALSE) {
+    r <- .Call(C_mc_fork, estranged)
+    processClass <- if (!r[1L]) "masterProcess" else
+    		    if (is.na(r[2L])) "estrangedProcess" else
+        {
+	    assign("pids", c(get("pids",envir = mc_pids), r[1L]), envir = mc_pids)
+	    "childProcess"
+        }
+    structure(list(pid = r[1L], fd = r[2:3]), class = c(processClass, "process"))
 }
 
 ## not used

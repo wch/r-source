@@ -127,51 +127,72 @@ static void child_sig_handler(int sig)
 /* from Defn.h */
 extern Rboolean R_isForkedChild;
 
-SEXP mc_fork() 
+SEXP mc_fork(SEXP sEstranged)
 {
     int pipefd[2]; /* write end, read end */
     int sipfd[2];
     pid_t pid;
     SEXP res = allocVector(INTSXP, 3);
     int *res_i = INTEGER(res);
-    if (pipe(pipefd)) error(_("unable to create a pipe"));
-    if (pipe(sipfd)) {
-	close(pipefd[0]); close(pipefd[1]);
-	error(_("unable to create a pipe"));
-    }
+    int estranged = (asInteger(sEstranged) > 0);
+
+    if (!estranged) {
+	if (pipe(pipefd)) error(_("unable to create a pipe"));
+	if (pipe(sipfd)) {
+	    close(pipefd[0]); close(pipefd[1]);
+	    error(_("unable to create a pipe"));
+	}
 #ifdef MC_DEBUG
-    Dprintf("parent[%d] created pipes: comm (%d->%d), sir (%d->%d)\n",
-	    getpid(), pipefd[1], pipefd[0], sipfd[1], sipfd[0]);
+	Dprintf("parent[%d] created pipes: comm (%d->%d), sir (%d->%d)\n",
+		getpid(), pipefd[1], pipefd[0], sipfd[1], sipfd[0]);
 #endif
+    }
 
     pid = fork();
     if (pid == -1) {
-	close(pipefd[0]); close(pipefd[1]);
-	close(sipfd[0]); close(sipfd[1]);
+	if (!estranged) {
+	    close(pipefd[0]); close(pipefd[1]);
+	    close(sipfd[0]); close(sipfd[1]);
+	}
 	error(_("unable to fork, possible reason: %s"), strerror(errno));
     }
     res_i[0] = (int) pid;
     if (pid == 0) { /* child */
 	R_isForkedChild = 1;
-	close(pipefd[0]); /* close read end */
-	master_fd = res_i[1] = pipefd[1];
+	if (estranged)
+	    res_i[1] = res_i[2] = NA_INTEGER;
+	else {
+	    close(pipefd[0]); /* close read end */
+	    master_fd = res_i[1] = pipefd[1];
+	    res_i[2] = NA_INTEGER;
+	    /* re-map stdin */
+	    dup2(sipfd[0], STDIN_FILENO);
+	    close(sipfd[0]);
+	}
 	is_master = 0;
-	/* re-map stdin */
-	dup2(sipfd[0], STDIN_FILENO);
-	close(sipfd[0]);
 	/* master uses USR1 to signal that the child process can terminate */
 	child_exit_status = -1;
-	child_can_exit = 0;
-	signal(SIGUSR1, child_sig_handler);
+	if (estranged)
+	    child_can_exit = 1;
+	else {
+	    child_can_exit = 0;
+	    signal(SIGUSR1, child_sig_handler);
+	}
 #ifdef MC_DEBUG
 	Dprintf("child process %d started\n", getpid());
 #endif
     } else { /* master process */
 	child_info_t *ci;
+	if (estranged) { /* don't even register it */
+	    res_i[1] = res_i[2] = NA_INTEGER;
+	    return res;
+	}
+
 	close(pipefd[1]); /* close write end of the data pipe */
 	close(sipfd[0]);  /* close read end of the child-stdin pipe */
 	res_i[1] = pipefd[0];
 	res_i[2] = sipfd[1];
+
 #ifdef MC_DEBUG
 	Dprintf("parent registers new child %d\n", pid);
 #endif

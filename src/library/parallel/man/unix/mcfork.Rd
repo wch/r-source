@@ -19,11 +19,14 @@
   process as necessary.
 }
 \usage{
-mcfork()
+mcfork(estranged = FALSE)
 
 mcexit(exit.code = 0L, send = NULL)
 }
 \arguments{
+  \item{estranged}{logical, if \code{TRUE} then the new process has
+    no ties to the parent process, will not show in the list of
+    children and will not be killed on exit}
   \item{exit.code}{process exit code.  By convention \code{0L} signifies
     a clean exit, \code{1L} an error.}
   \item{send}{if not \code{NULL} send this data before exiting
@@ -62,10 +65,13 @@ mcexit(exit.code = 0L, send = NULL)
 \value{
   \code{mcfork} returns an object of the class \code{"childProcess"} to
   the master and of class \code{"masterProcess"} to the child: both the
-  classes inherit from class \code{"process"}.  These are lists with
-  components \code{pid} (the process id of the \emph{other} process) and
-  a vector \code{fd} of the two file descriptor numbers for ends in the
-  current process of the inter-process pipes.
+  classes inherit from class \code{"process"}.  If \code{estranged} is
+  set to \code{TRUE} then the child process will be of the class
+  \code{"estrangedProcess"} and cannot communicate with the master
+  process nor will it show up on the list of children. These are lists
+  with components \code{pid} (the process id of the \emph{other}
+  process) and a vector \code{fd} of the two file descriptor numbers
+  for ends in the current process of the inter-process pipes.
 
   \code{mcexit} never returns.
 }
