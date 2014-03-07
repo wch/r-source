@@ -240,6 +240,9 @@
 
       \item Some functionality of \code{print.ts()} is now available in 
       \code{.preformat.ts()} for more modularity.% and format.ts() might follow
+      
+      \item The \code{pdf()} device omits entirely circles and text at
+      extremely small sizes, since some viewers were failing on such files.
     }
   }
 
