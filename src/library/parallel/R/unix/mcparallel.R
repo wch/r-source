@@ -20,9 +20,9 @@
 
 mcaffinity <- function(affinity = NULL) .Call(C_mc_affinity, affinity)
 
-mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL, mc.interactive = FALSE)
+mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL, mc.interactive = FALSE, detached = FALSE)
 {
-    f <- mcfork()
+    f <- mcfork(detached)
     env <- parent.frame()
     if (isTRUE(mc.set.seed)) mc.advance.stream()
     if (inherits(f, "masterProcess")) {
@@ -34,7 +34,12 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
         if (isTRUE(!mc.interactive)) .Call(C_mc_interactive, FALSE)
         if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity)
         if (isTRUE(silent)) closeStdout(TRUE)
-        sendMaster(try(eval(expr, env), silent = TRUE))
+	if (detached) {
+	    on.exit(mcexit(1L))
+	    eval(expr, env)
+	    mcexit(0L)
+	}
+	sendMaster(try(eval(expr, env), silent = TRUE))
         mcexit(0L)
     }
     if (!missing(name) && !is.null(name)) f$name <- as.character(name)[1L]

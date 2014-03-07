@@ -20,7 +20,8 @@
 }
 \usage{
 mcparallel(expr, name, mc.set.seed = TRUE, silent = FALSE,
-           mc.affinity = NULL, mc.interactive = FALSE)
+           mc.affinity = NULL, mc.interactive = FALSE,
+	   detached = FALSE)
 
 mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
@@ -39,6 +40,9 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
     child process will be set as interactive or non-interactive
     respectively. If \code{NA} then the child process will inherit the
     interactive flag from the parent.}
+  \item{detached}{logical, if \code{TRUE} then the job is detached from
+    the current session and cannot deliver any results back - it is used
+    for the code side-effect only.}
   \item{jobs}{list of jobs (or a single job) to collect results
     for.  Alternatively \code{jobs} can also be an integer vector of
     process IDs.  If omitted \code{collect} will wait for all currently
