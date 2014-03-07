@@ -240,6 +240,12 @@
 
       \item Some functionality of \code{print.ts()} is now available in 
       \code{.preformat.ts()} for more modularity.% and format.ts() might follow
+
+      \item \code{mcparallel()} gains an option \code{detach=TRUE} which
+      allows to execute code independently of the current session.
+      It is based on a new \code{estranged=TRUE} argument to
+      \code{mcfork()} which forks child processes such that they
+      become independent of the parent process.
       
       \item The \code{pdf()} device omits entirely circles and text at
       extremely small sizes, since some viewers were failing on such files.
