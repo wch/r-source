@@ -1029,6 +1029,7 @@ function()
                "Date/Publication",
                "LastChangedDate",
                "LastChangedRevision",
+               "Revision",
                "RcmdrModels",
                "RcppModules",
                "biocViews")
