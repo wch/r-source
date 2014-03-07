@@ -72,7 +72,7 @@ static child_info_t *children; /* in master, linked list of details of children 
 static int master_fd = -1; /* in child, write end of data pipe */
 static int is_master = 1; /* 0 in child */
 
-static int rm_child_(int pid) 
+static int rm_child_(int pid, int already_dead) 
 {
     child_info_t *ci = children, *prev = 0;
 #ifdef MC_DEBUG
@@ -87,7 +87,8 @@ static int rm_child_(int pid)
 	    if (prev) prev->next = ci->next;
 	    else children = ci->next;
 	    free(ci);
-	    kill(pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
+	    if (!already_dead) /* don't send any signals if we know it's dead */
+		kill(pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
 	    return 1;
 	}
 	prev = ci;
@@ -124,6 +125,38 @@ static void child_sig_handler(int sig)
     }
 }
 
+static void clean_zombies() {
+    int pid, wstat;
+    while ((pid = waitpid(-1, &wstat, WNOHANG)) > 0) {
+	/* did this child terminate? */
+	if (WIFEXITED(wstat) || WIFSIGNALED(wstat)) {
+#ifdef MC_DEBUG
+	    if (WIFEXITED(wstat))
+		Dprintf("child %d terminated with %d\n", pid, WEXITSTATUS(wstat));
+	    else
+		Dprintf("child %d terminated by signal %d\n", pid, WTERMSIG(wstat));
+#endif
+	    /* FIXME: evaluate that this is safe since this is
+	       a signal and thus can be fired at any point and thus
+	       this should be re-entrant */
+	    rm_child_(pid, 1);
+	}
+    }
+}
+
+/* this handler handles SIGCHLD to make sure
+   no zombies are left behind. Historically, zombies
+   were cleaned in mc_select_children(), but no one
+   will clean up detached processes and cleaning zombies
+   on signal makes this automatic as opposed to
+   requiring a poll.
+*/
+static void parent_sig_handler(int sig) {
+    /* clean up when a child terminates */
+    if (sig == SIGCHLD)
+	clean_zombies();
+}
+
 /* from Defn.h */
 extern Rboolean R_isForkedChild;
 
@@ -148,6 +181,9 @@ SEXP mc_fork(SEXP sEstranged)
 #endif
     }
 
+    /* make sure we get SIGCHLD to clean up the child process */
+    signal(SIGCHLD, parent_sig_handler);
+
     pid = fork();
     if (pid == -1) {
 	if (!estranged) {
@@ -159,6 +195,8 @@ SEXP mc_fork(SEXP sEstranged)
     res_i[0] = (int) pid;
     if (pid == 0) { /* child */
 	R_isForkedChild = 1;
+	/* don't track any children of the child by default */
+	signal(SIGCHLD, SIG_DFL);
 	if (estranged)
 	    res_i[1] = res_i[2] = NA_INTEGER;
 	else {
@@ -323,10 +361,8 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	which = INTEGER(sWhich);
 	wlen = LENGTH(sWhich);
     }
-    { 
-	int wstat; 
-	while (waitpid(-1, &wstat, WNOHANG) > 0) ; /* check for zombies */
-    }
+    clean_zombies();
+
     FD_ZERO(&fs);
     while (ci && ci->pid) {
 	if (ci->pfd == -1) zombies++;
@@ -347,30 +383,10 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 #ifdef MC_DEBUG
     Dprintf("select_children: maxfd=%d, wlen=%d, wcount=%d, zombies=%d, timeout=%d:%d\n", maxfd, wlen, wcount, zombies, (int)tv.tv_sec, (int)tv.tv_usec);
 #endif
-    if (zombies) { /* oops, this should never really happen - it did
-		    * while we had a bug in rm_child_ but hopefully
-		    * not anymore */
-	while (zombies) { /* this is rather more complicated than it
-			   * should be if we used pointers to delete,
-			   * but well ... */
-	    ci = children;
-	    while (ci) {
-		if (ci->pfd == -1) {
-#ifdef MC_DEBUG
-		    Dprintf("detected zombie: pid=%d, pfd=%d, sifd=%d\n", 
-			    ci->pid, ci->pfd, ci->sifd);
-#endif
-		    rm_child_(ci->pid);
-		    zombies--;
-		    break;
-		}
-		ci = ci->next;
-	    }
-	    if (!ci) break;
-	}
-    }
+
     if (maxfd == 0 || (wlen && !wcount)) 
 	return R_NilValue; /* NULL signifies no children to tend to */
+
     sr = select(maxfd + 1, &fs, 0, 0, tvp);
 #ifdef MC_DEBUG
     Dprintf("  sr = %d\n", sr);
@@ -419,7 +435,7 @@ static SEXP read_child_ci(child_info_t *ci)
 	int pid = ci->pid;
 	close(fd);
 	ci->pfd = -1;
-	rm_child_(pid);
+	rm_child_(pid, 0);
 	return ScalarInteger(pid);
     } else {
 	SEXP rv = allocVector(RAWSXP, len);
@@ -434,7 +450,7 @@ static SEXP read_child_ci(child_info_t *ci)
 		int pid = ci->pid;
 		close(fd);
 		ci->pfd = -1;
-		rm_child_(pid);
+		rm_child_(pid, 0);
 		return ScalarInteger(pid);
 	    }
 	    i += n;
@@ -519,7 +535,7 @@ SEXP mc_read_children(SEXP sTimeout)
 SEXP mc_rm_child(SEXP sPid) 
 {
     int pid = asInteger(sPid);
-    return ScalarLogical(rm_child_(pid));
+    return ScalarLogical(rm_child_(pid, 0));
 }
 
 SEXP mc_children() 
