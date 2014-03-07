@@ -430,12 +430,15 @@
       \item \command{tools::checkFF()} reports on \code{.C} and
       \code{.Fortran} calls with \code{DUP = FALSE} if argument
       \code{check_DUP} is true.  This is selected by
-      \command{R CMD check --as-cran}.
+      \command{R CMD check} by default.
       
       \item \command{R CMD check --use-gct} can be tuned to
       garbage-collect less frequently using \code{gctorture2()}
       \emph{via} the setting of environment variable
       \env{_R_CHECK_GCT_N_}.
+      
+      \item Where supported, \code{tools::texi2dvi()} limits the number
+      of passes tried to 20.
     }
   }
 

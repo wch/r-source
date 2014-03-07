@@ -269,6 +269,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         out <- .system_with_capture(texi2dvi, "--help")
         if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
+        ## This is present in texinfo after late 2009, so really 5.x.
+        if(length(grep("--max-iterations=N", out$stdout)))
+            opt_extra <- c(opt_extra, "--max-iterations=20")
         ## (Maybe change eventually: the current heuristics for finding
         ## error messages in log files should work for both regular and
         ## file line error indicators.)
@@ -352,7 +355,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             texinputs <- c(texinputs0, Rtexinputs, Rbstinputs)
             texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
             paths <- paste ("-I", shQuote(texinputs))
-            extra <- paste(extra, paste(paths, collapse = " "))
+            extra <- "--max-iterations=20"
+           extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## 'file' could be a file path
         base <- basename(file_path_sans_ext(file))
