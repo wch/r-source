@@ -72,7 +72,7 @@ static child_info_t *children; /* in master, linked list of details of children 
 static int master_fd = -1; /* in child, write end of data pipe */
 static int is_master = 1; /* 0 in child */
 
-static int rm_child_(int pid, int already_dead) 
+static int rm_child_(int pid) 
 {
     child_info_t *ci = children, *prev = 0;
 #ifdef MC_DEBUG
@@ -87,8 +87,7 @@ static int rm_child_(int pid, int already_dead)
 	    if (prev) prev->next = ci->next;
 	    else children = ci->next;
 	    free(ci);
-	    if (!already_dead) /* don't send any signals if we know it's dead */
-		kill(pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
+	    kill(pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
 	    return 1;
 	}
 	prev = ci;
@@ -98,6 +97,40 @@ static int rm_child_(int pid, int already_dead)
     Dprintf("WARNING: child %d was to be removed but it doesn't exist\n", pid);
 #endif
     return 0;
+}
+
+/* flag a child as terminated */
+static void terminated_child(int pid) {
+    child_info_t *ci = children;
+    while (ci) {
+	if (ci->pid == pid) {
+	    if (ci->pfd > 0) { close(ci->pfd); ci->pfd = -1; }
+            if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
+	    ci->pid = 0;
+	    break;
+	}
+	ci = ci->next;
+    }
+}
+
+/* remove all children that have a closed master descriptor */
+static void rm_closed() {
+    child_info_t *ci = children, *prev = 0;
+    while (ci) {
+	if (ci->pfd == -1) {
+	    child_info_t *next = ci->next;
+	    if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
+	    if (prev) prev->next = ci->next;
+            else children = ci->next;
+	    if (ci->pid)
+		kill(ci->pid, SIGUSR1); /* send USR1 to the child to make sure it exits */
+	    free(ci);
+	    ci = next;
+	} else {
+	    prev = ci;
+	    ci = ci->next;
+	}
+    }
 }
 
 #ifndef STDIN_FILENO
@@ -136,10 +169,10 @@ static void clean_zombies() {
 	    else
 		Dprintf("child %d terminated by signal %d\n", pid, WTERMSIG(wstat));
 #endif
-	    /* FIXME: evaluate that this is safe since this is
-	       a signal and thus can be fired at any point and thus
-	       this should be re-entrant */
-	    rm_child_(pid, 1);
+	    /* we can only flag at this point, since actually
+	       removing the child would cause re-entrance issues.
+	       So we let fork/collect clean up the child list. */
+	    terminated_child(pid);
 	}
     }
 }
@@ -237,6 +270,7 @@ SEXP mc_fork(SEXP sEstranged)
 	/* register the new child and its pipes */
 	ci = (child_info_t*) malloc(sizeof(child_info_t));
 	if (!ci) error(_("memory allocation error"));
+	rm_closed(); /* clean up the list by removing closed entries */
 	ci->pid = pid;
 	ci->pfd = pipefd[0];
 	ci->sifd= sipfd[1];
@@ -380,6 +414,9 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	}
 	ci = ci -> next;
     }
+    /* if there are any closed children, remove them - don't bother otherwise */
+    if (zombies) rm_closed();
+
 #ifdef MC_DEBUG
     Dprintf("select_children: maxfd=%d, wlen=%d, wcount=%d, zombies=%d, timeout=%d:%d\n", maxfd, wlen, wcount, zombies, (int)tv.tv_sec, (int)tv.tv_usec);
 #endif
@@ -435,7 +472,7 @@ static SEXP read_child_ci(child_info_t *ci)
 	int pid = ci->pid;
 	close(fd);
 	ci->pfd = -1;
-	rm_child_(pid, 0);
+	rm_child_(pid);
 	return ScalarInteger(pid);
     } else {
 	SEXP rv = allocVector(RAWSXP, len);
@@ -450,7 +487,7 @@ static SEXP read_child_ci(child_info_t *ci)
 		int pid = ci->pid;
 		close(fd);
 		ci->pfd = -1;
-		rm_child_(pid, 0);
+		rm_child_(pid);
 		return ScalarInteger(pid);
 	    }
 	    i += n;
@@ -535,7 +572,7 @@ SEXP mc_read_children(SEXP sTimeout)
 SEXP mc_rm_child(SEXP sPid) 
 {
     int pid = asInteger(sPid);
-    return ScalarLogical(rm_child_(pid, 0));
+    return ScalarLogical(rm_child_(pid));
 }
 
 SEXP mc_children() 
@@ -544,6 +581,7 @@ SEXP mc_children()
     SEXP res;
     int *pids;
     child_info_t *ci = children;
+    rm_closed();
     while (ci && ci->pid > 0) {
 	count++;
 	ci = ci->next;
@@ -556,6 +594,11 @@ SEXP mc_children()
 	    (pids++)[0] = ci->pid;
 	    ci = ci->next;
 	}
+	/* in theory signals can flag a pid as closed in the
+	   meantime, we may end up with fewer children than
+	   expected - highly unlikely but possible */
+	if (pids - INTEGER(res) < LENGTH(res))
+	    SETLENGTH(res, pids - INTEGER(res));
     }
     return res;
 }
@@ -590,7 +633,7 @@ SEXP mc_master_fd()
 
 SEXP mc_is_child() 
 {
-    return ScalarLogical(is_master?0:1);
+    return ScalarLogical(is_master ? FALSE : TRUE);
 }
 
 SEXP mc_kill(SEXP sPid, SEXP sSig) 
