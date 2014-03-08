@@ -2247,59 +2247,81 @@ cmi.o dmi.o: iface.o
 @node Using C+11 code,  , Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
-@R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) for all known @R{}platforms.  However, all
+@R{} can be built without a C++ compiler although one is available
+(but not necessarily installed) or all known @R{} platforms.  
+For full portability across platforms, all
 that can be assumed is approximate support for the C++98 standard (the
 widely used @command{g++} deviates considerably from the standard).
 Some compilers have a concept of `C++03' (`essentially a bug fix') or
-`C++ Technical Report 1', an optional addition to the `C++03' revision
+`C++ Technical Report 1' (TR1), an optional addition to the `C++03' revision
 which was published in 2007.  Finally a revised standard was published
 in 2011 and compilers with fairly complete implementations are becoming
 available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-It may be possible to compile C++11 code with recent versions of
-@command{g++} or @command{clang++} by including @option{-std=c++11} in
-@samp{PKG_CXXFLAGS}, and earlier versions support a flag
-@option{-std=c++0x}.
+From version 3.1.0, @R{} provides support for C++11 in packages.  This
+support is not consistent across platforms as it depends on the
+capabilities of the compiler (See below).  When @R{} is configured, it
+will determine whether the C++ compiler supports C++11 and which
+compiler flags, if any, are required to enable C++11 support.  For
+example, recent versions of @command{g++} or @command{clang++} accept
+the compiler flag @option{-std=c++11}, and earlier versions support a
+flag @option{-std=c++0x}, but the latter only provides partial support
+for the C++11 standard.
 
-Note that the default compiler for OS X is based on GCC 4.2.1 and has no
-support for anything other than the GNU version of C++98 and GNU
-extensions (which include TR1).  The default compiler on Windows is GCC
-4.6.x and supports the @option{-std=c++0x} flag and some C++11 features
-(see @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  It is
-possible to select a different compiler @emph{via} personal
-@file{Makevars} files.
-@ifset UseExternalXrefs
-@xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration},
-@end ifset
-For example, on OS X 10.7 or later one could select @command{clang++}.
+In order to use C++ code in a package, the package's @file{Makevars}
+(or @file{Makevars.win}) file should set the macro
+@samp{USE_CXX1X}. 
 
-As from @R{} 3.1.0 there is another way to do this.  If the package's
-@file{Makevars} (or @file{Makevars.win}) file defines the macro
-@samp{USE_CXX1X}, compilation and linking will be done with the compiler
-specified by the macro @samp{CXX1X} with flag @samp{CXX1XSTD}, which can
-be specified@footnote{For details of these and related macros, see file
-@file{config.site} in the @R{} sources.} when @R{} is configured or in a
-personal or site @file{Makevars} file.  This defaults to the C++
-compiler with flag @option{-std=c++11} or @option{-std=c++0x} (the
-latter on Windows), but allows an incompatible alternative to be
-specified just for C++11--using packages, e.g.@: @command{g++ 4.8.x} on
-Solaris.  (C++ compilers, even different versions, often differ in their
-ABI, so their outputs can rarely be mixed.)
+@example
+USE_CXX1X =
+@end example
 
-If the macro @samp{USE_CXX1X} is given a value this is used to set
-@samp{CXX1XSTD} to select a different standard, for example
-@option{-std=gnu++11} or @option{-std=c++1y}.
+Compilation and linking will then be done with the C++11 compiler.  If
+the macro @samp{USE_CXX1X} is given a value this is used 
+to select a different standard, for example
+
+@example
+USE_CXX1X = -std=gnu++11
+@end example
 
 To make this easier to use with @command{R CMD SHLIB}, the environment
 variable @env{USE_CXX1X} will be consulted if there is no
-@file{Makevars} file (nor @file{Makevars.win} on Windows). Packages without
-a @file{Makevars} file may specify that they require C++11 by
-including @samp{C++11} in the @samp{SystemRequirements} field of the
-@file{DESCRIPTION} file.
+@file{Makevars} file (nor @file{Makevars.win} on Windows).
+
+Packages without a @file{Makevars} file may specify that they require
+C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
+of the @file{DESCRIPTION} file.
+
+Further control over compilation of C++11 code can be obtained by
+specifying the macros @samp{CXX1X} and @samp{CXX1XSTD} when @R{} is
+configured@footnote{For
+details of these and related macros, see file @file{config.site} in
+the @R{} sources.}, or in a personal or site @file{Makevars} file
+@ifset UseExternalXrefs
+@xref{Customizing package compilation, , Customizing package compilation,
+ R-admin,  R Installation and Administration}.
+@end ifset
+If C++11 support is not available then these macros are
+both empty. Otherwise, @samp{CXX1X} defaults to the same value as the
+C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
+@option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).
+It is possible to specify @samp{CXX1X} to be a distinct compiler just
+for C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.
+Note however that different C++ compilers (and even different versions
+of the same compiler) often differ in their ABI so their outputs can
+rarely be mixed.
+
+As noted above, support for C++11 varies across platforms.  The
+default compiler for OS X is based on GCC 4.2.1 and has no support for
+anything other than the GNU version of C++98 and GNU extensions (which
+include TR1).  The default compiler on Windows is GCC 4.6.x and
+supports the @option{-std=c++0x} flag and some C++11 features (see
+@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  On these
+platforms, it is necessary to select a different compiler for C++11,
+as described above, @emph{via} personal @file{Makevars} files.  For
+example, on OS X 10.7 or later one could select @command{clang++}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
