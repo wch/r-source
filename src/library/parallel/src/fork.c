@@ -429,8 +429,15 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
     Dprintf("  sr = %d\n", sr);
 #endif
     if (sr < 0) {
+	/* we can land here when a child terminated due to arriving SIGCHLD.
+	   For simplicity we treat this as timeout. The alernative would be to
+	   go back to select, but potentially this could lead to a much longer
+	   total timeout */
+	if (errno == EINTR)
+	    return ScalarLogical(TRUE);
+
 	warning(_("error '%s' in select"), strerror(errno));
-	return ScalarLogical(0); /* FALSE on select error */
+	return ScalarLogical(FALSE); /* FALSE on select error */
     }
     if (sr < 1) return ScalarLogical(1); /* TRUE on timeout */
     ci = children;
