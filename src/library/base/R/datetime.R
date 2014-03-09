@@ -449,6 +449,7 @@ difftime <-
         time2 <- as.POSIXct(time2, tz = tz)
     }
     z <- unclass(time1) - unclass(time2)
+    attr(z, "tzone") <- NULL # it may get copied from args of `-`
     units <- match.arg(units)
     if(units == "auto") {
         if(all(is.na(z))) units <- "secs"

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-09 r65148) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-09 r65149) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7365,4 +7365,13 @@ Nov 1960 390 390
 Dec 1960 432 432
 > options(op)
 > ## 'digits' was applied to the time.
+> 
+> 
+> ## Related to PR#15190
+> difftime(
++     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
++     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
+Time differences in hours
+[1]  5 17
+> ## kept tzone from first arg.
 > 

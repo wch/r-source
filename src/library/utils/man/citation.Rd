@@ -80,8 +80,8 @@ readCitationFile(file, meta = NULL)
   one), and one can write \file{CITATION} files using the unified
   \code{\link{bibentry}} interface.
 
-  In \R >= 2.14.0, one can include an auto-generated package citation in
-  the \file{CITATION} file via \code{citation(auto = meta)}.
+  One can include an auto-generated package citation in the
+  \file{CITATION} file via \code{citation(auto = meta)}.
 
   \code{readCitationFile} makes use of the \code{Encoding} element (if
   any) of \code{meta} to determine the encoding of the file.
