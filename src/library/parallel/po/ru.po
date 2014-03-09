@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-06-29 17:48+0100\n"
+"POT-Creation-Date: 2014-03-09 09:37+0000\n"
 "PO-Revision-Date: 2013-03-19 21:05-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -19,73 +19,73 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: fork.c:137 fork.c:140
+#: fork.c:206 fork.c:209
 msgid "unable to create a pipe"
 msgstr "не могу создать трубу"
 
-#: fork.c:151
+#: fork.c:226
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "не могу разветвить, возможная причина: %s"
 
-#: fork.c:180
+#: fork.c:272
 msgid "memory allocation error"
 msgstr "ошибка распределения памяти"
 
-#: fork.c:232
+#: fork.c:325
 msgid "only children can send data to the master process"
 msgstr "только дочерние процессы могут посылать данные мастер-процессу"
 
-#: fork.c:234
+#: fork.c:327
 msgid "there is no pipe to the master process"
 msgstr "нет трубы к мастер-процессу"
 
-#: fork.c:236
+#: fork.c:329
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:245 fork.c:252 fork.c:582
+#: fork.c:338 fork.c:345 fork.c:669
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
-#: fork.c:265
+#: fork.c:358
 msgid "only the master process can send data to a child process"
 msgstr "только мастер-процесс может посылать данные дочернему процессу"
 
-#: fork.c:272
+#: fork.c:365
 #, c-format
 msgid "child %d does not exist"
 msgstr "дочерний процесс %d не существует"
 
-#: fork.c:278
+#: fork.c:371
 msgid "write error"
 msgstr "ошибка записи"
 
-#: fork.c:358 fork.c:480
+#: fork.c:439 fork.c:561
 #, c-format
 msgid "error '%s' in select"
 msgstr "ошибка '%s' в выборе"
 
-#: fork.c:564
+#: fork.c:651
 msgid "'mckill' failed"
 msgstr "'mckill' не удался"
 
-#: fork.c:574
+#: fork.c:661
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' может быть использован только в дочернем процессе"
 
-#: fork.c:595
+#: fork.c:682
 msgid "'mcexit' failed"
 msgstr "'mcexit' не удался"
 
-#: fork.c:625 fork.c:634
+#: fork.c:712 fork.c:721
 msgid "invalid CPU affinity specification"
 msgstr "неправильное описание привязки CPU"
 
-#: fork.c:645
+#: fork.c:732
 msgid "requested CPU set is too large for this system"
 msgstr "запрошенная установка CPU слишком велика для этой системы"
 
-#: fork.c:668
+#: fork.c:755
 msgid "retrieving CPU affinity set failed"
 msgstr "загрузка привязки установки CPU не удалась"
