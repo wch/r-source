@@ -53,12 +53,12 @@ NextMethod(generic = NULL, object = NULL, \dots)
   Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
 
-  \code{UseMethod} is a primitive function but (as from \R 2.11.0) uses
-  standard argument matching.  It is not the only means of dispatch of
-  methods, for there are \link{internal generic} and \link{group generic}
-  functions.  \code{UseMethod} currently dispatches on the implicit
-  class even for arguments that are not objects, but the other means of
-  dispatch do not.
+  \code{UseMethod} is a primitive function but uses standard argument
+  matching.  It is not the only means of dispatch of methods, for there
+  are \link{internal generic} and \link{group generic} functions.
+  \code{UseMethod} currently dispatches on the implicit class even for
+  arguments that are not objects, but the other means of dispatch do
+  not.
 
   \code{NextMethod} invokes the next method (determined by the
   class vector, either of the object supplied to the generic, or of

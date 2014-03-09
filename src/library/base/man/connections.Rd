@@ -132,8 +132,7 @@ isIncomplete(con)
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
-  (as from \R 2.10.0) those compressed by \command{bzip2}, \command{xz}
-  or \command{lzma}.
+  those compressed by \command{bzip2}, \command{xz} or \command{lzma}.
 
   For \code{bzfile} the description is the path to a file compressed by
   \command{bzip2}.

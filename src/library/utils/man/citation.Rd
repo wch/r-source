@@ -74,12 +74,11 @@ readCitationFile(file, meta = NULL)
   and finally zero or more calls to \code{citFooter}, where in fact
   \code{citHeader} and \code{citFooter} are simply wrappers to
   \code{\link{paste}}, with their \code{\dots} argument passed on to
-  \code{\link{paste}} as is.  \R 2.12.0 adds a new
-  \code{"\link{bibentry}"} class for improved representation and
-  manipulation of bibliographic information (in fact, the old mechanism
-  is implemented using the new one), and one can write \file{CITATION}
-  files using the unified \code{\link{bibentry}} interface.  Such files
-  are not usable with versions of \R prior to 2.12.0.
+  \code{\link{paste}} as is.  The \code{"\link{bibentry}"} class
+  makes for improved representation and manipulation of bibliographic
+  information (in fact, the old mechanism is implemented using the new
+  one), and one can write \file{CITATION} files using the unified
+  \code{\link{bibentry}} interface.
 
   In \R >= 2.14.0, one can include an auto-generated package citation in
   the \file{CITATION} file via \code{citation(auto = meta)}.

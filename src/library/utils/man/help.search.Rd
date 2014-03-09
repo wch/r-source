@@ -98,10 +98,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
 
-  Searching with \code{agrep = FALSE} will be several times faster
-  than the default (once the database is built).  However, as from
-  \R 2.10.0 approximate searches should be fast enough (around a second
-  with 2000 packages installed).
+  Searching with \code{agrep = FALSE} will be several times faster than
+  the default (once the database is built).  However, approximate
+  searches should be fast enough (around a second with 5000 packages
+  installed).
 
   If possible, the help database is saved in memory for use by
   subsequent calls in the session.

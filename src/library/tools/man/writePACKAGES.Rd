@@ -66,14 +66,13 @@ write_PACKAGES(dir = ".", fields = NULL,
   available which depends on \samp{R >= 2.11.0}.
 
   Support for repositories with subdirectories and hence for
-  \code{subdirs != FALSE} was added in \R 2.7.0: this depends on
-  recording a \code{"Path"} field in the \file{PACKAGES} file.
+  \code{subdirs != FALSE} depends on recording a \code{"Path"} field in
+  the \file{PACKAGES} file.
 
   Support for more general file names (e.g. other types of compression)
-  \emph{via} a \code{"File"} field in the \file{PACKAGES} file was added
-  in \R 2.10.0 and can be used by \code{\link{download.packages}}.  If
-  the file names are not of the standard form, use
-  \code{addFiles = TRUE}.
+  \emph{via} a \code{"File"} field in the \file{PACKAGES} file can be
+  used by \code{\link{download.packages}}.  If the file names are not of
+  the standard form, use \code{addFiles = TRUE}.
 
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages

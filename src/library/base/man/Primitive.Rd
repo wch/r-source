@@ -31,10 +31,6 @@
   not depend on knowing which functions are primitive (which does change
   as \R evolves).
 }
-\note{
-  Prior to \R 2.14.2 this could also be used to retrieve
-  \code{\link{.Internal}} functions: this was unintentional.
-}
 \seealso{
   \code{\link{.Internal}}.
 }

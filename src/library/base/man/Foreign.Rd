@@ -121,7 +121,7 @@
 
 \section{Warning}{
   \code{DUP = FALSE} \emph{is dangerous} and may be disabled in future
-  versions of \R.
+  versions of \R.  It was deprecated in \R 3.1.0.
 
   People concerned about performance and especially memory usage are
   strongly recommended to use the \code{\link{.Call}} interface instead

@@ -62,7 +62,7 @@ create.post(instructions = character(), description = "post",
       other Unix-alikes: if that fails it tries the browser set by
       \env{R_BROWSER}).
 
-      This is the \sQuote{factory-fresh} default method as from \R 2.13.0.
+      This is the \sQuote{factory-fresh} default method.
     }
 
     \item{\code{mailx}}{(Unix-alikes only.)

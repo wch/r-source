@@ -65,11 +65,6 @@ checkVignettes(package, dir, lib.loc = NULL,
   steps. There is a \code{print} method for displaying the
   information contained in such objects.
 }
-\note{
-  Prior to \R 2.13.0 this was the code used by \command{R CMD check},
-  but the latter is now more careful, running the code for each vignette
-  in a separate \R session.
-}
 
 \keyword{utilities}
 \keyword{documentation}

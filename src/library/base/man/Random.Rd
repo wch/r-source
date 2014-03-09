@@ -166,10 +166,10 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 }
 \note{
   Initially, there is no seed; a new one is created from the current
-  time (and since \R 2.14.0, the process ID) when one is required.
-  Hence different sessions will give different simulation results, by
-  default.  However, the seed might be restored from a previous session
-  if a previously saved workspace is restored.
+  time and the process ID when one is required.  Hence different
+  sessions will give different simulation results, by default.  However,
+  the seed might be restored from a previous session if a previously
+  saved workspace is restored.
 
   \code{.Random.seed} saves the seed set for the uniform random-number
   generator, at least for the system generators.  It does not

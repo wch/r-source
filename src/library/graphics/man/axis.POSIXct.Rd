@@ -44,12 +44,6 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   controlled by the locale setting of category \code{"LC_TIME"} (see
   \code{\link{Sys.setlocale}}.
 }
-\note{
-  These functions are the workhorse for methods for \code{\link{Axis}}.
-  Prior to \R 2.12.0 there were also \code{plot} methods for the
-  date-time classes, but the default method has also handled those for a
-  long time.
-}
 \value{
   The locations on the axis scale at which tick marks were drawn.
 }

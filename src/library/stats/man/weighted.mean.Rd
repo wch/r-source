@@ -1,6 +1,6 @@
 % File src/library/stats/man/weighted.mean.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{weighted.mean}
@@ -38,9 +38,9 @@ weighted.mean(x, w, \dots)
   their sum is zero or infinite the value is likely to be \code{NaN}).
 
   Missing values in \code{w} are not handled specially and so give a
-  missing value as the result.  However, as from \R 2.11.0 zero weights
-  \emph{are} handled specially and the corresponding \code{x} values are
-  omitted from the sum.
+  missing value as the result.  However, zero weights \emph{are} handled
+  specially and the corresponding \code{x} values are omitted from the
+  sum.
 }
 \value{
   For the default method, a length-one numeric vector.

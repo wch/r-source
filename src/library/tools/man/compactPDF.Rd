@@ -69,13 +69,12 @@ compactPDF(paths,
   these have been supported by Acrobat Reader since version 6 in 2003,
   so this is very unlikely to cause difficulties.
 
-  Stream compression is what most often has large gains: \R's
-  \code{\link{pdf}} device prior to \R 2.14.0 did not use it, and
-  older vignette PDFs often benefit from being re-generated.  Most PDF
+  Stream compression is what most often has large gains.  Most PDF
   documents are generated with object compression, but this does not
   seem to be the default for MiKTeX's \command{pdflatex}.  For some PDF
   files (and especially package vignettes), using GhostScript can
-  dramatically reduce the space taken by embedded images (often screenshots).
+  dramatically reduce the space taken by embedded images (often
+  screenshots).
 
   Where both GhostScript and \command{qpdf} are selected (when
   \code{gs_quality != "none"} and both executables are found), they are

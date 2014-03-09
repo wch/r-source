@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -272,9 +272,9 @@ x$i <- value
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
   subsetted (but never for subassignment).  Unlike S (Becker \emph{et
-    al} p. 358)), \R has never used partial matching when extracting by
-  \code{[}, and as from \R 2.7.0 partial matching is not by default used
-  by \code{[[} (see argument \code{exact}).
+  al} p. 358)), \R never uses partial matching when extracting by
+  \code{[}, and partial matching is not by default used by \code{[[}
+  (see argument \code{exact}).
 
   Thus the default behaviour is to use partial matching only when
   extracting from recursive objects (except environments) by \code{$}.

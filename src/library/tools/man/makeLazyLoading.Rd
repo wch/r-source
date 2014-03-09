@@ -24,7 +24,7 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
   packages other than \pkg{base} you can use
   \code{makeLazyLoading(package)} to convert them to use lazy loading.
 
-  Note that as from \R 2.14.0 this is done when all packages are installed.
+  This is done when a package is installed.
 }
 \keyword{utilities}
 \author{Luke Tierney and Brian Ripley}

@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -71,7 +71,7 @@ capabilities(what = NULL)
 #endif
       }
     \item{iconv}{is internationalization conversion via
-      \code{\link{iconv}} supported?  Always true as from \R 2.10.0.}
+      \code{\link{iconv}} supported?  Always true in current \R.}
     \item{NLS}{is there Natural Language Support (for message translations)?}
     \item{profmem}{is there support for memory profiling?  See
       \code{\link{tracemem}}.}

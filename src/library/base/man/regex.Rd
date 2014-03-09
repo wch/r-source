@@ -40,7 +40,7 @@
   mode of \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They use an implementation of the
   POSIX 1003.2 standard: that allows some scope for interpretation and
-  the interpretations here are those used as from \R 2.10.0.
+  the interpretations here are those currently used by \R.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller
@@ -74,8 +74,7 @@
   best avoided.)  The only portable way to specify all ASCII letters is
   to list them all as the character class\cr
   \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr
-  (The current implementation uses numerical order of the encoding: prior to
-  \R 2.10.0 locale-specific collation was used, and might be again.)
+  (The current implementation uses numerical order of the encoding.)
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the

@@ -36,8 +36,7 @@ warnings(\dots)
 }
 \section{Warning}{
   It is undocumented where \code{last.warning} is stored nor that it is
-  visible, and this is subject to change.  Prior to \R 2.4.0 it was
-  stored in the workspace, but no longer.
+  visible, and this is subject to change.
 }
 \seealso{
   \code{\link{warning}}.

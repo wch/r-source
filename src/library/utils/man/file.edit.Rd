@@ -30,9 +30,8 @@ file.edit(\dots, title = file, editor = getOption("editor"),
   The \code{title} argument is used for the window caption in Windows,
   and is currently ignored on other platforms.
 
-  The \code{fileEncoding} argument was added in \R 2.13.0: any error in
-  re-encoding the files to the native encoding will cause the function
-  to fail.
+  Any error in re-encoding the files to the native encoding will cause
+  the function to fail.
 
   The default for \code{editor} is system-dependent.   On
   Windows it defaults to \code{"internal"}, the script editor, and in

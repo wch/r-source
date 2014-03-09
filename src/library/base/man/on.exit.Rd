@@ -1,6 +1,6 @@
 % File src/library/base/man/on.exit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{on.exit}
@@ -25,9 +25,6 @@ on.exit(expr = NULL, add = FALSE)
     any previously set expressions.}
 }
 \details{
-  Where \code{expr} was evaluated changed in \R 2.8.0, and the following
-  applies only to that and later versions.
-
   The \code{expr} argument passed to \code{on.exit} is recorded without
   evaluation.  If it is not subsequently removed/replaced by another
   \code{on.exit} call in the same function, it is evaluated in the

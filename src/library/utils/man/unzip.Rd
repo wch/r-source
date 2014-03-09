@@ -48,9 +48,9 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   designed for Windows' users to be able to unpack Windows binary
   packages without external software.  It does not (for example) support
   Unicode filenames as introduced in \command{zip 3.0}: for that use
-  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  (As from
-  \R 2.14.0 it does have support for files of more than 4GB and
-  \command{bzip2} compression.)
+  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  (It does
+  have support for files of more than 4GB and \command{bzip2}
+  compression.)
 
   If \code{unzip} specifies a program, the format of the dates listed
   with \code{list = TRUE} is unknown (on Windows it can even depend on
