@@ -7375,3 +7375,10 @@ Time differences in hours
 [1]  5 17
 > ## kept tzone from first arg.
 > 
+> 
+> ## PR#15706
+> x1 <- as.dendrogram(hclust(dist(c(i=1,ii=2,iii=3,v=5,vi=6,vii=7))))
+> attr(cophenetic(x1), "Labels")
+[1] "iii" "i"   "ii"  "vii" "v"   "vi" 
+> ## gave a matrix in 3.0.3
+> 

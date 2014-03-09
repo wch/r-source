@@ -585,9 +585,13 @@
       accidentally, (\PR{15703}), and \code{order.dendrogram(d)} gave
       too much for a leaf \code{d}. (\PR{15702}) 
 
-      \item R would try to kill processes on exit that have pids
-      ever used by a child process spawned by \code{parallel} even
-      if those were not actually its children.
+      \item \R would try to kill processes on exit that have pids ever
+      used by a child process spawned by \code{parallel} even the
+      current process with that pid was not actually its child.
+      
+      \item \code{cophenetic()} applied to a \code{"dendrogram"} object
+      sometimes incorrectly returned a \code{"Labels"} attribute with
+      dimensions.  (\PR{15706})
     }
   }
 }

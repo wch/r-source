@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -203,8 +203,8 @@ function(x)
     out <- matrix(0, nrow = nobs, ncol = nobs)
     for(i in 1 : (nobs - 1)) {
         inds <- x$merge[i,]
-        ids1 <- if(inds[1L] < 0) -inds[1L] else ilist[[inds[1L]]]
-        ids2 <- if(inds[2L] < 0) -inds[2L] else ilist[[inds[2L]]]
+        ids1 <- if(inds[1L] < 0L) -inds[1L] else ilist[[inds[1L]]]
+        ids2 <- if(inds[2L] < 0L) -inds[2L] else ilist[[inds[2L]]]
         ilist[[i]] <- c(ids1, ids2)
         out[cbind(rep.int(ids1, rep.int(length(ids2), length(ids1))),
                   rep.int(ids2, length(ids1)))] <- x$height[i]
@@ -243,10 +243,9 @@ function(x)
     ##    for(i in seq_along(inds))
     ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
     hi <- cumsum(lens)
-    lo <- c(0, hi[-length(hi)]) + 1
+    lo <- c(0L, hi[-length(hi)]) + 1L
     for(i in seq_along(x))
         m[lo[i] : hi[i], lo[i] : hi[i]] <- as.matrix(children[[i]])
-    rownames(m) <- colnames(m) <-
-        unlist(sapply(children, attr, "Labels"))
+    rownames(m) <- colnames(m) <- unlist(lapply(children, attr, "Labels"))
     as.dist(m)
 }

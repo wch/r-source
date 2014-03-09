@@ -2852,3 +2852,9 @@ difftime(
     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 12:00:00"), tz="EST5EDT"),
     as.POSIXct(c("1970-01-01 00:00:00", "1970-01-01 00:00:00"), tz="UTC"))
 ## kept tzone from first arg.
+
+
+## PR#15706
+x1 <- as.dendrogram(hclust(dist(c(i=1,ii=2,iii=3,v=5,vi=6,vii=7))))
+attr(cophenetic(x1), "Labels")
+## gave a matrix in 3.0.3
