@@ -154,9 +154,13 @@ printCoefmat <-
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE
     print.default(Cf, quote = FALSE, right = TRUE, na.print = na.print, ...)
-    if(signif.stars && signif.legend)
-        ## FIXME: double space is to reproduce historical MM error
-        cat("---\nSignif. codes:  ", attr(Signif,"legend"), "\n", sep ="")
+    if(signif.stars && signif.legend) {
+	if((w <- getOption("width")) < nchar(sleg <- attr(Signif,"legend")))# == 46
+	    sleg <- strwrap(sleg, width = w - 2, prefix = "  ")
+	##"FIXME": Double space __ is for reproducibility, rather than by design
+	cat("---\nSignif. codes:  ", sleg, sep = "",
+	    fill = w+4 + max(nchar(sleg,"bytes") - nchar(sleg)))# +4: "---" 
+    }
     invisible(x)
 }
 

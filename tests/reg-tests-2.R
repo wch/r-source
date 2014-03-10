@@ -2858,3 +2858,12 @@ difftime(
 x1 <- as.dendrogram(hclust(dist(c(i=1,ii=2,iii=3,v=5,vi=6,vii=7))))
 attr(cophenetic(x1), "Labels")
 ## gave a matrix in 3.0.3
+
+
+## PR#15708
+aa <- anova( lm(sr ~ ., data = LifeCycleSavings) )
+op <- options(width = 50)
+aa
+op <- options(width = 40)
+aa ; options(op)
+## did not line wrap "Signif. codes" previously

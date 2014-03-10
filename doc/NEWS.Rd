@@ -592,6 +592,11 @@
       \item \code{cophenetic()} applied to a \code{"dendrogram"} object
       sometimes incorrectly returned a \code{"Labels"} attribute with
       dimensions.  (\PR{15706})
+
+      \item \code{printCoefmat()} called from quite a few \code{print()}
+      methods now obeys small \code{getOption("width")} settings,
+      line wrapping the "signif. codes" legend appropriately.
+      (\PR{15708}) 
     }
   }
 }

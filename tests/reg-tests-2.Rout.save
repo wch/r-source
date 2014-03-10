@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-09 r65149) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-10 r65152) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6403,15 +6403,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3c082e0> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c6f650> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3c2a160> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c41ae8> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x3c2a160> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c41ae8> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 
@@ -7381,4 +7381,44 @@ Time differences in hours
 > attr(cophenetic(x1), "Labels")
 [1] "iii" "i"   "ii"  "vii" "v"   "vi" 
 > ## gave a matrix in 3.0.3
+> 
+> 
+> ## PR#15708
+> aa <- anova( lm(sr ~ ., data = LifeCycleSavings) )
+> op <- options(width = 50)
+> aa
+Analysis of Variance Table
+
+Response: sr
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+pop15      1 204.12 204.118 14.1157 0.0004922 ***
+pop75      1  53.34  53.343  3.6889 0.0611255 .  
+dpi        1  12.40  12.401  0.8576 0.3593551    
+ddpi       1  63.05  63.054  4.3605 0.0424711 *  
+Residuals 45 650.71  14.460                      
+---
+Signif. codes:  
+0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+> op <- options(width = 40)
+> aa ; options(op)
+Analysis of Variance Table
+
+Response: sr
+          Df Sum Sq Mean Sq F value
+pop15      1 204.12 204.118 14.1157
+pop75      1  53.34  53.343  3.6889
+dpi        1  12.40  12.401  0.8576
+ddpi       1  63.05  63.054  4.3605
+Residuals 45 650.71  14.460        
+             Pr(>F)    
+pop15     0.0004922 ***
+pop75     0.0611255 .  
+dpi       0.3593551    
+ddpi      0.0424711 *  
+Residuals              
+---
+Signif. codes:  
+  0 '***' 0.001 '**' 0.01 '*' 0.05
+  '.' 0.1 ' ' 1
+> ## did not line wrap "Signif. codes" previously
 > 
