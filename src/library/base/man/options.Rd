@@ -237,14 +237,13 @@ getOption(x, default = NULL)
       % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
 #ifdef unix
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
-      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
+	
       This is the set of characters use to break the input line up into
       tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer\cr
-      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}%"
-      which was the default in \R 2.5.0.  (The default in pre-2.5.0
-      versions of \R was\cr
-      \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.)}%"
+      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&{()}"}%"
+      }
 #endif
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
