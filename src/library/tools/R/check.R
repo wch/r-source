@@ -1352,7 +1352,7 @@ setRlibs <-
                             "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
-                else if(any(grepl("^Calls with DUP = FALSE", out)))
+                else if(any(grepl("with DUP = FALSE:", out)))
                     wrapLog("DUP = FALSE is deprecated and may be",
                             "disabled in future versions of R.")
                 else

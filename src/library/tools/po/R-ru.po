@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-26 09:09\n"
-"PO-Revision-Date: 2013-03-19 22:26-0600\n"
+"PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -292,9 +292,8 @@ msgstr "Неправильные указатели файла лицензии: %s"
 msgid "License components with restrictions not permitted:"
 msgstr "Компоненты с ограничениями не разрешены:"
 
-#, fuzzy
 msgid "License components which are templates and need '+ file LICENSE':"
-msgstr "Компоненты с ограничениями не разрешены:"
+msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -458,9 +457,8 @@ msgstr ""
 "Автоматические сгенерированное содержание требует редактирования в оббъекте "
 "Rd '%s':"
 
-#, fuzzy
 msgid "no Rd sections specified"
-msgstr "не указан 'type'"
+msgstr "не указаны разделы Rd"
 
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
@@ -562,9 +560,8 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "не могу создать временную папку %s"
 
-#, fuzzy
 msgid "Running"
-msgstr "Запускаю %s"
+msgstr "Запускаю"
 
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
@@ -831,11 +828,11 @@ msgstr "Ссылка %s в пакете %s не найдена"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
-#, fuzzy
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
-"Только файлы помощи, %s, %s и файлы внутри %s в пакете могут быть просмотрены"
+"Только файлы помощи, %s, %s и файлы внутри %s и %s в пакете могут быть "
+"просмотрены"
 
 msgid "unsupported URL %s"
 msgstr "неподдерживаемые URL %s"
@@ -1153,7 +1150,7 @@ msgid "FAILED"
 msgstr "НЕ УДАЛОСЬ"
 
 msgid "DIFFERED"
-msgstr ""
+msgstr "РАЗЛИЧНЫ"
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "запускаю тесты на генерацию случайных отклонений -- иногда не удаются"

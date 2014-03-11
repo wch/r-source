@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:10\n"
-"PO-Revision-Date: 2013-03-19 17:45-0600\n"
+"PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -989,6 +989,8 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
+"пространство имен %s недоступно и было заменено\n"
+"на .GlobalEnv в результате работы с объектом %s"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
@@ -1734,9 +1736,6 @@ msgstr[2] "Предупреждения:\n"
 #~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
 #~ msgstr "'nv' должен быть 0, nrow(x) или ncol(x)"
 
-#~ msgid "too many 'S3method' directives"
-#~ msgstr "слишком много директив 'S3method'"
-
 #~ msgid "non-square matrix in 'chol'"
 #~ msgstr "не квадратная матрица в 'chol'"
 
@@ -1745,6 +1744,9 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "matrix not positive definite"
 #~ msgstr "матрица не является положительно определенной"
+
+#~ msgid "too many 'S3method' directives"
+#~ msgstr "слишком много директив 'S3method'"
 
 #~ msgid "'keep.source' is deprecated and will be ignored"
 #~ msgstr "'keep.source' устарел и будет пропущен"

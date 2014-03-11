@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 14:09+0000\n"
+"POT-Creation-Date: 2014-03-11 16:31+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -170,9 +170,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/connections.c:4965 src/main/connections.c:4991
 #: src/main/connections.c:4995 src/main/connections.c:4999
 #: src/main/connections.c:5003 src/main/context.c:596 src/main/context.c:605
-#: src/main/context.c:609 src/main/datetime.c:773 src/main/datetime.c:861
-#: src/main/datetime.c:863 src/main/datetime.c:867 src/main/datetime.c:1022
-#: src/main/datetime.c:1024 src/main/datetime.c:1226 src/main/debug.c:228
+#: src/main/context.c:609 src/main/datetime.c:775 src/main/datetime.c:865
+#: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1026
+#: src/main/datetime.c:1028 src/main/datetime.c:1232 src/main/debug.c:228
 #: src/main/deparse.c:397 src/main/dotcode.c:478 src/main/dotcode.c:482
 #: src/main/dotcode.c:487 src/main/dounzip.c:322 src/main/dounzip.c:329
 #: src/main/dounzip.c:339 src/main/dounzip.c:344 src/main/dounzip.c:348
@@ -249,7 +249,7 @@ msgstr "不支持这版本的Windows"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
 #: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:675 src/main/datetime.c:775 src/main/datetime.c:1026
+#: src/main/datetime.c:675 src/main/datetime.c:777 src/main/datetime.c:1030
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1368 src/main/identical.c:66 src/main/identical.c:67
@@ -2374,8 +2374,8 @@ msgstr "无法为本系统设时差区"
 msgid "problem with unsetting timezone"
 msgstr "取消时区设制时出了问题"
 
-#: src/main/datetime.c:800 src/main/datetime.c:802 src/main/datetime.c:897
-#: src/main/datetime.c:1234 src/main/datetime.c:1236
+#: src/main/datetime.c:804 src/main/datetime.c:806 src/main/datetime.c:901
+#: src/main/datetime.c:1240 src/main/datetime.c:1242
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "非空的\"POSIXlt\"结构里含长度为零的部件"
 

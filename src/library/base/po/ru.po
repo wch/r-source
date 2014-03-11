@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 14:09+0000\n"
-"PO-Revision-Date: 2013-03-19 19:17-0600\n"
+"POT-Creation-Date: 2014-03-11 16:31+0000\n"
+"PO-Revision-Date: 2014-03-11 10:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
@@ -175,9 +175,9 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/connections.c:4965 src/main/connections.c:4991
 #: src/main/connections.c:4995 src/main/connections.c:4999
 #: src/main/connections.c:5003 src/main/context.c:596 src/main/context.c:605
-#: src/main/context.c:609 src/main/datetime.c:773 src/main/datetime.c:861
-#: src/main/datetime.c:863 src/main/datetime.c:867 src/main/datetime.c:1022
-#: src/main/datetime.c:1024 src/main/datetime.c:1226 src/main/debug.c:228
+#: src/main/context.c:609 src/main/datetime.c:775 src/main/datetime.c:865
+#: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1026
+#: src/main/datetime.c:1028 src/main/datetime.c:1232 src/main/debug.c:228
 #: src/main/deparse.c:397 src/main/dotcode.c:478 src/main/dotcode.c:482
 #: src/main/dotcode.c:487 src/main/dounzip.c:322 src/main/dounzip.c:329
 #: src/main/dounzip.c:339 src/main/dounzip.c:344 src/main/dounzip.c:348
@@ -254,7 +254,7 @@ msgstr "неподдерживаемая версия Windows"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
 #: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:675 src/main/datetime.c:775 src/main/datetime.c:1026
+#: src/main/datetime.c:675 src/main/datetime.c:777 src/main/datetime.c:1030
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1368 src/main/identical.c:66 src/main/identical.c:67
@@ -1274,9 +1274,9 @@ msgid "class name too long in '%s'"
 msgstr "слишком длинное имя класса в '%s'"
 
 #: src/main/bind.c:1125
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create a matrix from type '%s'"
-msgstr "не могу создать матрицу из этих типов данных"
+msgstr "не могу создать матрицу из типа '%s'"
 
 #: src/main/bind.c:1196
 #, c-format
@@ -2412,8 +2412,8 @@ msgstr "не могу установить часовые пояса для эт
 msgid "problem with unsetting timezone"
 msgstr "проблема выключения часового пояса"
 
-#: src/main/datetime.c:800 src/main/datetime.c:802 src/main/datetime.c:897
-#: src/main/datetime.c:1234 src/main/datetime.c:1236
+#: src/main/datetime.c:804 src/main/datetime.c:806 src/main/datetime.c:901
+#: src/main/datetime.c:1240 src/main/datetime.c:1242
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "нулевая составляющая в непустой \"POSIXlt\"-структуре"
 
@@ -2920,9 +2920,8 @@ msgid "display list redraw incomplete"
 msgstr "отражение списка перерисовки неполное"
 
 #: src/main/engine.c:2777
-#, fuzzy
 msgid "invalid display list"
-msgstr "неправильный список аргументов"
+msgstr "неправильный список вывода"
 
 #: src/main/engine.c:2963
 msgid "'expr' argument must be an expression"
@@ -5072,9 +5071,9 @@ msgid "mismatch on types"
 msgstr "несоответствие типов"
 
 #: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1636
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognized internal function name \"%s\""
-msgstr "не могу найти функцию \"%s\""
+msgstr "не могу найти имя внутренней функции \"%s\""
 
 #: src/main/saveload.c:709
 msgid "cannot save file position while restoring data"
@@ -5272,7 +5271,7 @@ msgstr ""
 
 #: src/main/scan.c:364 src/main/scan.c:414
 msgid "EOF within quoted string"
-msgstr ""
+msgstr "EOF внутри закавыченной строки"
 
 #: src/main/scan.c:484
 #, c-format
@@ -7283,12 +7282,6 @@ msgstr "создать временный файл для '-e' не удалос
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: Только редактирование первого файла из списка"
 
-#~ msgid "negative value in 'x'"
-#~ msgstr "отрицательное значение в 'x'"
-
-#~ msgid "'jobu' and 'jobv' must be character strings"
-#~ msgstr "'jobu' и 'jobv' должны быть текстовыми строками"
-
 #~ msgid ""
 #~ "bad target context--should NEVER happen;\n"
 #~ "please bug.report() [R_run_onexits]"
@@ -7298,6 +7291,12 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: Только редактирование 
 
 #~ msgid "invalid assignment left-hand side"
 #~ msgstr "неправильная левая сторона присвоения"
+
+#~ msgid "negative value in 'x'"
+#~ msgstr "отрицательное значение в 'x'"
+
+#~ msgid "'jobu' and 'jobv' must be character strings"
+#~ msgstr "'jobu' и 'jobv' должны быть текстовыми строками"
 
 #, fuzzy
 #~ msgid "\"%s\" is not an existing slot in an object of class \"%s\""

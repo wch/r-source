@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 14:09+0000\n"
+"POT-Creation-Date: 2014-03-11 16:31+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -174,9 +174,9 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/connections.c:4965 src/main/connections.c:4991
 #: src/main/connections.c:4995 src/main/connections.c:4999
 #: src/main/connections.c:5003 src/main/context.c:596 src/main/context.c:605
-#: src/main/context.c:609 src/main/datetime.c:773 src/main/datetime.c:861
-#: src/main/datetime.c:863 src/main/datetime.c:867 src/main/datetime.c:1022
-#: src/main/datetime.c:1024 src/main/datetime.c:1226 src/main/debug.c:228
+#: src/main/context.c:609 src/main/datetime.c:775 src/main/datetime.c:865
+#: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1026
+#: src/main/datetime.c:1028 src/main/datetime.c:1232 src/main/debug.c:228
 #: src/main/deparse.c:397 src/main/dotcode.c:478 src/main/dotcode.c:482
 #: src/main/dotcode.c:487 src/main/dounzip.c:322 src/main/dounzip.c:329
 #: src/main/dounzip.c:339 src/main/dounzip.c:344 src/main/dounzip.c:348
@@ -253,7 +253,7 @@ msgstr "denne Windows-versjonen er ikkje støtta"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
 #: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
-#: src/main/datetime.c:675 src/main/datetime.c:775 src/main/datetime.c:1026
+#: src/main/datetime.c:675 src/main/datetime.c:777 src/main/datetime.c:1030
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
 #: src/main/errors.c:1368 src/main/identical.c:66 src/main/identical.c:67
@@ -2457,8 +2457,8 @@ msgstr "kan ikkje setja tidssonar på dette systemet"
 msgid "problem with unsetting timezone"
 msgstr "feil ved avsetjing av tidssone"
 
-#: src/main/datetime.c:800 src/main/datetime.c:802 src/main/datetime.c:897
-#: src/main/datetime.c:1234 src/main/datetime.c:1236
+#: src/main/datetime.c:804 src/main/datetime.c:806 src/main/datetime.c:901
+#: src/main/datetime.c:1240 src/main/datetime.c:1242
 #, fuzzy
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "komponent av lengd null i ikkje-tom POSIXlt-struktur"
