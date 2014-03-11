@@ -239,7 +239,7 @@ getOption(x, default = NULL)
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
 	
-      This is the set of characters use to break the input line up into
+      This is the set of characters use to break the input line into
       tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer\cr
       \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&{()}"}%"

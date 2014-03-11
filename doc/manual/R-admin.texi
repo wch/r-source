@@ -268,11 +268,11 @@ those you
 @enindex TMPDIR
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and scripts
-can be executed from) or points to a valid temporary directory (one from
-which execution of scripts is allowed) whose path does not contain
-spaces.@footnote{Most aspects will work with paths containing spaces,
-but external software used by @R{}, e.g.@: @command{texi2dvi} version
-@code{4.8}, may not.}
+can be executed from) or points to the absolute path to a valid
+temporary directory (one from which execution of scripts is allowed)
+which does not contain spaces.@footnote{Most aspects will work with
+paths containing spaces, but external software used by @R{}, e.g.@:
+@command{texi2dvi} version @code{4.8}, may not.}
 
 @findex R_HOME
 Choose a directory to install the @R{} tree (@R{} is not just a binary, but
@@ -1163,9 +1163,10 @@ Example:
 @subsection Building the core files
 
 @enindex TMPDIR
-Set the environment variable @env{TMPDIR} to point to a writable
-directory, with a path specified with forward slashes and no spaces.
-(The default is @file{/tmp}, which may not be useful on Windows.)
+Set the environment variable @env{TMPDIR} to the absolute path to a
+writable directory, with a path specified with forward slashes and no
+spaces.  (The default is @file{/tmp}, which may not be useful on
+Windows.)
 
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
@@ -1853,8 +1854,8 @@ more than one library, of course.
 
 @enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
-@file{/tmp} exists and can be written in and executed from) or points to
-a valid temporary directory with a path not containing spaces.
+@file{/tmp} exists and can be written in and executed from) or is the
+absoulute path to a valid temporary directory, not containing spaces.
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the

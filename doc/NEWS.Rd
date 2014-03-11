@@ -10,7 +10,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{type.convert()} (and hence \code{read.table()})
+      \item \code{type.convert()} (and hence \code{read.table(as.is = TRUE)})
       returns a character vector or factor when representing a numeric
       input as a double would lose accuracy.  Similarly for complex
       inputs.
@@ -40,7 +40,7 @@
 
       \item \code{uniroot()} gets new optional arguments, notably
       \code{extendInt}, allowing to auto-extend the search interval when
-      needed.  Its return value has an extra component, \code{init.it}.
+      needed.  The return value has an extra component, \code{init.it}.
 
       % advertize at all?
       % \item New \code{.lm.fit()} for benchmark lovers but not Joe
@@ -104,10 +104,10 @@
 
       \item There is more support to explore the system's idea of
       time-zone names.  \code{Sys.timezone()} tries to give the current
-      system setting (and succeeds at least on Linux, OS X, Solaris and
-      Windows), and \code{OlsonNames()} lists the names in the system's
-      Olson database. \code{Sys.timezone(location = FALSE)} gives the
-      previous behaviour.
+      system setting by name (and succeeds at least on Linux, OS X,
+      Solaris and Windows), and \code{OlsonNames()} lists the names in
+      the system's Olson database. \code{Sys.timezone(location = FALSE)}
+      gives the previous behaviour.
 
       \item Platforms with a 64-bit \code{time_t} type are allowed to
       handle conversions between the \code{"POSIXct"} and
@@ -118,7 +118,8 @@
       errors and so not used on OS X.)
 
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
-      Unix-alike 64-bit platforms.  On \R for Windows it is 64-bit (for
+      Unix-alike 64-bit platforms: however it several cases the
+      time-zone database is 32-bit.  On \R for Windows it is 64-bit (for
       both architectures as from this version).
 
       \item The \code{"save.defaults"} option can include a value for
@@ -152,8 +153,8 @@
       optional component \code{"zone"} recording the abbreviation for
       each element.
 
-      For suitable platforms, there is also a component \code{"gmtoff"}
-      recording the offset from GMT where known.
+      For platforms which support it, there is also a component
+      \code{"gmtoff"} recording the offset from GMT where known.
 
       \item (On Windows, by default on OS X and optionally elsewhere.)
       The system C function \code{strftime} has been replaced by a more
@@ -586,7 +587,7 @@
       too much for a leaf \code{d}. (\PR{15702}) 
 
       \item \R would try to kill processes on exit that have pids ever
-      used by a child process spawned by \code{parallel} even the
+      used by a child process spawned by \code{parallel} even though the
       current process with that pid was not actually its child.
       
       \item \code{cophenetic()} applied to a \code{"dendrogram"} object
