@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-06 18:29+0000\n"
+"POT-Creation-Date: 2014-03-11 14:09+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -137,39 +137,39 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/character.c:203 src/main/character.c:1037
 #: src/main/character.c:1041 src/main/character.c:1276
 #: src/main/character.c:1280 src/main/character.c:1341
-#: src/main/character.c:1344 src/main/connections.c:1214
-#: src/main/connections.c:1220 src/main/connections.c:1223
-#: src/main/connections.c:1227 src/main/connections.c:1372
-#: src/main/connections.c:1388 src/main/connections.c:1393
-#: src/main/connections.c:1993 src/main/connections.c:1999
-#: src/main/connections.c:2003 src/main/connections.c:2007
-#: src/main/connections.c:2012 src/main/connections.c:2662
-#: src/main/connections.c:2667 src/main/connections.c:2670
-#: src/main/connections.c:2673 src/main/connections.c:3054
-#: src/main/connections.c:3059 src/main/connections.c:3065
-#: src/main/connections.c:3068 src/main/connections.c:3072
-#: src/main/connections.c:3087 src/main/connections.c:3137
-#: src/main/connections.c:3142 src/main/connections.c:3146
-#: src/main/connections.c:3150 src/main/connections.c:3154
-#: src/main/connections.c:3160 src/main/connections.c:3207
-#: src/main/connections.c:3213 src/main/connections.c:3217
-#: src/main/connections.c:3267 src/main/connections.c:3270
-#: src/main/connections.c:3544 src/main/connections.c:3547
-#: src/main/connections.c:3550 src/main/connections.c:3556
-#: src/main/connections.c:3663 src/main/connections.c:3669
-#: src/main/connections.c:3672 src/main/connections.c:3823
-#: src/main/connections.c:3826 src/main/connections.c:3830
-#: src/main/connections.c:3833 src/main/connections.c:3953
-#: src/main/connections.c:4071 src/main/connections.c:4074
-#: src/main/connections.c:4411 src/main/connections.c:4436
-#: src/main/connections.c:4471 src/main/connections.c:4486
-#: src/main/connections.c:4494 src/main/connections.c:4520
-#: src/main/connections.c:4666 src/main/connections.c:4670
-#: src/main/connections.c:4798 src/main/connections.c:4800
-#: src/main/connections.c:4802 src/main/connections.c:4830
-#: src/main/connections.c:4962 src/main/connections.c:4988
-#: src/main/connections.c:4992 src/main/connections.c:4996
-#: src/main/connections.c:5000 src/main/context.c:596 src/main/context.c:605
+#: src/main/character.c:1344 src/main/connections.c:1217
+#: src/main/connections.c:1223 src/main/connections.c:1226
+#: src/main/connections.c:1230 src/main/connections.c:1375
+#: src/main/connections.c:1391 src/main/connections.c:1396
+#: src/main/connections.c:1996 src/main/connections.c:2002
+#: src/main/connections.c:2006 src/main/connections.c:2010
+#: src/main/connections.c:2015 src/main/connections.c:2665
+#: src/main/connections.c:2670 src/main/connections.c:2673
+#: src/main/connections.c:2676 src/main/connections.c:3057
+#: src/main/connections.c:3062 src/main/connections.c:3068
+#: src/main/connections.c:3071 src/main/connections.c:3075
+#: src/main/connections.c:3090 src/main/connections.c:3140
+#: src/main/connections.c:3145 src/main/connections.c:3149
+#: src/main/connections.c:3153 src/main/connections.c:3157
+#: src/main/connections.c:3163 src/main/connections.c:3210
+#: src/main/connections.c:3216 src/main/connections.c:3220
+#: src/main/connections.c:3270 src/main/connections.c:3273
+#: src/main/connections.c:3547 src/main/connections.c:3550
+#: src/main/connections.c:3553 src/main/connections.c:3559
+#: src/main/connections.c:3666 src/main/connections.c:3672
+#: src/main/connections.c:3675 src/main/connections.c:3826
+#: src/main/connections.c:3829 src/main/connections.c:3833
+#: src/main/connections.c:3836 src/main/connections.c:3956
+#: src/main/connections.c:4074 src/main/connections.c:4077
+#: src/main/connections.c:4414 src/main/connections.c:4439
+#: src/main/connections.c:4474 src/main/connections.c:4489
+#: src/main/connections.c:4497 src/main/connections.c:4523
+#: src/main/connections.c:4669 src/main/connections.c:4673
+#: src/main/connections.c:4801 src/main/connections.c:4803
+#: src/main/connections.c:4805 src/main/connections.c:4833
+#: src/main/connections.c:4965 src/main/connections.c:4991
+#: src/main/connections.c:4995 src/main/connections.c:4999
+#: src/main/connections.c:5003 src/main/context.c:596 src/main/context.c:605
 #: src/main/context.c:609 src/main/datetime.c:773 src/main/datetime.c:861
 #: src/main/datetime.c:863 src/main/datetime.c:867 src/main/datetime.c:1022
 #: src/main/datetime.c:1024 src/main/datetime.c:1226 src/main/debug.c:228
@@ -248,7 +248,7 @@ msgid "unsupported version of Windows"
 msgstr "不支持这版本的Windows"
 
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
-#: src/main/connections.c:3552 src/main/context.c:642 src/main/context.c:661
+#: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
 #: src/main/datetime.c:675 src/main/datetime.c:775 src/main/datetime.c:1026
 #: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
 #: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
@@ -338,9 +338,9 @@ msgid "truncate not enabled for this connection"
 msgstr "不能缩短这个链结"
 
 #: src/gnuwin32/run.c:729 src/gnuwin32/run.c:733 src/gnuwin32/run.c:746
-#: src/gnuwin32/run.c:774 src/main/connections.c:1327
-#: src/main/connections.c:1331 src/main/connections.c:1337
-#: src/main/connections.c:1351
+#: src/gnuwin32/run.c:774 src/main/connections.c:1330
+#: src/main/connections.c:1334 src/main/connections.c:1340
+#: src/main/connections.c:1354
 msgid "allocation of pipe connection failed"
 msgstr "管道链结分配失败"
 
@@ -1291,7 +1291,7 @@ msgstr "矢量size设得太大了"
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1537 src/main/connections.c:3063 src/main/engine.c:2967
+#: src/main/coerce.c:1537 src/main/connections.c:3066 src/main/engine.c:2967
 #: src/main/envir.c:993 src/main/envir.c:1046 src/main/envir.c:1136
 #: src/main/envir.c:1615 src/main/envir.c:1739 src/main/envir.c:1807
 #: src/main/envir.c:1925 src/main/envir.c:2582 src/main/envir.c:2642
@@ -1327,11 +1327,11 @@ msgstr "无法为空环境设父母环境"
 msgid "'parent' is not an environment"
 msgstr "'parent'不是环境"
 
-#: src/main/builtin.c:521 src/main/connections.c:3688
-#: src/main/connections.c:4065 src/main/connections.c:4099
-#: src/main/connections.c:4477 src/main/connections.c:4547
-#: src/main/connections.c:4756 src/main/connections.c:4760
-#: src/main/connections.c:5121 src/main/deparse.c:360 src/main/deparse.c:446
+#: src/main/builtin.c:521 src/main/connections.c:3691
+#: src/main/connections.c:4068 src/main/connections.c:4102
+#: src/main/connections.c:4480 src/main/connections.c:4550
+#: src/main/connections.c:4759 src/main/connections.c:4763
+#: src/main/connections.c:5124 src/main/deparse.c:360 src/main/deparse.c:446
 #: src/main/serialize.c:2006
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
@@ -1714,7 +1714,7 @@ msgid "%s not enabled for this connection"
 msgstr "%s对这个链结无效"
 
 #: src/main/connections.c:335 src/main/connections.c:352
-#: src/main/connections.c:2913
+#: src/main/connections.c:2916
 msgid "printing of extremely long output is truncated"
 msgstr "缩短了极长输出的打印"
 
@@ -1740,7 +1740,7 @@ msgstr "链结没有打开，不能读"
 msgid "connection is not open for writing"
 msgstr "链结没有打开，不能写"
 
-#: src/main/connections.c:734 src/main/connections.c:2226
+#: src/main/connections.c:734 src/main/connections.c:2229
 msgid "can only truncate connections open for writing"
 msgstr "只能缩短已经打开了的可以写的链结"
 
@@ -1757,7 +1757,7 @@ msgstr "本平台上没有文件缩短功能"
 msgid "allocation of file connection failed"
 msgstr "文件链结分配失败"
 
-#: src/main/connections.c:866 src/main/connections.c:1041
+#: src/main/connections.c:866 src/main/connections.c:1044
 #, c-format
 msgid "cannot create fifo '%s', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立先进先出'%1$s'"
@@ -1778,524 +1778,524 @@ msgid "cannot open fifo '%s'"
 msgstr "无法打开先进先出'%s'"
 
 #: src/main/connections.c:928 src/main/connections.c:939
-#: src/main/connections.c:1101 src/main/connections.c:1120
-#: src/main/connections.c:1528 src/main/connections.c:1538
-#: src/main/connections.c:1657 src/main/connections.c:1717
-#: src/main/connections.c:2243 src/main/connections.c:2260
-#: src/main/connections.c:2569 src/main/connections.c:5302
-#: src/main/connections.c:5366
+#: src/main/connections.c:1104 src/main/connections.c:1123
+#: src/main/connections.c:1531 src/main/connections.c:1541
+#: src/main/connections.c:1660 src/main/connections.c:1720
+#: src/main/connections.c:2246 src/main/connections.c:2263
+#: src/main/connections.c:2572 src/main/connections.c:5305
+#: src/main/connections.c:5369
 msgid "too large a block specified"
 msgstr "区组太大"
 
-#: src/main/connections.c:997 src/main/connections.c:1002
+#: src/main/connections.c:998 src/main/connections.c:1004
 #, fuzzy
 msgid "allocation of fifo name failed"
 msgstr "先进先出链结分配失败"
 
-#: src/main/connections.c:1063
+#: src/main/connections.c:1066
 #, fuzzy, c-format
 msgid "cannot open fifo '%s', reason '%s'"
 msgstr "无法打开URL'%s'，原因是'%s'"
 
-#: src/main/connections.c:1104 src/main/connections.c:1128
+#: src/main/connections.c:1107 src/main/connections.c:1131
 #, fuzzy
 msgid "allocation of fifo buffer failed"
 msgstr "先进先出链结分配失败"
 
-#: src/main/connections.c:1136
+#: src/main/connections.c:1139
 #, fuzzy, c-format
 msgid "cannot write FIFO '%s'"
 msgstr "无法打开URL'%s'"
 
-#: src/main/connections.c:1172 src/main/connections.c:1176
-#: src/main/connections.c:1182 src/main/connections.c:1198
+#: src/main/connections.c:1175 src/main/connections.c:1179
+#: src/main/connections.c:1185 src/main/connections.c:1201
 msgid "allocation of fifo connection failed"
 msgstr "先进先出链结分配失败"
 
-#: src/main/connections.c:1216 src/main/connections.c:1374
-#: src/main/connections.c:1995 src/main/connections.c:3209
-#: src/main/connections.c:4964
+#: src/main/connections.c:1219 src/main/connections.c:1377
+#: src/main/connections.c:1998 src/main/connections.c:3212
+#: src/main/connections.c:4967
 msgid "only first element of 'description' argument used"
 msgstr "只用了'description'参数的第一个元素"
 
-#: src/main/connections.c:1233
+#: src/main/connections.c:1236
 msgid ""
 "fifo(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr "fifo(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现在使用前者"
 
-#: src/main/connections.c:1247 src/main/connections.c:1411
-#: src/main/connections.c:2061 src/main/connections.c:3176
-#: src/main/connections.c:3229 src/main/connections.c:3277
-#: src/main/connections.c:3564 src/main/connections.c:3680
-#: src/main/connections.c:3841 src/main/connections.c:4092
-#: src/main/connections.c:4420 src/main/connections.c:4540
-#: src/main/connections.c:4752 src/main/connections.c:5102 src/main/dcf.c:94
+#: src/main/connections.c:1250 src/main/connections.c:1414
+#: src/main/connections.c:2064 src/main/connections.c:3179
+#: src/main/connections.c:3232 src/main/connections.c:3280
+#: src/main/connections.c:3567 src/main/connections.c:3683
+#: src/main/connections.c:3844 src/main/connections.c:4095
+#: src/main/connections.c:4423 src/main/connections.c:4543
+#: src/main/connections.c:4755 src/main/connections.c:5105 src/main/dcf.c:94
 #: src/main/deparse.c:352 src/main/deparse.c:438 src/main/saveload.c:2267
 #: src/main/saveload.c:2350 src/main/scan.c:933 src/main/serialize.c:2175
 #: src/main/serialize.c:2226 src/main/source.c:265
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
-#: src/main/connections.c:1262
+#: src/main/connections.c:1265
 msgid "fifo connections are not available on this system"
 msgstr "本系统没有先进先出链结这个功能"
 
-#: src/main/connections.c:1292
+#: src/main/connections.c:1295
 #, c-format
 msgid "cannot pipe() cmd '%ls': %s"
 msgstr "无法pipe()命令'%ls': %s"
 
-#: src/main/connections.c:1299
+#: src/main/connections.c:1302
 #, c-format
 msgid "cannot open pipe() cmd '%s': %s"
 msgstr "无法打开pipe()命令'%s': %s"
 
-#: src/main/connections.c:1468 src/main/connections.c:1788
+#: src/main/connections.c:1471 src/main/connections.c:1791
 #, c-format
 msgid "cannot open compressed file '%s', probable reason '%s'"
 msgstr "无法打开压缩文件'%s'，可能是因为'%s'"
 
-#: src/main/connections.c:1508
+#: src/main/connections.c:1511
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = \"end\"不适用于gz文件链结"
 
-#: src/main/connections.c:1513
+#: src/main/connections.c:1516
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "读取gz文件链结时内部出错"
 
-#: src/main/connections.c:1547 src/main/connections.c:1551
-#: src/main/connections.c:1557 src/main/connections.c:1574
+#: src/main/connections.c:1550 src/main/connections.c:1554
+#: src/main/connections.c:1560 src/main/connections.c:1577
 msgid "allocation of gzfile connection failed"
 msgstr "分配gz文件链结失败"
 
-#: src/main/connections.c:1603
+#: src/main/connections.c:1606
 #, c-format
 msgid "cannot open bzip2-ed file '%s', probable reason '%s'"
 msgstr "无法打开bzip2压缩文件'%s'，原因可能是'%s'"
 
-#: src/main/connections.c:1612
+#: src/main/connections.c:1615
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "文件'%s'看起来不象是bzip2类"
 
-#: src/main/connections.c:1621
+#: src/main/connections.c:1624
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr "在开始给'%s'文件进行bzip2压缩时出现了错误"
 
-#: src/main/connections.c:1675
+#: src/main/connections.c:1678
 msgid "allocation of overflow buffer for bzfile failed"
 msgstr "为bzfile分配溢出缓冲区失败"
 
-#: src/main/connections.c:1682
+#: src/main/connections.c:1685
 #, c-format
 msgid ""
 "file '%s' has trailing content that appears not to be compressed by bzip2"
 msgstr "文件'%s'结尾的内容看起来不是由bzip2压缩的"
 
-#: src/main/connections.c:1728 src/main/connections.c:1732
-#: src/main/connections.c:1738 src/main/connections.c:1755
+#: src/main/connections.c:1731 src/main/connections.c:1735
+#: src/main/connections.c:1741 src/main/connections.c:1758
 msgid "allocation of bzfile connection failed"
 msgstr "分配bz文件链结失败"
 
-#: src/main/connections.c:1801 src/main/connections.c:5958
+#: src/main/connections.c:1804 src/main/connections.c:5961
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "无法为lzma译码器进行初始化，错误是%d"
 
-#: src/main/connections.c:1817
+#: src/main/connections.c:1820
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
 msgstr "无法为lzma编码器进行初始化，错误是%d "
 
-#: src/main/connections.c:1945 src/main/connections.c:1949
-#: src/main/connections.c:1955 src/main/connections.c:1973
+#: src/main/connections.c:1948 src/main/connections.c:1952
+#: src/main/connections.c:1958 src/main/connections.c:1976
 msgid "allocation of xzfile connection failed"
 msgstr "分配xzfile文件链结失败"
 
-#: src/main/connections.c:2032
+#: src/main/connections.c:2035
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "这一版本的R不支持%s-压缩文件"
 
-#: src/main/connections.c:2127 src/modules/X11/devX11.c:3375
+#: src/main/connections.c:2130 src/modules/X11/devX11.c:3375
 msgid "memory allocation to copy clipboard failed"
 msgstr "抄写裁剪板时内存分配失败"
 
-#: src/main/connections.c:2132 src/modules/X11/devX11.c:3354
+#: src/main/connections.c:2135 src/modules/X11/devX11.c:3354
 #: src/modules/X11/devX11.c:3359
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不开裁剪板，或是裁剪板不含文字"
 
-#: src/main/connections.c:2143
+#: src/main/connections.c:2146
 msgid "memory allocation to open clipboard failed"
 msgstr "打开裁剪板时内存分配失败"
 
-#: src/main/connections.c:2171
+#: src/main/connections.c:2174
 msgid "unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/main/connections.c:2175
+#: src/main/connections.c:2178
 msgid "unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/main/connections.c:2215
+#: src/main/connections.c:2218
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "无法读取裁剪板范围外的内容"
 
-#: src/main/connections.c:2258
+#: src/main/connections.c:2261
 msgid "clipboard connection is open for reading only"
 msgstr "打开了只读裁剪板链结"
 
-#: src/main/connections.c:2278
+#: src/main/connections.c:2281
 msgid "clipboard buffer is full and output lost"
 msgstr "裁剪板缓冲区已满，丢失了输出"
 
-#: src/main/connections.c:2299
+#: src/main/connections.c:2302
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "裁剪板'mode'必需是'r'或'w'"
 
-#: src/main/connections.c:2302
+#: src/main/connections.c:2305
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "Unix操作系统上裁剪板'mode'必需是'r'"
 
-#: src/main/connections.c:2305 src/main/connections.c:2311
-#: src/main/connections.c:2317 src/main/connections.c:2334
+#: src/main/connections.c:2308 src/main/connections.c:2314
+#: src/main/connections.c:2320 src/main/connections.c:2337
 msgid "allocation of clipboard connection failed"
 msgstr "裁剪板链结分配失败"
 
-#: src/main/connections.c:2403 src/main/connections.c:2407
-#: src/main/connections.c:2413
+#: src/main/connections.c:2406 src/main/connections.c:2410
+#: src/main/connections.c:2416
 msgid "allocation of terminal connection failed"
 msgstr "终端链结分配失败"
 
-#: src/main/connections.c:2546
+#: src/main/connections.c:2549
 msgid "attempting to add too many elements to raw vector"
 msgstr "不能给原始矢量加大多元素"
 
-#: src/main/connections.c:2598
+#: src/main/connections.c:2601
 msgid "attempt to seek outside the range of the raw connection"
 msgstr "无法读取原始链结范围外的内容"
 
-#: src/main/connections.c:2609 src/main/connections.c:2613
-#: src/main/connections.c:2619 src/main/connections.c:2645
+#: src/main/connections.c:2612 src/main/connections.c:2616
+#: src/main/connections.c:2622 src/main/connections.c:2648
 msgid "allocation of raw connection failed"
 msgstr "原始链结分配失败"
 
-#: src/main/connections.c:2698
+#: src/main/connections.c:2701
 msgid "'con' is not a rawConnection"
 msgstr "'con'不是rawConnection"
 
-#: src/main/connections.c:2701
+#: src/main/connections.c:2704
 msgid "'con' is not an output rawConnection"
 msgstr "'con'不是输出链结rawConnection"
 
-#: src/main/connections.c:2739
+#: src/main/connections.c:2742
 msgid "too many characters for text connection"
 msgstr "字符太多了，无法用文字链结"
 
-#: src/main/connections.c:2744
+#: src/main/connections.c:2747
 msgid "cannot allocate memory for text connection"
 msgstr "无法给文字链结分配内存"
 
-#: src/main/connections.c:2793
+#: src/main/connections.c:2796
 msgid "seek is not relevant for text connection"
 msgstr "读取不适用于文字链结"
 
-#: src/main/connections.c:2801 src/main/connections.c:2805
-#: src/main/connections.c:2811 src/main/connections.c:2824
-#: src/main/connections.c:3009 src/main/connections.c:3013
-#: src/main/connections.c:3019 src/main/connections.c:3032
-#: src/main/connections.c:3038
+#: src/main/connections.c:2804 src/main/connections.c:2808
+#: src/main/connections.c:2814 src/main/connections.c:2827
+#: src/main/connections.c:3012 src/main/connections.c:3016
+#: src/main/connections.c:3022 src/main/connections.c:3035
+#: src/main/connections.c:3041
 msgid "allocation of text connection failed"
 msgstr "文字链结分配失败"
 
-#: src/main/connections.c:2986
+#: src/main/connections.c:2989
 msgid "text connection: appending to a non-existent char vector"
 msgstr "文字链结: 不能符加给不存在的字符矢量"
 
-#: src/main/connections.c:3090
+#: src/main/connections.c:3093
 msgid "unsupported mode"
 msgstr "不支持此状态"
 
-#: src/main/connections.c:3112
+#: src/main/connections.c:3115
 msgid "'con' is not a textConnection"
 msgstr "'con'不是链结"
 
-#: src/main/connections.c:3115
+#: src/main/connections.c:3118
 msgid "'con' is not an output textConnection"
 msgstr "'con'不是输出链结"
 
-#: src/main/connections.c:3189
+#: src/main/connections.c:3192
 msgid "sockets are not available on this system"
 msgstr "本系统没有插坐这个功能"
 
-#: src/main/connections.c:3257 src/main/connections.c:3306
-#: src/main/connections.c:3317 src/main/connections.c:3364
-#: src/main/connections.c:3389 src/main/connections.c:3412
-#: src/main/connections.c:3424 src/main/connections.c:3540
-#: src/main/connections.c:3665 src/main/connections.c:5405
+#: src/main/connections.c:3260 src/main/connections.c:3309
+#: src/main/connections.c:3320 src/main/connections.c:3367
+#: src/main/connections.c:3392 src/main/connections.c:3415
+#: src/main/connections.c:3427 src/main/connections.c:3543
+#: src/main/connections.c:3668 src/main/connections.c:5408
 msgid "'con' is not a connection"
 msgstr "'con'不是链结"
 
-#: src/main/connections.c:3260
+#: src/main/connections.c:3263
 msgid "cannot open standard connections"
 msgstr "无法打开标准链结"
 
-#: src/main/connections.c:3262
+#: src/main/connections.c:3265
 msgid "connection is already open"
 msgstr "链结已打开"
 
-#: src/main/connections.c:3295
+#: src/main/connections.c:3298
 msgid "unknown 'rw' value"
 msgstr "没有这样的'rw'值"
 
-#: src/main/connections.c:3366
+#: src/main/connections.c:3369
 msgid "cannot close standard connections"
 msgstr "无法关闭标准链结"
 
-#: src/main/connections.c:3369
+#: src/main/connections.c:3372
 msgid "cannot close 'output' sink connection"
 msgstr "无法关闭'output'汇集链结"
 
-#: src/main/connections.c:3371
+#: src/main/connections.c:3374
 msgid "cannot close 'message' sink connection"
 msgstr "无法关闭'message'汇集链结"
 
-#: src/main/connections.c:3391 src/main/connections.c:5120
-#: src/main/connections.c:5128 src/main/serialize.c:1996
+#: src/main/connections.c:3394 src/main/connections.c:5123
+#: src/main/connections.c:5131 src/main/serialize.c:1996
 #: src/main/serialize.c:2004
 msgid "connection is not open"
 msgstr "链结没有打开"
 
-#: src/main/connections.c:3487 src/main/connections.c:3499
+#: src/main/connections.c:3490 src/main/connections.c:3502
 msgid "line longer than buffer size"
 msgstr "行要比缓冲区要大"
 
-#: src/main/connections.c:3571 src/main/connections.c:3573
-#: src/main/connections.c:3849 src/main/connections.c:4403
-#: src/main/connections.c:4428 src/main/connections.c:5129 src/main/dcf.c:101
+#: src/main/connections.c:3574 src/main/connections.c:3576
+#: src/main/connections.c:3852 src/main/connections.c:4406
+#: src/main/connections.c:4431 src/main/connections.c:5132 src/main/dcf.c:101
 #: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:1998
 #: src/main/source.c:272
 msgid "cannot read from this connection"
 msgstr "无法从此链结读取"
 
-#: src/main/connections.c:3585 src/main/connections.c:3607
+#: src/main/connections.c:3588 src/main/connections.c:3610
 msgid "cannot allocate buffer in readLines"
 msgstr "无法给readLines分配缓冲区"
 
-#: src/main/connections.c:3620
+#: src/main/connections.c:3623
 #, c-format
 msgid "line %d appears to contain an embedded nul"
 msgstr ""
 
-#: src/main/connections.c:3637
+#: src/main/connections.c:3640
 #, c-format
 msgid "incomplete final line found on '%s'"
 msgstr "读'%s'时最后一行未遂"
 
-#: src/main/connections.c:3643
+#: src/main/connections.c:3646
 msgid "too few lines read in readLines"
 msgstr "readLines读的行数不够"
 
-#: src/main/connections.c:3746
+#: src/main/connections.c:3749
 msgid "incomplete string at end of file has been discarded"
 msgstr "略过文件末不完整的字符串"
 
-#: src/main/connections.c:3752
+#: src/main/connections.c:3755
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "没有null终止符: 字符串截断于10000个字节"
 
-#: src/main/connections.c:3817
+#: src/main/connections.c:3820
 msgid "can only read from a binary connection"
 msgstr "无法读二进列链结"
 
-#: src/main/connections.c:3866 src/main/connections.c:4173
+#: src/main/connections.c:3869 src/main/connections.c:4176
 msgid "size changing is not supported for complex vectors"
 msgstr "不支持复数矢量大小的改变"
 
-#: src/main/connections.c:3904 src/main/connections.c:3922
-#: src/main/connections.c:3948 src/main/connections.c:4007
-#: src/main/connections.c:4027 src/main/connections.c:4154
-#: src/main/connections.c:4167 src/main/connections.c:4226
-#: src/main/connections.c:4258
+#: src/main/connections.c:3907 src/main/connections.c:3925
+#: src/main/connections.c:3951 src/main/connections.c:4010
+#: src/main/connections.c:4030 src/main/connections.c:4157
+#: src/main/connections.c:4170 src/main/connections.c:4229
+#: src/main/connections.c:4261
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "本系统没有%d这样大小的值"
 
-#: src/main/connections.c:3933
+#: src/main/connections.c:3936
 msgid "raw is always of size 1"
 msgstr "raw的大小只能是一"
 
-#: src/main/connections.c:3956
+#: src/main/connections.c:3959
 msgid "'signed = FALSE' is only valid for integers of sizes 1 and 2"
 msgstr "'signed = FALSE'唯一有效的尺寸是1和2"
 
-#: src/main/connections.c:4057
+#: src/main/connections.c:4060
 msgid "'x' is not an atomic vector type"
 msgstr "'x'非基元矢量种类"
 
-#: src/main/connections.c:4063
+#: src/main/connections.c:4066
 msgid "can only write to a binary connection"
 msgstr "只能写入二进列链结"
 
-#: src/main/connections.c:4082
+#: src/main/connections.c:4085
 msgid "only 2^31-1 bytes can be written to a raw vector"
 msgstr "写原始矢量最多只能用2^31-1字节"
 
-#: src/main/connections.c:4084
+#: src/main/connections.c:4087
 msgid "only 2^31-1 bytes can be written in a single writeBin() call"
 msgstr "单次调用writeBin()的话最多只能写2^31-1字节"
 
-#: src/main/connections.c:4133 src/main/connections.c:4286
-#: src/main/connections.c:4567 src/main/connections.c:4607
+#: src/main/connections.c:4136 src/main/connections.c:4289
+#: src/main/connections.c:4570 src/main/connections.c:4610
 msgid "problem writing to connection"
 msgstr "写入链结有问题"
 
-#: src/main/connections.c:4178
+#: src/main/connections.c:4181
 msgid "size changing is not supported for raw vectors"
 msgstr "不支持原始矢量大小的改变"
 
-#: src/main/connections.c:4321 src/main/connections.c:4325
-#: src/main/connections.c:4364
+#: src/main/connections.c:4324 src/main/connections.c:4328
+#: src/main/connections.c:4367
 msgid "invalid UTF-8 input in readChar()"
 msgstr "readChar()的UTF-8输入有错"
 
-#: src/main/connections.c:4431
+#: src/main/connections.c:4434
 msgid "can only read in bytes in a non-UTF-8 MBCS locale"
 msgstr "在non-UTF-8 MBCS语言环境里只能读取字节"
 
-#: src/main/connections.c:4503
+#: src/main/connections.c:4506
 msgid "'object' is too short"
 msgstr "'object'太短"
 
-#: src/main/connections.c:4556
+#: src/main/connections.c:4559
 msgid "writeChar: more bytes requested than are in the string - will zero-pad"
 msgstr "writeChar：字符串的长度比需要的字节数目短-用零来补上"
 
-#: src/main/connections.c:4581
+#: src/main/connections.c:4584
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr "writeChar：字符串的长度比需要的字节数目短-用零来补上"
 
-#: src/main/connections.c:4635
+#: src/main/connections.c:4638
 msgid "maximum number of pushback lines exceeded"
 msgstr "超出推回线的最大数量"
 
-#: src/main/connections.c:4641 src/main/connections.c:4645
-#: src/main/connections.c:4682 src/main/connections.c:4690
+#: src/main/connections.c:4644 src/main/connections.c:4648
+#: src/main/connections.c:4685 src/main/connections.c:4693
 msgid "could not allocate space for pushback"
 msgstr "无法为推回分配空间"
 
-#: src/main/connections.c:4673
+#: src/main/connections.c:4676
 msgid "can only push back on open readable connections"
 msgstr "只能推回已打开的可读链结"
 
-#: src/main/connections.c:4675
+#: src/main/connections.c:4678
 msgid "can only push back on text-mode connections"
 msgstr "只能推回文字状态的链结"
 
-#: src/main/connections.c:4737 src/main/connections.c:4807
+#: src/main/connections.c:4740 src/main/connections.c:4810
 msgid "sink stack is full"
 msgstr "汇集堆叠满了"
 
-#: src/main/connections.c:4740
+#: src/main/connections.c:4743
 msgid "cannot switch output to stdin"
 msgstr "无法将输出转到stdin"
 
-#: src/main/connections.c:4767
+#: src/main/connections.c:4770
 msgid "no sink to remove"
 msgstr "没有可以除去的汇集"
 
-#: src/main/connections.c:4889
+#: src/main/connections.c:4892
 msgid "there is no connection NA"
 msgstr "没有NA链结"
 
-#: src/main/connections.c:4891
+#: src/main/connections.c:4894
 #, c-format
 msgid "there is no connection %d"
 msgstr "没有%d链结"
 
-#: src/main/connections.c:5026
+#: src/main/connections.c:5029
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr "file(\"\")只支持open = \"w+\"和open = \"w+b\"这两种模式：现在使用前者"
 
-#: src/main/connections.c:5080 src/modules/internet/internet.c:115
+#: src/main/connections.c:5083 src/modules/internet/internet.c:115
 #: src/modules/internet/internet.c:569
 msgid "unsupported URL scheme"
 msgstr "不支持这种URL方案"
 
-#: src/main/connections.c:5170
+#: src/main/connections.c:5173
 msgid "file stream does not have gzip magic number"
 msgstr "文件串流没有gzip幻数"
 
-#: src/main/connections.c:5181
+#: src/main/connections.c:5184
 msgid "file stream does not have valid gzip header"
 msgstr "文件串流的gzip表头有错"
 
-#: src/main/connections.c:5246
+#: src/main/connections.c:5249
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "清除'gzcon'链结时书写出错"
 
-#: src/main/connections.c:5348
+#: src/main/connections.c:5351
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc错误%x%x\n"
 
-#: src/main/connections.c:5375
+#: src/main/connections.c:5378
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon'链结书写出错"
 
-#: src/main/connections.c:5409
+#: src/main/connections.c:5412
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level’必需是0 ... 9之一"
 
-#: src/main/connections.c:5412
+#: src/main/connections.c:5415
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression'的值要么是TRUE要么是FALSE"
 
-#: src/main/connections.c:5415
+#: src/main/connections.c:5418
 msgid "this is already a 'gzcon' connection"
 msgstr "这已经是'gzcon'链结"
 
-#: src/main/connections.c:5421
+#: src/main/connections.c:5424
 msgid "can only use read- or write- binary connections"
 msgstr "只用读或写的二进列链结"
 
-#: src/main/connections.c:5424
+#: src/main/connections.c:5427
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "文字方式的'file'联结有可能会出错"
 
-#: src/main/connections.c:5427
+#: src/main/connections.c:5430
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
 "rawConnection"
 msgstr "不能创建一个可写的textConnection的'gzcon'连接；试用rawConnection一下"
 
-#: src/main/connections.c:5430 src/main/connections.c:5434
-#: src/main/connections.c:5441 src/main/connections.c:5455
+#: src/main/connections.c:5433 src/main/connections.c:5437
+#: src/main/connections.c:5444 src/main/connections.c:5458
 msgid "allocation of 'gzcon' connection failed"
 msgstr "分配'gzcon'链结失败"
 
-#: src/main/connections.c:5641
+#: src/main/connections.c:5644
 msgid "not a list of sockets"
 msgstr "非插坐串列"
 
-#: src/main/connections.c:5646
+#: src/main/connections.c:5649
 msgid "bad write indicators"
 msgstr "书写指示器有错"
 
-#: src/main/connections.c:5657
+#: src/main/connections.c:5660
 msgid "not a socket connection"
 msgstr "非插坐链结"
 
-#: src/main/connections.c:5902
+#: src/main/connections.c:5905
 msgid "unknown compression, assuming none"
 msgstr "不知道这种压缩格式，因此假设没有压缩"
 
-#: src/main/connections.c:6020 src/main/connections.c:6024
-#: src/main/connections.c:6030
+#: src/main/connections.c:6023 src/main/connections.c:6027
+#: src/main/connections.c:6033
 #, c-format
 msgid "allocation of %s connection failed"
 msgstr "链结%s分配失败"

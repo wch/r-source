@@ -534,8 +534,8 @@
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
 
-      \item \code{getGraphicsEvent()} caused 100\% CPU usage in Windows.
-      (PR#15500)
+      \item \code{getGraphicsEvent()} caused 100\% usage of one CPU in
+      Windows. (PR#15500)
 
       \item \code{nls()} with no \code{start} argument may now work
       inside another function (scoping issue).
@@ -564,13 +564,15 @@
       This may introduce error messages in existing code and/or produce
       a different result in existing code (but only where a non-finite
       location or dimension may now become zero).
-      
+
       \item Some bugs in TRE have been corrected by updating from the
-      \command{git} repository.
+      \command{git} repository.  This allows \R to be installed on some
+      platforms for which this was a blocker (\PR{15087} suggests Linux
+      on ARM and HP-UX).
 
       \item \code{?} applied to a call to an S4 generic failed in
       several cases. (\PR{15680})
-      
+     
       \item The implicit S4 generics for primitives with \code{\dots} in
       their argument list were incorrect. (\PR{15690})
       
@@ -587,8 +589,8 @@
       too much for a leaf \code{d}. (\PR{15702}) 
 
       \item \R would try to kill processes on exit that have pids ever
-      used by a child process spawned by \code{parallel} even though the
-      current process with that pid was not actually its child.
+      used by a child process spawned by \code{mcparallel} even though
+      the current process with that pid was not actually its child.
       
       \item \code{cophenetic()} applied to a \code{"dendrogram"} object
       sometimes incorrectly returned a \code{"Labels"} attribute with
@@ -596,7 +598,7 @@
 
       \item \code{printCoefmat()} called from quite a few \code{print()}
       methods now obeys small \code{getOption("width")} settings,
-      line wrapping the "signif. codes" legend appropriately.
+      line wrapping the \samp{"signif. codes"} legend appropriately.
       (\PR{15708}) 
     }
   }
