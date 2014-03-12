@@ -4895,9 +4895,9 @@ computations.
 The Solaris time-zone conversion services seem to be unreliable pre-1916
 in Europe (when daylight-savings time was first introduced): most often
 reporting in the non-existent DST variant.  Using @command{configure}
-option @option{--with-internal-tzcode} is recommended if such times are
-to be used.
-
+option @option{--with-internal-tzcode} is recommended, and required if
+you find time-zone abbreviations being given odd values (as has been
+seen on 64-bit builds without it).
 
 When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this

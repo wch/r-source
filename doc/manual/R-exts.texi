@@ -5944,7 +5944,7 @@ including the information in the @file{DESCRIPTION} files.
 @code{R CMD Sweave} and @code{R CMD Stangle} process vignette-like
 documentation files (e.g. Sweave vignettes with extension
 @samp{.Snw} or @samp{.Rnw}, or other non-Sweave vignettes).
-@code{R CMD Stangle} is use to extract the @R{} code fragments.
+@code{R CMD Stangle} is used to extract the @R{} code fragments.
 
 The exact usage and a detailed list of available options for all of
 these commands can be obtained by running @code{R CMD @var{command}

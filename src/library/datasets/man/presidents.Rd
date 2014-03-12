@@ -9,7 +9,7 @@
 \title{Quarterly Approval Ratings of US Presidents}
 \description{
   The (approximately) quarterly approval rating for the President of the
-  United states from the first quarter of 1945 to the last quarter of
+  United States from the first quarter of 1945 to the last quarter of
   1974.
 }
 \usage{presidents}

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/sunspot.month.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sunspot.month}
@@ -22,7 +22,7 @@ sunspot.month
 }
 \seealso{
   \code{sunspot.month} is a longer version of \code{\link{sunspots}}
-  that runs until 1988 rather than 1983.
+  that runs until 1997 rather than 1983.
 }
 \source{
   World Data Center-C1 For Sunspot Index
