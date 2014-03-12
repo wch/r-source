@@ -3237,7 +3237,7 @@ setRlibs <-
                 ## Warnings spotted by clang with
                 ## '-Wreturn-type-c-linkage':
                 warn_re <- c(warn_re,
-                             ": warning: .* has C-linkage specified, but returns user-defined type .* which is incompatible with C")
+                             ": warning: .* \\[-Wreturn-type-c-linkage\\]")
                 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
