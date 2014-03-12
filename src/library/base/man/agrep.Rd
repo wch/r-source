@@ -75,7 +75,7 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   deletions and substitutions required to transform one string into
   another.
 
-  Yhis uses \code{tre} by Ville Laurikari
+  This uses \code{tre} by Ville Laurikari
   (\url{http://http://laurikari.net/tre/}), which supports MBCS
   character matching.
 

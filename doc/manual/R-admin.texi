@@ -1855,7 +1855,7 @@ more than one library, of course.
 @enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or is the
-absoulute path to a valid temporary directory, not containing spaces.
+absolute path to a valid temporary directory, not containing spaces.
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the
