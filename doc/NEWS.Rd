@@ -298,8 +298,7 @@
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX}, but an alternative compiler,
       options and standard can be specified by variables \samp{CXX1X},
-      \samp{CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=c++1y} or
-      \samp{-std=gnu++11}).
+      \samp{CXX1XFLAGS} and \samp{CXX1XSTD} (e.g. \samp{-std=gnu++11}).
 
       \item \R{} can now optionally be compiled to use reference
       counting instead of the \code{NAMED} mechanism by defining
@@ -338,18 +337,8 @@
       \item \command{R CMD INSTALL --build} (not Windows) now defaults to
       the internal \code{tar()} unless \env{R_INSTALL_TAR} is set.
 
-      \item There is some support for compiling C++11 code in packages.
-      The file \file{src/Makevars} or \file{src/Makevars.win} should
-      define the macro \samp{USE_CXX1X} (with an empty value).  Where
-      needed, an alternative compiler can be specified by setting macros
-      \samp{CXX1X}, \samp{CXX1XFLAGS} and so on, either when \R is
-      configured or in a personal/site \file{Makevars} file.  The
-      default is to use \samp{$(CXX) -std=c++11} otherwise
-      \option{-std=c++0x} if supported, (the latter on Windows, as
-      supported by \code{g++ 4.6.x}.)
-
-      Other standards supported by the compiler can be specified by e.g.
-      \samp{USE_CXX1X = -std=c++1y} .
+      \item There is support for compiling C++11 code in packages on
+      suitable platforms: see \sQuote{Writing R Extensions}.
 
       \item Fake installs now install the contents of directory
       \file{inst}: some packages use this to install e.g. C++ headers

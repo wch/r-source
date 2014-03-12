@@ -2260,16 +2260,15 @@ available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-From version 3.1.0, @R{} provides support for C++11 in packages,
-in addition to C++98.  This
-support is not consistent across platforms as it depends on the
-capabilities of the compiler (See below).  When @R{} is configured, it
-will determine whether the C++ compiler supports C++11 and which
-compiler flags, if any, are required to enable C++11 support.  For
-example, recent versions of @command{g++} or @command{clang++} accept
-the compiler flag @option{-std=c++11}, and earlier versions support a
-flag @option{-std=c++0x}, but the latter only provides partial support
-for the C++11 standard.
+From version 3.1.0, @R{} provides support for C++11 in packages, in
+addition to C++98.  This support is not consistent across platforms as
+it depends on the capabilities of the compiler (see below).  When @R{}
+is configured, it will determine whether the C++ compiler supports C++11
+and which compiler flags, if any, are required to enable C++11 support.
+For example, recent versions of @command{g++} or @command{clang++}
+accept the compiler flag @option{-std=c++11}, and earlier versions
+support a flag @option{-std=c++0x}, but the latter only provides partial
+support for the C++11 standard.
 
 In order to use C++ code in a package, the package's @file{Makevars}
 file (or @file{Makevars.win} on Windows) should include the line
@@ -2278,10 +2277,10 @@ file (or @file{Makevars.win} on Windows) should include the line
 CXX_STD = CXX11
 @end example
 
-Compilation and linking will then be done with the C++11 compiler.  
-If any other value is given to the @samp{CXX_STD} macro it will be 
-ignored (Further options may become available in the future depending
-on the evolution of the C++ standard).
+Compilation and linking will then be done with the C++11 compiler.  If
+any other value is given to the @samp{CXX_STD} macro it will be ignored.
+(Further options may become available in the future depending on the
+evolution of the C++ standard.)
 
 Packages without a @file{Makevars} file may specify that they require
 C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
@@ -2305,7 +2304,7 @@ Further control over compilation of C++11 code can be obtained by
 specifying the macros @samp{CXX1X} and @samp{CXX1XSTD} when @R{} is
 configured@footnote{For
 details of these and related macros, see file @file{config.site} in
-the @R{} sources.}, or in a personal or site @file{Makevars} file
+the @R{} sources.}, or in a personal or site @file{Makevars} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
  R-admin,  R Installation and Administration}.
@@ -2323,14 +2322,14 @@ choose a different dialect of the standard, such as
 @option{-std=gnu++11} or enable experimental support for the next
 revision (tentatively planned for 2017) @option{-std=c++1y}.
 
-As noted above, support for C++11 varies across platforms.  The
-default compiler for OS X is based on GCC 4.2.1 and has no support for
+As noted above, support for C++11 varies across platforms.  The default
+compiler for OS X (<= 10.8) is based on GCC 4.2.1 and has no support for
 anything other than the GNU version of C++98 and GNU extensions (which
-include TR1).  The default compiler on Windows is GCC 4.6.x and
-supports the @option{-std=c++0x} flag and some C++11 features (see
+include TR1).  The default compiler on Windows is GCC 4.6.x and supports
+the @option{-std=c++0x} flag and some C++11 features (see
 @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  On these
-platforms, it is necessary to select a different compiler for C++11,
-as described above, @emph{via} personal @file{Makevars} files.  For
+platforms, it is necessary to select a different compiler for C++11, as
+described above, @emph{via} personal @file{Makevars} files.  For
 example, on OS X 10.7 or later one could select @command{clang++}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
