@@ -587,8 +587,9 @@ SEXP mc_children()
     unsigned int count = 0;
     SEXP res;
     int *pids;
-    child_info_t *ci = children;
+    child_info_t *ci;
     rm_closed();
+    ci = children;
     while (ci && ci->pid > 0) {
 	count++;
 	ci = ci->next;
