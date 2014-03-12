@@ -298,8 +298,8 @@
                 sys_requires <- unlist(strsplit(sys_requires, ","))
                 if(any(grepl("^[[:space:]]*C[+][+]11[[:space:]]*$",
                              sys_requires, ignore.case=TRUE))) {
-                    Sys.setenv("PKG_CXX_STD"="CXX11")
-                    on.exit(Sys.unsetenv("PKG_CXX_STD"))
+                    Sys.setenv("R_PKG_CXX_STD"="CXX11")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
                 }
             }
         }
@@ -1835,35 +1835,38 @@
         lines <- readLines("Makevars.win", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl=TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+        if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE))) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
-            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
         lines <- readLines("Makevars", warn = FALSE)
         if (length(grep("^OBJECTS *=", lines, perl = TRUE, useBytes = TRUE)))
             makeobjs <- ""
-        if (length(ll <- grep("^USE_CXX1X *=", lines, perl = TRUE,
+        if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE))) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- sub("^USE_CXX1X *= *", "", ll)
-            if(!nzchar(cxx1xstd)) cxx1xstd <- "$(CXX1XSTD)"
-        }
-    } else if (!use_cxx1x) {
-        val <- Sys.getenv("USE_CXX1X", NA)
-        if(!is.na(val)) {
-            use_cxx1x <- TRUE
-            cxx1xstd <- if(nzchar(val)) val else "$(CXX1XSTD)"
+            cxxstd <- gsub("^CXX_STD *=", "", ll)
+            cxxstd <- gsub(" *", "", cxxstd)
+            if (cxxstd == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     }
     if (!use_cxx1x) {
-        cxxstd <- Sys.getenv("PKG_CXX_STD")
-        if (cxxstd == "CXX11") {
+        val <- Sys.getenv("USE_CXX1X", NA)
+        if(!is.na(val)) {
             use_cxx1x <- TRUE
-            cxx1xstd <- "$(CXX1XSTD)"
+        }
+        else {
+            val <- Sys.getenv("R_PKG_CXX_STD")
+            if (val == "CXX11") {
+                use_cxx1x <- TRUE
+            }
         }
     }
 
@@ -1873,7 +1876,7 @@
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
         makeargs <- if (use_cxx1x)
-            c(sprintf("CXX='$(CXX1X) %s'", cxx1xstd),
+            c("CXX='$(CXX1X) $(CXX1XSTD)'",
               "CXXFLAGS='$(CXX1XFLAGS)'",
               "CXXPICFLAGS='$(CXX1XPICFLAGS)'",
               "SHLIB_LDFLAGS='$(SHLIB_CXX1XLDFLAGS)'",

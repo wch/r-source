@@ -2260,7 +2260,8 @@ available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
-From version 3.1.0, @R{} provides support for C++11 in packages.  This
+From version 3.1.0, @R{} provides support for C++11 in packages,
+in addition to C++98.  This
 support is not consistent across platforms as it depends on the
 capabilities of the compiler (See below).  When @R{} is configured, it
 will determine whether the C++ compiler supports C++11 and which
@@ -2271,28 +2272,34 @@ flag @option{-std=c++0x}, but the latter only provides partial support
 for the C++11 standard.
 
 In order to use C++ code in a package, the package's @file{Makevars}
-(or @file{Makevars.win}) file should set the macro
-@samp{USE_CXX1X}. 
+file (or @file{Makevars.win} on Windows) should include the line
 
 @example
-USE_CXX1X =
+CXX_STD = CXX11
 @end example
 
-Compilation and linking will then be done with the C++11 compiler.  If
-the macro @samp{USE_CXX1X} is given a value this is used 
-to select a different standard, for example
-
-@example
-USE_CXX1X = -std=gnu++11
-@end example
-
-To make this easier to use with @command{R CMD SHLIB}, the environment
-variable @env{USE_CXX1X} will be consulted if there is no
-@file{Makevars} file (nor @file{Makevars.win} on Windows).
+Compilation and linking will then be done with the C++11 compiler.  
+If any other value is given to the @samp{CXX_STD} macro it will be 
+ignored (Further options may become available in the future depending
+on the evolution of the C++ standard).
 
 Packages without a @file{Makevars} file may specify that they require
 C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
-of the @file{DESCRIPTION} file.
+of the @file{DESCRIPTION} file, e.g.
+
+@example
+SystemRequirements: C++11
+@end example
+
+If a package does have a @file{Makevars[.win]} file then setting the
+make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
+SHLIB} to work correctly in the package's @file{src} directory.
+
+The C++11 compiler will be used systematically by R for all C++ code
+if the environment variable @env{USE_CXX1X} is defined (with any
+value). Hence this environment variable should be defined when invoking
+@command{R CMD SHLIB} in the absence of a @file{Makevars} file (or
+@file{Makevars.win} on Windows) if a C++11 compiler is required.
 
 Further control over compilation of C++11 code can be obtained by
 specifying the macros @samp{CXX1X} and @samp{CXX1XSTD} when @R{} is
@@ -2303,15 +2310,18 @@ the @R{} sources.}, or in a personal or site @file{Makevars} file
 @xref{Customizing package compilation, , Customizing package compilation,
  R-admin,  R Installation and Administration}.
 @end ifset
-If C++11 support is not available then these macros are
-both empty. Otherwise, @samp{CXX1X} defaults to the same value as the
-C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
+If C++11 support is not available then these macros are both
+empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
+compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
 @option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).
 It is possible to specify @samp{CXX1X} to be a distinct compiler just
 for C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.
 Note however that different C++ compilers (and even different versions
 of the same compiler) often differ in their ABI so their outputs can
-rarely be mixed.
+rarely be mixed. By setting @samp{CXX1XSTD} it is also possible to
+choose a different dialect of the standard, such as
+@option{-std=gnu++11} or enable experimental support for the next
+revision (tentatively planned for 2017) @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The
 default compiler for OS X is based on GCC 4.2.1 and has no support for
