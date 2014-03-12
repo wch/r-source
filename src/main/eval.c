@@ -3572,7 +3572,7 @@ typedef R_bcstack_t * R_binding_cache_t;
 #  define GET_SMALLCACHE_BINDING_CELL(vcache, sidx) \
     (vcache ? vcache[sidx] : R_NilValue)
 
-#  define SET_CACHED_BINDING(cvache, sidx, cell) \
+#  define SET_CACHED_BINDING(vcache, sidx, cell) \
     do { if (vcache) vcache[CACHEIDX(sidx)] = (cell); } while (0)
 # else
 typedef SEXP R_binding_cache_t;
