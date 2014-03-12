@@ -1118,7 +1118,7 @@ function(fname, envir, mustMatch = TRUE)
     ##             { ... <UME> ... }
     ## then a recognizer for UME might be as follows.
 
-    f <- get(fname, envir = envir, inherits = FALSE)
+    f <- suppressMessages(get(fname, envir = envir, inherits = FALSE))
     if(!is.function(f)) return(FALSE)
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1L])) if (nzchar(res <- isUME(ee))) return(res)
