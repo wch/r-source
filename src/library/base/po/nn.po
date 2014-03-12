@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 16:31+0000\n"
+"POT-Creation-Date: 2014-03-12 08:12+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -192,7 +192,7 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3687 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3736 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -4018,9 +4018,9 @@ msgstr "kan ikkje bruka Internett-rutinar i modul"
 msgid "internet routines cannot be loaded"
 msgstr "kan ikkje lasta Internett-rutinar"
 
-#: src/main/internet.c:118 src/main/memory.c:3385 src/main/memory.c:3395
-#: src/main/memory.c:3407 src/main/memory.c:3421 src/main/memory.c:3438
-#: src/main/memory.c:3456
+#: src/main/internet.c:118 src/main/memory.c:3434 src/main/memory.c:3444
+#: src/main/memory.c:3456 src/main/memory.c:3470 src/main/memory.c:3487
+#: src/main/memory.c:3505
 msgid "bad value"
 msgstr "ugyldig verdi"
 
@@ -4189,139 +4189,139 @@ msgid_plural "unused arguments %s"
 msgstr[0] "ubrukt(e) argument %s"
 msgstr[1] "ubrukt(e) argument %s"
 
-#: src/main/memory.c:1214
+#: src/main/memory.c:1232
 msgid "can only weakly reference/finalize reference objects"
 msgstr "kan berre svakt referera/finalisera referanseobjekt"
 
-#: src/main/memory.c:1248
+#: src/main/memory.c:1266
 msgid "finalizer must be a function or NULL"
 msgstr "finalisatoren må vera ein funksjon eller NULL"
 
-#: src/main/memory.c:1304 src/main/memory.c:1312 src/main/memory.c:1323
+#: src/main/memory.c:1322 src/main/memory.c:1330 src/main/memory.c:1341
 msgid "not a weak reference"
 msgstr "ikkje ein svak referanse"
 
-#: src/main/memory.c:1454
+#: src/main/memory.c:1472
 msgid "first argument must be environment or external pointer"
 msgstr "det første argumentet må vera ein omgjevnad eller ein ekstern peikar"
 
-#: src/main/memory.c:1456
+#: src/main/memory.c:1474
 msgid "second argument must be a function"
 msgstr "det andre argumentet må vera ein funksjon"
 
-#: src/main/memory.c:1460
+#: src/main/memory.c:1478
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "det tredje argumentet må vera «TRUE» (sann) eller «FALSE» (usann)"
 
-#: src/main/memory.c:1950
+#: src/main/memory.c:1970
 msgid "vector memory exhausted (limit reached?)"
 msgstr "ikkje nok vektorminne (nådde grensa?)"
 
-#: src/main/memory.c:1956
+#: src/main/memory.c:1976
 msgid "cons memory exhausted (limit reached?)"
 msgstr "ikkje nok konstantminne (nådde grensa?)"
 
-#: src/main/memory.c:1961
+#: src/main/memory.c:1981
 msgid "memory exhausted (limit reached?)"
 msgstr "ikkje nok minne (nådde grensa?)"
 
-#: src/main/memory.c:2096
+#: src/main/memory.c:2116
 #, fuzzy, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "klarte ikkje reservera minneblokk av storleik %0.1f Gb"
 
-#: src/main/memory.c:2101
+#: src/main/memory.c:2121
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "klarte ikkje reservera minneblokk av storleik %0.1f Gb"
 
-#: src/main/memory.c:2401
+#: src/main/memory.c:2442
 #, fuzzy
 msgid "vector is too large"
 msgstr "den oppgjevne vektorstorleiken er for stor"
 
-#: src/main/memory.c:2404
+#: src/main/memory.c:2445
 msgid "negative length vectors are not allowed"
 msgstr "kan ikkje ha vektorar av negativ lengd"
 
-#: src/main/memory.c:2430 src/main/memory.c:2443 src/main/memory.c:2456
-#: src/main/memory.c:2471
+#: src/main/memory.c:2471 src/main/memory.c:2484 src/main/memory.c:2497
+#: src/main/memory.c:2512
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kan ikkje reservera vektor av lengd %d"
 
-#: src/main/memory.c:2492
+#: src/main/memory.c:2533
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "ugyldig type/lengd (%s/%d) ved vektorreservering"
 
-#: src/main/memory.c:2586
+#: src/main/memory.c:2636
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Gb"
 
-#: src/main/memory.c:2590
+#: src/main/memory.c:2640
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "kan ikkje reservera vektor av storleik %0.1f Mb"
 
-#: src/main/memory.c:2594
+#: src/main/memory.c:2644
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "kan ikkje reservera vektor av storleik %0.f Kb"
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:3001
 msgid "protect(): protection stack overflow"
 msgstr "protect(): vern av stakkoverflyt"
 
-#: src/main/memory.c:2959
+#: src/main/memory.c:3008
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:2992
+#: src/main/memory.c:3041
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: fann ikkje peikar"
 
-#: src/main/memory.c:3030
+#: src/main/memory.c:3079
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr "unprotect(): berre %d verna objekt"
 
-#: src/main/memory.c:3080
+#: src/main/memory.c:3129
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc klarte ikkje reservera (%u av %u) minne"
 
-#: src/main/memory.c:3091
+#: src/main/memory.c:3140
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc klarte ikkje endra storleik (%u) på reservert minne"
 
-#: src/main/memory.c:3331
+#: src/main/memory.c:3380
 msgid "not safe to return vector pointer"
 msgstr "ikkje trygt å returnera vektorpeikar"
 
-#: src/main/memory.c:3343
+#: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3359
+#: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3609
+#: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
 msgstr "minneprofilering er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/memory.c:3674
+#: src/main/memory.c:3723
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
 
-#: src/main/memory.c:3781
+#: src/main/memory.c:3830
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""

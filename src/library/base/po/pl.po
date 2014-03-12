@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 16:31+0000\n"
+"POT-Creation-Date: 2014-03-12 08:12+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -994,7 +994,7 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3687 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3736 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -8069,9 +8069,9 @@ msgstr "procedury internetowe nie mogą zostać załadowane"
 # error(_("bad value"))
 # src/main/memory.c: 3284
 # error(_("bad value"))
-#: src/main/internet.c:118 src/main/memory.c:3385 src/main/memory.c:3395
-#: src/main/memory.c:3407 src/main/memory.c:3421 src/main/memory.c:3438
-#: src/main/memory.c:3456
+#: src/main/internet.c:118 src/main/memory.c:3434 src/main/memory.c:3444
+#: src/main/memory.c:3456 src/main/memory.c:3470 src/main/memory.c:3487
+#: src/main/memory.c:3505
 msgid "bad value"
 msgstr "niepoprawna wartość"
 
@@ -8344,13 +8344,13 @@ msgstr[2] "nieużywane argumenty %s"
 
 # src/main/memory.c: 1191
 # error(_("can only weakly reference/finalize reference objects"))
-#: src/main/memory.c:1214
+#: src/main/memory.c:1232
 msgid "can only weakly reference/finalize reference objects"
 msgstr "można jedynie słabo odwoływać/ finalizować obiekty referencyjne"
 
 # src/main/memory.c: 1225
 # error(_("finalizer must be a function or NULL"))
-#: src/main/memory.c:1248
+#: src/main/memory.c:1266
 msgid "finalizer must be a function or NULL"
 msgstr "finalizator musi być funkcją lub wartością NULL"
 
@@ -8360,50 +8360,50 @@ msgstr "finalizator musi być funkcją lub wartością NULL"
 # error(_("not a weak reference"))
 # src/main/memory.c: 1295
 # error(_("not a weak reference"))
-#: src/main/memory.c:1304 src/main/memory.c:1312 src/main/memory.c:1323
+#: src/main/memory.c:1322 src/main/memory.c:1330 src/main/memory.c:1341
 msgid "not a weak reference"
 msgstr "to nie jest słaba referencja"
 
 # src/main/memory.c: 1411
 # error(_("first argument must be environment or external pointer"))
-#: src/main/memory.c:1454
+#: src/main/memory.c:1472
 msgid "first argument must be environment or external pointer"
 msgstr "pierwszy argument musi być środowiskiem lub zewnętrznym wskaźnikiem"
 
 # src/main/memory.c: 1413
 # error(_("second argument must be a function"))
-#: src/main/memory.c:1456
+#: src/main/memory.c:1474
 msgid "second argument must be a function"
 msgstr "drugi argument musi być funkcją"
 
 # src/main/memory.c: 1417
 # error(_("third argument must be 'TRUE' or 'FALSE'"))
-#: src/main/memory.c:1460
+#: src/main/memory.c:1478
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "trzeci argument musi być 'TRUE' lub 'FALSE'"
 
 # src/main/memory.c: 1898
 #  _("vector memory exhausted (limit reached?)")
-#: src/main/memory.c:1950
+#: src/main/memory.c:1970
 msgid "vector memory exhausted (limit reached?)"
 msgstr "wektorowa pamięć wyczerpana (osiągnięto limit?)"
 
 # src/main/memory.c: 1904
 #  _("cons memory exhausted (limit reached?)")
-#: src/main/memory.c:1956
+#: src/main/memory.c:1976
 msgid "cons memory exhausted (limit reached?)"
 msgstr "pamięć 'cons' wyczerpana (osiągnięto limit?)"
 
 # src/main/memory.c: 1909
 #  _("memory exhausted (limit reached?)")
-#: src/main/memory.c:1961
+#: src/main/memory.c:1981
 msgid "memory exhausted (limit reached?)"
 msgstr "pamięć wyczerpana (osiągnięto limit?)"
 
 # src/main/memory.c: 2032
 # error(_("cannot allocate memory block of size %0.f Tb"),
 # 		  dsize/pow(1024.0, 4.0))
-#: src/main/memory.c:2096
+#: src/main/memory.c:2116
 #, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "nie można przydzielić bloku pamięci o rozmiarze %0.f Tb"
@@ -8411,20 +8411,20 @@ msgstr "nie można przydzielić bloku pamięci o rozmiarze %0.f Tb"
 # src/main/memory.c: 2037
 # error(_("cannot allocate memory block of size %0.1f Gb"),
 # 		  dsize/pow(1024.0, 3.0))
-#: src/main/memory.c:2101
+#: src/main/memory.c:2121
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "nie można przydzielić bloku pamięci o rozmiarze %0.1f Gb"
 
 # src/main/memory.c: 2303
 #  _("vector is too large")
-#: src/main/memory.c:2401
+#: src/main/memory.c:2442
 msgid "vector is too large"
 msgstr "wektor jest zbyt duży"
 
 # src/main/memory.c: 2306
 #  _("negative length vectors are not allowed")
-#: src/main/memory.c:2404
+#: src/main/memory.c:2445
 msgid "negative length vectors are not allowed"
 msgstr "wektory o ujemnej długości nie są dozwolone"
 
@@ -8436,8 +8436,8 @@ msgstr "wektory o ujemnej długości nie są dozwolone"
 #  _("cannot allocate vector of length %d")
 # src/main/memory.c: 2373
 #  _("cannot allocate vector of length %d")
-#: src/main/memory.c:2430 src/main/memory.c:2443 src/main/memory.c:2456
-#: src/main/memory.c:2471
+#: src/main/memory.c:2471 src/main/memory.c:2484 src/main/memory.c:2497
+#: src/main/memory.c:2512
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "nie można przydzielić wektora o długości %d"
@@ -8445,54 +8445,54 @@ msgstr "nie można przydzielić wektora o długości %d"
 # src/main/memory.c: 2394
 # error(_("invalid type/length (%s/%d) in vector allocation"),
 # 	      type2char(type), length)
-#: src/main/memory.c:2492
+#: src/main/memory.c:2533
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "niepoprawny typ/długość (%s/%d) dla przydziału wektora"
 
 # src/main/memory.c: 2487
 #  _("cannot allocate vector of size %0.1f Gb")
-#: src/main/memory.c:2586
+#: src/main/memory.c:2636
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.1f Gb"
 
 # src/main/memory.c: 2491
 #  _("cannot allocate vector of size %0.1f Mb")
-#: src/main/memory.c:2590
+#: src/main/memory.c:2640
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.1f Mb"
 
 # src/main/memory.c: 2495
 #  _("cannot allocate vector of size %0.f Kb")
-#: src/main/memory.c:2594
+#: src/main/memory.c:2644
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "nie można przydzielić wektora o rozmiarze %0.f Kb"
 
 # src/main/memory.c: 2830
 #  _("protect(): protection stack overflow")
-#: src/main/memory.c:2952
+#: src/main/memory.c:3001
 msgid "protect(): protection stack overflow"
 msgstr "protect(): zabezpieczenie stosu przed przepełnieniem"
 
 # src/main/memory.c: 2846
 # error(_("unprotect(): only %d protected items"), R_PPStackTop)
-#: src/main/memory.c:2959
+#: src/main/memory.c:3008
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): tylko %d zabezpieczonych pozycji"
 
 # src/main/memory.c: 2860
 # error(_("unprotect_ptr: pointer not found"))
-#: src/main/memory.c:2992
+#: src/main/memory.c:3041
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: wskaźnik nie został znaleziony"
 
 # src/main/memory.c: 2897
 # error(_("R_Reprotect: only %d protected items, can't reprotect index %d"), R_PPStackTop, i)
-#: src/main/memory.c:3030
+#: src/main/memory.c:3079
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr ""
@@ -8502,7 +8502,7 @@ msgstr ""
 # src/main/memory.c: 2939
 # error(_("'Calloc' could not allocate memory (%.0f of %u bytes)"),
 # 	      (double) nelem, elsize)
-#: src/main/memory.c:3080
+#: src/main/memory.c:3129
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' nie mógł przydzielić pamięci (%.0f z %u bajtów)"
@@ -8510,43 +8510,43 @@ msgstr "'Calloc' nie mógł przydzielić pamięci (%.0f z %u bajtów)"
 # src/main/memory.c: 2950
 # error(_("'Realloc' could not re-allocate memory (%.0f bytes)"),
 # 	      (double) size)
-#: src/main/memory.c:3091
+#: src/main/memory.c:3140
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' nie mógł ponownie przydzielić pamięci (%.0f bajtów)"
 
 # src/main/memory.c: 3172
 # error(_("not safe to return vector pointer"))
-#: src/main/memory.c:3331
+#: src/main/memory.c:3380
 msgid "not safe to return vector pointer"
 msgstr "nie jest bezpiecznie zwracać wskaźnik wektora"
 
-#: src/main/memory.c:3343
+#: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3359
+#: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
 # src/main/memory.c: 3424
 # error(_("memory profiling is not available on this system"))
-#: src/main/memory.c:3609
+#: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
 msgstr "profilowanie pamięci nie jest dostępne na tym systemie"
 
 # src/main/memory.c: 3489
 # error(_("Rprofmem: cannot open output file '%s'"), filename)
-#: src/main/memory.c:3674
+#: src/main/memory.c:3723
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: nie można otworzyć pliku wyjściowego '%s'"
 
 # src/main/memory.c: 3596
 # error(_("long vectors not supported yet: %s:%d"), file, line)
-#: src/main/memory.c:3781
+#: src/main/memory.c:3830
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "długie wektory nie są jeszcze wspierane: %s:%d"

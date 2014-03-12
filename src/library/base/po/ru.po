@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-11 16:31+0000\n"
+"POT-Creation-Date: 2014-03-12 08:12+0000\n"
 "PO-Revision-Date: 2014-03-11 10:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -193,7 +193,7 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3687 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3736 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -3962,9 +3962,9 @@ msgstr "средства Интернет не доступны из модул�
 msgid "internet routines cannot be loaded"
 msgstr "средства Интернет не могут быть загружены"
 
-#: src/main/internet.c:118 src/main/memory.c:3385 src/main/memory.c:3395
-#: src/main/memory.c:3407 src/main/memory.c:3421 src/main/memory.c:3438
-#: src/main/memory.c:3456
+#: src/main/internet.c:118 src/main/memory.c:3434 src/main/memory.c:3444
+#: src/main/memory.c:3456 src/main/memory.c:3470 src/main/memory.c:3487
+#: src/main/memory.c:3505
 msgid "bad value"
 msgstr "неправильное значение"
 
@@ -4132,139 +4132,139 @@ msgstr[0] "неиспользованный аргумент %s"
 msgstr[1] "неиспользованные аргументы %s"
 msgstr[2] "неиспользованные аргументы %s"
 
-#: src/main/memory.c:1214
+#: src/main/memory.c:1232
 msgid "can only weakly reference/finalize reference objects"
 msgstr "могу сослаться на/завершить ссылочные объекты только слабо"
 
-#: src/main/memory.c:1248
+#: src/main/memory.c:1266
 msgid "finalizer must be a function or NULL"
 msgstr "завершитель должен быть функцией или NULL"
 
-#: src/main/memory.c:1304 src/main/memory.c:1312 src/main/memory.c:1323
+#: src/main/memory.c:1322 src/main/memory.c:1330 src/main/memory.c:1341
 msgid "not a weak reference"
 msgstr "не является слабой ссылкой"
 
-#: src/main/memory.c:1454
+#: src/main/memory.c:1472
 msgid "first argument must be environment or external pointer"
 msgstr "первый аргумент должен быть окружением или внешним указателем"
 
-#: src/main/memory.c:1456
+#: src/main/memory.c:1474
 msgid "second argument must be a function"
 msgstr "второй аргумент должен быть функцией"
 
-#: src/main/memory.c:1460
+#: src/main/memory.c:1478
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr "третий аргумент должен быть 'TRUE' или 'FALSE'"
 
-#: src/main/memory.c:1950
+#: src/main/memory.c:1970
 msgid "vector memory exhausted (limit reached?)"
 msgstr "векторная память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1956
+#: src/main/memory.c:1976
 msgid "cons memory exhausted (limit reached?)"
 msgstr "cons-память вышла (достигнут предел?)"
 
-#: src/main/memory.c:1961
+#: src/main/memory.c:1981
 msgid "memory exhausted (limit reached?)"
 msgstr "память исчерпана (достигнут предел?)"
 
-#: src/main/memory.c:2096
+#: src/main/memory.c:2116
 #, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr "не могу разместить блок памяти размером %0.f Tb"
 
-#: src/main/memory.c:2101
+#: src/main/memory.c:2121
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr "не могу разместить блок памяти размером %0.1f Gb"
 
-#: src/main/memory.c:2401
+#: src/main/memory.c:2442
 msgid "vector is too large"
 msgstr "вектор слишком велик"
 
-#: src/main/memory.c:2404
+#: src/main/memory.c:2445
 msgid "negative length vectors are not allowed"
 msgstr "не разрешена отрицательная длина векторов"
 
-#: src/main/memory.c:2430 src/main/memory.c:2443 src/main/memory.c:2456
-#: src/main/memory.c:2471
+#: src/main/memory.c:2471 src/main/memory.c:2484 src/main/memory.c:2497
+#: src/main/memory.c:2512
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "не могу разместить вектор длины %d"
 
-#: src/main/memory.c:2492
+#: src/main/memory.c:2533
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr "неправильный тип/длина (%s/%d) для размещения вектора"
 
-#: src/main/memory.c:2586
+#: src/main/memory.c:2636
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr "не могу разместить вектор размером %0.1f Gb"
 
-#: src/main/memory.c:2590
+#: src/main/memory.c:2640
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr "не могу разместить вектор размером %0.1f Mb"
 
-#: src/main/memory.c:2594
+#: src/main/memory.c:2644
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr "не могу разместить вектор размером %0.f Kb"
 
-#: src/main/memory.c:2952
+#: src/main/memory.c:3001
 msgid "protect(): protection stack overflow"
 msgstr "protect(): переполнение стека защиты"
 
-#: src/main/memory.c:2959
+#: src/main/memory.c:3008
 #, c-format
 msgid "unprotect(): only %d protected items"
 msgstr "unprotect(): только %d защищенных элементов"
 
-#: src/main/memory.c:2992
+#: src/main/memory.c:3041
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: указатель не найден"
 
-#: src/main/memory.c:3030
+#: src/main/memory.c:3079
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr ""
 "R_Reprotect: только %d защищенных элементов, не могу перезащитить индекс %d"
 
-#: src/main/memory.c:3080
+#: src/main/memory.c:3129
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc' не может выделить память (%.0f из %u байт)"
 
-#: src/main/memory.c:3091
+#: src/main/memory.c:3140
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc' не может переразместить память (%.0f байт)"
 
-#: src/main/memory.c:3331
+#: src/main/memory.c:3380
 msgid "not safe to return vector pointer"
 msgstr "небезопасно возвращать указатель вектора"
 
-#: src/main/memory.c:3343
+#: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3359
+#: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3609
+#: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
 msgstr "профилирование памяти в этой системе недоступно"
 
-#: src/main/memory.c:3674
+#: src/main/memory.c:3723
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 
-#: src/main/memory.c:3781
+#: src/main/memory.c:3830
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "длинные вектора еще не поддерживаются: %s:%d"
