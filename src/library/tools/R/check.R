@@ -3234,6 +3234,11 @@ setRlibs <-
                                  ": warning: incompatible implicit declaration of built-in function")
                 }
 
+                ## Warnings spotted by clang with
+                ## '-Wreturn-type-c-linkage':
+                warn_re <- c(warn_re,
+                             ": warning: .* has C-linkage specified, but returns user-defined type .* which is incompatible with C")
+                
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
