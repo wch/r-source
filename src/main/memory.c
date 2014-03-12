@@ -80,6 +80,7 @@
 #include <Internal.h>
 #include <R_ext/GraphicsEngine.h> /* GEDevDesc, GEgetDevice */
 #include <R_ext/Rdynload.h>
+#include <R_ext/Rallocators.h> /* for R_allocator_t structure */
 #include <Rmath.h> // R_pow_di
 
 #if defined(Win32) && defined(LEA_MALLOC)
@@ -442,7 +443,8 @@ static R_size_t R_V_maxused=0;
 
 /* Node Classes.  Non-vector nodes are of class zero. Small vector
    nodes are in classes 1, ..., NUM_SMALL_NODE_CLASSES, and large
-   vector nodes are in class LARGE_NODE_CLASS.  For vector nodes the
+   vector nodes are in class LARGE_NODE_CLASS. Vectors with
+   custom allocators are in CUSTOM_NODE_CLASS. For vector nodes the
    node header is followed in memory by the vector data, offset from
    the header by SEXPREC_ALIGN. */
 
@@ -453,11 +455,12 @@ static R_size_t R_V_maxused=0;
 # error NUM_NODE_CLASSES must be at most 8
 #endif
 
-#define LARGE_NODE_CLASS (NUM_NODE_CLASSES - 1)
-#define NUM_SMALL_NODE_CLASSES (NUM_NODE_CLASSES - 1)
+#define LARGE_NODE_CLASS  (NUM_NODE_CLASSES - 1)
+#define CUSTOM_NODE_CLASS (NUM_NODE_CLASSES - 2)
+#define NUM_SMALL_NODE_CLASSES (NUM_NODE_CLASSES - 2)
 
 /* the number of VECREC's in nodes of the small node classes */
-static int NodeClassSize[NUM_SMALL_NODE_CLASSES] = { 0, 1, 2, 4, 6, 8, 16 };
+static int NodeClassSize[NUM_SMALL_NODE_CLASSES] = { 0, 1, 2, 4, 8, 16 };
 
 #define NODE_CLASS(s) ((s)->sxpinfo.gccls)
 #define SET_NODE_CLASS(s,v) (((s)->sxpinfo.gccls) = (v))
@@ -993,35 +996,50 @@ static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
     return BYTE2VEC(size);
 }
 
-static void ReleaseLargeFreeVectors(void)
+static void custom_node_free(void *ptr);
+
+static void ReleaseLargeFreeVectors()
 {
-    SEXP s = NEXT_NODE(R_GenHeap[LARGE_NODE_CLASS].New);
-    while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
-	SEXP next = NEXT_NODE(s);
-	if (CHAR(s) != NULL) {
-	    R_size_t size;
+    for (int node_class = CUSTOM_NODE_CLASS; node_class <= LARGE_NODE_CLASS; node_class++) {
+	SEXP s = NEXT_NODE(R_GenHeap[node_class].New);
+	while (s != R_GenHeap[node_class].New) {
+	    SEXP next = NEXT_NODE(s);
+	    if (CHAR(s) != NULL) {
+		R_size_t size;
 #ifdef PROTECTCHECK
-	    if (TYPEOF(s) == FREESXP)
-		size = XLENGTH(s);
-	    else
-		/* should not get here -- arrange for a warning/error? */
+		if (TYPEOF(s) == FREESXP)
+		    size = XLENGTH(s);
+		else
+		    /* should not get here -- arrange for a warning/error? */
+		    size = getVecSizeInVEC(s);
+#else
 		size = getVecSizeInVEC(s);
-#else
-	    size = getVecSizeInVEC(s);
 #endif
-	    UNSNAP_NODE(s);
-	    R_LargeVallocSize -= size;
-	    R_GenHeap[LARGE_NODE_CLASS].AllocCount--;
+		UNSNAP_NODE(s);
+		R_GenHeap[node_class].AllocCount--;
+		if (node_class == LARGE_NODE_CLASS) {
+		    R_LargeVallocSize -= size;
 #ifdef LONG_VECTOR_SUPPORT
-	    if (IS_LONG_VEC(s))
-		free(((char *) s) - sizeof(R_long_vec_hdr_t));
-	    else
-		free(s);
+		    if (IS_LONG_VEC(s))
+			free(((char *) s) - sizeof(R_long_vec_hdr_t));
+		    else
+			free(s);
 #else
-	    free(s);
+		    free(s);
 #endif
+		} else {
+#ifdef LONG_VECTOR_SUPPORT
+		    if (IS_LONG_VEC(s))
+			custom_node_free(((char *) s) - sizeof(R_long_vec_hdr_t));
+		    else
+			custom_node_free(s);
+#else
+		    custom_node_free(s);
+#endif
+		}
+	    }
+	    s = next;
 	}
-	s = next;
     }
 }
 
@@ -1697,25 +1715,27 @@ static void RunGenCollect(R_size_t size_needed)
 	    s = next;
 	}
     }
-    s = NEXT_NODE(R_GenHeap[LARGE_NODE_CLASS].New);
-    while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
-	SEXP next = NEXT_NODE(s);
-	if (TYPEOF(s) != NEWSXP) {
-	    if (TYPEOF(s) != FREESXP) {
-		/**** could also leave this alone and restore the old
-		      node type in ReleaseLargeFreeVectors before
-		      calculating size */
-		if (CHAR(s) != NULL) {
-		    R_size_t size = getVecSizeInVEC(s);
-		    SETLENGTH(s, size);
+    for (i = CUSTOM_NODE_CLASS; i <= LARGE_NODE_CLASS; i++) {
+	s = NEXT_NODE(R_GenHeap[i].New);
+	while (s != R_GenHeap[i].New) {
+	    SEXP next = NEXT_NODE(s);
+	    if (TYPEOF(s) != NEWSXP) {
+		if (TYPEOF(s) != FREESXP) {
+		    /**** could also leave this alone and restore the old
+			  node type in ReleaseLargeFreeVectors before
+			  calculating size */
+		    if (CHAR(s) != NULL) {
+			R_size_t size = getVecSizeInVEC(s);
+			SETLENGTH(s, size);
+		    }
+		    SETOLDTYPE(s, TYPEOF(s));
+		    TYPEOF(s) = FREESXP;
 		}
-		SETOLDTYPE(s, TYPEOF(s));
-		TYPEOF(s) = FREESXP;
+		if (gc_inhibit_release)
+		    FORWARD_NODE(s);
 	    }
-	    if (gc_inhibit_release)
-		FORWARD_NODE(s);
+	    s = next;
 	}
-	s = next;
     }
     if (gc_inhibit_release)
 	PROCESS_NODES();
@@ -2332,6 +2352,27 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     return s;
 }
 
+/* support for custom allocators that allow vectors to be allocated
+   using non-standard means such as COW mmap() */
+
+static void *custom_node_alloc(R_allocator_t *allocator, size_t size) {
+    if (!allocator || !allocator->mem_alloc) return NULL;
+    void *ptr = allocator->mem_alloc(allocator, size + sizeof(R_allocator_t));
+    if (ptr) {
+	R_allocator_t *ca = (R_allocator_t*) ptr;
+	*ca = *allocator;
+	return (void*) (ca + 1);
+    }
+    return NULL;
+}
+
+static void custom_node_free(void *ptr) {
+    if (ptr) {
+	R_allocator_t *allocator = ((R_allocator_t*) ptr) - 1;
+	allocator->mem_free(allocator, (void*)allocator);
+    }
+}
+
 /* All vector objects must be a multiple of sizeof(SEXPREC_ALIGN)
    bytes so that alignment is preserved for all objects */
 
@@ -2342,7 +2383,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 */
 #define intCHARSXP 73
 
-SEXP allocVector(SEXPTYPE type, R_xlen_t length)
+SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 {
     SEXP s;     /* For the generational collector it would be safer to
 		   work in terms of a VECSEXP here, but that would
@@ -2353,7 +2394,7 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 #if VALGRIND_LEVEL > 0
     R_size_t actual_size = 0;
 #endif
-
+    
     /* Handle some scalars directly to improve speed. */
     if (length == 1) {
 	switch(type) {
@@ -2493,18 +2534,23 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	      type2char(type), length);
     }
 
-    if (size <= NodeClassSize[1]) {
-	node_class = 1;
-	alloc_size = NodeClassSize[1];
-    }
-    else {
-	node_class = LARGE_NODE_CLASS;
+    if (allocator) {
+	node_class = CUSTOM_NODE_CLASS;
 	alloc_size = size;
-	for (i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
-	    if (size <= NodeClassSize[i]) {
-		node_class = i;
-		alloc_size = NodeClassSize[i];
-		break;
+    } else {
+	if (size <= NodeClassSize[1]) {
+	    node_class = 1;
+	    alloc_size = NodeClassSize[1];
+	}
+	else {
+	    node_class = LARGE_NODE_CLASS;
+	    alloc_size = size;
+	    for (i = 2; i < NUM_SMALL_NODE_CLASSES; i++) {
+		if (size <= NodeClassSize[i]) {
+		    node_class = i;
+		    alloc_size = NodeClassSize[i];
+		    break;
+		}
 	    }
 	}
     }
@@ -2546,13 +2592,17 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 #endif
 	    void *mem = NULL; /* initialize to suppress warning */
 	    if (size < (R_SIZE_T_MAX / sizeof(VECREC)) - hdrsize) { /*** not sure this test is quite right -- why subtract the header? LT */
-		mem = malloc(hdrsize + size * sizeof(VECREC));
+		mem = allocator ?
+		    custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) : 
+		    malloc(hdrsize + size * sizeof(VECREC));
 		if (mem == NULL) {
 		    /* If we are near the address space limit, we
 		       might be short of address space.  So return
 		       all unused objects to malloc and try again. */
 		    R_gc_full(alloc_size);
-		    mem = malloc(hdrsize + size * sizeof(VECREC));
+		    mem = allocator ?
+			custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) : 
+			malloc(hdrsize + size * sizeof(VECREC));
 		}
 		if (mem != NULL) {
 #ifdef LONG_VECTOR_SUPPORT
@@ -2596,11 +2646,11 @@ SEXP allocVector(SEXPTYPE type, R_xlen_t length)
 	    }
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    INIT_REFCNT(s);
-	    SET_NODE_CLASS(s, LARGE_NODE_CLASS);
-	    R_LargeVallocSize += size;
-	    R_GenHeap[LARGE_NODE_CLASS].AllocCount++;
+	    SET_NODE_CLASS(s, node_class);
+	    if (!allocator) R_LargeVallocSize += size;
+	    R_GenHeap[node_class].AllocCount++;
 	    R_NodesInUse++;
-	    SNAP_NODE(s, R_GenHeap[LARGE_NODE_CLASS].New);
+	    SNAP_NODE(s, R_GenHeap[node_class].New);
 	}
 	ATTRIB(s) = R_NilValue;
 	TYPEOF(s) = type;
@@ -2659,7 +2709,6 @@ SEXP attribute_hidden allocCharsxp(R_len_t len)
 {
     return allocVector(intCHARSXP, len);
 }
-
 
 SEXP allocList(int n)
 {

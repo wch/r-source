@@ -19,7 +19,7 @@ R_EXT_HEADERS = \
   Constants.h Error.h GetX11Image.h \
   GraphicsDevice.h GraphicsEngine.h Itermacros.h \
   Lapack.h Linpack.h MathThreads.h Memory.h QuartzDevice.h \
-  Parse.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h \
+  Parse.h Print.h PrtUtil.h R-ftp-http.h RS.h Rallocators.h Random.h \
   Rdynload.h Riconv.h RStartup.h Utils.h eventloop.h libextern.h \
   stats_package.h stats_stubs.h Visibility.h
 

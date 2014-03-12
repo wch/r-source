@@ -183,6 +183,11 @@ INLINE_FUN R_xlen_t xlength(SEXP s)
     }
 }
 
+/* regular allocVector() as a special case of allocVector3() with no custom allocator */
+INLINE_FUN SEXP allocVector(SEXPTYPE type, R_xlen_t length)
+{
+    return allocVector3(type, length, NULL);
+}
 
 /* from list.c */
 /* Return a dotted pair with the given CAR and CDR. */
@@ -665,7 +670,6 @@ INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
     UNPROTECT(2);
     return ans;
 }
-
 
 /* from gram.y */
 

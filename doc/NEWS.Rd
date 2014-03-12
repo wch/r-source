@@ -479,6 +479,9 @@
       \item Calls to \code{SET_VECTOR_ELT()} and \code{SET_STRING_ELT()}
       are now checked for indices which are in-range: several packages
       were writing one element beyond the allocated length.
+
+      \item \code{allocVector3} has been added which allows custom
+      allocators to be used for individual vector allocations.
     }
   }
 
