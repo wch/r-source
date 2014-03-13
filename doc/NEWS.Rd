@@ -10,6 +10,15 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
+      \item More changes to reduce copying of objects (contributed
+      by Michael Lawrence).
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.1.0}{
+  \subsection{NEW FEATURES}{
+    \itemize{
       \item \code{type.convert()} (and hence \code{read.table(as.is = TRUE)})
       returns a character vector or factor when representing a numeric
       input as a double would lose accuracy.  Similarly for complex
