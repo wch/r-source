@@ -1597,7 +1597,7 @@ pkg-config --list-all | sort
 * Using Makevars::              
 * Configure example::           
 * Using F95 code::              
-* Using C+11 code::             
+* Using C++11 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2189,7 +2189,7 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F95 code, Using C+11 code, Configure example, Configure and cleanup
+@node Using F95 code, Using C++11 code, Configure example, Configure and cleanup
 @subsection Using F95 code
 
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
@@ -2244,7 +2244,7 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C+11 code,  , Using F95 code, Configure and cleanup
+@node Using C++11 code,  , Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available
@@ -3818,9 +3818,10 @@ files.
 @end ifset
 
 Although there is a 2011 version of the C++ standard, it is not yet
-fully implemented@footnote{despite misleading claims by some compilers
-to be `feature complete'.} and portable C++ code needs to follow the
-1998 standard (and not use features from C99).
+fully implemented and partial implementations are not universally
+available. Portable C++ code needs to follow the 1998 standard (and not
+use features from C99). 
+See also @ref{Using C++11 code} to specify a C++11 compiler.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3892,7 +3893,8 @@ Conflicts between symbols in DLLs are handled in very platform-specific
 ways.  Good ways to avoid trouble are to make as many symbols as
 possible static (check with @code{nm -pg}), and to use names which are
 clearly tied to your package (which also helps users if anything does go
-wrong).
+wrong).  Note that symbol names starting with @code{R_} are regarded as
+part of @R{}'s namespace and should not be used in packages.
 
 @item
 It is not portable to call compiled code in @R{} or other packages
@@ -6481,7 +6483,7 @@ samples  %        image name symbol name
 @file{memory.c}, 21% in @file{datetime.c} and 7% in @file{Rstrptime.h}.
 The analysis for @file{libc} showed that calls to @code{wcsftime}
 dominated, so those calls were cached for @R{} 3.0.3: the time spent in
-@code{no-vmlinux} (the kernel) was the reduced dramatically.
+@code{no-vmlinux} (the kernel) was reduced dramatically.
 
 On platforms which support it, callgraphs can be produced by
 @command{opcontrol --callgraph} if collected via @command{operf
@@ -7214,8 +7216,10 @@ non-empty value before the @command{INSTALL}.)
 memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{not including the versions distributed by Apple in
 @code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
-update in Fedora 19.} of @command{gcc} 4.8.0 or @command{clang} 3.1 and
-later on common Linux and OS X platforms.  See
+update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
+library, @pkg{libasan}, needs to be installed separately.} of
+@command{gcc} 4.8.0 or @command{clang} 3.1 and later on common Linux and
+OS X platforms.  See
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://code.google.com/p/address-sanitizer/}.
