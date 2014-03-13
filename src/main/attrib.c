@@ -1081,6 +1081,11 @@ SEXP dimgets(SEXP vec, SEXP val)
     }
     removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
+
+    /* Mark as immutable so nested complex assignment can't made the
+       dim attribute inconsistent with the length */
+    MARK_NOT_MUTABLE(val);
+
     UNPROTECT(2);
     return vec;
 }
