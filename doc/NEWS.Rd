@@ -7,7 +7,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 3.1.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{type.convert()} (and hence \code{read.table(as.is = TRUE)})
