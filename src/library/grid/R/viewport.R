@@ -163,33 +163,33 @@ height.details.viewport <- function(x) {
 }
 
 # How many "levels" in viewport object
-depth <- function(x) {
+depth <- function(x, ...) {
   UseMethod("depth")
 }
 
-depth.viewport <- function(x) {
+depth.viewport <- function(x, ...) {
   1
 }
 
-depth.vpList <- function(x) {
+depth.vpList <- function(x, ...) {
   # When pushed, the last element of the vpList is pushed last
   # so we are left whereever that leaves us
-  depth(x[[length(x)]])
+  depth(x[[length(x)]], ...)
 }
 
-depth.vpStack <- function(x) {
+depth.vpStack <- function(x, ...) {
   # Elements in the stack may be vpStacks or vpLists or vpTrees
   # so need to sum all the depths
-  sum(sapply(x, depth, simplify=TRUE))
+  sum(sapply(x, depth, ..., simplify=TRUE))
 }
 
-depth.vpTree <- function(x) {
+depth.vpTree <- function(x, ...) {
   # When pushed, the last element of the vpTree$children is
   # pushed last so we are left wherever that leaves us
-  depth(x$parent) + depth(x$children[[length(x$children)]])
+  depth(x$parent, ...) + depth(x$children[[length(x$children)]], ...)
 }
 
-depth.path <- function(x) {
+depth.path <- function(x, ...) {
   x$n
 }
 
