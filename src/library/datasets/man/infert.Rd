@@ -31,7 +31,7 @@
     8.  \tab stratum number \tab 1-63}
 }
 \source{
-  Trichopoulos et al. (1976)
+  Trichopoulos \emph{et al} (1976)
   \emph{Br. J. of Obst. and Gynaec.} \bold{83}, 645--650.
 }
 \note{

@@ -122,7 +122,7 @@ require(grDevices)
 
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
-## Imitating  Chambers et al., p.109, closely:
+## Imitating Chambers et al, p.109, closely:
 sunflowerplot(iris[, 3:4], cex = .2, cex.fact = 1, size = .035, seg.lwd = .8)
 ## or
 sunflowerplot(Petal.Width ~ Petal.Length, data = iris,
