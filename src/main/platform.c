@@ -1477,13 +1477,6 @@ static int R_unlink(const char *name, int recursive, int force)
     return (res2 == 0 || res != 0) ? 0 : 1;
 }
 
-/* for use under valgrind on OS X */
-void attribute_hidden R_CleanTempDir2(void)
-{
-    if (Sys_TempDir)
-	R_unlink(Sys_TempDir, 1, 1); /* recursive=TRUE, force=TRUE */
-}
-
 #endif
 
 
