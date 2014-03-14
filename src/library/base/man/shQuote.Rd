@@ -54,7 +54,7 @@ shQuote(string, type = c("sh", "csh", "cmd"))
 #endif
 }
 \references{
-  Loukides, M. et al (2002)
+  Loukides, M. \emph{et al} (2002)
   \emph{Unix Power Tools} Third Edition.  O'Reilly.  Section 27.12.
 
   \url{http://www.mhuffman.com/notes/dos/bash_cmd.htm}

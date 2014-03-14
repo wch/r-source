@@ -73,7 +73,7 @@ proj(object, \dots)
 }
 \author{
   The design was inspired by the S function of the same name described
-  in Chambers \emph{et al.} (1992).
+  in Chambers \emph{et al} (1992).
 }
 \seealso{\code{\link{aov}}, \code{\link{lm}}, \code{\link{model.tables}}
 }
