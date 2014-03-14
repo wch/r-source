@@ -1012,8 +1012,8 @@ Note particularly that recycling of short lists takes place here too;
 thus @code{c("X", "Y")} is repeated 5 times to match the sequence
 @code{1:10}.
 @footnote{@code{paste(..., collapse=@var{ss})} joins the
-arguments into a single character string putting @var{ss} in between.
-There are more tools for character manipulation, see the help
+arguments into a single character string putting @var{ss} in between, e.g.,
+@code{ss <- "|"}.  There are more tools for character manipulation, see the help
 for @code{sub} and @code{substring}.}
 
 @node Index vectors, Other types of objects, Character vectors, Simple manipulations numbers and vectors
