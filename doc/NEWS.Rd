@@ -10,8 +10,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item More changes to reduce copying of objects (contributed
-      by Michael Lawrence).
+      \item Placeholder.
     }
   }
 }
@@ -521,6 +520,9 @@
       their help has long said, \code{.Call()} is much preferred.
 
       \command{R CMD check} notes such usages (by default).
+      
+      \item The workaound of setting \env{R_OSX_VALGRIND} has been
+      removed: it is not needed in current valgrind.
     }
   }
 
