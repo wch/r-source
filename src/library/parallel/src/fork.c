@@ -584,19 +584,16 @@ SEXP mc_rm_child(SEXP sPid)
 
 SEXP mc_children() 
 {
-    unsigned int count = 0;
-    SEXP res;
-    int *pids;
-    child_info_t *ci;
     rm_closed();
-    ci = children;
+    child_info_t *ci = children;
+    unsigned int count = 0;
     while (ci && ci->pid > 0) {
 	count++;
 	ci = ci->next;
     }
-    res = allocVector(INTSXP, count);
+    SEXP res = allocVector(INTSXP, count);
     if (count) {
-	pids = INTEGER(res);
+	int *pids = INTEGER(res);
 	ci = children;
 	while (ci && ci->pid > 0) {
 	    (pids++)[0] = ci->pid;
@@ -606,7 +603,7 @@ SEXP mc_children()
 	   meantime, we may end up with fewer children than
 	   expected - highly unlikely but possible */
 	if (pids - INTEGER(res) < LENGTH(res))
-	    SETLENGTH(res, pids - INTEGER(res));
+	    SETLENGTH(res, (int)(pids - INTEGER(res)));
     }
     return res;
 }
