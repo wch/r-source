@@ -7101,10 +7101,12 @@ mechanism can be helpful in isolating memory protect problems.
 @node Using valgrind, Using Address Sanitizer, Using gctorture, Checking memory access
 @subsection Using valgrind
 
-If you have access to Linux on a common platform or (some versions of)
-OS X you can use @code{valgrind} (@uref{http://www.valgrind.org/},
-pronounced to rhyme with `tinned') to check for possible problems.  To
-run some examples under @code{valgrind} use something like
+If you have access to Linux on a common CPU type or OS X@footnote{at the
+time of writing mainly for 10.7 with some support for 10.8, none for the
+current 10.9.} you can use @code{valgrind}
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
@@ -7124,9 +7126,6 @@ session.  Expect this to run around 20x slower than without
 versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
-
-@c On Mac OS 10.6 and later the valgrind session is liable to hang when
-@c @R{} terminates with @command{valgrind} prior to 3.8.1.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in
