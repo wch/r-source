@@ -10,9 +10,9 @@
   in a viewport path, or in a grob path.
 }
 \usage{
-depth(x)
-\method{depth}{viewport}(x)
-\method{depth}{path}(x)
+depth(x, ...)
+\method{depth}{viewport}(x, ...)
+\method{depth}{path}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,6 +20,7 @@ depth(x)
     Typically a viewport or viewport stack or viewport tree or viewport
     list, or a viewport path, or a grob path.
   }
+  \item{\dots}{ Arguments used by other methods. }
 }
 \details{
   Depths of paths are pretty straightforward because they contain
