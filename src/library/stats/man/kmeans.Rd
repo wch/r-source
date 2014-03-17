@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{kmeans}
 \alias{kmeans}
 \alias{print.kmeans}
@@ -110,7 +112,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   multivariate observations. In \emph{Proceedings of the Fifth Berkeley
     Symposium on  Mathematical Statistics and  Probability},
   eds L. M. Le Cam & J. Neyman,
-  \bold{1}, pp. 281--297. Berkeley, CA: University of California Press.
+  \bold{1}, pp.\sspace{}281--297. Berkeley, CA: University of California Press.
 }
 \examples{
 require(graphics)

@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{optim}
 \alias{optim}
 \alias{optimHess}
@@ -88,7 +90,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   actual temperature. If a function to generate a new candidate point is
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
-  logarithmic cooling schedule as given in Belisle (1992, p. 890);
+  logarithmic cooling schedule as given in Belisle (1992, p.\sspace{}890);
   specifically, the temperature is set to
   \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
   the current iteration step and \code{temp} and \code{tmax} are

@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{supsmu}
 \alias{supsmu}
 \title{Friedman's SuperSmoother}
@@ -53,12 +55,12 @@ supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
   Friedman, J. H. (1984)
   SMART User's Guide.
   Laboratory for Computational Statistics, Stanford University Technical
-  Report No. 1.
+  Report No.\sspace{}1.
 
   Friedman, J. H. (1984)
   A variable span scatterplot smoother.
   Laboratory for Computational Statistics, Stanford University Technical
-  Report No. 5.
+  Report No.\sspace{}5.
 }
 \seealso{\code{\link{ppr}}}
 

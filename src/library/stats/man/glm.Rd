@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{glm}
 \title{Fitting Generalized Linear Models}
@@ -171,7 +172,7 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   For the background to warning messages about \sQuote{fitted probabilities
     numerically 0 or 1 occurred} for binomial GLMs, see Venables &
-  Ripley (2002, pp. 197--8).
+  Ripley (2002, pp.\sspace{}197--8).
 }
 
 \section{Fitting functions}{

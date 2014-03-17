@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{poly}
 \alias{poly}
 \alias{polym}
@@ -54,7 +56,7 @@ polym(\dots, degree = 1, raw = FALSE)
 
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
-  & Gentle (1980, pp. 343--4), and used in the \code{predict} part of
+  & Gentle (1980, pp.\sspace{}343--4), and used in the \code{predict} part of
   the code.
 
   \code{poly} using \code{\dots} is just a convenience wrapper for

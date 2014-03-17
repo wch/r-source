@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{ar.ols}
 \alias{ar.ols}
 \title{Fit Autoregressive Models to Time Series by OLS}
@@ -98,7 +100,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 }
 \references{
   Luetkepohl, H. (1991): \emph{Introduction to Multiple Time Series
-    Analysis.} Springer Verlag, NY, pp. 368--370.
+    Analysis.} Springer Verlag, NY, pp.\sspace{}368--370.
 }
 \examples{
 ar(lh, method = "burg")

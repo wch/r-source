@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{spec.pgram}
 \alias{spec.pgram}
 \title{Estimate Spectral Density of a Time Series by a Smoothed
@@ -81,8 +83,8 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
     Methods.} Second edition. Springer.
 
   Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
-    Statistics with S.} Fourth edition. Springer. (Especially
-  pp. 392--7.)
+    Statistics with S.} Fourth edition. Springer.
+  (Especially pp.\sspace{}392--7.)
 }
 \author{
   Originally Martyn Plummer; kernel smoothing by Adrian Trapletti,

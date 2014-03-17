@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{sunspot.year}
 \docType{data}
 \alias{sunspot.year}
@@ -21,6 +23,6 @@ sunspot.year
 }
 \source{
   H. Tong (1996)
-  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p. 471.
+  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p.\sspace{}471.
 }
 \keyword{datasets}

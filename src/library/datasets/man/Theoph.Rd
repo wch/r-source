@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Theoph}
 \docType{data}
 \alias{Theoph}
@@ -56,9 +58,10 @@
     Users Guide: Part V}, NONMEM Project Group, University of
   California, San Francisco.
 
-  Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for
-    Repeated Measurement Data}, Chapman & Hall (section 5.5, p. 145 and
-  section 6.6, p. 176)
+  Davidian, M. and Giltinan, D. M. (1995)
+  \emph{Nonlinear Models for Repeated Measurement Data},
+  Chapman & Hall
+  (section 5.5, p.\sspace{}145 and section 6.6, p.\sspace{}176)
 
   Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
     S and S-PLUS}, Springer (Appendix A.29)
