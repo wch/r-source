@@ -4673,10 +4673,11 @@ OBJC=clang
 the same compilers.)  The @acronym{CRAN} binary package installer
 changes its settings in @file{etc/Makeconf} to
 @example
-CC="gcc -arch x86_64"
-CXX="g++ -arch x86_64"
-CXX=clang++
-F77="gfortran-4.2 -arch x86_64"
+CC = gcc -arch x86_64 -std=gnu99
+CXX g++ -arch x86_64
+F77 = gfortran-4.2 -arch x86_64
+OBJC = gcc -arch x86_64
+OBJCXX = g++ -arch x86_64
 @end example
 when installing on Mavericks.
 
