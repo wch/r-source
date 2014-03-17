@@ -521,7 +521,7 @@
 
       \command{R CMD check} notes such usages (by default).
       
-      \item The workaound of setting \env{R_OSX_VALGRIND} has been
+      \item The workaround of setting \env{R_OSX_VALGRIND} has been
       removed: it is not needed in current valgrind.
     }
   }
