@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-09 09:37+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: 2013-02-21 20:43-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -50,7 +50,7 @@ msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
 
-#: fork.c:338 fork.c:345 fork.c:669
+#: fork.c:338 fork.c:345 fork.c:667
 msgid "write error, closing pipe to the master"
 msgstr "쓰기 에러입니다.  마스에 연결된 파이프를 닫습니다"
 
@@ -72,26 +72,26 @@ msgstr "쓰기 에러입니다"
 msgid "error '%s' in select"
 msgstr "선택중 에러 '%s'가 발생했습니다"
 
-#: fork.c:651
+#: fork.c:649
 msgid "'mckill' failed"
 msgstr "'mckill' 실패했습니다"
 
-#: fork.c:661
+#: fork.c:659
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit'는 오로지 자식 프로세스에서만 사용됩니다"
 
-#: fork.c:682
+#: fork.c:680
 msgid "'mcexit' failed"
 msgstr "'mcexit' 실패했습니다"
 
-#: fork.c:712 fork.c:721
+#: fork.c:710 fork.c:719
 msgid "invalid CPU affinity specification"
 msgstr "유효하지 않은 CPU affinity 지정입니다"
 
-#: fork.c:732
+#: fork.c:730
 msgid "requested CPU set is too large for this system"
 msgstr "요청된 CPU 셋은 이 시스템에 너무 큽니다"
 
-#: fork.c:755
+#: fork.c:753
 msgid "retrieving CPU affinity set failed"
 msgstr "CPU affiniy 셋을 검색하는데 실패했습니다"

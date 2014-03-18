@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-12 08:12+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1005,17 +1005,17 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/platform.c:1076 src/main/platform.c:1079 src/main/platform.c:1082
 #: src/main/platform.c:1085 src/main/platform.c:1088 src/main/platform.c:1185
 #: src/main/platform.c:1188 src/main/platform.c:1191 src/main/platform.c:1229
-#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1505
-#: src/main/platform.c:1508 src/main/platform.c:1511 src/main/platform.c:1547
-#: src/main/platform.c:1550 src/main/platform.c:1553 src/main/platform.c:1636
-#: src/main/platform.c:1652 src/main/platform.c:1691 src/main/platform.c:1693
-#: src/main/platform.c:1764 src/main/platform.c:1848 src/main/platform.c:2123
-#: src/main/platform.c:2183 src/main/platform.c:2360 src/main/platform.c:2363
-#: src/main/platform.c:2366 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2575 src/main/platform.c:2578
-#: src/main/platform.c:2581 src/main/platform.c:2584 src/main/platform.c:2587
-#: src/main/platform.c:2590 src/main/platform.c:2664 src/main/platform.c:2672
-#: src/main/platform.c:2708 src/main/platform.c:2758 src/main/print.c:242
+#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1498
+#: src/main/platform.c:1501 src/main/platform.c:1504 src/main/platform.c:1540
+#: src/main/platform.c:1543 src/main/platform.c:1546 src/main/platform.c:1629
+#: src/main/platform.c:1645 src/main/platform.c:1684 src/main/platform.c:1686
+#: src/main/platform.c:1757 src/main/platform.c:1841 src/main/platform.c:2116
+#: src/main/platform.c:2176 src/main/platform.c:2353 src/main/platform.c:2356
+#: src/main/platform.c:2359 src/main/platform.c:2362 src/main/platform.c:2365
+#: src/main/platform.c:2368 src/main/platform.c:2568 src/main/platform.c:2571
+#: src/main/platform.c:2574 src/main/platform.c:2577 src/main/platform.c:2580
+#: src/main/platform.c:2583 src/main/platform.c:2657 src/main/platform.c:2665
+#: src/main/platform.c:2701 src/main/platform.c:2751 src/main/print.c:242
 #: src/main/print.c:248 src/main/print.c:270 src/main/print.c:276
 #: src/main/print.c:283 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1950
@@ -1044,7 +1044,7 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
 #: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
-#: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -1238,7 +1238,7 @@ msgstr "niewspierana wersja systemu Windows"
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
 #: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
-#: src/unix/sys-std.c:1296
+#: src/unix/sys-std.c:1291
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
@@ -2874,32 +2874,32 @@ msgstr "wymiary [produkt %d] nie odpowiadają długości obiektu [%d]"
 
 # src/main/attrib.c: 1168
 # error(_("attributes must be a list or NULL"))
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 msgid "attributes must be a list or NULL"
 msgstr "atrybuty muszą być listą lub wartością NULL"
 
 # src/main/attrib.c: 1173
 # error(_("attributes must be named"))
-#: src/main/attrib.c:1182
+#: src/main/attrib.c:1187
 msgid "attributes must be named"
 msgstr "atrybuty muszą być nazwane"
 
 # src/main/attrib.c: 1177
 # error(_("all attributes must have names [%d does not]"), i+1)
-#: src/main/attrib.c:1186
+#: src/main/attrib.c:1191
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "wszystkie atrybuty muszą mieć nazwę [atrybut nr %d takiej nie ma]"
 
 # src/main/attrib.c: 1276
 #  _("'which' must be of mode character")
-#: src/main/attrib.c:1285
+#: src/main/attrib.c:1290
 msgid "'which' must be of mode character"
 msgstr "'which' musi być trybu tekstowego"
 
 # src/main/attrib.c: 1278
 #  _("exactly one attribute 'which' must be given")
-#: src/main/attrib.c:1287
+#: src/main/attrib.c:1292
 msgid "exactly one attribute 'which' must be given"
 msgstr "dokładnie jeden atrybut 'which' musi zostać podany"
 
@@ -2922,7 +2922,7 @@ msgstr "dokładnie jeden atrybut 'which' musi zostać podany"
 # src/main/subset.c: 1196
 # warningcall(call, _("partial match of '%s' to '%s'"),
 # 			    translateChar(input), st)
-#: src/main/attrib.c:1345 src/main/attrib.c:1368 src/main/subscript.c:240
+#: src/main/attrib.c:1350 src/main/attrib.c:1373 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1188 src/main/subset.c:1239
 #, c-format
 msgid "partial match of '%s' to '%s'"
@@ -2931,14 +2931,14 @@ msgstr "częściowa zgodność między '%s' a '%s'"
 # src/main/attrib.c: 1397
 # error(_("invalid type '%s' for slot name"),
 # 		  type2char(TYPEOF(nlist)))
-#: src/main/attrib.c:1406
+#: src/main/attrib.c:1411
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "niepoprawny typ '%s' dla nazwy gniazda"
 
 # src/main/attrib.c: 1435
 # error(_("'name' must be non-null character string"))
-#: src/main/attrib.c:1444
+#: src/main/attrib.c:1449
 msgid "'name' must be non-null character string"
 msgstr "'name' musi być niepustym łańcuchem tekstowym"
 
@@ -2948,7 +2948,7 @@ msgstr "'name' musi być niepustym łańcuchem tekstowym"
 # error(_("invalid type or length for slot name"))
 # src/main/attrib.c: 1666
 # error(_("invalid type or length for slot name"))
-#: src/main/attrib.c:1568 src/main/attrib.c:1639 src/main/attrib.c:1676
+#: src/main/attrib.c:1573 src/main/attrib.c:1644 src/main/attrib.c:1681
 msgid "invalid type or length for slot name"
 msgstr "niepoprawny typ lub długość dla nazwy gniazda"
 
@@ -2956,7 +2956,7 @@ msgstr "niepoprawny typ lub długość dla nazwy gniazda"
 # error(_("cannot get a slot (\"%s\") from an object of type \"%s\""),
 # 			  translateChar(asChar(input)),
 # 			  CHAR(type2str(TYPEOF(obj))))
-#: src/main/attrib.c:1602
+#: src/main/attrib.c:1607
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "nie można pobrać gniazda (\"%s\") z obiektu o typie \"%s\""
@@ -2965,20 +2965,20 @@ msgstr "nie można pobrać gniazda (\"%s\") z obiektu o typie \"%s\""
 # error(_("no slot of name \"%s\" for this object of class \"%s\""),
 # 		  translateChar(asChar(input)),
 # 		  translateChar(asChar(classString)))
-#: src/main/attrib.c:1613
+#: src/main/attrib.c:1618
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "brak gniazda o nazwie \"%s\" dla tego obiektu klasy \"%s\""
 
 # src/main/attrib.c: 1620
 # error(_("attempt to set slot on NULL object"))
-#: src/main/attrib.c:1630
+#: src/main/attrib.c:1635
 msgid "attempt to set slot on NULL object"
 msgstr "próba ustawienia gniazda na obiekt NULL"
 
 # src/main/attrib.c: 1661
 # error(_("formal classes cannot be used without the 'methods' package"))
-#: src/main/attrib.c:1671
+#: src/main/attrib.c:1676
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "formalne klasy nie mogą być używane bez pakietu 'methods'"
 
@@ -2986,7 +2986,7 @@ msgstr "formalne klasy nie mogą być używane bez pakietu 'methods'"
 # error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
 # 		  CHAR(PRINTNAME(nlist)),
 # 		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)))
-#: src/main/attrib.c:1683
+#: src/main/attrib.c:1688
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -2998,7 +2998,7 @@ msgstr ""
 # error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
 # 		  CHAR(PRINTNAME(nlist)),
 # 		  translateChar(STRING_ELT(klass, 0)))
-#: src/main/attrib.c:1687
+#: src/main/attrib.c:1692
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -3024,27 +3024,27 @@ msgstr "wektor wynikowy przekracza graniczną długość wektora w '%s'"
 #  _("type '%s' is unimplemented in '%s'")
 # src/main/bind.c: 467
 #  _("type '%s' is unimplemented in '%s'")
-#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
-#: src/main/bind.c:460 src/main/bind.c:488
+#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
+#: src/main/bind.c:449 src/main/bind.c:477
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "typ '%s' nie jest zaimplementowany w '%s'"
 
 # src/main/bind.c: 670
 #  _("repeated formal argument 'recursive'")
-#: src/main/bind.c:696
+#: src/main/bind.c:685
 msgid "repeated formal argument 'recursive'"
 msgstr "powtórzony formalny argument 'recursive'"
 
 # src/main/bind.c: 681
 #  _("repeated formal argument 'use.names'")
-#: src/main/bind.c:707
+#: src/main/bind.c:696
 msgid "repeated formal argument 'use.names'"
 msgstr "powtórzony formalny argument 'use.names'"
 
 # src/main/bind.c: 878
 # error(_("argument not a list"))
-#: src/main/bind.c:905
+#: src/main/bind.c:894
 msgid "argument not a list"
 msgstr "argument nie jest listą"
 
@@ -3064,7 +3064,7 @@ msgstr "argument nie jest listą"
 # error(_("class name too long in '%s'"), sg)
 # src/main/objects.c: 747
 # error(_("class name too long in '%s'"), sb)
-#: src/main/bind.c:1049 src/main/eval.c:2691 src/main/eval.c:2700
+#: src/main/bind.c:1038 src/main/eval.c:2691 src/main/eval.c:2700
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
@@ -3073,7 +3073,7 @@ msgstr "nazwa klasy w '%s' jest zbyt długa"
 
 # src/main/bind.c: 1097
 # error(_("cannot create a matrix from these types"))
-#: src/main/bind.c:1125
+#: src/main/bind.c:1114
 #, fuzzy, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "nie można utworzyć macierzy z tych typów"
@@ -3081,7 +3081,7 @@ msgstr "nie można utworzyć macierzy z tych typów"
 # src/main/bind.c: 1167
 # error(_("number of rows of matrices must match (see arg %d)"),
 # 		      na + 1)
-#: src/main/bind.c:1196
+#: src/main/bind.c:1185
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "liczby wierszy macierzy muszą być zgodne (zobacz argument %d)"
@@ -3089,7 +3089,7 @@ msgstr "liczby wierszy macierzy muszą być zgodne (zobacz argument %d)"
 # src/main/bind.c: 1411
 # error(_("number of columns of matrices must match (see arg %d)"),
 # 		      na + 1)
-#: src/main/bind.c:1441
+#: src/main/bind.c:1430
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "liczby kolumn macierzy muszą być zgodne (zobacz argument %d)"
@@ -9287,7 +9287,7 @@ msgstr "nazwa pliku jest zbyt długa"
 # error(_("internal out-of-memory condition"))
 # src/main/sysutils.c: 1644
 # error(_("internal out-of-memory condition"))
-#: src/main/platform.c:1518 src/main/platform.c:1565 src/main/sysutils.c:1850
+#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1850
 #: src/main/sysutils.c:1864
 msgid "internal out-of-memory condition"
 msgstr "wewnętrzny warunek braku pamięci"
@@ -9296,27 +9296,27 @@ msgstr "wewnętrzny warunek braku pamięci"
 # warning(_("read error on '%s'"), names)
 # src/main/sysutils.c: 1640
 # warning(_("read error on '%s'"), translateChar(el))
-#: src/main/platform.c:1561 src/main/sysutils.c:1860
+#: src/main/platform.c:1554 src/main/sysutils.c:1860
 #, c-format
 msgid "read error on '%s'"
 msgstr "błąd odczytu w '%s'"
 
 # src/main/platform.c: 1721
 # warning(_("setting 'LC_NUMERIC' may cause R to function strangely"))
-#: src/main/platform.c:1729
+#: src/main/platform.c:1722
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "ustawienie 'LC_NUMERIC' może spowodować, że R będzie dziwnie działał"
 
 # src/main/platform.c: 1733
 # warning(_("LC_MESSAGES exists on Windows but is not operational"))
-#: src/main/platform.c:1743
+#: src/main/platform.c:1736
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "'LC_MESSAGES' istnieje w systemie Windows, ale nie jest operacyjne"
 
 # src/main/platform.c: 1760
 # warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
 # 		CHAR(STRING_ELT(locale, 0)))
-#: src/main/platform.c:1770
+#: src/main/platform.c:1763
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
@@ -9327,7 +9327,7 @@ msgstr ""
 # error(_("'hostname' must be a character vector of length 1"))
 # src/main/platform.c: 2062
 # error(_("'hostname' must be a character vector of length 1"))
-#: src/main/platform.c:2072
+#: src/main/platform.c:2065
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' musi być wektorem tekstowym o długości 1"
 
@@ -9335,14 +9335,14 @@ msgstr "'hostname' musi być wektorem tekstowym o długości 1"
 # warning(_("nsl() was unable to resolve host '%s'"), name)
 # src/main/platform.c: 2068
 # warning(_("nsl() was unable to resolve host '%s'"), name)
-#: src/main/platform.c:2078
+#: src/main/platform.c:2071
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "'nsl()' nie był w stanie nawiązać połączenia z hostem '%s'"
 
 # src/main/platform.c: 2075
 # warning(_("unknown format returned by C function 'gethostbyname'"))
-#: src/main/platform.c:2085
+#: src/main/platform.c:2078
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr "nieznany format zwrócony przez funkcję C 'gethostbyname'"
 
@@ -9350,13 +9350,13 @@ msgstr "nieznany format zwrócony przez funkcję C 'gethostbyname'"
 # warning(_("nsl() is not supported on this platform"))
 # src/main/platform.c: 2084
 # warning(_("nsl() is not supported on this platform"))
-#: src/main/platform.c:2094
+#: src/main/platform.c:2087
 msgid "nsl() is not supported on this platform"
 msgstr "'nsl()' nie jest obsługiwany na tej platformie"
 
 # src/main/platform.c: 2155
 # warning(_("'%s' already exists"), dir)
-#: src/main/platform.c:2165
+#: src/main/platform.c:2158
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' już istnieje"
@@ -9364,14 +9364,14 @@ msgstr "'%s' już istnieje"
 # src/main/platform.c: 2158
 # warning(_("cannot create dir '%s', reason '%s'"), dir,
 # 		strerror(serrno))
-#: src/main/platform.c:2168
+#: src/main/platform.c:2161
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "nie można utworzyć katalogu '%s', powód '%s'"
 
 # src/main/platform.c: 2204
 # warning(_("'%ls' already exists"), dir)
-#: src/main/platform.c:2214
+#: src/main/platform.c:2207
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' już istnieje"
@@ -9379,7 +9379,7 @@ msgstr "'%ls' już istnieje"
 # src/main/platform.c: 2208
 # warning(_("cannot create dir '%ls', reason '%s'"), dir,
 # 		strerror(serrno))
-#: src/main/platform.c:2218
+#: src/main/platform.c:2211
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "nie można utworzyć katalogu '%ls', powód '%s'"
@@ -9388,7 +9388,7 @@ msgstr "nie można utworzyć katalogu '%ls', powód '%s'"
 # warning(_("too deep nesting"))
 # src/main/platform.c: 2380
 # warning(_("too deep nesting"))
-#: src/main/platform.c:2252 src/main/platform.c:2456
+#: src/main/platform.c:2245 src/main/platform.c:2449
 msgid "too deep nesting"
 msgstr "zbyt głębokie zagnieżdżenie"
 
@@ -9408,7 +9408,7 @@ msgstr "zbyt głębokie zagnieżdżenie"
 # warning(_("over-long path length"))
 # src/main/platform.c: 2449
 # warning(_("over-long path length"))
-#: src/main/platform.c:2260 src/main/platform.c:2273 src/main/platform.c:2291
+#: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
 #, fuzzy
 msgid "over-long path"
 msgstr "zbyt długa ścieżka"
@@ -9416,14 +9416,14 @@ msgstr "zbyt długa ścieżka"
 # src/main/platform.c: 2251
 # warning(_("problem creating directory %ls: %s"),
 # 		    dest, strerror(errno))
-#: src/main/platform.c:2280
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "problem z utworzeniem katalogu %ls: %s "
 
 # src/main/platform.c: 2270
 # warning(_("problem reading dir %ls: %s"), this, strerror(errno))
-#: src/main/platform.c:2300
+#: src/main/platform.c:2293
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "problem z czytaniem katalogu %ls: %s"
@@ -9444,15 +9444,15 @@ msgstr "problem z czytaniem katalogu %ls: %s"
 # warning(_("over-long path length"))
 # src/main/platform.c: 2449
 # warning(_("over-long path length"))
-#: src/main/platform.c:2311 src/main/platform.c:2472 src/main/platform.c:2485
-#: src/main/platform.c:2505 src/main/platform.c:2527
+#: src/main/platform.c:2304 src/main/platform.c:2465 src/main/platform.c:2478
+#: src/main/platform.c:2498 src/main/platform.c:2520
 msgid "over-long path length"
 msgstr "zbyt długa ścieżka"
 
 # src/main/platform.c: 2288
 # warning(_("problem copying %ls to %ls: %s"),
 # 			this, dest, strerror(errno))
-#: src/main/platform.c:2319
+#: src/main/platform.c:2312
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "problem z kopiowaniem %ls do %ls: %s"
@@ -9460,7 +9460,7 @@ msgstr "problem z kopiowaniem %ls do %ls: %s"
 # src/main/platform.c: 2418
 # warning(_("problem creating directory %s: %s"),
 # 		    this, strerror(errno))
-#: src/main/platform.c:2494
+#: src/main/platform.c:2487
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "problem z utworzeniem katalogu %s: %s"
@@ -9468,7 +9468,7 @@ msgstr "problem z utworzeniem katalogu %s: %s"
 # src/main/platform.c: 2437
 # warning(_("problem reading directory %s: %s"),
 # 		    this, strerror(errno))
-#: src/main/platform.c:2514
+#: src/main/platform.c:2507
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "problem z czytaniem katalogu %s: %s"
@@ -9476,14 +9476,14 @@ msgstr "problem z czytaniem katalogu %s: %s"
 # src/main/platform.c: 2458
 # warning(_("problem copying %s to %s: %s"),
 # 			this, dest, strerror(errno))
-#: src/main/platform.c:2536
+#: src/main/platform.c:2529
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "problem z kopiowaniem %s do %s: %s"
 
 # src/main/platform.c: 2581
 # error(_("'mode' must be of length at least one"))
-#: src/main/platform.c:2669
+#: src/main/platform.c:2662
 msgid "'mode' must be of length at least one"
 msgstr "długość 'mode' musi wynosić co najmniej 1"
 
@@ -9491,7 +9491,7 @@ msgstr "długość 'mode' musi wynosić co najmniej 1"
 # warning("insufficient OS support on this platform")
 # src/main/platform.c: 2648
 # warning(_("insufficient OS support on this platform"))
-#: src/main/platform.c:2736
+#: src/main/platform.c:2729
 msgid "insufficient OS support on this platform"
 msgstr "niewystarczające wsparcie OS na tej platformie"
 
@@ -13683,14 +13683,14 @@ msgstr ""
 # 			    R_HistoryFile)
 # src/unix/sys-std.c: 1252
 # error(_("problem in saving the history file '%s'"), file)
-#: src/unix/sys-std.c:1087 src/unix/sys-std.c:1254
+#: src/unix/sys-std.c:1082 src/unix/sys-std.c:1249
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "problem z zapisaniem pliku historii '%s'"
 
 # src/unix/sys-std.c: 1159
 #  _("Cannot open file '%s': %s\n\n")
-#: src/unix/sys-std.c:1161
+#: src/unix/sys-std.c:1156
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -13703,7 +13703,7 @@ msgstr ""
 #  _("'file' argument is too long")
 # src/unix/sys-std.c: 1246
 #  _("'file' argument is too long")
-#: src/unix/sys-std.c:1225 src/unix/sys-std.c:1248
+#: src/unix/sys-std.c:1220 src/unix/sys-std.c:1243
 msgid "'file' argument is too long"
 msgstr "argument 'file' jest zbyt długi"
 
@@ -13711,13 +13711,13 @@ msgstr "argument 'file' jest zbyt długi"
 #  _("no history mechanism available")
 # src/unix/sys-std.c: 1231
 #  _("no history mechanism available")
-#: src/unix/sys-std.c:1231 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1226 src/unix/sys-std.c:1228
 msgid "no history mechanism available"
 msgstr "brak dostępnego mechanizmu historii"
 
 # src/unix/sys-std.c: 1258
 # warning(_("problem in truncating the history file"))
-#: src/unix/sys-std.c:1260
+#: src/unix/sys-std.c:1255
 msgid "problem in truncating the history file"
 msgstr "problem z przycięciem pliku historii"
 
@@ -13725,7 +13725,7 @@ msgstr "problem z przycięciem pliku historii"
 #  _("no history available to save")
 # src/unix/sys-std.c: 1262
 #  _("no history available to save")
-#: src/unix/sys-std.c:1262 src/unix/sys-std.c:1264
+#: src/unix/sys-std.c:1257 src/unix/sys-std.c:1259
 msgid "no history available to save"
 msgstr "brak dostępnej historii do zapisania"
 
@@ -13733,7 +13733,7 @@ msgstr "brak dostępnej historii do zapisania"
 #  _("invalid timestamp")
 # src/unix/sys-std.c: 1274
 #  _("invalid timestamp")
-#: src/unix/sys-std.c:1276
+#: src/unix/sys-std.c:1271
 msgid "invalid timestamp"
 msgstr "niepoprawna sygnatura czasu"
 

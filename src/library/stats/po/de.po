@@ -1,10 +1,10 @@
 # Translation of /src/library/stats/po/stats.pot
-# Copyright (C) 2008-2013 The R Foundation
+# Copyright (C) 2008-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:11+0000\n"
 "PO-Revision-Date: 2013-03-11 16:08+0100\n"
@@ -26,7 +26,7 @@ msgstr "Wahrscheinlichkeiten außerhalb von [0,1] in qansar()"
 
 #: approx.c:31 rcont.c:16
 msgid "stats"
-msgstr ""
+msgstr "stats"
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -183,19 +183,18 @@ msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "nur 2500 Zeilen erlaubt für sm.method=\\\"spline\\\""
 
 #: lm.c:57
-#, fuzzy
 msgid "'x' is not a matrix"
-msgstr "'tmax' ist keine ganze Zahl"
+msgstr "'x' ist keine Matrix"
 
 #: lm.c:62
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr ""
+msgstr "Dimensionen von 'x' (%d,%d) und 'y' (%d) passen nicht zueinander"
 
 #: lm.c:77 lm.c:81
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
-msgstr ""
+msgstr "NA/NaN/Inf in '%s'"
 
 #: loessc.c:233
 msgid "span is too small"
@@ -486,9 +485,8 @@ msgid "'maxit' is not an integer"
 msgstr "'maxit' ist keine ganze Zahl"
 
 #: optim.c:260
-#, fuzzy
 msgid "'tmax' is not a positive integer"
-msgstr "'tmax' ist keine ganze Zahl"
+msgstr "'tmax' ist keine positive ganze Zahl"
 
 #: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"

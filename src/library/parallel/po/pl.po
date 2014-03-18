@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-09 09:37+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -62,7 +62,7 @@ msgstr ""
 # error(_("write error, closing pipe to the master"))
 # parallel/src/fork.c: 566
 # error(_("write error, closing pipe to the master"))
-#: fork.c:338 fork.c:345 fork.c:669
+#: fork.c:338 fork.c:345 fork.c:667
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
@@ -96,19 +96,19 @@ msgstr "błąd '%s' przy wyborze"
 
 # parallel/src/fork.c: 548
 # error(_("'mckill' failed"))
-#: fork.c:651
+#: fork.c:649
 msgid "'mckill' failed"
 msgstr "'mckill' nie powiodło się"
 
 # parallel/src/fork.c: 558
 # error(_("'mcexit' can only be used in a child process"))
-#: fork.c:661
+#: fork.c:659
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
 # parallel/src/fork.c: 579
 # error(_("'mcexit' failed"))
-#: fork.c:682
+#: fork.c:680
 msgid "'mcexit' failed"
 msgstr "'mcexit' nie powiodło się"
 
@@ -116,18 +116,18 @@ msgstr "'mcexit' nie powiodło się"
 # error(_("invalid CPU affinity specification"))
 # parallel/src/fork.c: 610
 # error(_("invalid CPU affinity specification"))
-#: fork.c:712 fork.c:721
+#: fork.c:710 fork.c:719
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
 # parallel/src/fork.c: 621
 # error(_("requested CPU set is too large for this system"))
-#: fork.c:732
+#: fork.c:730
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
 # parallel/src/fork.c: 644
 # error(_("retrieving CPU affinity set failed"))
-#: fork.c:755
+#: fork.c:753
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"

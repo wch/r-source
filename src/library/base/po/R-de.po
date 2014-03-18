@@ -1,11 +1,11 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2013.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:10\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
@@ -71,17 +71,14 @@ msgstr "falsch aufgebaute Versionszeichenkette"
 msgid "target is %s, current is %s"
 msgstr "Ziel ist %s, aktuell ist %s"
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr "'x' muss numerisch sein"
+msgstr "'tolernce' sollte  numerisch sein"
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr "'arg' sollte eines  von '%s' sein"
+msgstr "'scale' sollte numerisch oder NULL sein"
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr "'subset' muss boolesch sein"
+msgstr "'%s' muss boolesch sein"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
@@ -305,9 +302,8 @@ msgstr "ersetze Element in nicht existierender Spalte: %s"
 msgid "only a single element should be replaced"
 msgstr "nur ein einzelnes Element sollte ersetzt werden"
 
-#, fuzzy
 msgid "Name partially matched in data frame"
-msgstr "nicht numerische Variable in data frame:"
+msgstr "Name mit partieller Übereinstimmung in data frame:"
 
 msgid "names do not match previous names"
 msgstr "Namen passen nicht zu den vorhergehenden Namen"
@@ -471,9 +467,8 @@ msgstr "'from' muss ein \"POSIXt\" Objekt sein"
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to' muss ein \"POSIXt\" Objekt sein"
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr "keine Datei gefunden"
+msgstr "keine Olson Datenbank gefunden"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
@@ -629,7 +624,7 @@ msgid "using the first element of 'value' of type \"expression\""
 msgstr "nutze das erste Element von 'value' vom Typ \"expression\""
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr "Klasse von 'x' wurde verworfen"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' muss \"double\" (\"real\"), \"integer\" oder \"character\" sein"
@@ -699,9 +694,8 @@ msgstr "benötige Ersetzungswerte für Nicht-Treffer"
 msgid "must have replacements for matches"
 msgstr "benötige Ersetzungswerte für Treffer"
 
-#, fuzzy
 msgid "No factors specified"
-msgstr "keine DLL angegeben"
+msgstr "Keine Faktoren angegeben"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr "Norm '%s' nutzt aktuell immer exact = FALSE"
@@ -1000,7 +994,8 @@ msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
-msgstr ""
+msgstr "Namensraum %s ist nicht verfügar und ist durch"
+".GlobalEnv ersetzt worden während Objekt %s verarbeitet wurde"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
@@ -1101,9 +1096,8 @@ msgstr "lokaler Wert durch import %s ersetzt, während %s geladen wurde"
 msgid "cannot import into a sealed namespace"
 msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
-#, fuzzy
 msgid "replacing previous import by %s when loading %s"
-msgstr "vorhergehender Import %s während des Ladens von %s ersetzt"
+msgstr "vorhergehender Import durch %s während des Ladens von %s ersetzt"
 
 msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
@@ -1138,9 +1132,8 @@ msgstr "Paket %s hat keine 'NAMESPACE' Datei"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr "leerer Name in der Direktive  '%s' in der 'NAMESPACE' Datei"
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
-msgstr "doppelte Symbolnamen %s in useDynlib(\"%s\")"
+msgstr "doppelte Symbolnamen %s in useDynLib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "unbrauchbare 'S3method' Direktive: %s"
@@ -1226,9 +1219,8 @@ msgstr "benötige größeren Wert für 'ncol', da Pivotierung aufgetreten"
 msgid "invalid NCOL(R)"
 msgstr "unzulässige NCOL(R)"
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
-msgstr "'x' muss ein atomarer Vektor sein"
+msgstr "'x' muss ein Vektor eines atomaren Typs sein"
 
 msgid "invalid 'rle' structure"
 msgstr "ungültige 'rle' Struktur"
@@ -1255,7 +1247,7 @@ msgid "either specify 'nmax' or 'n', but not both."
 msgstr "entweder 'nmax' oder 'n' angeben, aber nicht beide"
 
 msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'from' kann weder NA, NaN noch Inf sein"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "Argument 'length.out' muss Länge 1 haben"
@@ -1264,7 +1256,7 @@ msgid "first element used of 'length.out' argument"
 msgstr "erstes Element von 'length.out' Argument benutzt"
 
 msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr "'to' kann weder NA, NaN noch Inf sein"
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr "ungültiges (to - from)/by in seq(.)"

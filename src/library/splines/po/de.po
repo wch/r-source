@@ -1,11 +1,11 @@
 # Translation of /src/library/splines/po/splines.pot
 # to German
-# Copyright (C) 2005-2009 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-11-25 05:14+0000\n"
 "PO-Revision-Date: 2009-10-07 14:28+0200\n"

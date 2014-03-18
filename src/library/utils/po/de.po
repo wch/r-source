@@ -1,21 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR The R Core Team
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation of src/library/utils/po/utils.pot to German.
+# Copyright (C) 2014 The R Foundation
+# This file is distributed under the same license as the R package.
+# Detlef Steuer <steuer@hsu-hh.de>, 2014.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:55+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2014-02-27 17:14\n"
+"PO-Revision-Date: 2014-03-16 16:24+0100\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: io.c:328 io.c:332 io.c:342 io.c:571 io.c:752 io.c:805 io.c:817 io.c:821
 #: io.c:827 io.c:828 io.c:1052 io.c:1053 io.c:1055 io.c:1056 io.c:1057
@@ -26,226 +26,226 @@ msgstr ""
 #: windows/widgets.c:81 windows/widgets.c:86
 #, c-format
 msgid "invalid '%s' argument"
-msgstr ""
+msgstr "ungültiges '%s' Argument"
 
 #: io.c:351 io.c:814
 msgid "invalid quote symbol set"
-msgstr ""
+msgstr "ungültiges Symbol für Quotatinen gesetzt"
 
 #: io.c:363 io.c:837 io.c:1040
 msgid "cannot open the connection"
-msgstr ""
+msgstr "kann die Verbindung nicht öffnen"
 
 #: io.c:366 io.c:370
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "kann aus dieser Verbindung nicht lesen"
 
 #: io.c:417 io.c:435
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr ""
+msgstr "quotierte Zeichenkette in Zeile %d mit EOF beendet"
 
 #: io.c:567
 msgid "the first argument must be of mode character"
-msgstr ""
+msgstr "das erste Argument muss vom Mode character sein"
 
 #: io.c:754
 #, c-format
 msgid "Selection: "
-msgstr ""
+msgstr "Auswahl: "
 
 #: io.c:846 io.c:860
 msgid "cannot allocate buffer in 'readTableHead'"
-msgstr ""
+msgstr "kann Buffer in 'readTableHead' nicht allokieren"
 
 #: io.c:871
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\\\ gefolgt von EOF"
 
 #: io.c:920 io.c:923
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
-msgstr ""
+msgstr "unvollstädige letzte Zeile von readTableHeader in '%s' gefunden"
 
 #: io.c:980
 msgid "index out of range"
-msgstr ""
+msgstr "Index außerhalb der Grenzen"
 
 #: io.c:1033
 msgid "'file' is not a connection"
-msgstr ""
+msgstr "'file' ist keine Verbindung"
 
 #: io.c:1036
 msgid "cannot write to this connection"
-msgstr ""
+msgstr "kann in diese Verbindung nicht schreiben"
 
 #: io.c:1066
 msgid "'dec' must be a single character"
-msgstr ""
+msgstr "'dec' muss ein einzelnes Zeichen sein"
 
 #: io.c:1093
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
-msgstr ""
+msgstr "korrupter Datafram -- Länge der Spalte %d entspricht nicht nrows"
 
 #: io.c:1123
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
-msgstr ""
+msgstr "Spalte %s behauptet Faktor zu sein, hat aber keine numerischen Kodes"
 
 #: io.c:1141
 msgid "corrupt matrix -- dims not not match length"
-msgstr ""
+msgstr "korrupte Matrix -- Dimensionen entsprechen nicht der Länge"
 
 #: stubs.c:57
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "'savehistory' kann nur in Rgui und Rterm genutzt werden"
 
 #: stubs.c:74
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "'loadhistory' kann nur in Rgui und Rterm genutzt werden"
 
 #: stubs.c:86
 msgid "invalid timestamp"
-msgstr ""
+msgstr "ungültiger Zeitstempel"
 
 #: stubs.c:152 stubs.c:160
 msgid "X11 dataentry cannot be loaded"
-msgstr ""
+msgstr "X11 Dateneintrag kann nicht geladen werden"
 
 #: stubs.c:156 stubs.c:185 stubs.c:191
 msgid "X11 is not available"
-msgstr ""
+msgstr "X11 nicht verfügbar"
 
 #: stubs.c:249 stubs.c:252
 #, c-format
 msgid "invalid '%s' specification"
-msgstr ""
+msgstr "ungültige '%s' Spezifikation"
 
 #: utils.c:83
 msgid "'hostname' must be a character vector of length 1"
-msgstr ""
+msgstr "'hostname' muss ein Zeihenkettenetor der Länge 1 sein"
 
 #: utils.c:89
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
-msgstr ""
+msgstr "nsl() konnte Hostnamen '%s' nicht auflösen"
 
 #: utils.c:96
 msgid "unknown format returned by 'gethostbyname'"
-msgstr ""
+msgstr "unbekanntes Format von 'gethostbyname' zurückgegeben"
 
 #: utils.c:105
 msgid "nsl() is not supported on this platform"
-msgstr ""
+msgstr "nsl() ist auf dieser Plattform nicht unterstützt"
 
 #: windows/dialogs.c:182
 msgid "unknown type"
-msgstr ""
+msgstr "unbekannter Typ"
 
 #: windows/dialogs.c:214 windows/dialogs.c:238 windows/dialogs.c:276
 #: windows/dialogs.c:311
 msgid "menu functions can only be used in the GUI"
-msgstr ""
+msgstr "Menüfunktionen können nur im GUI genutzt werden"
 
 #: windows/dialogs.c:246
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
-msgstr ""
+msgstr "kann keine Elemente für %s abrufen (%s)"
 
 #: windows/dialogs.c:284
 #, c-format
 msgid "unable to add menu (%s)"
-msgstr ""
+msgstr "kann Menü nicht hinzufügen (%s)"
 
 #: windows/dialogs.c:296
 #, c-format
 msgid "unable to add menu item (%s)"
-msgstr ""
+msgstr "kann Menüeintrag nicht hinzufügen (%s)"
 
 #: windows/dialogs.c:319
 msgid "menu does not exist"
-msgstr ""
+msgstr "Menü exisitiert nicht"
 
 #: windows/dialogs.c:326
 #, c-format
 msgid "unable to delete menu item (%s)"
-msgstr ""
+msgstr "kann Menüeintrag nicht entfernen (%s)"
 
 #: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
 #: windows/registry.c:254
 #, c-format
 msgid "invalid '%s' value"
-msgstr ""
+msgstr "ungültiger '%s' Wert"
 
 #: windows/registry.c:266
 #, c-format
 msgid "Registry key '%ls' not found"
-msgstr ""
+msgstr "Registryeintrag '%ls' nicht gefunden"
 
 #: windows/util.c:41
 msgid "unsupported version of Windows"
-msgstr ""
+msgstr "nicht unterstützte Version von Windows"
 
 #: windows/util.c:275
 msgid "argument must be a character vector or a raw vector"
-msgstr ""
+msgstr "Argument muss Zeichenkettenvektor oder Rawvektor sein"
 
 #: windows/util.c:312
 msgid "unable to open the clipboard"
-msgstr ""
+msgstr "kann Zwischenablage nicht öffnen"
 
 #: windows/util.c:317
 msgid "unable to write to the clipboard"
-msgstr ""
+msgstr "kann nicht in die Zwischenablage schreiben"
 
 #: windows/util.c:397
 msgid "'title' must be a character string"
-msgstr ""
+msgstr "'title' muss eine Zeichenkette sein"
 
 #: windows/util.c:406
 msgid "'text' must be a character string"
-msgstr ""
+msgstr "'text' muss eine Zeichenkette sein"
 
 #: windows/util.c:445
 #, c-format
 msgid "'%s' must be length 1"
-msgstr ""
+msgstr "'%s' muss Länge 1 haben"
 
 #: windows/util.c:558
 #, c-format
 msgid "'%s' must be a list"
-msgstr ""
+msgstr "'%s' muss eine Liste sein"
 
 #: windows/util.c:562
 #, c-format
 msgid "'%s' element %d is not a window handle"
-msgstr ""
+msgstr "'%s' Element %d ist keine Fensterhandle"
 
 #: windows/widgets.c:108
 msgid "Select one or more"
-msgstr ""
+msgstr "Wähle ein oder mehrere"
 
 #: windows/widgets.c:108
 msgid "Select one"
-msgstr ""
+msgstr "Wähle eins"
 
 #: windows/widgets.c:182 windows/widgets.c:252
 msgid "'default' must be a character string"
-msgstr ""
+msgstr "'default' muss Zeichenkette sein"
 
 #: windows/widgets.c:184 windows/widgets.c:254
 msgid "'default' is overlong"
-msgstr ""
+msgstr "'default' ist überlang"
 
 #: windows/widgets.c:188 windows/widgets.c:258
 msgid "'caption' must be a character string"
-msgstr ""
+msgstr "'caption' muss Zeichenkette sein"
 
 #: windows/widgets.c:190
 msgid "'multi' must be a logical value"
-msgstr ""
+msgstr "'multi' muss ein boolescher Wert sein"
 
 #: windows/widgets.c:192
 msgid "'filterindex' must be an integer value"
-msgstr ""
+msgstr "'filterindex' muss ganzzahlig sein"

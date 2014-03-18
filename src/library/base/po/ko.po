@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-12 08:12+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: 2013-03-10 12:09-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -233,17 +233,17 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/main/platform.c:1076 src/main/platform.c:1079 src/main/platform.c:1082
 #: src/main/platform.c:1085 src/main/platform.c:1088 src/main/platform.c:1185
 #: src/main/platform.c:1188 src/main/platform.c:1191 src/main/platform.c:1229
-#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1505
-#: src/main/platform.c:1508 src/main/platform.c:1511 src/main/platform.c:1547
-#: src/main/platform.c:1550 src/main/platform.c:1553 src/main/platform.c:1636
-#: src/main/platform.c:1652 src/main/platform.c:1691 src/main/platform.c:1693
-#: src/main/platform.c:1764 src/main/platform.c:1848 src/main/platform.c:2123
-#: src/main/platform.c:2183 src/main/platform.c:2360 src/main/platform.c:2363
-#: src/main/platform.c:2366 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2575 src/main/platform.c:2578
-#: src/main/platform.c:2581 src/main/platform.c:2584 src/main/platform.c:2587
-#: src/main/platform.c:2590 src/main/platform.c:2664 src/main/platform.c:2672
-#: src/main/platform.c:2708 src/main/platform.c:2758 src/main/print.c:242
+#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1498
+#: src/main/platform.c:1501 src/main/platform.c:1504 src/main/platform.c:1540
+#: src/main/platform.c:1543 src/main/platform.c:1546 src/main/platform.c:1629
+#: src/main/platform.c:1645 src/main/platform.c:1684 src/main/platform.c:1686
+#: src/main/platform.c:1757 src/main/platform.c:1841 src/main/platform.c:2116
+#: src/main/platform.c:2176 src/main/platform.c:2353 src/main/platform.c:2356
+#: src/main/platform.c:2359 src/main/platform.c:2362 src/main/platform.c:2365
+#: src/main/platform.c:2368 src/main/platform.c:2568 src/main/platform.c:2571
+#: src/main/platform.c:2574 src/main/platform.c:2577 src/main/platform.c:2580
+#: src/main/platform.c:2583 src/main/platform.c:2657 src/main/platform.c:2665
+#: src/main/platform.c:2701 src/main/platform.c:2751 src/main/print.c:242
 #: src/main/print.c:248 src/main/print.c:270 src/main/print.c:276
 #: src/main/print.c:283 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1950
@@ -272,7 +272,7 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
 #: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
-#: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s' 인자가 잘못되었습니다"
@@ -300,7 +300,7 @@ msgstr "지원되지 않는 윈도우즈 버전입니다"
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
 #: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
-#: src/unix/sys-std.c:1296
+#: src/unix/sys-std.c:1291
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 잘못되었습니다"
@@ -1390,17 +1390,17 @@ msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]가 객체 [%d]의 길이와 일치하지 않습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 msgid "attributes must be a list or NULL"
 msgstr "속성들은 반드시 리스트 또는 NULL이어야 합니다"
 
 # CHL20130306
-#: src/main/attrib.c:1182
+#: src/main/attrib.c:1187
 msgid "attributes must be named"
 msgstr "속성들은 반드시 이름이 주어져야 합니다"
 
 # CHL20130306
-#: src/main/attrib.c:1186
+#: src/main/attrib.c:1191
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
@@ -1408,63 +1408,63 @@ msgstr ""
 "다]"
 
 # CHL20130306
-#: src/main/attrib.c:1285
+#: src/main/attrib.c:1290
 msgid "'which' must be of mode character"
 msgstr "'which'는 반드시 문자형 모드이어야 합니다"
 
 # CHL20130306
-#: src/main/attrib.c:1287
+#: src/main/attrib.c:1292
 msgid "exactly one attribute 'which' must be given"
 msgstr "오로지 한개의 속성만이 'which'에 주어질 수 있습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1345 src/main/attrib.c:1368 src/main/subscript.c:240
+#: src/main/attrib.c:1350 src/main/attrib.c:1373 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1188 src/main/subset.c:1239
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'는 '%s'에 부분적으로만 일치합니다"
 
 # CHL20130306
-#: src/main/attrib.c:1406
+#: src/main/attrib.c:1411
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "'%s'는 슬롯이름에 유효한 타입이 아닙니다"
 
 # CHL20130306
-#: src/main/attrib.c:1444
+#: src/main/attrib.c:1449
 msgid "'name' must be non-null character string"
 msgstr "'name'은 반드시 NULL이 아닌 문자열이어야 합니다"
 
 # CHL20130306
-#: src/main/attrib.c:1568 src/main/attrib.c:1639 src/main/attrib.c:1676
+#: src/main/attrib.c:1573 src/main/attrib.c:1644 src/main/attrib.c:1681
 msgid "invalid type or length for slot name"
 msgstr "슬롯이름의 유형 또는 길이가 잘못되었습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1602
+#: src/main/attrib.c:1607
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "유형 \"%2$s\"를 가지는 객체로부터 슬롯 (\"%1$s\")를 얻을 수 없습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1613
+#: src/main/attrib.c:1618
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "클래스 \"%2$s\"를 가지는 이 객체에는 \"%1$s\" 이름을 가진 슬롯이 없습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1630
+#: src/main/attrib.c:1635
 msgid "attempt to set slot on NULL object"
 msgstr "NULL 객체에 슬롯을 지정하려고 했습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1671
+#: src/main/attrib.c:1676
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "'methods' 패키지없이 formal classes를 사용할 수 없습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1683
+#: src/main/attrib.c:1688
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1473,7 +1473,7 @@ msgstr ""
 "슬롯이 없는 기본 클래스 (\"%2$s\")로부터 슬롯 \"%1$s\"를 가져오려 했습니다"
 
 # CHL20130306
-#: src/main/attrib.c:1687
+#: src/main/attrib.c:1692
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1488,29 +1488,29 @@ msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr "'%s'내에서 초래된 벡터는 벡터의 길이제한을 넘어섭니다"
 
 # CHL20130306
-#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
-#: src/main/bind.c:460 src/main/bind.c:488
+#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
+#: src/main/bind.c:449 src/main/bind.c:477
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "타입 '%s'는 아직 '%s'에서 구현되지 않았습니다"
 
 # CHL20130306
-#: src/main/bind.c:696
+#: src/main/bind.c:685
 msgid "repeated formal argument 'recursive'"
 msgstr "형식인자 'recursive'가 반복됩니다"
 
 # CHL20130306
-#: src/main/bind.c:707
+#: src/main/bind.c:696
 msgid "repeated formal argument 'use.names'"
 msgstr "형식인자 'use.names'가 반복됩니다"
 
 # CHL20130306
-#: src/main/bind.c:905
+#: src/main/bind.c:894
 msgid "argument not a list"
 msgstr "리스트가 아닌 인자입니다"
 
 # CHL20130306
-#: src/main/bind.c:1049 src/main/eval.c:2691 src/main/eval.c:2700
+#: src/main/bind.c:1038 src/main/eval.c:2691 src/main/eval.c:2700
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
@@ -1518,13 +1518,13 @@ msgid "class name too long in '%s'"
 msgstr "'%s'내에 있는 클래스명이 너무 깁니다"
 
 # CHL20130306
-#: src/main/bind.c:1125
+#: src/main/bind.c:1114
 #, fuzzy, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "이러한 유형들로는 행렬을 작성할 수 없습니다"
 
 # CHL20130306
-#: src/main/bind.c:1196
+#: src/main/bind.c:1185
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr ""
@@ -1532,7 +1532,7 @@ msgstr ""
 "세요)"
 
 # CHL20130306
-#: src/main/bind.c:1441
+#: src/main/bind.c:1430
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -5332,117 +5332,117 @@ msgstr "R HOME의 위치를 확인할 수 없습니다"
 msgid "file name too long"
 msgstr "파일명이 너무 깁니다"
 
-#: src/main/platform.c:1518 src/main/platform.c:1565 src/main/sysutils.c:1850
+#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1850
 #: src/main/sysutils.c:1864
 msgid "internal out-of-memory condition"
 msgstr "내부 메모리 부족 상태입니다"
 
-#: src/main/platform.c:1561 src/main/sysutils.c:1860
+#: src/main/platform.c:1554 src/main/sysutils.c:1860
 #, c-format
 msgid "read error on '%s'"
 msgstr "'%s'에서 읽기 오류가 발생했습니다"
 
-#: src/main/platform.c:1729
+#: src/main/platform.c:1722
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "'LC_NUMERIC'을 조정하는 것은 R이 이상하게 작동하게 할 수도 있습니다"
 
-#: src/main/platform.c:1743
+#: src/main/platform.c:1736
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "LC_MESSAGES는 윈도우에 있지만, 이는 사용가능하지 않습니다"
 
-#: src/main/platform.c:1770
+#: src/main/platform.c:1763
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "OS는 로케일을 \"%s\"로 설정하기 위한 요청이 받아들일 수 없다고 보고합니다"
 
-#: src/main/platform.c:2072
+#: src/main/platform.c:2065
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
 
-#: src/main/platform.c:2078
+#: src/main/platform.c:2071
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:2085
+#: src/main/platform.c:2078
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr ""
 "알수 없는 형식이 C로 작성된 함수 'gethostbyname'에 의하여 반환되었습니다"
 
-#: src/main/platform.c:2094
+#: src/main/platform.c:2087
 msgid "nsl() is not supported on this platform"
 msgstr "이 플랫폼에서는 nsl()가 지원되지 않습니다"
 
-#: src/main/platform.c:2165
+#: src/main/platform.c:2158
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'는 이미 존재합니다"
 
-#: src/main/platform.c:2168
+#: src/main/platform.c:2161
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "디렉토리 '%s'를 만들 수 없습니다. 그 이유는 '%s'입니다"
 
-#: src/main/platform.c:2214
+#: src/main/platform.c:2207
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls'은 이미 존재합니다"
 
-#: src/main/platform.c:2218
+#: src/main/platform.c:2211
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "디렉토리 '%ls'를 만들 수 없습니다. 그 이유는 '%s'입니다. "
 
-#: src/main/platform.c:2252 src/main/platform.c:2456
+#: src/main/platform.c:2245 src/main/platform.c:2449
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2260 src/main/platform.c:2273 src/main/platform.c:2291
+#: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
 #, fuzzy
 msgid "over-long path"
 msgstr "길이가 0인 패턴입니다"
 
-#: src/main/platform.c:2280
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "디렉토리 %ls를 생성하는데 문제가 발생했습니다: %s"
 
-#: src/main/platform.c:2300
+#: src/main/platform.c:2293
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "디렉토리 %ls를 읽는데 문제가 발생했습니다: %s"
 
-#: src/main/platform.c:2311 src/main/platform.c:2472 src/main/platform.c:2485
-#: src/main/platform.c:2505 src/main/platform.c:2527
+#: src/main/platform.c:2304 src/main/platform.c:2465 src/main/platform.c:2478
+#: src/main/platform.c:2498 src/main/platform.c:2520
 msgid "over-long path length"
 msgstr ""
 
-#: src/main/platform.c:2319
+#: src/main/platform.c:2312
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "%ls를 %ls로 복사하는데 문제가 발생했습니다: %s"
 
-#: src/main/platform.c:2494
+#: src/main/platform.c:2487
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "디렉토리 %s를 생성하는데 문제가 발생했습니다: %s"
 
-#: src/main/platform.c:2514
+#: src/main/platform.c:2507
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "디렉토리 %s를 읽는데 문제가 발생했습니다: %s"
 
-#: src/main/platform.c:2536
+#: src/main/platform.c:2529
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "%1$s를 %2$s로 복사하는데 문제가 발생했습니다: %3$s"
 
-#: src/main/platform.c:2669
+#: src/main/platform.c:2662
 msgid "'mode' must be of length at least one"
 msgstr "'mode'의 길이는 반드시 최소한 1이상이어야 합니다"
 
-#: src/main/platform.c:2736
+#: src/main/platform.c:2729
 msgid "insufficient OS support on this platform"
 msgstr "이 플랫폼에서는 OS지원이 충분하지 않습니다"
 
@@ -7799,12 +7799,12 @@ msgid ""
 "report using bug.report()"
 msgstr ""
 
-#: src/unix/sys-std.c:1087 src/unix/sys-std.c:1254
+#: src/unix/sys-std.c:1082 src/unix/sys-std.c:1249
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "작업기록 파일 '%s'를 저장하는데 문제가 발생했습니다"
 
-#: src/unix/sys-std.c:1161
+#: src/unix/sys-std.c:1156
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -7813,23 +7813,23 @@ msgstr ""
 "파일 '%s'를 열 수 없습니다: %s\n"
 "\n"
 
-#: src/unix/sys-std.c:1225 src/unix/sys-std.c:1248
+#: src/unix/sys-std.c:1220 src/unix/sys-std.c:1243
 msgid "'file' argument is too long"
 msgstr ""
 
-#: src/unix/sys-std.c:1231 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1226 src/unix/sys-std.c:1228
 msgid "no history mechanism available"
 msgstr ""
 
-#: src/unix/sys-std.c:1260
+#: src/unix/sys-std.c:1255
 msgid "problem in truncating the history file"
 msgstr ""
 
-#: src/unix/sys-std.c:1262 src/unix/sys-std.c:1264
+#: src/unix/sys-std.c:1257 src/unix/sys-std.c:1259
 msgid "no history available to save"
 msgstr ""
 
-#: src/unix/sys-std.c:1276
+#: src/unix/sys-std.c:1271
 msgid "invalid timestamp"
 msgstr ""
 

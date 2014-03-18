@@ -1,13 +1,13 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-12 08:12+0000\n"
-"PO-Revision-Date: 2013-03-18 10:13+0100\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"PO-Revision-Date: 2014-03-16 15:58+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -199,17 +199,17 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/platform.c:1076 src/main/platform.c:1079 src/main/platform.c:1082
 #: src/main/platform.c:1085 src/main/platform.c:1088 src/main/platform.c:1185
 #: src/main/platform.c:1188 src/main/platform.c:1191 src/main/platform.c:1229
-#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1505
-#: src/main/platform.c:1508 src/main/platform.c:1511 src/main/platform.c:1547
-#: src/main/platform.c:1550 src/main/platform.c:1553 src/main/platform.c:1636
-#: src/main/platform.c:1652 src/main/platform.c:1691 src/main/platform.c:1693
-#: src/main/platform.c:1764 src/main/platform.c:1848 src/main/platform.c:2123
-#: src/main/platform.c:2183 src/main/platform.c:2360 src/main/platform.c:2363
-#: src/main/platform.c:2366 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2575 src/main/platform.c:2578
-#: src/main/platform.c:2581 src/main/platform.c:2584 src/main/platform.c:2587
-#: src/main/platform.c:2590 src/main/platform.c:2664 src/main/platform.c:2672
-#: src/main/platform.c:2708 src/main/platform.c:2758 src/main/print.c:242
+#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1498
+#: src/main/platform.c:1501 src/main/platform.c:1504 src/main/platform.c:1540
+#: src/main/platform.c:1543 src/main/platform.c:1546 src/main/platform.c:1629
+#: src/main/platform.c:1645 src/main/platform.c:1684 src/main/platform.c:1686
+#: src/main/platform.c:1757 src/main/platform.c:1841 src/main/platform.c:2116
+#: src/main/platform.c:2176 src/main/platform.c:2353 src/main/platform.c:2356
+#: src/main/platform.c:2359 src/main/platform.c:2362 src/main/platform.c:2365
+#: src/main/platform.c:2368 src/main/platform.c:2568 src/main/platform.c:2571
+#: src/main/platform.c:2574 src/main/platform.c:2577 src/main/platform.c:2580
+#: src/main/platform.c:2583 src/main/platform.c:2657 src/main/platform.c:2665
+#: src/main/platform.c:2701 src/main/platform.c:2751 src/main/print.c:242
 #: src/main/print.c:248 src/main/print.c:270 src/main/print.c:276
 #: src/main/print.c:283 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1950
@@ -238,7 +238,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
 #: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
-#: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -264,7 +264,7 @@ msgstr "nicht unterstützte Windows-Version"
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
 #: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
-#: src/unix/sys-std.c:1296
+#: src/unix/sys-std.c:1291
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
@@ -437,14 +437,14 @@ msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "Warnung: --max-mem-size =%4.0fM: zu groß und wird als %uM angenommen\n"
 
 #: src/gnuwin32/system.c:1039
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires an argument"
-msgstr "binäre Operationen verlangen zwei Argumente"
+msgstr "Option '%s' verlangt ein Argument"
 
 #: src/gnuwin32/system.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires a non-empty argument"
-msgstr "binäre Operationen verlangen zwei Argumente"
+msgstr "Option '%s' verlangt ein nicht-leeres Argument"
 
 #: src/gnuwin32/system.c:1078 src/unix/system.c:362
 #, c-format
@@ -563,29 +563,31 @@ msgid "'.Random.seed' is a missing argument with no default"
 msgstr "'.Random.seed' fehlt und es gibt keinen Standard"
 
 #: src/main/RNG.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "'.Random.seed' is not an integer vector but of type '%s', so ignored"
-msgstr "'.Random.seed' ist kein Integer-Vektor sondern vom Typ '%s'"
+msgstr ""
+"'.Random.seed' ist kein Integer-Vektor sondern vom Typ '%s', wird also "
+"ignoriert"
 
 #: src/main/RNG.c:363
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid integer, so ignored"
-msgstr "'.Random.seed[1]' ist keine zulässige ganze Zahl"
+msgstr "'.Random.seed[1]' ist keine zulässige ganze Zahl, wird also ignoriert"
 
 #: src/main/RNG.c:369
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid Normal type, so ignored"
-msgstr "'.Random.seed[0]' ist kein gültiger Normalverteilungs-Typ"
+msgstr ""
+"'.Random.seed[1]' ist kein gültiger Normalverteilungs-Typ, wird also "
+"ignoriert"
 
 #: src/main/RNG.c:383
-#, fuzzy
 msgid "'.Random.seed[1] = 5' but no user-supplied generator, so ignored"
-msgstr "'.Random.seed[1] = 5', aber kein nitzerdefinierter Generator angegeben"
+msgstr ""
+"'.Random.seed[1] = 5', aber kein nitzerdefinierter Generator angegeben, wird "
+"also ignoriert"
 
 #: src/main/RNG.c:388
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid RNG kind so ignored"
-msgstr "'.Random.seed[1]' ist kein gültiger RNG Typ"
+msgstr "'.Random.seed[1]' ist kein gültiger RNG Typ, wird also ignoriert"
 
 #: src/main/RNG.c:415
 msgid "'.Random.seed' has wrong length"
@@ -917,11 +919,11 @@ msgstr "ungültiger 'ncol' Wert (< 0)"
 
 #: src/main/array.c:116
 msgid "nc = 0 for non-null data"
-msgstr ""
+msgstr "nc = 0 für nicht-null Daten"
 
 #: src/main/array.c:124
 msgid "nr = 0 for non-null data"
-msgstr ""
+msgstr "nr = 0 for nicht-null Daten"
 
 #: src/main/array.c:135
 #, c-format
@@ -1170,65 +1172,65 @@ msgstr "Dimensionen passen nicht zur Länge des Objektes "
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "Dimensionen [Produkt %d] passen nicht zur Länge des Objektes [%d]"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 msgid "attributes must be a list or NULL"
 msgstr "Attribute müssen eine Liste oder NULL sein"
 
-#: src/main/attrib.c:1182
+#: src/main/attrib.c:1187
 msgid "attributes must be named"
 msgstr "Attribute müssen Namen haben"
 
-#: src/main/attrib.c:1186
+#: src/main/attrib.c:1191
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "alle Attribute müssen Namen haben [%d hat keinen]"
 
-#: src/main/attrib.c:1285
+#: src/main/attrib.c:1290
 msgid "'which' must be of mode character"
 msgstr "'which' muss vom Modus Charakter sein"
 
-#: src/main/attrib.c:1287
+#: src/main/attrib.c:1292
 msgid "exactly one attribute 'which' must be given"
 msgstr "es muss genau ein Attribut 'which' angegeben werden"
 
-#: src/main/attrib.c:1345 src/main/attrib.c:1368 src/main/subscript.c:240
+#: src/main/attrib.c:1350 src/main/attrib.c:1373 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1188 src/main/subset.c:1239
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "partieller Treffer von '%s' auf '%s'"
 
-#: src/main/attrib.c:1406
+#: src/main/attrib.c:1411
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "ungültiger Typ '%s' für den Slot-Namen"
 
-#: src/main/attrib.c:1444
+#: src/main/attrib.c:1449
 msgid "'name' must be non-null character string"
 msgstr "'name' muss eine nicht-Null Zeichenkette sein"
 
-#: src/main/attrib.c:1568 src/main/attrib.c:1639 src/main/attrib.c:1676
+#: src/main/attrib.c:1573 src/main/attrib.c:1644 src/main/attrib.c:1681
 msgid "invalid type or length for slot name"
 msgstr "ungültiger Typ oder ungültige Länge für den Slot-Namen"
 
-#: src/main/attrib.c:1602
+#: src/main/attrib.c:1607
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "kann keinen Slot (\"%s\") von einem Objekt vom Typ \"%s\" bekommen"
 
-#: src/main/attrib.c:1613
+#: src/main/attrib.c:1618
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "kein Slot des Namens \"%s\" für dieses Objekt der Klasse \"%s\""
 
-#: src/main/attrib.c:1630
+#: src/main/attrib.c:1635
 msgid "attempt to set slot on NULL object"
 msgstr "Versuch einen Slot für NULL Objekt zu setzen"
 
-#: src/main/attrib.c:1671
+#: src/main/attrib.c:1676
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "formale Klassen können nicht ohne das 'methods' Paket benutzt werden"
 
-#: src/main/attrib.c:1683
+#: src/main/attrib.c:1688
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1237,7 +1239,7 @@ msgstr ""
 "versuche einen Slot \"%s\" von einem Objekt der einfachen Klasse (\"%s\") "
 "ohne Slots anzufordern"
 
-#: src/main/attrib.c:1687
+#: src/main/attrib.c:1692
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1251,42 +1253,42 @@ msgstr ""
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr "Ergebnisvektor überschreitet die Grenze für Vektorlängen in '%s'"
 
-#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
-#: src/main/bind.c:460 src/main/bind.c:488
+#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
+#: src/main/bind.c:449 src/main/bind.c:477
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "Typ '%s' ist in '%s' nicht implementiert"
 
-#: src/main/bind.c:696
+#: src/main/bind.c:685
 msgid "repeated formal argument 'recursive'"
 msgstr "Wiederholung des formalen Argumentes 'recursive'"
 
-#: src/main/bind.c:707
+#: src/main/bind.c:696
 msgid "repeated formal argument 'use.names'"
 msgstr "Wiederholung des formalen Argumentes 'use.names'"
 
-#: src/main/bind.c:905
+#: src/main/bind.c:894
 msgid "argument not a list"
 msgstr "Argument ist keine Liste"
 
-#: src/main/bind.c:1049 src/main/eval.c:2691 src/main/eval.c:2700
+#: src/main/bind.c:1038 src/main/eval.c:2691 src/main/eval.c:2700
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "Klassenname zu lang in '%s'"
 
-#: src/main/bind.c:1125
-#, fuzzy, c-format
+#: src/main/bind.c:1114
+#, c-format
 msgid "cannot create a matrix from type '%s'"
-msgstr "kann aus diesen Typen keine Matrix machen"
+msgstr "kann keine Matrix aus Typ '%s' erzeugen"
 
-#: src/main/bind.c:1196
+#: src/main/bind.c:1185
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "Anzahl der Zeilen der Matrizen muss übereinstimmen (siehe Argument %d)"
 
-#: src/main/bind.c:1441
+#: src/main/bind.c:1430
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -1414,6 +1416,8 @@ msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
 " Consider using '%s' instead."
 msgstr ""
+"EXPR ist ein \"factor\", behandelt wie ein Integer.\n"
+" Evtl. stattdessen '%s' benutzen."
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -1620,9 +1624,8 @@ msgid "'what' must be a character string or a function"
 msgstr "'what' muss eine Zeichenkette oder eine Funktion sein"
 
 #: src/main/coerce.c:2412
-#, fuzzy
 msgid "'args' must be a list or expression"
-msgstr "'args' muss eine Liste sein"
+msgstr "'args' muss eine Liste oder ein Ausdruck sein"
 
 #: src/main/coerce.c:2415
 msgid "'args' must be a list"
@@ -1823,24 +1826,22 @@ msgid "too large a block specified"
 msgstr "zu großer Block spezifiziert"
 
 #: src/main/connections.c:998 src/main/connections.c:1004
-#, fuzzy
 msgid "allocation of fifo name failed"
-msgstr "Allokation der fifo Verbindung fehlgeschlagen"
+msgstr "Allokation des FIFO Namens fehlgeschlagen"
 
 #: src/main/connections.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open fifo '%s', reason '%s'"
-msgstr "kann URL '%s' nicht öffnen. Grund '%s'"
+msgstr "kann FIFO '%s' nicht öffnen. Grund '%s'"
 
 #: src/main/connections.c:1107 src/main/connections.c:1131
-#, fuzzy
 msgid "allocation of fifo buffer failed"
-msgstr "Allokation der fifo Verbindung fehlgeschlagen"
+msgstr "Allokation des FIFO Buffers fehlgeschlagen"
 
 #: src/main/connections.c:1139
-#, fuzzy, c-format
+#, c-format
 msgid "cannot write FIFO '%s'"
-msgstr "kann URL '%s' nicht öffnen"
+msgstr "kann nicht in FIFO  '%s' schreiben"
 
 #: src/main/connections.c:1175 src/main/connections.c:1179
 #: src/main/connections.c:1185 src/main/connections.c:1201
@@ -2128,7 +2129,7 @@ msgstr "kann Buffer in readLines nicht allozieren"
 #: src/main/connections.c:3623
 #, c-format
 msgid "line %d appears to contain an embedded nul"
-msgstr ""
+msgstr "Zeile %d scheint ein nul Zeichen zu enthalten"
 
 #: src/main/connections.c:3640
 #, c-format
@@ -2937,9 +2938,8 @@ msgid "display list redraw incomplete"
 msgstr "Displayliste unvollständig neugezeichnet"
 
 #: src/main/engine.c:2777
-#, fuzzy
 msgid "invalid display list"
-msgstr "ungültige Grenzen für 'y'"
+msgstr "ungültige Displayliste"
 
 #: src/main/engine.c:2963
 msgid "'expr' argument must be an expression"
@@ -4264,12 +4264,12 @@ msgstr "Vektorzeigerrückgabe ist unsicher"
 #: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
-msgstr ""
+msgstr "Versuch den Inde %lu/%lu in SET_STRING_ELT zu setzen"
 
 #: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
-msgstr ""
+msgstr "Versuch den Inde %lu/%lu in SET_VECTOR_ELT zu setzen"
 
 #: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
@@ -4720,117 +4720,116 @@ msgstr "kann R Home nicht finden"
 msgid "file name too long"
 msgstr "Dateiname zu lang"
 
-#: src/main/platform.c:1518 src/main/platform.c:1565 src/main/sysutils.c:1850
+#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1850
 #: src/main/sysutils.c:1864
 msgid "internal out-of-memory condition"
 msgstr "interner out-of-memory Vorfall"
 
-#: src/main/platform.c:1561 src/main/sysutils.c:1860
+#: src/main/platform.c:1554 src/main/sysutils.c:1860
 #, c-format
 msgid "read error on '%s'"
 msgstr "Lesefehler auf '%s'"
 
-#: src/main/platform.c:1729
+#: src/main/platform.c:1722
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "das Setzen von 'LC_NUMERIC' kann bewirken, dass R sich komisch benimmt"
 
-#: src/main/platform.c:1743
+#: src/main/platform.c:1736
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "LC_MESSAGES existiert unter Windows, ist aber nicht funktionsfähig"
 
-#: src/main/platform.c:1770
+#: src/main/platform.c:1763
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 "OS meldet: Anfrage Lokilisierung auf \"%s\" zu setzen kann nicht beachtet "
 "werden"
 
-#: src/main/platform.c:2072
+#: src/main/platform.c:2065
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' muss eine Charaktervektor der Länge 1 sein"
 
-#: src/main/platform.c:2078
+#: src/main/platform.c:2071
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() konnte Rechnernamen '%s' nicht auflösen"
 
-#: src/main/platform.c:2085
+#: src/main/platform.c:2078
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr "unbekanntes Format von der C Funktion  'gethostbyname' zurückgegeben"
 
-#: src/main/platform.c:2094
+#: src/main/platform.c:2087
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
 
-#: src/main/platform.c:2165
+#: src/main/platform.c:2158
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' existiert bereits"
 
-#: src/main/platform.c:2168
+#: src/main/platform.c:2161
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen. Grund '%s'"
 
-#: src/main/platform.c:2214
+#: src/main/platform.c:2207
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' existiert bereits"
 
-#: src/main/platform.c:2218
+#: src/main/platform.c:2211
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "kann Verzeichnis '%ls' nicht erzeugen, Grund '%s'"
 
-#: src/main/platform.c:2252 src/main/platform.c:2456
+#: src/main/platform.c:2245 src/main/platform.c:2449
 msgid "too deep nesting"
 msgstr "zu tiefe Verschachtelung"
 
-#: src/main/platform.c:2260 src/main/platform.c:2273 src/main/platform.c:2291
-#, fuzzy
+#: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
 msgid "over-long path"
-msgstr "überlange Pfadlänge"
+msgstr "überlanger Pfad"
 
-#: src/main/platform.c:2280
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "Problem beim erzeugen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2300
+#: src/main/platform.c:2293
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "Problem beim Lesen von Verzeichnis %ls: %s"
 
-#: src/main/platform.c:2311 src/main/platform.c:2472 src/main/platform.c:2485
-#: src/main/platform.c:2505 src/main/platform.c:2527
+#: src/main/platform.c:2304 src/main/platform.c:2465 src/main/platform.c:2478
+#: src/main/platform.c:2498 src/main/platform.c:2520
 msgid "over-long path length"
 msgstr "überlange Pfadlänge"
 
-#: src/main/platform.c:2319
+#: src/main/platform.c:2312
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "Problem %ls nach %ls zu kopieren: %s"
 
-#: src/main/platform.c:2494
+#: src/main/platform.c:2487
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "Problem beim Erzeugen von Verzeichnis %s: %s"
 
-#: src/main/platform.c:2514
+#: src/main/platform.c:2507
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "Problem beim Lesen aus Verzeichnis %s: %s"
 
-#: src/main/platform.c:2536
+#: src/main/platform.c:2529
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "Problem %s nach %s zu kopieren: %s"
 
-#: src/main/platform.c:2669
+#: src/main/platform.c:2662
 msgid "'mode' must be of length at least one"
 msgstr "'mode' muss Länge >= 1 haben"
 
-#: src/main/platform.c:2736
+#: src/main/platform.c:2729
 msgid "insufficient OS support on this platform"
 msgstr "ungenügende OS Unterstützung auf dieser Plattform"
 
@@ -5096,9 +5095,9 @@ msgid "mismatch on types"
 msgstr "Typen passen nicht zusammen"
 
 #: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1636
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognized internal function name \"%s\""
-msgstr "ungültige interne Funktion"
+msgstr "unerkannter interner Funktionsname \"%s\""
 
 #: src/main/saveload.c:709
 msgid "cannot save file position while restoring data"
@@ -5297,7 +5296,7 @@ msgstr ""
 
 #: src/main/scan.c:364 src/main/scan.c:414
 msgid "EOF within quoted string"
-msgstr ""
+msgstr "EOF in Zeichenkette"
 
 #: src/main/scan.c:484
 #, c-format
@@ -5342,9 +5341,8 @@ msgid "invalid quote symbol set"
 msgstr "ungültige Menge von quote Symbolen"
 
 #: src/main/scan.c:987
-#, fuzzy
 msgid "embedded nul(s) found in input"
-msgstr "Zeichenkette '%s' enthält nul Zeichen"
+msgstr "Eingabe  enthält nul Zeichen"
 
 #: src/main/seq.c:48
 msgid "unequal factor lengths"
@@ -6125,9 +6123,9 @@ msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "nicht unterstützte Umwandlung von '%s' aus codepage %d"
 
 #: src/main/sysutils.c:1530
-#, fuzzy, c-format
+#, c-format
 msgid "invalid Unicode point %u"
-msgstr "ungültige Zusammenfassung von Zeilen"
+msgstr "ungültiger Unicode Punkt %u"
 
 #: src/main/sysutils.c:1632
 msgid "cannot create 'R_TempDir'"
@@ -6952,9 +6950,8 @@ msgid "right-hand side should have %d not %d rows"
 msgstr "rechte Seite sollte %d, nicht %d Zeilen haben"
 
 #: src/modules/lapack/Lapack.c:743
-#, fuzzy
 msgid "'jobu' must be a character string"
-msgstr "'norm' muss eine Zeichenkette sein"
+msgstr "'jobu' muss eine Zeichenkette sein"
 
 #: src/modules/lapack/Lapack.c:751
 msgid "matrices of 2^31 or more elements are not supported"
@@ -7220,12 +7217,12 @@ msgstr ""
 "Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. "
 "Bitte melden Sie's via bug.report()"
 
-#: src/unix/sys-std.c:1087 src/unix/sys-std.c:1254
+#: src/unix/sys-std.c:1082 src/unix/sys-std.c:1249
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "Problem beim Speichern der Befehlshistory '%s'"
 
-#: src/unix/sys-std.c:1161
+#: src/unix/sys-std.c:1156
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -7234,23 +7231,23 @@ msgstr ""
 "kann Datei '%s': %s nicht öffnen\n"
 "\n"
 
-#: src/unix/sys-std.c:1225 src/unix/sys-std.c:1248
+#: src/unix/sys-std.c:1220 src/unix/sys-std.c:1243
 msgid "'file' argument is too long"
 msgstr "Argument für 'file' zu lang"
 
-#: src/unix/sys-std.c:1231 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1226 src/unix/sys-std.c:1228
 msgid "no history mechanism available"
 msgstr "kein History Mechanismus verfügbar"
 
-#: src/unix/sys-std.c:1260
+#: src/unix/sys-std.c:1255
 msgid "problem in truncating the history file"
 msgstr "Problem beim Kürzen der Befehlshistory"
 
-#: src/unix/sys-std.c:1262 src/unix/sys-std.c:1264
+#: src/unix/sys-std.c:1257 src/unix/sys-std.c:1259
 msgid "no history available to save"
 msgstr "keine History zum Sichern verfügbar"
 
-#: src/unix/sys-std.c:1276
+#: src/unix/sys-std.c:1271
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
@@ -7271,7 +7268,7 @@ msgstr "kann nicht popen '%s'. Grund vermutlich '%s'"
 #, c-format
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr ""
-"Zeile %d eventuell abgeschnitten beim Aufruf von system(, intern = TRUE"
+"Zeile %d eventuell abgeschnitten beim Aufruf von system(, intern = TRUE)"
 
 #: src/unix/sys-unix.c:288
 #, c-format

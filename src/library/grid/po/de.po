@@ -1,13 +1,13 @@
 # German translation of 
 # src/library/graphics/po/grid.pot
-# Copyright (C) 2009-2013 The R Foundation
+# Copyright (C) 2009-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: 2013-03-01 15:06+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -57,7 +57,7 @@ msgstr "unendliches x oder y im Grafikpfad"
 
 #: grid.c:2907
 msgid "Empty raster"
-msgstr ""
+msgstr "Leeres Raster"
 
 #: grid.c:3359
 msgid "invalid plotting symbol"
@@ -92,12 +92,13 @@ msgid "invalid unit or unit not yet implemented"
 msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
 #: unit.c:1702 unit.c:1733
+#, fuzzy
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "Viewport hat keine Dimension(en)"
 
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Nichtunterstützte Einheitenumwandlung"
 
 #: unit.c:1898
 msgid "Invalid unit"

@@ -1,11 +1,11 @@
 # Translation of po/RGui.pot to German.
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2005-2013.
-# Detlef Steuer <steuer@hsuhh.de>, 2005-2013.
+# Copyright (C) 2005-2014.
+# Detlef Steuer <steuer@hsuhh.de>, 2005-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 19:36+0000\n"
 "PO-Revision-Date: 2013-03-18 10:12+0100\n"

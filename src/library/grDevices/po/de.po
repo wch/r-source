@@ -1,10 +1,10 @@
 # Translation of src/library/grDevices/po/grDevices.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-09 09:36+0000\n"
 "PO-Revision-Date: 2013-03-01 10:48+0100\n"
@@ -54,9 +54,8 @@ msgid "invalid hcl color"
 msgstr "unzulässige HCL Farbe"
 
 #: colors.c:385
-#, fuzzy
 msgid "invalid value of 'maxColorValue'"
-msgstr "unzulässiger Wert von '%s'"
+msgstr "unzulässiger Wert von 'maxColorValue'"
 
 #: colors.c:413
 msgid "invalid 'names' vector"

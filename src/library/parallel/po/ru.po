@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-09 09:37+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: 2013-03-19 21:05-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "нет трубы к мастер-процессу"
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "посылаемый контент должен быть RAW, используйте serialize(), если надо"
 
-#: fork.c:338 fork.c:345 fork.c:669
+#: fork.c:338 fork.c:345 fork.c:667
 msgid "write error, closing pipe to the master"
 msgstr "ошибка записи, закрываю трубу к мастеру"
 
@@ -66,26 +66,26 @@ msgstr "ошибка записи"
 msgid "error '%s' in select"
 msgstr "ошибка '%s' в выборе"
 
-#: fork.c:651
+#: fork.c:649
 msgid "'mckill' failed"
 msgstr "'mckill' не удался"
 
-#: fork.c:661
+#: fork.c:659
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' может быть использован только в дочернем процессе"
 
-#: fork.c:682
+#: fork.c:680
 msgid "'mcexit' failed"
 msgstr "'mcexit' не удался"
 
-#: fork.c:712 fork.c:721
+#: fork.c:710 fork.c:719
 msgid "invalid CPU affinity specification"
 msgstr "неправильное описание привязки CPU"
 
-#: fork.c:732
+#: fork.c:730
 msgid "requested CPU set is too large for this system"
 msgstr "запрошенная установка CPU слишком велика для этой системы"
 
-#: fork.c:755
+#: fork.c:753
 msgid "retrieving CPU affinity set failed"
 msgstr "загрузка привязки установки CPU не удалась"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-12 08:12+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -199,17 +199,17 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/platform.c:1076 src/main/platform.c:1079 src/main/platform.c:1082
 #: src/main/platform.c:1085 src/main/platform.c:1088 src/main/platform.c:1185
 #: src/main/platform.c:1188 src/main/platform.c:1191 src/main/platform.c:1229
-#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1505
-#: src/main/platform.c:1508 src/main/platform.c:1511 src/main/platform.c:1547
-#: src/main/platform.c:1550 src/main/platform.c:1553 src/main/platform.c:1636
-#: src/main/platform.c:1652 src/main/platform.c:1691 src/main/platform.c:1693
-#: src/main/platform.c:1764 src/main/platform.c:1848 src/main/platform.c:2123
-#: src/main/platform.c:2183 src/main/platform.c:2360 src/main/platform.c:2363
-#: src/main/platform.c:2366 src/main/platform.c:2369 src/main/platform.c:2372
-#: src/main/platform.c:2375 src/main/platform.c:2575 src/main/platform.c:2578
-#: src/main/platform.c:2581 src/main/platform.c:2584 src/main/platform.c:2587
-#: src/main/platform.c:2590 src/main/platform.c:2664 src/main/platform.c:2672
-#: src/main/platform.c:2708 src/main/platform.c:2758 src/main/print.c:242
+#: src/main/platform.c:1286 src/main/platform.c:1289 src/main/platform.c:1498
+#: src/main/platform.c:1501 src/main/platform.c:1504 src/main/platform.c:1540
+#: src/main/platform.c:1543 src/main/platform.c:1546 src/main/platform.c:1629
+#: src/main/platform.c:1645 src/main/platform.c:1684 src/main/platform.c:1686
+#: src/main/platform.c:1757 src/main/platform.c:1841 src/main/platform.c:2116
+#: src/main/platform.c:2176 src/main/platform.c:2353 src/main/platform.c:2356
+#: src/main/platform.c:2359 src/main/platform.c:2362 src/main/platform.c:2365
+#: src/main/platform.c:2368 src/main/platform.c:2568 src/main/platform.c:2571
+#: src/main/platform.c:2574 src/main/platform.c:2577 src/main/platform.c:2580
+#: src/main/platform.c:2583 src/main/platform.c:2657 src/main/platform.c:2665
+#: src/main/platform.c:2701 src/main/platform.c:2751 src/main/print.c:242
 #: src/main/print.c:248 src/main/print.c:270 src/main/print.c:276
 #: src/main/print.c:283 src/main/random.c:478 src/main/random.c:482
 #: src/main/random.c:489 src/main/random.c:517 src/main/saveload.c:1950
@@ -238,7 +238,7 @@ msgstr "在显示'%ls'时出了问题"
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
 #: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
-#: src/unix/sys-std.c:1222 src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
@@ -264,7 +264,7 @@ msgstr "不支持这版本的Windows"
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
 #: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
-#: src/unix/sys-std.c:1296
+#: src/unix/sys-std.c:1291
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
@@ -1155,72 +1155,72 @@ msgstr "dims与对象长度不匹配"
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]与对象长度[%d]不匹配"
 
-#: src/main/attrib.c:1177
+#: src/main/attrib.c:1182
 msgid "attributes must be a list or NULL"
 msgstr "属性必需是串列或NULL值"
 
-#: src/main/attrib.c:1182
+#: src/main/attrib.c:1187
 msgid "attributes must be named"
 msgstr "属性必需取名"
 
-#: src/main/attrib.c:1186
+#: src/main/attrib.c:1191
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的属性都必需有名字[%d没有]"
 
-#: src/main/attrib.c:1285
+#: src/main/attrib.c:1290
 msgid "'which' must be of mode character"
 msgstr "'which'属性的状态必需是字符"
 
-#: src/main/attrib.c:1287
+#: src/main/attrib.c:1292
 msgid "exactly one attribute 'which' must be given"
 msgstr "只能给一个'which'属性"
 
-#: src/main/attrib.c:1345 src/main/attrib.c:1368 src/main/subscript.c:240
+#: src/main/attrib.c:1350 src/main/attrib.c:1373 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1188 src/main/subset.c:1239
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'部分匹配到'%s'"
 
-#: src/main/attrib.c:1406
+#: src/main/attrib.c:1411
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "槽名字的类别'%s'不对"
 
-#: src/main/attrib.c:1444
+#: src/main/attrib.c:1449
 msgid "'name' must be non-null character string"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1568 src/main/attrib.c:1639 src/main/attrib.c:1676
+#: src/main/attrib.c:1573 src/main/attrib.c:1644 src/main/attrib.c:1681
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
-#: src/main/attrib.c:1602
+#: src/main/attrib.c:1607
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "类别\"%2$s\"的对象中没有\"%1$s\"这样一个槽"
 
-#: src/main/attrib.c:1613
+#: src/main/attrib.c:1618
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别对象中"
 
-#: src/main/attrib.c:1630
+#: src/main/attrib.c:1635
 msgid "attempt to set slot on NULL object"
 msgstr "不能为NULL目标对象设属性"
 
-#: src/main/attrib.c:1671
+#: src/main/attrib.c:1676
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "一定要有'methods'程序包才能用正式类别"
 
-#: src/main/attrib.c:1683
+#: src/main/attrib.c:1688
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1687
+#: src/main/attrib.c:1692
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1232,42 +1232,42 @@ msgstr "非S4类别的对象(类别为\"%2$s\")没有\"%1$s\"这样的槽"
 msgid "resulting vector exceeds vector length limit in '%s'"
 msgstr "'%s'产生了长度超过限制的矢量"
 
-#: src/main/bind.c:302 src/main/bind.c:338 src/main/bind.c:387
-#: src/main/bind.c:460 src/main/bind.c:488
+#: src/main/bind.c:291 src/main/bind.c:327 src/main/bind.c:376
+#: src/main/bind.c:449 src/main/bind.c:477
 #, c-format
 msgid "type '%s' is unimplemented in '%s'"
 msgstr "'%2$s'里目前还没有实现'%1$s'这一种类"
 
-#: src/main/bind.c:696
+#: src/main/bind.c:685
 msgid "repeated formal argument 'recursive'"
 msgstr "不能有重复的正式参数'recursive' "
 
-#: src/main/bind.c:707
+#: src/main/bind.c:696
 msgid "repeated formal argument 'use.names'"
 msgstr "不能有重复的正式参数'use.names' "
 
-#: src/main/bind.c:905
+#: src/main/bind.c:894
 msgid "argument not a list"
 msgstr "参数不是串列"
 
-#: src/main/bind.c:1049 src/main/eval.c:2691 src/main/eval.c:2700
+#: src/main/bind.c:1038 src/main/eval.c:2691 src/main/eval.c:2700
 #: src/main/objects.c:318 src/main/objects.c:354 src/main/objects.c:729
 #: src/main/objects.c:746 src/main/objects.c:753
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "'%s'里的类别名字太长"
 
-#: src/main/bind.c:1125
+#: src/main/bind.c:1114
 #, fuzzy, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "无法按这些种类建立矩阵"
 
-#: src/main/bind.c:1196
+#: src/main/bind.c:1185
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "矩阵的行数必需相符(见arg%d)"
 
-#: src/main/bind.c:1441
+#: src/main/bind.c:1430
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "矩阵的列数必需相符(见arg%d)"
@@ -4616,115 +4616,115 @@ msgstr "无法确定R本录位置"
 msgid "file name too long"
 msgstr "文件名太长"
 
-#: src/main/platform.c:1518 src/main/platform.c:1565 src/main/sysutils.c:1850
+#: src/main/platform.c:1511 src/main/platform.c:1558 src/main/sysutils.c:1850
 #: src/main/sysutils.c:1864
 msgid "internal out-of-memory condition"
 msgstr "内部出现了内存不够情况"
 
-#: src/main/platform.c:1561 src/main/sysutils.c:1860
+#: src/main/platform.c:1554 src/main/sysutils.c:1860
 #, c-format
 msgid "read error on '%s'"
 msgstr "读取'%s'时出了错"
 
-#: src/main/platform.c:1729
+#: src/main/platform.c:1722
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "设定'LC_NUMERIC'后有可能会使R运转出现问题"
 
-#: src/main/platform.c:1743
+#: src/main/platform.c:1736
 msgid "LC_MESSAGES exists on Windows but is not operational"
 msgstr "LC_MESSAGES存在于Windows里，但没有用"
 
-#: src/main/platform.c:1770
+#: src/main/platform.c:1763
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "操作系统报告说无法执行将本地化设成\"%s\"的请求"
 
-#: src/main/platform.c:2072
+#: src/main/platform.c:2065
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为一的字符矢量"
 
-#: src/main/platform.c:2078
+#: src/main/platform.c:2071
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:2085
+#: src/main/platform.c:2078
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr "'gethostbyname'回覆了错误的格式"
 
-#: src/main/platform.c:2094
+#: src/main/platform.c:2087
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:2165
+#: src/main/platform.c:2158
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"
 
-#: src/main/platform.c:2168
+#: src/main/platform.c:2161
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$s'文件目录"
 
-#: src/main/platform.c:2214
+#: src/main/platform.c:2207
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls'已存在"
 
-#: src/main/platform.c:2218
+#: src/main/platform.c:2211
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$ls'文件目录"
 
-#: src/main/platform.c:2252 src/main/platform.c:2456
+#: src/main/platform.c:2245 src/main/platform.c:2449
 msgid "too deep nesting"
 msgstr "嵌套过深"
 
-#: src/main/platform.c:2260 src/main/platform.c:2273 src/main/platform.c:2291
+#: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
 #, fuzzy
 msgid "over-long path"
 msgstr "路径长度太长了"
 
-#: src/main/platform.c:2280
+#: src/main/platform.c:2273
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "建立文件目录%ls时出了问题：%s"
 
-#: src/main/platform.c:2300
+#: src/main/platform.c:2293
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "读取文件目录%ls时出了问题：%s"
 
-#: src/main/platform.c:2311 src/main/platform.c:2472 src/main/platform.c:2485
-#: src/main/platform.c:2505 src/main/platform.c:2527
+#: src/main/platform.c:2304 src/main/platform.c:2465 src/main/platform.c:2478
+#: src/main/platform.c:2498 src/main/platform.c:2520
 msgid "over-long path length"
 msgstr "路径长度太长了"
 
-#: src/main/platform.c:2319
+#: src/main/platform.c:2312
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr "拷贝%ls到%ls时出了问题：%s "
 
-#: src/main/platform.c:2494
+#: src/main/platform.c:2487
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr "建立文件目录%s时出了问题：%s"
 
-#: src/main/platform.c:2514
+#: src/main/platform.c:2507
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "读取文件目录%s时出了问题：%s"
 
-#: src/main/platform.c:2536
+#: src/main/platform.c:2529
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "拷贝%s到%s出了问题: %s "
 
-#: src/main/platform.c:2669
+#: src/main/platform.c:2662
 msgid "'mode' must be of length at least one"
 msgstr "'mode'的长度至少需要是一"
 
-#: src/main/platform.c:2736
+#: src/main/platform.c:2729
 msgid "insufficient OS support on this platform"
 msgstr "本平台操作系统支持不够"
 
@@ -7062,35 +7062,35 @@ msgid ""
 "report using bug.report()"
 msgstr "读行输入嵌套出了不寻常的错，请用bug.report()"
 
-#: src/unix/sys-std.c:1087 src/unix/sys-std.c:1254
+#: src/unix/sys-std.c:1082 src/unix/sys-std.c:1249
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "在保存履历文件'%s'时出了问题"
 
-#: src/unix/sys-std.c:1161
+#: src/unix/sys-std.c:1156
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
 "\n"
 msgstr "无法打开文件'%s': %s\n"
 
-#: src/unix/sys-std.c:1225 src/unix/sys-std.c:1248
+#: src/unix/sys-std.c:1220 src/unix/sys-std.c:1243
 msgid "'file' argument is too long"
 msgstr "'file'参数太长"
 
-#: src/unix/sys-std.c:1231 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1226 src/unix/sys-std.c:1228
 msgid "no history mechanism available"
 msgstr "没有历史功能"
 
-#: src/unix/sys-std.c:1260
+#: src/unix/sys-std.c:1255
 msgid "problem in truncating the history file"
 msgstr "截短履历文件时出了问题"
 
-#: src/unix/sys-std.c:1262 src/unix/sys-std.c:1264
+#: src/unix/sys-std.c:1257 src/unix/sys-std.c:1259
 msgid "no history available to save"
 msgstr "没有可以保存的历史"
 
-#: src/unix/sys-std.c:1276
+#: src/unix/sys-std.c:1271
 msgid "invalid timestamp"
 msgstr "时间标签不对"
 

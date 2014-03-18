@@ -1,10 +1,10 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2005-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-15 09:09+0000\n"
 "PO-Revision-Date: 2013-02-28 16:20+0100\n"
@@ -78,7 +78,7 @@ msgstr "ungültiger Grafikzustand"
 
 #: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "Grafikdevice während eines Aufrufs von locator oder identify geschlossen"
 
 #: graphics.c:2604
 msgid "No graphics device is active"
@@ -327,7 +327,7 @@ msgstr "kann keine Koordinaten mit Länge 0 und Länge ungleich 0 mischen"
 
 #: plot.c:1833
 msgid "Empty raster"
-msgstr ""
+msgstr "Leeres Raster"
 
 #: plot.c:1916
 msgid "invalid arrow head length"

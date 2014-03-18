@@ -1,13 +1,13 @@
 # Translation of src/library/tools/po/R-tools.pot to German.
-# Copyright (C) 2008-2013 The R Foundation
+# Copyright (C) 2008-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-26 09:09\n"
-"PO-Revision-Date: 2013-03-18 10:24+0100\n"
+"PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: \n"
@@ -219,13 +219,13 @@ msgstr ""
 "Versionsnummern müssen Folgen von mindestens zwei nicht-negativen, ganzen "
 "Zahlen, getrennt durch einen '.' oder einen '-', sein"
 
-#, fuzzy
 msgid "Invalid VignetteBuilder field."
-msgstr "Unzulässiges Feld für 'Priority'"
+msgstr "Unzulässiges Feld für VignetteBuilder"
 
 msgid ""
 "This field must contain one or more packages (and no version requirement)."
 msgstr ""
+"Dieses Feld muss ein oder mehrer Pakete enthalten (und keine Versionsanforderungen)."
 
 msgid "Invalid Priority field."
 msgstr "Unzulässiges Feld für 'Priority'"
@@ -279,24 +279,22 @@ msgid "Standardized license specification:"
 msgstr "Standardisierte Lizenzspezifikation:"
 
 msgid "Deprecated license: %s"
-msgstr ""
+msgstr "Veraltete Lizenz: %s"
 
 msgid "Invalid license file pointers: %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
-#, fuzzy
 msgid "License components with restrictions not permitted:"
-msgstr "Komponenten mit Einschränkungen nicht erlaubt:"
+msgstr "Lizenzkomponenten mit Einschränkungen nicht erlaubt:"
 
-#, fuzzy
 msgid "License components which are templates and need '+ file LICENSE':"
-msgstr "Komponenten mit Einschränkungen nicht erlaubt:"
+msgstr "Lizenzkomponenten, die Templates sind und '+ file LICENCE' benötigen:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
 
 msgid "Variables overriding user/site settings:"
-msgstr ""
+msgstr "Variablen überschreiben Nutzer- bzw. Rechnereinstellungen:"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
@@ -375,57 +373,54 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
 
-#, fuzzy
 msgid "'library' or 'require' calls to packages already attached by Depends:"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+msgstr "Aufrufe von 'library' oder 'require' für Pakete bereits mit Depends geladen:"
 
-#, fuzzy
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+msgstr "Aufruf von 'library' oder 'require'  für %s, ist aber bereits mit Depends geladen."
 
 msgid "Namespaces in Imports field not imported from:"
-msgstr ""
+msgstr "Namensräume im Imports Feld nicht importiert aus:"
 
-#, fuzzy
 msgid "Namespace in Imports field not imported from: %s"
-msgstr "Nicht benötigte Namensraumabhängigkeiten: %s"
+msgstr "Namensraum im Imports Feld nicht importiert aus: %s"
 
 msgid "Packages in Depends field not imported from:"
-msgstr ""
+msgstr "Pakete im Depends Feld nicht importiert aus:"
 
 msgid "Package in Depends field not imported from: %s"
-msgstr ""
+msgstr "Paket im Depends Feld nicht importiert aus: %s"
 
 msgid "Missing or unexported objects:"
-msgstr ""
+msgstr "Fehlende oder nicht exportierte Objekte:"
 
 msgid "Missing or unexported object: %s"
-msgstr ""
+msgstr "Fehlendes oder nicht exportiertes Objekt: %s"
 
 msgid "':::' calls which should be '::':"
-msgstr ""
+msgstr "':::' Aufrufe, die sein sollten '::':"
 
 msgid "':::' call which should be '::': %s"
-msgstr ""
+msgstr "':::' Aufruf, der sein sollte '::': %s"
 
 msgid "Missing objects imported by ':::' calls:"
-msgstr ""
+msgstr "Fehlende Objekte importiert durch ':::' Aufruf:"
 
 msgid "Missing object imported by a ':::' call: %s"
-msgstr ""
+msgstr "Fehlendes Objekt importiert durch ':::' Aufruf: %s"
 
 msgid "Unexported objects imported by ':::' calls:"
-msgstr ""
+msgstr "Nicht exportierte Objekte durch ':::' Aufrufe importiert:"
 
 msgid "Unexported object imported by a ':::' call: %s"
-msgstr ""
+msgstr "Nicht exportiertes Objekt durch einen ':::' Aufruf importiert: %s"
 
 msgid "Unavailable namespaces imported from by ':::' calls:"
-msgstr ""
+msgstr "Nicht verfügbare Namensräume durch ':::' Aufrufe importiert:"
 
 msgid "Unavailable namespace imported from by a ':::' call: %s"
-msgstr ""
+msgstr "Nicht verfügbaren Namensraum durch einen ':::' Aufruf importiert: %s"
 
 msgid "'data(package=)' calls not declared from:"
 msgstr "Aufrufe von 'data(package=)' nicht angemeldet von:"
@@ -433,9 +428,8 @@ msgstr "Aufrufe von 'data(package=)' nicht angemeldet von:"
 msgid "'data(package=)' call not declared from: %s"
 msgstr "Aufruf von 'data(package=' nicht angemeldet von: %s"
 
-#, fuzzy
 msgid "Package has no 'Version' field"
-msgstr "Paket  '%s' enthält keine .rda Datei"
+msgstr "Paket  hat kein 'Version' Feld"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "NB: benötige Internetzugang, um CRAN-Incoming zu checken"
@@ -453,9 +447,8 @@ msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr ""
 "Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
 
-#, fuzzy
 msgid "no Rd sections specified"
-msgstr "kein 'type' angegeben"
+msgstr "kein Rd Abschnitt angegeben"
 
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
@@ -540,36 +533,38 @@ msgstr "Ungültiger Wert für '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Nur ein Rd Abschnitt pro %s wird unterstützt"
 
-#, fuzzy
 msgid "Vignette product %s does not have a known filename extension (%s)"
-msgstr "hat keine bekannte Dateinamenserweiterung ("
+msgstr "Vignettenprodukt %s hat keine bekannte Dateinamenserweiterung (%s)"
 
 msgid ""
 "Failed to locate the %s output file (by engine %s) for vignette with name "
 "%s. The following files exist in directory %s: %s"
 msgstr ""
+"Konnte %s Ausgabedadatei (von Treiber %s) für Vignette namens"
+"%s nicht finden. Folgende Dateien exisitieren im Verzeichnis %s: %s"
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
 msgstr ""
+"Mehr als eine %s Ausgabedatei (von Treiber %s) für Vignette namens"
+"%s gefunden: %s"
 
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-#, fuzzy
 msgid "Running"
-msgstr "Ausführen von %s"
+msgstr "Ausführen"
 
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
-msgstr ""
+msgstr "Vignette %s überschreibt die folgende %s Ausgabe von Vignette %s: %s"
 
-#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each others output files"
 msgstr ""
-") und deshalb besteht Gefahr des gegenseitigen Überschreibens von Ausgaben"
+"Vignettenquelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb die"
+"Gefahr gegenseitigen Überschreibens besteht" 
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -592,14 +587,13 @@ msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
+msgstr "Vignettendateiname '%s' passt zu keinem der %s' Dateinamenmuster"
 
-#, fuzzy
 msgid "Inconsistent encoding specifications:"
-msgstr "Nicht-Standard Lizenzspezifikation:"
+msgstr "Inkonsistente Kodierungsspezifikationen:"
 
 msgid "with %\\SweaveUTF8"
-msgstr ""
+msgstr "with %\\SweaveUTF8"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
@@ -607,40 +601,32 @@ msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
 msgid "argument 'vignette' must be of length 1"
 msgstr "Argument 'vignette' muss Länge 1 haben"
 
-#, fuzzy
 msgid "Vignette engine package not specified"
-msgstr "nicht benötigte Vignettenabhängigkeiten "
+msgstr "Vignettentreiberpaket nicht angegeben"
 
 msgid "Unsupported engine name"
 msgstr "nicht unterstützter Engine Name"
 
-#, fuzzy
 msgid "None of packages %s have registered vignette engines"
-msgstr "habe Vignetten-Engine registriert"
+msgstr "Keines der Pakete %s hat Vignettentreiber registriert"
 
-#, fuzzy
 msgid "Vignette engine %s is not registered"
-msgstr "nicht benötigte Vignettenabhängigkeiten "
+msgstr "Vignettentreiber %s ist nicht registiert"
 
-#, fuzzy
 msgid "Vignette engine %s is not registered by any of the packages %s"
-msgstr "ist nicht von irgendeinem Paket registriert"
+msgstr "Vignettentreiber %s ist nicht von irgendeinem der Pakete %s registriert"
 
-#, fuzzy
 msgid "Engine name %s and package %s do not match"
-msgstr "Link %s konnte im Paket %s nicht gefunden werden"
+msgstr "Treibername %s und Paket %s passen nicht "
 
-#, fuzzy
 msgid "Argument %s must be a function and not %s"
-msgstr "muss eine Funktion sein und kein"
+msgstr "Argument %s muss eine Funktion sein und nicht %s"
 
-#, fuzzy
 msgid "Argument %s must be a character vector or NULL and not %s"
-msgstr "muss eine Zeichenkette oder NULL aber keine"
+msgstr "Argument %s muss eine Zeichenkette oder NULL sein, aber nicht %s"
 
-#, fuzzy
 msgid "Cannot change the %s engine or use an engine of that name"
-msgstr "Engine oder nutze eine Engine dieses Namens"
+msgstr "Kann den %s Treiber nicht wechseln oder einen Treiber dieses Namens nutzen"
 
 msgid "vignette builder '%s' not found"
 msgstr "Vignetten-Erzeuger '%s' nicht gefunden"
@@ -713,31 +699,31 @@ msgid "loading failed"
 msgstr "Laden fehlgeschlagen"
 
 msgid "assertConditon: Successfully caught a condition"
-msgstr ""
+msgstr "assertCondition: Erfolgreich eine Bedingung abgefangen"
 
 msgid "assertCondition: caught %s"
-msgstr ""
+msgstr "assertCondition: %s abgefangen"
 
 msgid ","
 msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
-msgstr ""
+msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
 msgid "Failed to get %s in evaluating %s"
-msgstr ""
+msgstr "Konnte nicht %s in der Auswertung von %s erhalten"
 
 msgid "Failed to get error in evaluating %s"
-msgstr ""
+msgstr "Konnte Fehler nicht in Auswertung von %s erhalten"
 
 msgid "Asserted error: %s"
-msgstr ""
+msgstr "Festgestellter Fehler: %s"
 
 msgid "Got warning in evaluating %s, but also an error"
-msgstr ""
+msgstr "Warnung bei Auswertung von %s, aber auch Fehler"
 
 msgid "Asserted warning: %s"
-msgstr ""
+msgstr "Festgestellte Warnung: %s"
 
 msgid "Changes require specified 'style'"
 msgstr "Änderungen benötigen den angegebenen 'style'"
@@ -879,9 +865,8 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr "erzeuge Debug-Symbole (%s)"
 
-#, fuzzy
 msgid "no DLL was created"
-msgstr "Datei '%s' wurde nicht erzeugt"
+msgstr "keine DLL erzeugt"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich entpackt und MD5 Summen überprüft"
@@ -894,7 +879,7 @@ msgstr ""
 "installiert werden"
 
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr ""
+msgstr "Paket %s %s gefunden, aber %s %s von %s verlangt"
 
 msgid "no source files found"
 msgstr "kein Quellkode gefunden"
@@ -1117,7 +1102,7 @@ msgid "testing '%s' failed"
 msgstr "Test von '%s' fehlgeschlagen"
 
 msgid "%d of the package tests failed"
-msgstr ""
+msgstr "%d der Pakettests fehlgeschlagen"
 
 msgid "Testing examples for package %s"
 msgstr "Teste die Beispiele für Paket %s"
@@ -1153,7 +1138,7 @@ msgid "FAILED"
 msgstr "fehlgeschlagen"
 
 msgid "DIFFERED"
-msgstr ""
+msgstr "unterschieden sich"
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
@@ -1286,14 +1271,12 @@ msgid_plural ""
 msgstr[0] ".Internal Aufruf in Methoden für folgende Referenzklasse gefunden:"
 msgstr[1] ".Internal Aufrufe in Methoden folgende Referenzklassen gefunden:"
 
-#, fuzzy
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
 "Found an obsolete/platform-specific call in the following functions:"
-msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
-msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+msgstr[0] "Veralteten/plattformspezifischen Aufruf in folgender Funktion gefunden:"
+msgstr[1] "Veraltete/plattformpezifische Aufrufe in folgenden Funktionen gefunden:"
 
-#, fuzzy
 msgid ""
 "Found an obsolete/platform-specific call in methods for the following S4 "
 "generic:"
@@ -1301,11 +1284,10 @@ msgid_plural ""
 "Found an obsolete/platform-specific call in methods for the following S4 "
 "generics:"
 msgstr[0] ""
-"veralteten Aufruf in Methoden für die folgende S4 Generische gefunden:"
+"Veralteten/plattformspezifischen Aufruf in Methoden für die folgende S4 Generische gefunden:"
 msgstr[1] ""
-"veralteten Aufruf in Methoden für die folgenden S4 Generischen gefunden:"
+"Veralteten/plattformspezifischen Aufruf in Methoden für die folgenden S4 Generischen gefunden:"
 
-#, fuzzy
 msgid ""
 "Found an obsolete/platform-specific call in methods for the following "
 "reference class:"
@@ -1313,9 +1295,9 @@ msgid_plural ""
 "Found an obsolete/platform-specific call in methods for the following "
 "reference classes:"
 msgstr[0] ""
-"veralteten Aufruf in Methoden für die folgende Referenzklasse gefunden:"
+"Veralteten/plattformspezifischen Aufruf in Methoden für die folgende Referenzklasse gefunden:"
 msgstr[1] ""
-"veralteten Aufruf in Methoden für die folgenden Referenzklassen gefunden:"
+"Veralteten/platformspezifischen Aufruf in Methoden für die folgenden Referenzklassen gefunden:"
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
@@ -1329,8 +1311,8 @@ msgstr[1] "Abgeschaltete/entfernte Funktionen gefunden:"
 
 msgid "Found the platform-specific device:"
 msgid_plural "Found the platform-specific devices:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Plattform-spezifisches gefunden:"
+msgstr[1] "Plattform-spezifische Devices gefunden"
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
@@ -1355,11 +1337,10 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kann %s Zeile %s nicht rekodieren"
 msgstr[1] "kann '%s' Zeilen %s nicht rekodieren"
 
-#, fuzzy
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
-msgstr[0] "Benötigte Felder fehlen:"
-msgstr[1] "Benötigte Felder fehlen:"
+msgstr[0] "Benötigtes Feld fehlt oder ist leer:"
+msgstr[1] "Benötigte Felder fehlen oder sind leer:"
 
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
