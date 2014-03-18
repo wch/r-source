@@ -1,10 +1,10 @@
 # Translation of src/library/graphics/po/R-graphics.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-07-20 09:37\n"
 "PO-Revision-Date: 2013-02-28 16:30+0100\n"
@@ -206,7 +206,7 @@ msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: Fehler in pretty(), breaks=%s"
 
 msgid "Invalid breakpoints produced by 'breaks(x)': %s"
-msgstr ""
+msgstr "Unzulässige Intervallgrenzen durch 'breaks(x)' erzeugt: %s"
 
 msgid "invalid length(breaks)"
 msgstr "unzulässige length(breaks)"
@@ -417,9 +417,8 @@ msgstr "Anzahl der Zeilen von 'locations' und 'x' müssen gleich sein"
 msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "Länge von 'angels' muss 'ncol(x)' entsprechen"
 
-#, fuzzy
 msgid "no finite and non-missing values"
-msgstr "ausschließlich fehlende Werte"
+msgstr "keine endliche nicht-fehlenden Werte"
 
 msgid "'scale' must be positive"
 msgstr "'scale' muss positiv sein"

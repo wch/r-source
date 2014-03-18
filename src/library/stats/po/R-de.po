@@ -1,11 +1,11 @@
 # Translation of /src/library/stats/po/R-stats.pot to German
-# Copyright (C) 2008-2013 The R Foundation
+# Copyright (C) 2008-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:11\n"
 "PO-Revision-Date: 2013-03-18 10:10+0100\n"
@@ -279,7 +279,7 @@ msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' muss kleiner sein als 'n.used'"
 
 msgid "zero-variance series"
-msgstr ""
+msgstr "Serie mit Varianz Null"
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'n.ahead' muss mindestens 1 sein"
@@ -345,13 +345,11 @@ msgstr "MA Teil des Modells ist nicht invertierbar"
 msgid "seasonal MA part of model is not invertible"
 msgstr "saisonaler MA Teil des Modells ist nicht invertierbar"
 
-#, fuzzy
 msgid "NAs in '%s'"
-msgstr "NAs in 'x'"
+msgstr "NAs in '%s'"
 
-#, fuzzy
 msgid "invalid 'SSinit'"
-msgstr "unzulässiges 'nb'"
+msgstr "unzulässiges 'SSinit'"
 
 msgid "converting non-invertible initial MA values"
 msgstr "konvertiere nicht-invertierbare initiale MA Werte"
@@ -398,9 +396,8 @@ msgstr "alle Beobachtungen sind in derselben Gruppe"
 msgid "there must be at least 2 observations in each group"
 msgstr "es müssen zumindest 2 Beobachtungen in jeder Gruppe sein"
 
-#, fuzzy
 msgid "'formula' should be of the form response ~ group"
-msgstr "Formel '%s' muss von der Form '~expr' sein"
+msgstr "'formul' sollte von der Art response ~ group sein"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' muss nicht-negativ und ganzzahlig sein"
@@ -928,9 +925,8 @@ msgstr "'x' muss mindestens 2 Zeilen und Spalten haben"
 msgid "'x' has entries too large to be integer"
 msgstr "'x' enthält Einträge, die zu groß für ein Ingeger sind"
 
-#, fuzzy
 msgid "'x' has been rounded to integer: %s"
-msgstr "'x' wurde auf gerundet auf ganze Zahl: %d"
+msgstr "'x' wurde gerundet auf ganze Zahl: %s"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
 msgstr "Wenn 'x' keine Matrix ist, muss 'y' angegeben werden"
@@ -1232,7 +1228,7 @@ msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "Anzahl der Clusterzentren muss zwischen 1 und nrow(x) liegen"
 
 msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
-msgstr ""
+msgstr "Anzahl Schritte in der Quick-TRANSfer Stufe überschreitet Maximum (= %d)"
 
 msgid "invalid nrow(x)"
 msgstr "unzulässige nrow(x)"
@@ -1439,7 +1435,7 @@ msgid "no 'nobs' method is available"
 msgstr "keine 'nobs' Methode verfügbar"
 
 msgid "'margin' must contain names or numbers corresponding to 'table'"
-msgstr ""
+msgstr "'margin' muss Namen oder Zahlen enthalten die mit 'table' korrespondieren"
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' und 'table' müssen dieselbe Länge haben"
@@ -1622,24 +1618,22 @@ msgstr "f.lower = f(lower) ist NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) ist NA"
 
-#, fuzzy
 msgid "invalid 'extendInt'; please report"
-msgstr "unzulässiges 'method' Argument"
+msgstr "unzulässiges 'extendInt'; bitte melden!"
 
-#, fuzzy
 msgid "no sign change found in %d iterations"
-msgstr "keine Konvergenz nach %d Schritt"
+msgstr "keine Vorzeichenwechsel nach %d Iterationen gefunden"
 
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+"kein Erfolg beim Erweitern der Intervallendpunkte für f(lower) * f(upper) <= 0"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "Werte von f() and den Endpunkten haben gleiches Vorzeichen"
 
-#, fuzzy
 msgid "convergence problem in zero finding:"
-msgstr "evtl. Konvergenzproblem: optim lieferte Kode = %d"
+msgstr "Konvergenzproblem bei der Nullstellensuche:"
 
 msgid "'control' argument must be a named list"
 msgstr "'control' Argument muss eine benannte Liste sein"
@@ -2464,29 +2458,25 @@ msgid_plural "%d missing values deleted"
 msgstr[0] "%d fehlender Wert gelöscht"
 msgstr[1] "%d fehlende Werte gelöscht"
 
-#, fuzzy
 msgid "'X' matrix has %d case (row)"
 msgid_plural "'X' matrix has %d cases (rows)"
-msgstr[0] "Matrix 'X' hat %d Zielgröße"
-msgstr[1] "Matrix 'X' hat %d Zielgrößen"
+msgstr[0] "Matrix 'X' hat %d Beobachtung (Zeile)"
+msgstr[1] "Matrix 'X' hat %d Beobachtungen (Zeilen)"
 
-#, fuzzy
 msgid "'Y' has %d case (row)"
 msgid_plural "'Y' has %d cases (rows)"
-msgstr[0] "'Y' hat %d Anwort"
-msgstr[1] "'Y' hat %d Anworten"
+msgstr[0] "'Y' hat %d Beobachtung (Zeile)"
+msgstr[1] "'Y' hat %d Beobachtungen (Zeilen)"
 
-#, fuzzy
 msgid "only %d case"
 msgid_plural "only %d cases"
-msgstr[0] ", aber nur %d Variable"
-msgstr[1] ", aber nur %d Variablen"
+msgstr[0] "nur %d Beobachtung" 
+msgstr[1] "nur %d Beobachtungen"
 
-#, fuzzy
 msgid "but %d variable"
 msgid_plural "but %d variables"
-msgstr[0] ", aber nur %d Variable"
-msgstr[1] ", aber nur %d Variablen"
+msgstr[0] "aber %d Variable"
+msgstr[1] "aber %d Variablen"
 
 msgid "medpolish() did not converge in %d iteration"
 msgid_plural "medpolish() did not converge in %d iterations"

@@ -1,10 +1,10 @@
 # Translation of src/library/graphics/po/R-grid.pot to German.
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-27 17:14\n"
 "PO-Revision-Date: 2013-03-01 15:59+0100\n"
@@ -111,9 +111,8 @@ msgstr "unzulässiger Wert für 'alpha'"
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr "es darf nur entweder 'font' oder 'fontface' angegeben werden"
 
-#, fuzzy
 msgid "invalid fontface"
-msgstr "ungültiger Fontface"
+msgstr "ungültige Zeichensatzerscheinung"
 
 msgid "argument must be a 'gpar' object"
 msgstr "Argument muss ein 'gpar' Objekt sein"
@@ -145,13 +144,11 @@ msgstr "Viewports dürfen nur ge\"pushed\" werden"
 msgid "must specify at least one viewport"
 msgstr "es muss zumindest ein Viewport angegeben werden"
 
-#, fuzzy
 msgid "Down viewport failed to record on display list"
-msgstr "unzulässiges Objekt in die Displayliste eingefügt"
+msgstr "Abgeschalteter Viewport konnte nicht in die Displayliste aufnehmen"
 
-#, fuzzy
 msgid "Down viewport incorrectly recorded on display list"
-msgstr "unzulässiges Objekt in die Displayliste eingefügt"
+msgstr "Abgeschalteter Viewport fälschlicherweise  in die Displayliste aufgenommen"
 
 msgid "must pop at least one viewport"
 msgstr "es muss zumindest ein Viewport von Stack geholt werden"
@@ -160,7 +157,7 @@ msgid "must navigate up at least one viewport"
 msgstr "es muss mindestens ein Viewport nach oben navigiert werden"
 
 msgid "Invalid number of generations"
-msgstr ""
+msgstr "Ungültige Anzahl von Generationen"
 
 msgid "invalid object inserted on the display list"
 msgstr "unzulässiges Objekt in die Displayliste eingefügt"
@@ -269,13 +266,11 @@ msgstr "Grob '%s' nicht gefunden"
 msgid "invalid element in the display list"
 msgstr "unzulässiges Element in der Display-Liste"
 
-#, fuzzy
 msgid "Invalid force target"
-msgstr "ungültige 'order'"
+msgstr "ungültiges Zwangsziel"
 
-#, fuzzy
 msgid "Invalid revert target"
-msgstr "unzulässiges 'print' Argument"
+msgstr "ungültiges Ziel für das Rückgängigmachen"
 
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr "kann nur 'children' für einen \"gTree\" setzen"
@@ -295,16 +290,14 @@ msgstr "'hgap' muss eine einzelne Stelle sein"
 msgid "'vgap' must be single unit"
 msgstr "'vgap' muss eine einzelne Stelle sein"
 
-#, fuzzy
 msgid "'nrow' must be >= 1"
-msgstr "'l' muss ein Layout sein"
+msgstr "'nrow' must >= 1 sein"
 
-#, fuzzy
 msgid "'ncol' must be >= 1"
-msgstr "'l' muss ein Layout sein"
+msgstr "'ncol' must >= 1 sein"
 
 msgid "nrow * ncol < #{legend labels}"
-msgstr ""
+msgstr "nrow * ncol < #{legend labels}"
 
 msgid "invalid justification"
 msgstr "unzulässige Ausrichtung"
@@ -330,9 +323,8 @@ msgstr "ungültiges Listing"
 msgid "invalid 'listing'"
 msgstr "ungültiges 'listing'"
 
-#, fuzzy
 msgid "Nothing on the display list"
-msgstr "unzulässige Modifikation der Display-Liste"
+msgstr "Nichts in der Display-Liste"
 
 msgid "invalid 'origin'"
 msgstr "unzulässiger 'origin'"

@@ -1,13 +1,13 @@
 # Translation of src/library/methods/po/R-methods.pot to German
-# Copyright (C) 2005-2013 The R Foundation
+# Copyright (C) 2005-2014 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2013.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.0.0\n"
+"Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-11-25 05:14\n"
-"PO-Revision-Date: 2013-03-13 12:48+0100\n"
+"PO-Revision-Date: 2014-03-16 16:02+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: \n"
@@ -734,33 +734,31 @@ msgstr "kann benötigtes Paket %s nicht finden"
 msgid "unable to find an environment containing class %s"
 msgstr "kann keine Umgebung mit einer Klasse %s finden"
 
-#, fuzzy
 msgid ""
 "Note: the specification for S3 class %s in package %s seems equivalent to "
 "one from package %s: not turning on duplicate class definitions for this "
 "class."
 msgstr ""
 "die Spezifikation für die S3 Klasse %s in Paket %s scheint äquivlant\n"
-"zu einer aus Paket %s und schaltet für diese Klasse nicht die\n"
-"dublizierten Klassendefinitionen an"
+"zu einer aus Paket %s; für diese Klasse werden  die\n"
+"Klassendefinitionen nicht dubliziert"
 
-#, fuzzy
 msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
 "from package %s"
 msgstr ""
-"Einige Oberklassen der Klasse %s in Paket %s haben dublizierteDefinitionen. "
+"Einige Oberklassen der Klasse %s in Paket %s haben dublizierte Definitionen. "
 "Diese Definition wird nicht als äquivalent zu der aus Paket %s behandelt."
 
-#, fuzzy
 msgid ""
 "Note: the specification for class %s in package %s seems equivalent to one "
 "from package %s: not turning on duplicate class definitions for this class."
 msgstr ""
-"Eine Spezifikation für die Klasse %s in Paket %s scheint äquivalent\n"
-"zu einer aus Paket %s und schaltet für diese Klasse nicht die\n"
-"dublizierten Klassendefinitionen an"
+"Die Spezifikation für die Klasse %s in Paket %s scheint äquivalent\n"
+"zu einer aus Paket %s; für diese Klasse werden  die\n"
+"Klassendefinitionen nicht dubliziert"
+
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
@@ -1566,16 +1564,15 @@ msgstr ""
 "Die überschreibende Klasse (\"%s\") des Feldes %s ist keine Unterklasse\n"
 "der existierenden Felddefinition (\"%s\")"
 
-#, fuzzy
 msgid ""
 "invalid assignment for reference class field %s, should be from class %s or "
 "a subclass (was class %s)"
 msgstr ""
-"Unzulässige Ersetzung für Feld %s, sollte aus Klasse %s oder eine "
+"Unzulässige Zueiwsung für Referenzklassenfeld %s, sollte aus Klasse %s oder eine "
 "Unterklasse sein (war Klasse %s)"
 
 msgid "invalid replacement: reference class field %s is read-only"
-msgstr ""
+msgstr "ungültige Ersetzung: Referenzklassenfeld %s ist nur lesbar"
 
 msgid ""
 "the 'contains' argument should be the names of superclasses:  got an element "
