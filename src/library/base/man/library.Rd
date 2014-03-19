@@ -75,16 +75,15 @@ require(package, lib.loc = NULL, quietly = FALSE,
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified
   by \code{lib.loc}, and returns the corresponding information in an
-  object of class \code{"libraryIQR"}.  The structure of this class may
-  change in future versions.  In earlier versions of \R, only the names
-  of all available packages were returned; use \code{.packages(all =
-  TRUE)} to obtain these.  Note that \code{\link{installed.packages}()}
-  returns even more information.
+  object of class \code{"libraryIQR"}.  (The structure of this class may
+  change in future versions.)  Use \code{.packages(all = TRUE)} to
+  obtain just the names of all available packages, and
+  \code{\link{installed.packages}()} for even more information.
 
   \code{library(help = somename)} computes basic information about the
-  package \code{somename}, and returns this in an object of class
-  \code{"packageInfo"}.  The structure of this class may change in
-  future versions.  When used with the default value (\code{NULL}) for
+  package \pkg{somename}, and returns this in an object of class
+  \code{"packageInfo"}.  (The structure of this class may change in
+  future versions.)  When used with the default value (\code{NULL}) for
   \code{lib.loc}, the attached packages are searched before the libraries.
 }
 \value{
