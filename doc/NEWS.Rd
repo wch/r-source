@@ -258,6 +258,11 @@
       
       \item The \code{pdf()} device omits entirely circles and text at
       extremely small sizes, since some viewers were failing on such files.
+      
+      \item The rightmost break for the \code{"months"},
+      \code{"quarters"} and \code{"years"} cases of
+      \code{hist.POSIXlt()} has been increased by a day.  (Inter alia,
+      fixes \PR{15717}.)
     }
   }
 
