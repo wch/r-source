@@ -3404,8 +3404,8 @@ support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors@footnote{and perhaps others} under Linux, there is
-Intel's Math Kernel Library
+For Intel processors@footnote{and perhaps others} under some
+distributions of Linux, there is Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
@@ -3413,13 +3413,14 @@ versions of MKL for OS X and Windows, but they did not work with the
 standard compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
-following notes apply exactly only to version 10.3.
+following notes apply exactly only to version 10.3 but have been used
+with version 11.1.
 
-Version 10 of MKL supports two linking models: the default model, which
-is backward compatible with version 9 (see below), and the pure layered
-model.  The layered model gives the user fine-grained control over four
-different library layers: interface, threading, computation, and
-run-time library support. Some examples of linking to MKL using this
+Versions 10 and later of MKL support two linking models: the default
+model (which is backward compatible with version 9 see below) and the
+layered model.  The layered model gives the user fine-grained control
+over four different library layers: interface, threading, computation,
+and run-time library support. Some examples of linking to MKL using this
 layered model are given below. (These examples are for GCC compilers on
 @cputype{x86_64}.)  The choice of interface layer is important on
 @cputype{x86_64} since the Intel Fortran compiler returns complex values
@@ -3427,7 +3428,7 @@ in different registers from the @acronym{GNU} Fortran compiler. You must
 therefore use the interface layer that matches your compiler
 (@code{mkl_intel*} or @code{mkl_gf*}).
 
-R can be linked to a sequential version of MKL by something like
+@R{} can be linked to a sequential version of MKL by something like
 
 @example
 MKL_LIB_PATH=/opt/intel/mkl/10.311.339/lib/intel64/
@@ -3460,10 +3461,13 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_gnu_thread \
 @end example
 
 @noindent
-The default number of threads will be chosen by the OpenMP software,
-but can be controlled by setting @code{OMP_NUM_THREADS} or
-@code{MKL_NUM_THREADS}, and in recent versions seems to produce a
+The default number of threads will be chosen by the OpenMP software, but
+can be controlled by setting @code{OMP_NUM_THREADS} or
+@code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.
+
+Platforms have been encountered on which @code{-ldl} needed to be added
+to the list of libraries.
 
 Static threaded MKL may be used (GNU OpenMP) with something like
 
