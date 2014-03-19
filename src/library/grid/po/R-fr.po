@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-27 17:14\n"
-"PO-Revision-Date: 2013-03-19 12:30+0100\n"
+"PO-Revision-Date: 2014-03-17 10:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 msgid "invalid 'at' location in 'axis'"
 msgstr "position 'at' incorrecte dans 'axis'"
@@ -66,7 +66,6 @@ msgstr "'frame' incorrect"
 msgid "invalid 'grob'"
 msgstr "'grob' incorrect"
 
-#, fuzzy
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
 msgstr ""
 "'row' et/ou 'col' incorrects (la cellule n'existe pas dans la grille de mise "
@@ -119,7 +118,6 @@ msgstr "valeur 'alpha' incorrecte"
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr "il faut spécifier soit 'font', soit 'fontface'"
 
-#, fuzzy
 msgid "invalid fontface"
 msgstr "police de caractères incorrecte"
 
@@ -153,13 +151,14 @@ msgstr "les vues peuvent seulement être repoussées"
 msgid "must specify at least one viewport"
 msgstr "il faut sélectionner au moins une vue"
 
-#, fuzzy
 msgid "Down viewport failed to record on display list"
-msgstr "objet incorrect inséré dans la liste d'affichage"
+msgstr ""
+"Erruer lors de l'enregistrement de la zone active (down viewport) dans la "
+"liste d'affichage"
 
-#, fuzzy
 msgid "Down viewport incorrectly recorded on display list"
-msgstr "objet incorrect inséré dans la liste d'affichage"
+msgstr ""
+"zone active (down viewport) incorrecte insérée dans la liste d'affichage"
 
 msgid "must pop at least one viewport"
 msgstr "il faut restaurer au moins une vue"
@@ -168,7 +167,7 @@ msgid "must navigate up at least one viewport"
 msgstr "il faut naviguer dans au moins une vue"
 
 msgid "Invalid number of generations"
-msgstr ""
+msgstr "Nombre de générations incorrect"
 
 msgid "invalid object inserted on the display list"
 msgstr "objet incorrect inséré dans la liste d'affichage"
@@ -285,13 +284,11 @@ msgstr "grob '%s' introuvable"
 msgid "invalid element in the display list"
 msgstr "élément incorrect dans la liste d'affichage (display list)"
 
-#, fuzzy
 msgid "Invalid force target"
-msgstr "'order' incorrect"
+msgstr "Cible incorrecte pour 'force'"
 
-#, fuzzy
 msgid "Invalid revert target"
-msgstr "argument 'print' incorrect"
+msgstr "Cible incorrecte pour 'revert'"
 
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr ""
@@ -312,16 +309,14 @@ msgstr "'hgap' doit contenir une seule unité"
 msgid "'vgap' must be single unit"
 msgstr "'vgap' doit contenir une seule unité"
 
-#, fuzzy
 msgid "'nrow' must be >= 1"
-msgstr "'l' doit être une mise en page (layout)"
+msgstr "'nrow' doit être >= 1"
 
-#, fuzzy
 msgid "'ncol' must be >= 1"
-msgstr "'l' doit être une mise en page (layout)"
+msgstr "'ncol' doit être >= 1"
 
 msgid "nrow * ncol < #{legend labels}"
-msgstr ""
+msgstr "nrow * ncol < #{libellés de légende}"
 
 msgid "invalid justification"
 msgstr "justification incorrecte"
@@ -348,9 +343,8 @@ msgstr "listing incorrect"
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
 
-#, fuzzy
 msgid "Nothing on the display list"
-msgstr "modification incorrecte dans la liste d'affichage (display list)"
+msgstr "Il n'y a rien dans la liste d'affichage (display list)"
 
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"

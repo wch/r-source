@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-19 07:55+0000\n"
-"PO-Revision-Date: 2013-03-19 12:10+0100\n"
+"PO-Revision-Date: 2014-03-17 10:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: grid.c:214
 msgid "cannot clip to rotated viewport"
@@ -58,7 +58,7 @@ msgstr "x ou y infinis dans le chemin graphique"
 
 #: grid.c:2907
 msgid "Empty raster"
-msgstr ""
+msgstr "graphique raster vide"
 
 #: grid.c:3359
 msgid "invalid plotting symbol"
@@ -95,11 +95,11 @@ msgstr "unité non autorisée ou pas encore implémentée"
 
 #: unit.c:1702 unit.c:1733
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "Le zone active (Viewport) a des dimensions nulles"
 
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Conversion d'unités non supportée"
 
 #: unit.c:1898
 msgid "Invalid unit"

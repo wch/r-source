@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-15 09:09+0000\n"
-"PO-Revision-Date: 2013-03-18 23:16+0100\n"
+"PO-Revision-Date: 2014-03-17 10:43+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: base.c:45
 msgid "no base graphics system is registered"
@@ -81,6 +81,7 @@ msgstr "état des graphiques incorrect"
 #: graphics.c:2555
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
+"le périphérique graphique est fermé lors de l'appel à locator() ou identify()"
 
 #: graphics.c:2604
 msgid "No graphics device is active"
@@ -332,7 +333,7 @@ msgstr ""
 
 #: plot.c:1833
 msgid "Empty raster"
-msgstr ""
+msgstr "graphique raster vide"
 
 #: plot.c:1916
 msgid "invalid arrow head length"

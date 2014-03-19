@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-18 13:54+0000\n"
-"PO-Revision-Date: 2013-03-18 23:11+0100\n"
+"PO-Revision-Date: 2014-03-17 10:36+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
@@ -441,14 +441,14 @@ msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr "AVIS : --max-mem-size = %4.0fM : trop petite et considérée comme %uM\n"
 
 #: src/gnuwin32/system.c:1039
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires an argument"
-msgstr "les opérations binaires nécessitent deux arguments"
+msgstr "l'option '%s' nécessite un argument"
 
 #: src/gnuwin32/system.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires a non-empty argument"
-msgstr "les opérations binaires nécessitent deux arguments"
+msgstr "l'option '%s' nécessite un argument non vide"
 
 #: src/gnuwin32/system.c:1078 src/unix/system.c:362
 #, c-format
@@ -577,33 +577,32 @@ msgid "'.Random.seed' is a missing argument with no default"
 msgstr "'.Random.seed' est un argument absent sans valeur par défaut"
 
 #: src/main/RNG.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "'.Random.seed' is not an integer vector but of type '%s', so ignored"
-msgstr "'.Random.seed' n'est pas un vecteur d'entiers, mais est de type '%s'"
+msgstr ""
+"'.Random.seed' n'est pas un vecteur d'entiers, mais est de type '%s', et "
+"sera donc ignoré"
 
 #: src/main/RNG.c:363
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid integer, so ignored"
-msgstr "'.Random.seed[1]' n'est pas un entier correct"
+msgstr "'.Random.seed[1]' n'est pas un entier correct, et sera donc ignoré"
 
 #: src/main/RNG.c:369
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid Normal type, so ignored"
-msgstr "'.Random.seed[1]' n'est pas un type Normal correct"
+msgstr ""
+"'.Random.seed[1]' n'est pas un type Normal correct, et sera donc ignoré"
 
 #: src/main/RNG.c:383
-#, fuzzy
 msgid "'.Random.seed[1] = 5' but no user-supplied generator, so ignored"
 msgstr ""
 "'.Random.seed[1] = 5' mais aucun générateur de nombres fourni par "
-"l'utilisateur"
+"l'utilisateur, il sera donc ignoré"
 
 #: src/main/RNG.c:388
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid RNG kind so ignored"
 msgstr ""
 "'.Random.seed[1]' n'est pas un RNG (générateur de nombres pseudo-aléatoires) "
-"correct"
+"correct et sera donc ignoré"
 
 #: src/main/RNG.c:415
 msgid "'.Random.seed' has wrong length"
@@ -940,11 +939,11 @@ msgstr "valeur 'ncol' incorrecte (< 0)"
 
 #: src/main/array.c:116
 msgid "nc = 0 for non-null data"
-msgstr ""
+msgstr "nc = 0 pour des données non nulles"
 
 #: src/main/array.c:124
 msgid "nr = 0 for non-null data"
-msgstr ""
+msgstr "nr = 0 pour des données non nulles"
 
 #: src/main/array.c:135
 #, c-format
@@ -1310,9 +1309,9 @@ msgid "class name too long in '%s'"
 msgstr "nom de classe trop long dans '%s'"
 
 #: src/main/bind.c:1114
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create a matrix from type '%s'"
-msgstr "impossible de créer une matrice à partir de ces types"
+msgstr "impossible de créer une matrice à partir de du type '%s'"
 
 #: src/main/bind.c:1185
 #, c-format
@@ -1447,6 +1446,8 @@ msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
 " Consider using '%s' instead."
 msgstr ""
+"EXPR est une variable \"factor\", elle sera traitée comme des entiers.\n"
+" Pensez à utiliser plutôt '%s'."
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -1657,9 +1658,8 @@ msgid "'what' must be a character string or a function"
 msgstr "'what' doit être une chaîne de caractères ou une fonction"
 
 #: src/main/coerce.c:2412
-#, fuzzy
 msgid "'args' must be a list or expression"
-msgstr "'args' doit être une liste"
+msgstr "'args' doit être une liste ou une expression"
 
 #: src/main/coerce.c:2415
 msgid "'args' must be a list"
@@ -1862,24 +1862,22 @@ msgid "too large a block specified"
 msgstr "bloc trop large fourni"
 
 #: src/main/connections.c:998 src/main/connections.c:1004
-#, fuzzy
 msgid "allocation of fifo name failed"
-msgstr "l'allocation d'une connexion fifo a échoué"
+msgstr "l'allocation dun nom d'une connexion fifo a échoué"
 
 #: src/main/connections.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open fifo '%s', reason '%s'"
-msgstr "impossible d'ouvrir l'URL '%s', à cause de '%s'"
+msgstr "impossible d'ouvrir la connexion fifo '%s', à cause de '%s'"
 
 #: src/main/connections.c:1107 src/main/connections.c:1131
-#, fuzzy
 msgid "allocation of fifo buffer failed"
-msgstr "l'allocation d'une connexion fifo a échoué"
+msgstr "l'allocation d'un tampon pour une connexion fifo a échoué"
 
 #: src/main/connections.c:1139
-#, fuzzy, c-format
+#, c-format
 msgid "cannot write FIFO '%s'"
-msgstr "impossible d'ouvrir l'URL '%s'"
+msgstr "impossible d'écrire dans la connexion FIFO '%s'"
 
 #: src/main/connections.c:1175 src/main/connections.c:1179
 #: src/main/connections.c:1185 src/main/connections.c:1201
@@ -2176,7 +2174,7 @@ msgstr "impossible d'allouer un tampon dans readLines"
 #: src/main/connections.c:3623
 #, c-format
 msgid "line %d appears to contain an embedded nul"
-msgstr ""
+msgstr "la ligne %d contient un caractère nul"
 
 #: src/main/connections.c:3640
 #, c-format
@@ -3004,9 +3002,8 @@ msgid "display list redraw incomplete"
 msgstr "liste de retraçage des affichages incomplète"
 
 #: src/main/engine.c:2777
-#, fuzzy
 msgid "invalid display list"
-msgstr "liste d'arguments incorrect"
+msgstr "liste de périphériques d'affichages incorrecte"
 
 #: src/main/engine.c:2963
 msgid "'expr' argument must be an expression"
@@ -4362,12 +4359,12 @@ msgstr "le renvoi d'un pointeur sur un vecteur n'est pas sûr"
 #: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
-msgstr ""
+msgstr "tentative de modification de l'index %lu/%lu dans SET_STRING_ELT"
 
 #: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
-msgstr ""
+msgstr "tentative de modification de l'index %lu/%lu dans SET_VECTOR_ELT"
 
 #: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
@@ -4897,7 +4894,6 @@ msgid "too deep nesting"
 msgstr "imbrication trop profonde"
 
 #: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
-#, fuzzy
 msgid "over-long path"
 msgstr "chemin trop long"
 
@@ -5211,9 +5207,9 @@ msgid "mismatch on types"
 msgstr "incohérence de types"
 
 #: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1636
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognized internal function name \"%s\""
-msgstr "impossible de trouver la fonction \"%s\""
+msgstr "impossible de trouver le nom de la fonction interne \"%s\""
 
 #: src/main/saveload.c:709
 msgid "cannot save file position while restoring data"
@@ -5426,7 +5422,7 @@ msgstr ""
 
 #: src/main/scan.c:364 src/main/scan.c:414
 msgid "EOF within quoted string"
-msgstr ""
+msgstr "Fin de fichier (EOF) dans une chaîne de caractères entre guillements"
 
 #: src/main/scan.c:484
 #, c-format
@@ -5471,9 +5467,8 @@ msgid "invalid quote symbol set"
 msgstr "symbole de chaîne de caractères incorrect"
 
 #: src/main/scan.c:987
-#, fuzzy
 msgid "embedded nul(s) found in input"
-msgstr "caractère nul au milieu de la chaîne : '%s'"
+msgstr "caractère(s) 'nul' au milieu de l'entrée"
 
 #: src/main/seq.c:48
 msgid "unequal factor lengths"
@@ -6268,9 +6263,9 @@ msgid "unsupported conversion to '%s' from codepage %d"
 msgstr "conversion vers '%s' depuis la page de code %d indisponible"
 
 #: src/main/sysutils.c:1530
-#, fuzzy, c-format
+#, c-format
 msgid "invalid Unicode point %u"
-msgstr "jonction de ligne incorrecte"
+msgstr "valeur Unicode incorrecte %u"
 
 #: src/main/sysutils.c:1632
 msgid "cannot create 'R_TempDir'"
@@ -7106,9 +7101,8 @@ msgid "right-hand side should have %d not %d rows"
 msgstr "le membre de droite devrait avoir %d lignes et non %d"
 
 #: src/modules/lapack/Lapack.c:743
-#, fuzzy
 msgid "'jobu' must be a character string"
-msgstr "'norm' doit être une chaîne de caractères"
+msgstr "'jobu' doit être une chaîne de caractères"
 
 #: src/modules/lapack/Lapack.c:751
 msgid "matrices of 2^31 or more elements are not supported"
