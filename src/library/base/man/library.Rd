@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -78,8 +78,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   object of class \code{"libraryIQR"}.  The structure of this class may
   change in future versions.  In earlier versions of \R, only the names
   of all available packages were returned; use \code{.packages(all =
-    TRUE)} for obtaining these.  Note that
-  \code{\link{installed.packages}()}
+  TRUE)} to obtain these.  Note that \code{\link{installed.packages}()}
   returns even more information.
 
   \code{library(help = somename)} computes basic information about the
