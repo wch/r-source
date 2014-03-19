@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-27 17:14\n"
-"PO-Revision-Date: 2013-03-19 22:02+0100\n"
+"PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -74,7 +74,7 @@ msgid "Warning: unknown option %s"
 msgstr "Avis : option inconnue %s"
 
 msgid "Output file:"
-msgstr ""
+msgstr "Fichier en sortie :"
 
 msgid "Compacting PDF document"
 msgstr "Document PDF compacté"
@@ -151,10 +151,10 @@ msgid "bad argument"
 msgstr "argument incorrect"
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr "'full.names' doit être TRUE pour des chemins multiples."
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "Le fichier timestamp n'existe plus."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -288,7 +288,7 @@ msgid "Message:"
 msgstr "Message :"
 
 msgid "'dump' is empty"
-msgstr ""
+msgstr "'dump' est vide"
 
 msgid "Available environments had calls:"
 msgstr "Les environnements disponibles avaient les appels suivants :"
@@ -742,7 +742,6 @@ msgstr "foundpkgs : %s"
 msgid "files: %s"
 msgstr "fichiers : %s"
 
-#, fuzzy
 msgid ""
 "installation of one or more packages failed,\n"
 "  probably %s"
@@ -917,9 +916,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "impossible de convertir 'x' en roman"
 
-#, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr "impossible de restaurer l'information de type"
+msgstr "impossible de créer le fichier %s, arrêt"
 
 msgid "no valid packages were specified"
 msgstr "aucun package valide n'a été spécifié"
@@ -1005,16 +1003,16 @@ msgid "file '%s' not found"
 msgstr "fichier '%s' introuvable"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr "le fichier '%s' n'a pas de droit d'exécution : le problème est corrigé"
 
 msgid "file size is limited to 8GB"
 msgstr "la taille du fichier est limitée à 8GB"
 
 msgid "invalid uid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "valeur uid incorrecte remplacée par celle pour l'utilisateur 'nobody'"
 
 msgid "invalid gid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "valeur gid incorrecte remplacée par celle pour l'utilisateur 'nobody'"
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1026,13 +1024,11 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "vignette %s introuvable"
 
-#, fuzzy
 msgid "vignette %s has no PDF/HTML"
-msgstr "la vignette %s n'a pas de PDF"
+msgstr "la vignette %s n'a pas de PDF/HTML"
 
-#, fuzzy
 msgid "vignette %s has no R code"
-msgstr "vignette %s introuvable"
+msgstr "la vignette %s n'a pas de code R"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"
@@ -1100,7 +1096,7 @@ msgid "no download method found"
 msgstr "impossible de trouver une méthode de téléchargement"
 
 msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
+msgstr "la méthode 'lynx' est non testée et dépréciée depuis R 3.1.0"
 
 msgid "download had nonzero exit status"
 msgstr "le téléchargement a a eu un statut de sortie non nul"
@@ -1417,8 +1413,8 @@ msgstr[1] ""
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""
-#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
-#~ "(s) : %s"
+#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) "
+#~ "champ(s) : %s"
 
 #~ msgid "'pb' is not from class \"winProgressBar\""
 #~ msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-26 09:09\n"
-"PO-Revision-Date: 2013-03-19 21:22+0100\n"
+"PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "l'argument 'package' doit être de longueur 1"
@@ -229,13 +229,14 @@ msgstr ""
 "Les numéros de version doivent être des séquences d'au moins deux entiers "
 "non négatifs, séparés par un seul '.' ou '-'."
 
-#, fuzzy
 msgid "Invalid VignetteBuilder field."
-msgstr "Champ 'Priority' incorrect."
+msgstr "Champ 'VignetteBuilder' incorrect."
 
 msgid ""
 "This field must contain one or more packages (and no version requirement)."
 msgstr ""
+"Ce champ doit contenir un ou plusieurs packages (et aucune indication de "
+"version)."
 
 msgid "Invalid Priority field."
 msgstr "Champ 'Priority' incorrect."
@@ -290,24 +291,24 @@ msgid "Standardized license specification:"
 msgstr "Spécification de licence standard :"
 
 msgid "Deprecated license: %s"
-msgstr ""
+msgstr "Licence dépréciée : %s"
 
 msgid "Invalid license file pointers: %s"
 msgstr "Pointeur de fichier licence incorrect : %s"
 
-#, fuzzy
 msgid "License components with restrictions not permitted:"
-msgstr "Le composants avec restrictions ne sont pas autorisés :"
+msgstr "Les composants avec restrictions de licence ne sont pas autorisés :"
 
-#, fuzzy
 msgid "License components which are templates and need '+ file LICENSE':"
-msgstr "Le composants avec restrictions ne sont pas autorisés :"
+msgstr ""
+"Les composants avec restrictions de licence qui sont des modèles et qui "
+"nécessitent '+ file LICENSE' :"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
 
 msgid "Variables overriding user/site settings:"
-msgstr ""
+msgstr "Des variables remplacent les valeurs utilisateur/site :"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
@@ -389,57 +390,58 @@ msgstr "appels 'library' ou 'require' non déclarés depuis :"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "appels 'library' ou 'require' non déclarés depuis : %s"
 
-#, fuzzy
 msgid "'library' or 'require' calls to packages already attached by Depends:"
-msgstr "appels 'library' ou 'require' non déclarés depuis :"
+msgstr ""
+"appels 'library' ou 'require' vers des packages déjà attachés depuis "
+"Depends :"
 
-#, fuzzy
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
-msgstr "appels 'library' ou 'require' non déclarés depuis : %s"
+msgstr ""
+"appels 'library' ou 'require' à %s qui est déjà attaché depuis Depends."
 
 msgid "Namespaces in Imports field not imported from:"
-msgstr ""
+msgstr "Espaces de noms dans le champ Imports non importés depuis :"
 
-#, fuzzy
 msgid "Namespace in Imports field not imported from: %s"
-msgstr "Dépendances d'espaces de noms non requises :"
+msgstr ""
+"Dépendance d'espace de nom dans le champ Imports non importé depuis : %s"
 
 msgid "Packages in Depends field not imported from:"
-msgstr ""
+msgstr "Packages dans le champ Depends non importés depuis :"
 
 msgid "Package in Depends field not imported from: %s"
-msgstr ""
+msgstr "Package dans le champ Depends non importé depuis : %s"
 
 msgid "Missing or unexported objects:"
-msgstr ""
+msgstr "Objets manquants ou non exportés :"
 
 msgid "Missing or unexported object: %s"
-msgstr ""
+msgstr "Objet manquant ou non exporté : %s"
 
 msgid "':::' calls which should be '::':"
-msgstr ""
+msgstr "appels ':::' qui devrait être '::' :"
 
 msgid "':::' call which should be '::': %s"
-msgstr ""
+msgstr "appel ':::' qui devrait être '::' : %s"
 
 msgid "Missing objects imported by ':::' calls:"
-msgstr ""
+msgstr "Objets manquants importés par appels ':::' :"
 
 msgid "Missing object imported by a ':::' call: %s"
-msgstr ""
+msgstr "Objet manquant importé par appel ':::' : %s"
 
 msgid "Unexported objects imported by ':::' calls:"
-msgstr ""
+msgstr "Objets non exportés importés par appels ':::' :"
 
 msgid "Unexported object imported by a ':::' call: %s"
-msgstr ""
+msgstr "Objet non exporté importé par appel ':::' : %s"
 
 msgid "Unavailable namespaces imported from by ':::' calls:"
-msgstr ""
+msgstr "Espaces de noms non disponibles importés par des appels ':::' :"
 
 msgid "Unavailable namespace imported from by a ':::' call: %s"
-msgstr ""
+msgstr "Espace de nom non disponible importé par un appel ':::' : %s"
 
 msgid "'data(package=)' calls not declared from:"
 msgstr "appel 'data(package=)' non déclaré depuis :"
@@ -448,7 +450,7 @@ msgid "'data(package=)' call not declared from: %s"
 msgstr "appel 'data(package=)' non déclaré depuis : %s"
 
 msgid "Package has no 'Version' field"
-msgstr ""
+msgstr "Le package n'a pas de champ 'Version'"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr ""
@@ -467,9 +469,8 @@ msgstr "Arguments sans description dans l'objet Rd '%s' :"
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
-#, fuzzy
 msgid "no Rd sections specified"
-msgstr "aucun 'type' spécifié"
+msgstr "aucune section Rd n'est spécifiée"
 
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
@@ -558,36 +559,42 @@ msgstr "valeur inexacte pour '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Seulement une section Rd par %s est supportée."
 
-#, fuzzy
 msgid "Vignette product %s does not have a known filename extension (%s)"
-msgstr "n'a pas une extension de fichier connue ("
+msgstr ""
+"Le fichier porduit pour la vignette %s n'a pas une extension de fichier "
+"connue (%s)"
 
 msgid ""
 "Failed to locate the %s output file (by engine %s) for vignette with name "
 "%s. The following files exist in directory %s: %s"
 msgstr ""
+"Impossible de localiser le fichier de sortie %s (par le moteur %s) pour la "
+"vignette de nom %s. Les fichiers suivants existent dans le répertoire %s : %s"
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
 msgstr ""
+"Plus d'un fichier de sortie %s localisé (par le moteur %s) pour la vignette "
+"portant le nom %s : %s"
 
 msgid "unable to create temp directory %s"
 msgstr "impossible de créer le répertoire temporaire %s"
 
-#, fuzzy
 msgid "Running"
-msgstr "Exécution de %s"
+msgstr "Exécution"
 
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
+"La vignette %s réécrit sur la sortie %s de la  vignette suivante %s : %s"
 
-#, fuzzy
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each others output files"
 msgstr ""
-") et qui risquent donc de remplacer mutuellement leurs fichiers en sortie"
+"Fichiers sources pour des vignettes (%s) détectés avec des noms partagés "
+"(%s) et qui risquent donc de se réécrire les uns sur les autres pour les "
+"fichiers de sortie"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -611,13 +618,14 @@ msgstr "le fichier '%s' est introuvable"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
+"le nom de fichier '%s' pour la vignette ne correspond pas au pattern de nom "
+"de fichier '%s'"
 
-#, fuzzy
 msgid "Inconsistent encoding specifications:"
-msgstr "Spécification de licence non standard :"
+msgstr "Spécifications d'encodage incohérentes :"
 
 msgid "with %\\SweaveUTF8"
-msgstr ""
+msgstr "avec %\\SweaveUTF8"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
@@ -625,40 +633,35 @@ msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
 msgid "argument 'vignette' must be of length 1"
 msgstr "l'argument 'vignette' doit être de longueur 1"
 
-#, fuzzy
 msgid "Vignette engine package not specified"
-msgstr "Dependences de vignette non requises :"
+msgstr "Package du moteur de vignettes non spécifié"
 
 msgid "Unsupported engine name"
 msgstr "Module de traitement non supporté"
 
-#, fuzzy
 msgid "None of packages %s have registered vignette engines"
-msgstr "a enregisté les modules de traitement de vignettes"
+msgstr ""
+"Aucun des packages %s n'a enregistré de module de traitement de vignettes"
 
-#, fuzzy
 msgid "Vignette engine %s is not registered"
-msgstr "Dependences de vignette non requises :"
+msgstr "Moteur de vignette %s non enregistré"
 
-#, fuzzy
 msgid "Vignette engine %s is not registered by any of the packages %s"
-msgstr "n'est enregisté par aucun des packages"
+msgstr "Moteur de vignette %s non enregistré dans aucun des packages %s"
 
-#, fuzzy
 msgid "Engine name %s and package %s do not match"
-msgstr "Le lien %s dans le package %s ne peut être localisé"
+msgstr "Le nom de generateur %s dans le package %s ne peut être localisé"
 
-#, fuzzy
 msgid "Argument %s must be a function and not %s"
-msgstr "doit être une fonction et pas"
+msgstr "L'argument %s doit être une fonction et pas %s"
 
-#, fuzzy
 msgid "Argument %s must be a character vector or NULL and not %s"
-msgstr "doit être une chaîne de caractères ou NULL et pas"
+msgstr "L'argument %s doit être une chaîne de caractères ou NULL et pas %s"
 
-#, fuzzy
 msgid "Cannot change the %s engine or use an engine of that name"
-msgstr "module de traitement ou utilise un module de ce nom"
+msgstr ""
+"Impossible de changer le module de traitement %s ou utiliser un module de ce "
+"nom"
 
 msgid "vignette builder '%s' not found"
 msgstr "créateur de vignette '%s' introuvable"
@@ -733,31 +736,33 @@ msgid "loading failed"
 msgstr "le chargement a échoué"
 
 msgid "assertConditon: Successfully caught a condition"
-msgstr ""
+msgstr "assertCondition : Une condition a été capturée avec succès"
 
 msgid "assertCondition: caught %s"
-msgstr ""
+msgstr "assertCondition : capture de %s"
 
 msgid ","
 msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
-msgstr ""
+msgstr "%s a été obtenu lors de l'évaluation de %s ; il fallait %s"
 
 msgid "Failed to get %s in evaluating %s"
-msgstr ""
+msgstr "%s n'a pas été obtenu lors de l'évaluation de %s"
 
 msgid "Failed to get error in evaluating %s"
-msgstr ""
+msgstr "Aucune erreur n'a été renvoyée lors de l'évaluation de %s"
 
 msgid "Asserted error: %s"
-msgstr ""
+msgstr "Assertion d'erreur : %s"
 
 msgid "Got warning in evaluating %s, but also an error"
 msgstr ""
+"Un message d'avis (warning) a été obtenu en évaluant %s, mais aussi une "
+"erreur"
 
 msgid "Asserted warning: %s"
-msgstr ""
+msgstr "Message d'avis (warning) dans l'assertion : %s"
 
 msgid "Changes require specified 'style'"
 msgstr "Les modifications nécessite le 'style' spécifié"
@@ -900,9 +905,8 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr "génération des symboles de débogage (%s)"
 
-#, fuzzy
 msgid "no DLL was created"
-msgstr "le fichier '%s' n'a pas été créé"
+msgstr "aucune DLL n'a pas été créé"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "package %s correctement décompressé et sommes MD5 vérifiées"
@@ -915,7 +919,7 @@ msgstr ""
 "rpm ou similaire"
 
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr ""
+msgstr "package %s %s trouvé, mais %s %s est nécessaire pour %s"
 
 msgid "no source files found"
 msgstr "aucun fichier source n'est trouvé"
@@ -1140,7 +1144,7 @@ msgid "testing '%s' failed"
 msgstr "le test '%s' a échoué"
 
 msgid "%d of the package tests failed"
-msgstr ""
+msgstr "%d des tests du package ont échoué"
 
 msgid "Testing examples for package %s"
 msgstr "Vérification des exemples du package %s"
@@ -1176,7 +1180,7 @@ msgid "FAILED"
 msgstr "ECHEC"
 
 msgid "DIFFERED"
-msgstr ""
+msgstr "DIFFERE"
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
@@ -1321,14 +1325,15 @@ msgstr[1] ""
 "Appels .Internal trouvés dans les méthodes pour les classes de références "
 "suivantes :"
 
-#, fuzzy
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
 "Found an obsolete/platform-specific call in the following functions:"
-msgstr[0] "Appel obsolète trouvé dans la fonction suivante :"
-msgstr[1] "Appels obsolète trouvés dans les fonctions suivantes :"
+msgstr[0] ""
+"Appel obsolète/spécifique d'une plateforme trouvé dans la fonction suivante :"
+msgstr[1] ""
+"Appels obsolètes/spécifiques d'une plateforme trouvés dans les fonctions "
+"suivantes :"
 
-#, fuzzy
 msgid ""
 "Found an obsolete/platform-specific call in methods for the following S4 "
 "generic:"
@@ -1336,11 +1341,12 @@ msgid_plural ""
 "Found an obsolete/platform-specific call in methods for the following S4 "
 "generics:"
 msgstr[0] ""
-"Appel obsolète trouvé dans les méthodes pour le générique S4 suivant :"
+"Appel obsolète/spécifique d'une plateforme trouvé dans les méthodes pour le "
+"générique S4 suivant :"
 msgstr[1] ""
-"Appel obsolète trouvé dans les méthodes pour les génériques S4 suivants :"
+"Appel obsolète/spécifique d'une plateforme trouvé dans les méthodes pour les "
+"génériques S4 suivants :"
 
-#, fuzzy
 msgid ""
 "Found an obsolete/platform-specific call in methods for the following "
 "reference class:"
@@ -1348,11 +1354,11 @@ msgid_plural ""
 "Found an obsolete/platform-specific call in methods for the following "
 "reference classes:"
 msgstr[0] ""
-"Appel obsolète trouvé dans les méthodes pour la classe de référence "
-"suivante :"
+"Appel obsolète/spécifique d'une plateforme trouvé dans les méthodes pour la "
+"classe de référence suivante :"
 msgstr[1] ""
-"Appel obsolète trouvé dans les méthodes pour les classes de référence "
-"suivantes :"
+"Appel obsolète/spécifique d'une plateforme trouvé dans les méthodes pour les "
+"classes de référence suivantes :"
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
@@ -1366,8 +1372,8 @@ msgstr[1] "Fonctions obsolètes ou éliminées trouvées : "
 
 msgid "Found the platform-specific device:"
 msgid_plural "Found the platform-specific devices:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "un périphérique spécifique à une plateforme est rencontré :"
+msgstr[1] "des périphériques spécifiques à une plateforme sont rencontrés :"
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
@@ -1392,11 +1398,10 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "impossible de réencoder %s ligne %s"
 msgstr[1] "impossible de réencoder %s lignes %s"
 
-#, fuzzy
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
-msgstr[0] "Champs requis mais manquants :"
-msgstr[1] "Champs requis mais manquants :"
+msgstr[0] "Champ requis mais manquant ou vide :"
+msgstr[1] "Champs requis mais manquants ou vides :"
 
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"

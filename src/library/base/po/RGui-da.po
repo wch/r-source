@@ -1,14 +1,14 @@
 # Danish translation RGui.
-# Copyright (c) 2012 RGui & nedenstående oversættere.
+# Copyright (c) 2014 RGui & nedenstående oversættere.
 # This file is distributed under the same license as the RGui package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2012.
+# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2012, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: RGUi\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 19:36+0000\n"
-"PO-Revision-Date: 2012-09-09 23:36+0200\n"
+"PO-Revision-Date: 2014-03-18 23:36+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -1070,9 +1070,8 @@ msgid "Variable name"
 msgstr "Variabelnavn"
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "Variabel findes ikke eller indeholder ingen plot!"
+msgstr "Variabel indeholder ingen plot!"
 
 #: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"

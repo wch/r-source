@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:11\n"
-"PO-Revision-Date: 2013-03-19 20:23+0100\n"
+"PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr ""
@@ -294,7 +294,7 @@ msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' doit être < 'n.used'"
 
 msgid "zero-variance series"
-msgstr ""
+msgstr "séries de variance nulle"
 
 msgid "'n.ahead' must be at least 1"
 msgstr "'n.ahead' doit valoir au moins 1"
@@ -360,13 +360,11 @@ msgstr "la partie MA du modèle est non inversible"
 msgid "seasonal MA part of model is not invertible"
 msgstr "la partie MA saisonnière du modèle est non inversible"
 
-#, fuzzy
 msgid "NAs in '%s'"
-msgstr "NAs dans 'x'"
+msgstr "NAs dans '%s'"
 
-#, fuzzy
 msgid "invalid 'SSinit'"
-msgstr "'nb' incorrect"
+msgstr "'SSinit' incorrect"
 
 msgid "converting non-invertible initial MA values"
 msgstr "conversion des valeurs MA initales non inversibles"
@@ -413,9 +411,8 @@ msgstr "toutes les observations appartiennent au même groupe"
 msgid "there must be at least 2 observations in each group"
 msgstr "il doit y avoir au moins 2 observations dans chaque groupe"
 
-#, fuzzy
 msgid "'formula' should be of the form response ~ group"
-msgstr "la formule '%s' doit être de la forme '~expr'"
+msgstr "'formula' doit être de la forme réponse ~ groupe"
 
 msgid "'x' must be nonnegative and integer"
 msgstr "'x' doit être un entier positif ou nul"
@@ -966,9 +963,8 @@ msgstr "'x' doit avoir au moins 2 lignes et colonnes"
 msgid "'x' has entries too large to be integer"
 msgstr "'x' contient des valeurs trop grandes pour des entiers"
 
-#, fuzzy
 msgid "'x' has been rounded to integer: %s"
-msgstr "'x' a été arrondi à un entier : %d"
+msgstr "'x' a été arrondi à un entier : %s"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
 msgstr "si 'x' n'est pas une matrice, 'y' doit être donné"
@@ -1273,6 +1269,7 @@ msgstr "le nombre de centres de classes doit être compris entre 1 et nrow(x)"
 
 msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
 msgstr ""
+"Les étapes de transfer (quick-TRANSfer stage) ont dépassé le maximum (= %d) "
 
 msgid "invalid nrow(x)"
 msgstr "nrow(x) incorrect"
@@ -1491,7 +1488,7 @@ msgid "no 'nobs' method is available"
 msgstr "pas de méthode 'nobs' disponible"
 
 msgid "'margin' must contain names or numbers corresponding to 'table'"
-msgstr ""
+msgstr "'margin' doit contenir les noms ou des nombres correspondant à 'table'"
 
 msgid "'start' and 'table' must be same length"
 msgstr "'start' et 'table' doivent avoir la même longueur"
@@ -1681,24 +1678,23 @@ msgstr "f.lower = f(lower) est NA"
 msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) est NA"
 
-#, fuzzy
 msgid "invalid 'extendInt'; please report"
-msgstr "argument 'method' incorrect"
+msgstr "argument 'extendInt' incorrect; veuillez envoyer un rapport de bug"
 
-#, fuzzy
 msgid "no sign change found in %d iterations"
-msgstr "pas de convergence en %d itération"
+msgstr "pas de changement de signe après %d itérations"
 
 msgid ""
 "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
 msgstr ""
+"impossible d'étendre l'intervalle des points extrêmes pour f(lower) * "
+"f(upper) <= 0"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "les valeurs de f() aux points extrêmes ne sont pas de signe opposé"
 
-#, fuzzy
 msgid "convergence problem in zero finding:"
-msgstr "problème de convergence possible : optim renvoie un code = %d"
+msgstr "problème de convergence dans la recherche de zéro :"
 
 msgid "'control' argument must be a named list"
 msgstr "l'argument 'control' doit être une liste nommée"
@@ -2556,25 +2552,21 @@ msgid_plural "%d missing values deleted"
 msgstr[0] "%d valeur manquante supprimée"
 msgstr[1] "%d valeurs manquantes supprimées"
 
-#, fuzzy
 msgid "'X' matrix has %d case (row)"
 msgid_plural "'X' matrix has %d cases (rows)"
-msgstr[0] "la matrice 'X' a %d réponse"
-msgstr[1] "la matrice 'X' a %d réponses"
+msgstr[0] "la matrice 'X' a %d cas (ligne)"
+msgstr[1] "la matrice 'X' a %d cas (lignes)"
 
-#, fuzzy
 msgid "'Y' has %d case (row)"
 msgid_plural "'Y' has %d cases (rows)"
-msgstr[0] "'Y' a %d réponse"
-msgstr[1] "'Y' a %d réponses"
+msgstr[0] "'Y' a %d cas (ligne)"
+msgstr[1] "'Y' a %d cas (lignes)"
 
-#, fuzzy
 msgid "only %d case"
 msgid_plural "only %d cases"
-msgstr[0] "mais seulement %d variable"
-msgstr[1] "mais seulement %d variables"
+msgstr[0] "mais seulement %d cas"
+msgstr[1] "mais seulement %d cas"
 
-#, fuzzy
 msgid "but %d variable"
 msgid_plural "but %d variables"
 msgstr[0] "mais seulement %d variable"

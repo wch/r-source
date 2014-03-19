@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-02-13 14:11+0000\n"
-"PO-Revision-Date: 2013-03-18 22:13+0100\n"
+"PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
@@ -28,7 +28,7 @@ msgstr "probabilités en dehors de [0,1] dans qansari()"
 
 #: approx.c:31 rcont.c:16
 msgid "stats"
-msgstr ""
+msgstr "stats"
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -185,19 +185,18 @@ msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "seulement 2500 lignes autorisées pour sm.method=\"spline\""
 
 #: lm.c:57
-#, fuzzy
 msgid "'x' is not a matrix"
-msgstr "'tmax' n'est pas un entier"
+msgstr "'x' n'est pas une matrice"
 
 #: lm.c:62
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr ""
+msgstr "les dimensions de 'x' (%d,%d) et de 'y' (%d) ne correspondent pas"
 
 #: lm.c:77 lm.c:81
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
-msgstr ""
+msgstr "NA/NaN/Inf dans '%s'"
 
 #: loessc.c:233
 msgid "span is too small"
@@ -495,9 +494,8 @@ msgid "'maxit' is not an integer"
 msgstr "'maxit n'est pas un entier"
 
 #: optim.c:260
-#, fuzzy
 msgid "'tmax' is not a positive integer"
-msgstr "'tmax' n'est pas un entier"
+msgstr "'tmax' n'est pas un entier positif"
 
 #: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"
