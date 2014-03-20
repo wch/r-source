@@ -3404,8 +3404,8 @@ support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
-For Intel processors@footnote{and perhaps others} under some
-distributions of Linux, there is Intel's Math Kernel Library
+For Intel processors, and perhaps others, and some distributions of
+Linux, there is Intel's Math Kernel Library
 (@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
@@ -3466,9 +3466,6 @@ can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.
 
-Platforms have been encountered on which @code{-ldl} needed to be added
-to the list of libraries.
-
 Static threaded MKL may be used (GNU OpenMP) with something like
 
 @example
@@ -3478,11 +3475,12 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
                 $@{MKL_LIB_PATH@}/libmkl_gnu_thread.a     \
                 $@{MKL_LIB_PATH@}/libmkl_core.a           \
         -Wl,--end-group                                 \
-        -lgomp -lpthread"
+        -lgomp -ldl -lpthread"
 @end example
 
 @noindent
-(Thanks to Ei-ji Nakama).
+(Thanks to Ei-ji Nakama.  The @code{-ldl} was needed on a Centos 5
+systems and may not be needed everywhere.)
 
 The MKL documentation includes a `link line advisor' which will suggest
 appropriate incantations: an on-line version was available at
