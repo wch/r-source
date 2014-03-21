@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -60,7 +60,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             as.formula(paste(deparse(formula[[2L]], width.cutoff = 500L,
                                      backtick = TRUE), "~", eTerm,
                              if(!intercept) "- 1"),
-                       env=environment(formula))
+                       env = environment(formula))
 
         ecall$method <- "qr"
         ecall$qr <- TRUE
@@ -104,7 +104,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             qtx <- qtx * wts
         }
         qty <- as.matrix(qr.qty(qr.e, resp))
-        if((nc <- ncol(qty)) > 1) {
+        if((nc <- ncol(qty)) > 1L) {
             dny <- colnames(resp)
             if(is.null(dny)) dny <- paste0("Y", 1L:nc)
             dimnames(qty) <- list(seq(nrow(qty)), dny)
@@ -112,7 +112,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         qtx <- qr.qty(qr.e, qtx)
         dimnames(qtx) <- list(seq(nrow(qtx)) , dnx)
         for(i in seq_along(nmstrata)) {
-            select <- asgn.e==(i-1)
+            select <- asgn.e == (i-1L)
             ni <- sum(select)
             if(!ni) next
             ## helpful to drop constant columns.
@@ -171,22 +171,22 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     ss <- matrix(NA, nterms, nresp)
     if(nterms) {
         for(i in seq(nterms)) {
-            ai <- asgn==uasgn[i]
+            ai <- asgn == uasgn[i]
             df[i] <- sum(ai)
             ef <- effects[ai,, drop=FALSE]
-            ss[i,] <- if(sum(ai) > 1) colSums(ef^2) else ef^2
+            ss[i, ] <- if(sum(ai) > 1) colSums(ef^2) else ef^2
         }
-        keep <- df > 0
+        keep <- df > 0L
         if(!intercept && uasgn[1L] == 0) keep[1L] <- FALSE
         nmeffect <- nmeffect[keep]
         df <- df[keep]
-        ss <- ss[keep,,drop=FALSE]
+        ss <- ss[keep, , drop = FALSE]
         nterms <- length(df)
     }
     cat("\nTerms:\n")
-    if(nterms == 0) {
+    if(nterms == 0L) {
         ## empty model
-        if(rdf > 0) {
+        if(rdf > 0L) {
             ss <- RSS
             ssp <- sapply(ss, format)
             if(!is.matrix(ssp)) ssp <- t(ssp)
@@ -198,10 +198,12 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
             print(tmp, quote = FALSE, right = TRUE)
             cat("\n")
-            cat("Residual standard error: ", sapply(sqrt(ss/rdf), format),
-                "\n", sep = "")
+            rs <- sqrt(RSS/rdf)
+            cat(if(length(rs) > 1L) "Residual standard errors:"
+                 else "Residual standard error:", sapply(rs, format))
+            cat("\n")
         } else
-        print(matrix(0, 2L, 1L, dimnames=
+        print(matrix(0, 2L, 1L, dimnames =
                      list(c("Sum of Squares", "Deg. of Freedom"), "<empty>")))
     } else {
         if(rdf > 0L) {
@@ -222,13 +224,15 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 #        int <- attr(x$terms, "intercept")
 #        nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
         cat("\n")
-        if(rdf > 0) {
+        if(rdf > 0L) {
             rs <- sqrt(RSS/rdf)
-            cat("Residual standard error: ", sapply(rs, format), "\n", sep = "")
+            cat(if(length(rs) > 1L) "Residual standard errors:"
+                else "Residual standard error:", sapply(rs, format))
+            cat("\n")
         }
         coef <- as.matrix(x$coefficients)[, 1L]
         R <- qrx$qr
-        R <- R[1L:min(dim(R)), ,drop=FALSE]
+        R <- R[1L:min(dim(R)), , drop=FALSE]
         R[lower.tri(R)] <- 0
         if(rank < (nc <- length(coef))) {
             cat(paste(nc - rank, "out of", nc, "effects not estimable\n"))
@@ -255,7 +259,7 @@ summary.aov <- function(object, intercept = FALSE, split,
             f <- rownames(factors)[factors[, i] > 0]
             sp <- f %in% ns
             if(any(sp)) {              # some marginal terms are split
-                if(sum(sp) > 1) {
+                if(sum(sp) > 1L) {
                     old <- split[ f[sp] ]
 		    nn <- setNames(nm = f[sp])
                     marg <- lapply(nn, function(x)
@@ -333,7 +337,7 @@ summary.aov <- function(object, intercept = FALSE, split,
 
     for (y in 1L:nresp) {
         if(is.null(effects)) {
-            nterms <- 0
+            nterms <- 0L
             df <- ss <- ms <- numeric()
             nmrows <- character()
         } else {
@@ -356,7 +360,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 }
             }
         }
-        if(rdf > 0) {
+        if(rdf > 0L) {
             df <- c(df, rdf)
             ss <- c(ss, sum(resid[, y]^2))
             nmrows <- c(nmrows,  "Residuals")
@@ -364,7 +368,7 @@ summary.aov <- function(object, intercept = FALSE, split,
         nt <- length(df)
         ms <- ifelse(df > 0L, ss/df, NA)
         x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
-        if(rdf > 0) {
+        if(rdf > 0L) {
             TT <- ms/ms[nt]
             TP <- pf(TT, df, rdf, lower.tail = FALSE)
             TT[nt] <- TP[nt] <- NA
@@ -374,9 +378,9 @@ summary.aov <- function(object, intercept = FALSE, split,
         }
         class(x) <- c("anova", "data.frame")
         attr(x, "row.names") <- format(nmrows)
-        if(!keep.zero.df) x <- x[df > 0, ]
+        if(!keep.zero.df) x <- x[df > 0L, ]
         pm <- pmatch("(Intercept)", row.names(x), 0L)
-        if(!intercept && pm > 0) x <- x[-pm ,]
+        if(!intercept && pm > 0L) x <- x[-pm ,]
         ans[[y]] <- x
     }
     class(ans) <- c("summary.aov", "listof")
@@ -423,12 +427,12 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
         if(any(z)) {
             xx <- abs(signif(x[z], 2))
             ll <- length(unique(xx))
-            if(ll > 10) xx <- cut(xx, 9) else if(ll == 1) x[] <- 1
+            if(ll > 10L) xx <- cut(xx, 9L) else if(ll == 1L) x[] <- 1
             x[z] <- paste0(ifelse(x[z] > 0, " ", "-"), xx)
         }
         x[!z] <- ""
         collabs <- colnames(x)
-        collabs <- if(length(collabs)) abbreviate(sub("\\.", "", collabs), 3)
+        collabs <- if(length(collabs)) abbreviate(sub("\\.", "", collabs), 3L)
         else 1L:ncol(x)
         colnames(x) <- collabs
         class(x) <- "mtable"
@@ -585,7 +589,7 @@ se.contrast.aov <-
     }
     weights <- contrast.weight.aov(object, contrast)
     rdf <- object$df.residual
-    if(rdf == 0) stop("no degrees of freedom for residuals")
+    if(rdf == 0L) stop("no degrees of freedom for residuals")
     resid <- as.matrix(object$residuals)
     wt <- object$weights
     if(!is.null(wt)) resid <- resid * wt^0.5
@@ -639,7 +643,7 @@ se.contrast.aovlist <-
             rank <- aov.object$rank
             rdf <- nobs - rank
         }
-        if(rdf == 0) return(NA)
+        if(rdf == 0L) return(NA)
         resid <- as.matrix(aov.object$residuals)
         wt <- aov.object$weights
         if(!is.null(wt)) resid <- resid * wt^0.5
