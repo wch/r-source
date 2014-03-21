@@ -9576,9 +9576,12 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-Currently all arguments to a @code{.Call} call will have @code{NAMED}
-set to 2, and so users must assume that they need to be duplicated
-before alteration.
+This mechanism is likely to be replaced in future versions of @R{}.
+
+@c commented out as people misread this as general.
+@c Currently all arguments to a @code{.Call} call will have @code{NAMED}
+@c set to 2, and so users must assume that they need to be duplicated
+@c before alteration.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
