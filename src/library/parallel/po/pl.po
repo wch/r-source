@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: \n"
@@ -14,120 +14,144 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
-# parallel/src/fork.c: 135
+# parallel/src/fork.c: 206
 # error(_("unable to create a pipe"))
-# parallel/src/fork.c: 138
+# parallel/src/fork.c: 209
 # error(_("unable to create a pipe"))
 #: fork.c:206 fork.c:209
 msgid "unable to create a pipe"
 msgstr "nie można utworzyć potoku"
 
-# parallel/src/fork.c: 149
+# parallel/src/fork.c: 226
 # error(_("unable to fork, possible reason: %s"), strerror(errno))
 #: fork.c:226
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "nie można rozdzielić, prawdopodobny powód: %s"
 
-# parallel/src/fork.c: 178
+# parallel/src/fork.c: 272
 # error(_("memory allocation error"))
 #: fork.c:272
 msgid "memory allocation error"
 msgstr "błąd przydziału pamięci"
 
-# parallel/src/fork.c: 216
+# parallel/src/fork.c: 325
 # error(_("only children can send data to the master process"))
 #: fork.c:325
 msgid "only children can send data to the master process"
 msgstr "tylko potomne procesy mogą przesłać dane do procesu głównego"
 
-# parallel/src/fork.c: 218
+# parallel/src/fork.c: 327
 # error(_("there is no pipe to the master process"))
 #: fork.c:327
 msgid "there is no pipe to the master process"
 msgstr "nie ma potoku do procesu głównego"
 
-# parallel/src/fork.c: 220
+# parallel/src/fork.c: 329
 # error(_("content to send must be RAW, use serialize() if needed"))
 #: fork.c:329
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "zawartość do wysłania musi być PUSTA, użyj 'serialize()' jeśli konieczne"
 
-# parallel/src/fork.c: 229
+# parallel/src/fork.c: 338
 # error(_("write error, closing pipe to the master"))
-# parallel/src/fork.c: 236
+# parallel/src/fork.c: 345
 # error(_("write error, closing pipe to the master"))
-# parallel/src/fork.c: 566
+# parallel/src/fork.c: 667
 # error(_("write error, closing pipe to the master"))
 #: fork.c:338 fork.c:345 fork.c:667
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
-# parallel/src/fork.c: 249
+# parallel/src/fork.c: 358
 # error(_("only the master process can send data to a child process"))
 #: fork.c:358
 msgid "only the master process can send data to a child process"
 msgstr "tylko główny proces może przesłać dane do potomnego procesu"
 
-# parallel/src/fork.c: 256
+# parallel/src/fork.c: 365
 # error(_("child %d does not exist"), pid)
 #: fork.c:365
 #, c-format
 msgid "child %d does not exist"
 msgstr "potomny proces %d nie istnieje"
 
-# parallel/src/fork.c: 262
+# parallel/src/fork.c: 371
 # error(_("write error"))
 #: fork.c:371
 msgid "write error"
 msgstr "błąd zapisu"
 
-# parallel/src/fork.c: 342
+# parallel/src/fork.c: 439
 # warning(_("error '%s' in select"), strerror(errno))
-# parallel/src/fork.c: 464
+# parallel/src/fork.c: 561
 # warning(_("error '%s' in select"), strerror(errno))
 #: fork.c:439 fork.c:561
 #, c-format
 msgid "error '%s' in select"
 msgstr "błąd '%s' przy wyborze"
 
-# parallel/src/fork.c: 548
+# parallel/src/fork.c: 649
 # error(_("'mckill' failed"))
 #: fork.c:649
 msgid "'mckill' failed"
 msgstr "'mckill' nie powiodło się"
 
-# parallel/src/fork.c: 558
+# parallel/src/fork.c: 659
 # error(_("'mcexit' can only be used in a child process"))
 #: fork.c:659
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
-# parallel/src/fork.c: 579
+# parallel/src/fork.c: 680
 # error(_("'mcexit' failed"))
 #: fork.c:680
 msgid "'mcexit' failed"
 msgstr "'mcexit' nie powiodło się"
 
-# parallel/src/fork.c: 601
+# parallel/src/fork.c: 710
 # error(_("invalid CPU affinity specification"))
-# parallel/src/fork.c: 610
+# parallel/src/fork.c: 719
 # error(_("invalid CPU affinity specification"))
 #: fork.c:710 fork.c:719
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
-# parallel/src/fork.c: 621
+# parallel/src/fork.c: 730
 # error(_("requested CPU set is too large for this system"))
 #: fork.c:730
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
-# parallel/src/fork.c: 644
+# parallel/src/fork.c: 753
 # error(_("retrieving CPU affinity set failed"))
 #: fork.c:753
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"
+
+#~ msgid "removing child %d\n"
+#~ msgstr "usuwanie dziecka %d\n"
+
+#~ msgid "WARNING: child %d was to be removed but it doesn't exist\n"
+#~ msgstr "OSTRZEŻENIE: dziecko %d miało być usunięte, ale nie istnieje\n"
+
+#~ msgid "child process %d got SIGUSR1; child_exit_status=%d\n"
+#~ msgstr "proces potomny %d otrzymał SIGUSR1; child_exit_status=%d\n"
+
+#~ msgid "child %d terminated with %d\n"
+#~ msgstr "dziecko %d przerwane z %d\n"
+
+#~ msgid "child %d terminated by signal %d\n"
+#~ msgstr "dziecko %d przerwane przez sygnał %d\n"
+
+#~ msgid "parent[%d] created pipes: comm (%d->%d), sir (%d->%d)\n"
+#~ msgstr "parent[%d] utworzył kanały: comm (%d->%d), sir (%d->%d)\n"
+
+#~ msgid "child process %d started\n"
+#~ msgstr "proces potomny %d rozpoczął się\n"
+
+#~ msgid "parent registers new child %d\n"
+#~ msgstr "rodzic rejestruje nowe dziecko %d\n"

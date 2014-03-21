@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # grid/src/grid.c: 214
 # warning(_("cannot clip to rotated viewport"))
@@ -22,13 +22,13 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "nie można przypiąć do obróconego okienka ekranu"
 
-# grid/src/grid.c: 673
+# grid/src/grid.c: 691
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
-# grid/src/grid.c: 678
+# grid/src/grid.c: 696
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
-# grid/src/grid.c: 767
+# grid/src/grid.c: 785
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
-# grid/src/grid.c: 772
+# grid/src/grid.c: 790
 # error(_("cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"))
 #: grid.c:691 grid.c:696 grid.c:785 grid.c:790
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -36,72 +36,74 @@ msgstr ""
 "nie można wyświetlić okienka ekranu na wierzchu (siatka oraz grafika "
 "pomieszały się?)"
 
-# grid/src/grid.c: 952
+# grid/src/grid.c: 970
 # error(_("attempt to plot on null device"))
 #: grid.c:970
 msgid "attempt to plot on null device"
 msgstr "próba rysowania na pustym urządzeniu"
 
-# grid/src/grid.c: 1232
+# grid/src/grid.c: 1302
 # error(_("there is no layout defined"))
 #: grid.c:1302
 msgid "there is no layout defined"
 msgstr "nie określono układu"
 
-# grid/src/grid.c: 1452
+# grid/src/grid.c: 1522
 # error(_("polygon edge not found (zero-width or zero-height?)"))
 #: grid.c:1522
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 "nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
 
-# grid/src/grid.c: 1461
+# grid/src/grid.c: 1531
 # error(_("polygon edge not found"))
 #: grid.c:1531
 msgid "polygon edge not found"
 msgstr "nie znaleziono krawędzi wielokąta"
 
-# grid/src/grid.c: 1615
+# grid/src/grid.c: 1685
 # error(_("require at least two points to draw arrow"))
 #: grid.c:1685
 msgid "require at least two points to draw arrow"
 msgstr "wymaga co najmniej dwu punktów, aby narysować strzałkę"
 
-# grid/src/grid.c: 1931
+# grid/src/grid.c: 2001
 # error(_("non-finite control point in Xspline"))
 #: grid.c:2001
 msgid "non-finite control point in Xspline"
 msgstr "nieskończony punkt kontrolny w 'Xspline'"
 
-# grid/src/grid.c: 2796
+# grid/src/grid.c: 2866
 # error(_("non-finite x or y in graphics path"))
 #: grid.c:2866
 msgid "non-finite x or y in graphics path"
 msgstr "nieskończony 'x' lub 'y' w ścieżce grafiki"
 
+# grid/src/grid.c: 2907
+# error(_("Empty raster"))
 #: grid.c:2907
 msgid "Empty raster"
-msgstr ""
+msgstr "Pusty raster"
 
-# grid/src/grid.c: 3286
+# grid/src/grid.c: 3359
 # error(_("invalid plotting symbol"))
 #: grid.c:3359
 msgid "invalid plotting symbol"
 msgstr "Nieprawidłowy rysowany symbol"
 
-# grid/src/grid.c: 3372
+# grid/src/grid.c: 3445
 # warning(_("unable to clip to rotated rectangle"))
 #: grid.c:3445
 msgid "unable to clip to rotated rectangle"
 msgstr "nie można przypiąć do obróconego prostokąta"
 
-# grid/src/layout.c: 587
+# grid/src/layout.c: 589
 # error(_("invalid 'layout.pos.row'"))
 #: layout.c:589
 msgid "invalid 'layout.pos.row'"
 msgstr "niepoprawny 'layout.pos.row'"
 
-# grid/src/layout.c: 591
+# grid/src/layout.c: 593
 # error(_("invalid 'layout.pos.col'"))
 #: layout.c:593
 msgid "invalid 'layout.pos.col'"
@@ -123,13 +125,13 @@ msgstr "nie można zachować stanu siatki. Zbyt duża liczba otwartych urządze�
 # error(_("unimplemented unit function"))
 # grid/src/unit.c: 410
 # error(_("unimplemented unit function"))
-# grid/src/unit.c: 1204
+# grid/src/unit.c: 1210
 # error(_("unimplemented unit function"))
-# grid/src/unit.c: 1284
+# grid/src/unit.c: 1290
 # error(_("unimplemented unit function"))
-# grid/src/unit.c: 1364
+# grid/src/unit.c: 1370
 # error(_("unimplemented unit function"))
-# grid/src/unit.c: 1444
+# grid/src/unit.c: 1450
 # error(_("unimplemented unit function"))
 #: unit.c:260 unit.c:410 unit.c:1210 unit.c:1290 unit.c:1370 unit.c:1450
 msgid "unimplemented unit function"
@@ -137,34 +139,46 @@ msgstr "niezaimplementowana jednostkowa funkcja"
 
 # grid/src/unit.c: 893
 # error(_("invalid unit or unit not yet implemented"))
-# grid/src/unit.c: 1639
+# grid/src/unit.c: 1645
 # error(_("invalid unit or unit not yet implemented"))
 #: unit.c:893 unit.c:1645
 msgid "invalid unit or unit not yet implemented"
 msgstr ""
 "niedozwolona jednostka lub jednostka nie została jeszcze zaimplementowana"
 
+# grid/src/unit.c: 1702
+# error(_("Viewport has zero dimension(s)"))
+# grid/src/unit.c: 1733
+# error(_("Viewport has zero dimension(s)"))
 #: unit.c:1702 unit.c:1733
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "Okno ekranu ma zerowe wymiary"
 
+# grid/src/unit.c: 1765
+# error(_("Unsupported unit conversion"))
+# grid/src/unit.c: 1780
+# error(_("Unsupported unit conversion"))
+# grid/src/unit.c: 1795
+# error(_("Unsupported unit conversion"))
+# grid/src/unit.c: 1810
+# error(_("Unsupported unit conversion"))
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Niewspierana jednostka konwersji"
 
-# grid/src/unit.c: 1798
+# grid/src/unit.c: 1898
 # error(_("Invalid unit"))
 #: unit.c:1898
 msgid "Invalid unit"
 msgstr "Niepoprawna jednostka"
 
-# grid/src/unit.c: 1814
+# grid/src/unit.c: 1914
 # error(_("'units' must be character"))
 #: unit.c:1914
 msgid "'units' must be character"
 msgstr "'units' muszą być tekstem"
 
-# grid/src/unit.c: 1817
+# grid/src/unit.c: 1917
 # error(_("'units' must be of length > 0"))
 #: unit.c:1917
 msgid "'units' must be of length > 0"

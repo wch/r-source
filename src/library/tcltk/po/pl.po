@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-17 11:19+0000\n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,9 +14,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
-# tcltk/src/tcltk.c: 63
+# tcltk/src/tcltk.c: 66
 #  _("parse error in R expression")
 #: tcltk.c:66
 msgid "parse error in R expression"
@@ -26,29 +26,29 @@ msgstr "Błąd składni w wyrażeniu R"
 msgid "tcl error.\n"
 msgstr "błąd 'tcl'.\n"
 
-# tcltk/src/tcltk.c: 187
+# tcltk/src/tcltk.c: 197
 # error(_("invalid argument"))
-# tcltk/src/tcltk.c: 714
+# tcltk/src/tcltk.c: 742
 # error(_("invalid argument"))
 #: tcltk.c:197 tcltk.c:742
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
-# tcltk/src/tcltk.c: 282
+# tcltk/src/tcltk.c: 301
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 300
+# tcltk/src/tcltk.c: 319
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 370
+# tcltk/src/tcltk.c: 392
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 433
+# tcltk/src/tcltk.c: 455
 # error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 485
+# tcltk/src/tcltk.c: 507
 # error(_("invalid tclObj -- perhaps saved from another session?"))
 #: tcltk.c:301 tcltk.c:319 tcltk.c:392 tcltk.c:455 tcltk.c:507
 msgid "invalid tclObj -- perhaps saved from another session?"
-msgstr "niepoprawny 'tclObj' -- być może zapisany z innej sesji?"
+msgstr "niepoprawny obiekt typu 'tclObj' -- być może zapisany z innej sesji?"
 
-# tcltk/src/tcltk.c: 589
+# tcltk/src/tcltk.c: 617
 # error(_("argument list is too long in tcltk internal function 'callback_closure'"))
 #: tcltk.c:617
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
@@ -56,13 +56,13 @@ msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
 "'callback_closure'"
 
-# tcltk/src/tcltk.c: 622
+# tcltk/src/tcltk.c: 650
 # error(_("argument is not of correct type"))
 #: tcltk.c:650
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
-# tcltk/src/tcltk.c: 673
+# tcltk/src/tcltk.c: 701
 # warning(_("no DISPLAY variable so Tk is not available"))
 #: tcltk.c:701
 msgid "no DISPLAY variable so Tk is not available"
@@ -79,6 +79,3 @@ msgstr "Tcl nie został załadowany"
 #: tcltk_unix.c:98
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl nie jest ostatnią załadowaną usługą"
-
-#~ msgid "Tcl already loaded"
-#~ msgstr "Tcl jest już załadowany"

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # parallel/R/RngStream.R: 22
 # stop("invalid value of 'seed'")
@@ -26,7 +26,7 @@ msgstr "niepoprawna wartość 'seed'"
 # parallel/R/clusterApply.R: 100
 # stop("need at least one argument")
 msgid "need at least one argument"
-msgstr "potrzeba co najmniej jednego argumentu"
+msgstr "co najmniej jeden argument jest wymagany"
 
 # parallel/R/clusterApply.R: 106
 # stop("zero-length inputs cannot be mixed with those of non-zero length")
@@ -35,17 +35,17 @@ msgstr ""
 "wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
 
-# parallel/R/clusterApply.R: 235
+# parallel/R/clusterApply.R: 236
 # stop("dim(X) must have a positive length")
 msgid "dim(X) must have a positive length"
 msgstr "'dim(X)' musi mieć dodatnią długość"
 
-# parallel/R/clusterApply.R: 248
+# parallel/R/clusterApply.R: 249
 # stop("'X' must have named dimnames")
 msgid "'X' must have named dimnames"
 msgstr "'X' musi mieć nazwane wymiary"
 
-# parallel/R/clusterApply.R: 251
+# parallel/R/clusterApply.R: 252
 # stop("not all elements of 'MARGIN' are names of dimensions")
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
@@ -53,63 +53,64 @@ msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
 # parallel/R/snow.R: 27
 # stop("no cluster 'cl' supplied and none is registered")
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr "klaster 'cl' nie został dostarczony oraz żaden nie jest zarejestrowany"
+msgstr ""
+"nie dostarczono argumentu klastr 'cl' oraz żaden nie jest zarejestrowany"
 
 # parallel/R/snow.R: 43
 # stop("not a valid cluster")
 msgid "not a valid cluster"
-msgstr "niepoprawny klaster"
+msgstr "to nie jest poprawny klaster"
 
-# parallel/R/snow.R: 140
+# parallel/R/snow.R: 141
 # stop("unknown cluster type")
 msgid "unknown cluster type"
 msgstr "nieznany typ klastra"
 
-# parallel/R/snowSOCK.R: 143
+# parallel/R/snowSOCK.R: 144
 # gettextf("node of a socket cluster on host %s with pid %d",
 #                     sQuote(x[["host"]]), pid)
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "węzeł gniazda klastra na hoście %s z pid %d"
 
-# parallel/R/snowSOCK.R: 181
+# parallel/R/snowSOCK.R: 182
 # stop("PORT must be specified")
 msgid "PORT must be specified"
-msgstr "PORT musi być określony"
+msgstr "argument 'port' musi być określony"
 
 # parallel/R/unix/forkCluster.R: 21
 # stop("'nnodes' must be >= 1")
 msgid "'nnodes' must be >= 1"
-msgstr "'nnodes' musi być >= 1"
+msgstr "argument 'nnodes' musi być >= 1"
 
-# parallel/R/unix/mcfork.R: 46
+# parallel/R/unix/mcfork.R: 44
 # stop("invalid 'child' argument")
-# parallel/R/unix/mcfork.R: 66
+# parallel/R/unix/mcfork.R: 64
 # stop("invalid 'child' argument")
 msgid "invalid 'child' argument"
 msgstr "niepoprawny argument 'child'"
 
+# parallel/R/unix/mcfork.R: 55
+# stop("'children' must be a list of processes or a single process")
 # parallel/R/unix/mcfork.R: 57
 # stop("'children' must be a list of processes or a single process")
-# parallel/R/unix/mcfork.R: 59
-# stop("'children' must be a list of processes or a single process")
 msgid "'children' must be a list of processes or a single process"
-msgstr "'children' musi być listą procesów lub pojedynczym procesem"
+msgstr "argument 'children' musi być listą procesów lub pojedynczym procesem"
 
-# parallel/R/unix/mcfork.R: 90
+# parallel/R/unix/mcfork.R: 88
 # stop(gettextf("'process' must be of class %s", dQuote("process")),
 #               domain = NA)
 msgid "'process' must be of class %s"
-msgstr "'process' musi być klasy %s"
+msgstr "argument 'process' musi być klasy %s"
 
-# parallel/R/unix/mcfork.R: 99
+# parallel/R/unix/mcfork.R: 97
 # stop("'child' must be a valid child process")
 msgid "'child' must be a valid child process"
-msgstr "'child' musi być poprawnym procesem potomnym"
+msgstr "argument 'child' musi być poprawnym procesem potomnym"
 
-# parallel/R/unix/mcfork.R: 102
+# parallel/R/unix/mcfork.R: 100
 # stop("'what' must be a character or raw vector")
 msgid "'what' must be a character or raw vector"
-msgstr "'what' musi być znakiem albo pustym wektorem"
+msgstr "argument 'what' musi być tekstem albo pustym wektorem"
 
 # parallel/R/unix/mclapply.R: 27
 # stop("'mc.cores' must be >= 1")
@@ -122,15 +123,15 @@ msgstr "'what' musi być znakiem albo pustym wektorem"
 # parallel/R/windows/mcdummies.R: 45
 # stop("'mc.cores' must be >= 1")
 msgid "'mc.cores' must be >= 1"
-msgstr "'mc.cores' musi być >= 1"
+msgstr "argument 'mc.cores' musi być >= 1"
 
-# parallel/R/unix/mclapply.R: 110
+# parallel/R/unix/mclapply.R: 111
 # warning(gettextf("%d function calls resulted in an error",
 #                              has.errors), domain = NA)
 msgid "%d function calls resulted in an error"
 msgstr "wywołania funkcji %d spowodowało błąd"
 
-# parallel/R/unix/mclapply.R: 167
+# parallel/R/unix/mclapply.R: 173
 # warning("all scheduled cores encountered errors in user code")
 msgid "all scheduled cores encountered errors in user code"
 msgstr "wszystkie zaplanowane jądra napotkały błędy w kodzie użytkownika"
@@ -142,7 +143,7 @@ msgstr ""
 "Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
 
-# parallel/R/unix/mcparallel.R: 58
+# parallel/R/unix/mcparallel.R: 66
 # stop("invalid 'jobs' argument")
 msgid "invalid 'jobs' argument"
 msgstr "niepoprawny argument 'jobs'"
@@ -152,9 +153,9 @@ msgstr "niepoprawny argument 'jobs'"
 # parallel/R/windows/mcdummies.R: 32
 # stop("'v' must be a vector")
 msgid "'v' must be a vector"
-msgstr "'v' musi być wektorem"
+msgstr "argument 'v' musi być wektorem"
 
-# parallel/R/unix/pvec.R: 70
+# parallel/R/unix/pvec.R: 71
 # warning("some results may be missing, folded or caused an error")
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
@@ -172,9 +173,9 @@ msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
 # parallel/R/windows/mcdummies.R: 46
 # stop("'mc.cores' > 1 is not supported on Windows")
 msgid "'mc.cores' > 1 is not supported on Windows"
-msgstr "'mc.cores' > 1 nie jest wspierane w systemach Windows"
+msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
 
-# parallel/R/snowSOCK.R: 130
+# parallel/R/snowSOCK.R: 131
 # sprintf(ngettext(length(hosts),
 #                             "socket cluster with %d nodes on host %s",
 #                             "socket cluster with %d nodes on hosts %s"),
@@ -182,10 +183,10 @@ msgstr "'mc.cores' > 1 nie jest wspierane w systemach Windows"
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
-msgstr[1] "gniazdo klastra z %d węzłami na hostach %s"
-msgstr[2] "gniazdo klastra z %d węzłami na hostach %s"
+msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
+msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"
 
-# parallel/R/unix/mclapply.R: 169
+# parallel/R/unix/mclapply.R: 175
 # warning(sprintf(ngettext(has.errors,
 #                                      "scheduled core %s encountered error in user code, all values of the job will be affected",
 #                                      "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"),
@@ -206,12 +207,3 @@ msgstr[1] ""
 msgstr[2] ""
 "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na "
 "wszystkie wartości zadań"
-
-#~ msgid "socket cluster with %d nodes on hosts %s"
-#~ msgstr "gniazdo klastra z %d węzłami na hostach %s"
-
-#~ msgid ","
-#~ msgstr ","
-
-#~ msgid "host"
-#~ msgstr "host"
