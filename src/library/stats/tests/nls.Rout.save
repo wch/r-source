@@ -1,5 +1,5 @@
 
-R version 3.1.0 alpha (2014-03-15 r65198)
+R version 3.1.0 alpha (2014-03-21 r65232)
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -697,4 +697,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.272   0.018   1.283 
+  1.280   0.018   1.291 

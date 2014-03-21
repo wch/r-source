@@ -1,5 +1,5 @@
 
-R version 3.1.0 alpha (2014-03-15 r65198)
+R version 3.1.0 alpha (2014-03-21 r65232)
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.188   0.020   0.198 
+  0.192   0.012   0.194 
