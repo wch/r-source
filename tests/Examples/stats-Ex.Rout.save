@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-12 r65162) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-21 r65227) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -9171,7 +9171,7 @@ resp 1           185.2867
 resp 2             7.8286
 Deg. of Freedom        12
 
-Residual standard error: 3.9294470.8077039
+Residual standard errors: 3.929447 0.8077039
 1 out of 13 effects not estimable
 Estimated effects are balanced
 > summary(npk2.aov)
@@ -9204,7 +9204,7 @@ resp 1           37.00167 306.29333
 resp 2            0.06988   2.88496
 Deg. of Freedom         1         4
 
-Residual standard error: 8.7506190.8492579
+Residual standard errors: 8.750619 0.8492579
 Estimated effects are balanced
 
 Stratum 2: Within
@@ -9219,7 +9219,7 @@ resp 1          185.28667
 resp 2            7.82863
 Deg. of Freedom        12
 
-Residual standard error: 3.9294470.8077039
+Residual standard errors: 3.929447 0.8077039
 Estimated effects are balanced
 > summary(npk2.aovE)
 
