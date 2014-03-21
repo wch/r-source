@@ -1,5 +1,9 @@
 ## tests of R functions based on the lapack module
 
+## NB: the signs of singular and eigenvectors are arbitrary,
+## so there may be differences from the reference ouptut,
+## especially when alternative BLAS are used.
+
 options(digits=4)
 
 ##    -------  examples from ?svd ---------
