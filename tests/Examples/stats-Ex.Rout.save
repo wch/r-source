@@ -12923,7 +12923,7 @@ Importance of components:
 Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
 Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
 Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
-> loadings(pc.cr)  ## note that blank entries are small but not zero
+> loadings(pc.cr)  # note that blank entries are small but not zero
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
@@ -12936,6 +12936,7 @@ Rape     -0.543 -0.167  0.818
 SS loadings      1.00   1.00   1.00   1.00
 Proportion Var   0.25   0.25   0.25   0.25
 Cumulative Var   0.25   0.50   0.75   1.00
+> ## The signs of the columns are arbitrary
 > plot(pc.cr) # shows a screeplot.
 > biplot(pc.cr)
 > 
@@ -15813,6 +15814,7 @@ Importance of components:
 Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
 Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
 Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
+> ## The signs of the loading columns are arbitrary
 > print(summary(princomp(USArrests, cor = TRUE),
 +               loadings = TRUE, cutoff = 0.2), digits = 2)
 Importance of components:
