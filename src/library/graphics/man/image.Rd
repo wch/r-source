@@ -1,6 +1,6 @@
 % File src/library/graphics/man/image.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -121,8 +121,9 @@ image(x, \dots)
 
   If \code{useRaster} is not specified, raster images are used when the
   \code{\link{getOption}("preferRaster")} is true, the grid is regular
-  and either \code{\link{dev.capabilities}("raster")} is \code{"yes"} or
-  it is \code{"non-missing"} and there are no missing values.
+  and either \code{\link{dev.capabilities}("rasterImage")$rasterImage}
+  is \code{"yes"} or it is \code{"non-missing"} and there are no missing
+  values.
 }
 
 \note{
