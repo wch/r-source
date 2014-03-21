@@ -263,6 +263,9 @@
       \code{"quarters"} and \code{"years"} cases of
       \code{hist.POSIXlt()} has been increased by a day.  (Inter alia,
       fixes \PR{15717}.)
+      
+      \item The handling of \code{DF[i,] <- a} where \code{i} is of
+      length 0 is improved.  (Inter alia, fixes \PR{15718}.)
     }
   }
 

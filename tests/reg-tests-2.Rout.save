@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-12 r65162) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-21 r65227) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7421,4 +7421,10 @@ Signif. codes:
   0 '***' 0.001 '**' 0.01 '*' 0.05
   '.' 0.1 ' ' 1
 > ## did not line wrap "Signif. codes" previously
+> 
+> 
+> ## PR#15718
+> d <- data.frame(a=1)
+> d[integer(), "a"] <- 2
+> ## warned in 3.0.3.
 > 

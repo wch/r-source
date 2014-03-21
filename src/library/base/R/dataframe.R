@@ -788,7 +788,7 @@ data.frame <-
     new.cols <- NULL
     nvars <- length(x)
     nrows <- .row_names_info(x, 2L)
-    if(has.i) { # df[i, ] or df[i, j]
+    if(has.i && length(i)) { # df[i, ] or df[i, j]
         rows <- NULL  # indicator that it is not yet set
         if(anyNA(i))
             stop("missing values are not allowed in subscripted assignments of data frames")
