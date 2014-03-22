@@ -1,6 +1,6 @@
 % File src/library/datasets/man/sunspots.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sunspots}
@@ -23,7 +23,9 @@
   New York: Springer-Verlag.
 }
 \seealso{
-  \code{\link{sunspot.month}} has a longer (and a bit different) series.
+  \code{\link{sunspot.month}} has a longer (and a bit different) series,
+  \code{\link{sunspot.year}} is a much shorter one.  See there for
+  getting more current sunspot numbers.
 }
 \examples{
 require(graphics)
