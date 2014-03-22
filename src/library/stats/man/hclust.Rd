@@ -1,6 +1,6 @@
 % File src/library/stats/man/hclust.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -161,10 +161,6 @@ hclust(d, method = "complete", members = NULL)
   \emph{Cluster Analysis}.
   London: Heinemann Educ. Books.
 
-  Gordon, A. D. (1999).
-  \emph{Classification}. Second Edition.
-  London: Chapman and Hall / CRC.
-
   Hartigan, J.A. (1975).
   \emph{Clustering  Algorithms}.
   New York: Wiley.
@@ -197,8 +193,8 @@ hclust(d, method = "complete", members = NULL)
   3rd English ed. Amsterdam: Elsevier Science BV.
 
   Murtagh, F. and Legendre, P. (2013).
-  Ward’s hierarchical agglomerative clustering method: which algorithms
-  implement Ward’s criterion?
+  Ward's hierarchical agglomerative clustering method: which algorithms
+  implement Ward's criterion?
   \emph{Journal of Classification} (in press).
 }
 \author{
