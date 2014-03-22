@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-22 r65242) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-22 r65252) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3106,6 +3106,16 @@ FALSE  TRUE
 [142,] 2790 1981.417     90.0     90.9       1.0
 [143,] 2819 1983.833     33.3     33.4       0.3
 > 
+> ## How to recreate the "old" sunspot.month (R <= 3.0.3):
+> .sunspot.diff <- cbind(
++     i = c(1202L, 1256L, 1258L, 1301L, 1407L, 1429L, 1452L, 1455L,
++           1663L, 2151L, 2329L, 2498L, 2594L, 2694L, 2819L),
++     res10 = c(1L, 1L, 1L, -1L, -1L, -1L, 1L, -1L,
++           1L, 1L, 1L, 1L, 1L, 20L, 1L))
+> ssm0 <- sunspot.month[1:2988]
+> with(as.data.frame(.sunspot.diff), ssm0[i] <<- ssm0[i] - res10/10)
+> sunspot.month.0 <- ts(ssm0, start = 1749, frequency = 12)
+> 
 > 
 > 
 > cleanEx()
@@ -3470,7 +3480,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.407 0.038 1.451 0 0 
+Time elapsed:  2.561 0.072 2.634 0 0 
 > grDevices::dev.off()
 null device 
           1 

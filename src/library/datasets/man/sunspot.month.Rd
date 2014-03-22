@@ -50,5 +50,15 @@ rug(time(eq)[i])
 s1 <- sunspots[i] ; s2 <- sunspot.month[i]
 cbind(i = i, time = time(sunspots)[i], sunspots = s1, ss.month = s2,
       perc.diff = round(100*2*abs(s1-s2)/(s1+s2), 1))
+
+## How to recreate the "old" sunspot.month (R <= 3.0.3):
+.sunspot.diff <- cbind(
+    i = c(1202L, 1256L, 1258L, 1301L, 1407L, 1429L, 1452L, 1455L,
+          1663L, 2151L, 2329L, 2498L, 2594L, 2694L, 2819L),
+    res10 = c(1L, 1L, 1L, -1L, -1L, -1L, 1L, -1L,
+          1L, 1L, 1L, 1L, 1L, 20L, 1L))
+ssm0 <- sunspot.month[1:2988]
+with(as.data.frame(.sunspot.diff), ssm0[i] <<- ssm0[i] - res10/10)
+sunspot.month.0 <- ts(ssm0, start = 1749, frequency = 12)
 }
 \keyword{datasets}
