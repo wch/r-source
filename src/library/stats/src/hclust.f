@@ -23,7 +23,7 @@ C  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C
 C  Modifications for R: Ross Ihaka, Dec 1996                 C
 C                       Fritz Leisch, Jun 2000               C
 C  all vars declared:   Martin Maechler, Apr 2001            C
-C							     C
+C                                                            C
 c- R Bug PR#4195 fixed "along" qclust.c, given in the report C
 C- Testing: --> "hclust" in ../../../../tests/reg-tests-1b.R C
 C  "ward.D2" (iOpt = 8): Martin Maechler, Mar 2014           C
