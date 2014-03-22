@@ -56,14 +56,13 @@ as.dist(m, diag = FALSE, upper = FALSE)
   Available distance measures are (written for two vectors \eqn{x} and
   \eqn{y}):
   \describe{
-    \item{\code{euclidean}:}{Usual square distance between the two
-      vectors (2 norm).}
+    \item{\code{euclidean}:}{Usual distance between the two vectors (2
+      norm aka \eqn{L_2}), \eqn{\sqrt{\sum_i (x_i - y_i)^2}}{sqrt(sum((x_i - y_i)^2))}.}
 
     \item{\code{maximum}:}{Maximum distance between two components of \eqn{x}
       and \eqn{y} (supremum norm)}
 
-    \item{\code{manhattan}:}{Absolute distance between the two vectors
-      (1 norm).}
+    \item{\code{manhattan}:}{Absolute distance between the two vectors (1 norm aka \eqn{L_1}).}
 
     \item{\code{canberra}:}{
       \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}.
