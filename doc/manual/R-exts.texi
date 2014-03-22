@@ -925,7 +925,9 @@ requirement which is checked at installation.  (In earlier versions of
 Specifying a package in @samp{LinkingTo} suffices if these are C++
 headers containing source code or static linking is done at
 installation: the packages do not need to be (and usually should not be)
-listed in the @samp{Depends} or @samp{Imports} fields.
+listed in the @samp{Depends} or @samp{Imports} fields.  This includes
+CRAN packages @CRANpkg{BH} and almost all users of
+@CRANpkg{RcppArmadillo} and @CRANpkg{RcppEigen}.
 
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
