@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2012   The R Core Team.
+ *  Copyright (C) 1998-2014   The R Core Team.
  *  Copyright (C) 2004-5        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -382,6 +382,8 @@ static SEXP D(SEXP expr, SEXP var)
 	    UNPROTECT(1);
 	}
 	else if (CAR(expr) == LogSymbol) {
+	    if (length(expr) != 2)
+		error("only single-argument calls are supported");
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   CADR(expr));
