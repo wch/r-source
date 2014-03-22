@@ -27,9 +27,9 @@ hclust(d, method = "complete", members = NULL)
 
   \item{method}{the agglomeration method to be used. This should
     be (an unambiguous abbreviation of) one of
-    \code{"ward"}, \code{"single"}, \code{"complete"},
-    \code{"average"}, \code{"mcquitty"}, \code{"median"} or
-    \code{"centroid"}.}
+    \code{"ward.D"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"},
+    \code{"average"} (= UPGMA), \code{"mcquitty"} (= WPGMA),
+    \code{"median"} (= WPGMC) or \code{"centroid"} (= UPGMC).}
 
   \item{members}{\code{NULL} or a vector with length size of
     \code{d}. See the \sQuote{Details} section.}
@@ -45,7 +45,7 @@ hclust(d, method = "complete", members = NULL)
     used. If \code{labels = FALSE} no labels at all are plotted.}
 
   \item{axes, frame.plot, ann}{logical flags as in \code{\link{plot.default}}.}
-  
+
   \item{main, sub, xlab, ylab}{character strings for
     \code{\link{title}}.  \code{sub} and \code{xlab} have a non-NULL
     default when there's a \code{tree$call}.}
@@ -114,7 +114,17 @@ hclust(d, method = "complete", members = NULL)
   methods.  Note however, that methods \code{"median"} and
   \code{"centroid"} are \emph{not} leading to a \emph{monotone distance}
   measure, or equivalently the resulting dendrograms can have so called
-  \emph{inversions} (which are hard to interpret).
+  \emph{inversions} or \emph{reversals} which are hard to interpret,
+  but note the trichotomies in Legendre and Legendre (2012).
+
+  Two different algorithms are found in the literature for Ward clustering.
+  The one used by option \code{"ward.D"} (equivalent to the only Ward
+  option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3) \emph{does not} implement
+  Ward's (1963) clustering criterion, whereas option \code{"ward.D2"} implements
+  that criterion (Murtagh and Legendre 2013).  With the latter, the
+  dissimilarities are \emph{squared} before cluster updating.
+  Note that \code{\link[cluster]{agnes}(*, method="ward")} corresponds
+  to \code{hclust(*, "ward.D2")}.
 
   If \code{members != NULL}, then \code{d} is taken to be a
   dissimilarity matrix between clusters instead of dissimilarities
@@ -151,7 +161,11 @@ hclust(d, method = "complete", members = NULL)
   \emph{Cluster Analysis}.
   London: Heinemann Educ. Books.
 
-  Hartigan, J. A. (1975).
+  Gordon, A. D. (1999).
+  \emph{Classification}. Second Edition.
+  London: Chapman and Hall / CRC.
+
+  Hartigan, J.A. (1975).
   \emph{Clustering  Algorithms}.
   New York: Wiley.
 
@@ -177,6 +191,15 @@ hclust(d, method = "complete", members = NULL)
   Similarity Analysis by Reciprocal Pairs for Discrete and Continuous
   Data.
   \emph{Educational and Psychological Measurement}, \bold{26}, 825--831.
+
+  Legendre, P. and L. Legendre (2012).
+  \emph{Numerical Ecology},
+  3rd English ed. Amsterdam: Elsevier Science BV.
+
+  Murtagh, F. and Legendre, P. (2013).
+  Ward’s hierarchical agglomerative clustering method: which algorithms
+  implement Ward’s criterion?
+  \emph{Journal of Classification} (in press).
 }
 \author{
   The \code{hclust} function is based on Fortran code
@@ -191,6 +214,8 @@ hclust(d, method = "complete", members = NULL)
 }
 \examples{
 require(graphics)
+
+### Example 1: Violent crime rates by US state
 
 hc <- hclust(dist(USArrests), "ave")
 plot(hc)
@@ -209,6 +234,22 @@ hc1 <- hclust(dist(cent)^2, method = "cen", members = table(memb))
 opar <- par(mfrow = c(1, 2))
 plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")
 plot(hc1, labels = FALSE, hang = -1, main = "Re-start from 10 clusters")
+par(opar)
+
+### Example 2: Straight-line distances among 10 US cities
+##  Compare the results of algorithms "ward.D" and "ward.D2"
+
+data(UScitiesD)
+
+mds2 <- -cmdscale(UScitiesD)
+plot(mds2, type="n", axes=FALSE, ann=FALSE)
+text(mds2, labels=rownames(mds2), xpd = NA)
+
+hcity.D  <- hclust(UScitiesD, "ward.D") # "wrong"
+hcity.D2 <- hclust(UScitiesD, "ward.D2")
+opar <- par(mfrow = c(1, 2))
+plot(hcity.D,  hang=-1)
+plot(hcity.D2, hang=-1)
 par(opar)
 }
 \keyword{multivariate}

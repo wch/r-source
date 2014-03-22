@@ -222,32 +222,32 @@
 
       The message for \code{all.equal.numeric()} reports a
       \code{"scaled difference"} only for \code{scale != 1}.
-      
+
       \item \code{all.equal()} now has a \code{"POSIXt"} method
       replacing the \code{"POSIXct"} method.
-      
+
       \item The \code{"Date"} and \code{"POSIXt"} methods of
       \code{seq()} allows \code{by = "quarter"} for completeness
       (\code{by = "3 months"} always worked).
 
       \item A number of changes to reduce copying of objects, contributed
       by Michael Lawrence.
-      
+
       \item \code{file.path()} removes any trailing separator on
       Windows, where they are invalid (although sometimes accepted).
       This is intended to enhance the portability of code written by
       those using POSIX file systems (where a trailing \code{/} can be
       used to confine path matching to directories).
-      
+
       \item New function \code{agrepl()} which like \code{grepl()}
       returns a logical vector.
-      
+
       \item \code{fifo()} is now supported on Windows. (\PR{15600})
-      
+
       \item \code{sort.list(method = "radix")} now allows negative
       integers (wish of \PR{15644}).
 
-      \item Some functionality of \code{print.ts()} is now available in 
+      \item Some functionality of \code{print.ts()} is now available in
       \code{.preformat.ts()} for more modularity.% and format.ts() might follow
 
       \item \code{mcparallel()} gains an option \code{detach=TRUE} which
@@ -255,17 +255,22 @@
       It is based on a new \code{estranged=TRUE} argument to
       \code{mcfork()} which forks child processes such that they
       become independent of the parent process.
-      
+
       \item The \code{pdf()} device omits entirely circles and text at
       extremely small sizes, since some viewers were failing on such files.
-      
+
       \item The rightmost break for the \code{"months"},
       \code{"quarters"} and \code{"years"} cases of
       \code{hist.POSIXlt()} has been increased by a day.  (Inter alia,
       fixes \PR{15717}.)
-      
+
       \item The handling of \code{DF[i,] <- a} where \code{i} is of
       length 0 is improved.  (Inter alia, fixes \PR{15718}.)
+
+      \item \code{hclust()} gains a new method \code{"ward.D2"} which
+      implements Ward's method correctly.  The previous \code{"ward"}
+      method is \code{"ward.D"} now, with the old name still working.
+      Thanks to research and proposals by Pierre Legendre.
     }
   }
 
@@ -320,7 +325,7 @@
       counting instead of the \code{NAMED} mechanism by defining
       \code{SWITCH_TO_REFCNT} in \file{Rinternals.h}. This may become
       the default in the future.
-      
+
       \item There is a new option \option{--use-system-tre} to use a
       suitable system \pkg{tre} library: at present this means a version
       from their \command{git} repository, after corrections.
@@ -438,17 +443,17 @@
       \env{_R_CHECK_DEPENDS_ONLY_} make available packages only in
       \samp{LinkingTo} only for installation, and not for
       loading/runtime tests.
-      
+
       \item \command{tools::checkFF()} reports on \code{.C} and
       \code{.Fortran} calls with \code{DUP = FALSE} if argument
       \code{check_DUP} is true.  This is selected by
       \command{R CMD check} by default.
-      
+
       \item \command{R CMD check --use-gct} can be tuned to
       garbage-collect less frequently using \code{gctorture2()}
       \emph{via} the setting of environment variable
       \env{_R_CHECK_GCT_N_}.
-      
+
       \item Where supported, \code{tools::texi2dvi()} limits the number
       of passes tried to 20.
     }
@@ -520,15 +525,15 @@
 
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
-      
+
       \item \code{download.file(method = "lynx")} is deprecated.
-      
+
       \item \code{.C(DUP = FALSE)} and \code{.Fortran(DUP = FALSE)} are
       now deprecated, and may be disabled in future versions of \R.  As
       their help has long said, \code{.Call()} is much preferred.
 
       \command{R CMD check} notes such usages (by default).
-      
+
       \item The workaround of setting \env{R_OSX_VALGRIND} has been
       removed: it is not needed in current valgrind.
     }
@@ -583,26 +588,26 @@
 
       \item \code{?} applied to a call to an S4 generic failed in
       several cases. (\PR{15680})
-     
+
       \item The implicit S4 generics for primitives with \code{\dots} in
       their argument list were incorrect. (\PR{15690})
-      
+
       \item Bug fixes to \code{methods::callGeneric()}. (\PR{15691})
-      
-      \item The bug fix to \code{aggregrate()} in \PR{15004} introduced 
+
+      \item The bug fix to \code{aggregrate()} in \PR{15004} introduced
       a new bug in the case of no grouping variables. (\PR{15699})
-      
+
       \item In rare cases printing deeply nested lists overran a buffer
       by one byte and on a few platforms segfaulted. (\PR{15679})
 
       \item The dendrogram method of \code{as.dendrogram()} was hidden
       accidentally, (\PR{15703}), and \code{order.dendrogram(d)} gave
-      too much for a leaf \code{d}. (\PR{15702}) 
+      too much for a leaf \code{d}. (\PR{15702})
 
       \item \R would try to kill processes on exit that have pids ever
       used by a child process spawned by \code{mcparallel} even though
       the current process with that pid was not actually its child.
-      
+
       \item \code{cophenetic()} applied to a \code{"dendrogram"} object
       sometimes incorrectly returned a \code{"Labels"} attribute with
       dimensions.  (\PR{15706})
@@ -610,7 +615,7 @@
       \item \code{printCoefmat()} called from quite a few \code{print()}
       methods now obeys small \code{getOption("width")} settings,
       line wrapping the \samp{"signif. codes"} legend appropriately.
-      (\PR{15708}) 
+      (\PR{15708})
     }
   }
 }
@@ -669,7 +674,7 @@
       classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"Date"}
       recognize strings with marked encodings: this allows, for example,
       UTF-8 French month names to be read on (French) Windows.
-      
+
       \item \code{iconv(to = "utf8")} is now accepted on all platforms
       (some implementations did already, but GNU \pkg{libiconv} did not:
       however converted strings were not marked as being in UTF-8).  The
@@ -678,7 +683,7 @@
       \item \code{available.packages()} is better protected against
       corrupt metadata files.  (A recurring problem with Debian package
       \pkg{shogun-r}: \PR{14713}.)
-      
+
       \item Finalizers are marked to be run at garbage collection, but
       run only at a somewhat safer later time (when interrupts are
       checked).  This circumvents some problems with finalizers running
@@ -889,10 +894,10 @@
       \item \code{pbeta(x, a, b, log.p = TRUE)} sometimes underflowed to
       zero for very small and very differently sized \code{a}, \code{b}.
       (\PR{15641})
-      
+
       \item \code{approx()} and \code{approxfun()} now handle infinite
       values with the \code{"constant"} method. (\PR{15655})
-      
+
       \item \code{stripchart()} again respects reversed limits in
       \code{xlim} and \code{ylim}.  (\PR{15664})
     }
