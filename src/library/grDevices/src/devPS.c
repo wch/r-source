@@ -3391,7 +3391,9 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->left = 72 * xoff;			/* left */
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;			/* bottom */
-    dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->top = 72 * (yoff + pd->height);	        /* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;
@@ -4884,6 +4886,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;		/* bottom */
     dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;
@@ -6165,6 +6169,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->right = 72 * (xoff + pd->width);	/* right */
     dd->bottom = 72 * yoff;			/* bottom */
     dd->top = 72 * (yoff + pd->height);	/* top */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     dd->cra[0] = 0.9 * pointsize;
     dd->cra[1] = 1.2 * pointsize;

@@ -3322,6 +3322,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->right = dd->left + rr.width - 0.0001;	/* right */
     dd->top = (xd->kind == PRINTER) ? rr.y : 0;	/* top */
     dd->bottom = dd->top + rr.height - 0.0001;	/* bottom */
+    dd->clipLeft = dd->left; dd->clipRight = dd->right;
+    dd->clipBottom = dd->bottom; dd->clipTop = dd->top;
 
     if (resize == 3) { /* might have got a shrunken window */
 	int iw = width/pixelWidth(NULL) + 0.5,
