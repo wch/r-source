@@ -1,5 +1,5 @@
 
-R version 3.1.0 alpha (2014-03-21 r65232)
+R version 3.1.0 alpha (2014-03-23 r65260)
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3755,7 +3755,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2abd530>
+<environment: 0x455e1d0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4718,7 +4718,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x2e810b8>
+<bytecode: 0x4aaa128>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7230,7 +7230,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x31345f0>
+<environment: 0x4e6a8f0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7746,6 +7746,8 @@ Number of Fisher Scoring iterations: 3
 > ### ** Examples
 > 
 > require(graphics)
+> 
+> ### Example 1: Violent crime rates by US state
 > 
 > hc <- hclust(dist(USArrests), "ave")
 > plot(hc)
@@ -11714,14 +11716,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x321d4b0>
-<environment: 0x318b618>
+<bytecode: 0x5400c20>
+<environment: 0x5414878>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x2fc5010>
-<environment: 0x318b618>
+<bytecode: 0x5402230>
+<environment: 0x5414878>
 
 > 
 > 
@@ -15503,8 +15505,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x1e68ad8>
-<environment: 0x2ddfbd8>
+<bytecode: 0x47ec5d0>
+<environment: 0x49d9ef8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17807,7 +17809,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.849 0.124 4.993 0 0 
+Time elapsed:  4.875 0.122 5.016 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R version 3.1.0 alpha (2014-03-21 r65232)
+R version 3.1.0 alpha (2014-03-23 r65260)
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -620,7 +620,7 @@ List of 2
   ..$ : chr [1:8] "Population" "Income" "Illiteracy" "Life Exp" ...
 
 ** structure of dataset sunspot.month
- Time-Series [1:2988] from 1749 to 1998: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
+ Time-Series [1:3177] from 1749 to 2014: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
 
 ** structure of dataset sunspot.year
  Time-Series [1:289] from 1700 to 1988: 5 11 16 23 36 58 29 20 10 8 ...
