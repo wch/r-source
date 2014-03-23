@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-12 r65162) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-23 r65260) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -290,6 +290,14 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	132 o
  - attr(*, "dimnames")=List of 2
   ..$ : chr [1:5] "Food and Tobacco" "Household Operation" "Medical and Health" "Personal Care" ...
   ..$ : chr [1:5] "1940" "1945" "1950" "1955" ...
+
+** structure of dataset UScitiesD
+Class 'dist'  atomic [1:45] 587 1212 701 1936 604 748 2139 2182 543 920 ...
+  ..- attr(*, "Labels")= chr [1:10] "Atlanta" "Chicago" "Denver" "Houston" ...
+  ..- attr(*, "Size")= int 10
+  ..- attr(*, "call")= language as.dist.default(m = t(cities.mat))
+  ..- attr(*, "Diag")= logi FALSE
+  ..- attr(*, "Upper")= logi FALSE
 
 ** structure of dataset VADeaths
  num [1:5, 1:4] 11.7 18.1 26.9 41 66 8.7 11.7 20.3 30.9 54.3 ...
@@ -620,7 +628,7 @@ List of 2
   ..$ : chr [1:8] "Population" "Income" "Illiteracy" "Life Exp" ...
 
 ** structure of dataset sunspot.month
- Time-Series [1:2988] from 1749 to 1998: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
+ Time-Series [1:3177] from 1749 to 2014: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
 
 ** structure of dataset sunspot.year
  Time-Series [1:289] from 1700 to 1988: 5 11 16 23 36 58 29 20 10 8 ...

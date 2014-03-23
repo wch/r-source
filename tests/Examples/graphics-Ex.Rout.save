@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-12 r65162) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-23 r65260) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2027,7 +2027,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2d53608>
+<bytecode: 0x264a118>
 <environment: namespace:graphics>
 > 
 > 
@@ -2768,7 +2768,7 @@ $`11.33`
 > 
 > ## 'number' is computed automatically:
 > sunflowerplot(iris[, 3:4])
-> ## Imitating  Chambers et al, p.109, closely:
+> ## Imitating Chambers et al, p.109, closely:
 > sunflowerplot(iris[, 3:4], cex = .2, cex.fact = 1, size = .035, seg.lwd = .8)
 > ## or
 > sunflowerplot(Petal.Width ~ Petal.Length, data = iris,
@@ -2898,7 +2898,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3557320>
+<bytecode: 0x308df78>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2978,7 +2978,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.968 0.026 2.001 0 0 
+Time elapsed:  2.107 0.031 2.146 0 0 
 > grDevices::dev.off()
 null device 
           1 

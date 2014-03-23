@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-22 r65252) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-23 r65260) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3131,28 +3131,27 @@ FALSE  TRUE
 > 
 > ### ** Examples
 > 
-> utils::str(sm <- sunspot.month)
- Time-Series [1:3177] from 1749 to 2014: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
+> utils::str(sm <- sunspots)# the monthly version we keep unchanged
+ Time-Series [1:2820] from 1749 to 1984: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
 > utils::str(sy <- sunspot.year)
  Time-Series [1:289] from 1700 to 1988: 5 11 16 23 36 58 29 20 10 8 ...
 > ## The common time interval
 > (t1 <- c(max(start(sm), start(sy)),     1)) # Jan 1749
 [1] 1749    1
-> (t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1988
-[1] 1988   12
+> (t2 <- c(min(  end(sm)[1],end(sy)[1]), 12)) # Dec 1983
+[1] 1983   12
 > s.m <- window(sm, start=t1, end=t2)
-> s.y <- window(sy, start=t1, end=t2) # {irrelevant warning}
-Warning in window.default(x, ...) : 'end' value not changed
+> s.y <- window(sy, start=t1, end=t2[1]) # {irrelevant warning}
 > stopifnot(length(s.y) * 12 == length(s.m),
 +           ## The yearly series *is* close to the averages of the monthly one:
-+           all.equal(s.y, aggregate(s.m, FUN = mean), tol = 0.0009))
++           all.equal(s.y, aggregate(s.m, FUN = mean), tol = 0.0020))
 > ## NOTE: Strangely, correctly weighting the number of days per month
 > ##       (using 28.25 for February) is *not* closer than the simple mean:
 > ndays <- c(31, 28.25, rep(c(31,30, 31,30, 31), 2))
-> all.equal(s.y, aggregate(s.m, FUN = mean))                     # 0.00082
-[1] "Mean relative difference: 0.0008325429"
-> all.equal(s.y, aggregate(s.m, FUN = weighted.mean, w = ndays)) # 0.00140
-[1] "Mean relative difference: 0.001391074"
+> all.equal(s.y, aggregate(s.m, FUN = mean))                     # 0.0013
+[1] "Mean relative difference: 0.001312539"
+> all.equal(s.y, aggregate(s.m, FUN = weighted.mean, w = ndays)) # 0.0017
+[1] "Mean relative difference: 0.001692215"
 > 
 > 
 > 
@@ -3480,7 +3479,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.561 0.072 2.634 0 0 
+Time elapsed:  1.542 0.035 1.583 0 0 
 > grDevices::dev.off()
 null device 
           1 

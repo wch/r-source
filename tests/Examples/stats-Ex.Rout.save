@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-21 r65227) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-23 r65260) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3755,7 +3755,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x2b539d0>
+<environment: 0x47012b0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4718,7 +4718,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x2edbab8>
+<bytecode: 0x49cf3e8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7230,7 +7230,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x32a94c8>
+<environment: 0x4c6ee68>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7747,6 +7747,8 @@ Number of Fisher Scoring iterations: 3
 > 
 > require(graphics)
 > 
+> ### Example 1: Violent crime rates by US state
+> 
 > hc <- hclust(dist(USArrests), "ave")
 > plot(hc)
 > plot(hc, hang = -1)
@@ -7764,6 +7766,22 @@ Number of Fisher Scoring iterations: 3
 > opar <- par(mfrow = c(1, 2))
 > plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")
 > plot(hc1, labels = FALSE, hang = -1, main = "Re-start from 10 clusters")
+> par(opar)
+> 
+> ### Example 2: Straight-line distances among 10 US cities
+> ##  Compare the results of algorithms "ward.D" and "ward.D2"
+> 
+> data(UScitiesD)
+> 
+> mds2 <- -cmdscale(UScitiesD)
+> plot(mds2, type="n", axes=FALSE, ann=FALSE)
+> text(mds2, labels=rownames(mds2), xpd = NA)
+> 
+> hcity.D  <- hclust(UScitiesD, "ward.D") # "wrong"
+> hcity.D2 <- hclust(UScitiesD, "ward.D2")
+> opar <- par(mfrow = c(1, 2))
+> plot(hcity.D,  hang=-1)
+> plot(hcity.D2, hang=-1)
 > par(opar)
 > 
 > 
@@ -11714,14 +11732,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x3743e50>
-<environment: 0x3737e80>
+<bytecode: 0x503e290>
+<environment: 0x4d00e30>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x3743f68>
-<environment: 0x3737e80>
+<bytecode: 0x503e3a8>
+<environment: 0x4d00e30>
 
 > 
 > 
@@ -15503,8 +15521,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x1fbe190>
-<environment: 0x3f44208>
+<bytecode: 0x3aa1350>
+<environment: 0x4ae4970>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17807,7 +17825,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.844 0.122 4.983 0 0 
+Time elapsed:  5.276 0.129 5.425 0 0 
 > grDevices::dev.off()
 null device 
           1 
