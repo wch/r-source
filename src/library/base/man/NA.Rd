@@ -28,21 +28,21 @@
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 
-  The generic function \code{anyNA} with its default method implements
-  \code{any(is.na(x))} in a fast way, not dispatching methods for
-  \code{is.na} and \code{any}.
+  The generic function \code{anyNA} implements something similar to
+  \code{any(is.na(x))} in a possibly faster way.
 }
 \usage{
 NA
 is.na(x)
 anyNA(x)
+
 \method{is.na}{data.frame}(x)
 
 is.na(x) <- value
 }
 \arguments{
-  \item{x}{an \R object to be tested: the default method handles atomic
-    vectors, lists and pairlists.}
+  \item{x}{an \R object to be tested: the default method for
+    \code{is.na} handles atomic vectors, lists and pairlists.}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
 %% Next par on character NAs taken from R-lang.texi:
@@ -66,6 +66,12 @@ is.na(x) <- value
   which case either might result.  Logical computations treat \code{NA}
   as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
   \code{FALSE} if the expression does not depend on the \code{NA} operand.
+  
+  The default method for \code{anyNA} handles atomic vectors, lists,
+  pairlists and \code{NULL} (unlike \code{is.na}).  It calls \code{is.na}
+  on other S4 objects, but assumes that the result is a logical vector.
+  In no other case does it dispatch a method of \code{is.na}, and it
+  never dispatches one for \code{any}.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
@@ -75,14 +81,14 @@ is.na(x) <- value
   otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
   are preserved.
 
-  The default methods also works for lists and pairlists:\cr
+  The default methods also work for lists and pairlists:\cr
   For \code{is.na}, elementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
-  methods for the class of the atomic vector is ignored).
+  method for the class of the element is ignored).
 
-  For \code{anyNA}, such lists are treated \emph{recursively}, such
-  that the result is only false if there is no \code{NA} or \code{NaN} in any
+  For \code{anyNA} lists and pairlists are treated \emph{recursively}:
+  the result is only false if there is no \code{NA} or \code{NaN} in any
   element (which may be a list itself).
 
   The data frame method for \code{is.na} returns a logical matrix
@@ -119,7 +125,7 @@ c(TRUE, FALSE) & NA
 c(TRUE, FALSE) | NA
 
 \donttest{
-## Measure speed difference in an extreme case:
+## Measure speed difference in an extremely favourable case:
 if(require("microbenchmark")) { # does not work reliably on all platforms
   x <- c(NaN, 1:10000)
   print(microbenchmark(any(is.na(x)), anyNA(x)))
