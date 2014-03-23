@@ -1829,9 +1829,7 @@ SEXP C_raster(SEXP args)
 
     raster = CAR(args); args = CDR(args);
     n = LENGTH(raster);
-    if (n <= 0) {
-        error(_("Empty raster"));  
-    }
+    if (n <= 0) error(_("Empty raster"));  
     dim = getAttrib(raster, R_DimSymbol);
 
     vmax = vmaxget();
@@ -2527,19 +2525,19 @@ SEXP C_title(SEXP args)
 
     Main = sub = xlab = ylab = R_NilValue;
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (CAR(args) != R_NilValue && length(CAR(args)) > 0)
 	Main = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (CAR(args) != R_NilValue && length(CAR(args)) > 0)
 	sub = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (CAR(args) != R_NilValue && length(CAR(args)) > 0)
 	xlab = CAR(args);
     args = CDR(args);
 
-    if (CAR(args) != R_NilValue && LENGTH(CAR(args)) > 0)
+    if (CAR(args) != R_NilValue && length(CAR(args)) > 0)
 	ylab = CAR(args);
     args = CDR(args);
 
