@@ -2142,12 +2142,13 @@ static Rboolean anyNA(SEXP x, SEXP env)
 
     default:
 	if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
-	    SEXP e, isna;
-	    // is.na(x) which *should* use dispatch (S4, typically):
-	    PROTECT(e = lang2(install("is.na"),x));
-	    PROTECT(isna = eval(e, env));
+	    // is.na(x) which should use dispatch (S4, typically):
+	    SEXP e = PROTECT(lang2(install("is.na"), x));
+	    SEXP isna = PROTECT(eval(e, env));
+	    if(TYPEOF(isna) != LGLSXP)
+		error("is.na() should return a logical vector");
 	    int *x_is_na = LOGICAL(isna);
-	    for(i = 0; i < n; i++) // maybe use  xlength(isna) instead of n ?
+	    for(i = 0; i < XLENGTH(isna); i++)
 		if(x_is_na[i]) { UNPROTECT(2); return TRUE; }
 	    UNPROTECT(2);
 	} else
