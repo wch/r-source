@@ -215,12 +215,12 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	dev = dd->dev;
 	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
         /* Bail out if necessary */
-        if (!bss)
-            return result;
+        if (!bss) return result;
+	/* Make sure initialized, or valgrind may complain. */
+        memset(bss, 0, sizeof(baseSystemState));
 	ddp = &(bss->dp);
 	GInit(ddp);
-	/* For some things, the device sets the starting value at least.
-	 */
+	/* For some things, the device sets the starting value at least. */
 	ddp->ps = dev->startps;
 	ddp->col = ddp->fg = dev->startcol;
 	ddp->bg = dev->startfill;
