@@ -2127,7 +2127,8 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
 	break;
- // Note that the recursive calls to anyNA() below never will do method dispatch
+// Note that the recursive calls to anyNA() below
+// will never do method dispatch for anyNA.
     case LISTSXP:
 	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x), env)) return TRUE;
 	break;
@@ -2141,6 +2142,7 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	return FALSE;
 
     default:
+	/* FIXME: this seems really intended for case S4SXP: */
 	if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
 	    // is.na(x) which should use dispatch (S4, typically):
 	    SEXP e = PROTECT(lang2(install("is.na"), x));
