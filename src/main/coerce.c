@@ -2096,7 +2096,17 @@ static Rboolean anyNA(SEXP x, SEXP env)
 {
     R_xlen_t i, n = xlength(x);
 
-    switch (TYPEOF(x)) {
+    if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
+	// is.na(x) which should use dispatch (S4, typically):
+	SEXP e = PROTECT(lang2(install("is.na"), x));
+	SEXP isna = PROTECT(eval(e, env));
+	if(TYPEOF(isna) != LGLSXP)
+	    error("is.na() should return a logical vector");
+	int *x_is_na = LOGICAL(isna);
+	for(i = 0; i < XLENGTH(isna); i++)
+	    if(x_is_na[i]) { UNPROTECT(2); return TRUE; }
+	UNPROTECT(2);
+    } else switch (TYPEOF(x)) {
     case REALSXP:
     {
 	double *xD = REAL(x);
@@ -2127,8 +2137,8 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
 	break;
-// Note that the recursive calls to anyNA() below
-// will never do method dispatch for anyNA.
+// Note that the recursive calls to anyNA() below (LISTSXP, VECSXP)
+// will never do method dispatch for anyNA: these happen in do_anyNA() only
     case LISTSXP:
 	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x), env)) return TRUE;
 	break;
@@ -2142,21 +2152,9 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	return FALSE;
 
     default:
-	/* FIXME: this seems really intended for case S4SXP: */
-	if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
-	    // is.na(x) which should use dispatch (S4, typically):
-	    SEXP e = PROTECT(lang2(install("is.na"), x));
-	    SEXP isna = PROTECT(eval(e, env));
-	    if(TYPEOF(isna) != LGLSXP)
-		error("is.na() should return a logical vector");
-	    int *x_is_na = LOGICAL(isna);
-	    for(i = 0; i < XLENGTH(isna); i++)
-		if(x_is_na[i]) { UNPROTECT(2); return TRUE; }
-	    UNPROTECT(2);
-	} else
-	    error("anyNA() applied to non-(list or vector) of type '%s'",
-		  type2char(TYPEOF(x)));
-    }
+	error("anyNA() applied to non-(list or vector) of type '%s'",
+	      type2char(TYPEOF(x)));
+	}
     return FALSE;
 } // anyNA()
 
