@@ -354,4 +354,9 @@ stopifnot(inherits(dl, "dendrogram"), is.leaf(dl),
 ## as.dendrogram() was hidden;  order.*() failed for leaf
 
 
+## using *named* method
+hw <- hclust(dist(sqrt(1:5)), method=c(M = "ward"))
+## failed for 2 days in R-devel/-alpha
+
+
 proc.time()
