@@ -4,6 +4,8 @@
 % Copyright 2002-2012 The R Foundation
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Extract}
 \title{Extract or Replace Parts of an Object}
 \alias{Extract}
@@ -232,7 +234,7 @@ x$i <- value
   (so the two interpretations would have the same outcome).
   (The documented behaviour of S was that an \code{NA} replacement index
   \sQuote{goes nowhere} but uses up an element of \code{value}:
-  Becker \emph{et al} p. 359.  However, that has not been true of
+  Becker \emph{et al} p.\sspace{}359.  However, that has not been true of
   other implementations.)
 }
 
@@ -272,7 +274,7 @@ x$i <- value
   Character indices can in some circumstances be partially matched (see
   \code{\link{pmatch}}) to the names or dimnames of the object being
   subsetted (but never for subassignment).  Unlike S (Becker \emph{et
-  al} p. 358)), \R never uses partial matching when extracting by
+  al} p.\sspace{}358)), \R never uses partial matching when extracting by
   \code{[}, and partial matching is not by default used by \code{[[}
   (see argument \code{exact}).
 

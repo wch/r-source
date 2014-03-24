@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{grid.xspline}
 \alias{grid.xspline}
 \alias{xsplineGrob}
@@ -99,7 +101,7 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
 \references{
   Blanc, C. and Schlick, C. (1995),
   "X-splines : A Spline Model Designed for the End User",
-  in \emph{Proceedings of SIGGRAPH 95}, pp. 377--386.
+  in \emph{Proceedings of SIGGRAPH 95}, pp.\sspace{}377--386.
   \url{http://dept-info.labri.fr/~schlick/DOC/sig1.html}
 }
 \seealso{

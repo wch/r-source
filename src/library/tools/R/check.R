@@ -3244,7 +3244,7 @@ setRlibs <-
                 ## '-Wreturn-type-c-linkage':
                 warn_re <- c(warn_re,
                              ": warning: .* \\[-Wreturn-type-c-linkage\\]")
-                
+
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
@@ -3583,6 +3583,7 @@ setRlibs <-
                          "enhances_but_not_installed",
                          "many_depends",
                          "skipped",
+                         "hdOnly",
                          if(!check_incoming) "bad_engine")
             if(!all(names(res) %in% allowed)) {
                 errorLog(Log)

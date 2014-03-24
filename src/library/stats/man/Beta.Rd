@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Beta}
 \alias{Beta}
 \alias{dbeta}
@@ -54,7 +56,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \eqn{I_x(a,b)} is \code{pbeta(x, a, b)}.
 
   The noncentral Beta distribution (with \code{ncp} \eqn{ = \lambda})
-  is defined (Johnson \emph{et al}, 1995, pp. 502) as the distribution of
+  is defined (Johnson \emph{et al}, 1995, pp.\sspace{}502) as the distribution of
   \eqn{X/(X+Y)} where \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(\lambda)}
   and \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.
 }
@@ -84,7 +86,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
   shape parameter is larger than one, otherwise directly from the definition.
   The non-central case is based on the derivation as a Poisson
-  mixture of betas (Johnson \emph{et al}, 1995, pp. 502--3).
+  mixture of betas (Johnson \emph{et al}, 1995, pp.\sspace{}502--3).
 
   The central \code{pbeta} uses a C translation (and enhancement for
   \code{log_p = TRUE}) of

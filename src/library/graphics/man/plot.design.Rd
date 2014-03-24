@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{plot.design}
 \alias{plot.design}
 \title{Plot Univariate Effects of a Design or Model}
@@ -48,7 +50,7 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
 \references{
   Chambers, J. M. and Hastie, T. J. eds (1992)
   \emph{Statistical Models in S}.
-  Chapman & Hall, London, \bold{the} \emph{white book}, pp. 546--7 (and 163--4).
+  Chapman & Hall, London, \bold{the} \emph{white book}, pp.\sspace{}546--7 (and 163--4).
 
   Freeny, A. E. and Landwehr, J. M. (1990)
   Displays for data from large designed experiments;

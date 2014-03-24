@@ -39,7 +39,7 @@ unit(x, units, data=NULL)
     \item{\code{"points"}}{Points.  72.27 pt = 1 in.}
     \item{\code{"picas"}}{Picas.  1 pc = 12 pt.}
     \item{\code{"bigpts"}}{Big Points.  72 bp = 1 in.}
-    \item{\code{"dida"}}{Dida. 1157 dd = 1238 pt.}
+    \item{\code{"dida"}}{Dida.  1157 dd = 1238 pt.}
     \item{\code{"cicero"}}{Cicero.  1 cc = 12 dd.}
     \item{\code{"scaledpts"}}{Scaled Points.  65536 sp = 1 pt.}
     \item{\code{"lines"}}{Lines of text.  Locations and dimensions

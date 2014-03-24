@@ -3,6 +3,8 @@
 % Copyright 1995-2010 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{UseMethod}
 \title{Class Methods}
 \alias{UseMethod}
@@ -158,7 +160,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   method.  It is possible to change the method that \code{NextMethod}
   would dispatch by manipulating \code{.Class}, but \sQuote{this is not
     recommended unless you understand the inheritance mechanism
-    thoroughly} (Chambers & Hastie, 1992, p. 469).
+    thoroughly} (Chambers & Hastie, 1992, p.\sspace{}469).
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

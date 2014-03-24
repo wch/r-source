@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{predict.Arima}
 \alias{predict.Arima}
 \title{Forecast from ARIMA fits}
@@ -29,7 +31,7 @@
 
   The standard errors of prediction exclude the uncertainty in the
   estimation of the ARMA model and the regression coefficients.
-  According to Harvey (1993, pp. 58--9) the effect is small.
+  According to Harvey (1993, pp.\sspace{}58--9) the effect is small.
 }
 \value{
   A time series of predictions, or if \code{se.fit = TRUE}, a list

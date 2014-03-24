@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{cmdscale}
 \alias{cmdscale}
@@ -99,7 +100,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 
   Krzanowski, W. J. and Marriott, F. H. C. (1994)
   \emph{Multivariate Analysis. Part I. Distributions, Ordination and
-  Inference.}  London: Edward Arnold. (Especially pp. 108--111.)
+  Inference.}  London: Edward Arnold. (Especially pp.\sspace{}108--111.)
 
   Mardia, K.V. (1978)
   Some properties of classical multidimensional scaling.

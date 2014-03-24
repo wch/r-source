@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Indometh}
 \docType{data}
 \alias{Indometh}
@@ -47,7 +49,7 @@
 
   Davidian, M. and Giltinan, D. M. (1995)
   \emph{Nonlinear Models for Repeated Measurement Data},
-  Chapman & Hall (section 5.2.4, p. 129)
+  Chapman & Hall (section 5.2.4, p.\sspace{}129)
 
   Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
     S and S-PLUS}, Springer.

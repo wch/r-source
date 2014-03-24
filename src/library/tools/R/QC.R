@@ -2927,10 +2927,16 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
     }
 
     ## Check for excessive 'Depends'
-
-    deps <- setdiff(depends, c("R", "base", "datasets", "grDevices", "graphics",
-                               "methods", "utils", "stats"))
+    deps <- setdiff(depends, c("R", "base", "datasets", "grDevices",
+                               "graphics", "methods", "utils", "stats"))
     if(length(deps) > 5L) bad_depends$many_depends <- deps
+
+    ## check header-only packages
+    if (check_incoming) {
+        hdOnly <- c("BH", "RcppArmadillo", "RcppEigen")
+        hd <- intersect(hdOnly, c(depends, imports))
+        if(length(hd)) bad_depends$hdOnly <- hd
+    }
 
     class(bad_depends) <- "check_package_depends"
     bad_depends
@@ -3015,9 +3021,16 @@ function(x, ...)
       },
       if(length(y <- x$bad_engine)) {
           c(y, "")
+      },
+      if(length(bad <- x$hdOnly)) {
+          c(if(length(bad) > 1L)
+            c("Packages in Depends/Imports which should probably only be in LinkingTo:", .pretty_format(bad))
+          else
+            sprintf("Package in Depends/Imports which should probably only be in LinkingTo: %s", sQuote(bad)),
+            "")
       }
       )
-}
+  }
 
 ### * .check_package_description
 

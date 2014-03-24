@@ -3,6 +3,8 @@
 % Copyright 1995-2008 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{boxplot}
 \alias{boxplot}
 \alias{boxplot.default}
@@ -62,7 +64,7 @@ boxplot(x, \dots)
   \item{notch}{if \code{notch} is \code{TRUE}, a notch is drawn in
     each side of the boxes.  If the notches of two plots do not
     overlap this is \sQuote{strong evidence} that the two medians differ
-    (Chambers \emph{et al}, 1983, p. 62).  See \code{\link{boxplot.stats}}
+    (Chambers \emph{et al}, 1983, p.\sspace{}62).  See \code{\link{boxplot.stats}}
     for the calculations used.}
   \item{outline}{if \code{outline} is not true, the outliers are
     not drawn (as points whereas S+ uses lines).}% the argument name is most ugly but S+ compatible
