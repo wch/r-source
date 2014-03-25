@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -28,8 +28,8 @@
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 
-  The generic function \code{anyNA} implements something similar to
-  \code{any(is.na(x))} in a possibly faster way.
+  The generic function \code{anyNA} implements \code{any(is.na(x))} in a
+  possibly faster way (especially for atomic vectors).
 }
 \usage{
 NA
@@ -67,11 +67,9 @@ is.na(x) <- value
   as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
   \code{FALSE} if the expression does not depend on the \code{NA} operand.
   
-  The default method for \code{anyNA} handles atomic vectors, lists,
-  pairlists and \code{NULL} (unlike \code{is.na}).  It calls \code{is.na}
-  on other S4 objects, but assumes that the result is a logical vector.
-  In no other case does it dispatch a method of \code{is.na}, and it
-  never dispatches one for \code{any}.
+  The default method for \code{anyNA} handles atomic vectors (without a
+  class) and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
+  classes and on lists and pairlists.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
@@ -82,18 +80,17 @@ is.na(x) <- value
   are preserved.
 
   The default methods also work for lists and pairlists:\cr
-  For \code{is.na}, elementwise the result is false unless that element
+  For \code{is.na}, lementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
   method for the class of the element is ignored).
 
-  For \code{anyNA} lists and pairlists are treated \emph{recursively}:
-  the result is only false if there is no \code{NA} or \code{NaN} in any
-  element (which may be a list itself).
-
   The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
   from the row and column names of the data frame.
+  
+  \code{anyNA(NULL)} is false: \code{is.na(NULL)} is \code{logical(0)},
+  with a warning.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -125,25 +122,19 @@ c(TRUE, FALSE) & NA
 c(TRUE, FALSE) | NA
 
 \donttest{
-## Measure speed difference in an extremely favourable case:
+## Measure speed difference in a favourable case:
+## the difference depends on the platform, on Linux ca 3x.
+x <- 1:10000; x[5000] <- NaN  # coerces x to be double
 if(require("microbenchmark")) { # does not work reliably on all platforms
-  x <- c(NaN, 1:10000)
   print(microbenchmark(any(is.na(x)), anyNA(x)))
-} else { ## much less accurate
-  x <- c(NaN, 1e6)
+} else {
   nSim <- 2^13
   print(rbind(is.na = system.time(replicate(nSim, any(is.na(x)))),
               anyNA = system.time(replicate(nSim, anyNA(x)))))
 }
 }
 
-## anyNA() works recursively with list()s:
-LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
-L2 <- LL[c(1,3)]
-sapply(LL, anyNA); anyNA(LL)
-sapply(L2, anyNA); anyNA(L2)
-
-## ... lists, and hence data frames, too; no method needed:
+## ... lists, and hence data frames, too:
 dN <- dd <- USJudgeRatings; dN[3,6] <- NA
 anyNA(dd) # FALSE
 anyNA(dN) # TRUE

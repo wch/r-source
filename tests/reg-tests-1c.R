@@ -73,16 +73,6 @@ try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
       k. <- kmeans(r., 2)   # fine
 
 
-## regression test incorrectly in example(NA)
-xx <- c(0:4)
-is.na(xx) <- c(2, 4)
-LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
-L2 <- LL[c(1,3)]
-dN <- dd <- USJudgeRatings; dN[3,6] <- NA
-stopifnot(anyNA(xx), anyNA(LL), !anyNA(L2),
-          anyNA(dN), !anyNA(dd), !any(is.na(dd)),
-          all(c(3,6) == which(is.na(dN), arr.ind=TRUE)))
-
 ## PR#15376
 stem(c(1, Inf))
 ## hung in 3.0.1
