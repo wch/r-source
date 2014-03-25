@@ -43,6 +43,8 @@ is.na(x) <- value
 \arguments{
   \item{x}{an \R object to be tested: the default method for
     \code{is.na} handles atomic vectors, lists and pairlists.}
+  \item{recursive}{logical: should \code{anyNA} be applied recursively
+    to lists and pairlists.}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
 %% Next par on character NAs taken from R-lang.texi:
@@ -53,10 +55,10 @@ is.na(x) <- value
   \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
 
   \code{is.na(x)} works elementwise when \code{x} is a
-  \code{\link{list}}.  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.  A complex
-  value is regarded as \code{NA} if either its real or imaginary part is
-  \code{NA} or \code{NaN}.
+  \code{\link{list}}.  It and \code{anyNA} are generic: you can write
+  methods to handle specific classes of objects, see
+  \link{InternalMethods}.  A complex value is regarded as \code{NA} if
+  either its real or imaginary part is \code{NA} or \code{NaN}.
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
@@ -80,10 +82,13 @@ is.na(x) <- value
   are preserved.
 
   The default methods also work for lists and pairlists:\cr
-  For \code{is.na}, lementwise the result is false unless that element
+  For \code{is.na}, elementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
-  method for the class of the element is ignored).
+  method for the class of the element is ignored).\cr
+  \code{anyNA(recursive = FALSE)} works the same way as \code{is.na};
+  \code{anyNA(recursive = TRUE)} apply \code{anyNA} (with method
+  dispatch) to each element.
 
   The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
@@ -133,6 +138,12 @@ if(require("microbenchmark")) { # does not work reliably on all platforms
               anyNA = system.time(replicate(nSim, anyNA(x)))))
 }
 }
+
+## anyNA() can work recursively with list()s:
+LL <- list(1:5, c(NA, 5:8), c("A","NA"), c("a", NA_character_))
+L2 <- LL[c(1,3)]
+sapply(LL, anyNA); c(anyNA(LL), anyNA(LL, TRUE))
+sapply(L2, anyNA); c(anyNA(L2), anyNA(L2, TRUE))
 
 ## ... lists, and hence data frames, too:
 dN <- dd <- USJudgeRatings; dN[3,6] <- NA

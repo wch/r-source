@@ -10,7 +10,7 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item \code{anyNA()} gains a \code{recursive} argument.
     }
   }
 }
