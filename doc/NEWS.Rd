@@ -620,6 +620,12 @@
       methods now obeys small \code{getOption("width")} settings,
       line wrapping the \samp{"signif. codes"} legend appropriately.
       (\PR{15708})
+      
+      \item \code{model.matrix()} assumed that the stored dimnames for a
+      matrix was \code{NULL} or length 2, but length 1 occurred.
+
+      \item The clipping region for a device was sometimes used in base
+      graphics before it was set.
     }
   }
 }
