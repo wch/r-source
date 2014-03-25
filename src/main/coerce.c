@@ -2138,17 +2138,6 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
 	break;
-#ifdef anyNA_RECURSIVE
-// If we want recursive calls to anyNA() below (LISTSXP, VECSXP)
-// then we need to do method dispatch for anyNA.
-    case LISTSXP:
-	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x), env)) return TRUE;
-	break;
-    case VECSXP:
-	for (i = 0; i < n; i++)
-	    if (anyNA(VECTOR_ELT(x, i), env)) return TRUE;
-	break;
-#endif
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
 	return FALSE;
     case NILSXP: // is.na() gives a warning..., but we do not.
