@@ -80,7 +80,7 @@ is.na(x) <- value
   are preserved.
 
   The default methods also work for lists and pairlists:\cr
-  For \code{is.na}, lementwise the result is false unless that element
+  For \code{is.na}, elementwise the result is false unless that element
   is a length-one atomic vector and the single element of that vector is
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
   method for the class of the element is ignored).
