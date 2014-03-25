@@ -31,10 +31,9 @@
       definition of \command{diff -b} (as distinct from the description
       in the \command{man} pages of most systems).
 
-      \item New function \code{anyNA()}, a fast version of
-      \code{any(is.na(.))}, \emph{where neither \code{is.na()} nor
-      \code{any()} has a relevant method}, based on a proposal by Tim
-      Hesterberg. (Wish of \PR{15239}.)
+      \item New function \code{anyNA()}, a version of
+      \code{any(is.na(.))} which is fast for atomic vectors, based on a
+      proposal by Tim Hesterberg. (Wish of \PR{15239}.)
 
       \item \code{arrayInd(*, useNames = TRUE)} and, analogously,
       \code{which(*, arr.ind = TRUE)} now make use of

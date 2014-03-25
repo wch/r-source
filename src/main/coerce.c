@@ -2086,27 +2086,26 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+// Check if x has missing values; the anyNA.default() method
 static Rboolean anyNA(SEXP x, SEXP env)
 /* Original code:
    Copyright 2012 Google Inc. All Rights Reserved.
    Author: Tim Hesterberg <rocket@google.com>
    Distributed under GPL 2 or later
 */
-// Check if x has missing values; the  anyNA.default() method:
 {
-    R_xlen_t i, n = xlength(x);
+    SEXPTYPE xT = TYPEOF(x);
+    if (OBJECT(x) || xT == VECSXP || xT == LISTSXP) {
+	SEXP e0 = PROTECT(lang2(install("is.na"), x));
+	SEXP e = PROTECT(lang2(install("any"), e0));
+	SEXP res = PROTECT(eval(e, env));
+	int ans = asLogical(res);
+	UNPROTECT(3);
+	return ans == 1; // so NA answer is false.
+    }
 
-    if(IS_S4_OBJECT(x)) { // --> any(is.na(.))
-	// is.na(x) which should use dispatch (S4, typically):
-	SEXP e = PROTECT(lang2(install("is.na"), x));
-	SEXP isna = PROTECT(eval(e, env));
-	if(TYPEOF(isna) != LGLSXP)
-	    error("is.na() should return a logical vector");
-	int *x_is_na = LOGICAL(isna);
-	for(i = 0; i < XLENGTH(isna); i++)
-	    if(x_is_na[i]) { UNPROTECT(2); return TRUE; }
-	UNPROTECT(2);
-    } else switch (TYPEOF(x)) {
+    R_xlen_t i, n = xlength(x);
+    switch (xT) {
     case REALSXP:
     {
 	double *xD = REAL(x);
@@ -2129,16 +2128,19 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	break;
     }
     case CPLXSXP:
+    {
+	Rcomplex *xC = COMPLEX(x);
 	for (i = 0; i < n; i++)
-	    if (ISNAN(COMPLEX(x)[i].r) ||
-		ISNAN(COMPLEX(x)[i].i)) return TRUE;
+	    if (ISNAN(xC[i].r) || ISNAN(xC[i].i)) return TRUE;
 	break;
+    }
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) == NA_STRING) return TRUE;
 	break;
-// Note that the recursive calls to anyNA() below (LISTSXP, VECSXP)
-// will never do method dispatch for anyNA: these happen in do_anyNA() only
+#ifdef anyNA_RECURSIVE
+// If we want recursive calls to anyNA() below (LISTSXP, VECSXP)
+// then we need to do method dispatch for anyNA.
     case LISTSXP:
 	for (i = 0; i < n; i++, x = CDR(x)) if (anyNA(CAR(x), env)) return TRUE;
 	break;
@@ -2146,6 +2148,7 @@ static Rboolean anyNA(SEXP x, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (anyNA(VECTOR_ELT(x, i), env)) return TRUE;
 	break;
+#endif
     case RAWSXP: /* no such thing as a raw NA:  is.na(.) gives FALSE always */
 	return FALSE;
     case NILSXP: // is.na() gives a warning..., but we do not.
@@ -2154,7 +2157,7 @@ static Rboolean anyNA(SEXP x, SEXP env)
     default:
 	error("anyNA() applied to non-(list or vector) of type '%s'",
 	      type2char(TYPEOF(x)));
-	}
+    }
     return FALSE;
 } // anyNA()
 
