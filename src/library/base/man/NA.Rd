@@ -34,7 +34,7 @@
 \usage{
 NA
 is.na(x)
-anyNA(x)
+anyNA(x, recursive = FALSE)
 
 \method{is.na}{data.frame}(x)
 
@@ -44,10 +44,10 @@ is.na(x) <- value
   \item{x}{an \R object to be tested: the default method for
     \code{is.na} handles atomic vectors, lists and pairlists.}
   \item{recursive}{logical: should \code{anyNA} be applied recursively
-    to lists and pairlists.}
+    to lists and pairlists?}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
-%% Next par on character NAs taken from R-lang.texi:
+%% Next para on character NAs taken from R-lang.texi:
 \details{
   The \code{NA} of character type is distinct from the
   string \code{"NA"}.  Programmers who need to specify an explicit
