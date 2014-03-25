@@ -314,7 +314,7 @@ static char *AppendInteger(char *buf, int i)
 static SEXP ColumnNames(SEXP x)
 {
     SEXP dn = getAttrib(x, R_DimNamesSymbol);
-    if (dn == R_NilValue)
+    if (dn == R_NilValue || length(dn) < 2)
 	return R_NilValue;
     else
 	return VECTOR_ELT(dn, 1);
