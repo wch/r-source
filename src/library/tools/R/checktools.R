@@ -589,10 +589,19 @@ function(log, drop_ok = TRUE)
                   lqa, rqa, lqa, rqa)
     pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
     if(length(pos)) {
-        txt <- lines[pos[1L]]
+        pos <- pos[1L]
+        txt <- lines[pos]
         package <- sub(re, "\\2", txt, perl = TRUE, useBytes = TRUE)
         version <- sub(re, "\\5", txt, perl = TRUE, useBytes = TRUE)
+        header <- lines[seq_len(pos - 1L)]
         lines <- lines[-seq_len(pos)]
+        ## Get check options from header.
+        re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
+        flags <- if(length(pos <- grep(re, header,
+                                       perl = TRUE, useBytes = TRUE))) {
+            sub(re, "\\1", header[pos[1L]],
+                perl = TRUE, useBytes = TRUE)
+        } else ""
     } else return()
 
     ## Get footer.
@@ -609,14 +618,6 @@ function(log, drop_ok = TRUE)
     if(num > 0L) {
         pos <- seq.int(len - num + 1L, len)
         lines <- lines[-pos]
-    }
-
-    re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
-    if(length(pos <- grep(re, lines, perl = TRUE, useBytes = TRUE))) {
-        flags <- sub(re, "\\1", lines[pos[1L]], perl = TRUE, useBytes = TRUE)
-        lines <- lines[-pos]
-    } else {
-        flags <- ""
     }
 
     analyze_lines <- function(lines) {
