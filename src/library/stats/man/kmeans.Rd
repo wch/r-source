@@ -32,7 +32,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{nstart}{if \code{centers} is a number, how many random sets
     should be chosen?}
   \item{algorithm}{character: may be abbreviated.  Note that
-    \code{"Lloyd"} and \code{"Forgy"} and alternative names for one
+    \code{"Lloyd"} and \code{"Forgy"} are alternative names for one
     algorithm.}
   \item{object}{an \R object of class \code{"kmeans"}, typically the
     result \code{ob} of \code{ob <- kmeans(..)}.}
