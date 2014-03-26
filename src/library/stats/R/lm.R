@@ -305,7 +305,6 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     n <- NROW(Qr$qr)
     if(is.na(z$df.residual) || n - p != z$df.residual)
         warning("residual degrees of freedom in object suggest this is not an \"lm\" fit")
-    p1 <- 1L:p
     ## do not want missing values substituted here
     r <- z$residuals
     f <- z$fitted.values
@@ -323,6 +322,10 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
         r <- sqrt(w) * r
     }
     resvar <- rss/rdf
+    ## see thread at https://stat.ethz.ch/pipermail/r-help/2014-March/367585.html
+    if (resvar < (mean(f)^2 + var(f)) * 1e-30)  # a few times .Machine$double.eps^2
+        warning("essentially perfect fit: summary may be unreliable")
+    p1 <- 1L:p
     R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
