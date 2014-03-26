@@ -42,24 +42,23 @@ is.na(x) <- value
 }
 \arguments{
   \item{x}{an \R object to be tested: the default method for
-    \code{is.na} handles atomic vectors, lists and pairlists.}
+    \code{is.na} handles atomic vectors, lists and pairlists: that for
+    \code{anyNA} also handled \code{NULL}.}
   \item{recursive}{logical: should \code{anyNA} be applied recursively
     to lists and pairlists?}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
-%% Next para on character NAs taken from R-lang.texi:
+
 \details{
-  The \code{NA} of character type is distinct from the
-  string \code{"NA"}.  Programmers who need to specify an explicit
-  string \code{NA} should use \code{NA_character_} rather than
-  \code{"NA"}, or set elements to \code{NA} using \code{is.na<-}.
+  The \code{NA} of character type is distinct from the string
+  \code{"NA"}.  Programmers who need to specify an explicit missing
+  string should use \code{NA_character_} (rather than \code{"NA"}) or set
+  elements to \code{NA} using \code{is.na<-}.
 
-  \code{is.na(x)} works elementwise when \code{x} is a
-  \code{\link{list}}.  It and \code{anyNA} are generic: you can write
+  \code{is.na} and \code{anyNA} are generic: you can write
   methods to handle specific classes of objects, see
-  \link{InternalMethods}.  A complex value is regarded as \code{NA} if
-  either its real or imaginary part is \code{NA} or \code{NaN}.
-
+  \link{InternalMethods}.
+  
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 
@@ -69,17 +68,19 @@ is.na(x) <- value
   as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
   \code{FALSE} if the expression does not depend on the \code{NA} operand.
   
-  The default method for \code{anyNA} handles atomic vectors (without a
-  class) and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
-  classes and on lists and pairlists.
+  The default method for \code{anyNA} handles atomic vectors without a
+  class and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
+  classes and for \code{recursive = FALSE}, on lists and pairlists.
 }
 \value{
   The default method for \code{is.na} applied to an atomic vector
   returns a logical vector of the same length as its argument \code{x},
   containing \code{TRUE} for those elements marked \code{NA} or, for
-  numeric or complex vectors, \code{\link{NaN}} (!) and \code{FALSE}
-  otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
-  are preserved.
+  numeric or complex vectors, \code{\link{NaN}} and \code{FALSE}
+  otherwise. (A complex value is regarded as \code{NA} if either its
+  real or imaginary part is \code{NA} or \code{\link{NaN}}.)
+  \code{dim}, \code{dimnames} and \code{names} attributes are copied to
+  the result.
 
   The default methods also work for lists and pairlists:\cr
   For \code{is.na}, elementwise the result is false unless that element
@@ -87,14 +88,14 @@ is.na(x) <- value
   regarded as \code{NA} or \code{NaN} (note that any \code{is.na}
   method for the class of the element is ignored).\cr
   \code{anyNA(recursive = FALSE)} works the same way as \code{is.na};
-  \code{anyNA(recursive = TRUE)} apply \code{anyNA} (with method
+  \code{anyNA(recursive = TRUE)} applies \code{anyNA} (with method
   dispatch) to each element.
 
   The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
   from the row and column names of the data frame.
   
-  \code{anyNA(NULL)} is false: \code{is.na(NULL)} is \code{logical(0)},
+  \code{anyNA(NULL)} is false: \code{is.na(NULL)} is \code{logical(0)}
   with a warning.
 }
 \references{
@@ -128,7 +129,7 @@ c(TRUE, FALSE) | NA
 
 \donttest{
 ## Measure speed difference in a favourable case:
-## the difference depends on the platform, on Linux ca 3x.
+## the difference depends on the platform, on most ca 3x.
 x <- 1:10000; x[5000] <- NaN  # coerces x to be double
 if(require("microbenchmark")) { # does not work reliably on all platforms
   print(microbenchmark(any(is.na(x)), anyNA(x)))
