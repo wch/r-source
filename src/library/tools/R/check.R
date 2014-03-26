@@ -4522,11 +4522,8 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
                        tmp <- d[e[1L], ]
                        flags <- tmp$Flags
                        flavors <- d$Flavor[e]
-                       c(sprintf("Version: %s%s",
-                                 tmp$Version,
-                                 ifelse(nzchar(flags),
-                                        sprintf("Flags: %s", flags),
-                                        "")),
+                       c(sprintf("Version: %s", tmp$Version),
+                         if(nzchar(flags)) sprintf("Flags: %s", flags),
                          sprintf("Check: %s, Result: %s", tmp$Check, tmp$Status),
                          sprintf("  %s",
                                  gsub("\n", "\n  ", tmp$Output,
