@@ -272,9 +272,13 @@
       Thanks to research and proposals by Pierre Legendre.
 
       \item The \code{sunspot.month} dataset has been amended and
-      updated from the official source, whereas \code{sunspots} and
-      \code{sunspot.year} will remain immutable, and the docs and source
-      links have been updated correspondingly.
+      updated from the official source, whereas the \code{sunspots} and
+      \code{sunspot.year} datasets will remain immutable. The
+      documentation and source links have been updated correspondingly.
+      
+      \item The \code{summary()} method for \code{"lm"} fits warns if
+      the fit is essentially perfect, as some of the summary may be
+      computed inaccurately (and with platform-dependent values).
     }
   }
 
