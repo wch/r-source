@@ -43,7 +43,7 @@ is.na(x) <- value
 \arguments{
   \item{x}{an \R object to be tested: the default method for
     \code{is.na} handles atomic vectors, lists and pairlists: that for
-    \code{anyNA} also handled \code{NULL}.}
+    \code{anyNA} also handles \code{NULL}.}
   \item{recursive}{logical: should \code{anyNA} be applied recursively
     to lists and pairlists?}
   \item{value}{a suitable index vector for use with \code{x}.}
@@ -76,7 +76,7 @@ is.na(x) <- value
   The default method for \code{is.na} applied to an atomic vector
   returns a logical vector of the same length as its argument \code{x},
   containing \code{TRUE} for those elements marked \code{NA} or, for
-  numeric or complex vectors, \code{\link{NaN}} and \code{FALSE}
+  numeric or complex vectors, \code{\link{NaN}}, and \code{FALSE}
   otherwise. (A complex value is regarded as \code{NA} if either its
   real or imaginary part is \code{NA} or \code{\link{NaN}}.)
   \code{dim}, \code{dimnames} and \code{names} attributes are copied to

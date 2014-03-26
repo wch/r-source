@@ -2197,16 +2197,23 @@ SEXP attribute_hidden do_anyNA(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "anyNA", args, rho, &ans, 0, 1))
 	return ans;
 
-    /* This is a primitive, so we manage argument matching ourselves. */
-    SEXP ap, tmp;
-    PROTECT(ap = CONS(R_NilValue, CONS(R_NilValue, R_NilValue)));
-    tmp = ap;
-    SET_TAG(tmp, install("x")); tmp = CDR(tmp);
-    SET_TAG(tmp, install("recursive"));
-    PROTECT(args = matchArgs(ap, args, call));
-    if(CADR(args) ==  R_MissingArg) SETCADR(args, ScalarLogical(FALSE));
-    ans = ScalarLogical(anyNA(call, op, args, rho));
-    UNPROTECT(2);
+    if(length(args) == 1) {
+	check1arg(args, call, "x");
+ 	ans = ScalarLogical(anyNA(call, op, args, rho));
+   } else {
+	/* This is a primitive, so we manage argument matching ourselves.
+	   But this takes a little time.
+	 */
+	SEXP ap, tmp;
+	PROTECT(ap = CONS(R_NilValue, CONS(R_NilValue, R_NilValue)));
+	tmp = ap;
+	SET_TAG(tmp, install("x")); tmp = CDR(tmp);
+	SET_TAG(tmp, install("recursive"));
+	PROTECT(args = matchArgs(ap, args, call));
+	if(CADR(args) ==  R_MissingArg) SETCADR(args, ScalarLogical(FALSE));
+	ans = ScalarLogical(anyNA(call, op, args, rho));
+	UNPROTECT(2);
+    }
     return ans;
 }
 
