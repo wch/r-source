@@ -323,7 +323,8 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     }
     resvar <- rss/rdf
     ## see thread at https://stat.ethz.ch/pipermail/r-help/2014-March/367585.html
-    if (resvar < (mean(f)^2 + var(f)) * 1e-30)  # a few times .Machine$double.eps^2
+    if (is.finite(resvar) &&
+        resvar < (mean(f)^2 + var(f)) * 1e-30)  # a few times .Machine$double.eps^2
         warning("essentially perfect fit: summary may be unreliable")
     p1 <- 1L:p
     R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
