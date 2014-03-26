@@ -459,7 +459,8 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
             }
     }
     if(partial) {
-        tmp <- summary.lm(object)$cov.unscaled
+        ## We only want one aspect of the summary, which we know to be reliable
+        tmp <- suppressWarnings(summary.lm(object)$cov.unscaled)
         ses <- sqrt(diag(tmp))
         beta11 <- tmp /outer(ses, ses)
         beta11[row(beta11) >= col(beta11)] <- 0
