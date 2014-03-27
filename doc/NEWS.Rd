@@ -277,8 +277,12 @@
       documentation and source links have been updated correspondingly.
       
       \item The \code{summary()} method for \code{"lm"} fits warns if
-      the fit is essentially perfect, as some of the summary may be
+      the fit is essentially perfect, as most of the summary may be
       computed inaccurately (and with platform-dependent values).
+
+      Programmers who use \code{summary} in order to extract just
+      a component which will be reliable (e.g. \code{$cov.unscaled})
+      should wrap their calls in \code{suppressWarnings()}.
     }
   }
 

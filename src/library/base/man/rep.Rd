@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -91,16 +91,19 @@ rep_len(x, length.out)
   no other attributes.
 }
 \note{
-  Function \code{rep.int} is a simple case handled by internal code, and
-  provided as a separate function partly for S compatibility and partly
-  for speed (especially when names can be dropped).
+  Function \code{rep.int} is a simple case which was provided as a
+  separate function partly for S compatibility and partly for speed
+  (especially when names can be dropped).  The performance of \code{rep}
+  has been improved since, but \code{rep.int} is still at least twice as
+  fast when \code{x} has names.
+
+  The name \code{rep.int} long precedes making \code{rep} generic.
 
   Function \code{rep} is a primitive, but (partial) matching of argument
-  names is performed as for normal functions.  You can no longer pass a
-  missing argument to e.g. \code{length.out}.
+  names is performed as for normal functions.
 
-  For historical reasons \code{rep} works on \code{NULL}: the result is
-  always \code{NULL} even when \code{length.out} is positive.
+  For historical reasons \code{rep} (only) works on \code{NULL}: the
+  result is always \code{NULL} even when \code{length.out} is positive.
 
   Although it has never been documented, these functions have always
   worked on \link{expression} vectors.  \R 2.x.y accepted pairlists and
