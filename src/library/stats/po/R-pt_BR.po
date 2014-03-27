@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-03-27 07:49\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1171,6 +1171,10 @@ msgstr "nem todos os modelos foram ajustados ao mesmo tamanho do jogo de dados"
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "observações com peso zero não foram usadas para calcular dispersão"
 
+msgid ""
+"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 msgid "invalid clustering method"
 msgstr "método de agrupamento inválido"
 
@@ -1361,6 +1365,10 @@ msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "graus de liberdade dos resíduos em objeto sugerem que este não é um ajuste "
 "\"lm\""
+
+#, fuzzy
+msgid "essentially perfect fit: summary may be unreliable"
+msgstr "testes-F ANOVA sobre um ajuste essencialmente perfeito, são incertos"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"

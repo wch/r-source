@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-03-27 07:49\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1092,6 +1092,10 @@ msgstr "模型拟合时没有用同样大小的数据集"
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "计算离散度时零权数的观察量略过不用"
 
+msgid ""
+"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 msgid "invalid clustering method"
 msgstr "群集方法不对"
 
@@ -1275,6 +1279,10 @@ msgstr "调用summary.lm(<fake-lm-object>) ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr "对象的残差自由度表明这不是\"lm\" 拟合"
+
+#, fuzzy
+msgid "essentially perfect fit: summary may be unreliable"
+msgstr "对几乎是完全拟合进行ANOVA F-检验的结果不会可靠"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"

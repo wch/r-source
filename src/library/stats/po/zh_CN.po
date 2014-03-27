@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -98,29 +98,29 @@ msgstr "标准差为零"
 msgid "invalid form in unary minus check"
 msgstr "检查一进列减号时发现形式不对"
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "微分表里没有这个函数'%s'"
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr "变数必需是字符串"
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "只用了第一个元素作为变数名"
 
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "'%s'的表达式不对"
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "变数名字不对"
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr "标签不对"
 

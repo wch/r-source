@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
-"PO-Revision-Date: 2013-02-28 05:35+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
+"PO-Revision-Date: 2014-03-26 10:01+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -112,7 +112,6 @@ msgstr " 'alpha' の値が不正です "
 msgid "must specify only one of 'font' and 'fontface'"
 msgstr " 'font' または 'fontface' のうち 1 つのみを指定しなければいけません "
 
-#, fuzzy
 msgid "invalid fontface"
 msgstr " 不正な fontface です "
 
@@ -147,13 +146,12 @@ msgstr " viewports を push することだけが有効です "
 msgid "must specify at least one viewport"
 msgstr " 少なくとも 1 つの viewport を指定しなければいけません "
 
-#, fuzzy
 msgid "Down viewport failed to record on display list"
-msgstr " display list 上に不正なオブジェクトが挿入されました "
+msgstr ""
+" ディスプレイリスト上でviewportを下げる操作を記録することに失敗しました "
 
-#, fuzzy
 msgid "Down viewport incorrectly recorded on display list"
-msgstr " display list 上に不正なオブジェクトが挿入されました "
+msgstr " ディスプレイリスト上でviewportを下げる操作が誤って記録されました "
 
 msgid "must pop at least one viewport"
 msgstr " 少なくとも 1 つの viewport を pop しなければいけません "
@@ -162,7 +160,7 @@ msgid "must navigate up at least one viewport"
 msgstr " 少なくとも 1 つの viewport を navigate up しなければいけません "
 
 msgid "Invalid number of generations"
-msgstr ""
+msgstr " 生成数が不正です "
 
 msgid "invalid object inserted on the display list"
 msgstr " display list 上に不正なオブジェクトが挿入されました "
@@ -270,13 +268,11 @@ msgstr " grob '%s' が見つかりません "
 msgid "invalid element in the display list"
 msgstr " ディスプレイリストの中に不正な要素があります "
 
-#, fuzzy
 msgid "Invalid force target"
-msgstr " 不正な 'order' です "
+msgstr " 不正な force target です "
 
-#, fuzzy
 msgid "Invalid revert target"
-msgstr " 不正な 'print' 引数です "
+msgstr " 不正な revert target です "
 
 msgid "can only reorder 'children' for a \"gTree\""
 msgstr " \"gTree\" に対しては 'children' の再順序化しかできません "
@@ -296,16 +292,14 @@ msgstr " 'hgap' は 1 つの単位 (unit) でなければなりません "
 msgid "'vgap' must be single unit"
 msgstr " 'vgap' は 1 つの単位 (unit) でなければなりません "
 
-#, fuzzy
 msgid "'nrow' must be >= 1"
-msgstr " 'l' は layout でなければなりません "
+msgstr " 'nrow' は 1以上でなければなりません "
 
-#, fuzzy
 msgid "'ncol' must be >= 1"
-msgstr " 'l' は layout でなければなりません "
+msgstr " 'ncol' は1以上でなければなりません "
 
 msgid "nrow * ncol < #{legend labels}"
-msgstr ""
+msgstr " nrow * ncol < #{legend labels} "
 
 msgid "invalid justification"
 msgstr " 不正な位置決め指定 (justification) です "
@@ -331,9 +325,8 @@ msgstr " 不正なリスティング "
 msgid "invalid 'listing'"
 msgstr " 不正な 'listing' "
 
-#, fuzzy
 msgid "Nothing on the display list"
-msgstr " display list に不正な変更が行われました "
+msgstr " ディスプレイリストに何もありません "
 
 msgid "invalid 'origin'"
 msgstr " 不正な 'origin' です "

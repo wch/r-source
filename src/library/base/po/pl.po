@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-03-27 07:48+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1042,19 +1042,19 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/sysutils.c:599 src/main/sysutils.c:603 src/main/sysutils.c:1831
 #: src/main/sysutils.c:1835 src/main/unique.c:966 src/main/unique.c:1289
 #: src/main/unique.c:1349 src/main/unique.c:1356 src/main/unique.c:1750
-#: src/main/util.c:577 src/main/util.c:580 src/main/util.c:1821
-#: src/main/util.c:1990 src/main/util.c:1991 src/main/util.c:1992
-#: src/main/util.c:2009 src/main/util.c:2033 src/main/util.c:2037
-#: src/main/util.c:2039 src/main/util.c:2064 src/main/util.c:2066
-#: src/main/util.c:2068 src/main/util.c:2071 src/main/util.c:2074
-#: src/main/util.c:2078 src/main/util.c:2080 src/modules/X11/devX11.c:3241
+#: src/main/util.c:581 src/main/util.c:584 src/main/util.c:1825
+#: src/main/util.c:1994 src/main/util.c:1995 src/main/util.c:1996
+#: src/main/util.c:2013 src/main/util.c:2037 src/main/util.c:2041
+#: src/main/util.c:2043 src/main/util.c:2068 src/main/util.c:2070
+#: src/main/util.c:2072 src/main/util.c:2075 src/main/util.c:2078
+#: src/main/util.c:2082 src/main/util.c:2084 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
-#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
-#: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1214
 #: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
@@ -1243,8 +1243,8 @@ msgstr "niewspierana wersja systemu Windows"
 #: src/main/seq.c:391 src/main/seq.c:395 src/main/seq.c:399
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:982
-#: src/main/util.c:987 src/main/util.c:994 src/main/util.c:997
+#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
+#: src/main/util.c:991 src/main/util.c:998 src/main/util.c:1001
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
@@ -1280,7 +1280,7 @@ msgstr "nie można zmniejszyć limitu pamięci: zignorowano"
 # error(_("'path' must be a character vector"))
 # src/main/util.c: 893
 # error(_("'path' must be a character vector"))
-#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:893
+#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:897
 msgid "'path' must be a character vector"
 msgstr "'path' musi być wektorem tekstowym"
 
@@ -1874,7 +1874,7 @@ msgstr "nie można przydzielić miejsca dla 'name'"
 # error(_("character argument expected"))
 # src/main/util.c: 694
 # error(_("character argument expected"))
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:694
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:698
 msgid "character argument expected"
 msgstr "oczekiwano argumentu tekstowego"
 
@@ -3385,7 +3385,7 @@ msgstr "niepoprawny argument"
 # src/main/character.c: 366
 # error(_("invalid value"))
 #: src/main/builtin.c:899 src/main/builtin.c:909 src/main/builtin.c:911
-#: src/main/character.c:366 src/main/coerce.c:2772
+#: src/main/character.c:366 src/main/coerce.c:2820
 msgid "invalid value"
 msgstr "niepoprawna wartość"
 
@@ -3411,7 +3411,7 @@ msgstr "niepoprawna wartość"
 # error(_("'...' used in an incorrect context"))
 # src/main/eval.c: 4814
 # error(_("'...' used in an incorrect context"))
-#: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
+#: src/main/builtin.c:942 src/main/coerce.c:2533 src/main/coerce.c:2574
 #: src/main/eval.c:563 src/main/eval.c:683 src/main/eval.c:2099
 #: src/main/eval.c:2176 src/main/eval.c:2236 src/main/eval.c:2569
 #: src/main/eval.c:4694 src/main/eval.c:4814
@@ -3760,56 +3760,56 @@ msgstr "'%s()' zastosowane do nie-listy lub nie-wektora typu '%s'"
 #  _("default method not implemented for type '%s'")
 # src/main/coerce.c: 2350
 #  _("default method not implemented for type '%s'")
-#: src/main/coerce.c:2219 src/main/coerce.c:2282 src/main/coerce.c:2350
+#: src/main/coerce.c:2267 src/main/coerce.c:2330 src/main/coerce.c:2398
 #, c-format
 msgid "default method not implemented for type '%s'"
 msgstr "domyślna metoda nie jest zaimplementowana dla typu '%s'"
 
 # src/main/coerce.c: 2368
 #  _("'name' is missing")
-#: src/main/coerce.c:2368
+#: src/main/coerce.c:2416
 msgid "'name' is missing"
 msgstr "brakuje 'name'"
 
 # src/main/coerce.c: 2375
 # errorcall_return(call, _("first argument must be a character string"))
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2423
 msgid "first argument must be a character string"
 msgstr "pierwszy argument musi być łańcuchem tekstowym"
 
 # src/main/coerce.c: 2408
 # error(_("'what' must be a character string or a function"))
-#: src/main/coerce.c:2408
+#: src/main/coerce.c:2456
 msgid "'what' must be a character string or a function"
 msgstr "argument 'what' musi być łańcuchem tekstowym lub funkcją"
 
 # src/main/coerce.c: 2412
 # error(_("'args' must be a list or expression"))
-#: src/main/coerce.c:2412
+#: src/main/coerce.c:2460
 msgid "'args' must be a list or expression"
 msgstr "'args' musi być listą lub wyrażeniem"
 
 # src/main/coerce.c: 2415
 # error(_("'args' must be a list"))
-#: src/main/coerce.c:2415
+#: src/main/coerce.c:2463
 msgid "'args' must be a list"
 msgstr "'args' musi być listą"
 
 # src/main/coerce.c: 2419
 # error(_("'envir' must be an environment"))
-#: src/main/coerce.c:2419
+#: src/main/coerce.c:2467
 msgid "'envir' must be an environment"
 msgstr "'envir' musi być środowiskiem"
 
 # src/main/coerce.c: 2574
 #  _("invalid environment specified")
-#: src/main/coerce.c:2574
+#: src/main/coerce.c:2622
 msgid "invalid environment specified"
 msgstr "określono niepoprawne środowisko"
 
 # src/main/coerce.c: 2640
 # warning(_("Setting class(x) to NULL;   result will no longer be an S4 object"))
-#: src/main/coerce.c:2640
+#: src/main/coerce.c:2688
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Ustawianie class(x) na NULL. Wynik nie będzie już dłużej obiektem S4"
 
@@ -3817,7 +3817,7 @@ msgstr "Ustawianie class(x) na NULL. Wynik nie będzie już dłużej obiektem S4
 # warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"),
 # 	    translateChar(STRING_ELT(newClass, 0)),
 # 	    translateChar(STRING_ELT(newClass, 1)))
-#: src/main/coerce.c:2643
+#: src/main/coerce.c:2691
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -3829,7 +3829,7 @@ msgstr ""
 # src/main/coerce.c: 2647
 # warning(_("Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"),
 # 	    CHAR(asChar(newClass)))
-#: src/main/coerce.c:2647
+#: src/main/coerce.c:2695
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -3840,14 +3840,14 @@ msgstr ""
 
 # src/main/coerce.c: 2680
 # error(_("invalid replacement object to be a class string"))
-#: src/main/coerce.c:2680
+#: src/main/coerce.c:2728
 msgid "invalid replacement object to be a class string"
 msgstr "niepoprawny zastępujący obiekt na miejsce łańcucha klasy"
 
 # src/main/coerce.c: 2701
 # error(_("\"%s\" can only be set as the class if the object has this type; found \"%s\""),
 # 		      valueString, type2char(TYPEOF(obj)))
-#: src/main/coerce.c:2701
+#: src/main/coerce.c:2749
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -3858,7 +3858,7 @@ msgstr ""
 # src/main/coerce.c: 2719
 # error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
 # 		 length(getAttrib(obj, R_DimSymbol)))
-#: src/main/coerce.c:2719
+#: src/main/coerce.c:2767
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -3869,7 +3869,7 @@ msgstr ""
 
 # src/main/coerce.c: 2727
 # error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"))
-#: src/main/coerce.c:2727
+#: src/main/coerce.c:2775
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
@@ -3877,7 +3877,7 @@ msgstr ""
 
 # src/main/coerce.c: 2763
 # error(_("'value' must be non-null character string"))
-#: src/main/coerce.c:2763
+#: src/main/coerce.c:2811
 msgid "'value' must be non-null character string"
 msgstr "'value' musi być niepustym łańcuchem tekstowym"
 
@@ -3885,7 +3885,7 @@ msgstr "'value' musi być niepustym łańcuchem tekstowym"
 # stop("invalid to change the storage mode of a factor")
 # src/main/coerce.c: 2776
 # error(_("invalid to change the storage mode of a factor"))
-#: src/main/coerce.c:2776
+#: src/main/coerce.c:2824
 msgid "invalid to change the storage mode of a factor"
 msgstr "niepoprawna zmiana trybu przechowywania czynnika"
 
@@ -12004,24 +12004,24 @@ msgstr "obiekt nie jest macierzą"
 # error(_("type %d is unimplemented in '%s'"), t, "type2char")
 # src/main/util.c: 281
 # error(_("type %d is unimplemented in '%s'"), t, "type2symbol")
-#: src/main/util.c:254 src/main/util.c:266 src/main/util.c:281
+#: src/main/util.c:254 src/main/util.c:268 src/main/util.c:285
 #, c-format
 msgid "type %d is unimplemented in '%s'"
 msgstr "niezaimplementowany typ %d w '%s'"
 
-#: src/main/util.c:293
+#: src/main/util.c:297
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "niezaimplementowany typ '%s' w '%s'\n"
 
-#: src/main/util.c:295
+#: src/main/util.c:299
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "niezaimplementowany typ (%d) w '%s'\n"
 
 # src/main/util.c: 420
 # error(_("invalid tag in name extraction"))
-#: src/main/util.c:420
+#: src/main/util.c:424
 msgid "invalid tag in name extraction"
 msgstr "niepoprawna etykieta w ekstrakcji nazwy"
 
@@ -12030,7 +12030,7 @@ msgstr "niepoprawna etykieta w ekstrakcji nazwy"
 # 		     "%d arguments passed to .Internal(%s) which requires %d",
 # 			   (unsigned long) length(args)),
 # 		  length(args), PRIMNAME(op), PRIMARITY(op))
-#: src/main/util.c:430
+#: src/main/util.c:434
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
@@ -12042,7 +12042,7 @@ msgstr[2] "%d argumentów przekazano do '.Internal(%s)' który wymaga %d"
 # ngettext("%d argument passed to '%s' which requires %d",
 # 			       "%d arguments passed to '%s' which requires %d",
 # 			       (unsigned long) length(args))
-#: src/main/util.c:436
+#: src/main/util.c:440
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
@@ -12052,39 +12052,39 @@ msgstr[2] "%d argumentów przekazano do funkcji '%s', która wymaga %d"
 
 # src/main/util.c: 451
 #  _("supplied argument name '%s' does not match '%s'")
-#: src/main/util.c:451
+#: src/main/util.c:455
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
 msgstr "dostarczona nazwa '%s' argumentu nie pasuje do '%s'"
 
 # src/main/util.c: 461
 # error(_("'nthcdr' list shorter than %d"), n)
-#: src/main/util.c:461
+#: src/main/util.c:465
 #, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr "lista 'nthcdr' jest krótsza niż %d"
 
 # src/main/util.c: 466
 # error(_("'nthcdr' needs a list to CDR down"))
-#: src/main/util.c:466
+#: src/main/util.c:470
 msgid "'nthcdr' needs a list to CDR down"
 msgstr "'nthcdr' potrzebuje listy aby prześledzić w dół listy elementów"
 
 # src/main/util.c: 582
 # error(_("'all.x' must be TRUE or FALSE"))
-#: src/main/util.c:582
+#: src/main/util.c:586
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "'all.x' musi być TRUE lub FALSE"
 
 # src/main/util.c: 584
 # error(_("'all.y' must be TRUE or FALSE"))
-#: src/main/util.c:584
+#: src/main/util.c:588
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y' musi być TRUE lub FALSE"
 
 # src/main/util.c: 696
 # error(_("missing value is invalid"))
-#: src/main/util.c:696
+#: src/main/util.c:700
 msgid "missing value is invalid"
 msgstr "brakująca wartość jest niepoprawna"
 
@@ -12092,7 +12092,7 @@ msgstr "brakująca wartość jest niepoprawna"
 # error(_("cannot change working directory"))
 # src/main/util.c: 712
 # error(_("cannot change working directory"))
-#: src/main/util.c:705 src/main/util.c:712
+#: src/main/util.c:709 src/main/util.c:716
 msgid "cannot change working directory"
 msgstr "nie można zmienić katalogu roboczego"
 
@@ -12110,9 +12110,9 @@ msgstr "nie można zmienić katalogu roboczego"
 # error(_("a character vector argument expected"))
 # src/main/util.c: 1059
 # error(_("a character vector argument expected"))
-#: src/main/util.c:731 src/main/util.c:765 src/main/util.c:806
-#: src/main/util.c:848 src/main/util.c:977 src/main/util.c:1036
-#: src/main/util.c:1059
+#: src/main/util.c:735 src/main/util.c:769 src/main/util.c:810
+#: src/main/util.c:852 src/main/util.c:981 src/main/util.c:1040
+#: src/main/util.c:1063
 msgid "a character vector argument expected"
 msgstr "oczekiwano wektora tekstowego jako argumentu"
 
@@ -12124,26 +12124,26 @@ msgstr "oczekiwano wektora tekstowego jako argumentu"
 # error(_("path too long"))
 # src/main/util.c: 856
 # error(_("path too long"))
-#: src/main/util.c:738 src/main/util.c:773 src/main/util.c:815
-#: src/main/util.c:856
+#: src/main/util.c:742 src/main/util.c:777 src/main/util.c:819
+#: src/main/util.c:860
 msgid "path too long"
 msgstr "ścieżka jest zbyt długa"
 
 # src/main/util.c: 991
 # warning(_("only the first character of 'quote' will be used"))
-#: src/main/util.c:991
+#: src/main/util.c:995
 msgid "only the first character of 'quote' will be used"
 msgstr "tylko pierwszy znak argumentu 'quote' zostanie użyty"
 
 # src/main/util.c: 1061
 # error(_("a character vector 'value' expected"))
-#: src/main/util.c:1061
+#: src/main/util.c:1065
 msgid "a character vector 'value' expected"
 msgstr "oczekiwano tekstowego wektora 'value'"
 
 # src/main/util.c: 1064
 # error(_("'value' must be of positive length"))
-#: src/main/util.c:1064
+#: src/main/util.c:1068
 msgid "'value' must be of positive length"
 msgstr "argument 'value' musi posiadać dodatnią długość"
 
@@ -12151,27 +12151,27 @@ msgstr "argument 'value' musi posiadać dodatnią długość"
 # error(_("invalid input '%s' in 'utf8towcs'"), s)
 # src/main/util.c: 1201
 # error(_("invalid input '%s' in 'utf8towcs'"), s)
-#: src/main/util.c:1193 src/main/util.c:1201
+#: src/main/util.c:1197 src/main/util.c:1205
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "niepoprawne wejście '%s' w funkcji 'utf8towcs()'"
 
 # src/main/util.c: 1286
 # error(_("invalid multibyte string at '%s'"), err)
-#: src/main/util.c:1286
+#: src/main/util.c:1290
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "niepoprawny wielobajtowy łańcuch w '%s'"
 
 # src/main/util.c: 1395
 # warning(_("error message truncated to 255 chars"))
-#: src/main/util.c:1395
+#: src/main/util.c:1399
 msgid "error message truncated to 255 chars"
 msgstr "komunikat błędu przycięty do 255 znaków"
 
 # src/main/util.c: 1408
 # warning(_("warning message truncated to 255 chars"))
-#: src/main/util.c:1408
+#: src/main/util.c:1412
 msgid "warning message truncated to 255 chars"
 msgstr "komunikat ostrzegawczy przycięty do 255 znaków"
 
@@ -12179,19 +12179,19 @@ msgstr "komunikat ostrzegawczy przycięty do 255 znaków"
 # stop("all arguments must be named")
 # src/main/util.c: 1815
 # error(_("all arguments must be named"))
-#: src/main/util.c:1815
+#: src/main/util.c:1819
 msgid "all arguments must be named"
 msgstr "wszystkie argumenty muszą być nazwane"
 
 # src/main/util.c: 1889
 # warning(_("ICU is not supported on this build"))
-#: src/main/util.c:1889
+#: src/main/util.c:1893
 msgid "ICU is not supported on this build"
 msgstr "ICU nie jest wspierany w tej kompilacji"
 
 # src/main/util.c: 1950
 # error(_("'breaks' is not sorted"))
-#: src/main/util.c:1950
+#: src/main/util.c:1954
 msgid "'breaks' is not sorted"
 msgstr "argument 'breaks' nie jest posortowany"
 
@@ -12201,20 +12201,20 @@ msgstr "argument 'breaks' nie jest posortowany"
 # error(_("long vector '%s' is not supported"), "breaks")
 # src/main/util.c: 2030
 # error(_("long vector '%s' is not supported"), "vec")
-#: src/main/util.c:1984 src/main/util.c:2030
+#: src/main/util.c:1988 src/main/util.c:2034
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "długi wektor '%s' nie jest wspierany"
 
 # src/main/util.c: 2083
 # error(_("'eps.correct' must be 0, 1, or 2"))
-#: src/main/util.c:2083
+#: src/main/util.c:2087
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct' musi być 0, 1, lub 2"
 
 # src/main/util.c: 2111
 # error(_("'x' must be a vector"))
-#: src/main/util.c:2111
+#: src/main/util.c:2115
 msgid "'x' must be a vector"
 msgstr "'x' musi być wektorem"
 
@@ -13059,14 +13059,14 @@ msgstr "argument type[1]='%s' musi być jednym z '1','O', lub 'I'"
 #: src/modules/lapack/Lapack.c:617 src/modules/lapack/Lapack.c:623
 #: src/modules/lapack/Lapack.c:677 src/modules/lapack/Lapack.c:684
 #: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:723
-#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:778
-#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:833
-#: src/modules/lapack/Lapack.c:839 src/modules/lapack/Lapack.c:893
-#: src/modules/lapack/Lapack.c:899 src/modules/lapack/Lapack.c:1133
-#: src/modules/lapack/Lapack.c:1139 src/modules/lapack/Lapack.c:1187
-#: src/modules/lapack/Lapack.c:1194 src/modules/lapack/Lapack.c:1198
-#: src/modules/lapack/Lapack.c:1226 src/modules/lapack/Lapack.c:1233
-#: src/modules/lapack/Lapack.c:1253
+#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:779
+#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:834
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:894
+#: src/modules/lapack/Lapack.c:900 src/modules/lapack/Lapack.c:1134
+#: src/modules/lapack/Lapack.c:1140 src/modules/lapack/Lapack.c:1188
+#: src/modules/lapack/Lapack.c:1195 src/modules/lapack/Lapack.c:1199
+#: src/modules/lapack/Lapack.c:1227 src/modules/lapack/Lapack.c:1234
+#: src/modules/lapack/Lapack.c:1254
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "kod błędu %d w procedurze 'Lapack' '%s'"
@@ -13078,7 +13078,7 @@ msgstr "kod błędu %d w procedurze 'Lapack' '%s'"
 # src/modules/lapack/Lapack.c: 873
 # error(_("'x' must be a square numeric matrix"))
 #: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
-#: src/modules/lapack/Lapack.c:873
+#: src/modules/lapack/Lapack.c:874
 msgid "'x' must be a square numeric matrix"
 msgstr "'x' musi być kwadratową macierzą liczbową"
 
@@ -13198,8 +13198,8 @@ msgstr "błąd [%d] w funkcji Lapack 'zgecon()'"
 #: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
 #: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
 #: src/modules/lapack/Lapack.c:692 src/modules/lapack/Lapack.c:734
-#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:856
-#: src/modules/lapack/Lapack.c:916
+#: src/modules/lapack/Lapack.c:800 src/modules/lapack/Lapack.c:857
+#: src/modules/lapack/Lapack.c:917
 msgid "Fortran complex functions are not available on this platform"
 msgstr "funkcje zespolone w języku Fortran nie są dozwolone na tej platformie"
 
@@ -13222,7 +13222,7 @@ msgstr "'a' musi być macierzą zespoloną"
 # error(_("'a' is 0-diml"))
 # src/modules/lapack/Lapack.c: 1041
 # error(_("'a' is 0-diml"))
-#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1041
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1042
 msgid "'a' is 0-diml"
 msgstr "'a' jest 0-wymiarowe"
 
@@ -13230,7 +13230,7 @@ msgstr "'a' jest 0-wymiarowe"
 # error(_("'a' (%d x %d) must be square"), n, n2)
 # src/modules/lapack/Lapack.c: 1043
 # error(_("'a' (%d x %d) must be square"), n, n2)
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1043
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1044
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "'A' (%d x %d) musi być macierzą kwadratową"
@@ -13239,7 +13239,7 @@ msgstr "'A' (%d x %d) musi być macierzą kwadratową"
 # error(_("no right-hand side in 'b'"))
 # src/modules/lapack/Lapack.c: 1049
 # error(_("no right-hand side in 'b'"))
-#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1049
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1050
 msgid "no right-hand side in 'b'"
 msgstr "brak prawej strony w 'b'"
 
@@ -13256,7 +13256,7 @@ msgstr "brak prawej strony w 'b'"
 # error(_("'b' (%d x %d) must be compatible with 'a' (%d x %d)"),
 # 		  length(Bin), p, n, n)
 #: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:560
-#: src/modules/lapack/Lapack.c:1052 src/modules/lapack/Lapack.c:1068
+#: src/modules/lapack/Lapack.c:1053 src/modules/lapack/Lapack.c:1069
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "macierz 'B' (%d x %d) musi być zgodna z macierzą 'A' (%d x %d)"
@@ -13276,9 +13276,9 @@ msgstr "macierz 'B' (%d x %d) musi być zgodna z macierzą 'A' (%d x %d)"
 # src/modules/lapack/Lapack.c: 1090
 # error(_("argument %d of Lapack routine %s had invalid value"),
 # 	      -info, "dgesv")
-#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:947
-#: src/modules/lapack/Lapack.c:961 src/modules/lapack/Lapack.c:1016
-#: src/modules/lapack/Lapack.c:1090
+#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:948
+#: src/modules/lapack/Lapack.c:962 src/modules/lapack/Lapack.c:1017
+#: src/modules/lapack/Lapack.c:1091
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "argument %d procedury 'Lapack' '%s' posiadał niepoprawną wartość"
@@ -13300,7 +13300,7 @@ msgstr "'b' musi być macierzą zespoloną"
 # src/modules/lapack/Lapack.c: 1219
 # error(_("right-hand side should have %d not %d rows"), n, Bdims[0])
 #: src/modules/lapack/Lapack.c:670 src/modules/lapack/Lapack.c:716
-#: src/modules/lapack/Lapack.c:1180 src/modules/lapack/Lapack.c:1219
+#: src/modules/lapack/Lapack.c:1181 src/modules/lapack/Lapack.c:1220
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "prawa strona powinna mieć %d wierszy, a nie %d "
@@ -13321,7 +13321,7 @@ msgstr "macierze o 2^31 lub większej liczbie elementów nie są wpierane"
 
 # src/modules/lapack/Lapack.c: 815
 # error(_("'x' must be a square complex matrix"))
-#: src/modules/lapack/Lapack.c:815
+#: src/modules/lapack/Lapack.c:816
 msgid "'x' must be a square complex matrix"
 msgstr "'x' musi być kwadratową macierzą zespoloną"
 
@@ -13335,9 +13335,9 @@ msgstr "'x' musi być kwadratową macierzą zespoloną"
 # error(_("'a' must be a numeric matrix"))
 # src/modules/lapack/Lapack.c: 1244
 # error(_("'a' must be a numeric matrix"))
-#: src/modules/lapack/Lapack.c:925 src/modules/lapack/Lapack.c:999
-#: src/modules/lapack/Lapack.c:1038 src/modules/lapack/Lapack.c:1113
-#: src/modules/lapack/Lapack.c:1244
+#: src/modules/lapack/Lapack.c:926 src/modules/lapack/Lapack.c:1000
+#: src/modules/lapack/Lapack.c:1039 src/modules/lapack/Lapack.c:1114
+#: src/modules/lapack/Lapack.c:1245
 msgid "'a' must be a numeric matrix"
 msgstr "'a' musi być macierzą liczbową"
 
@@ -13345,46 +13345,46 @@ msgstr "'a' musi być macierzą liczbową"
 # error(_("'a' must be a square matrix"))
 # src/modules/lapack/Lapack.c: 1249
 # error(_("'a' must be a square matrix"))
-#: src/modules/lapack/Lapack.c:932 src/modules/lapack/Lapack.c:1249
+#: src/modules/lapack/Lapack.c:933 src/modules/lapack/Lapack.c:1250
 msgid "'a' must be a square matrix"
 msgstr "'a' musi być macierzą kwadratową"
 
 # src/modules/lapack/Lapack.c: 933
 # error(_("'a' must have dims > 0"))
-#: src/modules/lapack/Lapack.c:933
+#: src/modules/lapack/Lapack.c:934
 msgid "'a' must have dims > 0"
 msgstr "macierz 'A' musi mieć wymiary > 0"
 
 # src/modules/lapack/Lapack.c: 945
 # error(_("the leading minor of order %d is not positive definite"),
 # 		      info)
-#: src/modules/lapack/Lapack.c:945
+#: src/modules/lapack/Lapack.c:946
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "wiodący minor rzędu %d nie jest dodatnio określony"
 
 # src/modules/lapack/Lapack.c: 959
 # warning(_("the matrix is either rank-deficient or indefinite"))
-#: src/modules/lapack/Lapack.c:959
+#: src/modules/lapack/Lapack.c:960
 msgid "the matrix is either rank-deficient or indefinite"
 msgstr "macierzy brakuje rang lub też jest nieokreślona"
 
 # src/modules/lapack/Lapack.c: 986
 # error(_("'size' argument must be a positive integer"))
-#: src/modules/lapack/Lapack.c:986
+#: src/modules/lapack/Lapack.c:987
 msgid "'size' argument must be a positive integer"
 msgstr "argument 'size' musi być dodatnią liczbą całkowitą"
 
 # src/modules/lapack/Lapack.c: 1001
 # error(_("'size' cannot exceed ncol(x) = %d"), n)
-#: src/modules/lapack/Lapack.c:1001
+#: src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "'size' nie może przewyższyć ncol(x) = %d"
 
 # src/modules/lapack/Lapack.c: 1002
 # error(_("'size' cannot exceed nrow(x) = %d"), m)
-#: src/modules/lapack/Lapack.c:1002
+#: src/modules/lapack/Lapack.c:1003
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "'size' nie może przewyższyć nrow(x) = %d"
@@ -13392,7 +13392,7 @@ msgstr "'size' nie może przewyższyć nrow(x) = %d"
 # src/modules/lapack/Lapack.c: 1014
 # error(_("element (%d, %d) is zero, so the inverse cannot be computed"),
 # 		      info, info)
-#: src/modules/lapack/Lapack.c:1014
+#: src/modules/lapack/Lapack.c:1015
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr ""
@@ -13401,7 +13401,7 @@ msgstr ""
 # src/modules/lapack/Lapack.c: 1093
 # error(_("Lapack routine %s: system is exactly singular: U[%d,%d] = 0"),
 # 	      "dgesv", info, info)
-#: src/modules/lapack/Lapack.c:1093
+#: src/modules/lapack/Lapack.c:1094
 #, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "procedura Lapack %s: system jest dokładnie osobliwy: U[%d,%d] = 0"
@@ -13409,7 +13409,7 @@ msgstr "procedura Lapack %s: system jest dokładnie osobliwy: U[%d,%d] = 0"
 # src/modules/lapack/Lapack.c: 1101
 # error(_("system is computationally singular: reciprocal condition number = %g"),
 # 		  rcond)
-#: src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1102
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "system jest obliczeniowo osobliwy: numer odwrotnego warunku = %g"
@@ -13418,13 +13418,13 @@ msgstr "system jest obliczeniowo osobliwy: numer odwrotnego warunku = %g"
 # error(_("'b' must be a numeric matrix"))
 # src/modules/lapack/Lapack.c: 1211
 # error(_("'b' must be a numeric matrix"))
-#: src/modules/lapack/Lapack.c:1173 src/modules/lapack/Lapack.c:1211
+#: src/modules/lapack/Lapack.c:1174 src/modules/lapack/Lapack.c:1212
 msgid "'b' must be a numeric matrix"
 msgstr "'b' musi być macierzą liczbową"
 
 # src/modules/lapack/Lapack.c: 1245
 # error(_("argument 'logarithm' must be logical"))
-#: src/modules/lapack/Lapack.c:1245
+#: src/modules/lapack/Lapack.c:1246
 msgid "argument 'logarithm' must be logical"
 msgstr "argument 'logarithm' musi być logiczny"
 

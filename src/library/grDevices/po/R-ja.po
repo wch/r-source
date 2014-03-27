@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
-"PO-Revision-Date: 2013-02-28 05:58+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
+"PO-Revision-Date: 2014-03-24 04:50+0200 \n"
+"Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -29,13 +29,13 @@ msgid "no proper 'z' matrix specified"
 msgstr " 適切な 'z' 行列が指定されていません "
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
-msgstr ""
+msgstr " 'x', 'y' および 'z' の次元が適合していません "
 
 msgid "'bias' must be positive"
 msgstr " 'bias' は正の値でなければなりません "
 
 msgid "'alpha' must be false if 'space' is specified"
-msgstr ""
+msgstr " 'space' が指定されている場合、'alpha' は false でなければなりません "
 
 msgid "at least 3 columns needed"
 msgstr " 少なくとも 3 つ列が必要です "
@@ -166,9 +166,8 @@ msgstr " フォントファミリー '%s' は未知です "
 msgid "invalid 'family' argument"
 msgstr " 不正な 'family' 引数です "
 
-#, fuzzy
 msgid "invalid 'file' argument '%s'"
-msgstr " 不正な 'family' 引数です "
+msgstr " 不正な 'file' 引数 '%s' です "
 
 msgid "invalid PDF version"
 msgstr " 不正な PDF のバージョンです "
@@ -254,9 +253,8 @@ msgstr " 現在、以下のものから記録することが出来るデバイ�
 msgid "argument is not of class %s"
 msgstr " 引数はクラス %s ではありません "
 
-#, fuzzy
 msgid "loading snapshot from a different session"
-msgstr " 異なった R バージョンからのスナップショットが読み込まれています "
+msgstr " 異なるセッションからスナップショットが読み込まれています "
 
 msgid "'nbin' must be numeric of length 1 or 2"
 msgstr " 'nbin' は長さ 1 または 2 の数値でなければなりません "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-03-27 07:48+0000\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -229,19 +229,19 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/sysutils.c:599 src/main/sysutils.c:603 src/main/sysutils.c:1831
 #: src/main/sysutils.c:1835 src/main/unique.c:966 src/main/unique.c:1289
 #: src/main/unique.c:1349 src/main/unique.c:1356 src/main/unique.c:1750
-#: src/main/util.c:577 src/main/util.c:580 src/main/util.c:1821
-#: src/main/util.c:1990 src/main/util.c:1991 src/main/util.c:1992
-#: src/main/util.c:2009 src/main/util.c:2033 src/main/util.c:2037
-#: src/main/util.c:2039 src/main/util.c:2064 src/main/util.c:2066
-#: src/main/util.c:2068 src/main/util.c:2071 src/main/util.c:2074
-#: src/main/util.c:2078 src/main/util.c:2080 src/modules/X11/devX11.c:3241
+#: src/main/util.c:581 src/main/util.c:584 src/main/util.c:1825
+#: src/main/util.c:1994 src/main/util.c:1995 src/main/util.c:1996
+#: src/main/util.c:2013 src/main/util.c:2037 src/main/util.c:2041
+#: src/main/util.c:2043 src/main/util.c:2068 src/main/util.c:2070
+#: src/main/util.c:2072 src/main/util.c:2075 src/main/util.c:2078
+#: src/main/util.c:2082 src/main/util.c:2084 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
-#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
-#: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1214
 #: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
@@ -262,8 +262,8 @@ msgstr "denne Windows-versjonen er ikkje støtta"
 #: src/main/seq.c:391 src/main/seq.c:395 src/main/seq.c:399
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:982
-#: src/main/util.c:987 src/main/util.c:994 src/main/util.c:997
+#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
+#: src/main/util.c:991 src/main/util.c:998 src/main/util.c:1001
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
@@ -285,7 +285,7 @@ msgstr "Ikkje ver tåpeleg! Maskina di har ei adressegrense på 4 GiB."
 msgid "cannot decrease memory limit: ignored"
 msgstr "kan ikkje redusera minnegrensa: ignorert"
 
-#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:893
+#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:897
 msgid "'path' must be a character vector"
 msgstr "«path» må vera ein teiknvektor"
 
@@ -649,7 +649,7 @@ msgstr "DLLname «%s» er for langt"
 msgid "could not allocate space for 'name'"
 msgstr "fann ikkje ledig plass til «name»"
 
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:694
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:698
 msgid "character argument expected"
 msgstr "venta teiknargument"
 
@@ -1409,11 +1409,11 @@ msgid "invalid argument"
 msgstr "ugyldig argument"
 
 #: src/main/builtin.c:899 src/main/builtin.c:909 src/main/builtin.c:911
-#: src/main/character.c:366 src/main/coerce.c:2772
+#: src/main/character.c:366 src/main/coerce.c:2820
 msgid "invalid value"
 msgstr "ugyldig verdi"
 
-#: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
+#: src/main/builtin.c:942 src/main/coerce.c:2533 src/main/coerce.c:2574
 #: src/main/eval.c:563 src/main/eval.c:683 src/main/eval.c:2099
 #: src/main/eval.c:2176 src/main/eval.c:2236 src/main/eval.c:2569
 #: src/main/eval.c:4694 src/main/eval.c:4814
@@ -1624,45 +1624,45 @@ msgstr "ikkje-implementert predikat"
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() brukt på ikkje-(liste eller vektor) av typen «%s»"
 
-#: src/main/coerce.c:2219 src/main/coerce.c:2282 src/main/coerce.c:2350
+#: src/main/coerce.c:2267 src/main/coerce.c:2330 src/main/coerce.c:2398
 #, fuzzy, c-format
 msgid "default method not implemented for type '%s'"
 msgstr "ikkje-implementert type «%s» i «%s»\n"
 
-#: src/main/coerce.c:2368
+#: src/main/coerce.c:2416
 msgid "'name' is missing"
 msgstr "«name» manglar"
 
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2423
 msgid "first argument must be a character string"
 msgstr "det første argumentet må vera ein teiknstreng"
 
-#: src/main/coerce.c:2408
+#: src/main/coerce.c:2456
 msgid "'what' must be a character string or a function"
 msgstr "«what» må vera ein teiknstreng eller ein funksjon"
 
-#: src/main/coerce.c:2412
+#: src/main/coerce.c:2460
 #, fuzzy
 msgid "'args' must be a list or expression"
 msgstr "«args» må vera ei liste"
 
-#: src/main/coerce.c:2415
+#: src/main/coerce.c:2463
 msgid "'args' must be a list"
 msgstr "«args» må vera ei liste"
 
-#: src/main/coerce.c:2419
+#: src/main/coerce.c:2467
 msgid "'envir' must be an environment"
 msgstr "«envir» må vera ein omgjevnad"
 
-#: src/main/coerce.c:2574
+#: src/main/coerce.c:2622
 msgid "invalid environment specified"
 msgstr "ugyldig omgjevnad oppgjeven"
 
-#: src/main/coerce.c:2640
+#: src/main/coerce.c:2688
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Set class(x) til NULL. Resultatet vil ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2643
+#: src/main/coerce.c:2691
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1671,7 +1671,7 @@ msgstr ""
 "Set class(x) til fleire teiknstrengar («%s», «%s», ...). Resultatet vil "
 "ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2647
+#: src/main/coerce.c:2695
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1680,18 +1680,18 @@ msgstr ""
 "Ved å setja class(x) til «%s», vert attributtet sett til NULL. Resultatet "
 "vil ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2680
+#: src/main/coerce.c:2728
 msgid "invalid replacement object to be a class string"
 msgstr "ugyldig erstattingsobjekt for å vera ein klassestreng"
 
-#: src/main/coerce.c:2701
+#: src/main/coerce.c:2749
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 "«%s» kan berre setjast som klasse viss objektet har denne typen (fann «%s»)"
 
-#: src/main/coerce.c:2719
+#: src/main/coerce.c:2767
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1700,18 +1700,18 @@ msgstr ""
 "kan ikkje setja klassen til «matrix» med mindre dimensjonsattributtet er av "
 "lengd 2 (var %d)"
 
-#: src/main/coerce.c:2727
+#: src/main/coerce.c:2775
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "kan ikkje setja klassen til «array» med mindre dimensjonsattributtet har "
 "lengd > 0"
 
-#: src/main/coerce.c:2763
+#: src/main/coerce.c:2811
 msgid "'value' must be non-null character string"
 msgstr "«value» må vera ein teiknstreng ulik null"
 
-#: src/main/coerce.c:2776
+#: src/main/coerce.c:2824
 msgid "invalid to change the storage mode of a factor"
 msgstr "kan ikkje endra lagringsmodus til ein faktor"
 
@@ -6296,134 +6296,134 @@ msgstr "«sep» må vera ein teiknvektor"
 msgid "object is not a matrix"
 msgstr "objektet er ikkje ei matrise"
 
-#: src/main/util.c:254 src/main/util.c:266 src/main/util.c:281
+#: src/main/util.c:254 src/main/util.c:268 src/main/util.c:285
 #, c-format
 msgid "type %d is unimplemented in '%s'"
 msgstr "typen %d er ikkje implementert i «%s»"
 
-#: src/main/util.c:293
+#: src/main/util.c:297
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "ikkje-implementert type «%s» i «%s»\n"
 
-#: src/main/util.c:295
+#: src/main/util.c:299
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "ikkje-implementert type (%d) i «%s»\n"
 
-#: src/main/util.c:420
+#: src/main/util.c:424
 msgid "invalid tag in name extraction"
 msgstr "ugyldig merkelapp i namneuttrekk"
 
-#: src/main/util.c:430
+#: src/main/util.c:434
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
 msgstr[0] "%d argument sendt til «.Internal(%s)», som tek %d argument"
 msgstr[1] "%d argument sende til «.Internal(%s)», som tek %d argument"
 
-#: src/main/util.c:436
+#: src/main/util.c:440
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "%d argument sendt til «%s», som tek %d argument"
 msgstr[1] "%d argument sende til «%s», som tek %d argument"
 
-#: src/main/util.c:451
+#: src/main/util.c:455
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
 msgstr "den oppgjevne argumentnamnet «%s» passar ikkje til «%s»"
 
-#: src/main/util.c:461
+#: src/main/util.c:465
 #, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr "«nthcdr»-lista er kortare enn %d"
 
-#: src/main/util.c:466
+#: src/main/util.c:470
 msgid "'nthcdr' needs a list to CDR down"
 msgstr "«nthcdr» treng ei liste til CDR ned"
 
-#: src/main/util.c:582
+#: src/main/util.c:586
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "«all.x» må vera TRUE eller FALSE"
 
-#: src/main/util.c:584
+#: src/main/util.c:588
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "«all.y» må vera TRUE eller FALSE"
 
-#: src/main/util.c:696
+#: src/main/util.c:700
 msgid "missing value is invalid"
 msgstr "manglande verdi er ugyldig"
 
-#: src/main/util.c:705 src/main/util.c:712
+#: src/main/util.c:709 src/main/util.c:716
 msgid "cannot change working directory"
 msgstr "klarte ikkje endra arbeidsmappe"
 
-#: src/main/util.c:731 src/main/util.c:765 src/main/util.c:806
-#: src/main/util.c:848 src/main/util.c:977 src/main/util.c:1036
-#: src/main/util.c:1059
+#: src/main/util.c:735 src/main/util.c:769 src/main/util.c:810
+#: src/main/util.c:852 src/main/util.c:981 src/main/util.c:1040
+#: src/main/util.c:1063
 msgid "a character vector argument expected"
 msgstr "venta eit teiknvektorargument"
 
-#: src/main/util.c:738 src/main/util.c:773 src/main/util.c:815
-#: src/main/util.c:856
+#: src/main/util.c:742 src/main/util.c:777 src/main/util.c:819
+#: src/main/util.c:860
 msgid "path too long"
 msgstr "adressa er for lang"
 
-#: src/main/util.c:991
+#: src/main/util.c:995
 msgid "only the first character of 'quote' will be used"
 msgstr "berre det første teiknet i «quote» vert brukt"
 
-#: src/main/util.c:1061
+#: src/main/util.c:1065
 msgid "a character vector 'value' expected"
 msgstr "venta ein teiknvektor «value»"
 
-#: src/main/util.c:1064
+#: src/main/util.c:1068
 msgid "'value' must be of positive length"
 msgstr "«value» må ha positiv lengd"
 
-#: src/main/util.c:1193 src/main/util.c:1201
+#: src/main/util.c:1197 src/main/util.c:1205
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "ugyldig inndata «%s» i «utf8towcs»"
 
-#: src/main/util.c:1286
+#: src/main/util.c:1290
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "ugyldig multibyte-streng i «%s»"
 
-#: src/main/util.c:1395
+#: src/main/util.c:1399
 msgid "error message truncated to 255 chars"
 msgstr "feilmelding trunkert til 255 teikn"
 
-#: src/main/util.c:1408
+#: src/main/util.c:1412
 msgid "warning message truncated to 255 chars"
 msgstr "åtvaring trunkert til 255 teikn"
 
-#: src/main/util.c:1815
+#: src/main/util.c:1819
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "attributta må ha namn"
 
-#: src/main/util.c:1889
+#: src/main/util.c:1893
 msgid "ICU is not supported on this build"
 msgstr "ICU er ikkje støtte på dette bygget"
 
-#: src/main/util.c:1950
+#: src/main/util.c:1954
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr "typen «%s» er ikkje støtta"
 
-#: src/main/util.c:1984 src/main/util.c:2030
+#: src/main/util.c:1988 src/main/util.c:2034
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr "typen «%s» er ikkje støtta"
 
-#: src/main/util.c:2083
+#: src/main/util.c:2087
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
-#: src/main/util.c:2111
+#: src/main/util.c:2115
 #, fuzzy
 msgid "'x' must be a vector"
 msgstr "«x» må vera ein teiknvektor"
@@ -6903,20 +6903,20 @@ msgstr "argumentet type[1]='%s' må vera «1», «O» eller «I»"
 #: src/modules/lapack/Lapack.c:617 src/modules/lapack/Lapack.c:623
 #: src/modules/lapack/Lapack.c:677 src/modules/lapack/Lapack.c:684
 #: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:723
-#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:778
-#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:833
-#: src/modules/lapack/Lapack.c:839 src/modules/lapack/Lapack.c:893
-#: src/modules/lapack/Lapack.c:899 src/modules/lapack/Lapack.c:1133
-#: src/modules/lapack/Lapack.c:1139 src/modules/lapack/Lapack.c:1187
-#: src/modules/lapack/Lapack.c:1194 src/modules/lapack/Lapack.c:1198
-#: src/modules/lapack/Lapack.c:1226 src/modules/lapack/Lapack.c:1233
-#: src/modules/lapack/Lapack.c:1253
+#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:779
+#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:834
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:894
+#: src/modules/lapack/Lapack.c:900 src/modules/lapack/Lapack.c:1134
+#: src/modules/lapack/Lapack.c:1140 src/modules/lapack/Lapack.c:1188
+#: src/modules/lapack/Lapack.c:1195 src/modules/lapack/Lapack.c:1199
+#: src/modules/lapack/Lapack.c:1227 src/modules/lapack/Lapack.c:1234
+#: src/modules/lapack/Lapack.c:1254
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr "feilkode %d frå Lapack-rutinen «%s»"
 
 #: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
-#: src/modules/lapack/Lapack.c:873
+#: src/modules/lapack/Lapack.c:874
 msgid "'x' must be a square numeric matrix"
 msgstr "«x» må vera ei kvadratisk, numerisk matrise"
 
@@ -6977,8 +6977,8 @@ msgstr "feil [%d] frå «zgecon()» i Lapack"
 #: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
 #: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
 #: src/modules/lapack/Lapack.c:692 src/modules/lapack/Lapack.c:734
-#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:856
-#: src/modules/lapack/Lapack.c:916
+#: src/modules/lapack/Lapack.c:800 src/modules/lapack/Lapack.c:857
+#: src/modules/lapack/Lapack.c:917
 msgid "Fortran complex functions are not available on this platform"
 msgstr ""
 "komplekse Fortran-funksjonar er ikkje tilgjengelege på denne plattforma"
@@ -6992,28 +6992,28 @@ msgstr "feil [%d] frå «ztrcon()» i Lapack"
 msgid "'a' must be a complex matrix"
 msgstr "«a» må vera ei kompleks matrise"
 
-#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1041
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1042
 msgid "'a' is 0-diml"
 msgstr "«a» er 0-dimensjonal"
 
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1043
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1044
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr "«a» (%d × %d) må vera kvadratisk"
 
-#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1049
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1050
 msgid "no right-hand side in 'b'"
 msgstr "inga høgreside i «b»"
 
 #: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:560
-#: src/modules/lapack/Lapack.c:1052 src/modules/lapack/Lapack.c:1068
+#: src/modules/lapack/Lapack.c:1053 src/modules/lapack/Lapack.c:1069
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr "«a» (%d × %d) må vera kompatibel med «a» (%d × %d)"
 
-#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:947
-#: src/modules/lapack/Lapack.c:961 src/modules/lapack/Lapack.c:1016
-#: src/modules/lapack/Lapack.c:1090
+#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:948
+#: src/modules/lapack/Lapack.c:962 src/modules/lapack/Lapack.c:1017
+#: src/modules/lapack/Lapack.c:1091
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr "argumentet %d i Lapack-rutinen %s har ein ugyldig verdi"
@@ -7023,7 +7023,7 @@ msgid "'b' must be a complex matrix"
 msgstr "«b» må vera ei kompleks matrise"
 
 #: src/modules/lapack/Lapack.c:670 src/modules/lapack/Lapack.c:716
-#: src/modules/lapack/Lapack.c:1180 src/modules/lapack/Lapack.c:1219
+#: src/modules/lapack/Lapack.c:1181 src/modules/lapack/Lapack.c:1220
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr "høgresida må ha %d, ikkje %d rader"
@@ -7037,68 +7037,68 @@ msgstr "«norm» må vera ein teiknstreng"
 msgid "matrices of 2^31 or more elements are not supported"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:815
+#: src/modules/lapack/Lapack.c:816
 #, fuzzy
 msgid "'x' must be a square complex matrix"
 msgstr "«x» må vera ei kvadratisk, numerisk matrise"
 
-#: src/modules/lapack/Lapack.c:925 src/modules/lapack/Lapack.c:999
-#: src/modules/lapack/Lapack.c:1038 src/modules/lapack/Lapack.c:1113
-#: src/modules/lapack/Lapack.c:1244
+#: src/modules/lapack/Lapack.c:926 src/modules/lapack/Lapack.c:1000
+#: src/modules/lapack/Lapack.c:1039 src/modules/lapack/Lapack.c:1114
+#: src/modules/lapack/Lapack.c:1245
 msgid "'a' must be a numeric matrix"
 msgstr "«a» må vera ei numerisk matrise"
 
-#: src/modules/lapack/Lapack.c:932 src/modules/lapack/Lapack.c:1249
+#: src/modules/lapack/Lapack.c:933 src/modules/lapack/Lapack.c:1250
 msgid "'a' must be a square matrix"
 msgstr "«a» må vera ei kvadratisk matrise"
 
-#: src/modules/lapack/Lapack.c:933
+#: src/modules/lapack/Lapack.c:934
 msgid "'a' must have dims > 0"
 msgstr "«a» må ha positiv «dims»"
 
-#: src/modules/lapack/Lapack.c:945
+#: src/modules/lapack/Lapack.c:946
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr "den leiande minoren av orden %d er ikkje positivt definitt"
 
-#: src/modules/lapack/Lapack.c:959
+#: src/modules/lapack/Lapack.c:960
 msgid "the matrix is either rank-deficient or indefinite"
 msgstr ""
 
-#: src/modules/lapack/Lapack.c:986
+#: src/modules/lapack/Lapack.c:987
 msgid "'size' argument must be a positive integer"
 msgstr "«size»-argumentet må vera eit positivt heiltal"
 
-#: src/modules/lapack/Lapack.c:1001
+#: src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr "«size» kan ikkje vera større enn ncol(x) = %d"
 
-#: src/modules/lapack/Lapack.c:1002
+#: src/modules/lapack/Lapack.c:1003
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr "«size» kan ikkje vera større enn nrow(x) = %d"
 
-#: src/modules/lapack/Lapack.c:1014
+#: src/modules/lapack/Lapack.c:1015
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr "elementet (%d, %d) er null, så inversen kan ikkje reknast ut"
 
-#: src/modules/lapack/Lapack.c:1093
+#: src/modules/lapack/Lapack.c:1094
 #, fuzzy, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack-rutinen dgesv: systemet er nøyaktig singulært"
 
-#: src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1102
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr "systemet er reknemessig singulært: det resiproke kondisjonstalet er %g"
 
-#: src/modules/lapack/Lapack.c:1173 src/modules/lapack/Lapack.c:1211
+#: src/modules/lapack/Lapack.c:1174 src/modules/lapack/Lapack.c:1212
 msgid "'b' must be a numeric matrix"
 msgstr "«b» må vera ei numerisk matrise"
 
-#: src/modules/lapack/Lapack.c:1245
+#: src/modules/lapack/Lapack.c:1246
 msgid "argument 'logarithm' must be logical"
 msgstr "argumentet «logarithm» må vera logisk"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11\n"
+"POT-Creation-Date: 2014-03-27 07:49\n"
 "PO-Revision-Date: 2014-03-11 10:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1135,6 +1135,10 @@ msgstr "не все модели были подогнаны под размер данных"
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr "наблюдения с нулевым весом не использовались при вычислении дисперсии"
 
+msgid ""
+"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 msgid "invalid clustering method"
 msgstr "неправильный метод кластеризации"
 
@@ -1321,6 +1325,10 @@ msgstr "вызываю summary.lm(<fake-lm-object>) ..."
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "остаточные степени свободы в объекте указывают, что это не подгонка \"lm\""
+
+#, fuzzy
+msgid "essentially perfect fit: summary may be unreliable"
+msgstr "применение F-критерия для в целом хорошей подгонки бессмысленно"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2013-03-11 16:08+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -97,29 +97,29 @@ msgstr "Standardabweichung ist Null"
 msgid "invalid form in unary minus check"
 msgstr "ungültige Form in unärem minus Check"
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funktion '%s' ist nicht in der Tabelle der Ableitungen"
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr "Variable muss eine Zeichenkette sein"
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "nur das erste Element wird als Variablenname genutzt"
 
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "ungültiger Ausdruck in '%s'"
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "ungültige Variablennamen"
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr "ungültiger tag"
 

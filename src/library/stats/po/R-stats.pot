@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 07:49\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1058,6 +1058,9 @@ msgstr ""
 msgid "observations with zero weight not used for calculating dispersion"
 msgstr ""
 
+msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 msgid "invalid clustering method"
 msgstr ""
 
@@ -1236,6 +1239,9 @@ msgid "calling summary.lm(<fake-lm-object>) ..."
 msgstr ""
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
+msgstr ""
+
+msgid "essentially perfect fit: summary may be unreliable"
 msgstr ""
 
 msgid "lm object does not have a proper 'qr' component.\n Rank zero or should not have used lm(.., qr=FALSE)."

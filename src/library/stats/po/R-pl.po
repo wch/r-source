@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 07:49\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2493,6 +2493,10 @@ msgid "observations with zero weight not used for calculating dispersion"
 msgstr ""
 "obserwacje z zerową wagą nie zostały użyte podczas kalkulacji dyspersji"
 
+msgid ""
+"The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr ""
+
 # stats/R/hclust.R: 51
 # stop("invalid clustering method")
 msgid "invalid clustering method"
@@ -2844,6 +2848,12 @@ msgstr "wywoływanie 'summary.lm(<fake-lm-object>)' ..."
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
 msgstr ""
 "stopnie swobody reszty w obiekcie sugerują, że nie jest do dopasowanie 'lm'"
+
+# stats/R/lm.R: 571
+# warning("ANOVA F-tests on an essentially perfect fit are unreliable")
+#, fuzzy
+msgid "essentially perfect fit: summary may be unreliable"
+msgstr "Testy ANOVA Fishera w istocie na idealnym dopasowaniu są niewiarygodne"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"

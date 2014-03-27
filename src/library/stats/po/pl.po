@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -162,26 +162,26 @@ msgstr "niepoprawna forma sprawdzania jednoargumentowej operacji minus"
 # stats/src/deriv.c: 533
 # error(_("Function '%s' is not in the derivatives table"),
 # 		  translateChar(STRING_ELT(u, 0)))
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funkcja '%s' nie znajduje się w tablicy pochodnych"
 
 # stats/src/deriv.c: 640
 # error(_("variable must be a character string"))
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr "zmienna musi być łańcuchem tekstowym"
 
 # stats/src/deriv.c: 642
 # warning(_("only the first element is used as variable name"))
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "tylko pierwszy element jest używany jako nazwa zmiennej"
 
 # stats/src/deriv.c: 655
 # error(_("invalid expression in '%s'"), where)
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "niepoprawne wyrażenie w '%s'"
@@ -190,13 +190,13 @@ msgstr "niepoprawne wyrażenie w '%s'"
 # error(_("invalid variable names"))
 # stats/src/model.c: 99
 # error(_("invalid variable names"))
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "niepoprawne nazwy zmiennych"
 
 # stats/src/deriv.c: 942
 # error(_("invalid tag"))
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr "niepoprawny znacznik"
 

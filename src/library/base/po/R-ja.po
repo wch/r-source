@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
-"PO-Revision-Date: 2013-03-02 09:39+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
+"PO-Revision-Date: 2014-03-26 13:57+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -67,17 +67,14 @@ msgstr " 正しい形式のバージョン文字列ではありません "
 msgid "target is %s, current is %s"
 msgstr " 引数 target は %s、引数 current は %s です "
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr " 'x' は数値でなければなりません "
+msgstr " 'tolerance' は数値でなければなりません "
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr " 'arg' は %s の一つでなければなりません： "
+msgstr " 'scale' は 数値もしくはNULLでなければなりません "
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr " 'subset' は論理値でなければなりません "
+msgstr " '%s' は論理値でなければなりません "
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "
@@ -301,9 +298,8 @@ msgstr " 存在しない列中の要素の置き換えです: %s "
 msgid "only a single element should be replaced"
 msgstr " ただ一つの要素しか置き換えられるべきではありません "
 
-#, fuzzy
 msgid "Name partially matched in data frame"
-msgstr " 以下のデータフレーム中に数値でない変数があります: "
+msgstr " データフレーム中の名前は部分的にマッチしました "
 
 msgid "names do not match previous names"
 msgstr " 名前が以前の名前と一致しません "
@@ -470,9 +466,8 @@ msgstr " 'from' は \"POSIXt\" オブジェクトでなければなりません 
 msgid "'to' must be a \"POSIXt\" object"
 msgstr " 'to' は \"POSIXt\" のオブジェクトでなければなりません "
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr " ファイルが見つかりません "
+msgstr "Olson データベースが見つかりません "
 
 msgid "'file' must be a character string or connection"
 msgstr " 'file' は文字列かコネクションでなければなりません "
@@ -628,7 +623,7 @@ msgid "using the first element of 'value' of type \"expression\""
 msgstr " タイプ \"expression\" の 'value' の最初の要素だけを使います "
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr " クラス 'x' は捨てられました "
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
@@ -701,9 +696,8 @@ msgstr " 非マッチに対する置換が必要です "
 msgid "must have replacements for matches"
 msgstr " マッチに対する置換が必要です "
 
-#, fuzzy
 msgid "No factors specified"
-msgstr " DLL が何も指定されませんでした "
+msgstr " 因子が指定されていません "
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr " norm '%s' は現在は常に exact = FALSE を使用します "
@@ -930,7 +924,7 @@ msgid "must specify names of formal arguments for 'vectorize'"
 msgstr " 'vectorize.args' には仮引数名しか指定出来ません "
 
 msgid "'arg' must be NULL or a character vector"
-msgstr " 'arg' は、NULL かひとつの文字列ベクトルでなければなりません "
+msgstr " 'arg' は、NULL かひとつの文字ベクトルでなければなりません "
 
 msgid "'arg' must be of length 1"
 msgstr " 'arg' は長さ 1 でなければなりません "
@@ -1003,6 +997,8 @@ msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
 msgstr ""
+" オブジェクト %2$s を処理する際、名前空間 %1$s は使用できないため .GlobalEnv "
+"によって置き換えられました "
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
@@ -1104,9 +1100,8 @@ msgstr " ローカル変数をインポート %s で置き換えています (%s
 msgid "cannot import into a sealed namespace"
 msgstr " 封印された名前空間にはインポートできません "
 
-#, fuzzy
 msgid "replacing previous import by %s when loading %s"
-msgstr " 以前のインポート %s を置き換えています (%s のロード中) "
+msgstr " %2$s のロード中に、以前のインポート %1$s を置き換えています "
 
 msgid "invalid import target"
 msgstr " 無効なインポート対象です "
@@ -1142,7 +1137,6 @@ msgstr " パッケージ %s には 'NAMESPACE' ファイルがありません "
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr " 'NAMESPACE' ファイル中のディレクティブ '%s' 中には名前がありません "
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr " 重複したシンボル名 %s が useDynlib(\"%s\") 中に見つかりました "
 
@@ -1232,9 +1226,8 @@ msgstr " ピボット操作が起きたので、より大きな 'ncol' 値が必
 msgid "invalid NCOL(R)"
 msgstr " NCOL(R) が不正です "
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
-msgstr " 'x' はベクトルでなければなりません "
+msgstr " 'x' はアトミックな型のベクトルでなければなりません "
 
 msgid "invalid 'rle' structure"
 msgstr " 無効な 'rle' 構造です "
@@ -1261,7 +1254,7 @@ msgid "either specify 'nmax' or 'n', but not both."
 msgstr " 'nmax' か 'n' を指定して下さい。しかし両方はだめです "
 
 msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr " 'from' はNA, NaN, infinite であってはなりません "
 
 msgid "argument 'length.out' must be of length 1"
 msgstr " 引数 'length.out' は長さ 1 でなければなりません "
@@ -1270,7 +1263,7 @@ msgid "first element used of 'length.out' argument"
 msgstr " 最初の要素は 引数 'length.out' として使われます "
 
 msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+msgstr " 'to' はNA, NaN, infinite であってはなりません "
 
 msgid "invalid (to - from)/by in seq(.)"
 msgstr " seq(.) 中の (to - from)/by が不正です "

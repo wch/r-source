@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
-"PO-Revision-Date: 2013-03-01 05:19+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
+"PO-Revision-Date: 2014-03-26 10:20+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -28,7 +28,7 @@ msgstr " qansari() 中で確率が [0, 1] の範囲外です "
 
 #: approx.c:31 rcont.c:16
 msgid "stats"
-msgstr ""
+msgstr " stats "
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -99,29 +99,29 @@ msgstr " 標準偏差が 0 です "
 msgid "invalid form in unary minus check"
 msgstr " 単項のマイナスの検査に不正な形式があります "
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr " 関数 '%s' は導関数の表中にありません "
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr " 変数は文字列でなければいけません "
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr " 最初の要素だけが変数名として使われました "
 
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr " '%s' 中の式が不正です "
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr " 変数名が不正です "
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr " タグが不正です "
 
@@ -185,19 +185,18 @@ msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr " sm.method=\"spline\" では 2500 行までしか扱えません "
 
 #: lm.c:57
-#, fuzzy
 msgid "'x' is not a matrix"
-msgstr " 'tmax' が整数値ではありません "
+msgstr " 'x' が行列ではありません "
 
 #: lm.c:62
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr ""
+msgstr " 'x' (%d,%d) と 'y' (%d)の次元が一致しません "
 
 #: lm.c:77 lm.c:81
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
-msgstr ""
+msgstr " '%s' の中に NA/NaN/Inf があります "
 
 #: loessc.c:233
 msgid "span is too small"
@@ -488,9 +487,8 @@ msgid "'maxit' is not an integer"
 msgstr " 'maxit' が整数ではありません "
 
 #: optim.c:260
-#, fuzzy
 msgid "'tmax' is not a positive integer"
-msgstr " 'tmax' が整数値ではありません "
+msgstr " 'tmax' が正の整数ではありません "
 
 #: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"

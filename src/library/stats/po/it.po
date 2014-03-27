@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -99,29 +99,29 @@ msgstr "la deviazione standard è zero"
 msgid "invalid form in unary minus check"
 msgstr ""
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funzione '%s' non presente nelle tavole delle derivate"
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr "la variabile deve essere una stringa character"
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "solo il primo elemento è utilizzato come nome di variabile"
 
-#: deriv.c:655
+#: deriv.c:657
 #, fuzzy, c-format
 msgid "invalid expression in '%s'"
 msgstr "espressione non valida in \"%s\""
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "nomi variabili non validi"
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr "'tag' non valido"
 

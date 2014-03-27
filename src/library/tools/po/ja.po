@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-27 18:10+0000\n"
-"PO-Revision-Date: 2013-02-28 06:03+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"PO-Revision-Date: 2014-03-26 13:56+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -34,7 +34,7 @@ msgstr " 引数は %d 個までです "
 
 #: getfmts.c:66
 msgid "'fmt' is not a character vector"
-msgstr " 'fmt' は文字列ベクトルではありません "
+msgstr " 'fmt' は文字ベクトルではありません "
 
 #: getfmts.c:69
 msgid "'fmt' must be length 1"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-15 09:09+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2013-02-20 17:48-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -237,8 +237,8 @@ msgid "invalid font specification"
 msgstr "유효한 폰트 지정이 아닙니다"
 
 # CHL20130308
-#: plot.c:276 plot.c:290 plot.c:481 plot.c:486 plot.c:2114 plot.c:2121
-#: plot.c:3143 plot.c:3145 plot.c:3147 plot.c:3302 plot3d.c:1163 plot3d.c:1167
+#: plot.c:276 plot.c:290 plot.c:481 plot.c:486 plot.c:2112 plot.c:2119
+#: plot.c:3141 plot.c:3143 plot.c:3145 plot.c:3300 plot3d.c:1163 plot3d.c:1167
 #: plot3d.c:1169 plot3d.c:1903
 #, c-format
 msgid "invalid '%s' value"
@@ -309,8 +309,8 @@ msgstr "축 레이블에 유효한 타입이 아닙니다"
 
 # CHL20130308
 #: plot.c:765 plot.c:1298 plot.c:1621 plot.c:1686 plot.c:1761 plot.c:1827
-#: plot.c:1903 plot.c:1998 plot.c:2074 plot.c:2352 plot.c:2526 plot.c:2742
-#: plot.c:3284 plot.c:3411 plot.c:3487 plot.c:3653 plot.c:3933 plot3d.c:1872
+#: plot.c:1901 plot.c:1996 plot.c:2072 plot.c:2350 plot.c:2524 plot.c:2740
+#: plot.c:3282 plot.c:3409 plot.c:3485 plot.c:3651 plot.c:3931 plot3d.c:1872
 msgid "too few arguments"
 msgstr "인자의 수가 너무 적습니다"
 
@@ -326,9 +326,9 @@ msgid "'hadj' must be of length one"
 msgstr "'hadj'의 길이는 반드시 1이어야 합니다"
 
 # CHL20130308
-#: plot.c:873 plot.c:2086 plot.c:2363 plot.c:2369 plot.c:2376 plot.c:2384
-#: plot.c:2391 plot.c:2398 plot.c:2405 plot.c:2412 plot.c:2420 plot.c:2427
-#: plot.c:3150
+#: plot.c:873 plot.c:2084 plot.c:2361 plot.c:2367 plot.c:2374 plot.c:2382
+#: plot.c:2389 plot.c:2396 plot.c:2403 plot.c:2410 plot.c:2418 plot.c:2425
+#: plot.c:3148
 #, c-format
 msgid "zero-length '%s' specified"
 msgstr "길이가 0인 '%s'가 지정되었습니다"
@@ -367,7 +367,7 @@ msgid "plot type '%s' will be truncated to first character"
 msgstr ""
 
 # CHL20130308
-#: plot.c:1331 plot.c:3004
+#: plot.c:1331 plot.c:3002
 msgid "invalid plot type"
 msgstr "유효한 플랏 타입이 아닙니다"
 
@@ -402,43 +402,43 @@ msgstr "네번째 인자가 잘못되었습니다"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "길이가 0인 좌표와 길이가 0이 아닌 좌표는 함께 사용될 수 없습니다"
 
-#: plot.c:1833
+#: plot.c:1832
 msgid "Empty raster"
 msgstr ""
 
 # CHL20130308
-#: plot.c:1916
+#: plot.c:1914
 msgid "invalid arrow head length"
 msgstr "화살표 머리부분의 길이가 유효하지 않습니다"
 
 # CHL20130308
-#: plot.c:1921
+#: plot.c:1919
 msgid "invalid arrow head angle"
 msgstr "화살표 머리부분의 각도가 유효하지 않습니다"
 
 # CHL20130308
-#: plot.c:1926
+#: plot.c:1924
 msgid "invalid arrow head specification"
 msgstr "화살표 머리부분의 지정이 유효하지 않습니다"
 
 # CHL20130308
-#: plot.c:2160
+#: plot.c:2158
 msgid "no coordinates were supplied"
 msgstr "좌표가 제공되지 않았습니다"
 
 # CHL20130308
-#: plot.c:2783
+#: plot.c:2781
 msgid "invalid a=, b= specification"
 msgstr "유효하지 않은 a=, b= 지정입니다"
 
 # CHL20130308
-#: plot.c:2792
+#: plot.c:2790
 msgid "'a' and 'b' must be finite"
 msgstr "'a'와 'b'는 반드시 유한해야 합니다"
 
 # CHL20130308
-#: plot.c:2927 plot.c:4053 plot.c:4057 plot.c:4060 plot.c:4080 plot.c:4084
-#: plot.c:4087 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
+#: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
+#: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
 #: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
 #: stem.c:208 stem.c:209
 #, c-format
@@ -446,131 +446,131 @@ msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"
 
 # CHL20130308
-#: plot.c:2999 plot.c:3139
+#: plot.c:2997 plot.c:3137
 #, c-format
 msgid "invalid number of points in %s"
 msgstr "%s에 있는 점들의 개수가 유효하지 않습니다"
 
 # CHL20130308
-#: plot.c:3141
+#: plot.c:3139
 msgid "incorrect argument type"
 msgstr "올바르지 않은 인자 유형입니다"
 
 # CHL20130308
-#: plot.c:3153
+#: plot.c:3151
 msgid "different argument lengths"
 msgstr "인자의 길이들이 다릅니다"
 
 # CHL20130308
-#: plot.c:3155
+#: plot.c:3153
 msgid "more 'labels' than points"
 msgstr "점의 개수보다 'labels'의 수가 더 많습니다"
 
 # CHL20130308
-#: plot.c:3204
+#: plot.c:3202
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "경고: %.2f 인치이내에 포인트가 하나도 없습니다\n"
 
 # CHL20130308
-#: plot.c:3210
+#: plot.c:3208
 msgid "warning: nearest point already identified\n"
 msgstr "경고: 가장 가까운 포인트는 이미 확인되었습니다\n"
 
 # CHL20130308
-#: plot.c:3295
+#: plot.c:3293
 msgid "invalid units"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3471 plot.c:3578
+#: plot.c:3469 plot.c:3576
 msgid "invalid dendrogram input"
 msgstr "유효하지 않은 덴드로이드그램 입력입니다"
 
 # CHL20130308
-#: plot.c:3635
+#: plot.c:3633
 msgid "invalid symbol parameter vector"
 msgstr "유효하지 않은 심볼 파라마터 벡터입니다"
 
 # CHL20130308
-#: plot.c:3658
+#: plot.c:3656
 msgid "invalid symbol coordinates"
 msgstr "심볼의 좌표가 유효하지 않습니다"
 
 # CHL20130308
-#: plot.c:3666
+#: plot.c:3664
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/파라미터의 길이가 일치하지 않습니다"
 
 # CHL20130308
-#: plot.c:3685
+#: plot.c:3683
 msgid "invalid circles data"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3687 plot.c:3708 plot.c:3733 plot.c:3763
+#: plot.c:3685 plot.c:3706 plot.c:3731 plot.c:3761
 msgid "invalid symbol parameter"
 msgstr "유효하지 않은 심볼 파라미터입니다"
 
 # CHL20130308
-#: plot.c:3706
+#: plot.c:3704
 msgid "invalid squares data"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3731
+#: plot.c:3729
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "사각형을 그리는데 유효한 데이터가 아닙니다 (2개의 열들이 필요합니다)"
 
 # CHL20130308
-#: plot.c:3761
+#: plot.c:3759
 msgid "invalid stars data"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3803
+#: plot.c:3801
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3806
+#: plot.c:3804
 #, c-format
 msgid "invalid 'thermometers[, %s]'"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3809
+#: plot.c:3807
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3812
+#: plot.c:3810
 msgid "invalid 'thermometers[, 1:2]'"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3851
+#: plot.c:3849
 msgid "invalid 'boxplots' data (need 5 columns)"
 msgstr "'boxplots'에 유효한 데이터가 아닙니다 (5개의 열들이 필요합니다)"
 
 # CHL20130308
-#: plot.c:3860
+#: plot.c:3858
 msgid "'boxplots[, 5]' outside [0,1] -- may look funny"
 msgstr ""
 
 # CHL20130308
-#: plot.c:3862
+#: plot.c:3860
 msgid "invalid 'boxplots[, 1:4]'"
 msgstr "유효하지 않은 'boxplots[, 1:4]'입니다"
 
 # CHL20130308
-#: plot.c:3908
+#: plot.c:3906
 msgid "invalid symbol type"
 msgstr "유효하지 않은 심볼 유형입니다"
 
 # CHL20130308
-#: plot.c:3946 plot.c:3948 plot.c:3953 plot.c:3955
+#: plot.c:3944 plot.c:3946 plot.c:3951 plot.c:3953
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "'%s' 인자의 길이가 잘못되었습니다"

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
-"PO-Revision-Date: 2013-03-19 13:41+0200 \n"
-"Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
+"POT-Creation-Date: 2014-03-18 13:54\n"
+"PO-Revision-Date: 2014-03-26 14:24+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -65,7 +65,7 @@ msgid "Warning: unknown option %s"
 msgstr " 警告: 不明なオプション %s "
 
 msgid "Output file:"
-msgstr ""
+msgstr " 出力ファイル： "
 
 msgid "Compacting PDF document"
 msgstr " PDF 文書を圧縮しています "
@@ -141,10 +141,10 @@ msgid "bad argument"
 msgstr " 誤った引数 "
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr " 複数のパスを指定するときはfull.namesがTRUEでなければなりません "
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "Timestampファイルがありません "
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -274,9 +274,8 @@ msgstr " 'dump' はクラス %s のオブジェクトではありません "
 msgid "Message:"
 msgstr " メッセージ: "
 
-#, fuzzy
 msgid "'dump' is empty"
-msgstr " 'dvipsscmd' が空です "
+msgstr " 'dump' が空です "
 
 msgid "Available environments had calls:"
 msgstr " 利用可能な環境は以下の呼び出しを含んでいました: "
@@ -351,16 +350,16 @@ msgid "too many list items (at most up to %d)"
 msgstr " リストの項目が多すぎます (最大でも %d です) "
 
 msgid "no vector columns were selected"
-msgstr " ベクタの列が選択されていません "
+msgstr " ベクトルの列が選択されていません "
 
 msgid "non-vector columns will be ignored"
-msgstr " ベクタでない列は無視されます "
+msgstr " ベクトルでない列は無視されます "
 
 msgid "at least one vector element is required"
-msgstr " 少なくとも一つのベクタ要素が必要です "
+msgstr " 少なくとも一つのベクトル要素が必要です "
 
 msgid "non-vector elements will be ignored"
-msgstr " ベクタでない要素は無視されます "
+msgstr " ベクトルでない要素は無視されます "
 
 msgid "'form' must be a two-sided formula"
 msgstr " 'form' は両辺に項を持つ公式でなければなりません "
@@ -730,13 +729,12 @@ msgstr " foundpkgs: %s "
 msgid "files: %s"
 msgstr " ファイル：%s "
 
-#, fuzzy
 msgid ""
 "installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
 " 一つもしくは複数のパッケージのインストールが失敗しました \n"
-" 恐らく %s "
+"       恐らく %s "
 
 msgid ""
 "The downloaded source packages are in\n"
@@ -905,9 +903,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' を roman に変換できません "
 
-#, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr " 型情報を再構成出来ませんでした "
+msgstr " ファイル %s を作成できません。中止します "
 
 msgid "no valid packages were specified"
 msgstr " 有効なパッケージが指定されませんでした "
@@ -994,16 +991,16 @@ msgid "file '%s' not found"
 msgstr " ファイル '%s' が見付かりません "
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr " ファイル '%s' は実行属性を持っていなかったので、修正しました "
 
 msgid "file size is limited to 8GB"
 msgstr " ファイルサイズは 8GB に制限されています "
 
 msgid "invalid uid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr " 不正なuid値は、ユーザ 'nobody' のuidで置き換えられました "
 
 msgid "invalid gid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr " 不正なgid値は、ユーザ 'nobody' のgidで置き換えられました "
 
 msgid ""
 "vignette %s found more than once,\n"
@@ -1015,13 +1012,11 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr " ビニエット %s が見付かりません "
 
-#, fuzzy
 msgid "vignette %s has no PDF/HTML"
-msgstr " ビニエット %s は PDF ファイルを持ちません "
+msgstr " ビニエット %s は PDF/HTML ファイルを持ちません "
 
-#, fuzzy
 msgid "vignette %s has no R code"
-msgstr " ビニエット %s が見付かりません "
+msgstr " ビニエット %s にはRコードがありません "
 
 msgid "select.list() cannot be used non-interactively"
 msgstr " select.list() は対話的にしか使えません "
@@ -1089,6 +1084,7 @@ msgstr " ダウンロードの方法が見付かりません "
 
 msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
 msgstr ""
+" メソッド 'lynx' は, R 3.1.0以降ではテストされておらず, 使用は推奨されません "
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "

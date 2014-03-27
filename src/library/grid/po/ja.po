@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
-"PO-Revision-Date: 2013-02-28 05:38+0200 \n"
-"Last-Translator: Triad sou <triadsou@gmail.com> \n"
+"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"PO-Revision-Date: 2014-03-26 10:02+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -58,7 +58,7 @@ msgstr " グラフィックパスに有限でない x か y があります "
 
 #: grid.c:2907
 msgid "Empty raster"
-msgstr ""
+msgstr " ラスターが空です "
 
 #: grid.c:3359
 msgid "invalid plotting symbol"
@@ -96,11 +96,11 @@ msgstr " 不正な単位 (unit) か、まだ実装されていない単位 (unit
 
 #: unit.c:1702 unit.c:1733
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr " ビューポートの次元数がゼロです "
 
 #: unit.c:1765 unit.c:1780 unit.c:1795 unit.c:1810
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr " 対応していない単位変換です "
 
 #: unit.c:1898
 msgid "Invalid unit"

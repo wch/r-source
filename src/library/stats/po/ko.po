@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:11+0000\n"
+"POT-Creation-Date: 2014-03-27 07:49+0000\n"
 "PO-Revision-Date: 2013-02-21 20:47-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -105,29 +105,29 @@ msgstr "표준편차가 0입니다"
 msgid "invalid form in unary minus check"
 msgstr ""
 
-#: deriv.c:533
+#: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "함수 '%s'는 미분함수 목록에 없습니다"
 
-#: deriv.c:640
+#: deriv.c:642
 msgid "variable must be a character string"
 msgstr "변수는 반드시 문자열이어야 합니다"
 
-#: deriv.c:642
+#: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "오로지 첫번째 요소만이 변수명으로서 사용되었습니다"
 
-#: deriv.c:655
+#: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "'%s'에 유효하지 않은 표현식이 있습니다"
 
-#: deriv.c:933 model.c:99
+#: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "유효하지 않은 변수명입니다"
 
-#: deriv.c:942
+#: deriv.c:944
 msgid "invalid tag"
 msgstr "유효하지 않은 태그입니다"
 

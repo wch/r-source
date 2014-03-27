@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
-"PO-Revision-Date: 2013-03-19 13:41+0200 \n"
-"Last-Translator: Masafumi <mokada@mail.ne.jp> \n"
+"POT-Creation-Date: 2014-03-27 07:48+0000\n"
+"PO-Revision-Date: 2014-03-26 13:54+0200 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
@@ -225,19 +225,19 @@ msgstr " '%ls' の表示に問題があります "
 #: src/main/sysutils.c:599 src/main/sysutils.c:603 src/main/sysutils.c:1831
 #: src/main/sysutils.c:1835 src/main/unique.c:966 src/main/unique.c:1289
 #: src/main/unique.c:1349 src/main/unique.c:1356 src/main/unique.c:1750
-#: src/main/util.c:577 src/main/util.c:580 src/main/util.c:1821
-#: src/main/util.c:1990 src/main/util.c:1991 src/main/util.c:1992
-#: src/main/util.c:2009 src/main/util.c:2033 src/main/util.c:2037
-#: src/main/util.c:2039 src/main/util.c:2064 src/main/util.c:2066
-#: src/main/util.c:2068 src/main/util.c:2071 src/main/util.c:2074
-#: src/main/util.c:2078 src/main/util.c:2080 src/modules/X11/devX11.c:3241
+#: src/main/util.c:581 src/main/util.c:584 src/main/util.c:1825
+#: src/main/util.c:1994 src/main/util.c:1995 src/main/util.c:1996
+#: src/main/util.c:2013 src/main/util.c:2037 src/main/util.c:2041
+#: src/main/util.c:2043 src/main/util.c:2068 src/main/util.c:2070
+#: src/main/util.c:2072 src/main/util.c:2075 src/main/util.c:2078
+#: src/main/util.c:2082 src/main/util.c:2084 src/modules/X11/devX11.c:3241
 #: src/modules/X11/devX11.c:3244 src/modules/X11/devX11.c:3247
 #: src/modules/X11/devX11.c:3271 src/modules/internet/internet.c:284
 #: src/modules/internet/internet.c:290 src/modules/internet/internet.c:296
 #: src/modules/internet/internet.c:299 src/modules/internet/internet.c:303
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
-#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:817
-#: src/modules/lapack/Lapack.c:879 src/modules/lapack/Lapack.c:1213
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1214
 #: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
@@ -258,8 +258,8 @@ msgstr " このバージョンの Windows はサポートされていません "
 #: src/main/seq.c:391 src/main/seq.c:395 src/main/seq.c:399
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:982
-#: src/main/util.c:987 src/main/util.c:994 src/main/util.c:997
+#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
+#: src/main/util.c:991 src/main/util.c:998 src/main/util.c:1001
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
@@ -281,7 +281,7 @@ msgstr " あらら！あなたのマシンのアドレス空間の上限は 4Gb 
 msgid "cannot decrease memory limit: ignored"
 msgstr " メモリー限界を減らすことができません: 無視しました "
 
-#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:893
+#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:897
 msgid "'path' must be a character vector"
 msgstr " 'path' は文字ベクトルでなくてはなりません "
 
@@ -438,14 +438,14 @@ msgid "WARNING: --max-mem-size=%4.0fM: too large and taken as %uM\n"
 msgstr " 警告: max-mem-size=%4.0fM は大きすぎるので %uM とされました \n"
 
 #: src/gnuwin32/system.c:1039
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires an argument"
-msgstr " 二項演算には二つの引数が必要です "
+msgstr " オプション '%s' には引数が必要です "
 
 #: src/gnuwin32/system.c:1070
-#, fuzzy, c-format
+#, c-format
 msgid "option '%s' requires a non-empty argument"
-msgstr " 二項演算には二つの引数が必要です "
+msgstr " オプション '%s' は空でない引数が必要です "
 
 #: src/gnuwin32/system.c:1078 src/unix/system.c:362
 #, c-format
@@ -566,29 +566,29 @@ msgid "'.Random.seed' is a missing argument with no default"
 msgstr " 引数 '.Random.seed' の指定がなく、デフォルトの設定もありません "
 
 #: src/main/RNG.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "'.Random.seed' is not an integer vector but of type '%s', so ignored"
-msgstr " '.Random.seed' が整数ベクトルではなくタイプ '%s' になっています "
+msgstr ""
+" '.Random.seed' が整数ベクトルではなくタイプ '%s' になっているため、無視され"
+"ました "
 
 #: src/main/RNG.c:363
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid integer, so ignored"
-msgstr " '.Random.seed[1]' が有効な整数値ではありません "
+msgstr " '.Random.seed[1]' が有効な整数値ではないため、無視されました "
 
 #: src/main/RNG.c:369
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid Normal type, so ignored"
-msgstr " '.Random.seed[1]' は有効な標準形ではありません "
+msgstr " '.Random.seed[1]' は有効な標準形ではないため、無視されました "
 
 #: src/main/RNG.c:383
-#, fuzzy
 msgid "'.Random.seed[1] = 5' but no user-supplied generator, so ignored"
-msgstr " '.Random.seed[1] = 5' ですが、ユーザ定義の乱数発生器がありません "
+msgstr ""
+" '.Random.seed[1] = 5' ですが、ユーザ定義の乱数発生器がないため、無視されまし"
+"た "
 
 #: src/main/RNG.c:388
-#, fuzzy
 msgid "'.Random.seed[1]' is not a valid RNG kind so ignored"
-msgstr " '.Random.seed[1]' が有効な種類の RNG (コード) ではありません "
+msgstr " '.Random.seed[1]' が有効な種類の RNGではないため、無視されました "
 
 #: src/main/RNG.c:415
 msgid "'.Random.seed' has wrong length"
@@ -632,7 +632,7 @@ msgstr " DLL の名前 '%s' が長すぎます "
 msgid "could not allocate space for 'name'"
 msgstr " 'name' のための領域を割り当てられませんでした "
 
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:694
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:698
 msgid "character argument expected"
 msgstr " 文字引数が期待されています "
 
@@ -918,11 +918,11 @@ msgstr " 'ncol' の値が不正です (負の値です) "
 
 #: src/main/array.c:116
 msgid "nc = 0 for non-null data"
-msgstr ""
+msgstr " 非NULLデータの列数が0です "
 
 #: src/main/array.c:124
 msgid "nr = 0 for non-null data"
-msgstr ""
+msgstr " 非NULLデータの行数が0です "
 
 #: src/main/array.c:135
 #, c-format
@@ -1287,9 +1287,9 @@ msgid "class name too long in '%s'"
 msgstr " '%s' のクラス名が長すぎます "
 
 #: src/main/bind.c:1114
-#, fuzzy, c-format
+#, c-format
 msgid "cannot create a matrix from type '%s'"
-msgstr " このようなタイプからは行列は作れません "
+msgstr " '%s' タイプからは行列を生成できません "
 
 #: src/main/bind.c:1185
 #, c-format
@@ -1393,11 +1393,11 @@ msgid "invalid argument"
 msgstr " 引数が不正です "
 
 #: src/main/builtin.c:899 src/main/builtin.c:909 src/main/builtin.c:911
-#: src/main/character.c:366 src/main/coerce.c:2772
+#: src/main/character.c:366 src/main/coerce.c:2820
 msgid "invalid value"
 msgstr " 値が不正です "
 
-#: src/main/builtin.c:942 src/main/coerce.c:2485 src/main/coerce.c:2526
+#: src/main/builtin.c:942 src/main/coerce.c:2533 src/main/coerce.c:2574
 #: src/main/eval.c:563 src/main/eval.c:683 src/main/eval.c:2099
 #: src/main/eval.c:2176 src/main/eval.c:2236 src/main/eval.c:2569
 #: src/main/eval.c:4694 src/main/eval.c:4814
@@ -1423,6 +1423,7 @@ msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
 " Consider using '%s' instead."
 msgstr ""
+"EXPRはfactorで、整数として扱われます。代わりに'%s'の使用を検討してください "
 
 #: src/main/character.c:105 src/main/character.c:108 src/main/character.c:132
 #: src/main/character.c:135
@@ -1461,7 +1462,7 @@ msgstr " 文字列でないオブジェクトの部分文字列の置き換え�
 
 #: src/main/character.c:551
 msgid "the first argument must be a character vector"
-msgstr " 最初の引数は文字列ベクトルでなくてはなりません "
+msgstr " 最初の引数は文字ベクトルでなくてはなりません "
 
 #: src/main/character.c:570
 msgid "abbreviate used with non-ASCII chars"
@@ -1607,47 +1608,46 @@ msgstr " 未実装の「述語」です "
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr " %s() は型 '%s' のベクトル、リスト以外に適用されます "
 
-#: src/main/coerce.c:2219 src/main/coerce.c:2282 src/main/coerce.c:2350
+#: src/main/coerce.c:2267 src/main/coerce.c:2330 src/main/coerce.c:2398
 #, c-format
 msgid "default method not implemented for type '%s'"
 msgstr " 型 '%s' のデフォルトメソッドは実装されていません "
 
-#: src/main/coerce.c:2368
+#: src/main/coerce.c:2416
 msgid "'name' is missing"
 msgstr " 'name' が見つかりません "
 
-#: src/main/coerce.c:2375
+#: src/main/coerce.c:2423
 msgid "first argument must be a character string"
 msgstr " 最初の引数は文字列でなくてはなりません "
 
-#: src/main/coerce.c:2408
+#: src/main/coerce.c:2456
 msgid "'what' must be a character string or a function"
 msgstr " 'what' は文字列または関数でなければなりません "
 
-#: src/main/coerce.c:2412
-#, fuzzy
+#: src/main/coerce.c:2460
 msgid "'args' must be a list or expression"
-msgstr " 'args' はリストでなくてはなりません "
+msgstr " 'args' はリストまたはexpressionでなければなりません "
 
-#: src/main/coerce.c:2415
+#: src/main/coerce.c:2463
 msgid "'args' must be a list"
 msgstr " 'args' はリストでなくてはなりません "
 
-#: src/main/coerce.c:2419
+#: src/main/coerce.c:2467
 msgid "'envir' must be an environment"
 msgstr " 'envir' は環境でなくてはなりません "
 
-#: src/main/coerce.c:2574
+#: src/main/coerce.c:2622
 msgid "invalid environment specified"
 msgstr " 不正な環境指定です "
 
-#: src/main/coerce.c:2640
+#: src/main/coerce.c:2688
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr ""
 " class(x) を NULL に設定しようとしています; 結果はもはや S4 オブジェクトでは"
 "なくなります "
 
-#: src/main/coerce.c:2643
+#: src/main/coerce.c:2691
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1656,7 +1656,7 @@ msgstr ""
 " class(x) を多重文字列 (\"%s\", \"%s\", ...) に設定しようとしています; 結果は"
 "もはや S4 オブジェクトではなくなります "
 
-#: src/main/coerce.c:2647
+#: src/main/coerce.c:2695
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1665,11 +1665,11 @@ msgstr ""
 " class(x) を \"%s\" に設定すると属性は NULL に設定されます; 結果はもはや S4 "
 "オブジェクトではなくなります "
 
-#: src/main/coerce.c:2680
+#: src/main/coerce.c:2728
 msgid "invalid replacement object to be a class string"
 msgstr " クラス文字列とするには不正な置き換えオブジェクトです "
 
-#: src/main/coerce.c:2701
+#: src/main/coerce.c:2749
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1677,7 +1677,7 @@ msgstr ""
 " \"%s\" はオブジェクトがこの型を持つ時だけクラスとして設定できます。\"%s\" が"
 "見つかりました "
 
-#: src/main/coerce.c:2719
+#: src/main/coerce.c:2767
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1686,16 +1686,16 @@ msgstr ""
 " 次元属性が長さ 2 でないかぎり (%d でした)、行列にクラスを設定するのは不正で"
 "す "
 
-#: src/main/coerce.c:2727
+#: src/main/coerce.c:2775
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr " 次元属性が長さ > 0 でないかぎり、配列にクラスを設定できません "
 
-#: src/main/coerce.c:2763
+#: src/main/coerce.c:2811
 msgid "'value' must be non-null character string"
 msgstr " 'value' は NULL でない文字列でなければなりません "
 
-#: src/main/coerce.c:2776
+#: src/main/coerce.c:2824
 msgid "invalid to change the storage mode of a factor"
 msgstr " 因子保管モードを変更するのは不正です "
 
@@ -1827,24 +1827,22 @@ msgid "too large a block specified"
 msgstr " 指定されたブロックが大きすぎます "
 
 #: src/main/connections.c:998 src/main/connections.c:1004
-#, fuzzy
 msgid "allocation of fifo name failed"
-msgstr " fifo 接続の割り当てに失敗しました "
+msgstr " fifo名の割付に失敗しました "
 
 #: src/main/connections.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open fifo '%s', reason '%s'"
 msgstr " URL '%s' を開くことができません、理由は '%s' です "
 
 #: src/main/connections.c:1107 src/main/connections.c:1131
-#, fuzzy
 msgid "allocation of fifo buffer failed"
-msgstr " fifo 接続の割り当てに失敗しました "
+msgstr " fifoバッファの割付に失敗しました "
 
 #: src/main/connections.c:1139
-#, fuzzy, c-format
+#, c-format
 msgid "cannot write FIFO '%s'"
-msgstr " URL '%s' を開けません "
+msgstr "FIFO '%s' に書き込めません "
 
 #: src/main/connections.c:1175 src/main/connections.c:1179
 #: src/main/connections.c:1185 src/main/connections.c:1201
@@ -2132,7 +2130,7 @@ msgstr " readLines にバッファを割り当てることができません "
 #: src/main/connections.c:3623
 #, c-format
 msgid "line %d appears to contain an embedded nul"
-msgstr ""
+msgstr " 行 %d は、埋め込まれたnulを含んでいるようです "
 
 #: src/main/connections.c:3640
 #, c-format
@@ -2941,9 +2939,8 @@ msgid "display list redraw incomplete"
 msgstr " ディスプレイリストが不完全に再描画されました "
 
 #: src/main/engine.c:2777
-#, fuzzy
 msgid "invalid display list"
-msgstr " 引数リストが不正です "
+msgstr " ディスプレイリストが不正です "
 
 #: src/main/engine.c:2963
 msgid "'expr' argument must be an expression"
@@ -3051,7 +3048,7 @@ msgstr " 最初の引数は名前付きリストでなくてはなりません "
 
 #: src/main/envir.c:1646
 msgid "names(x) must be a character vector of the same length as x"
-msgstr " names(x) は x と同じ長さの文字列ベクトルでなくてはなりません "
+msgstr " names(x) は x と同じ長さの文字ベクトルでなくてはなりません "
 
 #: src/main/envir.c:1649
 msgid "'envir' argument must be an environment"
@@ -4262,12 +4259,12 @@ msgstr " ベクトルのポインタを返すのは安全ではありません "
 #: src/main/memory.c:3392
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
-msgstr ""
+msgstr "SET_STRING_ELT 中で インデックス %lu/%lu を設定しようとしました "
 
 #: src/main/memory.c:3408
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
-msgstr ""
+msgstr "SET_VECTOR_ELT中で インデックス %lu/%lu を設定しようとしました "
 
 #: src/main/memory.c:3658
 msgid "memory profiling is not available on this system"
@@ -4746,7 +4743,7 @@ msgstr ""
 
 #: src/main/platform.c:2065
 msgid "'hostname' must be a character vector of length 1"
-msgstr " 'hostname' は長さ 1 の文字列ベクトルでなくてはなりません "
+msgstr " 'hostname' は長さ 1 の文字ベクトルでなくてはなりません "
 
 #: src/main/platform.c:2071
 #, c-format
@@ -4786,7 +4783,6 @@ msgid "too deep nesting"
 msgstr " 入れ子が深すぎます "
 
 #: src/main/platform.c:2253 src/main/platform.c:2266 src/main/platform.c:2284
-#, fuzzy
 msgid "over-long path"
 msgstr " 長すぎるパス長 "
 
@@ -4980,7 +4976,7 @@ msgstr ""
 
 #: src/main/raw.c:37 src/main/raw.c:273
 msgid "argument must be a character vector of length 1"
-msgstr " 引数は長さ 1 の文字列ベクトルでなくてはなりません "
+msgstr " 引数は長さ 1 の文字ベクトルでなくてはなりません "
 
 #: src/main/raw.c:39 src/main/raw.c:275
 msgid ""
@@ -5096,9 +5092,9 @@ msgid "mismatch on types"
 msgstr " 型が一致しません "
 
 #: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1636
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognized internal function name \"%s\""
-msgstr " 関数 \"%s\" を見つけることができませんでした "
+msgstr " 内部関数 \"%s\" を見つけることができませんでした "
 
 #: src/main/saveload.c:709
 msgid "cannot save file position while restoring data"
@@ -5225,7 +5221,7 @@ msgstr ""
 
 #: src/main/saveload.c:1940 src/main/saveload.c:2238
 msgid "first argument must be a character vector"
-msgstr " 最初の引数は文字列ベクトルでなくてはなりません "
+msgstr " 最初の引数は文字ベクトルでなくてはなりません "
 
 #: src/main/saveload.c:2012
 msgid "not a valid named list"
@@ -5302,7 +5298,7 @@ msgstr ""
 
 #: src/main/scan.c:364 src/main/scan.c:414
 msgid "EOF within quoted string"
-msgstr ""
+msgstr " クオートで囲まれた文字列中にEOFがあります "
 
 #: src/main/scan.c:484
 #, c-format
@@ -5347,9 +5343,8 @@ msgid "invalid quote symbol set"
 msgstr " 引用符が不正です "
 
 #: src/main/scan.c:987
-#, fuzzy
 msgid "embedded nul(s) found in input"
-msgstr " 文字列の中に nul が埋め込まれています: '%s' "
+msgstr " 入力文字列の中に nul が埋め込まれています "
 
 #: src/main/seq.c:48
 msgid "unequal factor lengths"
@@ -6105,7 +6100,7 @@ msgstr ""
 
 #: src/main/sysutils.c:631
 msgid "'x' must be a character vector"
-msgstr " 'x' は文字列ベクトルでなくてはなりません "
+msgstr " 'x' は文字ベクトルでなくてはなりません "
 
 #: src/main/sysutils.c:646
 msgid "'x' must be a list of NULL or raw vectors"
@@ -6128,9 +6123,9 @@ msgid "unsupported conversion to '%s' from codepage %d"
 msgstr " '%s' へのサポートされていない変換がコードページ %d にあります "
 
 #: src/main/sysutils.c:1530
-#, fuzzy, c-format
+#, c-format
 msgid "invalid Unicode point %u"
-msgstr " 行をまとめられません "
+msgstr " 不正なユニコードポイント %u "
 
 #: src/main/sysutils.c:1632
 msgid "cannot create 'R_TempDir'"
@@ -6228,26 +6223,26 @@ msgstr " 'sep' は文字列でなければなりません "
 msgid "object is not a matrix"
 msgstr " オブジェクトが行列ではありません "
 
-#: src/main/util.c:254 src/main/util.c:266 src/main/util.c:281
+#: src/main/util.c:254 src/main/util.c:268 src/main/util.c:285
 #, c-format
 msgid "type %d is unimplemented in '%s'"
 msgstr " 型 %d は '%s' では未実装です "
 
-#: src/main/util.c:293
+#: src/main/util.c:297
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr " 型 '%s'（'%s' における）は未実装です \n"
 
-#: src/main/util.c:295
+#: src/main/util.c:299
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr " 型 %d（'%s' における）は未実装です \n"
 
-#: src/main/util.c:420
+#: src/main/util.c:424
 msgid "invalid tag in name extraction"
 msgstr " 名前の抽出においてタグが不正です "
 
-#: src/main/util.c:430
+#: src/main/util.c:434
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
@@ -6255,105 +6250,105 @@ msgstr[0] ""
 " .Internal(%2$s) 関数に %1$d 個の引数が渡されましたが、%3$d 個でなくてはなり"
 "ません "
 
-#: src/main/util.c:436
+#: src/main/util.c:440
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] " %d 個の引数が '%s' に渡されましたが、%d が必要とされています "
 
-#: src/main/util.c:451
+#: src/main/util.c:455
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
 msgstr " 使われた引数名 '%s' が '%s' と一致しません "
 
-#: src/main/util.c:461
+#: src/main/util.c:465
 #, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr " 'nthcdr' リストが %d より短いです "
 
-#: src/main/util.c:466
+#: src/main/util.c:470
 msgid "'nthcdr' needs a list to CDR down"
 msgstr " 'nthcdr' は CDR down へのリストを必要とします "
 
-#: src/main/util.c:582
+#: src/main/util.c:586
 msgid "'all.x' must be TRUE or FALSE"
 msgstr " 'all.x' は TRUE または FALSE でなければなりません "
 
-#: src/main/util.c:584
+#: src/main/util.c:588
 msgid "'all.y' must be TRUE or FALSE"
 msgstr " 'all.y' は TRUEまたは FALSE でなければなりません "
 
-#: src/main/util.c:696
+#: src/main/util.c:700
 msgid "missing value is invalid"
 msgstr " 欠損値は不正です "
 
-#: src/main/util.c:705 src/main/util.c:712
+#: src/main/util.c:709 src/main/util.c:716
 msgid "cannot change working directory"
 msgstr " 作業ディレクトリを変更できません "
 
-#: src/main/util.c:731 src/main/util.c:765 src/main/util.c:806
-#: src/main/util.c:848 src/main/util.c:977 src/main/util.c:1036
-#: src/main/util.c:1059
+#: src/main/util.c:735 src/main/util.c:769 src/main/util.c:810
+#: src/main/util.c:852 src/main/util.c:981 src/main/util.c:1040
+#: src/main/util.c:1063
 msgid "a character vector argument expected"
 msgstr " 文字ベクトルの引数が期待されています "
 
-#: src/main/util.c:738 src/main/util.c:773 src/main/util.c:815
-#: src/main/util.c:856
+#: src/main/util.c:742 src/main/util.c:777 src/main/util.c:819
+#: src/main/util.c:860
 msgid "path too long"
 msgstr " パスが長すぎます "
 
-#: src/main/util.c:991
+#: src/main/util.c:995
 msgid "only the first character of 'quote' will be used"
 msgstr " 'quote' の最初の文字だけが使われます "
 
-#: src/main/util.c:1061
+#: src/main/util.c:1065
 msgid "a character vector 'value' expected"
 msgstr " 文字ベクトルの 'value' が期待されています "
 
-#: src/main/util.c:1064
+#: src/main/util.c:1068
 msgid "'value' must be of positive length"
 msgstr " 'value' は正の長さを持たないといけません "
 
-#: src/main/util.c:1193 src/main/util.c:1201
+#: src/main/util.c:1197 src/main/util.c:1205
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr " 'utf8towcs' 中に不正な入力 '%s' があります "
 
-#: src/main/util.c:1286
+#: src/main/util.c:1290
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr " '%s' に不正なマルチバイト文字があります "
 
-#: src/main/util.c:1395
+#: src/main/util.c:1399
 msgid "error message truncated to 255 chars"
 msgstr " エラーメッセージは 255 文字に切りつめられました "
 
-#: src/main/util.c:1408
+#: src/main/util.c:1412
 msgid "warning message truncated to 255 chars"
 msgstr " 警告メッセージは 255 文字に切り詰められました "
 
-#: src/main/util.c:1815
+#: src/main/util.c:1819
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前が付けられていなければなりません "
 
-#: src/main/util.c:1889
+#: src/main/util.c:1893
 msgid "ICU is not supported on this build"
 msgstr " このビルドでは ICU はサポートされていません "
 
-#: src/main/util.c:1950
+#: src/main/util.c:1954
 msgid "'breaks' is not sorted"
 msgstr " 'breaks' がソートされていません "
 
-#: src/main/util.c:1984 src/main/util.c:2030
+#: src/main/util.c:1988 src/main/util.c:2034
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr " long vector '%s' はサポートされていません "
 
-#: src/main/util.c:2083
+#: src/main/util.c:2087
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr " 'eps.correct' は 0, 1, または 2 でなければなりません "
 
-#: src/main/util.c:2111
+#: src/main/util.c:2115
 msgid "'x' must be a vector"
 msgstr " 'x' はベクトルでなくてはなりません "
 
@@ -6365,8 +6360,8 @@ msgid ""
 "\n"
 msgstr ""
 "R は、自由なソフトウェアであり、「完全に無保証」です。 \n"
-"一定の条件に従えば、自由にこれを再配布することができます。 \n"
-"配布条件の詳細に関しては、'license()' あるいは 'licence()' と入力してくださ"
+" 一定の条件に従えば、自由にこれを再配布することができます。 \n"
+" 配布条件の詳細に関しては、'license()' あるいは 'licence()' と入力してくださ"
 "い。 \n"
 "\n"
 
@@ -6378,9 +6373,9 @@ msgid ""
 "\n"
 msgstr ""
 "R は多くの貢献者による共同プロジェクトです。 \n"
-"詳しくは 'contributors()' と入力してください。 \n"
-"また、R や R のパッケージを出版物で引用する際の形式については \n"
-"'citation()' と入力してください。 \n"
+" 詳しくは 'contributors()' と入力してください。 \n"
+" また、R や R のパッケージを出版物で引用する際の形式については \n"
+" 'citation()' と入力してください。 \n"
 "\n"
 
 #: src/main/version.c:43
@@ -6390,10 +6385,10 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
-"'demo()' と入力すればデモをみることができます。 \n"
-"'help()' とすればオンラインヘルプが出ます。 \n"
-"'help.start()' で HTML ブラウザによるヘルプがみられます。 \n"
-"'q()' と入力すれば R を終了します。 \n"
+" 'demo()' と入力すればデモをみることができます。 \n"
+" 'help()' とすればオンラインヘルプが出ます。 \n"
+" 'help.start()' で HTML ブラウザによるヘルプがみられます。 \n"
+" 'q()' と入力すれば R を終了します。 \n"
 "\n"
 
 #: src/main/vfonts.c:50
@@ -6836,20 +6831,20 @@ msgstr " type[1]='%s' の引数は '1', 'O', 'I' のいずれかでなければ�
 #: src/modules/lapack/Lapack.c:617 src/modules/lapack/Lapack.c:623
 #: src/modules/lapack/Lapack.c:677 src/modules/lapack/Lapack.c:684
 #: src/modules/lapack/Lapack.c:688 src/modules/lapack/Lapack.c:723
-#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:778
-#: src/modules/lapack/Lapack.c:785 src/modules/lapack/Lapack.c:833
-#: src/modules/lapack/Lapack.c:839 src/modules/lapack/Lapack.c:893
-#: src/modules/lapack/Lapack.c:899 src/modules/lapack/Lapack.c:1133
-#: src/modules/lapack/Lapack.c:1139 src/modules/lapack/Lapack.c:1187
-#: src/modules/lapack/Lapack.c:1194 src/modules/lapack/Lapack.c:1198
-#: src/modules/lapack/Lapack.c:1226 src/modules/lapack/Lapack.c:1233
-#: src/modules/lapack/Lapack.c:1253
+#: src/modules/lapack/Lapack.c:730 src/modules/lapack/Lapack.c:779
+#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:834
+#: src/modules/lapack/Lapack.c:840 src/modules/lapack/Lapack.c:894
+#: src/modules/lapack/Lapack.c:900 src/modules/lapack/Lapack.c:1134
+#: src/modules/lapack/Lapack.c:1140 src/modules/lapack/Lapack.c:1188
+#: src/modules/lapack/Lapack.c:1195 src/modules/lapack/Lapack.c:1199
+#: src/modules/lapack/Lapack.c:1227 src/modules/lapack/Lapack.c:1234
+#: src/modules/lapack/Lapack.c:1254
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
 msgstr " エラーコード %d が Lapack ルーチン '%s' から返されました "
 
 #: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
-#: src/modules/lapack/Lapack.c:873
+#: src/modules/lapack/Lapack.c:874
 msgid "'x' must be a square numeric matrix"
 msgstr " 'x' は数値の正方行列でなければなりません "
 
@@ -6910,8 +6905,8 @@ msgstr " Lapack ルーチン 'zgecon()' からエラー [%d] が返されまし�
 #: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
 #: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
 #: src/modules/lapack/Lapack.c:692 src/modules/lapack/Lapack.c:734
-#: src/modules/lapack/Lapack.c:799 src/modules/lapack/Lapack.c:856
-#: src/modules/lapack/Lapack.c:916
+#: src/modules/lapack/Lapack.c:800 src/modules/lapack/Lapack.c:857
+#: src/modules/lapack/Lapack.c:917
 msgid "Fortran complex functions are not available on this platform"
 msgstr " Fortran の複素数関数はこのプラットフォームでは使用できません "
 
@@ -6924,28 +6919,28 @@ msgstr " Lapack ルーチン 'ztrcon()' からエラー [%d] が返されまし�
 msgid "'a' must be a complex matrix"
 msgstr " 'a' は複素行列でなければなりません "
 
-#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1041
+#: src/modules/lapack/Lapack.c:535 src/modules/lapack/Lapack.c:1042
 msgid "'a' is 0-diml"
 msgstr " 'a' の次元が 0 です "
 
-#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1043
+#: src/modules/lapack/Lapack.c:537 src/modules/lapack/Lapack.c:1044
 #, c-format
 msgid "'a' (%d x %d) must be square"
 msgstr " 'a' (%d x %d) は正方行列である必要があります "
 
-#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1049
+#: src/modules/lapack/Lapack.c:543 src/modules/lapack/Lapack.c:1050
 msgid "no right-hand side in 'b'"
 msgstr " 'b' に右辺項がありません "
 
 #: src/modules/lapack/Lapack.c:546 src/modules/lapack/Lapack.c:560
-#: src/modules/lapack/Lapack.c:1052 src/modules/lapack/Lapack.c:1068
+#: src/modules/lapack/Lapack.c:1053 src/modules/lapack/Lapack.c:1069
 #, c-format
 msgid "'b' (%d x %d) must be compatible with 'a' (%d x %d)"
 msgstr " 'd' (%d x %d) は 'a' (%d x %d) と整合性をもたなければなりません "
 
-#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:947
-#: src/modules/lapack/Lapack.c:961 src/modules/lapack/Lapack.c:1016
-#: src/modules/lapack/Lapack.c:1090
+#: src/modules/lapack/Lapack.c:581 src/modules/lapack/Lapack.c:948
+#: src/modules/lapack/Lapack.c:962 src/modules/lapack/Lapack.c:1017
+#: src/modules/lapack/Lapack.c:1091
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
 msgstr " Lapack ルーチン %2$s の %1$d 引数が不正な値を持っています "
@@ -6955,81 +6950,80 @@ msgid "'b' must be a complex matrix"
 msgstr " 'b' は複素行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:670 src/modules/lapack/Lapack.c:716
-#: src/modules/lapack/Lapack.c:1180 src/modules/lapack/Lapack.c:1219
+#: src/modules/lapack/Lapack.c:1181 src/modules/lapack/Lapack.c:1220
 #, c-format
 msgid "right-hand side should have %d not %d rows"
 msgstr " 右辺は %d 個の行を持つべきです（%d 行ではなくて） "
 
 #: src/modules/lapack/Lapack.c:743
-#, fuzzy
 msgid "'jobu' must be a character string"
-msgstr " 'norm' は文字列でなければなりません "
+msgstr " 'jobu' は文字列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:751
 msgid "matrices of 2^31 or more elements are not supported"
 msgstr " 要素数が 2^31 以上の行列はサポートされていません "
 
-#: src/modules/lapack/Lapack.c:815
+#: src/modules/lapack/Lapack.c:816
 msgid "'x' must be a square complex matrix"
 msgstr " 'x' は複素正方行列でなければなりません "
 
-#: src/modules/lapack/Lapack.c:925 src/modules/lapack/Lapack.c:999
-#: src/modules/lapack/Lapack.c:1038 src/modules/lapack/Lapack.c:1113
-#: src/modules/lapack/Lapack.c:1244
+#: src/modules/lapack/Lapack.c:926 src/modules/lapack/Lapack.c:1000
+#: src/modules/lapack/Lapack.c:1039 src/modules/lapack/Lapack.c:1114
+#: src/modules/lapack/Lapack.c:1245
 msgid "'a' must be a numeric matrix"
 msgstr " 'a' は数値行列でなければなりません "
 
-#: src/modules/lapack/Lapack.c:932 src/modules/lapack/Lapack.c:1249
+#: src/modules/lapack/Lapack.c:933 src/modules/lapack/Lapack.c:1250
 msgid "'a' must be a square matrix"
 msgstr " 'a' は正方行列でなければなりません "
 
-#: src/modules/lapack/Lapack.c:933
+#: src/modules/lapack/Lapack.c:934
 msgid "'a' must have dims > 0"
 msgstr " 'a' の次元は正である必要があります。 "
 
-#: src/modules/lapack/Lapack.c:945
+#: src/modules/lapack/Lapack.c:946
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
 msgstr " 次数 %d の主対角行列が正定値ではありません "
 
-#: src/modules/lapack/Lapack.c:959
+#: src/modules/lapack/Lapack.c:960
 msgid "the matrix is either rank-deficient or indefinite"
 msgstr " 行列はランク落ちか不定です "
 
-#: src/modules/lapack/Lapack.c:986
+#: src/modules/lapack/Lapack.c:987
 msgid "'size' argument must be a positive integer"
 msgstr " 'size' 引数は正整数値でなければなりません "
 
-#: src/modules/lapack/Lapack.c:1001
+#: src/modules/lapack/Lapack.c:1002
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
 msgstr " 'size' は列数 ncol(x) = %d を超えることはできません "
 
-#: src/modules/lapack/Lapack.c:1002
+#: src/modules/lapack/Lapack.c:1003
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
 msgstr " 'size' は行数 nrow(x) = %d を超えることはできません "
 
-#: src/modules/lapack/Lapack.c:1014
+#: src/modules/lapack/Lapack.c:1015
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
 msgstr " 要素 (%d, %d) が 0 であるため、逆数が計算できません "
 
-#: src/modules/lapack/Lapack.c:1093
+#: src/modules/lapack/Lapack.c:1094
 #, c-format
 msgid "Lapack routine %s: system is exactly singular: U[%d,%d] = 0"
 msgstr "Lapack routine %s: システムは正確に特異です: U[%d,%d] = 0 "
 
-#: src/modules/lapack/Lapack.c:1101
+#: src/modules/lapack/Lapack.c:1102
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
 msgstr " システムは数値的に特異です: 条件数の逆数 = %g "
 
-#: src/modules/lapack/Lapack.c:1173 src/modules/lapack/Lapack.c:1211
+#: src/modules/lapack/Lapack.c:1174 src/modules/lapack/Lapack.c:1212
 msgid "'b' must be a numeric matrix"
 msgstr " 'b' は数値行列でなければなりません "
 
-#: src/modules/lapack/Lapack.c:1245
+#: src/modules/lapack/Lapack.c:1246
 msgid "argument 'logarithm' must be logical"
 msgstr " 引数 'logarithm' は論理型でなくてはなりません "
 
