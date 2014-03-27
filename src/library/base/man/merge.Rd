@@ -1,6 +1,6 @@
 % File src/library/base/man/merge.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Copyright 2002-2011 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -44,7 +44,8 @@ merge(x, y, \dots)
     to be used for making unique the names of columns in the result
     which not used for merging (appearing in \code{by} etc).}
   \item{incomparables}{values which cannot be matched.  See
-    \code{\link{match}}.}
+    \code{\link{match}}.  This is intended to be used for merging on one
+    column, so these are incomparable values of that column.}
   \item{\dots}{arguments to be passed to or from methods.}
 }
 \details{
@@ -144,7 +145,6 @@ merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)
 x <- data.frame(k1 = c(NA,NA,3,4,5), k2 = c(1,NA,NA,4,5), data = 1:5)
 y <- data.frame(k1 = c(NA,2,NA,4,5), k2 = c(NA,NA,3,4,5), data = 1:5)
 merge(x, y, by = c("k1","k2")) # NA's match
-merge(x, y, by = c("k1","k2"), incomparables = NA)
 merge(x, y, by = "k1") # NA's match, so 6 rows
 merge(x, y, by = "k2", incomparables = NA) # 2 rows
 }
