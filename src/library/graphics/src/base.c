@@ -32,7 +32,7 @@
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #undef _
-#define _(String) dgettext ("grDevices", String)
+#define _(String) dgettext ("graphics", String)
 #else
 #define _(String) (String)
 #endif
