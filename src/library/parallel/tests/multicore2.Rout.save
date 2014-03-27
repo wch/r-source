@@ -1,5 +1,5 @@
 
-R version 3.1.0 alpha (2014-03-23 r65260)
+R version 3.1.0 beta (2014-03-27 r65305) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -43,4 +43,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.306   0.036   0.236 
+  0.311   0.029   0.233 
