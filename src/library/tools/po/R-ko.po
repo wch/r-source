@@ -1,28 +1,24 @@
 # Korean translation for R tools package
 # src/library/tools/po/R-ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R tools package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-27 09:11\n"
-"PO-Revision-Date: 2013-03-10 19:40-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-27 13:35-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "인자 'package'는 반드시 길이가 1 이어야 합니다"
@@ -91,6 +87,8 @@ msgstr "인자들의 기본값이 일치하지 않습니다:"
 
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr ""
+"문서 객체 '%s'로부터 다음과 같은 코드와 문서가 일치하지 않는 부분을 찾았습니"
+"다:"
 
 msgid "Code: %s"
 msgstr "코드: %s"
@@ -100,12 +98,14 @@ msgstr "문서: %s"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
 msgstr ""
+"문서 객체 '%s'로부터 S4 클래스 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
 
 msgid "Slots for class '%s'"
 msgstr "클래스 '%s'에 대한 슬롯들"
 
 msgid "Data codoc mismatches from documentation object '%s':"
 msgstr ""
+"문서 객체 '%s'로부터 데이터 코드와 문서가 일치하지 않는 부분을 찾았습니다:"
 
 msgid "Variables in data frame '%s'"
 msgstr "데이터 프레임 '%s'내의 변수들"
@@ -129,7 +129,7 @@ msgid "Assignments in \\usage in documentation object '%s':"
 msgstr ""
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr ""
+msgstr "문서 객체 '%s'내에서 올바르지 않은 \\usage 라인들을 찾았습니다:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr ""
@@ -174,6 +174,8 @@ msgid ""
 "Vignette dependencies (%s entries) must be contained in the DESCRIPTION "
 "Depends/Suggests/Imports entries."
 msgstr ""
+"비니에트 종속성 (%s 항목들)은 반드시 DESCRIPTION Depends/Suggests/Imports 항"
+"목내에 포함되어 있어야 합니다."
 
 msgid "Malformed package name"
 msgstr "잘못된 패키지명입니다"
@@ -204,7 +206,7 @@ msgstr ""
 "Depends 또는 Suggests 또는 Imports 또는 Enhances 항목이 잘못되었습니다."
 
 msgid "Offending entries:"
-msgstr ""
+msgstr "다음과 같은 문제가 되는 항목들이 있습니다:"
 
 msgid ""
 "Entries must be names of packages optionally followed by '<=' or '>=', white "
@@ -229,13 +231,14 @@ msgstr ""
 "버전을 표시하는 숫자들은 반드시 두 부분의 음이 아닌 정수로 되어야 하며, '.' "
 "또는 '-'으로 구분되어야 합니다."
 
-#, fuzzy
 msgid "Invalid VignetteBuilder field."
-msgstr "Priority 항목이 잘못되었습니다."
+msgstr "VignetteBuilder 항목이 잘못되었습니다."
 
 msgid ""
 "This field must contain one or more packages (and no version requirement)."
 msgstr ""
+"이 항목은 반드시 하나 이상의 패키지를 포함해야 합니다 (버전은 요구되지 않습니"
+"다)."
 
 msgid "Invalid Priority field."
 msgstr "Priority 항목이 잘못되었습니다."
@@ -244,6 +247,8 @@ msgid ""
 "Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
 "already be known to R."
 msgstr ""
+"'base' 또는 'recommended' 또는 'defunct-base'와 같은 우선순위를 가지는 패키지"
+"들은 반드시 R이 인식할 수 있도록 해야합니다."
 
 msgid ""
 "See the information on DESCRIPTION files in section 'Creating R packages' of "
@@ -273,28 +278,28 @@ msgstr ""
 "을 수 없습니다."
 
 msgid "Encoding '%s' is not portable"
-msgstr ""
+msgstr "인코딩 '%s'은  포터블하지 않습니다"
 
 msgid "Unknown encoding with non-ASCII data"
-msgstr ""
+msgstr "ASCII가 아닌 데이터에 이용된 인코딩을 알 수 없습니다"
 
 msgid "Non-standard license specification:"
-msgstr ""
+msgstr "비표준 라이센스 지정입니다:"
 
 msgid "Standardizable: %s"
 msgstr ""
 
 msgid "Standardized license specification:"
-msgstr ""
+msgstr "표준화된 라이센스 지정입니다:"
 
 msgid "Deprecated license: %s"
-msgstr ""
+msgstr "다음의 라이센스들은 더 이상 지원되지 않습니다: %s"
 
 msgid "Invalid license file pointers: %s"
-msgstr ""
+msgstr "라이센스 파일 포인터가 올바르지 않습니다: %s"
 
 msgid "License components with restrictions not permitted:"
-msgstr ""
+msgstr "다음은 허용되지 않는 제한을 가지고 있는 라이센스 구성요소들입니다:"
 
 msgid "License components which are templates and need '+ file LICENSE':"
 msgstr ""
@@ -371,77 +376,88 @@ msgid "package 'methods' is used but not declared"
 msgstr "패키지 'methods'가 사용되었으나 선언되지 않았습니다"
 
 msgid "'::' or ':::' imports not declared from:"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 '::' 또는 ':::' 임포트입니다:"
 
 msgid "'::' or ':::' import not declared from: %s"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 '::' 또는 ':::' 임포트입니다: %s"
 
 msgid "'library' or 'require' calls not declared from:"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
 
 msgid "'library' or 'require' call not declared from: %s"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"
 msgstr ""
+"다음은 Depends에 의하여 이미 부착된 패키지로의 'library' 또는 'require' 호출"
+"입니다 :"
 
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr ""
+"Depends에 의하여 이미 부착된 %s로의 'library' 또는 'require' 호출입니다."
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
+"Imports 항목 내에 있는 네임스페이스들은 다음으로부터 불러온 것이 아닙니다:"
 
 msgid "Namespace in Imports field not imported from: %s"
 msgstr ""
+"Imports 항목 내에 있는 네임스페이스들은 다음으로부터 불러온 것이 아닙니다: %s"
 
 msgid "Packages in Depends field not imported from:"
-msgstr ""
+msgstr "Depends 항목에 있는 패키지들은 다음으로부터 불러온 것이 아닙니다:"
 
 msgid "Package in Depends field not imported from: %s"
-msgstr ""
+msgstr "Depends 항목에 있는 패키지들은 다음으로부터 불러온 것이 아닙니다: %s"
 
 msgid "Missing or unexported objects:"
-msgstr ""
+msgstr "다음은 누락되거나 예상하지 못한 객체들입니다:"
 
 msgid "Missing or unexported object: %s"
-msgstr ""
+msgstr "다음은 누락되거나 예상하지 못한 객체입니다: %s"
 
 msgid "':::' calls which should be '::':"
-msgstr ""
+msgstr "다음은 '::'을 이용해야 하는데 ':::'을 이용한 호출입니다:"
 
 msgid "':::' call which should be '::': %s"
-msgstr ""
+msgstr "다음은 '::'을 이용해야 하는데 ':::'를 이용한 호출입니다: %s"
 
 msgid "Missing objects imported by ':::' calls:"
-msgstr ""
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 누락된 객체들입니다:"
 
 msgid "Missing object imported by a ':::' call: %s"
-msgstr ""
+msgstr "다음은 ':::'을 이용한 호출에 의하여 임포트된 누락된 객체입니다: %s"
 
 msgid "Unexported objects imported by ':::' calls:"
 msgstr ""
+"다음은 ':::'을 이용한 호출에 의하여 임포트된 예상하지 못한 객체들입니다:"
 
 msgid "Unexported object imported by a ':::' call: %s"
 msgstr ""
+"다음은 ':::'을 이용한 호출에 의하여 임포트된 예상하지 못한 객체입니다: %s"
 
 msgid "Unavailable namespaces imported from by ':::' calls:"
 msgstr ""
+"':::'을 이용한 호출에 의하여 다음으로부터 임포트된 이용불가능한 네임스페이스"
+"들입니다:"
 
 msgid "Unavailable namespace imported from by a ':::' call: %s"
 msgstr ""
+"':::'을 이용한 호출에 의하여 다음으로부터 임포트된 이용불가능한 네임스페이스"
+"입니다: %s"
 
 msgid "'data(package=)' calls not declared from:"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 'data(package=)' 호출입니다:"
 
 msgid "'data(package=)' call not declared from: %s"
-msgstr ""
+msgstr "다음으로부터 선언되지 않은 'data(package=)' 호출입니다: %s"
 
 msgid "Package has no 'Version' field"
-msgstr ""
+msgstr "패키지가 'Version' 항목을 가지고 있지 않습니다"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
-msgstr ""
+msgstr "NB: CRAN 인커밍 체크를 이용하기 위해서 인터넷 엑세스가 필요합니다"
 
 msgid "Rd files with duplicated name '%s':"
 msgstr "다음은 중복된 이름 '%s'를 가진 Rd 파일들입니다:"
@@ -455,9 +471,8 @@ msgstr "다음은 Rd 객체 '%s'에 아무런 설명이 없는 인자항목들�
 msgid "Auto-generated content requiring editing in Rd object '%s':"
 msgstr "다음은 Rd 객체 '%s'를 편집하는데 필요한 자동으로 생성된 컨텐츠입니다:"
 
-#, fuzzy
 msgid "no Rd sections specified"
-msgstr "'type'이 지정되지 않았습니다"
+msgstr "Rd 섹션들이 지정되지 않았습니다"
 
 msgid ""
 "Generics 'g' in 'env' %s where '%s' errors: %s\n"
@@ -539,32 +554,39 @@ msgid "Only one Rd section per %s is supported."
 msgstr ""
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
-msgstr ""
+msgstr "비니에트 프로덕트 %s는 알려진 파일확장자 (%s)를 가지고 있지 않습니다"
 
 msgid ""
 "Failed to locate the %s output file (by engine %s) for vignette with name "
 "%s. The following files exist in directory %s: %s"
 msgstr ""
+"%3$s 이름을 가진 비니에트에 대해서 %1$s 출력파일 (엔진 %2$s에 의해서)을 위치"
+"시키는데 실패했습니다. 디렉토리 %4$s내에 다음과 같은 파일들이 있습니다: %5$s"
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
 msgstr ""
+"이름 %3$s을 가진 비니에트에 대해서 다음과 같은 한 개이상의 %1$s 출력파일 (엔"
+"진 %2$s에 의하여)들이 놓여졌습니다: %4$s"
 
 msgid "unable to create temp directory %s"
 msgstr "임시디렉토리 %s를 생성하지 못했습니다"
 
-#, fuzzy
 msgid "Running"
-msgstr "%s를 실행중입니다"
+msgstr "실행중입니다"
 
 msgid "Vignette %s overwrites the following %s output by vignette %s: %s"
 msgstr ""
+"비니에트 %1$s은 다음의 %2$s 출력물을 비니에트 %3$s에 의하여 덮어썼습니다: "
+"%4$s"
 
 msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each others output files"
 msgstr ""
+"같은 이름들 (%2$s)을 가지고 있는 비니에트 소스 파일들 (%1$s)이 발견되었기 때"
+"문에 출력된 파일들이 서로 덮어쓸 위험이 있습니다"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -586,50 +608,49 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
+"비니에트 파일명 '%1$s'은 '%2$s' 파일명 패턴들 중 어느것과도 일치하지 않습니다"
 
+#, fuzzy
 msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr ""
+msgstr "다음은 일치하지 않는 인코딩 지정들입니다:"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
+"'%1$s' 비니에트 내에서 '%2$s'와 '%3$s'은 같은 비니에트 이름을 가지고 있습니다"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "인자 'vignette'는 반드시 길이가 1 이어야 합니다"
 
-#, fuzzy
 msgid "Vignette engine package not specified"
-msgstr "에러: 지정된 패키지가 없습니다"
+msgstr "비니에트 엔진 패키지가 지정되지 않았습니다"
 
 msgid "Unsupported engine name"
-msgstr ""
+msgstr "지원되지 않는 엔진명입니다"
 
 msgid "None of packages %s have registered vignette engines"
-msgstr ""
+msgstr "패키지들 %s 모두 등록된 비니에트 엔진들은 가지고 있지 않습니다"
 
-#, fuzzy
 msgid "Vignette engine %s is not registered"
-msgstr "에러: 지정된 패키지가 없습니다"
+msgstr "비니에트 엔진 %s이 등록되지 않았습니다"
 
 msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr ""
+"비니에트 엔진 %1$s은 패키지들 %2$s 어느 것에라도 등록되어 있지 않습니다"
 
-#, fuzzy
 msgid "Engine name %s and package %s do not match"
-msgstr "패키지 %2$s 내의 링크 %1$s 를 제자리에 위치시킬 수 없습니다"
+msgstr "엔진명 %1$s과 패키지 %2$s가 일치하지 않습니다"
 
-#, fuzzy
 msgid "Argument %s must be a function and not %s"
-msgstr "인자 '%s'는 반드시 문자열 또는 연결이어야 합니다"
+msgstr "인자 %s는 반드시 함수이고 %s이 아니어야 합니다"
 
-#, fuzzy
 msgid "Argument %s must be a character vector or NULL and not %s"
-msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"
+msgstr "인자 %s는 반드시 문자형 벡터 또는 NULL이고 %s가 아니어야 합니다"
 
 msgid "Cannot change the %s engine or use an engine of that name"
-msgstr ""
+msgstr "%s 엔진을 변경할 수 없거나 해당이름을 가진 엔진을 사용할 수 없습니다"
 
 msgid "vignette builder '%s' not found"
-msgstr ""
+msgstr "비니에트 빌더 '%s'를 찾을 수 없습니다"
 
 msgid "Invalid DESCRIPTION file"
 msgstr "DESCRIPTION 파일이 잘못되었습니다"
@@ -651,10 +672,10 @@ msgid "duplicated files in '%s' field:"
 msgstr "다음은 '%s' 항목에서 중복된 파일들입니다:"
 
 msgid "files in '%s' field missing from '%s':"
-msgstr ""
+msgstr "다음은 '%2$s'으로부터 누락된 '%1$s' 항목에 있는 파일들입니다:"
 
 msgid "files in '%s' missing from '%s' field:"
-msgstr ""
+msgstr "다음은 '%2$s' 항목으로부터 누락된 '%1$s' 내에 있는 파일들입니다:"
 
 msgid "unable to create '%s'"
 msgstr "'%s'을 생성할 수 없습니다"
@@ -680,6 +701,8 @@ msgid ""
 "compiling TeX file %s failed with message:\n"
 "%s"
 msgstr ""
+"TeX 파일 %s를 컴파일하는데 실패했습니다:\n"
+"%s"
 
 msgid "cannot copy '%s' to '%s'"
 msgstr "'%s'를 '%s'로 복사할 수 없습니다"
@@ -703,22 +726,22 @@ msgid "assertCondition: caught %s"
 msgstr ""
 
 msgid ","
-msgstr ""
+msgstr ","
 
 msgid "Got %s in evaluating %s; wanted %s"
-msgstr ""
+msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
 
 msgid "Failed to get %s in evaluating %s"
-msgstr ""
+msgstr "%2$s를 평가로부터 %1$s를 얻는데 실패했습니다"
 
 msgid "Failed to get error in evaluating %s"
-msgstr ""
+msgstr "%s 평가로부터 에러를 얻는데 실패했습니다"
 
 msgid "Asserted error: %s"
 msgstr ""
 
 msgid "Got warning in evaluating %s, but also an error"
-msgstr ""
+msgstr "%s를 평가시에 경고를 얻었지만 이는 또한 에러입니다"
 
 msgid "Asserted warning: %s"
 msgstr ""
@@ -736,13 +759,13 @@ msgid "Error: cannot rename directory to %s"
 msgstr "에러: 디렉토리 이름을 %s으로 바꿀 수 없습니다"
 
 msgid "cannot link from %s"
-msgstr ""
+msgstr "%s로부터 연결할 수 없습니다"
 
 msgid "-l option without value"
 msgstr ""
 
 msgid "configuration files are not supported as from R 2.12.0"
-msgstr ""
+msgstr "R 2.12.0 부터는 환경설정 파일들이 지원되지 않습니다"
 
 msgid "'--multiarch' specified with only one usable sub-architecture"
 msgstr ""
@@ -760,19 +783,19 @@ msgid "package directory %s does not exist"
 msgstr "패키지 디렉토리 %s가 존재하지 않습니다"
 
 msgid "no packages to check"
-msgstr ""
+msgstr "체크할 패키지들이 없습니다"
 
 msgid "downloading reverse dependencies ..."
 msgstr ""
 
 msgid "downloading %s ..."
-msgstr ""
+msgstr "%s을 다운로드 하고 있습니다  ..."
 
 msgid "installing dependencies %s"
-msgstr ""
+msgstr "종속된 %s들을 설치하고 있습니다"
 
 msgid "checking %s ..."
-msgstr ""
+msgstr "%s를 확인합니다 ..."
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr ""
@@ -836,13 +859,13 @@ msgid "no running server to stop"
 msgstr "중단해야 할 실행중인 서버가 없습니다"
 
 msgid "starting httpd help server ..."
-msgstr ""
+msgstr "httpd 도움말 서버를 시작합니다 ..."
 
 msgid "done"
 msgstr "완료"
 
 msgid "failed to start the httpd server"
-msgstr ""
+msgstr "httpd 서버를 시작하는데 실패했습니다"
 
 msgid "cannot read index information in file '%s'"
 msgstr "파일 '%s'에 있는 인덱스 정보를 읽을 수 없습니다"
@@ -863,9 +886,8 @@ msgstr ""
 msgid "generating debug symbols (%s)"
 msgstr "디버그 기호 %s를 생성합니다"
 
-#, fuzzy
 msgid "no DLL was created"
-msgstr "파일 '%s'은 생성되지 않았습니다"
+msgstr "DLL이 생성되지 않았습니다"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
@@ -876,7 +898,7 @@ msgid ""
 msgstr ""
 
 msgid "package %s %s was found, but %s %s is required by %s"
-msgstr ""
+msgstr "패키지 %1$s %2$s 을 찾았으나 %3$s %4$s는 %5$s에 의해 요구되어집니다"
 
 msgid "no source files found"
 msgstr "소스파일들을 찾을 수 없습니다"
@@ -915,7 +937,7 @@ msgid "all packages should have a NAMESPACE"
 msgstr "모든 패키지들은 반드시 NAMESPACE를 가지고 있어야 합니다"
 
 msgid "package seems to be using lazy loading for data already"
-msgstr ""
+msgstr "패키지는 이미 데이터에 대해서 레이지 로딩을 이용하고 있는 것 같습니다"
 
 msgid "source list must have names for all elements"
 msgstr "소스는 반드시 모든 구성요소들에 대해서 이름들을 가지고 있어야 합니다"
@@ -935,7 +957,7 @@ msgid "package contains no R code"
 msgstr "패키지가 R 코드를 포함하지 않습니다"
 
 msgid "package seems to be using lazy loading already"
-msgstr ""
+msgstr "패키지는 이미 레이지 로딩을 이용하고 있는 것 같습니다"
 
 msgid ""
 "Cannot process chunk/lines:\n"
@@ -978,7 +1000,7 @@ msgid ""
 msgstr ""
 
 msgid "Processing packages:"
-msgstr ""
+msgstr "다음의 패키지들을 프로세싱하고 있습니다:"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr ""
@@ -1008,16 +1030,16 @@ msgid "attempting to select more than one element"
 msgstr ""
 
 msgid "looking at %s"
-msgstr ""
+msgstr "%s를 살펴봅니다"
 
 msgid "cannot read literal string object"
-msgstr ""
+msgstr "literal 문자열 객체를 읽을 수 없습니다"
 
 msgid "cannot read hexadecimal string object"
-msgstr ""
+msgstr "hexadecimal 문자열 객체를 읽을 수 없습니다"
 
 msgid "cannot read name object"
-msgstr ""
+msgstr "이름 객체를 읽을 수 없습니다"
 
 msgid "cannot read array object"
 msgstr "배열 객체를 읽을 수 없습니다"
@@ -1047,7 +1069,7 @@ msgid "invalid index in object stream lookup"
 msgstr ""
 
 msgid "expanding %s"
-msgstr ""
+msgstr "%s을 확장하고 있습니다"
 
 msgid "unsupported filter %s"
 msgstr "지원되지 않는 필터 %s입니다"
@@ -1065,7 +1087,7 @@ msgid "package '%s' was not found"
 msgstr "패키지 '%s'를 찾을 수 없습니다"
 
 msgid "bad operand"
-msgstr ""
+msgstr "잘못된 연산자입니다"
 
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
@@ -1168,7 +1190,7 @@ msgid "file '%s' is not in valid DCF format"
 msgstr "파일 '%s'는 유효한 DCF 형식을 가지고 있지 않습니다."
 
 msgid "contains a blank line"
-msgstr ""
+msgstr "비어있는 라인을 포함하고 있습니다"
 
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr ""
@@ -1180,7 +1202,7 @@ msgid "Call sequence:"
 msgstr "호출 시퀀스: "
 
 msgid "parsing '%s'"
-msgstr ""
+msgstr "'%s'을 파싱합니다"
 
 msgid "Obsolete package %s in Rd xrefs"
 msgid_plural "Obsolete packages %s in Rd xrefs"
@@ -1196,28 +1218,23 @@ msgstr[0] "Rd xrefs에 알 수 없는 패키지 %s입니다"
 
 msgid "Note: found %d marked Latin-1 string"
 msgid_plural "Note: found %d marked Latin-1 strings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "노트: Latin-1 문자열로 표시된 %d를 찾았습니다"
 
 msgid "Note: found %d marked UTF-8 string"
 msgid_plural "Note: found %d marked UTF-8 strings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "노트: UTF-8 문자열로 표시된 %d을 찾았습니다"
 
 msgid "Note: found %d string marked as \"bytes\""
 msgid_plural "Note: found %d strings marked as \"bytes\""
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "노트: \"bytes\"로서 표시된 %d 문자열을 찾았습니다"
 
 msgid "Warning in file %s:"
 msgid_plural "Warnings in file %s:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "파일 %s내에 다음과 같은 경고를 발견했습니다:"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
@@ -1228,19 +1245,18 @@ msgstr[1] ""
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "다음의 함수로부터 .Internal 호출을 찾았습니다:"
 
 msgid "Found a.Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "다음의 S4 제네릭에 대하여 메소드로부터 .Internal 호출을 찾았습니다:"
 
 msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] ""
-msgstr[1] ""
+"다음과 같은 레퍼런스 클래스에 대하여 메소들로부터 .Internal 호출을 찾았습니"
+"다:"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
@@ -1265,16 +1281,15 @@ msgstr[0] ""
 
 msgid "Found the deprecated function:"
 msgid_plural "Found the deprecated functions:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "다음은 더 이상 지원되지 않는 함수들입니다:"
 
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
-msgstr[0] ""
+msgstr[0] "다음은 더 이상 지원되지 않거나 제거된 함수들입니다:"
 
 msgid "Found the platform-specific device:"
 msgid_plural "Found the platform-specific devices:"
-msgstr[0] ""
+msgstr[0] "다음과 같은 특정 플랫폼 디바이스를 찾았습니다:"
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
@@ -1288,7 +1303,6 @@ msgid_plural ""
 "missing/empty \\name field in Rd files\n"
 "%s"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
@@ -1297,7 +1311,7 @@ msgstr[1] ""
 
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
-msgstr[0] ""
+msgstr[0] "필요한 항목이 누락되거나 비어있습니다:"
 
 msgid "Help on topic '%s' was found in the following package:"
 msgid_plural "Help on topic '%s' was found in the following packages:"
@@ -1305,8 +1319,7 @@ msgstr[0] "'%s'와 관련된 주제를 다음의 패키지들로부터 찾았습
 
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었습니다"
 
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
