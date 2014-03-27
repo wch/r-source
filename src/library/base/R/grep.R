@@ -1,7 +1,7 @@
 #  File src/library/base/R/grep.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -291,14 +291,48 @@ function(x, m, invert = FALSE)
     y
 }
 
+## Suppose matching partitions a string as
+##   n0 m1 n1 ... mk nk
+## where the m and n substrings are the matched and non-matched parts,
+## respectively, and n0 and/or nk can be empty.
+## (regexec() can give overlapping matches, in which case extracting
+## inverted matches or replacing cannot work.)
+## For list match data, k can be any non-negative integer. 
+## Extraction and replacement straightforwardly work on the m or n
+## sequences, depending on whether invert is FALSE or TRUE.
+## For vector match data from regexpr(), k can be 0 or 1.
+## If k = 0 (no match):
+##                    invert
+##               FALSE      TRUE
+##   extract      drop       n0
+##   replace       n0        r0
+## If k = 1:
+##                    invert
+##               FALSE      TRUE
+##   extract       m1     c(n0, n1)
+##   replace    n0 r1 n1  r0 m1 r1
+
 `regmatches<-` <-
 function(x, m, invert = FALSE, value)
 {
     if(!length(x)) return(x)
 
-    y <- regmatches(x, m, !invert)
-
     ili <- is.list(m)
+
+    if(!ili && invert && any(m == -1L)) {
+        ## regmatches() drops empty matches for vector match data if
+        ## invert is FALSE (see above): we need to work around this when
+        ## replacing non-matches (PR #15723).
+        y <- rep_len(list(character()), length(x))
+        y[m > -1L] <- as.list(regmatches(x, m, FALSE))
+    } else {
+        y <- regmatches(x, m, !invert)
+    }
+
+    ## <FIXME>
+    ## It might be simpler to try reducing the vector case to the list
+    ## case, transforming m and value as needed,
+    ## </FIXME>
 
     if(!ili && !invert) {
         ## For non-list m and invert = FALSE, we need a character vector
