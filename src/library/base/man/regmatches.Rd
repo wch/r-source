@@ -14,8 +14,8 @@ regmatches(x, m, invert = FALSE) <- value
 \arguments{
   \item{x}{a character vector}
   \item{m}{an object with match data}
-  \item{invert}{a logical: if \code{TRUE}, extract the non-matched
-    substrings.}
+  \item{invert}{a logical: if \code{TRUE}, extract or replace the
+    non-matched substrings.}
   \item{value}{an object with suitable replacement values for the
     matched or non-matched substrings (see \code{Details}).}
 }
@@ -37,7 +37,7 @@ regmatches(x, m, invert = FALSE) <- value
 
   The replacement function can be used for replacing the matched or
   non-matched substrings.  For vector match data, if \code{invert} is
-  \code{TRUE}, \code{value} should be a character vector with length the
+  \code{FALSE}, \code{value} should be a character vector with length the
   number of matched elements in \code{m}.  Otherwise, it should be a
   list of character vectors with the same length as \code{m}, each as
   long as the number of replacements needed.  Replacement coerces values
