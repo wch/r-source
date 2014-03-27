@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -42,10 +42,6 @@ msgstr "referencia a parte desconhecida '%s'"
 #, fuzzy
 msgid "no Sweave file with name %s found"
 msgstr "nenhum arquivo Sweave com o nome '%s' encontrado"
-
-#, fuzzy
-msgid "%d Sweave files for basename %s found"
-msgstr "%d arquivos Sweave com o nome base '%s' encontrados:"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "mais de uma especificação de sintaxe encontrada, usando a primeira"
@@ -1082,6 +1078,12 @@ msgstr ""
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "%d arquivos Sweave com o nome base '%s' encontrados:"
+msgstr[1] "%d arquivos Sweave com o nome base '%s' encontrados:"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"

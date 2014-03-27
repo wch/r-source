@@ -3005,7 +3005,9 @@ void R_signal_protect_error(void)
 
 void R_signal_unprotect_error(void)
 {
-    error(_("unprotect(): only %d protected items"), R_PPStackTop);
+    error(ngettext("unprotect(): only %d protected item",
+		   "unprotect(): only %d protected items", R_PPStackTop),
+	  R_PPStackTop);
 }
 
 #ifndef INLINE_PROTECT
@@ -3076,8 +3078,10 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 
 void R_signal_reprotect_error(PROTECT_INDEX i)
 {
-    error(_("R_Reprotect: only %d protected items, can't reprotect index %d"),
-	  R_PPStackTop, i);
+    error(ngettext("R_Reprotect: only %d protected items, can't reprotect index %d", 
+		   "R_Reprotect: only %d protected items, can't reprotect index %d",
+		   R_PPStackTop),
+          R_PPStackTop, i);
 }
     
 #ifndef INLINE_PROTECT

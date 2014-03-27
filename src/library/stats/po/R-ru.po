@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-11 10:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -109,6 +109,9 @@ msgstr "x$lag должен иметь как минимум 1 колонку"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "могу использовать ci.type=\"ma\" только если первый лаг -- ноль"
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr "только одномерные временные ряды"
@@ -929,12 +932,6 @@ msgstr "'circular' должен быть логическим и не NA"
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "длина 'init' должна равняться длине 'filter'"
-
-msgid "'init' must have 1 column"
-msgstr "'init' должен иметь одну колонку"
-
-msgid "'init' must have 1 or %d columns"
-msgstr "'init' должен иметь 1 или %d колонок"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' должен иметь по крайней мере 2 строки и колонки"
@@ -2157,7 +2154,8 @@ msgstr "неправильная шаговая функция"
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "'plot.stepfun' вызван с неправильным типом аргумента 'x'"
 
-msgid "must be 0 or 1"
+#, fuzzy
+msgid "%s must be 0 or 1"
 msgstr "должен быть 0 или 1"
 
 msgid "only univariate series are allowed"
@@ -2470,6 +2468,13 @@ msgstr[0] "не могу оптимизировать, начиная с этого стартового значения"
 msgstr[1] "не могу оптимизировать, начиная с этих стартовых значений"
 msgstr[2] "не могу оптимизировать, начиная с этих стартовых значений"
 
+#, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] "'init' должен иметь одну колонку"
+msgstr[1] "'init' должен иметь одну колонку"
+msgstr[2] "'init' должен иметь одну колонку"
+
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] "матрица X имеет ранг %d, но только %d наблюдение"
@@ -2577,6 +2582,9 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr "'init' должен иметь 1 или %d колонок"
 
 #~ msgid "'deriv' must be between 0 and 2"
 #~ msgstr "'deriv' должно быть между 0 и 2"

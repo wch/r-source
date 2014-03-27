@@ -1536,7 +1536,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
       table <- get(if(inherited) ".AllMTable" else ".MTable", envir = environment(fdef))
     else {
         if(!identical(inherited, FALSE))
-          stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
+          stop(gettextf("only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)", inherited), domain = NA)
         where <- as.environment(where)
         what <- .TableMetaName(f, fdef@package)
         if(exists(what, envir = where, inherits = FALSE))

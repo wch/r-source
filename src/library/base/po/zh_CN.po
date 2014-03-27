@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:48+0000\n"
+"POT-Creation-Date: 2014-03-27 09:10+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -182,13 +182,13 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/envir.c:1940 src/main/envir.c:1947 src/main/envir.c:1958
 #: src/main/envir.c:2172 src/main/envir.c:2293 src/main/envir.c:2552
 #: src/main/envir.c:2762 src/main/envir.c:2776 src/main/envir.c:2783
-#: src/main/envir.c:2799 src/main/envir.c:3367 src/main/errors.c:1030
+#: src/main/envir.c:2799 src/main/envir.c:3367 src/main/errors.c:1049
 #: src/main/eval.c:397 src/main/eval.c:406 src/main/eval.c:409
 #: src/main/grep.c:767 src/main/grep.c:772 src/main/grep.c:1061
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3736 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3740 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -218,9 +218,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/saveload.c:2366 src/main/scan.c:684 src/main/scan.c:853
 #: src/main/scan.c:867 src/main/scan.c:871 src/main/scan.c:873
 #: src/main/scan.c:884 src/main/scan.c:911 src/main/scan.c:914
-#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:618
-#: src/main/seq.c:623 src/main/seq.c:631 src/main/seq.c:662 src/main/seq.c:666
-#: src/main/seq.c:672 src/main/seq.c:680 src/main/sort.c:175
+#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:624
+#: src/main/seq.c:629 src/main/seq.c:637 src/main/seq.c:668 src/main/seq.c:672
+#: src/main/seq.c:678 src/main/seq.c:686 src/main/sort.c:175
 #: src/main/sysutils.c:585 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:599 src/main/sysutils.c:603 src/main/sysutils.c:1831
 #: src/main/sysutils.c:1835 src/main/unique.c:966 src/main/unique.c:1289
@@ -250,12 +250,12 @@ msgstr "不支持这版本的Windows"
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
 #: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
 #: src/main/datetime.c:675 src/main/datetime.c:777 src/main/datetime.c:1030
-#: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
-#: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
-#: src/main/errors.c:1368 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/dotcode.c:199 src/main/errors.c:948 src/main/errors.c:981
+#: src/main/errors.c:1084 src/main/errors.c:1109 src/main/errors.c:1114
+#: src/main/errors.c:1387 src/main/identical.c:66 src/main/identical.c:67
 #: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
-#: src/main/seq.c:185 src/main/seq.c:341 src/main/seq.c:346 src/main/seq.c:350
-#: src/main/seq.c:391 src/main/seq.c:395 src/main/seq.c:399
+#: src/main/seq.c:191 src/main/seq.c:347 src/main/seq.c:352 src/main/seq.c:356
+#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
 #: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
@@ -646,33 +646,34 @@ msgid "shared object '%s' was not loaded"
 msgstr "没有载入共享目标对象'%s'"
 
 #: src/main/Rdynload.c:979
-#, c-format
-msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "无法给注册了的原始符号分配内存(%d字节)"
+#, fuzzy, c-format
+msgid "cannot allocate memory for registered native symbol (%d byte)"
+msgid_plural "cannot allocate memory for registered native symbol (%d bytes)"
+msgstr[0] "无法给注册了的原始符号分配内存(%d字节)"
 
-#: src/main/Rdynload.c:1100 src/main/Rdynload.c:1321
+#: src/main/Rdynload.c:1101 src/main/Rdynload.c:1322
 msgid "must pass package name or DllInfo reference"
 msgstr "必需传给程序包名字或DllInfo引用"
 
-#: src/main/Rdynload.c:1197
+#: src/main/Rdynload.c:1198
 #, c-format
 msgid "unimplemented type %d in 'createRSymbolObject'"
 msgstr "'createRSymbolObject'里的种类%d目前没有被实现"
 
-#: src/main/Rdynload.c:1279 src/main/Rdynload.c:1373
+#: src/main/Rdynload.c:1280 src/main/Rdynload.c:1374
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr " R_getRegisteredRoutines()需要DllInfo引用"
 
-#: src/main/Rdynload.c:1282 src/main/Rdynload.c:1376
+#: src/main/Rdynload.c:1283 src/main/Rdynload.c:1377
 msgid "NULL value passed for DllInfo"
 msgstr "给DllInfo了一个NULL值"
 
-#: src/main/Rdynload.c:1436
+#: src/main/Rdynload.c:1437
 #, c-format
 msgid "function '%s' not provided by package '%s'"
 msgstr "程序包'%s'不提供'%s'这样的函数"
 
-#: src/main/Rdynload.c:1438
+#: src/main/Rdynload.c:1439
 msgid "table entry must be an external pointer"
 msgstr "桌项必需是外部指针"
 
@@ -857,29 +858,25 @@ msgstr "一参数的实数函数目前还没有实现"
 msgid "unimplemented complex function"
 msgstr "目前没有实现复数功能"
 
-#: src/main/arithmetic.c:1526 src/main/arithmetic.c:1877
-#: src/main/arithmetic.c:2056 src/main/arithmetic.c:2168
+#: src/main/arithmetic.c:1526 src/main/arithmetic.c:1881
+#: src/main/arithmetic.c:2060 src/main/arithmetic.c:2172
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值参数的实数函数目前没有实现"
 
-#: src/main/arithmetic.c:1552
-#, c-format
-msgid "%d arguments passed to '%s' which requires 1 or 2"
-msgstr "给了%d个参数到'%s'，但它最多只能用两个参数"
+#: src/main/arithmetic.c:1552 src/main/arithmetic.c:1650
+#, fuzzy, c-format
+msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
+msgid_plural "%d arguments passed to '%s'which requires 1 or 2 arguments"
+msgstr[0] "给了%d个参数到'%s'，但它最多只能用两个参数"
 
-#: src/main/arithmetic.c:1570
+#: src/main/arithmetic.c:1571
 msgid "invalid second argument of length 0"
 msgstr "第二参数长度为零是不对的"
 
-#: src/main/arithmetic.c:1639
+#: src/main/arithmetic.c:1640
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'参数"
-
-#: src/main/arithmetic.c:1647
-#, c-format
-msgid "%d arguments passed to 'log' which requires 1 or 2"
-msgstr "给了'log'%d个参数，但它最多只能用两个参数"
 
 #: src/main/array.c:79 src/main/array.c:1441
 #, c-format
@@ -1493,15 +1490,15 @@ msgstr "'mode'参数不对"
 msgid "applies only to lists and vectors"
 msgstr "只能用于串列和矢量"
 
-#: src/main/coerce.c:77 src/main/errors.c:1208
+#: src/main/coerce.c:77 src/main/errors.c:1227
 msgid "NAs introduced by coercion"
 msgstr "强制改变过程中产生了NA"
 
-#: src/main/coerce.c:79 src/main/errors.c:1209
+#: src/main/coerce.c:79 src/main/errors.c:1228
 msgid "inaccurate integer conversion in coercion"
 msgstr "强制改变整数不精确"
 
-#: src/main/coerce.c:81 src/main/errors.c:1210
+#: src/main/coerce.c:81 src/main/errors.c:1229
 msgid "imaginary parts discarded in coercion"
 msgstr "强制改变时丢弃了虚数部分"
 
@@ -2553,7 +2550,7 @@ msgstr "PACKAGE参数值太长"
 msgid "no arguments supplied"
 msgstr "没有提供参数"
 
-#: src/main/dotcode.c:475 src/main/seq.c:913
+#: src/main/dotcode.c:475 src/main/seq.c:919
 msgid "too many arguments"
 msgstr "参数太多"
 
@@ -3162,170 +3159,181 @@ msgstr "字符串里嵌入了nul：'%s'"
 msgid "interrupts suspended; signal ignored"
 msgstr "暫停中断; 略过信号"
 
-#: src/main/errors.c:318
+#: src/main/errors.c:265
+msgid "[... truncated]"
+msgstr ""
+
+#: src/main/errors.c:325
 msgid "invalid option \"warning.expression\""
 msgstr "\"warning.expression\"选项不对"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(由警告转换成)%s"
 
-#: src/main/errors.c:359
-#, c-format
-msgid "Warning: %s\n"
+#: src/main/errors.c:364
+#, fuzzy
+msgid "Warning:"
 msgstr "警告: %s\n"
 
-#: src/main/errors.c:363
-#, c-format
-msgid "Warning in %s : %s\n"
+#: src/main/errors.c:366
+#, fuzzy, c-format
+msgid "Warning in %s :"
 msgstr "%s里有警告: %s\n"
 
-#: src/main/errors.c:365
-#, c-format
-msgid ""
-"Warning in %s :\n"
-"  %s\n"
+#: src/main/errors.c:375 src/main/errors.c:389 src/main/errors.c:700
+msgid "Calls:"
 msgstr ""
-"%s里有警告:\n"
-"  %s\n"
 
-#: src/main/errors.c:428 src/main/errors.c:447 src/main/errors.c:596
+#: src/main/errors.c:436 src/main/errors.c:455 src/main/errors.c:615
 msgid "Lost warning messages\n"
 msgstr "警告信息丢失\n"
 
-#: src/main/errors.c:459
-msgid "Warning message:\n"
-msgid_plural "Warning messages:\n"
+#: src/main/errors.c:467
+#, fuzzy
+msgid "Warning message:"
+msgid_plural "Warning messages:"
 msgstr[0] "警告信息：\n"
 
-#: src/main/errors.c:514
+#: src/main/errors.c:477 src/main/errors.c:505
 #, c-format
-msgid "There were %d warnings (use warnings() to see them)\n"
-msgstr "共有%d个警告 (用warnings()来显示)\n"
+msgid "In %s :"
+msgstr ""
 
-#: src/main/errors.c:517
-#, c-format
-msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
+#: src/main/errors.c:530
+#, fuzzy, c-format
+msgid "There was %d warning (use warnings() to see it)"
+msgid_plural "There were %d warnings (use warnings() to see them)"
+msgstr[0] "共有%d个警告 (用warnings()来显示)\n"
+
+#: src/main/errors.c:535
+#, fuzzy, c-format
+msgid "There were %d or more warnings (use warnings() to see the first %d)"
 msgstr "警告多于%d个(用warnings()来显示第一个到第%d个)\n"
 
-#: src/main/errors.c:587
+#: src/main/errors.c:606
 msgid "Error during wrapup: "
 msgstr "收捲时出错: "
 
-#: src/main/errors.c:612
+#: src/main/errors.c:631
 msgid "Error in "
 msgstr "错误于"
 
-#: src/main/errors.c:613
-#, c-format
-msgid " (from %s) : "
+#: src/main/errors.c:653 src/main/errors.c:660
+#, fuzzy, c-format
+msgid "Error in %s (from %s) : "
 msgstr " (从%s) : "
 
-#: src/main/errors.c:664 src/main/errors.c:670
+#: src/main/errors.c:662
+#, fuzzy, c-format
+msgid "Error in %s : "
+msgstr "错误于"
+
+#: src/main/errors.c:682 src/main/errors.c:688
 #, c-format
 msgid "Error: "
 msgstr "错误: "
 
-#: src/main/errors.c:690 src/main/errors.c:1319
+#: src/main/errors.c:709 src/main/errors.c:1338
 msgid "In addition: "
 msgstr "此外: "
 
-#: src/main/errors.c:811
+#: src/main/errors.c:830
 msgid "invalid option \"error\"\n"
 msgstr "选项\"error\"不对\n"
 
-#: src/main/errors.c:893
+#: src/main/errors.c:912
 msgid "Execution halted\n"
 msgstr "停止执行\n"
 
-#: src/main/errors.c:1032
+#: src/main/errors.c:1051
 msgid "'msg1' must be a character string"
 msgstr "'msg1’必需是字符串"
 
-#: src/main/errors.c:1034
+#: src/main/errors.c:1053
 msgid "'msg2' must be a character string"
 msgstr "'msg2’必需是字符串"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1150
 msgid " [invalid string in stop(.)]"
 msgstr " [stop(.)里的字符串不对]"
 
-#: src/main/errors.c:1162
+#: src/main/errors.c:1181
 msgid " [invalid string in warning(.)]"
 msgstr " [warning(.)里的字符串不对]"
 
-#: src/main/errors.c:1178
+#: src/main/errors.c:1197
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "\"%s\"里的参数数目不对"
 
-#: src/main/errors.c:1184 src/main/errors.c:1199
+#: src/main/errors.c:1203 src/main/errors.c:1218
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "%s里的功能目前没有实现"
 
-#: src/main/errors.c:1193
+#: src/main/errors.c:1212
 msgid "invalid number of arguments"
 msgstr "参数数目不对"
 
-#: src/main/errors.c:1194 src/main/logic.c:189
+#: src/main/errors.c:1213 src/main/logic.c:189
 msgid "invalid argument type"
 msgstr "参数种类不对"
 
-#: src/main/errors.c:1196
+#: src/main/errors.c:1215
 msgid "time-series/vector length mismatch"
 msgstr "时间系列/矢量长度不等"
 
-#: src/main/errors.c:1197
+#: src/main/errors.c:1216
 msgid "incompatible arguments"
 msgstr "不可兼容的参数"
 
-#: src/main/errors.c:1200
+#: src/main/errors.c:1219
 msgid "unknown error (report this!)"
 msgstr "不知是什么错误(请报告!)"
 
-#: src/main/errors.c:1212
+#: src/main/errors.c:1231
 msgid "unknown warning (report this!)"
 msgstr "不知是什么警告(请报告!)"
 
-#: src/main/errors.c:1283
+#: src/main/errors.c:1302
 msgid "No function to return from, jumping to top level"
 msgstr "没有可回归的函数, 跳到最高层"
 
-#: src/main/errors.c:1299
+#: src/main/errors.c:1318
 msgid "top level inconsistency?"
 msgstr "最高层不一致？"
 
-#: src/main/errors.c:1478
+#: src/main/errors.c:1497
 msgid "bad handler data"
 msgstr "处理器数据有错"
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1647
 msgid "error message not a string"
 msgstr "错误信息不是字符串"
 
-#: src/main/errors.c:1703
+#: src/main/errors.c:1722
 msgid "handler or restart stack mismatch in old restart"
 msgstr "旧重新启动里的处理器或重新启动堆叠不相配"
 
-#: src/main/errors.c:1729 src/main/errors.c:1745
+#: src/main/errors.c:1748 src/main/errors.c:1764
 msgid "bad error message"
 msgstr "错误信息不对"
 
-#: src/main/errors.c:1787
+#: src/main/errors.c:1806
 msgid "bad restart"
 msgstr "重新启动出错"
 
-#: src/main/errors.c:1819
+#: src/main/errors.c:1838
 msgid "restart not on stack"
 msgstr "不能在堆叠上重新启动"
 
-#: src/main/errors.c:1836
+#: src/main/errors.c:1855
 msgid "not in a try context"
 msgstr "不在try的上下文中"
 
-#: src/main/errors.c:1849
+#: src/main/errors.c:1868
 msgid "error message must be a character string"
 msgstr "错误信息必需是字符串"
 
@@ -3633,14 +3641,14 @@ msgstr "不支持'getGraphicsEvent'的递归应用"
 msgid "no graphics event handlers set"
 msgstr "还没有设定图形事件处理机"
 
-#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
-#: src/main/gram.y:2236
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2251
+#: src/main/gram.y:2265
 #, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "%d行读MBCS字节时遇到EOF"
 
-#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
-#: src/main/gram.y:2233
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2255
+#: src/main/gram.y:2262
 #, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "句法分析器%d行里不能有多字节字符"
@@ -3659,109 +3667,116 @@ msgstr "%d行的标记种类不对"
 msgid "contextstack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/gram.y:1890
-msgid "input"
-msgstr "输入"
+#: src/main/gram.y:1915 src/main/gram.y:1921
+#, fuzzy, c-format
+msgid "unexpected input"
+msgstr "意外的%s"
 
-#: src/main/gram.y:1891
-msgid "end of input"
+#: src/main/gram.y:1918
+#, fuzzy, c-format
+msgid "unexpected end of input"
 msgstr "输入结束"
 
-#: src/main/gram.y:1892
-msgid "string constant"
+#: src/main/gram.y:1924
+#, fuzzy, c-format
+msgid "unexpected string constant"
 msgstr "字符常量"
 
-#: src/main/gram.y:1893
-msgid "numeric constant"
+#: src/main/gram.y:1927
+#, fuzzy, c-format
+msgid "unexpected numeric constant"
 msgstr "数值量"
 
-#: src/main/gram.y:1894
-msgid "symbol"
-msgstr "符号"
+#: src/main/gram.y:1930
+#, fuzzy, c-format
+msgid "unexpected symbol"
+msgstr "意外的%s"
 
-#: src/main/gram.y:1895
-msgid "assignment"
-msgstr "任务"
+#: src/main/gram.y:1933
+#, fuzzy, c-format
+msgid "unexpected assignment"
+msgstr "意外的%s"
 
-#: src/main/gram.y:1896
-msgid "end of line"
+#: src/main/gram.y:1936
+#, fuzzy, c-format
+msgid "unexpected end of line"
 msgstr "行尾"
 
-#: src/main/gram.y:1910 src/main/gram.y:1916
+#: src/main/gram.y:1939 src/main/gram.y:1945
 #, c-format
 msgid "unexpected %s"
 msgstr "意外的%s"
 
-#: src/main/gram.y:1926
+#: src/main/gram.y:1955
 #, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "%2$d行上正式参数'%1$s'有重复"
 
-#: src/main/gram.y:2136
+#: src/main/gram.y:2165
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr "整数文字%s里有小数点；转用数值"
 
-#: src/main/gram.y:2140
+#: src/main/gram.y:2169
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr "同L一起修饰的%s是非整数值; 转用数值"
 
-#: src/main/gram.y:2153
+#: src/main/gram.y:2182
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr "整数文字%s里含多余的小数点"
 
-#: src/main/gram.y:2185
+#: src/main/gram.y:2214
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "%d行无法为长字符串分配内存"
 
-#: src/main/gram.y:2338
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\x'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2352
+#: src/main/gram.y:2381
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\uxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2367
+#: src/main/gram.y:2396
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\u'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2375
+#: src/main/gram.y:2404
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2387
+#: src/main/gram.y:2416
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "不支持反引号里\\Uxxxxxxxx这样的序列(%d行)"
 
-#: src/main/gram.y:2402
+#: src/main/gram.y:2431
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "由\"%s\"开头的字符串中有'\\U'，它必需同hex数字一起来用"
 
-#: src/main/gram.y:2410
+#: src/main/gram.y:2439
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "\\U{xxxxxxxx}顺序不对(%d行)"
 
-#: src/main/gram.y:2451
+#: src/main/gram.y:2480
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "由\"%2$s\"开头的字符串中存在'\\%1$c'，但没有这种逸出号"
 
-#: src/main/gram.y:2510
+#: src/main/gram.y:2539
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr "在字符串中混合Unicode和八进制/十六进制转义是不允许的"
 
-#: src/main/gram.y:2514
+#: src/main/gram.y:2543
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3770,13 +3785,13 @@ msgstr ""
 "%d行字符串里包含了不属于目前语言环境的Unicode转义字符\n"
 "太长了(最多只能有10000个字符)"
 
-#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
-#: src/main/gram.y:3132
+#: src/main/gram.y:3141 src/main/gram.y:3148 src/main/gram.y:3154
+#: src/main/gram.y:3161
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "%d行上下文堆叠上溢"
 
-#: src/main/gram.y:3227
+#: src/main/gram.y:3256
 #, c-format
 msgid "internal parser error at line %d"
 msgstr "%d行里输入缓冲区上溢"
@@ -3897,9 +3912,9 @@ msgstr "无法读写模块里的互联网例行程序"
 msgid "internet routines cannot be loaded"
 msgstr "无法载入互联网例行程序"
 
-#: src/main/internet.c:118 src/main/memory.c:3434 src/main/memory.c:3444
-#: src/main/memory.c:3456 src/main/memory.c:3470 src/main/memory.c:3487
-#: src/main/memory.c:3505
+#: src/main/internet.c:118 src/main/memory.c:3438 src/main/memory.c:3448
+#: src/main/memory.c:3460 src/main/memory.c:3474 src/main/memory.c:3491
+#: src/main/memory.c:3509
 msgid "bad value"
 msgstr "值不对"
 
@@ -4146,53 +4161,55 @@ msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
 #: src/main/memory.c:3008
-#, c-format
-msgid "unprotect(): only %d protected items"
-msgstr "unprotect():只有%d个保护项"
+#, fuzzy, c-format
+msgid "unprotect(): only %d protected item"
+msgid_plural "unprotect(): only %d protected items"
+msgstr[0] "unprotect():只有%d个保护项"
 
-#: src/main/memory.c:3041
+#: src/main/memory.c:3043
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到指针"
 
-#: src/main/memory.c:3079
-#, c-format
+#: src/main/memory.c:3081
+#, fuzzy, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr "R_Reprotect:只有%d个保护项, 不能重新保护索引%d"
+msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
+msgstr[0] "R_Reprotect:只有%d个保护项, 不能重新保护索引%d"
 
-#: src/main/memory.c:3129
+#: src/main/memory.c:3133
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "'Calloc'无法分配(%2$u字节的%1$.0f)内存"
 
-#: src/main/memory.c:3140
+#: src/main/memory.c:3144
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "'Realloc'无法重新分配(大小为%.0f字节)的内存"
 
-#: src/main/memory.c:3380
+#: src/main/memory.c:3384
 msgid "not safe to return vector pointer"
 msgstr "回覆矢量指针不是安全的做法"
 
-#: src/main/memory.c:3392
+#: src/main/memory.c:3396
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3408
+#: src/main/memory.c:3412
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3658
+#: src/main/memory.c:3662
 msgid "memory profiling is not available on this system"
 msgstr "本系统没有记忆概要分析这个功能"
 
-#: src/main/memory.c:3723
+#: src/main/memory.c:3727
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 无法输出文件'%s'"
 
-#: src/main/memory.c:3830
+#: src/main/memory.c:3834
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "现在还没有支持长向量：%s:%d"
@@ -5240,66 +5257,67 @@ msgstr "答案矢量会太长"
 msgid "argument of length 0"
 msgstr "参数长度为零"
 
-#: src/main/seq.c:161 src/main/seq.c:163
-#, c-format
-msgid "numerical expression has %d elements: only the first used"
-msgstr "数值表达式一共有%d元素: 只用了第一个"
+#: src/main/seq.c:162 src/main/seq.c:167
+#, fuzzy, c-format
+msgid "numerical expression has %d element: only the first used"
+msgid_plural "numerical expression has %d elements: only the first used"
+msgstr[0] "数值表达式一共有%d元素: 只用了第一个"
 
-#: src/main/seq.c:167
+#: src/main/seq.c:173
 msgid "NA/NaN argument"
 msgstr "NA/NaN参数"
 
-#: src/main/seq.c:331
+#: src/main/seq.c:337
 msgid "incorrect type for second argument"
 msgstr "第二参数种类不对"
 
-#: src/main/seq.c:334
+#: src/main/seq.c:340
 #, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr "种类为'%s'的目标对象不能被复制"
 
-#: src/main/seq.c:387
+#: src/main/seq.c:393
 msgid "attempt to replicate non-vector"
 msgstr "非矢量不能被复制"
 
-#: src/main/seq.c:403
+#: src/main/seq.c:409
 msgid "cannot replicate NULL to a non-zero length"
 msgstr "不能复制NULL到一个非零长度的"
 
-#: src/main/seq.c:626 src/main/seq.c:633 src/main/seq.c:768 src/main/seq.c:979
+#: src/main/seq.c:632 src/main/seq.c:639 src/main/seq.c:774 src/main/seq.c:985
 #, c-format
 msgid "first element used of '%s' argument"
 msgstr "只用'%s'参数里的第一个元素"
 
-#: src/main/seq.c:766
+#: src/main/seq.c:772
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out'必需是正整数"
 
-#: src/main/seq.c:790 src/main/seq.c:856 src/main/seq.c:873
+#: src/main/seq.c:796 src/main/seq.c:862 src/main/seq.c:879
 msgid "'from' must be finite"
 msgstr "'from'的值必需是有限的"
 
-#: src/main/seq.c:792 src/main/seq.c:858 src/main/seq.c:895
+#: src/main/seq.c:798 src/main/seq.c:864 src/main/seq.c:901
 msgid "'to' must be finite"
 msgstr "'to'的值必需是有限的"
 
-#: src/main/seq.c:804
+#: src/main/seq.c:810
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr "'seq'内的'(to - from)/by'值设得不对"
 
-#: src/main/seq.c:816
+#: src/main/seq.c:822
 msgid "'by' argument is much too small"
 msgstr "'by'参数太小了"
 
-#: src/main/seq.c:818
+#: src/main/seq.c:824
 msgid "wrong sign in 'by' argument"
 msgstr "'by'正负号不对"
 
-#: src/main/seq.c:875 src/main/seq.c:897
+#: src/main/seq.c:881 src/main/seq.c:903
 msgid "'by' must be finite"
 msgstr "'by'的值必需是有限的"
 
-#: src/main/seq.c:985 src/main/seq.c:990
+#: src/main/seq.c:991 src/main/seq.c:996
 msgid "argument must be coercible to non-negative integer"
 msgstr "参数必需能被强制改变成非负整数"
 
@@ -7152,6 +7170,25 @@ msgstr "为'-e'建立临时文件失败"
 #: src/unix/system.c:469
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: 只修改文件串列中的第一个元素"
+
+#~ msgid "%d arguments passed to 'log' which requires 1 or 2"
+#~ msgstr "给了'log'%d个参数，但它最多只能用两个参数"
+
+#~ msgid ""
+#~ "Warning in %s :\n"
+#~ "  %s\n"
+#~ msgstr ""
+#~ "%s里有警告:\n"
+#~ "  %s\n"
+
+#~ msgid "input"
+#~ msgstr "输入"
+
+#~ msgid "symbol"
+#~ msgstr "符号"
+
+#~ msgid "assignment"
+#~ msgstr "任务"
 
 #~ msgid "negative value in 'x'"
 #~ msgstr "'x'里有负值"

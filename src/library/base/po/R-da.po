@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -314,16 +314,14 @@ msgstr "antal argumentkolonner svarer ikke overens"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "ugyldigt listeargument: alle variabler skal have den samme længde"
 
-msgid "data frame with 0 columns and %d rows"
-msgstr "dataramme med 0 kolonner og %d rækker"
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rækker> (eller 0-længde row.names)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "variabel der ikke er numerisk i dataramme:"
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "kun defineret for lige store datarammer"
 
 msgid "list of length %d not meaningful"
@@ -550,7 +548,8 @@ msgstr "ugyldige 'labels'; længde %d skal være 1 eller %d"
 msgid "number of levels differs"
 msgstr "niveauantal er forskelligt"
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "ikke meningsfuldt for faktorer"
 
 msgid "level sets of factors are different"
@@ -1615,6 +1614,48 @@ msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "leverede %d variabel til at erstatte %d variabler"
 msgstr[1] "leverede %d variabler til at erstatte %d variabler"
 
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "dataramme med 0 kolonner og %d rækker"
+msgstr[1] "dataramme med 0 kolonner og %d rækker"
+
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Det følgende objekt er maskeret %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"De følgende objekter er maskerede %s %s:\n"
+"\n"
+"%s\n"
+
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Det følgende objekt er maskeret %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"De følgende objekter er maskerede %s %s:\n"
+"\n"
+"%s\n"
+
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] "bibliotek %s indeholder ingen pakker"
@@ -1687,6 +1728,3 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
-
-
-

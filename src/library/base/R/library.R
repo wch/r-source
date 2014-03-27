@@ -215,11 +215,17 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
                     objs <- strwrap(paste(same, collapse=", "),
                                     indent = 4L, exdent = 4L)
-                    msg <- sprintf(ngettext(length(same),
-                                            "The following object is masked %s %s:\n\n%s\n",
-                                            "The following objects are masked %s %s:\n\n%s\n"),
-                                   if (i < lib.pos) "_by_" else "from",
-                                   sQuote(sp[i]), paste(objs, collapse="\n"))
+                         if (i < lib.pos) {
+                           msg <- sprintf(ngettext(length(same),
+                               "The following object is masked _by_ %s:\n\n%s\n",
+                               "The following objects are masked _by_ %s:\n\n%s\n", domain = "R-base"),
+                                sQuote(sp[i]), paste(objs, collapse = "\n"))
+                        } else {
+                           msg <- sprintf(ngettext(length(same),
+                               "The following object is masked from %s:\n\n%s\n",
+                               "The following objects are masked from %s:\n\n%s\n", domain = "R-base"),
+                                sQuote(sp[i]), paste(objs, collapse = "\n"))
+                        }
 		    packageStartupMessage(msg)
                 }
             }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-16 19:28\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -276,7 +276,10 @@ msgstr "pakiet %s jest wymagany przez %s tak więc nie zostanie odłączony"
 #                                  deparse(conditionCall(res))[1L],
 #                                  conditionMessage(res)),
 #                         call. = FALSE, domain = NA)
-msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
 msgstr ""
 "%s nie powiodło się w funkcji '%s()' dla pakietu '%s', szczegóły:\n"
 "  wywołanie: %s\n"
@@ -643,7 +646,8 @@ msgstr "wymagane jest 0, 1, lub 2 indeksy"
 # stop("missing values are not allowed in subscripted assignments of data frames")
 # src/library/base/R/dataframe.R: 829
 # stop("missing values are not allowed in subscripted assignments of data frames")
-msgid "missing values are not allowed in subscripted assignments of data frames"
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
 msgstr ""
 "brakujące wartości nie są dozwolone w indeksowanych przypisaniach ramek "
 "danych"
@@ -718,11 +722,6 @@ msgid "invalid list argument: all variables should have the same length"
 msgstr ""
 "niepoprawny argument listy: wszystkie zmienne powinny mieć tę samą długość"
 
-# src/library/base/R/dataframe.R: 1389
-# gettextf("data frame with 0 columns and %d rows\n", n)
-msgid "data frame with 0 columns and %d rows"
-msgstr "ramka danych z zerową liczbą kolumn oraz %d wierszami"
-
 # src/library/base/R/dataframe.R: 1393
 # gettext("<0 rows> (or 0-length row.names)\n")
 msgid "<0 rows> (or 0-length row.names)"
@@ -735,7 +734,8 @@ msgstr "zmienna nieliczbowa w ramce danych:"
 
 # src/library/base/R/dataframe.R: 1506
 # stop(.Generic, " only defined for equally-sized data frames")
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "zdefiniowane jedynie dla ramek danych o równych rozmiarach"
 
 # src/library/base/R/dataframe.R: 1516
@@ -897,7 +897,8 @@ msgstr "argument 'length.out' musi mieć długość 1"
 # stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
 # src/library/base/R/dates.R: 257
 # stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
-msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr ""
 "dokładnie dwa z 'to', 'by' oraz 'length.out' / 'along.with' muszą być "
 "określone"
@@ -1148,7 +1149,11 @@ msgstr "argument 'file' musi być łańcuchem tekstowym lub połączeniem"
 # stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
 #                       paste0("  ", lines, collapse = "\n")),
 #              domain = NA)
-msgid "Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Regular lines must have a tag.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 "Niepoprawny format DCF.\n"
 "Regularne linie muszą mieć znacznik.\n"
@@ -1159,7 +1164,11 @@ msgstr ""
 # stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
 #                       paste0("  ", lines, collapse = "\n")),
 #              domain = NA)
-msgid "Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s"
+msgid ""
+"Invalid DCF format.\n"
+"Continuation lines must not start a record.\n"
+"Offending lines start with:\n"
+"%s"
 msgstr ""
 "Niepoprawny format DCF.\n"
 "Linie uzupełniające nie mogą rozpoczynać rekordu.\n"
@@ -1247,7 +1256,8 @@ msgstr ""
 
 # src/library/base/R/dynload.R: 189
 # stop("looking for DLL for native routine call, but no DLLs in namespace of call")
-msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
 "poszukiwanie pliku DLL dla wywołania rodzimej procedury, ale brak plików DLL "
 "w przestrzeni nazw wywołania"
@@ -1290,7 +1300,8 @@ msgstr "liczba poziomów różni się"
 # stop(.Generic, " not meaningful for factors")
 # src/library/base/R/factor.R: 171
 # warning(.Generic, " not meaningful for factors")
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "nie ma sensu dla czynników"
 
 # src/library/base/R/factor.R: 195
@@ -1322,7 +1333,9 @@ msgstr "'%s' nie jest określone dla uporządkowanych czynników"
 # src/library/base/R/factor.R: 317
 # stop(gettextf("'%s' is only meaningful for ordered factors if all arguments have the same level sets",
 # 		      .Generic))
-msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
+msgid ""
+"'%s' is only meaningful for ordered factors if all arguments have the same "
+"level sets"
 msgstr ""
 "'%s' ma sens tylko dla uporządkowanych czynników jeśli wszystkie argumenty "
 "mają ten sam zbiór poziomów"
@@ -1622,7 +1635,8 @@ msgstr "pakiet %s nie jest zainstalowany dla 'arch=%s'"
 
 # src/library/base/R/library.R: 121
 # stop(gettextf("package %s has a license that you need to accept in an interactive session", sQuote(pkg)), domain = NA)
-msgid "package %s has a license that you need to accept in an interactive session"
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
 msgstr ""
 "Pakiet %s posiada licencję, którą musisz zaakceptować w interaktywnej sesji"
 
@@ -1634,7 +1648,9 @@ msgstr ""
 
 # src/library/base/R/library.R: 133
 # message(gettextf("package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is", sQuote(pkg)), domain = NA)
-msgid "package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is"
+msgid ""
+"package %s has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
 msgstr ""
 "pakiet %s posiada licencję, którą musisz zaakceptować:\n"
 "zgodnie z opisem w pliku DESCRIPTION jest to"
@@ -1820,14 +1836,17 @@ msgstr "żaden z tych pakietów nie został załadowany"
 # src/library/base/R/library.R: 747
 # warning(gettextf("package %s found more than once,\nusing the one found in %s",
 #                                  sQuote(pkg), sQuote(paths)), domain = NA)
-msgid "package %s found more than once,\nusing the one found in %s"
+msgid ""
+"package %s found more than once,\n"
+"using the one found in %s"
 msgstr ""
 "pakiet %s został znaleziony więcej niż raz. Używanie tego znalezionego w %s"
 
 # src/library/base/R/library.R: 779
 # gettextf("Further information is available in the following vignettes in directory %s:",
 #                  sQuote(file.path(x$path, "doc")))
-msgid "Further information is available in the following vignettes in directory %s:"
+msgid ""
+"Further information is available in the following vignettes in directory %s:"
 msgstr ""
 "Dalsza informacja jest dostępna w następujących ilustracjach w katalogu %s:"
 
@@ -2098,7 +2117,9 @@ msgstr "dodatkowe argumenty zostały zignorowane w 'message()'"
 
 # src/library/base/R/methodsSupport.R: 27
 # stop("tracing functions requires the 'methods' package, but unable to load the 'methods' namespace")
-msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
+msgid ""
+"tracing functions requires the 'methods' package, but unable to load the "
+"'methods' namespace"
 msgstr ""
 "funkcjonalność śledzenia funkcji wymaga pakietu 'methods', ale nie można "
 "załadować przestrzeni nazw 'methods'"
@@ -2114,7 +2135,9 @@ msgstr "nie można zmienić trybu przechowywania czynnika"
 # warning(gettextf("namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s",
 #                                        sQuote(name)[1L], sQuote(where)),
 #                               domain = NA, call. = FALSE, immediate. = TRUE)
-msgid "namespace %s is not available and has been replaced\nby .GlobalEnv when processing object %s"
+msgid ""
+"namespace %s is not available and has been replaced\n"
+"by .GlobalEnv when processing object %s"
 msgstr ""
 "przestrzeń nazw %s nie jest dostępna, więc została zastąpiona przez '."
 "GlobalEnv' podczas przetwarzania obiektu %s"
@@ -2158,7 +2181,9 @@ msgstr "przestrzeń nazw %s jest już zamknięta w 'loadNamespace()'"
 # warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
 #                                                            sym$name, varName, varName, sQuote(package)),
 #                                                   domain = NA)
-msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
+"defined in the %s namespace"
 msgstr ""
 "nie udało się przypisać RegisteredNativeSymbol dla %s do %s ponieważ %s jest "
 "już zdefiniowane w przestrzeni nazw %s"
@@ -2167,7 +2192,9 @@ msgstr ""
 # warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
 #                                                 origVarName, varName, varName, sQuote(package)),
 #                                        domain = NA)
-msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
+"in the %s namespace"
 msgstr ""
 "nie udało się przypisać NativeSymbolInfo dla %s do %s ponieważ %s jest już "
 "zdefiniowane w przestrzeni nazw %s"
@@ -2176,7 +2203,9 @@ msgstr ""
 # warning(gettextf("failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
 #                                                 origVarName, varName, sQuote(package)),
 #                                        domain = NA)
-msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
+msgid ""
+"failed to assign NativeSymbolInfo for %s since %s is already defined in the "
+"%s namespace"
 msgstr ""
 "nie udało się przypisać NativeSymbolInfo dla %s ponieważ %s jest już "
 "zdefiniowane w przestrzeni nazw %s"
@@ -2203,7 +2232,9 @@ msgstr "nie można załadować kodu R w pakiecie %s"
 # src/library/base/R/namespace.R: 513
 # warning(gettextf("'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s", sQuote(package)),
 #                             call. = FALSE, domain = NA)
-msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
+msgid ""
+"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in "
+"package %s"
 msgstr ""
 "'exportClassPattern' określono w pliku 'NAMESPACE', ale brak pasujących klas "
 "w pakiecie %s"
@@ -2351,7 +2382,9 @@ msgstr "zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s"
 # warning(gettextf("No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)",
 #                                  g, pkg),
 #                         domain = NA)
-msgid "No generic function found corresponding to requested imported methods for \"%s\" from package \"%s\" (malformed exports?)"
+msgid ""
+"No generic function found corresponding to requested imported methods for "
+"\"%s\" from package \"%s\" (malformed exports?)"
 msgstr ""
 "Nie znaleziono ogólnej funkcji odpowiadającej zażądanym zaimportowanym "
 "metodom dla funkcji '%s' z pakietu '%s' (uszkodzone eksporty?)"
@@ -2750,7 +2783,9 @@ msgstr "osobliwa macierz 'a' w 'solve()'"
 
 # src/library/base/R/sort.R: 22
 # stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
-msgid "'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?"
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
 msgstr ""
 "'decreasing' musi być wektorem logicznym o długości 1.\n"
 "Czy chciałeś ustawić 'partial'?"
@@ -2789,7 +2824,9 @@ msgstr "długości argumentów różnią się"
 
 # src/library/base/R/sort.R: 131
 # stop("'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?")
-msgid "'x' must be atomic for 'sort.list'\nHave you called 'sort' on a list?"
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
 msgstr ""
 "'x' musi być typem atomowym dla 'sort.list'\n"
 "Czy wywołano 'sort' na liście?"
@@ -4091,7 +4128,9 @@ msgstr "niepoprawna wartość 'digits'"
 
 # src/library/base/R/unix/system.unix.R: 27
 # message("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
-msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
 msgstr ""
 "argumenty 'show.output.on.console', 'minimized' oraz 'invisible' są tylko "
 "dla systemu Windows"
@@ -4252,7 +4291,10 @@ msgstr[2] "opcje odwrotnego parsowania %s nie są rozpoznane"
 #                                             "The following objects are masked %s %s:\n\n%s\n"),
 #                                    if (i < db.pos) "_by_" else "from",
 #                                    pkg, paste(objs, collapse="\n"))
-msgid "The following object is masked %s %s:\n\n%s\n"
+msgid ""
+"The following object is masked %s %s:\n"
+"\n"
+"%s\n"
 msgid_plural ""
 "The following objects are masked %s %s:\n"
 "\n"
@@ -4415,6 +4457,83 @@ msgstr[0] "dostarczono %d zmienną do zastąpienia %d zmiennych"
 msgstr[1] "dostarczono %d zmienne do zastąpienia %d zmiennych"
 msgstr[2] "dostarczono %d zmiennych do zastąpienia %d zmiennych"
 
+# src/library/base/R/dataframe.R: 1389
+# gettextf("data frame with 0 columns and %d rows\n", n)
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "ramka danych z zerową liczbą kolumn oraz %d wierszami"
+msgstr[1] "ramka danych z zerową liczbą kolumn oraz %d wierszami"
+msgstr[2] "ramka danych z zerową liczbą kolumn oraz %d wierszami"
+
+# src/library/base/R/library.R: 218
+# sprintf(ngettext(length(same),
+#                                             "The following object is masked %s %s:\n\n%s\n",
+#                                             "The following objects are masked %s %s:\n\n%s\n"),
+#                                    if (i < lib.pos) "_by_" else "from",
+#                                    sQuote(sp[i]), paste(objs, collapse="\n"))
+# src/library/base/R/attach.R: 71
+# sprintf(ngettext(length(same),
+#                                             "The following object is masked %s %s:\n\n%s\n",
+#                                             "The following objects are masked %s %s:\n\n%s\n"),
+#                                    if (i < db.pos) "_by_" else "from",
+#                                    pkg, paste(objs, collapse="\n"))
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Następujący obiekt został zakryty %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"Następujące obiekty zostały zakryte %s %s:\n"
+"\n"
+"%s\n"
+msgstr[2] ""
+"Następujące obiekty zostały zakryte %s %s:\n"
+"\n"
+"%s\n"
+
+# src/library/base/R/library.R: 218
+# sprintf(ngettext(length(same),
+#                                             "The following object is masked %s %s:\n\n%s\n",
+#                                             "The following objects are masked %s %s:\n\n%s\n"),
+#                                    if (i < lib.pos) "_by_" else "from",
+#                                    sQuote(sp[i]), paste(objs, collapse="\n"))
+# src/library/base/R/attach.R: 71
+# sprintf(ngettext(length(same),
+#                                             "The following object is masked %s %s:\n\n%s\n",
+#                                             "The following objects are masked %s %s:\n\n%s\n"),
+#                                    if (i < db.pos) "_by_" else "from",
+#                                    pkg, paste(objs, collapse="\n"))
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"Następujący obiekt został zakryty %s %s:\n"
+"\n"
+"%s\n"
+msgstr[1] ""
+"Następujące obiekty zostały zakryte %s %s:\n"
+"\n"
+"%s\n"
+msgstr[2] ""
+"Następujące obiekty zostały zakryte %s %s:\n"
+"\n"
+"%s\n"
+
 # src/library/base/R/library.R: 419
 # sprintf(ngettext(length(nopkgs),
 #                                     "library %s contains no packages",
@@ -4486,7 +4605,9 @@ msgstr[2] "argument 'by' musi jednoznacznie określać poprawne kolumny"
 # ngettext(length(bad),
 #                                      "Function found when exporting methods from the namespace %s which is not S4 generic: %s",
 #                                      "Functions found when exporting methods from the namespace %s which are not S4 generic: %s", domain = "R-base")
-msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
+msgid ""
+"Function found when exporting methods from the namespace %s which is not S4 "
+"generic: %s"
 msgid_plural ""
 "Functions found when exporting methods from the namespace %s which are not "
 "S4 generic: %s"

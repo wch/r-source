@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -296,16 +296,13 @@ msgstr ""
 msgid "invalid list argument: all variables should have the same length"
 msgstr ""
 
-msgid "data frame with 0 columns and %d rows"
-msgstr ""
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr ""
 
 msgid "non-numeric variable in data frame:"
 msgstr ""
 
-msgid "only defined for equally-sized data frames"
+msgid "%s only defined for equally-sized data frames"
 msgstr ""
 
 msgid "list of length %d not meaningful"
@@ -512,7 +509,7 @@ msgstr ""
 msgid "number of levels differs"
 msgstr ""
 
-msgid "not meaningful for factors"
+msgid "%s not meaningful for factors"
 msgstr ""
 
 msgid "level sets of factors are different"
@@ -1499,6 +1496,21 @@ msgstr[1]    ""
 
 msgid        "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "The following object is masked _by_ %s:\n\n%s\n"
+msgid_plural "The following objects are masked _by_ %s:\n\n%s\n"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "The following object is masked from %s:\n\n%s\n"
+msgid_plural "The following objects are masked from %s:\n\n%s\n"
 msgstr[0]    ""
 msgstr[1]    ""
 

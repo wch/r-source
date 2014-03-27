@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -659,35 +659,11 @@ msgstr "nieogólna funkcja '%s' przekazana do 'findMethods()'"
 
 # methods/R/Methods.R: 1539
 # stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
-msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+#, fuzzy
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
 "tylko FALSE ma sens dla 'inherited', gdy dostarczono 'where' (otrzymano"
-
-# methods/R/MethodsList.R: 62
-# stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
-#              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
-#                           collapse=", ")), domain = NA)
-# methods/R/RMethodUtils.R: 1270
-# stop(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)",
-#                       msg, paste0("\"", old, "\"", collapse=", "),
-#                       paste0("\"", new, "\"", collapse=", ")),
-#              domain = NA)
-# methods/R/RMethodUtils.R: 1275
-# warning(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)",
-#                          msg, paste0("\"", old, "\"", collapse=", "),
-#                          paste0("\"", new, "\"", collapse=", ")),
-#                 domain = NA)
-# methods/R/RMethodUtils.R: 1290
-# stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s",
-# 		      msg, paste0("\"", old[is.na(match(old, names(dlist)))], "\"", collapse=", ")),
-# 	     domain = NA)
-# methods/R/methodsTable.R: 471
-# stop("invalid or unset methods table in generic function \"",
-#                fdef@generic,"\"", damain = NA)
-# methods/R/Methods.R: 1539
-# stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
-msgid "\""
-msgstr "\""
 
 # methods/R/Methods.R: 1604
 # stop(gettextf("argument 'f' must be a generic function or %s",
@@ -935,6 +911,18 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "nazwy w sygnaturze dla metody (%s) nie zgadzają się z argumentami %s (%s)"
 
+# methods/R/MethodsListClass.R: 418
+# stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
+#                             paste(sigArgs, collapse = ", "),
+#                             if(is(fdef, "genericFunction")) fdef@generic else "function",
+#                             paste(formalNames, collapse = ", ")),
+#                    domain = NA)
+#, fuzzy
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"nazwy w sygnaturze dla metody (%s) nie zgadzają się z argumentami %s (%s)"
+
 # methods/R/NextMethod.R: 60
 # stop(gettextf("a call to callNextMethod() appears in a call to %s, but the call does not seem to come from either a generic function or another 'callNextMethod'",
 #                           sQuote(f)),
@@ -1023,6 +1011,9 @@ msgstr ""
 #                     call. = FALSE, domain = NA)
 msgid "undefined slot classes in definition of %s: %s"
 msgstr "niezdefiniowane gniazda klas w definicji %s: %s"
+
+msgid "(class %s)"
+msgstr ""
 
 # methods/R/RClassUtils.R: 408
 # stop(gettextf("in definition of class %s, information for superclass %s is of class %s (expected \"SClassExtension\")",
@@ -2327,7 +2318,8 @@ msgstr ""
 # methods/R/methodsTable.R: 471
 # stop("invalid or unset methods table in generic function \"",
 #                fdef@generic,"\"", damain = NA)
-msgid "invalid or unset methods table in generic function \""
+#, fuzzy
+msgid "invalid or unset methods table in generic function %s"
 msgstr "niepoprawna lub nieustawiona tablica metod w ogólnej funkcji \""
 
 # methods/R/methodsTable.R: 474
@@ -3500,3 +3492,29 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+# methods/R/MethodsList.R: 62
+# stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
+#              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
+#                           collapse=", ")), domain = NA)
+# methods/R/RMethodUtils.R: 1270
+# stop(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)",
+#                       msg, paste0("\"", old, "\"", collapse=", "),
+#                       paste0("\"", new, "\"", collapse=", ")),
+#              domain = NA)
+# methods/R/RMethodUtils.R: 1275
+# warning(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)",
+#                          msg, paste0("\"", old, "\"", collapse=", "),
+#                          paste0("\"", new, "\"", collapse=", ")),
+#                 domain = NA)
+# methods/R/RMethodUtils.R: 1290
+# stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s",
+# 		      msg, paste0("\"", old[is.na(match(old, names(dlist)))], "\"", collapse=", ")),
+# 	     domain = NA)
+# methods/R/methodsTable.R: 471
+# stop("invalid or unset methods table in generic function \"",
+#                fdef@generic,"\"", damain = NA)
+# methods/R/Methods.R: 1539
+# stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
+#~ msgid "\""
+#~ msgstr "\""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -110,6 +110,9 @@ msgstr "x$lag deve avere almeno 1 colonna"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "si può usare ci.type=\"ma\" solo se il primo lag è 0"
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr "solo serie storiche unidimensionali"
@@ -976,14 +979,6 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "la lunghezza di 'init' deve essere uguale a quella di 'filter' "
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgstr "'init'; deve avere 1 o %d colonne"
-
-#, fuzzy
-msgid "'init' must have 1 or %d columns"
-msgstr "'init'; deve avere 1 o %d colonne"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' deve avere almeno 2 righe e colonne"
@@ -2280,7 +2275,8 @@ msgstr "non è una funzione a gradini valida"
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "'plot.stepfun' chiamata con argomento 'x' di tipo sbagliato"
 
-msgid "must be 0 or 1"
+#, fuzzy
+msgid "%s must be 0 or 1"
 msgstr "deve essere 0 o 1"
 
 msgid "only univariate series are allowed"
@@ -2600,6 +2596,12 @@ msgstr[0] "impossibile ottimizzare partendo da questi valori"
 msgstr[1] "impossibile ottimizzare partendo da questi valori"
 
 #, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] "'init'; deve avere 1 o %d colonne"
+msgstr[1] "'init'; deve avere 1 o %d colonne"
+
+#, fuzzy
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] "la matrice X ha rango %d, ma solo %d osservazioni"
@@ -2701,6 +2703,10 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr "'init'; deve avere 1 o %d colonne"
 
 #, fuzzy
 #~ msgid "'deriv' must be between 0 and 2"

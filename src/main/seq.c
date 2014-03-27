@@ -158,9 +158,15 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n1 == 0 || n2 == 0)
 	errorcall(call, _("argument of length 0"));
     if (n1 > 1)
-	warningcall(call, _("numerical expression has %d elements: only the first used"), (int) n1);
+	warningcall(call, 
+		    ngettext("numerical expression has %d element: only the first used",
+			     "numerical expression has %d elements: only the first used",
+			     (int) n1), (int) n1);
     if (n2 > 1)
-	warningcall(call, _("numerical expression has %d elements: only the first used"), (int) n2);
+	warningcall(call, 
+		    ngettext("numerical expression has %d element: only the first used", 
+			     "numerical expression has %d elements: only the first used", 
+			     (int) n2), (int) n2);
     n1 = asReal(s1);
     n2 = asReal(s2);
     if (ISNAN(n1) || ISNAN(n2))

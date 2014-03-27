@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -38,9 +38,6 @@ msgid "reference to unknown chunk %s"
 msgstr ""
 
 msgid "no Sweave file with name %s found"
-msgstr ""
-
-msgid "%d Sweave files for basename %s found"
 msgstr ""
 
 msgid "more than one syntax specification found, using the first one"
@@ -1065,6 +1062,11 @@ msgstr ""
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr ""
+
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"

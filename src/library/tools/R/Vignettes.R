@@ -695,7 +695,7 @@ getVignetteEncoding <-  function(file, ...)
     if (length(poss)) {
     	result <- "UTF-8"
     	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
-    	    stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
+    	    stop(gettextf("Inconsistent encoding specifications: %s with %%\\SweaveUTF8", result1), domain = NA)
     } else 
     	result <- result1
     result

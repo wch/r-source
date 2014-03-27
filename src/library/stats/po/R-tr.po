@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -106,6 +106,9 @@ msgstr "x$lag en az 1 sütuna sahip olmalı"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "sadece ilk gecikme 0 ise ci.type=\"ma\" kullanılabilir"
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr "sadece tek değişkenli zaman serileri"
@@ -914,14 +917,6 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr "'init' uzunluğu 'filter' ile eşit uzunlukta olmalı"
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgstr "'init'; 1 veya %d sütun içermeli"
-
-#, fuzzy
-msgid "'init' must have 1 or %d columns"
-msgstr "'init'; 1 veya %d sütun içermeli"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr "'x' en az 2 satır ve sütun içermeli"
@@ -2137,7 +2132,8 @@ msgstr ""
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr ""
 
-msgid "must be 0 or 1"
+#, fuzzy
+msgid "%s must be 0 or 1"
 msgstr "0 yada 1 olmalı"
 
 msgid "only univariate series are allowed"
@@ -2434,6 +2430,12 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] "'init'; 1 veya %d sütun içermeli"
+msgstr[1] "'init'; 1 veya %d sütun içermeli"
+
+#, fuzzy
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] "X matrisinin rankı %d, ancak sadece %d gözlem var"
@@ -2537,6 +2539,10 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#, fuzzy
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr "'init'; 1 veya %d sütun içermeli"
 
 #~ msgid "'deriv' must be between 0 and 2"
 #~ msgstr "'deriv' 0 ile 2 arasında olmalı"

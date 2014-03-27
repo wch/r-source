@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-26 10:17+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -100,6 +100,9 @@ msgstr " x$lag は少なくとも 1 つの列を含まねばなりません "
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr " 第一ラグが 0 であるときだけ ci.type=\"ma\" を使用することができます "
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr " 一変量時系列専用です "
@@ -915,12 +918,6 @@ msgstr " 'circular' は NA ではない論理値である必要があります "
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr " 'init' の長さは 'filter' の長さに等しくなければなりません; "
-
-msgid "'init' must have 1 column"
-msgstr " 'init' は 1 列でなければなりません "
-
-msgid "'init' must have 1 or %d columns"
-msgstr " 'init' は 1列もしくは%d 列でなければなりません "
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr " 'x' は少なくとも 2 つの行及び列を持たなければなりません "
@@ -2138,7 +2135,8 @@ msgstr " 適正な階段関数ではありません "
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr " 関数 'plot.stepfun' が誤ったタイプの引数 'x' で呼ばれました "
 
-msgid "must be 0 or 1"
+#, fuzzy
+msgid "%s must be 0 or 1"
 msgstr " 0 か 1 でなければなりません "
 
 msgid "only univariate series are allowed"
@@ -2417,6 +2415,11 @@ msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
 msgstr[0] " 指定された初期値からは最適化を行うことができませんでした "
 
+#, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] " 'init' は 1 列でなければなりません "
+
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] " 行列 X のランクは %d ですが、観測値が %d 個しかありません "
@@ -2488,6 +2491,9 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr " 'init' は 1列もしくは%d 列でなければなりません "
 
 #~ msgid "'deriv' must be between 0 and 2"
 #~ msgstr " 'deriv' は 0 と 2 の間になければなりません "

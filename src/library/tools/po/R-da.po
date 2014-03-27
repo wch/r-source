@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -557,10 +557,7 @@ msgstr ""
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "Inconsistent encoding specifications:"
-msgstr ""
-
-msgid "with %\\SweaveUTF8"
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
@@ -1042,9 +1039,6 @@ msgstr ""
 msgid "testing '%s' failed"
 msgstr ""
 
-msgid "%d of the package tests failed"
-msgstr ""
-
 msgid "Testing examples for package %s"
 msgstr ""
 
@@ -1114,10 +1108,7 @@ msgstr ""
 msgid "unable to run %s on '%s'"
 msgstr ""
 
-msgid "cannot coerce"
-msgstr ""
-
-msgid "to logical"
+msgid "cannot coerce %s to logical"
 msgstr ""
 
 msgid "File 'DESCRIPTION' is missing."
@@ -1284,6 +1275,11 @@ msgstr[1] ""
 
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 msgstr[1] ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -43,9 +43,6 @@ msgstr "référence à un tronçon inconnu %s"
 
 msgid "no Sweave file with name %s found"
 msgstr "un fichier Sweave de nom %s est introuvable"
-
-msgid "%d Sweave files for basename %s found"
-msgstr "%d fichiers Sweave trouvés pour le nom de base %s"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr ""
@@ -1169,6 +1166,12 @@ msgstr "winDialog() ne peut être utilisé en mode non interactif"
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() ne peut être utilisé en mode non interactif"
 
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "%d fichiers Sweave trouvés pour le nom de base %s"
+msgstr[1] "%d fichiers Sweave trouvés pour le nom de base %s"
+
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
 msgstr[0] "%d occurrence dans %s"
@@ -1413,8 +1416,8 @@ msgstr[1] ""
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""
-#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) "
-#~ "champ(s) : %s"
+#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
+#~ "(s) : %s"
 
 #~ msgid "'pb' is not from class \"winProgressBar\""
 #~ msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1332,13 +1332,9 @@ msgstr ""
 
 # tools/R/Vignettes.R: 698
 # stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
-msgid "Inconsistent encoding specifications:"
+#, fuzzy
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr "Niespójne specyfikacje strony kodowej:"
-
-# tools/R/Vignettes.R: 698
-# stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
-msgid "with %\\SweaveUTF8"
-msgstr "z %\\SweaveUTF8"
 
 # tools/R/Vignettes.R: 824
 # stop(gettextf("In '%s' vignettes '%s' and '%s' have the same vignette name",
@@ -2473,12 +2469,6 @@ msgstr "Znaleziono %s, prawdopodobnie z %s"
 msgid "testing '%s' failed"
 msgstr "testowanie '%s' nie powiodło się"
 
-# tools/R/testing.R: 253
-# stop(gettextf("%d of the package tests failed", sum(res)),
-#                      domain = NA, call. = FALSE)
-msgid "%d of the package tests failed"
-msgstr "%d z testów pakietu nie powiodło się"
-
 # tools/R/testing.R: 285
 # message(gettextf("Testing examples for package %s", sQuote(pkg)),
 #                 domain = NA)
@@ -2636,13 +2626,9 @@ msgstr "nie można uruchomić polecenia '%s' na pliku '%s'"
 
 # tools/R/utils.R: 528
 # warning("cannot coerce ", sQuote(val), " to logical")
-msgid "cannot coerce"
+#, fuzzy
+msgid "cannot coerce %s to logical"
 msgstr "nie można przekształcić"
-
-# tools/R/utils.R: 528
-# warning("cannot coerce ", sQuote(val), " to logical")
-msgid "to logical"
-msgstr "na typ logiczny"
 
 # tools/R/utils.R: 780
 # stop("File 'DESCRIPTION' is missing.")
@@ -3030,6 +3016,26 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "obiekt %s jest utworzony przez więcej niż jedno wywołanie danych"
 msgstr[1] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
+
+# tools/R/testing.R: 253
+# stop(gettextf("%d of the package tests failed", sum(res)),
+#                      domain = NA, call. = FALSE)
+#, fuzzy
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] "%d z testów pakietu nie powiodło się"
+msgstr[1] "%d z testów pakietu nie powiodło się"
+msgstr[2] "%d z testów pakietu nie powiodło się"
+
+# tools/R/Vignettes.R: 698
+# stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
+#~ msgid "with %\\SweaveUTF8"
+#~ msgstr "z %\\SweaveUTF8"
+
+# tools/R/utils.R: 528
+# warning("cannot coerce ", sQuote(val), " to logical")
+#~ msgid "to logical"
+#~ msgstr "na typ logiczny"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "argument 'file' musi być łańcuchem tekstowym lub połączeniem"

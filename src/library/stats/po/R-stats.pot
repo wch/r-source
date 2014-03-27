@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,6 +93,9 @@ msgid "x$lag must have at least 1 column"
 msgstr ""
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
+msgstr ""
+
+msgid "Page [%d,%d]: i =%s; j =%s"
 msgstr ""
 
 msgid "univariate time series only"
@@ -858,12 +861,6 @@ msgid "'circular' must be logical and not NA"
 msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
-msgstr ""
-
-msgid "'init' must have 1 column"
-msgstr ""
-
-msgid "'init' must have 1 or %d columns"
 msgstr ""
 
 msgid "'x' must have at least 2 rows and columns"
@@ -2006,7 +2003,7 @@ msgstr ""
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr ""
 
-msgid "must be 0 or 1"
+msgid "%s must be 0 or 1"
 msgstr ""
 
 msgid "only univariate series are allowed"
@@ -2284,6 +2281,11 @@ msgstr[1]    ""
 
 msgid        "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
 msgstr[0]    ""
 msgstr[1]    ""
 

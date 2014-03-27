@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-17 10:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -113,8 +113,8 @@ msgid ""
 "%s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
 msgstr ""
 "l'instruction : 'as(object, \"%s\") <- value' est valable lorsque l'objet "
-"est de la classe %s seulement si 'is(value, \"%s\")' est vrai "
-"('class(value)' est %s)"
+"est de la classe %s seulement si 'is(value, \"%s\")' est vrai ('class"
+"(value)' est %s)"
 
 msgid ""
 "there is no automatic definition for 'as(object, \"%s\") <- value' when "
@@ -398,13 +398,12 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "fonction non générique '%s' fournie à findMethods()"
 
-msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+#, fuzzy
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
 "seul FALSE a un sens pour 'inherited', lorsque 'where' est fourni (il s'agit "
 "de"
-
-msgid "\""
-msgstr "\""
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr "l'argument 'f' doit être une fonction générique ou %s"
@@ -560,6 +559,13 @@ msgstr ""
 "les noms dans la signature pour la méthode (%s) ne correspondent pas aux "
 "arguments de la fonction %s (%s)"
 
+#, fuzzy
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"les noms dans la signature pour la méthode (%s) ne correspondent pas aux "
+"arguments de la fonction %s (%s)"
+
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
 "seem to come from either a generic function or another 'callNextMethod'"
@@ -607,6 +613,9 @@ msgstr ""
 
 msgid "undefined slot classes in definition of %s: %s"
 msgstr "slot non défini dans la définition de classe de %s : %s"
+
+msgid "(class %s)"
+msgstr "(classe %s)"
 
 msgid ""
 "in definition of class %s, information for superclass %s is of class %s "
@@ -1366,7 +1375,8 @@ msgstr ""
 "objets incorrects dans la table des méthodes (%s) : une méthode est attendue "
 "et un objet de classe %s est fourni"
 
-msgid "invalid or unset methods table in generic function \""
+#, fuzzy
+msgid "invalid or unset methods table in generic function %s"
 msgstr ""
 "table de méthodes incorrecte ou non définie pour la fonction générique \""
 
@@ -2044,6 +2054,9 @@ msgstr[1] ""
 "aucune définition de la classe %s n'existe à la position spécifiée, %s, "
 "définitions dans : %s"
 
+#~ msgid "\""
+#~ msgstr "\""
+
 #~ msgid ""
 #~ "could not find superclass %s to clean up when removing subclass "
 #~ "references to class %s"
@@ -2240,9 +2253,6 @@ msgstr[1] ""
 #~ msgstr ""
 #~ "La méthode %s de la classe %s n'a pas été traitée comme méthode de classe "
 #~ "avant installation. Les méthodes de la classe sont peut-être corrompues."
-
-#~ msgid "(class %s)"
-#~ msgstr "(classe %s)"
 
 #~ msgid "for method %s()"
 #~ msgstr "pour la méthode %s()"

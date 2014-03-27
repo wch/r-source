@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -571,11 +571,8 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
 #, fuzzy
-msgid "Inconsistent encoding specifications:"
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr "非标准执照规格"
-
-msgid "with %\\SweaveUTF8"
-msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s'简介里'%s'和'%s'的名字是一样的"
@@ -1078,9 +1075,6 @@ msgstr "找到了%s,可能是从%s来的"
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
 
-msgid "%d of the package tests failed"
-msgstr ""
-
 msgid "Testing examples for package %s"
 msgstr "试验程序包%s的范例"
 
@@ -1150,11 +1144,9 @@ msgstr "无法在'%2$s'上调用'%1$s'"
 msgid "unable to run %s on '%s'"
 msgstr "无法在'%2$s'上调用%1$s"
 
-msgid "cannot coerce"
+#, fuzzy
+msgid "cannot coerce %s to logical"
 msgstr "无法强迫改变"
-
-msgid "to logical"
-msgstr "为逻辑值"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "缺少'DESCRIPTION'这个文件"
@@ -1300,6 +1292,13 @@ msgstr[0] "在以下这些程序包里找到了关于'%s'主题的帮助:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] ""
+
+#~ msgid "to logical"
+#~ msgstr "为逻辑值"
 
 #~ msgid "Vignette product"
 #~ msgstr "产品简介："

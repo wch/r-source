@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -613,11 +613,9 @@ msgstr ""
 " ビニエットファイル名 '%s' が、ファイル名パターン '%s' のいずれとも一致しませ"
 "ん "
 
-msgid "Inconsistent encoding specifications:"
+#, fuzzy
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr " 一貫していないエンコーディングの指定: "
-
-msgid "with %\\SweaveUTF8"
-msgstr " with %\\SweaveUTF8 "
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
@@ -1136,9 +1134,6 @@ msgstr " %s が見つかりました（おそらく %s から） "
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
 
-msgid "%d of the package tests failed"
-msgstr " パッケージテストのうち %d 個が失敗しました "
-
 msgid "Testing examples for package %s"
 msgstr " %s パッケージに対する例をテストしています "
 
@@ -1208,11 +1203,9 @@ msgstr " '%s' を '%s' に対して実行出来ません "
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
 
-msgid "cannot coerce"
+#, fuzzy
+msgid "cannot coerce %s to logical"
 msgstr " 強制変換できません "
-
-msgid "to logical"
-msgstr " 論理値へ "
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr " ファイル 'DESCRIPTION' が見当たりません。 "
@@ -1365,6 +1358,17 @@ msgstr[0] " トピック '%s' に関するヘルプが以下のパッケージ�
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しにより生成されました "
+
+#, fuzzy
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] " パッケージテストのうち %d 個が失敗しました "
+
+#~ msgid "with %\\SweaveUTF8"
+#~ msgstr " with %\\SweaveUTF8 "
+
+#~ msgid "to logical"
+#~ msgstr " 論理値へ "
 
 #~ msgid "Vignette product"
 #~ msgstr " ビニエットプロダクト "

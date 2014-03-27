@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -47,9 +47,6 @@ msgstr "ссылка на неизвестный фрагмент %s"
 
 msgid "no Sweave file with name %s found"
 msgstr "Sweave-файл с именем %s не найден"
-
-msgid "%d Sweave files for basename %s found"
-msgstr "%d Sweave-файлов с базовым именем %s найдено"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "найдено более одного указания на синтаксис, использую первое"
@@ -1145,6 +1142,13 @@ msgstr "winDialog() нельзя использовать неинтерактивно"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() нельзя использовать неинтерактивно"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "%d Sweave-файлов с базовым именем %s найдено"
+msgstr[1] "%d Sweave-файлов с базовым именем %s найдено"
+msgstr[2] "%d Sweave-файлов с базовым именем %s найдено"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"

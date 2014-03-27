@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -327,16 +327,14 @@ msgstr "talet på argumentkolonnar er ikkje like"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "ugyldig listeargument: alle variablar må vera like lange"
 
-msgid "data frame with 0 columns and %d rows"
-msgstr "dataramme med 0 kolonnar og %d rader"
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rader> (eller row.names av lengd null)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "ikkje numerisk variabel i dataramme:"
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "berre definert for datarammer av lik storleik"
 
 msgid "list of length %d not meaningful"
@@ -585,7 +583,8 @@ msgstr "ugyldige merkelappar – lengd %d må vera 1 eller %d"
 msgid "number of levels differs"
 msgstr "talet på nivå er forskjellig"
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "gjev ikkje meining for faktorar"
 
 msgid "level sets of factors are different"
@@ -1693,6 +1692,34 @@ msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "oppgav %d variablar for å erstatta %d variablar"
 msgstr[1] "oppgav %d variablar for å erstatta %d variablar"
+
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "dataramme med 0 kolonnar og %d rader"
+msgstr[1] "dataramme med 0 kolonnar og %d rader"
+
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"

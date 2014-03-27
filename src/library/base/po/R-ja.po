@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: 2014-03-26 13:57+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -310,16 +310,14 @@ msgstr " 引数の列の数が一致しません "
 msgid "invalid list argument: all variables should have the same length"
 msgstr " 無効なリストの引数です。全ての変数は同じ長さを持つべきです "
 
-msgid "data frame with 0 columns and %d rows"
-msgstr " 0 列 %d 行のデータフレーム "
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr " <0 行> (または長さ 0 の row.names) "
 
 msgid "non-numeric variable in data frame:"
 msgstr " 以下のデータフレーム中に数値でない変数があります: "
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr " 同じ大きさのデータフレームに対してだけ定義されています "
 
 msgid "list of length %d not meaningful"
@@ -553,7 +551,8 @@ msgstr " 無効な 'labels' です; 長さ %d は 1 または %d であるべき
 msgid "number of levels differs"
 msgstr " 水準の数が異なります "
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr " 因子に対しては無意味です "
 
 msgid "level sets of factors are different"
@@ -1631,6 +1630,39 @@ msgstr[0] " 置換データは %d 行ですが、%d 個の行を置換しよう�
 msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] " %d 個の変数を与えて、%d 個の変数を置換しようとしています "
+
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] " 0 列 %d 行のデータフレーム "
+
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+" 以下のオブジェクトはマスクされています (%s %s) : \n"
+"\n"
+" %s \n"
+
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+" 以下のオブジェクトはマスクされています (%s %s) : \n"
+"\n"
+" %s \n"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"

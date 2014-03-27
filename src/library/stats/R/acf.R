@@ -173,9 +173,7 @@ plot.acf <-
         iind <- (I-1)*nr + 1L:nr
         jind <- (J-1)*nr + 1L:nr
         if(verbose)
-            message("Page [",I,",",J,"]: i =",
-                    paste(iind,collapse=","),"; j =",
-                    paste(jind,collapse=","), domain = NA)
+            message(gettextf("Page [%d,%d]: i =%s; j =%s", I, J, paste(iind,collapse=","), paste(jind,collapse=",")), domain = NA)
         for (i in iind) for (j in jind)
             if(max(i,j) > nser) {
                 frame(); box(col = "light gray")

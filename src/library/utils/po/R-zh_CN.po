@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-27 17:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -39,9 +39,6 @@ msgstr "没有这样一个可對照的%s块"
 
 msgid "no Sweave file with name %s found"
 msgstr "没有名字为'%s'的Sweave文件"
-
-msgid "%d Sweave files for basename %s found"
-msgstr "找到了%d个不含路径文件字符串为%s的Sweave文件:"
 
 msgid "more than one syntax specification found, using the first one"
 msgstr "在多套語法規則里选用第一个套"
@@ -1100,6 +1097,11 @@ msgstr "winDialog()不能在非互交形式下使用"
 
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString()不能在非互交形式下使用"
+
+#, fuzzy
+msgid "%d Sweave file for basename %s found"
+msgid_plural "%d Sweave files for basename %s found"
+msgstr[0] "找到了%d个不含路径文件字符串为%s的Sweave文件:"
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-11-25 05:14\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-16 16:02+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -385,11 +385,10 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "nicht-generische Funktion '%s' an findMethods() übergeben"
 
-msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+#, fuzzy
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr "nur FALSE sinnvoll für 'inherited', wenn 'where' angegeben (bekam"
-
-msgid "\""
-msgstr "\""
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr "Argument 'f' muss eine generische Funktion oder %s sein"
@@ -542,6 +541,13 @@ msgstr ""
 "die Namen in der Signatur für die Methode (%s) passen nicht zu den "
 "Argumenten von %s (%s)"
 
+#, fuzzy
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"die Namen in der Signatur für die Methode (%s) passen nicht zu den "
+"Argumenten von %s (%s)"
+
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
 "seem to come from either a generic function or another 'callNextMethod'"
@@ -590,6 +596,9 @@ msgstr ""
 
 msgid "undefined slot classes in definition of %s: %s"
 msgstr "nicht definierte Slotklassen in der Definition von %s: %s"
+
+msgid "(class %s)"
+msgstr "(Klasse %s)"
 
 msgid ""
 "in definition of class %s, information for superclass %s is of class %s "
@@ -758,7 +767,6 @@ msgstr ""
 "Die Spezifikation für die Klasse %s in Paket %s scheint äquivalent\n"
 "zu einer aus Paket %s; für diese Klasse werden  die\n"
 "Klassendefinitionen nicht dubliziert"
-
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
@@ -1318,7 +1326,8 @@ msgstr ""
 "ungültiges Objekt in der Methodentabelle (%s), Methode war erwartet,\n"
 "bekam Objekt der Klasse %s"
 
-msgid "invalid or unset methods table in generic function \""
+#, fuzzy
+msgid "invalid or unset methods table in generic function %s"
 msgstr ""
 "ungültige oder zurückgesetzte Methodentabelle in generischer Funktion \""
 
@@ -1568,8 +1577,8 @@ msgid ""
 "invalid assignment for reference class field %s, should be from class %s or "
 "a subclass (was class %s)"
 msgstr ""
-"Unzulässige Zueiwsung für Referenzklassenfeld %s, sollte aus Klasse %s oder eine "
-"Unterklasse sein (war Klasse %s)"
+"Unzulässige Zueiwsung für Referenzklassenfeld %s, sollte aus Klasse %s oder "
+"eine Unterklasse sein (war Klasse %s)"
 
 msgid "invalid replacement: reference class field %s is read-only"
 msgstr "ungültige Ersetzung: Referenzklassenfeld %s ist nur lesbar"
@@ -1971,6 +1980,9 @@ msgstr[1] ""
 "keine Definiton der Klasse %s an der angegebenen Position, %s, Definitionen "
 "bei: %s"
 
+#~ msgid "\""
+#~ msgstr "\""
+
 #~ msgid ""
 #~ "could not find superclass %s to clean up when removing subclass "
 #~ "references to class %s"
@@ -2165,9 +2177,6 @@ msgstr[1] ""
 #~ "Methode %s aus Klasse %s wurde bis zur Installation nicht als "
 #~ "Klassenmethode behandelt,\n"
 #~ "Mögliche Beschädigung der Methoden der Klasse"
-
-#~ msgid "(class %s)"
-#~ msgstr "(Klasse %s)"
 
 #~ msgid "for method %s()"
 #~ msgstr "für Methode %s()"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-13 14:10\n"
+"POT-Creation-Date: 2014-03-27 09:10\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -313,16 +313,14 @@ msgstr "变量的列数不对"
 msgid "invalid list argument: all variables should have the same length"
 msgstr "串列参数有错：所有变数的长度都应该是一样的"
 
-msgid "data frame with 0 columns and %d rows"
-msgstr "数据框没有列但有%d行"
-
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 行> (或0-长度的row.names)"
 
 msgid "non-numeric variable in data frame:"
 msgstr "数据框里有非数值的参数"
 
-msgid "only defined for equally-sized data frames"
+#, fuzzy
+msgid "%s only defined for equally-sized data frames"
 msgstr "只适用于大小相同的数据框"
 
 msgid "list of length %d not meaningful"
@@ -548,7 +546,8 @@ msgstr "'labels'不对；长度%d应该是一或%d"
 msgid "number of levels differs"
 msgstr "层次数目不同"
 
-msgid "not meaningful for factors"
+#, fuzzy
+msgid "%s not meaningful for factors"
 msgstr "对因子没有意义"
 
 msgid "level sets of factors are different"
@@ -1580,6 +1579,39 @@ msgstr[0] "替换数据里有%d行来替换%d行"
 msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "提供了%d变数用来替换%d变数"
+
+#, fuzzy
+msgid "data frame with 0 columns and %d row"
+msgid_plural "data frame with 0 columns and %d rows"
+msgstr[0] "数据框没有列但有%d行"
+
+#, fuzzy
+msgid ""
+"The following object is masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked _by_ %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"下列对象被屏蔽了%s %s:\n"
+"\n"
+"%s\n"
+
+#, fuzzy
+msgid ""
+"The following object is masked from %s:\n"
+"\n"
+"%s\n"
+msgid_plural ""
+"The following objects are masked from %s:\n"
+"\n"
+"%s\n"
+msgstr[0] ""
+"下列对象被屏蔽了%s %s:\n"
+"\n"
+"%s\n"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"

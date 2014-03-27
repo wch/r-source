@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:48+0000\n"
+"POT-Creation-Date: 2014-03-27 09:10+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -193,13 +193,13 @@ msgstr ""
 #: src/main/envir.c:1940 src/main/envir.c:1947 src/main/envir.c:1958
 #: src/main/envir.c:2172 src/main/envir.c:2293 src/main/envir.c:2552
 #: src/main/envir.c:2762 src/main/envir.c:2776 src/main/envir.c:2783
-#: src/main/envir.c:2799 src/main/envir.c:3367 src/main/errors.c:1030
+#: src/main/envir.c:2799 src/main/envir.c:3367 src/main/errors.c:1049
 #: src/main/eval.c:397 src/main/eval.c:406 src/main/eval.c:409
 #: src/main/grep.c:767 src/main/grep.c:772 src/main/grep.c:1061
 #: src/main/grep.c:1063 src/main/grep.c:1065 src/main/grep.c:1510
 #: src/main/grep.c:1514 src/main/grep.c:1519 src/main/grep.c:2323
 #: src/main/grep.c:2328 src/main/grep.c:2621 src/main/grep.c:2626
-#: src/main/memory.c:3736 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3740 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -229,9 +229,9 @@ msgstr ""
 #: src/main/saveload.c:2366 src/main/scan.c:684 src/main/scan.c:853
 #: src/main/scan.c:867 src/main/scan.c:871 src/main/scan.c:873
 #: src/main/scan.c:884 src/main/scan.c:911 src/main/scan.c:914
-#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:618
-#: src/main/seq.c:623 src/main/seq.c:631 src/main/seq.c:662 src/main/seq.c:666
-#: src/main/seq.c:672 src/main/seq.c:680 src/main/sort.c:175
+#: src/main/scan.c:917 src/main/scan.c:972 src/main/seq.c:624
+#: src/main/seq.c:629 src/main/seq.c:637 src/main/seq.c:668 src/main/seq.c:672
+#: src/main/seq.c:678 src/main/seq.c:686 src/main/sort.c:175
 #: src/main/sysutils.c:585 src/main/sysutils.c:589 src/main/sysutils.c:593
 #: src/main/sysutils.c:599 src/main/sysutils.c:603 src/main/sysutils.c:1831
 #: src/main/sysutils.c:1835 src/main/unique.c:966 src/main/unique.c:1289
@@ -262,12 +262,12 @@ msgstr "conversione non supportata"
 #: src/gnuwin32/extra.c:267 src/main/apply.c:105 src/main/character.c:595
 #: src/main/connections.c:3555 src/main/context.c:642 src/main/context.c:661
 #: src/main/datetime.c:675 src/main/datetime.c:777 src/main/datetime.c:1030
-#: src/main/dotcode.c:199 src/main/errors.c:929 src/main/errors.c:962
-#: src/main/errors.c:1065 src/main/errors.c:1090 src/main/errors.c:1095
-#: src/main/errors.c:1368 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/dotcode.c:199 src/main/errors.c:948 src/main/errors.c:981
+#: src/main/errors.c:1084 src/main/errors.c:1109 src/main/errors.c:1114
+#: src/main/errors.c:1387 src/main/identical.c:66 src/main/identical.c:67
 #: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
-#: src/main/seq.c:185 src/main/seq.c:341 src/main/seq.c:346 src/main/seq.c:350
-#: src/main/seq.c:391 src/main/seq.c:395 src/main/seq.c:399
+#: src/main/seq.c:191 src/main/seq.c:347 src/main/seq.c:352 src/main/seq.c:356
+#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
 #: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
@@ -684,32 +684,34 @@ msgstr "libreria dinamica '%s' non caricata"
 
 #: src/main/Rdynload.c:979
 #, fuzzy, c-format
-msgid "cannot allocate memory for registered native symbol (%d bytes)"
-msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
+msgid "cannot allocate memory for registered native symbol (%d byte)"
+msgid_plural "cannot allocate memory for registered native symbol (%d bytes)"
+msgstr[0] "non è possibile allocare memoria per la struttura InternetRoutines"
+msgstr[1] "non è possibile allocare memoria per la struttura InternetRoutines"
 
-#: src/main/Rdynload.c:1100 src/main/Rdynload.c:1321
+#: src/main/Rdynload.c:1101 src/main/Rdynload.c:1322
 msgid "must pass package name or DllInfo reference"
 msgstr "specificare nome pacchetto o una referenza a DllInfo"
 
-#: src/main/Rdynload.c:1197
+#: src/main/Rdynload.c:1198
 #, fuzzy, c-format
 msgid "unimplemented type %d in 'createRSymbolObject'"
 msgstr "Tipo %d non implementato in createRSymbolObject"
 
-#: src/main/Rdynload.c:1279 src/main/Rdynload.c:1373
+#: src/main/Rdynload.c:1280 src/main/Rdynload.c:1374
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr "R_getRegisteredRoutines() necessita di una referenza di tipo DllInfo"
 
-#: src/main/Rdynload.c:1282 src/main/Rdynload.c:1376
+#: src/main/Rdynload.c:1283 src/main/Rdynload.c:1377
 msgid "NULL value passed for DllInfo"
 msgstr "Valore NULL specificato al posto di DllInfo"
 
-#: src/main/Rdynload.c:1436
+#: src/main/Rdynload.c:1437
 #, c-format
 msgid "function '%s' not provided by package '%s'"
 msgstr ""
 
-#: src/main/Rdynload.c:1438
+#: src/main/Rdynload.c:1439
 #, fuzzy
 msgid "table entry must be an external pointer"
 msgstr "non posso de-classificare un puntatore esterno"
@@ -899,30 +901,27 @@ msgstr "funzione reale (di un argomento) non implementata"
 msgid "unimplemented complex function"
 msgstr "funzione complessa non implementata"
 
-#: src/main/arithmetic.c:1526 src/main/arithmetic.c:1877
-#: src/main/arithmetic.c:2056 src/main/arithmetic.c:2168
+#: src/main/arithmetic.c:1526 src/main/arithmetic.c:1881
+#: src/main/arithmetic.c:2060 src/main/arithmetic.c:2172
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "funzione reale di %d argomenti numerici non implementata"
 
-#: src/main/arithmetic.c:1552
+#: src/main/arithmetic.c:1552 src/main/arithmetic.c:1650
 #, fuzzy, c-format
-msgid "%d arguments passed to '%s' which requires 1 or 2"
-msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"
+msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
+msgid_plural "%d arguments passed to '%s'which requires 1 or 2 arguments"
+msgstr[0] "%d argomenti passati a 'log' che ne richiede 1 o 2"
+msgstr[1] "%d argomenti passati a 'log' che ne richiede 1 o 2"
 
-#: src/main/arithmetic.c:1570
+#: src/main/arithmetic.c:1571
 msgid "invalid second argument of length 0"
 msgstr "secondo argomento di lunghezza 0 non valido"
 
-#: src/main/arithmetic.c:1639
+#: src/main/arithmetic.c:1640
 #, fuzzy
 msgid "invalid argument 'base' of length 0"
 msgstr "secondo argomento di lunghezza 0 non valido"
-
-#: src/main/arithmetic.c:1647
-#, c-format
-msgid "%d arguments passed to 'log' which requires 1 or 2"
-msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"
 
 #: src/main/array.c:79 src/main/array.c:1441
 #, fuzzy, c-format
@@ -1582,15 +1581,15 @@ msgstr "argomento '%s' non valido"
 msgid "applies only to lists and vectors"
 msgstr "si applica solo a liste e vettori"
 
-#: src/main/coerce.c:77 src/main/errors.c:1208
+#: src/main/coerce.c:77 src/main/errors.c:1227
 msgid "NAs introduced by coercion"
 msgstr "si è prodotto un NA per coercizione"
 
-#: src/main/coerce.c:79 src/main/errors.c:1209
+#: src/main/coerce.c:79 src/main/errors.c:1228
 msgid "inaccurate integer conversion in coercion"
 msgstr "conversione intera non accurata durante la conversione"
 
-#: src/main/coerce.c:81 src/main/errors.c:1210
+#: src/main/coerce.c:81 src/main/errors.c:1229
 msgid "imaginary parts discarded in coercion"
 msgstr "parti immaginarie eliminate durante la conversione"
 
@@ -2703,7 +2702,7 @@ msgstr "argomento PACKAGE è troppo lungo"
 msgid "no arguments supplied"
 msgstr "nessun argomento specificato"
 
-#: src/main/dotcode.c:475 src/main/seq.c:913
+#: src/main/dotcode.c:475 src/main/seq.c:919
 msgid "too many arguments"
 msgstr "troppi argomenti"
 
@@ -3350,170 +3349,183 @@ msgstr ""
 msgid "interrupts suspended; signal ignored"
 msgstr "interrupt sospesi; segnale ignorato"
 
-#: src/main/errors.c:318
+#: src/main/errors.c:265
+msgid "[... truncated]"
+msgstr ""
+
+#: src/main/errors.c:325
 msgid "invalid option \"warning.expression\""
 msgstr "opzione  \"warning.expression\" non valida"
 
-#: src/main/errors.c:348
+#: src/main/errors.c:354
 #, c-format
 msgid "(converted from warning) %s"
 msgstr "(contertito da avviso) %s"
 
-#: src/main/errors.c:359
-#, fuzzy, c-format
-msgid "Warning: %s\n"
+#: src/main/errors.c:364
+#, fuzzy
+msgid "Warning:"
 msgstr "Avviso: "
 
-#: src/main/errors.c:363
+#: src/main/errors.c:366
 #, fuzzy, c-format
-msgid "Warning in %s : %s\n"
+msgid "Warning in %s :"
 msgstr "Avviso in %s : "
 
-#: src/main/errors.c:365
-#, fuzzy, c-format
-msgid ""
-"Warning in %s :\n"
-"  %s\n"
-msgstr "Avviso in %s : "
+#: src/main/errors.c:375 src/main/errors.c:389 src/main/errors.c:700
+msgid "Calls:"
+msgstr ""
 
-#: src/main/errors.c:428 src/main/errors.c:447 src/main/errors.c:596
+#: src/main/errors.c:436 src/main/errors.c:455 src/main/errors.c:615
 msgid "Lost warning messages\n"
 msgstr "Alcuni messaggi di avviso perduti\n"
 
-#: src/main/errors.c:459
+#: src/main/errors.c:467
 #, fuzzy
-msgid "Warning message:\n"
-msgid_plural "Warning messages:\n"
+msgid "Warning message:"
+msgid_plural "Warning messages:"
 msgstr[0] "Alcuni messaggi di avviso perduti\n"
 msgstr[1] "Alcuni messaggi di avviso perduti\n"
 
-#: src/main/errors.c:514
+#: src/main/errors.c:477 src/main/errors.c:505
 #, c-format
-msgid "There were %d warnings (use warnings() to see them)\n"
-msgstr "Ci sono %d avvisi (usare warnings() per leggerli)\n"
+msgid "In %s :"
+msgstr ""
 
-#: src/main/errors.c:517
+#: src/main/errors.c:530
 #, fuzzy, c-format
-msgid "There were %d or more warnings (use warnings() to see the first %d)\n"
+msgid "There was %d warning (use warnings() to see it)"
+msgid_plural "There were %d warnings (use warnings() to see them)"
+msgstr[0] "Ci sono %d avvisi (usare warnings() per leggerli)\n"
+msgstr[1] "Ci sono %d avvisi (usare warnings() per leggerli)\n"
+
+#: src/main/errors.c:535
+#, fuzzy, c-format
+msgid "There were %d or more warnings (use warnings() to see the first %d)"
 msgstr "Ci sono 50 o più avvisi (usare warnings() per leggere i primi 50)\n"
 
-#: src/main/errors.c:587
+#: src/main/errors.c:606
 msgid "Error during wrapup: "
 msgstr "Errore durante wrapup: "
 
-#: src/main/errors.c:612
+#: src/main/errors.c:631
 msgid "Error in "
 msgstr "Errore in "
 
-#: src/main/errors.c:613
+#: src/main/errors.c:653 src/main/errors.c:660
 #, c-format
-msgid " (from %s) : "
+msgid "Error in %s (from %s) : "
 msgstr ""
 
-#: src/main/errors.c:664 src/main/errors.c:670
+#: src/main/errors.c:662
+#, fuzzy, c-format
+msgid "Error in %s : "
+msgstr "Errore in "
+
+#: src/main/errors.c:682 src/main/errors.c:688
 #, c-format
 msgid "Error: "
 msgstr "Errore: "
 
-#: src/main/errors.c:690 src/main/errors.c:1319
+#: src/main/errors.c:709 src/main/errors.c:1338
 msgid "In addition: "
 msgstr "Inoltre: "
 
-#: src/main/errors.c:811
+#: src/main/errors.c:830
 msgid "invalid option \"error\"\n"
 msgstr "opzione \"error\" non valida\n"
 
-#: src/main/errors.c:893
+#: src/main/errors.c:912
 msgid "Execution halted\n"
 msgstr "Esecuzione interrotta\n"
 
-#: src/main/errors.c:1032
+#: src/main/errors.c:1051
 msgid "'msg1' must be a character string"
 msgstr "'msg1' deve essere una stringa di tipo character"
 
-#: src/main/errors.c:1034
+#: src/main/errors.c:1053
 msgid "'msg2' must be a character string"
 msgstr "'msg2' deve essere una stringa di tipo character"
 
-#: src/main/errors.c:1131
+#: src/main/errors.c:1150
 msgid " [invalid string in stop(.)]"
 msgstr " [stringa non valida in stop(.)]"
 
-#: src/main/errors.c:1162
+#: src/main/errors.c:1181
 msgid " [invalid string in warning(.)]"
 msgstr " [stringa non valida in warning(.)]"
 
-#: src/main/errors.c:1178
+#: src/main/errors.c:1197
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr "numero di argomenti non corretto per \"%s\""
 
-#: src/main/errors.c:1184 src/main/errors.c:1199
+#: src/main/errors.c:1203 src/main/errors.c:1218
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr "funzionalità non implementata in %s"
 
-#: src/main/errors.c:1193
+#: src/main/errors.c:1212
 msgid "invalid number of arguments"
 msgstr "numero di argomenti non valido"
 
-#: src/main/errors.c:1194 src/main/logic.c:189
+#: src/main/errors.c:1213 src/main/logic.c:189
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
-#: src/main/errors.c:1196
+#: src/main/errors.c:1215
 msgid "time-series/vector length mismatch"
 msgstr "lunghezza serie storiche/vettore non concordante"
 
-#: src/main/errors.c:1197
+#: src/main/errors.c:1216
 msgid "incompatible arguments"
 msgstr "argomenti incompatibili"
 
-#: src/main/errors.c:1200
+#: src/main/errors.c:1219
 msgid "unknown error (report this!)"
 msgstr "errore sconosciuto (per piacere, segnalatecelo!)"
 
-#: src/main/errors.c:1212
+#: src/main/errors.c:1231
 msgid "unknown warning (report this!)"
 msgstr "avviso sconosciuto (per piacere, segnalatecelo!)"
 
-#: src/main/errors.c:1283
+#: src/main/errors.c:1302
 msgid "No function to return from, jumping to top level"
 msgstr "non vi è alcuna funzione da cui uscire, salto al livello superiore"
 
-#: src/main/errors.c:1299
+#: src/main/errors.c:1318
 msgid "top level inconsistency?"
 msgstr "inconsitenza a livello superiore?"
 
-#: src/main/errors.c:1478
+#: src/main/errors.c:1497
 msgid "bad handler data"
 msgstr ""
 
-#: src/main/errors.c:1628
+#: src/main/errors.c:1647
 msgid "error message not a string"
 msgstr "il messaggio di errore non è una stringa"
 
-#: src/main/errors.c:1703
+#: src/main/errors.c:1722
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 
-#: src/main/errors.c:1729 src/main/errors.c:1745
+#: src/main/errors.c:1748 src/main/errors.c:1764
 msgid "bad error message"
 msgstr "messaggio di errore sbagliato"
 
-#: src/main/errors.c:1787
+#: src/main/errors.c:1806
 msgid "bad restart"
 msgstr "riavvio non corretto"
 
-#: src/main/errors.c:1819
+#: src/main/errors.c:1838
 msgid "restart not on stack"
 msgstr "'restart' non è nello stack"
 
-#: src/main/errors.c:1836
+#: src/main/errors.c:1855
 msgid "not in a try context"
 msgstr "non è in un contesto di 'try'"
 
-#: src/main/errors.c:1849
+#: src/main/errors.c:1868
 #, fuzzy
 msgid "error message must be a character string"
 msgstr "'msg1' deve essere una stringa di tipo character"
@@ -3836,14 +3848,14 @@ msgstr "modalità '%s' non supportata in call_R"
 msgid "no graphics event handlers set"
 msgstr "nessuno dispositivo grafico attivo"
 
-#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2222
-#: src/main/gram.y:2236
+#: src/main/gram.y:222 src/main/gram.y:237 src/main/gram.y:2251
+#: src/main/gram.y:2265
 #, fuzzy, c-format
 msgid "EOF whilst reading MBCS char at line %d"
 msgstr "EOF durante la lettura di un carattere MBCS"
 
-#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2226
-#: src/main/gram.y:2233
+#: src/main/gram.y:226 src/main/gram.y:234 src/main/gram.y:2255
+#: src/main/gram.y:2262
 #, fuzzy, c-format
 msgid "invalid multibyte character in parser at line %d"
 msgstr "carattere multibyte non valido in mbcs_get_next"
@@ -3863,124 +3875,129 @@ msgstr "tipo tag non corretto"
 msgid "contextstack overflow"
 msgstr "overflow del node stack"
 
-#: src/main/gram.y:1890
-msgid "input"
-msgstr ""
+#: src/main/gram.y:1915 src/main/gram.y:1921
+#, fuzzy, c-format
+msgid "unexpected input"
+msgstr "necessaria formula"
 
-#: src/main/gram.y:1891
-msgid "end of input"
-msgstr ""
+#: src/main/gram.y:1918
+#, fuzzy, c-format
+msgid "unexpected end of input"
+msgstr "necessaria formula"
 
-#: src/main/gram.y:1892
-msgid "string constant"
-msgstr ""
+#: src/main/gram.y:1924
+#, fuzzy, c-format
+msgid "unexpected string constant"
+msgstr "non posso leggere da questa connessione"
 
-#: src/main/gram.y:1893
-#, fuzzy
-msgid "numeric constant"
+#: src/main/gram.y:1927
+#, fuzzy, c-format
+msgid "unexpected numeric constant"
 msgstr "argomento non numerico"
 
-#: src/main/gram.y:1894
-#, fuzzy
-msgid "symbol"
-msgstr "non è un simbolo"
+#: src/main/gram.y:1930
+#, fuzzy, c-format
+msgid "unexpected symbol"
+msgstr "necessaria formula"
 
-#: src/main/gram.y:1895
-msgid "assignment"
-msgstr ""
+#: src/main/gram.y:1933
+#, fuzzy, c-format
+msgid "unexpected assignment"
+msgstr "necessaria formula"
 
-#: src/main/gram.y:1896
-msgid "end of line"
-msgstr ""
+#: src/main/gram.y:1936
+#, fuzzy, c-format
+msgid "unexpected end of line"
+msgstr "necessaria formula"
 
-#: src/main/gram.y:1910 src/main/gram.y:1916
+#: src/main/gram.y:1939 src/main/gram.y:1945
 #, fuzzy, c-format
 msgid "unexpected %s"
 msgstr "necessaria formula"
 
-#: src/main/gram.y:1926
+#: src/main/gram.y:1955
 #, fuzzy, c-format
 msgid "repeated formal argument '%s' on line %d"
 msgstr "Argomento formale ripetuto"
 
-#: src/main/gram.y:2136
+#: src/main/gram.y:2165
 #, c-format
 msgid "integer literal %s contains decimal; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:2140
+#: src/main/gram.y:2169
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
 
-#: src/main/gram.y:2153
+#: src/main/gram.y:2182
 #, c-format
 msgid "integer literal %s contains unnecessary decimal point"
 msgstr ""
 
-#: src/main/gram.y:2185
+#: src/main/gram.y:2214
 #, fuzzy, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "non è possibile allocare memoria (in GEregister)"
 
-#: src/main/gram.y:2338
+#: src/main/gram.y:2367
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2352
+#: src/main/gram.y:2381
 #, fuzzy, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "'onMouseDown' non supportata"
 
-#: src/main/gram.y:2367
+#: src/main/gram.y:2396
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2375
+#: src/main/gram.y:2404
 #, fuzzy, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "sequenza \\u{xxxx} non valida"
 
-#: src/main/gram.y:2387
+#: src/main/gram.y:2416
 #, fuzzy, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "'onMouseDown' non supportata"
 
-#: src/main/gram.y:2402
+#: src/main/gram.y:2431
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2410
+#: src/main/gram.y:2439
 #, fuzzy, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "sequenza \\U{xxxxxxxx} non valida"
 
-#: src/main/gram.y:2451
+#: src/main/gram.y:2480
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "il primo argomento deve essere una stringa di tipo character"
 
-#: src/main/gram.y:2510
+#: src/main/gram.y:2539
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 
-#: src/main/gram.y:2514
+#: src/main/gram.y:2543
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
 
-#: src/main/gram.y:3112 src/main/gram.y:3119 src/main/gram.y:3125
-#: src/main/gram.y:3132
+#: src/main/gram.y:3141 src/main/gram.y:3148 src/main/gram.y:3154
+#: src/main/gram.y:3161
 #, fuzzy, c-format
 msgid "contextstack overflow at line %d"
 msgstr "overflow dello stack interi"
 
-#: src/main/gram.y:3227
+#: src/main/gram.y:3256
 #, fuzzy, c-format
 msgid "internal parser error at line %d"
 msgstr "overflow buffer di input"
@@ -4100,9 +4117,9 @@ msgstr "le routine internet non sono accessibili dal modulo"
 msgid "internet routines cannot be loaded"
 msgstr "le routine internet non possono essere caricate"
 
-#: src/main/internet.c:118 src/main/memory.c:3434 src/main/memory.c:3444
-#: src/main/memory.c:3456 src/main/memory.c:3470 src/main/memory.c:3487
-#: src/main/memory.c:3505
+#: src/main/internet.c:118 src/main/memory.c:3438 src/main/memory.c:3448
+#: src/main/memory.c:3460 src/main/memory.c:3474 src/main/memory.c:3491
+#: src/main/memory.c:3509
 msgid "bad value"
 msgstr "valore sbagliato"
 
@@ -4364,53 +4381,57 @@ msgstr "protect(): overflow dello stack di protezione"
 
 #: src/main/memory.c:3008
 #, c-format
-msgid "unprotect(): only %d protected items"
-msgstr ""
+msgid "unprotect(): only %d protected item"
+msgid_plural "unprotect(): only %d protected items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/main/memory.c:3041
+#: src/main/memory.c:3043
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: puntatore non trovato"
 
-#: src/main/memory.c:3079
+#: src/main/memory.c:3081
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr ""
+msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/main/memory.c:3129
+#: src/main/memory.c:3133
 #, fuzzy, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr "Calloc non può allocare memoria (%d di %d)"
 
-#: src/main/memory.c:3140
+#: src/main/memory.c:3144
 #, fuzzy, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr "Realloc non può riallocare memoria (dimensione %d)"
 
-#: src/main/memory.c:3380
+#: src/main/memory.c:3384
 msgid "not safe to return vector pointer"
 msgstr "non è sicuro restituire puntatori vettoriali"
 
-#: src/main/memory.c:3392
+#: src/main/memory.c:3396
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3408
+#: src/main/memory.c:3412
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3658
+#: src/main/memory.c:3662
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "Il profiling di R non è disponibile su questo sistema"
 
-#: src/main/memory.c:3723
+#: src/main/memory.c:3727
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: non posso aprire il file di profile '%s'"
 
-#: src/main/memory.c:3830
+#: src/main/memory.c:3834
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -5536,74 +5557,76 @@ msgstr "il risultato sarebbe un vettore troppo lungo"
 msgid "argument of length 0"
 msgstr "l'argomento ha lunghezza zero"
 
-#: src/main/seq.c:161 src/main/seq.c:163
-#, c-format
-msgid "numerical expression has %d elements: only the first used"
-msgstr "l'espressione numerica ha %d elementi: solo il primo è utilizzato"
+#: src/main/seq.c:162 src/main/seq.c:167
+#, fuzzy, c-format
+msgid "numerical expression has %d element: only the first used"
+msgid_plural "numerical expression has %d elements: only the first used"
+msgstr[0] "l'espressione numerica ha %d elementi: solo il primo è utilizzato"
+msgstr[1] "l'espressione numerica ha %d elementi: solo il primo è utilizzato"
 
-#: src/main/seq.c:167
+#: src/main/seq.c:173
 msgid "NA/NaN argument"
 msgstr "argomento NA/NaN"
 
-#: src/main/seq.c:331
+#: src/main/seq.c:337
 #, fuzzy
 msgid "incorrect type for second argument"
 msgstr "rep() tipo del secondo argomento non valido"
 
-#: src/main/seq.c:334
+#: src/main/seq.c:340
 #, fuzzy, c-format
 msgid "attempt to replicate an object of type '%s'"
 msgstr "tentativo di replicare un non vettore"
 
-#: src/main/seq.c:387
+#: src/main/seq.c:393
 msgid "attempt to replicate non-vector"
 msgstr "tentativo di replicare un non vettore"
 
-#: src/main/seq.c:403
+#: src/main/seq.c:409
 #, fuzzy
 msgid "cannot replicate NULL to a non-zero length"
 msgstr "non è possibile allocare un vettore di lunghezza %d"
 
-#: src/main/seq.c:626 src/main/seq.c:633 src/main/seq.c:768 src/main/seq.c:979
+#: src/main/seq.c:632 src/main/seq.c:639 src/main/seq.c:774 src/main/seq.c:985
 #, fuzzy, c-format
 msgid "first element used of '%s' argument"
 msgstr "solo il primo elemento di 'url' viene utilizzato"
 
-#: src/main/seq.c:766
+#: src/main/seq.c:772
 #, fuzzy
 msgid "'length.out' must be a non-negative number"
 msgstr "'gap' deve essere un intero non negativo"
 
-#: src/main/seq.c:790 src/main/seq.c:856 src/main/seq.c:873
+#: src/main/seq.c:796 src/main/seq.c:862 src/main/seq.c:879
 #, fuzzy
 msgid "'from' must be finite"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/seq.c:792 src/main/seq.c:858 src/main/seq.c:895
+#: src/main/seq.c:798 src/main/seq.c:864 src/main/seq.c:901
 #, fuzzy
 msgid "'to' must be finite"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/seq.c:804
+#: src/main/seq.c:810
 msgid "invalid '(to - from)/by' in 'seq'"
 msgstr ""
 
-#: src/main/seq.c:816
+#: src/main/seq.c:822
 #, fuzzy
 msgid "'by' argument is much too small"
 msgstr "argomento 'file' troppo lungo"
 
-#: src/main/seq.c:818
+#: src/main/seq.c:824
 #, fuzzy
 msgid "wrong sign in 'by' argument"
 msgstr "lunghezza sbagliata dell'argomento 'mode'"
 
-#: src/main/seq.c:875 src/main/seq.c:897
+#: src/main/seq.c:881 src/main/seq.c:903
 #, fuzzy
 msgid "'by' must be finite"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/seq.c:985 src/main/seq.c:990
+#: src/main/seq.c:991 src/main/seq.c:996
 #, fuzzy
 msgid "argument must be coercible to non-negative integer"
 msgstr "l'argomento deve essere di tipo environment"
@@ -7551,6 +7574,19 @@ msgstr "impostazione del profile timer non riuscita"
 #: src/unix/system.c:469
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATTENZIONE: Verrà editato solo il primo file della lista"
+
+#~ msgid "%d arguments passed to 'log' which requires 1 or 2"
+#~ msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Warning in %s :\n"
+#~ "  %s\n"
+#~ msgstr "Avviso in %s : "
+
+#, fuzzy
+#~ msgid "symbol"
+#~ msgstr "non è un simbolo"
 
 #~ msgid "negative value in 'x'"
 #~ msgstr "valore negativo in 'x'"

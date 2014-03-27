@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -596,11 +596,8 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
 #, fuzzy
-msgid "Inconsistent encoding specifications:"
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr "Нестандартная лицензия:"
-
-msgid "with %\\SweaveUTF8"
-msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Среди миниатюр '%s' '%s' и '%s' имеют одинаковые имена"
@@ -1113,9 +1110,6 @@ msgstr "Нашел %s, возможно, из %s"
 msgid "testing '%s' failed"
 msgstr "тестирование '%s' не удалось"
 
-msgid "%d of the package tests failed"
-msgstr ""
-
 msgid "Testing examples for package %s"
 msgstr "Проверяю примеры к пакету %s"
 
@@ -1185,11 +1179,9 @@ msgstr "не могу запустить '%s' на '%s'"
 msgid "unable to run %s on '%s'"
 msgstr "не могу запустить %s на '%s'"
 
-msgid "cannot coerce"
+#, fuzzy
+msgid "cannot coerce %s to logical"
 msgstr "нельзя соединить"
-
-msgid "to logical"
-msgstr "в логический"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "Файл 'DESCRIPTION' пропущен."
@@ -1390,6 +1382,15 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "объект %s создан больше чем за один вызов данных"
 msgstr[1] "объекты %s созданы больше чем за один вызов данных"
 msgstr[2] "объекты %s созданы больше чем за один вызов данных"
+
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#~ msgid "to logical"
+#~ msgstr "в логический"
 
 #~ msgid "Vignette product"
 #~ msgstr "Продукт миниатюры"

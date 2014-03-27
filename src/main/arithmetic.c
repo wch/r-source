@@ -1549,8 +1549,9 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     n = length(args);
     if (n != 1 && n != 2)
-	error(_("%d arguments passed to '%s' which requires 1 or 2"),
-	      n, PRIMNAME(op));
+        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments",
+                       "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
+              n, PRIMNAME(op));
 
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	if(n == 1) {
@@ -1644,7 +1645,10 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	}
 	default:
-	    error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
+// Please use ngettext even if 'n' is always != 1.
+// Put %s instead of 'log'. Now message has the same form as in line 1553 (less to translate in po files)
+        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments", "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
+              n, "log");
 	}
     }
     UNPROTECT(nprotect);

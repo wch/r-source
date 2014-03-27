@@ -258,6 +258,14 @@ static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
 #endif
 
 #define BUFSIZE 8192
+static R_INLINE void RprintTrunc(char *buf)
+{
+    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength) {
+	strcat(buf, " ");
+	strcat(buf, _("[... truncated]"));
+    }
+}
+
 void warning(const char *format, ...)
 {
     char buf[BUFSIZE], *p;
@@ -269,8 +277,7 @@ void warning(const char *format, ...)
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
-    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
-	strcat(buf, " [... truncated]");
+    RprintTrunc(buf);
     if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
     warningcall(c ? c->call : R_NilValue, "%s", buf);
 }
@@ -342,8 +349,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if(w >= 2) { /* make it an error */
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
-	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
-	    strcat(buf, " [... truncated]");
+        RprintTrunc(buf);
 	inWarning = 0; /* PR#1570 */
 	errorcall(call, _("(converted from warning) %s"), buf);
     }
@@ -353,19 +359,20 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	} else dcall = "";
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
-	    strcat(buf, " [... truncated]");
-	if(dcall[0] == '\0')
-	    REprintf(_("Warning: %s\n"), buf);
-	else if(noBreakWarning || 
-		(mbcslocale && 18 + wd(dcall) + wd(buf) <= LONGWARN) ||
-		(!mbcslocale && 18+strlen(dcall)+strlen(buf) <= LONGWARN) )
-	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
-	else
-	    REprintf(_("Warning in %s :\n  %s\n"), dcall, buf);
+        RprintTrunc(buf);
+
+	if(dcall[0] == '\0') REprintf(_("Warning:"));
+	else {
+	    REprintf(_("Warning in %s :"), dcall);
+	    if(!(noBreakWarning || 
+		 ( mbcslocale && 18 + wd(dcall) + wd(buf) <= LONGWARN) ||
+		 (!mbcslocale && 18 + strlen(dcall) + strlen(buf) <= LONGWARN)))
+		REprintf("\n ");
+	}
+	REprintf(" %s\n", buf);
 	if(R_ShowWarnCalls && call != R_NilValue) {
 	    tr = R_ConciseTraceback(call, 0);
-	    if (strlen(tr)) REprintf("Calls: %s\n", tr);
+	    if (strlen(tr)) {REprintf(_("Calls:")); REprintf(" %s\n", tr);}
 	}
     }
     else if(w == 0) {	/* collect them */
@@ -373,13 +380,14 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if(R_CollectWarnings < R_nwarnings) {
 	    SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
 	    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
-	    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
-		strcat(buf, " [... truncated]");
+            RprintTrunc(buf);
 	    if(R_ShowWarnCalls && call != R_NilValue) {
 		char *tr =  R_ConciseTraceback(call, 0); 
 		size_t nc = strlen(tr);
 		if (nc && nc + (int)strlen(buf) + 8 < BUFSIZE) {
-		    strcat(buf, "\nCalls: ");
+		    strcat(buf, "\n");
+		    strcat(buf, _("Calls:"));
+		    strcat(buf, " ");
 		    strcat(buf, tr);
 		}
 	    }
@@ -456,15 +464,17 @@ void PrintWarnings(void)
     cntxt.cend = &cleanup_PrintWarnings;
 
     inPrintWarnings = 1;
-    header = ngettext("Warning message:\n", "Warning messages:\n", R_CollectWarnings);
+    header = ngettext("Warning message:", "Warning messages:", 
+		      R_CollectWarnings);
     if( R_CollectWarnings == 1 ) {
-	REprintf("%s", header);
+	REprintf("%s\n", header);
 	names = CAR(ATTRIB(R_Warnings));
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
-	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
+	    REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
 	else {
-	    const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
+	    const char *dcall, *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
+            REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(msg, '\n');
@@ -473,24 +483,26 @@ void PrintWarnings(void)
 		    msgline1 = wd(msg);
 		    *p = '\n';
 		} else msgline1 = wd(msg);
-		if (6 + wd(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+		if (6 + wd(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    } else {
 		size_t msgline1 = strlen(msg);
 		char *p = strchr(msg, '\n');
 		if (p) msgline1 = (int)(p - msg);
-		if (6+strlen(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+		if (6 + strlen(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    }
-	    REprintf("In %s :%s%s\n", dcall, sep, msg);
+	    REprintf(" %s\n", msg);
 	}
     } else if( R_CollectWarnings <= 10 ) {
-	REprintf("%s", header);
+	REprintf("%s\n", header);
 	names = CAR(ATTRIB(R_Warnings));
 	for(i = 0; i < R_CollectWarnings; i++) {
-	    if( VECTOR_ELT(R_Warnings, i) == R_NilValue )
+	    if( VECTOR_ELT(R_Warnings, i) == R_NilValue ) {
 		REprintf("%d: %s \n", i+1, CHAR(STRING_ELT(names, i)));
-	    else {
-		const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
+	    } else {
+		const char *dcall, *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, i)), 0));
+		REprintf("%d: ", i + 1); 
+		REprintf(_("In %s :"), dcall); 
 		if (mbcslocale) {
 		    int msgline1;
 		    char *p = strchr(msg, '\n');
@@ -499,22 +511,30 @@ void PrintWarnings(void)
 			msgline1 = wd(msg);
 			*p = '\n';
 		    } else msgline1 = wd(msg);
-		    if (10 + wd(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+		    if (10 + wd(dcall) + msgline1 > LONGWARN) {
+			REprintf("\n "); 
+                    }
 		} else {
 		    size_t msgline1 = strlen(msg);
 		    char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
-		    if (10+strlen(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
+			REprintf("\n "); 
+                    }
 		}
-		REprintf("%d: In %s :%s%s\n", i+1, dcall, sep, msg);
+		REprintf(" %s\n", msg);
 	    }
 	}
     } else {
 	if (R_CollectWarnings < R_nwarnings)
-	    REprintf(_("There were %d warnings (use warnings() to see them)\n"),
+	    REprintf(ngettext("There was %d warning (use warnings() to see it)", 
+			      "There were %d warnings (use warnings() to see them)", 
+			      R_CollectWarnings), 
 		     R_CollectWarnings);
 	else
-	    REprintf(_("There were %d or more warnings (use warnings() to see the first %d)\n"), R_nwarnings, R_nwarnings);
+	    REprintf(_("There were %d or more warnings (use warnings() to see the first %d)"), 
+		     R_nwarnings, R_nwarnings);
+	REprintf("\n");
     }
     /* now truncate and install last.warning */
     PROTECT(s = allocVector(VECSXP, R_CollectWarnings));
@@ -576,7 +596,6 @@ static void NORET
 verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     RCNTXT cntxt;
-    const char *dcall;
     char *p, *tr;
     int oldInError;
 
@@ -608,13 +627,10 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
     inError = 1;
 
     if(call != R_NilValue) {
-	char tmp[BUFSIZE];
-	char *head = _("Error in "),
-	     *mid1 = " : ", *mid2 = _(" (from %s) : "), *tail = "\n  ";
-	char *mid = mid1;
-	char src[BUFSIZE];
+	char tmp[BUFSIZE], tmp2[BUFSIZE];
+	char *head = _("Error in "), *tail = "\n  ";
 	SEXP srcloc;
-	size_t len;	
+	size_t len = 0;	//this needs to be set!
 	int protected = 0, skip = NA_INTEGER;
 	SEXP opt = GetOption1(install("show.error.locations"));
 	if (!isNull(opt)) {
@@ -627,21 +643,23 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	    	skip = asInteger(opt);
 	}
 
+	const char *dcall = CHAR(STRING_ELT(deparse1s(call), 0));
+	snprintf(tmp2, BUFSIZE,  "%s", head); 
 	if (skip != NA_INTEGER) {
 	    PROTECT(srcloc = GetSrcLoc(R_GetCurrentSrcref(skip)));
 	    protected++;
 	    len = strlen(CHAR(STRING_ELT(srcloc, 0)));
-	    if (len) {
-	        snprintf(src, BUFSIZE, mid2, CHAR(STRING_ELT(srcloc, 0)));
-	        mid = src;
-	    }
+	    if (len)
+		snprintf(tmp2, BUFSIZE,  _("Error in %s (from %s) : "), 
+			 dcall, CHAR(STRING_ELT(srcloc, 0)));
 	}
-	len = strlen(head) + strlen(mid) + strlen(tail);
-	
+
 	Rvsnprintf(tmp, min(BUFSIZE, R_WarnLength) - strlen(head), format, ap);
-	dcall = CHAR(STRING_ELT(deparse1s(call), 0));
-	if (len + strlen(dcall) + strlen(tmp) < BUFSIZE) {
-	    snprintf(errbuf, BUFSIZE,  "%s%s%s", head, dcall, mid);
+	if (strlen(tmp2) + strlen(tail) + strlen(tmp) < BUFSIZE) {
+	    if(len) snprintf(errbuf, BUFSIZE,  
+			     _("Error in %s (from %s) : "),
+			     dcall, CHAR(STRING_ELT(srcloc, 0)));
+	    else snprintf(errbuf, BUFSIZE,  _("Error in %s : "), dcall);
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(tmp, '\n');
@@ -679,7 +697,8 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	tr = R_ConciseTraceback(call, 0); 
 	size_t nc = strlen(tr);
 	if (nc && nc + strlen(errbuf) + 8 < BUFSIZE) {
-	    strcat(errbuf, "Calls: ");
+	    strcat(errbuf, _("Calls:"));
+	    strcat(errbuf, " ");
 	    strcat(errbuf, tr);
 	    strcat(errbuf, "\n");
 	}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -383,13 +383,12 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr " findMethods() に総称的でない関数 '%s' が与えられました "
 
-msgid "only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
+#, fuzzy
+msgid ""
+"only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
 " 'where' が与えられた時は、'inherited' に対しては FALSE だけが意味を持ちます "
 "(以下が与えられました "
-
-msgid "\""
-msgstr " \" "
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr " 引数 'f' に対する関数は総称的関数または %s でなければなりません "
@@ -541,6 +540,12 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 " メソッド (%s) に対するシグナチャ中の名前が %s の引数 (%s) にマッチしません "
 
+#, fuzzy
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+" メソッド (%s) に対するシグナチャ中の名前が %s の引数 (%s) にマッチしません "
+
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
 "seem to come from either a generic function or another 'callNextMethod'"
@@ -588,6 +593,9 @@ msgstr ""
 
 msgid "undefined slot classes in definition of %s: %s"
 msgstr " %s の定義中に未定義のスロットクラス: %s "
+
+msgid "(class %s)"
+msgstr " (クラス \"%s\") "
 
 msgid ""
 "in definition of class %s, information for superclass %s is of class %s "
@@ -1286,7 +1294,8 @@ msgstr ""
 " メソッドテーブル (%s) 中に不正なオブジェクトがあります。メソッドが期待されま"
 "すが、クラス %s のオブジェクトが得られました "
 
-msgid "invalid or unset methods table in generic function \""
+#, fuzzy
+msgid "invalid or unset methods table in generic function %s"
 msgstr " 以下の総称的関数中に不正か未設定のメソッドがあります \" "
 
 msgid "trying to find a methods table in a non-generic function"
@@ -1897,6 +1906,9 @@ msgid_plural ""
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s "
 
+#~ msgid "\""
+#~ msgstr " \" "
+
 #~ msgid ""
 #~ "could not find superclass %s to clean up when removing subclass "
 #~ "references to class %s"
@@ -2084,9 +2096,6 @@ msgstr[0] ""
 #~ msgstr ""
 #~ " メソッド %s (クラス %s からの)はインストールされるまでクラスメソッドとし"
 #~ "て処理されません． このクラス中のメソッドに混乱がある可能性があります． "
-
-#~ msgid "(class %s)"
-#~ msgstr " (クラス \"%s\") "
 
 #~ msgid "for method %s()"
 #~ msgstr " メソッド %s()　用 "

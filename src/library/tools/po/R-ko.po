@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-01-26 09:09\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2013-03-10 19:40-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
@@ -587,10 +587,7 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "Inconsistent encoding specifications:"
-msgstr ""
-
-msgid "with %\\SweaveUTF8"
+msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
@@ -1085,9 +1082,6 @@ msgstr ""
 msgid "testing '%s' failed"
 msgstr "'%s'를 테스팅하는 것은 실패했습니다"
 
-msgid "%d of the package tests failed"
-msgstr ""
-
 msgid "Testing examples for package %s"
 msgstr "패키지 %s의 예제를 테스트합니다"
 
@@ -1157,11 +1151,9 @@ msgstr "'%2$s'에 '%1$s'를 실행할 수 없습니다"
 msgid "unable to run %s on '%s'"
 msgstr "'%2$s'에 %1$s를 실행할 수 없습니다"
 
-msgid "cannot coerce"
+#, fuzzy
+msgid "cannot coerce %s to logical"
 msgstr "강제변환을 할 수 없습니다"
-
-msgid "to logical"
-msgstr ""
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "파일 'DESCRIPTION'이 없습니다."
@@ -1315,6 +1307,10 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "%d of the package tests failed"
+msgid_plural "%d of the package tests failed"
+msgstr[0] ""
 
 #~ msgid "Sweave"
 #~ msgstr "Sweave"

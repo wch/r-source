@@ -4266,16 +4266,18 @@ static void yyerror(const char *s)
     static char const yyunexpected[] = "syntax error, unexpected ";
     static char const yyexpecting[] = ", expecting ";
     char *expecting;
- #if 0
+//Small refactoring in order to remove partial messages -> see next changes below
+//No change in final functionality
+// #if 0
  /* these are just here to trigger the internationalization */
-    _("input");
-    _("end of input");
-    _("string constant");
-    _("numeric constant");
-    _("symbol");
-    _("assignment");
-    _("end of line");
-#endif
+ //   _("input");
+ //   _("end of input");
+ //   _("string constant");
+//    _("numeric constant");
+//    _("symbol");
+//    _("assignment");
+//    _("end of line");
+//#endif
 
     R_ParseError     = yylloc.first_line;
     R_ParseErrorCol  = yylloc.first_column;
@@ -4288,9 +4290,36 @@ static void yyerror(const char *s)
 	if (expecting) *expecting = '\0';
 	for (i = 0; yytname_translations[i]; i += 2) {
 	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
-		sprintf(R_ParseErrorMsg, _("unexpected %s"),
-		    i/2 < YYENGLISH ? _(yytname_translations[i+1])
-				    : yytname_translations[i+1]);
+		switch(i/2)
+		{
+		case 0:
+			sprintf(R_ParseErrorMsg, _("unexpected input"));
+				break;
+		case 1:
+			sprintf(R_ParseErrorMsg, _("unexpected end of input"));
+				break;
+		case 2:
+			sprintf(R_ParseErrorMsg, _("unexpected input"));
+				break;
+		case 3:
+			sprintf(R_ParseErrorMsg, _("unexpected string constant"));
+				break;
+		case 4:
+			sprintf(R_ParseErrorMsg, _("unexpected numeric constant"));
+				break;
+		case 5:
+			sprintf(R_ParseErrorMsg, _("unexpected symbol"));
+				break;
+		case 6:
+			sprintf(R_ParseErrorMsg, _("unexpected assignment"));
+				break;
+		case 7:
+			sprintf(R_ParseErrorMsg, _("unexpected end of line"));			
+				break;
+		default:
+		sprintf(R_ParseErrorMsg, _("unexpected %s"), yytname_translations[i+1]);
+				break;
+		}
 		return;
 	    }
 	}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49\n"
+"POT-Creation-Date: 2014-03-27 09:11\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,6 +104,9 @@ msgstr "x$lag skal have mindst 1 kolonne"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "kan kun bruge ci-type=»ma« hvis første lag er 0"
+
+msgid "Page [%d,%d]: i =%s; j =%s"
+msgstr ""
 
 msgid "univariate time series only"
 msgstr "kun univariate tidsserier"
@@ -884,14 +887,6 @@ msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
 msgstr ""
-
-#, fuzzy
-msgid "'init' must have 1 column"
-msgstr "x$lag skal have mindst 1 kolonne"
-
-#, fuzzy
-msgid "'init' must have 1 or %d columns"
-msgstr "x$lag skal have mindst 1 kolonne"
 
 msgid "'x' must have at least 2 rows and columns"
 msgstr ""
@@ -2067,8 +2062,9 @@ msgstr ""
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr ""
 
-msgid "must be 0 or 1"
-msgstr ""
+#, fuzzy
+msgid "%s must be 0 or 1"
+msgstr "»acf« skal have længden to eller længere"
 
 msgid "only univariate series are allowed"
 msgstr ""
@@ -2351,6 +2347,12 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] ""
 msgstr[1] ""
 
+#, fuzzy
+msgid "'init' must have %d column"
+msgid_plural "'init' must have 1 or %d columns"
+msgstr[0] "x$lag skal have mindst 1 kolonne"
+msgstr[1] "x$lag skal have mindst 1 kolonne"
+
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
 msgstr[0] ""
@@ -2440,3 +2442,7 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "'init' must have 1 or %d columns"
+#~ msgstr "x$lag skal have mindst 1 kolonne"
