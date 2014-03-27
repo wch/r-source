@@ -1,28 +1,24 @@
 # Korean translation for R base package
 # src/library/base/po/RGui-ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R base package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2013-03-18 19:36+0000\n"
-"PO-Revision-Date: 2013-02-13 11:32-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-27 08:58-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
 msgid "Not enough memory"
@@ -1066,9 +1062,8 @@ msgid "Variable name"
 msgstr "변수명"
 
 #: src/library/grDevices/src/devWindows.c:1258
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "변수가 존재하지 않거나 어떠한 플랏들도 포함하고 있지 않습니다!"
+msgstr "변수가 어떠한 플랏들도 포함하고 있지 않습니다!"
 
 #: src/library/grDevices/src/devWindows.c:1273
 msgid "Name of variable to save to"

@@ -1,28 +1,24 @@
 # Korean translation for R utils package
 # src/library/utils/po/ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R utils package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-01-15 09:09+0000\n"
-"PO-Revision-Date: 2013-02-16 14:52-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-26 23:03-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: io.c:328 io.c:332 io.c:342 io.c:571 io.c:752 io.c:805 io.c:817 io.c:821
 #: io.c:827 io.c:828 io.c:1052 io.c:1053 io.c:1055 io.c:1056 io.c:1057
@@ -48,9 +44,9 @@ msgid "cannot read from this connection"
 msgstr "이 연결로부터 읽을 수 없습니다"
 
 #: io.c:417 io.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr "새로운 행 또는 EOF에 의하여 종료된 문자열입니다"
+msgstr ""
 
 #: io.c:567
 msgid "the first argument must be of mode character"
@@ -77,7 +73,7 @@ msgstr ""
 
 #: io.c:980
 msgid "index out of range"
-msgstr ""
+msgstr "범위밖의 인덱스입니다"
 
 #: io.c:1033
 msgid "'file' is not a connection"
