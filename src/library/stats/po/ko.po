@@ -1,28 +1,24 @@
 # Korean translation for R stats package
 # src/library/stats/po/ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R stats package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49+0000\n"
-"PO-Revision-Date: 2013-02-21 20:47-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
+"PO-Revision-Date: 2014-03-26 21:13-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
@@ -31,10 +27,6 @@ msgstr "연속적인 중앙값들의 브로드밴드/범위가 n보다 큽니다
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qansari()내에 있는 확률의 값들이 [0,1] 범위외에 있습니다"
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
-msgstr ""
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -83,7 +75,7 @@ msgstr "'x'는 NULL입니다"
 
 #: cov.c:663 cov.c:669
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "호환되지 않는 차원들입니다"
 
 #: cov.c:688 cov.c:729 cov.c:762
 msgid "no complete element pairs"
@@ -193,19 +185,18 @@ msgstr ""
 "2500개입니다"
 
 #: lm.c:57
-#, fuzzy
 msgid "'x' is not a matrix"
-msgstr "'tmax'는 정수가 아닙니다"
+msgstr "'x'는 행렬이 아닙니다"
 
 #: lm.c:62
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
-msgstr ""
+msgstr "'x' (%d,%d)와 'y' (%d)의 차원들이 일치하지 않습니다"
 
 #: lm.c:77 lm.c:81
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
-msgstr ""
+msgstr "'%s' 내에 NA/NaN/Inf가 있습니다"
 
 #: loessc.c:233
 msgid "span is too small"
@@ -280,7 +271,7 @@ msgstr "변수 %2$s에 유효하지 않은 타입 (%1$s)입니다"
 #: model.c:161
 #, c-format
 msgid "variable lengths differ (found for '%s')"
-msgstr ""
+msgstr "변수의 길이들이 다릅니다 ('%s'에서 찾았습니다)"
 
 #: model.c:215
 msgid "invalid result from na.action"
@@ -302,7 +293,7 @@ msgstr "얼마나 많은 경우들이 있는지 모릅니다"
 #: model.c:414
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
-msgstr ""
+msgstr "변수의 길이들이 다릅니다 (변수 %d에서 찾았습니다)"
 
 #: model.c:418 model.c:425
 #, c-format
@@ -497,9 +488,8 @@ msgid "'maxit' is not an integer"
 msgstr "'maxit'은 정수가 아닙니다"
 
 #: optim.c:260
-#, fuzzy
 msgid "'tmax' is not a positive integer"
-msgstr "'tmax'는 정수가 아닙니다"
+msgstr "'tmax'는 양의 정수가 아닙니다"
 
 #: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"
@@ -818,4 +808,4 @@ msgstr ""
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
-msgstr ""
+msgstr "마지막 %d 개의 관측값들에서 결측치들이 존재합니다"

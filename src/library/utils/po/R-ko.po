@@ -1,28 +1,24 @@
 # Korean translation for R utils package
 # src/library/utils/po/R-ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R utils package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-27 09:11\n"
-"PO-Revision-Date: 2013-03-10 12:14-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-26 23:11-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -77,7 +73,7 @@ msgid "Warning: unknown option %s"
 msgstr "경고: 알수없는 옵션 %s입니다"
 
 msgid "Output file:"
-msgstr ""
+msgstr "출력파일:"
 
 msgid "Compacting PDF document"
 msgstr "PDF 문서를 생성합니다"
@@ -152,10 +148,10 @@ msgid "bad argument"
 msgstr "잘못된 인자입니다"
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr "'full.names'은 다중 경로에 대해서 반드시 TRUE이어야 합니다."
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "타임스탬프 파일은 더 이상 존재하지 않습니다."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -284,7 +280,7 @@ msgid "Message:"
 msgstr "메시지:"
 
 msgid "'dump' is empty"
-msgstr ""
+msgstr "'dump'가 비어있습니다"
 
 msgid "Available environments had calls:"
 msgstr "사용가능한 environments가 다음의 호출을 가집니다:"
@@ -728,13 +724,12 @@ msgstr "발견된 패키지들: %s"
 msgid "files: %s"
 msgstr "파일들: %s"
 
-#, fuzzy
 msgid ""
 "installation of one or more packages failed,\n"
 "  probably %s"
 msgstr ""
-"한 개이상의 패키지 설치에 실패했습니다,\n"
-"  아마도 %s 입니다"
+"하나 이상의 패키지 설치에 실패했습니다,\n"
+"  아마도 %s입니다"
 
 msgid ""
 "The downloaded source packages are in\n"
@@ -751,7 +746,7 @@ msgstr ""
 "만들어지지 않을 것입니다"
 
 msgid "'env' must be an environment"
-msgstr ""
+msgstr "'env'는 반드시 인바이런먼트이어야 합니다"
 
 msgid "no object named '%s' to show"
 msgstr "보여줄 '%s'이라는 이름을 가진 객체가 없습니다"
@@ -896,9 +891,8 @@ msgstr ""
 msgid "cannot coerce 'x' to roman"
 msgstr "'x'를 roman으로 강제변환을 할 수 없습니다"
 
-#, fuzzy
 msgid "Could not create file %s, aborting"
-msgstr "유형에 관련된 정보를 복구할 수 없습니다"
+msgstr "파일 %s을 생성할 수 없어 종료합니다"
 
 msgid "no valid packages were specified"
 msgstr "유효한 패키지들이 지정되지 않았습니다"
@@ -985,7 +979,7 @@ msgid "file '%s' not found"
 msgstr "파일 '%s'를 찾을 수 없습니다"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr "파일 '%s'은 실행권한을 가지고 있지 않습니다: 정정되었습니다"
 
 msgid "file size is limited to 8GB"
 msgstr "파일크기는 8GB로 제한되어 있습니다"
@@ -1006,13 +1000,11 @@ msgstr ""
 msgid "vignette %s not found"
 msgstr "비니에트 %s를 찾을 수 없습니다"
 
-#, fuzzy
 msgid "vignette %s has no PDF/HTML"
-msgstr "비니에트 %s는 PDF를 가지지 않습니다"
+msgstr "비니에트 %s는 PDF/HTML를 가지지 않습니다"
 
-#, fuzzy
 msgid "vignette %s has no R code"
-msgstr "비니에트 %s를 찾을 수 없습니다"
+msgstr "비니에트 %s는 R 코드를 가지고 있지 않습니다"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()는 비대화식으로 사용될 수 없습니다"
@@ -1079,7 +1071,7 @@ msgid "no download method found"
 msgstr "다운로드 메소드를 찾을 수 없습니다"
 
 msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
+msgstr "메소드 'lynx'는 테스트되지 않았고 R 3.1.0에서는 지원되지 않습니다"
 
 msgid "download had nonzero exit status"
 msgstr "다운로드가 0 이 아닌 종료상태를 가졌습니다"
@@ -1166,6 +1158,7 @@ msgstr[0] "역할지정이 잘못되었습니다: %s."
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
 msgstr[0] ""
+"비브타입 %1$s의 비브항목은 다음 항목을 반드시 지정해야만 합니다: %2$s"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
@@ -1250,6 +1243,8 @@ msgid_plural ""
 "There are binary versions available (and will be installed) but the source "
 "versions are later"
 msgstr[0] ""
+"바이너리 버전을 이용할 수 있습니다 (그리고 설치되어질 것입니다) 그러나 소스 "
+"버전은 추후에 제공될 것입니다"
 
 msgid "last record incomplete, %d line discarded"
 msgid_plural "last record incomplete, %d lines discarded"

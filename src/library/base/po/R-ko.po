@@ -1,28 +1,24 @@
 # Korean translation for R base package
 # src/library/base/po/R-ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R base package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:10\n"
-"PO-Revision-Date: 2013-02-17 18:18-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
+"PO-Revision-Date: 2014-03-27 08:58-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s'는 더 이상 지원되지 않습니다."
@@ -84,17 +80,14 @@ msgstr ""
 msgid "target is %s, current is %s"
 msgstr "타겟은 %s이지만, 현재는 %s 입니다"
 
-#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr "'x'은 반드시 수치형이어야 합니다"
+msgstr "'tolerance'는 반드시 수치형이어야 합니다"
 
-#, fuzzy
 msgid "'scale' should be numeric or NULL"
-msgstr "'arg'은 반드시 %s 중 하나이어야 합니다"
+msgstr "'scale'은 반드시 수치형 또는 NULL이어야 합니다"
 
-#, fuzzy
 msgid "'%s' must be logical"
-msgstr "'subset'은 반드시 논리적이어야 합니다"
+msgstr "'%s'은 반드시 논리형이어야 합니다"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X)는 반드시 양의 값을 가지는 길이를 가져야 합니다"
@@ -316,9 +309,8 @@ msgstr ""
 msgid "only a single element should be replaced"
 msgstr "한개의 구성요소만이 교체되어져야 합니다"
 
-#, fuzzy
 msgid "Name partially matched in data frame"
-msgstr "데이터 프레임에 수치형이 아닌 변수가 있습니다"
+msgstr "데이터 프레임내에 부분적으로 일치하는 이름이 있습니다"
 
 msgid "names do not match previous names"
 msgstr ""
@@ -481,9 +473,8 @@ msgstr "'from'은 반드시 \"POSIXt\" 객체이어야 합니다"
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "'to'는 반드시 \"POSIXt\" 객체이어야 합니다"
 
-#, fuzzy
 msgid "no Olson database found"
-msgstr "파일을 찾을 수 없습니다"
+msgstr "Olson 데이터베이스를 찾을 수 없습니다"
 
 msgid "'file' must be a character string or connection"
 msgstr "'file'은 반드시 문자열 또는 커넥션이어야 합니다"
@@ -700,9 +691,8 @@ msgstr ""
 msgid "must have replacements for matches"
 msgstr ""
 
-#, fuzzy
 msgid "No factors specified"
-msgstr "DLL이 지정되지 않았습니다"
+msgstr "지정된 요인들이 없습니다"
 
 msgid "norm '%s' currently always uses exact = FALSE"
 msgstr ""
@@ -973,6 +963,9 @@ msgstr ""
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'와 'by.y'는 열의 개수를 다르게 지정해야 합니다"
 
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr ""
+
 msgid "additional arguments ignored in message()"
 msgstr "message()내에서 무시된 추가적인 인자들입니다"
 
@@ -1121,9 +1114,8 @@ msgstr "패키지 %s는 'NAMESPACE' 파일을 가지고 있지 않습니다"
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
 msgstr ""
 
-#, fuzzy
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
-msgstr "useDynLib(\"%s\")내에 중복된 심볼명 %s입니다"
+msgstr "useDynLib(\"%2$s\")내에 중복된 심볼명 %1$s들이 있습니다"
 
 msgid "bad 'S3method' directive: %s"
 msgstr ""
@@ -1209,9 +1201,8 @@ msgstr ""
 msgid "invalid NCOL(R)"
 msgstr "유효하지 않은 NCOL(R)입니다"
 
-#, fuzzy
 msgid "'x' must be a vector of an atomic type"
-msgstr "'x'는 반드시 atomic 벡터이어야 합니다"
+msgstr "'x'는 반드시 atomic 타입으로 이루어진 벡터이어야 합니다"
 
 msgid "invalid 'rle' structure"
 msgstr "유효하지 않은 'rle' 구조입니다"

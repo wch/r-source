@@ -20,7 +20,7 @@
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #undef _
-#define _(String) dgettext ("graphics", String) //This should be 'graphics' not 'grDevices', right?
+#define _(String) dgettext ("graphics", String)
 #else
 #define _(String) (String)
 #endif

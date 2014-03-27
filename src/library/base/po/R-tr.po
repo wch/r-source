@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:10\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -939,6 +939,9 @@ msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr ""
+
+msgid "'incomparables' is supported only for merging on a single column"
 msgstr ""
 
 msgid "additional arguments ignored in message()"

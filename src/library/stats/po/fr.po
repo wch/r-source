@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49+0000\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -25,10 +25,6 @@ msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilités en dehors de [0,1] dans qansari()"
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
-msgstr "stats"
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -825,6 +821,9 @@ msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
+
+#~ msgid "stats"
+#~ msgstr "stats"
 
 #~ msgid "allocation error in smooth(*, '3RSR')."
 #~ msgstr "erreur d'allocation dans smooth(*, '3RSR')."

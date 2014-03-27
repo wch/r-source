@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:10\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -960,6 +960,9 @@ msgstr "'by' skal angive en eller flere kolonner som tal, navne eller logiske"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' og 'by.y' angiver forskellige antal kolonner"
+
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr ""
 
 msgid "additional arguments ignored in message()"
 msgstr "yderligere argumenter ignoreres i message()"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:10\n"
+"POT-Creation-Date: 2014-03-27 18:29\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2109,6 +2109,9 @@ msgstr ""
 # stop("'by.x' and 'by.y' specify different numbers of columns")
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "argumenty 'by.x' oraz 'by.y' określają różne liczby kolumn"
+
+msgid "'incomparables' is supported only for merging on a single column"
+msgstr ""
 
 # src/library/base/R/message.R: 36
 # warning("additional arguments ignored in message()")

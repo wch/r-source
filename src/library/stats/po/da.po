@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49+0000\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,10 +24,6 @@ msgstr "båndbredde/spænd for kørende medianer er større end n"
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "sandsynligheder uden for [0,1] i qansari()"
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
-msgstr ""
 
 #: approx.c:102
 msgid "approx(): invalid f value"

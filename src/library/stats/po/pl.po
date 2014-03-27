@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49+0000\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -27,10 +27,6 @@ msgstr "pasmo/rozpiętość ruchomych median jest większe niż 'n'"
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "prawdopodobieństwa poza przedziałem [0,1] w 'qansari()'"
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
-msgstr "stats"
 
 # stats/src/approx.c: 102
 # error(_("approx(): invalid f value"))
@@ -1366,3 +1362,6 @@ msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "brakuje wartości w ostatnich %d obserwacjach"
+
+#~ msgid "stats"
+#~ msgstr "stats"

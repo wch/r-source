@@ -1,28 +1,24 @@
 # Korean translation for R grDevices package
 # src/library/grDevices/po/ko.po
-# Copyright (C) 1995-2013 The R Core Team
+# Copyright (C) 1995-2014 The R Core Team
 # This file is distributed under the same license as the R grDevices package.
-# R Development Translation Team - Korean
-# Chel Hee Lee <gnustats@korea.gnu.org>, 2008-2013.
-# Chel Hee Lee <gnustats@gmail.com>, 2008-2013.
+# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.0.0\n"
+"Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-03-27 07:49+0000\n"
-"PO-Revision-Date: 2013-02-21 18:58-0600\n"
-"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
-"Language-Team: R Development Translation Teams (Korean) <gnustats@korea.gnu."
-"org>\n"
+"PO-Revision-Date: 2014-03-26 20:46-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team:  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Korean\n"
-"X-Poedit-Country: KOREA, REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:53
 #, c-format
@@ -62,9 +58,8 @@ msgid "invalid hcl color"
 msgstr "유효하지 않은 hcl 색입니다"
 
 #: colors.c:385
-#, fuzzy
 msgid "invalid value of 'maxColorValue'"
-msgstr "유효하지 않은 '%s'의 값입니다"
+msgstr "'maxColorValue'의 값이 올바르지 않습니다"
 
 #: colors.c:413
 msgid "invalid 'names' vector"
@@ -117,7 +112,7 @@ msgstr "알수없는 파렛트입니다 (2개 이상의 색상이 필요합니�
 #: colors.c:1499 colors.c:1521
 #, c-format
 msgid "maximum number of colors is %d"
-msgstr ""
+msgstr "사용할 수 있는 색상의 최대개수는 %d입니다"
 
 #: devPS.c:560
 #, c-format
@@ -200,7 +195,7 @@ msgstr "인코딩 리스트를 할당하는데 실패했습니다"
 
 #: devPS.c:1309
 msgid "truncated string which was too long for copy"
-msgstr ""
+msgstr "복사하기에 너무 긴 문자열을 잘라내었습니다"
 
 #: devPS.c:1349
 #, c-format
@@ -209,7 +204,7 @@ msgstr "인코딩 파일 '%s'을 로드하는데 실패했습니다"
 
 #: devPS.c:1442 devPS.c:1475
 msgid "invalid font name or more than one font name"
-msgstr ""
+msgstr "올바른 폰트명이 아니거나 하나 이상의 폰트명을 가집니다"
 
 #: devPS.c:1595 devPS.c:1630
 #, c-format

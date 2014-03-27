@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 07:49+0000\n"
+"POT-Creation-Date: 2014-03-27 18:37+0000\n"
 "PO-Revision-Date: 2014-03-26 10:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,10 +25,6 @@ msgstr " 移動中央値のバンド幅・バンド範囲 (span) が n より大
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0, 1] の範囲外です "
-
-#: approx.c:31 rcont.c:16
-msgid "stats"
-msgstr " stats "
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -812,6 +808,9 @@ msgstr " 3 点移動中央値計算の終了ルールが不正です: %d "
 #, c-format
 msgid "missing value in last %d observations"
 msgstr " 直前の %d 個の観測値中に欠損値があります "
+
+#~ msgid "stats"
+#~ msgstr " stats "
 
 #~ msgid "allocation error in smooth(*, '3RSR')."
 #~ msgstr " smooth(*, '3RSR') 中の割り当てエラーです． "
