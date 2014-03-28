@@ -3224,6 +3224,8 @@ setRlibs <-
                              ": warning: unused",
                              ## clang warning about invalid returns.
                              "warning: void function",
+                             "warning: control reaches end of non-void function",
+                             "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
                              "missing links?:")
