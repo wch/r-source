@@ -3222,6 +3222,8 @@ setRlibs <-
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
+                             ## clang warning about invalid returns.
+                             "warning: void function",
                              ": #warning",
                              # these are from era of static HTML
                              "missing links?:")
