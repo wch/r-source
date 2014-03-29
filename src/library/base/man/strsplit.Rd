@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -67,6 +67,8 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   (non-empty) string, the first element of the output is \code{""}, but
   if there is a match at the end of the string, the output is the same
   as with the match removed.
+
+  Invalid inputs in the current locale are warned about up to 5 times.
 }
 \value{
   A list of the same length as \code{x}, the \code{i}-th element of which
