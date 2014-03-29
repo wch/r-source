@@ -181,7 +181,7 @@ isIncomplete(con)
   write/append (where implemented, currently for file and clipboard
   connections, \code{\link{stdout}} and \code{\link{stderr}}).
 
-  If for a \code{file} or (on a Unix-alike) a\code{fifo} connection the
+  If for a \code{file} or (on a Unix-alike) a \code{fifo} connection the
   description is \code{""}, the file/fifo is immediately opened (in
   \code{"w+"} mode unless \code{open = "w+b"} is specified) and unlinked
   from the file system.  This provides a temporary file/fifo to write to
