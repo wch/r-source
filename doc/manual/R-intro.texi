@@ -804,12 +804,12 @@ beginning and end of the sequence, and if these are the only two
 arguments given the result is the same as the colon operator.  That is
 @code{seq(2,10)} is the same vector as @code{2:10}.
 
-Parameters to @code{seq()}, and to many other @R{} functions, can also
+Arguments to @code{seq()}, and to many other @R{} functions, can also
 be given in named form, in which case the order in which they appear is
-irrelevant.  The first two parameters may be named
+irrelevant.  The first two arguments may be named
 @code{from=@var{value}} and @code{to=@var{value}}; thus
 @code{seq(1,30)}, @code{seq(from=1, to=30)} and @code{seq(to=30,
-from=1)} are all the same as @code{1:30}.  The next two parameters to
+from=1)} are all the same as @code{1:30}.  The next two arguments to
 @code{seq()} may be named @code{by=@var{value}} and
 @code{length=@var{value}}, which specify a step size and a length for
 the sequence respectively.  If neither of these is given, the default
@@ -832,8 +832,8 @@ generates in @code{s3} the vector @code{c(-5.0, -4.8, -4.6, @dots{},
 @noindent
 generates the same vector in @code{s4}.
 
-The fifth parameter may be named @code{along=@var{vector}}, which is
-normally used as the only parameter to create the sequence @code{1, 2,
+The fifth argument may be named @code{along=@var{vector}}, which is
+normally used as the only argument to create the sequence @code{1, 2,
 @dots{}, length(@var{vector})}, or the empty sequence if the vector is
 empty (as it can be).
 
@@ -991,7 +991,7 @@ concatenates them one by one into character strings.  Any numbers given
 among the arguments are coerced into character strings in the evident
 way, that is, in the same way they would be if they were printed.  The
 arguments are by default separated in the result by a single blank
-character, but this can be changed by the named parameter,
+character, but this can be changed by the named argument,
 @code{sep=@var{string}}, which changes it to @code{@var{string}},
 possibly empty.
 
