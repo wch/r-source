@@ -832,8 +832,8 @@ generates in @code{s3} the vector @code{c(-5.0, -4.8, -4.6, @dots{},
 @noindent
 generates the same vector in @code{s4}.
 
-The fifth parameter may be named @code{along=@var{vector}}, which if
-used must be the only parameter, and creates a sequence @code{1, 2,
+The fifth parameter may be named @code{along=@var{vector}}, which is
+normally used as the only parameter to create the sequence @code{1, 2,
 @dots{}, length(@var{vector})}, or the empty sequence if the vector is
 empty (as it can be).
 
