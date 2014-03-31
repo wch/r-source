@@ -2325,14 +2325,16 @@ choose a different dialect of the standard, such as
 revision (tentatively planned for 2017) @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The default
-compiler for OS X (<= 10.8) is based on GCC 4.2.1 and has no support for
-anything other than the GNU version of C++98 and GNU extensions (which
-include TR1).  The default compiler on Windows is GCC 4.6.x and supports
-the @option{-std=c++0x} flag and some C++11 features (see
+compiler@footnote{OS X 10.7 and later have @command{clang++} but for
+10.7 and 10.8 it uses the @command{g++} 4.2.x headers.} for OS X (<=
+10.8) is based on GCC 4.2.1 and has no support for anything other than
+the GNU version of C++98 and GNU extensions (which include TR1).  The
+default compiler on Windows is GCC 4.6.x and supports the
+@option{-std=c++0x} flag and some C++11 features (see
 @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}).  On these
 platforms, it is necessary to select a different compiler for C++11, as
 described above, @emph{via} personal @file{Makevars} files.  For
-example, on OS X 10.7 or later one could select @command{clang++}.
+example, on OS X 10.9 one could select @command{clang++}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
