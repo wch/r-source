@@ -13,6 +13,13 @@
       \item \code{anyNA()} gains a \code{recursive} argument.
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{dbinom(x,n)}, \code{pbinom()}, \code{dpois()}, etc,
+      are slightly less restrictive in checking if \code{n} is integer
+      valued. (Wish of \PR{15734}.) 
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.1.0}{

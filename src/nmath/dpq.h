@@ -116,6 +116,7 @@
 /* [neg]ative or [non int]eger : */
 #define R_D_negInonint(x) (x < 0. || R_nonint(x))
 
+// for discrete d<distr>(x, ...) :
 #define R_D_nonint_check(x) 				\
    if(R_nonint(x)) {					\
 	MATHLIB_WARNING("non-integer x = %f", x);	\

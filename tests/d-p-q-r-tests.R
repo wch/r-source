@@ -792,5 +792,14 @@ ldp <- diff(log(diff(pbeta(0.5, 2^-(90+ 1:25), 2^-60, log.p=TRUE))))
 stopifnot(abs(ldp - log(1/2)) < 1e-9)
 ## pbeta(*, log) lost all precision here, for R <= 3.0.x (PR#15641)
 
+## pbinom(), dbinom(), dhyper(),.. : R allows "almost integer" n
+for (FUN in c(function(n) dbinom(1,n,0.5), function(n) pbinom(1,n,0.5),
+              function(n) dpois(n, n), function(n) dhyper(n+1, n+5,n+5, n)))
+    try( lapply(sample(10000, size=1000), function(M) {
+    ## invisible(lapply(sample(10000, size=1000), function(M) {
+        n <- (M/100)*10^(2:20); if(anyNA(P <- FUN(n)))
+            stop("NA for M=",M, "; 10ex=",paste((2:20)[is.na(P)], collapse=", "))}))
+## check was too tight for large n in R <= 3.1.0 (PR#15734)
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
