@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-03-23 r65260) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-03-31 r65344) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1327,7 +1327,16 @@ Warning messages:
 > stopifnot(abs(ldp - log(1/2)) < 1e-9)
 > ## pbeta(*, log) lost all precision here, for R <= 3.0.x (PR#15641)
 > 
+> ## pbinom(), dbinom(), dhyper(),.. : R allows "almost integer" n
+> for (FUN in c(function(n) dbinom(1,n,0.5), function(n) pbinom(1,n,0.5),
++               function(n) dpois(n, n), function(n) dhyper(n+1, n+5,n+5, n)))
++     try( lapply(sample(10000, size=1000), function(M) {
++     ## invisible(lapply(sample(10000, size=1000), function(M) {
++         n <- (M/100)*10^(2:20); if(anyNA(P <- FUN(n)))
++             stop("NA for M=",M, "; 10ex=",paste((2:20)[is.na(P)], collapse=", "))}))
+> ## check was too tight for large n in R <= 3.1.0 (PR#15734)
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.729 0.007 0.739 0 0 
+Time elapsed:  1.954 0.028 2.006 0 0 
 > 
