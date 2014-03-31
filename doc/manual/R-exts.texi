@@ -2250,7 +2250,7 @@ cmi.o dmi.o: iface.o
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available
-(but not necessarily installed) or all known @R{} platforms.  
+(but not necessarily installed) on all known @R{} platforms.  
 For full portability across platforms, all
 that can be assumed is approximate support for the C++98 standard (the
 widely used @command{g++} deviates considerably from the standard).
@@ -2272,7 +2272,7 @@ accept the compiler flag @option{-std=c++11}, and earlier versions
 support a flag @option{-std=c++0x}, but the latter only provides partial
 support for the C++11 standard.
 
-In order to use C++ code in a package, the package's @file{Makevars}
+In order to use C++11 code in a package, the package's @file{Makevars}
 file (or @file{Makevars.win} on Windows) should include the line
 
 @example
@@ -2329,7 +2329,7 @@ compiler for OS X (<= 10.8) is based on GCC 4.2.1 and has no support for
 anything other than the GNU version of C++98 and GNU extensions (which
 include TR1).  The default compiler on Windows is GCC 4.6.x and supports
 the @option{-std=c++0x} flag and some C++11 features (see
-@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}.  On these
+@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}).  On these
 platforms, it is necessary to select a different compiler for C++11, as
 described above, @emph{via} personal @file{Makevars} files.  For
 example, on OS X 10.7 or later one could select @command{clang++}.

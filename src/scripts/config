@@ -53,11 +53,17 @@ Variables:
   CPP           C preprocessor
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
 		headers in a nonstandard directory <dir>
-  CXX           C++ compiler command
+  CXX           C++ compiler command for C++98 code
   CXXCPP        C++ preprocessor
   CXXFLAGS      C++ compiler flags
   CXXPICFLAGS   special flags for compiling C++ code to be turned into a
 		shared library
+  CXX1X         C++ compiler command for C++11 code
+  CXX1XSTD      flag used to enable C++11 support
+  CXX1XFLAGS    C++11 compiler flags
+  CXX1XXPICFLAGS
+                special flags for compiling C++11 code to be turned into
+                a shared library
   DYLIB_EXT	file extension (including '.') for dynamic libraries
   DYLIB_LD      command for linking dynamic libraries which contain
 		object files from a C or Fortran compiler only
@@ -236,7 +242,7 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
+ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX1X CXX1XSTD CXX1XFLAGS CXX1XPICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
