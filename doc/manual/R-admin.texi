@@ -1605,24 +1605,23 @@ producing output in the console.  Here are three ways to avoid it:
 @itemize
 @item
 Ensure that the console is completely visible (or at least the activity
-indicator at the top right corner).
+indicator at the top right corner is visible).
 
 @item
 Call @samp{Get Info} on the application (e.g.@: from Finder). This will
 have two tick boxes in the `General' panel: click the one named `Prevent
-App Nap' if it is not already ticked.
+App Nap' if it is not already ticked.  (This only available for builds
+made prior to Mavericks.)
 
 @item
 In a Terminal, run
 @example
 defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @end example
+
+@noindent
 (see @uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html}).
 @end itemize
-
-The current @acronym{CRAN} build was built before Mavericks: the advice
-for a build under Mavericks will differ (and the check box in the second
-option will not be present).
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -2013,11 +2012,12 @@ downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there is an additional type @code{mac.binary} (the default
 in the @acronym{CRAN} distribution but not when compiling from source:
-@code{mac.binary.mavericks} for that version) that can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These OS X binary package files have the
-extension @samp{.tgz}.  The @Rapp{} GUI provides menus for installation
-of either binary or source packages, from @acronym{CRAN} or local files.
+@code{mac.binary.mavericks} for a Mavericks-only build) which can be
+passed to @code{install.packages} in order to download and install
+binary packages from a suitable repository.  These OS X binary package
+files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
+for installation of either binary or source packages, from
+@acronym{CRAN} or local files.
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
@@ -4678,14 +4678,15 @@ compiler, have in @file{config.site} something like
 @example
 CC=clang
 CXX=clang++
-F77="gfortran-4.2 -arch x86_64"
+F77=gfortran-4.8
 FC=$F77
 OBJC=clang
 @end example
 @noindent
 (@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
 the same compilers.)  Some versions of the @acronym{CRAN} binary package
-installer changes its settings in @file{etc/Makeconf} to
+installer for `Snow Leopard' changes the settings in @file{etc/Makeconf}
+to
 @example
 CC = gcc -arch x86_64 -std=gnu99
 CXX g++ -arch x86_64

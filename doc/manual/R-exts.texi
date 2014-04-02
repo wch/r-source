@@ -2321,7 +2321,7 @@ Note however that different C++ compilers (and even different versions
 of the same compiler) often differ in their ABI so their outputs can
 rarely be mixed. By setting @samp{CXX1XSTD} it is also possible to
 choose a different dialect of the standard, such as
-@option{-std=gnu++11} or enable experimental support for the next
+@option{-std=gnu++11}, or enable experimental support for the next
 revision (tentatively planned for 2017) @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The default
@@ -2332,9 +2332,8 @@ the GNU version of C++98 and GNU extensions (which include TR1).  The
 default compiler on Windows is GCC 4.6.x and supports the
 @option{-std=c++0x} flag and some C++11 features (see
 @uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}).  On these
-platforms, it is necessary to select a different compiler for C++11, as
-described above, @emph{via} personal @file{Makevars} files.  For
-example, on OS X 10.9 one could select @command{clang++}.
+platforms, it is necessary to select a different compiler for C++11,
+@emph{via} personal or site @file{Makevars} files.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
