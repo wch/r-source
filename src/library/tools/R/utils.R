@@ -1479,7 +1479,7 @@ function(x, dfile)
     Encoding(x) <- "unknown"
     ## Avoid folding for fields where we keep whitespace when reading.
     write.dcf(rbind(x), dfile,
-              keep.white = .keep_white_description_fields)
+              keep.white = c(.keep_white_description_fields, "Maintainer"))
 }
 
 ### ** .read_repositories
