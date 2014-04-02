@@ -50,7 +50,8 @@
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary"} and \code{"win.binary"} are currently in use.
+    \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
+    \code{"win.binary"} are currently in use.
 
     This should \strong{not} be used to identify the OS.
   }

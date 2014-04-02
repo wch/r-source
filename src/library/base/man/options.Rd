@@ -552,13 +552,15 @@ getOption(x, default = NULL)
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
       Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.  Some OS X builds use \code{"mac.binary"}.
+      \code{"source"}.  Some OS X builds use \code{"mac.binary"} and
+      \code{"mac.binary.mavericks"}
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      CRAN OS X build) and \code{"mac.binary."}.  Windows
-      uses  \code{"win.binary"}.  (\code{"mac.binary.leopard"} and
-      \code{"mac.binary.universal"} are no longer in use.)
+      CRAN OS X build), \code{"mac.binary."} and
+      \code{"mac.binary.mavericks"}.  Windows uses  \code{"win.binary"}.
+      (\code{"mac.binary.leopard"} and \code{"mac.binary.universal"} are
+      no longer in use.)
 #endif
     }
 
