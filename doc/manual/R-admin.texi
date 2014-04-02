@@ -1544,6 +1544,8 @@ build which should run on all Macs from mid-2008 on.  For older Intel
 Macs and some older versions of the OS you can install @R{} from the
 sources.
 
+There may be a separate installer package for Mavericks users.
+
 It is important that if you use this binary package that your OS is
 fully updated: run `Software Update' from the Apple menu to be sure.
 If you update your OS X version, you should re-install @R{}: the
@@ -2010,12 +2012,12 @@ downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there is an additional type @code{mac.binary} (the default
-in the @acronym{CRAN} distribution but not when compiling from source)
-that can be passed to @code{install.packages} in order to download and
-install binary packages from a suitable repository.  These OS X binary
-package files have the extension @samp{.tgz}.  The @Rapp{} GUI provides
-menus for installation of either binary or source packages, from
-@acronym{CRAN} or local files.
+in the @acronym{CRAN} distribution but not when compiling from source:
+@code{mac.binary.mavericks} for that version) that can be passed to
+@code{install.packages} in order to download and install binary packages
+from a suitable repository.  These OS X binary package files have the
+extension @samp{.tgz}.  The @Rapp{} GUI provides menus for installation
+of either binary or source packages, from @acronym{CRAN} or local files.
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
@@ -2253,6 +2255,12 @@ wise to have a @file{src/contrib} area with a possibly empty
 @code{"mac.binary"}: located at
 @file{bin/macosx/contrib/@var{3.y}} for @R{} versions
 @var{3.y.z} and containing @file{.tgz} files.
+
+@item 
+@code{"mac.binary.mavericks"}: located at
+@file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
+@var{3.1.z} to be run under OS X 10.9 (Mavericks) and containing
+@file{.tgz} files.
 
 @item 
 @code{"mac.binary.leopard"}: located at
@@ -4359,7 +4367,7 @@ This has to be used in conjunction with a Fortran compiler: the
 which is needed for some versions of @command{gfortran}.
 
 The current default for @command{clang++} is to use the C++ runtime from
-the installed @command{g++}.  Using the runtime from the @code{libcxx}
+the installed @command{g++}.  Using the runtime from the @code{libc++}
 project (@url{http://libcxx.llvm.org/}) has also been tested: for some
 @R{} packages only the variant using @code{libcxxabi} was successful.
 
@@ -4446,7 +4454,8 @@ the configure flag @option{--disable-largefile} was needed (since
 
 You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
-with @option{--without-readline}).
+with @option{--without-readline}).  That and other binary components are
+available from @uref{http://r.research.att.com/libs}.
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): X is part of the standard
@@ -4486,8 +4495,8 @@ the command-line tools from within Xcode, from the @samp{Downloads} pane
 in the @samp{Preferences}.  For Mavericks, see the specific sub-section
 below.
 
-Various compilers can be used.  The current @acronym{CRAN} distribution
-of @R{} is built using
+Various compilers can be used.  The current @acronym{CRAN} `Snow
+Leopard' distribution of @R{} is built using
 
 @itemize
 @item @command{gcc}
@@ -4525,13 +4534,30 @@ build, use @code{-arch i386} for all compiler commands.)
 
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
-The alternative, @command{clang}, has no OpenMP support.
+
+The current @acronym{CRAN} `Mavericks' distribution of @R{} is built
+using
+
+@example
+CC=clang
+CXX=clang++
+F77=gfortran-4.8
+FC=$F77
+OBJC=clang
+@end example
+
+@noindent
+with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
+compiler from
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}
+Apple's build of @command{clang} has no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 (and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
-and useful for many packages.
+and useful for many packages: it will also be used if present when
+configuring the @code{X11()} device.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4542,11 +4568,11 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 @end example
 
 @noindent
-to provide higher-performance versions of the @acronym{BLAS} and LAPACK
-routines.  (Use of @code{Accelerate} with @option{--with-lapack} does
-not work on Snow Leopard: it may work there without.)@footnote{It is
-reported that some non-Apple toolchains @code{CPPFLAGS} has needed to
-contain @code{-D__ACCELERATE__}.}
+to provide potentially higher-performance versions of the @acronym{BLAS}
+and LAPACK routines.  (Use of @code{Accelerate} with
+@option{--with-lapack} does not work on Snow Leopard: it may work there
+without.)@footnote{It is reported that for some non-Apple toolchains
+@code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4556,7 +4582,7 @@ will show the compilers and configuration options used for the
 --with-system-zlib --enable-memory-profiling --disable-openmp
 @end example
 @noindent
-was used.
+was used for `Snow Leopard' and the first two for `Mavericks'.
 
 Configure option @option{--with-internal-tzcode} is the default, as a
 64-bit @code{time_t} is available but the system implementation of time
@@ -4637,7 +4663,7 @@ be installed afterwards.
 Xcode for Mavericks provides different compilers, headers and libraries from
 earlier versions.  In particular the compilers (even those called
 @command{gcc} and @command{g++}) are based on @command{clang}, and the 
-C++ headers and runtime are from LLVM's @samp{libcxx} project).
+C++ headers and runtime are from LLVM's @samp{libc++} project).
 
 The command-line tools can be (re-)installed by @command{xcode-select
 --install}.  (If you have a fresh installation of Mavericks, running
@@ -4658,8 +4684,8 @@ OBJC=clang
 @end example
 @noindent
 (@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
-the same compilers.)  The @acronym{CRAN} binary package installer
-changes its settings in @file{etc/Makeconf} to
+the same compilers.)  Some versions of the @acronym{CRAN} binary package
+installer changes its settings in @file{etc/Makeconf} to
 @example
 CC = gcc -arch x86_64 -std=gnu99
 CXX g++ -arch x86_64
@@ -4668,14 +4694,6 @@ OBJC = gcc -arch x86_64
 OBJCXX = g++ -arch x86_64
 @end example
 when installing on Mavericks.
-
-We have been experimenting with @command{gfortran} from GCC 4.8.2, which
-can be used by
-
-@example
-F77=gfortran-4.8
-FC=$F77
-@end example
 
 See the comments under Mountain Lion about X11 and GTK.
 
