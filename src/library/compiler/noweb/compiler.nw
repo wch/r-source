@@ -1876,8 +1876,8 @@ specialized handlers for a range of functions that are installed in
 place of the default ones.
 <<install default inlining handlers>>=
 local({
-    <<install default [[BUILTIN]] handlers>>
     <<install default [[SPECIAL]] handlers>>
+    <<install default [[BUILTIN]] handlers>>
 })
 @ 
 The handler installations are wrapped in a [[local]] call to reduce
@@ -1992,11 +1992,9 @@ makes the code a bit cleaner.
 Default handlers for all [[BUILTIN]] functions in the [[base]] package
 are installed programmatically by
 <<install default [[BUILTIN]] handlers>>=
-basevars <- ls('package:base', all = TRUE)
-types <- sapply(basevars, function(n) typeof(get(n)))
-for (s in basevars[types == "special"])
-    if (! haveInlineHandler(s, "base"))
-        setInlineHandler(s, cmpSpecial)
+for (b in basevars[types == "builtin"])
+    if (! haveInlineHandler(b, "base"))
+        setInlineHandler(b, cmpBuiltin)
 @ %def
 
 
@@ -2019,9 +2017,11 @@ cmpSpecial <- function(e, cb, cntxt) {
 This handler is installed for all [[SPECIAL]] functions in the base
 package with
 <<install default [[SPECIAL]] handlers>>=
-for (b in basevars[types == "builtin"])
-    if (! haveInlineHandler(b, "base"))
-        setInlineHandler(b, cmpBuiltin)
+basevars <- ls('package:base', all = TRUE)
+types <- sapply(basevars, function(n) typeof(get(n)))
+for (s in basevars[types == "special"])
+    if (! haveInlineHandler(s, "base"))
+        setInlineHandler(s, cmpSpecial)
 @ %def
 
 
