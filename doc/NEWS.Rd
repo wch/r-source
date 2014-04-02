@@ -188,7 +188,9 @@
       assignments when possible.  This reduces copying of replacement
       values in expressions such as \code{Z$a <- a0} and
       \code{ans[[i]] <- tmp}: some package code has relied on there
-      being copies.  (Based on suggestions from Michael Lawrence.)
+      being copies. 
+      Further, a number of other changes to reduce copying of objects;
+      all these contributed or based on suggestions by Michael Lawrence.
 
       \item The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
@@ -235,9 +237,6 @@
       \item The \code{"Date"} and \code{"POSIXt"} methods of
       \code{seq()} allows \code{by = "quarter"} for completeness
       (\code{by = "3 months"} always worked).
-
-      \item A number of changes to reduce copying of objects, contributed
-      by Michael Lawrence.
 
       \item \code{file.path()} removes any trailing separator on
       Windows, where they are invalid (although sometimes accepted).
