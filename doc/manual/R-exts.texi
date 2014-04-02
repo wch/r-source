@@ -7019,10 +7019,6 @@ Note that memory access errors may be seen with LAPACK, BLAS and
 Java-using packages: some at least of these seem to be intentional, and
 some are related to passing characters to Fortran.
 
-There are other memory-access-checking tools available: GCC supports
-@command{mudflap} and `lightweight bounds checking' (`LBC') is
-promised as a plug-in.
-
 @menu
 * Using gctorture::             
 * Using valgrind::              
