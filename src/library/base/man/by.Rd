@@ -30,8 +30,8 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
   subsetted by the values of one or more factors, and function
   \code{FUN} is applied to each subset in turn.
 
-  For the default method, an object with dimensions (e.g. a matrix) is
-  coerced to a data frame and the data frome method applied.  Other
+  For the default method, an object with dimensions (e.g., a matrix) is
+  coerced to a data frame and the data frame method applied.  Other
   objects are also coerced to a data frame, but \code{FUN} is applied
   separately to (subsets of) each column of the data frame.
 }
