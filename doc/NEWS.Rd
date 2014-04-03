@@ -173,9 +173,10 @@
       assignments when possible.  This reduces copying of replacement
       values in expressions such as \code{Z$a <- a0} and
       \code{ans[[i]] <- tmp}: some package code has relied on there
-      being copies. 
-      Further, a number of other changes to reduce copying of objects;
-      all these contributed or based on suggestions by Michael Lawrence.
+      being copies.
+      
+      Also, a number of other changes to reduce copying of objects; all
+      contributed by or based on suggestions by Michael Lawrence.
 
       \item The \code{fast} argument of \code{KalmanLike()},
       \code{KalmanRun()} and \code{KalmanForecast()} has been replaced
@@ -240,14 +241,14 @@
       \item Some functionality of \code{print.ts()} is now available in
       \code{.preformat.ts()} for more modularity.% and format.ts() might follow
 
-      \item \code{mcparallel()} gains an option \code{detach=TRUE} which
-      allows to execute code independently of the current session.
-      It is based on a new \code{estranged=TRUE} argument to
-      \code{mcfork()} which forks child processes such that they
-      become independent of the parent process.
+      \item \code{mcparallel()} gains an option \code{detach = TRUE}
+      which allows execution of code independently of the current
+      session.  It is based on a new \code{estranged = TRUE} argument to
+      \code{mcfork()} which forks child processes such that they become
+      independent of the parent process.
 
-      \item The \code{pdf()} device omits entirely circles and text at
-      extremely small sizes, since some viewers were failing on such files.
+      \item The \code{pdf()} device omits circles and text at extremely
+      small sizes, since some viewers were failing on such files.
 
       \item The rightmost break for the \code{"months"},
       \code{"quarters"} and \code{"years"} cases of
@@ -271,7 +272,7 @@
       the fit is essentially perfect, as most of the summary may be
       computed inaccurately (and with platform-dependent values).
 
-      Programmers who use \code{summary} in order to extract just
+      Programmers who use \code{summary()} in order to extract just
       a component which will be reliable (e.g. \code{$cov.unscaled})
       should wrap their calls in \code{suppressWarnings()}.
     }
@@ -309,7 +310,9 @@
       \item The included (64-bit) time-zone conversion code and Olson
       time-zone database can be used instead of the system version: use
       \command{configure} option \option{--with-internal-tzcode}.  This
-      is the default on Windows and OS X.
+      is the default on Windows and OS X.  (Note that this does not
+      currently work if a non-default \code{rsharedir}
+      \command{configure} variable is used.)
 
       (It might be necessary to set environment variable \env{TZ} on
       OSes where this is not already set, although the system timezone is
@@ -347,7 +350,7 @@
       considered to be vignettes and hence indexed as such.
 
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
-      is no longer recognized as valid. Use \samp{MIT} or
+      is no longer recognized as valid.  Use \samp{MIT} or
       \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
