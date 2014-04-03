@@ -325,7 +325,9 @@
       \item The included (64-bit) time-zone conversion code and Olson
       time-zone database can be used instead of the system version: use
       \command{configure} option \option{--with-internal-tzcode}.  This
-      is the default on Windows and OS X.
+      is the default on Windows and OS X.  (Note that this does not
+      currently work if a non-default \code{rsharedir}
+      \command{configure} variable is used.)
 
       (It might be necessary to set environment variable \env{TZ} on
       OSes where this is not already set, although the system timezone is
