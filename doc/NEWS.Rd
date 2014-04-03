@@ -10,7 +10,7 @@
 \section{\Rlogo CHANGES IN R 3.1.0}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{type.convert()} (and hence \code{read.table(as.is = TRUE)})
+      \item \code{type.convert()} (and hence \code{read.table(as.is = FALSE)})
       returns a character vector or factor when representing a numeric
       input as a double would lose accuracy.  Similarly for complex
       inputs.
