@@ -34,10 +34,10 @@
 \section{\Rlogo CHANGES IN R 3.1.0}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{type.convert()} (and hence \code{read.table(as.is = FALSE)})
-      returns a character vector or factor when representing a numeric
-      input as a double would lose accuracy.  Similarly for complex
-      inputs.
+      \item \code{type.convert()} (and hence by default
+      \code{read.table()}) returns a character vector or factor when
+      representing a numeric input as a double would lose accuracy.
+      Similarly for complex inputs.
 
       If a file contains numeric data with unrepresentable numbers of
       decimal places that are intended to be read as numeric, specify
