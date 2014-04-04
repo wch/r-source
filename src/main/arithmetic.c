@@ -1645,9 +1645,8 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	}
 	default:
-// Please use ngettext even if 'n' is always != 1.
-// Put %s instead of 'log'. Now message has the same form as in line 1553 (less to translate in po files)
-        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments", "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
+        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments", 
+		       "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
               n, "log");
 	}
     }
