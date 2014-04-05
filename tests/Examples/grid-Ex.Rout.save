@@ -1,5 +1,5 @@
 
-R version 3.1.0 beta (2014-03-27 r65305) -- "Spring Dance"
+R version 3.1.0 RC (2014-04-04 r65373) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2067,7 +2067,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.278 0.018 1.3 0 0 
+Time elapsed:  1.248 0.019 1.272 0 0 
 > grDevices::dev.off()
 null device 
           1 
