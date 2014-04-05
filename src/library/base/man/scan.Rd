@@ -235,7 +235,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   is a list, otherwise every 10000 items.
 
   If \code{file} is a character string and \code{fileEncoding} is
-  non-default, or it it is a not-already-open \link{connection} with a
+  non-default, or if it is a not-already-open \link{connection} with a
   non-default \code{encoding} argument, the text is converted to UTF-8
   and declared as such (and the \code{encoding} argument to \code{scan}
   is ignored).  See the examples of \code{\link{readLines}}.
