@@ -27,6 +27,11 @@
     \itemize{
       \item \command{configure} option \option{--with-internal-tzcode}
       can now be used with variable \code{rsharedir}.
+      
+      \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
+      with \code{clean = FALSE} no longer remove any created files.
+      This is used in the new \command{--no-clean} option to
+      \command{R CMD Sweave}.
     }
   }
 }

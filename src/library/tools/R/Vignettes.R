@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -569,11 +569,11 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
             unlink(f[newer], recursive = TRUE)
+            f <- setdiff(list.files(all.files = TRUE, no.. = TRUE),
+                         c(keep, origfiles))
+            f <- f[file_test("-f", f)]
+            file.remove(f)
         }
-        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE),
-                     c(keep, origfiles))
-        f <- f[file_test("-f", f)]
-        file.remove(f)
     }
 
     # Assert
@@ -673,11 +673,11 @@ buildVignette <-
 	newer <- file_test("-nt", f, ".build.timestamp")
 	## some packages create directories
 	unlink(f[newer], recursive = TRUE)
-    }
-    f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
-    f <- f[file_test("-f", f)]
-    file.remove(f)
-
+    }    
+        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
+        f <- f[file_test("-f", f)]
+        file.remove(f)
+    #}
     unique(keep)
 }
 

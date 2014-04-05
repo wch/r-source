@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -435,6 +435,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --driver=name   use named Sweave driver",
             "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  default encoding 'enc' for file",
+	    "  --no-clean      do not remove created temporary files",
             "  --options=      comma-separated list of Sweave/engine options",
             "  --pdf           convert to PDF document",
             "  --compact=      try to compact PDF document:",
@@ -456,6 +457,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     engine <- NULL
     toPDF <- FALSE
     compact <- Sys.getenv("_R_SWEAVE_COMPACT_PDF_", "no")
+    clean <- TRUE
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -467,7 +469,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2006-2013 The R Core Team.",
+                "Copyright (C) 2006-2014 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
@@ -478,6 +480,8 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             engine <- substr(a, 10, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             encoding <- substr(a, 12, 1000)
+	} else if (a == "--no-clean") {
+	    clean <- FALSE
         } else if (substr(a, 1, 10) == "--options=") {
             options <- substr(a, 11, 1000)
         } else if (a == "--pdf") {
@@ -496,7 +500,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
         Usage()
         do_exit(1L)
     }
-    args <- list(file=file, tangle=FALSE, latex=toPDF, engine=engine)
+    args <- list(file=file, tangle=FALSE, latex=toPDF, engine=engine, clean=clean)
     if(nzchar(driver)) args <- c(args, driver)
     args <- c(args, encoding = encoding)
     if(nzchar(options)) {
