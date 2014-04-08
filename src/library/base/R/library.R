@@ -153,10 +153,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         else {
             ## A package will have created a generic
             ## only if it has created a formal method.
-            length(objects(env, pattern="^\\.__[MT]", all.names=TRUE)) == 0L
+            length(objects(env, pattern="^\\.__T", all.names=TRUE)) == 0L
         }
     }
 
+    ## FIXME: ./attach.R 's attach() has *very* similar checkConflicts(), keep in sync
     checkConflicts <- function(package, pkgname, pkgpath, nogenerics, env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
@@ -173,7 +174,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## down into the loop and test against specific other package name
             ## but subtle conflicts like that are likely to be found elsewhere
 	    these <- ob[substr(ob, 1L, 6L) == ".__T__"]
-            gen <- gsub(".__T__(.*):([^:]+)", "\\1", these)
+            gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__T__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != package]
             ob <- ob[!(ob %in% gen)]
@@ -212,21 +213,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                                        sQuote(package)),
                                               domain = NA)
                     }
-
-                    objs <- strwrap(paste(same, collapse=", "),
-                                    indent = 4L, exdent = 4L)
-                         if (i < lib.pos) {
-                           msg <- sprintf(ngettext(length(same),
-                               "The following object is masked _by_ %s:\n\n%s\n",
-                               "The following objects are masked _by_ %s:\n\n%s\n", domain = "R-base"),
-                                sQuote(sp[i]), paste(objs, collapse = "\n"))
-                        } else {
-                           msg <- sprintf(ngettext(length(same),
-                               "The following object is masked from %s:\n\n%s\n",
-                               "The following objects are masked from %s:\n\n%s\n", domain = "R-base"),
-                                sQuote(sp[i]), paste(objs, collapse = "\n"))
-                        }
-		    packageStartupMessage(msg)
+		    msg <- .maskedMsg(same, pkg = sQuote(sp[i]), by = i < lib.pos)
+		    packageStartupMessage(msg, domain = NA)
                 }
             }
         }

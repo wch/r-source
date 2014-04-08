@@ -23,6 +23,9 @@
       no longer underflows for small x and ncp < 80, e.g, for
       \code{pchisq(1e-5, df=100, ncp=1, log=TRUE)}. Based on \PR{15635}
       and a suggestion by Roby Joehanes.  
+
+      \item When \code{attach()} notices conflicts, it does so
+      compatibly with \code{library()}, emitting a \code{message()}.
     }
   }
 }

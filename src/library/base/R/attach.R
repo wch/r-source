@@ -16,9 +16,25 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## also used by library() :
+.maskedMsg <- function(same, pkg, by) {
+    objs <- strwrap(paste(same, collapse=", "), indent = 4L, exdent = 4L)
+    txt <- if(by) {
+        ngettext(length(same),
+                 "The following object is masked _by_ %s:\n\n%s\n",
+                 "The following objects are masked _by_ %s:\n\n%s\n")
+    } else {
+        ngettext(length(same),
+                 "The following object is masked from %s:\n\n%s\n",
+                 "The following objects are masked from %s:\n\n%s\n")
+    }
+    sprintf(txt, pkg, paste(objs, collapse="\n"))
+}
+
 attach <- function(what, pos = 2L, name = deparse(substitute(what)),
                    warn.conflicts = TRUE)
 {
+    ## FIXME: ./library.R 's library() has *very* similar checkConflicts(), keep in sync
     checkConflicts <- function(env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
@@ -33,12 +49,10 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
             }
         }
         ob <- objects(db.pos, all.names = TRUE)
-        if(.isMethodsDispatchOn()) {
-            ## <FIXME>: this is wrong-headed: see library().
-            these <- objects(db.pos, all.names = TRUE)
-            these <- these[substr(these, 1L, 6L) == ".__M__"]
-            gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
-            from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
+        if(.isMethodsDispatchOn()) { ## {see note in library() about this}
+            these <- ob[substr(ob, 1L, 6L) == ".__T__"]
+            gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
+            from <- gsub(".__T__(.*):([^:]+)", "\\2", these)
             gen <- gen[from != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
@@ -52,29 +66,15 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
                 if(length(Classobjs)) same <- same[-Classobjs]
                 ## report only objects which are both functions or
                 ## both non-functions.
-                is_fn1 <- sapply(same, function(x)
-                                 exists(x, where = i, mode = "function",
-                                        inherits = FALSE))
-                is_fn2 <- sapply(same, function(x)
-                                 exists(x, where = db.pos, mode = "function",
-                                        inherits = FALSE))
-                same <- same[is_fn1 == is_fn2]
+		same.isFn <- function(where)
+		    vapply(same, exists, NA,
+			   where = where, mode = "function", inherits = FALSE)
+		same <- same[same.isFn(i) == same.isFn(db.pos)]
                 if(length(same)) {
-                    objs <- strwrap(paste(same, collapse=", "),
-                                    indent = 4L, exdent = 4L)
-                    pkg <-
-                        if (sum(sp == sp[i]) > 1L) {
-                            sprintf("%s (position %d)", sp[i], i)
-                        } else {
-                            sp[i]
-                        }
-                    msg <- sprintf(ngettext(length(same),
-                                            "The following object is masked %s %s:\n\n%s\n",
-                                            "The following objects are masked %s %s:\n\n%s\n"),
-                                   if (i < db.pos) "_by_" else "from",
-                                   pkg, paste(objs, collapse="\n"))
-                    cat(msg)
-                }
+		    pkg <- if (sum(sp == sp[i]) > 1L) # 'pos = *' needs no translation
+			sprintf("%s (pos = %d)", sp[i], i) else sp[i]
+		    message(.maskedMsg(same, pkg, by = i < db.pos), domain=NA)
+		}
             }
         }
     }
@@ -200,8 +200,8 @@ ls <- objects <-
               pattern)
 {
     if (!missing(name)) {
-        nameValue <- try(name, silent = TRUE)
-        if(identical(class(nameValue), "try-error")) {
+        pos <- tryCatch(name, error = function(e)e)
+        if(inherits(pos, "error")) {
             name <- substitute(name)
             if (!is.character(name))
                 name <- deparse(name)
@@ -209,8 +209,6 @@ ls <- objects <-
                     domain = NA)
             pos <- name
         }
-        else
-            pos <- nameValue
     }
     all.names <- .Internal(ls(envir, all.names))
     if (!missing(pattern)) {
