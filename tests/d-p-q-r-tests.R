@@ -758,6 +758,17 @@ stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
 ## extreme tail of non-central chisquare
 stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
 ## jumped to zero too early up to R 2.10.1 (PR#14216)
+## left "extreme tail"
+lp <- pchisq(2^-(0:200), 100, 1, log=TRUE)
+stopifnot(is.finite(lp), lp < -184,
+	  all.equal(lp[201], -7115.10693158))
+dlp <- diff(lp)
+range(dd <- abs(dlp[-(1:30)] - -34.65735902799))
+stopifnot(-34.66 < dlp, dlp < -34.41, dd < 1e-8)# 2.2e-10 64bit Lnx
+## underflowed to -Inf much too early in R <= 3.1.0
+for(e in c(0, 2e-16))# continuity at 80 (= branch point)
+stopifnot(all.equal(pchisq(1:2, 1.01, ncp = 80*(1-e), log=TRUE),
+		    c(-34.57369629, -31.31514671)))
 
 ## logit() == qlogit() on the right extreme:
 x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))

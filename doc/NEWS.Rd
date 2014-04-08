@@ -17,7 +17,12 @@
     \itemize{
       \item \code{dbinom(x,n)}, \code{pbinom()}, \code{dpois()}, etc,
       are slightly less restrictive in checking if \code{n} is integer
-      valued. (Wish of \PR{15734}.) 
+      valued. (Wish of \PR{15734}.)
+
+      \item \code{pchisq(x, df, ncp, log.p=TRUE)} is more accurate and
+      no longer underflows for small x and ncp < 80, e.g, for
+      \code{pchisq(1e-5, df=100, ncp=1, log=TRUE)}. Based on \PR{15635}
+      and a suggestion by Roby Joehanes.  
     }
   }
 }
