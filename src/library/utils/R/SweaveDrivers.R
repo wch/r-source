@@ -27,7 +27,7 @@ RweaveLatex <- function()
 
 ## We definitely do not want '.' in here, to avoid misidentification
 ## of file extensions.
-.SweaveValidFilenameRegexp <- "^[[:alnum:]#+-_]+$"
+.SweaveValidFilenameRegexp <- "^[[:alnum:]#+_-]+$"
 
 RweaveLatexSetup <-
     function(file, syntax, output = NULL, quiet = FALSE, debug = FALSE,
