@@ -29,7 +29,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
-  news since the 2.10.0 release of R (corresponding to R's top-level
+  news since the 3.0.0 release of R (corresponding to R's top-level
   \file{NEWS} file).  Otherwise, if the given add-on package can be
   found in the given libraries, it is attempted to read its news in
   structured form from files \file{inst/NEWS.Rd}, \file{NEWS} or
