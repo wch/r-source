@@ -1,6 +1,6 @@
 % File src/library/utils/man/news.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{news}
@@ -102,11 +102,11 @@ db <- news()
   vv <- capture.output(db)  # without an error
 }
 \donttest{% <- is not sensibly diff-ed against previous versions
-## Bug fixes with PR number in 2.11.0.
-news(Version == "2.11.0" & grepl("^BUG", Category) & grepl("PR#", Text),
+## Bug fixes with PR number in 3.0.1.
+news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
      db = db)
 ## Which categories have been in use? % R-core maybe should standardize a bit more
 sort(table(db[, "Category"]), decreasing = TRUE)
-## Entries with version >= 2.10.1 (including "2.10.1 patched"):
-table(news(Version >= "2.10.1", db = db)$Version)
+## Entries with version >= 3.0.0 (including "3.0.0 patched"):
+table(news(Version >= "3.0.0", db = db)$Version)
 }}
