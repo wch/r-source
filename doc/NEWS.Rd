@@ -7,6 +7,26 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.1.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \command{configure} option \option{--with-internal-tzcode}
+      can now be used with variable \code{rsharedir}.
+
+      \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
+      with \code{clean = FALSE} no longer remove any created files.
+      This is used in the new \command{--no-clean} option to
+      \command{R CMD Sweave}.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item When \code{attach()} notices conflicts, it does so
+      compatibly with \code{library()}, emitting a \code{message()}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.1.0}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -174,7 +194,7 @@
       values in expressions such as \code{Z$a <- a0} and
       \code{ans[[i]] <- tmp}: some package code has relied on there
       being copies.
-      
+
       Also, a number of other changes to reduce copying of objects; all
       contributed by or based on suggestions by Michael Lawrence.
 
@@ -267,7 +287,7 @@
       updated from the official source, whereas the \code{sunspots} and
       \code{sunspot.year} datasets will remain immutable. The
       documentation and source links have been updated correspondingly.
-      
+
       \item The \code{summary()} method for \code{"lm"} fits warns if
       the fit is essentially perfect, as most of the summary may be
       computed inaccurately (and with platform-dependent values).
@@ -622,7 +642,7 @@
       methods now obeys small \code{getOption("width")} settings,
       line wrapping the \samp{"signif. codes"} legend appropriately.
       (\PR{15708})
-      
+
       \item \code{model.matrix()} assumed that the stored dimnames for a
       matrix was \code{NULL} or length 2, but length 1 occurred.
 
