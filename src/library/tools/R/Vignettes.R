@@ -460,7 +460,6 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 ###
 ### Run a weave and pdflatex on all vignettes of a package and try to
 ### remove all temporary files that were created.
-
 buildVignettes <-
 function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALSE)
 {
@@ -592,7 +591,7 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 ###
 ### Run a weave and/or tangle on one vignette and try to
 ### remove all temporary files that were created.
-
+### Also called from 'R CMD Sweave' via .Sweave() in ../../utils/R/Sweave.R
 buildVignette <-
     function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
     quiet = TRUE, clean = TRUE, engine = NULL, buildPkg = NULL, ...)
@@ -673,7 +672,8 @@ buildVignette <-
 	newer <- file_test("-nt", f, ".build.timestamp")
 	## some packages create directories
 	unlink(f[newer], recursive = TRUE)
-    }    
+    }
+    ### huh?  2nd round of cleaning even if  clean is FALSE ??
         f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
         f <- f[file_test("-f", f)]
         file.remove(f)
@@ -685,18 +685,18 @@ buildVignette <-
 
 getVignetteEncoding <-  function(file, ...)
 {
-    # Look for inputen[cx] first, then %\SweaveUTF8.  Complain about 
+    # Look for inputen[cx] first, then %\SweaveUTF8.  Complain about
     # inconsistencies.
-    
+
     lines <- readLines(file, warn = FALSE)
     result1 <- .getVignetteEncoding(lines, ...)
-    
+
     poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
     if (length(poss)) {
     	result <- "UTF-8"
     	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
     	    stop(gettextf("Inconsistent encoding specifications: %s with %%\\SweaveUTF8", result1), domain = NA)
-    } else 
+    } else
     	result <- result1
     result
 }
