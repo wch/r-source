@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -33,6 +33,7 @@
 \alias{.popath}
 \alias{.mapply}
 \alias{.detach}
+\alias{.maskedMsg}
 
 \alias{.C_R_addTaskCallback}
 \alias{.C_R_getTaskCallbackNames}
@@ -97,6 +98,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .mapply(FUN, dots, MoreArgs)
 
 .detach(pos)
+
+.maskedMsg(same, pkg, by)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -138,6 +141,11 @@ lazyLoadDBfetch(key, file, compressed, hook)
     strictly positive length, or all of zero length).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{pos}{an integer.}
+
+  \item{same}{character vector of \emph{same} objects, masking others.}
+  \item{pkg}{character string naming the package which is masked from or by.}
+  \item{by}{logical indicating if the masking happens \emph{by}
+  \code{pkg}, or (\code{by = FALSE}) from \code{pkg}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -216,6 +224,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.mapply} and \code{.detach} are \sQuote{bare-bones} versions for
   use in other \R packages.
+
+  \code{.maskedMsg} is a utility called both from \code{\link{attach}()}
+  and \code{\link{library}()} for consistency to produce the warning message.
 
   Objects starting \code{.C_} and \code{.F_} are references to
   registered C and Fortran entry points.
