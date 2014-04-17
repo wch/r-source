@@ -39,17 +39,17 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
   \item{subdirs}{a character vector of subdirectories of \code{dir} in which
     to look for vignettes. The first which exists is used.  Defaults to
     \code{"doc"} if \code{package} is supplied, otherwise \code{"vignettes"}.}
-  \item{output}{logical.  If \code{TRUE}, the output filename
-    for each vignette in the result.}
-  \item{source}{logical.  If \code{TRUE}, include the tangled output filename
-    for each vignette in the result.}
+  \item{output}{logical indicating if the output filenames for each
+    vignette should be returned (in component \code{outputs}).}
+  \item{source}{logical indicating if the \emph{tangled} output
+    filenames for each vignette should be returned (in component \code{sources}).}
   \item{check}{logical.  If \code{TRUE}, check whether all files that
     have vignette-like filenames have an identifiable vignette engine.
     This may be a false positive if a file is not a vignette but has a 
     filename matching a pattern defined by one of the vignette engines.} 
 }
 \details{
-  \code{buildVignettes} is used by \code{R CMD build} and \code{R CMD
+  \code{buildVignettes} is used by \command{R CMD build} and \command{R CMD
     check} to (re-)build vignette PDFs from their sources. 
 }
 \value{
@@ -59,6 +59,21 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 
   \code{pkgVignettes} returns an object of class \code{"pkgVignettes"}
   if a vignette directory is found, otherwise \code{NULL}.  
+}
+\examples{
+str(gVigns <- pkgVignettes("grid"))
+\dontshow{
+ `\%=f=\%` <- function(a, b) normalizePath(a) == normalizePath(b)
+ with(gVigns,
+      stopifnot(engines == "utils::Sweave",
+                pkgdir \%=f=\% system.file(package="grid"),
+                dir    \%=f=\% system.file(package="grid", "doc"),
+                (n. <- length(docs)) >= 12, # have 13 
+                n. == length(names), n. == length(engines),
+                length(msg) == 0) ) # as it is a 'base' package
+}
+stopifnot("grid" \%in\% gVigns$names,
+          inherits(gVigns, "pkgVignettes"))
 }
 \keyword{utilities}
 \keyword{documentation}

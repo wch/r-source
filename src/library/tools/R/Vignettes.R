@@ -35,7 +35,7 @@ vignette_type <- function(file) {
 # Locates the vignette weave, tangle and texi2pdf product(s) based on the
 # vignette name.   All such products must have the name as their filename
 # prefix (i.e. "^<name>").
-# For weave, final = TRUE will look for <name>.pdf and <name>.pdf, whereas
+# For weave, final = TRUE will look for <name>.pdf and <name>.html, whereas
 # with final = FALSE it also looks for <name>.tex (if <name>.pdf is also
 # found, it will be returned).  For tangle, main = TRUE will look <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
@@ -44,20 +44,14 @@ find_vignette_product <-
     function(name, by = c("weave", "tangle", "texi2pdf"),
              final = FALSE, main = TRUE, dir = ".", engine, ...)
 {
-    stopifnot(length(name) == 1L)
+    stopifnot(length(name) == 1L, file_test("-d", dir))
     by <- match.arg(by)
-    stopifnot(file_test("-d", dir))
+    exts <- ## (lower case here):
+	switch(by,
+	       "weave" = if (final) c("pdf", "html") else c("pdf", "html", "tex"),
+	       "tangle" = c("r", "s"),
+	       "texi2pdf" = "pdf")
 
-    if (by == "weave") {
-        if (final)
-            exts <- c("pdf", "html")
-        else
-            exts <- c("pdf", "html", "tex")
-    } else if (by == "tangle") {
-        exts <- c("r", "s")
-    } else if (by == "texi2pdf") {
-        exts <- "pdf"
-    }
     exts <- c(exts, toupper(exts))
     pattern1 <- sprintf("^%s[.](%s)$", name, paste(exts, collapse = "|"))
     output0 <- list.files(path = dir, all.files = FALSE, full.names = FALSE, no..=TRUE)
@@ -113,16 +107,13 @@ find_vignette_product <-
                  domain = NA)
     }
 
+    ## return :
     if (length(output) > 0L) {
         if (dir == ".")
-            output <- basename(output)
+            basename(output)
         else
-            output <- file.path(dir, output)
-    } else {
-        output <- NULL
-    }
-
-    output
+            file.path(dir, output)
+    } ## else NULL
 }
 
 
@@ -382,28 +373,24 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 
     docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
-    matchedPattern <- rep(FALSE, length(allFiles))
+    matchedPattern <- rep.int(FALSE, length(allFiles))
     msg <- character()
     if (length(allFiles) > 0L) {
         for (name in names(engineList)) {
             engine <- engineList[[name]]
-            patternsT <- engine$pattern
-            for (pattern in patternsT) {
+            for (pattern in engine$pattern) {
                 idxs <- grep(pattern, allFiles)
-		docsT <- allFiles[idxs]
 		matchedPattern[idxs] <- TRUE
-		keep <- logical(length(docsT))
-		for (i in seq_along(docsT))
-		    keep[i] <- engineMatches(name, getVignetteEngine(docsT[i]))
-		idxs  <- idxs[keep]
-                nidxs <- length(idxs)
-                if (nidxs > 0L) {
+		keep <- vapply(allFiles[idxs], function(.d.)
+			       engineMatches(name, getVignetteEngine(.d.)), NA)
+		if (any(keep)) {
+		    idxs <- idxs[keep]
                     if (is.function(engine$weave)) {
                         docsT <- allFiles[idxs]
                         docs <- c(docs, docsT)
                         names <- c(names, gsub(pattern, "", basename(docsT)))
-                        engines <- c(engines, rep(name, times = nidxs))
-                        patterns <- c(patterns, rep(pattern, times = nidxs))
+			engines	 <- c(engines,	rep.int(name,	 length(idxs)))
+			patterns <- c(patterns, rep.int(pattern, length(idxs)))
                     }
 		    matchedPattern <- matchedPattern[-idxs]
                     allFiles <- allFiles[-idxs]
@@ -421,13 +408,12 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     }
 
     # Assert
-    stopifnot(length(names) == length(docs))
-    stopifnot(length(engines) == length(docs))
-    stopifnot(length(patterns) == length(docs))
-    stopifnot(!any(duplicated(docs)))
+    stopifnot(length(names)    == length(docs),
+	      length(engines)  == length(docs),
+	      length(patterns) == length(docs), !anyDuplicated(docs))
 
     z <- list(docs=docs, names=names, engines=engines, patterns=patterns,
-              dir=docdir, pkgdir=dir, msg = msg)
+	      dir = docdir, pkgdir = dir, msg = msg)
 
     if (output) {
         outputs <- character(length(docs))
@@ -592,14 +578,12 @@ function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE, tangle = FALS
 ### Run a weave and/or tangle on one vignette and try to
 ### remove all temporary files that were created.
 ### Also called from 'R CMD Sweave' via .Sweave() in ../../utils/R/Sweave.R
-buildVignette <-
-    function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
-    quiet = TRUE, clean = TRUE, engine = NULL, buildPkg = NULL, ...)
+buildVignette <- function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
+			  quiet = TRUE, clean = TRUE, keep = character(),
+			  engine = NULL, buildPkg = NULL, ...)
 {
-
     if (!file_test("-f", file))
 	stop(gettextf("file '%s' not found", file), domain = NA)
-
     if (!file_test("-d", dir))
 	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
 
@@ -627,12 +611,11 @@ buildVignette <-
 
     # Set output directory temporarily
     file <- file_path_as_absolute(file)
-    olddir <- getwd()
+    olddir <- setwd(dir)
     if (!is.null(olddir)) on.exit(setwd(olddir))
-    setwd(dir)
 
-    # Record existing files
-    origfiles <- list.files(all.files = TRUE)
+    ## # Record existing files
+    ## origfiles <- list.files(all.files = TRUE)
     if (is.na(clean) || clean) {
 	file.create(".build.timestamp")
     }
@@ -661,9 +644,9 @@ buildVignette <-
 	find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
     } # else NULL
 
-    # Cleanup
-    keep <- c(sources, final)
-    if (is.na(clean)) {  # Use NA to signal we want .tex files kept.
+    ## Cleanup newly created files unless those in 'keep'
+    keep <- c(sources, final, keep)
+    if (is.na(clean)) {  # Use NA to signal we want .tex (or .md) files kept.
 	keep <- c(keep, output)
 	clean <- TRUE
     }
@@ -674,10 +657,10 @@ buildVignette <-
 	unlink(f[newer], recursive = TRUE)
     }
     ### huh?  2nd round of cleaning even if  clean is FALSE ??
-        f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
-        f <- f[file_test("-f", f)]
-        file.remove(f)
-    #}
+    ##     f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), c(keep, origfiles))
+    ##     f <- f[file_test("-f", f)]
+    ##     file.remove(f)
+    ## #}
     unique(keep)
 }
 
