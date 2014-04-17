@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -443,9 +443,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .BioC_version_associated_with_R_version
 
 .BioC_version_associated_with_R_version <-
-    numeric_version(Sys.getenv("R_BIOC_VERSION", "2.14"))
+    function() numeric_version(Sys.getenv("R_BIOC_VERSION", "3.0"))
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
+## Wierdly, 3.0 is the second version (after 2.14) for the 3.1.x series.
 
 ### ** .vc_dir_names
 
@@ -1504,7 +1505,7 @@ function(x)
                                     "http://www.bioconductor.org")),
              x, fixed = TRUE)
     sub("%v",
-        as.character(.BioC_version_associated_with_R_version),
+        as.character(.BioC_version_associated_with_R_version()),
         x, fixed = TRUE)
 }
 
