@@ -36,7 +36,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   This function determines the vignette engine for the vignette (default
   \code{utils::Sweave}), then weaves and/or tangles the vignette using
   that engine.  Finally, if \code{clean} is \code{TRUE}, newly created
-  intermediate files (non \dQuot{targets}, where these depend on the engine,
+  intermediate files (non \dQuote{targets}, where these depend on the engine,
   etc, and not any in \code{keep}) will be deleted.  If \code{clean} is
   \code{NA}, and \code{weave} is true, newly created intermediate output
   files (e.g., \file{.tex}) will not be deleted even if a \file{.pdf}
