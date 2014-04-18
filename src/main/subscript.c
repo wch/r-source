@@ -313,6 +313,8 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 		error("invalid subscript for pairlist");
 #endif
 	    cx = nthcdr(x, (int) offset);
+	    if (NAMED(x) > NAMED(CAR(cx)))
+		SET_NAMED(CAR(x), NAMED(x));
 	    x = CAR(cx);
 	    if (dup && MAYBE_SHARED(x)) {
 		x = shallow_duplicate(x);
@@ -321,6 +323,8 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	} else {
 	    cx = x;
 	    x = VECTOR_ELT(x, offset);
+	    if (NAMED(cx) > NAMED(x))
+		SET_NAMED(x, NAMED(cx));
 	    if (dup && MAYBE_SHARED(x)) {
 		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
