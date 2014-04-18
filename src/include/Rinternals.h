@@ -486,6 +486,11 @@ Rboolean (Rf_isObject)(SEXP s);
 #endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
 
+/* Complex assignment support */
+/* temporary definition that will need to be refined to distinguish
+   getter from setter calls */
+#define IS_GETTER_CALL(call) (CADR(call) == R_TmpvalSymbol)
+
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
    The function STRING_ELT is used as an argument to arrayAssign even
