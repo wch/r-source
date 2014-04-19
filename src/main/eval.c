@@ -218,8 +218,9 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < PROFLINEMAX)
 		snprintf(buf+len, PROFBUFSIZ - len,
-			 ":%ld:%ld:%ld:%ld:", smallv, bigv,
-			 nodes, get_duplicate_counter());
+			 ":%lu:%lu:%lu:%lu:", 
+			 (unsigned long) smallv, (unsigned long) bigv,
+			 (unsigned long) nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
     }
 
