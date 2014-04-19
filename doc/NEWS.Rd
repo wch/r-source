@@ -17,6 +17,12 @@
       with \code{clean = FALSE} no longer remove any created files.
       This is used in the new \command{--no-clean} option to
       \command{R CMD Sweave}.
+
+      \item The Bioconductor \sQuote{version} used by
+      \code{setRepositories()} can now be set by environment variable
+      \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
+      (It has been stated that Bioconductor will switch from version
+      2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
     }
   }
   \subsection{BUG FIXES}{
@@ -1202,8 +1208,8 @@
 
       \item The default \sQuote{version} of Bioconductor for its
       packages has been changed to the upcoming \samp{2.13}, but this
-      can be set by the environment variable \env{R_BIOC_VERSION}, e.g.
-      in file \file{Renviron.site}.
+      can be set by the environment variable \env{R_BIOC_VERSION} when
+      \R is installed.
     }
   }
 

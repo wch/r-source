@@ -442,8 +442,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### ** .BioC_version_associated_with_R_version
 
-.BioC_version_associated_with_R_version <-
+..BioC_version_associated_with_R_version <- function()
     numeric_version(Sys.getenv("R_BIOC_VERSION", "2.14"))
+.BioC_version_associated_with_R_version <-
+    ..BioC_version_associated_with_R_version()
 ## Things are more complicated from R-2.15.x with still two BioC
 ## releases a year, so we do need to set this manually.
 
@@ -1503,7 +1505,7 @@ function(x)
                                     "http://www.bioconductor.org")),
              x, fixed = TRUE)
     sub("%v",
-        as.character(.BioC_version_associated_with_R_version),
+        as.character(..BioC_version_associated_with_R_version()),
         x, fixed = TRUE)
 }
 
