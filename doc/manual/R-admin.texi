@@ -645,12 +645,10 @@ specified on the @command{make install} command line (at least for
 
 The @command{configure} or @command{make} variables @code{rdocdir} and
 @code{rsharedir} can be used to install the system-independent
-@file{doc} and @file{share}@footnote{do not use this if
-@command{configure} option @option{--with-internal-tzcode} was used.}
-directories to somewhere other than @code{libdir}.  The C header files
-can be installed to the value of @code{rincludedir}: note that as the
-headers are not installed into a subdirectory you probably want
-something like
+@file{doc} and @file{share} directories to somewhere other than
+@code{libdir}.  The C header files can be installed to the value of
+@code{rincludedir}: note that as the headers are not installed into a
+subdirectory you probably want something like
 @code{rincludedir=/usr/local/include/R-@value{VERSIONno}}.
 
 If you want the @R{} home to be something other than
@@ -902,8 +900,7 @@ directory@footnote{How to prepare such a directory is described in file
 to by environment variable @env{TZDIR}: this should contain files such
 as @file{Europe/London}.  On all tested OSes the system timezone was
 deduced correctly, but if necessary it can be set as the value of
-environment variable @env{TZ}.  (This option is currently incompatible
-with setting @option{rsharedir}.)
+environment variable @env{TZ}.
 
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes

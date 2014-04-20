@@ -23,6 +23,7 @@ Chile,Chile,Santiago,http://dirichlet.mat.puc.cl/,"Pontificia Universidad Catoli
 "China (Xiamen)",China,Xiamen,http://mirrors.xmu.edu.cn/CRAN/,"Xiamen University","admin # Xdmc.org",1,cn
 "Colombia (Bogota)",Colombia,Bogota,http://www.laqee.unal.edu.co/CRAN/,"National University of Colombia","Ernesto Parra Rincon <eparrar # unal.edu.co>",1,co
 "Colombia (Cali)",Colombia,Cali,http://www.icesi.edu.co/CRAN/,"Icesi University","adminred # Icesi.edu.co",1,co
+"Czech Republic","Czech Republic","Prague",http://mirrors.nic.cz/R/,"CZ.NIC, Prague","mirrors # nic.cz",1,cz
 Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","mirror # dotsrc.org",1,dk
 Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnica del Litoral","jrodrig # espol.edu.ec",1,ec
 "France (Lyon 1)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr
@@ -63,6 +64,7 @@ Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University 
 Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
 "South Africa (Johannesburg)","South Africa",Johannesburg,http://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za
+"Spain (A Coruña)","Spain","A Coruña",http://ftp.cixug.es/CRAN,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb # stat.umu.se>",1,se
 Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.Maechler # R-project.org",1,ch
