@@ -26,7 +26,7 @@ lag(x, \dots)
 }
 \details{  
   Vector or matrix arguments \code{x} are given a \code{tsp} attribute
-  \emph{via} \code{\link{haveTsp}}.
+  \emph{via} \code{\link{hasTsp}}.
 }
 \value{
   A time series object with the same class as \code{x}.
