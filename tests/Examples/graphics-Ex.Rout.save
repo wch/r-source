@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-04-04 r65373) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2027,7 +2027,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1d9d5c8>
+<bytecode: 0x2288690>
 <environment: namespace:graphics>
 > 
 > 
@@ -2898,7 +2898,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3090b28>
+<bytecode: 0x2c0d620>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2978,7 +2978,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.898 0.027 1.931 0 0 
+Time elapsed:  1.907 0.025 1.938 0 0 
 > grDevices::dev.off()
 null device 
           1 
