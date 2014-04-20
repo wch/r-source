@@ -23,8 +23,21 @@
       \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
       (It has been stated that Bioconductor will switch from version
       2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
+
+      \item The Bioconductor \sQuote{version} used by
+      \code{setRepositories()} can now be set by environment variable
+      \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
+      (It has been stated that Bioconductor will switch from version
+      2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
     }
   }
+
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included version of PCRE has been updated to 8.35.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item When \code{attach()} notices conflicts, it does so
