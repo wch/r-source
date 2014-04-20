@@ -1,6 +1,6 @@
 % File src/library/stats/man/lag.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lag}
@@ -10,7 +10,10 @@
 \description{
   Compute a lagged version of a time series, shifting the time base
   back by a given number of observations.
-}
+  
+  \code{lag} is a generic function; this page documents its default
+  method.
+  }
 \usage{
 lag(x, \dots)
 
@@ -21,14 +24,12 @@ lag(x, \dots)
   \item{k}{The number of lags (in units of observations).}
   \item{\dots}{further arguments to be passed to or from methods.}
 }
-\details{
-  Vector or matrix arguments \code{x} are coerced to time series.
-
-  \code{lag} is a generic function; this page documents its default
-  method.
+\details{  
+  Vector or matrix arguments \code{x} are given a \code{tsp} attribute
+  \emph{via} \code{\link{haveTsp}}.
 }
 \value{
-  A time series object.
+  A time series object with the same class as \code{x}.
 }
 
 \note{
