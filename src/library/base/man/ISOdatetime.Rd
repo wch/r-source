@@ -19,7 +19,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{hour, min, sec}{numerical values for a time within a day.
     Fractional seconds are allowed.}
   \item{tz}{A \link{time zone} specification to be used for the conversion.
-    \code{""} is the current time zone and \code{"GMT"} is UTC.}
+    \code{""} is the current time zone and \code{"GMT"} is UTC.  Invalid
+    values are most commonly treated as UTC, on some platforms with a warning.}
 }
 \details{
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for

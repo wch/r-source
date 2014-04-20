@@ -30,7 +30,9 @@ strptime(x, format, tz = "")
     \code{"\link{POSIXlt}"} for \code{strftime}.}
   \item{tz}{A character string specifying the time zone to be used for
     the conversion.  System-specific (see \code{\link{as.POSIXlt}}), but
-    \code{""} is the current time zone, and \code{"GMT"} is UTC.}
+    \code{""} is the current time zone, and \code{"GMT"} is UTC.
+    Invalid values are most commonly treated as UTC, on some platforms with
+    a warning.}
   \item{format}{A character string.  The default for the \code{format}
     methods is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any element has a time
@@ -239,7 +241,7 @@ strptime(x, format, tz = "")
   more characters.
 
   Some platforms support modifiers from POSIX 2008 (and others).  On
-  Linux the format \code{"\%04Y"}) assures a minimum of four characters
+  Linux the format \code{"\%04Y"} assures a minimum of four characters
   and zero-padding.  The internal code (as used on Windows and by
   default on OS X) uses zero-padding by default, and formats
   \code{\%_4Y} and \code{\%_Y} can be used for space padding and no
@@ -295,7 +297,7 @@ strptime(x, format, tz = "")
   In a C locale \code{\%c} is required to be
   \code{"\%a \%b \%e \%H:\%M:\%S \%Y"}.  As Windows does not comply (and
   uses a date format not understood outside N. America), that format is
-  used on Windows in all locales.
+  used by \R on Windows in all locales.
   
   That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
   caused problems in some locales prior to \R 3.0.3: e.g. in French on
