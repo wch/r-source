@@ -2865,16 +2865,27 @@ setRlibs <-
                 status <- R_runR(Rcmd, R_opts2, jitstr,
                                  stdout = outfile, stderr = outfile)
                 t2 <- proc.time()
+                out <- readLines(outfile, warn = FALSE)
+                if(R_check_suppress_RandR_message)
+                    out <- grep('^Xlib: *extension "RANDR" missing on display',
+                                out, invert = TRUE, value = TRUE,
+                                useBytes = TRUE)
+                warns <- grep("^Warning: file name .* is not portable",
+                              out, value = TRUE, useBytes = TRUE)
                 if (status) {
                     noteLog(Log)
-                    out <- readLines(outfile, warn = FALSE)
-                    if (R_check_suppress_RandR_message)
-                        out <- grep('^Xlib: *extension "RANDR" missing on display', out,
-                                    invert = TRUE, value = TRUE, useBytes = TRUE)
                     out <- utils::tail(out, 25)
                     printLog0(Log,
                               paste(c("Error in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
+                } else if(nw <- length(warns)) {
+                    noteLog(Log)
+                    msg <- ngettext(nw,
+                                    "Warning in re-building vignettes:\n",
+                                    "Warnings in re-building vignettes:\n",
+                                    domain = NA)
+                    wrapLog(msg)
+                    printLog0(Log, .format_lines_with_indent(warns), "\n")
                 } else {
                     ## clean up
                     if (config_val_to_logical(Sys.getenv("_R_CHECK_CLEAN_VIGN_TEST_", "true")))
