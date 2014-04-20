@@ -51,7 +51,8 @@ OlsonNames()
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
-  \url{http://en.wikipedia.org/wiki/Coordinated_Universal_Time}).
+  \url{http://en.wikipedia.org/wiki/Coordinated_Universal_Time}).  (Some
+  but not all platforms will give a warning for invalid timezones.)
 
   Time zones did not come into use until the second half of the
   nineteenth century and were not widely adopted until the twentieth,
@@ -97,7 +98,7 @@ OlsonNames()
   city) e.g. \code{Europe/London}, \code{America/Los_Angeles},
   \code{Pacific/Easter}.  Some traditional designations are also allowed
   such as \code{EST5EDT} or \code{GB}.  (Beware that some of these
-  designations may not be what you think: in particular \code{EST} is a
+  designations may not be what you expect: in particular \code{EST} is a
   time zone used in Canada \emph{without} daylight saving time, and not
   \code{EST5EDT} nor (Australian) Eastern Standard Time.)  The
   designation can also be an optional colon prepended to the path to a
@@ -133,7 +134,8 @@ OlsonNames()
   database at \code{file.path(R.home("share"), "zoneinfo")} is used by
   default: file \file{VERSION} in that directory states the version.
   Environment variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} directory.
+  \file{zoneinfo} directory (this is also supported by some OSes,
+  e.g. Linux).
 #endif
 #ifdef windows
 

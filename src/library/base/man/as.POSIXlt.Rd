@@ -42,7 +42,8 @@ as.POSIXlt(x, tz = "", \dots)
   \item{tz}{A time zone specification to be used for the conversion,
     \emph{if one is required}.  System-specific (see \link{time zones}),
     but \code{""} is the current time zone, and \code{"GMT"} is UTC
-    (Universal Time, Coordinated).}
+    (Universal Time, Coordinated). Invalid values are most commonly
+    treated as UTC, on some platforms with a warning.}
   \item{\dots}{further arguments to be passed to or from other methods.}
   \item{format}{character string giving a date-time format as used
     by \code{\link{strptime}}.}
@@ -96,7 +97,8 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   happens in such cases is OS-specific: one should expect the first to
   be \code{NA}, but the second could be interpreted as either BST or
   GMT (and common OSes give both possible values).  Note too (see
-  \code{\link{strftime}}), OS facilities may not format invalid times correctly.
+  \code{\link{strftime}}) that OS facilities may not format invalid
+  times correctly.
 }
 
 \value{
@@ -108,14 +110,14 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
 
 \note{
   Some of the concepts used have to be extended backwards in time (the
-  usage is \emph{proleptic}).  For example, the origin of time for the
-  \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC}, is before UTC
-  was defined.  More importantly, conversion is done assuming the
-  Gregorian calendar which was introduced in 1582 and not used
-  universally until the 20th century.  One of the re-interpretations
-  assumed by ISO 8601:2004 is that there was a year zero, even though
-  current year numbering (and zero) is a much later concept (525 AD for
-  year numbers from 1 AD).
+  usage is said to be \sQuote{proleptic}).  For example, the origin of
+  time for the \code{"POSIXct"} class, \sQuote{1970-01-01 00:00.00 UTC},
+  is before UTC was defined.  More importantly, conversion is done
+  assuming the Gregorian calendar which was introduced in 1582 and not
+  used universally until the 20th century.  One of the
+  re-interpretations assumed by ISO 8601:2004 is that there was a year
+  zero, even though current year numbering (and zero) is a much later
+  concept (525 AD for year numbers from 1 AD).
 
   If you want to extract specific aspects of a time (such as the day of
   the week) just convert it to class \code{"POSIXlt"} and extract the
