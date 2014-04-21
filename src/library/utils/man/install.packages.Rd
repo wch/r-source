@@ -107,17 +107,18 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{type}{character, indicating the type of package to download and
     install.
 
-    Possible values are (currently) \code{"source"}, \code{"mac.binary"}
-    and \code{"win.binary"}: the binary types can be listed and
-    downloaded but not installed on other platforms.
+    Possible values are (currently) \code{"source"},
+    \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
+    \code{"win.binary"}: the binary types can be listed and downloaded
+    but not installed on other platforms.
 
     The default is the appropriate binary type on Windows and on the
-    CRAN binary OS X distribution, otherwise \code{"source"}.  For
-    the platforms where binary packages are the default, an alternative
-    is \code{"both"} which means \sQuote{try binary if available,
-    otherwise try source}.  (This will only choose the binary package if
-    its version number is no older than the source version.  In
-    interactive use it will ask before attempting to install source
+    CRAN binary OS X distributions, otherwise \code{"source"}.  For the
+    platforms where binary packages are the default, an alternative is
+    \code{"both"} which means \sQuote{try binary if available and
+    current, otherwise try source}.  (This will only choose the binary
+    package if its version number is no older than the source version.
+    In interactive use it will ask before attempting to install source
     packages.)
   }
   \item{configure.args}{
@@ -188,8 +189,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 \details{
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
-  also supported, and the type most commonly used on Windows and from
-  the CRAN distribution for OS X.  This function can install either
+  also supported, and the type most commonly used on Windows and by
+  the CRAN distributions for OS X.  This function can install either
   type where supported, either by downloading a file from a repository
   or from a local file.  The default type is given by
   \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
@@ -303,9 +304,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
   give an error if called with \code{type = "source"} on such a system.
 
-  Some binary distributions of \R can be installed on a machine without the
-  tools needed to install packages: the remedy is to do a complete
-  install of \R which should bring in all those tools as dependencies.
+  Some binary Linux distributions of \R can be installed on a machine
+  without the tools needed to install packages: a possible remedy is to
+  do a complete install of \R which should bring in all those tools as
+  dependencies.
 }
 #endif
 #ifdef windows
