@@ -1537,34 +1537,33 @@ Windows' CRLF line endings.
 @end macro
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it.  This runs on OS X 10.6 and later (Snow Leopard, Lion,
-Mountain Lion, Mavericks, @dots{}); it is a 64-bit (@cputype{x86_64})
-build which should run on all Macs from mid-2008 on.  For older Intel
-Macs and some older versions of the OS you can install @R{} from the
-sources.
+X'. Click on that, then download the file
+@file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
+OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
+@dots{}); it is a 64-bit (@cputype{x86_64}) build which should run on
+all Macs from mid-2008 on.  For older Intel Macs and some older versions
+of the OS you can install @R{} from the sources.
 
-There may be a separate installer package for Mavericks users.
+There is a separate installer package,
+@file{R-@value{VERSIONno}-mavericks.pkg}, which is preferred for
+Mavericks users: the `Snow Leopard' installer package also works there
+and may have more binary packages available.
 
-It is important that if you use this binary package that your OS is
-fully updated: run `Software Update' from the Apple menu to be sure.
+It is important that if you use a binary installer package that your OS
+is fully updated: run `Software Update' from the Apple menu to be sure.
 If you update your OS X version, you should re-install @R{}: the
 installer tailors the installation to the current version of the OS.
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
-currently shows three components (`Package Name').  Everyone will need
-the `R Framework' component: the `R GUI' and `Tcl/Tk' components are
-optional (the latter being needed to use package @pkg{tcltk}).
+currently shows three components.  Everyone will need the `R Framework'
+component: the `R GUI' and `Tcl/Tk' components are optional (the latter
+being needed to use package @pkg{tcltk}).
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
-
-On Mountain Lion and later with `GateKeeper' active you will need to
-right/control-click on any unsigned packages and select @samp{Open}:
-recent @acronym{CRAN} packages are signed.
 
 For building @R{} from source, see @ref{OS X}.
 
@@ -1577,7 +1576,7 @@ For building @R{} from source, see @ref{OS X}.
 @node Running R under OS X, Uninstalling under OS X, Installing R under OS X, Installing R under OS X
 @section Running R under OS X
 
-There are two ways to run @R{} on OS X from the @acronym{CRAN} binary
+There are two ways to run @R{} on OS X from a @acronym{CRAN} binary
 distribution.
 
 There is a GUI console normally installed with the @R{} icon in
@@ -4672,8 +4671,8 @@ command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)  They
 are not available under the @samp{Downloads} preference pane in Xcode.
 
-To use the compilers Xcode 5 provides and the recommended Fortran
-compiler, have in @file{config.site} something like
+To use the compilers from the comannd-line tools for Xcode 5 with the
+recommended Fortran compiler, have in @file{config.site} something like
 
 @example
 CC=clang
@@ -4714,9 +4713,7 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this expects a fully-updated X11 installation: it was built
-against the Apple X11 from Snow Leopard, but XQuartz will work if recent
-enough (e.g.@: version 2.7.4).
+Note that this expects a fully-updated X11 installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
