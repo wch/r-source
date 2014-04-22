@@ -177,7 +177,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 if (!is.null(options$label))
                     object$chunkout[[chunkprefix]] <- chunkout
                 if(!grepl(.SweaveValidFilenameRegexp, chunkout))
-                    warning("file name ", sQuote(chunkout), " is not portable",
+                    warning("file stem ", sQuote(chunkout), " is not portable",
                             call. = FALSE, domain = NA)
             }
         } else chunkout <- object$output
@@ -259,7 +259,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
 
         if (length(devs)) {
             if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
-                warning("file name ", sQuote(chunkprefix), " is not portable",
+                warning("file stem ", sQuote(chunkprefix), " is not portable",
                         call. = FALSE, domain = NA)
             if (options$figs.only)
                 devs[[1L]](name = chunkprefix,
@@ -712,7 +712,7 @@ RtangleRuncode <-  function(object, chunk, options)
 
     if (options$split) {
         if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
-            warning("file name ", sQuote(chunkprefix), " is not portable",
+            warning("file stem ", sQuote(chunkprefix), " is not portable",
                     call. = FALSE, domain = NA)
         outfile <- paste(chunkprefix, options$engine, sep = ".")
         if (!object$quiet) cat(options$chunknr, ":", outfile,"\n")
