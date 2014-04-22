@@ -2849,7 +2849,7 @@ setRlibs <-
                 ## since so many people use 'R CMD' in Makefiles,
                 oPATH <- Sys.getenv("PATH")
                 Sys.setenv(PATH = paste(R.home("bin"), oPATH,
-                           sep = .Platform$path.sep))
+                                        sep = .Platform$path.sep))
                 on.exit(Sys.setenv(PATH = oPATH))
                 ## And too many inst/doc/Makefile are not safe for
                 ## parallel makes
@@ -2870,7 +2870,7 @@ setRlibs <-
                     out <- grep('^Xlib: *extension "RANDR" missing on display',
                                 out, invert = TRUE, value = TRUE,
                                 useBytes = TRUE)
-                warns <- grep("^Warning: file name .* is not portable",
+                warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
                 if (status) {
                     noteLog(Log)
