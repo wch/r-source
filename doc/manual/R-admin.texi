@@ -1545,14 +1545,14 @@ all Macs from mid-2008 on.  For older Intel Macs and some older versions
 of the OS you can install @R{} from the sources.
 
 There is a separate installer package,
-@file{R-@value{VERSIONno}-mavericks.pkg}, which is preferred for
-Mavericks users: the `Snow Leopard' installer package also works there
-and may have more binary packages available.
+@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks only: the
+`Snow Leopard' installer package also works there and may have more
+binary packages available (but there are a few packages using C++11 and
+only available for the Mavericks build).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: run `Software Update' from the Apple menu to be sure.
-If you update your OS X version, you should re-install @R{}: the
-installer tailors the installation to the current version of the OS.
+(If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
 At the `Installation Type' stage, note the option to `Customize'.  This
@@ -1564,6 +1564,9 @@ This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the
 ``Window'' menu and item ``Installer Log''. The full output (select
 ``Show All Log'') is useful for tracking down problems.
+
+If you update your OS X version, you should re-install @R{}: the
+installer tailors the installation to the current version of the OS.
 
 For building @R{} from source, see @ref{OS X}.
 
@@ -2024,7 +2027,9 @@ particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
 `Command-line Tools' for @command{Xcode} and compilers which match those
-used to build @R{}: see @ref{OS X}.
+used to build @R{}: see @ref{OS X}.  (Note that the Fortran compilers
+differ for the `Snow Leopard' and `Mavericks' binary installations of
+@R{}.)
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
@@ -4683,8 +4688,8 @@ OBJC=clang
 @end example
 @noindent
 (@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
-the same compilers.)  Some versions of the @acronym{CRAN} binary package
-installer for `Snow Leopard' changes the settings in @file{etc/Makeconf}
+the same compilers.)  Recent versions of the @acronym{CRAN} binary package
+installer for `Snow Leopard' change the settings in @file{etc/Makeconf}
 to
 @example
 CC = gcc -arch x86_64 -std=gnu99
