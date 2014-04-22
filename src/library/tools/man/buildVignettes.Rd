@@ -61,7 +61,8 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
   if a vignette directory is found, otherwise \code{NULL}.  
 }
 \examples{
-str(gVigns <- pkgVignettes("grid"))
+gVigns <- pkgVignettes("grid")
+\donttest{str(gVigns)}% because it contains paths
 \dontshow{
  `\%=f=\%` <- function(a, b) normalizePath(a) == normalizePath(b)
  with(gVigns,
