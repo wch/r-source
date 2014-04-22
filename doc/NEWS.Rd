@@ -15,8 +15,8 @@
 
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.
-      This is used in the new \command{--no-clean} option to
-      \command{R CMD Sweave}.
+      \code{buildvignette()} gains a \code{keep} argument for more
+      cleaning customization. 
 
       \item The Bioconductor \sQuote{version} used by
       \code{setRepositories()} can now be set by environment variable
@@ -36,6 +36,9 @@
     \itemize{
       \item When \code{attach()} notices conflicts, it does so
       compatibly with \code{library()}, emitting a \code{message()}.
+
+      \command{R CMD Sweave} no longer cleans any files, compatibly with
+      all previous versions of \R.
     }
   }
 }
