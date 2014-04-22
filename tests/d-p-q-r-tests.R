@@ -763,7 +763,7 @@ lp <- pchisq(2^-(0:200), 100, 1, log=TRUE)
 stopifnot(is.finite(lp), lp < -184,
 	  all.equal(lp[201], -7115.10693158))
 dlp <- diff(lp)
-range(dd <- abs(dlp[-(1:30)] - -34.65735902799))
+dd <- abs(dlp[-(1:30)] - -34.65735902799)
 stopifnot(-34.66 < dlp, dlp < -34.41, dd < 1e-8)# 2.2e-10 64bit Lnx
 ## underflowed to -Inf much too early in R <= 3.1.0
 for(e in c(0, 2e-16))# continuity at 80 (= branch point)
