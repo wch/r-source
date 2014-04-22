@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-04-22 r65441) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -212,16 +212,7 @@ _Journal of the Royal Statistical Society, Series B_, *26*, pp.
 > 
 > ### ** Examples
 > 
-> str(gVigns <- pkgVignettes("grid"))
-List of 7
- $ docs    : chr [1:13] "/home/ripley/R/R-devel/library/grid/doc/displaylist.Rnw" "/home/ripley/R/R-devel/library/grid/doc/frame.Rnw" "/home/ripley/R/R-devel/library/grid/doc/grid.Rnw" "/home/ripley/R/R-devel/library/grid/doc/grobs.Rnw" ...
- $ names   : chr [1:13] "displaylist" "frame" "grid" "grobs" ...
- $ engines : chr [1:13] "utils::Sweave" "utils::Sweave" "utils::Sweave" "utils::Sweave" ...
- $ patterns: chr [1:13] "[.][rRsS](nw|tex)$" "[.][rRsS](nw|tex)$" "[.][rRsS](nw|tex)$" "[.][rRsS](nw|tex)$" ...
- $ dir     : chr "/home/ripley/R/R-devel/library/grid/doc"
- $ pkgdir  : chr "/home/ripley/R/R-devel/library/grid"
- $ msg     : chr(0) 
- - attr(*, "class")= chr "pkgVignettes"
+> gVigns <- pkgVignettes("grid")
 > ## Don't show: 
 >  `%=f=%` <- function(a, b) normalizePath(a) == normalizePath(b)
 >  with(gVigns,
