@@ -248,6 +248,9 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 		R_IoBufferWriteReset(&R_ConsoleIob);
 		return 0;
 	    }
+	    /* PR#15770 We don't want to step into expressions entered at the debug prompt. 
+	       The 'S' will be changed back to 's' after the next eval. */
+	    if (R_BrowserLastCommand == 's') R_BrowserLastCommand = 'S';  
 	}
 	R_Visible = FALSE;
 	R_EvalDepth = 0;
@@ -264,6 +267,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	Rf_callToplevelHandlers(thisExpr, value, TRUE, wasDisplayed);
 	R_CurrentExpr = value; /* Necessary? Doubt it. */
 	UNPROTECT(1);
+	if (R_BrowserLastCommand == 'S') R_BrowserLastCommand = 's';  
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	state->prompt_type = 1;
 	return(1);
