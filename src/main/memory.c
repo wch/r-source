@@ -105,7 +105,7 @@ static int gc_reporting = 0;
 static int gc_count = 0;
 
 /* These are used in profiling to separete out time in GC */
-static Rboolean R_in_gc = TRUE;
+static Rboolean R_in_gc = FALSE;
 int R_gc_running() { return R_in_gc; }
 
 #ifdef TESTING_WRITE_BARRIER
