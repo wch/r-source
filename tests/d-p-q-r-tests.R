@@ -758,6 +758,17 @@ stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
 ## extreme tail of non-central chisquare
 stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
 ## jumped to zero too early up to R 2.10.1 (PR#14216)
+## left "extreme tail"
+lp <- pchisq(2^-(0:200), 100, 1, log=TRUE)
+stopifnot(is.finite(lp), lp < -184,
+	  all.equal(lp[201], -7115.10693158))
+dlp <- diff(lp)
+range(dd <- abs(dlp[-(1:30)] - -34.65735902799))
+stopifnot(-34.66 < dlp, dlp < -34.41, dd < 1e-8)# 2.2e-10 64bit Lnx
+## underflowed to -Inf much too early in R <= 3.1.0
+for(e in c(0, 2e-16))# continuity at 80 (= branch point)
+stopifnot(all.equal(pchisq(1:2, 1.01, ncp = 80*(1-e), log=TRUE),
+		    c(-34.57369629, -31.31514671)))
 
 ## logit() == qlogit() on the right extreme:
 x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))
@@ -791,6 +802,15 @@ stopifnot(abs(1 - dnorm(35+3^-9)/ 3.933395747534971e-267) < 1e-15)
 ldp <- diff(log(diff(pbeta(0.5, 2^-(90+ 1:25), 2^-60, log.p=TRUE))))
 stopifnot(abs(ldp - log(1/2)) < 1e-9)
 ## pbeta(*, log) lost all precision here, for R <= 3.0.x (PR#15641)
+
+## pbinom(), dbinom(), dhyper(),.. : R allows "almost integer" n
+for (FUN in c(function(n) dbinom(1,n,0.5), function(n) pbinom(1,n,0.5),
+              function(n) dpois(n, n), function(n) dhyper(n+1, n+5,n+5, n)))
+    try( lapply(sample(10000, size=1000), function(M) {
+    ## invisible(lapply(sample(10000, size=1000), function(M) {
+        n <- (M/100)*10^(2:20); if(anyNA(P <- FUN(n)))
+            stop("NA for M=",M, "; 10ex=",paste((2:20)[is.na(P)], collapse=", "))}))
+## check was too tight for large n in R <= 3.1.0 (PR#15734)
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

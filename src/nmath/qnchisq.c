@@ -72,24 +72,24 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 	if(p > 1 - DBL_EPSILON) return ML_POSINF;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
         for(; ux < DBL_MAX &&
-		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, TRUE) < pp;
+		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, TRUE, FALSE) < pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
         for(lx = fmin2(ux0, DBL_MAX);
 	    lx > DBL_MIN &&
-		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, TRUE) > pp;
+		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, TRUE, FALSE) > pp;
 	    lx *= 0.5);
     }
     else {
 	if(p > 1 - DBL_EPSILON) return 0.0;
 	pp = fmin2(1 - DBL_EPSILON, p * (1 + Eps));
         for(; ux < DBL_MAX &&
-		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, FALSE) > pp;
+		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, FALSE, FALSE) > pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
         for(lx = fmin2(ux0, DBL_MAX);
 	    lx > DBL_MIN &&
-		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, FALSE) < pp;
+		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, FALSE, FALSE) < pp;
 	    lx *= 0.5);
     }
 
@@ -97,7 +97,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
     if(lower_tail) {
 	do {
 	    nx = 0.5 * (lx + ux);
-	    if (pnchisq_raw(nx, df, ncp, accu, racc, 100000, TRUE) > p)
+	    if (pnchisq_raw(nx, df, ncp, accu, racc, 100000, TRUE, FALSE) > p)
 		ux = nx;
 	    else
 		lx = nx;
@@ -106,7 +106,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
     } else {
 	do {
 	    nx = 0.5 * (lx + ux);
-	    if (pnchisq_raw(nx, df, ncp, accu, racc, 100000, FALSE) < p)
+	    if (pnchisq_raw(nx, df, ncp, accu, racc, 100000, FALSE, FALSE) < p)
 		ux = nx;
 	    else
 		lx = nx;
