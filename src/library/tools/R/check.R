@@ -3373,9 +3373,28 @@ setRlibs <-
                     lines <- grep("Warning: ignoring .First.lib()", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
+                lines <- unique(lines)
+
+                note_re <-
+                    "warning: control may reach end of non-void function"
+
+                notes <- grep(note_re, lines0, value = TRUE, useBytes = TRUE)
+                notes <- unique(notes)
+
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
+                    if(length(notes)) {
+                        printLog(Log,
+                                 "Found the following additional warnings:\n")
+                        printLog0(Log, .format_lines_with_indent(notes),
+                                  "\n")
+                    }
+                    printLog0(Log, sprintf("See %s for details.\n",
+                                           sQuote(outfile)))
+                } else if(length(notes)) {
+                    noteLog(Log, "Found the following warnings:")
+                    printLog0(Log, .format_lines_with_indent(notes), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
