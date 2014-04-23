@@ -52,6 +52,9 @@
       \item The \code{s} (\dQuote{step into}) command in the debugger 
       would cause R to step into expressions evaluated there,
       not just into functions being debugged.  (PR#15770)
+      
+      \item Use of \code{save(..., envir=)} with named objects could
+      fail.  (\PR{15758})
     }
   }
 }
