@@ -234,6 +234,13 @@ FOSS: no
 Extensible: yes
 Restricts_use: yes
 
+Name: Creative Commons Attribution-ShareAlike 3.0 Unported License
+Abbrev: CC BY-SA 3.0
+FSF: free_and_GPLv3_incompatible
+URL: http://creativecommons.org/licenses/by-sa/3.0
+FOSS: yes
+Extensible: yes
+
 Name: Creative Commons Attribution-ShareAlike 3.0 United States License
 Abbrev: CC BY-SA 3.0 US
 FSF: free_and_GPLv3_incompatible
