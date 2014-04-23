@@ -39,7 +39,7 @@ png <-
              width = 480, height = 480, units = "px", pointsize = 12,
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo", "cairo-png"),
-             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -77,7 +77,7 @@ bmp <-
              width = 480, height = 480, units = "px", pointsize = 12,
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -109,7 +109,7 @@ jpeg <-
              width = 480, height = 480, units = "px", pointsize = 12,
              quality = 75, bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
@@ -143,7 +143,7 @@ tiff <-
                              "lzw+p", "zip+p"),
              bg = "white", res = NA, family = "sans",
              restoreConsole = TRUE, type = c("windows", "cairo"),
-             antialias = c("default", "none", "cleartype", "grey", "subpixel"))
+             antialias = c("default", "none", "cleartype", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
