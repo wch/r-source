@@ -95,6 +95,8 @@ merge.data.frame <-
             bx <- x[, by.x]; if(is.factor(bx)) bx <- as.character(bx)
             by <- y[, by.y]; if(is.factor(by)) by <- as.character(by)
         } else {
+            if (!is.null(incomparables))
+                stop("'incomparables' is supported only for merging on a single column")
             ## Do these together for consistency in as.character.
             ## Use same set of names.
             bx <- x[, by.x, drop=FALSE]; by <- y[, by.y, drop=FALSE]

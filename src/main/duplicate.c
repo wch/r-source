@@ -365,10 +365,12 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 void copyVector(SEXP s, SEXP t)
 {
     R_xlen_t i, ns, nt;
-
+    SEXPTYPE sT = TYPEOF(s), tT = TYPEOF(t);
+    if (sT != tT)
+	error("vector types do not match in copyVector");
     nt = XLENGTH(t);
     ns = XLENGTH(s);
-    switch (TYPEOF(s)) {
+    switch (sT) {
     case STRSXP:
 	for (i = 0; i < ns; i++)
 	    SET_STRING_ELT(s, i, STRING_ELT(t, i % nt));
