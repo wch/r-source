@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *  Copyright (C) 2003--2008  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -334,8 +334,6 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
     }
 }
 
-static Rboolean Walker_warn = FALSE;
-
 /* A  version using Walker's alias method, based on Alg 3.13B in
    Ripley (1987).
  */
@@ -347,12 +345,6 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
     double *q, rU;
     int i, j, k;
     int *HL, *H, *L;
-
-    if (!Walker_warn) {
-	Walker_warn = TRUE;
-	warning("Walker's alias method used: results are different from R < 2.2.0");
-    }
-
 
     /* Create the alias tables.
        The idea is that for HL[0] ... L-1 label the entries with q < 1
