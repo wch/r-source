@@ -7331,6 +7331,13 @@ like
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero
 @end example
 
+@noindent
+A smaller selection is available for GCC, for 4.9.0
+@example
+-fsanitize=integer-divide-by-zero,null,return,shift,signed-integer-overflow,unreachable,vla-bound
+@end example
+
+
 There is also the compiler flag @option{-fcatch-undefined-behavior},
 said to be more reliable in @command{clang} than @command{gcc}.
 
