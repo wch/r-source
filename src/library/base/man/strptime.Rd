@@ -161,8 +161,10 @@ strptime(x, format, tz = "")
   
       For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes
-      from UTC, so \code{-0800} is 8 hours behind UTC.} 
-    \item{\code{\%Z}}{(Output only.) Time zone abbreviation as a
+      from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
+      \code{+1400} are accepted as from \R 3.1.1: previous versions only
+      accepted up to \code{+1200}.} 
+    \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
   }
