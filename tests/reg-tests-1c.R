@@ -349,4 +349,9 @@ hw <- hclust(dist(sqrt(1:5)), method=c(M = "ward"))
 ## failed for 2 days in R-devel/-alpha
 
 
+## PR#15758
+my_env <- new.env(); my_env$one <- 1L
+save(one, file = tempfile(), envir = my_env)
+## failed in R < 3.1.1.
+
 proc.time()

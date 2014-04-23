@@ -42,7 +42,7 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
 
   The way the date-times are rendered (especially month names) is
   controlled by the locale setting of category \code{"LC_TIME"} (see
-  \code{\link{Sys.setlocale}}.
+  \code{\link{Sys.setlocale}}).
 }
 \value{
   The locations on the axis scale at which tick marks were drawn.

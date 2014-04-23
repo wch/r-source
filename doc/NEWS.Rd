@@ -71,6 +71,9 @@
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
       was not accepted.  ((\PR{15760}))
+      
+      \item Use of \code{save(..., envir=)} with named objects could
+      fail.  (\PR{15758})
     }
   }
 }
