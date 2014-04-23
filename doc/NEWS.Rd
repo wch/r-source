@@ -62,8 +62,15 @@
       (Based on \PR{15635} and a suggestion by Roby Joehanes.)
       
       \item The \code{s} (\dQuote{step into}) command in the debugger 
-      would cause R to step into expressions evaluated there,
-      not just into functions being debugged.  (PR#15770)
+      would cause \R to step into expressions evaluated there,
+      not just into functions being debugged.  (\PR{15770})
+
+      \item The third-party code used by \code{strptime()} rejected
+      time-zone offsets of more than \code{+1200}. (\PR{15768})
+
+      \item (Windows only.)
+      \code{png(type = "cairo", antialias = "gray")}
+      was not accepted.  ((\PR{15760}))
     }
   }
 }

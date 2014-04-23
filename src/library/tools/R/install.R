@@ -333,8 +333,7 @@
             if (res)
                 errmsg(sprintf("packaging into %s failed", sQuote(filename)))
             message("packaged installation of ",
-                    sQuote(pkg_name), " as ",
-                    sQuote(paste0(filename, ".gz")),
+                    sQuote(pkg_name), " as ", sQuote(filename),
                     domain = NA)
             setwd(owd)
         }
