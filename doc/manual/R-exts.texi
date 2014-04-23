@@ -7230,9 +7230,9 @@ compilation times and uses substantially more memory, often 1--2GB, at
 run time.  By comparison with @command{valgrind}, it can detect misuse
 of stack and global variables but not the use of uninitialized memory.
 
-Most versions@footnote{@command{gcc} will from version 4.9.0.} do not
-return symbolic addresses for the location of the error.  One
-possibility is to use an external symbolizer such as
+@command{gcc} as from version 4.9.0 returns symbolic addresses for the
+location of the error, but most other version do not.  For the latter,
+one possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
@@ -7244,7 +7244,7 @@ The simplest way to make use of this is to build a version of @R{} with
 something like
 
 @example
-CC="gcc-4.8 -std=gnu99 -fsanitize=address"
+CC="gcc-4.9 -std=gnu99 -fsanitize=address"
 CFLAGS="-fno-omit-frame-pointer -O2 -Wall -pedantic -mtune=native"
 @end example
 
@@ -7253,10 +7253,10 @@ which will ensure that the @code{libasan} run-time library is compiled
 into the @R{} executable.  However this check can be enabled on a
 per-package basis by using a @file{~/.R/Makevars} file like
 @example
-CC = gcc-4.8 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
-CXX = g++-4.8 -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran-4.8 -fsanitize=address
-FC = gfortran-4.8 -fsanitize=address
+CC = gcc-4.9 -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
+CXX = g++-4.9 -fsanitize=address -fno-omit-frame-pointer
+F77 = gfortran-4.9 -fsanitize=address
+FC = gfortran-4.9 -fsanitize=address
 @end example
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
@@ -7298,7 +7298,7 @@ compilation: see @uref{http://clang-analyzer.llvm.org/}.
 `UBSanitizer' is a tool for C/C++ source code selected by
 @samp{-fsanitize=undefined} (or with the address sanitizer by
 @samp{-fsanitize=undefined,address} where supported) in suitable builds
-of @command{clang}, and will appear in GCC 4.9.0.  (It can be enabled in
+of @command{clang}, and GCC as from 4.9.0.  (It can be enabled in
 a similar way to the address sanitizer: see the previous subsection.)
 
 `Undefined behaviour' is where the language standard does not require
