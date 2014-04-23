@@ -3698,7 +3698,7 @@ setRlibs <-
                     srcfiles <- dir(".", all.files = TRUE)
                     fi <- file.info(srcfiles)
                     srcfiles <- srcfiles[!fi$isdir]
-                    srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def$)",
+                    srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
                                      srcfiles,
                                      invert = TRUE, value = TRUE)
                     if (length(srcfiles)) {
