@@ -1,4 +1,4 @@
-% File src/library/methods/man/stdRefClass.Rd
+[% File src/library/methods/man/stdRefClass.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2010-2 R Core Team
 % Distributed under GPL 2 or later
@@ -30,7 +30,7 @@ objects.  Objects normally do not come directly from this class, but
 from subclasses defined by a call to \code{\link{setRefClass}}.
 The documentation below is technical background describing the implementation, but applications
 should use the interface documented under \code{\link{setRefClass}},
-in particular the \code{\$} operator and field accessor functions as
+in particular the \code{$} operator and field accessor functions as
 described there.
 }
 
@@ -42,7 +42,7 @@ Each version of this mechanism is defined by a \emph{basic reference
   class}, which must implement a set of methods and provide some
 further information used by \code{\link{setRefClass}}.
 
-The required methods are for operators \code{\$} and \code{\$<-} to
+The required methods are for operators \code{$} and \code{$<-} to
 get and set a field in an object, and for \code{\link{initialize}} to
 initialize objects.
 
@@ -60,8 +60,8 @@ Other basic reference classes may use an interface to a language such
 as Java or C++ using reference semantics for classes.
 
 Usually, the \R  user will be able to invoke class methods on the
-class, using the \code{\$} operator.  The basic reference class
-method for \code{\$} needs to make this possible.  Essentially, the
+class, using the \code{$} operator.  The basic reference class
+method for \code{$} needs to make this possible.  Essentially, the
 operator must return an \R function corresponding to the object and
 the class method name.
 
