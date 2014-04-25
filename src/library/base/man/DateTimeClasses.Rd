@@ -95,7 +95,7 @@
     \item{\code{zone}}{(Optional.) The abbreviation for the time zone in
       force at that time: \code{""} if unknown (but \code{""} might also
       be used for UTC).}
-    \item{\code{gmtoff}}{(Optional.) The offset in minutes from GMT:
+    \item{\code{gmtoff}}{(Optional.) The offset in seconds from GMT:
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
