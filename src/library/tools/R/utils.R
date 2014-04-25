@@ -1029,6 +1029,8 @@ function()
                "Version",
                "VignetteBuilder",
                "ZipData"),
+             ## Should be documented in R-exts eventually:
+             c("Additional_repositories"),
              ## Others: adjust as needed.
              c("Repository",
                "Path",
