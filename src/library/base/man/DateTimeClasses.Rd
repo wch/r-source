@@ -193,9 +193,9 @@
   to billions of years), but such times can only be interpreted with
   reference to a time zone.
 
-  % http://www.timeanddate.com/calendar/julian-gregorian-switch.html The
-  concept of time zones was first adopted in the nineteenth century, and
-  the Gregorian calendar was introduced in 1582 but not universally
+  % http://www.timeanddate.com/calendar/julian-gregorian-switch.html
+  The concept of time zones was first adopted in the nineteenth century,
+  and the Gregorian calendar was introduced in 1582 but not universally
   adopted until 1927.  OS services almost invariably assume the
   Gregorian calendar and may assume that the time zone that was first
   enacted for the location was in force before that date.  (The earliest
