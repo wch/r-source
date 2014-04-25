@@ -99,18 +99,19 @@
       positive values are East of the meridian.  Usually \code{NA} if
       unknown, but \code{0} could mean unknown.}
   }
-  (The last two components not present for times in UTC and are
+  (The last two components are not present for times in UTC and are
   platform-dependent: they are supported on platforms based on BSD or
-  \code{glibc}, including Linux and OS X, but are not necessarily set.).
-  Note that the internal list structure is somewhat hidden, as many
-  methods (including \code{\link{length}(x)}, \code{\link{print}()} and
-  \code{\link{str}}) apply to the abstract date-time vector, as for
-  \code{"POSIXct"}.  The classes correspond to the POSIX/C99 constructs
-  of \sQuote{calendar time} (the \code{time_t} data type) and
-  \sQuote{local time} (or broken-down time, the \code{struct tm} data
-  type), from which they also inherit their names.  The components of
-  \code{"POSIXlt"} are integer vectors, except \code{sec} and
-  \code{zone}.
+  \code{glibc} (including Linux and OS X) and those using the
+  \code{tzcode} implementation shipped with \R (including Windows). But
+  they are not necessarily set.).  Note that the internal list structure
+  is somewhat hidden, as many methods (including
+  \code{\link{length}(x)}, \code{\link{print}()} and \code{\link{str}})
+  apply to the abstract date-time vector, as for \code{"POSIXct"}.  The
+  classes correspond to the POSIX/C99 constructs of \sQuote{calendar
+  time} (the \code{time_t} data type) and \sQuote{local time} (or
+  broken-down time, the \code{struct tm} data type), from which they
+  also inherit their names.  The components of \code{"POSIXlt"} are
+  integer vectors, except \code{sec} and \code{zone}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
