@@ -6693,7 +6693,7 @@ function(x, ...)
           "FOSS licence with BuildVignettes: false"
       },
       if(length(y <- x$fields)) {
-          c("Possibly mis-spelled fields in DESCRIPTION:",
+          c("Unknown, possibly mis-spelled, fields in DESCRIPTION:",
             sprintf("  %s", paste(sQuote(y), collapse = " ")))
       },
       if(length(y <- x$overrides)) {
