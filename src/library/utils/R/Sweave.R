@@ -291,15 +291,16 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
 ###**********************************************************
 
+## NB: } should not be escaped in [] .
 SweaveSyntaxNoweb <-
     list(doc = "^@",
          code = "^<<(.*)>>=.*",
          coderef = "^<<(.*)>>.*",
-         docopt = "^[[:space:]]*\\\\SweaveOpts\\{([^\\}]*)\\}",
-         docexpr = "\\\\Sexpr\\{([^\\}]*)\\}",
+         docopt = "^[[:space:]]*\\\\SweaveOpts\\{([^}]*)\\}",
+         docexpr = "\\\\Sexpr\\{([^}]*)\\}",
          extension = "\\.[rsRS]?nw$",
-         syntaxname = "^[[:space:]]*\\\\SweaveSyntax\\{([^\\}]*)\\}",
-         input = "^[[:space:]]*\\\\SweaveInput\\{([^\\}]*)\\}",
+         syntaxname = "^[[:space:]]*\\\\SweaveSyntax\\{([^}]*)\\}",
+         input = "^[[:space:]]*\\\\SweaveInput\\{([^}]*)\\}",
          trans = list(
              doc = "@",
              code = "<<\\1>>=",
@@ -315,8 +316,8 @@ class(SweaveSyntaxNoweb) <- "SweaveSyntax"
 
 SweaveSyntaxLatex <- SweaveSyntaxNoweb
 SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end\\{Scode\\}"
-SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin\\{Scode\\}\\{?([^\\}]*)\\}?.*"
-SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef\\{([^\\}]*)\\}.*"
+SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin\\{Scode\\}\\{?([^}]*)\\}?.*"
+SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef\\{([^}]*)\\}.*"
 SweaveSyntaxLatex$extension <- "\\.[rsRS]tex$"
 
 SweaveSyntaxLatex$trans$doc <-  "\\\\end{Scode}"

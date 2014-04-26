@@ -300,7 +300,7 @@ encoding as the main file.
 \subsection{Using scalars in text}
 
 There is limited support for using the values of \R{} objects in text
-chunks. Any occurrence of \verb|\Sexpr{|\texttt{\textit{expr}}\verb|}|
+chunks. Any occurrence of \verb|\Sexpr|\verb|{|\texttt{\textit{expr}}\verb|}|
 is replaced by the string resulting from coercing the value of the
 expression \texttt{expr} to a character vector; only the first element
 of this vector is used. E.g., \verb|\Sexpr{sqrt(9)}| will be replaced
