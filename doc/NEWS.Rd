@@ -80,6 +80,9 @@
       
       \item \code{Sweave()} mis-parsed \samp{Sexpr} expressions that
       contained backslashes.  (\PR{15779})
+      
+      \item The return value from \code{options(foo=NULL)} was not
+      the previous value of the option.  (\PR{15781})
     }
   }
 }
