@@ -4678,7 +4678,7 @@ command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)  They
 are not available under the @samp{Downloads} preference pane in Xcode.
 
-To use the compilers from the comannd-line tools for Xcode 5 with the
+To use the compilers from the command-line tools for Xcode 5 with the
 recommended Fortran compiler, have in @file{config.site} something like
 
 @example
