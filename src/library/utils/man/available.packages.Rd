@@ -1,6 +1,6 @@
 % File src/library/utils/man/available.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{available.packages}
@@ -62,21 +62,21 @@ available.packages(contriburl =
 
   The built-in filters are
   \describe{
-    \item{\code{"R_version"}}{exclude packages whose \R version
+    \item{\code{"R_version"}}{Exclude packages whose \R version
       requirements are not met}
-    \item{\code{"OS_type"}}{exclude packages whose OS requirement is
+    \item{\code{"OS_type"}}{Exclude packages whose OS requirement is
       incompatible with this version of \R: that is exclude
       Windows-only packages on a Unix-alike platform
       and \emph{vice versa}.}
-    \item{\code{"subarch"}}{for binary packages, exclude those with
+    \item{\code{"subarch"}}{For binary packages, exclude those with
       compiled code that is not available for the current
       sub-architecture, e.g. exclude packages only compiled for 32-bit
       Windows on a 64-bit Windows \R.}
-    \item{\code{"duplicates"}}{only report the latest version where more
+    \item{\code{"duplicates"}}{Only report the latest version where more
       than one version is available, and only report the first-named
       repository (in \code{contriburl}) with the latest version if that
       is in more than one repository.}
-    \item{\code{"license/FOSS"}}{include only packages for which
+    \item{\code{"license/FOSS"}}{Include only packages for which
       installation can proceed solely based on packages which can be
       verified as Free or Open Source Software (FOSS, e.g.,
       \url{http://en.wikipedia.org/wiki/FOSS}) employing the available
@@ -86,13 +86,16 @@ available.packages(contriburl =
       Note that this does depend on the repository supplying license
       information.
     }
-    \item{\code{"license/restricts_use"}}{include only packages for
+    \item{\code{"license/restricts_use"}}{Include only packages for
       which installation can proceed solely based on packages which are
       guaranteed not to restrict use.
     }
-    \item{\code{"CRAN"}}{use CRAN versions in preference to versions
+    \item{\code{"CRAN"}}{Use CRAN versions in preference to versions
       from other repositories (even if these have a higher version
-      number).}
+      number).  This needs to be applied \emph{before} the default
+      \code{"duplicates"} filter, so cannot be used with
+      \code{add = TRUE}.
+    }
   }
   If all the filters are from this set they can be specified as a
   character vector; otherwise \code{filters} should be a list with
