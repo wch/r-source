@@ -35,6 +35,9 @@
       \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
       (It has been stated that Bioconductor will switch from version
       2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
+      
+      \item Error messages from bugs in embedded \samp{Sexpr} code
+      in Sweave documents now report the source location.
     }
   }
 
@@ -70,10 +73,13 @@
 
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
-      was not accepted.  ((\PR{15760}))
+      was not accepted.  (\PR{15760})
       
       \item Use of \code{save(..., envir=)} with named objects could
       fail.  (\PR{15758})
+      
+      \item \code{Sweave()} mis-parsed \samp{Sexpr} expressions that
+      contained backslashes.  (\PR{15779})
     }
   }
 }

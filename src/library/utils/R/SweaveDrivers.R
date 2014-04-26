@@ -456,7 +456,13 @@ RweaveLatexWritedoc <- function(object, chunk)
                       cmdloc + attr(cmdloc, "match.length") - 1L)
         cmd <- sub(object$syntax$docexpr, "\\1", cmd)
         if (object$options$eval) {
-            val <- as.character(eval(parse(text = cmd), envir = .GlobalEnv))
+            val <- tryCatch(as.character(eval(parse(text = cmd), envir = .GlobalEnv)),
+		    error = function(e) {
+	               filenum <- attr(chunk, "srcFilenum")[pos[1L]]
+                       filename <- attr(chunk, "srcFilenames")[filenum]
+                       location <- paste0(basename(filename), ":", attr(chunk, "srclines")[pos[1L]])
+		       stop("at ",location, ", ", conditionMessage(e), call. = FALSE)
+		   })
             ## protect against character(), because sub() will fail
             if (length(val) == 0L) val <- ""
         }
