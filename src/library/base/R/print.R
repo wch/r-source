@@ -82,12 +82,17 @@ print.listof <- function(x, ...)
 
 ## formerly same as [.AsIs
 `[.listof` <- function(x, i, ...) structure(NextMethod("["), class = class(x))
+`[.DList` <- `[.simple.list` <- `[.listof`
 
 ## used for version:
 print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
 
-`[.simple.list` <- `[.listof`
-
 print.function <- function(x, useSource = TRUE, ...)
     .Internal(print.function(x, useSource, ...))
+
+print.DList <- function(x, ...)
+{
+    cat(formatDL(x, ...), sep="\n")
+    invisible(x)
+}

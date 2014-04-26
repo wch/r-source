@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.getenv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.getenv}
@@ -39,6 +39,10 @@ Sys.getenv(x = NULL, unset = "", names = NA)
   some platforms allow but POSIX does not.  (Windows is such a platform:
   there names including \code{=} are truncated just before the first
   \code{=}.)
+
+  When \code{x} is missing and \code{names} is not false, the result is
+  of class \code{"DList"} in order to get a nice
+  \code{\link{print}} method.
 }
 \seealso{
   \code{\link{Sys.setenv}},
@@ -53,6 +57,7 @@ Sys.getenv(x = NULL, unset = "", names = NA)
 Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 
 names(s <- Sys.getenv()) # all settings (the values could be very long)
+head(s, 12)# using the DList print() method
 
 ## Language and Locale settings -- but rather use Sys.getlocale()
 s[grep("^L(C|ANG)", names(s))]

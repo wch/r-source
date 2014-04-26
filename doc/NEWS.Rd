@@ -11,6 +11,10 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
+
+      \item \code{Sys.getenv(x, names, *)} returns a
+      \code{"DList"}, and hence prints nicely when \code{x} is
+      missing and \code{names} is not false.
     }
   }
   %% \subsection{BUG FIXES}{
@@ -28,7 +32,7 @@
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.
       \code{buildvignette()} gains a \code{keep} argument for more
-      cleaning customization. 
+      cleaning customization.
 
       \item The Bioconductor \sQuote{version} used by
       \code{setRepositories()} can now be set by environment variable
@@ -63,8 +67,8 @@
       no longer underflows for small \code{x} and \code{ncp < 80}, e.g,
       for \code{pchisq(1e-5, df = 100, ncp = 1, log = TRUE)}.
       (Based on \PR{15635} and a suggestion by Roby Joehanes.)
-      
-      \item The \code{s} (\dQuote{step into}) command in the debugger 
+
+      \item The \code{s} (\dQuote{step into}) command in the debugger
       would cause \R to step into expressions evaluated there,
       not just into functions being debugged.  (\PR{15770})
 
@@ -74,7 +78,7 @@
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
       was not accepted.  (\PR{15760})
-      
+
       \item Use of \code{save(..., envir=)} with named objects could
       fail.  (\PR{15758})
       
