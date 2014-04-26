@@ -599,7 +599,7 @@ function(log, drop_ok = TRUE)
         re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
         flags <- if(length(pos <- grep(re, header,
                                        perl = TRUE, useBytes = TRUE))) {
-            sub(re, "\\1", header[pos[1L]],
+            sub(re, "\\2", header[pos[1L]],
                 perl = TRUE, useBytes = TRUE)
         } else ""
     } else return()
