@@ -73,7 +73,8 @@
       not just into functions being debugged.  (\PR{15770})
 
       \item The third-party code used by \code{strptime()} rejected
-      time-zone offsets of more than \code{+1200}. (\PR{15768})
+      time-zone offsets of more than \code{+1200} (\code{+1245},
+      \code{+1300} and \code{+1400} can occur).  (\PR{15768})
 
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
@@ -85,8 +86,11 @@
       \item \code{Sweave()} mis-parsed \samp{Sexpr} expressions that
       contained backslashes.  (\PR{15779})
       
-      \item The return value from \code{options(foo=NULL)} was not
+      \item The return value from \code{options(foo = NULL)} was not
       the previous value of the option.  (\PR{15781})
+      
+      \item \code{enc2utf8()} and \code{enc2native()} did not always
+      mark the encoding of the return values when it was known.
     }
   }
 }
