@@ -344,7 +344,7 @@ function(package, dir, lib.loc = NULL)
                            stages = "build",
                            built_file = built_file)
         if(length(db)) {
-            first <- nchar(file.path(dir, "man", "")) + 1L
+            first <- nchar(file.path(dir, "man")) + 2L
             names(db) <- substring(names(db), first)
         }
     }

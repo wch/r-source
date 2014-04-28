@@ -491,7 +491,7 @@ get_exclude_patterns <- function()
 
     	# Strip the pkgdir off the names
     	names(db) <- substring(names(db),
-                               nchar(file.path(pkgdir, "man", "")) + 1L)
+                               nchar(file.path(pkgdir, "man")) + 2L)
 
 	containsSexprs <-
             which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
