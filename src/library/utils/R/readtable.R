@@ -32,12 +32,12 @@ function(file, sep = "", quote = "\"'", skip = 0,
 
 
 type.convert <-
-function(x, na.strings = "NA", as.is = FALSE, dec = ".")
-    .External2(C_typeconvert, x, na.strings, as.is, dec)
+function(x, na.strings = "NA", as.is = FALSE, dec = ".", exact=NA)
+    .External2(C_typeconvert, x, na.strings, as.is, dec, exact)
 
 
 read.table <-
-function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
+function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=NA,
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
@@ -207,8 +207,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     for (i in (1L:cols)[do]) {
         data[[i]] <-
             if (is.na(colClasses[i]))
-                type.convert(data[[i]], as.is = as.is[i], dec = dec,
-                             na.strings = character(0L))
+                type.convert(data[[i]], as.is = as.is[i], dec=dec,
+			     exact=exact, na.strings = character(0L))
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])

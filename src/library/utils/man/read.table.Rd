@@ -16,7 +16,7 @@
 }
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'",
-           dec = ".", row.names, col.names,
+           dec = ".", exact = NA, row.names, col.names,
            as.is = !stringsAsFactors,
            na.strings = "NA", colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
@@ -78,6 +78,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     \code{colClasses} is specified.}
 
   \item{dec}{the character used in the file for decimal points.}
+
+  \item{exact}{logical indicating how to convert numbers whose conversion
+    to double precision would lose accuracy, see \code{\link{type.convert}}.}
 
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the
@@ -198,7 +201,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   }
 
   \item{skipNul}{logical: should nuls be skipped?}
-  
+
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
 
@@ -293,10 +296,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   the column of row names (if any).
 
   There are two approaches for reading input that is not in the local
-  encoding.  If the input is known to be UTF-8 or Latin1, use the 
-  \code{encoding} argument to declare that.  If the input is in some 
-  other encoding, then it may be translated on input.  The \code{fileEncoding} 
-  argument achieves this by setting up a connection to do the re-encoding 
+  encoding.  If the input is known to be UTF-8 or Latin1, use the
+  \code{encoding} argument to declare that.  If the input is in some
+  other encoding, then it may be translated on input.  The \code{fileEncoding}
+  argument achieves this by setting up a connection to do the re-encoding
   into the current locale.  Note that on Windows or other systems not running
   in a UTF-8 locale, this may not be possible.
 }

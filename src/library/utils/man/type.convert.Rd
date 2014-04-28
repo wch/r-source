@@ -11,7 +11,7 @@
   factor as appropriate.
 }
 \usage{
-type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
+type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = NA)
 }
 \arguments{
   \item{x}{a character vector.}
@@ -19,10 +19,24 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
   \item{na.strings}{a vector of strings which are to be interpreted as
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values in logical, integer, numeric or complex vectors.}
-
   \item{as.is}{logical.  See \sQuote{Details}.}
-
   \item{dec}{the character to be assumed for decimal points.}
+  \item{exact}{logical indicating how to convert numbers whose conversion
+    to double precision would lose accuracy, typically when \code{x}
+    has more digits than can be stored in a \code{\link{double}}.
+    \describe{
+      \item{\code{exact = FALSE}:}{the conversion happens with some
+	accuracy loss.  This has been the only behavior of \R versions 3.0.3
+	and earlier.}
+      \item{\code{exact = TRUE}:}{\code{x} is \emph{not} converted to a
+	number, but to a \code{\link{factor}} or left as character,
+	depending on \code{as.is}.  This has been the only behavior of
+	\R version 3.1.0.}
+      \item{\code{exact = NA}, default:}{a \code{\link{warning}} about
+	accuracy loss is signalled and the conversion happens as with
+	\code{exact = FALSE}.}
+    }
+  }
 }
 \details{
   This is principally a helper function for \code{\link{read.table}}.

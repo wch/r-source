@@ -39,9 +39,16 @@
       \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
       (It has been stated that Bioconductor will switch from version
       2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
-      
+
       \item Error messages from bugs in embedded \samp{Sexpr} code
       in Sweave documents now report the source location.
+
+      %% port to R patched only after a bit of dust settlement:
+      \item \code{type.convert()}, \code{read.table()} and similar
+      \code{read.*()} functions get a new \code{exact} argument,
+      specifying how numeric input is converted when its conversion to
+      double precision loses accuracy.  The default \code{exact = NA}
+      corresponds to numeric conversion with a warning about accuracy loss.
     }
   }
 
@@ -82,10 +89,10 @@
 
       \item Use of \code{save(..., envir=)} with named objects could
       fail.  (\PR{15758})
-      
+
       \item \code{Sweave()} mis-parsed \samp{Sexpr} expressions that
       contained backslashes.  (\PR{15779})
-      
+
       \item The return value from \code{options(foo = NULL)} was not
       the previous value of the option.  (\PR{15781})
       

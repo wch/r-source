@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-read.DIF <- function(file, header = FALSE, dec = ".",
+read.DIF <- function(file, header = FALSE, dec = ".", exact = NA,
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
@@ -213,7 +213,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
 	            else data[[i]]
 		} else
 		    type.convert(data[[i]], as.is = as.is[i], dec = dec,
-				 na.strings = character(0L))
+				 na.strings = character(0L), exact=exact)
 	    }
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
