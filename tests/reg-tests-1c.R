@@ -354,4 +354,24 @@ my_env <- new.env(); my_env$one <- 1L
 save(one, file = tempfile(), envir = my_env)
 ## failed in R < 3.1.1.
 
+
+## Conversion to numeric in boundary case
+ch <- "0x1.ffa0000000001p-1"
+rr <- type.convert(ch, exact=FALSE)
+rX <- type.convert(ch, exact=TRUE)
+stopifnot(is.numeric(rr), identical(rr, rX),
+          all.equal(rr, 0.999267578125),
+          all.equal(type.convert(ch), type.convert("0x1.ffap-1"), tol=5e-15))
+## type.convert(ch) was not numeric in R 3.1.0
+##
+ch <- "1234567890123456789" 
+rr <- type.convert(ch, exact=FALSE)
+rX <- type.convert(ch, exact=TRUE)
+rx <- type.convert(ch, exact=TRUE, as.is=TRUE)
+tools::assertWarning(r. <- type.convert(ch))
+stopifnot(is.numeric(rr), identical(rr, r.), all.equal(rr, 1.234567890e18),
+	  is.factor(rX),  identical(rx, ch))
+
+
+
 proc.time()
