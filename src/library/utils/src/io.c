@@ -173,19 +173,19 @@ extern double R_strtod5(const char *str, char **endptr, char dec,
 			Rboolean NA, Rboolean exact);
 
 static double
-Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d, Rboolean exact)
+Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d, int i_exact)
 {
-    return R_strtod5(nptr, endptr, d->decchar, NA, exact);
+    return R_strtod5(nptr, endptr, d->decchar, NA, i_exact);
 }
 
 static Rcomplex
-strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d, Rboolean exact)
+strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d, int i_exact)
 {
     Rcomplex z;
     double x, y;
     char *s, *endp;
 
-    x = Strtod(nptr, &endp, NA, d, exact);
+    x = Strtod(nptr, &endp, NA, d, i_exact);
     if (isBlankString(endp)) {
 	z.r = x; z.i = 0;
     } else if (*endp == 'i')  {
@@ -193,7 +193,7 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d, Rboolean exac
 	endp++;
     } else {
 	s = endp;
-	y = Strtod(s, &endp, NA, d, exact);
+	y = Strtod(s, &endp, NA, d, i_exact);
 	if (*endp == 'i') {
 	    z.r = x; z.i = y;
 	    endp++;
@@ -499,7 +499,8 @@ typedef struct typecvt_possible_types {
  *
  * The typeInfo struct should be initialized with all fields TRUE.
  */
-static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data)
+static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data,
+			  Rboolean exact)
 {
     int res;
     char *endp;
@@ -523,13 +524,13 @@ static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data
     }
 
     if (typeInfo->isreal) {
-	Strtod(s, &endp, TRUE, data, FALSE);
+	Strtod(s, &endp, TRUE, data, exact);
 	if (!isBlankString(endp))
 	    typeInfo->isreal = FALSE;
     }
 
     if (typeInfo->iscomplex) {
-	strtoc(s, &endp, TRUE, data, FALSE);
+	strtoc(s, &endp, TRUE, data, exact);
 	if (!isBlankString(endp))
 	    typeInfo->iscomplex = FALSE;
     }
@@ -549,8 +550,8 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
-    int i, j, len, asIs, exact;
-    Rboolean done = FALSE;
+    int i, j, len, asIs, i_exact;
+    Rboolean done = FALSE, exact;
     char *endp;
     const char *tmp = NULL;
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
@@ -582,7 +583,8 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    data.decchar = translateChar(STRING_ELT(dec, 0))[0];
     }
 
-    exact = asLogical(CAD4R(args)); // in (FALSE, TRUE, NA)
+    i_exact = asLogical(CAD4R(args)); // in {FALSE, TRUE, NA}
+    exact = (i_exact == NA_INTEGER) ? FALSE : (Rboolean) i_exact; // {FALSE, TRUE}
 
     cvec = CAR(args);
     len = length(cvec);
@@ -603,7 +605,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
     }
     if (i < len) { // Found non-NA entry; use it to screen:
-	ruleout_types(tmp, &typeInfo, &data);
+	ruleout_types(tmp, &typeInfo, &data, exact);
     }
 
     if (typeInfo.islogical) {
@@ -620,7 +622,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		    LOGICAL(rval)[i] = 1;
 		else {
 		    typeInfo.islogical = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data, exact);
 		    break;
 		}
 	    }
@@ -639,7 +641,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(rval)[i] = Strtoi(tmp, 10);
 		if (INTEGER(rval)[i] == NA_INTEGER) {
 		    typeInfo.isinteger = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data, exact);
 		    break;
 		}
 	    }
@@ -655,10 +657,10 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		REAL(rval)[i] = NA_REAL;
 	    else {
-		REAL(rval)[i] = Strtod(tmp, &endp, FALSE, &data, exact);
+		REAL(rval)[i] = Strtod(tmp, &endp, FALSE, &data, i_exact);
 		if (!isBlankString(endp)) {
 		    typeInfo.isreal = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data, exact);
 		    break;
 		}
 	    }
@@ -674,11 +676,11 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		|| isNAstring(tmp, 1, &data) || isBlankString(tmp))
 		COMPLEX(rval)[i].r = COMPLEX(rval)[i].i = NA_REAL;
 	    else {
-		COMPLEX(rval)[i] = strtoc(tmp, &endp, FALSE, &data, exact);
+		COMPLEX(rval)[i] = strtoc(tmp, &endp, FALSE, &data, i_exact);
 		if (!isBlankString(endp)) {
 		    typeInfo.iscomplex = FALSE;
 		    /* this is not needed, unless other cases are added */
-		    ruleout_types(tmp, &typeInfo, &data);
+		    ruleout_types(tmp, &typeInfo, &data, exact);
 		    break;
 		}
 	    }
