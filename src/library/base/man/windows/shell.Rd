@@ -1,10 +1,9 @@
 % File src/library/base/man/windows/shell.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shell}
-\Rdversion{1.1}
 \alias{shell}
 \title{Invoke a System Command, using a Shell}
 
@@ -19,8 +18,8 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
     \code{NULL} (no shell).  If missing, a suitable shell is chosen:
     see \sQuote{Details}.}
   \item{flag}{the switch to run a command under the shell.  If the shell
-  is \code{bash} or \code{tcsh} or \code{sh} the default is changed to
-  \code{"-c"}.}
+  is idneitfied as \code{bash} or \code{tcsh} or \code{sh} the default
+  is changed to \code{"-c"}.}
   \item{intern}{a logical, indicates whether to make the output of the
     command an \R object.}
   \item{wait}{should the \R interpreter wait for the command to finish?
@@ -59,11 +58,14 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
 \details{
   If no \code{shell} is specified, the environment variables
   \env{R_SHELL}, \env{SHELL} and \env{COMSPEC} are tried in turn:
-  \env{COMSPEC} should always succeed.  Using \code{shell = NULL}
-  invokes the command \code{cmd} directly, in which case an extension
-  of \file{.exe} is assumed.  It is possible to use batch files
-  directly if their extension is given: Windows (rather than \R) then
-  chooses a shell.
+  \env{COMSPEC} should always succeed. Note that future versions of \R
+  will not consult \env{SHELL}, so set \env{R_SHELL} if you want to
+  override \env{COMSPEC}.
+
+  Using \code{shell = NULL} invokes the command \code{cmd} directly, in
+  which case an extension of \file{.exe} is assumed.  It is possible to
+  use batch files directly if their extension is given: Windows (rather
+  than \R) then chooses a shell.
 
   See \code{\link{system}} for fuller details: \code{shell} is a more
   user-friendly wrapper for \code{system}.  To make use of Windows
