@@ -499,20 +499,20 @@ typedef struct typecvt_possible_types {
  *
  * The typeInfo struct should be initialized with all fields TRUE.
  */
-static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data,
-			  Rboolean exact)
+static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data)
 {
     int res;
     char *endp;
 
     if (typeInfo->islogical) {
-	if (strcmp(s, "F") == 0 || strcmp(s, "FALSE") == 0
-	    || strcmp(s, "T") == 0 || strcmp(s, "TRUE") == 0) {
+	if (strcmp(s, "F") == 0 || strcmp(s, "T") == 0 || 
+	    strcmp(s, "FALSE") == 0 || strcmp(s, "TRUE") == 0) {
 	    typeInfo->isinteger = FALSE;
 	    typeInfo->isreal = FALSE;
 	    typeInfo->iscomplex = FALSE;
+	    return; // short cut
 	} else {
-	    typeInfo->islogical = TRUE;
+	    typeInfo->islogical = FALSE; 
 	}
     }
 
@@ -523,13 +523,13 @@ static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data
     }
 
     if (typeInfo->isreal) {
-	Strtod(s, &endp, TRUE, data, exact);
+	Strtod(s, &endp, TRUE, data, FALSE);
 	if (!isBlankString(endp))
 	    typeInfo->isreal = FALSE;
     }
 
     if (typeInfo->iscomplex) {
-	strtoc(s, &endp, TRUE, data, exact);
+	strtoc(s, &endp, TRUE, data, FALSE);
 	if (!isBlankString(endp))
 	    typeInfo->iscomplex = FALSE;
     }
@@ -595,15 +595,15 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	PROTECT(names = getAttrib(cvec, R_NamesSymbol));
 
-    /* Use the first non-NA to screen */
+    /* Find the first non-NA entry (empty => NA) */
     for (i = 0; i < len; i++) {
 	tmp = CHAR(STRING_ELT(cvec, i));
 	if (!(STRING_ELT(cvec, i) == NA_STRING || strlen(tmp) == 0
 	      || isNAstring(tmp, 1, &data) || isBlankString(tmp)))
 	    break;
     }
-    if (i < len) {  /* not all entries are NA */
-	ruleout_types(tmp, &typeInfo, &data, exact);
+    if (i < len) { // Found non-NA entry; use it to screen:
+	ruleout_types(tmp, &typeInfo, &data);
     }
 
     if (typeInfo.islogical) {
@@ -620,7 +620,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		    LOGICAL(rval)[i] = 1;
 		else {
 		    typeInfo.islogical = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data, exact);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -639,7 +639,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(rval)[i] = Strtoi(tmp, 10);
 		if (INTEGER(rval)[i] == NA_INTEGER) {
 		    typeInfo.isinteger = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data, exact);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -658,7 +658,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		REAL(rval)[i] = Strtod(tmp, &endp, FALSE, &data, exact);
 		if (!isBlankString(endp)) {
 		    typeInfo.isreal = FALSE;
-		    ruleout_types(tmp, &typeInfo, &data, exact);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
@@ -678,7 +678,7 @@ SEXP typeconvert(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (!isBlankString(endp)) {
 		    typeInfo.iscomplex = FALSE;
 		    /* this is not needed, unless other cases are added */
-		    ruleout_types(tmp, &typeInfo, &data, exact);
+		    ruleout_types(tmp, &typeInfo, &data);
 		    break;
 		}
 	    }
