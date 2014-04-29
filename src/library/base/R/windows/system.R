@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -94,7 +94,6 @@ shell <- function(cmd, shell, flag = "/c", intern = FALSE,
 {
     if(missing(shell)) {
         shell <- Sys.getenv("R_SHELL")
-        if(!nzchar(shell)) shell <- Sys.getenv("SHELL")
         if(!nzchar(shell)) shell <- Sys.getenv("COMSPEC")
     }
     if(missing(flag) &&

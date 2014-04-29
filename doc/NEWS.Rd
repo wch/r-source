@@ -15,6 +15,13 @@
       \item \code{Sys.getenv(x, names, *)} returns a
       \code{"DList"}, and hence prints nicely when \code{x} is
       missing and \code{names} is not false.
+
+      \item (Windows.)  \code{shell()} no longer consults the
+      environment variable \env{SHELL}: too many systems have been
+      encountered where it was set incorrectly (usually to a path where
+      software was compiled, not where it was installed).
+      \env{R_SHELL}, the preferred way to select a non-default shell,
+      can be used instead.
     }
   }
   %% \subsection{BUG FIXES}{
