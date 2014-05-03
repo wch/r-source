@@ -1,6 +1,6 @@
 % File src/library/base/man/outer.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{outer}
@@ -30,17 +30,17 @@ X \%o\% Y
   will be extended by \code{\link{rep}} to length the products of the
   lengths of \code{X} and \code{Y} before \code{FUN} is called.
 
-  \code{FUN} is called with these two extended vectors as
-  arguments. Therefore, it must be a vectorized function (or the
-  name of one), expecting at
-  least two arguments.
+  \code{FUN} is called with these two extended vectors as arguments
+  (plus any arguments in \code{\dots}).  It must be a vectorized
+  function (or the name of one) expecting at least two arguments and
+  returning a value with the same length as the first (and the second).
 
   Where they exist, the [dim]names of \code{X} and \code{Y} will be
   copied to the answer, and a dimension assigned which is the
   concatenation of the dimensions of \code{X} and \code{Y} (or lengths
   if dimensions do not exist).
 
-  \code{FUN = "*"} is handled internally as a special case, \emph{via}
+  \code{FUN = "*"} is handled as a special case \emph{via}
   \code{as.vector(X) \%*\% t(as.vector(Y))}, and is intended only for
   numeric vectors and arrays.
 

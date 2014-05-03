@@ -131,10 +131,15 @@ available.packages(contriburl =
   set up a repository.
 }
 \examples{\dontrun{
-## restrict install.packages() (etc) to known-to-be-FOSS packages
+## Restrict install.packages() (etc) to known-to-be-FOSS packages
 options(available_packages_filters =
   c("R_version", "OS_type", "subarch", "duplicates", "license/FOSS"))
 ## or
 options(available_packages_filters = list(add = TRUE, "license/FOSS"))
+
+## Give priority to released versions on CRAN, rather than development
+## versions on Omegahat, R-Forge etc.
+options(available_packages_filters =
+     c("R_version", "OS_type", "subarch", "CRAN", "duplicates"))
 }}
 \keyword{utilities}
