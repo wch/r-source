@@ -2929,7 +2929,7 @@ try(options(list('digits', 'width')))# give an error
 
 
 ## PR#7100 seg faulted or path too long error on ././././././. ...
-list.files('.', all.files = TRUE, recursive = TRUE)
+length( list.files('.', all.files = TRUE, recursive = TRUE) )
 
 
 ## PR#7116 segfaulted on A, later versions segfaulted on B or gave different
