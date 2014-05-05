@@ -26,6 +26,10 @@
       
       \item Error messages from bugs in embedded \samp{Sexpr} code
       in Sweave documents now report the source location.
+
+      For some compiler versions, integer addition could accidentally
+      overflow (without a warning).  \R's internal code should be more
+      "robust" now, thanks to Hervé Pagès.  (\PR{15774})
     }
   }
 
