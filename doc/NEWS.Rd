@@ -109,6 +109,10 @@
       \item \code{dnbinom(x, size=<large>, mu, log=TRUE)} no longer
       underflows to -Inf for large \code{mu}, thanks to a suggestion
       from Alessandro Mammana (MPI MolGen, Berlin).
+
+      \item \code{pbeta(x, a,b, log=TRUE)} no longer behaves
+      discontinuously (in a small x-region) because of denormalized
+      numbers.
     }
   }
 }
