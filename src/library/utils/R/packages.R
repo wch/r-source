@@ -277,8 +277,8 @@ function(db)
     CRAN <- getOption("repos")["CRAN"]
     for(d in dups) {
         pos <- which(packages == d)
-        drop <- c(drop, pos[substring(db[pos, "Repository"], 1,
-                                      nchar(CRAN)) != CRAN])
+        ind <- substring(db[pos, "Repository"], 1, nchar(CRAN)) != CRAN
+        if(!all(ind)) drop <- c(drop, pos[ind])
     }
     if(length(drop)) db[-drop, , drop = FALSE] else db
 }
