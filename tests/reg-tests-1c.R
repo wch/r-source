@@ -368,10 +368,15 @@ ch <- "1234567890123456789"
 rr <- type.convert(ch, exact=FALSE)
 rX <- type.convert(ch, exact=TRUE)
 rx <- type.convert(ch, exact=TRUE, as.is=TRUE)
-tools::assertWarning(r. <- type.convert(ch))
+tools::assertWarning(r. <- type.convert(ch, exact=NA))
 stopifnot(is.numeric(rr), identical(rr, r.), all.equal(rr, 1.234567890e18),
 	  is.factor(rX),  identical(rx, ch))
 
+
+## PR#15764: integer overflow could happen accidentally
+tools::assertWarning(ii <- 1980000020L + 222000000L)
+stopifnot(is.na(ii))
+## failed for some version of clang, in R <= 3.1.0
 
 
 proc.time()
