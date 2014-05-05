@@ -1339,7 +1339,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	v = u;
 	/* this duplication may appear not to be needed in all cases,
 	   but beware that other code relies on it.
-	   (E.g  we clear attributes in do_asvector and do_ascharacter.)
+	   (E.g  we clear attributes in do_asvector and do_asatomic.)
 
 	   Generally coerceVector will copy over attributes.
 	*/
@@ -1392,9 +1392,7 @@ SEXP asCharacterFactor(SEXP x)
 }
 
 
-/* the "ascharacter" name is a historical anomaly: as.character used to be the
- * only primitive;  now, all these ops are : */
-SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x;
 
