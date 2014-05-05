@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-04-20 r65415) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-03 r65519) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1229,6 +1229,11 @@ Warning messages:
 > mu <- 1e12 * 2^(0:20)
 > stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tolerance = 1e-13))
 > ## was wrong in 2.7.2 (only)
+> mu <- sort(outer(1:7, 10^c(0:10,50*(1:6))))
+> NB <- dnbinom(5, size=1e305, mu=mu, log=TRUE)
+> P  <- dpois  (5,                mu, log=TRUE)
+> stopifnot(abs(rErr(NB,P)) < 9*Meps)# seen 2.5*
+> ## wrong in 3.1.0 and earlier
 > 
 > 
 > ## Non-central F for large x
@@ -1349,5 +1354,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.704 0.004 0.709 0 0 
+Time elapsed:  0.757 0.004 0.763 0 0 
 > 

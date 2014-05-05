@@ -105,6 +105,10 @@
       
       \item \code{enc2utf8()} and \code{enc2native()} did not always
       mark the encoding of the return values when it was known.
+
+      \item \code{dnbinom(x, size=<large>, mu, log=TRUE)} no longer
+      underflows to -Inf for large \code{mu}, thanks to a suggestion
+      from Alessandro Mammana (MPI MolGen, Berlin).
     }
   }
 }
