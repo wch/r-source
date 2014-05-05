@@ -694,6 +694,11 @@ stopifnot(d < 0, diff(d) > 0, d[1] < 1e-10)
 mu <- 1e12 * 2^(0:20)
 stopifnot(all.equal(1/(1+mu), dnbinom(0, size = 1, mu = mu), tolerance = 1e-13))
 ## was wrong in 2.7.2 (only)
+mu <- sort(outer(1:7, 10^c(0:10,50*(1:6))))
+NB <- dnbinom(5, size=1e305, mu=mu, log=TRUE)
+P  <- dpois  (5,                mu, log=TRUE)
+stopifnot(abs(rErr(NB,P)) < 9*Meps)# seen 2.5*
+## wrong in 3.1.0 and earlier
 
 
 ## Non-central F for large x
