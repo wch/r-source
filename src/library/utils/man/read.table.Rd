@@ -16,7 +16,7 @@
 }
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'",
-           dec = ".", exact = NA, row.names, col.names,
+           dec = ".", exact = FALSE, row.names, col.names,
            as.is = !stringsAsFactors,
            na.strings = "NA", colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,

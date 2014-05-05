@@ -54,8 +54,8 @@
       \item \code{type.convert()}, \code{read.table()} and similar
       \code{read.*()} functions get a new \code{exact} argument,
       specifying how numeric input is converted when its conversion to
-      double precision loses accuracy.  The default \code{exact = NA}
-      corresponds to numeric conversion with a warning about accuracy loss.
+      double precision loses accuracy.  The default \code{exact = FALSE}
+      allows accuracy loss, as in all \R versions before 3.1.0.
     }
   }
 

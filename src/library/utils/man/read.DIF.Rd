@@ -12,7 +12,7 @@
 }
 \usage{
 read.DIF(file, header = FALSE,
-         dec = ".", exact = NA, row.names, col.names,
+         dec = ".", exact = FALSE, row.names, col.names,
          as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA, nrows = -1,
          skip = 0, check.names = TRUE, blank.lines.skip = TRUE,

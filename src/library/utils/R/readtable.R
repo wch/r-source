@@ -32,12 +32,12 @@ function(file, sep = "", quote = "\"'", skip = 0,
 
 
 type.convert <-
-function(x, na.strings = "NA", as.is = FALSE, dec = ".", exact=NA)
+function(x, na.strings = "NA", as.is = FALSE, dec = ".", exact=FALSE)
     .External2(C_typeconvert, x, na.strings, as.is, dec, exact)
 
 
 read.table <-
-function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=NA,
+function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=FALSE,
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,

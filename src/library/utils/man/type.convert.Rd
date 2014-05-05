@@ -11,7 +11,7 @@
   factor as appropriate.
 }
 \usage{
-type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = NA)
+type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = FALSE)
 }
 \arguments{
   \item{x}{a character vector.}
@@ -28,13 +28,13 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = NA)
       \item{\code{exact = FALSE}:}{the conversion happens with some
 	accuracy loss.  This has been the only behavior of \R versions 3.0.3
 	and earlier.}
+      \item{\code{exact = NA}, default:}{a \code{\link{warning}} about
+	accuracy loss is signalled and the conversion happens as with
+	\code{exact = FALSE}.}
       \item{\code{exact = TRUE}:}{\code{x} is \emph{not} converted to a
 	number, but to a \code{\link{factor}} or left as character,
 	depending on \code{as.is}.  This has been the only behavior of
 	\R version 3.1.0.}
-      \item{\code{exact = NA}, default:}{a \code{\link{warning}} about
-	accuracy loss is signalled and the conversion happens as with
-	\code{exact = FALSE}.}
     }
   }
 }
