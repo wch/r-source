@@ -43,16 +43,12 @@ formatDL(x, y, style = c("table", "list"),
   In table style, items with more than \code{indent - 3} characters are
   displayed on a line of their own.
 }
-\examples{\dontrun{
-%% FIXME: This no longer works!  (\dontrun{..} is *not* the solution)
-## Use R to create the 'INDEX' for package 'splines' from its 'CONTENTS'
-x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
-               fields = c("Entry", "Description"))
-x <- as.data.frame(x)
-writeLines(formatDL(x$Entry, x$Description))
-## or equivalently: writeLines(formatDL(x))
-## Same information in tagged description list style:
-writeLines(formatDL(x$Entry, x$Description, style = "list"))
-## or equivalently: writeLines(formatDL(x, style = "list"))
-}}
+\examples{
+## Provide a nice summary of the numerical characteristics of the
+## machine R is running on:
+writeLines(formatDL(unlist(.Machine)))
+## Inspect Sys.getenv() results in "list" style (by default, these are
+## printed in "table" style):
+writeLines(formatDL(Sys.getenv(), style = "list"))
+}
 \keyword{print}
