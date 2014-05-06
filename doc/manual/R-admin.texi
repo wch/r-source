@@ -5065,7 +5065,7 @@ The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
 tested.
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.8.2
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.9.0
 needed
 
 @example
@@ -5093,7 +5093,7 @@ be in the
 The compilation can be tuned to a particular cpu: the @acronym{CRAN}
 check system uses @code{-mtune=niagara2}.
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.8.2
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.0
 needed
 
 @example
@@ -5110,7 +5110,7 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
-For an @cputype{amd64} target with @command{gcc}@tie{}4.8.2
+For an @cputype{amd64} target with @command{gcc}@tie{}4.9.0
 we used 
 
 @example

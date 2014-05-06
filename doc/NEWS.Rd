@@ -59,7 +59,7 @@
 
       For some compiler versions, integer addition could accidentally
       overflow (without a warning).  \R's internal code should be more
-      "robust" now, thanks to Hervé Pagès.  (\PR{15774})
+      \dQuote{robust} now, thanks to Hervé Pagès.  (\PR{15774})
     }
   }
 
@@ -110,13 +110,16 @@
       \item \code{enc2utf8()} and \code{enc2native()} did not always
       mark the encoding of the return values when it was known.
 
-      \item \code{dnbinom(x, size=<large>, mu, log=TRUE)} no longer
+      \item \code{dnbinom(x, size = <large>, mu, log = TRUE)} no longer
       underflows to -Inf for large \code{mu}, thanks to a suggestion
       from Alessandro Mammana (MPI MolGen, Berlin).
 
-      \item \code{pbeta(x, a,b, log=TRUE)} no longer behaves
+      \item \code{pbeta(x, a, b, log = TRUE)} no longer behaves
       discontinuously (in a small x-region) because of denormalized
       numbers.
+      
+      \item The \code{"CRAN"} filter (see \code{available.packges()}) no
+      longer removes duplicates other than of packages on CRAN.
     }
   }
 }
