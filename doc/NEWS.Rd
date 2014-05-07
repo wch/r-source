@@ -57,7 +57,7 @@
       double precision loses accuracy.  The default \code{exact = FALSE}
       allows accuracy loss, as in all \R versions before 3.1.0.
 
-      For some compiler versions, integer addition could accidentally
+      \item For some compiler versions, integer addition could accidentally
       overflow (without a warning).  \R's internal code should be more
       \dQuote{robust} now, thanks to Hervé Pagès.  (\PR{15774})
     }
