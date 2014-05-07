@@ -118,7 +118,7 @@
       discontinuously (in a small x-region) because of denormalized
       numbers.
       
-      \item The \code{"CRAN"} filter (see \code{available.packges()}) no
+      \item The \code{"CRAN"} filter (see \code{available.packages()}) no
       longer removes duplicates other than of packages on CRAN.
     }
   }
