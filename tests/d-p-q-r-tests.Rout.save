@@ -735,7 +735,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(Rt,	  qt	   (Pt,	 df = 11))
 [1] TRUE
-> all.equal(Rt2,	  qt	   (Pt2, df = 1.01), tolerance = 1e-2)
+> All.eq(Rt2,	  qt	   (Pt2, df = 1.01))
 [1] TRUE
 > All.eq(Runif,	  qunif	   (Punif, min = .2, max = 2))
 [1] TRUE
@@ -777,7 +777,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(Rt,	  qt	   (1- Pt,  df = 11,   lower=F))
 [1] TRUE
-> all.equal(Rt2,	  qt	   (1- Pt2, df = 1.01, lower=F), tolerance = 1e-2)
+> All.eq(Rt2,	  qt	   (1- Pt2, df = 1.01, lower=F))
 [1] TRUE
 > All.eq(Runif,	  qunif	   (1- Punif, min = .2, max = 2, lower=F))
 [1] TRUE
@@ -793,7 +793,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(Rcauchy,	  qcauchy  (log(Pcauchy), location = 12, scale = 2, log=TRUE))
 [1] TRUE
-> all.equal(Rchisq,    qchisq   (log(Pchisq), df = 3, log=TRUE),tolerance =1e-14)
+> All.eq(Rchisq,    qchisq   (log(Pchisq), df = 3, log=TRUE))
 [1] TRUE
 > All.eq(Rexp,	  qexp	   (log(Pexp), rate = 2, log=TRUE))
 [1] TRUE
@@ -819,7 +819,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(Rt,	  qt	   (log(Pt), df = 11, log=TRUE))
 [1] TRUE
-> all.equal(Rt2,	  qt	   (log(Pt2), df = 1.01, log=TRUE), tolerance = 1e-2)
+> All.eq(Rt2,	  qt	   (log(Pt2), df = 1.01, log=TRUE))
 [1] TRUE
 > All.eq(Runif,	  qunif	   (log(Punif), min = .2, max = 2, log=TRUE))
 [1] TRUE
@@ -862,7 +862,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(Rt,	  qt	   (log1p(-Pt ), df = 11,   lower=F, log=T))
 [1] TRUE
-> all.equal(Rt2,	  qt	   (log1p(-Pt2), df = 1.01, lower=F, log=T), tolerance = 1e-2)
+> All.eq(Rt2,	  qt	   (log1p(-Pt2), df = 1.01, lower=F, log=T))
 [1] TRUE
 > All.eq(Runif,	  qunif	   (log1p(-Punif), min = .2, max = 2, lower=F, log=T))
 [1] TRUE
