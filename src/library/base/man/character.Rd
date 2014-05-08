@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -48,8 +48,9 @@ is.character(x)
 
   \code{as.character} attempts to coerce its argument to character type;
   like \code{\link{as.vector}} it strips attributes including names.
-  For lists it deparses the elements individually, except that it
-  extracts the first element of length-one character vectors.
+  For lists and pairlists (including \link{language objects} such as
+  calls) it deparses the elements individually, except that it extracts
+  the first element of length-one character vectors.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.
@@ -57,7 +58,7 @@ is.character(x)
 \note{
   \code{as.character} breaks lines in language objects at 500
   characters, and inserts newlines.  Prior to 2.15.0 lines were
-  truncated (at about 70 characters before 1.3.1).
+  truncated.
 }
 \seealso{
   \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
@@ -68,7 +69,7 @@ is.character(x)
   \code{help.search(keyword = "character")} gives even more links.
 
   \code{\link{deparse}}, which is normally preferable to
-  \code{as.character} for language objects.
+  \code{as.character} for \link{language objects}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

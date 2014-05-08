@@ -1,6 +1,6 @@
 % File src/library/base/man/bquote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bquote}
@@ -15,12 +15,12 @@
 bquote(expr, where = parent.frame())
 }
 \arguments{
-  \item{expr}{A language object.}
+  \item{expr}{A \link{language object}.}
   \item{where}{An environment.}
 }
 
 \value{
-  A language object.
+  A \link{language object}.
 }
 \seealso{
   \code{\link{quote}}, \code{\link{substitute}}
