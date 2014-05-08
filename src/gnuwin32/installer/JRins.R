@@ -28,7 +28,9 @@
 
     Rver <- readLines("../../../VERSION")[1L]
     Rver <- sub("Under .*$", "Pre-release", Rver)
+    ## This is now over 2^16, so truncate
     SVN <- sub("Revision: ", "", readLines("../../../SVN-REVISION"))[1L]
+    SVN <- as.character(as.numeric(SVN) - 50000L)
     Rver0 <- paste(sub(" .*$", "", Rver), SVN, sep = ".")
 
 
