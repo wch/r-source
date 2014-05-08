@@ -1,5 +1,5 @@
 
-R version 3.1.0 Patched (2014-04-19 r65415) -- "Spring Dance"
+R version 3.1.0 Patched (2014-05-08 r65543) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.096   0.012   0.105 
+  0.149   0.021   0.160 
