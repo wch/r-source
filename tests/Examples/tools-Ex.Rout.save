@@ -213,18 +213,6 @@ _Journal of the Royal Statistical Society, Series B_, *26*, pp.
 > ### ** Examples
 > 
 > gVigns <- pkgVignettes("grid")
-> ## Don't show: 
->  `%=f=%` <- function(a, b) normalizePath(a) == normalizePath(b)
->  with(gVigns,
-+       stopifnot(engines == "utils::Sweave",
-+                 pkgdir %=f=% system.file(package="grid"),
-+                 dir    %=f=% system.file(package="grid", "doc"),
-+                 (n. <- length(docs)) >= 12, # have 13 
-+                 n. == length(names), n. == length(engines),
-+                 length(msg) == 0) ) # as it is a 'base' package
-> ## End Don't show
-> stopifnot("grid" %in% gVigns$names,
-+           inherits(gVigns, "pkgVignettes"))
 > 
 > 
 > 
