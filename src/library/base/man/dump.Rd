@@ -1,6 +1,6 @@
 % File src/library/base/man/dump.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dump}
@@ -83,7 +83,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   Currently environments, external pointers, weak references and objects
   of type \code{S4} are not deparsed in a way that can be
-  \code{source}d.  In addition, language objects are deparsed in a
+  \code{source}d.  In addition, \link{language objects} are deparsed in a
   simple way whatever the value of \code{control}, and this includes not
   dumping their attributes (which will result in a warning).
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/print.default.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print.default}
@@ -39,7 +39,7 @@
     uses \code{\link{getOption}("max.print")}; see that help page for more
     details.}
   \item{useSource}{logical, indicating whether to use source
-    references or copies rather than deparsing language objects.
+    references or copies rather than deparsing \link{language objects}.
     The default is to use the original source if it is available.}
   \item{\dots}{further arguments to be passed to or from other
     methods.  They are ignored in this function.}
@@ -63,7 +63,7 @@
 
   Option \code{width} controls the printing of vectors, matrices and
   arrays, and option \code{deparse.cutoff} controls the printing of
-  language objects such as calls and formulae.
+  \link{language objects} such as calls and formulae.
 
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for \R objects with formal classes if called

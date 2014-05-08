@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -44,7 +44,7 @@ simplify2array(x, higher = TRUE)
   \item{FUN.VALUE}{a (generalized) vector; a template for the return
     value from FUN.  See \sQuote{Details}.}
   \item{n}{integer: the number of replications.}
-  \item{expr}{the expression (language object, usually a call)
+  \item{expr}{the expression (a \link{language object}, usually a call)
     to evaluate repeatedly.}
 
   \item{x}{a list, typically returned from \code{lapply()}.}
