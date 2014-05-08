@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -44,7 +44,7 @@ solve(a, b, \dots)
   \code{\link{qr.solve}} can handle non-square systems.
 }
 \source{
-  The defult method is an interface to the LAPACK routines \code{DGESV}
+  The default method is an interface to the LAPACK routines \code{DGESV}
   and \code{ZGESV}.
 
   LAPACK is from \url{http://www.netlib.org/lapack}.
