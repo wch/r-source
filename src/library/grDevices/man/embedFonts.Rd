@@ -17,7 +17,8 @@ embedFonts(file, format, outfile = file, fontpaths = "",
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
-  \item{format}{either \code{"pswrite"} or \code{"pdfwrite"}.
+  \item{format}{the format for the new file (with fonts embedded) given as
+    the name of a ghostscript output device.
     If not specified, it is guessed from the suffix of \code{file}.}
   \item{outfile}{the name of the new file (with fonts embedded).}
   \item{fontpaths}{a character vector giving directories that
@@ -45,6 +46,15 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
+  The \code{format} is by default \code{"pswrite"}, when the original
+  file has a \code{.ps} or \code{.eps} suffix,
+  or \code{"pdfwrite"} when the original
+  file has a \code{.pdf} suffix.
+  In recent versions of ghostscript, the
+  \code{"pswrite"} format has been deprecated, so you may have to
+  provide an explicit format:  \code{"ps2write"}
+  and \code{"eps2write"} should be available.
+  
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.
 
