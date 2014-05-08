@@ -65,4 +65,21 @@ example(fileutils)
 ## results are location- and OS-specific
 example(parseLatex) # charset-specific
 
+## part of example(buildVignettes) at one time
+gVigns <- pkgVignettes("grid")
+str(gVigns) # contains paths
+
+vdir <- system.file(package = "grid", "doc")
+if(nzchar(vdir)) { # so vignettes have bee installed
+    `%=f=%` <- function(a, b) normalizePath(a) == normalizePath(b)
+    with(gVigns,
+         stopifnot(engines == "utils::Sweave",
+                   pkgdir %=f=% system.file(package="grid"),
+                   dir    %=f=% vdir,
+                   (n. <- length(docs)) >= 12, # have 13
+                   n. == length(names), n. == length(engines),
+                   length(msg) == 0) ) # as it is a 'base' package
+    stopifnot("grid" %in% gVigns$names, inherits(gVigns, "pkgVignettes"))
+}
+
 proc.time()
