@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/postscript.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -961,7 +961,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
     if (missing(format)) {
         format <- switch(suffix,
                          ps = ,
-                         eps = "pswrite",
+                         eps = "ps2write",
                          pdf = "pdfwrite")
     }
     if (!is.character(format)) {

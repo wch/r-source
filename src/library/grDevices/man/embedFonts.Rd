@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/embedFonts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{embedFonts}
@@ -46,14 +46,12 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
-  The \code{format} is by default \code{"pswrite"}, when the original
-  file has a \code{.ps} or \code{.eps} suffix,
-  or \code{"pdfwrite"} when the original
-  file has a \code{.pdf} suffix.
-  In recent versions of ghostscript, the
-  \code{"pswrite"} format has been deprecated, so you may have to
-  provide an explicit format:  \code{"ps2write"}
-  and \code{"eps2write"} should be available.
+  The \code{format} is by default \code{"ps2write"}, when the original
+  file has a \code{.ps} or \code{.eps} suffix, or \code{"pdfwrite"} when
+  the original file has a \code{.pdf} suffix.  For earlier versions of
+  Ghostscript (prior to 9.10), \code{format = "pswrite"} or \code{format
+  = "epswrite"} can be used: as from 9.14 \code{format = "eps2write"} is
+  available.
   
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.

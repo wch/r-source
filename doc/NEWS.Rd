@@ -22,6 +22,11 @@
       software was compiled, not where it was installed).
       \env{R_SHELL}, the preferred way to select a non-default shell,
       can be used instead.
+
+      \item \code{embedFonts()} now uses \code{format = "ps2write"} by
+      default for \file{.ps} and \file{.eps} files.  This is available
+      in Ghostscript 9.x (since 2010) whereas the previous default,
+      \code{format = "pswrite"}, was removed in 9.10.
     }
   }
   %% \subsection{BUG FIXES}{
