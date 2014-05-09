@@ -1,9 +1,13 @@
 ## For examples skipped in testing because they need recommended packages.
 
+## This is skipped entirely on a Unix-alike if recommended packages are,
+## so for Windows
+if(!require("MASS")) q()
+
 pdf("reg-examples-3.pdf", encoding = "ISOLatin1.enc")
 
 ## From datasets
-if(require("survival")){
+if(require("survival")) {
   model3 <- clogit(case ~ spontaneous+induced+strata(stratum), data = infert)
   print(summary(model3))
   detach("package:survival")  # survival (conflicts)
