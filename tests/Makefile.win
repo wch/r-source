@@ -67,7 +67,7 @@ test-Standalone:
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 \
 	  Rplot* Rprof.out Rprofmem.out \
-	  reg-examples-*.pdf  testCID.* \
+	  reg-examples*.pdf  testCID.* \
 	  reg-plot-latin1.ps reg-plot.ps \
 	  reg-plot-latin1.pdf reg-plot.pdf reg-tests-*.pdf \
 	  R-exts.* R-intro.R 
