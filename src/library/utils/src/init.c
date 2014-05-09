@@ -79,7 +79,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
 
     EXTDEF(countfields, 6),
     EXTDEF(readtablehead, 7),
-    EXTDEF(typeconvert, 4),
+    EXTDEF(typeconvert, 5),
     EXTDEF(writetable, 11),
 
     EXTDEF(addhistory, 1),
