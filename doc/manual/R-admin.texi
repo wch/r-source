@@ -1137,7 +1137,7 @@ to use @samp{libjpeg-turbo} from
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
 The @code{jpeg} sub-directory for version 9 is named @file{jpeg-9}; if
-you use a different version (e.g.@: @file{jpeg-8d} or
+you use a different version (e.g.@: @file{jpeg-9a} or
 @file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit the definition of
 @code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
@@ -1146,9 +1146,9 @@ directories can also be set there.
 Example:
 
 @example
-> tar -zxf libpng-1.6.2.tar.gz
-> mv libpng-1.6.2 libpng
-> tar -zxf jpegsrc.v9.tar.gz
+> tar -zxf libpng-1.6.10.tar.gz
+> mv libpng-1.6.10 libpng
+> tar -zxf jpegsrc.v9a.tar.gz
 > tar -zxf tiff-4.0.3.tar.gz
 > mv tiff-4.0.3/libtiff .
 > rm -rf tiff-4.0.3
