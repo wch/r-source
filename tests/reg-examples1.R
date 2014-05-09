@@ -69,13 +69,13 @@ example(parseLatex) # charset-specific
 gVigns <- pkgVignettes("grid")
 str(gVigns) # contains paths
 
-vdir <- system.file(package = "grid", "doc")
-if(nzchar(vdir)) { # so vignettes have bee installed
+vind <- system.file(package = "grid", "doc", "index.html")
+if(nzchar(vind)) { # so vignettes have been installed
     `%=f=%` <- function(a, b) normalizePath(a) == normalizePath(b)
     with(gVigns,
          stopifnot(engines == "utils::Sweave",
                    pkgdir %=f=% system.file(package="grid"),
-                   dir    %=f=% vdir,
+                   dir    %=f=% system.file(package = "grid", "doc"),
                    (n. <- length(docs)) >= 12, # have 13
                    n. == length(names), n. == length(engines),
                    length(msg) == 0) ) # as it is a 'base' package
