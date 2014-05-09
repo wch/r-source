@@ -55,11 +55,10 @@
       \item Error messages from bugs in embedded \samp{Sexpr} code
       in Sweave documents now report the source location.
 
-      %% port to R patched only after a bit of dust settlement:
       \item \code{type.convert()}, \code{read.table()} and similar
-      \code{read.*()} functions get a new \code{exact} argument,
+      \code{read.*()} functions get a new \code{numerals} argument,
       specifying how numeric input is converted when its conversion to
-      double precision loses accuracy.  The default \code{exact = FALSE}
+      double precision loses accuracy.  The default \code{exact = "allow.loss"}
       allows accuracy loss, as in all \R versions before 3.1.0.
 
       \item For some compiler versions, integer addition could accidentally
@@ -111,7 +110,7 @@
 
       \item The return value from \code{options(foo = NULL)} was not
       the previous value of the option.  (\PR{15781})
-      
+
       \item \code{enc2utf8()} and \code{enc2native()} did not always
       mark the encoding of the return values when it was known.
 
@@ -122,7 +121,7 @@
       \item \code{pbeta(x, a, b, log = TRUE)} no longer behaves
       discontinuously (in a small x-region) because of denormalized
       numbers.
-      
+
       \item The \code{"CRAN"} filter (see \code{available.packages()}) no
       longer removes duplicates other than of packages on CRAN.
     }

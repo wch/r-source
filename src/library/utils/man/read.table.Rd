@@ -16,8 +16,8 @@
 }
 \usage{
 read.table(file, header = FALSE, sep = "", quote = "\"'",
-           dec = ".", exact = FALSE, row.names, col.names,
-           as.is = !stringsAsFactors,
+           dec = ".", numerals = c("allow.loss", "warn.loss", "no.loss"),
+           row.names, col.names, as.is = !stringsAsFactors,
            na.strings = "NA", colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
@@ -79,7 +79,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 
   \item{dec}{the character used in the file for decimal points.}
 
-  \item{exact}{logical indicating how to convert numbers whose conversion
+  \item{numerals}{string indicating how to convert numbers whose conversion
     to double precision would lose accuracy, see \code{\link{type.convert}}.}
 
   \item{row.names}{a vector of row names.  This can be a vector giving

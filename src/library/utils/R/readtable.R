@@ -32,12 +32,15 @@ function(file, sep = "", quote = "\"'", skip = 0,
 
 
 type.convert <-
-function(x, na.strings = "NA", as.is = FALSE, dec = ".", exact=FALSE)
-    .External2(C_typeconvert, x, na.strings, as.is, dec, exact)
+function(x, na.strings = "NA", as.is = FALSE, dec = ".",
+	 numerals = c("allow.loss", "warn.loss", "no.loss"))
+    .External2(C_typeconvert, x, na.strings, as.is, dec,
+               match.arg(numerals))
 
 
 read.table <-
-function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=FALSE,
+function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
+	 numerals = c("allow.loss", "warn.loss", "no.loss"),
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
@@ -64,6 +67,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=FALSE,
         on.exit(close(file))
     }
     pbEncoding <- if (encoding %in% c("", "bytes", "UTF-8")) encoding else "bytes"
+    numerals <- match.arg(numerals)
 
     if(skip > 0L) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
@@ -208,7 +212,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".", exact=FALSE,
         data[[i]] <-
             if (is.na(colClasses[i]))
                 type.convert(data[[i]], as.is = as.is[i], dec=dec,
-			     exact=exact, na.strings = character(0L))
+			     numerals=numerals, na.strings = character(0L))
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])

@@ -1555,7 +1555,7 @@ double R_strtod5(const char *str, char **endptr, char dec,
 	    if (exph >= 0) exph += 4;
 	}
 #define strtod_EXACT_CLAUSE						\
-	if((exact || exact == NA_LOGICAL) && ans > 0x1.fffffffffffffp52) { \
+	if(exact && ans > 0x1.fffffffffffffp52) {			\
 	    if(exact == NA_LOGICAL)					\
 		warning(_(						\
 		"accuracy loss in conversion from \"%s\" to numeric"),	\

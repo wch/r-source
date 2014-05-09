@@ -11,7 +11,8 @@
   factor as appropriate.
 }
 \usage{
-type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = FALSE)
+type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".",
+             numerals = c("allow.loss", "warn.loss", "no.loss"))
 }
 \arguments{
   \item{x}{a character vector.}
@@ -21,20 +22,20 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".", exact = FALSE)
     missing values in logical, integer, numeric or complex vectors.}
   \item{as.is}{logical.  See \sQuote{Details}.}
   \item{dec}{the character to be assumed for decimal points.}
-  \item{exact}{logical indicating how to convert numbers whose conversion
-    to double precision would lose accuracy, typically when \code{x}
-    has more digits than can be stored in a \code{\link{double}}.
+  \item{numerals}{string indicating how to convert numbers whose
+    conversion to double precision would lose accuracy, typically when
+    \code{x} has more digits than can be stored in a \code{\link{double}}.
     \describe{
-      \item{\code{exact = FALSE}:}{the conversion happens with some
-	accuracy loss.  This has been the only behavior of \R versions 3.0.3
-	and earlier.}
-      \item{\code{exact = NA}, default:}{a \code{\link{warning}} about
-	accuracy loss is signalled and the conversion happens as with
-	\code{exact = FALSE}.}
-      \item{\code{exact = TRUE}:}{\code{x} is \emph{not} converted to a
-	number, but to a \code{\link{factor}} or left as character,
-	depending on \code{as.is}.  This has been the only behavior of
-	\R version 3.1.0.}
+      \item{\code{numerals = "allow.loss"}, default:}{the conversion
+	happens with some accuracy loss.  This has been the only
+	behavior of \R versions 3.0.3 and earlier.}
+      \item{\code{numerals = "warn.loss"}:}{a \code{\link{warning}}
+	about accuracy loss is signalled and the conversion happens as
+	with \code{numerals = "allow.loss"}.}
+      \item{\code{numerals = "no.loss"}:}{\code{x} is \emph{not}
+	converted to a number, but to a \code{\link{factor}} or left as
+	character, depending on \code{as.is}.  This has been the only
+	behavior of \R version 3.1.0.}
     }
   }
 }

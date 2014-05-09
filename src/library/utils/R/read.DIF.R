@@ -1,7 +1,7 @@
 #  File src/library/utils/R/read.DIF.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-read.DIF <- function(file, header = FALSE, dec = ".", exact = FALSE,
+read.DIF <- function(file, header = FALSE, dec = ".",
+	 numerals = c("allow.loss", "warn.loss", "no.loss"),
          row.names, col.names, as.is = !stringsAsFactors,
          na.strings = "NA", colClasses = NA,
          nrows = -1, skip = 0,
@@ -213,7 +214,7 @@ read.DIF <- function(file, header = FALSE, dec = ".", exact = FALSE,
 	            else data[[i]]
 		} else
 		    type.convert(data[[i]], as.is = as.is[i], dec = dec,
-				 na.strings = character(0L), exact=exact)
+				 na.strings = character(0L), numerals=numerals)
 	    }
         ## as na.strings have already been converted to <NA>
             else if (colClasses[i] == "factor") as.factor(data[[i]])

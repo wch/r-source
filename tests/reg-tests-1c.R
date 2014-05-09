@@ -357,18 +357,19 @@ save(one, file = tempfile(), envir = my_env)
 
 ## Conversion to numeric in boundary case
 ch <- "0x1.ffa0000000001p-1"
-rr <- type.convert(ch, exact=FALSE)
-rX <- type.convert(ch, exact=TRUE)
+rr <- type.convert(ch, numerals="allow.loss")
+rX <- type.convert(ch, numerals="no.loss")
 stopifnot(is.numeric(rr), identical(rr, rX),
           all.equal(rr, 0.999267578125),
-          all.equal(type.convert(ch), type.convert("0x1.ffap-1"), tol=5e-15))
+	  all.equal(type.convert(ch,	      numerals="warn"),
+		    type.convert("0x1.ffap-1",numerals="warn"), tol=5e-15))
 ## type.convert(ch) was not numeric in R 3.1.0
 ##
-ch <- "1234567890123456789" 
-rr <- type.convert(ch, exact=FALSE)
-rX <- type.convert(ch, exact=TRUE)
-rx <- type.convert(ch, exact=TRUE, as.is=TRUE)
-tools::assertWarning(r. <- type.convert(ch, exact=NA))
+ch <- "1234567890123456789"
+rr <- type.convert(ch, numerals="allow.loss")
+rX <- type.convert(ch, numerals="no.loss")
+rx <- type.convert(ch, numerals="no.loss", as.is=TRUE)
+tools::assertWarning(r. <- type.convert(ch, numerals="warn.loss"))
 stopifnot(is.numeric(rr), identical(rr, r.), all.equal(rr, 1.234567890e18),
 	  is.factor(rX),  identical(rx, ch))
 
