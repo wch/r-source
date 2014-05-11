@@ -1282,8 +1282,10 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	    x : allocVector(INTSXP, n);
 	PROTECT(s);
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
-	for(i = 0 ; i < n ; i++)
-	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
+	for(i = 0 ; i < n ; i++) {
+            int xi = INTEGER(x)[i];
+	    INTEGER(s)[i] = (xi == NA_INTEGER) ? xi : abs(xi);
+        }
     } else if (TYPEOF(x) == REALSXP) {
 	R_xlen_t i, n = XLENGTH(x);
 	PROTECT(s = NO_REFERENCES(x) ? x : allocVector(REALSXP, n));
