@@ -671,7 +671,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 
 int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
-unsigned int TimeToSeed(void); /* datetime.c */
+unsigned int TimeToSeed(void); // times.c
 
 const char* get_workspace_name();  /* from startup.c */
 

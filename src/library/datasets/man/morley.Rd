@@ -1,6 +1,6 @@
 % File src/library/datasets/man/morley.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -20,7 +20,7 @@
 morley
 }
 \format{
-  A data frame contains the following components:
+  A data frame with 100 observations on the following 3 variables.
   \describe{
     \item{\code{Expt}}{The experiment number, from 1 to 5.}
     \item{\code{Run}}{The run number within each experiment.}

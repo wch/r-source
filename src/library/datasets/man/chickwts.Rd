@@ -1,6 +1,6 @@
 % File src/library/datasets/man/chickwts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chickwts}
@@ -13,10 +13,10 @@
 }
 \usage{chickwts}
 \format{
-  A data frame with 71 observations on 2 variables.
+  A data frame with 71 observations on the following 2 variables.
   \describe{
-    \item{weight}{a numeric variable giving the chick weight.}
-    \item{feed}{a factor giving the feed type.}
+    \item{\code{weight}}{a numeric variable giving the chick weight.}
+    \item{\code{feed}}{a factor giving the feed type.}
   }
 }
 \source{

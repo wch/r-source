@@ -37,7 +37,7 @@
 #define R_D_log(p)	(log_p	?  (p)	 : log(p))	/* log(p) */
 #define R_D_Clog(p)	(log_p	? log1p(-(p)) : (0.5 - (p) + 0.5)) /* [log](1-p) */
 
-/* log(1 - exp(x))  in more stable form than log1p(- R_D_qIv(x))) : */
+// log(1 - exp(x))  in more stable form than log1p(- R_D_qIv(x)) :
 #define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x)))
 
 /* log(1-exp(x)):  R_D_LExp(x) == (log1p(- R_D_qIv(x))) but even more stable:*/
@@ -60,7 +60,7 @@
 #define R_DT_log(p)	(lower_tail? R_D_log(p) : R_D_LExp(p))/* log(p) in qF */
 #define R_DT_Clog(p)	(lower_tail? R_D_LExp(p): R_D_log(p))/* log(1-p) in qF*/
 #define R_DT_Log(p)	(lower_tail? (p) : R_Log1_Exp(p))
-/* ==   R_DT_log when we already "know" log_p == TRUE :*/
+// ==   R_DT_log when we already "know" log_p == TRUE
 
 
 #define R_Q_P01_check(p)			\

@@ -96,7 +96,7 @@
 static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-unsigned int TimeToSeed(void); /* datetime.c */
+unsigned int TimeToSeed(void); // times.c
 
 /* Generate a temporary file name based on TMPL.  TMPL must match the
    rules for mk[s]temp (i.e. end in "XXXXXX").  The name constructed

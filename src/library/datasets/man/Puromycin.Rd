@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Puromycin.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Puromycin}
@@ -16,13 +16,13 @@
 \format{
   This data frame contains the following columns:
   \describe{
-    \item{conc}{
+    \item{\code{conc}}{
       a numeric vector of substrate concentrations (ppm)
     }
-    \item{rate}{
+    \item{\code{rate}}{
       a numeric vector of instantaneous reaction rates (counts/min/min)
     }
-    \item{state}{
+    \item{\code{state}}{
       a factor with levels
       \code{treated}
       \code{untreated}
