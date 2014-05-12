@@ -31,6 +31,9 @@
       \item Some unusual arguments to \code{embedFonts()} can not be
       specified as character vectors, and the defaults have changed
       accordingly.
+
+      \item Functions in the \code{Summary} group duplicate less.
+      (\PR{15798})
     }
   }
   %% \subsection{BUG FIXES}{

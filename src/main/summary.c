@@ -459,7 +459,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* match to foo(..., na.rm=FALSE) */
     PROTECT(args = fixup_NaRm(args));
-    PROTECT(call2 = duplicate(call));
+    PROTECT(call2 = shallow_duplicate(call));
     SETCDR(call2, args);
 
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
@@ -770,7 +770,7 @@ SEXP attribute_hidden do_range(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, a, b, prargs, call2;
 
     PROTECT(args = fixup_NaRm(args));
-    PROTECT(call2 = duplicate(call));
+    PROTECT(call2 = shallow_duplicate(call));
     SETCDR(call2, args);
 
     if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
