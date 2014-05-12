@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -54,22 +54,18 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 
   The types available will depend on the version of \code{ghostscript},
   but are likely to include
-  \code{"pcxmono"}, \code{"pcxgray"}, \code{"pcx16"}, \code{"pcx256"},
-  \code{"pcx24b"}, \code{"pcxcmyk"}, \code{"pbm"}, \code{"pbmraw"},
-  \code{"pgm"}, \code{"pgmraw"}, \code{"pgnm"}, \code{"pgnmraw"},
-  \code{"pnm"}, \code{"pnmraw"}, \code{"ppm"}, \code{"ppmraw"},
-  \code{"pkm"}, \code{"pkmraw"}, \code{"tiffcrle"}, \code{"tiffg3"},
-  \code{"tiffg32d"}, \code{"tiffg4"}, \code{"tifflzw"},
+  \code{"jpeg"}, \code{"jpegcmyk"}, \code{"jpeggray"},
+  \code{"tiffcrle"}, \code{"tiffg3"},
+  \code{"tiffg32d"}, \code{"tiffg4"}, \code{"tiffgray"}, \code{"tifflzw"},
   \code{"tiffpack"}, \code{"tiff12nc"}, \code{"tiff24nc"}, \code{"tiff32nc"}
-  \code{"psmono"}, \code{"psgray"}, \code{"psrgb"}, \code{"bit"},
-  \code{"bitrgb"}, \code{"bitcmyk"}, \code{"pngmono"}, \code{"pnggray"},
-  \code{"pngalpha"}, \code{"png16"}, \code{"png256"}, \code{"png16m"},
-  \code{"png48"}, \code{"jpeg"}, \code{"jpeggray"}, \code{"pdfwrite"}.
+  \code{"png16"}, \code{"png16m"}, \code{"png256"}, \code{"png48"},
+  \code{"pngmono"}, \code{"pnggray"}, \code{"pngalpha"},
+  \code{"bmp16"}, \code{"bmp16m"} \code{"bmp256"}, \code{"bmp32b"},
+  \code{"bmpgray"}, \code{"bmpmono"}.
 
   The default type, \code{"png16m"}, supports 24-bit colour and
-  anti-aliasing.  Versions of \R prior to 2.7.0 defaulted to
-  \code{"png256"}, which uses a palette of 256 colours and could be a
-  more compact representation.  Monochrome graphs can use
+  anti-aliasing.  Type \code{"png256"} uses a palette of 256 colours and
+  could give a more compact representation.  Monochrome graphs can use
   \code{"pngmono"}, or \code{"pnggray"} if anti-aliasing is desired.
   Plots with a transparent background and varying degrees of
   transparency should use \code{"pngalpha"}.
@@ -83,7 +79,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \code{Rplots\%03d.png} can be used: this is interpreted by Ghostscript.
 
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
-  specified, the other is chosen to preserve aspect ratio of the
+  specified, the other is chosen to preserve the aspect ratio of the
   device being copied.  The main reason to prefer \code{method = "pdf"}
   over the default would be to allow semi-transparent colours to be used.
 

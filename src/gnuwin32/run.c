@@ -48,7 +48,7 @@ static char *expandcmd(const char *cmd, int whole)
     char c = '\0';
     char *s, *p, *q = NULL, *f, *dest, *src;
     int   d, ext, len = strlen(cmd)+1;
-    char buf[len], fl[len], fn[len];
+    char buf[len], fl[len], fn[MAX_PATH];
 
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
