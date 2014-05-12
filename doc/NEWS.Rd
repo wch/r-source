@@ -127,7 +127,12 @@
       
       \item The device listing from \code{dev2bitmap()} and
       \code{bitmap()} was truncated to 1000 characters: modern versions
-      of GhostScript have many more devices.
+      of GhostScript on most platforms have many more devices.
+
+      \item (Windows.)  Commands such as \code{Sys.which()} and
+      \code{pipe()} which needed to find the full path to a command
+      could segfault if the long path name was much longer than the
+      short path name (which \code{Sys.which()} returns).
     }
   }
 }
