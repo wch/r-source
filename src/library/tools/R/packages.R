@@ -148,7 +148,8 @@ function(dir, fields = NULL,
                 temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
                                  error = identity)
                 if(!inherits(temp, "error")) {
-                    if(is.na(temp["NeedsCompilation"])) {
+                    if("NeedsCompilation" %in% fields &&
+                       is.na(temp["NeedsCompilation"])) {
                         l <- utils::untar(files[i], list = TRUE)
                         temp["NeedsCompilation"] <-
                             if(any(l == file.path(packages[i], "src/"))) "yes" else "no"
