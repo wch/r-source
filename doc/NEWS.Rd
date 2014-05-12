@@ -27,6 +27,10 @@
       default for \file{.ps} and \file{.eps} files.  This is available
       in Ghostscript 9.x (since 2010) whereas the previous default,
       \code{format = "pswrite"}, was removed in 9.10.
+
+      \item Some unusual arguments to \code{embedFonts()} can not be
+      specified as character vectors, and the defaults have changed
+      accordingly.
     }
   }
   %% \subsection{BUG FIXES}{

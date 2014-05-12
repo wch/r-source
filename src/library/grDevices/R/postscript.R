@@ -947,12 +947,12 @@ pdfFonts(Japan1 = CIDFont("KozMinPro-Regular-Acro", "EUC-H", "EUC-JP",
 }
 
 # Call ghostscript to process postscript or pdf file to embed fonts
-# (could also be used to convert ps or pdf to any supported  format)
+# (could also be used to convert ps or pdf to any supported format)
 embedFonts <- function(file, # The ps or pdf file to convert
                        format, # Default guessed from file suffix
                        outfile = file, # By default overwrite file
-                       fontpaths = "",
-                       options = "" # Additional options to ghostscript
+                       fontpaths = character(),
+                       options = character() # Additional options to ghostscript
                        )
 {
     if(!is.character(file) || length(file) != 1L || !nzchar(file))
@@ -963,23 +963,24 @@ embedFonts <- function(file, # The ps or pdf file to convert
     suffix <- gsub(".+[.]", "", file)
     if (missing(format))
         format <- switch(suffix,
-                         ps = ,
-                         eps = "ps2write",
+                         ps = , eps = "ps2write",
                          pdf = "pdfwrite")
-    if (!is.character(format))
-        stop("Invalid output format")
+    if (!is.character(format)) stop("invalid output format")
+    check_gs_type(gsexe, format)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths))
         fontpaths <-
-            shQuote(paste0("-sFONTPATH=",
-                           paste(fontpaths, collapse =.Platform$path.sep)))
-    cmd <- paste0(gsexe, " -dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format,
-                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
-                  options, " ", shQuote(file))
-    ret <- system(cmd)
+            paste0("-sFONTPATH=",
+                   shQuote(paste(fontpaths, collapse = .Platform$path.sep)))
+    args <- c(paste0("-dNOPAUSE -dBATCH -q -dAutoRotatePages=/None -sDEVICE=", format),
+              paste0(" -sOutputFile=", tmpfile),
+              fontpaths, options, shQuote(file))
+    ret <- system2(gsexe, args)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)
+    if(outfile != file) args[2] <- paste0(" -sOutputFile=", shQuote(outfile))
+    cmd <- paste(c(shQuote(gsexe), args), collapse = " ")
     file.copy(tmpfile, outfile, overwrite = TRUE)
     invisible(cmd)
 }

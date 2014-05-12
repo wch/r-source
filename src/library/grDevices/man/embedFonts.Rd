@@ -12,8 +12,8 @@
   embed all fonts in the file.
 }
 \usage{
-embedFonts(file, format, outfile = file, fontpaths = "",
-           options = "")
+embedFonts(file, format, outfile = file,
+           fontpaths = character(), options = character())
 }
 \arguments{
   \item{file}{a character string giving the name of the original file.}
@@ -23,7 +23,7 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   \item{outfile}{the name of the new file (with fonts embedded).}
   \item{fontpaths}{a character vector giving directories that
     Ghostscript will search for fonts.}
-  \item{options}{a character string containing further options to
+  \item{options}{a character vector containing further options to
     Ghostscript.}
 }
 \details{
@@ -51,7 +51,8 @@ embedFonts(file, format, outfile = file, fontpaths = "",
   the original file has a \code{.pdf} suffix.  For earlier versions of
   Ghostscript (prior to 9.10), \code{format = "pswrite"} or \code{format
   = "epswrite"} can be used: as from 9.14 \code{format = "eps2write"} is
-  available.
+  available.  If an invalid device is given, the error message will list
+  the available devices.
   
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.
