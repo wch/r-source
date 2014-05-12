@@ -951,7 +951,7 @@ pdfFonts(Japan1 = CIDFont("KozMinPro-Regular-Acro", "EUC-H", "EUC-JP",
 embedFonts <- function(file, # The ps or pdf file to convert
                        format, # Default guessed from file suffix
                        outfile = file, # By default overwrite file
-                       fontpaths = "",
+                       fontpaths = character(),
                        options = "" # Additional options to ghostscript
                        )
 {
