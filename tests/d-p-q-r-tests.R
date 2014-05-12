@@ -9,6 +9,10 @@
 F <- FALSE
 T <- TRUE
 
+options(warn = 2)
+##      ======== No warnings, unless explicitly asserted via
+assertWarning <- tools::assertWarning
+
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 opt.conformance <- 0
 Meps <- .Machine $ double.eps
@@ -26,7 +30,8 @@ All.eq <- function(x,y) {
     all.equal.numeric(x,y, tolerance = 64*.Machine$double.eps,
                       scale = max(0, mean(abs(x), na.rm=TRUE)))
 }
-if(!interactive()) set.seed(123)
+if(!interactive())
+    set.seed(123)
 
 ## The prefixes of ALL the PDQ & R functions
 PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
@@ -44,79 +49,62 @@ PQonly <- c("tukey")
 ## Abramowitz & Stegun, p.945-6;  26.5.24  AND	26.5.28 :
 n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
 for(n in rbinom(n1, size = 2*n0, p = .4)) {
-    cat("n=",n,": ")
     for(p in c(0,1,rbeta(n2, 2,4))) {
-	cat(".")
-	for(k in rbinom(n3, size = n,  prob = runif(1))) {
+	for(k in rbinom(n3, size = n,  prob = runif(1)))
 	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k] in three ways:
-	    tst1 <- all.equal(	     pbinom(0:k, size = n, prob = p),
-			      cumsum(dbinom(0:k, size = n, prob = p)))
-	    tst <- all.equal(if(k==n || p==0) 1 else
-			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
-			     sum(dbinom(0:k, size = n, prob = p)))
-	    if(!isTRUE(tst1) || !isTRUE(tst)) {
-		cat("n=", n,"; p =",format(p),".  k =",k)
-		if(!isTRUE(tst1)) cat("; tst1=",tst1)
-		if(!isTRUE(tst )) cat("; tst=", tst)
-		cat("\n")
-	    }
-	}
+	    stopifnot(all.equal(       pbinom(0:k, size = n, prob = p),
+				cumsum(dbinom(0:k, size = n, prob = p))),
+		      all.equal(if(k==n || p==0) 1 else
+				pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
+				sum(dbinom(0:k, size = n, prob = p))))
     }
-    cat("\n")
 }
 
 ##__ 2. Geometric __
-for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
-    print(All.eq((dg <- dgeom(0:10, pr)),
-		 pr * (1-pr)^(0:10)))
-    print(All.eq(cumsum(dg), pgeom(0:10, pr)))
-}
+for(pr in seq(1e-10,1,len=15)) # p=0 is not a distribution
+    stopifnot(All.eq((dg <- dgeom(0:10, pr)),
+		     pr * (1-pr)^(0:10)),
+	      All.eq(cumsum(dg), pgeom(0:10, pr)))
+
 
 ##__ 3. Hypergeometric __
 
 m <- 10; n <- 7
 for(k in 2:m) {
     x <- 0:(k+1)
-    print(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
+    stopifnot(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
 }
 
 ##__ 4. Negative Binomial __
 
 ## PR #842
 for(size in seq(0.8,2, by=.1))
-    print(all.equal(cumsum(dnbinom(0:7, size, .5)),
-			   pnbinom(0:7, size, .5)))
-All.eq(pnbinom(c(1,3), .9, .5), c(0.777035760338812, 0.946945347071519))
+    stopifnot(all.equal(cumsum(dnbinom(0:7, size, .5)),
+			       pnbinom(0:7, size, .5)))
+stopifnot(All.eq(pnbinom(c(1,3), .9, .5),
+		 c(0.777035760338812, 0.946945347071519)))
 
 ##__ 5. Poisson __
 
-all(dpois(0:5,0)	   == c(1, rep(0,5)))
-all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
+stopifnot(dpois(0:5,0)		 == c(1, rep(0,5)),
+	  dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
 
 ## Cumulative Poisson '==' Cumulative Chi^2 :
 ## Abramowitz & Stegun, p.941 :	 26.4.21 (26.4.2)
 n1 <- 20; n2 <- 16
 for(lambda in rexp(n1))
-    for(k in rpois(n2, lambda)) {
-	tst <- all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
-			 pp <- cumsum(dpois(0:k, lambda=lambda)),
-                         tolerance = 100*Meps)
-	if(!isTRUE(tst))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
-	tst2 <- all.equal(pp, ppois(0:k, lambda=lambda), tolerance = 100*Meps)
-	if(!isTRUE(tst2))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
-	tst3 <- all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail = FALSE))
-	if(!isTRUE(tst3))
-	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
-    }
+    for(k in rpois(n2, lambda))
+	stopifnot(all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
+			    pp <- cumsum(dpois(0:k, lambda=lambda)),
+			    tolerance = 100*Meps),
+		  all.equal(pp, ppois(0:k, lambda=lambda), tolerance = 100*Meps),
+		  all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail = FALSE)))
 
 
 ##__ 6. SignRank __
 for(n in rpois(32, lam=8)) {
     x <- -1:(n + 4)
-    if(!isTRUE(eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))))
-        print(eq)
+    stopifnot(All.eq(psignrank(x, n), cumsum(dsignrank(x, n))))
 }
 
 ##__ 7. Wilcoxon (symmetry & cumulative) __
@@ -127,10 +115,9 @@ for(n in rpois(5, lam=6))
 	fx <- dwilcox(x, n, m)
 	Fx <- pwilcox(x, n, m)
 	is.sym <- is.sym & all(fx == dwilcox(x, m, n))
-	if(!isTRUE(eq <- All.eq(Fx, cumsum(fx))))
-            print(eq)
+	stopifnot(All.eq(Fx, cumsum(fx)))
     }
-is.sym
+stopifnot(is.sym)
 
 
 ###-------- Continuous Distributions ----------
@@ -139,23 +126,20 @@ is.sym
 x <- round(rgamma(100, shape = 2),2)
 for(sh in round(rlnorm(30),2)) {
     Ga <- gamma(sh)
-    for(sig in round(rlnorm(30),2)) {
-	tst <- all.equal((d1 <- dgamma(	 x,   shape = sh, scale = sig)),
-			 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
-			 tolerance = 1e-14)## __ad interim__ was 1e-15
-	if(!isTRUE(tst))
-	    cat("ERROR: dgamma() doesn't scale:",tst,"\n",
-		"  x =", formatC(x),"\n	 shape,scale=",formatC(c(sh, sig)),"\n")
-	tst <- All.eq(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)))
-	if(!isTRUE(tst))
-	    cat("NOT Equal:",tst,"\n x =", formatC(x),
-		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
-    }
+    for(sig in round(rlnorm(30),2))
+	stopifnot(all.equal((d1 <- dgamma(	 x,   shape = sh, scale = sig)),
+                            (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
+                            tolerance = 1e-14)## __ad interim__ was 1e-15
+                  ,
+                  All.eq(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)))
+                  )
 }
-pgamma(1,Inf,scale=Inf) == 0
+
+stopifnot(pgamma(1,Inf,scale=Inf) == 0)
 ## Also pgamma(Inf,Inf) == 1 for which NaN was slightly more appropriate
-all(is.nan(c(pgamma(Inf,  1,scale=Inf),
-             pgamma(Inf,Inf,scale=Inf))))
+assertWarning(stopifnot(
+    is.nan(c(pgamma(Inf,  1,scale=Inf),
+             pgamma(Inf,Inf,scale=Inf)))))
 scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
 stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
           pgamma(xMax,1, scale=Inf) == 0,
@@ -167,78 +151,89 @@ stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
           )
 
 p <- 7e-4; df <- 0.9
+stopifnot(
 abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
         pchisq(qchisq(1-p, df,lower=FALSE),df,lower=FALSE)/(1-p),# was 1.618e-11
         pchisq(qchisq(log(p), df,log=TRUE),df, log=TRUE)/log(p), # was 3.181e-9
         pchisq(qchisq(log1p(-p),df,log=T,lower=F),df, log=T,lower=F)/log1p(-p)
         )# 32b-i386: (2.2e-16, 0,0, 3.3e-16); Opteron: (2.2e-16, 0,0, 2.2e-15)
     ) < 1e-14
+)
 
 ##-- non central Chi^2 :
 xB <- c(2000,1e6,1e50,Inf)
 for(df in c(0.1, 1, 10))
     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
-all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
-          49.7766246561514, tolerance = 1e-11)
+stopifnot(all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
+                    49.7766246561514, tolerance = 1e-11))
 for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
-    cat("df =", formatC(df, wid=3))
     xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
     pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
     dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 501)
-    print(all.equal(xx, qchisq(pp, df=df, ncp=1), tolerance = dtol))# TRUE
-    ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
+    stopifnot(all.equal(xx, qchisq(pp, df=df, ncp=1), tolerance = dtol))
 }
 
 ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
-options(warn=-1) # ignore warnings from R's version of log1p
 psml <- 2^-(10:54)
 q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
 q1 <- qchisq(1-psml, df=1.2, ncp=10) # inaccurate in the tail
 p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
 p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
 iO <- 1:30
-all.equal(q0[iO], q1[iO], tolerance = 1e-5)
-all.equal(p0[iO], psml[iO])
-options(warn=0)
+stopifnot(all.equal(q0[iO], q1[iO], tolerance = 1e-5),# 9.86e-8
+          all.equal(p0[iO], psml[iO])) # 1.07e-13
 
 ##--- Beta (need more):
 
 ## big a & b (PR #643)
-summary(a <- rlnorm(20, 5.5))
-summary(b <- rlnorm(20, 6.5))
+stopifnot(is.finite(a <- rlnorm(20, 5.5)), a > 0,
+          is.finite(b <- rlnorm(20, 6.5)), b > 0)
 pab <- expand.grid(seq(0,1,by=.1), a, b)
 p <- pab[,1]; a <- pab[,2]; b <- pab[,3]
-all.equal(dbeta(p,a,b), exp(pab <- dbeta(p,a,b, log = TRUE)), tolerance = 1e-11)
-sample(pab, 50)
+stopifnot(all.equal(dbeta(p,a,b),
+                    exp(pab <- dbeta(p,a,b, log = TRUE)), tolerance = 1e-11))
+sp <- sample(pab, 50)
+if(!interactive())
+stopifnot(which(isI <- sp == -Inf) ==
+              c(3, 11, 15, 20, 22, 23, 30, 39, 42, 43, 46, 47, 49),
+          all.equal(range(sp[!isI]), c(-2906.123981, 2.197270387))
+          )
 
 
 ##--- Normal (& Lognormal) :
 
-qnorm(0) == -Inf && qnorm(-Inf, log = TRUE) == -Inf
-qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
+stopifnot(
+    qnorm(0) == -Inf, qnorm(-Inf, log = TRUE) == -Inf,
+    qnorm(1) ==  Inf, qnorm( 0,   log = TRUE) ==  Inf)
 
-is.nan(qnorm(1.1)) &&
-is.nan(qnorm(-.1)) # + warn
+assertWarning(stopifnot(
+    is.nan(qnorm(1.1)),
+    is.nan(qnorm(-.1))))
 
 x <- c(-Inf, -1e100, 1:6, 1e200, Inf)
-rbind(d.s0 =dnorm(x,3,s=0),   p.s0 = pnorm(x,3,s=0),
-      d.sI =dnorm(x,3,s=Inf), p.sI = pnorm(x,3,s=Inf))
+stopifnot(
+    dnorm(x,3,s=0) == c(0,0,0,0, Inf, 0,0,0,0,0),
+    pnorm(x,3,s=0) == c(0,0,0,0,  1 , 1,1,1,1,1),
+    dnorm(x,3,s=Inf) == 0,
+    pnorm(x,3,s=Inf) == c(0, rep(0.5, 8), 1))
 
 ## 3 Test data from Wichura (1988) :
-all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
-	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
-	  tolerance = 1e-15)
-# extreme tail -- available on log scale only:
-all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
+stopifnot(
+    all.equal(qnorm(c( 0.25,  .001, 1e-20)),
+	      c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
+	      tolerance = 1e-15)
+  , ## extreme tail -- available on log scale only:
+    all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
+)
 
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tolerance = 1e-15)
 z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
 z.ok <- z > -37.5 | !is.finite(z)
-for(df in 1:10) if(!isTRUE(all.equal(pt(z, df), 1 - pt(-z,df), tolerance = 1e-15)))
-    cat("ERROR -- df = ", df, "\n")
-All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE))
-All.eq(pz,		 pnorm(-z, lower=FALSE))
-All.eq(log(pz[z.ok]),  pnorm(z[z.ok], log=TRUE))
+for(df in 1:10) stopifnot(all.equal(pt(z, df), 1 - pt(-z,df), tolerance = 1e-15))
+
+stopifnot(All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE)),
+          All.eq(pz,		    pnorm(-z, lower=FALSE)),
+          All.eq(log(pz[z.ok]), pnorm(z[z.ok], log=TRUE)))
 y <- seq(-70,0, by = 10)
 cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
 y <- c(1:15, seq(20,40, by=5))
@@ -252,7 +247,7 @@ for(L in c(FALSE,TRUE))
 			pnorm(+y, log= L, lower=FALSE)))
 
 ## Log norm
-All.eq(pz, plnorm(exp(z)))
+stopifnot(All.eq(pz, plnorm(exp(z))))
 
 
 ###==========  p <-> q	Inversion consistency =====================
@@ -448,7 +443,7 @@ All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
 All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
 x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
 for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
-    print(all.equal(pt(-a, df=1), pcauchy(-a), tolerance = 1e-15))
+    stopifnot(all.equal(pt(-a, df=1), pcauchy(-a), tolerance = 1e-15))
 ## for PR#7902:
 ex <- -c(rev(1/x), ex)
 All.eq(-x, qcauchy(pcauchy(-x)))
@@ -569,9 +564,10 @@ stopifnot(df(0, 1, f2) == Inf,
           df(0, 3, f2) == 0)
 ## only the last one was ok in R 2.2.1 and earlier
 
-x0 <- -2 * 10^-c(22,10,7,5)
-stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
-          dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
+x0 <- -2 * 10^-c(22,10,7,5) # ==> d*() warns about non-integer:
+assertWarning(fx0 <- dbinom(x0, size = 3, prob = 0.1))
+stopifnot(fx0 == 0,  pbinom(x0, size = 3, prob = 0.1) == 0)
+
 ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 
 ## dbeta(*, ncp):
@@ -611,7 +607,6 @@ stopifnot(abs(1 - p / pt(qtp, df=1)) < 1e-14)
 stopifnot(all.equal(qt(-740, df=2, log=TRUE), -exp(370)/sqrt(2)))
 ## P ~ 1 (=> p ~ 0.5):
 p.5 <- 0.5 + 2^(-5*(5:8))
-p.5 - 0.5
 stopifnot(all.equal(qt(p.5, df = 2),
 		    c(8.429369702179e-08, 2.634178031931e-09,
 		      8.231806349784e-11, 2.572439484308e-12)))
@@ -623,9 +618,9 @@ qtp <- qt(-(20:850), df=1.2, log=TRUE, lower=FALSE)
 stopifnot(abs(5/6 - quantile(diff(log(qtp)), pr=c(0,0.995))) < 1e-11)
 
 ## close to df=1 (where Taylor steps are important!):
-all.equal(-20, pt(qt(-20, df=1.02, log=TRUE),
-                          df=1.02, log=TRUE), tolerance = 1e-12)
-stopifnot(diff(lq <- log(qt(-2^-(10:600), df=1.1, log=TRUE))) > 0.6)
+stopifnot(all.equal(-20, pt(qt(-20, df=1.02, log=TRUE),
+                          df=1.02, log=TRUE), tolerance = 1e-12),
+          diff(lq <- log(qt(-2^-(10:600), df=1.1, log=TRUE))) > 0.6)
 lq1 <- log(qt(-2^-(20:600), df=1, log=TRUE))
 lq2 <- log(qt(-2^-(20:600), df=2, log=TRUE))
 stopifnot(mean(abs(diff(lq1) - log(2)      )) < 1e-8,
@@ -639,8 +634,8 @@ stopifnot(all.equal(lp, -pt(qt(exp(-lp), 1.2), 1.2, log=TRUE), tolerance = 4e-16
 x <- c(.01, .10, .25, .40, .55, .71, .98)
 pbval <- c(-0.04605755624088, -0.3182809860569, -0.7503593555585,
            -1.241555830932, -1.851527837938, -2.76044482378, -8.149862739881)
-all.equal(pbeta(x, 0.8, 2, lower=FALSE, log=TRUE), pbval)
-all.equal(pbeta(1-x, 2, 0.8, log=TRUE), pbval)
+stopifnot(all.equal(pbeta(x, 0.8, 2, lower=FALSE, log=TRUE), pbval),
+          all.equal(pbeta(1-x, 2, 0.8, log=TRUE), pbval))
 qq <- 2^(0:1022)
 df.set <- c(0.1, 0.2, 0.5, 1, 1.2, 2.2, 5, 10, 20, 50, 100, 500)
 for(nu in df.set) {
@@ -648,8 +643,9 @@ for(nu in df.set) {
     stopifnot(is.finite(pqq))
 }
 ##
-All.eq(pt(2^-30, df=10),
-       0.50000000036238542)# = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
+stopifnot(All.eq(pt(2^-30, df=10),
+                 0.50000000036238542))
+## = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
 
 ## rbinom(*, size) gave NaN for large size up to R <= 2.6.1
 M <- .Machine$integer.max
@@ -665,8 +661,8 @@ stopifnot(qf(1/4, Inf, Inf) == 1,
 	  abs(x - qf(pf(x, f1,f2, log.p=TRUE), f1,f2, log.p=TRUE)) < 1e-4)
 
 ## qbeta(*, log.p) for "border" case:
-stopifnot(is.finite(qbeta(-1e10, 50,40, log.p=TRUE)),
-          is.finite(qbeta(-1e10,  2, 3, lower=FALSE, log.p=TRUE)))
+stopifnot(is.finite(q0 <- qbeta(-1e10, 50,40, log.p=TRUE)),
+          1 ==            qbeta(-1e10,  2, 3, log.p=TRUE, lower=FALSE))
 ## infinite loop or NaN in R <= 2.7.0
 
 ## phyper(x, 0,0,0), notably for huge x
