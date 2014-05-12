@@ -957,30 +957,17 @@ embedFonts <- function(file, # The ps or pdf file to convert
 {
     if(!is.character(file) || length(file) != 1L || !nzchar(file))
         stop("'file' must be a non-empty character string")
+    gsexe <- tools::find_gs_cmd()
+    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
     suffix <- gsub(".+[.]", "", file)
-    if (missing(format)) {
+    if (missing(format))
         format <- switch(suffix,
                          ps = ,
                          eps = "ps2write",
                          pdf = "pdfwrite")
-    }
-    if (!is.character(format)) {
+    if (!is.character(format))
         stop("Invalid output format")
-    }
-    gsexe <- Sys.getenv("R_GSCMD")
-    if(.Platform$OS.type == "windows" && !nzchar(gsexe))
-        gsexe <- Sys.getenv("GSC")
-    if(is.null(gsexe) || !nzchar(gsexe)) {
-        gsexe <- switch(.Platform$OS.type,
-                        unix = "gs",
-                        windows = {
-                            poss <- Sys.which(c("gswin64c.exe", "gswin32c.exe"))
-                            poss <- poss[nzchar(poss)]
-                            if(length(poss)) poss else "gswin32c.exe"
-                        })
-    } else if(.Platform$OS.type == "windows" &&
-              length(grep(" ", gsexe, fixed=TRUE)))
-        gsexe <- shortPathName(gsexe)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths))
         fontpaths <-

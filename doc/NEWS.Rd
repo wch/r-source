@@ -124,6 +124,10 @@
 
       \item The \code{"CRAN"} filter (see \code{available.packages()}) no
       longer removes duplicates other than of packages on CRAN.
+      
+      \item The device listing from \code{dev2bitmap()} and
+      \code{bitmap()} was truncated to 1000 characters: modern versions
+      of GhostScript have many more devices.
     }
   }
 }
