@@ -13,7 +13,7 @@
       \item \code{anyNA()} gains a \code{recursive} argument.
 
       \item \code{Sys.getenv(x, names, *)} returns a
-      \code{"DList"}, and hence prints nicely when \code{x} is
+      \code{"DList"}, and hence prints tidily when \code{x} is
       missing and \code{names} is not false.
 
       \item (Windows.)  \code{shell()} no longer consults the

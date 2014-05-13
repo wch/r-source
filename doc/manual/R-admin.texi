@@ -4821,6 +4821,9 @@ but this can be changed at configure time by specifying the flag
 make prefix=/where/you/want/R.framework/to/go install
 @end example
 
+Note that installation as a framework is non-standard and a number of
+utilities (including @command{R CMD config}) do not support it.
+
 @node Building R.app,  , Frameworks, OS X
 @subsection Building R.app
 
