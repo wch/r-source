@@ -7216,9 +7216,10 @@ memory checker in @command{valgrind}.  It is available with suitable
 builds@footnote{not including the versions distributed by Apple in
 @code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
 update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
-library, @pkg{libasan}, needs to be installed separately.} of
-@command{gcc} 4.8.0 or @command{clang} 3.1 and later on common Linux and
-OS X platforms.  See
+library, @pkg{libasan}, needs to be installed separately. OS X users can
+install a suitable @command{clang} fron the sources or possibly
+distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
+@command{clang} 3.1 and later on common Linux and OS X platforms.  See
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/docs/AddressSanitizer.html} and
 @uref{https://code.google.com/p/address-sanitizer/}.
@@ -12514,9 +12515,13 @@ R CMD config --cppflags
 R CMD config --ldflags
 @end example
 
-If @R{} is installed, @code{pkg-config} is available and
-sub-architectures have not been used, alternatives for a shared @R{}
-library are
+@noindent
+(These apply only to an uninstalled copy or a standard install, not,
+say, to installing as a framework on OS X.)
+
+If @R{} is installed, @code{pkg-config} is available and neither
+sub-architectures nor a framework have been used, alternatives for a
+shared @R{} library are
 
 @example
 pkg-config --cflags libR
