@@ -226,6 +226,16 @@ function(object, filename = NULL, name = NULL)
 
     ## Construct the format.
     if(is.data.frame(x)) {
+
+        make_item_tag <- function(s) {
+            ## For syntactic names, use \code; otherwise, use \samp.
+            if(grepl("^([[:alpha:]]|[.][[:alpha:]._])[[:alnum:]._]*$", s)) {
+                paste0("\\code{", s, "}")
+            } else {
+                paste0("\\samp{", gsub("([%{}])", "\\\\\\1", s), "}")
+            }
+        }
+        
         fmt <- c("\\format{",
                  paste("  A data frame with",
                        nrow(x),
@@ -238,7 +248,7 @@ function(object, filename = NULL, name = NULL)
             xi <- x[[i]]
             fmt <-
                 c(fmt,
-                  paste0("    \\item{\\code{", i, "}}{",
+                  paste0("    \\item{", make_item_tag(i), "}{",
                          if(inherits(xi, "ordered")) {
                              paste("an", data.class(xi),
                                    "factor with levels",
@@ -279,7 +289,7 @@ function(object, filename = NULL, name = NULL)
              description = c("\\description{",
              "%%  ~~ A concise (1-5 lines) description of the dataset. ~~",
              "}"),
-             usage = paste0("\\usage{data(", name, ")}"),
+             usage = paste0("\\usage{data(\"", name, "\")}"),
              format = fmt,
              details = c("\\details{",
              paste("%%  ~~ If necessary, more details than the",
