@@ -1137,9 +1137,9 @@ static void bgrat(double a, double b, double x, double y, double *w,
     if (b * z == 0.0) { // should not happen, but does, e.g.,
 	// for  pbeta(1e-320, 1e-5, 0.5)  i.e., _subnormal_ x,
 	// Warning ... bgrat(a=20.5, b=1e-05, x=1, y=9.99989e-321): ..
-	MATHLIB_WARNING4(
-	    "bgrat(a=%g, b=%g, x=%g, y=%g): b*z == 0 underflow, hence inaccurate pbeta()",
-	    a,b,x,y);
+	MATHLIB_WARNING5(
+	    "bgrat(a=%g, b=%g, x=%g, y=%g): z=%g, b*z == 0 underflow, hence inaccurate pbeta()",
+	    a,b,x,y, z);
 	/* L_Error:    THE EXPANSION CANNOT BE COMPUTED */ *ierr = 1; return;
     }
 
