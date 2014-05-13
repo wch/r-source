@@ -275,6 +275,8 @@ function(db)
     dups <- packages[duplicated(packages)]
     drop <- integer()
     CRAN <- getOption("repos")["CRAN"]
+    ## do nothing if there is no CRAN repos on the list
+    if(is.na(CRAN)) return(db)
     for(d in dups) {
         pos <- which(packages == d)
         ind <- substring(db[pos, "Repository"], 1, nchar(CRAN)) != CRAN
