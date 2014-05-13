@@ -2264,7 +2264,7 @@ implemented in C++, and C++ compilers commonly accept C99 extensions to
 C++98.
 
 From version 3.1.0, @R{} provides support for C++11 in packages, in
-addition to C++98.  This support is not consistent across platforms as
+addition to C++98.  This support is not uniform across platforms as
 it depends on the capabilities of the compiler (see below).  When @R{}
 is configured, it will determine whether the C++ compiler supports C++11
 and which compiler flags, if any, are required to enable C++11 support.
@@ -2282,8 +2282,8 @@ CXX_STD = CXX11
 
 Compilation and linking will then be done with the C++11 compiler.  If
 any other value is given to the @samp{CXX_STD} macro it will be ignored.
-(Further options may become available in the future depending on the
-evolution of the C++ standard.)
+(Further options may become available in the future as the C++ standard
+evolves.)
 
 Packages without a @file{Makevars} file may specify that they require
 C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
@@ -2315,15 +2315,15 @@ the @R{} sources.}, or in a personal or site @file{Makevars} file.
 If C++11 support is not available then these macros are both
 empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
 compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
-@option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).
-It is possible to specify @samp{CXX1X} to be a distinct compiler just
-for C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.
-Note however that different C++ compilers (and even different versions
-of the same compiler) often differ in their ABI so their outputs can
-rarely be mixed. By setting @samp{CXX1XSTD} it is also possible to
-choose a different dialect of the standard, such as
-@option{-std=gnu++11}, or enable experimental support for the next
-revision (tentatively planned for 2017) @option{-std=c++1y}.
+@option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).  It
+is possible to specify @samp{CXX1X} to be a distinct compiler just for
+C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  Note
+however that different C++ compilers (and even different versions of the
+same compiler) often differ in their ABI so their outputs can rarely be
+mixed. By setting @samp{CXX1XSTD} it is also possible to choose a
+different dialect of the standard, such as @option{-std=gnu++11}, or
+enable experimental support for the next revision (tentatively planned
+for 2017) using something like @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The default
 compiler@footnote{OS X 10.7 and later have @command{clang++} but for
@@ -7090,7 +7090,7 @@ message.
 @end itemize
 
 @code{R CMD check --use-gct} can be set to use
-@code{gctorture2(@var{n})} rather than @code{gctorture(TRUE)} by
+@code{gctorture2(@var{n})} rather than @code{gctorture(TRUE)} by setting
 environment variable @env{_R_CHECK_GCT_N_} to a positive integer value
 to be used as @code{@var{n}}.
 
@@ -7101,12 +7101,12 @@ mechanism can be helpful in isolating memory protect problems.
 @node Using valgrind, Using Address Sanitizer, Using gctorture, Checking memory access
 @subsection Using valgrind
 
-If you have access to Linux on a common CPU type or OS X@footnote{at the
-time of writing mainly for 10.7 with some support for 10.8, none for the
-current 10.9.} you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
-check for possible problems.  To run some examples under @code{valgrind}
-use something like
+If you have access to Linux on a common CPU type or supported versions
+of OS X@footnote{at the time of writing mainly for 10.7 with some
+support for 10.8, none for the current 10.9.} you can use
+@code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
+with `tinned') to check for possible problems.  To run some examples
+under @code{valgrind} use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
@@ -7161,7 +7161,7 @@ An example of @code{valgrind} output is
 @end smallexample
 @noindent
 This example is from an instrumented version of @R{}, while tracking
-down a bug in the @CRANpkg{Matrix} package in January, 2006.  The first line
+down a bug in the @CRANpkg{Matrix} package in 2006.  The first line
 indicates that @R{} has tried to read 4 bytes from a memory address that
 it does not have access to. This is followed by a C stack trace showing
 where the error occurred. Next is a description of the memory that was
@@ -7233,7 +7233,7 @@ run time.  By comparison with @command{valgrind}, it can detect misuse
 of stack and global variables but not the use of uninitialized memory.
 
 @command{gcc} as from version 4.9.0 returns symbolic addresses for the
-location of the error, but most other version do not.  For the latter,
+location of the error, but most other versions do not.  For the latter,
 one possibility is to use an external symbolizer such as
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
@@ -7274,6 +7274,9 @@ to link the required libraries into the @R{} executable.
 
 For options available @emph{via} an environment variable see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
+With @command{gcc} additional control is available @emph{via} the
+@option{--params} flag: see the @command{man} page.
+
 
 For more detailed information @R{} can be run under a debugger with a
 breakpoint set before the address sanitizer report is produced: for
@@ -7334,10 +7337,31 @@ like
 @end example
 
 @noindent
-A smaller selection is available for GCC, for 4.9.0
+A smaller selection is available for GCC, currently
 @example
 -fsanitize=integer-divide-by-zero,null,return,shift,signed-integer-overflow,unreachable,vla-bound
 @end example
+
+@noindent
+with
+@example
+-fsanitize=float-divide-by-zero
+@end example
+
+@noindent
+as a separate option not enabled by @code{-fsanitize=undefined}.  Other
+useful flags are
+@example
+-no-fsanitize=recover
+-fsanitize-undefined-trap-on-error
+@end example
+
+@noindent
+The first causes the first report to be fatal (it always is for
+@code{unreachable} and @code{return} suboptions): the second reports
+@emph{via} traps and so does not need the @code{libubsan} library linked
+in.
+
 
 
 There is also the compiler flag @option{-fcatch-undefined-behavior},
@@ -7688,7 +7712,7 @@ In general the representation of each object follows the format:
 @end smallexample
 
 For a more fine-grained control over the the depth of the recursion
-and the output of vectors @code{R_inspect3} takes additional two integer
+and the output of vectors @code{R_inspect3} takes additional two character()
 parameters: maximum depth and the maximal number of elements that will
 be printed for scalar vectors. The defaults in @code{R_inspect} are
 currently -1 (no limit) and 5 respectively.
