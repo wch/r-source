@@ -93,6 +93,7 @@ initDefaultClusterOptions <- function(libname)
                     type = "PSOCK",
                     outfile = "/dev/null",
                     rscript = rscript,
+                    rscript_args = character(),
                     user = Sys.info()["user"],
                     rshcmd = "ssh",
                     manual = FALSE,
@@ -104,7 +105,8 @@ initDefaultClusterOptions <- function(libname)
                     scriptdir = file.path(libname, "parallel"),
                     rprog = file.path(R.home("bin"), "R"),
                     snowlib = .libPaths()[1],
-                    useRscript = TRUE, useXDR = TRUE)
+                    useRscript = TRUE, # for use by snow clusters
+                    useXDR = TRUE)
     defaultClusterOptions <<- addClusterOptions(emptyenv(), options)
 }
 

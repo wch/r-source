@@ -72,17 +72,20 @@ setDefaultCluster(cl = NULL)
     \item{\code{outfile}}{Where to direct the \code{\link{stdout}} and
       \code{\link{stderr}} connection output from the workers.
       \code{""} indicates no redirection (which may only be useful for
-      workers on the local machines).
+      workers on the local machine).
       Defaults to \file{/dev/null} (\file{nul:} on Windows).  The other
       possibility is a file path on the worker's host.
       Files will be opened in append mode, as all workers log to the
       same file.}
     \item{\code{homogeneous}}{Logical.  Are all the hosts running
-      identical setups, so \command{Rscript} can be launched using its
-      full path on the master?  Otherwise it has to be in the default
-      path on the other hosts.}
-    \item{\code{rscript}}{The path to \command{Rscript} on the workers.
-      Defaults to the full path on the master.}
+      identical setups, so \command{Rscript} can be launched using
+      the same path on each?  Otherwise \command{Rscript} has to be in
+      the default path on the workers.}
+    \item{\code{rscript}}{The path to \command{Rscript} on the workers,
+      used if \code{homogeneous} is true. Defaults to the full path on
+      the master.}
+    \item{\code{rscript_args}}{Character vector of additional
+      arguments for \command{Rscript} such as \option{--no-environ}.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
       worker processes, e.g.{} \code{15} for a low priority.
       OS-dependent: see \code{\link{psnice}} for details.}
@@ -94,11 +97,11 @@ setDefaultCluster(cl = NULL)
       run manually.}
     \item{\code{methods}}{Logical.  If true (default) the workers will
       load the \pkg{methods} package: not loading it saves ca 30\% of the
-      startup time of the cluster.}
+      startup CPU time of the cluster.}
     \item{\code{useXDR}}{Logical. If true (default) serialization will
       use XDR: where large amounts of data are to be transferred and
       all the nodes are little-endian, communication may be
-      substantially fast if this is set to false.}
+      substantially faster if this is set to false.}
   }
 
   Function \code{makeForkCluster} creates a socket cluster by forking
