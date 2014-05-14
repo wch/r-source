@@ -58,7 +58,7 @@
 \newcommand{\R}{{\normalfont\textsf{R}}{}}
 \newcommand{\Rdash}{-}
 
-\def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
+% \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
 \newcommand{\vneed}[1]{%
   \penalty-1000\vskip#1 plus 10pt minus #1\penalty-1000\vspace{-#1}}
@@ -191,8 +191,10 @@
 {\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}
 
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\Rhref}[2]{\href{#1}{#2}}}
-{\newcommand{\Rhref}[2]{#2\footnote{\url{#1}}}}
+{\newcommand*{\Rhref}{\begingroup\@makeother\#\@Rhref}
+  \newcommand*{\@Rhref}[2]{\href{#1}{#2}\endgroup}}
+{\newcommand*{\Rhref}{\begingroup\@makeother\#\@Rhref}
+  \newcommand*{\@Rhref}[2]{#2\footnote{\url{#1}}\endgroup}}
 
 %% as from R 2.10.0 set \email in monospaced font (like \url)
 %\newcommand{\email}[1]{$\langle$\texttt{#1}$\rangle$}
