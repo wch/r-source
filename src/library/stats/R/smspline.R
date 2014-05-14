@@ -37,7 +37,7 @@ n.knots <- function(n) {
 
 smooth.spline <-
     function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-             all.knots = FALSE, nknots = .nknots.smspl(nx), keep.data = TRUE,
+             all.knots = FALSE, nknots = .nknots.smspl, keep.data = TRUE,
              df.offset = 0, penalty = 1, control.spar = list(),
              tol = 1e-6 * IQR(x))
 {
@@ -105,16 +105,17 @@ smooth.spline <-
         if(!missing(nknots) && !is.null(nknots))
             warning("'all.knots' is TRUE; 'nknots' specification is disregarded")
         nknots <- nx
-    } else {
-	## was knot <- sknotl(xbar, nknots)
-        if(is.null(nknots))# <- for back compatibility
-            nknots <- .nknots.smspl(nx)
-        else if(!is.numeric(nknots))
-            stop("'nknots' must be numeric (in {1,..,n})")
-        else if(nknots < 1)
-            stop("'nknots' must be at least 1")
-        else if(nknots > nx)
-            stop("cannot use more inner knots than unique 'x' values")
+    } else if(is.null(nknots))# <- for back compatibility
+	nknots <- .nknots.smspl(nx)
+    else {
+	if(is.function(nknots))
+	    nknots <- nknots(nx)
+	else if(!is.numeric(nknots))
+	    stop("'nknots' must be numeric (in {1,..,n})")
+	if(nknots < 1)
+	    stop("'nknots' must be at least 1")
+	else if(nknots > nx)
+	    stop("cannot use more inner knots than unique 'x' values")
     }
     knot <- c(rep(xbar[1 ], 3),
               if(all.knots) xbar else xbar[seq.int(1, nx, length.out = nknots)],
