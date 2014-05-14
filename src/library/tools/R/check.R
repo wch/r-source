@@ -3260,9 +3260,15 @@ setRlibs <-
                 warn_re <- c(warn_re,
                              ": warning: .* \\[-Wreturn-type-c-linkage\\]")
 
+                ## gcc and clang warnings about sequencing
+                warn_re <- c(warn_re,
+                             ": warning: .* \\[-Wunsequenced\\]",
+                             ": warning: .* \\[-Wsequence-point\\]")
+
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
+
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
