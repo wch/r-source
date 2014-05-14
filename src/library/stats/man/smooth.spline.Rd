@@ -13,7 +13,7 @@
 }
 \usage{
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-              all.knots = FALSE, nknots = .nknots.smspl(nx),
+              all.knots = FALSE, nknots = .nknots.smspl,
               keep.data = TRUE, df.offset = 0, penalty = 1,
               control.spar = list(), tol = 1e-6 * IQR(x))
 }
@@ -39,10 +39,11 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
    knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.}
- \item{nknots}{integer giving the number of knots to use when
-   \code{all.knots = FALSE}.  By default for \eqn{n_x > 49}{nx > 49}
-   this is less than \eqn{n_x}{nx}, the number of unique \code{x}
-   values, see the Note.}
+ \item{nknots}{integer or \code{\link{function}} giving the number of
+   knots to use when \code{all.knots = FALSE}.  If a function (as by
+   default), the number of knots is \code{nknots(nx)}.  By default for
+   \eqn{n_x > 49}{nx > 49} this is less than \eqn{n_x}{nx}, the number
+   of unique \code{x} values, see the Note.}
  \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
    residuals are available from the result.}
@@ -142,8 +143,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   determined by the \code{tol} argument, equivalently to \preformatted{%
     nx <- length(x)  -  sum(duplicated( round((x - mean(x)) / tol) ))}
 
-  The default \code{all.knots = FALSE} and \code{nknots =
-    .nknots.smspl(nx)}, entails using only \eqn{O({n_x}^{0.2})}{O(nx ^ 0.2)}
+  The default \code{all.knots = FALSE} and \code{nknots = .nknots.smspl},
+  entails using only \eqn{O({n_x}^{0.2})}{O(nx ^ 0.2)}
   knots instead of \eqn{n_x}{nx} for \eqn{n_x > 49}{nx > 49}.  This cuts
   speed and memory requirements, but not drastically anymore since \R
   version 1.5.1 where it is only \eqn{O(n_k) + O(n)}{O(nk) + O(n)} where
