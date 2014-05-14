@@ -78,6 +78,7 @@ chull <- function(x, y = NULL)
 {
     X <- xy.coords(x, y, recycle = TRUE)
     x <- cbind(X$x, X$y)
+    if(any(!is.finite(x))) stop("finite coordinates are needed")
     if(nrow(x) == 0) return(integer())
     if(nrow(x) == 1) return(1L)
     res <- .Call(C_chull, x)
