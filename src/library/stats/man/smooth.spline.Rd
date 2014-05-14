@@ -138,7 +138,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
   of duplicated points.  \code{cv = TRUE} is best avoided in that case.
 }
 \note{
-  The number of unique \code{x} values, \eqn{\mathttt{nx} = n_x}{nx} are
+  The number of unique \code{x} values, \eqn{\mathtt{nx} = n_x}{nx} are
   determined by the \code{tol} argument, equivalently to \preformatted{%
     nx <- length(x)  -  sum(duplicated( round((x - mean(x)) / tol) ))}
 
