@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-08 r65543) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-13 r65592) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -15014,7 +15014,7 @@ S Tukey smoother resulting from  smooth(x = x3R, kind = "S")
 > 
 > ### Name: smooth.spline
 > ### Title: Fit a Smoothing Spline
-> ### Aliases: smooth.spline
+> ### Aliases: smooth.spline .nknots.smspl
 > ### Keywords: smooth
 > 
 > ### ** Examples
@@ -15102,6 +15102,20 @@ attr(,"class")
 > ## consistency check:
 > stopifnot(all.equal(cars$dist,
 +                     fitted(cars.spl) + residuals(cars.spl)))
+> 
+> ## Visualize the behavior of  .nknots.smspl()
+> nKnots <- Vectorize(.nknots.smspl) ; c.. <- adjustcolor("gray20",.5)
+> curve(nKnots, 1, 250, n=250)
+> abline(0,1, lty=2, col=c..); text(90,90,"y = x", col=c.., adj=-.25)
+> abline(h=100,lty=2); abline(v=200, lty=2)
+> 
+> n <- c(1:799, seq(800, 3490, by=10), seq(3500, 10000, by = 50))
+> plot(n, nKnots(n), type="l", main = "Vectorize(.nknots.smspl) (n)")
+> abline(0,1, lty=2, col=c..); text(180,180,"y = x", col=c..)
+> n0 <- c(50, 200, 800, 3200); c0 <- adjustcolor("blue3", .5)
+> lines(n0, nKnots(n0), type="h", col=c0)
+> axis(1, at=n0, line=-2, col.ticks=c0, col=NA, col.axis=c0)
+> axis(4, at=.nknots.smspl(10000), line=-.5, col=c..,col.axis=c.., las=1)
 > 
 > ##-- artificial example
 > y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
@@ -17825,7 +17839,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.71 0.108 4.832 0 0 
+Time elapsed:  5.816 0.2 6.22 0 0 
 > grDevices::dev.off()
 null device 
           1 

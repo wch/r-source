@@ -5,14 +5,15 @@
 
 \name{smooth.spline}
 \alias{smooth.spline}
+\alias{.nknots.smspl}
 %\alias{print.smooth.spline}% is not exported
 \title{Fit a Smoothing Spline}
 \description{
   Fits a cubic smoothing spline to the supplied data.
 }
 \usage{
-smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
-              cv = FALSE, all.knots = FALSE, nknots = NULL,
+smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
+              all.knots = FALSE, nknots = .nknots.smspl(nx),
               keep.data = TRUE, df.offset = 0, penalty = 1,
               control.spar = list(), tol = 1e-6 * IQR(x))
 }
@@ -39,8 +40,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.}
  \item{nknots}{integer giving the number of knots to use when
-   \code{all.knots = FALSE}.  By default for \eqn{n > 49} this is less
-   than \eqn{n}, the number of unique \code{x} values.}
+   \code{all.knots = FALSE}.  By default for \eqn{n_x > 49}{nx > 49}
+   this is less than \eqn{n_x}{nx}, the number of unique \code{x}
+   values, see the Note.}
  \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
    residuals are available from the result.}
@@ -70,12 +72,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
    }
    Note that \code{spar} is only searched for in the interval
    \eqn{[low, high]}.
-   }
+ }
 
-   \item{tol}{A tolerance for same-ness of the \code{x} values.  The
-     values are binned into bins of size \code{tol} and values which
-     fall into the same bin are regarded as the same.
-     Must be strictly positive (and finite).}
+ \item{tol}{a tolerance for same-ness or uniqueness of the \code{x}
+   values.  The values are binned into bins of size \code{tol} and
+   values which fall into the same bin are regarded as the same.  Must
+   be strictly positive (and finite).}
 }
 \details{
   Neither \code{x} nor \code{y} are allowed to containing missing or
@@ -136,12 +138,17 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   of duplicated points.  \code{cv = TRUE} is best avoided in that case.
 }
 \note{
-  The default \code{all.knots = FALSE} and \code{nknots = NULL} entails
-  using only \eqn{O(n^{0.2})}
-  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts speed and memory
-  requirements, but not drastically anymore since \R version 1.5.1 where
-  it is only \eqn{O(n_k) + O(n)}{O(nk) + O(n)} where \eqn{n_k}{nk} is
-  the number of knots.
+  The number of unique \code{x} values, \eqn{\mathttt{nx} = n_x}{nx} are
+  determined by the \code{tol} argument, equivalently to \preformatted{%
+    nx <- length(x)  -  sum(duplicated( round((x - mean(x)) / tol) ))}
+
+  The default \code{all.knots = FALSE} and \code{nknots =
+    .nknots.smspl(nx)}, entails using only \eqn{O({n_x}^{0.2})}{O(nx ^ 0.2)}
+  knots instead of \eqn{n_x}{nx} for \eqn{n_x > 49}{nx > 49}.  This cuts
+  speed and memory requirements, but not drastically anymore since \R
+  version 1.5.1 where it is only \eqn{O(n_k) + O(n)}{O(nk) + O(n)} where
+  \eqn{n_k}{nk} is the number of knots.
+
   In this case where not all unique \code{x} values are
   used as knots, the result is not a smoothing spline in the strict
   sense, but very close unless a small smoothing parameter (or large
@@ -243,6 +250,20 @@ abline(h = 0, col = "gray")
 ## consistency check:
 stopifnot(all.equal(cars$dist,
                     fitted(cars.spl) + residuals(cars.spl)))
+
+## Visualize the behavior of  .nknots.smspl()
+nKnots <- Vectorize(.nknots.smspl) ; c.. <- adjustcolor("gray20",.5)
+curve(nKnots, 1, 250, n=250)
+abline(0,1, lty=2, col=c..); text(90,90,"y = x", col=c.., adj=-.25)
+abline(h=100,lty=2); abline(v=200, lty=2)
+
+n <- c(1:799, seq(800, 3490, by=10), seq(3500, 10000, by = 50))
+plot(n, nKnots(n), type="l", main = "Vectorize(.nknots.smspl) (n)")
+abline(0,1, lty=2, col=c..); text(180,180,"y = x", col=c..)
+n0 <- c(50, 200, 800, 3200); c0 <- adjustcolor("blue3", .5)
+lines(n0, nKnots(n0), type="h", col=c0)
+axis(1, at=n0, line=-2, col.ticks=c0, col=NA, col.axis=c0)
+axis(4, at=.nknots.smspl(10000), line=-.5, col=c..,col.axis=c.., las=1)
 
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))

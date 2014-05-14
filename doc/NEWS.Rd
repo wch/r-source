@@ -76,6 +76,9 @@
       \item For some compiler versions, integer addition could accidentally
       overflow (without a warning).  \R's internal code should be more
       \dQuote{robust} now, thanks to Hervé Pagès.  (\PR{15774})
+
+      \item The function determining the default number of knots
+      for \code{smooth.spline()} is now exported, as \code{.nknots.smspl}.
     }
   }
 
@@ -136,7 +139,7 @@
 
       \item The \code{"CRAN"} filter (see \code{available.packages()}) no
       longer removes duplicates other than of packages on CRAN.
-      
+
       \item The device listing from \code{dev2bitmap()} and
       \code{bitmap()} was truncated to 1000 characters: modern versions
       of GhostScript on most platforms have many more devices.

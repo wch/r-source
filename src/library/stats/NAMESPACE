@@ -6,7 +6,8 @@ importFrom(grDevices, dev.interactive, palette, extendrange, xy.coords)
 importFrom(utils, str)
 
 
-export(.checkMFClasses, .getXlevels, .MFclass, acf, acf2AR, add.scope,
+export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
+       acf, acf2AR, add.scope,
        add1, addmargins, aggregate,aggregate.ts, AIC, alias, anova,
        aov, approx, approxfun, ar, ar.burg, ar.mle, ar.ols, ar.yw,
        arima, arima.sim, arima0, arima0.diag, ARMAacf, ARMAtoMA,
