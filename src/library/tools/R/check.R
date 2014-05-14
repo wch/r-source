@@ -3275,7 +3275,7 @@ setRlibs <-
                              ": warning: .* \\[-Wdeprecated-register\\]",
                              ": warning: .* \\[-Wformat-extra-args\\]", # also gcc
                              ": warning: .* \\[-Wformat-security\\]",
-                             ": warning: .* \\[-Wheader-guard\\]")
+                             ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]")
 
