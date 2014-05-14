@@ -3261,9 +3261,23 @@ setRlibs <-
                              ": warning: .* \\[-Wreturn-type-c-linkage\\]")
 
                 ## gcc and clang warnings about sequencing
+
+                ## gcc warnings
                 warn_re <- c(warn_re,
-                             ": warning: .* \\[-Wunsequenced\\]",
+                             ": warning: .* \\[-Wformat-contains-nul\\]",
+                             ": warning: .* \\[-Wformat-zero-length\\]",
+                             ": warning: .* \\[-Wpointer-to-int-cast\\]",
                              ": warning: .* \\[-Wsequence-point\\]")
+
+                ## clang warnings
+                warn_re <- c(warn_re,
+                             ": warning: .* GNU extension",
+                             ": warning: .* \\[-Wdeprecated-register\\]",
+                             ": warning: .* \\[-Wformat-extra-args\\]", # also gcc
+                             ": warning: .* \\[-Wformat-security\\]",
+                             ": warning: .* \\[-Wheader-guard\\]")
+                             ": warning: .* \\[-Wpointer-arith\\]",
+                             ": warning: .* \\[-Wunsequenced\\]")
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
