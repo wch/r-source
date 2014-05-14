@@ -34,6 +34,11 @@
 
       \item Functions in the \code{Summary} group duplicate less.
       (\PR{15798})
+
+      \item (Unix-alikes.) \code{system(cmd, input = )} now uses
+      \sQuote{shell-execution-environment} redirection, which will be
+      more natural if \code{cmd} is not a single command (but requires a
+      POSIX-compliant shell). (\PR{15508})
     }
   }
   %% \subsection{BUG FIXES}{
