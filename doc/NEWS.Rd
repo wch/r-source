@@ -145,6 +145,12 @@
       \code{pipe()} which needed to find the full path to a command
       could segfault if the long path name was much longer than the
       short path name (which \code{Sys.which()} returns).
+      
+      \item \command{R CMD build} will fail with an error if one of the
+      packages specified in the \samp{VignetteBuilder} field is not
+      installed.  (Without loading those packages it cannot be
+      ascertained which files are intended to be vignettes.)  (Wish of
+      \PR{15775}.)
     }
   }
 }
