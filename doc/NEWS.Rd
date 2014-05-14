@@ -154,6 +154,9 @@
       installed.  (Without loading those packages it cannot be
       ascertained which files are intended to be vignettes.)  (Wish of
       \PR{15775}.)
+      
+      \item Misguided attempts to use \code{chull()} with non-finite
+      points now give an error (related to \PR{15777}).
     }
   }
 }
