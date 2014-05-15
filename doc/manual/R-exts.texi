@@ -7026,6 +7026,7 @@ some are related to passing characters to Fortran.
 * Using valgrind::              
 * Using Address Sanitizer::     
 * Using Undefined Behaviour Sanitizer::  
+* Other analyses with `clang'::  
 * Using `Dr. Memory'::          
 * Fortran array bounds checking::  
 @end menu
@@ -7227,20 +7228,28 @@ distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address}@footnote{@option{-faddress-sanitizer} in
-@command{clang} 3.1}, and using @code{-fno-omit-frame-pointer} will give
-more legible reports.  It has a runtime penalty of 2--3x, extended
-compilation times and uses substantially more memory, often 1--2GB, at
-run time.  By comparison with @command{valgrind}, it can detect misuse
-of stack and global variables but not the use of uninitialized memory.
+@command{clang} 3.1}, and compiling with @code{-fno-omit-frame-pointer}
+will give more legible reports.  It has a runtime penalty of 2--3x,
+extended compilation times and uses substantially more memory, often
+1--2GB, at run time.  By comparison with @command{valgrind}, it can
+detect misuse of stack and global variables but not the use of
+uninitialized memory.
 
 @command{gcc} as from version 4.9.0 returns symbolic addresses for the
 location of the error, but most other versions do not.  For the latter,
-one possibility is to use an external symbolizer such as
+one possibility is to use an external symbolizer.  Depending on the
+version, this can be done @emph{via} an environment variable, e.g.@:
+
+@example
+ASAN_SYMBOLIZER_PATH=/path/to/llvm-symbolizer
+@end example
+
+@noindent
+or by piping the output through
 @command{asan_symbolize.py}@footnote{installed on some Linux systems as
 @command{asan_symbolize}, and obtainable from
 @uref{https://llvm.org/svn/llvm-project/compiler-rt/trunk/lib/asan/scripts/asan_symbolize.py}:
-it makes use of @command{llvm-symbolizer} if available.}.  For example,
-the check output can be piped through @command{asan_symbolize.py} and
+it makes use of @command{llvm-symbolizer} if available.} and
 perhaps then (for compiled C++ code) @command{c++filt}.
 
 The simplest way to make use of this is to build a version of @R{} with
@@ -7248,7 +7257,7 @@ something like
 
 @example
 CC="gcc-4.9 -std=gnu99 -fsanitize=address"
-CFLAGS="-fno-omit-frame-pointer -O2 -Wall -pedantic -mtune=native"
+CFLAGS="-fno-omit-frame-pointer -g -O2 -Wall -pedantic -mtune=native"
 @end example
 
 @noindent
@@ -7264,19 +7273,21 @@ FC = gfortran-4.9 -fsanitize=address
 (Note that @code{-fsanitize=address} has to be part of the compiler
 specification to ensure it is used for linking.  These settings will not
 be honoured by packages which ignore @file{~/.R/Makevars}.)  It will
-likely be necessary to build @R{} with
+be necessary to build @R{} with
 
 @example
 MAIN_LDFLAGS = -fsanitize=address
 @end example
 
 @noindent
-to link the required libraries into the @R{} executable.
+to link the runtime libraries into the @R{} executable if it was not
+specified as part of @samp{CC} when @R{} was built.
 
-For options available @emph{via} an environment variable see
+For options available @emph{via} the environment variable
+@env{ASAN_OPTIONS} see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
 With @command{gcc} additional control is available @emph{via} the
-@option{--params} flag: see the @command{man} page.
+@option{--params} flag: see its @command{man} page.
 
 
 For more detailed information @R{} can be run under a debugger with a
@@ -7288,24 +7299,12 @@ break __asan_report_error
 (See
 @uref{http://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
 
-Some versions of @command{clang} also have a (currently experimental)
-memory sanitizer invoked by @option{-fsanitize=memory} which detects
-uses of uninitialized memory. See
-@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.  And some have
-an experimental leak sanitizer for @code{x86_64} Linux: see
-@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}.
-
-Clang also has a Static Analyser run on the source files during
-compilation: see @uref{http://clang-analyzer.llvm.org/}.
-
-@node Using Undefined Behaviour Sanitizer, Using `Dr. Memory', Using Address Sanitizer, Checking memory access
+@node Using Undefined Behaviour Sanitizer, Other analyses with `clang', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
 
 `UBSanitizer' is a tool for C/C++ source code selected by
-@samp{-fsanitize=undefined} (or with the address sanitizer by
-@samp{-fsanitize=undefined,address} where supported) in suitable builds
-of @command{clang}, and GCC as from 4.9.0.  (It can be enabled in
-a similar way to the address sanitizer: see the previous subsection.)
+@option{-fsanitize=undefined} in suitable builds
+of @command{clang}, and GCC as from 4.9.0.
 
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
@@ -7318,6 +7317,11 @@ are attempts to coerce a @code{NaN} to type @code{int} or
 @code{NA_INTEGER} to an unsigned type such as @code{size_t}.  Also
 common is @code{y[x - 1]} forgetting that @code{x} might be
 @code{NA_INTEGER}.
+
+This sanitizer can be combined with the Address Sanitizer by
+@option{-fsanitize=undefined,address}.  Its runtime library is linked
+into each package's DLL, so it is less often needed to be included in
+@env{MAIN_LDFLAGS}.
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
@@ -7338,7 +7342,14 @@ like
 @end example
 
 @noindent
-A smaller selection is available for GCC, currently
+In addition,
+@example
+-fsanitize=unsigned-integer-overflow
+@end example
+is available as a separate option in some versions of @command{clang}
+(not enabled by @option{-fsanitize=undefined}).
+
+A smaller selection is available for GCC, currently defaulting to
 @example
 -fsanitize=integer-divide-by-zero,null,return,shift,signed-integer-overflow,unreachable,vla-bound
 @end example
@@ -7350,31 +7361,51 @@ with
 @end example
 
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined}.  Other
-useful flags are
+as a separate option not enabled by @code{-fsanitize=undefined}.  
+
+Other useful flags include
 @example
 -no-fsanitize=recover
--fsanitize-undefined-trap-on-error
 @end example
 
 @noindent
-The first causes the first report to be fatal (it always is for
-@code{unreachable} and @code{return} suboptions): the second reports
-@emph{via} traps and so does not need the @code{libubsan} library linked
-in.
+which causes the first report to be fatal (it always is for the
+@code{unreachable} and @code{return} suboptions).
 
 
-
-There is also the compiler flag @option{-fcatch-undefined-behavior},
-said to be more reliable in @command{clang} than @command{gcc}.
+There are also the compiler flags @option{-fcatch-undefined-behavior}
+and @option{-ftrapv}, said to be more reliable in @command{clang} than
+@command{gcc}.
 
 For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
-@uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}.
+@uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
+(which has 3 parts).
 
 This option does not currently compile OpenMP code.
 
-@node Using `Dr. Memory', Fortran array bounds checking, Using Undefined Behaviour Sanitizer, Checking memory access
+@node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
+@subsection Other analyses with `clang'
+
+
+@command{clang} has a `Static Analyser' run on the source files during
+compilation: see @uref{http://clang-analyzer.llvm.org/}.
+
+Some versions of @command{clang} have a (currently experimental) memory
+sanitizer invoked by @option{-fsanitize=memory} which detects uses of
+uninitialized memory. See
+@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.  
+
+For @code{x86_64} Linux there is a leak sanitizer: see
+@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}:
+one way to invoke this from an ASAN-enabled build is by the environment
+variable
+
+@example
+ASAN_OPTIONS="detect_leaks=1"
+@end example
+
+@node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
@@ -7458,7 +7489,7 @@ Selection: 3
 
 @noindent
 Since the @R{} process may be damaged, the only really safe options are
-the first or third.  (Note that a core dump is only produced where
+thWpointer-to-int-cast or third.  (Note that a core dump is only produced where
 enabled: a common default in a shell is to limit its size to 0, thereby
 disabling it.)
 
