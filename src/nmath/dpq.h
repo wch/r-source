@@ -26,6 +26,8 @@
 #define R_D__1	(log_p ? 0. : 1.)			/* 1 */
 #define R_DT_0	(lower_tail ? R_D__0 : R_D__1)		/* 0 */
 #define R_DT_1	(lower_tail ? R_D__1 : R_D__0)		/* 1 */
+#define R_D_half (log_p ? -M_LN2 : 0.5)		// 1/2 (lower- or upper tail)
+
 
 /* Use 0.5 - p + 0.5 to perhaps gain 1 bit of accuracy */
 #define R_D_Lval(p)	(lower_tail ? (p) : (0.5 - (p) + 0.5))	/*  p  */

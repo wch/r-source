@@ -32,24 +32,26 @@
 
 double rbeta(double aa, double bb)
 {
+    if (aa < 0. || bb < 0.)
+	ML_ERR_return_NAN;
+    if (!R_FINITE(aa) && !R_FINITE(bb)) // a = b = Inf : all mass at 1/2
+	return 0.5;
+    if (aa == 0. && bb == 0.) // point mass 1/2 at each of {0,1} :
+	return (unif_rand() < 0.5) ? 0. : 1.;
+    // now, at least one of a, b is finite and positive
+    if (!R_FINITE(aa) || bb == 0.)
+    	return 1.0;
+    if (!R_FINITE(bb) || aa == 0.)
+    	return 0.0;
+
     double a, b, alpha;
     double r, s, t, u1, u2, v, w, y, z;
-
     int qsame;
     /* FIXME:  Keep Globals (properly) for threading */
     /* Uses these GLOBALS to save time when many rv's are generated : */
     static double beta, gamma, delta, k1, k2;
     static double olda = -1.0;
     static double oldb = -1.0;
-
-    if (aa <= 0. || bb <= 0. || (!R_FINITE(aa) && !R_FINITE(bb)))
-	ML_ERR_return_NAN;
-
-    if (!R_FINITE(aa))
-    	return 1.0;
-
-    if (!R_FINITE(bb))
-    	return 0.0;
 
     /* Test if we need new "initializing" */
     qsame = (olda == aa) && (oldb == bb);

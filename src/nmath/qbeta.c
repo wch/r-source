@@ -65,6 +65,30 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     R_Q_P01_boundaries(alpha, 0, 1);
 
     p_ = R_DT_qIv(alpha);/* lower_tail prob (in any case) */
+    // Conceptually,  0 < p_ < 1  (but can be 0 or 1 because of cancellation!)
+
+    //  p==0, q==0, p = Inf, q = Inf  <==> treat as one- or two-point mass
+    if(p == 0 || q == 0 || !R_FINITE(p) || !R_FINITE(q)) {
+	// We know 0 < p_ < 1 : pbeta() is constant and trivial in {0, 1/2, 1}
+#ifdef DEBUG_qbeta
+	REprintf(
+	    "qbeta(%g, %g, %g, lower_t=%d, log_p=%d): (p,q)-boundary: trivial\n",
+	    alpha, p,q, lower_tail, log_p);
+#endif
+	if(p == 0 && q == 0) { // point mass 1/2 at each of {0,1} :
+	    if(alpha < R_D_half) return 0.;
+	    if(alpha > R_D_half) return 1.;
+	    // else:  alpha == "1/2"
+	    return 0.5;
+	} else if (p == 0 || p/q == 0) { // point mass 1 at 0 - "flipped around"
+	    return 0.;
+	} else if (q == 0 || q/p == 0) { // point mass 1 at 0 - "flipped around"
+	    return 1;
+	}
+	// else:  p = q = Inf : point mass 1 at 1/2
+	return 0.5;
+    }
+
 
     if(log_p && (p_ == 0. || p_ == 1.))
 	return p_; /* better than NaN or infinite loop;
