@@ -1040,6 +1040,7 @@ function()
                "Revision",
                "RcmdrModels",
                "RcppModules",
+               "Roxygen",
                "biocViews")
              ))
 }
