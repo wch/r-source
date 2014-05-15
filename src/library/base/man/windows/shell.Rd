@@ -18,7 +18,7 @@ shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
     \code{NULL} (no shell).  If missing, a suitable shell is chosen:
     see \sQuote{Details}.}
   \item{flag}{the switch to run a command under the shell.  If the shell
-  is idneitfied as \code{bash} or \code{tcsh} or \code{sh} the default
+  is identified as \code{bash} or \code{tcsh} or \code{sh} the default
   is changed to \code{"-c"}.}
   \item{intern}{a logical, indicates whether to make the output of the
     command an \R object.}

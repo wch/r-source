@@ -41,7 +41,7 @@ extern UImode  CharacterMode;
 static char RunError[501] = "";
 
 /* This might be given a command line (whole = 0) or just the
-   executable (whole = 0).  In the later case the path may or may not
+   executable (whole = 1).  In the later case the path may or may not
    be quoted */
 static char *expandcmd(const char *cmd, int whole)
 {
@@ -53,6 +53,7 @@ static char *expandcmd(const char *cmd, int whole)
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
 
+    // This is the return value.
     if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
 	strcpy(RunError, "Insufficient memory (expandcmd)");
 	return NULL;
@@ -62,7 +63,7 @@ static char *expandcmd(const char *cmd, int whole)
     /* find the command itself, possibly double-quoted */
     if (whole) {
 	d = 0;
-    } else {
+    } else { // command line
 	for (q = p, d = 0; *q && ( d || !isspace(*q) ); q++)
 	    if (*q == '\"') d = d ? 0 : 1;
 	if (d) {
@@ -109,11 +110,11 @@ static char *expandcmd(const char *cmd, int whole)
 	return NULL;
     }
     /*
+      NB: as of Windows 7 SearchPath does not return short names any more.
+
       Paranoia : on my system switching to short names is not needed
       since SearchPath already returns 'short names'. However,
       this is not documented so I prefer to be explicit.
-      Problem is that we have removed \" from the executable since
-      SearchPath seems dislikes them
     */
     GetShortPathName(fn, s, MAX_PATH);
     if (!whole) {

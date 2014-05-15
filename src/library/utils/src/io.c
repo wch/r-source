@@ -1142,7 +1142,8 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 						 quote_col[j], qmethod,
 						 &strBuf, cdec);
 			else
-			    error(_("column %s claims to be a factor but does not have numeric codes"), j+1);
+			    error(_("column %s claims to be a factor but does not have numeric codes"),
+				  j+1);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,
 					     &strBuf, cdec);
