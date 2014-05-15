@@ -29,7 +29,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{shape1, shape2}{positive parameters of the Beta distribution.}
+  \item{shape1, shape2}{non-negative parameters of the Beta distribution.}
   \item{ncp}{non-centrality parameter.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -45,6 +45,10 @@ rbeta(n, shape1, shape2, ncp = 0)
   by continuity (as limits).
   \cr
   The mean is \eqn{a/(a+b)} and the variance is \eqn{ab/((a+b)^2 (a+b+1))}.
+  These moments and all distributional properties can be defined as
+  limits (leading to point masses at 0, 1/2, or 1) when \eqn{a} or
+  \eqn{b} are zero or infinite, and the corresponding
+  \code{[dpqr]beta()} functions are defined correspondingly.
 
   \code{pbeta} is closely related to the incomplete beta function.  As
   defined by Abramowitz and Stegun 6.6.1
@@ -66,11 +70,11 @@ rbeta(n, shape1, shape2, ncp = 0)
   generates random deviates.
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
-  
+
   The length of the result is determined by \code{n} for
   \code{rbeta}, and is the maximum of the lengths of the
-  numerical parameters for the other functions.  
-  
+  numerical parameters for the other functions.
+
   The numerical parameters other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   parameters are used.
@@ -149,5 +153,39 @@ rbeta(n, shape1, shape2, ncp = 0)
 x <- seq(0, 1, length = 21)
 dbeta(x, 1, 1)
 pbeta(x, 1, 1)
+
+## Visualization, including limit cases:
+pl.beta <- function(a,b, asp = if(isLim) 1, ylim = if(isLim) c(0,1.1)) {
+  if(isLim <- a == 0 || b == 0 || a == Inf || b == Inf) {
+    eps <- 1e-10
+    x <- c(0, eps, (1:7)/16, 1/2+c(-eps,0,eps), (9:15)/16, 1-eps, 1)
+  } else {
+    x <- seq(0, 1, length = 1025)
+  }
+  fx <- cbind(dbeta(x, a,b), pbeta(x, a,b), qbeta(x, a,b))
+  f <- fx; f[fx == Inf] <- 1e100
+  matplot(x, f, ylab="", type="l", ylim=ylim, asp=asp,
+          main = sprintf("[dpq]beta(x, a=\%g, b=\%g)", a,b))
+  abline(0,1,     col="gray", lty=3)
+  abline(h = 0:1, col="gray", lty=3)
+  legend("top", paste0(c("d","p","q"), "beta(x, a,b)"),
+         col=1:3, lty=1:3, bty = "n")
+  invisible(cbind(x, fx))
+}
+pl.beta(3,1)
+
+pl.beta(2, 4)
+pl.beta(3, 7)
+pl.beta(3, 7, asp=1)
+
+pl.beta(0, 0)   ## point masses at  {0, 1}
+
+pl.beta(0, 2)   ## point mass at 0 ; the same as
+pl.beta(1, Inf)
+
+pl.beta(Inf, 2) ## point mass at 1 ; the same as
+pl.beta(3, 0)
+
+pl.beta(Inf, Inf)# point mass at 1/2
 }
 \keyword{distribution}

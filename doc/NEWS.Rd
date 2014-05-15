@@ -79,6 +79,11 @@
 
       \item The function determining the default number of knots
       for \code{smooth.spline()} is now exported, as \code{.nknots.smspl}.
+
+      \item \code{dbeta(., a,b)}, \code{pbeta()}, \code{qbeta()} and
+      \code{rbeta()} are now defined also for \eqn{a=0}, \eqn{b=0}, or
+      infinite \eqn{a} and \eqn{b} (where they typically returned
+      \code{NaN} before).
     }
   }
 
@@ -148,13 +153,13 @@
       \code{pipe()} which needed to find the full path to a command
       could segfault if the long path name was much longer than the
       short path name (which \code{Sys.which()} returns).
-      
+
       \item \command{R CMD build} will fail with an error if one of the
       packages specified in the \samp{VignetteBuilder} field is not
       installed.  (Without loading those packages it cannot be
       ascertained which files are intended to be vignettes.)  (Wish of
       \PR{15775}.)
-      
+
       \item Misguided attempts to use \code{chull()} with non-finite
       points now give an error (related to \PR{15777}).
     }

@@ -824,5 +824,14 @@ for (FUN in c(function(n) dbinom(1,n,0.5), function(n) pbinom(1,n,0.5),
             stop("NA for M=",M, "; 10ex=",paste((2:20)[is.na(P)], collapse=", "))}))
 ## check was too tight for large n in R <= 3.1.0 (PR#15734)
 
+## [dpqr]beta(*, a,b) where a and/or b are Inf
+stopifnot(pbeta(.1, Inf, 40) == 0,
+          pbeta(.5, 40, Inf) == 1,
+          pbeta(.4, Inf,Inf) == 0,
+          pbeta(.5, Inf,Inf) == 1,
+          ## gave infinite loop (or NaN) in R <= 3.1.0
+          qbeta(.9, Inf, 100) == 1, # Inf.loop
+          qbeta(.1, Inf, Inf) == 1/2)# NaN + Warning
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

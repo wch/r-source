@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-11 r65564) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-13 r65592) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1222,7 +1222,16 @@ Type 'q()' to quit R.
 +             stop("NA for M=",M, "; 10ex=",paste((2:20)[is.na(P)], collapse=", "))}))
 > ## check was too tight for large n in R <= 3.1.0 (PR#15734)
 > 
+> ## [dpqr]beta(*, a,b) where a and/or b are Inf
+> stopifnot(pbeta(.1, Inf, 40) == 0,
++           pbeta(.5, 40, Inf) == 1,
++           pbeta(.4, Inf,Inf) == 0,
++           pbeta(.5, Inf,Inf) == 1,
++           ## gave infinite loop (or NaN) in R <= 3.1.0
++           qbeta(.9, Inf, 100) == 1, # Inf.loop
++           qbeta(.1, Inf, Inf) == 1/2)# NaN + Warning
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.801 0.004 0.825 0 0 
+Time elapsed:  0.898 0.01 0.923 0 0 
 > 
