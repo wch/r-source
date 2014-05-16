@@ -39,6 +39,9 @@
       \sQuote{shell-execution-environment} redirection, which will be
       more natural if \code{cmd} is not a single command (but requires a
       POSIX-compliant shell). (\PR{15508})
+
+      \item \code{read.fwf()} and \code{read.DIF()} gain a
+      \code{fileEncoding} argument, for convenience.
     }
   }
   %% \subsection{BUG FIXES}{

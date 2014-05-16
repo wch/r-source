@@ -13,7 +13,7 @@
 \usage{
 read.fwf(file, widths, header = FALSE, sep = "\t",
          skip = 0, row.names, col.names, n = -1,
-         buffersize = 2000, \dots)
+         buffersize = 2000, fileEncoding = "", \dots)
 }
 \arguments{
   \item{file}{
@@ -38,6 +38,13 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   \item{n}{the maximum number of records (lines) to be read, defaulting
     to no limit.}
   \item{buffersize}{Maximum number of lines to read at one time}
+  
+  \item{fileEncoding}{character string: if non-empty declares the
+    encoding used on a file (not a connection) so the character data can
+    be re-encoded.  See the \sQuote{Encoding} section of the help for
+    \code{\link{file}}, the \sQuote{R Data Import/Export Manual} and
+    \sQuote{Note}.}
+  
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.  Useful such arguments include
     \code{as.is}, \code{na.strings}, \code{colClasses} and \code{strip.white}.}
@@ -62,13 +69,16 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   result in faster processing when enough memory is available.
   
   Note that \code{read.fwf} (not \code{read.table}) reads the supplied
-  file, so arguments such as \code{encoding} and \code{fileEncoding}
-  will not be useful.
+  file, so the latter's argument \code{encoding} will not be useful.
 }
 \author{
   Brian Ripley for \R version: originally in \code{Perl} by Kurt Hornik.
 }
-\seealso{\code{\link{scan}} and \code{\link{read.table}}.}
+\seealso{
+  \code{\link{scan}} and \code{\link{read.table}}.
+  
+  \code{\link{read.fortran}} for another style of fixed-format files.
+}
 \examples{
 ff <- tempfile()
 cat(file = ff, "123456", "987654", sep = "\n")

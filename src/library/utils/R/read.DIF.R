@@ -24,11 +24,16 @@ read.DIF <- function(file, header = FALSE, dec = ".",
          check.names = TRUE,
          blank.lines.skip = TRUE,
          stringsAsFactors = default.stringsAsFactors(),
-	 transpose = FALSE)
+	 transpose = FALSE, fileEncoding = "")
 {
     if (.Platform$OS.type == "windows" && identical(file, "clipboard")) {
-	if (!(5 %in% getClipboardFormats(numeric=TRUE)) ) stop("No DIF data on clipboard")
+	if ( !(5 %in% getClipboardFormats(numeric = TRUE)) )
+            stop("No DIF data on clipboard")
 	lines <- readClipboard(5)
+    } else if(nzchar(fileEncoding)) {
+        con <- file(file, "rt", encoding = fileEncoding)
+        lines <- readLines(con)
+        close(con)
     } else {
 	lines <- readLines(file)
     }
