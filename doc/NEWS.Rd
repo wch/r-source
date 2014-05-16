@@ -42,6 +42,10 @@
 
       \item \code{read.fwf()} and \code{read.DIF()} gain a
       \code{fileEncoding} argument, for convenience.
+
+      \item Graphics devices can add attributes to their description in
+      \code{.Device} and \code{.Devices}.  Several of those included with
+      \R use a \code{"filepath"} attribute.
     }
   }
   %% \subsection{BUG FIXES}{

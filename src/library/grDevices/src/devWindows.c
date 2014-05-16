@@ -3620,6 +3620,7 @@ static void SaveAsTiff(pDevDesc dd, const char *fn)
 #ifndef CLEARTYPE_QUALITY
 # define CLEARTYPE_QUALITY 5
 #endif
+extern void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file);
 
 SEXP devga(SEXP args)
 {
@@ -3710,15 +3711,19 @@ SEXP devga(SEXP args)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
-	char type[100];
+	char type[100], *file = NULL, fn[MAX_PATH];
 	strcpy(type, "windows");
 	if (display[0]) {
 	    strncpy(type, display, 100);
-	    // Package tkrplot assumes the exact form here
-	    if(strncmp(display, "win.metafile", 12)) {
-		char *p = strchr(type, ':');
-		if(p) *p = '\0';
+	    char *p = strchr(display, ':');
+	    if (p) {
+		strncpy(fn, p+1, MAX_PATH);
+		file = fn;
 	    }
+	    // Package tkrplot assumes the exact form here,
+	    // but remove suffix for all the others.
+	    p = strchr(type, ':');
+	    if(p && strncmp(display, "win.metafile", 12)) *p = '\0';
 	}
 	/* Allocate and initialize the device driver data */
 	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
@@ -3732,7 +3737,7 @@ SEXP devga(SEXP args)
 	    error(_("unable to start %s() device"), type);
 	}
 	gdd = GEcreateDevDesc(dev);
-	GEaddDevice2(gdd, type);
+	GEaddDevice2f(gdd, type, file);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
