@@ -144,8 +144,10 @@
       discontinuously (in a small x-region) because of denormalized
       numbers.
 
-      \item The \code{"CRAN"} filter (see \code{available.packages()}) no
-      longer removes duplicates other than of packages on CRAN.
+      \item The \code{"CRAN"} filter (see \code{available.packages()})
+      no longer removes duplicates other than of packages on CRAN, and
+      does not fail if there is no CRAN repository in
+      \code{getOption("repository")}.
 
       \item The device listing from \code{dev2bitmap()} and
       \code{bitmap()} was truncated to 1000 characters: modern versions
