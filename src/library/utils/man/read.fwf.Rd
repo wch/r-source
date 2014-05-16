@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.fwf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.fwf}
@@ -39,7 +39,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
     to no limit.}
   \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
-    \code{\link{read.table}}.  Useful further arguments include
+    \code{\link{read.table}}.  Useful such arguments include
     \code{as.is}, \code{na.strings}, \code{colClasses} and \code{strip.white}.}
 }
 % PR#8083 mentions strip.white
@@ -60,9 +60,13 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   Reducing the \code{buffersize} argument may reduce memory use when
   reading large files with long lines.  Increasing \code{buffersize} may
   result in faster processing when enough memory is available.
+  
+  Note that \code{read.fwf} (not \code{read.table}) reads the supplied
+  file, so arguments such as \code{encoding} and \code{fileEncoding}
+  will not be useful.
 }
 \author{
-  Brian Ripley for \R version: original \code{Perl} by Kurt Hornik.
+  Brian Ripley for \R version: originally in \code{Perl} by Kurt Hornik.
 }
 \seealso{\code{\link{scan}} and \code{\link{read.table}}.}
 \examples{
