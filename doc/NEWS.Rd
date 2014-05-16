@@ -12,9 +12,9 @@
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
 
-      \item \code{Sys.getenv(x, names, *)} returns a
-      \code{"DList"}, and hence prints tidily when \code{x} is
-      missing and \code{names} is not false.
+      \item When \code{x} is missing and \code{names} is not false,
+      \code{Sys.getenv(x, names)} returns an object of class
+      \code{"DList"} and hence prints tidily.
 
       \item (Windows.)  \code{shell()} no longer consults the
       environment variable \env{SHELL}: too many systems have been
@@ -61,8 +61,9 @@
       \item The Bioconductor \sQuote{version} used by
       \code{setRepositories()} can now be set by environment variable
       \env{R_BIOC_VERSION} at runtime, not just when \R is installed.
-      (It has been stated that Bioconductor will switch from version
-      2.14 to version 3.0 during the lifetime of the \R 3.1 series.)
+      (It has been stated that Bioconductor will switch from
+      \sQuote{version} 2.14 to \sQuote{version} 3.0 during the lifetime
+      of the \R 3.1 series.)
 
       \item Error messages from bugs in embedded \samp{Sexpr} code
       in Sweave documents now report the source location.
@@ -70,8 +71,9 @@
       \item \code{type.convert()}, \code{read.table()} and similar
       \code{read.*()} functions get a new \code{numerals} argument,
       specifying how numeric input is converted when its conversion to
-      double precision loses accuracy.  The default \code{exact = "allow.loss"}
-      allows accuracy loss, as in all \R versions before 3.1.0.
+      double precision loses accuracy.  The default \code{numerals =
+      "allow.loss"} allows accuracy loss, as in \R versions before
+      3.1.0.
 
       \item For some compiler versions, integer addition could accidentally
       overflow (without a warning).  \R's internal code should be more
@@ -81,8 +83,8 @@
       for \code{smooth.spline()} is now exported, as \code{.nknots.smspl}.
 
       \item \code{dbeta(., a,b)}, \code{pbeta()}, \code{qbeta()} and
-      \code{rbeta()} are now defined also for \eqn{a=0}, \eqn{b=0}, or
-      infinite \eqn{a} and \eqn{b} (where they typically returned
+      \code{rbeta()} are now defined also for \eqn{a = 0}, \eqn{b = 0},
+      or infinite \eqn{a} and \eqn{b} (where they typically returned
       \code{NaN} before).
     }
   }
@@ -95,8 +97,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item When \code{attach()} notices conflicts, it does so
-      compatibly with \code{library()}, using \code{message()}.
+      \item When \code{attach()} reports conflicts, it does so
+      compatibly with \code{library()} using \code{message()}.
 
       \item \command{R CMD Sweave} no longer cleans any files,
       compatibly with versions of \R prior to 3.1.0.
@@ -151,8 +153,9 @@
 
       \item (Windows.)  Commands such as \code{Sys.which()} and
       \code{pipe()} which needed to find the full path to a command
-      could segfault if the long path name was much longer than the
-      short path name (which \code{Sys.which()} returns).
+      could segfault if the \sQuote{long} path name was much longer than
+      the \sQuote{short} path name (which \code{Sys.which()} returns),
+      as the behviour of the Windows API call had changed.
 
       \item \command{R CMD build} will fail with an error if one of the
       packages specified in the \samp{VignetteBuilder} field is not
