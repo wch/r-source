@@ -3264,6 +3264,7 @@ setRlibs <-
 
                 ## gcc warnings
                 warn_re <- c(warn_re,
+                             ": warning: pointer of type .* used in arithmetic",
                              ": warning: .* \\[-Wformat-contains-nul\\]",
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
