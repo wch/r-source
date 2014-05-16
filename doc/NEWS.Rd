@@ -155,7 +155,7 @@
       \code{pipe()} which needed to find the full path to a command
       could segfault if the \sQuote{long} path name was much longer than
       the \sQuote{short} path name (which \code{Sys.which()} returns),
-      as the behviour of the Windows API call had changed.
+      as the behaviour of the Windows API call had changed.
 
       \item \command{R CMD build} will fail with an error if one of the
       packages specified in the \samp{VignetteBuilder} field is not
