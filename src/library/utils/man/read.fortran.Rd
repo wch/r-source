@@ -1,22 +1,22 @@
 % File src/library/utils/man/read.fortran.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{read.fortran}
 \alias{read.fortran}
-\title{Read Fixed-Format Data}
+\title{Read Fixed-Format Data in a Fortran-like Style}
 \description{
-Read fixed-format data files using Fortran-style format specifications.
+  Read fixed-format data files using Fortran-style format specifications.
 }
 \usage{
 read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
 }
 \arguments{
-  \item{file}{File or \link{connection} to read from}
+  \item{file}{File or \link{connection} to read from.}
   \item{format}{Character vector or list of vectors.  See
     \sQuote{Details} below.}
-  \item{\dots}{Other arguments for \code{\link{read.fwf}}}
+  \item{\dots}{Other arguments for \code{\link{read.fwf}}.}
   \item{as.is}{Keep characters as characters?}
   \item{colClasses}{Variable classes to override defaults. See
     \code{\link{read.table}} for details.}
