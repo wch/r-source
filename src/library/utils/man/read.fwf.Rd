@@ -62,13 +62,17 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   result in faster processing when enough memory is available.
   
   Note that \code{read.fwf} (not \code{read.table}) reads the supplied
-  file, so arguments such as \code{encoding} and \code{fileEncoding}
-  will not be useful.
+  file, so the latter's  arguments such as \code{encoding} and
+  \code{fileEncoding} will not be useful.
 }
 \author{
   Brian Ripley for \R version: originally in \code{Perl} by Kurt Hornik.
 }
-\seealso{\code{\link{scan}} and \code{\link{read.table}}.}
+\seealso{
+  \code{\link{scan}} and \code{\link{read.table}}.
+  
+  \code{\link{read.fortran}} for another style of fixed-format files.
+}
 \examples{
 ff <- tempfile()
 cat(file = ff, "123456", "987654", sep = "\n")

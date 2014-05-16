@@ -154,7 +154,7 @@ read.DIF(file, header = FALSE,
   its WinFX system, which may or may not be compatible.
 }
 \examples{
-## read.DIF() needs transpose = TRUE for file exported from Excel
+## read.DIF() may need transpose = TRUE for a file exported from Excel
 udir <- system.file("misc", package = "utils")
 dd <- read.DIF(file.path(udir, "exDIF.dif"), header = TRUE, transpose = TRUE)
 dc <- read.csv(file.path(udir, "exDIF.csv"), header = TRUE)
