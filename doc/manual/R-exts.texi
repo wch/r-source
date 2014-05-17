@@ -12572,12 +12572,11 @@ R CMD config --ldflags
 @end example
 
 @noindent
-(These apply only to an uninstalled copy or a standard install, not,
-say, to installing as a framework on OS X.)
+(These apply only to an uninstalled copy or a standard install.)
 
 If @R{} is installed, @code{pkg-config} is available and neither
-sub-architectures nor a framework have been used, alternatives for a
-shared @R{} library are
+sub-architectures nor an OS X framework have been used, alternatives for
+a shared @R{} library are
 
 @example
 pkg-config --cflags libR
@@ -12591,6 +12590,11 @@ and for a static @R{} library
 pkg-config --cflags libR
 pkg-config --libs --static libR
 @end example
+
+@noindent
+(This may work for an installed OS framework if @code{pkg-config} is
+taught where to look for @file{libR.pc}: it is installed inside the
+framework.)
 
 However, a more comprehensive way is to set up a @file{Makefile} to
 compile the front-end.  Suppose file @file{myfe.c} is to be compiled to

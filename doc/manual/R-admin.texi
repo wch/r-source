@@ -4809,20 +4809,25 @@ selected by the default option
 ./configure --enable-R-framework
 @end example
 
-This is only needed if you want to build @R{} for use with the
-@Rapp{} console, and implies @option{--enable-R-shlib} to build
-@R{} as a dynamic library.  This option configures @R{} to be built and
-installed as a framework called @file{R.framework}.  The default
-installation path for @file{R.framework} is @file{/Library/Frameworks}
-but this can be changed at configure time by specifying the flag
+(This is intended to be used with an Apple toolchain: other compilers may
+not support frameworks correctly.)
+
+It is only needed if you want to build @R{} for use with the @Rapp{}
+console, and implies @option{--enable-R-shlib} to build @R{} as a
+dynamic library.  This option configures @R{} to be built and installed
+as a framework called @file{R.framework}.  The default installation path
+for @file{R.framework} is @file{/Library/Frameworks} but this can be
+changed at configure time by specifying the flag
 @option{--enable-R-framework[=@var{DIR}]} or at install time as
 
 @example
 make prefix=/where/you/want/R.framework/to/go install
 @end example
 
-Note that installation as a framework is non-standard and a number of
-utilities (including @command{R CMD config}) do not support it.
+Note that installation as a framework is non-standard (especially to a
+non-standard location) and utilities may not support it (e.g.@: the
+@command{pkg-config} file @file{libR.pc} will be put somewhere unknown
+to @command{pkg-config}).
 
 @node Building R.app,  , Frameworks, OS X
 @subsection Building R.app
