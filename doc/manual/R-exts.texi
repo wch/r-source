@@ -7219,7 +7219,7 @@ builds@footnote{not including the versions distributed by Apple in
 @code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
 update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
 library, @pkg{libasan}, needs to be installed separately. OS X users can
-install a suitable @command{clang} fron the sources or possibly
+install a suitable @command{clang} from the sources or possibly
 distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
 @command{clang} 3.1 and later on common Linux and OS X platforms.  See
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation},
