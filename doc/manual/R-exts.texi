@@ -7489,7 +7489,7 @@ Selection: 3
 
 @noindent
 Since the @R{} process may be damaged, the only really safe options are
-thWpointer-to-int-cast or third.  (Note that a core dump is only produced where
+the first or third.  (Note that a core dump is only produced where
 enabled: a common default in a shell is to limit its size to 0, thereby
 disabling it.)
 
