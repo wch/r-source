@@ -65,7 +65,8 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
         out
     }
 
-    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")), add = TRUE)
+    ctype <-  Sys.getlocale("LC_CTYPE")
+    on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
     Sys.setlocale("LC_CTYPE", "C")
 
     lines <- readLines(file)
