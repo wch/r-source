@@ -1,7 +1,7 @@
 #  File src/library/base/R/dcf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,6 +65,8 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
         out
     }
 
+    ## This needs to be done in an 8-bit locale,
+    ## both for the regexps and strtrim().
     ctype <-  Sys.getlocale("LC_CTYPE")
     on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
     Sys.setlocale("LC_CTYPE", "C")

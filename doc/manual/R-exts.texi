@@ -3108,7 +3108,7 @@ to change the search order.
 Note that a package with non-Sweave vignettes should always have a
 @samp{VignetteBuilder} field in the @file{DESCRIPTION} file, since this
 is how @command{R CMD check} recognizes that there are vignettes to be
-checked.
+checked: packages listed there are required when the package is checked.
 
 The vignette engine can produce @file{.tex}, @file{.pdf}, or @file{.html}
 files as output.  If it produces @file{.tex} files, @R{} will

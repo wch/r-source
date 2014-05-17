@@ -2863,7 +2863,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
     standard_package_names <- .get_standard_package_names()
 
     ## Are all packages listed in Depends/Suggests/Imports/LinkingTo installed?
-    lreqs <- c(ldepends, limports, llinks, VB,
+    lreqs <- c(ldepends, limports, llinks,
                if(force_suggests) lsuggests)
     lreqs2 <- c(if(!force_suggests) lsuggests, lenhances)
     if(length(c(lreqs, lreqs2))) {
@@ -2886,11 +2886,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                 bad1 <-  bad[bad %in% c(depends, imports, links)]
                 if(length(bad1))
                     bad_depends$required_but_not_installed <- bad1
-                bad2 <- bad[bad %in% VB]
+                bad2 <-  setdiff(bad, bad1)
                 if(length(bad2))
-                    bad_depends$required_for_checking_but_not_installed <- bad2
-                bad3 <-  setdiff(bad, c(bad1, bad2))
-                if(length(bad3))
                     bad_depends$suggested_but_not_installed <- bad3
             }
             if(length(reqs[m]))
@@ -2926,6 +2923,11 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             m <- setdiff(sapply(lsuggests, `[[`, 1L), installed)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
+        }
+        if (length(VB)) {
+            bad <- VB[! VB %in% c(package_name, installed)]
+            if(length(bad))
+                bad_depends$required_for_checking_but_not_installed <- bad
         }
     }
     ## FIXME: is this still needed now we do dependency analysis?
@@ -3001,11 +3003,6 @@ function(x, ...)
       } else if(length(bad)) {
           c(sprintf("Package required but not available: %s", sQuote(bad)), "")
       },
-      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
-          c(.pretty_format2("Packages required for checking but not available:", bad), "")
-      } else if(length(bad)) {
-          c(sprintf("Package required for checking but not available: %s", sQuote(bad)), "")
-      },
       if(length(bad <- x$suggested_but_not_installed) > 1L) {
           c(.pretty_format2("Packages suggested but not available:", bad), "")
       } else if(length(bad)) {
@@ -3043,6 +3040,11 @@ function(x, ...)
       } else if(length(bad)) {
           c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
             "")
+      },
+      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
+          c(.pretty_format2("VignetteBuilder packages required for checking but not available:", bad), "")
+      } else if(length(bad)) {
+          c(sprintf("VignetteBuilder package required for checking but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
