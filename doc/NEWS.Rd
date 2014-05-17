@@ -169,8 +169,10 @@
       \item \command{R CMD build} will fail with an error if one of the
       packages specified in the \samp{VignetteBuilder} field is not
       installed.  (Without loading those packages it cannot be
-      ascertained which files are intended to be vignettes.)  (Wish of
-      \PR{15775}.)
+      ascertained which files are intended to be vignettes. This means
+      that the \samp{VignetteBuilder} packages have to be installed for
+      package checking too.)
+      (Wish of \PR{15775}.)
 
       \item Misguided attempts to use \code{chull()} with non-finite
       points now give an error (related to \PR{15777}).

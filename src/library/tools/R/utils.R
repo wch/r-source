@@ -793,7 +793,8 @@ function(dir, installed = FALSE)
 
 .get_requires_from_package_db <-
 function(db,
-         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
+         category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
+         "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -812,7 +813,8 @@ function(db,
 
 .get_requires_with_version_from_package_db <-
 function(db,
-         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
+         category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
+         "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {

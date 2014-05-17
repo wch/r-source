@@ -2852,6 +2852,8 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
     ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
+    ## VignetteBuilder packages are needed to ascertain what is a vignette.
+    VB <- .get_requires_from_package_db(db, "VignetteBuilder")
 
     depends <- sapply(ldepends, `[[`, 1L)
     imports <- sapply(limports, `[[`, 1L)
@@ -2861,7 +2863,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
     standard_package_names <- .get_standard_package_names()
 
     ## Are all packages listed in Depends/Suggests/Imports/LinkingTo installed?
-    lreqs <- c(ldepends, limports, llinks,
+    lreqs <- c(ldepends, limports, llinks, VB,
                if(force_suggests) lsuggests)
     lreqs2 <- c(if(!force_suggests) lsuggests, lenhances)
     if(length(c(lreqs, lreqs2))) {
@@ -2884,9 +2886,12 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                 bad1 <-  bad[bad %in% c(depends, imports, links)]
                 if(length(bad1))
                     bad_depends$required_but_not_installed <- bad1
-                bad2 <-  setdiff(bad, bad1)
+                bad2 <- bad[bad %in% VB]
                 if(length(bad2))
-                    bad_depends$suggested_but_not_installed <- bad2
+                    bad_depends$required_for_checking_but_not_installed <- bad2
+                bad3 <-  setdiff(bad, c(bad1, bad2))
+                if(length(bad3))
+                    bad_depends$suggested_but_not_installed <- bad3
             }
             if(length(reqs[m]))
                 bad_depends$required_but_stub <- reqs[m]
@@ -2995,6 +3000,11 @@ function(x, ...)
           c(.pretty_format2("Packages required but not available:", bad), "")
       } else if(length(bad)) {
           c(sprintf("Package required but not available: %s", sQuote(bad)), "")
+      },
+      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
+          c(.pretty_format2("Packages required for checking but not available:", bad), "")
+      } else if(length(bad)) {
+          c(sprintf("Package required for checking but not available: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$suggested_but_not_installed) > 1L) {
           c(.pretty_format2("Packages suggested but not available:", bad), "")
@@ -6574,7 +6584,7 @@ function(dir)
                                        "no",
                                        ""))
                 ## Map Repository fields to URLs, and determine unused
-                ## URLs. 
+                ## URLs.
                 ## Note that available.packages() possibly adds Path
                 ## information in the Repository field, so matching
                 ## given contrib URLs to these fields is not trivial.
