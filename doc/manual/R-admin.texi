@@ -662,7 +662,7 @@ make install rhome=/usr/local/lib64/R-@value{VERSIONno}
 will use a version-specific @R{} home on a non-Debian Linux 64-bit
 system.
 
-If you have made @R{} as a shared/dynamic library you can install it in
+If you have made @R{} as a shared library you can install it in
 your system's library directory by
 
 @example
@@ -671,7 +671,10 @@ make prefix=/path/to/here install-libR
 
 @noindent
 where @code{prefix} is optional, and @code{libdir} will give more
-precise control.
+precise control.  However, you should not install to a directory
+mentioned in @env{LDPATHS} (e.g.@: @file{/usr/local/lib64}) if you
+intend to work with multiple versions of @R{}, since that directory may
+be given precedence over that in other @R{} installations.
 
 @example
 make install-strip
