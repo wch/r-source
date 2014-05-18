@@ -284,10 +284,13 @@ AC_ARG_ENABLE([BLAS-shlib],
 [use_blas_shlib="${enableval}"],
 [use_blas_shlib="unset"])
 
+## As from R 3.2.0 split up -L... and -lR
 if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/lib\$(R_ARCH) -lR"
+  LIBR0="-L\$(R_HOME)/lib\$(R_ARCH)"
+  LIBR1=-lR
 else
-  LIBR=
+  LIBR0=
+  LIBR1=
 fi
 
 ## Enable maintainer-specific portions of Makefiles.
@@ -2096,7 +2099,9 @@ case "${host_os}" in
     fi
   ;;
 esac
-AC_SUBST(LIBR)
+## LIBR0 is for the -L part, LIBR1 for -lR (if needed)
+AC_SUBST(LIBR0)
+AC_SUBST(LIBR1)
 
 ## This version is used to build a shared BLAS lib
 BLAS_LIBS0=${BLAS_LIBS}

@@ -22,7 +22,7 @@ DISTFILES = \
 	dllversion.rc
 
 internet_la = internet$(SHLIB_EXT)
-internet_la_LIBADD = $(LIBR) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+internet_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
 
