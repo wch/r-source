@@ -6,7 +6,7 @@
 ## Usage:
 ##   R CMD f77 [options] files [objs]
 
-## Copyright (C) 2002-5 The R Core Team
+## Copyright (C) 2002-2005 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R front-end script to f2c: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-5 The R Core Team.
+Copyright (C) 2002-2005 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
