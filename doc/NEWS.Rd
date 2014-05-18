@@ -112,6 +112,13 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.35.
+      
+      \item There is a new target \command{make uninstall-libR} to
+      remove an installed shared/static \file{libR}.
+
+       \command{make install-libR} now works if a sub-architecture is
+       used, although the user will need to specify \code{libdir}
+       differently for different sub-architectures.
     }
   }
 
