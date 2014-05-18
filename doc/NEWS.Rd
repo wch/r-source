@@ -48,6 +48,19 @@
       \R use a \code{"filepath"} attribute.
     }
   }
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{ 
+      \item When building \R as a shared library, the
+      \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
+      link commands used during installation and when packages are
+      installed: this help ensure that the current build has priority if
+      an \R shared library has already been installed by e.g.
+      \command{install-libR} in a library mentioned in \env{LDFLAGS}
+      (and not in \sQuote{your system's library directory} as
+      documented). (Wish of \PR{15790}.)
+    }
+  }
+  
   %% \subsection{BUG FIXES}{
   %%   \itemize{
   %%   }
