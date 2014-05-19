@@ -1027,49 +1027,36 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /* First pass, exact matching */
     R_xlen_t nexact = 0;
-    if(no_dups) {
-	for (R_xlen_t i = 0; i < n_input; i++) {
-	    const char *ss = in[i];
-	    if (strlen(ss) == 0) continue;
-	    for (int j = 0; j < n_target; j++) {
-		if (used[j]) continue;
-		if (strcmp(ss, tar[j]) == 0) {
-		    if(no_dups) used[j] = 1;
-		    ians[i] = j + 1;
-		    nexact++;
-		    break;
-		}
-	    }
-	}
+    /* Compromise when hashing used changed in 3.2.0 (PR#15697) */
+    if (n_input <= 100 || n_target <= 100) {
+        for (R_xlen_t i = 0; i < n_input; i++) {
+            const char *ss = in[i];
+            if (strlen(ss) == 0) continue;
+            for (int j = 0; j < n_target; j++) {
+                if (no_dups && used[j]) continue;
+                if (strcmp(ss, tar[j]) == 0) {
+                    ians[i] = j + 1;
+                    if (no_dups) used[j] = 1;
+                    nexact++;
+                    break;
+                }
+            }
+        }
     } else {
-	/* only worth hashing if enough lookups will be done:
-	   since the tradeoff involves memory as well as time
-	   it is not really possible to optimize there.
-	 */
-	if((n_target > 100) && (10*n_input > n_target)) {
-	    HashData data;
-	    HashTableSetup(target, &data, NA_INTEGER);
-	    data.useUTF8 = useUTF8;
-	    data.nomatch = 0;
-	    DoHashing(target, &data);
-	    for (R_xlen_t i = 0; i < n_input; i++) {
-		/* we don't want to lookup "" */
-		if (strlen(in[i]) == 0) continue;
-		ians[i] = Lookup(target, input, i, &data);
-		if(ians[i]) nexact++;
-	    }
-	} else {
-	    for (R_xlen_t i = 0; i < n_input; i++) {
-		const char *ss = in[i];
-		if (strlen(ss) == 0) continue;
-		for (int j = 0; j < n_target; j++)
-		    if (strcmp(ss, tar[j]) == 0) {
-			ians[i] = j + 1;
-			nexact++;
-			break;
-		    }
-	    }
-	}
+        HashData data;
+        HashTableSetup(target, &data, NA_INTEGER);
+        data.useUTF8 = useUTF8;
+        data.nomatch = 0;
+        DoHashing(target, &data);
+        for (R_xlen_t i = 0; i < n_input; i++) {
+            if (strlen(in[i]) == 0) /* don't look up "" */
+                continue;
+            int j = Lookup(target, input, i, &data);
+            if ((j == 0) || (no_dups && used[j - 1])) continue;
+            if (no_dups) used[j - 1] = 1;
+            ians[i] = j;
+            nexact++;
+        }
     }
 
     if(nexact < n_input) {

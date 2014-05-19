@@ -46,6 +46,9 @@
       \item Graphics devices can add attributes to their description in
       \code{.Device} and \code{.Devices}.  Several of those included with
       \R use a \code{"filepath"} attribute.
+      
+      \item \item{pmatch()} uses hashing in more cases and so is faster
+      at the expense of using more memory. (\PR{15697})
     }
   }
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
