@@ -202,6 +202,11 @@
       terms, so that for example attempting to delete it would remove
       the intercept instead (and leave a corrupt internal structure).
       (\PR{15735})
+
+      \item \code{anyDuplicated()} silently returned wrong values when
+      the first duplicate was at an index which could not be stored as
+      in an integer vector (although a lot of RAM and patience would
+      have been needed to encounter this).
     }
   }
 }

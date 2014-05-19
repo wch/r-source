@@ -1,6 +1,6 @@
 % File src/library/base/man/duplicated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{duplicated}
@@ -116,7 +116,9 @@ anyDuplicated(x, incomparables = FALSE, \dots)
     each row.  For a matrix or array, and when \code{MARGIN = 0}, a
     logical array with the same dimensions and dimnames.
 
-    \code{anyDuplicated()}: a non-negative integer vector of length one.
+    \code{anyDuplicated()}: an integer or real vector of length one with
+    value the 1-based index of the first duplicate if any, otherwise
+    \code{0}.
 }
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements

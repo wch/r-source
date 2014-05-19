@@ -543,7 +543,7 @@ static SEXP Duplicated(SEXP x, Rboolean from_last, int nmax)
 /* simpler version of the above : return 1-based index of first, or 0 : */
 R_xlen_t any_duplicated(SEXP x, Rboolean from_last)
 {
-    int result = 0;
+    R_xlen_t result = 0;
     int nmax = NA_INTEGER;
 
     if (!isVector(x)) error(_("'duplicated' applies only to vectors"));
@@ -554,12 +554,10 @@ R_xlen_t any_duplicated(SEXP x, Rboolean from_last)
 
     if(from_last) {
 	for (i = n-1; i >= 0; i--) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     } else {
 	for (i = 0; i < n; i++) {
-//	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	    if(isDuplicated(x, i, &data)) { result = ++i; break; }
 	}
     }
@@ -692,15 +690,20 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(length(incomp) && /* S has FALSE to mean empty */
        !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0)) {
-	if(PRIMVAL(op) == 2) /* return R's 1-based index :*/
-	    return ScalarInteger(any_duplicated3(x, incomp, fL));
-	else
+	if(PRIMVAL(op) == 2) {
+	    /* return R's 1-based index :*/
+	    R_xlen_t ind  = any_duplicated3(x, incomp, fL);
+	    if(ind > INT_MAX) return ScalarReal((double) ind);
+	    else return ScalarInteger((int)ind);
+	} else
 	    dup = duplicated3(x, incomp, fL, nmax);
     }
     else {
-	if(PRIMVAL(op) == 2)
-	    return ScalarInteger(any_duplicated(x, fL));
-	else
+	if(PRIMVAL(op) == 2) {
+	    R_xlen_t ind  = any_duplicated(x, fL);
+	    if(ind > INT_MAX) return ScalarReal((double) ind);
+	    else return ScalarInteger((int)ind);
+	} else
 	    dup = Duplicated(x, fL, nmax);
     }
     if (PRIMVAL(op) == 0) /* "duplicated()" */
@@ -1044,10 +1047,6 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	   it is not really possible to optimize there.
 	 */
 	if((n_target > 100) && (10*n_input > n_target)) {
-	    /* <FIXME>
-	       Currently no hashing when using bytes.
-	       </FIXME>
-	    */
 	    HashData data;
 	    HashTableSetup(target, &data, NA_INTEGER);
 	    data.useUTF8 = useUTF8;
