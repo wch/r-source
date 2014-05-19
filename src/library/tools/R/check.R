@@ -4658,12 +4658,12 @@ function(x, ...)
 CRAN_check_results <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    ## This allows for partial local mirrors, or to
+    ## look at a more-freqently-updated mirror
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_results.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     results <- readRDS(rds)
     close(rds)
 
@@ -4673,12 +4673,10 @@ function()
 CRAN_check_details <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_details.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     details <- readRDS(rds)
     close(rds)
 
@@ -4688,12 +4686,10 @@ function()
 CRAN_memtest_notes <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/memtest_notes.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     mtnotes <- readRDS(rds)
     close(rds)
 
