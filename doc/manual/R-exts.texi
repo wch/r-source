@@ -1905,11 +1905,11 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  The compilers currently used on OS X have partial
-support for OpenMP 2.5, but this is not enabled in the @acronym{CRAN}
-build. (Apple have discontinued support for those compilers, and their
-preferred alternative, @command{clang}, currently has no OpenMP
-support.  A project to add it has been announced at
+have recent versions.  The compilers used on OS X 10.6 (`Snow Leopard')
+had partial support for OpenMP 2.5, but this is not enabled in the
+@acronym{CRAN} build of @R{}. (Apple have discontinued support for those
+compilers, and their alternative as from OS X 10.9, @command{clang}, has
+no OpenMP support.  A project to add it has been announced at
 @uref{http://clang-omp.github.io/}, but it is unknown when or even if
 the Apple builds will incorporate it.)
 
@@ -1933,8 +1933,8 @@ nested, although it is common to use only a single thread below the
 first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  The best way to limit resources is to limit the
-overall number of threads available to OpenMP in the R process: this can
-be done via environment variable @env{OMP_THREAD_LIMIT}, where
+overall number of threads available to OpenMP in the @R{} process: this
+can be done via environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
 Solaris Studio and Intel compilers.}  Alternatively, the number of
 threads per region can be limited by the environment variable
@@ -8665,6 +8665,9 @@ Note that there can be tricky versioning issues here, as package
 desirable that the API provided by package @pkg{packB} remains
 backwards-compatible.
 
+Shipping a static library in package @pkg{packB} for other packages to
+link to avoids most of the difficulties.
+
 @menu
 * Unix-alikes::                 
 * Windows::                     
@@ -8679,48 +8682,53 @@ on a Unix-alike OS.  There are severe portability issues, so this is not
 recommended for a distributed package.
 
 This is easiest if @pkg{packB} provides a static library
-@file{packB/libs/libpackB.a}.  (This will need to be compiled with
+@file{packB/lib/libpackB.a}.  (Note using directory @file{lib} rather
+than @file{libs} is conventional, and architecture-specific
+sub-directories may be needed and are assumed in the sample code
+below. The code in the static library will need to be compiled with
 @code{PIC} flags on platforms where it matters.)  Then as the code from
 package @pkg{packB} is incorporated when package @pkg{packA} is
 installed, we only need to find the static library at install time for
-package @pkg{packB}.  The only issue is to find package @pkg{packB}, and
-for that we can ask @R{} by something like (long lines broken for display here)
+package @pkg{packA}.  The only issue is to find package @pkg{packB}, and
+for that we can ask @R{} by something like (long lines broken for
+display here)
 
 @example
 PKGB_PATH=`echo 'library(packB);
-  cat(system.file("libs",  package="packB", mustWork=TRUE))' \
+  cat(system.file("lib",  package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS="$(PKGB_PATH)$(R_ARCH)/libpackB.a"
 @end example
 
-For a dynamic library @file{packB/libs/libpackB.so}
-(@file{packB/libs/libpackB.dylib} on OS X: note that you cannot link to
-a shared object, @file{.so} on that platform) we could use
+For a dynamic library @file{packB/lib/libpackB.so}
+(@file{packB/lib/libpackB.dylib} on OS X: note that you cannot link to
+a shared object, @file{.so}, on that platform) we could use
 
 @example
 PKGB_PATH=`echo 'library(packB);
-  cat(system.file("libs", package="packB", mustWork=TRUE))' \
+  cat(system.file("lib", package="packB", mustWork=TRUE))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
 
 @noindent
 This will work for installation, but very likely not when package
-@code{packB} is loaded, as the path to package @pkg{packB}'s @file{libs}
+@code{packB} is loaded, as the path to package @pkg{packB}'s @file{lib}
 directory is not in the @command{ld.so}@footnote{@command{dyld} on OS X,
 and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can arrange to
 put it there @strong{before} @R{} is launched by setting (on some
 platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to the
 @command{ld.so} cache (see @command{man ldconfig}).  On platforms that
-support it, the path to the dynamic library can be hardcoded at install
-time (which assumes that the location of package @pkg{packB} will not be
-changed) nor the package updated to a changed API).  On systems with the
-@command{gcc} or @command{clang} and the @acronym{GNU} linker (e.g.@:
-Linux) and some others (e.g.@: OS X) this can be done by e.g.@:
+support it, the path to the directory containing the dynamic library can
+be hardcoded at install time (which assumes that the location of package
+@pkg{packB} will not be changed nor the package updated to a changed
+API).  On systems with the @command{gcc} or @command{clang} and the
+@acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X) this
+can be done by e.g.@:
 
 @example
 PKGB_PATH=`echo 'library(packB);
-  cat(system.file("libs", package="packB", mustWork=TRUE)))' \
+  cat(system.file("lib", package="packB", mustWork=TRUE)))' \
  | "$@{R_HOME@}/bin/R" --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)$(R_ARCH)" -Wl,-rpath,"$(PKGB_PATH)$(R_ARCH)" -lpackB
 @end example
@@ -8733,7 +8741,8 @@ the compiler as well as the linker).
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for
 @samp{hardcode}), although that does not currently know the spell for OS
-X (as given in the example above).
+X (as given in the example above, as @option{-rpath} is only supported for
+shared objects and not for executables).
 
 Making headers provided by package @pkg{packB} available to the code to
 be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
