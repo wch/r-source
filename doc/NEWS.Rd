@@ -196,6 +196,12 @@
 
       \item Misguided attempts to use \code{chull()} with non-finite
       points now give an error (related to \PR{15777}).
+
+      \item For a formula with exactly 32 variables the 32nd variable
+      was aliased to the intercept in some C-level computations of
+      terms, so that for example attempting to delete it would remove
+      the intercept instead (and leave a corrupt internal structure).
+      (\PR{15735})
     }
   }
 }
