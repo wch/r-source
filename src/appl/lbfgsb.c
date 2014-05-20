@@ -115,7 +115,7 @@ static void mainlb(int, int, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, int *, int *, int *, char *,
-		   int, char *, int *, int *, double *);
+		   int, char *, int *, double *);
 static void matupd(int, int, double *, double *, double *,
 		   double *, double *, double *, int *, int *,
 		   int *, int *, double *, double *, double *,
@@ -145,7 +145,7 @@ static
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
 	    double *wa, int * iwa, char *task, int iprint,
-	    int *lsave, int *isave, double *dsave)
+	    int *isave, double *dsave)
 {
 /*     ************
 
@@ -332,52 +332,34 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
     char csave[60];
 
     /* Local variables */
-    int lsnd, ld, lr, lt;
-    int lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
+    static int lsnd, ld, lr, lt, lz, lwa, lwn, lss, lws, lwt, lsy, lwy;
 
     /* make sure csave is initialized */
     csave[0] = '\0';
     
     /* Parameter adjustments */
     --wa;
-    --isave;
 
-    /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
-	isave[1] = m * n;
-	isave[2] = m * m;
-	isave[3] = m * m << 2;
-	isave[4] = 1;
-	isave[5] = isave[4] + isave[1];
-	isave[6] = isave[5] + isave[1];
-	isave[7] = isave[6] + isave[2];
-	isave[8] = isave[7] + isave[2];
-	isave[9] = isave[8];
-	isave[10] = isave[9] + isave[2];
-	isave[11] = isave[10] + isave[3];
-	isave[12] = isave[11] + isave[3];
-	isave[13] = isave[12] + n;
-	isave[14] = isave[13] + n;
-	isave[15] = isave[14] + n;
-	isave[16] = isave[15] + n;
+	lws = 1;
+	lwy = lws + m * n;
+	lsy = lwy + m * n;
+	lss = lsy + m * m;
+	lwt = lss + m * m;
+	lwn = lwt + m * m;
+	lsnd = lwn + (m * m << 2);
+	lz = lsnd + (m * m << 2);
+	lr = lz + n;
+	ld = lr + n;
+	lt = ld + n;
+	lwa = lt + n;
     }
-    lws = isave[4];
-    lwy = isave[5];
-    lsy = isave[6];
-    lss = isave[7];
-    lwt = isave[9];
-    lwn = isave[10];
-    lsnd = isave[11];
-    lz = isave[12];
-    lr = isave[13];
-    ld = isave[14];
-    lt = isave[15];
-    lwa = isave[16];
+
     mainlb(n, m, x, l, u, nbd, f, g, factr, pgtol,
 	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn],
 	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa],
 	   iwa, &iwa[n], &iwa[n << 1], task, iprint,
-	   csave, lsave, &isave[22], dsave);
+	   csave, isave, dsave);
     return;
 } /* setulb */
 /* ======================= The end of setulb ============================= */
@@ -389,7 +371,7 @@ static void mainlb(int n, int m, double *x,
 		   double *snd, double *z, double *r, double *d,
 		   double *t, double *wa, int *indx, int *iwhere,
 		   int *indx2, char *task, int iprint,
-		   char *csave, int *lsave, int *isave, double *dsave)
+		   char *csave, int *isave, double *dsave)
 {
 /*     ************
        Subroutine mainlb
@@ -624,9 +606,10 @@ static void mainlb(int n, int m, double *x,
     --l;
     --x;
     --wa;
-    --lsave;
-    --isave;
-    --dsave;
+//    --lsave;
+//    --isave;
+//    --dsave;
+    static int lsave[4];
 
     /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
@@ -695,45 +678,45 @@ static void mainlb(int n, int m, double *x,
 /*	  The end of the initialization. */
     } else {
 /*	    restore local variables. */
-	prjctd = lsave[1];
-	cnstnd = lsave[2];
-	boxed = lsave[3];
-	updatd = lsave[4];
+	prjctd = lsave[0];
+	cnstnd = lsave[1];
+	boxed = lsave[2];
+	updatd = lsave[3];
 
-	nintol = isave[1];
-	itfile = isave[3];
-	iback = isave[4];
-	nskip = isave[5];
-	head = isave[6];
-	col = isave[7];
-	itail = isave[8];
-	iter = isave[9];
-	iupdat = isave[10];
-	nint = isave[12];
-	nfgv = isave[13];
-	info = isave[14];
-	ifun = isave[15];
-	iword = isave[16];
-	nfree = isave[17];
-	nact = isave[18];
-	ileave = isave[19];
-	nenter = isave[20];
+	nintol = isave[1-1];
+	itfile = isave[3-1];
+	iback = isave[4-1];
+	nskip = isave[5-1];
+	head = isave[6-1];
+	col = isave[7-1];
+	itail = isave[8-1];
+	iter = isave[9-1];
+	iupdat = isave[10-1];
+	nint = isave[12-1];
+	nfgv = isave[13-1];
+	info = isave[14-1];
+	ifun = isave[15-1];
+	iword = isave[16-1];
+	nfree = isave[17-1];
+	nact = isave[18-1];
+	ileave = isave[19-1];
+	nenter = isave[20-1];
 
-	theta = dsave[1];
-	fold = dsave[2];
-	tol = dsave[3];
-	dnorm = dsave[4];
-	epsmch = dsave[5];
-	cpu1 = dsave[6];
-	cachyt = dsave[7];
-	sbtime = dsave[8];
-	lnscht = dsave[9];
-	gd = dsave[11];
-	stpmx = dsave[12];
-	sbgnrm = dsave[13];
-	stp = dsave[14];
-	gdold = dsave[15];
-	dtd = dsave[16];
+	theta = dsave[1-1];
+	fold = dsave[2-1];
+	tol = dsave[3-1];
+	dnorm = dsave[4-1];
+	epsmch = dsave[5-1];
+	cpu1 = dsave[6-1];
+	cachyt = dsave[7-1];
+	sbtime = dsave[8-1];
+	lnscht = dsave[9-1];
+	gd = dsave[11-1];
+	stpmx = dsave[12-1];
+	sbgnrm = dsave[13-1];
+	stp = dsave[14-1];
+	gdold = dsave[15-1];
+	dtd = dsave[16-1];
 /*	After returning from the driver go to the point where execution */
 /*	is to resume. */
 	if (strncmp(task, "FG_LN", 5) == 0)	goto L666;
@@ -901,7 +884,7 @@ L666:
     lnsrlb(n, &l[1], &u[1], &nbd[1], &x[1], f, &fold, &gd, &gdold, &g[1], &
 	    d[1], &r[1], &t[1], &z[1], &stp, &dnorm, &dtd, &xstep, &
 	    stpmx, &iter, &ifun, &iback, &nfgv, &info, task, &boxed, &cnstnd,
-	    csave, &isave[22], &dsave[17]);
+	    csave, &isave[21], &dsave[16]);
     if (info != 0 || iback >= 20) {
 /*	    restore the previous iterate. */
 	F77_CALL(dcopy)(&n, &t[1], &c__1, &x[1], &c__1);
@@ -1034,43 +1017,45 @@ L888:
 L999:
 L1000:
 /*     Save local variables. */
-    lsave[1] = prjctd;
-    lsave[2] = cnstnd;
-    lsave[3] = boxed;
-    lsave[4] = updatd;
-    isave[1] = nintol;
-    isave[3] = itfile;
-    isave[4] = iback;
-    isave[5] = nskip;
-    isave[6] = head;
-    isave[7] = col;
-    isave[8] = itail;
-    isave[9] = iter;
-    isave[10] = iupdat;
-    isave[12] = nint;
-    isave[13] = nfgv;
-    isave[14] = info;
-    isave[15] = ifun;
-    isave[16] = iword;
-    isave[17] = nfree;
-    isave[18] = nact;
-    isave[19] = ileave;
-    isave[20] = nenter;
-    dsave[1] = theta;
-    dsave[2] = fold;
-    dsave[3] = tol;
-    dsave[4] = dnorm;
-    dsave[5] = epsmch;
-    dsave[6] = cpu1;
-    dsave[7] = cachyt;
-    dsave[8] = sbtime;
-    dsave[9] = lnscht;
-    dsave[11] = gd;
-    dsave[12] = stpmx;
-    dsave[13] = sbgnrm;
-    dsave[14] = stp;
-    dsave[15] = gdold;
-    dsave[16] = dtd;
+    lsave[0] = prjctd;
+    lsave[1] = cnstnd;
+    lsave[2] = boxed;
+    lsave[3] = updatd;
+
+    isave[1-1] = nintol;
+    isave[3-1] = itfile;
+    isave[4-1] = iback;
+    isave[5-1] = nskip;
+    isave[6-1] = head;
+    isave[7-1] = col;
+    isave[8-1] = itail;
+    isave[9-1] = iter;
+    isave[10-1] = iupdat;
+    isave[12-1] = nint;
+    isave[13-1] = nfgv;
+    isave[14-1] = info;
+    isave[15-1] = ifun;
+    isave[16-1] = iword;
+    isave[17-1] = nfree;
+    isave[18-1] = nact;
+    isave[19-1] = ileave;
+    isave[20-1] = nenter;
+
+    dsave[1-1] = theta;
+    dsave[2-1] = fold;
+    dsave[3-1] = tol;
+    dsave[4-1] = dnorm;
+    dsave[5-1] = epsmch;
+    dsave[6-1] = cpu1;
+    dsave[7-1] = cachyt;
+    dsave[8-1] = sbtime;
+    dsave[9-1] = lnscht;
+    dsave[11-1] = gd;
+    dsave[12-1] = stpmx;
+    dsave[13-1] = sbgnrm;
+    dsave[14-1] = stp;
+    dsave[15-1] = gdold;
+    dsave[16-1] = dtd;
     prn3lb(n, x+1, f, task, iprint, info,
 	   iter, nfgv, nintol, nskip, nact, sbgnrm,
 	   nint, word, iback, stp, xstep, k);
@@ -2731,10 +2716,7 @@ L556:
 	    return;
 	}
     }
-    dcsrch(f, gd, stp,
-	   ftol, gtol, xtol,
-	   stpmin, *stpmx,
-	   csave, isave, dsave);
+    dcsrch(f, gd, stp, ftol, gtol, xtol, stpmin, *stpmx, csave, isave, dsave);
     *xstep = *stp * *dnorm;
     if (strncmp(csave, "CONV", 4) != 0 && strncmp(csave, "WARN", 4) != 0) {
 	strcpy(task, "FG_LNSRCH");
@@ -3330,10 +3312,6 @@ static void dcsrch(double *f, double *g, double *stp,
     int brackt;
     double fxm, fym, gxm, gym, stx, sty;
 
-    /* Parameter adjustments */
-    --dsave;
-    --isave;
-
     /* Function Body */
 
 /*     Initialization block. */
@@ -3374,25 +3352,21 @@ static void dcsrch(double *f, double *g, double *stp,
 	goto L1000;
     } else {
 /*	  Restore local variables. */
-	if (isave[1] == 1) {
-	    brackt = TRUE_;
-	} else {
-	    brackt = FALSE_;
-	}
-	stage = isave[2];
-	ginit = dsave[1];
-	gtest = dsave[2];
-	gx = dsave[3];
-	gy = dsave[4];
-	finit = dsave[5];
-	fx = dsave[6];
-	fy = dsave[7];
-	stx = dsave[8];
-	sty = dsave[9];
-	stmin = dsave[10];
-	stmax = dsave[11];
-	width = dsave[12];
-	width1 = dsave[13];
+	if (isave[0] == 1) brackt = TRUE_; else brackt = FALSE_;
+	stage = isave[1];
+	ginit = dsave[0];
+	gtest = dsave[1];
+	gx = dsave[2];
+	gy = dsave[3];
+	finit = dsave[4];
+	fx = dsave[5];
+	fy = dsave[6];
+	stx = dsave[7];
+	sty = dsave[8];
+	stmin = dsave[9];
+	stmax = dsave[10];
+	width = dsave[11];
+	width1 = dsave[12];
     }
 /*      If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the */
 /*      algorithm enters the second stage. */
@@ -3470,25 +3444,21 @@ static void dcsrch(double *f, double *g, double *stp,
     strcpy(task, "FG");
 L1000:
 /*     Save local variables. */
-    if (brackt) {
-	isave[1] = 1;
-    } else {
-	isave[1] = 0;
-    }
-    isave[2] = stage;
-    dsave[1] = ginit;
-    dsave[2] = gtest;
-    dsave[3] = gx;
-    dsave[4] = gy;
-    dsave[5] = finit;
-    dsave[6] = fx;
-    dsave[7] = fy;
-    dsave[8] = stx;
-    dsave[9] = sty;
-    dsave[10] = stmin;
-    dsave[11] = stmax;
-    dsave[12] = width;
-    dsave[13] = width1;
+    if (brackt) isave[0] = 1; else isave[0] = 0;
+    isave[1] = stage;
+    dsave[0] = ginit;
+    dsave[1] = gtest;
+    dsave[2] = gx;
+    dsave[3] = gy;
+    dsave[4] = finit;
+    dsave[5] = fx;
+    dsave[6] = fy;
+    dsave[7] = stx;
+    dsave[8] = sty;
+    dsave[9] = stmin;
+    dsave[10] = stmax;
+    dsave[11] = width;
+    dsave[12] = width1;
     return;
 } /* dcsrch */
 /* ====================== The end of dcsrch ============================== */
