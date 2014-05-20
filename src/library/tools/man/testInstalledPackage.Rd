@@ -1,6 +1,6 @@
 % File src/library/tools/man/testInstalledPackage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2013 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{testInstalledPackage}
@@ -15,12 +15,12 @@
 \usage{
 testInstalledPackage(pkg, lib.loc = NULL, outDir = ".",
                      types = c("examples", "tests", "vignettes"),
-                     srcdir = NULL, Ropts = "")
+                     srcdir = NULL, Ropts = "", ...)
 
 testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
                       scope = c("both", "base", "recommended"),
                       types = c("examples", "tests", "vignettes"),
-                      srcdir = NULL, Ropts = "")
+                      srcdir = NULL, Ropts = "", ...)
 
 testInstalledBasic(scope = c("basic", "devel", "both"))
 }
@@ -36,6 +36,8 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   \item{srcdir}{Optional directory to look for \code{.save} files.}
   \item{Ropts}{Additional options such as \option{-d valgrind} to be
     passed to \command{R CMD BATCH} when running examples or tests.}
+  \item{\dots}{additional arguments use when preparing the files to be
+    run, e.g. \code{commentDontrun} and \code{commentDonttest}.}
   \item{scope}{Which set(s) should be tested?}
 }
 \details{

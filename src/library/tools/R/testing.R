@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -21,7 +21,8 @@
 ## functions principally for testing R and packages
 
 massageExamples <-
-    function(pkg, files, outFile = stdout(), use_gct = FALSE, addTiming = FALSE)
+    function(pkg, files, outFile = stdout(), use_gct = FALSE,
+             addTiming = FALSE, ..., commentDonttest = TRUE)
 {
     if(file_test("-d", files[1L])) {
         old <- Sys.setlocale("LC_COLLATE", "C")
@@ -96,17 +97,20 @@ massageExamples <-
 
         cat("### * ", nm, "\n\n", sep = "", file = out)
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
-        dont_test <- FALSE
         if(addTiming)
             cat("base::assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
                 file = out)
-        for (line in lines) {
-            if(any(grepl("^[[:space:]]*## No test:", line, perl = TRUE, useBytes = TRUE)))
-                dont_test <- TRUE
-            if(!dont_test) cat(line, "\n", sep = "", file = out)
-            if(any(grepl("^[[:space:]]*## End\\(No test\\)",
-                         line, perl = TRUE, useBytes = TRUE)))
-                dont_test <- FALSE
+        if (commentDonttest) {
+            dont_test <- FALSE
+            for (line in lines) {
+                if(any(grepl("^[[:space:]]*## No test:", line,
+                             perl = TRUE, useBytes = TRUE)))
+                    dont_test <- TRUE
+                if(!dont_test) cat(line, "\n", sep = "", file = out)
+                if(any(grepl("^[[:space:]]*## End\\(No test\\)", line,
+                             perl = TRUE, useBytes = TRUE)))
+                    dont_test <- FALSE
+            }
         }
 
         if(addTiming) {
@@ -222,7 +226,7 @@ testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
              scope = c("both", "base", "recommended"),
              types = c("examples", "tests", "vignettes"),
-             srcdir = NULL, Ropts = "")
+             srcdir = NULL, Ropts = "", ...)
 {
     ow <- options(warn = 1)
     on.exit(ow)
@@ -240,7 +244,7 @@ testInstalledPackages <-
         do_one <- function(pkg) {
             if(is.null(srcdir) && pkg %in% known_packages$base)
                 srcdir <- R.home("tests/Examples")
-            testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
+            testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts, ...)
         }
         res <- parallel::mclapply(pkgs, do_one, mc.cores = mc.cores,
                                   mc.preschedule = FALSE)
@@ -259,7 +263,7 @@ testInstalledPackages <-
         for (pkg in pkgs) {
             if(is.null(srcdir) && pkg %in% known_packages$base)
                 srcdir <- R.home("tests/Examples")
-            res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts)
+            res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir, Ropts, ...)
             if (res) {
                 status <- 1L
                 msg <- gettextf("testing '%s' failed", pkg)
@@ -274,7 +278,7 @@ testInstalledPackages <-
 testInstalledPackage <-
     function(pkg, lib.loc = NULL, outDir = ".",
              types = c("examples", "tests", "vignettes"),
-             srcdir = NULL, Ropts = "")
+             srcdir = NULL, Ropts = "", ...)
 {
     types <- pmatch(types, c("examples", "tests", "vignettes"))
     pkgdir <- find.package(pkg, lib.loc)
@@ -286,7 +290,7 @@ testInstalledPackage <-
     if (1 %in% types) {
         message(gettextf("Testing examples for package %s", sQuote(pkg)),
                 domain = NA)
-        Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE)
+        Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE, ...)
         if (length(Rfile)) {
             outfile <- paste0(pkg, "-Ex.Rout")
             failfile <- paste(outfile, "fail", sep = "." )
@@ -390,7 +394,8 @@ testInstalledPackage <-
     q("no", status = status)
 }
 
-.runPackageTests <- function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL)
+.runPackageTests <-
+    function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL, ...)
 {
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
@@ -489,7 +494,8 @@ testInstalledPackage <-
 }
 
 .createExdotR <-
-    function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE)
+    function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
+             ..., commentDontrun = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
     ## might be zipped:
@@ -513,7 +519,7 @@ testInstalledPackage <-
         nm <- sub("\\.[Rr]d$", "", basename(f))
         Rd2ex(db[[f]],
               file.path(filedir, paste(nm, "R", sep = ".")),
-              defines = NULL)
+              defines = NULL, commentDontrun = commentDontrun)
         cnt <- cnt + 1L
         if(!silent && cnt %% 10L == 0L)
             message(".", appendLF = FALSE, domain = NA)
@@ -522,7 +528,7 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, use_gct, addTiming)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming, ...)
     invisible(Rfile)
 }
 

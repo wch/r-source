@@ -51,6 +51,7 @@
       at the expense of using more memory. (\PR{15697})
     }
   }
+  
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{ 
       \item When building \R as a shared library, the
@@ -64,6 +65,18 @@
     }
   }
   
+  \subsection{UTILITES}{
+    \itemize{ 
+      \item There is some support for testing the \code{\\dontrun}. and
+      \code{\\donttest} parts of examples in packages.
+
+      \code{tools::testInstalledPackage()} accepts new arguments
+      \code{commentDontrun = FALSE} and \code{commentDonttest = FALSE}.
+
+      More to come.
+    }
+  }
+
   %% \subsection{BUG FIXES}{
   %%   \itemize{
   %%   }
