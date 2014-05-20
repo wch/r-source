@@ -83,12 +83,14 @@ Rd2ex <-
                     writeLines("", con)
                     render(x[[1L]], paste0(if (commentDontrun) "##D ", prefix))
                 } else render(x[[1L]], prefix)
-                for(i in 2:length(x)) render(x[[i]], paste0(if (commentDontrun) "##D ", prefix))
+                if(length(x) >= 2L)
+                    for(i in 2:length(x))
+                        render(x[[i]], paste0(if (commentDontrun) "##D ", prefix))
                 last <- x[[length(x)]]
                 if (!grepl("\n$", last[length(last)], perl = TRUE))
                     writeLines("", con)
                 if (commentDontrun)
-                of1("## End(Not run)")
+                    of1("## End(Not run)")
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")
