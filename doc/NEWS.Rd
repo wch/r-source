@@ -235,9 +235,9 @@
       \item \code{tools::Rd2ex(commentDontrun = FALSE)} failed if the
       block had only one line.
 
-      \item Hexadecimal constants such as \code{} which were incorrectly
-      qualified by \code{L} were parsed incorrectly since \R 3.0.0, with
-      a slightly garbled warning. (\PR{15753})
+      \item Hexadecimal constants such as \code{0x110p-5L} which were
+      incorrectly qualified by \code{L} were parsed incorrectly since \R
+      3.0.0, with a slightly garbled warning. (\PR{15753})
     }
   }
 }

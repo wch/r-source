@@ -82,8 +82,7 @@ static void cmprlb(int, int, double *,
 		   int *);
 static void dcsrch(double *, double *, double *,
 		   double, double, double,
-		   double, double,
-		   char *, int *, double *);
+		   double, double, char *);
 static void dcstep(double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, int *, double *,
@@ -108,7 +107,7 @@ static void lnsrlb(int, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, int *, int *,
 		   int *, int *, int *, char *, int *, int *,
-		   char *, int *, double *);
+		   char *);
 static void mainlb(int, int, double *,
 		   double *, double *, int *, double *, double *,
 		   double, double *, double *, double *,
@@ -887,7 +886,7 @@ L666:
     lnsrlb(n, &l[1], &u[1], &nbd[1], &x[1], f, &fold, &gd, &gdold, &g[1], &
 	    d[1], &r[1], &t[1], &z[1], &stp, &dnorm, &dtd, &xstep, &
 	    stpmx, &iter, &ifun, &iback, &nfgv, &info, task, &boxed, &cnstnd,
-	    csave, &isave[21], &dsave[16]);
+	    csave);
     if (info != 0 || iback >= 20) {
 /*	    restore the previous iterate. */
 	F77_CALL(dcopy)(&n, &t[1], &c__1, &x[1], &c__1);
@@ -2608,7 +2607,7 @@ static void lnsrlb(int n, double *l, double *u,
 		   double *dnorm, double *dtd, double *xstep,
 		   double *stpmx, int *iter, int *ifun, int *iback, int *nfgv,
 		   int *info, char *task, int *boxed, int *cnstnd,
-		   char *csave, int *isave, double *dsave)
+		   char *csave)
 {
 /*     **********
 
@@ -2719,7 +2718,7 @@ L556:
 	    return;
 	}
     }
-    dcsrch(f, gd, stp, ftol, gtol, xtol, stpmin, *stpmx, csave, isave, dsave);
+    dcsrch(f, gd, stp, ftol, gtol, xtol, stpmin, *stpmx, csave);
     *xstep = *stp * *dnorm;
     if (strncmp(csave, "CONV", 4) != 0 && strncmp(csave, "WARN", 4) != 0) {
 	strcpy(task, "FG_LNSRCH");
@@ -3170,8 +3169,7 @@ static void subsm(int n, int m, int *nsub, int *ind,
 static void dcsrch(double *f, double *g, double *stp,
 		   /*Chgd: the next five are no longer pointers:*/
 		   double ftol, double gtol, double xtol,
-		   double stpmin, double stpmax,
-		   char *task, int *isave, double *dsave)
+		   double stpmin, double stpmax, char *task)
 {
 /*	**********
 
@@ -3309,11 +3307,10 @@ static void dcsrch(double *f, double *g, double *stp,
 */
 
     /* Local variables */
-    int stage;
-    double finit, ginit, width, ftest, gtest, stmin, stmax, width1, fm,
-	    gm, fx, fy, gx, gy;
-    int brackt;
-    double fxm, fym, gxm, gym, stx, sty;
+    static int stage, brackt;
+    static double ginit, gtest, gx, gy, finit, fx, fy, stx, sty,
+	stmin, stmax, width, width1;
+    double ftest, fm, gm, fxm, fym, gxm, gym;
 
     /* Function Body */
 
@@ -3352,31 +3349,13 @@ static void dcsrch(double *f, double *g, double *stp,
 	stmin = 0.;
 	stmax = *stp + *stp * 4.;
 	strcpy(task, "FG");
-	goto L1000;
-    } else {
-/*	  Restore local variables. */
-	if (isave[0] == 1) brackt = TRUE_; else brackt = FALSE_;
-	stage = isave[1];
-	ginit = dsave[0];
-	gtest = dsave[1];
-	gx = dsave[2];
-	gy = dsave[3];
-	finit = dsave[4];
-	fx = dsave[5];
-	fy = dsave[6];
-	stx = dsave[7];
-	sty = dsave[8];
-	stmin = dsave[9];
-	stmax = dsave[10];
-	width = dsave[11];
-	width1 = dsave[12];
+	return;
     }
 /*      If psi(stp) <= 0 and f'(stp) >= 0 for some step, then the */
 /*      algorithm enters the second stage. */
     ftest = finit + *stp * gtest;
-    if (stage == 1 && *f <= ftest && *g >= 0.) {
+    if (stage == 1 && *f <= ftest && *g >= 0.)
 	stage = 2;
-    }
 /*	Test for warnings. */
     if (brackt && (*stp <= stmin || *stp >= stmax))
 	strcpy(task, "WARNING: ROUNDING ERRORS PREVENT PROGRESS");
@@ -3391,7 +3370,7 @@ static void dcsrch(double *f, double *g, double *stp,
 	strcpy(task, "CONVERGENCE");
 /*	Test for termination. */
     if (strncmp(task, "WARN", 4) == 0 || strncmp(task, "CONV", 4) == 0)
-	goto L1000;
+	return;
 
 /*     A modified function is used to predict the step during the */
 /*     first stage if a lower function value has been obtained but */
@@ -3445,23 +3424,6 @@ static void dcsrch(double *f, double *g, double *stp,
     }
 /*     Obtain another function and derivative. */
     strcpy(task, "FG");
-L1000:
-/*     Save local variables. */
-    if (brackt) isave[0] = 1; else isave[0] = 0;
-    isave[1] = stage;
-    dsave[0] = ginit;
-    dsave[1] = gtest;
-    dsave[2] = gx;
-    dsave[3] = gy;
-    dsave[4] = finit;
-    dsave[5] = fx;
-    dsave[6] = fy;
-    dsave[7] = stx;
-    dsave[8] = sty;
-    dsave[9] = stmin;
-    dsave[10] = stmax;
-    dsave[11] = width;
-    dsave[12] = width1;
     return;
 } /* dcsrch */
 /* ====================== The end of dcsrch ============================== */
