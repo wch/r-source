@@ -301,7 +301,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \examples{
-\dontrun{
+\donttest{
 ## Test function for encodings
 TestChars <- function(encoding = "ISOLatin1", ...)
 {

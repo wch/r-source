@@ -113,7 +113,7 @@ write.dcf(x, file = "", append = FALSE,
   \code{\link{available.packages}}, which uses \code{read.dcf} to read
   the indices of package repositories.
 }
-\examples{\dontrun{
+\examples{\donttest{
 ## Create a reduced version of the DESCRIPTION file in package 'splines'
 x <- read.dcf(file = system.file("DESCRIPTION", package = "splines"),
               fields = c("Package", "Version", "Title"))

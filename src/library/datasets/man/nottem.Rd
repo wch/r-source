@@ -20,7 +20,7 @@
   Butterworths. Series R.
 }
 \examples{
-\dontrun{require(stats); require(graphics)
+\donttest{require(stats); require(graphics)
 nott <- window(nottem, end = c(1936,12))
 fit <- arima(nott, order = c(1,0,0), list(order = c(2,1,0), period = 12))
 nott.fore <- predict(fit, n.ahead = 36)

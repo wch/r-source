@@ -54,7 +54,7 @@ within(data, expr, \dots)
 \examples{
 require(stats); require(graphics)
 #examples from glm:
-\dontrun{
+\donttest{
 library(MASS)
 with(anorexia, {
     anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),

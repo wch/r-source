@@ -32,7 +32,7 @@
   David Donoho
 }
 \examples{
-\dontrun{## We could re-generate the dataset by the following R code
+\donttest{## We could re-generate the dataset by the following R code
 seed <- as.double(1)
 RANDU <- function() {
     seed <<- ((2^16 + 3) * seed) \%\% (2^31)

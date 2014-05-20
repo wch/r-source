@@ -174,7 +174,7 @@ options(op)
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 }
-\dontrun{## These may not be correct names on your system
+\donttest{## These may not be correct names on your system
 as.POSIXlt(Sys.time(), "America/New_York")  # in New York
 as.POSIXlt(Sys.time(), "EST5EDT")           # alternative.
 as.POSIXlt(Sys.time(), "EST" )   # somewhere in Eastern Canada

@@ -139,7 +139,7 @@ all.equal(pchisq(x, df = 2), pexp(x, 1/2))
 Z0 <- rchisq(100, df = 0, ncp = 2.)
 graphics::stem(Z0)
 
-\dontrun{## visual testing
+\donttest{## visual testing
 ## do P-P plots for 1000 points at various degrees of freedom
 L <- 1.2; n <- 1000; pp <- ppoints(n)
 op <- par(mfrow = c(3,3), mar = c(3,3,1,1)+.1, mgp = c(1.5,.6,0),

@@ -126,11 +126,7 @@ plot(z)
 plot(z, plot.type = "single", lty = 1:3)
 
 ## A phase plot:
-plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col = "blue",
-     main = "Lag plot of New Haven temperatures")
-## a clearer way to do this would be
-\dontrun{
 plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
      main = "Lag plot of New Haven temperatures")
-}}
+}
 \keyword{ts}

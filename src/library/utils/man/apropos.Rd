@@ -79,7 +79,7 @@ rm(cor)
 # need a DOUBLE backslash '\\\\' (in case you don't see it anymore)
 apropos("\\\\[")
 
-\dontrun{# everything % not diff-able
+\donttest{# everything % not diff-able
 length(apropos("."))
 
 # those starting with 'pr'
