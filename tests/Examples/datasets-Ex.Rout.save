@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-16 r65623) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-20 r65698) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2635,14 +2635,6 @@ Model 2: Speed ~ Run + Expt
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D require(stats); require(graphics)
-> ##D nott <- window(nottem, end = c(1936,12))
-> ##D fit <- arima(nott, order = c(1,0,0), list(order = c(2,1,0), period = 12))
-> ##D nott.fore <- predict(fit, n.ahead = 36)
-> ##D ts.plot(nott, nott.fore$pred, nott.fore$pred+2*nott.fore$se,
-> ##D         nott.fore$pred-2*nott.fore$se, gpars = list(col = c(1,1,4,4)))
-> ## End(Not run)
 > 
 > 
 > cleanEx()
@@ -2831,18 +2823,6 @@ Warning: not plotting observations with leverage one:
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D ## We could re-generate the dataset by the following R code
-> ##D seed <- as.double(1)
-> ##D RANDU <- function() {
-> ##D     seed <<- ((2^16 + 3) * seed) %% (2^31)
-> ##D     seed/(2^31)
-> ##D }
-> ##D for(i in 1:400) {
-> ##D     U <- c(RANDU(), RANDU(), RANDU(), RANDU(), RANDU())
-> ##D     print(round(U[1:3], 6))
-> ##D }
-> ## End(Not run)
 > 
 > 
 > 
@@ -3479,7 +3459,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.389 0.023 1.417 0 0 
+Time elapsed:  1.396 0.016 1.416 0 0 
 > grDevices::dev.off()
 null device 
           1 

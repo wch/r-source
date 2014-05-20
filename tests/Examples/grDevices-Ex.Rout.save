@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-16 r65623) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-20 r65698) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2015,10 +2015,69 @@ character(0)
 > 
 > ### ** Examples
 > 
+> # This currently only works on the Windows
+> # and X11(type = "Xlib") screen devices...
+> ## Not run: 
+> ##D savepar <- par(ask = FALSE)
+> ##D dragplot <- function(..., xlim = NULL, ylim = NULL, xaxs = "r", yaxs = "r") {
+> ##D     plot(..., xlim = xlim, ylim = ylim, xaxs = xaxs, yaxs = yaxs)
+> ##D     startx <- NULL
+> ##D     starty <- NULL
+> ##D     prevx <- NULL
+> ##D     prevy <- NULL
+> ##D     usr <- NULL
+> ##D 
+> ##D     devset <- function()
+> ##D         if (dev.cur() != eventEnv$which) dev.set(eventEnv$which)
+> ##D 
+> ##D     dragmousedown <- function(buttons, x, y) {
+> ##D         startx <<- x
+> ##D         starty <<- y
+> ##D         prevx <<- 0
+> ##D         prevy <<- 0
+> ##D         devset()
+> ##D         usr <<- par("usr")
+> ##D         eventEnv$onMouseMove <- dragmousemove
+> ##D         NULL
+> ##D     }
+> ##D 
+> ##D     dragmousemove <- function(buttons, x, y) {
+> ##D         devset()
+> ##D         deltax <- diff(grconvertX(c(startx, x), "ndc", "user"))
+> ##D         deltay <- diff(grconvertY(c(starty, y), "ndc", "user"))
+> ##D 	if (abs(deltax-prevx) + abs(deltay-prevy) > 0) {
+> ##D 	    plot(..., xlim = usr[1:2]-deltax, xaxs = "i",
+> ##D 		      ylim = usr[3:4]-deltay, yaxs = "i")
+> ##D 	    prevx <<- deltax
+> ##D 	    prevy <<- deltay
+> ##D 	}
+> ##D         NULL
+> ##D     }
+> ##D 
+> ##D     mouseup <- function(buttons, x, y) {
+> ##D     	eventEnv$onMouseMove <- NULL
+> ##D     }	
+> ##D 
+> ##D     keydown <- function(key) {
+> ##D         if (key == "q") return(invisible(1))
+> ##D         eventEnv$onMouseMove <- NULL
+> ##D         NULL
+> ##D     }
+> ##D 
+> ##D     setGraphicsEventHandlers(prompt = "Click and drag, hit q to quit",
+> ##D                      onMouseDown = dragmousedown,
+> ##D                      onMouseUp = mouseup,
+> ##D                      onKeybd = keydown)
+> ##D     eventEnv <- getGraphicsEventEnv()
+> ##D }
+> ##D 
+> ##D dragplot(rnorm(1000), rnorm(1000))
+> ##D getGraphicsEvent()
+> ##D par(savepar)
+> ## End(Not run)
 > 
 > 
 > 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("gray")
 > ### * gray
@@ -2453,31 +2512,9 @@ Sturges   Scott      FD
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D ## Test function for encodings
-> ##D TestChars <- function(encoding = "ISOLatin1", ...)
-> ##D {
-> ##D     pdf(encoding = encoding, ...)
-> ##D     par(pty = "s")
-> ##D     plot(c(-1,16), c(-1,16), type = "n", xlab = "", ylab = "",
-> ##D          xaxs = "i", yaxs = "i")
-> ##D          title(paste("Centred chars in encoding", encoding))
-> ##D     grid(17, 17, lty = 1)
-> ##D     for(i in c(32:255)) {
-> ##D         x <- i %% 16
-> ##D         y <- i %/% 16
-> ##D         points(x, y, pch = i)
-> ##D     }
-> ##D     dev.off()
-> ##D }
-> ##D ## there will be many warnings.
-> ##D TestChars("ISOLatin2")
-> ##D ## this does not view properly in older viewers.
-> ##D TestChars("ISOLatin2", family = "URWHelvetica")
-> ##D ## works well for viewing in gs-based viewers, and often in xpdf.
-> ## End(Not run)
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("pdf.options")
 > ### * pdf.options
@@ -3713,7 +3750,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  8.101 0.136 8.263 0 0 
+Time elapsed:  8.14 0.145 8.304 0 0 
 > grDevices::dev.off()
 null device 
           1 

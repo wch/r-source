@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-16 r65623) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-20 r65698) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -275,23 +275,6 @@ lm2  6 336.3417
   8 | 23
 
 > 
-> ## Not run: 
-> ##D ## visual testing
-> ##D ## do P-P plots for 1000 points at various degrees of freedom
-> ##D L <- 1.2; n <- 1000; pp <- ppoints(n)
-> ##D op <- par(mfrow = c(3,3), mar = c(3,3,1,1)+.1, mgp = c(1.5,.6,0),
-> ##D           oma = c(0,0,3,0))
-> ##D for(df in 2^(4*rnorm(9))) {
-> ##D   plot(pp, sort(pchisq(rr <- rchisq(n, df = df, ncp = L), df = df, ncp = L)),
-> ##D        ylab = "pchisq(rchisq(.),.)", pch = ".")
-> ##D   mtext(paste("df = ", formatC(df, digits = 4)), line =  -2, adj = 0.05)
-> ##D   abline(0, 1, col = 2)
-> ##D }
-> ##D mtext(expression("P-P plots : Noncentral  "*
-> ##D                  chi^2 *"(n=1000, df=X, ncp= 1.2)"),
-> ##D       cex = 1.5, font = 2, outer = TRUE)
-> ##D par(op)
-> ## End(Not run)
 > 
 > ## "analytical" test
 > lam <- seq(0, 100, by = .25)
@@ -302,6 +285,7 @@ lm2  6 336.3417
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("Exponential")
 > ### * Exponential
@@ -3789,7 +3773,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4842dc8>
+<environment: 0x45411b0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4752,7 +4736,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x49d9160>
+<bytecode: 0x3dc7f08>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7264,7 +7248,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x50cec10>
+<environment: 0x4df6050>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7683,14 +7667,6 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
 > 
-> ## Not run: 
-> ##D ## an example with offsets from Venables & Ripley (2002, p.189)
-> ##D utils::data(anorexia, package = "MASS")
-> ##D 
-> ##D anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-> ##D                 family = gaussian, data = anorexia)
-> ##D summary(anorex.1)
-> ## End(Not run)
 > 
 > # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
 > clotting <- data.frame(
@@ -8605,10 +8581,9 @@ alternative hypothesis: the CDF of x lies below that of y
 > 
 > ## Multivariate (but non-stationary! ...)
 > lag.plot(freeny.x, lags = 3)
-> ## Not run: 
-> ##D no lines for long series :
-> ##D lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
-> ## End(Not run)
+> 
+> ## no lines for long series :
+> lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
 > 
 > 
 > 
@@ -8839,13 +8814,6 @@ List of 8
 >   stopifnot(id(unname(lm.$coef), lm..$coef),
 + 	    id(unname(lmw$coef), lm.w$coef))
 > ## End Don't show
-> ## Not run: 
-> ##D if(require("microbenchmark")) {
-> ##D   mb <- microbenchmark(lm(y~X), lm.fit(X,y), .lm.fit(X,y))
-> ##D   print(mb)
-> ##D   boxplot(mb, notch=TRUE)
-> ##D }
-> ## End(Not run)
 > 
 > 
 > 
@@ -10551,10 +10519,10 @@ Nonlinear regression model
 a b 
 3 2 
  residual sum-of-squares: 0.000524
-> ## Not run: 
-> ##D ## terminates in an error, because convergence cannot be confirmed:
-> ##D nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
-> ## End(Not run)
+> ## terminates in an error, because convergence cannot be confirmed:
+> try(nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321)))
+Error in nls(y ~ a + b * x, start = list(a = 0.12345, b = 0.54321)) : 
+  number of iterations exceeded maximum of 50
 > 
 > ## the nls() internal cheap guess for starting values can be sufficient:
 > 
@@ -11564,13 +11532,8 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > plot(z, plot.type = "single", lty = 1:3, col = 4:2)
 > 
 > ## A phase plot:
-> plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col = "blue",
+> plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
 +      main = "Lag plot of New Haven temperatures")
-> ## a clearer way to do this would be
-> ## Not run: 
-> ##D plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
-> ##D      main = "Lag plot of New Haven temperatures")
-> ## End(Not run)
 > 
 > ## xy.lines and xy.labels are FALSE for large series:
 > plot(lag(sunspots, 1), sunspots, pch = ".")
@@ -11766,14 +11729,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4a3b990>
-<environment: 0x4c9db20>
+<bytecode: 0x5426fb0>
+<environment: 0x540bc78>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4a3baa8>
-<environment: 0x4c9db20>
+<bytecode: 0x54270c8>
+<environment: 0x540bc78>
 
 > 
 > 
@@ -14767,12 +14730,6 @@ eff.vl> options(contrasts = old)
 > se.contrast(fit, as.matrix(cont))
        A       BC 
 3.377196 3.899650 
-> ## Not run: 
-> ##D # comparison with lme
-> ##D library(nlme)
-> ##D fit2 <- lme(Yield ~ A + B*C, random = ~1 | Block, data = aovdat)
-> ##D summary(fit2)$tTable # same estimates, similar (but smaller) se's.
-> ## End(Not run)
 > 
 > 
 > base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
@@ -15569,8 +15526,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4700138>
-<environment: 0x46f46c8>
+<bytecode: 0x410e6e0>
+<environment: 0x475e130>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -16540,13 +16497,9 @@ attr(,".Environment")
 > plot(z, plot.type = "single", lty = 1:3)
 > 
 > ## A phase plot:
-> plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col = "blue",
+> plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
 +      main = "Lag plot of New Haven temperatures")
-> ## a clearer way to do this would be
-> ## Not run: 
-> ##D plot(nhtemp, lag(nhtemp, 1), cex = .8, col = "blue",
-> ##D      main = "Lag plot of New Haven temperatures")
-> ## End(Not run)
+> 
 > 
 > 
 > cleanEx()
@@ -16928,17 +16881,6 @@ Frequency = 1
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D require(graphics)
-> ##D 
-> ##D fit <- arima(lh, c(1,0,0))
-> ##D tsdiag(fit)
-> ##D 
-> ##D ## see also examples(arima)
-> ##D 
-> ##D (fit <- StructTS(log10(JohnsonJohnson), type = "BSM"))
-> ##D tsdiag(fit)
-> ## End(Not run)
 > 
 > 
 > cleanEx()
@@ -17873,7 +17815,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.802 0.126 4.946 0 0 
+Time elapsed:  4.853 0.108 4.976 0 0 
 > grDevices::dev.off()
 null device 
           1 

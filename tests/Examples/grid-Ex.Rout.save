@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-05-16 r65623) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-20 r65698) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -438,15 +438,6 @@ NULL
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D dev.new(width=.5, height=.5)
-> ##D grid.rect()
-> ##D grid.text("hi")
-> ##D cap <- grid.cap()
-> ##D dev.off()
-> ##D 
-> ##D grid.raster(cap, width=.5, height=.5, interpolate=FALSE)
-> ## End(Not run)
 > 
 > 
 > 
@@ -2067,7 +2058,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.239 0.014 1.257 0 0 
+Time elapsed:  1.254 0.009 1.268 0 0 
 > grDevices::dev.off()
 null device 
           1 
