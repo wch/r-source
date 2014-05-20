@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/mcfork.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2013 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
@@ -26,7 +26,7 @@ mcexit(exit.code = 0L, send = NULL)
 \arguments{
   \item{estranged}{logical, if \code{TRUE} then the new process has
     no ties to the parent process, will not show in the list of
-    children and will not be killed on exit}
+    children and will not be killed on exit.}
   \item{exit.code}{process exit code.  By convention \code{0L} signifies
     a clean exit, \code{1L} an error.}
   \item{send}{if not \code{NULL} send this data before exiting
@@ -109,12 +109,12 @@ mcexit(exit.code = 0L, send = NULL)
 % The results here involve a random PID.
 \examples{\donttest{
 ## This will work when run as an example, but not when pasted in.
-p <- mcfork()
+p <- parallel:::mcfork()
 if (inherits(p, "masterProcess")) {
     cat("I'm a child! ", Sys.getpid(), "\n")
-    mcexit(,"I was a child")
+    parallel:::mcexit(,"I was a child")
 }
 cat("I'm the master\n")
-unserialize(readChildren(1.5))
+unserialize(parallel:::readChildren(1.5))
 }}
 \keyword{interface}
