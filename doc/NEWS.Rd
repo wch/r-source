@@ -207,9 +207,9 @@
       (\PR{15735})
 
       \item \code{anyDuplicated()} silently returned wrong values when
-      the first duplicate was at an index which could not be stored as
-      in an integer vector (although a lot of RAM and patience would
-      have been needed to encounter this).
+      the first duplicate was at an index which was too large to be
+      stored in an integer vector (although a lot of RAM and patience
+      would have been needed to encounter this).
     }
   }
 }
