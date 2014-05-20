@@ -73,7 +73,8 @@
       \code{tools::testInstalledPackage()} accepts new arguments
       \code{commentDontrun = FALSE} and \code{commentDonttest = FALSE}.
 
-      More to come.
+      \command{R CMD check} gains \option{--run-dontrun} and
+      \option{--run-donttest} options.
     }
   }
 

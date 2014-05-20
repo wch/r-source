@@ -2431,7 +2431,9 @@ setRlibs <-
         if (!do_examples) resultLog(Log, "SKIPPED")
         else {
             pkgtopdir <- file.path(libdir, pkgname)
-            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
+            cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s, commentDontrun = %s, commentDontest = %s)',
+                           pkgname, pkgtopdir, use_gct, do_timings,
+                           !run_dontrun, !run_donttest)
             Rout <- tempfile("Rout")
             ## any arch will do here
             status <- R_runR(cmd, R_opts2, "LC_ALL=C",
@@ -3818,6 +3820,8 @@ setRlibs <-
             "      --no-manual       do not produce the PDF manual",
             "      --no-vignettes    do not run R code in vignettes",
             "      --no-build-vignettes    do not build vignette outputs",
+            "      --run-dontrun     do run \\dontrun sections in the Rd files",
+            "      --run-donttest    do run \\donttest sections in the Rd files",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -3897,6 +3901,8 @@ setRlibs <-
     multiarch <- NA
     force_multiarch <- FALSE
     as_cran <- FALSE
+    run_dontrun <- FALSE
+    run_donttest <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -3951,6 +3957,10 @@ setRlibs <-
         } else if (a == "--no-latex") {
             stop("'--no-latex' is defunct: use '--no-manual' instead",
                  call. = FALSE, domain = NA)
+        } else if (a == "--run-dontrun") {
+            run_dontrun  <- TRUE
+        } else if (a == "--run-donttest") {
+            run_donttest  <- TRUE
         } else if (a == "--use-gct") {
             use_gct  <- TRUE
         } else if (a == "--use-valgrind") {
