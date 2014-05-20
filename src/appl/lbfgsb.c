@@ -236,6 +236,8 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 
        csave is a working string of characters of length 60.
 
+       *** These are all Fortan 1-based indices.
+
        lsave is a logical working array of dimension 4.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -245,6 +247,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   If lsave(3) = .true. then  each variable has upper and lower
 				      bounds;
 
+       *** re-arranged to be of size 23, reduce indices by 21.
        isave is an integer working array of dimension 44.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:

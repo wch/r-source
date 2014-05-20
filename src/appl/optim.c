@@ -647,7 +647,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 {
     char task[60];
     double f, *g, dsave[29], *wa;
-    int tr = -1, iter = 0, *iwa, isave[22];
+    int tr = -1, iter = 0, *iwa, isave[23];
 
     if(n == 0) { /* not handled in setulb */
 	*fncount = 1;
