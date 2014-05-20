@@ -109,6 +109,13 @@
       \code{rbeta()} are now defined also for \eqn{a = 0}, \eqn{b = 0},
       or infinite \eqn{a} and \eqn{b} (where they typically returned
       \code{NaN} before).
+
+      \item Many package authors report that the RStudio graphics device
+      does not work correctly with their package's use of
+      \code{dev.new()}.  \code{dev.new(noRStudioGD = TRUE)} uses the
+      default device as selected by \R itself, ignoring RStudio's
+      override but still respecting \env{R_INTERACTIVE_DEVICE} and
+      \env{R_DEFAULT_DEVICE}.
     }
   }
 
