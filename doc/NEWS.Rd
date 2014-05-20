@@ -76,6 +76,12 @@
       \item \command{configure} option \option{--with-internal-tzcode}
       can now be used with variable \code{rsharedir}.
 
+      \item When \code{attach()} reports conflicts, it does so
+      compatibly with \code{library()} by using \code{message()}.
+
+      \item \command{R CMD Sweave} no longer cleans any files,
+      compatibly with versions of \R prior to 3.1.0.
+      
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.
       \code{buildvignette()} gains a \code{keep} argument for more
@@ -134,12 +140,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item When \code{attach()} reports conflicts, it does so
-      compatibly with \code{library()} using \code{message()}.
-
-      \item \command{R CMD Sweave} no longer cleans any files,
-      compatibly with versions of \R prior to 3.1.0.
-
       \item \code{dbinom(x,n)}, \code{pbinom()}, \code{dpois()}, etc,
       are slightly less restrictive in checking if \code{n} is
       integer-valued.  (Wish of \PR{15734}.)
@@ -184,7 +184,7 @@
       \item The \code{"CRAN"} filter (see \code{available.packages()})
       no longer removes duplicates other than of packages on CRAN, and
       does not fail if there is no CRAN repository in
-      \code{getOption("repository")}.
+      \code{getOption("repos")}.
 
       \item The device listing from \code{dev2bitmap()} and
       \code{bitmap()} was truncated to 1000 characters: modern versions
