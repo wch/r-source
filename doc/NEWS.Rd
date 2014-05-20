@@ -217,6 +217,9 @@
       the first duplicate was at an index which was too large to be
       stored in an integer vector (although a lot of RAM and patience
       would have been needed to encounter this).
+      
+      \item \code{tools::Rd2ex(commentDontrun = FALSE)} failed if the
+      block had only one line.
     }
   }
 }
