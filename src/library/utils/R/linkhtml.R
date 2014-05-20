@@ -113,15 +113,15 @@ make.packages.html <-
             writeLines(paste0("<a href=\"#pkgs-", nm, "\">", nm, "</a>"), out)
             writeLines("</p>\n", out)
         }
-        cat('<p><table width="100%" summary="R Package list>\n', file = out)
+        cat('<p><table width="100%" summary="R Package list">\n', file = out)
         for (a in nm) {
             if(use_alpha)
-                cat("<tr id=\"pkgs-", a, "\"/>\n", sep = "", file = out)
+                cat("<tr id=\"pkgs-", a, "\"> <td></td>\n", sep = "", file = out)
             for (i in pg[first == a]) {
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
                 if (is.na(title)) title <- "-- Title is missing --"
-                cat('<tr align="left" valign="top" id="lib-"', i, '">\n',
+                cat('<tr align="left" valign="top" id="lib-', i, '">\n',
                     '<td width="25%"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>", title,
                     "</td></tr>\n", file = out, sep = "")
