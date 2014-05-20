@@ -680,6 +680,7 @@ setEncoding2, "
             "      --no-index	do not index output",
             "      --no-description	do not typeset the description of a package",
             "      --internals	typeset 'internal' documentation (usually skipped)",
+            "      --build_dir=DIR	use DIR as the working directory",
             "",
             "The output papersize is set by the environment variable R_PAPERSIZE.",
             "The PDF previewer is set by the environment variable R_PDFVIEWER.",

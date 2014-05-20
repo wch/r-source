@@ -62,7 +62,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   result in faster processing when enough memory is available.
   
   Note that \code{read.fwf} (not \code{read.table}) reads the supplied
-  file, so the latter's  arguments such as \code{encoding} and
+  file, so the latter's arguments such as \code{encoding} and
   \code{fileEncoding} will not be useful.
 }
 \author{
