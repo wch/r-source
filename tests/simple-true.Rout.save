@@ -43,7 +43,7 @@ Type 'q()' to quit R.
 > typeof(1e-3L) == "double" # gives warning
 [1] TRUE
 Warning message:
-non-integer value 1e-3 qualified with L; using numeric value 
+non-integer value 1e-3L qualified with L; using numeric value 
 > 1.L # gives warning
 [1] 1
 Warning message:
