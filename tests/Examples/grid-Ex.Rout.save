@@ -1,5 +1,5 @@
 
-R version 3.1.0 Patched (2014-05-15 r65619) -- "Spring Dance"
+R version 3.1.0 Patched (2014-05-20 r65699) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -438,15 +438,6 @@ NULL
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D dev.new(width=.5, height=.5)
-> ##D grid.rect()
-> ##D grid.text("hi")
-> ##D cap <- grid.cap()
-> ##D dev.off()
-> ##D 
-> ##D grid.raster(cap, width=.5, height=.5, interpolate=FALSE)
-> ## End(Not run)
 > 
 > 
 > 
@@ -2067,7 +2058,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.277 0.011 1.292 0 0 
+Time elapsed:  1.238 0.013 1.254 0 0 
 > grDevices::dev.off()
 null device 
           1 
