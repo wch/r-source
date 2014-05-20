@@ -2165,9 +2165,7 @@ static int NumericValue(int c)
 		    warning(_("integer literal %s contains decimal; using numeric value"), yytext);
 		else {
 		    /* hide the L for the warning message */
-		    *(yyp-2) = '\0';
 		    warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
-		    *(yyp-2) = (char)c;
 		}
 	    }
 	    asNumeric = 1;

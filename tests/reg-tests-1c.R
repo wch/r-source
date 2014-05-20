@@ -396,4 +396,10 @@ updateArgument <-
 ans2 <- update(myFormula, updateArgument)
 stopifnot(identical(ans2, myFormula))
 
+
+## PR#15753
+0x110p-5L
+stopifnot(.Last.value == 8.5)
+## was 272 with a garbled message in R 3.0.0 - 3.1.0.
+
 proc.time()
