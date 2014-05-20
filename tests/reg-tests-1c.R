@@ -380,4 +380,14 @@ stopifnot(is.na(ii))
 ## failed for some version of clang, in R <= 3.1.0
 
 
+## PR#15735: formulae with exactly 32 variables
+myFormula <- as.formula(paste(c("y ~ x0", paste0("x", 1:30)), collapse = "+"))
+ans <- update(myFormula, . ~ . - w1)
+stopifnot(identical(ans, myFormula))
+
+updateArgument <-
+    as.formula(paste(c(". ~ . ", paste0("w", 1:30)), collapse = " - "))
+ans2 <- update(myFormula, updateArgument)
+stopifnot(identical(ans2, myFormula))
+
 proc.time()
