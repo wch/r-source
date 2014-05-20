@@ -100,28 +100,28 @@
       \item \code{type.convert()}, \code{read.table()} and similar
       \code{read.*()} functions get a new \code{numerals} argument,
       specifying how numeric input is converted when its conversion to
-      double precision loses accuracy.  The default \code{numerals =
-      "allow.loss"} allows accuracy loss, as in \R versions before
+      double precision loses accuracy.  The default value,
+      \code{"allow.loss"} allows accuracy loss, as in \R versions before
       3.1.0.
 
-      \item For some compiler versions, integer addition could accidentally
-      overflow (without a warning).  \R's internal code should be more
-      \dQuote{robust} now, thanks to Hervé Pagès.  (\PR{15774})
+      \item For some compilers, integer addition could overflow without
+      a warning.  \R's internal code for both integer addition and
+      subtraction is more robust now.  (\PR{15774})
 
       \item The function determining the default number of knots
       for \code{smooth.spline()} is now exported, as \code{.nknots.smspl}.
 
-      \item \code{dbeta(., a,b)}, \code{pbeta()}, \code{qbeta()} and
+      \item \code{dbeta(, a,b)}, \code{pbeta()}, \code{qbeta()} and
       \code{rbeta()} are now defined also for \eqn{a = 0}, \eqn{b = 0},
       or infinite \eqn{a} and \eqn{b} (where they typically returned
       \code{NaN} before).
 
       \item Many package authors report that the RStudio graphics device
       does not work correctly with their package's use of
-      \code{dev.new()}.  \code{dev.new(noRStudioGD = TRUE)} uses the
-      default device as selected by \R itself, ignoring RStudio's
-      override but still respecting \env{R_INTERACTIVE_DEVICE} and
-      \env{R_DEFAULT_DEVICE}.
+      \code{dev.new()}.  The new option \code{dev.new(noRStudioGD =
+      TRUE)} replaces the RStudio override by the default device as
+      selected by \R itself, still respecting environment variables
+      \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}.
     }
   }
 
