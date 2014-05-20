@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dev}
@@ -23,13 +23,16 @@ dev.next(which = dev.cur())
 dev.prev(which = dev.cur())
 dev.off(which = dev.cur())
 dev.set(which = dev.next())
-dev.new(\dots)
+dev.new(\dots, noRStudioGD = FALSE)
 graphics.off()
 }
 
 \arguments{
   \item{which}{An integer specifying a device number.}
   \item{\dots}{arguments to be passed to the device selected.}
+  \item{noRStudioGD}{Do not use the RStudio graphics device even if
+    specified as the default device: it does not accept arguments such
+    as \code{width} and \code{height}.}
 }
 \details{
   Only one device is the \sQuote{active} device: this is the device in
