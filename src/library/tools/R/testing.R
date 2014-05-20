@@ -111,7 +111,8 @@ massageExamples <-
                              perl = TRUE, useBytes = TRUE)))
                     dont_test <- FALSE
             }
-        }
+        } else
+            for (line in lines) cat(line, "\n", sep = "", file = out)
 
         if(addTiming) {
             cat("base::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
