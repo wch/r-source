@@ -935,9 +935,8 @@ static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
     Rfifoconn this = con->private;
 
     /* uses 'size_t' for len */
-    if ((size * sizeof(wchar_t) * nitems) > 50000) {
-      error(_("too large a block specified"));
-    }
+    if ((double) size * (double) nitems > SSIZE_MAX)
+	error(_("too large a block specified"));
     return write(this->fd, ptr, size * nitems)/size;
 }
 
