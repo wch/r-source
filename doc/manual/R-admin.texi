@@ -750,6 +750,11 @@ targets to uninstall info and PDF manuals in file
 Target @code{uninstall-tests} will uninstall any installed tests, as
 well as removing the directory @file{tests} containing the test results.
 
+An installed shared/static @code{libR} can be uninstalled by
+
+@example
+make prefix=/path/to/here uninstall-libR
+@end example
 
 
 @node Sub-architectures, Other Options, Uninstallation, Installing R under Unix-alikes
