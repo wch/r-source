@@ -2888,7 +2888,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                     bad_depends$required_but_not_installed <- bad1
                 bad2 <-  setdiff(bad, bad1)
                 if(length(bad2))
-                    bad_depends$suggested_but_not_installed <- bad3
+                    bad_depends$suggested_but_not_installed <- bad2
             }
             if(length(reqs[m]))
                 bad_depends$required_but_stub <- reqs[m]
