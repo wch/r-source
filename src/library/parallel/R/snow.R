@@ -86,15 +86,16 @@ initDefaultClusterOptions <- function(libname)
     port <- if (identical(port, "random")) NA else as.integer(port)
     if (is.na(port))
         port <- 11000 + 1000 * ((stats::runif(1L) + unclass(Sys.time())/300) %% 1)
+    Sys.i <- Sys.info()
     options <- list(port = as.integer(port),
                     timeout = 60 * 60 * 24 * 30, # 30 days
-                    master =  Sys.info()["nodename"],
+                    master = Sys.i[["nodename"]],
                     homogeneous = TRUE,
                     type = "PSOCK",
                     outfile = "/dev/null",
                     rscript = rscript,
                     rscript_args = character(),
-                    user = Sys.info()["user"],
+                    user = Sys.i[["user"]],
                     rshcmd = "ssh",
                     manual = FALSE,
                     methods = TRUE,
