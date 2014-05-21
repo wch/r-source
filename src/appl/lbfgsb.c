@@ -114,7 +114,7 @@ static void mainlb(int, int, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, double *, double *,
 		   double *, double *, int *, int *, int *, char *,
-		   int, char *, int *, double *);
+		   int, char *, int *);
 static void matupd(int, int, double *, double *, double *,
 		   double *, double *, double *, int *, int *,
 		   int *, int *, double *, double *, double *,
@@ -143,8 +143,7 @@ static void prn3lb(int n, double *x, double *f, char *task, int iprint,
 static
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
-	    double *wa, int * iwa, char *task, int iprint,
-	    int *isave, double *dsave)
+	    double *wa, int * iwa, char *task, int iprint, int *isave)
 {
 /*     ************
 
@@ -236,7 +235,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
        csave is a working string of characters of length 60.
 
        *** These are all Fortan 1-based indices.
-
+       *** now only used local to mainlb.
        lsave is a logical working array of dimension 4.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -246,7 +245,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   If lsave(3) = .true. then  each variable has upper and lower
 				      bounds;
 
-       *** re-arranged to be of size 23, reduce indices by 21.
+       *** re-arranged to be of size 21, reduce indices by 21.
        isave is an integer working array of dimension 44.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -274,6 +273,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   isave(41) = the number of variables entering the set of active
 			   constraints in the current iteration.
 
+       *** re-arranged to be of size 16, no longer exported.
        dsave is a double precision working array of dimension 29.
 	 On exit with 'task' = NEW_X, the following information is
 							       available:
@@ -361,7 +361,7 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	   &wa[lws], &wa[lwy], &wa[lsy],&wa[lss], &wa[lwt],&wa[lwn],
 	   &wa[lsnd], &wa[lz], &wa[lr], &wa[ld], &wa[lt], &wa[lwa],
 	   iwa, &iwa[n], &iwa[n << 1], task, iprint,
-	   csave, isave, dsave);
+	   csave, isave);
     return;
 } /* setulb */
 /* ======================= The end of setulb ============================= */
@@ -373,7 +373,7 @@ static void mainlb(int n, int m, double *x,
 		   double *snd, double *z, double *r, double *d,
 		   double *t, double *wa, int *indx, int *iwhere,
 		   int *indx2, char *task, int iprint,
-		   char *csave, int *isave, double *dsave)
+		   char *csave, int *isave)
 {
 /*     ************
        Subroutine mainlb
@@ -501,12 +501,7 @@ static void mainlb(int n, int m, double *x,
 
        csave is a working string of characters of length 60.
 
-       lsave is a logical working array of dimension 4.
-
        isave is an integer working array of dimension 23.
-
-       dsave is a double precision working array of dimension 29.
-
 
        Subprograms called
 
@@ -559,40 +554,14 @@ static void mainlb(int n, int m, double *x,
     double d__1, d__2;
 
     /* Local variables */
-    int head;
-    double fold;
-    int nact;
     double ddum;
-    int info;
-    int nfgv, ifun, iter, nint;
     char word[4]; /* allow for terminator */
-    int i, iback, k = 0; /* -Wall */
-    double gdold;
-    int nfree;
-    int boxed;
-    int itail;
-    double theta;
-    double dnorm;
-    int nskip, iword;
-    double xstep = 0.0, stpmx; /* xstep is printed before being used */
-    double gd, dr, rr;
-    int ileave;
-    int itfile;
-    double cachyt, epsmch;
-    int updatd;
-    double sbtime;
-    int prjctd;
-    int iupdat;
-    int cnstnd;
-    double sbgnrm;
-    int nenter;
-    double lnscht;
-    int nintol;
-    double dtd;
-    int col;
-    double tol;
+    int i, k = 0; /* -Wall */
+    double xstep = 0.0; /* printed before being used */
+    double dr, rr;
     int wrk;
-    double stp, cpu1, cpu2;
+    double cpu2;
+
 
     /* Parameter adjustments */
     --indx2;
@@ -608,10 +577,14 @@ static void mainlb(int n, int m, double *x,
     --l;
     --x;
     --wa;
-//    --lsave;
-//    --isave;
-//    --dsave;
-    static int lsave[4];
+    // formerly lsave
+    static int prjctd, cnstnd, boxed, updatd;
+    // in isave
+    static int nintol, itfile, iback, nskip, head, col, itail, iter, iupdat,
+	nint, nfgv, info, ifun, iword, nfree, nact, ileave, nenter;
+    // formerly dsave
+    static double theta, fold, tol, dnorm, epsmch, cpu1, cachyt, sbtime,
+	lnscht, gd, stpmx, sbgnrm, stp, gdold, dtd;
 
     /* Function Body */
     if (strncmp(task, "START", 5) == 0) {
@@ -679,46 +652,6 @@ static void mainlb(int n, int m, double *x,
 		&cnstnd, &boxed);
 /*	  The end of the initialization. */
     } else {
-/*	    restore local variables. */
-	prjctd = lsave[0];
-	cnstnd = lsave[1];
-	boxed = lsave[2];
-	updatd = lsave[3];
-
-	nintol = isave[1-1];
-	itfile = isave[3-1];
-	iback = isave[4-1];
-	nskip = isave[5-1];
-	head = isave[6-1];
-	col = isave[7-1];
-	itail = isave[8-1];
-	iter = isave[9-1];
-	iupdat = isave[10-1];
-	nint = isave[12-1];
-	nfgv = isave[13-1];
-	info = isave[14-1];
-	ifun = isave[15-1];
-	iword = isave[16-1];
-	nfree = isave[17-1];
-	nact = isave[18-1];
-	ileave = isave[19-1];
-	nenter = isave[20-1];
-
-	theta = dsave[1-1];
-	fold = dsave[2-1];
-	tol = dsave[3-1];
-	dnorm = dsave[4-1];
-	epsmch = dsave[5-1];
-	cpu1 = dsave[6-1];
-	cachyt = dsave[7-1];
-	sbtime = dsave[8-1];
-	lnscht = dsave[9-1];
-	gd = dsave[11-1];
-	stpmx = dsave[12-1];
-	sbgnrm = dsave[13-1];
-	stp = dsave[14-1];
-	gdold = dsave[15-1];
-	dtd = dsave[16-1];
 /*	After returning from the driver go to the point where execution */
 /*	is to resume. */
 	if (strncmp(task, "FG_LN", 5) == 0)	goto L666;
@@ -1019,11 +952,6 @@ L888:
 L999:
 L1000:
 /*     Save local variables. */
-    lsave[0] = prjctd;
-    lsave[1] = cnstnd;
-    lsave[2] = boxed;
-    lsave[3] = updatd;
-
     isave[1-1] = nintol;
     isave[3-1] = itfile;
     isave[4-1] = iback;
@@ -1042,22 +970,6 @@ L1000:
     isave[18-1] = nact;
     isave[19-1] = ileave;
     isave[20-1] = nenter;
-
-    dsave[1-1] = theta;
-    dsave[2-1] = fold;
-    dsave[3-1] = tol;
-    dsave[4-1] = dnorm;
-    dsave[5-1] = epsmch;
-    dsave[6-1] = cpu1;
-    dsave[7-1] = cachyt;
-    dsave[8-1] = sbtime;
-    dsave[9-1] = lnscht;
-    dsave[11-1] = gd;
-    dsave[12-1] = stpmx;
-    dsave[13-1] = sbgnrm;
-    dsave[14-1] = stp;
-    dsave[15-1] = gdold;
-    dsave[16-1] = dtd;
     prn3lb(n, x+1, f, task, iprint, info,
 	   iter, nfgv, nintol, nskip, nact, sbgnrm,
 	   nint, word, iback, stp, xstep, k);
@@ -3218,8 +3130,7 @@ static void dcsrch(double *f, double *g, double *stp,
 
      The subroutine statement is
 
-	subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax,
-			  task,isave,dsave)
+	subroutine dcsrch(f,g,stp,ftol,gtol,xtol,stpmin,stpmax task)
      where
 
 	f is a double precision variable.
@@ -3285,10 +3196,6 @@ static void dcsrch(double *f, double *g, double *stp,
 
 	  On exit with convergence, a warning or an error, the
 	     variable task contains additional information.
-
-	isave is an integer work array of dimension 2.
-
-	dsave is a double precision work array of dimension 13.
 
      Subprograms called
 
