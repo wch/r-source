@@ -5,6 +5,7 @@
 
 \name{reg.finalizer}
 \alias{reg.finalizer}
+\alias{finalizer}
 \title{Finalization of Objects}
 \description{
   Registers an \R function to be called upon garbage collection of
@@ -30,7 +31,7 @@
   for objects that are never copied on assignment, hence the restriction
   to environments and external pointers.
 
-  Note that as \R's interpreter is not re-entrant and the finalizer may
+  Note that as \R's interpreter is not re-entrant, the finalizer may
   be run in the middle of a computation.  So there are many functions
   which it is not safe to call from \code{f}: one example which caused
   trouble is \code{\link{options}}. As from \R 3.0.3 finalizers are
