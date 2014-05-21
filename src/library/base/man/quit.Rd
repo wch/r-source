@@ -1,6 +1,6 @@
 % File src/library/base/man/quit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quit}
@@ -34,11 +34,11 @@ quit(save = "default", status = 0, runLast = TRUE)
     ask in interactive use but may be overridden by command-line
     arguments (which must be supplied in non-interactive use).
 
-    Immediately \emph{before} terminating, \code{.Last()} is executed if
-    the function \code{.Last} exists and \code{runLast} is true.  If in
-    interactive use there are errors in the \code{.Last} function,
-    control will be returned to the command prompt, so do test the
-    function thoroughly.  There is a system analogue,
+    Immediately \emph{before} normal termination, \code{.Last()} is
+    executed if the function \code{.Last} exists and \code{runLast} is
+    true.  If in interactive use there are errors in the \code{.Last}
+    function, control will be returned to the command prompt, so do test
+    the function thoroughly.  There is a system analogue,
     \code{.Last.sys()}, which is run after \code{.Last()} if
     \code{runLast} is true.
 
@@ -52,16 +52,16 @@ quit(save = "default", status = 0, runLast = TRUE)
     session temporary directory and print any remaining warnings
     (e.g. from \code{.Last()} and device closure).
 
-    Some error statuses are used by \R itself.  The default error
+    Some error status values are used by \R itself.  The default error
     handler for non-interactive use effectively calls \code{q("no", 1,
-      FALSE)} and returns error code 1.  Error status 2 is used for \R
+    FALSE)} and returns error status 1.  Error status 2 is used for \R
     \sQuote{suicide}, that is a catastrophic failure, and other small
     numbers are used by specific ports for initialization failures.  It
     is recommended that users choose statuses of 10 or more.
 
     Valid values of \code{status} are system-dependent, but \code{0:255}
     are normally valid.  (Many OSes will report the last byte of the
-    value, that is report the number modulo 256.  But not all.)
+    value, that is report the value modulo 256.  But not all.)
 #ifdef windows
 % https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx?mfr=true
 % https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/if.mspx?mfr=true
@@ -82,7 +82,7 @@ quit(save = "default", status = 0, runLast = TRUE)
 \note{
   The \code{R.app} GUI on OS X has its own version of these functions
   with slightly different behaviour for the \code{save} argument (the
-  \sQuote{Startup} preferences for this action are taken into account).
+  GUI's \sQuote{Startup} preferences for this action are taken into account).
 }
 \seealso{
   \code{\link{.First}} for setting things on startup.
@@ -90,6 +90,7 @@ quit(save = "default", status = 0, runLast = TRUE)
 \examples{
 \dontrun{## Unix-flavour example
 .Last <- function() {
+  graphics.off() # close devices before printing
   cat("Now sending PDF graphics to the printer:\n")
   system("lpr Rplots.pdf")
   cat("bye bye...\n")

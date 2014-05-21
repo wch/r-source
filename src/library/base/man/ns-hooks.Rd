@@ -59,6 +59,10 @@
   \code{.onDetach} are looked for as internal objects in the namespace
   and should not be exported (whereas \code{.Last.lib} should be).
 
+  Note that packages are not detached nor namespaces unloaded at the end
+  of an \R session unless the user arranges to do so (e.g. \emph{via}
+  \code{\link{.Last}}).
+
   Anything needed for the functioning of the namespace should be
   handled at load/unload times by the \code{.onLoad} and
   \code{.onUnload} hooks.  For example, DLLs can be loaded (unless done
