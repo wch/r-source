@@ -238,6 +238,9 @@
       \item Hexadecimal constants such as \code{0x110p-5L} which were
       incorrectly qualified by \code{L} were parsed incorrectly since \R
       3.0.0, with a slightly garbled warning. (\PR{15753})
+
+      \item \code{system()} returned success on some platforms even if
+      the system was unable to launch a process. (\PR{15796})
     }
   }
 }
