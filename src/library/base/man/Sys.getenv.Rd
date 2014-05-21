@@ -41,7 +41,7 @@ Sys.getenv(x = NULL, unset = "", names = NA)
   \code{=}.)
 
   When \code{x} is missing and \code{names} is not false, the result is
-  of class \code{"DList"} in order to get a nice
+  of class \code{"Dlist"} in order to get a nice
   \code{\link{print}} method.
 }
 \seealso{
@@ -57,7 +57,7 @@ Sys.getenv(x = NULL, unset = "", names = NA)
 Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 
 names(s <- Sys.getenv()) # all settings (the values could be very long)
-head(s, 12)# using the DList print() method
+head(s, 12)# using the Dlist print() method
 
 ## Language and Locale settings -- but rather use Sys.getlocale()
 s[grep("^L(C|ANG)", names(s))]

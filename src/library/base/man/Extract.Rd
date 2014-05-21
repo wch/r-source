@@ -13,7 +13,7 @@
 \alias{[}
 \alias{[.listof}
 \alias{[.simple.list}
-\alias{[.DList}
+\alias{[.Dlist}
 \alias{[[}
 \alias{$}
 \alias{getElement}

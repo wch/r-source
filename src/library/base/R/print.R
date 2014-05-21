@@ -82,7 +82,7 @@ print.listof <- function(x, ...)
 
 ## formerly same as [.AsIs
 `[.listof` <- function(x, i, ...) structure(NextMethod("["), class = class(x))
-`[.DList` <- `[.simple.list` <- `[.listof`
+`[.Dlist` <- `[.simple.list` <- `[.listof`
 
 ## used for version:
 print.simple.list <- function(x, ...)
@@ -91,9 +91,9 @@ print.simple.list <- function(x, ...)
 print.function <- function(x, useSource = TRUE, ...)
     .Internal(print.function(x, useSource, ...))
 
-print.DList <- function(x, ...)
+print.Dlist <- function(x, ...)
 {
-    if(!is.list(x) && !is.matrix(x) && is.null(names(x))) ## messed up DList
+    if(!is.list(x) && !is.matrix(x) && is.null(names(x))) ## messed up Dlist
 	return(NextMethod())
     cat(formatDL(x, ...), sep="\n")
     invisible(x)

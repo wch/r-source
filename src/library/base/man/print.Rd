@@ -24,7 +24,7 @@ print(x, \dots)
 \alias{print.htest}
 \alias{print.listof}
 \alias{print.simple.list}
-\alias{print.DList}
+\alias{print.Dlist}
 \alias{print.table}
 \description{
   \code{print} prints its argument and returns it \emph{invisibly} (via

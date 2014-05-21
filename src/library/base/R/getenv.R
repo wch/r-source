@@ -31,7 +31,7 @@ Sys.getenv <- function(x = NULL, unset = "", names = NA)
 	    v[sort.list(n)]
 	else { # with names
 	    v <- structure(v, names = n)
-	    structure(class = "DList", # with nice print method
+	    structure(class = "Dlist", # with nice print method
 		      v[sort.list(n)])
 	}
     } else {

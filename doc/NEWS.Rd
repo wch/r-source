@@ -14,7 +14,7 @@
 
       \item When \code{x} is missing and \code{names} is not false,
       \code{Sys.getenv(x, names)} returns an object of class
-      \code{"DList"} and hence prints tidily.
+      \code{"Dlist"} and hence prints tidily.
 
       \item (Windows.)  \code{shell()} no longer consults the
       environment variable \env{SHELL}: too many systems have been
@@ -46,14 +46,14 @@
       \item Graphics devices can add attributes to their description in
       \code{.Device} and \code{.Devices}.  Several of those included with
       \R use a \code{"filepath"} attribute.
-      
+
       \item \code{pmatch()} uses hashing in more cases and so is faster
       at the expense of using more memory. (\PR{15697})
     }
   }
-  
+
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{ 
+    \itemize{
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
@@ -64,9 +64,9 @@
       documented). (Wish of \PR{15790}.)
     }
   }
-  
+
   \subsection{UTILITES}{
-    \itemize{ 
+    \itemize{
       \item There is some support for testing the \code{\\dontrun}. and
       \code{\\donttest} parts of examples in packages.
 
@@ -95,7 +95,7 @@
 
       \item \command{R CMD Sweave} no longer cleans any files,
       compatibly with versions of \R prior to 3.1.0.
-      
+
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.
       \code{buildvignette()} gains a \code{keep} argument for more
@@ -142,7 +142,7 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.35.
-      
+
       \item There is a new target \command{make uninstall-libR} to
       remove an installed shared/static \file{libR}.
 
@@ -231,7 +231,7 @@
       the first duplicate was at an index which was too large to be
       stored in an integer vector (although a lot of RAM and patience
       would have been needed to encounter this).
-      
+
       \item \code{tools::Rd2ex(commentDontrun = FALSE)} failed if the
       block had only one line.
 
