@@ -30,6 +30,9 @@ function(given = NULL, family = NULL, middle = NULL,
     args <- list(given = given, family = family, middle = middle,
                  email = email, role = role, comment = comment,
 		 first = first, last = last)
+    if(all(sapply(args, is.null))) {
+        return(structure(list(), class = "person"))
+    }
     args <- lapply(args, .listify)
     args_length <- sapply(args, length)
     if(!all(args_length_ok <- args_length %in% c(1L, max(args_length))))
@@ -173,7 +176,7 @@ function(x, i)
 print.person <-
 function(x, ...)
 {
-    print(format(x, ...))
+    if(length(x)) print(format(x, ...))
     invisible(x)
 }
 
@@ -264,6 +267,8 @@ function(x)
 
     x <- as.character(x)
 
+    if(!length(x)) return(person())
+
     ## Need to split the strings into individual person components.
     ## We used to split at ',' and 'and', but of course these could be
     ## contained in roles or comments as well.
@@ -302,6 +307,8 @@ function(x)
     x <- do.call("c",
                  regmatches(x, gregexpr(pattern, y), invert = TRUE))
     x <- x[!sapply(x, .is_not_nonempty_text)]
+
+    if(!length(x)) return(person())
 
     ## Step C.
     as_person1 <- function(x) {
@@ -366,6 +373,8 @@ function(x,
          ...
          )
 {
+    if(!length(x)) return(character())
+    
     args <- c("given", "family", "email", "role", "comment")
     include <- sapply(include, match.arg, args)
 
@@ -595,6 +604,8 @@ function(x, style = "text", .bibstyle = NULL,
          citation.bibtex.max = getOption("citation.bibtex.max", 1),
          sort = FALSE, ...)
 {
+    if(!length(x)) return(character())
+    
     style <- .bibentry_match_format_style(style)
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
