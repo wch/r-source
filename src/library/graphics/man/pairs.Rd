@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pairs}
@@ -19,6 +19,7 @@ pairs(x, \dots)
       na.action = stats::na.pass)
 
 \method{pairs}{default}(x, labels, panel = points, \dots,
+      horInd = 1:nc, verInd = 1:nc,
       lower.panel = panel, upper.panel = panel,
       diag.panel = NULL, text.panel = textPanel,
       label.pos = 0.5 + has.diag/3, line.main = 3,
@@ -53,6 +54,8 @@ pairs(x, \dots)
     \code{plot} such as \code{main}.  \code{par("oma")} will be set
     appropriately unless specified.
   }
+  \item{horInd, verInd}{The (numerical) indices of the variables to be
+    plotted on the horizontal and vertical axes respectively.}
   \item{lower.panel, upper.panel}{separate panel functions (or
     \code{NULL}) to be used below and above the diagonal respectively.}
   \item{diag.panel}{optional \code{function(x, \dots)} to be
@@ -68,7 +71,7 @@ pairs(x, \dots)
     at the top, or graph-like with row 1 at the bottom?}
   \item{gap}{distance between subplots, in margin lines.}
   \item{log}{a character string indicating if logarithmic axes are to be
-    used: see \code{\link{plot.default}}. \code{log = "xy"} specifies
+    used: see \code{\link{plot.default}}.  \code{log = "xy"} specifies
     logarithmic axes for all variables.}
 }
 \details{
@@ -98,6 +101,12 @@ pairs(x, \dots)
   \code{na.action = na.omit}, all cases which contain a missing values for
   any of the variables are omitted completely (including when the scales
   are selected).
+  
+  Arguments \code{horInd} and \code{verInd} were introduced in \R
+  3.2.0. If given the same value they can be used to select or re-order
+  variables: with different ranges of consecutive values they can be
+  used to plot rectangular windows of a full pairs plot; in the latter
+  case \sQuote{diagonal} refers to the diagonal of the full plot. 
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens

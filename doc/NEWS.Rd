@@ -49,6 +49,9 @@
 
       \item \code{pmatch()} uses hashing in more cases and so is faster
       at the expense of using more memory. (\PR{15697})
+      
+      \item \code{pairs()} gains new arguments to select sets of
+      variables to be plotted against each other.
     }
   }
 
