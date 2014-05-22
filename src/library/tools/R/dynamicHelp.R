@@ -180,7 +180,15 @@ httpd <- function(path, query, ...)
                "xml" = "text/xml",  # in RCurl
                "text/plain")
     }
-
+    
+    charsetSetting <- function(pkg) {
+    	encoding <-read.dcf(system.file("DESCRIPTION", package=pkg), "Encoding")
+	if (is.na(encoding))
+	    ""
+        else
+    	    paste0("; charset=", encoding)
+    }
+    
     sQuote <- function(text)
         paste0("&lsquo;", text, "&rsquo;")
     mono <- function(text)
@@ -200,7 +208,7 @@ httpd <- function(path, query, ...)
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
     else if(grepl("^/NEWS[.][[:digit:]]$", path)) 
     	return(list(file = file.path(R.home(), sub("/", "", path)),
-    	            "content-type" = "text/plain"))
+    	            "content-type" = "text/plain; encoding=utf-8"))
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
@@ -407,7 +415,7 @@ httpd <- function(path, query, ...)
     	    return( list(payload = paste(formatted, collapse="\n")) )
     	else
     	    return( list(file = system.file("NEWS", package = pkg),
-    	                 "content-type" = "text/plain") )
+    	                 "content-type" = paste0("text/plain", charsetSetting(pkg) ) ) )
     } else if (grepl(figureRegexp, path)) {
         pkg <- sub(figureRegexp, "\\1", path)
         fig <- sub(figureRegexp, "\\3", path)
@@ -426,7 +434,7 @@ httpd <- function(path, query, ...)
         if(grepl(descRegexp, path)) {
             pkg <- sub(descRegexp, "\\1", path)
             file <- system.file("DESCRIPTION", package = pkg)
-            return(list(file = file, "content-type" = "text/plain"))
+            return(list(file = file, "content-type" = paste0("text/plain", charsetSetting(pkg))))
         } else
             return(error_page(gettextf("Only help files, %s, %s and files under %s and %s in a package can be viewed", mono("NEWS"),
                               mono("DESCRIPTION"), mono("doc/"), mono("demo/"))))
