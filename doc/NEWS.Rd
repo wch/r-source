@@ -244,6 +244,10 @@
 
       \item \code{system()} returned success on some platforms even if
       the system was unable to launch a process. (\PR{15796})
+
+      \item (Windows \command{Rgui} console.)  Unbuffered output was
+      sometimes not output immediately if the prompt was not on the last
+      line of the console.
     }
   }
 }

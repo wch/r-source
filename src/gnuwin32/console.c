@@ -360,7 +360,6 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     p->clp = NULL;
     p->r = -1;
     p->overwrite = 0;
-    p->lazyupdate = 1;
     p->needredraw = 0;
     p->wipe_completion = 0;
     p->my0 = p->my1 = -1;
@@ -1547,7 +1546,10 @@ int consolewrites(control c, const char *s)
 	xbufaddxs(p->lbuf, buf, 1);
     }
     if (strchr(s, '\n')) p->needredraw = 1;
-    if (!p->lazyupdate || (p->r >= 0))
+    if (!p->lazyupdate) {
+	setfirstvisible(c, NUMLINES - ROWS);
+	REDRAW;
+    } else if (p->r >= 0)
 	setfirstvisible(c, NUMLINES - ROWS);
     else {
 	p->newfv = NUMLINES - ROWS;
