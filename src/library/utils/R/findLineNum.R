@@ -1,7 +1,7 @@
 #  File src/library/utils/R/fineLineNum.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2009-2012 Duncan Murdoch and the R Core Team
+#  Copyright (C) 2009-2014 Duncan Murdoch and the R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
     perfectMatch <- identical(.normalizePath(fnsrc$filename, fnsrc$wd), targetfilename)
     if (perfectMatch ||
         (nameonly && !is.null(fnsrc$filename) && basename(fnsrc$filename) == basename(targetfilename))) {
-	if (!is.na(srcfile$timestamp) && fnsrc$timestamp != srcfile$timestamp)
+	if (!is.na(srcfile$timestamp) && !is.null(fnsrc$timestamp) && fnsrc$timestamp != srcfile$timestamp)
 	    timediff <- fnsrc$timestamp - srcfile$timestamp
 	else
 	    timediff <- 0
