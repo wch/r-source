@@ -161,6 +161,10 @@
       \item Hexadecimal constants such as \code{0x110p-5L} which were
       incorrectly qualified by \code{L} were parsed incorrectly since \R
       3.0.0, with a slightly garbled warning. (\PR{15753})
+
+      \item (Windows \command{Rgui} console.)  Unbuffered output was
+      sometimes not output immediately if the prompt was not on the last
+      line of the console.
     }
   }
 }
