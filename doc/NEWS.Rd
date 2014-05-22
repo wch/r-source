@@ -68,7 +68,7 @@
     }
   }
 
-  \subsection{UTILITES}{
+  \subsection{UTILITIES}{
     \itemize{
       \item There is some support for testing the \code{\\dontrun}. and
       \code{\\donttest} parts of examples in packages.
