@@ -744,7 +744,7 @@ static void handleEvent(XEvent event)
 {
     if (event.xany.type == Expose) {
 	/* ----- window repaint ------ */
-	while (XCheckTypedEvent(display, Expose, &event)) ;
+	while (XCheckTypedWindowEvent(display, event.xexpose.window, Expose, &event));
 	if (inclose) return;
 	if (event.xexpose.count != 0) return;
 	caddr_t temp;
@@ -810,7 +810,7 @@ static void handleEvent(XEvent event)
 #endif
 	    dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);	
 	    /* gobble Expose events; we'll redraw anyway */
-	    while (XCheckTypedEvent(display, Expose, &event)) ;
+	    while (XCheckTypedWindowEvent(display, event.xexpose.window, Expose, &event));
 	    pGEDevDesc gdd = desc2GEDesc(dd);
 	    if(gdd->dirty) {
 		GEplayDisplayList(gdd);
