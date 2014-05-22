@@ -781,7 +781,6 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     struct passwd *stpwd;
     struct group *stgrp;
 #endif
-    int i, n;
 #ifdef Win32
     SEXP exe;
     struct _stati64 sb;
@@ -793,7 +792,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     if (!isString(fn))
 	error(_("invalid filename argument"));
-    n = length(fn);
+    int n = length(fn);
 #ifdef UNIX_EXTRAS
     PROTECT(ans = allocVector(VECSXP, 10));
     PROTECT(ansnames = allocVector(STRSXP, 10));
@@ -830,7 +829,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
     SET_STRING_ELT(ansnames, 6, mkChar("exe"));
 #endif
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
 #ifdef Win32
 	wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
 	/* trailing \ is not valid on Windows except for the
@@ -881,12 +880,27 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef UNIX_EXTRAS
 	    INTEGER(uid)[i] = (int) sb.st_uid;
 	    INTEGER(gid)[i] = (int) sb.st_gid;
-	    stpwd = getpwuid(sb.st_uid);
-	    if (stpwd) SET_STRING_ELT(uname, i, mkChar(stpwd->pw_name));
-	    else SET_STRING_ELT(uname, i, NA_STRING);
-	    stgrp = getgrgid(sb.st_gid);
-	    if (stgrp) SET_STRING_ELT(grname, i, mkChar(stgrp->gr_name));
-	    else SET_STRING_ELT(grname, i, NA_STRING);
+
+            /* Usually all of the uid and gid values in a list of
+             * files are the same so we can avoid most of the calls
+             * to getpwuid() and getgrgid(), which can be quite slow
+             * on some systems.  (PR#15804)
+             */
+            if (i && INTEGER(uid)[i - 1] == (int) sb.st_uid)
+		SET_STRING_ELT(uname, i, STRING_ELT(uname, i - 1));
+            else {
+		stpwd = getpwuid(sb.st_uid);
+		SET_STRING_ELT(uname, i,
+			       stpwd ? mkChar(stpwd->pw_name): NA_STRING);
+            }
+
+            if (i && INTEGER(gid)[i - 1] == (int) sb.st_gid)
+		SET_STRING_ELT(grname, i, STRING_ELT(grname, i - 1));
+            else {
+		stgrp = getgrgid(sb.st_gid);
+		SET_STRING_ELT(grname, i, 
+			       stgrp ? mkChar(stgrp->gr_name): NA_STRING);
+            }
 #endif
 #ifdef Win32
 	    {
