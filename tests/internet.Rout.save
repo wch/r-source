@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2014-05-20 r65698) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-05-22 r65712) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin13.2.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -29,41 +29,41 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 5552
+[1] 5557
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
 > readLines(zz)
- [1] "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">"                       
- [2] ""                                                                       
- [3] "<html>"                                                                 
- [4] "<head>"                                                                 
- [5] "<title>The Comprehensive R Archive Network</title>"                     
- [6] "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">"         
- [7] "<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">"
- [8] "<link rel=\"stylesheet\" type=\"text/css\" href=\"R.css\">"             
- [9] "</head>"                                                                
-[10] ""                                                                       
-[11] "<FRAMESET cols=\"1*, 4*\" border=0>"                                    
-[12] "<FRAMESET rows=\"120, 1*\">"                                            
-[13] "<FRAME src=\"logo.html\" name=\"logo\" frameborder=0>"                  
-[14] "<FRAME src=\"navbar.html\" name=\"contents\" frameborder=0>"            
-[15] "</FRAMESET>"                                                            
-[16] "<FRAME src=\"banner.shtml\" name=\"banner\" frameborder=0>"             
-[17] "<noframes>"                                                             
-[18] "<h1>The Comprehensive R Archive Network</h1>"                           
-[19] ""                                                                       
-[20] "Your browser seems not to support frames,"                              
-[21] "here is the <A href=\"navbar.html\">contents page</A> of CRAN."         
-[22] "</noframes>"                                                            
-[23] "</FRAMESET>"                                                            
-[24] ""                                                                       
-[25] ""                                                                       
-[26] ""                                                                       
+ [1] "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
+ [2] "<html>"                                                                                                   
+ [3] "<head>"                                                                                                   
+ [4] "<title>The Comprehensive R Archive Network</title>"                                                       
+ [5] "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=utf-8\">"                                  
+ [6] "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">"                                           
+ [7] "<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">"                                  
+ [8] "<link rel=\"stylesheet\" type=\"text/css\" href=\"R.css\">"                                               
+ [9] "</head>"                                                                                                  
+[10] ""                                                                                                         
+[11] "<FRAMESET cols=\"1*, 4*\" border=0>"                                                                      
+[12] "<FRAMESET rows=\"120, 1*\">"                                                                              
+[13] "<FRAME src=\"logo.html\" name=\"logo\" frameborder=0>"                                                    
+[14] "<FRAME src=\"navbar.html\" name=\"contents\" frameborder=0>"                                              
+[15] "</FRAMESET>"                                                                                              
+[16] "<FRAME src=\"banner.shtml\" name=\"banner\" frameborder=0>"                                               
+[17] "<noframes>"                                                                                               
+[18] "<h1>The Comprehensive R Archive Network</h1>"                                                             
+[19] ""                                                                                                         
+[20] "Your browser seems not to support frames,"                                                                
+[21] "here is the <A href=\"navbar.html\">contents page</A> of CRAN."                                           
+[22] "</noframes>"                                                                                              
+[23] "</FRAMESET>"                                                                                              
 > close(zz)
 > 
 > ## check graceful failure:
 > try(zz <- url("http://foo.bar", "r"))
+Error in url("http://foo.bar", "r") : cannot open the connection
+In addition: Warning message:
+In url("http://foo.bar", "r") : unable to resolve 'foo.bar'
 > 
 > # and via read.table, test http and ftp.
 > 
