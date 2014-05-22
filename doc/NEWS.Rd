@@ -248,6 +248,10 @@
       \item (Windows \command{Rgui} console.)  Unbuffered output was
       sometimes not output immediately if the prompt was not on the last
       line of the console.
+      
+      \item The built-in help server did not declare the encoding for 
+      the \file{DESCRIPTION} or other text files to be the package 
+      encoding, so non-ASCII characters could be displayed incorrectly.
     }
   }
 }
