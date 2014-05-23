@@ -16,12 +16,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-mirror2html <- function(mirrors = NULL, file="mirrors.html",
-                        head = "mirrors-head.html",
-                        foot = "mirrors-foot.html")
+mirror2html <-
+function(mirrors = NULL, file = "mirrors.html",
+         head = "mirrors-head.html", foot = "mirrors-foot.html")
 {
     if(is.null(mirrors)){
-        mirrors <- getCRANmirrors(all=FALSE, local.only=TRUE)
+        mirrors <- getCRANmirrors(all = FALSE, local.only = TRUE)
     }
     mirrors$Host <- gsub("&", "&amp;", mirrors$Host)
     z <- NULL
@@ -31,11 +31,11 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
         m <- mirrors[mirrors$Country == country,]
         z <- c(z, paste0("<dt>", country, "</dt>"),
                "<dd>",
-               sprintf("<table border=0 width=90%% summary=\"%s\">",
+               sprintf("<table border=0 width=\"90%%\" summary=\"%s\">",
                        country))
         for(k in seq_len(nrow(m))) {
             z <- c(z, "<tr>",
-                   "<td width=45%>",
+                   "<td width=\"45%\">",
                    sprintf("<a href=\"%s\" target=\"_top\">%s</a>",
                            m$URL[k], m$URL[k]),
                    "</td>\n",
@@ -50,19 +50,14 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
     invisible(z)
 }
 
-checkCRAN <- function(method)
+checkCRAN <-
+function(method)
 {
-    master <- available.packages(contrib.url("http://cran.R-project.org"),
-                                 method=method)
+    master <- available.packages(contrib.url("http://CRAN.R-project.org"),
+                                 method = method)
     m <- getCRANmirrors()
     z <- list()
     for(url in as.character(m$URL))
-        z[[url]] = available.packages(contrib.url(url), method=method)
+        z[[url]] <- available.packages(contrib.url(url), method = method)
     lapply(z, function(a) all.equal(a, master))
 }
-
-
-
-
-
-
