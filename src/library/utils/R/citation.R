@@ -119,6 +119,9 @@ function(given = NULL, family = NULL, middle = NULL,
         ## Canonicalize 0-length character arguments to NULL.
         if(any(ind <- (sapply(rval, length) == 0L)))
             rval[ind] <- vector("list", length = sum(ind))
+        ## Give nothing if there is nothing.
+        if(all(sapply(rval, is.null)))
+            rval <- NULL
 
         return(rval)
     }
@@ -131,12 +134,15 @@ function(given = NULL, family = NULL, middle = NULL,
                             middle = middle[[i]], email = email[[i]],
                             role = role[[i]], comment = comment[[i]],
                             first = first[[i]], last = last[[i]])))
-    class(rval) <- "person"
 
     ## <COMMENT Z>
     ## Should we check that for each person there is at least one
     ## non-NULL entry?
     ## </COMMENT>
+    ## Yes!
+    rval <- rval[!sapply(rval, is.null)]
+
+    class(rval) <- "person"
 
     rval
 }
