@@ -183,9 +183,10 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): already the base and recommended packages are
-byte-compiled.  At some future time this might be done routinely, so
-@emph{compiling} a package may come to mean compiling its @R{} code.
+@pkg{compiler}): already base and recommended packages are normally
+byte-compiled and this can be specified for other packages.  So
+@emph{compiling} a package may come to mean byte-compiling its @R{}
+code.
 
 @item
 It used to be unambiguous to talk about @emph{loading} an installed
@@ -273,7 +274,6 @@ shell) script files which are, respectively, executed before and
 (provided that option @option{--clean} was given) after installation on
 Unix-alikes, see @ref{Configure and cleanup}.  The analogues on Windows
 are @file{configure.win} and @file{cleanup.win}.
-
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -1220,6 +1220,10 @@ directory.  The suggestion is that programs are installed under
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
+
+Subdirectory @file{tools} is the preferred place for auxiliary files
+needed during configuration, and also for sources need to re-create
+scripts (e.g.@: M4 files for @command{autoconf}).
 
 
 @node Data in packages, Non-R scripts in packages, Package subdirectories, Package structure
