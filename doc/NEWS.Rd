@@ -60,7 +60,7 @@
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
-      installed: this help ensure that the current build has priority if
+      installed: this helps ensure that the current build has priority if
       an \R shared library has already been installed by e.g.
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
@@ -70,7 +70,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item There is some support for testing the \code{\\dontrun}. and
+      \item There is some support for testing the \code{\\dontrun} and
       \code{\\donttest} parts of examples in packages.
 
       \code{tools::testInstalledPackage()} accepts new arguments
