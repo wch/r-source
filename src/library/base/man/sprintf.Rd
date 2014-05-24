@@ -1,6 +1,6 @@
 % File src/library/base/man/sprintf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sprintf}
@@ -121,7 +121,9 @@ gettextf(fmt, \dots, domain = NULL)
     \item{\code{+}}{Always print number with sign: by default only
       negative numbers are printed with a sign.}
     \item{a space}{Prefix a space if the first character is not a sign.}
-    \item{\code{0}}{For numbers, pad to the field width with leading zeros.}
+    \item{\code{0}}{For numbers, pad to the field width with leading
+      zeros. For characters, this zero-pads on some platforms and is
+      ignored on others.}
     \item{\code{#}}{specifies \dQuote{alternate output} for numbers, its
       action depending on the type:
       For \code{x} or \code{X}, \code{0x} or \code{0X} will be prefixed
@@ -243,6 +245,10 @@ noquote(format(xx, justify = "right"))
 
 sprintf("min 10-char string '\%10s'",
         c("a", "ABC", "and an even longer one"))
+
+\donttest{## Platform-dependent bad example from qdapTools 1.0.0:
+## may pad with spaces or zeroes.
+sprintf("\%09s", month.names)}
 
 n <- 1:18
 sprintf(paste0("e with \%2d digits = \%.", n, "g"), n, exp(1))
