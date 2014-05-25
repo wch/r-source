@@ -269,7 +269,7 @@
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
 \ifthenelse{\boolean{Rd@use@inconsolata}}{%
- \IfFileExists{inconsolata.sty}{\usepackage{inconsolata}}{\usepackage{zi4}}}{}
+ \IfFileExists{inconsolata.sty}{\usepackage[noupquote]{inconsolata}}{\usepackage[noupquote]{zi4}}}{}
 
 %% needs to come after \code is defined
 %% inspired by an earlier version of upquote.sty

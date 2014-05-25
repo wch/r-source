@@ -479,8 +479,7 @@ either of the options @code{inconsolata}, on a Unix-alike only if found
 by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
-@pkg{inconsolata} or @pkg{bera} installed: @pkg{inconsolata} is likely
-to require @pkg{upquote}.)
+@pkg{inconsolata} or @pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
@@ -3002,10 +3001,14 @@ vignettes is sensitive to the version of the @LaTeX{} package
 kept up-to-date.  A number of standard @LaTeX{} packages are required
 (including @pkg{url}) and others such as @pkg{hyperref} and
 @pkg{inconsolata} are desirable (and without them you may need to change
-@R{}'s defaults: @pxref{Making the manuals}).  Note that most versions
-of @pkg{inconsolata} require package @pkg{upquote} and that
+@R{}'s defaults: @pxref{Making the manuals}).  Note that package
 @pkg{hyperref} (currently) requires packages @pkg{kvoptions},
-@pkg{ltxcmds} and @pkg{refcount}.
+@pkg{ltxcmds} and @pkg{refcount}.  For distributions based on TeXLive
+the simplest approach may be to install collections
+@pkg{collection-fontsextra} and @pkg{collection-latexextra} (assuming
+@pkg{collection-latex} was already installed by default): Fedora calls
+the first @pkg{texlive-collection-fontsextra}: Debian/Ubuntu
+@pkg{texlive-fonts-extra} (and similarly) for the second.
 
 
 @cindex Subversion
@@ -4612,9 +4615,9 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: @pkg{inconsolata}, @pkg{texinfo}, @pkg{upquote}
-and @pkg{url}.  @samp{TeX Live Utility} (available @emph{via} the MacTeX
-front page) provides a graphical means to manage @TeX{} packages.
+some packages, e.g.@: @pkg{inconsolata} and @pkg{texinfo}.  @samp{TeX
+Live Utility} (available @emph{via} the MacTeX front page) provides a
+graphical means to manage @TeX{} packages.
 
 @menu
 * Snow Leopard::                
