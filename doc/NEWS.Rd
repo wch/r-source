@@ -226,7 +226,7 @@
 
       \item For a formula with exactly 32 variables the 32nd variable
       was aliased to the intercept in some C-level computations of
-      terms, so that for example attempting to delete it would remove
+      terms, so that for example attempting to remove it would remove
       the intercept instead (and leave a corrupt internal structure).
       (\PR{15735})
 
@@ -2884,13 +2884,13 @@
 }
 
 \section{CHANGES in previous versions}{
-   \itemize{
-     \item
-     Older news can be found in text format in files
-     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
-     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
-     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for
-     \R  versions from 2.10.0 to 2.15.3 is in
-     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
-   }
- }
+  \itemize{
+    \item Older news can be found in text format in files
+    \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
+      and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
+      \file{NEWS.2}}
+    in the \file{doc} directory.  News in HTML format for
+    \R versions from 2.10.0 to 2.15.3 is in
+    \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
+  }
+}
