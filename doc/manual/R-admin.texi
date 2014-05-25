@@ -3005,7 +3005,12 @@ kept up-to-date.  A number of standard @LaTeX{} packages are required
 @R{}'s defaults: @pxref{Making the manuals}).  Note that most versions
 of @pkg{inconsolata} require package @pkg{upquote} and that
 @pkg{hyperref} (currently) requires packages @pkg{kvoptions},
-@pkg{ltxcmds} and @pkg{refcount}.
+@pkg{ltxcmds} and @pkg{refcount}.  For distributions based on TeXLive
+the simplest approach may be to install collections
+@pkg{collection-fontsextra} and @pkg{collection-latexextra} (assuming
+@pkg{collection-latex} was already installed by default): Fedora calls
+the first @pkg{texlive-collection-fontsextra}: Debian/Ubuntu
+@pkg{texlive-fonts-extra} (and similarly) for the second.
 
 
 @cindex Subversion
@@ -4626,8 +4631,8 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: @pkg{inconsolata}, @pkg{texinfo}, @pkg{upquote}
-and @pkg{url}.  @samp{TeX Live Utility} (available @emph{via} the MacTeX
+some packages, e.g.@: @pkg{inconsolata}, @pkg{texinfo} and
+@pkg{upquote}.  @samp{TeX Live Utility} (available @emph{via} the MacTeX
 front page) provides a graphical means to manage @TeX{} packages.
 
 @menu
