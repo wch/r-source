@@ -3008,7 +3008,7 @@ the simplest approach may be to install collections
 @pkg{collection-fontsextra} and @pkg{collection-latexextra} (assuming
 @pkg{collection-latex} was already installed by default): Fedora calls
 the first @pkg{texlive-collection-fontsextra}: Debian/Ubuntu
-@pkg{texlive-fonts-extra} (and similarly) for the second.
+@pkg{texlive-fonts-extra} (and similarly for the second).
 
 
 @cindex Subversion
