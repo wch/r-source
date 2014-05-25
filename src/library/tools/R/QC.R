@@ -6632,6 +6632,26 @@ function(dir)
             vds <- readRDS(vds)[, "File"]
     }
 
+    ## Check for missing build/{partial.rds,pkgname.pdf}
+    ## copy code from build.R
+    Rdb <- .build_Rd_db(dir, stages = NULL,
+                        os = c("unix", "windows"), step = 1)
+    if(length(Rdb)) {
+        names(Rdb) <-
+            substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
+        containsBuildSexprs <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)["build"])))
+        if(containsBuildSexprs &&
+           !file.exists(file.path(dir, "build",
+                                  paste0( meta[["Package"]], ".pdf"))))
+            out$missing_manual_rdb <- TRUE
+        needRefMan <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
+        if(needRefMan && !file.exists(file.path(dir, "build", "partial.rdb")))
+            out$missing_manual_pdf <- TRUE
+    }
+
+
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than 'vignettes'.
     vign_dir <- file.path(dir, "vignettes")
@@ -6878,6 +6898,12 @@ function(x, ...)
       },
       if(length(y <- x$missing_vignette_index)) {
           "Package has a VignetteBuilder field but no prebuilt vignette index."
+      },
+      if(length(y <- x$missing_manual_rdb)) {
+          "Package has help file(s) containing build-stage \\Sexpr{} expresssons but no build/partial.rdb."
+      },
+      if(length(y <- x$missing_manual_pdf)) {
+          "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
       }
       )
 }
