@@ -6548,6 +6548,66 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
+    ## Does this have Suggests or Enhances not in mainstream
+    ## repositories?
+
+    suggests_or_enhances <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
+                         .extract_dependency_package_names(meta["Enhances"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(suggests_or_enhances)) {
+        out$suggests_or_enhances_not_in_mainstream_repositories <-
+            suggests_or_enhances
+        if(!is.na(aurls <- meta["Additional_repositories"])) {
+            aurls <- unique(unlist(strsplit(aurls, ", *")))
+            adb <-
+                tryCatch(utils::available.packages(utils::contrib.url(aurls,
+                                                                      "source"),
+                                                   filters =
+                                                   c("R_version",
+                                                     "duplicates")))
+            if(inherits(adb, "error")) {
+                out$additional_repositories_analysis_failed_with <-
+                    conditionMessage(adb)
+            } else {
+                pos <- match(suggests_or_enhances, rownames(adb), nomatch =
+                             0L)
+                ind <- (pos > 0L)
+                tab <- matrix(character(), nrow = 0L, ncol = 3L)
+                if(any(ind))
+                    tab <- rbind(tab,
+                                 cbind(suggests_or_enhances[ind],
+                                       "yes",
+                                       adb[pos[ind], "Repository"]))
+                ind <- !ind
+                if(any(ind))
+                    tab <- rbind(tab,
+                                 cbind(suggests_or_enhances[ind],
+                                       "no",
+                                       ""))
+                ## Map Repository fields to URLs, and determine unused
+                ## URLs.
+                ## Note that available.packages() possibly adds Path
+                ## information in the Repository field, so matching
+                ## given contrib URLs to these fields is not trivial.
+                unused <- character()
+                for(u in aurls) {
+                    cu <- utils::contrib.url(u, "source")
+                    ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                    if(any(ind)) {
+                        tab[ind, 3L] <- u
+                    } else {
+                        unused <- c(unused, u)
+                    }
+                }
+                if(length(unused))
+                    tab <- rbind(tab, cbind("", "", unused))
+                dimnames(tab) <- NULL
+                out$additional_repositories_analysis_results <- tab
+            }
+        }
+    }
+
     uses <- character()
     BUGS <- character()
     for (field in c("Depends", "Imports", "Suggests")) {
@@ -6571,6 +6631,26 @@ function(dir)
         else
             vds <- readRDS(vds)[, "File"]
     }
+
+    ## Check for missing build/{partial.rds,pkgname.pdf}
+    ## copy code from build.R
+    Rdb <- .build_Rd_db(dir, stages = NULL,
+                        os = c("unix", "windows"), step = 1)
+    if(length(Rdb)) {
+        names(Rdb) <-
+            substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
+        containsBuildSexprs <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)["build"])))
+        if(containsBuildSexprs &&
+           !file.exists(file.path(dir, "build",
+                                  paste0( meta[["Package"]], ".pdf"))))
+            out$missing_manual_rdb <- TRUE
+        needRefMan <-
+            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
+        if(needRefMan && !file.exists(file.path(dir, "build", "partial.rdb")))
+            out$missing_manual_pdf <- TRUE
+    }
+
 
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than 'vignettes'.
@@ -6775,6 +6855,24 @@ function(x, ...)
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
+      if(length(y <-
+                x$suggests_or_enhances_not_in_mainstream_repositories)) {
+          c("Suggests or Enhances not in mainstream repositories:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L),
+            if(length(y <-
+                      x$additional_repositories_analysis_failed_with)) {
+                c("Using Additional_repositories specification failed with:",
+                  paste(" ", y))
+            } else if(length(y <-
+                             x$additional_repositories_analysis_results)) {
+                c("Availability using Additional_repositories specification:",
+                  sprintf("  %s   %s   %s",
+                          format(y[, 1L], justify = "left"),
+                          format(y[, 2L], justify = "right"),
+                          format(y[, 3L], justify = "left")))
+            })
+      },
       if (length(y <- x$uses)) {
           paste(if(length(y) > 1L)
 		"Uses the superseded packages:" else
@@ -6800,6 +6898,12 @@ function(x, ...)
       },
       if(length(y <- x$missing_vignette_index)) {
           "Package has a VignetteBuilder field but no prebuilt vignette index."
+      },
+      if(length(y <- x$missing_manual_rdb)) {
+          "Package has help file(s) containing build-stage \\Sexpr{} expresssons but no build/partial.rdb."
+      },
+      if(length(y <- x$missing_manual_pdf)) {
+          "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
       }
       )
 }

@@ -18,7 +18,7 @@
 
       \item \command{R CMD Sweave} no longer cleans any files,
       compatibly with versions of \R prior to 3.1.0.
-      
+
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.
       \code{buildvignette()} gains a \code{keep} argument for more
@@ -65,7 +65,7 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.35.
-      
+
       \item There is a new target \command{make uninstall-libR} to
       remove an installed shared/static \file{libR}.
 
@@ -146,7 +146,7 @@
 
       \item For a formula with exactly 32 variables the 32nd variable
       was aliased to the intercept in some C-level computations of
-      terms, so that for example attempting to delete it would remove
+      terms, so that for example attempting to remove it would remove
       the intercept instead (and leave a corrupt internal structure).
       (\PR{15735})
 
@@ -154,13 +154,16 @@
       the first duplicate was at an index which was too large to be
       stored in an integer vector (although a lot of RAM and patience
       would have been needed to encounter this).
-      
+
       \item \code{tools::Rd2ex(commentDontrun = FALSE)} failed if the
       block had only one line.
 
       \item Hexadecimal constants such as \code{0x110p-5L} which were
       incorrectly qualified by \code{L} were parsed incorrectly since \R
       3.0.0, with a slightly garbled warning. (\PR{15753})
+
+      \item \code{system()} returned success on some platforms even if
+      the system was unable to launch a process. (\PR{15796})
 
       \item (Windows \command{Rgui} console.)  Unbuffered output was
       sometimes not output immediately if the prompt was not on the last
@@ -2801,13 +2804,13 @@
 }
 
 \section{CHANGES in previous versions}{
-   \itemize{
-     \item
-     Older news can be found in text format in files
-     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
-     and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
-     \file{NEWS.2}} in the \file{doc} directory.  News in HTML format for
-     \R  versions from 2.10.0 to 2.15.3 is in
-     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
-   }
- }
+  \itemize{
+    \item Older news can be found in text format in files
+    \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1}
+      and \href{../NEWS.2}{NEWS.2}}{\file{NEWS.0}, \file{NEWS.1} and
+      \file{NEWS.2}}
+    in the \file{doc} directory.  News in HTML format for
+    \R versions from 2.10.0 to 2.15.3 is in
+    \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
+  }
+}

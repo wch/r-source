@@ -3264,6 +3264,7 @@ setRlibs <-
 
                 ## gcc warnings
                 warn_re <- c(warn_re,
+                             ": warning: pointer of type .* used in arithmetic",
                              ": warning: .* \\[-Wformat-contains-nul\\]",
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
@@ -3271,13 +3272,18 @@ setRlibs <-
 
                 ## clang warnings
                 warn_re <- c(warn_re,
+                             ": warning: .* GNU extension",
+                             ": warning: .* \\[-Wdeprecated-register\\]",
                              ": warning: .* \\[-Wformat-extra-args\\]", # also gcc
+                             ": warning: .* \\[-Wformat-security\\]",
+                             ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]")
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
+
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
@@ -3388,9 +3394,28 @@ setRlibs <-
                     lines <- grep("Warning: ignoring .First.lib()", lines,
                                   fixed = TRUE, invert = TRUE, value = TRUE)
 
+                lines <- unique(lines)
+
+                note_re <-
+                    "warning: control may reach end of non-void function"
+
+                notes <- grep(note_re, lines0, value = TRUE, useBytes = TRUE)
+                notes <- unique(notes)
+
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
+                    if(length(notes)) {
+                        printLog(Log,
+                                 "Found the following additional warnings:\n")
+                        printLog0(Log, .format_lines_with_indent(notes),
+                                  "\n")
+                    }
+                    printLog0(Log, sprintf("See %s for details.\n",
+                                           sQuote(outfile)))
+                } else if(length(notes)) {
+                    noteLog(Log, "Found the following warnings:")
+                    printLog0(Log, .format_lines_with_indent(notes), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                 } else resultLog(Log, "OK")
@@ -4633,12 +4658,12 @@ function(x, ...)
 CRAN_check_results <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    ## This allows for partial local mirrors, or to
+    ## look at a more-freqently-updated mirror
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_results.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     results <- readRDS(rds)
     close(rds)
 
@@ -4648,12 +4673,10 @@ function()
 CRAN_check_details <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/check_details.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     details <- readRDS(rds)
     close(rds)
 
@@ -4663,12 +4686,10 @@ function()
 CRAN_memtest_notes <-
 function()
 {
-    rds <- gzcon(url(sprintf("%s/%s",
-                             getOption("repos")["CRAN"],
+    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
                              "web/checks/memtest_notes.rds"),
                      open = "rb"))
-    ## We could make the location of the local CRAN web/checks rsync
-    ## settable via some env var.
     mtnotes <- readRDS(rds)
     close(rds)
 
