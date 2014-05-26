@@ -4266,18 +4266,6 @@ static void yyerror(const char *s)
     static char const yyunexpected[] = "syntax error, unexpected ";
     static char const yyexpecting[] = ", expecting ";
     char *expecting;
-//Small refactoring in order to remove partial messages -> see next changes below
-//No change in final functionality
-// #if 0
- /* these are just here to trigger the internationalization */
- //   _("input");
- //   _("end of input");
- //   _("string constant");
-//    _("numeric constant");
-//    _("symbol");
-//    _("assignment");
-//    _("end of line");
-//#endif
 
     R_ParseError     = yylloc.first_line;
     R_ParseErrorCol  = yylloc.first_column;
