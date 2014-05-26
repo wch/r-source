@@ -485,6 +485,9 @@ Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
 NimbusSans and (for Courier, if used) NimbusMon.
 
+This needs @LaTeX{} packages @pkg{times}, @pkg{helvetic} and (if used)
+@pkg{courier} installed.
+
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
@@ -2999,16 +3002,18 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
-(including @pkg{url}) and others such as @pkg{hyperref} and
-@pkg{inconsolata} are desirable (and without them you may need to change
-@R{}'s defaults: @pxref{Making the manuals}).  Note that package
-@pkg{hyperref} (currently) requires packages @pkg{kvoptions},
-@pkg{ltxcmds} and @pkg{refcount}.  For distributions based on TeXLive
-the simplest approach may be to install collections
-@pkg{collection-fontsextra} and @pkg{collection-latexextra} (assuming
-@pkg{collection-latex} was already installed by default): Fedora calls
-the first @pkg{texlive-collection-fontsextra}: Debian/Ubuntu
-@pkg{texlive-fonts-extra} (and similarly for the second).
+(including @pkg{fancyvrb}, @pkg{url} and some of the font packages
+@pkg{times}, @pkg{helvetic} and either @pkg{ec} or @pkg{cm-super}) and
+others such as @pkg{hyperref} and @pkg{inconsolata} are desirable (and
+without them you may need to change @R{}'s defaults: @pxref{Making the
+manuals}).  Note that package @pkg{hyperref} (currently) requires
+packages @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For
+distributions based on TeXLive the simplest approach may be to install
+collections @pkg{collection-latex}, @pkg{collection-fontsrecommended},
+@pkg{collection-latexrecommended}, @pkg{collection-fontsextra} and
+@pkg{collection-latexextra} (assuming they are not installed by
+default): Fedora uses names like @pkg{texlive-collection-fontsextra} and
+Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
 
 @cindex Subversion
@@ -4615,9 +4620,13 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: @pkg{inconsolata} and @pkg{texinfo}.  @samp{TeX
-Live Utility} (available @emph{via} the MacTeX front page) provides a
-graphical means to manage @TeX{} packages.
+some packages, e.g.@: for the 2013 version we needed to add either
+@pkg{cm-super} or @pkg{ec}, @pkg{helvetic}, @pkg{inconsolata} and
+@pkg{texinfo} (or package @pkg{texinfo} and the collections
+@pkg{collection-fontsrecommended}, @pkg{collection-fontsextra} and
+@pkg{collection-latexextra} which will take this up to about 1GB).
+@samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
+provides a graphical means to manage @TeX{} packages.
 
 @menu
 * Snow Leopard::                
@@ -5516,11 +5525,23 @@ path.
 @section @LaTeX{}
 
 The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
-@LaTeX{} includes a suitable port of @code{pdftex}.  The `basic' version
-of @samp{MiKTeX} almost suffices (the @pkg{grid} vignettes need
-@file{fancyvrb.sty}), but it will install the 15Mb @samp{lm} package if
-allowed to (although that is not actually used).  The @file{Rtools*.exe}
-installer does @emph{not} include any version of @LaTeX{}.
+@LaTeX{} includes a suitable port of @code{pdftex}.  This can be set up
+to install extra packages `on the fly', which is the simplest way to use
+it (and the default).  The `basic' version of @samp{MiKTeX} almost
+suffices: when last tested packages
+
+@example
+epsf fancyvrb inconsolata listings mptopdf natbib url
+@end example
+
+@noindent
+needed to be added (on the fly or @emph{via} the @samp{MiKTeX} Package
+Manager) to install @R{}.  In any case ensure that the @pkg{inconsolata}
+package is installed---you can check with the @samp{MiKTeX} Package
+Manager.
+
+The @file{Rtools*.exe} installer does @emph{not} include any version of
+@LaTeX{}.
 
 It is also possible to use the TeXLive distribution from
 @uref{http://www.tug.org/texlive/}.
@@ -5529,9 +5550,7 @@ It is also possible to use the TeXLive distribution from
 Please read @ref{Making the manuals} about how to make @file{fullrefman.pdf}
 and set the environment variable @env{R_RD4PDF} suitably; ensure you
 have the required fonts installed or that @samp{MiKTeX} is set up to
-install @LaTeX{} packages on first use.  (In any case ensure that the
-@pkg{inconsolata} package is installed---you can check with the MiKTeX
-Package Manager.)
+install @LaTeX{} packages on first use.
 
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer

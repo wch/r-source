@@ -65,6 +65,9 @@
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
       documented). (Wish of \PR{15790}.)
+
+      \item LaTeX package \pkg{upquote} is no longer required for \R's
+      use of \pkg{inconsolata}.
     }
   }
 
@@ -152,7 +155,12 @@
        \command{make install-libR} now works if a sub-architecture is
        used, although the user will need to specify \code{libdir}
        differently for different sub-architectures.
-    }
+       
+       \item There is more extensive advice on which LaTeX packages are
+       required to install \R or to make package manuals (as done by
+       \command{R CMD check}, in the \sQuote{Writing R Extensions}
+       manual.
+     }
   }
 
   \subsection{BUG FIXES}{
