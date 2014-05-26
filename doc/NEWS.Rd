@@ -68,6 +68,10 @@
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
+      
+      \item The \code{\\donttest} sections of \R's help files can be
+      tested by\cr
+      \command{make check TEST_DONTTEST=TRUE}.
     }
   }
 
