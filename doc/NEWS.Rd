@@ -99,8 +99,10 @@
       \item When \code{attach()} reports conflicts, it does so
       compatibly with \code{library()} by using \code{message()}.
 
-      \item \command{R CMD Sweave} no longer cleans any files,
-      compatibly with versions of \R prior to 3.1.0.
+      \item \command{R CMD Sweave} no longer cleans any files by
+      default, compatibly with versions of \R prior to 3.1.0.  There are
+      new options \option{--clean}, \option{--clean=default} and
+      \option{--clean=keepOuts}.
 
       \item \code{tools::buildVignette()} and \code{tools::buildVignettes()}
       with \code{clean = FALSE} no longer remove any created files.

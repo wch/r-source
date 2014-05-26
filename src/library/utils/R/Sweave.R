@@ -493,9 +493,6 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 			    "keepOuts" = NA,
 			    message(gettextf("Warning: unknown option '--clean='%s",
 					     clean.), domain = NA))
-	} else if (a == "--no-clean") { # only exists in 3.1.0
-	    message("Warning: '--no-clean' is deprecated and the default behaviour, see --clean")
-	    clean <- FALSE
         } else if (substr(a, 1, 10) == "--options=") {
             options <- substr(a, 11, 1000)
         } else if (a == "--pdf") {
