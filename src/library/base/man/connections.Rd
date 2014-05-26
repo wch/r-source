@@ -559,7 +559,7 @@ cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
 close(Tfile)
 
-\donttest{## fifo example -- may fail even with OS support for fifos
+\dontrun{## fifo example -- may hang even with OS support for fifos
 if(capabilities("fifo")) {
   zz <- fifo("foo-fifo", "w+")
   writeLines("abc", zz)
