@@ -248,7 +248,7 @@ sprintf("min 10-char string '\%10s'",
 
 \donttest{## Platform-dependent bad example from qdapTools 1.0.0:
 ## may pad with spaces or zeroes.
-sprintf("\%09s", month.names)}
+sprintf("\%09s", month.name)}
 
 n <- 1:18
 sprintf(paste0("e with \%2d digits = \%.", n, "g"), n, exp(1))
