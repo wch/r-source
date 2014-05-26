@@ -3002,10 +3002,10 @@ Building PDF package manuals (including the @R{} reference manual) and
 vignettes is sensitive to the version of the @LaTeX{} package
 @pkg{hyperref} and we recommend that the @TeX{} distribution used is
 kept up-to-date.  A number of standard @LaTeX{} packages are required
-(including @pkg{fancyvrb}, @pkg{url} and some of the font packages
-@pkg{times}, @pkg{helvetic} and either @pkg{ec} or @pkg{cm-super}) and
-others such as @pkg{hyperref} and @pkg{inconsolata} are desirable (and
-without them you may need to change @R{}'s defaults: @pxref{Making the
+(including @pkg{fancyvrb}, @pkg{url} and some of the font packages such
+as @pkg{times}, @pkg{helvetic}, @pkg{ec} and @pkg{cm-super}) and others
+such as @pkg{hyperref} and @pkg{inconsolata} are desirable (and without
+them you may need to change @R{}'s defaults: @pxref{Making the
 manuals}).  Note that package @pkg{hyperref} (currently) requires
 packages @pkg{kvoptions}, @pkg{ltxcmds} and @pkg{refcount}.  For
 distributions based on TeXLive the simplest approach may be to install
@@ -4620,8 +4620,8 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version (ca 300MB) is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: for the 2013 version we needed to add either
-@pkg{cm-super} or @pkg{ec}, @pkg{helvetic}, @pkg{inconsolata} and
+some packages, e.g.@: for the 2013 version we needed to add
+@pkg{cm-super}, @pkg{ec}, @pkg{helvetic}, @pkg{inconsolata} and
 @pkg{texinfo} (or package @pkg{texinfo} and the collections
 @pkg{collection-fontsrecommended}, @pkg{collection-fontsextra} and
 @pkg{collection-latexextra} which will take this up to about 1GB).
