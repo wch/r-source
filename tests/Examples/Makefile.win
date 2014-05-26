@@ -13,14 +13,17 @@ INSTFILES = \
 
 ECHO = echo
 
-R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla LANGUAGE=en LC_TIME=C
+## R_LIBS_SITE has to be non-empty or it is ignored
+R_EXE = $(R_HOME)/$(BINDIR)/Rterm --slave --vanilla \
+  LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE=nothing
 
 all: test-Examples-Base
 
 test-Examples: test-Examples-Base
 
+TEST_DONTTEST = FALSE
 test-Examples-Base:
-	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples', commentDonttest=!$(TEST_DONTTEST))" | $(R_EXE)
 
 
 ## nlme suggests 'Hmisc'

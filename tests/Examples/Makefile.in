@@ -28,9 +28,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 test-Examples: test-Examples-Base
 
+TEST_DONTTEST = FALSE
 ## Who does make check but not make? -- maybe better to check what was made.
 test-Examples-Base: Makefile
-	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples', srcdir=\"$(srcdir)\")" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples', srcdir=\"$(srcdir)\", commentDonttest=!$(TEST_DONTTEST))" | $(R_EXE)
 
 
 ## <NOTE>

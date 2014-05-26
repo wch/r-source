@@ -28,6 +28,12 @@ If a check fails there will almost always be a .Rout.fail file with
 the problematic output, so looking at the tail of that file should
 help pinpoint the problem.
 
+The \dontest sections of the examples can be run by
+
+     make check TEST_DONTTEST=TRUE
+
+(but expect some differences from the reference ouput).
+
 
 	---------- Historical Information -----------
 
