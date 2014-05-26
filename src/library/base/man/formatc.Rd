@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -147,8 +147,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   and \code{small.mark}, special characters need escaping.  In particular,
   to insert a single backslash, use \code{"\\\\\\\\"}.
 
-  In versions of \R before 2.13.0, the \code{big.mark} would be
-  reversed on insertion if it contained more than one character.
+  The C doubles used for \R numerical vectors have signed zeros, which
+  \code{formatC} may output as \code{-0}, \code{-0.000} \dots.
 }
 \note{
   Prior to \R 3.0.2 this copied the class of \code{x} to the return
