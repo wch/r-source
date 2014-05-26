@@ -437,9 +437,9 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
             "  --engine=pkg::engine  use named vignette engine",
             "  --encoding=enc  default encoding 'enc' for file",
 	    "  --clean         corresponds to --clean=default",
-	    "  --clean=	       remove some of the created files:",
+	    "  --clean=        remove some of the created files:",
             '                  "default" removes those the same initial name;',
-            '                  "keepOuts" keeps e.g. the *.tex ones even when PDF is produced',
+            '                  "keepOuts" keeps e.g. *.tex even when PDF is produced',
             "  --options=      comma-separated list of Sweave/engine options",
             "  --pdf           convert to PDF document",
             "  --compact=      try to compact PDF document:",
@@ -494,7 +494,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 			    message(gettextf("Warning: unknown option '--clean='%s",
 					     clean.), domain = NA))
 	} else if (a == "--no-clean") { # only exists in 3.1.0
-	    message("Warning: '--no-clean' is deprecated; default does not clean, see --clean")
+	    message("Warning: '--no-clean' is deprecated and the default behaviour, see --clean")
 	    clean <- FALSE
         } else if (substr(a, 1, 10) == "--options=") {
             options <- substr(a, 11, 1000)
