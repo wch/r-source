@@ -154,6 +154,9 @@ gettextf(fmt, \dots, domain = NULL)
 
   Field widths and precisions of \code{\%s} conversions are interpreted
   as bytes, not characters, as described in the C standard.
+  
+  The C doubles used for \R numerical vectors have signed zeros, which
+  \code{sprintf} may output as \code{-0}, \code{-0.000} \dots.
 }
 %% (for #) This is from Kernighan & Ritchie, p. 243:
 %% For \code{o}, the first digit will be zero.
