@@ -146,7 +146,7 @@ z <- cbind(a, b)
 (o <- order(a, b, na.last = FALSE)); z[o, ]
 (o <- order(a, b, na.last = NA)); z[o, ]
 
-\dontrun{
+\donttest{
 ##  speed examples for long vectors:
 x <- factor(sample(letters, 1e6, replace = TRUE))
 system.time(o <- sort.list(x)) ## 0.4 secs

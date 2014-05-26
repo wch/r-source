@@ -93,7 +93,7 @@ str(lm. <- lm.fit (x = X, y = y))
   stopifnot(id(unname(lm.$coef), lm..$coef),
 	    id(unname(lmw$coef), lm.w$coef))
 }
-\dontrun{
+\donttest{
 if(require("microbenchmark")) {
   mb <- microbenchmark(lm(y~X), lm.fit(X,y), .lm.fit(X,y))
   print(mb)

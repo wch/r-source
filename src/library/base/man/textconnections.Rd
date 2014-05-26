@@ -116,7 +116,7 @@ isIncomplete(zz)
 close(zz)
 foo
 
-\dontrun{# capture R output: use part of example from help(lm)
+\donttest{# capture R output: use part of example from help(lm)
 zz <- textConnection("foo", "w")
 ctl <- c(4.17, 5.58, 5.18, 6.11, 4.5, 4.61, 5.17, 4.53, 5.33, 5.14)
 trt <- c(4.81, 4.17, 4.41, 3.59, 5.87, 3.83, 6.03, 4.89, 4.32, 4.69)

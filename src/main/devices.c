@@ -429,7 +429,7 @@ void GEaddDevice(pGEDevDesc gdd)
     if(gdd->dev->activate) gdd->dev->activate(gdd->dev);
 
     /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(R_DeviceSymbol), 0)));
+    t = PROTECT(duplicate(getSymbolValue(R_DeviceSymbol)));
     if (appnd)
 	SETCDR(s, CONS(t, R_NilValue));
     else

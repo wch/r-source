@@ -42,7 +42,7 @@ intToUtf8(x, multiple = FALSE)
 
   \code{NA} inputs are mapped to \code{NA} output.
 }
-\examples{\dontrun{
+\examples{\donttest{
 ## will only display in some locales and fonts
 intToUtf8(0x03B2L) # Greek beta
 }}

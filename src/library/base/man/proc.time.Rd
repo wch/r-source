@@ -60,7 +60,7 @@ proc.time()
   \code{\link{gc.time}} for how much of the time was spent in garbage
   collection.
 }
-\examples{\dontrun{
+\examples{\donttest{
 ## a way to time an R expression: system.time is preferred
 ptm <- proc.time()
 for (i in 1:50) mad(stats::runif(500))

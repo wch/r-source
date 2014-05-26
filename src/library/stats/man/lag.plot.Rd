@@ -73,10 +73,9 @@ lag.plot(nhtemp, 6, layout = c(2,1), asp = NA,
 
 ## Multivariate (but non-stationary! ...)
 lag.plot(freeny.x, lags = 3)
-\dontrun{
-no lines for long series :
+
+## no lines for long series :
 lag.plot(sqrt(sunspots), set = c(1:4, 9:12), pch = ".", col = "gold")
-}
 }
 \keyword{hplot}
 \keyword{ts}

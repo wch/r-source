@@ -257,6 +257,7 @@ install.packages <-
                 ##' returns "no" for "no",  otherwise 'ans', a string
 		msg <- gettext(msg)
 		if(.Platform$OS.type == "windows") {
+                    flush.console() # so warning is seen
 		    ans <- winDialog("yesno", sprintf(msg, sQuote(userdir)))
 		    if(ans != "YES") "no" else ans
 		} else {

@@ -51,7 +51,7 @@ Sys.localeconv()
 ##            "127"             "127"
 
 ## Now try your default locale (which might be "C").
-\dontrun{old <- Sys.getlocale()
+\donttest{old <- Sys.getlocale()
 ## The category may not be set:
 ## the following may do so, but it might not be supported.
 Sys.setlocale("LC_MONETARY", locale = "")

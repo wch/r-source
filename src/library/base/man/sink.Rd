@@ -100,7 +100,7 @@ i <- 1:10
 outer(i, i, "*")
 sink()
 unlink("sink-examp.txt")
-\dontrun{
+\donttest{
 ## capture all the output to a file.
 zz <- file("all.Rout", open = "wt")
 sink(zz)
@@ -109,7 +109,7 @@ try(log("a"))
 ## back to the console
 sink(type = "message")
 sink()
-try(log("a"))
+file.show("all.Rout")
 }}
 \keyword{file}
 \keyword{connection}
