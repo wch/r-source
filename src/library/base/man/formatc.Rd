@@ -113,7 +113,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 \value{
   A character object of same size and attributes as \code{x} (after
   discarding any class), in the current locale's encoding.
-  
+
   Unlike \code{\link{format}}, each number is formatted individually.
   Looping over each element of \code{x}, the C function
   \code{sprintf(\dots)} is called for numeric inputs (inside the C
@@ -210,6 +210,10 @@ cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
 ## individual formatting to common width:
 fc <- formatC(1.234 + 10^(0:8), format = "fg", width = 11, big.mark = "'")
 cbind(fc)
+## Powers of two, stored exactly, formatted individually:
+pow.2 <- formatC(2^-(1:32), digits=24, width=1, format="fg")
+## nicely printed (the last line showing 5^32 exactly):
+noquote(cbind(pow.2))
 
 ## complex numbers:
 r <- 10.0000001; rv <- (r/10)^(1:10)
