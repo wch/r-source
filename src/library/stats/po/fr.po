@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 18:37+0000\n"
+"POT-Creation-Date: 2014-05-26 08:40+0100\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -377,7 +377,7 @@ msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 msgid "'data' argument is of the wrong type"
 msgstr "l'argument 'data' est d'un mauvais type"
 
-#: model.c:1952
+#: model.c:1954
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' dans la formule et pas d'argument 'data'"
 

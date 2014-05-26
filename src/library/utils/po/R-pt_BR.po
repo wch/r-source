@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -66,6 +66,13 @@ msgid ""
 "%s"
 msgstr ""
 
+msgid "Warning: unknown option '--clean='%s"
+msgstr ""
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
 msgid "Warning: unknown option %s"
 msgstr ""
 
@@ -79,6 +86,12 @@ msgid "path to %s contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
+msgstr ""
+
+msgid "at"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "the output file '%s' has disappeared"

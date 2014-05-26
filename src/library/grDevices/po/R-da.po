@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2012-01-28 17:40+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,9 @@ msgid "no proper 'z' matrix specified"
 msgstr "ingen korrekt »z-matrix« angivet"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
+
+msgid "finite coordinates are needed"
 msgstr ""
 
 msgid "'bias' must be positive"
@@ -218,7 +221,11 @@ msgstr "forskellige skriftkodninger »%s'/'%s«"
 msgid "'file' must be a non-empty character string"
 msgstr "»file« skal være en udfyldt tegnstreng"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr "Ugyldigt uddataformat"
 
 msgid "status %d in running command '%s'"
@@ -304,16 +311,16 @@ msgstr "længden for »x«, »y« og »z« er forskellig"
 msgid "'file' is missing with no default"
 msgstr "»file« mangler uden standard"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "beklager, »gs« kan ikke findes"
-
 msgid "unrecognized format of gs -help"
 msgstr "formatet for gs -help blev ikke genkendt"
 
 msgid "device '%s' is not available"
 msgstr "enhed »%s« er ikke tilgængelig"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "Tilgængelige enheder er %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -411,6 +418,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z værdi <= 0 udeladt fra logaritmisk plot"
 msgstr[1] "%d z værdier <= 0 udeladt fra logaritmisk plot"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "beklager, »gs« kan ikke findes"
 
 #, fuzzy
 #~ msgid "loading snapshot from pre-3.0.0 R version"

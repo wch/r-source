@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -329,6 +329,14 @@ msgstr "argumento não numérico para 'pairs'"
 
 msgid "only one column in the argument to 'pairs'"
 msgstr "apenas uma coluna no argumento para 'pairs'"
+
+#, fuzzy
+msgid "invalid argument 'horInd'"
+msgstr "argumento inicial inválido"
+
+#, fuzzy
+msgid "invalid argument 'verInd'"
+msgstr "argumento inicial inválido"
 
 msgid "the 'panel' function made a new plot"
 msgstr "a função 'panel' fez um novo gráfico"

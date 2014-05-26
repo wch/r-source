@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 18:37+0000\n"
+"POT-Creation-Date: 2014-05-26 08:40+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -380,7 +380,7 @@ msgstr "'path' deve ser um vetor de caracteres"
 msgid "'data' argument is of the wrong type"
 msgstr "argumento 'data' é do tipo errado"
 
-#: model.c:1952
+#: model.c:1954
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' na fórmula e nenhum argumento 'data'"
 

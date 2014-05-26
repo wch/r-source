@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1924,6 +1924,9 @@ msgid "attempt to smooth NA values"
 msgstr ""
 
 msgid "invalid 'endrule' argument"
+msgstr ""
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 msgstr ""
 
 msgid "invalid 'control.spar'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: 2014-03-26 14:24+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -58,6 +58,14 @@ msgstr ""
 " 構文解析エラーか空のオプションが以下にあります \n"
 " %s "
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr " 警告: 不明なオプション %s "
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
 msgid "Warning: unknown option %s"
 msgstr " 警告: 不明なオプション %s "
 
@@ -72,6 +80,12 @@ msgstr " %s へのパスは空白を含みます "
 
 msgid "this may cause problems when running LaTeX"
 msgstr " これは LaTeX を実行するとき問題を引き起こすかも知れません "
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr " , "
 
 msgid "the output file '%s' has disappeared"
 msgstr " 出力ファイル '%s' がなくなりました "
@@ -1344,9 +1358,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "not found"
 #~ msgstr " 見付かりません "
-
-#~ msgid ","
-#~ msgstr " , "
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr " HTTPUserAgent "

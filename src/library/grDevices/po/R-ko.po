@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-26 20:50-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -37,6 +37,9 @@ msgstr "적절히 지정된 'z' 행렬이 없습니다"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "'x', 'y' 그리고 'z'의 차원들이 일치하지 않습니다"
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias'는 반드시 양수이어야 합니다"
@@ -216,7 +219,11 @@ msgstr "폰트 인코딩이 일치하지 않습니다 '%s'/'%s'"
 msgid "'file' must be a non-empty character string"
 msgstr "'file'은 반드시 비어있지 않은 문자열이어야 합니다"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr "유효하지 않은 출력 포맷입니다"
 
 msgid "status %d in running command '%s'"
@@ -296,16 +303,16 @@ msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
 msgid "'file' is missing with no default"
 msgstr "'file'은 기본값 없이 누락되었습니다"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "미안합니다, 'gs'를 찾을 수 없습니다"
-
 msgid "unrecognized format of gs -help"
 msgstr "알수없는 gs 포맷입니다 -help"
 
 msgid "device '%s' is not available"
 msgstr "장치 '%s'를 사용할 수 없습니다"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "사용가능한 장치들은 %s입니다"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -401,6 +408,9 @@ msgstr[0] ""
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] ""
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "미안합니다, 'gs'를 찾을 수 없습니다"
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr "pre-3.0.0 R 버전으로부터 스냅샷을 로딩합니다"

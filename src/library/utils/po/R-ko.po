@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -69,6 +69,14 @@ msgstr ""
 "구문분석 에러 또는 다음에 empty option입니다\n"
 "%s"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "경고: 알수없는 옵션 %s입니다"
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
 msgid "Warning: unknown option %s"
 msgstr "경고: 알수없는 옵션 %s입니다"
 
@@ -83,6 +91,12 @@ msgstr "%s로의 파일경로에 공백들이 있습니다,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "이것은 LaTeX를 실행할때 문제를 야기할 수 있습니다"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ""
 
 msgid "the output file '%s' has disappeared"
 msgstr "출력결과를 포함한 파일 '%s'가 사라졌습니다"

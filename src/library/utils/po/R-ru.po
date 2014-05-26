@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -70,6 +70,14 @@ msgstr ""
 "ошибка разбора или пустая опция в\n"
 "%s"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Предупреждение: неизвестная опция %s"
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
 msgid "Warning: unknown option %s"
 msgstr "Предупреждение: неизвестная опция %s"
 
@@ -84,6 +92,12 @@ msgstr "путь у %s содержит пробелы,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "файл вывода '%s' пропал :("
@@ -1390,9 +1404,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "not found"
 #~ msgstr "не найден"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"

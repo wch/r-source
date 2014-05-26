@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-11 10:27-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -38,6 +38,9 @@ msgstr "не указана подходящая 'z'-матрица"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "измерения 'x', 'y' and 'z' не соответствуют друг другу"
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' должен быть положительным"
@@ -218,7 +221,11 @@ msgstr "несоответствие кодировки шрифта '%s'/'%s'"
 msgid "'file' must be a non-empty character string"
 msgstr "'file' должен быть непустой символьной строкой"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr "Неправильный формат вывода"
 
 msgid "status %d in running command '%s'"
@@ -299,16 +306,16 @@ msgstr "длины 'x', 'y' и 'z' различаются"
 msgid "'file' is missing with no default"
 msgstr "пропущен 'file', умолчания нет"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "извините, не могу найти 'gs'"
-
 msgid "unrecognized format of gs -help"
 msgstr "неподдерживаемый формат gs -help"
 
 msgid "device '%s' is not available"
 msgstr "устройство '%s' недоступно"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "Доступные устройства: %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -408,6 +415,9 @@ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d значение z <= 0 пропущено на логарифмическом графике"
 msgstr[1] "%d значения z <= 0 пропущены на логарифмическом графике"
 msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "извините, не могу найти 'gs'"
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr "загрузка снимка из версии R до 3.0.0"

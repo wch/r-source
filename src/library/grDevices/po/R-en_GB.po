@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -27,6 +27,9 @@ msgid "no proper 'z' matrix specified"
 msgstr ""
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr ""
+
+msgid "finite coordinates are needed"
 msgstr ""
 
 msgid "'bias' must be positive"
@@ -207,7 +210,10 @@ msgstr ""
 msgid "'file' must be a non-empty character string"
 msgstr ""
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+msgid "invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
@@ -285,16 +291,15 @@ msgstr ""
 msgid "'file' is missing with no default"
 msgstr ""
 
-msgid "sorry, 'gs' cannot be found"
-msgstr ""
-
 msgid "unrecognized format of gs -help"
 msgstr ""
 
 msgid "device '%s' is not available"
 msgstr ""
 
-msgid "Available devices are %s"
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr ""
 
 msgid "'res' must be specified unless 'units = \"px\"'"

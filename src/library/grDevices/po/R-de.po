@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2013-03-01 10:55+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -33,6 +33,9 @@ msgstr "keine geeignete 'z' Matrix angegeben"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "Dimensionen von 'x', 'y' und 'z' passen nicht zueinander"
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' muss positiv sein"
@@ -212,7 +215,11 @@ msgstr "Zeichenkodierungen passen nicht '%s'/'%s'"
 msgid "'file' must be a non-empty character string"
 msgstr "'file' muss eine nicht-leere Zeichenkette sein"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr "ungültiges Ausgabeformat"
 
 msgid "status %d in running command '%s'"
@@ -291,16 +298,16 @@ msgstr "Längen von 'x', 'y' und 'z' unterscheiden sich"
 msgid "'file' is missing with no default"
 msgstr "'file' fehlt ohne Standardwert"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "'gs' kann leider nicht gefunden werden"
-
 msgid "unrecognized format of gs -help"
 msgstr "unbekanntes Format von gs -help"
 
 msgid "device '%s' is not available"
 msgstr "Device '%s' steht nicht zur Verfügung"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "Verfügbar Devices sind %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -395,6 +402,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d z Wert <= 0 ausgelassen in logarithmischem Plot"
 msgstr[1] "%d z Werte <= 0 ausgelassen in logarithmischem Plot"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "'gs' kann leider nicht gefunden werden"
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr "lade Snapshot einer Version vor R-3.0.0"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-12-18 14:41\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-17 10:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -35,6 +35,9 @@ msgstr "la matrice 'z' spécifiée est incorrecte"
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr "les dimensions de 'x', 'y' et 'z' ne correspondent pas"
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' doit être positif"
@@ -217,7 +220,11 @@ msgstr "incohérence d'encodage pour la police '%s/%s'"
 msgid "'file' must be a non-empty character string"
 msgstr "'file' doit être une chaîne de caractère non vide"
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr "Format de sortie incorrect"
 
 msgid "status %d in running command '%s'"
@@ -297,16 +304,16 @@ msgstr "les longueurs de 'x', 'y' et 'z' diffèrent"
 msgid "'file' is missing with no default"
 msgstr "'file' est manquant sans valeur par défaut"
 
-msgid "sorry, 'gs' cannot be found"
-msgstr "désolé, 'gs' est introuvable"
-
 msgid "unrecognized format of gs -help"
 msgstr "format de gs - help inconnu"
 
 msgid "device '%s' is not available"
 msgstr "le périphérique '%s' n'est pas disponible"
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr "Les périphériques disponibles sont %s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -408,6 +415,9 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
 msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr "désolé, 'gs' est introuvable"
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:37\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -309,6 +309,14 @@ msgstr "非数值参数不能适用于'pairs'"
 
 msgid "only one column in the argument to 'pairs'"
 msgstr "参数里只有一个列用在'pairs'上"
+
+#, fuzzy
+msgid "invalid argument 'horInd'"
+msgstr "第一个参数不对"
+
+#, fuzzy
+msgid "invalid argument 'verInd'"
+msgstr "第一个参数不对"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'函数画了一个新的图"

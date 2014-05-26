@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-26 10:17+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1995,6 +1995,9 @@ msgstr " NA 値を平滑化しようとしました "
 
 msgid "invalid 'endrule' argument"
 msgstr " 無効な引数 'endrule' です "
+
+msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
+msgstr ""
 
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "

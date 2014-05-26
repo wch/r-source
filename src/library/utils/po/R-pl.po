@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -107,6 +107,20 @@ msgstr "błąd parsowania lub pusta opcja w %s"
 # utils/R/Sweave.R: 590
 # message(gettextf("Warning: unknown option %s", sQuote(a)),
 #                     domain = NA)
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "Ostrzeżenie: nieznana opcja %s"
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
+# utils/R/Sweave.R: 488
+# message(gettextf("Warning: unknown option %s", sQuote(a)),
+#                     domain = NA)
+# utils/R/Sweave.R: 590
+# message(gettextf("Warning: unknown option %s", sQuote(a)),
+#                     domain = NA)
 msgid "Warning: unknown option %s"
 msgstr "Ostrzeżenie: nieznana opcja %s"
 
@@ -135,6 +149,12 @@ msgstr "ścieżka do %s zawiera spacje,"
 #                     domain = NA)
 msgid "this may cause problems when running LaTeX"
 msgstr "to może spowodować problemy podczas uruchamiania LaTeX'a"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ""
 
 # utils/R/SweaveDrivers.R: 507
 # stop(gettextf("the output file '%s' has disappeared", outputname))

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-05-26 08:40\n"
 "PO-Revision-Date: 2014-03-24 04:50+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -30,6 +30,9 @@ msgstr " 適切な 'z' 行列が指定されていません "
 
 msgid "dimensions of 'x', 'y' and 'z' do not match"
 msgstr " 'x', 'y' および 'z' の次元が適合していません "
+
+msgid "finite coordinates are needed"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr " 'bias' は正の値でなければなりません "
@@ -214,7 +217,11 @@ msgstr " フォントエンコーディングがミスマッチです '%s'/'%s' 
 msgid "'file' must be a non-empty character string"
 msgstr " 'file' は空でない文字列でなければなりません "
 
-msgid "Invalid output format"
+msgid "GhostScript was not found"
+msgstr ""
+
+#, fuzzy
+msgid "invalid output format"
 msgstr " 不正な出力書式です "
 
 msgid "status %d in running command '%s'"
@@ -292,16 +299,16 @@ msgstr " 'x', 'y' そして 'z' の長さが異なります "
 msgid "'file' is missing with no default"
 msgstr " 'file' はデフォルトなしで欠損となっています "
 
-msgid "sorry, 'gs' cannot be found"
-msgstr " すみません，'gs' が見つかりません "
-
 msgid "unrecognized format of gs -help"
 msgstr " gs -help の意味不明な書式です "
 
 msgid "device '%s' is not available"
 msgstr " デバイス '%s' は利用可能ではありません "
 
-msgid "Available devices are %s"
+#, fuzzy
+msgid ""
+"Available devices are:\n"
+"%s"
 msgstr " 利用可能なデバイスは %s です "
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -392,6 +399,9 @@ msgstr[0] " %d 個の正でない y の値が対数プロットから除かれ�
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] " %d 個の正でない x の値が対数プロットから除かれました "
+
+#~ msgid "sorry, 'gs' cannot be found"
+#~ msgstr " すみません，'gs' が見つかりません "
 
 #~ msgid "loading snapshot from pre-3.0.0 R version"
 #~ msgstr ""

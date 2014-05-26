@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-05-26 08:41\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -62,6 +62,14 @@ msgstr ""
 "解析出错或是\n"
 "%s里有空白的选项"
 
+#, fuzzy
+msgid "Warning: unknown option '--clean='%s"
+msgstr "警告：没有%s这样的选项"
+
+msgid ""
+"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
+msgstr ""
+
 msgid "Warning: unknown option %s"
 msgstr "警告：没有%s这样的选项"
 
@@ -76,6 +84,12 @@ msgstr "指向%s的路径里不能有空格,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "这可能会对运行LaTeX里产生问题"
+
+msgid "at"
+msgstr ""
+
+msgid ","
+msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "输出文件'%s'不见了"
@@ -1284,9 +1298,6 @@ msgstr[0] "正在使用%s这个程序包，因此不会被安装"
 
 #~ msgid "not found"
 #~ msgstr "找不到"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "HTTPUserAgent"
 #~ msgstr "HTTPUserAgent"
