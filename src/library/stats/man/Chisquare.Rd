@@ -42,11 +42,11 @@ rchisq(n, df, ncp = 0)
 
   The length of the result is determined by \code{n} for
   \code{rchisq}, and is the maximum of the lengths of the
-  numerical parameters for the other functions.  
+  numerical arguments for the other functions.  
   
-  The numerical parameters other than \code{n} are recycled to the
+  The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
-  parameters are used.
+  arguments are used.
 }
 \details{
   The chi-squared distribution with \code{df}\eqn{= n \ge 0}
