@@ -1,6 +1,6 @@
 % File src/library/stats/man/family.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
@@ -81,6 +81,19 @@ quasipoisson(link = "log")
   \code{family} is a generic function with methods for classes
   \code{"glm"} and \code{"lm"} (the latter returning \code{gaussian()}).
 
+  
+  For the \code{binomial} and \code{quasibinomial} families the response
+  can be specified in one of three ways:
+  \enumerate{
+    \item As a factor: \sQuote{success} is interpreted as the factor not
+    having the first level (and hence usually of having the second level).
+    \item As a numerical vector with values  between \code{0} and
+    \code{1}, interpreted as the proportion of successful cases (with the
+    total number of cases given by the \code{weights}).
+    \item As a two-column integer matrix: the first column gives the
+    number of successes and the second the number of failures.
+  }
+    
   The \code{quasibinomial} and \code{quasipoisson} families differ from
   the \code{binomial} and \code{poisson} families only in that the
   dispersion parameter is not fixed at one, so they can model
