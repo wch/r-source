@@ -1,6 +1,6 @@
 % File src/library/stats/man/Binomial.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Binomial}
@@ -14,6 +14,9 @@
   Density, distribution function, quantile function and random
   generation for the binomial distribution with parameters \code{size}
   and \code{prob}.
+
+  This is conventionally interpreted as the number of \sQuote{successes}
+  in \code{size} trials.
 }
 \usage{
 dbinom(x, size, prob, log = FALSE)
@@ -41,11 +44,11 @@ rbinom(n, size, prob)
   
   The length of the result is determined by \code{n} for
   \code{rbinom}, and is the maximum of the lengths of the
-  numerical parameters for the other functions.  
+  numerical arguments for the other functions.  
   
-  The numerical parameters other than \code{n} are recycled to the
+  The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
-  parameters are used.
+  arguments are used.
 }
 \details{
   The binomial distribution with \code{size} \eqn{= n} and
@@ -58,6 +61,7 @@ rbinom(n, size, prob)
 
   If an element of \code{x} is not integer, the result of \code{dbinom}
   is zero, with a warning.
+
   \eqn{p(x)} is computed using Loader's algorithm, see the reference below.
 
   The quantile is defined as the smallest value \eqn{x} such that
