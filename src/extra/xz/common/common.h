@@ -25,8 +25,8 @@
 #	endif
 // Don't use ifdef or defined() below.
 #elif HAVE_VISIBILITY
-#	define LZMA_API_EXPORT __attribute__((__visibility__("default")))
-#else
+//#	define LZMA_API_EXPORT __attribute__((__visibility__("default")))
+//#else
 #	define LZMA_API_EXPORT
 #endif
 

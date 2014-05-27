@@ -166,6 +166,10 @@
        required to install \R or to make package manuals (as done by
        \command{R CMD check}, in the \sQuote{Writing R Extensions}
        manual.
+
+       \item Compilers were handing the visibility control in
+       \file{src/extra/xz} inconsistently, so it has been simplified.
+       (\PR{15327})
      }
   }
 
