@@ -1121,6 +1121,10 @@ if ( any(file.exists(execs)) ) @{
 @}
 @end example
 
+@noindent
+Note the use of architecture-specific subdirectories if @file{bin} where
+needed.
+
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running @emph{via}
@@ -1213,10 +1217,9 @@ packages.  NB: only files (and not directories) under @file{exec} are
 installed (and those with names starting with a dot are ignored), and
 they are all marked as executable (mode @code{755}, moderated by
 @samp{umask}) on POSIX platforms.  Note too that this is not suitable
-for executable @emph{programs} since some platforms (including OS X and
-Windows) support multiple architectures using the same installed package
-directory.  The suggestion is that programs are installed under
-@file{bin} in a sub-directory which depends on the architecture.
+for executable @emph{programs} since some platforms (including Windows)
+support multiple architectures using the same installed package
+directory.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
@@ -2232,8 +2235,9 @@ extension @file{.f90} or @file{.f95}.  For platforms using
 @option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
 Fortran 95 with non-standard extensions.  The Solaris @command{f95}
 compiler `accepts some Fortran 2003 features'.  Note that the compiler
-used for OS X is @command{gfortran 4.2.3} which has limited Fortran 2003
-support (@uref{http://gcc.gnu.org/onlinedocs/gcc-4.2.3/gfortran/}).
+used for OS X <= 10.8 is @command{gfortran 4.2.3} which has limited
+Fortran 2003 support
+(@uref{http://gcc.gnu.org/onlinedocs/gcc-4.2.3/gfortran/}).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others. (Module
