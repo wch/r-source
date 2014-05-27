@@ -164,7 +164,7 @@
        
        \item There is more extensive advice on which LaTeX packages are
        required to install \R or to make package manuals (as done by
-       \command{R CMD check}, in the \sQuote{Writing R Extensions}
+       \command{R CMD check}) in the \sQuote{Writing R Extensions}
        manual.
 
        \item Compilers were handing the visibility control in
