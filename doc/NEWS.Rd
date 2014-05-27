@@ -270,6 +270,12 @@
       \item The built-in help server did not declare the encoding for 
       the \file{DESCRIPTION} or other text files to be the package 
       encoding, so non-ASCII characters could be displayed incorrectly.
+
+      \item \R{} is now trying harder to not cleanup child processes
+      that were not spawned by \code{mcparallel} on platforms that
+      provide information about the source process of the \code{SIGCHLD}
+      signal. This allows 3rd party libraries to manage the exit status
+      of children that they spawn without \R{} interfering.
     }
   }
 }
