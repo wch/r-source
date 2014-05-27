@@ -25,7 +25,7 @@
 */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h> /* for affinity function checks */
+#include <config.h> /* for affinity function checks and sigaction */
 #endif
 
 #include "parallel.h"
@@ -184,11 +184,59 @@ static void clean_zombies() {
    on signal makes this automatic as opposed to
    requiring a poll.
 */
+#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_WORKING_SIGACTION) && defined(HAVE_SIGEMPTYSET)
+/* if we can, we use SIGINFO to get the PID of the child to avoid
+   picking up children spawned by other packages */
+static void parent_sig_handler(int sig, siginfo_t *info, void *context) {
+    /* clean up when a child terminates */
+    if (sig == SIGCHLD) {
+	if (info && info->si_pid > 0) {
+	    pid_t pid = info->si_pid;
+	    child_info_t *ci = children;
+	    while (ci) {
+		if (ci->pid == pid) {
+		    /* one of ours - pick up the status - this is almost like clean_zombies() except targetted at one PID */
+		    int wstat;
+		    if ((waitpid(pid, &wstat, WNOHANG) == pid) && (WIFEXITED(wstat) || WIFSIGNALED(wstat))) {
+#ifdef MC_DEBUG
+			if (WIFEXITED(wstat))
+			    Dprintf("child %d terminated with %d\n", pid, WEXITSTATUS(wstat));
+			else
+			    Dprintf("child %d terminated by signal %d\n", pid, WTERMSIG(wstat));
+#endif			
+			if (ci->pfd > 0)  { close(ci->pfd); ci->pfd = -1; }
+			if (ci->sifd > 0) { close(ci->sifd); ci->sifd = -1; }
+			ci->pid = 0;
+		    }
+		    break;
+		}
+		ci = ci->next;
+	    }
+	} else /* no way to tell the source - pick up everything */
+	    clean_zombies();
+    }
+}
+
+static void setup_sig_handler() {
+    struct sigaction sa;
+    sa.sa_sigaction = parent_sig_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_SIGINFO | SA_RESTART;
+    sigaction(SIGCHLD, &sa, NULL);
+}
+#else
+/* sigaction is not viable, so use the "dumb" way
+   to clean up anything that comes our way */
+static void setup_sig_handler() {
+    signal(SIGCHLD, parent_sig_handler);
+}
+
 static void parent_sig_handler(int sig) {
     /* clean up when a child terminates */
     if (sig == SIGCHLD)
 	clean_zombies();
 }
+#endif
 
 /* from Defn.h */
 extern Rboolean R_isForkedChild;
@@ -215,7 +263,7 @@ SEXP mc_fork(SEXP sEstranged)
     }
 
     /* make sure we get SIGCHLD to clean up the child process */
-    signal(SIGCHLD, parent_sig_handler);
+    setup_sig_handler();
 
     pid = fork();
     if (pid == -1) {
