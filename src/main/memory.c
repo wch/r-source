@@ -2352,6 +2352,21 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     return s;
 }
 
+SEXP R_mkEVPROMISE(SEXP expr, SEXP val)
+{
+    SEXP prom = mkPROMISE(expr, R_NilValue);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
+SEXP R_mkEVPROMISE_NR(SEXP expr, SEXP val)
+{
+    SEXP prom = mkPROMISE(expr, R_NilValue);
+    DISABLE_REFCNT(prom);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
 /* support for custom allocators that allow vectors to be allocated
    using non-standard means such as COW mmap() */
 
