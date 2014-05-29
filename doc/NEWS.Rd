@@ -276,6 +276,10 @@
       provide information about the source process of the \code{SIGCHLD}
       signal. This allows 3rd party libraries to manage the exit status
       of children that they spawn without \R{} interfering.
+
+      \item \code{mcmapply} was only parallelizing if the number of jobs
+      was bigger than the number of cores. It now parallelizes if the
+      number of jobs is more than one.
     }
   }
 }

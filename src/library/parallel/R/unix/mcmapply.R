@@ -29,7 +29,7 @@ mcmapply <-
     n <- max(lens)
     if(n && min(lens) == 0L)
         stop("Zero-length inputs cannot be mixed with those of non-zero length")
-    answer <- if(n <= mc.cores) .mapply(FUN, dots, MoreArgs)
+    answer <- if(n < 2L) .mapply(FUN, dots, MoreArgs)
     else {
         ## recycle shorter vectors
         X <- if (!all(lens == n))
