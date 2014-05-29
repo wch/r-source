@@ -1843,17 +1843,24 @@ static R_INLINE SEXP getAssignFcnSymbol(SEXP fun)
     return installAssignFcnSymbol(fun);
 }
 
-static R_INLINE SEXP mkEVPROMISE(SEXP expr, SEXP val, SEXP rho, Rboolean track)
+static R_INLINE SEXP mkEVPROMISE(SEXP expr, SEXP val)
 {
-    SEXP prom = mkPROMISE(expr, rho);
-    if (! track) DISABLE_REFCNT(prom);
+    SEXP prom = mkPROMISE(expr, R_NilValue);
     SET_PRVALUE(prom, val);
     return prom;
 }
 
-static R_INLINE SEXP mkRHSPROMISE(SEXP expr, SEXP rhs, SEXP rho)
+static R_INLINE SEXP mkEVPROMISE_NR(SEXP expr, SEXP val)
 {
-    return mkEVPROMISE(expr, rhs, rho, FALSE);
+    SEXP prom = mkPROMISE(expr, R_NilValue);
+    DISABLE_REFCNT(prom);
+    SET_PRVALUE(prom, val);
+    return prom;
+}
+
+static R_INLINE SEXP mkRHSPROMISE(SEXP expr, SEXP rhs)
+{
+    return mkEVPROMISE_NR(expr, rhs);
 }
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1934,7 +1941,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
-    PROTECT(rhsprom = mkRHSPROMISE(CADR(args), rhs, rho));
+    PROTECT(rhsprom = mkRHSPROMISE(CADR(args), rhs));
 
     while (isLanguage(CADR(expr))) {
 	nprot = 1; /* the PROTECT of rhs below from this iteration */
@@ -3799,7 +3806,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
     last = ncall;
     while (CDR(last) != R_NilValue)
 	last = CDR(last);
-    prom = mkRHSPROMISE(CAR(last), rhs, rho);
+    prom = mkRHSPROMISE(CAR(last), rhs);
     SETCAR(last, prom);
     result = tryDispatch(generic, ncall, lhs, rho, pv);
     UNPROTECT(1);
@@ -4906,7 +4913,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    PROTECT(ncall = duplicate(call));
 	    /**** hack to avoid evaluating the symbol */
 	    SETCAR(CDDR(ncall), ScalarString(PRINTNAME(symbol)));
-	    prom = mkRHSPROMISE(CADDDR(ncall), rhs, rho);
+	    prom = mkRHSPROMISE(CADDDR(ncall), rhs);
 	    SETCAR(CDR(CDDR(ncall)), prom);
 	    dispatched = tryDispatch("$<-", ncall, x, rho, &value);
 	    UNPROTECT(1);
@@ -5052,25 +5059,25 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
 	  /* promise won't be captured so don't track refrences */
-	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho, FALSE);
+	  prom = mkEVPROMISE_NR(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* insert evaluated promise for RHS as last argument */
 	  last = args;
 	  while (CDR(last) != R_NilValue)
 	      last = CDR(last);
-	  prom = mkRHSPROMISE(vexpr, rhs, rho);
+	  prom = mkRHSPROMISE(vexpr, rhs);
 	  SETCAR(last, prom);
 	  /* make the call */
 	  value = PRIMFUN(fun) (call, fun, args, rho);
 	  break;
 	case CLOSXP:
 	  /* push evaluated promise for RHS onto arguments with 'value' tag */
-	  prom = mkRHSPROMISE(vexpr, rhs, rho);
+	  prom = mkRHSPROMISE(vexpr, rhs);
 	  PUSHCALLARG(prom);
 	  SET_TAG(GETSTACK(-1), R_valueSym);
 	  /* replace first argument with evaluated promise for LHS */
 	  /* promise might be captured, so track references */
-	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho, TRUE);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);
 	  /* make the call */
@@ -5104,7 +5111,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  SETSTACK(-2, args);
 	  /* insert evaluated promise for LHS as first argument */
 	  /* promise won't be captured so don't track refrences */
-	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho, FALSE);
+	  prom = mkEVPROMISE_NR(R_TmpvalSymbol, lhs);
 	  SETCAR(args, prom);
 	  /* make the call */
 	  value = PRIMFUN(fun) (call, fun, args, rho);
@@ -5112,7 +5119,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	case CLOSXP:
 	  /* replace first argument with evaluated promise for LHS */
 	  /* promise might be captured, so track references */
-	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs, rho, TRUE);
+	  prom = mkEVPROMISE(R_TmpvalSymbol, lhs);
 	  args = GETSTACK(-2);
 	  SETCAR(args, prom);
 	  /* make the call */
