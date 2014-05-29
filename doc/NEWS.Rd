@@ -280,6 +280,9 @@
       \item \code{mcmapply} was only parallelizing if the number of jobs
       was bigger than the number of cores. It now parallelizes if the
       number of jobs is more than one.
+
+      \item Auto-printing would re-evaluate its argument when trying to
+      dispatch to a print method. This is now avoided when possible.
     }
   }
 }

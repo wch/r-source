@@ -984,6 +984,12 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	else /* S3 */
 	    PROTECT(call = lang2(install("print"), s));
 
+	if (TYPEOF(s) == SYMSXP || TYPEOF(s) == LANGSXP)
+	    /* If s is not self-evaluating wrap it in a promise. Doing
+	       this unconditionally seems to create problems in the S4
+	       case. */
+	    SETCADR(call, R_mkEVPROMISE(s, s));
+
 	eval(call, env);
 	UNPROTECT(1);
     } else PrintValueRec(s, env);
