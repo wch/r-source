@@ -6632,7 +6632,7 @@ function(dir)
             vds <- readRDS(vds)[, "File"]
     }
 
-    ## Check for missing build/{partial.rds,pkgname.pdf}
+    ## Check for missing build/{partial.rdb,pkgname.pdf}
     ## copy code from build.R
     Rdb <- .build_Rd_db(dir, stages = NULL,
                         os = c("unix", "windows"), step = 1)
@@ -6642,13 +6642,15 @@ function(dir)
         containsBuildSexprs <-
             any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)["build"])))
         if(containsBuildSexprs &&
-           !file.exists(file.path(dir, "build",
-                                  paste0( meta[["Package"]], ".pdf"))))
+           !file.exists(file.path(dir, "build", "partial.rdb")))
             out$missing_manual_rdb <- TRUE
         needRefMan <-
             any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
-        if(needRefMan && !file.exists(file.path(dir, "build", "partial.rdb")))
+        if(needRefMan &&
+           !file.exists(file.path(dir, "build",
+                                  paste0( meta[["Package"]], ".pdf")))) {
             out$missing_manual_pdf <- TRUE
+        }
     }
 
 
