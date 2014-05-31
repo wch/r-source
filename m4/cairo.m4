@@ -125,7 +125,7 @@ int main(void) {
       CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
-          ## This is for static MacOS build
+          ## This is for static OS X build
           CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKGCONF}" --static --libs ${xmodlist}`
           ;;

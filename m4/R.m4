@@ -3323,7 +3323,7 @@ fi
 ## -------
 ## Look for iconv, possibly in libiconv.
 ## Need to include <iconv.h> as this may define iconv as a macro.
-## libiconv, e.g. on MacOS X, has iconv as a macro and needs -liconv.
+## libiconv, e.g. on OS X, has iconv as a macro and needs -liconv.
 AC_DEFUN([R_ICONV],
 [AC_CHECK_HEADERS(iconv.h)
 ## need to ignore cache for this as it may set LIBS

@@ -79,10 +79,10 @@ case "${host_os}" in
    ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
    ## http://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
-     AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
+     AC_MSG_ERROR([The earliest supported OS X is 10.4.]
      ;; 
   darwin[[567]]*)
-     AC_MSG_ERROR([The earliest supported MacOS X is 10.4.]
+     AC_MSG_ERROR([The earliest supported OS X is 10.4.]
      ;; 
   aix[123]*|aix4.[01]*)
     ## These need a form of linking we no longer support
@@ -220,7 +220,7 @@ fi],
 
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
-[AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[MacOS X only: build R framework (if possible), and specify
+[AS_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],[OS X only: build R framework (if possible), and specify
                  its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=yes])
@@ -253,7 +253,7 @@ fi
 AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 
 ## Allow the user to specify building R as a shared library.
-## (but a 'dynamic library' in the terminology of Mac OS X).
+## (but a 'dynamic library' in the terminology of OS X).
 ## <NOTE>
 ## Building a framework implies building R shared libraries, hence the
 ## strange default.
@@ -342,14 +342,14 @@ AC_ARG_WITH([blas],
 [AS_HELP_STRING([--with-blas],[use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
-# default is "no" except on MacOS X
+# default is "no" except on OS X
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AS_HELP_STRING([--with-lapack],[use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
-# default is "no" except on MacOS X
+# default is "no" except on OS X
 
 ## Readline.
 AC_ARG_WITH([readline],
@@ -359,7 +359,7 @@ AC_ARG_WITH([readline],
 
 ## Aqua.
 AC_ARG_WITH([aqua],
-[AS_HELP_STRING([--with-aqua],[MacOS X only: use Aqua (if available) @<:@yes@:>@])],
+[AS_HELP_STRING([--with-aqua],[OS X only: use Aqua (if available) @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_aqua=no
 else
@@ -735,7 +735,7 @@ AC_SUBST(LIBM)
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
   darwin*)
-    ## MacOS <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
+    ## OS X <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
     AC_SEARCH_LIBS(dlopen, dl,,[AC_MSG_ERROR([Your OS X is too old.])])
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com/documentation/MacOSX/ has nothing
@@ -771,7 +771,7 @@ if test "${use_readline}" = yes; then
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
   fi
-  ## the NetBSD version as used in MacOS X does not have this
+  ## the NetBSD version as used in OS X does not have this
   AC_CHECK_FUNCS(history_truncate_file)
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
@@ -1338,7 +1338,7 @@ case "${host_os}" in
       esac
     fi
     ## some linkers are broken and need to be set to a specific
-    ## Mac OS X version to work better
+    ## OS X version to work better
     case "${host_os}" in
        darwin8*)
           # this is the 'old' way and it doesn't work with recent gcc as the driver
@@ -1891,7 +1891,7 @@ R_CHECK_FUNCS([access chdir execv ftruncate getcwd geteuid getuid link readlink 
 R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 ## utime was declared obsolescent in POSIX 2008 (use utimes instead)
 R_CHECK_FUNCS([utime], [#include <utime.h>])
-## clock_gettime is POSIX 1993, but not on MacOS X
+## clock_gettime is POSIX 1993, but not on OS X
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
@@ -2059,7 +2059,7 @@ fi
 
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
-## Apple's Mac OS X is known to provide it
+## Apple's OS X is known to provide it
 R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
 
 ## BLAS.
@@ -2195,7 +2195,7 @@ AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
-## The default has already been set on MacOS X: otherwise it is "no"
+## The default has already been set on OS X: otherwise it is "no"
 ## and so this test fails.
 if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
