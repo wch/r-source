@@ -272,17 +272,17 @@
       encoding, so non-ASCII characters could be displayed incorrectly.
 
       \item \R{} is now trying harder to not cleanup child processes
-      that were not spawned by \code{mcparallel} on platforms that
+      that were not spawned by \code{mcparallel()} on platforms that
       provide information about the source process of the \code{SIGCHLD}
       signal. This allows 3rd party libraries to manage the exit status
       of children that they spawn without \R{} interfering.
 
-      \item \code{mcmapply} was only parallelizing if the number of jobs
-      was bigger than the number of cores. It now parallelizes if the
-      number of jobs is more than one.
+      \item \code{mcmapply()} was only parallelizing if the number of
+      jobs was bigger than the number of cores. It now parallelizes if
+      the number of jobs is more than one.
 
       \item Auto-printing would re-evaluate its argument when trying to
-      dispatch to a print method. This is now avoided when possible.
+      dispatch to a print method.  This is now avoided when possible.
     }
   }
 }
