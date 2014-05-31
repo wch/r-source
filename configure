@@ -1879,7 +1879,7 @@ Optional Features:
                           attempt to compile support for Rprofmem(),
                           tracemem() [no]
   --enable-R-framework[=DIR]
-                          MacOS X only: build R framework (if possible), and
+                          OS X only: build R framework (if possible), and
                           specify its installation prefix [yes,
                           /Library/Frameworks]
   --enable-R-shlib        build the shared/dynamic library 'libR' [no]
@@ -1910,7 +1910,7 @@ Optional Packages:
   --with-lapack           use system LAPACK library (if available), or specify
                           it [no]
   --with-readline         use readline library [yes]
-  --with-aqua             MacOS X only: use Aqua (if available) [yes]
+  --with-aqua             OS X only: use Aqua (if available) [yes]
   --with-tcltk            use Tcl/Tk (if available), or specify its library
                           dir [yes]
   --with-tcl-config=TCL_CONFIG
@@ -3763,10 +3763,10 @@ case "${host_os}" in
    ## with 13 being 10.9.  We no longer support < 10.4 (Tiger)
    ## http://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
-     as_fn_error $? "The earliest supported MacOS X is 10.4.
+     as_fn_error $? "The earliest supported OS X is 10.4.
      ;;
   darwin567*" "$LINENO" 5
-     as_fn_error $? "The earliest supported MacOS X is 10.4.
+     as_fn_error $? "The earliest supported OS X is 10.4.
      ;;
   aix123*|aix4.01*" "$LINENO" 5
     ## These need a form of linking we no longer support
@@ -3948,7 +3948,7 @@ fi
 
 
 ## Allow the user to specify building R as a shared library.
-## (but a 'dynamic library' in the terminology of Mac OS X).
+## (but a 'dynamic library' in the terminology of OS X).
 ## <NOTE>
 ## Building a framework implies building R shared libraries, hence the
 ## strange default.
@@ -4102,7 +4102,7 @@ else
   use_blas=unset
 fi
 
-# default is "no" except on MacOS X
+# default is "no" except on OS X
 
 ## LAPACK.
 
@@ -4118,7 +4118,7 @@ else
   use_lapack=unset
 fi
 
-# default is "no" except on MacOS X
+# default is "no" except on OS X
 
 ## Readline.
 
@@ -20703,7 +20703,7 @@ fi
 
 case "${host_os}" in
   darwin*)
-    ## MacOS <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
+    ## OS X <= 10.2 dlcompat, >= 10.3 included dlcompat in libSystem
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing dlopen" >&5
 $as_echo_n "checking for library containing dlopen... " >&6; }
 if ${ac_cv_search_dlopen+:} false; then :
@@ -21094,7 +21094,7 @@ fi
 
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
   fi
-  ## the NetBSD version as used in MacOS X does not have this
+  ## the NetBSD version as used in OS X does not have this
   for ac_func in history_truncate_file
 do :
   ac_fn_c_check_func "$LINENO" "history_truncate_file" "ac_cv_func_history_truncate_file"
@@ -26232,7 +26232,7 @@ fi ;;
       esac
     fi
     ## some linkers are broken and need to be set to a specific
-    ## Mac OS X version to work better
+    ## OS X version to work better
     case "${host_os}" in
        darwin8*)
           # this is the 'old' way and it doesn't work with recent gcc as the driver
@@ -28176,7 +28176,7 @@ _ACEOF
 fi
 done
 
-## clock_gettime is POSIX 1993, but not on MacOS X
+## clock_gettime is POSIX 1993, but not on OS X
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD.
 ## Unsurprising, as POSIX 2008 moved it from its timers section to base.
@@ -29501,7 +29501,7 @@ fi
 
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
-## Apple's Mac OS X is known to provide it
+## Apple's OS X is known to provide it
  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for cblas_cdotu_sub in vecLib framework" >&5
 $as_echo_n "checking for cblas_cdotu_sub in vecLib framework... " >&6; }
 if ${r_cv_check_fw_vecLib+:} false; then :
@@ -30479,7 +30479,7 @@ fi
 
 
 ## LAPACK.
-## The default has already been set on MacOS X: otherwise it is "no"
+## The default has already been set on OS X: otherwise it is "no"
 ## and so this test fails.
 if test "${use_lapack}" = "yes"; then
 
@@ -32498,7 +32498,7 @@ $as_echo "$r_cv_has_cairo" >&6; }
       CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
-          ## This is for static MacOS build
+          ## This is for static OS X build
           CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
           CAIROX11_LIBS=`"${PKGCONF}" --static --libs ${xmodlist}`
           ;;
@@ -39822,7 +39822,7 @@ $as_echo "#define USE_POSIX_THREADS_WEAK 1" >>confdefs.h
               LTLIBTHREAD=
             fi
           fi
-          # OSF/1 4.0 and MacOS X 10.1 lack the pthread_rwlock_t type and the
+          # OSF/1 4.0 and OS X 10.1 lack the pthread_rwlock_t type and the
           # pthread_rwlock_* functions.
           ac_fn_c_check_type "$LINENO" "pthread_rwlock_t" "ac_cv_type_pthread_rwlock_t" "#include <pthread.h>
 "
