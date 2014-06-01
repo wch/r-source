@@ -52,7 +52,7 @@ httpd <- function(path, query, ...)
         out <- HTMLheader("R User Manuals")
         for (pkg in pkgs) {
             vinfo <- getVignetteInfo(pkg)
-     	    if (nrow(vinfo)) 
+     	    if (nrow(vinfo))
          	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
          		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R")])))
      	}
@@ -180,7 +180,7 @@ httpd <- function(path, query, ...)
                "xml" = "text/xml",  # in RCurl
                "text/plain")
     }
-    
+
     charsetSetting <- function(pkg) {
     	encoding <-read.dcf(system.file("DESCRIPTION", package=pkg), "Encoding")
 	if (is.na(encoding))
@@ -188,7 +188,7 @@ httpd <- function(path, query, ...)
         else
     	    paste0("; charset=", encoding)
     }
-    
+
     sQuote <- function(text)
         paste0("&lsquo;", text, "&rsquo;")
     mono <- function(text)
@@ -206,7 +206,7 @@ httpd <- function(path, query, ...)
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     else if(path == "/NEWS")
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
-    else if(grepl("^/NEWS[.][[:digit:]]$", path)) 
+    else if(grepl("^/NEWS[.][[:digit:]]$", path))
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain; encoding=utf-8"))
     else if(!grepl("^/(doc|library|session)/", path))
