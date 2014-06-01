@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -609,17 +609,17 @@ setEncoding2, "
     ## </NOTE>
 
     if (!file.exists(file)) return(0L)
-    age <- file.info(file, extra_cols = FALSE)$mtime
+    age <- file.info(file)$mtime
 
     if (any(file.info(c(Sys.glob(file.path(dir, "man", "*.Rd")),
                         Sys.glob(file.path(dir, "man", "*.rd")))
-                      , extra_cols = FALSE)$mtime > age))
+                      )$mtime > age))
         return(0L)
 
-    if (isTRUE(file.info(file.path(dir, OS), extra_cols = FALSE)$isdir)) {
+    if (isTRUE(file.info(file.path(dir, OS))$isdir)) {
         if (any(file.info(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
                             Sys.glob(file.path(dir, "man", OS, "*.rd")))
-                          , extra_cols = FALSE)$mtime > age))
+                          )$mtime > age))
             return(0L)
     }
 
@@ -633,7 +633,7 @@ setEncoding2, "
 
 ..Rd2pdf <- function(args = NULL, quit = TRUE)
 {
-    dir.exists <- function(x) !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     do_cleanup <- function() {
         if(clean) {

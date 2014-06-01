@@ -3330,7 +3330,7 @@ function(dfile)
     have_src <- TRUE # dummy
     if(length(llinks)) {
         ## This is pointless unless there is compilable code
-        dir.exists <- function(x) !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         have_src <- dir.exists(file.path(dirname(dfile), "src"))
 
         ## See if this is installable under 3.0.1:

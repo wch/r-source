@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -225,7 +225,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if(!missing(package)) {
         if (is.null(lib.loc)) lib.loc <- .libPaths()
         ## remove any non-existent directories
-        lib.loc <- lib.loc[file.info(lib.loc, extra_cols = FALSE)$isdir %in% TRUE]
+        lib.loc <- lib.loc[file.info(lib.loc)$isdir %in% TRUE]
 
 	if(!character.only)
 	    package <- as.character(substitute(package))
@@ -685,7 +685,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             ## Note that we cannot use tools::file_test() here, as
             ## cyclic namespace dependencies are not supported.  Argh.
             paths <- c(paths,
-                       dirs[file.info(dirs, extra_cols = FALSE)$isdir &
+                       dirs[file.info(dirs)$isdir &
                             file.exists(file.path(dirs,
                                                   "DESCRIPTION"))])
         }

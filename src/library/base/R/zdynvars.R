@@ -1,7 +1,7 @@
 #  File src/library/base/R/zdynvars.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
             ## Use normalizePath for display: but also does path.expand
             new <- Sys.glob(path.expand(new))
             paths <- unique(normalizePath(c(new, .Library.site, .Library), '/'))
-            .lib.loc <<- paths[file.info(paths, extra_cols = FALSE)$isdir %in% TRUE]
+            .lib.loc <<- paths[file.info(paths)$isdir %in% TRUE]
         }
         else
             .lib.loc

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/linkhtml.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ make.packages.html <-
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.
         if(identical(lib.loc, readRDS(op))) {
-            dates <- file.info(c(f.tg, lib.loc), extra_cols = FALSE)$mtime
+            dates <- file.info(c(f.tg, lib.loc))$mtime
             if(which.max(dates) == 1L) return(TRUE)
         }
     }

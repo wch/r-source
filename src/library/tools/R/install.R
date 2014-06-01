@@ -36,8 +36,7 @@
     ## calls system() on Windows for
     ## sh (configure.win/cleanup.win) make zip
 
-    dir.exists <- function(x)
-        !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     ## global variables
     curPkg <- character() # list of packages in current pkg
@@ -851,8 +850,7 @@
                 pkgerrmsg("compilation failed", pkg_name)
 
             ## if we have subarchs, update DESCRIPTION
-            fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")),
-                            extra_cols = FALSE)
+            fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")))
             dirs <- basename(row.names(fi[fi$isdir %in% TRUE, ]))
             ## avoid DLLs installed by rogue packages
             if(WINDOWS) dirs <- dirs[dirs %in% c("i386", "x64")]
@@ -905,8 +903,7 @@
                                    "bzip2" = 2L,
                                    "xz" = 3L,
                                    TRUE)  # default to gzip
-                } else if(file.info(f, extra_cols = FALSE)$size > 1e6)
-                    comp <- 3L # "xz"
+                } else if(file.info(f)$size > 1e6) comp <- 3L # "xz"
 		res <- try(sysdata2LazyLoadDB(f, file.path(instdir, "R"),
                                               compress = comp))
 		if (inherits(res, "try-error"))
@@ -1069,7 +1066,7 @@
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
                 ## make executable if the source file was (for owner)
-                modes <- file.info(i_files, extra_cols = FALSE)$mode
+                modes <- file.info(i_files)$mode
                 execs <- as.logical(modes & as.octmode("100"))
 		Sys.chmod(i2_files[execs], dmode)
             }
@@ -1507,8 +1504,7 @@
                 errmsg("cannot extract package from ", sQuote(pkg))
             if (length(new) > 1L)
                 errmsg("extracted multiple files from ", sQuote(pkg))
-            if (file.info(new, extra_cols = FALSE)$isdir)
-                pkgname <- basename(new)
+            if (file.info(new)$isdir) pkgname <- basename(new)
             else errmsg("cannot extract package from ", sQuote(pkg))
 
             ## If we have a binary bundle distribution, there should
@@ -1575,7 +1571,7 @@
     group.writable <- if(WINDOWS) FALSE else {
 	## install package group-writable  iff  in group-writable lib
         d <-  as.octmode("020")
-	(file.info(lib, extra_cols = FALSE)$mode & d) == d ## TRUE  iff  g-bit is "w"
+	(file.info(lib)$mode & d) == d ## TRUE  iff  g-bit is "w"
     }
 
     if (libs_only) {

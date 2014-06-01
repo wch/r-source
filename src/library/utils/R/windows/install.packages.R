@@ -101,8 +101,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
         instPath <- file.path(lib, pkgname)
         if(identical(lock, "pkglock") || isTRUE(lock)) {
             ## This is code adapted from tools:::.install_packages
-            dir.exists <- function(x)
-                !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+            dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 	    lockdir <- if(identical(lock, "pkglock"))
                 file.path(lib, paste("00LOCK", pkgname, sep = "-"))
             else file.path(lib, "00LOCK")
@@ -153,8 +152,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                     }
                 }
             ## update 'Archs': copied from tools:::.install.packages
-            fi <- file.info(Sys.glob(file.path(instPath, "libs", "*")),
-                            extra_cols = FALSE)
+            fi <- file.info(Sys.glob(file.path(instPath, "libs", "*")))
             dirs <- row.names(fi[fi$isdir %in% TRUE])
             if (length(dirs)) {
                 descfile <- file.path(instPath, "DESCRIPTION")

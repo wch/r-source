@@ -211,8 +211,7 @@ setRlibs <-
                 else out
             }
 
-    dir.exists <- function(x)
-        !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     td0 <- Inf # updated below
     print_time <- function(t1, t2, Log)
@@ -553,11 +552,11 @@ setRlibs <-
         ##                                 full.names = TRUE, recursive = TRUE)
         ##                 allfiles <- sub("^./", "", allfiles)
         if(length(allfiles)) {
-            mode <- file.info(allfiles, extra_cols = FALSE)$mode
+            mode <- file.info(allfiles)$mode
             bad_files <- allfiles[(mode & "400") < as.octmode("400")]
         }
         if(length(alldirs <- unique(dirname(allfiles)))) {
-            mode <- file.info(alldirs, extra_cols = FALSE)$mode
+            mode <- file.info(alldirs)$mode
             bad_files <- c(bad_files,
                            alldirs[(mode & "700") < as.octmode("700")])
         }
@@ -575,7 +574,7 @@ setRlibs <-
         bad_files <- character()
         for (f in c("configure", "cleanup")) {
             if (!file.exists(f)) next
-            mode <- file.info(f, extra_cols = FALSE)$mode
+            mode <- file.info(f)$mode
             if ((mode & "500") < as.octmode("500"))
                 bad_files <- c(bad_files, f)
         }
@@ -803,9 +802,7 @@ setRlibs <-
             if(is.null(topfiles0)) {
                 topfiles <- dir()
                 ## Now check if any of these were created since we started
-                topfiles <-
-                    topfiles[file.info(topfiles, extra_cols = FALSE)$ctime
-                             <= .unpack.time]
+                topfiles <- topfiles[file.info(topfiles)$ctime <= .unpack.time]
             } else topfiles <- topfiles0
             known <- c("DESCRIPTION", "INDEX", "LICENCE", "LICENSE",
                        "LICENCE.note", "LICENSE.note",
@@ -1120,7 +1117,7 @@ setRlibs <-
                 c("Meta", "R", "data", "demo", "exec", "libs",
                   "man", "help", "html", "latex", "R-ex", "build")
             allfiles <- dir("inst", full.names = TRUE)
-            alldirs <- allfiles[file.info(allfiles, extra_cols = FALSE)$isdir]
+            alldirs <- allfiles[file.info(allfiles)$isdir]
             suspect <- basename(alldirs) %in% R_system_subdirs
             if (any(suspect)) {
                 ## check they are non-empty
@@ -2063,8 +2060,7 @@ setRlibs <-
         files <- grep("^src/[Ww]in", files, invert = TRUE, value = TRUE)
         bad_files <- character()
         for(f in files) {
-            contents <- readChar(f, file.info(f, extra_cols = FALSE)$size,
-                                 useBytes = TRUE)
+            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
         }
@@ -2084,8 +2080,7 @@ setRlibs <-
                 full.names = TRUE, recursive = TRUE)
         for(f in all_files) {
             if (!file.exists(f)) next
-            contents <- readChar(f, file.info(f, extra_cols = FALSE)$size,
-                                 useBytes = TRUE)
+            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
         }
@@ -2702,8 +2697,7 @@ setRlibs <-
                 printLog(Log,
                          "  Found 'R CMD' in Makefile: should be '\"$(R_HOME)/bin/R\" CMD'\n")
             }
-            contents <- readChar(f, file.info(f, extra_cols = FALSE)$size,
-                                 useBytes = TRUE)
+            contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
             if(any(grepl("\r", contents, fixed = TRUE, useBytes = TRUE))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -3725,7 +3719,7 @@ setRlibs <-
                     !(file.exists("Makefile.in") && spec_install)) {
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)
-                    fi <- file.info(srcfiles, extra_cols = FALSE)
+                    fi <- file.info(srcfiles)
                     srcfiles <- srcfiles[!fi$isdir]
                     srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
                                      srcfiles,
@@ -3786,8 +3780,7 @@ setRlibs <-
         } else resultLog(Log, "OK")
     }
 
-    dir.exists <- function(x)
-        !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 

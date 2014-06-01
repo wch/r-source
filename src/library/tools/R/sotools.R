@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2011-2014 The R Core Team
+#  Copyright (C) 2011-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ read_symbols_from_object_file <- function(f)
     ## reasonable to assume this on the path
     if(!nzchar(nm <- Sys.which("nm"))) return()
     f <- file_path_as_absolute(f)
-    if(!(file.info(f, extra_cols = FALSE)$size)) return()
+    if(!(file.info(f)$size)) return()
     s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
                          intern = TRUE),
                   " +")

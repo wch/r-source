@@ -1,7 +1,7 @@
 #  File src/library/base/R/srcfile.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ srcfile <- function(filename, encoding = getOption("encoding"), Enc = "unknown")
     e$filename <- filename
 
     # If filename is a URL, this will return NA
-    e$timestamp <- file.info(filename, extra_cols = FALSE)[1,"mtime"]
+    e$timestamp <- file.info(filename)[1,"mtime"]
 
     if (identical(encoding, "unknown")) encoding <- "native.enc"
     e$encoding <- encoding
@@ -71,18 +71,16 @@ open.srcfile <- function(con, line, ...) {
 	    olddir <- setwd(srcfile$wd)
 	    on.exit(setwd(olddir))
 	}
-	timestamp <- file.info(srcfile$filename, extra_cols = FALSE)[1,"mtime"]
+	timestamp <- file.info(srcfile$filename)[1,"mtime"]
 	if (!is.null(srcfile$timestamp)
 	    && !is.na(srcfile$timestamp)
 	    && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
-            warning(gettextf("Timestamp of %s has changed",
-                             sQuote(srcfile$filename)),
+            warning(gettextf("Timestamp of %s has changed", sQuote(srcfile$filename)),
                     call. = FALSE, domain = NA)
 	if (is.null(srcfile$encoding)) encoding <- getOption("encoding")
 	else encoding <- srcfile$encoding
 	# Specifying encoding below means that reads will convert to the native encoding
-	srcfile$conn <- conn <-
-            file(srcfile$filename, open = "rt", encoding = encoding)
+	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=encoding)
 	srcfile$line <- 1L
 	oldline <- 1L
     } else if (!isOpen(conn)) {
