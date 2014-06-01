@@ -1,7 +1,7 @@
 #  File src/library/utils/R/package.skeleton.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@ package.skeleton <-
 {
     safe.dir.create <- function(path)
     {
-	dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+	dirTest <- function(x)
+            !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & isdir
 	if(!dirTest(path) && !dir.create(path))
 	    stop(gettextf("cannot create directory '%s'", path), domain = NA)
     }

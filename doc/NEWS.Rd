@@ -52,6 +52,9 @@
       
       \item \code{pairs()} gains new arguments to select sets of
       variables to be plotted against each other.
+      
+      \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
+      of columns to be computed.
     }
   }
 

@@ -1,7 +1,7 @@
 #  File src/library/base/R/parse.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,8 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
 		    if (!length(text)) text <- ""
             	    close(file)
             	    file <- stdin()
-        	    srcfile <- srcfilecopy(filename, text, file.info(filename)[1,"mtime"],
+        	    srcfile <- srcfilecopy(filename, text,
+                                           file.info(filename, extra_cols = FALSE)[1,"mtime"],
         	                       isFile = TRUE)
                 } else
 		    on.exit(close(file))

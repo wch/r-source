@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013 The R Core Team
+ *  Copyright (C) 1998--2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -790,17 +790,19 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = CAR(args);
     if (!isString(fn))
 	error(_("invalid filename argument"));
-    int n = length(fn);
+    int extras = asInteger(CADR(args));
+    if(extras == NA_INTEGER)
+	error(_("invalid '%s' argument"), "extra_cols");
+    int n = length(fn), ncols = 6;
+    if(extras) {
 #ifdef UNIX_EXTRAS
-    PROTECT(ans = allocVector(VECSXP, 10));
-    PROTECT(ansnames = allocVector(STRSXP, 10));
+	ncols = 10;
 #elif defined(Win32)
-    PROTECT(ans = allocVector(VECSXP, 7));
-    PROTECT(ansnames = allocVector(STRSXP, 7));
-#else
-    PROTECT(ans = allocVector(VECSXP, 6));
-    PROTECT(ansnames = allocVector(STRSXP, 6));
+	ncols = 7;
 #endif
+    }
+    PROTECT(ans = allocVector(VECSXP, ncols));
+    PROTECT(ansnames = allocVector(STRSXP, ncols));
     fsize = SET_VECTOR_ELT(ans, 0, allocVector(REALSXP, n));
     SET_STRING_ELT(ansnames, 0, mkChar("size"));
     isdir = SET_VECTOR_ELT(ans, 1, allocVector(LGLSXP, n));
@@ -814,18 +816,22 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     atime = SET_VECTOR_ELT(ans, 5, allocVector(REALSXP, n));
     SET_STRING_ELT(ansnames, 5, mkChar("atime"));
 #ifdef UNIX_EXTRAS
-    uid = SET_VECTOR_ELT(ans, 6, allocVector(INTSXP, n));
-    SET_STRING_ELT(ansnames, 6, mkChar("uid"));
-    gid = SET_VECTOR_ELT(ans, 7, allocVector(INTSXP, n));
-    SET_STRING_ELT(ansnames, 7, mkChar("gid"));
-    uname = SET_VECTOR_ELT(ans, 8, allocVector(STRSXP, n));
-    SET_STRING_ELT(ansnames, 8, mkChar("uname"));
-    grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
-    SET_STRING_ELT(ansnames, 9, mkChar("grname"));
+    if (extras) {
+	uid = SET_VECTOR_ELT(ans, 6, allocVector(INTSXP, n));
+	SET_STRING_ELT(ansnames, 6, mkChar("uid"));
+	gid = SET_VECTOR_ELT(ans, 7, allocVector(INTSXP, n));
+	SET_STRING_ELT(ansnames, 7, mkChar("gid"));
+	uname = SET_VECTOR_ELT(ans, 8, allocVector(STRSXP, n));
+	SET_STRING_ELT(ansnames, 8, mkChar("uname"));
+	grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
+	SET_STRING_ELT(ansnames, 9, mkChar("grname"));
+    }
 #endif
 #ifdef Win32
-    exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
-    SET_STRING_ELT(ansnames, 6, mkChar("exe"));
+    if (extras) {
+	exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
+	SET_STRING_ELT(ansnames, 6, mkChar("exe"));
+    }
 #endif
     for (int i = 0; i < n; i++) {
 #ifdef Win32
@@ -875,56 +881,58 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(atime)[i] += STAT_TIMESPEC_NS (sb, st_atim);
 # endif
 #endif
+	    if (extras) {
 #ifdef UNIX_EXTRAS
-	    INTEGER(uid)[i] = (int) sb.st_uid;
-	    INTEGER(gid)[i] = (int) sb.st_gid;
+		INTEGER(uid)[i] = (int) sb.st_uid;
+		INTEGER(gid)[i] = (int) sb.st_gid;
 
-            /* Usually all of the uid and gid values in a list of
-             * files are the same so we can avoid most of the calls
-             * to getpwuid() and getgrgid(), which can be quite slow
-             * on some systems.  (PR#15804)
-             */
-            if (i && INTEGER(uid)[i - 1] == (int) sb.st_uid)
-		SET_STRING_ELT(uname, i, STRING_ELT(uname, i - 1));
-            else {
-		struct passwd *stpwd = getpwuid(sb.st_uid);
-		SET_STRING_ELT(uname, i,
-			       stpwd ? mkChar(stpwd->pw_name): NA_STRING);
-            }
+		/* Usually all of the uid and gid values in a list of
+		 * files are the same so we can avoid most of the calls
+		 * to getpwuid() and getgrgid(), which can be quite slow
+		 * on some systems.  (PR#15804)
+		 */
+		if (i && INTEGER(uid)[i - 1] == (int) sb.st_uid)
+		    SET_STRING_ELT(uname, i, STRING_ELT(uname, i - 1));
+		else {
+		    struct passwd *stpwd = getpwuid(sb.st_uid);
+		    SET_STRING_ELT(uname, i,
+				   stpwd ? mkChar(stpwd->pw_name): NA_STRING);
+		}
 
-            if (i && INTEGER(gid)[i - 1] == (int) sb.st_gid)
-		SET_STRING_ELT(grname, i, STRING_ELT(grname, i - 1));
-            else {
-		struct group *stgrp = getgrgid(sb.st_gid);
-		SET_STRING_ELT(grname, i, 
-			       stgrp ? mkChar(stgrp->gr_name): NA_STRING);
-            }
+		if (i && INTEGER(gid)[i - 1] == (int) sb.st_gid)
+		    SET_STRING_ELT(grname, i, STRING_ELT(grname, i - 1));
+		else {
+		    struct group *stgrp = getgrgid(sb.st_gid);
+		    SET_STRING_ELT(grname, i, 
+				   stgrp ? mkChar(stgrp->gr_name): NA_STRING);
+		}
 #endif
 #ifdef Win32
-	    {
-		char *s="no";
-		DWORD type;
-		if (GetBinaryTypeW(wfn, &type))
-		    switch(type) {
-		    case SCS_64BIT_BINARY:
-			s = "win64";
-			break;
-		    case SCS_32BIT_BINARY:
-			s = "win32";
-			break;
-		    case SCS_DOS_BINARY:
-		    case SCS_PIF_BINARY:
-			s = "msdos";
-			break;
-		    case SCS_WOW_BINARY:
-			s = "win16";
-			break;
-		    default:
-			s = "unknown";
-		    }
-		SET_STRING_ELT(exe, i, mkChar(s));
-	    }
+		{
+		    char *s="no";
+		    DWORD type;
+		    if (GetBinaryTypeW(wfn, &type))
+			switch(type) {
+			case SCS_64BIT_BINARY:
+			    s = "win64";
+			    break;
+			case SCS_32BIT_BINARY:
+			    s = "win32";
+			    break;
+			case SCS_DOS_BINARY:
+			case SCS_PIF_BINARY:
+			    s = "msdos";
+			    break;
+			case SCS_WOW_BINARY:
+			    s = "win16";
+			    break;
+			default:
+			    s = "unknown";
+			}
+		    SET_STRING_ELT(exe, i, mkChar(s));
+		}
 #endif
+	    }
 	} else {
 	    REAL(fsize)[i] = NA_REAL;
 	    LOGICAL(isdir)[i] = NA_INTEGER;
@@ -932,15 +940,17 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(mtime)[i] = NA_REAL;
 	    REAL(ctime)[i] = NA_REAL;
 	    REAL(atime)[i] = NA_REAL;
+	    if (extras) {
 #ifdef UNIX_EXTRAS
-	    INTEGER(uid)[i] = NA_INTEGER;
-	    INTEGER(gid)[i] = NA_INTEGER;
-	    SET_STRING_ELT(uname, i, NA_STRING);
-	    SET_STRING_ELT(grname, i, NA_STRING);
+		INTEGER(uid)[i] = NA_INTEGER;
+		INTEGER(gid)[i] = NA_INTEGER;
+		SET_STRING_ELT(uname, i, NA_STRING);
+		SET_STRING_ELT(grname, i, NA_STRING);
 #endif
 #ifdef Win32
-	    SET_STRING_ELT(exe, i, NA_STRING);
+		SET_STRING_ELT(exe, i, NA_STRING);
 #endif
+	    }
 	}
     }
     setAttrib(ans, R_NamesSymbol, ansnames);

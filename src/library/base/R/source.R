@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,7 +80,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    	lines <- readLines(file, warn = FALSE)
 	    	on.exit()
 	    	close(file)
-            	srcfile <- srcfilecopy(filename, lines, file.info(filename)[1,"mtime"],
+            	srcfile <- srcfilecopy(filename, lines,
+                                       file.info(filename, extra_cols = FALSE)[1,"mtime"],
             			       isFile = TRUE)
 	    } else {
             	from_file <- TRUE
@@ -246,7 +247,7 @@ function(file, envir = baseenv(), chdir = FALSE,
     on.exit(options(oop))
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)
-    	srcfile <- srcfilecopy(file, lines, file.info(file)[1,"mtime"], isFile = TRUE)
+    	srcfile <- srcfilecopy(file, lines, file.info(file, extra_cols = FALSE)[1,"mtime"], isFile = TRUE)
     	exprs <- parse(text = lines, srcfile = srcfile, keep.source = TRUE)
     } else
     	exprs <- parse(n = -1, file = file, srcfile = NULL, keep.source = FALSE)

@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -11,11 +11,13 @@
   file systems.
 }
 \usage{
-file.info(\dots)
+file.info(\dots, extra_cols = TRUE)
 }
 \arguments{
   \item{\dots}{character vectors containing file paths.  Tilde-expansion
     is done: see \code{\link{path.expand}}.}
+  \item{extra_cols}{Logical: return all cols rather than just the
+    first six.}
 }
 \details{
   What constitutes a \sQuote{file} is OS-dependent but includes
@@ -70,6 +72,10 @@ file.info(\dots)
     bits but not executable in this sense.}
 #endif
 
+  If \code{extra_cols} is false, only the first six columns are
+  returned: as these can all be found from a single C system call, this
+  can be faster.
+  
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
@@ -107,8 +113,9 @@ file.info(\dots)
 }
 \examples{
 ncol(finf <- file.info(dir()))  # at least six
-\dontrun{finf # the whole list}
+\donttest{finf # the whole list}
 ## Those that are more than 100 days old :
+finf <- file.info(dir(), extra_cols = FALSE)
 finf[difftime(Sys.time(), finf[,"mtime"], units = "days") > 100 , 1:4]
 
 file.info("no-such-file-exists")

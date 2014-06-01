@@ -906,7 +906,7 @@ function(pkg, con, vignetteIndex = NULL)
         otherfiles <- setdiff(otherfiles,
                               c(vignetteIndex[, c("PDF", "File", "R")], "index.html"))
     if (length(otherfiles)) {
-    	otherfiles <- ifelse(file.info(system.file(file.path("doc", otherfiles), package=pkg))$isdir,
+    	otherfiles <- ifelse(file.info(system.file(file.path("doc", otherfiles), package = pkg), extra_cols = FALSE)$isdir,
 			     paste0(otherfiles, "/"),
 			     otherfiles)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')

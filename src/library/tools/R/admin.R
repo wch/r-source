@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -392,20 +392,23 @@ function(dir, outDir)
     ## some people have man dirs without any valid .Rd files
     if(length(allRd)) {
         ## we want the date of the newest .Rd file we will install
-        newestRd <- max(file.info(allRd)$mtime)
+        newestRd <- max(file.info(allRd, extra_cols = FALSE)$mtime)
         ## these files need not exist, which gives NA.
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
                      file.path("Meta", "links.rds"),
                      "INDEX")
-        upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
+        upToDate <-
+            file.info(file.path(outDir, indices,
+                                extra_cols = FALSE))$mtime >= newestRd
         if(file_test("-d", dataDir)
            && length(dataFiles <- list.files(dataDir))) {
             ## Note that the data index is computed from both the package's
             ## Rd files and the data sets actually available.
-            newestData <- max(file.info(dataFiles)$mtime)
+            newestData <- max(file.info(dataFiles, extra_cols = FALSE)$mtime)
             upToDate <- c(upToDate,
-                          file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
+                          file.info(file.path(outDir, "Meta", "data.rds"),
+                                    extra_cols = FALSE)$mtime >=
                           max(newestRd, newestData))
         }
         ## Note that this is not quite good enough: an Rd file or data file
@@ -596,7 +599,7 @@ function(dir, outDir, encoding = "")
     ## Create a vignette index only if the vignette dir exists.
     if (!ok)
        return(invisible())
-       
+
     ## Copy the index to Meta
     file.copy(indexname, file.path(outDir, "Meta"))
 
@@ -740,7 +743,7 @@ function(dir, outDir, keep.source = TRUE)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
     ## This also creates the .R files
-    .install_package_vignettes2(dir, outDir)    
+    .install_package_vignettes2(dir, outDir)
     invisible()
 }
 
@@ -920,7 +923,7 @@ function(dir)
 
 checkRdaFiles <- function(paths)
 {
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir)) {
+    if(length(paths) == 1L && isTRUE(file.info(paths, extra_cols = FALSE)$isdir)) {
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
         ## Exclude .RData, which this may or may not match
@@ -932,7 +935,7 @@ checkRdaFiles <- function(paths)
     res <- res[rep_len(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
-    res$size[keep] <- file.info(paths)$size[keep]
+    res$size[keep] <- file.info(paths, extra_cols = FALSE)$size[keep]
     for(p in paths[keep]) {
         magic <- readBin(p, "raw", n = 5)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
@@ -957,7 +960,7 @@ resaveRdaFiles <- function(paths,
                            compress = c("auto", "gzip", "bzip2", "xz"),
                            compression_level)
 {
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+    if(length(paths) == 1L && isTRUE(file.info(paths, extra_cols = FALSE)$isdir))
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
     compress <- match.arg(compress)
@@ -974,13 +977,13 @@ resaveRdaFiles <- function(paths,
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
                  compress = "bzip2")
-            ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
+            ss <- file.info(c(f1, f2), extra_cols = FALSE)$size * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
                      compress = "xz")
-                ss <- c(ss, file.info(f3)$size)
+                ss <- c(ss, file.info(f3, extra_cols = FALSE)$size)
 		names(ss) <- c(f1, f2, f3)
             }
             nm <- names(ss)
@@ -1005,7 +1008,7 @@ compactPDF <-
     gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
     use_gs <- if(gs_quality != "none") nzchar(gs_cmd <- find_gs_cmd(gs_cmd)) else FALSE
     if (!use_gs && !use_qpdf) return()
-    if(length(paths) == 1L && isTRUE(file.info(paths)$isdir))
+    if(length(paths) == 1L && isTRUE(file.info(paths, extra_cols = FALSE)$isdir))
         paths <- Sys.glob(file.path(paths, "*.pdf"))
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
@@ -1034,7 +1037,8 @@ compactPDF <-
                                    p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
-            old <- file.info(p)$size; new <-  file.info(tf)$size
+            old <- file.info(p, extra_cols = FALSE)$size;
+            new <-  file.info(tf, extra_cols = FALSE)$size
             if(new/old < 0.9 && new < old - 1e4) {
                 file.copy(tf, p, overwrite = TRUE)
                 ans[p, ] <- c(old, new)
@@ -1077,7 +1081,8 @@ add_datalist <- function(pkgpath, force = FALSE)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
     if (!force && file.exists(dlist)) return()
-    fi <- file.info(Sys.glob(file.path(pkgpath, "data", "*")))
+    fi <- file.info(Sys.glob(file.path(pkgpath, "data", "*")),
+                    extra_cols = FALSE)
     size <- sum(fi$size)
     if(size <= 1024^2) return()
     z <- suppressPackageStartupMessages(list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
