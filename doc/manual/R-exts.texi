@@ -1056,9 +1056,9 @@ can be used together and mixing C and C++ seems to be widely successful.
 
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
-@samp{WIN32} will be defined: on 64-bit Windows builds also
-@samp{WIN64}, and on OS X @samp{__APPLE__} is defined.@footnote{There is
-also @samp{__APPLE_CC__}, but that indicates a compiler with
+@samp{_WIN32} will be defined: on 64-bit Windows builds also
+@samp{_WIN64}, and on OS X @samp{__APPLE__} is defined.@footnote{There
+is also @samp{__APPLE_CC__}, but that indicates a compiler with
 Apple-specific features, not the OS.  It is used in
 @file{Rinlinedfuns.h}.}
 
