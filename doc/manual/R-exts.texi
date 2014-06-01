@@ -7239,7 +7239,11 @@ It requires code to have been compiled @emph{and linked} with
 @command{clang} 3.1}, and compiling with @code{-fno-omit-frame-pointer}
 will give more legible reports.  It has a runtime penalty of 2--3x,
 extended compilation times and uses substantially more memory, often
-1--2GB, at run time.  By comparison with @command{valgrind}, it can
+1--2GB, at run time.  On 64-bit platforms it reserves (but does not
+allocate) 16--20TB of virtual memory: restrictive shell settings can
+cause problems.
+
+By comparison with @command{valgrind}, ASan can
 detect misuse of stack and global variables but not the use of
 uninitialized memory.
 
@@ -7295,8 +7299,16 @@ For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
 With @command{gcc} additional control is available @emph{via} the
-@option{--params} flag: see its @command{man} page.
+@option{--params} flag: see its @command{man} page.  For some builds on
+@code{x86_64} Linux this includes enabling the leak sanitizer
+(@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
+which might even be enabled by default: this means any leaks give the
+process a failure error status (by default @code{23}).  To disable this
+and some strict checking use
 
+@example
+setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
+@end example
 
 For more detailed information @R{} can be run under a debugger with a
 breakpoint set before the address sanitizer report is produced: for
@@ -7410,7 +7422,7 @@ one way to invoke this from an ASAN-enabled build is by the environment
 variable
 
 @example
-ASAN_OPTIONS="detect_leaks=1"
+ASAN_OPTIONS='detect_leaks=1'
 @end example
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
