@@ -1204,7 +1204,7 @@ static Rconnection newfifo(const char *description, const char *mode)
 
 SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(WIN32)
+#if (defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)) || defined(_WIN32)
     SEXP sfile, sopen, ans, class, enc;
     const char *file, *open;
     int ncon, block;

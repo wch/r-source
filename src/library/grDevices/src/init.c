@@ -28,7 +28,7 @@
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>
 
-#ifndef WIN32
+#ifndef _WIN32
 /* This really belongs with the X11 module, but it is about devices */
 static SEXP cairoProps(SEXP in)
 {
@@ -71,7 +71,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(palette, 1),
     CALLDEF(palette2, 1),
 
-#ifndef WIN32
+#ifndef _WIN32
     CALLDEF(makeQuartzDefault, 0),
     CALLDEF(cairoProps, 1),
 #else
@@ -109,7 +109,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(setGraphicsEventEnv, 2),
     EXTDEF(devAskNewPage, 1),
 
-#ifdef WIN32
+#ifdef _WIN32
     EXTDEF(savePlot, 4),
     EXTDEF(devga, 21),
 #else

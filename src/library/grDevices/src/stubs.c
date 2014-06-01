@@ -22,7 +22,7 @@
 #include <Internal.h>
 #include "grDevices.h"
 
-#ifndef WIN32
+#ifndef _WIN32
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env);
 
@@ -67,7 +67,7 @@ SEXP setGraphicsEventEnv(SEXP call, SEXP op, SEXP args, SEXP env)
     return do_setGraphicsEventEnv(call, op, CDR(args), env);
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 SEXP bringtotop(SEXP sdev, SEXP sstay);
 SEXP msgwindow(SEXP sdev, SEXP stype);
 

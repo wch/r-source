@@ -4,8 +4,8 @@
 
 #include <stdint.h>
 
-/* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
-#if defined(WIN32) || defined(__CYGWIN__)
+/* Local mod: assumes _WIN32 is i386 and little-endian generic is 32-bit */
+#if defined(_WIN32) || defined(__CYGWIN__)
 static uint32_t ntohl(uint32_t x)
 { /* could write VC++ inline assembler, but not worth it for now */
 #ifdef _MSC_VER

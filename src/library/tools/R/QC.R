@@ -6648,9 +6648,8 @@ function(dir)
             any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
         if(needRefMan &&
            !file.exists(file.path(dir, "build",
-                                  paste0( meta[["Package"]], ".pdf")))) {
+                                  paste0( meta[["Package"]], ".pdf"))))
             out$missing_manual_pdf <- TRUE
-        }
     }
 
 
