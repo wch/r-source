@@ -26,8 +26,10 @@
  (cd `R-devel-pbeta-dbg RHOME`/src/nmath ; gcc -I. -I../../src/include -I../../../R/src/include  -DHAVE_CONFIG_H -fopenmp -g -pedantic -Wall --std=gnu99 -DDEBUG_q -DDEBUG_bratio -Wcast-align -Wclobbered  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
 */
 #ifdef DEBUG_bratio
-/* for REprintf */
 # include <R_ext/Print.h>
+# define R_ifDEBUG_printf(...) REprintf(__VA_ARGS__)
+#else
+# define R_ifDEBUG_printf(...)
 #endif
 
 /* MM added R_D_LExp, so redefine here in terms of rexpm1 */
@@ -130,10 +132,8 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 
     if (fabs(z) > eps * 3.0) { *ierr = 5; return; }
 
-#ifdef DEBUG_bratio
-    REprintf("bratio(a=%g, b=%g, x=%9g, y=%9g, .., log_p=%d): ", a,b,x,y, log_p);
-#endif
-
+    R_ifDEBUG_printf("bratio(a=%g, b=%g, x=%9g, y=%9g, .., log_p=%d): ",
+		     a,b,x,y, log_p);
     *ierr = 0;
     if (x == 0.0) goto L200;
     if (y == 0.0) goto L210;
@@ -159,9 +159,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	    *w1 = a / (a + b);
 	}
 
-#ifdef DEBUG_bratio
-	REprintf("a & b very small -> simple ratios (%g,%g)\n", *w,*w1);
-#endif
+	R_ifDEBUG_printf("a & b very small -> simple ratios (%g,%g)\n", *w,*w1);
 	return;
     }
 
@@ -183,32 +181,24 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	}
 	/* now have  x0 <= 1/2 <= y0  (still  x0+y0 == 1) */
 
-#ifdef DEBUG_bratio
-	REprintf(" min(a,b) <= 1, do_swap=%d;", do_swap);
-#endif
+	R_ifDEBUG_printf(" min(a,b) <= 1, do_swap=%d;", do_swap);
 
 	if (b0 < min(eps, eps * a0)) { /* L80: */
 	    *w = fpser(a0, b0, x0, eps, log_p);
 	    *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
-#ifdef DEBUG_bratio
-	    REprintf("  b0 small -> w := fpser(*) = %.15g\n", *w);
-#endif
+	    R_ifDEBUG_printf("  b0 small -> w := fpser(*) = %.15g\n", *w);
 	    goto L_end;
 	}
 
 	if (a0 < min(eps, eps * b0) && b0 * x0 <= 1.0) { /* L90: */
 	    *w1 = apser(a0, b0, x0, eps);
-#ifdef DEBUG_bratio
-	    REprintf("  a0 small -> w1 := apser(*) = %.15g\n", *w1);
-#endif
+	    R_ifDEBUG_printf("  a0 small -> w1 := apser(*) = %.15g\n", *w1);
 	    goto L_end_from_w1;
 	}
 
 	Rboolean did_bup = FALSE;
 	if (max(a0,b0) > 1.0) { /* L20:  min(a,b) <= 1 < max(a,b)  */
-#ifdef DEBUG_bratio
-	    REprintf("\n L20:  min(a,b) <= 1 < max(a,b); ");
-#endif
+	    R_ifDEBUG_printf("\n L20:  min(a,b) <= 1 < max(a,b); ");
 	    if (b0 <= 1.0) goto L_w_bpser;
 
 	    if (x0 >= 0.29) /* was 0.3, PR#13786 */	goto L_w1_bpser;
@@ -220,9 +210,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 		goto L131;
 	    }
 	} else { /*  a, b <= 1 */
-#ifdef DEBUG_bratio
-	    REprintf("\n      both a,b <= 1; ");
-#endif
+	    R_ifDEBUG_printf("\n      both a,b <= 1; ");
 	    if (a0 >= min(0.2, b0))	goto L_w_bpser;
 
 	    if (pow(x0, a0) <= 0.9) 	goto L_w_bpser;
@@ -231,14 +219,10 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	}
 	n = 20; /* goto L130; */
 	*w1 = bup(b0, a0, y0, x0, n, eps, FALSE); did_bup = TRUE;
-#ifdef DEBUG_bratio
-	REprintf("  ... n=20 and *w1 := bup(*) = %.15g; ", *w1);
-#endif
+	R_ifDEBUG_printf("  ... n=20 and *w1 := bup(*) = %.15g; ", *w1);
 	b0 += n;
     L131:
-#ifdef DEBUG_bratio
-	REprintf(" L131: bgrat(*, w1=%.15g) ", *w1);
-#endif
+	R_ifDEBUG_printf(" L131: bgrat(*, w1=%.15g) ", *w1);
 	bgrat(b0, a0, y0, x0, w1, 15*eps, &ierr1, FALSE);
 #ifdef DEBUG_bratio
 	REprintf(" ==> new w1=%.15g", *w1);
@@ -248,9 +232,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	    // "almost surely" from underflow, try more: [2013-03-04]
 // FIXME: it is even better to do this in bgrat *directly* at least for the case
 //  !did_bup, i.e., where *w1 = (0 or -Inf) on entry
-#ifdef DEBUG_bratio
-	    REprintf(" denormalized or underflow (?) -> retrying: ");
-#endif
+	    R_ifDEBUG_printf(" denormalized or underflow (?) -> retrying: ");
 	    if(did_bup) { // re-do that part on log scale:
 		*w1 = bup(b0-n, a0, y0, x0, n, eps, TRUE);
 	    }
@@ -285,15 +267,11 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	    SET_0_noswap;
 	}
 
-#ifdef DEBUG_bratio
-	REprintf("  L30:  both  a, b > 1; |lambda| = %#g, do_swap = %d\n",
-		 lambda, do_swap);
-#endif
+	R_ifDEBUG_printf("  L30:  both  a, b > 1; |lambda| = %#g, do_swap = %d\n",
+			 lambda, do_swap);
 
 	if (b0 < 40.0) {
-#ifdef DEBUG_bratio
-	    REprintf("  b0 < 40;");
-#endif
+	    R_ifDEBUG_printf("  b0 < 40;");
 	    if (b0 * x0 <= 0.7
 		|| (log_p && lambda > 650.)) /* << added 2010-03-18 */
 		goto L_w_bpser;
@@ -301,32 +279,24 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 		goto L140;
 	}
 	else if (a0 > b0) { /* ----  a0 > b0 >= 40  ---- */
-#ifdef DEBUG_bratio
-	    REprintf("  a0 > b0 >= 40;");
-#endif
+	    R_ifDEBUG_printf("  a0 > b0 >= 40;");
 	    if (b0 <= 100.0 || lambda > b0 * 0.03)
 		goto L_bfrac;
 
 	} else if (a0 <= 100.0) {
-#ifdef DEBUG_bratio
-	    REprintf("  a0 <= 100; a0 <= b0 >= 40;");
-#endif
+	    R_ifDEBUG_printf("  a0 <= 100; a0 <= b0 >= 40;");
 	    goto L_bfrac;
 	}
 	else if (lambda > a0 * 0.03) {
-#ifdef DEBUG_bratio
-	    REprintf("  b0 >= a0 > 100; lambda > a0 * 0.03 ");
-#endif
+	    R_ifDEBUG_printf("  b0 >= a0 > 100; lambda > a0 * 0.03 ");
 	    goto L_bfrac;
 	}
 
 	/* else if none of the above    L180: */
 	*w = basym(a0, b0, lambda, eps * 100.0, log_p);
 	*w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
-#ifdef DEBUG_bratio
-	REprintf("  b0 >= a0 > 100; lambda <= a0 * 0.03: *w:= basym(*) =%.15g\n",
-		 *w);
-#endif
+	R_ifDEBUG_printf("  b0 >= a0 > 100; lambda <= a0 * 0.03: *w:= basym(*) =%.15g\n",
+			 *w);
 	goto L_end;
 
     } /* else: a, b > 1 */
@@ -336,25 +306,19 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 L_w_bpser: // was L100
     *w = bpser(a0, b0, x0, eps, log_p);
     *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
-#ifdef DEBUG_bratio
-    REprintf(" L_w_bpser: *w := bpser(*) = %.15g\n", *w);
-#endif
+    R_ifDEBUG_printf(" L_w_bpser: *w := bpser(*) = %.15g\n", *w);
     goto L_end;
 
 L_w1_bpser:  // was L110
     *w1 = bpser(b0, a0, y0, eps, log_p);
     *w  = log_p ? R_Log1_Exp(*w1) : 0.5 - *w1 + 0.5;
-#ifdef DEBUG_bratio
-    REprintf(" L_w1_bpser: *w1 := bpser(*) = %.15g\n", *w1);
-#endif
+    R_ifDEBUG_printf(" L_w1_bpser: *w1 := bpser(*) = %.15g\n", *w1);
     goto L_end;
 
 L_bfrac:
     *w = bfrac(a0, b0, x0, y0, lambda, eps * 15.0, log_p);
     *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
-#ifdef DEBUG_bratio
-    REprintf(" L_bfrac: *w := bfrac(*) = %g\n", *w);
-#endif
+    R_ifDEBUG_printf(" L_bfrac: *w := bfrac(*) = %g\n", *w);
     goto L_end;
 
 L140:
@@ -367,9 +331,7 @@ L140:
 
     *w = bup(b0, a0, y0, x0, n, eps, FALSE);
 
-#ifdef DEBUG_bratio
-    REprintf(" L140: *w := bup(b0=%g,..) = %.15g; ", b0, *w);
-#endif
+    R_ifDEBUG_printf(" L140: *w := bup(b0=%g,..) = %.15g; ", b0, *w);
     if(*w < DBL_MIN && log_p) { /* do not believe it; try bpser() : */
 	/*revert: */ b0 += n;
 	/* which is only valid if b0 <= 1 || b0*x0 <= 0.7 */
@@ -378,23 +340,17 @@ L140:
     if (x0 <= 0.7) {
 	/* log_p :  TODO:  w = bup(.) + bpser(.)  -- not so easy to use log-scale */
 	*w += bpser(a0, b0, x0, eps, /* log_p = */ FALSE);
-#ifdef DEBUG_bratio
-	REprintf(" x0 <= 0.7: *w := *w + bpser(*) = %.15g\n", *w);
-#endif
+	R_ifDEBUG_printf(" x0 <= 0.7: *w := *w + bpser(*) = %.15g\n", *w);
 	goto L_end_from_w;
     }
     /* L150: */
     if (a0 <= 15.0) {
 	n = 20;
 	*w += bup(a0, b0, x0, y0, n, eps, FALSE);
-#ifdef DEBUG_bratio
-	REprintf("\n a0 <= 15: *w := *w + bup(*) = %.15g;", *w);
-#endif
+	R_ifDEBUG_printf("\n a0 <= 15: *w := *w + bup(*) = %.15g;", *w);
 	a0 += n;
     }
-#ifdef DEBUG_bratio
-    REprintf(" bgrat(*, w=%.15g) ", *w);
-#endif
+    R_ifDEBUG_printf(" bgrat(*, w=%.15g) ", *w);
     bgrat(a0, b0, x0, y0, w, 15*eps, &ierr1, FALSE);
     if(ierr1) *ierr = 8;
 #ifdef DEBUG_bratio
@@ -627,8 +583,9 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 		ans = a0 / a * exp(z);
 	}
     }
-
-    if (!log_p && (ans == 0.0 || a <= eps * 0.1)) {
+    R_ifDEBUG_printf(" bpser(a=%g, b=%g, x=%g, log=%d): prelim.ans = %.14g;\n",
+		     a,b,x, log_p, ans);
+    if (ans == R_D__0 || (!log_p && a <= eps * 0.1)) {
 	return ans;
     }
 
@@ -645,8 +602,18 @@ static double bpser(double a, double b, double x, double eps, int log_p)
 	c *= (0.5 - b / n + 0.5) * x;
 	w = c / (a + n);
 	sum += w;
-    } while (fabs(w) > tol);
-
+    } while (n < 1e7 && fabs(w) > tol);
+    if(fabs(w) > tol) { // the series did not converge (in time)
+	// warn only when the result seems to matter:
+	if(( log_p && !(a*sum > -1. && fabs(log1p(a * sum)) < eps*fabs(ans))) ||
+	   (!log_p && fabs(a*sum + 1) != 1.))
+	    MATHLIB_WARNING5(
+		" bpser(a=%g, b=%g, x=%g,...) did not converge (n=1e7, |w|/tol=%g > 1; A=%g)",
+		a,b,x, fabs(w)/tol, ans);
+    }
+    R_ifDEBUG_printf("  -> n=%.0f iterations, |w|=%g %s %g=tol:=eps/a ==> a*sum=%g\n",
+		     n, fabs(w), (fabs(w) > tol) ? ">!!>" : "<=",
+		     tol, a*sum);
     if(log_p) {
 	if (a*sum > -1.0) ans += log1p(a * sum);
 	else ans = ML_NEGINF;
@@ -996,9 +963,7 @@ static double brcmp1(int mu, double a, double b, double x, double y, int give_lo
 	if (b0 >= 8.0) {
 	/* L80:                  ALGORITHM FOR b0 >= 8 */
 	    u = gamln1(a0) + algdiv(a0, b0);
-#ifdef DEBUG_bratio
-	    REprintf(" brcmp1(mu,a,b,*): a0 < 1, b0 >= 8;  z=%.15g\n", z);
-#endif
+	    R_ifDEBUG_printf(" brcmp1(mu,a,b,*): a0 < 1, b0 >= 8;  z=%.15g\n", z);
 	    return give_log
 		? log(a0) + esum(mu, z - u, TRUE)
 		:     a0  * esum(mu, z - u, FALSE);
@@ -1021,9 +986,7 @@ static double brcmp1(int mu, double a, double b, double x, double y, int give_lo
 	    c = give_log
 		? log1p(gam1(a)) + log1p(gam1(b)) - log(z)
 		: (gam1(a) + 1.0) * (gam1(b) + 1.0) / z;
-#ifdef DEBUG_bratio
-	    REprintf(" brcmp1(mu,a,b,*): a0 < 1, b0 <= 1;  c=%.15g\n", c);
-#endif
+	    R_ifDEBUG_printf(" brcmp1(mu,a,b,*): a0 < 1, b0 <= 1;  c=%.15g\n", c);
 	    return give_log
 		? ans + log(a0) + c - log1p(a0 / b0)
 		: ans * (a0 * c) / (a0 / b0 + 1.0);
@@ -1051,9 +1014,7 @@ static double brcmp1(int mu, double a, double b, double x, double y, int give_lo
 	} else {
 	    t = gam1(apb) + 1.0;
 	}
-#ifdef DEBUG_bratio
-	REprintf(" brcmp1(mu,a,b,*): a0 < 1 < b0 < 8;  t=%.15g\n", t);
-#endif
+	R_ifDEBUG_printf(" brcmp1(mu,a,b,*): a0 < 1 < b0 < 8;  t=%.15g\n", t);
 	// L72:
 	return give_log
 	    ? log(a0)+ esum(mu, z, TRUE) + log1p(gam1(b0)) - log(t) // TODO? log(t) = log1p(..)
@@ -1080,10 +1041,8 @@ static double brcmp1(int mu, double a, double b, double x, double y, int give_lo
 	}
 	double lx0 = -log1p(b/a); // in both cases
 
-#ifdef DEBUG_bratio
-	REprintf(" brcmp1(mu,a,b,*): a,b >= 8;	x0=%.15g, lx0=log(x0)=%.15g\n",
-		 x0, lx0);
-#endif
+	R_ifDEBUG_printf(" brcmp1(mu,a,b,*): a,b >= 8;	x0=%.15g, lx0=log(x0)=%.15g\n",
+			 x0, lx0);
 	// L110:
 	double e = -lambda / a;
 	if (fabs(e) > 0.6) {
@@ -1121,9 +1080,9 @@ static void bgrat(double a, double b, double x, double y, double *w,
 *     eps is the tolerance used.
 *     ierr is a variable that reports the status of the results.
 *
-* TODO:  if(log_w) ,  *w  itself must be in log-space;
+* if(log_w),  *w  itself must be in log-space;
 *     compute   w := w + I_x(a,b)  but return *w = log(w):
-*          *w := log(exp(*w) + I_x(a,b)) = logspace_add(*w, log( I_x(a,b) )
+*          *w := log(exp(*w) + I_x(a,b)) = logspace_add(*w, log( I_x(a,b) ))
 * ----------------------------------------------------------------------- */
 
 #define n_terms_bgrat 30
@@ -1140,7 +1099,8 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	MATHLIB_WARNING5(
 	    "bgrat(a=%g, b=%g, x=%g, y=%g): z=%g, b*z == 0 underflow, hence inaccurate pbeta()",
 	    a,b,x,y, z);
-	/* L_Error:    THE EXPANSION CANNOT BE COMPUTED */ *ierr = 1; return;
+	/* L_Error:    THE EXPANSION CANNOT BE COMPUTED */
+	 *ierr = 1; return;
     }
 
 /*                 COMPUTATION OF THE EXPANSION */
@@ -1161,10 +1121,8 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	u = exp(log_u);
 
     if (log_u == ML_NEGINF) {
-#ifdef DEBUG_bratio
-	REprintf(" bgrat(*): underflow log_u = -Inf  = log_r -u', log_r = %g ",
-		 log_r);
-#endif
+	R_ifDEBUG_printf(" bgrat(*): underflow log_u = -Inf  = log_r -u', log_r = %g ",
+			 log_r);
 	/* L_Error:    THE EXPANSION CANNOT BE COMPUTED */ *ierr = 2; return;
     }
 
@@ -1174,9 +1132,8 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	? ((*w == ML_NEGINF) ? 0. : exp(  *w    - log_u))
 	: ((*w == 0.)        ? 0. : exp(log(*w) - log_u));
 
-#ifdef DEBUG_bratio
-    REprintf(" bgrat(a=%g, b=%g, x=%g, *)\n -> u=%g, l='w/u'=%g, ", a,b,x, u, l);
-#endif
+    R_ifDEBUG_printf(" bgrat(a=%g, b=%g, x=%g, *)\n -> u=%g, l='w/u'=%g, ",
+		     a,b,x, u, l);
     double
 	q_r = grat_r(b, z, log_r, eps), // = q/r of former grat1(b,z, r, &p, &q)
 	v = 0.25 / (nu * nu),
@@ -1204,17 +1161,15 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	double dj = d[nm1] * j;
 	sum += dj;
 	if (sum <= 0.0) {
-#ifdef DEBUG_bratio
-	    REprintf(" bgrat(*): sum_n(..) <= 0; should not happen (n=%d)\n", n);
-#endif
+	    R_ifDEBUG_printf(" bgrat(*): sum_n(..) <= 0; should not happen (n=%d)\n", n);
 	    /* L_Error:    THE EXPANSION CANNOT BE COMPUTED */ *ierr = 3; return;
 	}
 	if (fabs(dj) <= eps * (sum + l)) {
 	    break;
-	} else if(n == n_terms_bgrat)
-	    MATHLIB_WARNING4(
-		"bgrat(a=%g, b=%g, x=%g,..): did *not* converge; rel.err=%g",
-		a,b,x, fabs(dj) /(sum + l));
+	} else if(n == n_terms_bgrat) // never? ; please notify R-core if seen:
+	    MATHLIB_WARNING5(
+		"bgrat(a=%g, b=%g, x=%g,..): did *not* converge; dj=%g, rel.err=%g\n",
+		a,b,x, dj, fabs(dj) /(sum + l));
     }
 
 /*                    ADD THE RESULTS TO W */
@@ -1251,18 +1206,15 @@ static double grat_r(double a, double x, double log_r, double eps)
 	/* L120: */
 	if (x < 0.25) {
 	    double p = erf__(sqrt(x));
-#ifdef DEBUG_bratio
-	    REprintf(" grat_r(a=%g, x=%g ..)): a=1/2 --> p=erf__(.)= %g\n", a,x, p);
-#endif
+	    R_ifDEBUG_printf(" grat_r(a=%g, x=%g ..)): a=1/2 --> p=erf__(.)= %g\n",
+			     a, x, p);
 	    return (0.5 - p + 0.5)*exp(-log_r);
 
         } else { // 2013-02-27: improvement for "large" x: direct computation of q/r:
 	    double sx = sqrt(x),
 		q_r = erfc1(1, sx)/sx * M_SQRT_PI;
-#ifdef DEBUG_bratio
-	    REprintf(" grat_r(a=%g, x=%g ..)): a=1/2 --> q_r=erfc1(..)/r= %g\n",
-		     a,x, q_r);
-#endif
+	    R_ifDEBUG_printf(" grat_r(a=%g, x=%g ..)): a=1/2 --> q_r=erfc1(..)/r= %g\n",
+			     a,x, q_r);
 	    return q_r;
 	}
 
@@ -1279,10 +1231,8 @@ static double grat_r(double a, double x, double log_r, double eps)
 	    sum += t;
 	} while (fabs(t) > tol);
 
-#ifdef DEBUG_bratio
-	REprintf(" grat_r(a=%g, x=%g, log_r=%g): sum=%g; Taylor w/ %.0f terms",
-		 a,x,log_r, sum, an-3.);
-#endif
+	R_ifDEBUG_printf(" grat_r(a=%g, x=%g, log_r=%g): sum=%g; Taylor w/ %.0f terms",
+			 a,x,log_r, sum, an-3.);
 	double j = a * x * ((sum/6. - 0.5/(a + 2.)) * x + 1./(a + 1.)),
 	    z = a * log(x),
 	    h = gam1(a),
@@ -1293,22 +1243,16 @@ static double grat_r(double a, double x, double log_r, double eps)
 	    double l = rexpm1(z),
 		q = ((l + 0.5 + 0.5) * j - l) * g - h;
 	    if (q <= 0.0) {
-#ifdef DEBUG_bratio
-		REprintf(" => q_r= 0.\n");
-#endif
+		R_ifDEBUG_printf(" => q_r= 0.\n");
 		/* L110:*/ return 0.;
 	    } else {
-#ifdef DEBUG_bratio
-		REprintf(" => q_r=%.15g\n", q * exp(-log_r));
-#endif
+		R_ifDEBUG_printf(" => q_r=%.15g\n", q * exp(-log_r));
 		return q * exp(-log_r);
 	    }
 
 	} else {
 	    double p = exp(z) * g * (0.5 - j + 0.5);
-#ifdef DEBUG_bratio
-	    REprintf(" => q_r=%.15g\n", (0.5 - p + 0.5) * exp(-log_r));
-#endif
+	    R_ifDEBUG_printf(" => q_r=%.15g\n", (0.5 - p + 0.5) * exp(-log_r));
 	    return /* q/r = */ (0.5 - p + 0.5) * exp(-log_r);
 	}
 
@@ -1332,10 +1276,8 @@ static double grat_r(double a, double x, double log_r, double eps)
 	    an0 = a2n / b2n;
 	} while (fabs(an0 - am0) >= eps * an0);
 
-#ifdef DEBUG_bratio
-	REprintf(" grat_r(a=%g, x=%g, log_r=%g): Cont.frac. %.0f terms => q_r=%.15g\n",
-		 a,x, log_r, c-1., an0);
-#endif
+	R_ifDEBUG_printf(" grat_r(a=%g, x=%g, log_r=%g): Cont.frac. %.0f terms => q_r=%.15g\n",
+			 a,x, log_r, c-1., an0);
 	return /* q/r = (r * an0)/r = */ an0;
     }
 } /* grat_r */
@@ -1781,9 +1723,7 @@ static double gam1(double a)
 		     ) * t + r[3]) * t + r[2]) * t + r[1]) * t + r[0];
 	bot = (s2 * t + s1) * t + 1.0;
 	w = top / bot;
-#ifdef DEBUG_bratio
-	REprintf("  gam1(a = %.15g): t < 0: w=%.15g\n", a, w);
-#endif
+	R_ifDEBUG_printf("  gam1(a = %.15g): t < 0: w=%.15g\n", a, w);
 	if (d > 0.0)
 	    return t * w / a;
 	else
@@ -1804,11 +1744,8 @@ static double gam1(double a)
 		   ) * t + p[1]) * t + p[0];
 	bot = (((q[4] * t + q[3]) * t + q[2]) * t + q[1]) * t + 1.0;
 	w = top / bot;
-#ifdef DEBUG_bratio
-	REprintf("  gam1(a = %.15g): t > 0: (is a < 1.5 ?)  w=%.15g\n",
-		 a, w);
-#endif
-
+	R_ifDEBUG_printf("  gam1(a = %.15g): t > 0: (is a < 1.5 ?)  w=%.15g\n",
+			 a, w);
 	if (d > 0.0) /* L21: */
 	    return t / a * (w - 0.5 - 0.5);
 	else

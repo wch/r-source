@@ -814,6 +814,16 @@ stopifnot(all.equal(px[1], -746.0986886924, tol=1e-12),
           -4.2e-8 < d2., d2. < -4.18e-8)
 ## were way off in R <= 3.1.0
 
+c0 <- system.time(p0 <- pbeta(  .9999, 1e30, 1.001, log=TRUE))
+cB <- max(.001, c0[[1]])# base time
+c1 <- system.time(p1 <- pbeta(1- 1e-9, 1e30, 1.001, log=TRUE))
+c2 <- system.time(p2 <- pbeta(1-1e-12, 1e30, 1.001, log=TRUE))
+stopifnot(all.equal(p0, -1.000050003333e26, tol=1e-10),
+          all.equal(p1, -1e21, tol = 1e-6),
+          all.equal(p2, -9.9997788e17),
+          c(c1[[1]], c2[[1]]) < 1000*cB)
+## (almost?) infinite loop in R <= 3.1.0
+
 
 ## pbinom(), dbinom(), dhyper(),.. : R allows "almost integer" n
 for (FUN in c(function(n) dbinom(1,n,0.5), function(n) pbinom(1,n,0.5),
@@ -832,6 +842,10 @@ stopifnot(pbeta(.1, Inf, 40) == 0,
           ## gave infinite loop (or NaN) in R <= 3.1.0
           qbeta(.9, Inf, 100) == 1, # Inf.loop
           qbeta(.1, Inf, Inf) == 1/2)# NaN + Warning
+## range check (in "close" cases):
+assertWarning(qN <- qbeta(2^-(10^(1:3)), 2,3, log.p=TRUE))
+assertWarning(qn <- qbeta(c(-.1, -1e-300, 1.25), 2,3))
+stopifnot(is.nan(qN), is.nan(qn))
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

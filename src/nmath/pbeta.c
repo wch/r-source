@@ -64,7 +64,8 @@ double pbeta_raw(double x, double a, double b, int lower_tail, int log_p)
     //====
     // ierr = 8 : inaccuracy in extreme cases in bgrat(); we warn *there*
     if(ierr && (ierr != 8 || log_p) )
-	MATHLIB_WARNING(_("pbeta_raw() -> bratio() gave error code %d"), ierr);
+	MATHLIB_WARNING4(_("pbeta_raw(%g, a=%g, b=%g, ..) -> bratio() gave error code %d"),
+			x, a,b, ierr);
     return lower_tail ? w : wc;
 } /* pbeta_raw() */
 

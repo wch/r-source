@@ -225,7 +225,8 @@
 
       \item \code{pbeta(x, a, b, log = TRUE)} no longer behaves
       discontinuously (in a small x-region) because of denormalized
-      numbers.
+      numbers.  Also, \code{pbeta(1-1e-12, 1e30, 1.001, log=TRUE)} now
+      terminates \dQuote{in real time}.
 
       \item The \code{"CRAN"} filter (see \code{available.packages()})
       no longer removes duplicates other than of packages on CRAN, and
