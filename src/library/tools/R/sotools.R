@@ -41,7 +41,7 @@ read_symbols_from_object_file <- function(f)
     ## reasonable to assume this on the path
     if(!nzchar(nm <- Sys.which("nm"))) return()
     f <- file_path_as_absolute(f)
-    if(!(file.info(f, extra_cols = FALSE)$size)) return()
+    if(!(file.size(f))) return()
     s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
                          intern = TRUE),
                   " +")

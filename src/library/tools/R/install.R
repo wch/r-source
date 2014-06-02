@@ -901,8 +901,7 @@
                                    "bzip2" = 2L,
                                    "xz" = 3L,
                                    TRUE)  # default to gzip
-                } else if(file.info(f, extra_cols = FALSE)$size > 1e6)
-                    comp <- 3L # "xz"
+                } else if(file.size(f) > 1e6) comp <- 3L # "xz"
 		res <- try(sysdata2LazyLoadDB(f, file.path(instdir, "R"),
                                               compress = comp))
 		if (inherits(res, "try-error"))
@@ -1065,7 +1064,7 @@
             file.copy(i_files, i2_files)
             if (!WINDOWS) {
                 ## make executable if the source file was (for owner)
-                modes <- file.info(i_files, extra_cols = FALSE)$mode
+                modes <- file.mode(i_files)
                 execs <- as.logical(modes & as.octmode("100"))
 		Sys.chmod(i2_files[execs], dmode)
             }
@@ -1570,7 +1569,7 @@
     group.writable <- if(WINDOWS) FALSE else {
 	## install package group-writable  iff  in group-writable lib
         d <-  as.octmode("020")
-	(file.info(lib, extra_cols = FALSE)$mode & d) == d ## TRUE  iff  g-bit is "w"
+	(file.mode(lib) & d) == d ## TRUE  iff  g-bit is "w"
     }
 
     if (libs_only) {

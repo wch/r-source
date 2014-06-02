@@ -47,7 +47,7 @@ make.packages.html <-
     if (temp && file.exists(f.tg) && file.exists(op)) {
         ## check if we can avoid remaking it.
         if(identical(lib.loc, readRDS(op))) {
-            dates <- file.info(c(f.tg, lib.loc), extra_cols = FALSE)$mtime
+            dates <- file.mtime(c(f.tg, lib.loc))
             if(which.max(dates) == 1L) return(TRUE)
         }
     }

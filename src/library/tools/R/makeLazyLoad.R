@@ -271,8 +271,7 @@ makeLazyLoading <-
         warning("package contains no R code")
         return(invisible())
     }
-    if (file.info(codeFile, extra_cols = FALSE)["size"] ==
-        file.info(loaderFile, extra_cols = FALSE)["size"])
+    if (file.size(codeFile) == file.size(loaderFile))
         warning("package seems to be using lazy loading already")
     else {
         code2LazyLoadDB(package, lib.loc = lib.loc,

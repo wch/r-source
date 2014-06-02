@@ -46,8 +46,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
             	    close(file)
             	    file <- stdin()
         	    srcfile <-
-                        srcfilecopy(filename, text,
-                                    file.info(filename, extra_cols = FALSE)[1,"mtime"],
+                        srcfilecopy(filename, text, file.mtime(filename),
                                     isFile = TRUE)
                 } else
 		    on.exit(close(file))

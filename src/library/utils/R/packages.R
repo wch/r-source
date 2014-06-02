@@ -572,8 +572,7 @@ installed.packages <-
             enc <- sprintf("%d_%s", nchar(base), .Call(C_crc64, base))
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             if(file.exists(dest) &&
-               file.info(dest, extra_cols = FALSE)$mtime >
-               file.info(lib, extra_cols = FALSE)$mtime &&
+               file.mtime(dest) > file.mtime(lib) &&
                (val <- readRDS(dest))$base == base)
                 ## use the cache file
                 retval <- rbind(retval, val$value)

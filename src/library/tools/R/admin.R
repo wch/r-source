@@ -392,22 +392,20 @@ function(dir, outDir)
     ## some people have man dirs without any valid .Rd files
     if(length(allRd)) {
         ## we want the date of the newest .Rd file we will install
-        newestRd <- max(file.info(allRd, extra_cols = FALSE)$mtime)
+        newestRd <- max(file.mtime(allRd))
         ## these files need not exist, which gives NA.
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
                      file.path("Meta", "links.rds"),
                      "INDEX")
-        upToDate <- file.info(file.path(outDir, indices),
-                              extra_cols = FALSE)$mtime >= newestRd
+        upToDate <- file.mtime(file.path(outDir, indices)) >= newestRd
         if(dir.exists(dataDir)
            && length(dataFiles <- list.files(dataDir))) {
             ## Note that the data index is computed from both the package's
             ## Rd files and the data sets actually available.
-            newestData <- max(file.info(dataFiles, extra_cols = FALSE)$mtime)
+            newestData <- max(file.mtime(dataFiles))
             upToDate <- c(upToDate,
-                          file.info(file.path(outDir, "Meta", "data.rds"),
-                                    extra_cols = FALSE)$mtime >=
+                          file.mtime(file.path(outDir, "Meta", "data.rds")) >=
                           max(newestRd, newestData))
         }
         ## Note that this is not quite good enough: an Rd file or data file
@@ -934,7 +932,7 @@ checkRdaFiles <- function(paths)
     res <- res[rep_len(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
-    res$size[keep] <- file.info(paths, extra_cols = FALSE)$size[keep]
+    res$size[keep] <- file.size(paths)[keep]
     for(p in paths[keep]) {
         magic <- readBin(p, "raw", n = 5)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
@@ -974,13 +972,13 @@ resaveRdaFiles <- function(paths,
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
                  compress = "bzip2")
-            ss <- file.info(c(f1, f2), extra_cols = FALSE)$size * c(0.9, 1.0)
+            ss <- file.size(c(f1, f2)) * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
                      compress = "xz")
-                ss <- c(ss, file.info(f3, extra_cols = FALSE)$size)
+                ss <- c(ss, file.size(f3))
 		names(ss) <- c(f1, f2, f3)
             }
             nm <- names(ss)
@@ -1034,8 +1032,7 @@ compactPDF <-
                                    p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
-            old <- file.info(p, extra_cols = FALSE)$size
-            new <-  file.info(tf, extra_cols = FALSE)$size
+            old <- file.size(p); new <-  file.size(tf)
             if(new/old < 0.9 && new < old - 1e4) {
                 file.copy(tf, p, overwrite = TRUE)
                 ans[p, ] <- c(old, new)
@@ -1078,8 +1075,7 @@ add_datalist <- function(pkgpath, force = FALSE)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
     if (!force && file.exists(dlist)) return()
-    size <- sum(file.info(Sys.glob(file.path(pkgpath, "data", "*")),
-                          extra_cols = FALSE)$size)
+    size <- sum(file.size(Sys.glob(file.path(pkgpath, "data", "*"))))
     if(size <= 1024^2) return()
     z <- suppressPackageStartupMessages(list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
     if(!length(z)) return()

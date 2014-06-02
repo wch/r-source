@@ -5,6 +5,9 @@
 
 \name{file.info}
 \alias{file.info}
+\alias{file.mode}
+\alias{file.mtime}
+\alias{file.size}
 \title{Extract File Information}
 \description{
   Utility function to extract information about files on the user's
@@ -12,6 +15,10 @@
 }
 \usage{
 file.info(\dots, extra_cols = TRUE)
+
+file.mode(\dots)
+file.mtime(\dots)
+file.size(\dots)
 }
 \arguments{
   \item{\dots}{character vectors containing file paths.  Tilde-expansion
@@ -50,7 +57,7 @@ file.info(\dots, extra_cols = TRUE)
 #endif
 }
 \value{
-  A data frame with row names the file names and columns
+  For \code{file.info}, data frame with row names the file names and columns
   \item{size}{double: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
@@ -73,7 +80,7 @@ file.info(\dots, extra_cols = TRUE)
 #endif
 
   If \code{extra_cols} is false, only the first six columns are
-  returned: as these can all be found from a single C system call, this
+  returned: as these can all be found from a single C system call this
   can be faster.
   
   Entries for non-existent or non-readable files will be \code{NA}.
@@ -93,6 +100,9 @@ file.info(\dots, extra_cols = TRUE)
   some systems.  However, many file systems only record times in
   seconds, and some (e.g. modification time on FAT systems) are recorded
   in increments of 2 or more seconds.
+  
+  \code{file.mode}, \code{file.mtime} and \code{file.mode} are
+  convenience wrappers returning just one of the columns.
 }
 #ifdef unix
 \note{

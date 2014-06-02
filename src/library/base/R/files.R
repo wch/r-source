@@ -106,7 +106,7 @@ file.copy <- function(from, to,
     if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to copy to")
     ## we don't use file_test as that is in utils.
-    if (nt == 1 && isTRUE(file.info(to, extra_cols = FALSE)$isdir)) {
+    if (nt == 1 && dir.exists(to)) {
         if (recursive && to %in% from)
             stop("attempt to copy a directory to itself")
         ## on Windows we need \ for the compiled code (e.g. mkdir).
@@ -162,6 +162,11 @@ file.info <- function(..., extra_cols = TRUE)
     attr(res, "row.names") <- fn # not row.names<- as that does a length check
     res
 }
+## wrappers introduced in R 3.1.0
+file.mode <- function(...) file.info(..., extra_cols = TRUE)$mode
+file.mtime <- function(...) file.info(..., extra_cols = TRUE)$mtime
+file.size <- function(...) file.info(..., extra_cols = TRUE)$size
+
 
 file.access <- function(names, mode = 0)
 {

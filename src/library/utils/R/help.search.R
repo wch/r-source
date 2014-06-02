@@ -177,9 +177,7 @@ help.search <-
 	   ## We also need to rebuild the hsearch db in case an existing
 	   ## dir in the library path was modified more recently than
 	   ## the db, as packages might have been installed or removed.
-	   any(attr(db, "mtime") <
-	       file.info(lib.loc[file.exists(lib.loc)],
-                         extra_cols = FALSE)$mtime) ||
+	   any(attr(db, "mtime") < file.mtime(lib.loc[file.exists(lib.loc)])) ||
 	   ## Or if the user changed the locale character type ...
 	   !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
 	   )

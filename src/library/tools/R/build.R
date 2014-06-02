@@ -693,7 +693,7 @@ get_exclude_patterns <- function()
                     con <- gzfile(nm3[1L], "wb", compression = 9L); writeLines(x, con); close(con)
                     con <- bzfile(nm3[2L], "wb", compression = 9L); writeLines(x, con); close(con)
                     con <- xzfile(nm3[3L], "wb", compression = 9L); writeLines(x, con); close(con)
-                    sizes <- file.info(nm3)$size * c(0.9, 1, 1)
+                    sizes <- file.size(nm3) * c(0.9, 1, 1)
                     ind <- which.min(sizes)
                     if(ind > 1) OK <<- FALSE
                     unlink(c(nm, nm3[-ind]))

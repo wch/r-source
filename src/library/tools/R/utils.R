@@ -69,11 +69,11 @@ function(op, x, y)
     switch(op,
            "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
            "-d" = dir.exists(x),
-           "-nt" = (!is.na(mt.x <- file.info(x, extra_cols = FALSE)$mtime)
-                    & !is.na(mt.y <- file.info(y, extra_cols = FALSE)$mtime)
+           "-nt" = (!is.na(mt.x <- file.mtime(x))
+                    & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.info(x, extra_cols = FALSE)$mtime)
-                    & !is.na(mt.y <- file.info(y, extra_cols = FALSE)$mtime)
+           "-ot" = (!is.na(mt.x <- file.mtime(x))
+                    & !is.na(mt.y <- file.mtimx(y))
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            stop(gettextf("test '%s' is not available", op),
@@ -1378,7 +1378,7 @@ function(packages = NULL, FUN, ...)
 .parse_code_file <-
 function(file, encoding = NA)
 {
-    if(!file.info(file, extra_cols = FALSE)$size) return()
+    if(!file.size(file)) return()
     suppressWarnings({
         if(!is.na(encoding) &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {

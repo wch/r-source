@@ -609,17 +609,17 @@ setEncoding2, "
     ## </NOTE>
 
     if (!file.exists(file)) return(0L)
-    age <- file.info(file, extra_cols = FALSE)$mtime
+    age <- file.mtime(file)
 
-    if (any(file.info(c(Sys.glob(file.path(dir, "man", "*.Rd")),
-                        Sys.glob(file.path(dir, "man", "*.rd"))),
-                      extra_cols = FALSE)$mtime > age))
+    if (any(file.mtime(c(Sys.glob(file.path(dir, "man", "*.Rd")),
+                        Sys.glob(file.path(dir, "man", "*.rd"))))
+                       > age))
         return(0L)
 
     if (dir.exists(file.path(dir, OS))) {
-        if (any(file.info(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
-                            Sys.glob(file.path(dir, "man", OS, "*.rd"))),
-                          extra_cols = FALSE)$mtime > age))
+        if (any(file.mtime(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
+                            Sys.glob(file.path(dir, "man", OS, "*.rd"))))
+                           > age))
             return(0L)
     }
 

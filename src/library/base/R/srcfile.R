@@ -29,7 +29,7 @@ srcfile <- function(filename, encoding = getOption("encoding"), Enc = "unknown")
     e$filename <- filename
 
     # If filename is a URL, this will return NA
-    e$timestamp <- file.info(filename, extra_cols = FALSE)[1,"mtime"]
+    e$timestamp <- file.mtime(filename)
 
     if (identical(encoding, "unknown")) encoding <- "native.enc"
     e$encoding <- encoding
@@ -71,7 +71,7 @@ open.srcfile <- function(con, line, ...) {
 	    olddir <- setwd(srcfile$wd)
 	    on.exit(setwd(olddir))
 	}
-	timestamp <- file.info(srcfile$filename, extra_cols = FALSE)[1,"mtime"]
+	timestamp <- file.mtime(srcfile$filename)
 	if (!is.null(srcfile$timestamp)
 	    && !is.na(srcfile$timestamp)
 	    && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
