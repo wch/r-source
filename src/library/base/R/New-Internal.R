@@ -104,7 +104,7 @@ rbind <- function(..., deparse.level = 1)
                    c("all",
                      "keepInteger", "quoteExpressions", "showAttributes",
                      "useSource", "warnIncomplete", "delayPromises",
-                     "keepNA", "S_compatible"))
+                     "keepNA", "S_compatible", "hexNumeric"))
     if (anyNA(opts))
         stop(sprintf(ngettext(as.integer(sum(is.na(opts))),
                               "deparse option %s is not recognized",

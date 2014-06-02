@@ -73,6 +73,13 @@
       For compatibility with S, integer values of double vectors are
       deparsed with a trailing decimal point.  Backticks are not used.
     }
+    \item{\code{hexNumeric}}{
+      Real and finite complex numbers are output in \samp{"\%a"} format as
+      binary fractions (coded as hexadecimal: see \code{\link{sprintf}})
+      with maximal opportunity to be recorded to full precision (and no
+      noise). Complex numbers with one or both non-finite components are
+      output as if this option were not set.
+    }
   }
   For the most readable (but perhaps incomplete) display, use
   \code{control = NULL}. This displays the object's value, but not its
@@ -86,6 +93,8 @@
   an inverse of \code{parse()}.  However, not all objects are
   deparse-able even with this option.  A warning will be issued if the
   function recognizes that it is being asked to do the impossible.
+  Also, representing double and complex numbers as decimals may well not
+  be exact.
 }
 \value{
   A numerical value corresponding to the options selected.

@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -64,11 +64,10 @@ dget(file)
   \code{\link{deparse}}, \code{\link{dump}}, \code{\link{write}}.
 }
 \examples{
-## Write an ASCII version of mean to the file "foo"
+## Write an ASCII version of function mean to the file "foo"
 dput(mean, "foo")
 ## And read it back into 'bar'
 bar <- dget("foo")
-unlink("foo")
 ## Create a function with comments
 baz <- function(x) {
   # Subtract from one
@@ -78,6 +77,14 @@ baz <- function(x) {
 dput(baz)
 ## and now display the saved source
 dput(baz, control = "useSource")
+
+## Numeric values:
+dput(pi) # slight rounding
+dput(pi, control = "hexNumeric") # can be read in exactly
+dput(pi, "foo"); dget("foo") - pi
+dput(pi, "foo", control = "hexNumeric"); dget("foo") - pi
+
+unlink("foo")
 }
 \keyword{file}
 \keyword{programming}

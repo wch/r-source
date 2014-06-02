@@ -56,8 +56,13 @@
       \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
       of columns to be computed.
       
-      \item New internal function \code{dir.exists()} in \pkg{base} to test
-      whether one or more paths exist and are directories.
+      \item New function \code{dir.exists()} in \pkg{base} to test
+      efficiently whether one or more paths exist and are directories.
+
+      \item \code{dput()} and friends gain a new control
+      \samp{"hexNumeric"} which outputs double and complex quantities
+      as binary fractions (see \code{sprintf("\%a")}) to full precision
+      (and no noise).
     }
   }
 
@@ -103,9 +108,6 @@
 \section{\Rlogo CHANGES IN R 3.1.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \command{configure} option \option{--with-internal-tzcode}
-      can now be used with variable \code{rsharedir}.
-
       \item When \code{attach()} reports conflicts, it does so
       compatibly with \code{library()} by using \code{message()}.
 
@@ -159,6 +161,9 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
+      \item \command{configure} option \option{--with-internal-tzcode}
+      can now be used with variable \code{rsharedir}.
+
       \item The included version of PCRE has been updated to 8.35.
 
       \item There is a new target \command{make uninstall-libR} to

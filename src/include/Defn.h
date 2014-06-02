@@ -970,6 +970,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define DELAYPROMISES 		32
 #define KEEPNA			64
 #define S_COMPAT       		128
+#define HEXNUMERIC             	256
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
 #define DEFAULTDEPARSE		65 /* KEEPINTEGER | KEEPNA, used for calls */
