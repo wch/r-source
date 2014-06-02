@@ -64,6 +64,7 @@ double	Rf_gamma_cody(double);
 # define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
 # define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
 # define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
+# define MATHLIB_WARNING5(fmt,x,x2,x3,x4,x5) warning(fmt,x,x2,x3,x4,x5)
 
 #include <R_ext/Arith.h>
 #define ML_POSINF	R_PosInf
@@ -100,6 +101,7 @@ void R_CheckUserInterrupt(void);
 #define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
 #define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
 #define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
+#define MATHLIB_WARNING5(fmt,x,x2,x3,x4,x5) printf(fmt,x,x2,x3,x4,x5)
 
 #define ISNAN(x) (isnan(x)!=0)
 #define R_FINITE(x)    R_finite(x)
