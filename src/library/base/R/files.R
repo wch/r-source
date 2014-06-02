@@ -128,8 +128,8 @@ file.copy <- function(from, to,
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) {
             okay[okay] <- file.append(to[okay], from[okay])
-            if(copy.mode || copy.date) {
-                fi <- file.info(from[okay], extra_cols = FALSE)
+            if(copy.mode || copy.date) { # file.info call can be slow
+                fi <- file.info(from[okay])
                 if(copy.mode) Sys.chmod(to[okay], fi$mode, TRUE)
                 if(copy.date) Sys.setFileTime(to[okay], fi$mtime)
             }
