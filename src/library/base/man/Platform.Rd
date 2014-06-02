@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -92,9 +92,9 @@
 
 \examples{
 ## Note: this can be done in a system-independent way
-## by file.info()$isdir
+## by file.info()$isdir: see utils::file_test
 if(.Platform$OS.type == "unix") {
-   system.test <- function(...) { system(paste("test", ...)) == 0 }
+   system.test <- function(...) system(paste("test", ...)) == 0L
    dir.exists <- function(dir)
        sapply(dir, function(d) system.test("-d", d))
    dir.exists(c(R.home(), "/tmp", "~", "/NO")) # > T T T F
