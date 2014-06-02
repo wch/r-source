@@ -777,10 +777,11 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP fn, ans, ansnames, fsize, mtime, ctime, atime, isdir,
 	mode, xxclass;
 #ifdef UNIX_EXTRAS
-    SEXP uid, gid, uname, grname;
+    SEXP uid = R_NilValue, gid = R_NilValue, 
+	uname = R_NilValue, grname = R_NilValue; // silence -Wall
 #endif
 #ifdef Win32
-    SEXP exe;
+    SEXP exe = R_NilValue;
     struct _stati64 sb;
 #else
     struct stat sb;
@@ -815,8 +816,8 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, 4, mkChar("ctime"));
     atime = SET_VECTOR_ELT(ans, 5, allocVector(REALSXP, n));
     SET_STRING_ELT(ansnames, 5, mkChar("atime"));
-#ifdef UNIX_EXTRAS
     if (extras) {
+#ifdef UNIX_EXTRAS
 	uid = SET_VECTOR_ELT(ans, 6, allocVector(INTSXP, n));
 	SET_STRING_ELT(ansnames, 6, mkChar("uid"));
 	gid = SET_VECTOR_ELT(ans, 7, allocVector(INTSXP, n));
@@ -825,14 +826,12 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_STRING_ELT(ansnames, 8, mkChar("uname"));
 	grname = SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
 	SET_STRING_ELT(ansnames, 9, mkChar("grname"));
-    }
 #endif
 #ifdef Win32
-    if (extras) {
 	exe = SET_VECTOR_ELT(ans, 6, allocVector(STRSXP, n));
 	SET_STRING_ELT(ansnames, 6, mkChar("exe"));
-    }
 #endif
+    }
     for (int i = 0; i < n; i++) {
 #ifdef Win32
 	wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
