@@ -10,9 +10,6 @@
 \section{\Rlogo CHANGES IN R 3.1.0 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \command{configure} option \option{--with-internal-tzcode}
-      can now be used with variable \code{rsharedir}.
-
       \item When \code{attach()} reports conflicts, it does so
       compatibly with \code{library()} by using \code{message()}.
 
@@ -66,6 +63,9 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
+      \item \command{configure} option \option{--with-internal-tzcode}
+      can now be used with variable \code{rsharedir}.
+
       \item The included version of PCRE has been updated to 8.35.
 
       \item There is a new target \command{make uninstall-libR} to
