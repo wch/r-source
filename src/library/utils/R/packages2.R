@@ -238,7 +238,7 @@ install.packages <-
     if(length(lib) == 1L && .Platform$OS.type == "windows") {
         ## file.access is unreliable on Windows, especially >= Vista.
         ## the only known reliable way is to try it
-        ok <- file.info(lib)$isdir %in% TRUE # dir might not exist, PR#14311
+        ok <- dir.exists(lib) # dir might not exist, PR#14311
         if(ok) {
             fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep = "_"))
             unlink(fn, recursive = TRUE) # precaution

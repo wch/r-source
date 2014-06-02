@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -271,7 +271,8 @@ makeLazyLoading <-
         warning("package contains no R code")
         return(invisible())
     }
-    if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
+    if (file.info(codeFile, extra_cols = FALSE)["size"] ==
+        file.info(loaderFile, extra_cols = FALSE)["size"])
         warning("package seems to be using lazy loading already")
     else {
         code2LazyLoadDB(package, lib.loc = lib.loc,

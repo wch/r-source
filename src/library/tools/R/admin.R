@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -392,20 +392,22 @@ function(dir, outDir)
     ## some people have man dirs without any valid .Rd files
     if(length(allRd)) {
         ## we want the date of the newest .Rd file we will install
-        newestRd <- max(file.info(allRd)$mtime)
+        newestRd <- max(file.info(allRd, extra_cols = FALSE)$mtime)
         ## these files need not exist, which gives NA.
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
                      file.path("Meta", "links.rds"),
                      "INDEX")
-        upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
+        upToDate <- file.info(file.path(outDir, indices),
+                              extra_cols = FALSE)$mtime >= newestRd
         if(dir.exists(dataDir)
            && length(dataFiles <- list.files(dataDir))) {
             ## Note that the data index is computed from both the package's
             ## Rd files and the data sets actually available.
-            newestData <- max(file.info(dataFiles)$mtime)
+            newestData <- max(file.info(dataFiles, extra_cols = FALSE)$mtime)
             upToDate <- c(upToDate,
-                          file.info(file.path(outDir, "Meta", "data.rds"))$mtime >=
+                          file.info(file.path(outDir, "Meta", "data.rds"),
+                                    extra_cols = FALSE)$mtime >=
                           max(newestRd, newestData))
         }
         ## Note that this is not quite good enough: an Rd file or data file
@@ -932,7 +934,7 @@ checkRdaFiles <- function(paths)
     res <- res[rep_len(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
-    res$size[keep] <- file.info(paths)$size[keep]
+    res$size[keep] <- file.info(paths, extra_cols = FALSE)$size[keep]
     for(p in paths[keep]) {
         magic <- readBin(p, "raw", n = 5)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
@@ -972,13 +974,13 @@ resaveRdaFiles <- function(paths,
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
                  compress = "bzip2")
-            ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
+            ss <- file.info(c(f1, f2), extra_cols = FALSE)$size * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
                      compress = "xz")
-                ss <- c(ss, file.info(f3)$size)
+                ss <- c(ss, file.info(f3, extra_cols = FALSE)$size)
 		names(ss) <- c(f1, f2, f3)
             }
             nm <- names(ss)
@@ -1032,7 +1034,8 @@ compactPDF <-
                                    p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
-            old <- file.info(p)$size; new <-  file.info(tf)$size
+            old <- file.info(p, extra_cols = FALSE)$size
+            new <-  file.info(tf, extra_cols = FALSE)$size
             if(new/old < 0.9 && new < old - 1e4) {
                 file.copy(tf, p, overwrite = TRUE)
                 ans[p, ] <- c(old, new)

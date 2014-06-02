@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.search.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -178,7 +178,8 @@ help.search <-
 	   ## dir in the library path was modified more recently than
 	   ## the db, as packages might have been installed or removed.
 	   any(attr(db, "mtime") <
-	       file.info(lib.loc[file.exists(lib.loc)])$mtime) ||
+	       file.info(lib.loc[file.exists(lib.loc)],
+                         extra_cols = FALSE)$mtime) ||
 	   ## Or if the user changed the locale character type ...
 	   !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
 	   )

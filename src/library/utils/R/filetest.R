@@ -27,13 +27,13 @@ function(op, x, y)
     ## directory (the GNU variant tests for being a regular file).
     ## Note: vectorized in x and y.
     switch(op,
-           "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
+           "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
            "-d" = dir.exists(x),
-           "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
+           "-nt" = (!is.na(mt.x <- file.info(x, extra_cols = FALSE)$mtime)
+                    & !is.na(mt.y <- file.info(y, extra_cols = FALSE)$mtime)
                     & (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
+           "-ot" = (!is.na(mt.x <- file.info(x, extra_cols = FALSE)$mtime)
+                    & !is.na(mt.y <- file.info(y, extra_cols = FALSE)$mtime)
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            stop(gettextf("test '%s' is not available", op),
