@@ -1,7 +1,7 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,10 +128,11 @@ file.copy <- function(from, to,
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) {
             okay[okay] <- file.append(to[okay], from[okay])
-            if(copy.mode)
-                Sys.chmod(to[okay], file.info(from[okay])$mode, TRUE)
-            if(copy.date)
-                Sys.setFileTime(to[okay], file.info(from[okay])$mtime)
+            if(copy.mode || copy.date) {
+                fi <- file.info(from[okay], extra_cols = FALSE)
+                if(copy.mode) Sys.chmod(to[okay], fi$mode, TRUE)
+                if(copy.date) Sys.setFileTime(to[okay], fi$mtime)
+            }
         }
     }
     okay
