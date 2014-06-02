@@ -73,7 +73,7 @@ function(op, x, y)
                     & !is.na(mt.y <- file.mtime(y))
                     & (mt.x > mt.y)),
            "-ot" = (!is.na(mt.x <- file.mtime(x))
-                    & !is.na(mt.y <- file.mtimx(y))
+                    & !is.na(mt.y <- file.mtime(y))
                     & (mt.x < mt.y)),
            "-x" = (file.access(x, 1L) == 0L),
            stop(gettextf("test '%s' is not available", op),
