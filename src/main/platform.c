@@ -959,6 +959,55 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+SEXP attribute_hidden do_direxists(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans;
+
+#ifdef Win32
+    struct _stati64 sb;
+#else
+    struct stat sb;
+#endif
+
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+	error(_("invalid filename argument"));
+    int n = length(fn);
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (int i = 0; i < n; i++) {
+#ifdef Win32
+	wchar_t *wfn = filenameToWchar(STRING_ELT(fn, i), TRUE);
+	/* trailing \ is not valid on Windows except for the
+	   root directory on a drive, specified as "\", or "D:\",
+	   or "\\?\D:\", etc.  We remove it in other cases,
+	   to help those who think they're on Unix. */
+	size_t len = wcslen(wfn);
+	if (len) {
+	    wchar_t *p = wfn + (len - 1);
+            if (len > 1 && (*p == L'/' || *p == L'\\') &&
+            	*(p-1) != L':') *p = 0;
+        }
+#else
+	const char *efn = R_ExpandFileName(translateChar(STRING_ELT(fn, i)));
+#endif
+	if (STRING_ELT(fn, i) != NA_STRING &&
+#ifdef Win32
+	    _wstati64(wfn, &sb)
+#else
+	    /* Target not link */
+	    stat(efn, &sb)
+#endif
+	    == 0) {
+	    LOGICAL(ans)[i] = (sb.st_mode & S_IFDIR) > 0;
+
+	} else LOGICAL(ans)[i] = 0;
+    }
+    // copy names?
+    UNPROTECT(1);
+    return ans;
+}
+
 /* No longer required by POSIX, but maybe on earlier OSes */
 #ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>

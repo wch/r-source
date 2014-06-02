@@ -68,7 +68,7 @@ function(op, x, y)
     ## Note: vectorized in x and y.
     switch(op,
            "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
+           "-d" = dir.exists(x),
            "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
                     & !is.na(mt.y <- file.info(y)$mtime)
                     & (mt.x > mt.y)),
@@ -129,7 +129,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
     if(type %in% c("code", "docs")) {
         for(os in OS_subdirs) {
             os_dir <- file.path(dir, os)
-            if(file_test("-d", os_dir)) {
+            if(dir.exists(os_dir)) {
                 os_files <- list_files_with_exts(os_dir, exts,
                                                  all.files = all.files,
                                                  full.names = FALSE)

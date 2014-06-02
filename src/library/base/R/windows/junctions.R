@@ -20,7 +20,7 @@ Sys.junction <- function(from, to)
 {
     if (!(nf <- length(from))) return(logical())
     if (!(nt <- length(to)))   stop("no files to link to")
-    if (nt == 1 && isTRUE(file.info(to)$isdir))
+    if (nt == 1 && dir.exists(file.info(to)))
         to <- file.path(to, basename(from))
     else if (nf > nt) stop("more 'from' files than 'to' files")
     else if (nf < nt) stop("fewer 'from' files than 'to' files")

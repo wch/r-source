@@ -170,6 +170,13 @@ file.access <- function(names, mode = 0)
     res
 }
 
+## dir.exists <- function(paths) {
+##     isdir <- file.info(paths, extra_cols = FALSE)$isdir
+##     !is.na(isdir) & isdir
+## }
+
+dir.exists <- function(paths) .Internal(dir.exists(paths))
+
 dir.create <- function(path, showWarnings = TRUE, recursive = FALSE,
                        mode = "0777")
     .Internal(dir.create(path, showWarnings, recursive, as.octmode(mode)))

@@ -25,7 +25,7 @@ function(topic, package = NULL, lib.loc = NULL,
     paths <- find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
-    paths <- paths[file_test("-d", file.path(paths, "demo"))]
+    paths <- paths[dir.exists(file.path(paths, "demo"))]
     ## Earlier versions remembered given packages with no 'demo'
     ## subdirectory, and warned about them.
 

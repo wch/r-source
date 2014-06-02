@@ -91,13 +91,12 @@
 }
 
 \examples{
-## Note: this can be done in a system-independent way
-## by file.info()$isdir: see utils::file_test
+## Note: this can be done in a system-independent way by dir.exists()
 if(.Platform$OS.type == "unix") {
    system.test <- function(...) system(paste("test", ...)) == 0L
-   dir.exists <- function(dir)
+   dir.exists2 <- function(dir)
        sapply(dir, function(d) system.test("-d", d))
-   dir.exists(c(R.home(), "/tmp", "~", "/NO")) # > T T T F
+   dir.exists2(c(R.home(), "/tmp", "~", "/NO")) # > T T T F
 }
 }
 \keyword{file}

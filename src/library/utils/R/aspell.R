@@ -490,7 +490,7 @@ function(dir, drop = c("\\author", "\\references"),
     dir <- normalizePath(dir, "/")
 
     subdir <- file.path(dir, "man")
-    files <- if(file_test("-d", subdir))
+    files <- if(dir.exists(subdir))
         tools::list_files_with_type(subdir,
                                     "docs",
                                     OS_subdirs = c("unix", "windows"))
@@ -843,7 +843,7 @@ function(dir, ignore = character(),
     dir <- tools::file_path_as_absolute(dir)
 
     subdir <- file.path(dir, "R")
-    files <- if(file_test("-d", subdir))
+    files <- if(dir.exists(subdir))
         tools::list_files_with_type(subdir,
                                     "code",
                                     OS_subdirs = c("unix", "windows"))
@@ -930,7 +930,7 @@ function(dir, ignore = character(),
 {
     dir <- tools::file_path_as_absolute(dir)
     subdir <- file.path(dir, "po")
-    files <- if(file_test("-d", subdir))
+    files <- if(dir.exists(subdir))
         Sys.glob(file.path(subdir, "*.pot"))
     else character()
 
@@ -1132,7 +1132,7 @@ function(n) {
 find_files_in_directories <-
 function(basenames, dirnames)
 {
-    dirnames <- dirnames[file_test("-d", dirnames)]
+    dirnames <- dirnames[dir.exists(dirnames)]
     dirnames <- normalizePath(dirnames, "/")
 
     out <- character(length(basenames))

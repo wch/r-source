@@ -59,7 +59,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 	# avoid builddir != srcdir problems -- assume package has been installed
         lib.loc <- c(dirname(pkgpath), .libPaths())
     }
-    if(file_test("-d", dataDir)) {
+    if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
         } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
@@ -102,7 +102,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         op <- options(encoding=enc)
         on.exit(options(encoding=op[[1L]]))
     }
-    if(file_test("-d", dataDir)) {
+    if(dir.exists(dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
 	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
 	    file.exists(file.path(dataDir, paste(package, "rdb", sep="."))) ){

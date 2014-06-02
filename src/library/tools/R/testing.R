@@ -24,7 +24,7 @@ massageExamples <-
     function(pkg, files, outFile = stdout(), use_gct = FALSE,
              addTiming = FALSE, ..., commentDonttest = TRUE)
 {
-    if(file_test("-d", files[1L])) {
+    if(dir.exists(files[1L])) {
         old <- Sys.setlocale("LC_COLLATE", "C")
         files <- sort(Sys.glob(file.path(files, "*.R")))
         Sys.setlocale("LC_COLLATE", old)
@@ -340,7 +340,7 @@ testInstalledPackage <-
     }
 
     ## FIXME merge with code in .runPackageTests
-    if (2 %in% types && file_test("-d", d <- file.path(pkgdir, "tests"))) {
+    if (2 %in% types && dir.exists(d <- file.path(pkgdir, "tests"))) {
         this <- paste(pkg, "tests", sep = "-")
         unlink(this, recursive = TRUE)
         dir.create(this)
@@ -375,7 +375,7 @@ testInstalledPackage <-
         setwd(owd)
     }
 
-    if (3 %in% types && file_test("-d", d <- file.path(pkgdir, "doc"))) {
+    if (3 %in% types && dir.exists(file.path(pkgdir, "doc"))) {
         message(gettextf("Running vignettes for package %s", sQuote(pkg)),
                 domain = NA)
         checkVignettes(pkg, lib.loc, latex = FALSE, weave =TRUE)

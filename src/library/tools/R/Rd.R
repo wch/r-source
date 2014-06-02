@@ -234,11 +234,11 @@ function(RdFiles, outFile = "", type = NULL,
     ##
     ## called from R CMD build
 
-    if((length(RdFiles) == 1L) && file_test("-d", RdFiles)) {
+    if((length(RdFiles) == 1L) && dir.exists(RdFiles)) {
         ## Compatibility code for the former @code{R CMD Rdindex}
         ## interface.
         docsDir <- RdFiles
-        if(file_test("-d", file.path(docsDir, "man")))
+        if(dir.exists(file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
         RdFiles <- list_files_with_type(docsDir, "docs")
     }
@@ -334,7 +334,7 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file_test("-d", dir))
+        if(!dir.exists(dir))
             stop(gettextf("directory '%s' does not exist", dir),
                  domain = NA)
         else
@@ -368,7 +368,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
     if(!is.null(dir)) {
         dir <- file_path_as_absolute(dir)
         man_dir <- file.path(dir, "man")
-        if(!file_test("-d", man_dir))
+        if(!dir.exists(man_dir))
             return(structure(list(), names = character()))
         if(is.null(files))
             files <- list_files_with_type(man_dir, "docs", OS_subdirs=os)
@@ -476,7 +476,7 @@ function(package, dir, lib.loc = NULL)
         ## </NOTE>
     }
     else {
-        if(file_test("-d", file.path(dir, "man"))) {
+        if(dir.exists(file.path(dir, "man"))) {
             db <- Rd_db(dir = dir)
             aliases <- lapply(db, .Rd_get_metadata, "alias")
             if(length(aliases))

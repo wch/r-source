@@ -50,7 +50,6 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
 
     unpackPkg <- function(pkg, pkgname, lib, lock = FALSE)
     {
-        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.

@@ -36,8 +36,6 @@
     ## calls system() on Windows for
     ## sh (configure.win/cleanup.win) make zip
 
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     ## global variables
     curPkg <- character() # list of packages in current pkg
     lockdir <- ""
@@ -1149,7 +1147,7 @@
 				types = build_help_types,
 				outenc = outenc)
 	    }
-	    if (file_test("-d", figdir <- file.path(pkg_dir, "man", "figures"))) {
+	    if (dir.exists(figdir <- file.path(pkg_dir, "man", "figures"))) {
 		starsmsg(paste0(stars, "*"), "copying figures")
 		dir.create(destdir <- file.path(instdir, "help", "figures"))
 		file.copy(Sys.glob(c(file.path(figdir, "*.png"),
@@ -1166,7 +1164,7 @@
 	    res <- try(.install_package_indices(".", instdir))
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
-            if(file_test("-d", "vignettes")) {
+            if(dir.exists("vignettes")) {
                 starsmsg(stars, "installing vignettes")
                 enc <- desc["Encoding"]
                 if (is.na(enc)) enc <- ""
@@ -1504,7 +1502,7 @@
                 errmsg("cannot extract package from ", sQuote(pkg))
             if (length(new) > 1L)
                 errmsg("extracted multiple files from ", sQuote(pkg))
-            if (file.info(new)$isdir) pkgname <- basename(new)
+            if (dir.exists(new)) pkgname <- basename(new)
             else errmsg("cannot extract package from ", sQuote(pkg))
 
             ## If we have a binary bundle distribution, there should
@@ -2129,7 +2127,7 @@
     ext     <- c(".html", ".tex", ".R")
     names(dirname) <- names(ext) <- c("html", "latex", "example")
     mandir <- file.path(dir, "man")
-    if (!file_test("-d", mandir)) return()
+    if (!dir.exists(mandir)) return()
     desc <- readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
     ver <- desc["Version"]

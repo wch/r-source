@@ -44,7 +44,7 @@ find_vignette_product <-
     function(name, by = c("weave", "tangle", "texi2pdf"),
              final = FALSE, main = TRUE, dir = ".", engine, ...)
 {
-    stopifnot(length(name) == 1L, file_test("-d", dir))
+    stopifnot(length(name) == 1L, dir.exists(dir))
     by <- match.arg(by)
     exts <- ## (lower case here):
 	switch(by,
@@ -354,7 +354,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     if(missing(dir))
 	stop("you must specify 'package' or 'dir'")
     ## Using sources from directory @code{dir} ...
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
 	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
     else {
 	dir <- file_path_as_absolute(dir)
@@ -362,12 +362,12 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 	    subdirs <- if (missing(package)) "vignettes" else "doc"
 	for (subdir in subdirs) {
 	    docdir <- file.path(dir, subdir)
-	    if(file_test("-d", docdir))
+	    if(dir.exists(docdir))
 		break
 	}
     }
 
-    if(!file_test("-d", docdir)) return(NULL)
+    if(!dir.exists(docdir)) return(NULL)
 
     # Locate all vignette files
     buildPkgs <- loadVignetteBuilder(dir, mustwork = FALSE)
@@ -590,7 +590,7 @@ buildVignette <-
 {
     if (!file_test("-f", file))
 	stop(gettextf("file '%s' not found", file), domain = NA)
-    if (!file_test("-d", dir))
+    if (!dir.exists(dir))
 	stop(gettextf("directory '%s' does not exist", dir), domain = NA)
 
     if (!is.null(buildPkg))
@@ -790,7 +790,7 @@ function(vigns)
     dir <- vigns$dir
     sources <- vigns$sources
 
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
 
     nvigns <- length(files)
@@ -857,7 +857,7 @@ function(vigns)
 function(vignetteDir, pkgdir = ".")
 {
     dir <- file.path(pkgdir, vignetteDir)
-    if(!file_test("-d", dir))
+    if(!dir.exists(dir))
         stop(gettextf("directory '%s' does not exist", dir), domain = NA)
 
     subdir <- gsub(pkgdir, "", dir, fixed=TRUE)
@@ -906,7 +906,7 @@ function(pkg, con, vignetteIndex = NULL)
         otherfiles <- setdiff(otherfiles,
                               c(vignetteIndex[, c("PDF", "File", "R")], "index.html"))
     if (length(otherfiles)) {
-    	otherfiles <- ifelse(file.info(system.file(file.path("doc", otherfiles), package=pkg))$isdir,
+    	otherfiles <- ifelse(dir.exists(system.file(file.path("doc", otherfiles), package = pkg)),
 			     paste0(otherfiles, "/"),
 			     otherfiles)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
@@ -1192,7 +1192,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
     ## Find the directories with a 'doc' subdirectory *possibly*
     ## containing vignettes.
 
-    paths <- paths[file_test("-d", file.path(paths, "doc"))]
+    paths <- paths[dir.exists(file.path(paths, "doc"))]
 
     empty <- cbind(Package = character(0),
                    Dir = character(0),

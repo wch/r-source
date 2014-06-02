@@ -46,7 +46,7 @@
             ## Use normalizePath for display: but also does path.expand
             new <- Sys.glob(path.expand(new))
             paths <- unique(normalizePath(c(new, .Library.site, .Library), '/'))
-            .lib.loc <<- paths[file.info(paths)$isdir %in% TRUE]
+            .lib.loc <<- paths[dir.exists(paths)]
         }
         else
             .lib.loc

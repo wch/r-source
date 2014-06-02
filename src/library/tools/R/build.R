@@ -103,9 +103,6 @@ get_exclude_patterns <- function()
     Ssystem <- function(command, args = character(), ...)
         system2(command, args, stdout = NULL, stderr = NULL, ...)
 
-
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
@@ -567,8 +564,7 @@ get_exclude_patterns <- function()
         ## dir(recursive = TRUE) did not include directories, so
         ## we needed to do this recursively
         files <- dir(d, all.files = TRUE, full.names = TRUE)
-        isdir <- file.info(files)$isdir
-        for (dd in files[isdir]) {
+        for (dd in files[dir.exists(files)]) {
             if (grepl("/\\.+$", dd)) next
             find_empty_dirs(dd)
         }
@@ -901,7 +897,7 @@ get_exclude_patterns <- function()
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = TRUE)
 
-        isdir <- file_test("-d", allfiles)
+        isdir <- dir.exists(allfiles)
         ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in%
                                        c("check", "chm", .vc_dir_names)))
@@ -962,7 +958,7 @@ get_exclude_patterns <- function()
                recursive = TRUE)
 
         ## work on 'data' directory if present
-        if(file_test("-d", file.path(pkgname, "data")) ||
+        if(dir.exists(file.path(pkgname, "data")) ||
            file_test("-f", file.path(pkgname, "R", "sysdata.rda"))) {
             messageLog(Log, "looking to see if a 'data/datalist' file should be added")
             ## in some cases data() needs the package installed as

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/writePACKAGES.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -173,7 +173,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     dir <- file_path_as_absolute(dir)
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
     paths <- list.files(dir, full.names = TRUE)
-    paths <- paths[file_test("-d", paths) &
+    paths <- paths[dir.exists(paths) &
                    file_test("-f", file.path(paths, "DESCRIPTION"))]
     db <- vector(length(paths), mode = "list")
     if(verbose) message("Processing packages:")
@@ -185,7 +185,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
         if(!inherits(temp, "error")) {
             if(is.na(temp["NeedsCompilation"])) {
                 temp["NeedsCompilation"] <-
-                    if(file_test("-d", file.path(paths[i], "src"))) "yes" else "no"
+                    if(dir.exists(file.path(paths[i], "src"))) "yes" else "no"
             }
             ## Cannot compute MD5 sum of the source tar.gz when working
             ## on the unpacked sources ...

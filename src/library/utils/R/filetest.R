@@ -1,7 +1,7 @@
 #  File src/library/utils/R/filetest.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ function(op, x, y)
     ## Note: vectorized in x and y.
     switch(op,
            "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
+           "-d" = dir.exists(x),
            "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
                     & !is.na(mt.y <- file.info(y)$mtime)
                     & (mt.x > mt.y)),

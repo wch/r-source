@@ -368,7 +368,7 @@ httpd <- function(path, query, ...)
         if(nzchar(rest) && rest != "/") {
             ## FIXME should we check existence here?
             file <- paste0(docdir, rest)
-            if(isTRUE(file.info(file)$isdir))
+            if(dir.exists(file))
                 return(.HTMLdirListing(file,
                                        paste0("/library/", pkg, "/doc", rest),
                                        up))

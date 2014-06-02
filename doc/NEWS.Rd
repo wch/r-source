@@ -55,6 +55,9 @@
       
       \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
       of columns to be computed.
+      
+      \item New internal function \code{dir.exists()} in \pkg{base} to test
+      whether one or more paths exist and are directories.
     }
   }
 

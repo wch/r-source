@@ -211,8 +211,6 @@ setRlibs <-
                 else out
             }
 
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
     td0 <- Inf # updated below
     print_time <- function(t1, t2, Log)
     {
@@ -3779,8 +3777,6 @@ setRlibs <-
             if (!any) resultLog(Log, "OK")
         } else resultLog(Log, "OK")
     }
-
-    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
