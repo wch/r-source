@@ -58,6 +58,8 @@ function(x, compression = FALSE)
 
 ### ** file_test
 
+## exported/documented copy is in utils.
+
 file_test <-
 function(op, x, y)
 {

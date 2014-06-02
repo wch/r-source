@@ -18,24 +18,7 @@
 
 ### ** file_test
 
-file_test <-
-function(op, x, y)
-{
-    ## Provide shell-style '-f', '-d', '-x', '-nt' and '-ot' tests.
-    ## Note that file.exists() only tests existence ('test -e' on some
-    ## systems), and that our '-f' tests for existence and not being a
-    ## directory (the GNU variant tests for being a regular file).
-    ## Note: vectorized in x and y.
-    switch(op,
-           "-f" = !is.na(isdir <- file.info(x, extra_cols = FALSE)$isdir) & !isdir,
-           "-d" = dir.exists(x),
-           "-nt" = (!is.na(mt.x <- file.mtime(x))
-                    & !is.na(mt.y <- file.mtime(y))
-                    & (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.mtime(x))
-                    & !is.na(mt.y <- file.mtime(y))
-                    & (mt.x < mt.y)),
-           "-x" = (file.access(x, 1L) == 0L),
-           stop(gettextf("test '%s' is not available", op),
-                domain = NA))
-}
+## An exported/documented copy of an internal function in tools.
+file_test <- tools:::file_test
+environment(file_test) <- environment()
+
