@@ -89,7 +89,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{compression_level} can be part of the \code{"save.defaults"}
   option.
 
-  A connection that is not already open will be opened in mode \code{"wb"}.
+  A connection that is not already open will be opened in mode
+  \code{"wb"}.  Supplying a connection which is open and not in binary
+  mode gives an error.
 }
 
 \section{Compression}{
