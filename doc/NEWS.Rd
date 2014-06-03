@@ -305,6 +305,10 @@
 
       \item Auto-printing would re-evaluate its argument when trying to
       dispatch to a print method.  This is now avoided when possible.
+      
+      \item Unserializing (including \code{load()} and \code{readRDS()})
+      could silently return incorrect numeric values from ASCII saves if
+      there was a read error.
     }
   }
 }

@@ -46,9 +46,9 @@
       definitions.
     }
     \item{\code{warnIncomplete}}{
-      Some exotic objects such as \link{environment}s,
-      external pointers, etc. can not be deparsed properly.  This option
-      causes a warning to be issued if the deparser recognizes one of these
+      Some exotic objects such as \link{environment}s, external
+      pointers, etc. can not be deparsed properly.  This option causes a
+      warning to be issued if the deparser recognizes one of these
       situations.
 
       Also, the parser in \R < 2.7.0 would only accept strings of up to
@@ -56,7 +56,9 @@
     }
     \item{\code{keepNA}}{
       Integer, real and character \code{NA}s are surrounded by coercion
-      where necessary to ensure that they are parsed to the same type.
+      functions where necessary to ensure that they are parsed to the
+      same type.  Since e.g. \code{NA_real_} can be output in \R, this is
+      mainly used in connection with \code{S_compatible}.
     }
     \item{\code{all}}{
       An abbreviated way to specify all of the options
@@ -76,9 +78,11 @@
     \item{\code{hexNumeric}}{
       Real and finite complex numbers are output in \samp{"\%a"} format as
       binary fractions (coded as hexadecimal: see \code{\link{sprintf}})
-      with maximal opportunity to be recorded to full precision (and no
-      noise). Complex numbers with one or both non-finite components are
+      with maximal opportunity to be recorded exactly to full precision.
+      Complex numbers with one or both non-finite components are
       output as if this option were not set.
+
+      All platforms can \code{source} this format as from \R 2.7.0.
     }
     \item{\code{digits16}}{
       Real and finite complex numbers are output using format

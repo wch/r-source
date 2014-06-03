@@ -364,11 +364,11 @@ static int InInteger(R_inpstream_t stream)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	InWord(stream, word, sizeof(word));
-	sscanf(word, "%s", buf);
+	if(sscanf(word, "%s", buf) != 1) error(_("read error"));
 	if (strcmp(buf, "NA") == 0)
 	    return NA_INTEGER;
 	else
-	    sscanf(buf, "%d", &i);
+	    if(sscanf(buf, "%d", &i) != 1) error(_("read error"));
 	return i;
     case R_pstream_binary_format:
 	stream->InBytes(stream, &i, sizeof(int));
@@ -395,7 +395,7 @@ static double InReal(R_inpstream_t stream)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	InWord(stream, word, sizeof(word));
-	sscanf(word, "%s", buf);
+	if(sscanf(word, "%s", buf) != 1) error(_("read error"));
 	if (strcmp(buf, "NA") == 0)
 	    return NA_REAL;
 	else if (strcmp(buf, "Inf") == 0)
@@ -403,11 +403,13 @@ static double InReal(R_inpstream_t stream)
 	else if (strcmp(buf, "-Inf") == 0)
 	    return R_NegInf;
 	else
+	    if(
 #ifdef Win32
-	    trio_sscanf(buf, "%lg", &d);
+		trio_sscanf(buf, "%lg", &d)
 #else
-	    sscanf(buf, "%lg", &d);
+		sscanf(buf, "%lg", &d)
 #endif
+		!= 1) error(_("read error"));
 	return d;
     case R_pstream_binary_format:
 	stream->InBytes(stream, &d, sizeof(double));
