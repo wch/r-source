@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -18,11 +18,11 @@ readRDS(file, refhook = NULL)
 }
 \arguments{
   \item{object}{\R object to serialize.}
-  \item{file}{a \link{connection} or the name of the file where the R object
+  \item{file}{a \link{connection} or the name of the file where the \R object
     is saved to or read from.}
-  \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
-    written; otherwise (default except for text-mode connections), a
-    binary one is used.  See the comments in the help for \code{\link{save}}.}
+  \item{ascii}{a logical.  If \code{TRUE} or \code{NA}, an ASCII
+    representation is written; otherwise (default), a binary one is used.
+    See the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default version (2).  Versions prior to 2 are not
     supported, so this will only be relevant when there are later versions.}
@@ -61,8 +61,8 @@ readRDS(file, refhook = NULL)
 
   If a connection is supplied it will be opened (in binary mode) for the
   duration of the function if not already open: if it is already open it
-  must be in binary mode for \code{saveRDS(ascii = FALSE)} (the
-  default).
+  must be in binary mode for \code{saveRDS(ascii = FALSE)} or to read
+  non-ASCII saves.
 }
 
 \value{

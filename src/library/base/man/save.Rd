@@ -20,7 +20,7 @@
 save(\dots, list = character(),
      file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(),
-     compress = !ascii, compression_level,
+     compress = isTRUE(!ascii), compression_level,
      eval.promises = TRUE, precheck = TRUE)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
@@ -37,7 +37,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     \code{version = 1}.}
   \item{ascii}{if \code{TRUE}, an ASCII representation of the data is
     written.  The default value of \code{ascii} is \code{FALSE} which
-    leads to a binary file being written.}
+    leads to a binary file being written.  If \code{NA} and
+    \code{version >= 2}, a different ASCII representation is used which
+    writes double/complex numbers as binary fractions.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default format.  The version used from \R
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
@@ -89,7 +91,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{compression_level} can be part of the \code{"save.defaults"}
   option.
 
-  A connection that is not already open will be opened in mode \code{"wb"}.
+  A connection that is not already open will be opened in mode
+  \code{"wb"}.  Supplying a connection which is open and not in binary
+  mode gives an error.
 }
 
 \section{Compression}{

@@ -59,10 +59,18 @@
       \item New function \code{dir.exists()} in \pkg{base} to test
       efficiently whether one or more paths exist and are directories.
 
-      \item \code{dput()} and friends gain a new control
-      \samp{"hexNumeric"} which outputs double and complex quantities
-      as binary fractions (see \code{sprintf("\%a")}) to full precision
-      (and no noise).
+      \item \code{dput()} and friends gain new controls
+      \samp{"hexNumeric"} and \samp{"digits16"} which output double and
+      complex quantities as binary fractions (see \code{sprintf("\%a")})
+      to full precision (and no noise) and as decimals with 16
+      significant digits.
+
+      \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
+      support \code{ascii = NA} which writes ASCII files using the
+      \code{sprintf("\%a")}) for double/complex quantities.  This is
+      compatible with \code{ascii = TRUE} but avoid
+      binary->decimal->binary conversions with potential lost of
+      precision.
     }
   }
 
