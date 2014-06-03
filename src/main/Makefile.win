@@ -51,6 +51,8 @@ builtin-CPPFLAGS=-I../gnuwin32
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
 connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
+## gcc warns incorrectly about %a
+deparse-CFLAGS=-Wno-format
 dounzip-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
 edit-CPPFLAGS=-I../gnuwin32
 grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
