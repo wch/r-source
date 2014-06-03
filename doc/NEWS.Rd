@@ -61,16 +61,17 @@
 
       \item \code{dput()} and friends gain new controls
       \samp{"hexNumeric"} and \samp{"digits16"} which output double and
-      complex quantities as binary fractions (see \code{sprintf("\%a")})
-      to full precision (and no noise) and as decimals with 16
-      significant digits.
+      complex quantities as, respectively, binary fractions (see
+      \code{sprintf("\%a")}) to full precision (and no noise) and as
+      decimals with 16 significant digits. 
 
       \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
       support \code{ascii = NA} which writes ASCII files using the
       \code{sprintf("\%a")}) for double/complex quantities.  This is
-      compatible with \code{ascii = TRUE} but avoid
+      compatible with \code{ascii = TRUE} but avoids
       binary->decimal->binary conversions with potential lost of
-      precision.
+      precision.  Unfortunately Windows' deficiences mean that the
+      format can be written but not read there in \R before 3.2.0.
     }
   }
 

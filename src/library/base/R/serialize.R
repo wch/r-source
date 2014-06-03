@@ -22,7 +22,7 @@ saveRDS <-
 {
     if(is.character(file)) {
         if(file == "") stop("'file' must be non-empty string")
-        mode <- if(ascii) "w" else "wb"
+        mode <- if(ascii %in% FALSE) "wb" else "w"
         con <- if (identical(compress, "bzip2")) bzfile(file, mode)
             else if (identical(compress, "xz")) xzfile(file, mode)
             else if(compress) gzfile(file, mode) else file(file, mode)

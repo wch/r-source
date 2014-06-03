@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -87,7 +87,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{save.image}), see also the \sQuote{Examples} section.  If a
   \code{"save.image.defaults"} option is set it is used in preference to
   \code{"save.defaults"} for function \code{save.image} (which allows
-  this to have different defaults). In addition,
+  this to have different defaults).  In addition,
   \code{compression_level} can be part of the \code{"save.defaults"}
   option.
 
@@ -149,6 +149,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
   One such \sQuote{later addition} was long vectors, introduced in \R
   3.0.0 and loadable only on 64-bit platforms.
+  
+  Loading files saved with \code{ASCII = NA} requires a C99-compilant C
+  function \code{sscanf}: this is a problem on Windows, first worked
+  around in \R 3.2.0.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
