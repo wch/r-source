@@ -397,7 +397,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "envir");
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */
-    if(opts == NA_INTEGER || opts < 0 || opts > 256)
+    if(opts == NA_INTEGER || opts < 0 || opts > 1024)
 	errorcall(call, _("'opts' should be small non-negative integer"));
     evaluate = asLogical(CAD4R(args));
     if (!evaluate) opts |= DELAYPROMISES;
@@ -1276,7 +1276,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
     const char *strp;
-    char *buff = 0, hex[64];
+    char *buff = 0, hex[64]; // 64 is more than enough
     Rboolean surround = FALSE, allNA, addL = TRUE;
 
     tlen = length(vector);
@@ -1424,10 +1424,24 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');
+	    } else if (TYPEOF(vector) == REALSXP && (d->opts & DIGITS16)) {
+		double x = REAL(vector)[i];
+		if (R_FINITE(x)) {
+		    snprintf(hex, 32, "%.16g", x);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
 	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & HEXNUMERIC)) {
 		Rcomplex z =  COMPLEX(vector)[i];
 		if (R_FINITE(z.r) && R_FINITE(z.i)) {
 		    snprintf(hex, 64, "%a + %ai", z.r, z.i);
+		    strp = hex;
+		} else
+		    strp = EncodeElement(vector, i, quote, '.');
+	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS16)) {
+		Rcomplex z =  COMPLEX(vector)[i];
+		if (R_FINITE(z.r) && R_FINITE(z.i)) {
+		    snprintf(hex, 64, "%.16g + %16gi", z.r, z.i);
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');

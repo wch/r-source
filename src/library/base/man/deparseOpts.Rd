@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -78,6 +78,12 @@
       binary fractions (coded as hexadecimal: see \code{\link{sprintf}})
       with maximal opportunity to be recorded to full precision (and no
       noise). Complex numbers with one or both non-finite components are
+      output as if this option were not set.
+    }
+    \item{\code{digits16}}{
+      Real and finite complex numbers are output using format
+      \samp{"\%.16g"} which may give more precision than the default.
+      Complex numbers with one or both non-finite components are
       output as if this option were not set.
     }
   }

@@ -80,10 +80,11 @@ dput(baz, control = "useSource")
 
 ## Numeric values:
 dput(pi) # slight rounding
+dput(pi, control = "digits16")
 dput(pi, control = "hexNumeric") # can be read in exactly
 dput(pi, "foo"); dget("foo") - pi
+dput(pi, "foo", control = "digits16"); dget("foo") - pi
 dput(pi, "foo", control = "hexNumeric"); dget("foo") - pi
-
 unlink("foo")
 }
 \keyword{file}
