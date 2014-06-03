@@ -150,9 +150,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   One such \sQuote{later addition} was long vectors, introduced in \R
   3.0.0 and loadable only on 64-bit platforms.
   
-  Loading files saved with \code{ASCII = NA} requires a C99-compilant C
+  Loading files saved with \code{ASCII = NA} requires a C99-compliant C
   function \code{sscanf}: this is a problem on Windows, first worked
-  around in \R 3.2.0.
+  around in \R 3.2.0. 
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},

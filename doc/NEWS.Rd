@@ -70,8 +70,9 @@
       \code{sprintf("\%a")}) for double/complex quantities.  This is
       compatible with \code{ascii = TRUE} but avoids
       binary->decimal->binary conversions with potential lost of
-      precision.  Unfortunately Windows' deficiences mean that the
-      format can be written but not read there in \R before 3.2.0.
+      precision.  Unfortunately Windows lack of C99 compliance means
+      that the format can be written but not read correctly there in \R
+      before 3.2.0.
     }
   }
 
