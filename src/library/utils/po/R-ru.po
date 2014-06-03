@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -73,10 +73,6 @@ msgstr ""
 #, fuzzy
 msgid "Warning: unknown option '--clean='%s"
 msgstr "Предупреждение: неизвестная опция %s"
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
-msgstr ""
 
 msgid "Warning: unknown option %s"
 msgstr "Предупреждение: неизвестная опция %s"
@@ -355,9 +351,6 @@ msgstr "в %s не найдено помощи"
 
 msgid "%s has a help file but no examples"
 msgstr "у %s есть файл помощи, но нет примеров"
-
-msgid "test '%s' is not available"
-msgstr "тест '%s' недоступен"
 
 msgid "Line number missing"
 msgstr "Пропущен номер строки"
@@ -1331,6 +1324,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "test '%s' is not available"
+#~ msgstr "тест '%s' недоступен"
 
 #~ msgid "Created PDF document %s"
 #~ msgstr "Созданный документ PDF %s"

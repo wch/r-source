@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -50,6 +50,9 @@ msgstr "uendelig eller manglende værdier i 'x'"
 
 msgid "a dimension is zero"
 msgstr "en dimension er nul"
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgstr ""
 
 msgid "second argument must be a list"
 msgstr "andet argument skal være en liste"

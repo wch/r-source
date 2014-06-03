@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -78,6 +78,9 @@ msgstr "wartość nieskończona lub brakuje wartości w 'x'"
 # stop("a dimension is zero")
 msgid "a dimension is zero"
 msgstr "wymiar wynosi zero"
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgstr ""
 
 # src/library/base/R/New-Internal.R: 130
 # stop("second argument must be a list")

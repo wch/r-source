@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -50,6 +50,9 @@ msgstr "неопределенные или пропущенные значения в 'x'"
 
 msgid "a dimension is zero"
 msgstr "нулевое измерение"
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgstr ""
 
 msgid "second argument must be a list"
 msgstr "второй аргумент должен быть списком"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -46,6 +46,9 @@ msgstr "unendliche oder fehlende Werte in 'x'"
 
 msgid "a dimension is zero"
 msgstr "eine Dimension ist 0"
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgstr ""
 
 msgid "second argument must be a list"
 msgstr "das zweite Argument muss eine Liste sein"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -65,10 +65,6 @@ msgstr ""
 #, fuzzy
 msgid "Warning: unknown option '--clean='%s"
 msgstr "警告：没有%s这样的选项"
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
-msgstr ""
 
 msgid "Warning: unknown option %s"
 msgstr "警告：没有%s这样的选项"
@@ -343,9 +339,6 @@ msgstr "找不到与%s有关的帮助文件"
 
 msgid "%s has a help file but no examples"
 msgstr "%s含帮助文件但没有示范文件"
-
-msgid "test '%s' is not available"
-msgstr "没有'%s'这种测试"
 
 msgid "Line number missing"
 msgstr "缺少行数"
@@ -1222,6 +1215,9 @@ msgstr[0] "罗马数字不对：%s"
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "正在使用%s这个程序包，因此不会被安装"
+
+#~ msgid "test '%s' is not available"
+#~ msgstr "没有'%s'这种测试"
 
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "安装出错，基本程序包里没有CITATION这一文件。"

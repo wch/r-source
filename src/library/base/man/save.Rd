@@ -138,7 +138,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
   Saved \R objects are binary files, even those saved with
   \code{ascii = TRUE}, so ensure that they are transferred without
-  conversion of end of line markers and of 8-bit characters.  The lines
+  conversion of end-of-line markers and of 8-bit characters.  The lines
   are delimited by LF on all platforms.
 
   Although the default version has not changed since \R 1.4.0, this
@@ -147,7 +147,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   unless use is made of later additions (for example, raw vectors,
   external pointers and some S4 objects).
 
-  On such \sQuote{later addition} was long vectors, introduced in \R
+  One such \sQuote{later addition} was long vectors, introduced in \R
   3.0.0 and loadable only on 64-bit platforms.
 }
 \seealso{

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -110,10 +110,6 @@ msgstr "błąd parsowania lub pusta opcja w %s"
 #, fuzzy
 msgid "Warning: unknown option '--clean='%s"
 msgstr "Ostrzeżenie: nieznana opcja %s"
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
-msgstr ""
 
 # utils/R/Sweave.R: 488
 # message(gettextf("Warning: unknown option %s", sQuote(a)),
@@ -664,12 +660,6 @@ msgstr "nie znaleziono pomocy dla %s"
 #                 domain = NA)
 msgid "%s has a help file but no examples"
 msgstr "%s posiada plik pomocy, ale nie ma przykładów"
-
-# utils/R/filetest.R: 39
-# stop(gettextf("test '%s' is not available", op),
-#                 domain = NA)
-msgid "test '%s' is not available"
-msgstr "test '%s' nie jest dostępny"
 
 # utils/R/findLineNum.R: 97
 # stop("Line number missing")
@@ -2521,3 +2511,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+# utils/R/filetest.R: 39
+# stop(gettextf("test '%s' is not available", op),
+#                 domain = NA)
+#~ msgid "test '%s' is not available"
+#~ msgstr "test '%s' nie jest dostępny"

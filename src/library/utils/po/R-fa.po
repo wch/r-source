@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: 2012-12-30 23:32+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -61,10 +61,6 @@ msgid ""
 msgstr ""
 
 msgid "Warning: unknown option '--clean='%s"
-msgstr ""
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
 msgstr ""
 
 msgid "Warning: unknown option %s"
@@ -328,9 +324,6 @@ msgid "no help found for %s"
 msgstr ""
 
 msgid "%s has a help file but no examples"
-msgstr ""
-
-msgid "test '%s' is not available"
 msgstr ""
 
 msgid "Line number missing"

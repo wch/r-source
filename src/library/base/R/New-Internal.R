@@ -112,7 +112,9 @@ rbind <- function(..., deparse.level = 1)
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
     if (any(opts == 1L))
-        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L)) # not (7,9)
+        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L)) # not (7,9:11)
+    if(10L %in% opts && 11L %in% opts)
+        stop('"hexNumeric"and "digits16" are mutually exclusive')
     return(sum(2^(opts-2)))
 }
 

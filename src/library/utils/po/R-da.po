@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,10 +66,6 @@ msgstr ""
 #, fuzzy
 msgid "Warning: unknown option '--clean='%s"
 msgstr "Advarsel: Ukendt indstilling"
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
-msgstr ""
 
 #, fuzzy
 msgid "Warning: unknown option %s"
@@ -347,9 +343,6 @@ msgid "no help found for %s"
 msgstr ""
 
 msgid "%s has a help file but no examples"
-msgstr ""
-
-msgid "test '%s' is not available"
 msgstr ""
 
 msgid "Line number missing"

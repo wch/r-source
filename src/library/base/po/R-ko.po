@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -53,6 +53,9 @@ msgstr "'x'에 무한한 값이 있거나 결측치가 있습니다"
 
 msgid "a dimension is zero"
 msgstr "차원이 0입니다"
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgstr ""
 
 msgid "second argument must be a list"
 msgstr "두번째 인수는 반드시 리스트이어야 합니다"

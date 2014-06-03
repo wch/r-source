@@ -101,6 +101,8 @@
   function recognizes that it is being asked to do the impossible.
   Also, representing double and complex numbers as decimals may well not
   be exact.
+
+  Only one of \code{"hexNumeric"} and \code{"digits16"} can be specified.
 }
 \value{
   A numerical value corresponding to the options selected.

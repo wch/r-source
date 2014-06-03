@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:41\n"
+"POT-Creation-Date: 2014-06-03 11:51\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -72,10 +72,6 @@ msgstr ""
 #, fuzzy
 msgid "Warning: unknown option '--clean='%s"
 msgstr "경고: 알수없는 옵션 %s입니다"
-
-msgid ""
-"Warning: '--no-clean' is deprecated; default does not clean, see --clean"
-msgstr ""
 
 msgid "Warning: unknown option %s"
 msgstr "경고: 알수없는 옵션 %s입니다"
@@ -353,9 +349,6 @@ msgstr "%s에 대한 도움말을 찾을 수 없습니다"
 
 msgid "%s has a help file but no examples"
 msgstr "%s에 대한 도움말이 있지만 예제는 없습니다"
-
-msgid "test '%s' is not available"
-msgstr "테스트 '%s'는 사용할 수 없습니다"
 
 msgid "Line number missing"
 msgstr "라인넘버가 없습니다"
@@ -1271,6 +1264,9 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
+
+#~ msgid "test '%s' is not available"
+#~ msgstr "테스트 '%s'는 사용할 수 없습니다"
 
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "설치시 문제로 인하여 base 패키지 내에 CITATION 파일이 없습니다."

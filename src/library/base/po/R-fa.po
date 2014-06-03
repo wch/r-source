@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-06-03 11:50\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -44,6 +44,9 @@ msgid "infinite or missing values in 'x'"
 msgstr ""
 
 msgid "a dimension is zero"
+msgstr ""
+
+msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
