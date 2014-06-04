@@ -3738,6 +3738,7 @@ repository such as @acronym{CRAN}).
 * PDF size::                    
 * Check timing::                
 * Encoding issues::             
+* Portable C and C++ code::     
 * Binary distribution::         
 @end menu
 
@@ -3749,7 +3750,9 @@ Many of the graphics devices are platform-specific: even @code{X11()}
 (aka @code{x11()}) which although emulated on Windows may not be
 available on a Unix-alike (and is not the preferred screen device on OS
 X).  It is rarely necessary for package code or examples to open a new
-device, but if essential, use @code{dev.new()}.
+device, but if essential,@footnote{People use @code{dev.new()} to open a
+device at a particular size: that is not portable but using
+@code{dev.new(noRStudioGD = TRUE)} helps.} use @code{dev.new()}.
 
 Use @command{R CMD build} to make the release @file{.tar.gz} file.
 
@@ -3799,7 +3802,7 @@ Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 Moreover, Bash extensions also need to be avoided in shell scripts,
-including expression in Makefiles (which are passed to the shell for
+including expressions in Makefiles (which are passed to the shell for
 processing).  Some @R{} platforms use strictly POSIX-conformant Bourne
 shells, and Windows and some Unix-alike OSes use @command{ash}
 (@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a rather minimal
@@ -3814,7 +3817,7 @@ One particular issue is the use of @command{echo}, for which two
 behaviours are allowed
 (@uref{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
-should not use @option{-n} (as the first argument) or escape sequences.
+should not use @option{-n} (as the first argument) nor escape sequences.
 
 @item
 Make use of the abilities of your compilers to check the
@@ -3978,16 +3981,16 @@ viewer and take many minutes to print (if they can be printed at all).
 
 @command{qpdf} (@uref{http://qpdf.sourceforge.net/}) can compress
 losslessly.  It is fairly readily available (e.g.@: it has binaries for
-Windows and packages in Debian/Ubuntu/Fedora 17, and is installed as
-part of the @acronym{CRAN} OS X distribution of @R{}).  @command{R CMD
-build} has an option to run @command{qpdf} over PDF files under
-@file{inst/doc} and replace them if at least 10Kb and 10% is saved.  The
-full path to the @command{qpdf} command can be supplied as environment
-variable @env{R_QPDF} (and is on the CRAN binary of @R{} for OS X).  It
-seems MiKTeX does not use PDF object compression and so @command{qpdf}
-can reduce considerably the files it outputs: MiKTeX can be overridden by
-code in the preamble of an Sweave or @LaTeX{} file --- see how this is done
-for the @R{} reference manual at
+Windows and packages in Debian/Ubuntu/Fedora, and is installed as part
+of the @acronym{CRAN} OS X distribution of @R{}).  @command{R CMD build}
+has an option to run @command{qpdf} over PDF files under @file{inst/doc}
+and replace them if at least 10Kb and 10% is saved.  The full path to
+the @command{qpdf} command can be supplied as environment variable
+@env{R_QPDF} (and is on the CRAN binary of @R{} for OS X).  It seems
+MiKTeX does not use PDF object compression and so @command{qpdf} can
+reduce considerably the files it outputs: MiKTeX can be overridden by
+code in the preamble of an Sweave or @LaTeX{} file --- see how this is
+done for the @R{} reference manual at
 @uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
 
 Other tools can reduce the size of PDFs containing bitmap images at
@@ -4055,7 +4058,7 @@ are only retained if environment variable
 @env{_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_} is set to a true value.
 
 
-@node Encoding issues, Binary distribution, Check timing, Writing portable packages
+@node Encoding issues, Portable C and C++ code, Check timing, Writing portable packages
 @subsection Encoding issues
 
 Care is needed if your package contains non-@acronym{ASCII} text, and in
@@ -4120,7 +4123,63 @@ to specify a suitable locale @emph{via} environment variable
 the current locale is UTF-8 then the package code is translated to UTF-8
 for syntax checking.
 
-@node Binary distribution,  , Encoding issues, Writing portable packages
+@node Portable C and C++ code, Binary distribution, Encoding issues, Writing portable packages
+@subsection Portable C and C++ code
+
+Writing portable C and C++ code is mainly a matter of observing the
+standards (C99, C++98 or where declared C++11) and testing that
+extensions (such as POSIX functions) are supported.  However, some
+common errors are worth pointing out here.  It can be helpful to look up
+functions at @uref{http://www.cplusplus.com/reference/} or
+@uref{http://en.cppreference.com/w/} and compare what is defined in the
+various standards.
+
+@itemize
+@item
+Mathermatical functions such as @code{sqrt} are defined in C++ for
+floating-point arguments.  It is legitimate in C++ to overload these
+with versions for types @code{float}, @code{double}, @code{long double}
+and possibly more.  This means that calling @code{sqrt} on an integer
+type may have `overloading ambiguity' as it could be promoted to any of the
+supported floating-point types: this is commonly seen on Solaris.
+(C++11 requires additional overloads for integer types.)
+
+@item
+Function @code{fabs} is defined for only for floating-point types,
+except in C++11 which has overloads in @file{<cmath>} for integer types.
+Function @code{abs} is defined in C99's @file{<stdlib.h>} for @code{int}
+and in C++98's @file{<cstdlib>} for integer types, overloaded in
+@file{<cmath>} for floating-point types.  C++11 has additional overloads
+in @file{<cmath>} for integer types.
+
+@item
+Functions such as @code{isnan} or @code{isfinite} are not required by
+C++98: where compilers support them they may be only in the @code{std}
+namespace.  There is no way to make use of these functions which works
+with all C++ compilers currently in use on @R{} platforms: use @R{}'s
+versions such as @code{ISNAN} and @code{R_FINITE} instead.
+
+It is an error (and make little sense, although has been seen) to call
+these functions for integer arguments.
+
+@item
+Macros defined by the compiler/OS can cause problems.  Macros starting
+with an underscore followed by an upper-case letter or another
+underscore are reserved and should not be used in portable code.  Other
+macros, typically upper-case, may be defined by the compiler or system
+headers and can cause problems. 
+@c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
+The most common issue involves the names of the Intel CPU registers such
+as @code{CS}, @code{DS} and @code{SS} defined on i586/x64 Solaris in
+@file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
+and other core headers.
+@end itemize
+
+Some additional information for C++ is available at
+@uref{http://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
+by Martyn Plummer.
+
+@node Binary distribution,  , Portable C and C++ code, Writing portable packages
 @subsection Binary distribution
 
 If you want to distribute a binary version of a package on Windows or OS
@@ -8520,10 +8579,10 @@ If you feel tempted to read the source code and subvert these
 mechanisms, please resist.  Far too much developer time has been wasted
 in chasing down errors caused by failures to follow this documentation,
 and even more by package authors demanding explanations as to why their
-packages not longer work.
+packages no longer work.
 @c Jasjeet Singh Sekhon: this is your moment of infamy.
-In particular, undocumented environment or make variables are not for
-use by package writers and are subject to change without notice.
+In particular, undocumented environment or @command{make} variables are
+not for use by package writers and are subject to change without notice.
 
 @node Interfacing C++ code, Fortran I/O, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code
