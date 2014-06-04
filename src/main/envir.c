@@ -3606,7 +3606,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	PROTECT(cval = allocCharsxp(len));
 	memcpy(CHAR_RW(cval), name, len);
 	switch(enc) {
-	case 0:
+	case CE_NATIVE:
 	    break;          /* don't set encoding */
 	case CE_UTF8:
 	    SET_UTF8(cval);
