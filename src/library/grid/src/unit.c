@@ -218,23 +218,23 @@ double pureNullUnitValue(SEXP unit, int index)
     if (isUnitArithmetic(unit)) {
 	int i;
 	if (addOp(unit)) {
-	    result = unitValue(arg1(unit), index) + 
-		unitValue(arg2(unit), index);
+	    result = pureNullUnitValue(arg1(unit), index) + 
+		pureNullUnitValue(arg2(unit), index);
 	}
 	else if (minusOp(unit)) {
-	    result = unitValue(arg1(unit), index) - 
-		unitValue(arg2(unit), index);
+	    result = pureNullUnitValue(arg1(unit), index) - 
+		pureNullUnitValue(arg2(unit), index);
 	}
 	else if (timesOp(unit)) {
 	    result = REAL(arg1(unit))[index] * 
-		unitValue(arg2(unit), index);
+		pureNullUnitValue(arg2(unit), index);
 	}
 	else if (minFunc(unit)) {
 	    int n = unitLength(arg1(unit));
 	    double temp = DBL_MAX;
-	    result = unitValue(arg1(unit), 0);
+	    result = pureNullUnitValue(arg1(unit), 0);
 	    for (i=1; i<n; i++) {
-		temp = unitValue(arg1(unit), i);
+		temp = pureNullUnitValue(arg1(unit), i);
 		if (temp < result)
 		    result = temp;
 	    }
@@ -242,9 +242,9 @@ double pureNullUnitValue(SEXP unit, int index)
 	else if (maxFunc(unit)) {
 	    int n = unitLength(arg1(unit));
 	    double temp = DBL_MIN;
-	    result = unitValue(arg1(unit), 0);
+	    result = pureNullUnitValue(arg1(unit), 0);
 	    for (i=1; i<n; i++) {
-		temp = unitValue(arg1(unit), i);
+		temp = pureNullUnitValue(arg1(unit), i);
 		if (temp > result)
 		    result = temp;
 	    }
@@ -253,7 +253,7 @@ double pureNullUnitValue(SEXP unit, int index)
 	    int n = unitLength(arg1(unit));
 	    result = 0.0;
 	    for (i=0; i<n; i++) {
-		result += unitValue(arg1(unit), i);
+		result += pureNullUnitValue(arg1(unit), i);
 	    }
 	}
 	else 
@@ -264,7 +264,7 @@ double pureNullUnitValue(SEXP unit, int index)
 	 * to limit indices to unit length if desired
 	 */
 	int n = unitLength(unit);
-	result = unitValue(VECTOR_ELT(unit, index % n), 0);
+	result = pureNullUnitValue(VECTOR_ELT(unit, index % n), 0);
     } else
 	result = unitValue(unit, index);
     return result;

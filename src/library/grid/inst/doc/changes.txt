@@ -1,4 +1,15 @@
 
+Changes from grid_3.1.* to grid_3.2.0:
+-------------------------------------
+
+1.  Fixed evaluation of "pure null" units (by making evaluation recursive).
+    Previously, for example, a unit list with a unit list as its first
+    component would evaluate to NA.  This typically only affects layouts 
+    in grid.
+
+    Problem reported by Baptiste Auguie.
+
+
 Changes from grid_3.0.* to grid_3.1.0:
 -------------------------------------
 
