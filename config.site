@@ -257,3 +257,7 @@
 ## CXX1XPICFLAGS=
 ## SHLIB_CXXIXLD=
 ## SHLIB_CXXiXLDFLAGS=
+
+## Additional libraries to link the internet module against.
+## Some claim Solaris needs -lsocket -lnsl
+## INTERNET_LIBS=

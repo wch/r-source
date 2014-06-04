@@ -1711,6 +1711,10 @@ else
   fi
 fi
 
+## some claim Solaris needs -lsocket -lnsl (PR#15815)
+: ${INTERNET_LIBS="${internet_libs}"}
+AC_SUBST(INTERNET_LIBS)
+
 AM_CONDITIONAL(DYLIB_UNDEFINED_ALLOWED, [test "x${dylib_undefined_allowed}" = xyes])
 AM_CONDITIONAL(BUILD_CYGWIN, [test "x${is_cygwin}" = xyes])
 
