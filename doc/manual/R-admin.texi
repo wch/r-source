@@ -4940,6 +4940,16 @@ When using the Oracle compilers@footnote{including @command{gcc} for
 Sparc from Oracle.} do @emph{not} specify @option{-fast}, as this
 disables @acronym{IEEE} arithmetic and @command{make check} will fail.
 
+It has been reported that some Solaris installations need
+
+@example
+INTERNET_LIBS="-lsocket -lnsl"
+@end example
+
+@noindent
+on the @command{configure} command line or in file @file{config.site};
+however, there have been many successful installs without this.
+
 A little juggling of paths was needed to ensure @acronym{GNU}
 @code{libiconv} (in @file{/usr/local}) was used rather than the Solaris
 @code{iconv}:
@@ -4991,11 +5001,11 @@ packages currently on CRAN).
 
 Currently @cputype{amd64} and @cputype{sparcv9} builds work
 out-of-the-box with Sun Studio 12u1 but not Solaris Studio 12.2 and
-later: @file{libRblas.so} and @file{lapack.so} are generated with code
+12.3: @file{libRblas.so} and @file{lapack.so} are generated with code
 that causes relocation errors (which is being linked in from the Fortran
-libraries).  This means that building @R{} as a shared library may be
-impossible with Solaris Studio >= 12.2.  For a standard build the trick
-seems to be to manually set @code{FLIBS} to avoid the troublesome
+libraries).  This means that building 64-bit @R{} as a shared library
+may be impossible with Solaris Studio >= 12.2.  For a standard build the
+trick seems to be to manually set @code{FLIBS} to avoid the troublesome
 libraries.  For example, on @cputype{amd64} set in @file{config.site}
 something like
 
