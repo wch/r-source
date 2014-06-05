@@ -798,7 +798,9 @@ static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
 	*found = 1;
 	SETCAR(list, R_UnboundValue); /* in case binding is cached */
 	LOCK_BINDING(list);           /* in case binding is cached */
-	return CDR(list);
+	SEXP rest = CDR(list);
+	SETCDR(list, R_NilValue);     /* to fix refcnt on 'rest' */
+	return rest;
     }
     else {
 	SEXP last = list;
@@ -809,6 +811,7 @@ static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
 		SETCAR(next, R_UnboundValue); /* in case binding is cached */
 		LOCK_BINDING(next);           /* in case binding is cached */
 		SETCDR(last, CDR(next));
+		SETCDR(next, R_NilValue);     /* to fix refcnt on 'list' */
 		return list;
 	    }
 	    else {
