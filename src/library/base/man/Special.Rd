@@ -76,7 +76,8 @@ lfactorial(x)
   \code{deriv}-th derivative of \eqn{\psi(x)}.
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
     \frac{\Gamma'(x)}{\Gamma(x)}}{digamma(x) = \psi(x) = d/dx{ln \Gamma(x)} = \Gamma'(x) / \Gamma(x)}
-  This is often called the \sQuote{polygamma} function, e.g. in
+  \eqn{\psi} and its derivatives, the \code{psigamma()} functions, are
+  often called the \sQuote{polygamma} functions, e.g. in
   Abramowitz and Stegun (section 6.4.1, page 260); and higher
   derivatives (\code{deriv = 2:4}) have occasionally been called
   \sQuote{tetragamma}, \sQuote{pentagamma}, and \sQuote{hexagamma}.
@@ -116,7 +117,9 @@ lfactorial(x)
   Wadsworth & Brooks/Cole. (For \code{gamma} and \code{lgamma}.)
 
   Abramowitz, M. and Stegun, I. A. (1972)
-  \emph{Handbook of Mathematical Functions.} New York: Dover.
+  \emph{Handbook of Mathematical Functions}. New York: Dover.
+  \url{http://en.wikipedia.org/wiki/Abramowitz_and_Stegun} provides
+  links to the full text which is in public domain.\cr
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{
