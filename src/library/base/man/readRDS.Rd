@@ -85,7 +85,7 @@ women2 <- readRDS("women.rds")
 identical(women, women2)
 ## or examine the object via a connection, which will be opened as needed.
 con <- gzfile("women.rds")
-str(readRDS(con))
+readRDS(con)
 close(con)
 
 ## Less convenient ways to restore the object
