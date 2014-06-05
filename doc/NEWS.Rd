@@ -49,13 +49,13 @@
 
       \item \code{pmatch()} uses hashing in more cases and so is faster
       at the expense of using more memory. (\PR{15697})
-      
+
       \item \code{pairs()} gains new arguments to select sets of
       variables to be plotted against each other.
-      
+
       \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
       of columns to be computed.
-      
+
       \item New function \code{dir.exists()} in \pkg{base} to test
       efficiently whether one or more paths exist and are directories.
 
@@ -63,7 +63,7 @@
       \samp{"hexNumeric"} and \samp{"digits16"} which output double and
       complex quantities as, respectively, binary fractions (see
       \code{sprintf("\%a")}) to full precision (and no noise) and as
-      decimals with 16 significant digits. 
+      decimals with 16 significant digits.
 
       \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
       support \code{ascii = NA} which writes ASCII files using the
@@ -89,7 +89,7 @@
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
-      
+
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
       \command{make check TEST_DONTTEST=TRUE}.
@@ -182,7 +182,7 @@
        \command{make install-libR} now works if a sub-architecture is
        used, although the user will need to specify \code{libdir}
        differently for different sub-architectures.
-       
+
        \item There is more extensive advice on which LaTeX packages are
        required to install \R or to make package manuals (as done by
        \command{R CMD check}) in the \sQuote{Writing R Extensions}
@@ -288,9 +288,9 @@
       \item (Windows \command{Rgui} console.)  Unbuffered output was
       sometimes not output immediately if the prompt was not on the last
       line of the console.
-      
-      \item The built-in help server did not declare the encoding for 
-      the \file{DESCRIPTION} or other text files to be the package 
+
+      \item The built-in help server did not declare the encoding for
+      the \file{DESCRIPTION} or other text files to be the package
       encoding, so non-ASCII characters could be displayed incorrectly.
 
       \item \R{} is now trying harder to not cleanup child processes
@@ -305,10 +305,12 @@
 
       \item Auto-printing would re-evaluate its argument when trying to
       dispatch to a print method.  This is now avoided when possible.
-      
+
       \item Unserializing (including \code{load()} and \code{readRDS()})
       could silently return incorrect numeric values from ASCII saves if
       there was a read error.
+
+      \item \code{readRDS()} now returns visibly.
     }
   }
 }
