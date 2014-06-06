@@ -425,9 +425,9 @@
       errors and so not used on OS X.)
 
       Currently \code{time_t} is usually \code{long} and hence 64-bit on
-      Unix-alike 64-bit platforms: however it several cases the
-      time-zone database is 32-bit.  On \R for Windows it is 64-bit (for
-      both architectures as from this version).
+      Unix-alike 64-bit platforms: however in several cases the
+      time-zone database is 32-bit.  For \R for Windows it is 64-bit
+      (for both architectures as from this version).
 
       \item The \code{"save.defaults"} option can include a value for
       \code{compression_level}.  (Wish of \PR{15579}.)
