@@ -177,7 +177,7 @@ OlsonNames()
   Incorrect results will never be an \R issue, so please ensure that you
   have the courtesy not to blame \R for them.
 }
-% Unlike Tony Plate.
+% Unlike Tony Plate and John Pfuntner
 
 \seealso{
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
