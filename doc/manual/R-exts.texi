@@ -4136,7 +4136,7 @@ various standards.
 
 @itemize
 @item
-Mathermatical functions such as @code{sqrt} are defined in C++ for
+Mathematical functions such as @code{sqrt} are defined in C++ for
 floating-point arguments.  It is legitimate in C++ to overload these
 with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
