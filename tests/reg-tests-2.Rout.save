@@ -7437,3 +7437,56 @@ $foo
 
 > ## printed wrong value in 3.1.0
 > 
+> ## getParseData bug reported by Andrew Redd
+> raw <- "
++ function( a   # parameter 1
++          , b=2 # parameter 2
++          ){a+b}"
+> p <- parse(text=raw)
+> getParseData(p)
+   line1 col1 line2 col2 id parent          token
+31     2    1     4   15 31      0           expr
+3      2    1     2    8  3     31       FUNCTION
+4      2    9     2    9  4     31            '('
+5      2   11     2   11  5     31 SYMBOL_FORMALS
+6      2   15     2   27  6     31        COMMENT
+8      3   10     3   10  8     31            ','
+10     3   12     3   12 10     31 SYMBOL_FORMALS
+11     3   13     3   13 11     31     EQ_FORMALS
+12     3   14     3   14 12     13      NUM_CONST
+13     3   14     3   14 13     31           expr
+14     3   16     3   28 14     31        COMMENT
+16     4   10     4   10 16     31            ')'
+28     4   11     4   15 28     31           expr
+18     4   11     4   11 18     28            '{'
+25     4   12     4   14 25     28           expr
+19     4   12     4   12 19     21         SYMBOL
+21     4   12     4   12 21     25           expr
+20     4   13     4   13 20     25            '+'
+22     4   14     4   14 22     24         SYMBOL
+24     4   14     4   14 24     25           expr
+23     4   15     4   15 23     28            '}'
+   terminal          text
+31    FALSE              
+3      TRUE      function
+4      TRUE             (
+5      TRUE             a
+6      TRUE # parameter 1
+8      TRUE             ,
+10     TRUE             b
+11     TRUE             =
+12     TRUE             2
+13    FALSE              
+14     TRUE # parameter 2
+16     TRUE             )
+28    FALSE              
+18     TRUE             {
+25    FALSE              
+19     TRUE             a
+21    FALSE              
+20     TRUE             +
+22     TRUE             b
+24    FALSE              
+23     TRUE             }
+> ## Got some parents wrong
+> 

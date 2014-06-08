@@ -1289,6 +1289,8 @@ static void ParseInit(void)
 static void initData(void)
 {
     ParseState.data_count = 0 ;
+    for (int i = 1; i <= ID_COUNT; i++)
+	ID_ID( i ) = 0;
 }
 
 

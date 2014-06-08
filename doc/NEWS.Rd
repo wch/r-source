@@ -166,6 +166,9 @@
       TRUE)} replaces the RStudio override by the default device as
       selected by \R itself, still respecting environment variables
       \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}.
+      
+      \item \code{getParseData()} could return incorrect values for 
+      the parents of some elements. (Reported by Andrew Redd.)
     }
   }
 

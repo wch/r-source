@@ -2879,3 +2879,12 @@ d[integer(), "a"] <- 2
 options(foo = 1)
 print(options(foo = NULL))
 ## printed wrong value in 3.1.0
+
+## getParseData bug reported by Andrew Redd
+raw <- "
+function( a   # parameter 1
+         , b=2 # parameter 2
+         ){a+b}"
+p <- parse(text=raw)
+getParseData(p)
+## Got some parents wrong
