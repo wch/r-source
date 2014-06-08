@@ -561,8 +561,8 @@
  do_asPOSIXct
  do_asPOSIXlt
  do_as_environment
+ do_asatomic
  do_ascall
- do_ascharacter
  do_asfunction
  do_assign
  do_asvector
@@ -631,6 +631,7 @@
  do_dimnamesgets
  do_dirchmod
  do_dircreate
+ do_direxists
  do_dirname
  do_disassemble
  do_dllversion
@@ -1314,6 +1315,7 @@
  pcre_malloc
  pcre_refcount
  pcre_stack_free
+ pcre_stack_guard
  pcre_stack_malloc
  pcre_study
  pcre_version
@@ -1435,14 +1437,28 @@
  trio_asprintfv
  trio_fprintf
  trio_fprintfv
+ trio_fscanf
+ trio_fscanfv
  trio_printf
  trio_printfv
+ trio_scanf
+ trio_scanfv
+ trio_snprintf
  trio_snprintfv
+ trio_sprintf
  trio_sprintfv
+ trio_sscanf
+ trio_sscanfv
+ trio_strerror
  trio_vaprintf
  trio_vasprintf
  trio_vfprintf
+ trio_vfscanf
  trio_vprintf
+ trio_vscanf
+ trio_vsnprintf
+ trio_vsprintf
+ trio_vsscanf
  tzname
  tzset
  unregisterBase
