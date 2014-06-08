@@ -61,8 +61,11 @@ serialize <-
     if (!ascii && inherits(connection, "sockconn"))
         .Internal(serializeb(object, connection, xdr, version, refhook))
     else {
-        if (!isTRUE(ascii) && !xdr) ascii <- NA
-        .Internal(serialize(object, connection, ascii, version, refhook))
+        if(is.na(ascii)) type <- 2L
+        else if(ascii) type <- 1L
+        else if(!xdr) type <- 3L
+        else type <- 0L
+        .Internal(serialize(object, connection, type, version, refhook))
     }
 }
 

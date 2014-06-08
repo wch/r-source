@@ -2493,10 +2493,13 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 
     hook = fun != R_NilValue ? CallHook : NULL;
 
-    int asc = asLogical(ascii);
-    if (asc == NA_LOGICAL) type = R_pstream_asciihex_format;
-    else if (asc) type = R_pstream_ascii_format;
-    else type = R_pstream_xdr_format;
+    int asc = asInteger(ascii);
+    switch(asc) {
+    case 1: type = R_pstream_ascii_format; break;
+    case 2: type = R_pstream_asciihex_format; break;
+    case 3: type = R_pstream_binary_format; break;
+    default: type = R_pstream_xdr_format; break;
+    }
 
     if (icon == R_NilValue) {
 	RCNTXT cntxt;
@@ -2874,7 +2877,7 @@ do_serialize(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP object, icon, type, ver, fun;
     object = CAR(args); args = CDR(args);
     icon = CAR(args); args = CDR(args);
-    type = CAR(args); args = CDR(args); // ascii or xdr
+    type = CAR(args); args = CDR(args);
     ver = CAR(args); args = CDR(args);
     fun = CAR(args);
     

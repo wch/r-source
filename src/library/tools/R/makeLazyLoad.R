@@ -151,6 +151,11 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                            variables)
 {
+    ## pre-empt any problems with interpretation of 'ascii'
+    ascii <- as.logical(ascii)
+    if (is.na(ascii)) stop("'ascii' must be TRUE or FALSE", domain = NA)
+    ascii <- as.integer(ascii)
+
     envlist <- function(e)
         .Internal(getVarsFromFrame(ls(e, all.names = TRUE), e, FALSE))
 
