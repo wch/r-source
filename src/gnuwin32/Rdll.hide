@@ -229,7 +229,6 @@
  R_newsock
  R_newunz
  R_newurl
- R_num_math_threads
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch

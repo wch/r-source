@@ -410,6 +410,7 @@ static RETSIGTYPE handleInterrupt(int dummy)
  */
 
 #ifndef Win32
+// controlled by the internal http server in the internet module
 int R_ignore_SIGPIPE = 0;
 
 static RETSIGTYPE handlePipe(int dummy)
