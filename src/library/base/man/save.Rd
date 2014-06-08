@@ -75,11 +75,15 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
   All \R platforms use the XDR (bigendian) representation of C ints and
   doubles in binary save-d files, and these are portable across all \R
-  platforms.  (ASCII saves used to be useful for moving data between
-  platforms but are now mainly of historical interest.  They can be more
-  compact than binary saves where compression is not used, but are
-  almost always slower to both read and write: binary saves compress
-  much better than ASCII ones.)
+  platforms.
+
+  ASCII saves used to be useful for moving data between platforms but
+  are now mainly of historical interest.  They can be more compact than
+  binary saves where compression is not used, but are almost always
+  slower to both read and write: binary saves compress much better than
+  ASCII ones.  Further, decimal ASCII saves may not restore
+  double/complex values exactly, and what value is restored may depend
+  on the \R platform.
 
   Default values for the \code{ascii}, \code{compress}, \code{safe} and
   \code{version} arguments can be modified with the
@@ -98,7 +102,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
 \section{Compression}{
   Large files can be reduced considerably in size by compression.  A
-  particular 46MB object was saved as 35MB without compression in 2
+  particular 46MB \R object was saved as 35MB without compression in 2
   seconds, 22MB with \command{gzip} compression in 8 secs, 19MB with
   \command{bzip2} compression in 13 secs and 9.4MB with \command{xz}
   compression in 40 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
@@ -152,7 +156,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   
   Loading files saved with \code{ASCII = NA} requires a C99-compliant C
   function \code{sscanf}: this is a problem on Windows, first worked
-  around in \R 3.2.0. 
+  around in \R 3.2.0.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
