@@ -3,7 +3,7 @@
 set.seed(1)
 if(.Platform$OS.type == "windows") options(pager = "console")
 
-pdf("reg-examples1.pdf", encoding = "ISOLatin1.enc")
+pdf("reg-examples-1.pdf", encoding = "ISOLatin1.enc")
 
 
 ## base
