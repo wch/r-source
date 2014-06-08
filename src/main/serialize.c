@@ -2327,7 +2327,7 @@ static void InitBConOutPStream(R_outpstream_t stream, bconbuf_t bb,
 }
 
 /* only for use by serialize(), with binary write to a socket connection */
-SEXP attribute_hidden
+static SEXP
 R_serializeb(SEXP object, SEXP icon, SEXP xdr, SEXP Sversion, SEXP fun)
 {
     struct R_outpstream_st out;
@@ -2477,7 +2477,7 @@ static SEXP CloseMemOutPStream(R_outpstream_t stream)
     return val;
 }
 
-SEXP attribute_hidden
+static SEXP
 R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 {
     struct R_outpstream_st out;
@@ -2493,6 +2493,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 
     hook = fun != R_NilValue ? CallHook : NULL;
 
+    // Prior to 3.2.0 this was logical, values 0/1/NA for binary.
     int asc = asInteger(ascii);
     switch(asc) {
     case 1: type = R_pstream_ascii_format; break;
