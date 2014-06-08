@@ -58,9 +58,8 @@
       TRUE)} replaces the RStudio override by the default device as
       selected by \R itself, still respecting environment variables
       \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}.
-      
-      \item \code{getParseData()} could return incorrect values for 
-      the parents of some elements. (Reported by Andrew Redd.)
+
+      \item \code{readRDS()} now returns visibly.
     }
   }
 
@@ -204,8 +203,9 @@
       \item Unserializing (including \code{load()} and \code{readRDS()})
       could silently return incorrect numeric values from ASCII saves if
       there was a read error.
-
-      \item \code{readRDS()} now returns visibly.
+      
+      \item \code{getParseData()} could return incorrect values for 
+      the parents of some elements. (Reported by Andrew Redd.)
     }
   }
 }
