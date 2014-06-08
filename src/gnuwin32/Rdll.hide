@@ -125,9 +125,6 @@
  R_OpenSiteFile
  R_OpenSysInitFile
  R_OutputCon
- R_PPStack
- R_PPStackSize
- R_PPStackTop
  R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
