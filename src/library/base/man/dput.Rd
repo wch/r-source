@@ -79,12 +79,13 @@ dput(baz)
 dput(baz, control = "useSource")
 
 ## Numeric values:
-dput(pi) # slight rounding
-dput(pi, control = "digits16")
-dput(pi, control = "hexNumeric") # can be read in exactly
-dput(pi, "foo"); dget("foo") - pi
-dput(pi, "foo", control = "digits16"); dget("foo") - pi
-dput(pi, "foo", control = "hexNumeric"); dget("foo") - pi
+xx <- pi^(1:3)
+dput(xx)
+dput(xx, control = "digits16")
+dput(xx, control = "hexNumeric")
+dput(xx, "foo"); dget("foo") - xx # slight rounding on all platforms
+dput(xx, "foo", control = "digits16"); dget("foo") - xx # rounding on Windows
+dput(xx, "foo", control = "hexNumeric"); dget("foo") - xx
 unlink("foo")
 }
 \keyword{file}
