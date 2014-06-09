@@ -73,6 +73,10 @@
       precision.  Unfortunately Windows' lack of C99 compliance means
       that the format can be written but not read correctly there in \R
       before 3.2.0.
+      
+      \item The \code{format()} calls used when printing the result of
+      \code{summary()} on an \code{"lm"} object now consult
+      \code{getOption("OutDec")}.  (Wish of \PR{15819}.)
     }
   }
 

@@ -50,8 +50,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   perhaps S) session, but the function \code{\link{save}} is designed to
   be used for transporting \R data, and will work with \R objects that
   \code{dump} does not handle.  For maximal reproducibility use
-  \code{control = c("all", "hexNumeric")}: for slightly less
-  reproducibility an alternative is \code{control = c("all", "digits16")}.
+  \code{control = c("all", "hexNumeric")}.
 
   To produce a more readable representation of an object, use
   \code{control = NULL}.  This will skip attributes, and will make other

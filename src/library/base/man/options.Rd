@@ -179,9 +179,11 @@ getOption(x, default = NULL)
       \code{max.print} \emph{entries}.}
 
     \item{\code{OutDec}:}{character string containing a single-byte
-      character.  The character to be used as the decimal point in output
-      conversions, that is in printing, plotting and \code{as.character}
-      but not deparsing.}
+      character.  The preferred character to be used as the decimal
+      point in output conversions, that is in printing, plotting and
+      \code{as.character} but not when deparsing nor by
+      \code{\link{sprintf}} or \code{\link{formatC}} (which are
+      sometimes used prior to printing.}
 
     \item{\code{pager}:}{the command used for displaying text files by
       \code{\link{file.show}}.
