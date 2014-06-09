@@ -87,10 +87,9 @@
     \item{\code{digits17}}{
       Real and finite complex numbers are output using format
       \samp{"\%.17g"} which may give more precision than the default
-      (but not necessarily enough to read back with no loss of
-      precision).
-      Complex numbers with one or both non-finite components are
-      output as if this option were not set.
+      (but the ouptut will depend on the platform and there may be loss
+      of precision when read back).  Complex numbers with one or both
+      non-finite components are output as if this option were not set.
     }
   }
   For the most readable (but perhaps incomplete) display, use
@@ -108,7 +107,7 @@
   Also, representing double and complex numbers as decimals may well not
   be exact.
 
-  Only one of \code{"hexNumeric"} and \code{"digits16"} can be specified.
+  Only one of \code{"hexNumeric"} and \code{"digits17"} can be specified.
 }
 \value{
   A numerical value corresponding to the options selected.

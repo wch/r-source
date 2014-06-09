@@ -84,7 +84,8 @@ dput(xx)
 dput(xx, control = "digits17")
 dput(xx, control = "hexNumeric")
 dput(xx, "foo"); dget("foo") - xx # slight rounding on all platforms
-dput(xx, "foo", control = "digits17"); dget("foo") - xx # maybe some rounding
+dput(xx, "foo", control = "digits17")
+dget("foo") - xx # slight rounding on some platforms
 dput(xx, "foo", control = "hexNumeric"); dget("foo") - xx
 unlink("foo")
 }
