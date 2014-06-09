@@ -2925,7 +2925,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                 bad_depends$suggests_but_not_installed <- m
         }
         if (length(VB)) {
-            bad <- VB[! VB %in% c(package_name, installed)]
+            bad <- VB[! VB %in% c(package_name, depends, imports, suggests)]
             if(length(bad))
                 bad_depends$required_for_checking_but_not_installed <- bad
         }
@@ -3042,9 +3042,9 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
-          c(.pretty_format2("VignetteBuilder packages required for checking but not available:", bad), "")
+          c(.pretty_format2("VignetteBuilder packages required for checking but not declared:", bad), "")
       } else if(length(bad)) {
-          c(sprintf("VignetteBuilder package required for checking but not available: %s", sQuote(bad)), "")
+          c(sprintf("VignetteBuilder package required for checking but not declared: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
