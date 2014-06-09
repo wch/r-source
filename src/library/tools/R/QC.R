@@ -2925,9 +2925,14 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                 bad_depends$suggests_but_not_installed <- m
         }
         if (length(VB)) {
+            ## these need both to be declared and installed
             bad <- VB[! VB %in% c(package_name, depends, imports, suggests)]
             if(length(bad))
-                bad_depends$required_for_checking_but_not_installed <- bad
+                bad_depends$required_for_checking_but_not_declared <- bad
+            bad2 <- VB[! VB %in% c(package_name, installed)]
+            bad2 <- setdiff(bad2, bad)
+            if(length(bad2))
+                bad_depends$required_for_checking_but_not_installed <- bad2
         }
     }
     ## FIXME: is this still needed now we do dependency analysis?
@@ -3041,10 +3046,15 @@ function(x, ...)
           c(sprintf("Package which this enhances but not available for checking: %s", sQuote(bad)),
             "")
       },
-      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
+      if(length(bad <- x$required_for_checking_but_not_declared) > 1L) {
           c(.pretty_format2("VignetteBuilder packages required for checking but not declared:", bad), "")
       } else if(length(bad)) {
           c(sprintf("VignetteBuilder package required for checking but not declared: %s", sQuote(bad)), "")
+      },
+      if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
+          c(.pretty_format2("VignetteBuilder packages required for checking but not installed:", bad), "")
+      } else if(length(bad)) {
+          c(sprintf("VignetteBuilder package required for checking but installed: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
