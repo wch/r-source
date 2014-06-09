@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ecdf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,9 @@ ecdf <- function (x)
 
 print.ecdf <- function (x, digits = getOption("digits") - 2L, ...)
 {
-    numform <- function(x) paste(formatC(x, digits = digits), collapse = ", ")
+    numform <- function(x)
+        paste(formatC(x, digits = digits, decimal.mark = getOption("OutDec")),
+              collapse = ", ")
     cat("Empirical CDF \nCall: ")
     print(attr(x, "call"), ...)
     n <- length(xx <- environment(x)$"x")

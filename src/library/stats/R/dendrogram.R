@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dendrogram.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -352,9 +352,9 @@ plotNode <-
     if(getOption("verbose")) {
 	cat(if(inner)"inner node" else "leaf", ":")
 	if(!is.null(nPar)) { cat(" with node pars\n"); str(nPar) }
-	cat(if(inner )paste(" height", formatC(yTop),"; "),
-	    "(x1,x2)= (", formatC(x1, width = 4), ",", formatC(x2, width = 4), ")",
-	    "--> xTop=", formatC(xTop, width = 8), "\n", sep = "")
+	cat(if(inner )paste(" height", formatC(yTop, decimal.mark = getOption("OutDec")),"; "),
+	    "(x1,x2)= (", formatC(x1, width = 4L, decimal.mark = getOption("OutDec")), ",", formatC(x2, width = 4L, decimal.mark = getOption("OutDec")), ")",
+	    "--> xTop=", formatC(xTop, width = 8L, decimal.mark = getOption("OutDec")), "\n", sep = "")
     }
 
     Xtract <- function(nam, L, default, indx)

@@ -814,6 +814,7 @@
 	cli <- defClasses[i,]
 	dist <- dist + ihi[match(cli, names(ihi))]
     }
+    ## These should be integers, so we do not need to worry about a decimal point
     if(verbose) cat("** final methods' distances: (",
 		    paste(formatC(dist), collapse= ", "), ")\n", sep='')
     best <- dist == min(dist)

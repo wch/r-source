@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-06-01 r65806) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-06-09 r65891) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7429,7 +7429,7 @@ Signif. codes:
 > ## warned in 3.0.3.
 > 
 > 
-> ## PR15781
+> ## PR#15781
 > options(foo = 1)
 > print(options(foo = NULL))
 $foo
@@ -7437,12 +7437,13 @@ $foo
 
 > ## printed wrong value in 3.1.0
 > 
+> 
 > ## getParseData bug reported by Andrew Redd
 > raw <- "
 + function( a   # parameter 1
 +          , b=2 # parameter 2
 +          ){a+b}"
-> p <- parse(text=raw)
+> p <- parse(text = raw)
 > getParseData(p)
    line1 col1 line2 col2 id parent          token
 31     2    1     4   15 31      0           expr
@@ -7489,4 +7490,32 @@ $foo
 24    FALSE              
 23     TRUE             }
 > ## Got some parents wrong
+> 
+> 
+> ## wish of PR#15819
+> set.seed(123); x <- runif(10); y <- rnorm(10)
+> op <- options(OutDec = ",")
+> fit <- lm(y ~ x)
+> summary(fit)
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1,62155 -0,33471  0,05238  0,55227  1,19742 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   0,8994     0,6282   1,432    0,190
+x            -1,3275     0,9780  -1,357    0,212
+
+Residual standard error: 0,8648 on 8 degrees of freedom
+Multiple R-squared:  0,1872,	Adjusted R-squared:  0,08557 
+F-statistic: 1,842 on 1 and 8 DF,  p-value: 0,2117
+
+> options(op)
+> ## those parts using formatC still used a decimal point.
+> 
+> 
 > 

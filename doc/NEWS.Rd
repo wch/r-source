@@ -73,6 +73,17 @@
       precision.  Unfortunately Windows' lack of C99 compliance means
       that the format can be written but not read correctly there in \R
       before 3.2.0.
+
+      \item The print methods for classes \code{"density"},
+      \code{"ecdf"}, \code{"stepfun"} and \code{"summary.lm"} now
+      consult \code{getOption("OutDec")} even where \code{formatC()} is
+      used.
+
+      Similarly when \code{cut()}, \code{dendrogram()}, \code{plot.ts()}
+      and \code{quantile()} construct labels, and for the report from
+      \code{legend(trace = TRUE)}.
+
+      (In part, wish of \PR{15819}.)
     }
   }
 

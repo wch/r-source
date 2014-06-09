@@ -84,7 +84,9 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     }
     if(trace)
 	catn <- function(...)
-	    do.call("cat", c(lapply(list(...),formatC), list("\n")))
+	    do.call("cat", c(lapply(list(...), formatC,
+                                    decimal.mark = getOption("OutDec")),
+                             list("\n")))
 
     cin <- par("cin")
     Cex <- cex * par("cex")		# = the `effective' cex for text

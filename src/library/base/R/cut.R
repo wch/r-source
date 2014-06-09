@@ -1,7 +1,7 @@
 #  File src/library/base/R/cut.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ cut.default <-
 	dx <- diff(rx <- range(x, na.rm = TRUE))
 	if(dx == 0) {
             dx <- abs(rx[1L])
-            breaks <- seq.int(rx[1L] - dx/1000, rx[2L] + dx/1000, 
+            breaks <- seq.int(rx[1L] - dx/1000, rx[2L] + dx/1000,
                               length.out = nb)
         } else {
             breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
@@ -41,7 +41,9 @@ cut.default <-
     codes.only <- FALSE
     if (is.null(labels)) {#- try to construct nice ones ..
 	for(dig in dig.lab:max(12L, dig.lab)) {
-	    ch.br <- formatC(breaks, digits = dig, width = 1L)
+            ## 0+ avoids printing signed zeros as "-0"
+	    ch.br <- formatC(0+breaks, digits = dig, width = 1L,
+                             decimal.mark = getOption("OutDec"))
 	    if(ok <- all(ch.br[-1L] != ch.br[-nb])) break
 	}
 	labels <-

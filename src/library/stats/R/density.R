@@ -169,7 +169,8 @@ plot.density <- function(x, main = NULL, xlab = NULL, ylab = "Density",
                          type = "l", zero.line = TRUE, ...)
 {
     if(is.null(xlab))
-	xlab <- paste("N =", x$n, "  Bandwidth =", formatC(x$bw))
+	xlab <- paste("N =", x$n, "  Bandwidth =",
+                      formatC(x$bw, decimal.mark = getOption("OutDec")))
     if(is.null(main)) main <- deparse(x$call)
     plot.default(x, main = main, xlab = xlab, ylab = ylab, type = type, ...)
     if(zero.line) abline(h = 0, lwd = 0.1, col = "gray")
@@ -180,7 +181,9 @@ print.density <- function(x, digits = NULL, ...)
 {
     cat("\nCall:\n\t", deparse(x$call),
 	"\n\nData: ", x$data.name, " (", x$n, " obs.);",
-	"\tBandwidth 'bw' = ", formatC(x$bw, digits = digits), "\n\n", sep = "")
+	"\tBandwidth 'bw' = ",
+        formatC(x$bw, digits = digits, decimal.mark = getOption("OutDec")),
+        "\n\n", sep = "")
     print(summary(as.data.frame(x[c("x","y")])), digits = digits, ...)
     invisible(x)
 }

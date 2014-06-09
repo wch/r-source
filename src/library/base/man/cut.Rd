@@ -62,6 +62,9 @@ cut(x, \dots)
   The default method will sort a numeric vector of \code{breaks}, but
   other methods are not required to and \code{labels} will correspond to
   the intervals after sorting.
+  
+  As from \R 3.2.0, \code{getOption("OutDec")} is consulted when labels
+  are constructed for \code{labels = NULL}.
 }
 \value{
   A \code{\link{factor}} is returned, unless \code{labels = FALSE} which

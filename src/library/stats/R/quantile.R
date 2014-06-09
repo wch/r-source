@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quantile.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ quantile.default <-
     if(names && np > 0L) {
 	dig <- max(2L, getOption("digits"))
 	names(qs) <- paste0(## formatC is slow for long probs
-                            if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig)
+                            if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig, decimal.mark = getOption("OutDec"))
                             else format(100 * probs, trim = TRUE, digits = dig),
                             "%")
     }
