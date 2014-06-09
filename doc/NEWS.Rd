@@ -75,9 +75,9 @@
       before 3.2.0.
 
       \item The print methods for classes \code{"density"},
-      \code{"ecdf"}, \code{"stepfun"} and \code{"summary.lm"} now
-      consult \code{getOption("OutDec")} even where \code{formatC()} is
-      used.
+      \code{"ecdf"}, \code{"kmeans"}, \code{"stepfun"} and
+      \code{"summary.lm"} now consult \code{getOption("OutDec")} even
+      where \code{formatC()} or \code{sprintf()} is used.
 
       Similarly when \code{cut()}, \code{dendrogram()}, \code{plot.ts()}
       and \code{quantile()} construct labels, and for the report from
