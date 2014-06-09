@@ -1427,7 +1427,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    } else if (TYPEOF(vector) == REALSXP && (d->opts & DIGITS16)) {
 		double x = REAL(vector)[i];
 		if (R_FINITE(x)) {
-		    snprintf(hex, 32, "%.16g", x);
+		    snprintf(hex, 32, "%.17g", x);
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');
@@ -1441,7 +1441,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    } else if (TYPEOF(vector) == CPLXSXP && (d->opts & DIGITS16)) {
 		Rcomplex z =  COMPLEX(vector)[i];
 		if (R_FINITE(z.r) && R_FINITE(z.i)) {
-		    snprintf(hex, 64, "%.16g + %16gi", z.r, z.i);
+		    snprintf(hex, 64, "%.17g + %17gi", z.r, z.i);
 		    strp = hex;
 		} else
 		    strp = EncodeElement(vector, i, quote, '.');

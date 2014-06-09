@@ -81,10 +81,10 @@ dput(baz, control = "useSource")
 ## Numeric values:
 xx <- pi^(1:3)
 dput(xx)
-dput(xx, control = "digits16")
+dput(xx, control = "digits17")
 dput(xx, control = "hexNumeric")
 dput(xx, "foo"); dget("foo") - xx # slight rounding on all platforms
-dput(xx, "foo", control = "digits16"); dget("foo") - xx # rounding on Windows
+dput(xx, "foo", control = "digits17"); dget("foo") - xx # maybe some rounding
 dput(xx, "foo", control = "hexNumeric"); dget("foo") - xx
 unlink("foo")
 }

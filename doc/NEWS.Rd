@@ -60,10 +60,10 @@
       efficiently whether one or more paths exist and are directories.
 
       \item \code{dput()} and friends gain new controls
-      \samp{"hexNumeric"} and \samp{"digits16"} which output double and
+      \samp{"hexNumeric"} and \samp{"digits17"} which output double and
       complex quantities as, respectively, binary fractions (see
       \code{sprintf("\%a")}) to full precision (and no noise) and as
-      decimals with 16 significant digits.
+      decimals with up to 17 significant digits.
 
       \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
       support \code{ascii = NA} which writes ASCII files using the

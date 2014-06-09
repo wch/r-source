@@ -84,11 +84,11 @@
 
       All platforms can \code{source} this format as from \R 2.7.0.
     }
-    \item{\code{digits16}}{
+    \item{\code{digits17}}{
       Real and finite complex numbers are output using format
-      \samp{"\%.16g"} which may give more precision than the default
+      \samp{"\%.17g"} which may give more precision than the default
       (but not necessarily enough to read back with no loss of
-      precision: see the examples for \code{\link{dput}}).
+      precision).
       Complex numbers with one or both non-finite components are
       output as if this option were not set.
     }
