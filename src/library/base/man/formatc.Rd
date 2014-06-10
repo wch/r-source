@@ -153,6 +153,10 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 \note{
   Prior to \R 3.0.2 this copied the class of \code{x} to the return
   value and could easily create invalid objects.
+  
+  The default for \code{decimal.mark} is not appropriate for use within
+  \code{\link{print}} methods: use \code{decimal.mark =
+    getOption("OutDec")} there.
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap for S-PLUS, later
