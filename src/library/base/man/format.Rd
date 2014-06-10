@@ -73,7 +73,7 @@ format(x, \dots)
 
   \item{big.mark, big.interval, small.mark,
     small.interval, decimal.mark, zero.print, drop0trailing}{%
-    used for prettying (longish) numerical and comples sequences.
+    used for prettying (longish) numerical and complex sequences.
     Passed to \code{\link{prettyNum}}: that help page explains the details.}
 }
 \details{
@@ -124,7 +124,7 @@ format(x, \dots)
   
   The internal code respects the option
   \code{\link{getOption}("OutDec")} for the \sQuote{decimal mark}, so if
-  this is set to something other than \code{"."} then it takes predence
+  this is set to something other than \code{"."} then it takes precedence
   over argument \code{decimal.mark}.
 }
 \value{

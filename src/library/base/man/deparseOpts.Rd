@@ -87,7 +87,7 @@
     \item{\code{digits17}}{
       Real and finite complex numbers are output using format
       \samp{"\%.17g"} which may give more precision than the default
-      (but the ouptut will depend on the platform and there may be loss
+      (but the output will depend on the platform and there may be loss
       of precision when read back).  Complex numbers with one or both
       non-finite components are output as if this option were not set.
     }
