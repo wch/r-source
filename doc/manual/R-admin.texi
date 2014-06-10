@@ -479,7 +479,10 @@ either of the options @code{inconsolata}, on a Unix-alike only if found
 by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
-@pkg{inconsolata} or @pkg{bera} installed.)
+@pkg{inconsolata}@footnote{Instructions on how to install the latest
+version are at
+@uref{http://www.ctan.org/tex-archive/fonts/inconsolata/}.} or
+@pkg{bera} installed.)
 
 Note that in most @LaTeX{} installations this will not actually use the
 standard fonts for PDF, but rather embed the URW clones NimbusRom,
