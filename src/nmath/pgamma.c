@@ -30,6 +30,7 @@
  *
  *	double logspace_add (double logx, double logy)
  *	double logspace_sub (double logx, double logy)
+ *	double logspace_sum (double* logx, int n)
  *
  *
  *  DESCRIPTION
@@ -51,8 +52,8 @@
 #include "nmath.h"
 #include "dpq.h"
 /*----------- DEBUGGING -------------
- *	make CFLAGS='-DDEBUG_p -g -I/usr/local/include -I../include'
- * (cd ~/R/D/r-devel/Linux-inst/src/nmath; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DDEBUG_p -g -O2 -c ../../../R/src/nmath/pgamma.c -o pgamma.o)
+ * make CFLAGS='-DDEBUG_p -g'
+ * (cd `R-devel RHOME`/src/nmath; gcc -I. -I../../src/include -I../../../R/src/include  -DHAVE_CONFIG_H -fopenmp -DDEBUG_p -g -c ../../../R/src/nmath/pgamma.c -o pgamma.o)
  */
 
 /* Scalefactor:= (2^32)^8 = 2^256 = 1.157921e+77 */
@@ -241,6 +242,38 @@ double logspace_sub (double logx, double logy)
 {
     return logx + R_Log1_Exp(logy - logx);
 }
+
+/*
+ * Compute the log of a sum from logs of terms, i.e.,
+ *
+ *     log (sum_i  exp (logx[i]) ) =
+ *     log (e^M * sum_i  e^(logx[i] - M) ) =
+ *     M + log( sum_i  e^(logx[i] - M)
+ *
+ * without causing overflows or throwing much accuracy.
+ */
+#ifdef HAVE_LONG_DOUBLE
+# define EXP expl
+# define LOG logl
+#else
+# define EXP exp
+# define LOG log
+#endif
+double logspace_sum (double* logx, int n)
+{
+    if(n == 0) return ML_NEGINF; // = log( sum(<empty>) )
+    if(n == 1) return logx[0];
+    if(n == 2) return logspace_add(logx[0], logx[1]);
+    // else (n >= 3) :
+    int i;
+    // Mx := max_i log(x_i)
+    double Mx = logx[0];
+    for(i = 1; i < n; i++) if(Mx < logx[i]) Mx = logx[i];
+    LDOUBLE s = (LDOUBLE) 0.;
+    for(i = 0; i < n; i++) s += EXP(logx[i] - Mx);
+    return Mx + (double) LOG(s);
+}
+
 
 
 /* dpois_wrap (x_P_1,  lambda, g_log) ==

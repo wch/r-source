@@ -394,6 +394,7 @@ double  log1pexp(double); // <-- ../nmath/plogis.c
 double  lgamma1p(double);
 double  logspace_add(double, double);
 double  logspace_sub(double, double);
+double  logspace_sum(double *, int);
 
 	/* Beta Distribution */
 

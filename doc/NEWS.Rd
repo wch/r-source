@@ -95,6 +95,8 @@
       \code{decimal.mark} are set to the same value (period and comma
       are not uncommonly used for each, and this is a check that
       conventions have not got mixed).
+
+      \item New C API utility \code{logspace_sum(logx[], n)}.
     }
   }
 
@@ -333,8 +335,8 @@
       \item Unserializing (including \code{load()} and \code{readRDS()})
       could silently return incorrect numeric values from ASCII saves if
       there was a read error.
-      
-      \item \code{getParseData()} could return incorrect values for 
+
+      \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
     }
   }
