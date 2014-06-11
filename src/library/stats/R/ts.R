@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -552,9 +552,7 @@ plot.ts <-
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
 		     else if(all(tsp(x) == tsp(y)))
-                         formatC(unclass(time(x)),
-                                 decimal.mark = getOption("OutDec"),
-                                 width = 1L)
+                         formatC(unclass(time(x)), width = 1)
 		     else seq_along(xy$x),
 		     col = col, cex = cex)
 	    if(xy.lines)

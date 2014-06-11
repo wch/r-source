@@ -42,8 +42,7 @@ cut.default <-
     if (is.null(labels)) {#- try to construct nice ones ..
 	for(dig in dig.lab:max(12L, dig.lab)) {
             ## 0+ avoids printing signed zeros as "-0"
-	    ch.br <- formatC(0+breaks, digits = dig, width = 1L,
-                             decimal.mark = getOption("OutDec"))
+	    ch.br <- formatC(0+breaks, digits = dig, width = 1L)
 	    if(ok <- all(ch.br[-1L] != ch.br[-nb])) break
 	}
 	labels <-

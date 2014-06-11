@@ -1,7 +1,7 @@
 #  File src/library/stats/R/stepfun.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -56,9 +56,7 @@ knots.stepfun <- function(Fn, ...) eval(expression(x), envir=environment(Fn))
 
 print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
 {
-    numform <- function(x)
-        paste(formatC(x, digits = digits, decimal.mark = getOption("OutDec")),
-              collapse = ", ")
+    numform <- function(x) paste(formatC(x, digits = digits), collapse=", ")
     i1 <- function(n) 1L:min(3L, n)
     i2 <- function(n) if(n >= 4L) max(4L, n-1L):n else integer()
     cat("Step function\nCall: ")
