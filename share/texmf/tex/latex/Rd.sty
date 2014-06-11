@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, http://www.R-project.org
-%%% Copyright (C) 2003-2013 The R Foundation
+%%% Copyright (C) 2003-2014 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -268,8 +268,11 @@
   \usepackage[T1]{fontenc}}{}
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
+%% it appears that all versions of zi4.sty support [noupquote],
+%% whereas only those since 2013/06/09 of inconsolata.sty do: such
+%% installations should also have zi4.sty
 \ifthenelse{\boolean{Rd@use@inconsolata}}{%
- \IfFileExists{inconsolata.sty}{\usepackage[noupquote]{inconsolata}}{\usepackage[noupquote]{zi4}}}{}
+ \IfFileExists{zi4.sty}{\usepackage[noupquote]{zi4}}{\usepackage{inconsolata}}}{}
 
 %% needs to come after \code is defined
 %% inspired by an earlier version of upquote.sty

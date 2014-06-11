@@ -26,8 +26,9 @@
   \RequirePackage[T1]{fontenc}
   \RequirePackage{ae}
 }{}%
+%% see comment in Rd.sty
 \ifthenelse{\boolean{Sweave@inconsolata}}{%
- \IfFileExists{inconsolata.sty}{\usepackage[noupquote]{inconsolata}}{\usepackage[noupquote]{zi4}}}{}
+ \IfFileExists{zi4.sty}{\usepackage[noupquote]{zi4}}{\usepackage{inconsolata}}}{}
 
 \DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
 \DefineVerbatimEnvironment{Soutput}{Verbatim}{}
