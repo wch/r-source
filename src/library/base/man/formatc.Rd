@@ -16,8 +16,9 @@ formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL,
         big.mark = "", big.interval = 3L,
         small.mark = "", small.interval = 5L,
-        decimal.mark = ".", preserve.width = "individual",
-        zero.print = NULL, drop0trailing = FALSE)
+        decimal.mark = getOption("OutDec"),
+        preserve.width = "individual", zero.print = NULL,
+        drop0trailing = FALSE)
 
 prettyNum(x, big.mark = "",   big.interval = 3L,
           small.mark = "", small.interval = 5L,
@@ -149,14 +150,17 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 
   The C doubles used for \R numerical vectors have signed zeros, which
   \code{formatC} may output as \code{-0}, \code{-0.000} \dots.
+  
+  There is a warning if \code{big.mark} and \code{decimal.mark} are the
+  same: that would be confusing to those reading the output.
 }
 \note{
   Prior to \R 3.0.2 this copied the class of \code{x} to the return
   value and could easily create invalid objects.
   
-  The default for \code{decimal.mark} is not appropriate for use within
-  \code{\link{print}} methods: use \code{decimal.mark =
-    getOption("OutDec")} there.
+  The default for \code{decimal.mark} was changed in \R 3.2.0: for use within
+  \code{\link{print}} methods in packages which might be used with
+  earlier versions: use \code{decimal.mark = getOption("OutDec")} explicitly.
 }
 \author{
   \code{formatC} was originally written by Bill Dunlap for S-PLUS, later

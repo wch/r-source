@@ -74,6 +74,11 @@
       that the format can be written but not read correctly there in \R
       before 3.2.0.
 
+      \item The default for \code{formatC(decimal.mark =)} has been
+      changed to be \code{getOption("OutDec")}; this makes it more
+      consistent with \code{format()} and suitable for use in print
+      methods.
+
       \item The print methods for classes \code{"density"},
       \code{"ecdf"}, \code{"kmeans"}, \code{"stepfun"} and
       \code{"summary.lm"} now consult \code{getOption("OutDec")} even
@@ -84,6 +89,12 @@
       \code{legend(trace = TRUE)}.
 
       (In part, wish of \PR{15819}.)
+
+      \item \code{printNum()} (and hence \code{format()} and
+      \code{formatC()} give a warning if \code{big.mark} and
+      \code{decimal.mark} are set to the same value (period and comma
+      are not uncommonly used for each, and this is a check that
+      conventions have not got mixed).
     }
   }
 

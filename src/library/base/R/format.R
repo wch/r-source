@@ -106,8 +106,9 @@ formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL,
 		     big.mark = "", big.interval = 3L,
 		     small.mark = "", small.interval = 5L,
-		     decimal.mark = ".", preserve.width = "individual",
-                     zero.print = NULL, drop0trailing = FALSE)
+                     decimal.mark = getOption("OutDec"),
+                     preserve.width = "individual", zero.print = NULL,
+                     drop0trailing = FALSE)
 {
     if(is.object(x)) {
         x <- unclass(x)
@@ -131,7 +132,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 	if(mode=="real") mode <- "double"
 	storage.mode(x) <- mode
     }
-    else if (mode != "character") stop("'mode' must be \"double\" (\"real\"), \"integer\" or \"character\"")
+    else if (mode != "character")
+        stop("'mode' must be \"double\" (\"real\"), \"integer\" or \"character\"")
     if (mode == "character" || (!is.null(format) && format == "s")) {
 	if (mode != "character") {
 	    warning('coercing argument to "character" for format="s"')
@@ -294,6 +296,11 @@ prettyNum <-
     }
     ## be fast in trivial case (when all options have their default):
     nMark <- big.mark== "" && small.mark== "" && decimal.mark== "."
+
+    if (identical(big.mark, decimal.mark))
+        warning(gettextf("'big.mark' and 'decimal.mark' are both '%s', which could be confusing",
+                         big.mark), domain = NA)
+
     nZero <- is.null(zero.print) && !drop0trailing
     if(nMark && nZero)
 	return(x)
