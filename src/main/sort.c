@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2013   The R Core Team
+ *  Copyright (C) 1998-2014   The R Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -864,7 +864,7 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 
     if (n < 2) return;
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < NI; h = sincs[++t])
+    for (h = incs[t]; t < NI; h = incs[++t])
 	R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
