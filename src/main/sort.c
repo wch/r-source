@@ -864,7 +864,7 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, Rboolean nalast,
 
     if (n < 2) return;
     for (t = 0; incs[t] > n; t++);
-    for (h = incs[t]; t < NI; h = sincs[++t])
+    for (h = incs[t]; t < 16; h = sincs[++t])
 	R_CheckUserInterrupt();
 	for (i = h; i < n; i++) {
 	    itmp = indx[i];
