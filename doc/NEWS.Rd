@@ -192,6 +192,9 @@
       \env{R_INTERACTIVE_DEVICE} and \env{R_DEFAULT_DEVICE}.
 
       \item \code{readRDS()} now returns visibly.
+
+      \item Modifying internal logical scalar constants now results in
+      an error instead of a warning.
     }
   }
 
