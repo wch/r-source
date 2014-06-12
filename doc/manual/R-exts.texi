@@ -2632,7 +2632,10 @@ value.  The test of cyclic declarations@footnote{For example, in early
 2014 @CRANpkg{gdata} declared @samp{Imports: gtools} and @CRANpkg{gtools}
 declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
 repositories (including @acronym{CRAN}) set: do this in
-@file{~/.Rprofile}.
+@file{~/.Rprofile}, by e.g@:
+@example
+options(repos = c(CRAN="http://cran.r-project.org"))
+@end example
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
