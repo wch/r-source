@@ -352,7 +352,7 @@ Summary.POSIXlt <- function (..., na.rm)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    class(x) <- NULL
+    ## class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
@@ -363,7 +363,7 @@ function(x, ..., drop = TRUE)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    class(x) <- NULL
+    ## class(x) <- NULL
     val <- NextMethod("[[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
