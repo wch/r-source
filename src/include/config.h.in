@@ -109,12 +109,12 @@
 /* Define to 1 if you have the `cexp' function. */
 #undef HAVE_CEXP
 
-/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+/* Define to 1 if you have the OS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. (For intl) */
 #undef HAVE_CFLOCALECOPYCURRENT
 
-/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
-   the CoreFoundation framework. (For intl) */
+/* Define to 1 if you have the OS X function CFPreferencesCopyAppValue in the
+   CoreFoundation framework. (For intl) */
 #undef HAVE_CFPREFERENCESCOPYAPPVALUE
 
 /* Define to 1 if you have the `chdir' function. */
