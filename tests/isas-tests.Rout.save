@@ -1,5 +1,5 @@
 
-R version 3.1.0 Patched (2014-05-26 r65747) -- "Spring Dance"
+R version 3.1.0 Patched (2014-06-13 r65930) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2562,6 +2562,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.089 0.012 0.101 0 0 
+Time elapsed:  0.156 0.004 0.161 0 0 
 > 
 > 
