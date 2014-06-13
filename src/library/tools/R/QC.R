@@ -2925,8 +2925,10 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
                 bad_depends$suggests_but_not_installed <- m
         }
         if (length(VB)) {
-            ## these need both to be declared and installed
-            bad <- VB[! VB %in% c(package_name, depends, imports, suggests)]
+            ## These need both to be declared and installed
+            ## If people explicitly state 'utils' they ought really to
+            ## declare it, but skip for now.
+            bad <- VB[! VB %in% c(package_name, "utils", depends, imports, suggests)]
             if(length(bad))
                 bad_depends$required_for_checking_but_not_declared <- bad
             bad2 <- VB[! VB %in% c(package_name, installed)]
