@@ -28,17 +28,21 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
-    \file{.zip} files containing binary builds of packages. Source
-    directories or \file{.tar.gz} archives may also be installed, but
-    some packages need suitable tools installed (see the
+    of \file{.zip} files containing binary builds of packages.
+    (\code{http://} and \code{file://} URLs are also accepted and the
+    files will be downloaded and installed from local copies.)
+    Source directories or archives may also be installed,
+    but some packages need suitable tools installed (see the
     \sQuote{Details} section).
 #endif
 #ifdef unix
-    \file{.tar.gz} files.  These can be source archives or binary
-    package archive files (as created by \command{R CMD build --binary}).
-    On a CRAN build of \R for OS X these can be \file{.tgz} files
-    containing binary package archives.
-    Tilde-expansion will be done on the file paths.
+    \file{.tar.gz} files.  These can be source directories or archives
+    or binary package archive files (as created by \command{R CMD build
+      --binary}).  (\code{http://} and \code{file://} URLs are also
+    accepted and the files will be downloaded and installed from local
+    copies.)  On a CRAN build of \R for OS X these can be \file{.tgz}
+    files containing binary package archives.
+    Tilde-expansion will be done on file paths.
 #endif
 
     If this is missing or a zero-length character vector, a listbox of
@@ -56,15 +60,15 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{"http://cran.us.r-project.org"}.  For more details on
     supported URL schemes see \code{\link{url}}.
 
-    Can be \code{NULL} to install from local files
-    (with extension \file{.tar.gz} for source packages).
+    Can be \code{NULL} to install from local files, directories or URLs:
+    this will be inferred if possible from \code{pkgs}.
   }
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
     argument if your repository mirror is incomplete, e.g., because
     you burned only the \file{contrib} section on a CD, or only have
-    binary packages.  Overrides argument \code{repos}.  As with
-    \code{repos}, can also be \code{NULL} to install from local files.
+    binary packages.  Overrides argument \code{repos}.  Can also be
+    \code{NULL} to install from local files.
   }
   \item{method}{
     download method, see \code{\link{download.file}}.

@@ -63,6 +63,11 @@
 
       \item Modifying internal logical scalar constants now results in
       an error instead of a warning.
+      
+      \item \code{install.packages(repos = NULL)} now accepts
+      \code{http://} or \code{ftp://} URLs of package archives as well
+      as file paths, and will download as required.  In most cases
+      \code{repos = NULL} can be deduced from the extension of the URL.
     }
   }
 
@@ -206,8 +211,8 @@
       \item Unserializing (including \code{load()} and \code{readRDS()})
       could silently return incorrect numeric values from ASCII saves if
       there was a read error.
-      
-      \item \code{getParseData()} could return incorrect values for 
+
+      \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
     }
   }
