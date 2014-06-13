@@ -226,8 +226,10 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     }
 
     if(is.null(contriburl)) {
-        for(i in seq_along(pkgs))
+        for(i in seq_along(pkgs)) {
+            if(is.na(pkgs[i])) next
             unpackPkgZip(pkgs[i], pkgnames[i], lib, libs_only, lock, quiet)
+        }
         return(invisible())
     }
     tmpd <- destdir
