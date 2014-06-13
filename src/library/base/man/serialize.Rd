@@ -21,7 +21,7 @@ unserialize(connection, refhook = NULL)
   \item{connection}{an open \link{connection} or (for \code{serialize})
     \code{NULL} or (for \code{unserialize}) a raw vector
     (see \sQuote{Details}).}
-  \item{ascii}{a logical.  If \code{TRUE} on \code{NA}, an ASCII
+  \item{ascii}{a logical.  If \code{TRUE} or \code{NA}, an ASCII
     representation is written; otherwise (default) a binary one.
     See also the comments in the help for \code{\link{save}}.}
   \item{xdr}{a logical: if a binary representation is used, should a

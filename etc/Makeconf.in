@@ -97,7 +97,7 @@ SHLIB_FFLAGS = @SHLIB_FFLAGS@
 SHLIB_LD = @SHLIB_LD@
 SHLIB_LDFLAGS = @SHLIB_LDFLAGS@@BUILD_LTO_TRUE@ $(CFLAGS) $(CPICFLAGS)
 SHLIB_LIBADD = @SHLIB_LIBADD@
-## We want to endure libR is picked by from $(R_HOME)/lib
+## We want to ensure libR is picked up from $(R_HOME)/lib
 ## before e.g. /usr/local/lib if a version is already installed.
 SHLIB_LINK = $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LIBR0) $(LDFLAGS)
 SHLIB_OPENMP_CFLAGS = @SHLIB_OPENMP_CFLAGS@
