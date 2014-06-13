@@ -109,7 +109,7 @@ Enter an environment number, or 0 to exit
 Selection: 0
 
 ## A possible setting for non-interactive sessions
-options(error = quote({dump.frames(to.file = TRUE); q()}))
+options(error = quote({dump.frames(to.file = TRUE); q(status = 1)}))
 }}
 \keyword{utilities}
 \keyword{error}
