@@ -4153,17 +4153,22 @@ except in C++11 which has overloads in @file{<cmath>} for integer types.
 Function @code{abs} is defined in C99's @file{<stdlib.h>} for @code{int}
 and in C++98's @file{<cstdlib>} for integer types, overloaded in
 @file{<cmath>} for floating-point types.  C++11 has additional overloads
-in @file{<cmath>} for integer types.
+for @code{abs} in @file{<cmath>} for integer types.
 
 @item
-Functions such as @code{isnan} or @code{isfinite} are not required by
-C++98: where compilers support them they may be only in the @code{std}
-namespace.  There is no way to make use of these functions which works
-with all C++ compilers currently in use on @R{} platforms: use @R{}'s
-versions such as @code{ISNAN} and @code{R_FINITE} instead.
+Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
+are not required by C++98: where compilers support them they may be only
+in the @code{std} namespace or only in the main namespace.  There is no
+way to make use of these functions which works with all C++ compilers
+currently in use on @R{} platforms: use @R{}'s versions such as
+@code{ISNAN} and @code{R_FINITE} instead.
 
 It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
+
+@item
+Variable-length arrays are C99, not supported by C++98 nor by the C++
+compilers in use with @R{} on some platforms.
 
 @item
 Macros defined by the compiler/OS can cause problems.  Macros starting
