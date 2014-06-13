@@ -95,11 +95,14 @@
       \code{decimal.mark} are set to the same value (period and comma
       are not uncommonly used for each, and this is a check that
       conventions have not got mixed).
-
-      \item New C API utility \code{logspace_sum(logx[], n)}.
+      
+      \item \code{install.packages(repos = NULL)} now accepts
+      \code{http://} or \code{ftp://} URLs of package archives as well
+      as file paths, and will download as required.  In most cases
+      \code{repos = NULL} can be deduced from the extension of the URL.
     }
   }
-
+  
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item When building \R as a shared library, the
@@ -130,6 +133,12 @@
 
       \command{R CMD check} gains \option{--run-dontrun} and
       \option{--run-donttest} options.
+    }
+  }
+  
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item New C API utility \code{logspace_sum(logx[], n)}.
     }
   }
 

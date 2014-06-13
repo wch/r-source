@@ -140,7 +140,7 @@ install.packages <-
     get_package_name <- function(pkg) {
         ## Since the pkg argument can be the name of a file rather than
         ## a regular package name, we have to clean that up.
-        gsub("_\\.(zip|tar\\.gz)", "",
+        gsub("_[.](zip|tar[.]gz|tar[.]bzip2|tar[.]xz)", "",
              gsub(.standard_regexps()$valid_package_version, "",
                   basename(pkg)))
     }
@@ -149,13 +149,12 @@ install.packages <-
     {
         if(.Platform$OS.type == "windows") return(character())
 
-        pkg <- get_package_name(pkg)
-
         if(length(pkgs) == 1L && length(configure.args) &&
            length(names(configure.args)) == 0L)
             return(paste0("--configure-args=",
                           shQuote(paste(configure.args, collapse = " "))))
 
+        pkg <- get_package_name(pkg)
         if (length(configure.args) && length(names(configure.args))
               && pkg %in% names(configure.args))
             config <- paste0("--configure-args=",
@@ -170,13 +169,12 @@ install.packages <-
     {
         if(.Platform$OS.type == "windows") return(character())
 
-        pkg <- get_package_name(pkg)
-
         if(length(pkgs) == 1L && length(configure.vars) &&
            length(names(configure.vars)) == 0L)
             return(paste0("--configure-vars=",
                           shQuote(paste(configure.vars, collapse = " "))))
 
+        pkg <- get_package_name(pkg)
         if (length(configure.vars) && length(names(configure.vars))
               && pkg %in% names(configure.vars))
             config <- paste0("--configure-vars=",
@@ -282,16 +280,44 @@ install.packages <-
 
     lib <- normalizePath(lib)
 
-    ## check if we should infer repos=NULL
+    ## check if we should infer repos = NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
-        if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
-           (type %in% "win.binary" && length(grep("\\.zip$", pkgs))) ||
+        if((type == "source" &&
+            any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs) | dir.exists(pkgs))) ||
+           (type %in% "win.binary" && length(grep("[.]zip$", pkgs))) ||
            (substr(type, 1L, 10L) == "mac.binary"
-            && length(grep("\\.tgz$", pkgs)))) {
+            && length(grep("[.]tgz$", pkgs)))) {
             repos <- NULL
-            message("inferring 'repos = NULL' from the file name")
+            message("inferring 'repos = NULL' from 'pkgs'")
         }
     }
+
+    if(is.null(repos) & missing(contriburl)) {
+        tmpd <- destdir
+        nonlocalrepos <- any(web <- grepl("^(http|ftp)://", pkgs))
+        if(is.null(destdir) && nonlocalrepos) {
+            tmpd <- file.path(tempdir(), "downloaded_packages")
+            if (!file.exists(tmpd) && !dir.create(tmpd))
+                stop(gettextf("unable to create temporary directory %s",
+                              sQuote(tmpd)),
+                     domain = NA)
+        }
+        if(nonlocalrepos) {
+            urls <- pkgs[web]
+            for (p in unique(urls)) {
+                this <- pkgs == p
+                destfile <- file.path(tmpd, basename(p))
+                res <- try(download.file(p, destfile, method, mode="wb", ...))
+                if(!inherits(res, "try-error") && res == 0L)
+                    pkgs[this] <- destfile
+                else {
+                    ## There will be enough notification from the try()
+                    pkgs[this] <- NA
+                }
+           }
+        }
+    }
+
 
 # for testing .Platform$pkgType <- "mac.binary.leopard"
     ## Look at type == "both"
@@ -555,25 +581,25 @@ install.packages <-
         ## install from local source tarball(s)
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
 
-        for(i in seq_len(nrow(update))) {
-            args <- c(args0,
-                      get_install_opts(update[i, 1L]),
-                      "-l", shQuote(update[i, 2L]),
-                      getConfigureArgs(update[i, 1L]),
-                      getConfigureVars(update[i, 1L]),
-                      shQuote(update[i, 1L]))
-            status <- system2(cmd0, args, env = env,
-                              stdout = output, stderr = output)
-            if(status > 0L)
-                warning(gettextf("installation of package %s had non-zero exit status",
-                                 sQuote(update[i, 1L])),
-                        domain = NA)
-            else if(verbose) {
-                cmd <- paste(c(cmd0, args), collapse = " ")
-                message(sprintf("%d): succeeded '%s'", i, cmd),
-                        domain = NA)
-            }
-        }
+       for(i in seq_len(nrow(update))) {
+           if (is.na(update[i, 1L])) next
+           args <- c(args0,
+                     get_install_opts(update[i, 1L]),
+                     "-l", shQuote(update[i, 2L]),
+                     getConfigureArgs(update[i, 1L]),
+                     getConfigureVars(update[i, 1L]),
+                     shQuote(update[i, 1L]))
+           status <- system2(cmd0, args, env = env,
+                             stdout = output, stderr = output)
+           if(status > 0L)
+               warning(gettextf("installation of package %s had non-zero exit status",
+                                sQuote(update[i, 1L])),
+                       domain = NA)
+           else if(verbose) {
+               cmd <- paste(c(cmd0, args), collapse = " ")
+               message(sprintf("%d): succeeded '%s'", i, cmd), domain = NA)
+           }
+       }
         return(invisible())
     }
 
@@ -677,7 +703,7 @@ install.packages <-
             if(status > 0L) {
                 ## Try to figure out which
                 pkgs <- update[, 1L]
-                tss <- sub("\\.ts$", "", dir(".", pattern = "\\.ts$"))
+                tss <- sub("[.]ts$", "", dir(".", pattern = "[.]ts$"))
                 failed <- pkgs[!pkgs %in% tss]
 		for (pkg in failed) system(paste0("cat ", pkg, ".out"))
                 warning(gettextf("installation of one or more packages failed,\n  probably %s",
