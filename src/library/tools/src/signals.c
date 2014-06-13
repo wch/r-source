@@ -25,7 +25,7 @@
 #include "tools.h"
 #include <signal.h> // C99
 
-#ifdef WIN32
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
@@ -39,12 +39,12 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
     PROTECT(sres = allocVector(LGLSXP, ns));
     pid = INTEGER(sspid);
     res = INTEGER(sres);
-#if !defined(WIN32) && !defined(HAVE_KILL)
+#if !defined(_WIN32) && !defined(HAVE_KILL)
     warning(_("pskill() is not supported on this platform"));
 #endif
     if(signal != NA_INTEGER) {
 	for (int i = 0; i < ns; i++) {
-#ifdef WIN32
+#ifdef _WIN32
 	    HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, pid[i]);
 	    if (hProc) {
                 TerminateProcess(hProc, 1);
@@ -92,7 +92,7 @@ SEXP ps_priority(SEXP spid, SEXP svalue)
     UNPROTECT(2);
     return sres;
 }
-#elif defined(WIN32)
+#elif defined(_WIN32)
 SEXP ps_priority(SEXP spid, SEXP svalue)
 {
     SEXP sspid, sres;

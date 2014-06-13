@@ -988,7 +988,7 @@
 #endif
 
 /* Define this to be the name of the CPU of your system. */
-#ifdef WIN64
+#ifdef _WIN64
 #define R_CPU "x86_64"
 #else
 #define R_CPU "i386"
@@ -1007,7 +1007,7 @@
 #define R_OS "mingw32"
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
-#ifdef WIN64
+#ifdef _WIN64
 #define R_PLATFORM "x86_64-w64-mingw32"
 #else
 #define R_PLATFORM "i386-w64-mingw32"
@@ -1038,7 +1038,7 @@
 #define SIZEOF_LONG 4
 
 /* The size of `long double', as computed by sizeof. */
-#ifdef WIN64
+#ifdef _WIN64
 #define SIZEOF_LONG_DOUBLE 16
 #else
 #define SIZEOF_LONG_DOUBLE 12

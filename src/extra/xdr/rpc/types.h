@@ -59,10 +59,10 @@
 #	define NULL 0
 #endif
 
-#if !defined(WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
+#if !defined(_WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
 #include <stdlib.h> // for malloc
 #endif
-#if defined(WIN32) && defined(LEA_MALLOC)
+#if defined(_WIN32) && defined(LEA_MALLOC)
 #include <stddef.h>
 extern void *Rm_malloc(size_t n);
 extern void Rm_free(void * p);
@@ -78,7 +78,7 @@ extern void Rm_free(void * p);
 #include <sys/types.h>
 #endif /* macintosh */
 #endif
-#if !defined(WIN32) && !defined(macintosh)
+#if !defined(_WIN32) && !defined(macintosh)
 #include <sys/time.h>
 #endif
 

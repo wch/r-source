@@ -217,9 +217,11 @@ void doMouseEvent(pDevDesc dd, R_MouseEvent event,
 
     if (TYPEOF(handler) == CLOSXP) {
         defineVar(install("which"), ScalarInteger(ndevNumber(dd)+1), dd->eventEnv);
-	int len = (buttons & leftButton)
-	    + (buttons & middleButton)
-	    + (buttons & rightButton);
+	// Be portable: see PR#15793
+	int len = ((buttons & leftButton) != 0)
+	  + ((buttons & middleButton) != 0)
+	  + ((buttons & rightButton) != 0);
+
 	PROTECT(bvec = allocVector(INTSXP, len));
 	i = 0;
 	if (buttons & leftButton) INTEGER(bvec)[i++] = 0;

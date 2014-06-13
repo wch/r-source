@@ -1041,7 +1041,7 @@ int setupui(void)
     if (RguiMDI & RW_MDI) {
 	TRACERUI("Rgui");
 	RFrame = newwindow(
-#ifdef WIN64
+#ifdef _WIN64
 	    "RGui (64-bit)",
 #else
 	    "RGui (32-bit)",
@@ -1056,7 +1056,7 @@ int setupui(void)
 	TRACERUI("Console done");
     } else {
 	TRACERUI("Console");
-#ifdef WIN64
+#ifdef _WIN64
 	if (!(RConsole = newconsole("R Console (64-bit)", flags ))) return 0;
 #else
 	if (!(RConsole = newconsole("R Console (32-bit)", flags ))) return 0;

@@ -214,7 +214,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 	    case 'c':
 		// In a C locale this is supposed to be
 		// "%a %b %e %T %Y". It is not on Windows ....
-#ifdef WIN32
+#ifdef _WIN32
 		pt = _fmt("%a %b %e %T %Y", t, pt, ptlim);
 #else
 		pt = _fmt(orig("%c", t), t, pt, ptlim);
@@ -306,7 +306,7 @@ _fmt(const char *format, const stm *const t, char * pt, const char *const ptlim)
 		stm  tm = *t;
 		char buf[22]; // <= 19 digs + sign + terminator
 		int_fast64_t mkt = R_mktime(&tm);
-#ifdef WIN32
+#ifdef _WIN32
 		// not ISO C99, so warns
 		(void) snprintf(buf, 22, "%I64d", mkt);
 #else

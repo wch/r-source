@@ -231,7 +231,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     GetComputerNameW(name, &namelen);
     wcstoutf8(buf, name, 1000);
     SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
-#ifdef WIN64
+#ifdef _WIN64
     SET_STRING_ELT(ans, 4, mkChar("x86-64"));
 #else
     SET_STRING_ELT(ans, 4, mkChar("x86"));
@@ -307,7 +307,7 @@ SEXP in_memsize(SEXP ssize)
 	if (!R_FINITE(mem))
 	    error(_("incorrect argument"));
 #ifdef LEA_MALLOC
-#ifndef WIN64
+#ifndef _WIN64
 	if(mem >= 4096)
 	    error(_("don't be silly!: your machine has a 4Gb address limit"));
 #endif

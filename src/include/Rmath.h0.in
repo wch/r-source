@@ -649,7 +649,7 @@ double  logspace_sub(double logx, double logy);
 # define R_FINITE(x)    R_finite(x)
 int R_finite(double);
 
-# ifdef WIN32  /* not Win32 as no config information */
+# ifdef _WIN32  /* not Win32 as no config information */
 #  ifdef RMATH_DLL
 #   define R_EXTERN extern __declspec(dllimport)
 #  else

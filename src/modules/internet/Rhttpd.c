@@ -58,7 +58,7 @@
 
 /* this is orignally from sisock.h - system independent sockets */
 
-#ifndef WIN32
+#ifndef _WIN32
 # include <R_ext/eventloop.h>
 # include <sys/types.h>
 # ifdef HAVE_UNISTD_H
@@ -126,7 +126,7 @@ static int initsocks(void)
 # define donesocks() WSACleanup()
 typedef int socklen_t;
 
-#endif /* WIN32 */
+#endif /* _WIN32 */
 
 /* --- system-independent part --- */
 
@@ -183,7 +183,7 @@ static int in_process;
 typedef struct httpd_conn {
     SOCKET sock;         /* client socket */
     struct in_addr peer; /* IP address of the peer */
-#ifdef WIN32
+#ifdef _WIN32
     HANDLE thread;       /* worker thread */
 #else
     InputHandler *ih;    /* worker input handler */
@@ -208,7 +208,7 @@ static httpd_conn_t *workers[MAX_WORKERS];
 /* --- flag determining whether one-time initialization is yet to be performed --- */
 static int needs_init = 1;
 
-#ifdef WIN32
+#ifdef _WIN32
 #define WM_RHTTP_CALLBACK ( WM_USER + 1 )
 static HWND message_window;
 static LRESULT CALLBACK
@@ -221,7 +221,7 @@ RhttpdWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 static void first_init()
 {
     initsocks();
-#ifdef WIN32
+#ifdef _WIN32
     /* create a dummy message-only window for synchronization with the
      * main event loop */
     HINSTANCE instance = GetModuleHandle(NULL);
@@ -277,7 +277,7 @@ static SEXP collect_buffers(struct buffer *buf) {
 static void finalize_worker(httpd_conn_t *c)
 {
     DBG(printf("finalizing worker %p\n", (void*) c));
-#ifndef WIN32
+#ifndef _WIN32
     if (c->ih) {
 	removeInputHandler(&R_InputHandlers, c->ih);
 	c->ih = NULL;
@@ -316,7 +316,7 @@ static int add_worker(httpd_conn_t *c) {
     unsigned int i = 0;
     for (; i < MAX_WORKERS; i++)
 	if (!workers[i]) {
-#ifdef WIN32
+#ifdef _WIN32
 	    DBG(printf("registering worker %p as %d (thread=0x%x)\n", (void*) c, i, (int) c->thread));
 #else
 	    DBG(printf("registering worker %p as %d (handler=%p)\n", (void*) c, i, (void*) c->ih));
@@ -497,7 +497,7 @@ static SEXP parse_request_body(httpd_conn_t *c) {
     }
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 /* on Windows we have to guarantee that process_request is performed
  * on the main thread, so we have to dispatch it through a message */
 static void process_request_main_thread(httpd_conn_t *c);
@@ -749,7 +749,7 @@ static void process_request(httpd_conn_t *c)
     in_process = 0;
 }
 
-#ifdef WIN32
+#ifdef _WIN32
 #undef process_request
 #endif
 
@@ -1074,7 +1074,7 @@ static void srv_input_handler(void *data);
 
 static SOCKET srv_sock = INVALID_SOCKET;
 
-#ifdef WIN32
+#ifdef _WIN32
 /* Windows implementation uses threads to accept and serve
    connections, using the main event loop to synchronize with R
    through a message-only window which is created on the R thread
@@ -1135,7 +1135,7 @@ static void srv_input_handler(void *data)
     c = (httpd_conn_t*) calloc(1, sizeof(httpd_conn_t));
     c->sock = cl_sock;
     c->peer = peer_sa.sin_addr;
-#ifndef WIN32
+#ifndef _WIN32
     c->ih = addInputHandler(R_InputHandlers, cl_sock, &worker_input_handler,
 			    HttpdWorkerActivity);
     if (c->ih) c->ih->userData = c;
@@ -1152,7 +1152,7 @@ static void srv_input_handler(void *data)
 
 int in_R_HTTPDCreate(const char *ip, int port) 
 {
-#ifndef WIN32
+#ifndef _WIN32
     int reuse = 1;
 #endif
     SAIN srv_sa;
@@ -1164,7 +1164,7 @@ int in_R_HTTPDCreate(const char *ip, int port)
     if (srv_sock != INVALID_SOCKET)
 	closesocket(srv_sock);
 
-#ifdef WIN32
+#ifdef _WIN32
     /* on Windows stop the server thread if it exists */
     if (server_thread) {
 	DWORD ts = 0;
@@ -1179,7 +1179,7 @@ int in_R_HTTPDCreate(const char *ip, int port)
     if (srv_sock == INVALID_SOCKET)
 	Rf_error("unable to create socket");
 
-#ifndef WIN32
+#ifndef _WIN32
     /* set socket for reuse so we can re-init if we die */
     /* But on Windows, this lets us stomp on any port already in use, so don't do it. */
     setsockopt(srv_sock, SOL_SOCKET, SO_REUSEADDR,
@@ -1203,7 +1203,7 @@ int in_R_HTTPDCreate(const char *ip, int port)
     if (listen(srv_sock, 8))
 	Rf_error("cannot listen to TCP port %d", port);
 
-#ifndef WIN32
+#ifndef _WIN32
     /* all went well, register the socket as a handler */
     if (srv_handler) removeInputHandler(&R_InputHandlers, srv_handler);
     srv_handler = addInputHandler(R_InputHandlers, srv_sock,
@@ -1220,7 +1220,7 @@ void in_R_HTTPDStop(void)
     if (srv_sock != INVALID_SOCKET) closesocket(srv_sock);
     srv_sock = INVALID_SOCKET;
 
-#ifdef WIN32
+#ifdef _WIN32
     /* on Windows stop the server thread if it exists */
     if (server_thread) {
 	DWORD ts = 0;

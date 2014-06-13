@@ -686,7 +686,7 @@ void attribute_hidden BindDomain(char *R_Home)
     else snprintf(localedir, PATH_MAX+20, "%s/library/translations", R_Home);
     bindtextdomain(PACKAGE, localedir); // PACKAGE = DOMAIN = "R"
     bindtextdomain("R-base", localedir);
-# ifdef WIN32
+# ifdef _WIN32
     bindtextdomain("RGui", localedir);
 # endif
 #endif

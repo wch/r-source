@@ -53,7 +53,7 @@ use of tm_zone and tm_gmtoff on all platforms.
 #include <stdio.h>
 #include <fcntl.h> // for open + modes
 
-#ifndef WIN32
+#ifndef _WIN32
 # include <unistd.h> // for access, read, close
 #endif
 

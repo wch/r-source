@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001 The R Core Team.
+ *  Copyright (C) 2000-2014 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,12 @@
 
 /*
   Experimental: included by src/library/stats/src/distance.c
+
+  Note that only uses R_num_math_threads: it is not clear
+  R_num_math_threads should be exposed at all.
+
+  This is not used currently on Windows, where R_num_math_threads
+  used not to be exposed.
 */
 
 #ifndef R_EXT_MATHTHREADS_H_
