@@ -1,7 +1,7 @@
 #  File src/library/base/R/frametools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
 	names(nl) <- names(x)
 	eval(substitute(select), nl, parent.frame())
     }
+    ## PR#15823 suggested that sometimes which(r) would be faster,
+    ## but this is not intended for programmatic use and the
+    ## difference is tens of ms on a 1 million-row data frame.
     x[r, vars, drop = drop]
 }
 
