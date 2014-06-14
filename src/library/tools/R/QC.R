@@ -3049,9 +3049,9 @@ function(x, ...)
             "")
       },
       if(length(bad <- x$required_for_checking_but_not_declared) > 1L) {
-          c(.pretty_format2("VignetteBuilder packages required for checking but not declared:", bad), "")
+          c(.pretty_format2("VignetteBuilder packages not declared:", bad), "")
       } else if(length(bad)) {
-          c(sprintf("VignetteBuilder package required for checking but not declared: %s", sQuote(bad)), "")
+          c(sprintf("VignetteBuilder package not declared: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
           c(.pretty_format2("VignetteBuilder packages required for checking but not installed:", bad), "")
