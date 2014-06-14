@@ -294,7 +294,7 @@ install.packages <-
 
     if(is.null(repos) & missing(contriburl)) {
         tmpd <- destdir
-        nonlocalrepos <- any(web <- grepl("^(http|ftp)://", pkgs))
+        nonlocalrepos <- any(web <- grepl("^(http|https|ftp)://", pkgs))
         if(is.null(destdir) && nonlocalrepos) {
             tmpd <- file.path(tempdir(), "downloaded_packages")
             if (!file.exists(tmpd) && !dir.create(tmpd))

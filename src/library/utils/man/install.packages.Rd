@@ -26,17 +26,17 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{pkgs}{character vector of the names of packages whose
     current versions should be downloaded from the repositories.
 
-    If \code{repos = NULL}, a character vector of file paths of
+    If \code{repos = NULL}, a character vector of
 #ifdef windows
-    of \file{.zip} files containing binary builds of packages.
-    (\code{http://} and \code{file://} URLs are also accepted and the
-    files will be downloaded and installed from local copies.)
-    Source directories or archives may also be installed,
-    but some packages need suitable tools installed (see the
-    \sQuote{Details} section).
+    file paths of \file{.zip} files containing binary builds of
+    packages.  (\code{http://} and \code{file://} URLs are also accepted
+    and the files will be downloaded and installed from local copies.)
+    Source directories or file paths or URLs of archives be
+    specified with \code{type = "source"}, but some packages need
+    suitable tools installed (see the \sQuote{Details} section).
 #endif
 #ifdef unix
-    \file{.tar.gz} files.  These can be source directories or archives
+    file paths.  These can be source directories or archives
     or binary package archive files (as created by \command{R CMD build
       --binary}).  (\code{http://} and \code{file://} URLs are also
     accepted and the files will be downloaded and installed from local
@@ -126,8 +126,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     packages.)
   }
   \item{configure.args}{
-    (not used on Windows) a character vector or a named list.  If a
-    character vector with no names is supplied, the elements are
+    (Used only for source installs.) A character vector or a named list.
+    If a character vector with no names is supplied, the elements are
     concatenated into a single string (separated by a space) and used as
     the value for the \option{--configure-args} flag in the call to
     \command{R CMD INSTALL}.  If the character vector has names these
@@ -143,9 +143,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     value for \option{--configure-args}.
   }
   \item{configure.vars}{
-    (not used on Windows) analogous to \code{configure.args} for flag
-    \option{--configure-vars}, which is used to set environment variables
-    for the \command{configure} run.
+    (Used only for source installs.) Analogous to \code{configure.args}
+    for flag \option{--configure-vars}, which is used to set environment
+    variables for the \command{configure} run.
   }
   \item{clean}{a logical value indicating whether to specify
     to add the \option{--clean} flag to the call to
