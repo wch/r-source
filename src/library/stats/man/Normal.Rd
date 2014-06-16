@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -51,6 +51,10 @@ rnorm(n, mean = 0, sd = 1)
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
+  
+  For \code{sd = 0} this gives the limit as \code{sd} decreases to 0, a
+  point mass at \code{mu}.
+  \code{sd < 0} is an error and returns \code{NaN}.
 }
 \details{
   If \code{mean} or \code{sd} are not specified they assume the default
