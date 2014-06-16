@@ -1,6 +1,6 @@
 % File src/library/stats/man/Lognormal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Lognormal}
@@ -45,6 +45,8 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
+
+  \code{sdlog <= 0} is an error and returns \code{NaN}.
 }
 \source{
   \code{dlnorm} is calculated from the definition (in \sQuote{Details}).
