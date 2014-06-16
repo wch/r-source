@@ -68,9 +68,6 @@ rnorm(n, mean = 0, sd = 1)
   }
   where \eqn{\mu} is the mean of the distribution and
   \eqn{\sigma} the standard deviation.
-
-  \code{qnorm} is based on Wichura's algorithm AS 241 which provides
-  precise results up to about 16 digits.
 }
 \seealso{
   \link{Distributions} for other standard distributions, including
@@ -89,6 +86,8 @@ rnorm(n, mean = 0, sd = 1)
   Wichura, M. J. (1988)
   Algorithm AS 241: The percentage points of the normal distribution.
   \emph{Applied Statistics}, \bold{37}, 477--484.
+
+  which provides precise results up to about 16 digits.
 
   For \code{rnorm}, see \link{RNG} for how to select the algorithm and
   for references to the supplied methods.
