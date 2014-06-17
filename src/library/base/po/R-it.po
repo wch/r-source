@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:50\n"
+"POT-Creation-Date: 2014-06-17 08:35\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -47,7 +47,7 @@ msgstr "valori infiniti o mancanti in 'x'"
 msgid "a dimension is zero"
 msgstr ""
 
-msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -711,6 +711,9 @@ msgstr "'flag' può contenre solo '0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "data frame corrotto: le colonne verranno accorciate o riempite con NA"
 
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' deve avere lunghezza > 1"
 
@@ -1081,6 +1084,9 @@ msgstr "'by' deve essere compatibile col numero di colonne"
 #, fuzzy
 msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by' deve specificare la colonna(e)"
+
+msgid "long vectors are not supported"
+msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' e 'by.y' specificano numeri di colonne differenti"

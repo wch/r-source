@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-09 10:50+0100\n"
+"POT-Creation-Date: 2014-06-17 08:35+0100\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -181,13 +181,13 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/main/deparse.c:397 src/main/dotcode.c:478 src/main/dotcode.c:482
 #: src/main/dotcode.c:487 src/main/dounzip.c:322 src/main/dounzip.c:329
 #: src/main/dounzip.c:339 src/main/dounzip.c:344 src/main/dounzip.c:348
-#: src/main/dounzip.c:352 src/main/envir.c:1621 src/main/envir.c:1624
-#: src/main/envir.c:1745 src/main/envir.c:1750 src/main/envir.c:1816
-#: src/main/envir.c:1832 src/main/envir.c:1838 src/main/envir.c:1935
-#: src/main/envir.c:1943 src/main/envir.c:1950 src/main/envir.c:1961
-#: src/main/envir.c:2175 src/main/envir.c:2296 src/main/envir.c:2555
-#: src/main/envir.c:2765 src/main/envir.c:2779 src/main/envir.c:2786
-#: src/main/envir.c:2802 src/main/envir.c:3370 src/main/errors.c:1049
+#: src/main/dounzip.c:352 src/main/envir.c:1626 src/main/envir.c:1629
+#: src/main/envir.c:1750 src/main/envir.c:1755 src/main/envir.c:1821
+#: src/main/envir.c:1837 src/main/envir.c:1843 src/main/envir.c:1940
+#: src/main/envir.c:1948 src/main/envir.c:1955 src/main/envir.c:1966
+#: src/main/envir.c:2180 src/main/envir.c:2301 src/main/envir.c:2560
+#: src/main/envir.c:2770 src/main/envir.c:2784 src/main/envir.c:2791
+#: src/main/envir.c:2807 src/main/envir.c:3375 src/main/errors.c:1049
 #: src/main/eval.c:398 src/main/eval.c:407 src/main/eval.c:410
 #: src/main/grep.c:779 src/main/grep.c:784 src/main/grep.c:1075
 #: src/main/grep.c:1077 src/main/grep.c:1079 src/main/grep.c:1524
@@ -231,11 +231,11 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/main/sysutils.c:1838 src/main/sysutils.c:1842 src/main/unique.c:969
 #: src/main/unique.c:1275 src/main/unique.c:1335 src/main/unique.c:1342
 #: src/main/unique.c:1736 src/main/util.c:581 src/main/util.c:584
-#: src/main/util.c:1828 src/main/util.c:1997 src/main/util.c:1998
-#: src/main/util.c:1999 src/main/util.c:2016 src/main/util.c:2040
-#: src/main/util.c:2044 src/main/util.c:2046 src/main/util.c:2071
-#: src/main/util.c:2073 src/main/util.c:2075 src/main/util.c:2078
-#: src/main/util.c:2081 src/main/util.c:2085 src/main/util.c:2087
+#: src/main/util.c:1833 src/main/util.c:2002 src/main/util.c:2003
+#: src/main/util.c:2004 src/main/util.c:2021 src/main/util.c:2045
+#: src/main/util.c:2049 src/main/util.c:2051 src/main/util.c:2076
+#: src/main/util.c:2078 src/main/util.c:2080 src/main/util.c:2083
+#: src/main/util.c:2086 src/main/util.c:2090 src/main/util.c:2092
 #: src/modules/X11/devX11.c:3241 src/modules/X11/devX11.c:3244
 #: src/modules/X11/devX11.c:3247 src/modules/X11/devX11.c:3271
 #: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
@@ -264,8 +264,8 @@ msgstr "지원되지 않는 윈도우즈 버전입니다"
 #: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
-#: src/main/util.c:991 src/main/util.c:998 src/main/util.c:1001
+#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:991
+#: src/main/util.c:996 src/main/util.c:1003 src/main/util.c:1006
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
@@ -287,7 +287,7 @@ msgstr "사용자 컴퓨터 주소공간의 한계는 4Gb입니다"
 msgid "cannot decrease memory limit: ignored"
 msgstr "메모리 한계를 줄일 수 없기 때문에 무시되었습니다"
 
-#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:897
+#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:902
 msgid "'path' must be a character vector"
 msgstr "'path'는 반드시 문자형 벡터이어야 합니다"
 
@@ -634,7 +634,7 @@ msgstr "DLLname '%s'는 너무 깁니다"
 msgid "could not allocate space for 'name'"
 msgstr "'name'에 공간을 할당할 수 없습니다"
 
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:698
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:703
 msgid "character argument expected"
 msgstr "문자형 인자가 필요합니다"
 
@@ -1139,8 +1139,8 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'의 길이 [%d]가 배열의 크기와 같지 않습니다"
 
 #: src/main/attrib.c:1055 src/main/builtin.c:75 src/main/builtin.c:112
-#: src/main/envir.c:1609 src/main/envir.c:1737 src/main/envir.c:1799
-#: src/main/envir.c:1921 src/main/paste.c:74 src/main/paste.c:293
+#: src/main/envir.c:1614 src/main/envir.c:1742 src/main/envir.c:1804
+#: src/main/envir.c:1926 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:479 src/main/random.c:508 src/main/unique.c:1735
 msgid "invalid first argument"
 msgstr "첫번째 인자가 유효하지 않습니다"
@@ -1317,11 +1317,11 @@ msgstr "지정된 벡터의 크기가 너무 큽니다"
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
 #: src/main/coerce.c:1535 src/main/connections.c:3065 src/main/engine.c:2967
 #: src/main/envir.c:996 src/main/envir.c:1049 src/main/envir.c:1139
-#: src/main/envir.c:1618 src/main/envir.c:1742 src/main/envir.c:1810
-#: src/main/envir.c:1928 src/main/envir.c:2585 src/main/envir.c:2645
-#: src/main/envir.c:2925 src/main/envir.c:2954 src/main/envir.c:2975
-#: src/main/envir.c:2998 src/main/envir.c:3033 src/main/envir.c:3054
-#: src/main/envir.c:3360 src/main/envir.c:3365 src/main/eval.c:5314
+#: src/main/envir.c:1623 src/main/envir.c:1747 src/main/envir.c:1815
+#: src/main/envir.c:1933 src/main/envir.c:2590 src/main/envir.c:2650
+#: src/main/envir.c:2930 src/main/envir.c:2959 src/main/envir.c:2980
+#: src/main/envir.c:3003 src/main/envir.c:3038 src/main/envir.c:3059
+#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5314
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2365 src/main/serialize.c:2744
 msgid "use of NULL environment is defunct"
@@ -2508,7 +2508,7 @@ msgstr "길이가 0인 인수입니다"
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts'는 반드시 음이 아닌 작은 정수이어야 합니다"
 
-#: src/main/deparse.c:411 src/main/envir.c:1767 src/main/envir.c:1849
+#: src/main/deparse.c:411 src/main/envir.c:1772 src/main/envir.c:1854
 #: src/main/eval.c:570 src/main/eval.c:1252 src/main/eval.c:3622
 #: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2762
 #, c-format
@@ -2974,7 +2974,7 @@ msgstr "라인 타입이 유효하지 않습니다"
 msgid "cannot change value of locked binding for '%s'"
 msgstr "'%s'에 대해서 잠긴 바인딩의 값은 변경할 수 없습니다"
 
-#: src/main/envir.c:251 src/main/envir.c:1457
+#: src/main/envir.c:251 src/main/envir.c:1459
 msgid "cannot add bindings to a locked environment"
 msgstr "잠겨있는 인바이런먼트에 바인딩을 추가할 수 없습니다"
 
@@ -2990,7 +2990,7 @@ msgstr ""
 msgid "unbind in the base environment is unimplemented"
 msgstr ""
 
-#: src/main/envir.c:837 src/main/envir.c:1687
+#: src/main/envir.c:837 src/main/envir.c:1692
 msgid "cannot remove bindings from a locked environment"
 msgstr "잠겨있는 인바이런먼트로부터 바인딩을 제거할 수 없습니다"
 
@@ -3009,7 +3009,7 @@ msgstr "... 목록은 %d개의 구성요소들을 가지고 있지 않습니다"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr ""
 
-#: src/main/envir.c:1393 src/main/envir.c:1845 src/main/eval.c:574
+#: src/main/envir.c:1393 src/main/envir.c:1850 src/main/eval.c:574
 #: src/main/eval.c:3613
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
@@ -3024,197 +3024,197 @@ msgstr "함수 \"%s\"를 찾을 수 없습니다"
 msgid "cannot assign values in the empty environment"
 msgstr "비어있는 인바이런먼트에는 값을 부여할 수 없습니다"
 
-#: src/main/envir.c:1427 src/main/envir.c:1500
+#: src/main/envir.c:1427 src/main/envir.c:1502
 msgid "cannot assign variables to this database"
 msgstr "이 데이터베이스에 변수를 부여할 수 없습니다"
 
-#: src/main/envir.c:1583
+#: src/main/envir.c:1588
 #, c-format
 msgid "cannot add binding of '%s' to the base environment"
 msgstr "바인딩 '%s'를 베이스 인바이런먼트에 추가할 수 없습니다"
 
-#: src/main/envir.c:1612
+#: src/main/envir.c:1617
 msgid "only the first element is used as variable name"
 msgstr "오로지 첫번째 요소만이 변수명으로 사용됩니다"
 
-#: src/main/envir.c:1644
+#: src/main/envir.c:1649
 msgid "first argument must be a named list"
 msgstr "첫번째 인자는 반드시 named list이어야 합니다"
 
-#: src/main/envir.c:1649
+#: src/main/envir.c:1654
 msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x)는 반드시 x와 같은 길이를 가지는 문자형 벡터이어야 합니다"
 
-#: src/main/envir.c:1652
+#: src/main/envir.c:1657
 msgid "'envir' argument must be an environment"
 msgstr "'envir' 인자는 반드시 인바이런먼트이어야 합니다"
 
-#: src/main/envir.c:1681
+#: src/main/envir.c:1686
 msgid "cannot remove variables from base namespace"
 msgstr "base 네임스페이스로부터 변수들을 제거 할 수 없습니다"
 
-#: src/main/envir.c:1683
+#: src/main/envir.c:1688
 msgid "cannot remove variables from the base environment"
 msgstr "베이스 인바이런먼트로부터 변수들을 제거 할 수 없습니다"
 
-#: src/main/envir.c:1685
+#: src/main/envir.c:1690
 msgid "cannot remove variables from the empty environment"
 msgstr "비어 있는 인바이런먼트로부터 변수들을 제거 할 수 없습니다"
 
-#: src/main/envir.c:1693
+#: src/main/envir.c:1698
 msgid "cannot remove variables from this database"
 msgstr "이 데이터베이스로부터 변수들을 제거 할 수 없습니다"
 
-#: src/main/envir.c:1852
+#: src/main/envir.c:1857
 #, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr "모드 '%2$s'를 가지는 객체 '%1$s'를 찾을 수 없습니다"
 
-#: src/main/envir.c:1924
+#: src/main/envir.c:1929
 #, c-format
 msgid "invalid name in position %d"
 msgstr "위치 %d에 유효하지 않은 이름이 존재합니다"
 
-#: src/main/envir.c:1930
+#: src/main/envir.c:1935
 msgid "second argument must be an environment"
 msgstr "두번째 인자는 반드시 인바이런먼트이어야 합니다"
 
-#: src/main/envir.c:1938 src/main/envir.c:1946
+#: src/main/envir.c:1943 src/main/envir.c:1951
 #, c-format
 msgid "wrong length for '%s' argument"
 msgstr "'%s' 인수의 길이가 잘못되었습니다"
 
-#: src/main/envir.c:2065
+#: src/main/envir.c:2070
 msgid "invalid use of 'missing'"
 msgstr "'missing'의 사용이 올바르지 않습니다"
 
-#: src/main/envir.c:2090
+#: src/main/envir.c:2095
 msgid "'missing' can only be used for arguments"
 msgstr "'missing'은 인자들에 대해서만 사용할 수 있습니다"
 
-#: src/main/envir.c:2171
+#: src/main/envir.c:2176
 msgid "'pos' must be an integer"
 msgstr "'pos'는 반드시 정수이어야 합니다"
 
-#: src/main/envir.c:2185
+#: src/main/envir.c:2190
 msgid "all elements of a list must be named"
 msgstr "리스트의 모든 구성요소들에는 반드시 이름이 주어져야 합니다"
 
-#: src/main/envir.c:2208
+#: src/main/envir.c:2213
 msgid "'attach' only works for lists, data frames and environments"
 msgstr ""
 "'attach'는 리스트, 데이터프레임, 그리고 인바이런먼트에서만 작동하도록 되어 있"
 "습니다"
 
-#: src/main/envir.c:2291
+#: src/main/envir.c:2296
 msgid "detaching \"package:base\" is not allowed"
 msgstr "\"package:base\"를 분리해 내는 것은 허용되지 않습니다"
 
-#: src/main/envir.c:2592 src/main/envir.c:2647
+#: src/main/envir.c:2597 src/main/envir.c:2652
 msgid "argument must be an environment"
 msgstr "인자는 반드시 인바이런먼트이어야 합니다"
 
-#: src/main/envir.c:2651
+#: src/main/envir.c:2656
 msgid "arguments must be symbolic"
 msgstr "인자들은 반드시 심볼릭이어야 합니다"
 
-#: src/main/envir.c:2775
+#: src/main/envir.c:2780
 msgid "no enclosing environment"
 msgstr "둘러싸고 있는 인바이런먼트가 없습니다"
 
-#: src/main/envir.c:2828
+#: src/main/envir.c:2833
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "\"%s\"라고 하는 항목은 검색목록에 없습니다"
 
-#: src/main/envir.c:2853
+#: src/main/envir.c:2858
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "'as.environment(NULL)'의 사용은 더 이상 지원하지 않습니다"
 
-#: src/main/envir.c:2859
+#: src/main/envir.c:2864
 msgid "S4 object does not extend class \"environment\""
 msgstr "S4 객체는 클래스 \"environment\"를 확장하지 않습니다"
 
-#: src/main/envir.c:2874
+#: src/main/envir.c:2879
 msgid "invalid object for 'as.environment'"
 msgstr "'as.environment'에 유효하지 않은 객체입니다"
 
-#: src/main/envir.c:2900 src/main/envir.c:2928 src/main/envir.c:2957
-#: src/main/envir.c:2978 src/main/envir.c:3001 src/main/envir.c:3036
-#: src/main/envir.c:3057
+#: src/main/envir.c:2905 src/main/envir.c:2933 src/main/envir.c:2962
+#: src/main/envir.c:2983 src/main/envir.c:3006 src/main/envir.c:3041
+#: src/main/envir.c:3062
 msgid "not an environment"
 msgstr "인바이런먼트가 아닙니다"
 
-#: src/main/envir.c:2952 src/main/envir.c:2973 src/main/envir.c:2994
-#: src/main/envir.c:3031 src/main/envir.c:3052 src/main/envir.c:3151
+#: src/main/envir.c:2957 src/main/envir.c:2978 src/main/envir.c:2999
+#: src/main/envir.c:3036 src/main/envir.c:3057 src/main/envir.c:3156
 msgid "not a symbol"
 msgstr "심볼이 아닙니다"
 
-#: src/main/envir.c:2965 src/main/envir.c:2986 src/main/envir.c:3044
-#: src/main/envir.c:3065
+#: src/main/envir.c:2970 src/main/envir.c:2991 src/main/envir.c:3049
+#: src/main/envir.c:3070
 #, c-format
 msgid "no binding for \"%s\""
 msgstr ""
 
-#: src/main/envir.c:2996
+#: src/main/envir.c:3001
 msgid "not a function"
 msgstr "함수가 아닙니다"
 
-#: src/main/envir.c:3004 src/main/envir.c:3020
+#: src/main/envir.c:3009 src/main/envir.c:3025
 msgid "symbol already has a regular binding"
 msgstr ""
 
-#: src/main/envir.c:3006 src/main/envir.c:3022
+#: src/main/envir.c:3011 src/main/envir.c:3027
 msgid "cannot change active binding if binding is locked"
 msgstr "바인딩이 잠겨있다면 활성화 되어 있는 바인딩을 변경할 수 없습니다"
 
-#: src/main/envir.c:3110
+#: src/main/envir.c:3115
 msgid "unknown op"
 msgstr "알 수 없는 op입니다"
 
-#: src/main/envir.c:3155
+#: src/main/envir.c:3160
 msgid "cannot unbind a locked binding"
 msgstr "잠겨있는 바인딩을 떼어낼 수 없습니다"
 
-#: src/main/envir.c:3157
+#: src/main/envir.c:3162
 msgid "cannot unbind an active binding"
 msgstr "활성화 되어 있는 바인딩을 떼어낼 수 없습니다"
 
-#: src/main/envir.c:3292
+#: src/main/envir.c:3297
 msgid "bad namespace name"
 msgstr "잘못된 네임스페이스명입니다"
 
-#: src/main/envir.c:3304
+#: src/main/envir.c:3309
 msgid "namespace already registered"
 msgstr "이미 등록되어 있는 네임스페이스입니다"
 
-#: src/main/envir.c:3316
+#: src/main/envir.c:3321
 msgid "namespace not registered"
 msgstr "등록되어 있지 않은 네임스페이스입니다1"
 
-#: src/main/envir.c:3363
+#: src/main/envir.c:3368
 msgid "bad import environment argument"
 msgstr "불러오기 인바이런먼트 인자가 잘못되었습니다"
 
-#: src/main/envir.c:3368
+#: src/main/envir.c:3373
 msgid "bad export environment argument"
 msgstr "내보내기 인바이런먼트 인자가 잘못되었습니다"
 
-#: src/main/envir.c:3372
+#: src/main/envir.c:3377
 msgid "length of import and export names must match"
 msgstr "불러오기와 내보내기의 이름들의 길이는 반드시 일치해야 합니다"
 
-#: src/main/envir.c:3395
+#: src/main/envir.c:3400
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "내보내어진 심볼 '%s'이 값을 가지고 있지 않습니다"
 
-#: src/main/envir.c:3560
+#: src/main/envir.c:3565
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "알수없는 인코딩입니다: %d"
 
-#: src/main/envir.c:3580
+#: src/main/envir.c:3585
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "문자열에 nul이 포함되어 있습니다: '%s'"
@@ -3609,7 +3609,7 @@ msgstr "바이트 코드 버전이 불일치합니다"
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프에 유효하지 않은 시퀀스 인자가 있습니다"
 
-#: src/main/eval.c:4619 src/main/names.c:1182
+#: src/main/eval.c:4619 src/main/names.c:1184
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ".Internal 함수 '%s'는 없습니다"
@@ -4281,24 +4281,24 @@ msgstr "Rprofmem: 출력파일 '%s'을 열 수 없습니다"
 msgid "long vectors not supported yet: %s:%d"
 msgstr "아직까지는 지원되지 않는 긴 벡터들입니다: %s:%d"
 
-#: src/main/names.c:997
+#: src/main/names.c:999
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어 집니다"
 
-#: src/main/names.c:1000
+#: src/main/names.c:1002
 msgid "no such primitive function"
 msgstr "그러한 프리미티브 함수는 없습니다"
 
-#: src/main/names.c:1147
+#: src/main/names.c:1149
 msgid "attempt to use zero-length variable name"
 msgstr "길이가 0인 변수명을 사용하려고 시도했습니다"
 
-#: src/main/names.c:1149
+#: src/main/names.c:1151
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수명들은 최대 %d 바이트까지 허용됩니다"
 
-#: src/main/names.c:1177 src/main/names.c:1180
+#: src/main/names.c:1179 src/main/names.c:1182
 msgid "invalid .Internal() argument"
 msgstr "유효하지 않은 .Internal() 인자입니다"
 
@@ -6268,82 +6268,86 @@ msgstr "'all.x'는 반드시 TRUE 또는 FALSE이어야 합니다"
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y'는 반드시 TRUE 또는 FALSE이어야 합니다"
 
-#: src/main/util.c:700
+#: src/main/util.c:613
+msgid "number of rows in the result exceeds maximum vector length"
+msgstr ""
+
+#: src/main/util.c:705
 msgid "missing value is invalid"
 msgstr ""
 
-#: src/main/util.c:709 src/main/util.c:716
+#: src/main/util.c:714 src/main/util.c:721
 msgid "cannot change working directory"
 msgstr "작업디렉토리를 변경할 수 없습니다"
 
-#: src/main/util.c:735 src/main/util.c:769 src/main/util.c:810
-#: src/main/util.c:852 src/main/util.c:981 src/main/util.c:1040
-#: src/main/util.c:1063
+#: src/main/util.c:740 src/main/util.c:774 src/main/util.c:815
+#: src/main/util.c:857 src/main/util.c:986 src/main/util.c:1045
+#: src/main/util.c:1068
 msgid "a character vector argument expected"
 msgstr "문자형 벡터 인자가 와야합니다"
 
-#: src/main/util.c:742 src/main/util.c:777 src/main/util.c:819
-#: src/main/util.c:860
+#: src/main/util.c:747 src/main/util.c:782 src/main/util.c:824
+#: src/main/util.c:865
 msgid "path too long"
 msgstr "경로가 너무 깁니다"
 
-#: src/main/util.c:995
+#: src/main/util.c:1000
 msgid "only the first character of 'quote' will be used"
 msgstr "오로지 'quote'의 첫번째 문자만이 사용될 것입니다"
 
-#: src/main/util.c:1065
+#: src/main/util.c:1070
 msgid "a character vector 'value' expected"
 msgstr "문자형 벡터 'value'가 와야합니다"
 
-#: src/main/util.c:1068
+#: src/main/util.c:1073
 msgid "'value' must be of positive length"
 msgstr "'value'는 반드시 길이가 양수이어야 합니다"
 
-#: src/main/util.c:1197 src/main/util.c:1205
+#: src/main/util.c:1202 src/main/util.c:1210
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "'utf8towcs'내에 입력 '%s'이 잘못되었습니다"
 
-#: src/main/util.c:1290
+#: src/main/util.c:1295
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "'%s'에서 유효하지 않은 멀티바이트 문자열이 있습니다"
 
-#: src/main/util.c:1399
+#: src/main/util.c:1404
 msgid "error message truncated to 255 chars"
 msgstr "에러메시지가 255 문자까지 보여집니다"
 
-#: src/main/util.c:1412
+#: src/main/util.c:1417
 msgid "warning message truncated to 255 chars"
 msgstr "경고메시지가 255 문자까지 보여집니다"
 
-#: src/main/util.c:1561
+#: src/main/util.c:1566
 #, c-format
 msgid "accuracy loss in conversion from \"%s\" to numeric"
 msgstr ""
 
-#: src/main/util.c:1822
+#: src/main/util.c:1827
 msgid "all arguments must be named"
 msgstr "모든 인자들에는 반드시 이름이 주어져야 합니다"
 
-#: src/main/util.c:1896
+#: src/main/util.c:1901
 msgid "ICU is not supported on this build"
 msgstr "이 빌드에서는 ICU는 지원되지 않습니다"
 
-#: src/main/util.c:1957
+#: src/main/util.c:1962
 msgid "'breaks' is not sorted"
 msgstr "'breaks'가 정렬되지 않았습니다"
 
-#: src/main/util.c:1991 src/main/util.c:2037
+#: src/main/util.c:1996 src/main/util.c:2042
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "긴 벡터 '%s'는 지원되지 않습니다"
 
-#: src/main/util.c:2090
+#: src/main/util.c:2095
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct'는 반드시 0, 1, 또는 2 이어야 합니다"
 
-#: src/main/util.c:2118
+#: src/main/util.c:2123
 msgid "'x' must be a vector"
 msgstr "'x'는 반드시 벡터이어야 합니다"
 

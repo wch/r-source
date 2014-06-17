@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40+0100\n"
+"POT-Creation-Date: 2014-06-17 08:36+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -30,34 +30,62 @@ msgstr "'%s' musi być liczbą o długości %d"
 # grDevices/src/colors.c: 69
 # error(_("color intensity %g, not in [0,1]"), x)
 #: colors.c:69
+#, fuzzy, c-format
+msgid "color intensity %s, not in [0,1]"
+msgstr "intensywność %g koloru, nie jest w przedziale [0, 1]"
+
+# grDevices/src/colors.c: 69
+# error(_("color intensity %g, not in [0,1]"), x)
+#: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
 msgstr "intensywność %g koloru, nie jest w przedziale [0, 1]"
 
 # grDevices/src/colors.c: 76
 # error(_("color intensity %d, not in 0:255"), x)
-#: colors.c:76
+#: colors.c:78
+#, fuzzy, c-format
+msgid "color intensity %s, not in 0:255"
+msgstr "intensywność %d koloru, nie jest w zakresie 0:255"
+
+# grDevices/src/colors.c: 76
+# error(_("color intensity %d, not in 0:255"), x)
+#: colors.c:80
 #, c-format
 msgid "color intensity %d, not in 0:255"
 msgstr "intensywność %d koloru, nie jest w zakresie 0:255"
 
 # grDevices/src/colors.c: 83
 # error(_("alpha level %g, not in [0,1]"), x)
-#: colors.c:83
+#: colors.c:87
+#, fuzzy, c-format
+msgid "alpha level %s, not in [0,1]"
+msgstr "poziom %g alfa, nie jest w przedziale [0, 1]"
+
+# grDevices/src/colors.c: 83
+# error(_("alpha level %g, not in [0,1]"), x)
+#: colors.c:89
 #, c-format
 msgid "alpha level %g, not in [0,1]"
 msgstr "poziom %g alfa, nie jest w przedziale [0, 1]"
 
 # grDevices/src/colors.c: 90
 # error(_("alpha level %d, not in 0:255"), x)
-#: colors.c:90
+#: colors.c:96
+#, fuzzy, c-format
+msgid "alpha level %s, not in 0:255"
+msgstr "poziom %d alfa, nie jest w zakresie 0:255"
+
+# grDevices/src/colors.c: 90
+# error(_("alpha level %d, not in 0:255"), x)
+#: colors.c:98
 #, c-format
 msgid "alpha level %d, not in 0:255"
 msgstr "poziom %d alfa, nie jest w zakresie 0:255"
 
 # grDevices/src/colors.c: 118
 # error(_("bad hsv to rgb color conversion"))
-#: colors.c:118
+#: colors.c:126
 msgid "bad hsv to rgb color conversion"
 msgstr "błędna konwersja hsv na rgb"
 
@@ -65,7 +93,7 @@ msgstr "błędna konwersja hsv na rgb"
 # error(_("invalid hsv color"))
 # grDevices/src/colors.c: 221
 # error(_("invalid hsv color"))
-#: colors.c:207 colors.c:221
+#: colors.c:215 colors.c:229
 msgid "invalid hsv color"
 msgstr "niepoprawny kolor hsv"
 
@@ -73,19 +101,19 @@ msgstr "niepoprawny kolor hsv"
 # error(_("invalid hcl color"))
 # grDevices/src/colors.c: 353
 # error(_("invalid hcl color"))
-#: colors.c:333 colors.c:353
+#: colors.c:341 colors.c:361
 msgid "invalid hcl color"
 msgstr "niepoprawny kolor hcl"
 
 # grDevices/src/colors.c: 385
 # error(_("invalid value of 'maxColorValue'"))
-#: colors.c:385
+#: colors.c:393
 msgid "invalid value of 'maxColorValue'"
 msgstr "niepoprawna wartość 'maxColorValue'"
 
 # grDevices/src/colors.c: 413
 # error(_("invalid 'names' vector"))
-#: colors.c:413
+#: colors.c:421
 msgid "invalid 'names' vector"
 msgstr "niepoprawny wektor 'names'"
 
@@ -93,7 +121,7 @@ msgstr "niepoprawny wektor 'names'"
 # error(_("invalid gray level, must be in [0,1]."))
 # grDevices/src/colors.c: 481
 # error(_("invalid gray level, must be in [0,1]."))
-#: colors.c:472 colors.c:481
+#: colors.c:480 colors.c:489
 msgid "invalid gray level, must be in [0,1]."
 msgstr "niepoprawny poziom szarości, musi być w przedziale [0, 1]."
 
@@ -101,14 +129,14 @@ msgstr "niepoprawny poziom szarości, musi być w przedziale [0, 1]."
 # error(_("invalid '%s' value"), "alpha")
 # grDevices/src/cairo/cairoBM.c: 501
 # error(_("invalid '%s' value"), "bg")
-#: colors.c:537
+#: colors.c:545
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
 
 # grDevices/src/colors.c: 1329
 # error(_("invalid hex digit in 'color' or 'lty'"))
-#: colors.c:1329
+#: colors.c:1337
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "niepoprawna liczba szestnastkowa w 'color' lub 'lty'"
 
@@ -116,13 +144,13 @@ msgstr "niepoprawna liczba szestnastkowa w 'color' lub 'lty'"
 # error(_("invalid RGB specification"))
 # grDevices/src/colors.c: 1349
 # error(_("invalid RGB specification"))
-#: colors.c:1339 colors.c:1349
+#: colors.c:1347 colors.c:1357
 msgid "invalid RGB specification"
 msgstr "niepoprawne określenie RGB"
 
 # grDevices/src/colors.c: 1382
 # error(_("invalid color name '%s'"), nm)
-#: colors.c:1382
+#: colors.c:1390
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "niepoprawna nazwa koloru '%s'"
@@ -131,33 +159,33 @@ msgstr "niepoprawna nazwa koloru '%s'"
 # error(_("invalid color specification \"%s\""), s)
 # grDevices/src/colors.c: 1441
 # error(_("invalid color specification \"%s\""), s)
-#: colors.c:1432 colors.c:1441
+#: colors.c:1440 colors.c:1449
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr "niepoprawne określenie koloru \"%s\""
 
 # grDevices/src/colors.c: 1469
 # warning(_("supplied color is neither numeric nor character"))
-#: colors.c:1469
+#: colors.c:1477
 msgid "supplied color is neither numeric nor character"
 msgstr "dostarczony kolor nie jest ani liczbą ani tekstem"
 
 # grDevices/src/colors.c: 1473
 # error(_("numerical color values must be >= 0, found %d"), indx)
-#: colors.c:1473
+#: colors.c:1481
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr "liczbowe wartości koloru muszą być >=0, znaleziono %d"
 
 # grDevices/src/colors.c: 1484
 # error(_("invalid argument type"))
-#: colors.c:1484
+#: colors.c:1492
 msgid "invalid argument type"
 msgstr "niepoprawny argument 'type'"
 
 # grDevices/src/colors.c: 1495
 # error(_("unknown palette (need >= 2 colors)"))
-#: colors.c:1495
+#: colors.c:1503
 msgid "unknown palette (need >= 2 colors)"
 msgstr "nieznana paleta (potrzeba >= 2 kolory)"
 
@@ -165,7 +193,7 @@ msgstr "nieznana paleta (potrzeba >= 2 kolory)"
 # error(_("maximum number of colors is %d"), MAX_PALETTE_SIZE)
 # grDevices/src/colors.c: 1521
 # error(_("maximum number of colors is %d"), MAX_PALETTE_SIZE)
-#: colors.c:1499 colors.c:1521
+#: colors.c:1507 colors.c:1529
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr "maksymalna liczba kolorów wynosi %d"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:51\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -642,7 +642,10 @@ msgstr ""
 msgid "unable to create %s"
 msgstr ""
 
-msgid "inferring 'repos = NULL' from the file name"
+msgid "inferring 'repos = NULL' from 'pkgs'"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
 msgstr ""
 
 msgid ""
@@ -680,9 +683,6 @@ msgid "system (cmd0): %s"
 msgstr ""
 
 msgid "installation of package %s had non-zero exit status"
-msgstr ""
-
-msgid "unable to create temporary directory %s"
 msgstr ""
 
 msgid "foundpkgs: %s"

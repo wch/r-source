@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-09 10:50+0100\n"
+"POT-Creation-Date: 2014-06-17 08:35+0100\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -181,13 +181,13 @@ msgstr "problema ao mostrar '%ls'"
 #: src/main/deparse.c:397 src/main/dotcode.c:478 src/main/dotcode.c:482
 #: src/main/dotcode.c:487 src/main/dounzip.c:322 src/main/dounzip.c:329
 #: src/main/dounzip.c:339 src/main/dounzip.c:344 src/main/dounzip.c:348
-#: src/main/dounzip.c:352 src/main/envir.c:1621 src/main/envir.c:1624
-#: src/main/envir.c:1745 src/main/envir.c:1750 src/main/envir.c:1816
-#: src/main/envir.c:1832 src/main/envir.c:1838 src/main/envir.c:1935
-#: src/main/envir.c:1943 src/main/envir.c:1950 src/main/envir.c:1961
-#: src/main/envir.c:2175 src/main/envir.c:2296 src/main/envir.c:2555
-#: src/main/envir.c:2765 src/main/envir.c:2779 src/main/envir.c:2786
-#: src/main/envir.c:2802 src/main/envir.c:3370 src/main/errors.c:1049
+#: src/main/dounzip.c:352 src/main/envir.c:1626 src/main/envir.c:1629
+#: src/main/envir.c:1750 src/main/envir.c:1755 src/main/envir.c:1821
+#: src/main/envir.c:1837 src/main/envir.c:1843 src/main/envir.c:1940
+#: src/main/envir.c:1948 src/main/envir.c:1955 src/main/envir.c:1966
+#: src/main/envir.c:2180 src/main/envir.c:2301 src/main/envir.c:2560
+#: src/main/envir.c:2770 src/main/envir.c:2784 src/main/envir.c:2791
+#: src/main/envir.c:2807 src/main/envir.c:3375 src/main/errors.c:1049
 #: src/main/eval.c:398 src/main/eval.c:407 src/main/eval.c:410
 #: src/main/grep.c:779 src/main/grep.c:784 src/main/grep.c:1075
 #: src/main/grep.c:1077 src/main/grep.c:1079 src/main/grep.c:1524
@@ -231,11 +231,11 @@ msgstr "problema ao mostrar '%ls'"
 #: src/main/sysutils.c:1838 src/main/sysutils.c:1842 src/main/unique.c:969
 #: src/main/unique.c:1275 src/main/unique.c:1335 src/main/unique.c:1342
 #: src/main/unique.c:1736 src/main/util.c:581 src/main/util.c:584
-#: src/main/util.c:1828 src/main/util.c:1997 src/main/util.c:1998
-#: src/main/util.c:1999 src/main/util.c:2016 src/main/util.c:2040
-#: src/main/util.c:2044 src/main/util.c:2046 src/main/util.c:2071
-#: src/main/util.c:2073 src/main/util.c:2075 src/main/util.c:2078
-#: src/main/util.c:2081 src/main/util.c:2085 src/main/util.c:2087
+#: src/main/util.c:1833 src/main/util.c:2002 src/main/util.c:2003
+#: src/main/util.c:2004 src/main/util.c:2021 src/main/util.c:2045
+#: src/main/util.c:2049 src/main/util.c:2051 src/main/util.c:2076
+#: src/main/util.c:2078 src/main/util.c:2080 src/main/util.c:2083
+#: src/main/util.c:2086 src/main/util.c:2090 src/main/util.c:2092
 #: src/modules/X11/devX11.c:3241 src/modules/X11/devX11.c:3244
 #: src/modules/X11/devX11.c:3247 src/modules/X11/devX11.c:3271
 #: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
@@ -264,8 +264,8 @@ msgstr "versão do Windows não suportada"
 #: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:220
-#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:986
-#: src/main/util.c:991 src/main/util.c:998 src/main/util.c:1001
+#: src/main/summary.c:886 src/main/sysutils.c:251 src/main/util.c:991
+#: src/main/util.c:996 src/main/util.c:1003 src/main/util.c:1006
 #: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
 #: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
 #: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
@@ -287,7 +287,7 @@ msgstr "não seja tolo!: seu computador tem um limite de endereçamento de 4Gb"
 msgid "cannot decrease memory limit: ignored"
 msgstr "não foi possível diminuir o limite de memória: ignorado"
 
-#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:897
+#: src/gnuwin32/extra.c:428 src/gnuwin32/extra.c:529 src/main/util.c:902
 msgid "'path' must be a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
@@ -647,7 +647,7 @@ msgstr "DLLname '%s' é muito longo"
 msgid "could not allocate space for 'name'"
 msgstr "não foi possível alocar espaço para 'name'"
 
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:698
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:703
 msgid "character argument expected"
 msgstr "esperado um argumento caractere"
 
@@ -1159,8 +1159,8 @@ msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "comprimento de 'dimnames' [%d] não é igual ao tamanho do array"
 
 #: src/main/attrib.c:1055 src/main/builtin.c:75 src/main/builtin.c:112
-#: src/main/envir.c:1609 src/main/envir.c:1737 src/main/envir.c:1799
-#: src/main/envir.c:1921 src/main/paste.c:74 src/main/paste.c:293
+#: src/main/envir.c:1614 src/main/envir.c:1742 src/main/envir.c:1804
+#: src/main/envir.c:1926 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:479 src/main/random.c:508 src/main/unique.c:1735
 msgid "invalid first argument"
 msgstr "primeiro argumento inválido"
@@ -1335,11 +1335,11 @@ msgstr "tamanho de vetor especificado é muito grande"
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
 #: src/main/coerce.c:1535 src/main/connections.c:3065 src/main/engine.c:2967
 #: src/main/envir.c:996 src/main/envir.c:1049 src/main/envir.c:1139
-#: src/main/envir.c:1618 src/main/envir.c:1742 src/main/envir.c:1810
-#: src/main/envir.c:1928 src/main/envir.c:2585 src/main/envir.c:2645
-#: src/main/envir.c:2925 src/main/envir.c:2954 src/main/envir.c:2975
-#: src/main/envir.c:2998 src/main/envir.c:3033 src/main/envir.c:3054
-#: src/main/envir.c:3360 src/main/envir.c:3365 src/main/eval.c:5314
+#: src/main/envir.c:1623 src/main/envir.c:1747 src/main/envir.c:1815
+#: src/main/envir.c:1933 src/main/envir.c:2590 src/main/envir.c:2650
+#: src/main/envir.c:2930 src/main/envir.c:2959 src/main/envir.c:2980
+#: src/main/envir.c:3003 src/main/envir.c:3038 src/main/envir.c:3059
+#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5314
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2365 src/main/serialize.c:2744
 msgid "use of NULL environment is defunct"
@@ -2551,7 +2551,7 @@ msgstr "argumento de comprimento zero"
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts' deve ser um inteiro pequeno não negativo"
 
-#: src/main/deparse.c:411 src/main/envir.c:1767 src/main/envir.c:1849
+#: src/main/deparse.c:411 src/main/envir.c:1772 src/main/envir.c:1854
 #: src/main/eval.c:570 src/main/eval.c:1252 src/main/eval.c:3622
 #: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2762
 #, c-format
@@ -3029,7 +3029,7 @@ msgstr "linha de tipo inválido"
 msgid "cannot change value of locked binding for '%s'"
 msgstr "não é possível mudar o valor de vinculo bloqueado para '%s'"
 
-#: src/main/envir.c:251 src/main/envir.c:1457
+#: src/main/envir.c:251 src/main/envir.c:1459
 msgid "cannot add bindings to a locked environment"
 msgstr "não é possível adicionar vinculações a um ambiente bloqueado"
 
@@ -3045,7 +3045,7 @@ msgstr "não é possível desvincular no espaço de nomes base"
 msgid "unbind in the base environment is unimplemented"
 msgstr "desvincular no ambiente base não está implementado"
 
-#: src/main/envir.c:837 src/main/envir.c:1687
+#: src/main/envir.c:837 src/main/envir.c:1692
 msgid "cannot remove bindings from a locked environment"
 msgstr "não é possível desfazer vinculações de um ambiente bloqueado"
 
@@ -3064,7 +3064,7 @@ msgstr "A lista ... não contém %d elementos"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d usado em um contexto incorreto, nenhum ... para procurar"
 
-#: src/main/envir.c:1393 src/main/envir.c:1845 src/main/eval.c:574
+#: src/main/envir.c:1393 src/main/envir.c:1850 src/main/eval.c:574
 #: src/main/eval.c:3613
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
@@ -3079,199 +3079,199 @@ msgstr "não foi possível encontrar a função \"%s\""
 msgid "cannot assign values in the empty environment"
 msgstr "não é possível atribuir valores no ambiente vazio"
 
-#: src/main/envir.c:1427 src/main/envir.c:1500
+#: src/main/envir.c:1427 src/main/envir.c:1502
 msgid "cannot assign variables to this database"
 msgstr "não é possível atribuir variáveis a essa base de dados"
 
-#: src/main/envir.c:1583
+#: src/main/envir.c:1588
 #, c-format
 msgid "cannot add binding of '%s' to the base environment"
 msgstr "não é possível adicionar vinculação de '%s' ao ambiente base"
 
-#: src/main/envir.c:1612
+#: src/main/envir.c:1617
 msgid "only the first element is used as variable name"
 msgstr "apenas o primeiro elemento é usado como nome da variável"
 
-#: src/main/envir.c:1644
+#: src/main/envir.c:1649
 msgid "first argument must be a named list"
 msgstr "primeiro argumento deve ser uma lista nomeada"
 
-#: src/main/envir.c:1649
+#: src/main/envir.c:1654
 msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) deve ser um vetor de caracter de mesmo comprimento que x"
 
-#: src/main/envir.c:1652
+#: src/main/envir.c:1657
 #, fuzzy
 msgid "'envir' argument must be an environment"
 msgstr "argumento 'env' deve ser um ambiente"
 
-#: src/main/envir.c:1681
+#: src/main/envir.c:1686
 msgid "cannot remove variables from base namespace"
 msgstr "não é possível remover variáveis do espaço de nomes base"
 
-#: src/main/envir.c:1683
+#: src/main/envir.c:1688
 msgid "cannot remove variables from the base environment"
 msgstr "não é possível remover variáveis do ambiente base"
 
-#: src/main/envir.c:1685
+#: src/main/envir.c:1690
 msgid "cannot remove variables from the empty environment"
 msgstr "não é possível remover variáveis do ambiente vazio"
 
-#: src/main/envir.c:1693
+#: src/main/envir.c:1698
 msgid "cannot remove variables from this database"
 msgstr "não é possível remover variáveis dessa base de dados"
 
-#: src/main/envir.c:1852
+#: src/main/envir.c:1857
 #, c-format
 msgid "object '%s' of mode '%s' was not found"
 msgstr "objeto '%s' de modo '%s'  não foi encontrado"
 
-#: src/main/envir.c:1924
+#: src/main/envir.c:1929
 #, c-format
 msgid "invalid name in position %d"
 msgstr "nome inválido na posição %d"
 
-#: src/main/envir.c:1930
+#: src/main/envir.c:1935
 msgid "second argument must be an environment"
 msgstr "segundo argumento deve ser um ambiente"
 
-#: src/main/envir.c:1938 src/main/envir.c:1946
+#: src/main/envir.c:1943 src/main/envir.c:1951
 #, c-format
 msgid "wrong length for '%s' argument"
 msgstr "comprimento errado para argumento '%s'"
 
-#: src/main/envir.c:2065
+#: src/main/envir.c:2070
 msgid "invalid use of 'missing'"
 msgstr "uso inválido de 'missing'"
 
-#: src/main/envir.c:2090
+#: src/main/envir.c:2095
 msgid "'missing' can only be used for arguments"
 msgstr "'missing' só pode ser usado para argumentos"
 
-#: src/main/envir.c:2171
+#: src/main/envir.c:2176
 msgid "'pos' must be an integer"
 msgstr "'pos' deve ser um inteiro"
 
-#: src/main/envir.c:2185
+#: src/main/envir.c:2190
 msgid "all elements of a list must be named"
 msgstr "todos os elementos de uma lista devem ser nomeados"
 
-#: src/main/envir.c:2208
+#: src/main/envir.c:2213
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "'attach' só funciona para listas, data frames e ambientes"
 
-#: src/main/envir.c:2291
+#: src/main/envir.c:2296
 msgid "detaching \"package:base\" is not allowed"
 msgstr "detach de \"package:base\" não é permitido"
 
-#: src/main/envir.c:2592 src/main/envir.c:2647
+#: src/main/envir.c:2597 src/main/envir.c:2652
 msgid "argument must be an environment"
 msgstr "argumento deve ser um ambiente"
 
-#: src/main/envir.c:2651
+#: src/main/envir.c:2656
 msgid "arguments must be symbolic"
 msgstr "argumentos devem ser simbólicos"
 
-#: src/main/envir.c:2775
+#: src/main/envir.c:2780
 msgid "no enclosing environment"
 msgstr "nenhum ambiente abrangente"
 
-#: src/main/envir.c:2828
+#: src/main/envir.c:2833
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "nenhum item \"%s\" na lista de procura"
 
-#: src/main/envir.c:2853
+#: src/main/envir.c:2858
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "uso de 'as.environment(NULL)' não é mais permitido"
 
-#: src/main/envir.c:2859
+#: src/main/envir.c:2864
 msgid "S4 object does not extend class \"environment\""
 msgstr "objeto S4 não estende classe \"environment\""
 
-#: src/main/envir.c:2874
+#: src/main/envir.c:2879
 msgid "invalid object for 'as.environment'"
 msgstr "objeto inválido para 'as.environment'"
 
-#: src/main/envir.c:2900 src/main/envir.c:2928 src/main/envir.c:2957
-#: src/main/envir.c:2978 src/main/envir.c:3001 src/main/envir.c:3036
-#: src/main/envir.c:3057
+#: src/main/envir.c:2905 src/main/envir.c:2933 src/main/envir.c:2962
+#: src/main/envir.c:2983 src/main/envir.c:3006 src/main/envir.c:3041
+#: src/main/envir.c:3062
 msgid "not an environment"
 msgstr "não é um ambiente"
 
-#: src/main/envir.c:2952 src/main/envir.c:2973 src/main/envir.c:2994
-#: src/main/envir.c:3031 src/main/envir.c:3052 src/main/envir.c:3151
+#: src/main/envir.c:2957 src/main/envir.c:2978 src/main/envir.c:2999
+#: src/main/envir.c:3036 src/main/envir.c:3057 src/main/envir.c:3156
 msgid "not a symbol"
 msgstr "não é um símbolo"
 
-#: src/main/envir.c:2965 src/main/envir.c:2986 src/main/envir.c:3044
-#: src/main/envir.c:3065
+#: src/main/envir.c:2970 src/main/envir.c:2991 src/main/envir.c:3049
+#: src/main/envir.c:3070
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "nenhuma vinculação para \"%s\""
 
-#: src/main/envir.c:2996
+#: src/main/envir.c:3001
 msgid "not a function"
 msgstr "não é uma função"
 
-#: src/main/envir.c:3004 src/main/envir.c:3020
+#: src/main/envir.c:3009 src/main/envir.c:3025
 msgid "symbol already has a regular binding"
 msgstr "símbolo já tem uma vinculação regular"
 
-#: src/main/envir.c:3006 src/main/envir.c:3022
+#: src/main/envir.c:3011 src/main/envir.c:3027
 msgid "cannot change active binding if binding is locked"
 msgstr "não é possível mudar a vinculação ativa se o vínculo estiver bloqueado"
 
-#: src/main/envir.c:3110
+#: src/main/envir.c:3115
 msgid "unknown op"
 msgstr "operador não conhecido"
 
-#: src/main/envir.c:3155
+#: src/main/envir.c:3160
 msgid "cannot unbind a locked binding"
 msgstr "não é possível desvincular uma vinculação bloqueada"
 
-#: src/main/envir.c:3157
+#: src/main/envir.c:3162
 msgid "cannot unbind an active binding"
 msgstr "não é possível desvincular uma vinculação ativa"
 
-#: src/main/envir.c:3292
+#: src/main/envir.c:3297
 #, fuzzy
 msgid "bad namespace name"
 msgstr "nome de espaço de nomes inválido"
 
-#: src/main/envir.c:3304
+#: src/main/envir.c:3309
 #, fuzzy
 msgid "namespace already registered"
 msgstr "espaço de nomes já registrado"
 
-#: src/main/envir.c:3316
+#: src/main/envir.c:3321
 #, fuzzy
 msgid "namespace not registered"
 msgstr "espaço de nomes não registrado"
 
-#: src/main/envir.c:3363
+#: src/main/envir.c:3368
 msgid "bad import environment argument"
 msgstr "argumento de importação de ambiente inválido"
 
-#: src/main/envir.c:3368
+#: src/main/envir.c:3373
 msgid "bad export environment argument"
 msgstr "argumento de exportação de ambiente inválido"
 
-#: src/main/envir.c:3372
+#: src/main/envir.c:3377
 msgid "length of import and export names must match"
 msgstr "comprimentos dos nomes de importação e exportação devem ser iguais"
 
-#: src/main/envir.c:3395
+#: src/main/envir.c:3400
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "símbolo exportado '%s' não tem valor"
 
-#: src/main/envir.c:3560
+#: src/main/envir.c:3565
 #, c-format
 msgid "unknown encoding: %d"
 msgstr "codificação não suportada: %d"
 
-#: src/main/envir.c:3580
+#: src/main/envir.c:3585
 #, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "cadeia de caracteres com nul incluso: '%s'"
@@ -3672,7 +3672,7 @@ msgstr "incompatibilidade da versão bytecode"
 msgid "invalid sequence argument in for loop"
 msgstr "seqüência de argumentos inválida em loop for"
 
-#: src/main/eval.c:4619 src/main/names.c:1182
+#: src/main/eval.c:4619 src/main/names.c:1184
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "nenhuma função interna \"%s\""
@@ -4374,24 +4374,24 @@ msgstr "Rprofmem: não é possível abrir o arquivo de perfil '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:997
+#: src/main/names.c:999
 msgid "string argument required"
 msgstr "argumento string requerido"
 
-#: src/main/names.c:1000
+#: src/main/names.c:1002
 msgid "no such primitive function"
 msgstr "não existe tal função primitiva"
 
-#: src/main/names.c:1147
+#: src/main/names.c:1149
 msgid "attempt to use zero-length variable name"
 msgstr "tentativa de usar um nome de variável com comprimento zero"
 
-#: src/main/names.c:1149
+#: src/main/names.c:1151
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nomes de variáveis são limitados a %d bytes"
 
-#: src/main/names.c:1177 src/main/names.c:1180
+#: src/main/names.c:1179 src/main/names.c:1182
 msgid "invalid .Internal() argument"
 msgstr "argumento .Internal() inválido"
 
@@ -6430,84 +6430,88 @@ msgstr "'all.x' deve ser TRUE ou FALSE"
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y' deve ser TRUE ou FALSE"
 
-#: src/main/util.c:700
+#: src/main/util.c:613
+msgid "number of rows in the result exceeds maximum vector length"
+msgstr ""
+
+#: src/main/util.c:705
 msgid "missing value is invalid"
 msgstr "valor faltante é inválido"
 
-#: src/main/util.c:709 src/main/util.c:716
+#: src/main/util.c:714 src/main/util.c:721
 msgid "cannot change working directory"
 msgstr "não é possível mudar o diretório de trabalho"
 
-#: src/main/util.c:735 src/main/util.c:769 src/main/util.c:810
-#: src/main/util.c:852 src/main/util.c:981 src/main/util.c:1040
-#: src/main/util.c:1063
+#: src/main/util.c:740 src/main/util.c:774 src/main/util.c:815
+#: src/main/util.c:857 src/main/util.c:986 src/main/util.c:1045
+#: src/main/util.c:1068
 msgid "a character vector argument expected"
 msgstr "vetor de caracteres esperado como argumento"
 
-#: src/main/util.c:742 src/main/util.c:777 src/main/util.c:819
-#: src/main/util.c:860
+#: src/main/util.c:747 src/main/util.c:782 src/main/util.c:824
+#: src/main/util.c:865
 msgid "path too long"
 msgstr "caminho muito longo"
 
-#: src/main/util.c:995
+#: src/main/util.c:1000
 msgid "only the first character of 'quote' will be used"
 msgstr "apenas o primeiro caractere"
 
-#: src/main/util.c:1065
+#: src/main/util.c:1070
 msgid "a character vector 'value' expected"
 msgstr "vetor de caracteres vector.'value' esperado"
 
-#: src/main/util.c:1068
+#: src/main/util.c:1073
 msgid "'value' must be of positive length"
 msgstr "'value' deve ter comprimento positivo"
 
-#: src/main/util.c:1197 src/main/util.c:1205
+#: src/main/util.c:1202 src/main/util.c:1210
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "entrada inválida '%s' em 'utf8towcs'"
 
-#: src/main/util.c:1290
+#: src/main/util.c:1295
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "string multibyte inválida em '%s'"
 
-#: src/main/util.c:1399
+#: src/main/util.c:1404
 msgid "error message truncated to 255 chars"
 msgstr "mensagem de erro truncada para 255 caracteres"
 
-#: src/main/util.c:1412
+#: src/main/util.c:1417
 msgid "warning message truncated to 255 chars"
 msgstr "mensagem de aviso truncada para 255 caracteres"
 
-#: src/main/util.c:1561
+#: src/main/util.c:1566
 #, c-format
 msgid "accuracy loss in conversion from \"%s\" to numeric"
 msgstr ""
 
-#: src/main/util.c:1822
+#: src/main/util.c:1827
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "os atributos devem ter nome"
 
-#: src/main/util.c:1896
+#: src/main/util.c:1901
 msgid "ICU is not supported on this build"
 msgstr "ICU não é suportado nessa plataforma"
 
-#: src/main/util.c:1957
+#: src/main/util.c:1962
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr "tipo '%s' não é suportado"
 
-#: src/main/util.c:1991 src/main/util.c:2037
+#: src/main/util.c:1996 src/main/util.c:2042
 #, fuzzy, c-format
 msgid "long vector '%s' is not supported"
 msgstr "tipo '%s' não é suportado"
 
-#: src/main/util.c:2090
+#: src/main/util.c:2095
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
-#: src/main/util.c:2118
+#: src/main/util.c:2123
 #, fuzzy
 msgid "'x' must be a vector"
 msgstr "'x' deve ser um vetor de caracteres"

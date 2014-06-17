@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40+0100\n"
+"POT-Creation-Date: 2014-06-17 08:36+0100\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,92 +25,112 @@ msgid "'%s' must be numeric of length %d"
 msgstr " '%s' は長さ %d の数値でなければなりません "
 
 #: colors.c:69
+#, fuzzy, c-format
+msgid "color intensity %s, not in [0,1]"
+msgstr " 色彩強度 %g が [0, 1] の範囲内にありません "
+
+#: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
 msgstr " 色彩強度 %g が [0, 1] の範囲内にありません "
 
-#: colors.c:76
+#: colors.c:78
+#, fuzzy, c-format
+msgid "color intensity %s, not in 0:255"
+msgstr " 色彩強度 %d が 0:255 の範囲内にありません "
+
+#: colors.c:80
 #, c-format
 msgid "color intensity %d, not in 0:255"
 msgstr " 色彩強度 %d が 0:255 の範囲内にありません "
 
-#: colors.c:83
+#: colors.c:87
+#, fuzzy, c-format
+msgid "alpha level %s, not in [0,1]"
+msgstr " アルファ値 %g が [0, 1] の範囲内にありません "
+
+#: colors.c:89
 #, c-format
 msgid "alpha level %g, not in [0,1]"
 msgstr " アルファ値 %g が [0, 1] の範囲内にありません "
 
-#: colors.c:90
+#: colors.c:96
+#, fuzzy, c-format
+msgid "alpha level %s, not in 0:255"
+msgstr " アルファ値 %d が 0:255 の範囲内にありません "
+
+#: colors.c:98
 #, c-format
 msgid "alpha level %d, not in 0:255"
 msgstr " アルファ値 %d が 0:255 の範囲内にありません "
 
-#: colors.c:118
+#: colors.c:126
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色変換に失敗しました "
 
-#: colors.c:207 colors.c:221
+#: colors.c:215 colors.c:229
 msgid "invalid hsv color"
 msgstr " hsv カラーが不正です "
 
-#: colors.c:333 colors.c:353
+#: colors.c:341 colors.c:361
 msgid "invalid hcl color"
 msgstr " hcl カラーが不正です "
 
-#: colors.c:385
+#: colors.c:393
 msgid "invalid value of 'maxColorValue'"
 msgstr " 'maxColorValue' の値が不正です "
 
-#: colors.c:413
+#: colors.c:421
 msgid "invalid 'names' vector"
 msgstr " 'names' ベクトルが不正です "
 
-#: colors.c:472 colors.c:481
+#: colors.c:480 colors.c:489
 msgid "invalid gray level, must be in [0,1]."
 msgstr " 濃淡度が不正です。濃淡度は [0, 1] の範囲内にある必要があります "
 
-#: colors.c:537
+#: colors.c:545
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
 
-#: colors.c:1329
+#: colors.c:1337
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr " 'color' または 'lty' 中の 16 進数が不正です "
 
-#: colors.c:1339 colors.c:1349
+#: colors.c:1347 colors.c:1357
 msgid "invalid RGB specification"
 msgstr " RGB の指定が不正です "
 
-#: colors.c:1382
+#: colors.c:1390
 #, c-format
 msgid "invalid color name '%s'"
 msgstr " 色名 '%s' が不正です "
 
-#: colors.c:1432 colors.c:1441
+#: colors.c:1440 colors.c:1449
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr " 色の指定 \"%s\" が不正です "
 
-#: colors.c:1469
+#: colors.c:1477
 msgid "supplied color is neither numeric nor character"
 msgstr " 与えられた色が数値でも文字列でもありません "
 
-#: colors.c:1473
+#: colors.c:1481
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr ""
 " 色を数値で指定する場合、数値は 0 以上である必要があります。%d が指定されまし"
 "た "
 
-#: colors.c:1484
+#: colors.c:1492
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
-#: colors.c:1495
+#: colors.c:1503
 msgid "unknown palette (need >= 2 colors)"
 msgstr " パレットが不正です (2 色以上必要です) "
 
-#: colors.c:1499 colors.c:1521
+#: colors.c:1507 colors.c:1529
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr " パレットの色数の最大値は %d です "

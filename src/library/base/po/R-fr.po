@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:50\n"
+"POT-Creation-Date: 2014-06-17 08:35\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -48,7 +48,7 @@ msgstr "valeurs infinies ou manquantes dans 'x'"
 msgid "a dimension is zero"
 msgstr "une dimension est nulle"
 
-msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -673,6 +673,9 @@ msgstr ""
 "tableau de données corrompu : les colonnes seront tronquées ou complétées "
 "avec des NAs"
 
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' a une longueur > 1"
 
@@ -1008,6 +1011,9 @@ msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr ""
 "'by' doit spécifier lune ou plusieurs colonnes comme des entiers, des noms "
 "ou des valeurs logiques"
+
+msgid "long vectors are not supported"
+msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' et 'by.y' spécifient des nombres différents de colonnes"

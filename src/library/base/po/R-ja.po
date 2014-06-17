@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:50\n"
+"POT-Creation-Date: 2014-06-17 08:35\n"
 "PO-Revision-Date: 2014-03-26 13:57+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -43,7 +43,7 @@ msgstr " 'x' に無限値か欠測値があります "
 msgid "a dimension is zero"
 msgstr " 次元が 0 です "
 
-msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -650,6 +650,9 @@ msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
 " 壊れたデータフレームです。列が切り詰められるか、または NA 値で埋められます "
 
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
 msgid "'zero.print' has length > 1"
 msgstr " 'zero.print' は長さ > 1 を持ちます "
 
@@ -978,6 +981,9 @@ msgstr " 'by' は列数にマッチしなければなりません "
 
 msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr " 'by' は列を数値、名前ラベルもしくは論理値で特定しなければなりません "
+
+msgid "long vectors are not supported"
+msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr " 'by.x' そして 'by.y' は異なった列数を指定しています "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:50\n"
+"POT-Creation-Date: 2014-06-17 08:35\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -47,7 +47,7 @@ msgstr "'x'里有无穷值或遗漏值"
 msgid "a dimension is zero"
 msgstr "维度为零"
 
-msgid "\"hexNumeric\"and \"digits16\" are mutually exclusive"
+msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -638,6 +638,9 @@ msgstr "'flag'只能含'0+- #'"
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
 
+msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
+msgstr ""
+
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print'的长度一定得大于一"
 
@@ -954,6 +957,9 @@ msgstr "'by'的长度一定得和列的长度相同"
 
 msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by'一定得用数字，名字或逻辑值来指定一个或多个列"
+
+msgid "long vectors are not supported"
+msgstr ""
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"

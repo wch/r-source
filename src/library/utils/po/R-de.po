@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:51\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -672,8 +672,12 @@ msgstr "kann keine Pakete installieren"
 msgid "unable to create %s"
 msgstr "kann %s nicht erzeugen"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
+
+msgid "unable to create temporary directory %s"
+msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -717,9 +721,6 @@ msgstr "System (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "Installation des Pakets %s hatte Exit-Status ungleich 0"
-
-msgid "unable to create temporary directory %s"
-msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "foundpkgs: %s"
 msgstr "foundpkgs: %s"

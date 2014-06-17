@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:51\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2014-03-26 14:24+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -672,8 +672,12 @@ msgstr " パッケージをインストール出来ませんでした "
 msgid "unable to create %s"
 msgstr " %s を生成できませんでした "
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr " ファイル名から 'repos = NULL' を推測 "
+
+msgid "unable to create temporary directory %s"
+msgstr " 一時的ディレクトリ %s を作ることが出来ません "
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -723,9 +727,6 @@ msgstr " システム (cmd0): %s "
 
 msgid "installation of package %s had non-zero exit status"
 msgstr " パッケージ %s のインストールは、ゼロでない終了値をもちました "
-
-msgid "unable to create temporary directory %s"
-msgstr " 一時的ディレクトリ %s を作ることが出来ません "
 
 msgid "foundpkgs: %s"
 msgstr " foundpkgs: %s "

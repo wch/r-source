@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:51\n"
+"POT-Creation-Date: 2014-06-17 08:36\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -676,8 +676,12 @@ msgstr "패키지들을 설치할 수 없습니다"
 msgid "unable to create %s"
 msgstr "%s를 생성할 수 없습니다"
 
-msgid "inferring 'repos = NULL' from the file name"
+#, fuzzy
+msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "파일이름으로부터 'repos = NULL'임을 알 수 있습니다"
+
+msgid "unable to create temporary directory %s"
+msgstr "임시 디렉토리 %s를 생성할 수 없습니다"
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
@@ -721,9 +725,6 @@ msgstr "시스템 (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
 msgstr "패키지 %s의 설치가 0이 아닌 종료상태를 가졌습니다"
-
-msgid "unable to create temporary directory %s"
-msgstr "임시 디렉토리 %s를 생성할 수 없습니다"
 
 msgid "foundpkgs: %s"
 msgstr "발견된 패키지들: %s"
