@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -569,15 +569,14 @@ static void isort_with_index(int *x, int *indx, int n)
 */
 SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP xi, yi, ansx, ansy, ans, x_lone, y_lone;
+    SEXP xi, yi, ansx, ansy, ans;
     int nx = 0, ny = 0, i, j, k, nx_lone = 0, ny_lone = 0;
     int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
-    int *ix, *iy, tmp, nnx, nny, i0, j0;
-    double dnans = 0;
-    const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
+    int nnx, nny;
 
     checkArity(op, args);
     xi = CAR(args);
+    // NB: long vectors are not supported for input
     if ( !isInteger(xi) || !(nx = LENGTH(xi)) )
 	error(_("invalid '%s' argument"), "xinds");
     yi = CADR(args);
@@ -589,8 +588,8 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'all.y' must be TRUE or FALSE"));
 
     /* 0. sort the indices */
-    ix = (int *) R_alloc((size_t) nx, sizeof(int));
-    iy = (int *) R_alloc((size_t) ny, sizeof(int));
+    int *ix = (int *) R_alloc((size_t) nx, sizeof(int));
+    int *iy = (int *) R_alloc((size_t) ny, sizeof(int));
     for(i = 0; i < nx; i++) ix[i] = i+1;
     for(i = 0; i < ny; i++) iy[i] = i+1;
     isort_with_index(INTEGER(xi), ix, nx);
@@ -599,8 +598,9 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* 1. determine result sizes */
     for (i = 0; i < nx; i++) if (INTEGER(xi)[i] > 0) break; nx_lone = i;
     for (i = 0; i < ny; i++) if (INTEGER(yi)[i] > 0) break; ny_lone = i;
+    double dnans = 0;
     for (i = nx_lone, j = ny_lone; i < nx; i = nnx, j = nny) {
-	tmp = INTEGER(xi)[i];
+	int tmp = INTEGER(xi)[i];
 	for(nnx = i; nnx < nx; nnx++) if(INTEGER(xi)[nnx] != tmp) break;
 	/* the next is not in theory necessary,
 	   since we have the common values only */
@@ -609,38 +609,39 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* printf("i %d nnx %d j %d nny %d\n", i, nnx, j, nny); */
 	dnans += (nnx-i)*(nny-j);
     }
-    if (dnans > INT_MAX)
-	error(_("number of rows in the result exceeds 2^31"));
-    int nans = (int) dnans;
+    if (dnans > R_XLEN_T_MAX)
+	error(_("number of rows in the result exceeds maximum vector length"));
+    R_xlen_t nans = (int) dnans;
 
 
     /* 2. allocate and store result components */
 
-    PROTECT(ans = mkNamed(VECSXP, nms));
+    const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
+    ans = PROTECT(mkNamed(VECSXP, nms));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
 
     if(all_x) {
-	x_lone = allocVector(INTSXP, nx_lone);
+	SEXP x_lone = allocVector(INTSXP, nx_lone);
 	SET_VECTOR_ELT(ans, 2, x_lone);
 	for (i = 0, ll = 0; i < nx_lone; i++)
 	    INTEGER(x_lone)[ll++] = ix[i];
     }
 
     if(all_y) {
-	y_lone = allocVector(INTSXP, ny_lone);
+	SEXP y_lone = allocVector(INTSXP, ny_lone);
 	SET_VECTOR_ELT(ans, 3, y_lone);
 	for (i = 0, ll = 0; i < ny_lone; i++)
 	    INTEGER(y_lone)[ll++] = iy[i];
     }
 
     for (i = nx_lone, j = ny_lone, k = 0; i < nx; i = nnx, j = nny) {
-	tmp = INTEGER(xi)[i];
+	int tmp = INTEGER(xi)[i];
 	for(nnx = i; nnx < nx; nnx++) if(INTEGER(xi)[nnx] != tmp) break;
 	for(; j < ny; j++) if(INTEGER(yi)[j] >= tmp) break;
 	for(nny = j; nny < ny; nny++) if(INTEGER(yi)[nny] != tmp) break;
-	for(i0 = i; i0 < nnx; i0++)
-	    for(j0 = j; j0 < nny; j0++) {
+	for(int i0 = i; i0 < nnx; i0++)
+	    for(int j0 = j; j0 < nny; j0++) {
 		INTEGER(ansx)[k]   = ix[i0];
 		INTEGER(ansy)[k++] = iy[j0];
 	    }

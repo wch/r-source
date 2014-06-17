@@ -95,6 +95,9 @@
       \code{decimal.mark} are set to the same value (period and comma
       are not uncommonly used for each, and this is a check that
       conventions have not got mixed).
+      
+      \item \code{merge()} can create a result which uses long vectors
+      on 64-bit platforms.
     }
   }
   

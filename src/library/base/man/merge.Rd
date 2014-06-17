@@ -95,6 +95,10 @@ merge(x, y, \dots)
 \note{
   This is intended to work with data frames with vector-like columns:
   some aspects work with data frames containing matrices, but not all.
+  
+  Currently long vectors are not accepted for inputs, which are thus
+  restricted to less than 2^31 rows.  Prior to \R 3.2.0 that restriction
+  also applied to the result.
 }
 
 \value{
