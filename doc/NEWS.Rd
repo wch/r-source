@@ -142,7 +142,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item For conistency with \code{[dpqr]lnorm()},
+      \item For consistency with \code{[dpqr]lnorm()},
       \code{rlnorm(sdlog = 0)} is an error and so returns \code{NaN}.
     }
   }
@@ -231,7 +231,7 @@
        \command{R CMD check}) in the \sQuote{Writing R Extensions}
        manual.
 
-       \item Compilers were handing the visibility control in
+       \item Compilers were handling the visibility control in
        \file{src/extra/xz} inconsistently, so it has been simplified.
        (\PR{15327})
      }
@@ -356,8 +356,9 @@
       \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
       
-      \item Attempts to use \code{merge()} to create a result with 2^31
-      or more rows now give a clearer error message.
+      \item Attempting to use data frames of 2^31 or more rows with
+      \code{merge()} or to create a merged data frame of that size now
+      gives a clearer error message.
     }
   }
 }
