@@ -283,7 +283,7 @@ install.packages <-
     ## check if we should infer repos = NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" &&
-            any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs) | dir.exists(pkgs))) ||
+            any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) ||
            (type %in% "win.binary" && length(grep("[.]zip$", pkgs))) ||
            (substr(type, 1L, 10L) == "mac.binary"
             && length(grep("[.]tgz$", pkgs)))) {
