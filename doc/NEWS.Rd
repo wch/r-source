@@ -137,10 +137,12 @@
     }
   }
 
-  %% \subsection{BUG FIXES}{
-  %%   \itemize{
-  %%   }
-  %% }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item For conistency with \code{[dpqr]lnorm()},
+      \code{rlnorm(sdlog = 0)} is an error and so returns \code{NaN}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.1.0 patched}{
@@ -350,6 +352,9 @@
 
       \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
+      
+      \item Attempts to use \code{merge()} to create a result with 2^31
+      or more rows now give a clearer error message.
     }
   }
 }
