@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -578,6 +578,7 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     xi = CAR(args);
+    // NB: long vectors are not supported for input
     if ( !isInteger(xi) || !(nx = LENGTH(xi)) )
 	error(_("invalid '%s' argument"), "xinds");
     yi = CADR(args);
@@ -607,10 +608,10 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(; j < ny; j++) if(INTEGER(yi)[j] >= tmp) break;
 	for(nny = j; nny < ny; nny++) if(INTEGER(yi)[nny] != tmp) break;
 	/* printf("i %d nnx %d j %d nny %d\n", i, nnx, j, nny); */
-	dnans += (nnx-i)*(nny-j);
+	dnans += ((double)(nnx-i))*(nny-j);
     }
     if (dnans > INT_MAX)
-	error(_("number of rows in the result exceeds 2^31"));
+	error(_("number of rows in the result exceeds maximum vector length"));
     int nans = (int) dnans;
 
 

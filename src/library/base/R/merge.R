@@ -58,6 +58,7 @@ merge.data.frame <-
     }
 
     nx <- nrow(x <- as.data.frame(x)); ny <- nrow(y <- as.data.frame(y))
+    if (nx >= 2^31 || ny >= 2^31) stop("long vectors are not supported")
     by.x <- fix.by(by.x, x)
     by.y <- fix.by(by.y, y)
     if((l.b <- length(by.x)) != length(by.y))
