@@ -214,6 +214,9 @@
 
       \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
+      
+      \item Attempts to use \code{merge()} to create a result with 2^31
+      or more rows now give a clearer error message.
     }
   }
 }

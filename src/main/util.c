@@ -570,9 +570,10 @@ static void isort_with_index(int *x, int *indx, int n)
 SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP xi, yi, ansx, ansy, ans, x_lone, y_lone;
-    int nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
+    int nx = 0, ny = 0, i, j, k, nx_lone = 0, ny_lone = 0;
     int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
     int *ix, *iy, tmp, nnx, nny, i0, j0;
+    double dnans = 0;
     const char *nms[] = {"xi", "yi", "x.alone", "y.alone", ""};
 
     checkArity(op, args);
@@ -606,8 +607,11 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(; j < ny; j++) if(INTEGER(yi)[j] >= tmp) break;
 	for(nny = j; nny < ny; nny++) if(INTEGER(yi)[nny] != tmp) break;
 	/* printf("i %d nnx %d j %d nny %d\n", i, nnx, j, nny); */
-	nans += (nnx-i)*(nny-j);
+	dnans += (nnx-i)*(nny-j);
     }
+    if (dnans > INT_MAX)
+	error(_("number of rows in the result exceeds 2^31"));
+    int nans = (int) dnans;
 
 
     /* 2. allocate and store result components */
