@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -357,7 +357,7 @@ model.frame.default <-
         fcall[[1L]] <- quote(stats::model.frame)
         env <- environment(formula$terms)
 	if (is.null(env)) env <- parent.frame()
-        return(eval(fcall, env, parent.frame()))
+        return(eval(fcall, env)) # 2-arg form as env is an environment
     }
     if(missing(formula)) {
 	if(!missing(data) && inherits(data, "data.frame") &&
