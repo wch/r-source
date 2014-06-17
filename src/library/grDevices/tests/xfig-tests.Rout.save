@@ -1,5 +1,5 @@
 
-R version 3.1.0 Patched (2014-06-13 r65930) -- "Spring Dance"
+R version 3.1.0 Patched (2014-06-17 r65958) -- "Spring Dance"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.198   0.013   0.201 
+  0.199   0.015   0.204 
