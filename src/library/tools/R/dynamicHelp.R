@@ -207,7 +207,7 @@ httpd <- function(path, query, ...)
     else if(path == "/NEWS")
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
     else if(grepl("^/NEWS[.][[:digit:]]$", path))
-    	return(list(file = file.path(R.home(), sub("/", "", path)),
+    	return(list(file = file.path(R.home("doc"), sub("/", "", path)),
     	            "content-type" = "text/plain; encoding=utf-8"))
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
