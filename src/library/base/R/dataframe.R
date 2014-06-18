@@ -1139,7 +1139,11 @@ data.frame <-
   if (!is.null(a)) return(a)
 
   a <- x[[name, exact=FALSE]]
-  if (!is.null(a)) warning("Name partially matched in data frame")
+  if (!is.null(a) && getOption("warnPartialMatchDollar", default=FALSE)) {
+  	names <- names(x)
+  	warning(gettextf("Partial match of '%s' to '%s' in data frame",
+                                   name, names[pmatch(name, names)]))
+  }
   return(a)
 }
 
