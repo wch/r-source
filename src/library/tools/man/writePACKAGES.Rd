@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -36,10 +36,10 @@ write_PACKAGES(dir = ".", fields = NULL,
     are used.
   }
   \item{type}{
-    Type of packages: currently source \file{.tar.gz} archives, and Mac
-    or Windows binary (\file{.tgz} or \file{.zip}, respectively)
-    packages are supported.  Defaults to \code{"win.binary"} on Windows
-    and to \code{"source"} otherwise.
+    Type of packages: currently source \file{.tar.\{gz,bz2,xz\}} archives,
+    and OS X or Windows binary (\file{.tgz} or \file{.zip},
+    respectively) packages are supported.  Defaults to
+    \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
   \item{verbose}{logical.  Should packages be listed as they are
     processed?}
