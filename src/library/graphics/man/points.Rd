@@ -1,6 +1,6 @@
 % File src/library/graphics/man/points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{points}
@@ -139,7 +139,7 @@ points(x, \dots)
   If the symbol font (\code{\link{par}(font = 5)}) is used, numerical
   values should be used for \code{pch}: the range is
   \code{c(32:126, 160:254)} in all locales (but \code{240} is not
-  defined (used for \sQuote{apple} on Mac OS) and \code{160}, Euro, may
+  defined (used for \sQuote{apple} on OS X) and \code{160}, Euro, may
   not be present).
 }
 \note{
