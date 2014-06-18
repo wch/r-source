@@ -209,6 +209,10 @@
       \code{http://} or \code{ftp://} URLs of package archives as well
       as file paths, and will download as required.  In most cases
       \code{repos = NULL} can be deduced from the extension of the URL.
+      
+      \item The warning when using partial matching with the \code{$}
+      operator on data frames is now only given when
+      \code{options("warnPartialMatchDollar")} is \code{TRUE}.
     }
   }
 
