@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-2013 R Core Team
+% Copyright 2008-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -62,8 +62,8 @@ icuSetCollate(...)
   \code{C} locale, unless \code{locale} is specified.
 }
 \note{
-  ICU is used by default wherever it is available:
-  this include Mac OS >= 10.4 and many Linux installations.
+  ICU is used by default wherever it is available: this include OS X (as
+  from 10.4) and many Linux installations.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}

@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help}
@@ -59,7 +59,7 @@ help(topic, package = NULL, lib.loc = NULL,
     see the section on \sQuote{Offline help}.
   }
 #ifdef unix
-  The \sQuote{factory-fresh} default is text help except from the Mac OS
+  The \sQuote{factory-fresh} default is text help except from the OS X
   GUI, which uses HTML help displayed in its own browser window.
 #endif
 #ifdef windows

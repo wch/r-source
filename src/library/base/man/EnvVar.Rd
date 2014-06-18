@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007-2013 R Core Team
+% Copyright 2007-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -71,7 +71,7 @@
     \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
     \item{\env{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
-      command-line completion is not used.  (Not used by Mac OS GUI.)}
+      command-line completion is not used.  (Not used by OS X GUI.)}
     \item{\env{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be attached in every session.  See \code{\link{options}}.}
     \item{\env{R_DOC_DIR}:}{The location of the \R \file{doc}
