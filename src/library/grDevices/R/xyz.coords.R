@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/xyz.coords.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 ## Both xy.coords() and xyz.coords()  --- should be kept in sync!
 
 xy.coords <-
-    function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
+    function(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL, recycle = FALSE)
 {
     if(is.null(y)) {
 	ylab <- xlab
@@ -27,8 +27,8 @@ xy.coords <-
 	    if (inherits(x, "formula") && length(x) == 3) {
 		ylab <- deparse(x[[2L]])
 		xlab <- deparse(x[[3L]])
-		y <- eval(x[[2L]], environment(x), parent.frame())
-		x <- eval(x[[3L]], environment(x), parent.frame())
+		y <- eval(x[[2L]], environment(x))
+		x <- eval(x[[3L]], environment(x))
 	    }
 	    else stop("invalid first argument")
 	}
