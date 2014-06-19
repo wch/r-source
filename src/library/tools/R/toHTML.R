@@ -22,20 +22,21 @@ function(title="R", logo=TRUE,
     if (logo)
     	result <- c(result,
                     paste0('<img class="toplogo" src="',
-                           file.path(Rhome, 'doc/html/logo.jpg'), '" alt="[R logo]">'))
+                           file.path(Rhome, 'doc/html/logo.jpg'),
+                           '" alt="[R logo]">'))
     result <- c(result, '</h1>', '<hr>')
     if (!is.null(up) || !is.null(top)) {
     	result <- c(result, '<div align="center">')
     	if (!is.null(up))
     	    result <- c(result,
-    	        paste0('<a href="', up, '"><img src="',
+    	        paste0('<a href="', up, '"><img class="arrow" src="',
                        file.path(Rhome, 'doc/html/left.jpg'),
-                       '" alt="[Up]" width="30" height="30" border="0"></a>'))
+                       '" alt="[Up]"></a>'))
     	if (!is.null(top))
     	    result <- c(result,
-    	    	paste0('<a href="', top, '"><img src="',
+    	    	paste0('<a href="', top, '"><img class="arrow" src="',
     	    	      file.path(Rhome, 'doc/html/up.jpg'),
-    	    	      '" alt="[Top]" width="30" height="30" border="0"></a>'))
+    	    	      '" alt="[Top]"></a>'))
     	result <- c(result, '</div>')
     }
     result

@@ -917,7 +917,7 @@ function(pkg, con, vignetteIndex = NULL)
 		  '<col width="24%">',
                   paste0('<tr><td></td><td><span class="samp">',
                          iconv(urls, "", "UTF-8"), "</span></td></tr>"),
-                  "</dl>")
+                  "</table>")
     }
     html <- c(html, "</body></html>")
     writeLines(html, con=con)
