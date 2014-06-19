@@ -25,7 +25,7 @@ rnbinom(n, size, prob, mu)
   \item{x}{vector of (non-negative integer) quantiles.}
   \item{q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
-  \item{n}{number of observations. If \code{length(n) > 1}, the length
+  \item{n}{number of observations.  If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{size}{target for number of successful trials, or dispersion
     parameter (the shape parameter of the gamma mixing distribution).
@@ -50,7 +50,7 @@ rnbinom(n, size, prob, mu)
 
   A negative binomial distribution can also arise as a mixture of
   Poisson distributions with mean distributed as a gamma distribution
-  (see\code{\link{pgamma}}) with scale parameter \code{(1 - prob)/prob}
+  (see \code{\link{pgamma}}) with scale parameter \code{(1 - prob)/prob}
   and shape parameter \code{size}.  (This definition allows non-integer
   values of \code{size}.)
 
@@ -62,10 +62,11 @@ rnbinom(n, size, prob, mu)
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.
 
-  The case \code{size == 0} is the distribution concentrated at zero. This 
-  is the limiting distribution for \code{size} approaching zero, even if 
-  \code{mu} rather than \code{prob} is held constant. Notice though, that
-  the mean of the limit distribution is 0, whatever the value of \code{mu}.  
+  The case \code{size == 0} is the distribution concentrated at zero.
+  This is the limiting distribution for \code{size} approaching zero,
+  even if \code{mu} rather than \code{prob} is held constant.  Notice
+  though, that the mean of the limit distribution is 0, whatever the
+  value of \code{mu}.
 
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
@@ -78,11 +79,11 @@ rnbinom(n, size, prob, mu)
 
   Invalid \code{size} or \code{prob} will result in return value
   \code{NaN}, with a warning.
-  
+
   The length of the result is determined by \code{n} for
   \code{rnbinom}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
