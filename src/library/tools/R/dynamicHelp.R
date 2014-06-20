@@ -54,7 +54,7 @@ httpd <- function(path, query, ...)
             vinfo <- getVignetteInfo(pkg)
      	    if (nrow(vinfo))
          	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
-         		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R")])))
+         		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R"), drop = FALSE])))
      	}
         out <- c(out, "<hr>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
