@@ -23,11 +23,12 @@ all sensible platforms.)
 To remake it, download the current version of tzdataXXXXx.tar.gz from
 http://www.iana.org/time-zones to this directory and run
 
-make -f Make.zi VERSION=2014c
+make -f Make.zi VERSION=2014e
 
 for the appropriate version.  If zic is not on the path, use something like
 
-make -f Make.zi VERSION=2014c ZIC=/usr/sbin/zic
+make -f Make.zi VERSION=2014e ZIC=/usr/sbin/zic
 
 NB: it seems that this needs to be done on a system with 64-bit time_t
-or the catalogs will be confined to 1902-2038.
+or the catalogs will be confined to 1902-2038.  And even that does not
+to suffice on OS X, whose zic seems to be 32-bit.
