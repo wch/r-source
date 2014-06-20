@@ -298,7 +298,7 @@ Ops.POSIXt <- function(e1, e2)
         stop(gettextf("'%s' not defined for \"POSIXt\" objects", .Generic),
              domain = NA)
     if(inherits(e1, "POSIXlt") || is.character(e1)) e1 <- as.POSIXct(e1)
-    if(inherits(e2, "POSIXlt") || is.character(e1)) e2 <- as.POSIXct(e2)
+    if(inherits(e2, "POSIXlt") || is.character(e2)) e2 <- as.POSIXct(e2)
     check_tzones(e1, e2)
     NextMethod(.Generic)
 }
