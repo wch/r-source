@@ -199,6 +199,8 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     RCNTXT cntxt;
 
     checkArity(op, args);
+    if(!inherits(CAR(args), "connection"))
+	error(_("'file' must be a character string or connection"));
     R_ParseError = 0;
     R_ParseErrorMsg[0] = '\0';
 
