@@ -339,6 +339,8 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     PROTECT(tval); /* against Rconn_printf */
+    if(!inherits(CADR(args), "connection"))
+	error(_("'file' must be a character string or connection"));
     ifile = asInteger(CADR(args));
 
     wasopen = 1;
@@ -387,6 +389,8 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     names = CAR(args);
     file = CADR(args);
+    if(!inherits(file, "connection"))
+	error(_("'file' must be a character string or connection"));
     if(!isString(names))
 	error( _("character arguments expected"));
     nobjs = length(names);
