@@ -98,6 +98,11 @@
       
       \item \code{merge()} can create a result which uses long vectors
       on 64-bit platforms.
+      
+      \item \code{dget()} gains a new argument \code{keep.source} which
+      defaults to \code{FALSE} for speed (\code{dput()} and
+      \code{dget()} are most often used for data objects where this can
+      make \code{dget()} many times faster).
     }
   }
   

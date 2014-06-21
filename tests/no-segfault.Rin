@@ -32,7 +32,7 @@ misc.int <- c("browser", "browseVignettes", "bug.report", "checkCRAN",
               "readLines", "package.skeleton", "trace", "recover",
               "rm", "remove", "parent.env<-",
               "builtins", "data", "help", "news", "rtags", "vignette",
-              "installed.packages")
+              "installed.packages", "dget")
 inet.list <- c(apropos("download\\."),
                apropos("^url\\."), apropos("\\.url"),
                apropos("packageStatus"),
