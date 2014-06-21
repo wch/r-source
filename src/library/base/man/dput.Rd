@@ -43,7 +43,9 @@ dget(file)
 
   To display saved source rather than deparsing the internal representation
   include \code{"useSource"} in \code{control}.  \R currently saves
-  source only for function definitions.
+  source only for function definitions.  If you do not care about source
+  representation (e.g. for a data object) set \code{options(keep.source
+    = FALSE}) before calling \code{dget}. 
 }
 \value{
   For \code{dput}, the first argument invisibly.
@@ -51,6 +53,12 @@ dget(file)
   For \code{dget}, the object created.
 }
 \note{
+  This is \bold{not} a good way to transfer objects between \R sessions.
+  \code{\link{dump}} is better, but the function \code{\link{save}} is
+  designed to be used for transporting \R data, and will work with \R
+  objects that \code{dput} does not handle correctly as well as being
+  much faster.
+  
   To avoid the risk of a source attribute out of sync with the actual
   function definition, the source attribute of a function will never
   be written as an attribute.
