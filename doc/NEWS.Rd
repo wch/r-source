@@ -368,6 +368,10 @@
       \item Attempting to use data frames of 2^31 or more rows with
       \code{merge()} or to create a merged data frame of that size now
       gives a clearer error message.
+
+      \item \code{parse()} did not check its \code{file} argument was a
+      connection if it was not a character string, so
+      e.g. \code{parse(FALSE)} attempted to read from \code{stdin}.
     }
   }
 }

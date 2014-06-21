@@ -51,7 +51,8 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
                 } else
 		    on.exit(close(file))
 	    }
-	}
+	} else if (!inherits(file, "connection"))
+            stop("'file' must be a character string or connection")
     }
     .Internal(parse(file, n, text, prompt, srcfile, encoding))
 }
