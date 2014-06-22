@@ -12,9 +12,9 @@
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
 
-      \item When \code{x} is missing and \code{names} is not false,
-      \code{Sys.getenv(x, names)} returns an object of class
-      \code{"Dlist"} and hence prints tidily.
+      \item When \code{x} is missing and \code{names} is not false
+      (including the default value), \code{Sys.getenv(x, names)} returns
+      an object of class \code{"Dlist"} and hence prints tidily.
 
       \item (Windows.)  \code{shell()} no longer consults the
       environment variable \env{SHELL}: too many systems have been
@@ -23,10 +23,10 @@
       \env{R_SHELL}, the preferred way to select a non-default shell,
       can be used instead.
 
-      \item \code{embedFonts()} now uses \code{format = "ps2write"} by
-      default for \file{.ps} and \file{.eps} files.  This is available
-      in Ghostscript 9.x (since 2010) whereas the previous default,
-      \code{format = "pswrite"}, was removed in 9.10.
+      \item \code{embedFonts()} now defaults to \code{format =
+      "ps2write"} for \file{.ps} and \file{.eps} files.  This is
+      available in Ghostscript 9.x (since 2010) whereas the previous
+      default, \code{format = "pswrite"}, was removed in 9.10.
 
       \item Some unusual arguments to \code{embedFonts()} can now be
       specified as character vectors, and the defaults have changed
@@ -54,16 +54,17 @@
       variables to be plotted against each other.
 
       \item \code{file.info(, extra_cols = FALSE)} allows a minimal set
-      of columns to be computed.
+      of columns to be computed: on some systems this can be
+      significantly faster with large file lists.
 
       \item New function \code{dir.exists()} in \pkg{base} to test
       efficiently whether one or more paths exist and are directories.
 
       \item \code{dput()} and friends gain new controls
       \samp{"hexNumeric"} and \samp{"digits17"} which output double and
-      complex quantities as, respectively, binary fractions (see
-      \code{sprintf("\%a")}) to full precision (and no noise) and as
-      decimals with up to 17 significant digits.
+      complex quantities as, respectively, binary fractions (exactly,
+      see \code{sprintf("\%a")}) and as decimals with up to 17
+      significant digits.
 
       \item \code{save()}, \code{saveRDS()} and \code{serialize()} now
       support \code{ascii = NA} which writes ASCII files using the
@@ -147,8 +148,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item For consistency with \code{[dpqr]lnorm()},
-      \code{rlnorm(sdlog = 0)} is an error and so returns \code{NaN}.
+      \item For consistency with \code{[dpq]lnorm()},
+      \code{rlnorm(sdlog = 0)} is now an error and so returns \code{NaN}.
     }
   }
 }
