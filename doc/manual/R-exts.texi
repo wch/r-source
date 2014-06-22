@@ -617,6 +617,17 @@ language subtags which in essence are 2-letter ISO 639-1
 639-3 (@uref{http://en.wikipedia.@/org/@/wiki/@/ISO_639-3}) language
 codes.
 
+@c DESCRIPTION field RdMacros
+As of @R{} 3.2.0, an @samp{RdMacros} field can be used to hold a 
+comma-separated list of packages from which the current package will import
+Rd macro definitions.  These will be imported after the system macros,
+in the order listed in the @samp{RdMacros} field, before any macro
+definitions in the current package are loaded.  Macro definitions in
+individual @file{.Rd} files in the @file{man} directory are loaded
+last, and are local to later parts of that file.  In case of any
+duplicates, the last loaded definition will be used@footnote{Duplicate
+definitions may trigger a warning:  see @ref{User-defined macros}.}
+
 @c DESCRIPTION field Built
 @c DESCRIPTION field Packaged
 @quotation Note
@@ -1022,6 +1033,11 @@ they do not need to be documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
+
+The @file{man} subdirectory may contain a subdirectory named @file{macros};
+this will contain source for user-defined Rd macros.  
+(See @ref{User-defined macros}.)  These use the Rd format, but may
+not contain anything but macro definitions, comments and whitespace.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
@@ -5916,6 +5932,9 @@ the name of the new macro including the initial backslash, and the second
 is the macro definition.  As in @LaTeX{}, @code{\newcommand} requires that the
 new macro not have been previously defined, whereas @code{\renewcommand}
 allows existing macros (including all built-in ones) to be replaced.
+(As from version 3.2.0, this test is disabled by default, but may
+be enabled by setting the environment variable @env{_WARN_DUPLICATE_RD_MACROS_}
+to a true value.)
 
 Also as in @LaTeX{}, the new macro may be defined to take arguments,
 and numeric placeholders such as @code{#1} are used in the macro
@@ -5930,19 +5949,36 @@ significance.  All arguments to user-defined macros will be parsed as
 verbatim text, and simple text-substitution will be used to replace
 the place-holders, after which the replacement text will be parsed.
 
-For example, the @file{NEWS.Rd} file currently uses the definition
+As of @R{} version 3.2.0, a number of macros are defined in the file 
+@file{share/Rd/macros/system.Rd} of the @R{} source or home
+directory, and these will normally be available in all @file{.Rd} files.  
+For example, that file contains the definition
 @example
 \newcommand@{\PR@}@{\Sexpr[results=rd]@{tools:::Rd_expr_PR(#1)@}@}
 @end example
-which defines @code{\PR} to be a single argument macro; then code like
+@noindent
+which defines @code{\PR} to be a single argument macro; then code 
+(typically used in the @file{NEWS.Rd} file) like
 @example
 \PR@{1234@}
 @end example
+@noindent
 will expand to
 @example
 \Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
 @end example
-when parsed.
+@noindent
+when parsed.  See the comments in that file for a discussion of what
+macros are available and what they do.
+
+Packages may also define their
+own common macros; these would be stored in an @file{.Rd} file in 
+@file{man/macros} in the package source and will be installed into 
+@file{help/macros} when the package is installed.  A package may also
+use the macros from a different package by listing the other package
+in the @samp{RdMacros} field in the @file{DESCRIPTION} file.
+
+
 
 @node Encoding, Processing documentation files, User-defined macros, Writing R documentation files
 @section Encoding

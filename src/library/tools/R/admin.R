@@ -795,6 +795,12 @@ function(dir, outDir, encoding = "unknown")
     db_file <- file.path(manOutDir,
                          paste0(basename(outDir), ".rdx"))
     built_file <- file.path(dir, "build", "partial.rdb")
+    macro_files <- list.files(file.path(dir, "man", "macros"), pattern = "\\.Rd$", full.names = TRUE)
+    if (length(macro_files)) {
+    	macroDir <- file.path(manOutDir, "macros")
+    	dir.create(macroDir, FALSE)
+    	file.copy(macro_files, macroDir, overwrite = TRUE)
+    }
     ## Avoid (costly) rebuilding if not needed.
     ## Actually, it seems no more costly than these tests, which it also does
     pathsFile <- file.path(manOutDir, "paths.rds")

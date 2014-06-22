@@ -12,10 +12,14 @@ all: NEWS.rds html/NEWS.html NEWS NEWS.pdf \
   CHANGES.rds CHANGES html/CHANGES.html
 
 NEWS.rds: NEWS.Rd
-	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
+	  warningCall = FALSE), \"$@\")" | $(R_EXE)
 
 CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
-	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = \"install\", \
+	  warningCall = FALSE), \"$@\")" | $(R_EXE)
 
 ## Force ASCII output, for portability on Windows
 NEWS: NEWS.rds

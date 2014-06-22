@@ -58,7 +58,7 @@ static const R_CallMethodDef CallEntries[] = {
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(C_parseLatex, 4),
-    EXTDEF(C_parseRd, 7),
+    EXTDEF(C_parseRd, 9),
 
     {NULL, NULL, 0}
 };

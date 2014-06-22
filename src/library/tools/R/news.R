@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -327,13 +327,15 @@ function(f, out = "") {
     Rd2txt(f, out,
            stages = c("install", "render"),
            outputEncoding = if(l10n_info()[["UTF-8"]]) "" else "ASCII//TRANSLIT",
-           options = Rd2txt_NEWS_in_Rd_options)
+           options = Rd2txt_NEWS_in_Rd_options,
+           macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
  }
 
 Rd2HTML_NEWS_in_Rd <-
 function(f, out, ...) {
     if (grepl("[.]rds$", f)) f <- readRDS(f)
-    Rd2HTML(f, out, stages = c("install", "render"), ...)
+    Rd2HTML(f, out, stages = c("install", "render"), 
+           macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"), ...)
 }
 
 Rd2pdf_NEWS_in_Rd <-
@@ -349,7 +351,8 @@ function(f, pdf_file)
     out <- file(f3, "w")
     Rd2latex(f, f2,
              stages = c("install", "render"),
-             outputEncoding = "UTF-8", writeEncoding = FALSE)
+             outputEncoding = "UTF-8", writeEncoding = FALSE,
+             macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[ae,hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
@@ -526,7 +529,8 @@ function(file = NULL)
     else {
         ## Expand \Sexpr et al now because this does not happen when using
         ## fragments.
-        prepare_Rd(parse_Rd(file), stages = "install")
+        macros <- loadRdMacros(file.path(R.home("share"), "Rd", "macros", "system.Rd"))
+        prepare_Rd(parse_Rd(file, macros = macros), stages = "install")
     }
 
     db <- .extract_news_from_Rd(x)
@@ -544,7 +548,8 @@ function(file = NULL)
 .build_news_db_from_package_NEWS_Rd <-
 function(file)
 {
-    x <- prepare_Rd(parse_Rd(file), stages = "install")
+    macros <- loadRdMacros(file.path(R.home("share"), "Rd", "macros", "system.Rd"))
+    x <- prepare_Rd(parse_Rd(file, macros = macros), stages = "install")
 
     db <- .extract_news_from_Rd(x)
 

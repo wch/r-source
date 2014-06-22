@@ -45,7 +45,9 @@ R.1:
 	  $(top_builddir)/bin/R
 
 NEWS.rds: $(srcdir)/NEWS.Rd
-	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\"), stages = 'install'), 'NEWS.rds')" | $(R_EXE)
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCall = FALSE), \
+	  'NEWS.rds')" | $(R_EXE)
 
 NEWS: NEWS.rds
 	@$(ECHO) "creating NEWS"
@@ -70,7 +72,9 @@ NEWS.pdf: NEWS.rds
 docs2: NEWS.2.rds NEWS.2.html NEWS.2.pdf
 
 NEWS.2.rds: $(srcdir)/NEWS.2.Rd
-	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\"), stages = 'install'), 'NEWS.2.rds')" | $(R_EXE)
+	@$(ECHO) "options(warn=1);saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.2.Rd\", \
+	  macros = \"../share/Rd/macros/system.Rd\"), stages = 'install', warningCall = FALSE), \
+	  'NEWS.2.rds')" | $(R_EXE)
 
 ## NB: this is only the top part of NEWS.2 in the sources.
 NEWS.2: NEWS.2.rds

@@ -14,7 +14,8 @@ for spell checking or other uses.
 }
 \usage{
 RdTextFilter(ifile, encoding = "unknown", keepSpacing = TRUE,
-             drop = character(), keep = character())
+             drop = character(), keep = character(),
+             macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
 }
 \arguments{
 \item{ifile}{
@@ -32,7 +33,10 @@ RdTextFilter(ifile, encoding = "unknown", keepSpacing = TRUE,
   Additional sections of the Rd to drop.
 }
   \item{keep}{
-Sections of the Rd file to keep.
+  Sections of the Rd file to keep.
+}
+  \item{macros}{
+  Macro definitions to assume when parsing.  See \code{\link{parse_Rd}}.
 }
 }
 \details{

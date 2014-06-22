@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseRd.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
                      verbose = FALSE, fragment = FALSE,
-                     warningCalls = TRUE)
+                     warningCalls = TRUE, 
+                     macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"))
 {
     if(is.character(file)) {
         file0 <- file
@@ -32,6 +33,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
         }
     } else file0 <- "<connection>"
     lines <- readLines(file, warn = FALSE)
+    if(is.character(macros)) 
+    	macros <- loadRdMacros(macros)
     ## remove old-style marking for data, keep line nos
     lines[lines == "\\non_function{}"] <- ""
     ## Extract the encoding if marked in the file:
@@ -69,9 +72,11 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     tcon <- file()
     writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))
+    
+    warndups <- config_val_to_logical(Sys.getenv("_R_WARN_DUPLICATE_RD_MACROS_", "FALSE"))
 
     result <- .External2(C_parseRd, tcon, srcfile, "UTF-8",
-                         verbose, basename, fragment, warningCalls)
+                         verbose, basename, fragment, warningCalls, macros, warndups)
     expandDynamicFlags(result)
 }
 

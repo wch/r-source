@@ -47,6 +47,7 @@
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */
 
 static Rboolean wCalls = TRUE;
+static Rboolean warnDups = FALSE;
 
 #define YYERROR_VERBOSE 1
 
@@ -536,11 +537,13 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     	PROTECT(thedefn = mkString(CHAR(STRING_ELT(thedefn,0))));
     else
     	PROTECT(thedefn = mkString(""));
-    prev = findVar(install(CHAR(STRING_ELT(thename, 0))), parseState.xxMacroList);
-    if (prev != R_UnboundValue && !strcmp(CHAR(STRING_ELT(cmd,0)), "\renewcommand")) {
-        snprintf(buffer, sizeof(buffer), _("Macro '%s' previously defined."), 
+    if (warnDups) {
+	prev = findVar(install(CHAR(STRING_ELT(thename, 0))), parseState.xxMacroList);
+    	if (prev != R_UnboundValue && strcmp(CHAR(STRING_ELT(cmd,0)), "\\renewcommand")) {
+	    snprintf(buffer, sizeof(buffer), _("Macro '%s' previously defined."), 
                  CHAR(STRING_ELT(thename, 0)));
-        yyerror(buffer);
+            yyerror(buffer);
+        }
     }
     for (c = CHAR(STRING_ELT(thedefn, 0)); *c; c++) {
     	if (*c == '#' && isdigit(*(c+1))) 
@@ -908,8 +911,10 @@ static SEXP GrowList(SEXP l, SEXP s)
 
 /*--------------------------------------------------------------------------*/
  
-static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment)
+static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP macros)
 {
+    Rboolean keepmacros = !isLogical(macros) || asLogical(macros);
+    
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     
@@ -933,12 +938,20 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment)
     if (fragment) parseState.xxinitvalue = STARTFRAGMENT;
     else	  parseState.xxinitvalue = STARTFILE;
     
-    parseState.xxMacroList = InstallKeywords();
+    if (!isEnvironment(macros))
+	macros = InstallKeywords();
+	
+    PROTECT(macros);
+    PROTECT(parseState.xxMacroList = R_NewHashedEnv(macros, ScalarInteger(0)));
+    UNPROTECT_PTR(macros);
     
     parseState.Value = R_NilValue;
     
     if (yyparse()) *status = PARSE_ERROR;
     else *status = PARSE_OK;
+    
+    if (keepmacros && !isNull(parseState.Value))
+	setAttrib(parseState.Value, install("macros"), parseState.xxMacroList);
 
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", parseState.Value);    
@@ -966,11 +979,11 @@ static int con_getc(void)
 }
 
 static
-SEXP R_ParseRd(Rconnection con, ParseStatus *status, SEXP srcfile, Rboolean fragment)
+SEXP R_ParseRd(Rconnection con, ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP macros)
 {
     con_parse = con;
     ptr_getc = con_getc;
-    return ParseRd(status, srcfile, fragment);
+    return ParseRd(status, srcfile, fragment, macros);
 }
 
 /*----------------------------------------------------------------------------
@@ -1156,6 +1169,7 @@ static SEXP InstallKeywords()
     	defineVar(name, val, result);
     	UNPROTECT(2);
     }
+    UNPROTECT(1);
     return result;
 }
     	
@@ -1760,7 +1774,7 @@ static void PopState() {
 
 /* "do_parseRd" 
 
- .External2(C_parseRd,file, srcfile, encoding, verbose, basename, warningCalls)
+ .External2(C_parseRd,file, srcfile, encoding, verbose, basename, warningCalls, macros, warndups)
  If there is text then that is read and the other arguments are ignored.
 */
 
@@ -1774,6 +1788,7 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     int ifile, wcall;
     ParseStatus status;
     RCNTXT cntxt;
+    SEXP macros;
 
 #if DEBUGMODE
     yydebug = 1;
@@ -1796,10 +1811,12 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     parseState.xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
     parseState.xxBasename = CHAR(STRING_ELT(CAR(args), 0));	args = CDR(args);
     fragment = asLogical(CAR(args));				args = CDR(args);
-    wcall = asLogical(CAR(args));
+    wcall = asLogical(CAR(args));				args = CDR(args);
     if (wcall == NA_LOGICAL)
     	error(_("invalid '%s' value"), "warningCalls");
     wCalls = wcall;
+    macros = CAR(args);						args = CDR(args);
+    warnDups = asLogical(CAR(args));
 
     if (ifile >= 3) {/* file != "" */
 	if(!wasopen) {
@@ -1811,7 +1828,7 @@ SEXP C_parseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cntxt.cenddata = con;
 	}
 	if(!con->canread) error(_("cannot read from this connection"));
-	s = R_ParseRd(con, &status, source, fragment);
+	s = R_ParseRd(con, &status, source, fragment, macros);
 	if(!wasopen) endcontext(&cntxt);
 	PopState();
 	if (status != PARSE_OK) parseError(call, R_ParseError);
