@@ -3,8 +3,6 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{ar.ols}
 \alias{ar.ols}
 \title{Fit Autoregressive Models to Time Series by OLS}

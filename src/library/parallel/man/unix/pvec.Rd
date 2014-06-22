@@ -3,8 +3,6 @@
 % Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{pvec}
 \alias{pvec}
 \title{Parallelize a Vector Map Function using Forking}

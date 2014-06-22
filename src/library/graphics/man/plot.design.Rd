@@ -3,8 +3,6 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
-
 \name{plot.design}
 \alias{plot.design}
 \title{Plot Univariate Effects of a Design or Model}

@@ -3,8 +3,6 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
-
 \name{fisher.test}
 \alias{fisher.test}
 \title{Fisher's Exact Test for Count Data}

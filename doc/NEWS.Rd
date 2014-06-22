@@ -1,7 +1,5 @@
 % -*- coding: utf-8 -*-
-\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
 \name{NEWS}
 \title{R News}
@@ -104,6 +102,9 @@
       defaults to \code{FALSE} for speed (\code{dput()} and
       \code{dget()} are most often used for data objects where this can
       make \code{dget()} many times faster).
+      
+      \item Packages may now use a file of common macro definitions in their
+      help files, and may import definitions from other packages.
     }
   }
   
