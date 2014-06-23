@@ -98,7 +98,7 @@ merge(x, y, \dots)
   
   Currently long vectors are not accepted for inputs, which are thus
   restricted to less than 2^31 rows.  Prior to \R 3.2.0 that restriction
-  also applied to the result.
+  also applied to the result (and still does for 32-bit platforms).
 }
 
 \value{
