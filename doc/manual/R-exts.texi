@@ -3908,7 +3908,7 @@ package authors are often mistaken about that.
 @item
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g., segfaults) on some machines.
-See @ref{Using valgrind} for a tool which can be used to look for this.
+See @ref{Checking memory access} for tools which can be used to look for this.
 
 @item
 Many platforms will allow unsatisfied entry points in compiled code, but
@@ -3916,7 +3916,7 @@ will crash the application (here @R{}) if they are ever used.  Some
 (notably Windows) will not.  Looking at the output of
 
 @example
-nm -pg mypkg.so  # @r{or other extension such as @file{.sl}}
+nm -pg mypkg.so
 @end example
 
 @noindent
@@ -4034,10 +4034,10 @@ and suitable options might be
 @end example
 
 @noindent
-; see @uref{http://www.ghostscript.com/@/doc/@/9.07/@/Ps2pdf.htm} for
+; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which Ghostscript 9.06
-and later produced dramatically better reductions than 9.05 or earlier.
+and later produced much better reductions than 9.05 or earlier.
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
