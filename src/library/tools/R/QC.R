@@ -6348,9 +6348,14 @@ function(dir)
                           function(p) {
                               fp <- file.path(dir, p)
                               if(file_test("-f", fp)) {
+                                  lines <- readLines(fp, warn = FALSE)
                                   ## Should this use the package
                                   ## encoding?
-                                  c(p, readLines(fp, warn = FALSE))
+                                  pos <- grep("[^[:blank:]]", lines)
+                                  c(p, if(len <- length(pos)) {
+                                      lines[seq(from = pos[1L],
+                                                to = pos[len])]
+                                  })
                               } else NULL
                           }))
     }
