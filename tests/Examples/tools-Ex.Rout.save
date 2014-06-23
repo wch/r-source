@@ -645,36 +645,6 @@ NULL
 > 
 > ### ** Examples
 > 
-> f <- tempfile()
-> writeLines(paste0("\\newcommand{\\logo}{\\if{html}{\\figure{logo.jpg}}",
-+                   "\\if{latex}{\\figure{logo.jpg}{options: width=0.5in}}}"),
-+ 	    f)
-> m <- loadRdMacros(f)
-> ls(m)
-[1] "\\logo"
-> ls(parent.env(m))
- [1] "\\acronym"      "\\alias"        "\\arguments"    "\\author"      
- [5] "\\bold"         "\\cite"         "\\code"         "\\command"     
- [9] "\\concept"      "\\cr"           "\\deqn"         "\\describe"    
-[13] "\\description"  "\\details"      "\\dfn"          "\\docType"     
-[17] "\\dontrun"      "\\dontshow"     "\\donttest"     "\\dots"        
-[21] "\\dQuote"       "\\email"        "\\emph"         "\\enc"         
-[25] "\\encoding"     "\\enumerate"    "\\env"          "\\eqn"         
-[29] "\\examples"     "\\figure"       "\\file"         "\\format"      
-[33] "\\href"         "\\if"           "\\ifelse"       "\\item"        
-[37] "\\itemize"      "\\kbd"          "\\keyword"      "\\ldots"       
-[41] "\\link"         "\\linkS4class"  "\\method"       "\\name"        
-[45] "\\newcommand"   "\\note"         "\\option"       "\\out"         
-[49] "\\pkg"          "\\preformatted" "\\R"            "\\RdOpts"      
-[53] "\\Rdversion"    "\\references"   "\\renewcommand" "\\S3method"    
-[57] "\\S4method"     "\\samp"         "\\section"      "\\seealso"     
-[61] "\\Sexpr"        "\\source"       "\\special"      "\\sQuote"      
-[65] "\\strong"       "\\subsection"   "\\synopsis"     "\\tab"         
-[69] "\\tabular"      "\\testonly"     "\\title"        "\\url"         
-[73] "\\usage"        "\\value"        "\\var"          "\\verb"        
-[77] "#endif"         "#ifdef"         "#ifndef"       
-> ls(parent.env(parent.env(m)))
-character(0)
 > 
 > 
 > 

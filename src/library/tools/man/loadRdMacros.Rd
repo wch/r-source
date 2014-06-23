@@ -58,6 +58,7 @@ Duncan Murdoch
 \code{\link{parse_Rd}}
 }
 \examples{
+\donttest{
 f <- tempfile()
 writeLines(paste0("\\\\newcommand{\\\\logo}{\\\\if{html}{\\\\figure{logo.jpg}}",
                   "\\\\if{latex}{\\\\figure{logo.jpg}{options: width=0.5in}}}"),
@@ -66,6 +67,7 @@ m <- loadRdMacros(f)
 ls(m)
 ls(parent.env(m))
 ls(parent.env(parent.env(m)))
+}
 }
 \keyword{ utilities }
 \keyword{ documentation }
