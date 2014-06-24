@@ -23,13 +23,13 @@ function(topic, package = NULL, lib.loc = NULL,
          help_type = getOption("help_type"))
 {
     types <- c("text", "html", "pdf")
-    if(!missing(package))
+    if (!is.null(package))
         if(is.name(y <- substitute(package)))
             package <- as.character(y)
 
     ## If no topic was given ...
     if(missing(topic)) {
-        if(!missing(package)) {         # "Help" on package.
+        if(!is.null(package)) {	# "Help" on package.
             help_type <- if(!length(help_type)) "text"
             else match.arg(tolower(help_type), types)
             ## Carter Butts and others misuse 'help(package=)' in startup
@@ -71,6 +71,9 @@ function(topic, package = NULL, lib.loc = NULL,
 
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type), types)
+    
+    if (is.null(package))
+	package <- loadedNamespaces()
 
     paths <- index.search(topic,
                           find.package(package, lib.loc, verbose = verbose))
