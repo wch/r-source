@@ -104,7 +104,11 @@
       make \code{dget()} many times faster).
       
       \item Packages may now use a file of common macro definitions in their
-      help files, and may import definitions from other packages.
+      help files, and may import definitions from other packages.  
+      
+      \item A number of macros have been added to the new \file{share/Rd} 
+      directory for use in package overview help
+      pages, and \code{promptPackage()} now makes use of them. 
     }
   }
   

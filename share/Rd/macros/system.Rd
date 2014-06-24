@@ -23,3 +23,22 @@
 
 % To avoid a double space after a period in LaTeX output
 \newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
+% To get the package title at build time from the DESCRIPTION file
+\newcommand{\packageTitle}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_title("#1")}}
+
+% To get the package description at build time from the DESCRIPTION file
+\newcommand{\packageDescription}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_description("#1")}}
+
+% To get the package author at build time from the DESCRIPTION file
+\newcommand{\packageAuthor}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_author("#1")}}
+
+% To get the package maintainer at build time from the DESCRIPTION file
+\newcommand{\packageMaintainer}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer("#1")}}
+
+% To get a formatted copy of the whole DESCRIPTION file
+\newcommand{\packageDESCRIPTION}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_DESCRIPTION("#1")}}
+
+% To include various indices about an installed package
+
+\newcommand{\packageIndices}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices("#1")}}

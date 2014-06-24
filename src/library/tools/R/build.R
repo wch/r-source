@@ -191,6 +191,7 @@ get_exclude_patterns <- function()
 	    printLog(Log, "ERROR: package installation failed\n")
 	    do_exit(1)
 	}
+	Sys.setenv("R_BUILD_TEMPLIB" = libdir)
 	TRUE
     }
 

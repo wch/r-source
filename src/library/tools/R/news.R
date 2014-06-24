@@ -514,13 +514,6 @@ function(file, out = stdout(), codify = FALSE)
     }
 }
 
-Rd_expr_PR <-
-function(x)
-{
-    baseurl <- "https://bugs.R-project.org/bugzilla3/show_bug.cgi?id"
-    sprintf("\\href{%s=%s}{PR#%s}", baseurl, x, x)
-}
-
 .build_news_db_from_R_NEWS_Rd <-
 function(file = NULL)
 {
