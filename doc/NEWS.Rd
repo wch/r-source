@@ -225,8 +225,8 @@
       operator on data frames is now only given when
       \code{options("warnPartialMatchDollar")} is \code{TRUE}.
       
-      \item Package help requests like \code{package?foo} now default
-      to trying all packages, not just loaded ones.
+      \item Package help requests like \code{package?foo} now 
+      try the package \code{foo} whether loaded or not.
       
       \item General help requests now default to trying all loaded 
       packages, not just those on the search path.
