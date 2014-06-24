@@ -18,6 +18,9 @@ INSTFILES = \
 DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 
 ## R_LIBS_SITE has to be non-empty or it is ignored
+## Note that this does not set LC_COLLATE.  The collation of examples
+## is done in C order in massageExamples(), but we want to test the
+## orderings users use.
 R_EXE = LANGUAGE=en LC_TIME=C R_LIBS= R_LIBS_USER= R_LIBS_SITE='nothing' \
   $(top_builddir)/bin/R --slave --vanilla
 

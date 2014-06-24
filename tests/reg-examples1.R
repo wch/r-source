@@ -64,6 +64,7 @@ example(Rdutils)
 example(fileutils)
 ## results are location- and OS-specific
 example(parseLatex) # charset-specific
+example(loadRdMacros) # collation-specific
 
 ## part of example(buildVignettes) at one time
 gVigns <- pkgVignettes("grid")
