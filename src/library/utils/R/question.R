@@ -80,7 +80,8 @@ function(e1, e2)
 			return(.helpForCall(topicExpr, parent.frame(), FALSE))
 		    e2
 		}
-            h <- .tryHelp(topicName(type, topic), package = package)
+	    try.all.packages <- type == "package" || getOption("help.try.all.packages")
+            h <- .tryHelp(topicName(type, topic), package = package, try.all.packages = try.all.packages)
             if(is.null(h)) {
 		if(is.language(topicExpr))
 		    topicExpr <- deparse(topicExpr)
@@ -194,14 +195,14 @@ function(expr, envir, doEval = TRUE)
 }
 
 .tryHelp <-
-function(topic, package = NULL)
+function(topic, package = NULL, try.all.packages = getOption("help.try.all.packages"))
 {
     ## Try finding help.
     ## Return NULL (nothing) in case we found no help pages, or an
     ## error.
     ## (Earlier versions showed what they found via print(), or gave
     ## an error.)
-    h <- tryCatch(do.call("help", list(topic, package = package)),
+    h <- tryCatch(do.call("help", list(topic, package = package, try.all.packages = try.all.packages)),
                   error = identity)
     if(inherits(h, "error") || !length(h))
         h <- NULL
