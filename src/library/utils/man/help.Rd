@@ -28,8 +28,8 @@ help(topic, package = NULL, lib.loc = NULL,
    See \sQuote{Details} for what happens if this is omitted.
  }
  \item{package}{a name or character vector giving the packages to look
-   into for documentation, or \code{NULL}.  By default, all packages in
-   the search path are used.  To avoid a name being deparsed use e.g.
+   into for documentation, or \code{NULL}.  By default, all packages 
+   whose namespaces are loaded are used.  To avoid a name being deparsed use e.g.
    \code{(pkg_ref)} (see the examples).}
  \item{lib.loc}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
@@ -99,7 +99,7 @@ help(topic, package = NULL, lib.loc = NULL,
   \code{\link{getOption}("menu.graphics")} is true, the default.)
 
   Note that HTML help does not make use of \code{lib.loc}: it will
-  always look first in the attached packages and then along
+  always look first in the loaded packages and then along
   \code{.libPaths()}.
 }
 

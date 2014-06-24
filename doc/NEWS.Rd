@@ -227,6 +227,9 @@
       
       \item Package help requests like \code{package?foo} now default
       to trying all packages, not just loaded ones.
+      
+      \item General help requests now default to trying all loaded 
+      packages, not just those on the search path.
     }
   }
 
