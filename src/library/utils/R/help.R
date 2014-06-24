@@ -48,7 +48,7 @@ function(topic, package = NULL, lib.loc = NULL,
             } else return(library(help = package, lib.loc = lib.loc,
                                   character.only = TRUE))
         }
-        if(!missing(lib.loc))           # text "Help" on library.
+        if(!is.null(lib.loc))           # text "Help" on library.
             return(library(lib.loc = lib.loc))
         ## ultimate default is to give help on help()
         topic <- "help"; package <- "utils"; lib.loc <- .Library
@@ -77,7 +77,7 @@ function(topic, package = NULL, lib.loc = NULL,
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)
-       && try.all.packages && missing(package) && missing(lib.loc)) {
+       && try.all.packages && is.null(package) && is.null(lib.loc)) {
         ## Try all the remaining packages.
         for(lib in .libPaths()) {
             packages <- .packages(TRUE, lib)

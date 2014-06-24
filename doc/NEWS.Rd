@@ -224,6 +224,9 @@
       \item The warning when using partial matching with the \code{$}
       operator on data frames is now only given when
       \code{options("warnPartialMatchDollar")} is \code{TRUE}.
+      
+      \item Package help requests like \code{package?foo} now default
+      to trying all packages, not just loaded ones.
     }
   }
 
@@ -380,6 +383,9 @@
       e.g. \code{parse(FALSE)} attempted to read from \code{stdin}.
 
       Nor did \code{dump()} and \code{dput()}.
+      
+      \item The \code{"help.try.all.packages"} option was ignored when
+      the shortcut syntax for help was used, e.g. \code{?foo}.  
     }
   }
 }
