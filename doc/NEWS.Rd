@@ -389,6 +389,8 @@
       
       \item The \code{"help.try.all.packages"} option was ignored when
       the shortcut syntax for help was used, e.g. \code{?foo}.  
+      
+      \item A potential segfault in string allocation has been fixed.
     }
   }
 }
