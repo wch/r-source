@@ -383,6 +383,11 @@ isIncomplete(con)
   explicitly, e.g. by \code{writeChar("\ufeff", con, eos = NULL)} or
   \code{writeBin(as.raw(c(0xef, 0xbb, 0xff)), binary_con)}
 
+  Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
+  not portable, and not supported on all current \R platforms.
+  \code{"UTF-8"} is portable and \code{"macintosh"} is the official
+  (and most widely supported) name for \sQuote{Mac Roman}.
+
   Requesting a conversion that is not supported is an error, reported
   when the connection is opened.  Exactly what happens when the
   requested translation cannot be done for invalid input is in general
