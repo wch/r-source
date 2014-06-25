@@ -395,7 +395,10 @@
       
       \item Potential memory protection errors in \code{sort()} and 
       \code{D()} have been fixed. (Found by Radford Neal.)
-
+      
+      \item Fixed a lack of error checking in graphics event functions.
+      (Found by Radford Neal; a different patch used here than the
+      one in pqR.)
     }
   }
 }

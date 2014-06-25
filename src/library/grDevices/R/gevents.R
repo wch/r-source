@@ -21,14 +21,19 @@ setGraphicsEventHandlers <- function(which=dev.cur(),
     setGraphicsEventEnv(which, as.environment(list(...)))
 
 setGraphicsEventEnv <- function(which=dev.cur(), env) {
+    which <- as.integer(which)
+    stopifnot(length(which) == 1)
     result <- getGraphicsEventEnv(which)
     env$which <- which
     .External2(C_setGraphicsEventEnv, which, env)
     invisible(result)
 }
 
-getGraphicsEventEnv <- function(which=dev.cur())
+getGraphicsEventEnv <- function(which=dev.cur()) {
+    which <- as.integer(which)
+    stopifnot(length(which) == 1)
     .External2(C_getGraphicsEventEnv, which)
+}
 
 getGraphicsEvent <- function(prompt = "Waiting for input",
                  onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL,
