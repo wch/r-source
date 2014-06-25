@@ -247,6 +247,10 @@ and @code{UTF-16BE} prohibit it.  We have too often been reduced to
 looking at the file with the command-line utility @command{od} or a hex
 editor to work out its encoding.
 
+Note that @code{utf8} is not a valid encoding name (@code{UTF-8} is),
+and @code{macintosh} is the most portable name for what is sometimes
+called `Mac Roman' encoding. 
+
 @node Export to text files, XML, Imports, Introduction
 @section Export to text files
 @cindex Exporting to a text file
