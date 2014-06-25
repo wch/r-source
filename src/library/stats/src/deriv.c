@@ -456,28 +456,28 @@ static SEXP D(SEXP expr, SEXP var)
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   PP_S(SqrtSymbol,
-				PP_S(MinusSymbol, Constant(1.),
-				     PP_S(PowerSymbol,CADR(expr),Constant(2.))),
+				PP_S(MinusSymbol, PP(Constant(1.)),
+				     PP_S(PowerSymbol,CADR(expr),PP(Constant(2.)))),
 				R_MissingArg));
-	    UNPROTECT(4);
+	    UNPROTECT(6);
 	}
 	else if (CAR(expr) == AcosSymbol) {
 	    ans = simplify(MinusSymbol,
 			   PP_S(DivideSymbol,
 				PP(D(CADR(expr), var)),
 				PP_S(SqrtSymbol,
-				     PP_S(MinusSymbol,Constant(1.),
+				     PP_S(MinusSymbol,PP(Constant(1.)),
 					  PP_S(PowerSymbol,
-					       CADR(expr),Constant(2.))),
+					       CADR(expr),PP(Constant(2.)))),
 				     R_MissingArg)), R_MissingArg);
-	    UNPROTECT(5);
+	    UNPROTECT(7);
 	}
 	else if (CAR(expr) == AtanSymbol) {
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
-			   PP_S(PlusSymbol,Constant(1.),
-				PP_S(PowerSymbol, CADR(expr),Constant(2.))));
-	    UNPROTECT(3);
+			   PP_S(PlusSymbol,PP(Constant(1.)),
+				PP_S(PowerSymbol, CADR(expr),PP(Constant(2.)))));
+	    UNPROTECT(5);
 	}
 	else if (CAR(expr) == LGammaSymbol) {
 	    ans = simplify(TimesSymbol,
@@ -502,31 +502,31 @@ static SEXP D(SEXP expr, SEXP var)
 	else if (CAR(expr) == TriGammaSymbol) {
 	    ans = simplify(TimesSymbol,
 			   PP(D(CADR(expr), var)),
-			   PP_S(PsiSymbol, CADR(expr), ScalarInteger(2)));
-	    UNPROTECT(2);
+			   PP_S(PsiSymbol, CADR(expr), PP(ScalarInteger(2))));
+	    UNPROTECT(3);
 	}
 	else if (CAR(expr) == PsiSymbol) {
 	    if (length(expr) == 2){
 		ans = simplify(TimesSymbol,
 			       PP(D(CADR(expr), var)),
-			       PP_S(PsiSymbol, CADR(expr), ScalarInteger(1)));
-		UNPROTECT(2);
+			       PP_S(PsiSymbol, CADR(expr), PP(ScalarInteger(1))));
+		UNPROTECT(3);
 	    } else if (TYPEOF(CADDR(expr)) == INTSXP ||
 		       TYPEOF(CADDR(expr)) == REALSXP) {
 		ans = simplify(TimesSymbol,
 			       PP(D(CADR(expr), var)),
 			       PP_S(PsiSymbol,
 				    CADR(expr),
-				    ScalarInteger(asInteger(CADDR(expr))+1)));
-		UNPROTECT(2);
+				    PP(ScalarInteger(asInteger(CADDR(expr))+1))));
+		UNPROTECT(3);
 	    } else {
 		ans = simplify(TimesSymbol,
 			       PP(D(CADR(expr), var)),
 			       PP_S(PsiSymbol,
 				    CADR(expr),
 				    simplify(PlusSymbol, CADDR(expr),
-					     ScalarInteger(1))));
-		UNPROTECT(2);
+					     PP(ScalarInteger(1)))));
+		UNPROTECT(3);
 	    }
 	}
 

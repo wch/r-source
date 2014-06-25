@@ -393,8 +393,9 @@
       \item A potential segfault in string allocation has been fixed.
       (Found by Radford Neal.)
       
-      \item A potential memory protection error in \code{sort()} has
-      been fixed. (Found by Radford Neal.)      
+      \item Potential memory protection errors in \code{sort()} and 
+      \code{D()} have been fixed. (Found by Radford Neal.)
+
     }
   }
 }
