@@ -23,7 +23,7 @@ function(topic, package = NULL, lib.loc = NULL,
          help_type = getOption("help_type"))
 {
     types <- c("text", "html", "pdf")
-    if (!is.null(package))
+    if(!missing(package)) # Don't check for NULL; may be nonstandard eval
         if(is.name(y <- substitute(package)))
             package <- as.character(y)
 
@@ -72,11 +72,9 @@ function(topic, package = NULL, lib.loc = NULL,
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type), types)
     
-    if (is.null(package))
-	package <- loadedNamespaces()
-
     paths <- index.search(topic,
-                          find.package(package, lib.loc, verbose = verbose))
+                          find.package(if (is.null(package)) loadedNamespaces() else package, 
+			               lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)
