@@ -150,7 +150,7 @@ as.Date(dates, "\%m/\%d/\%y")
 as.Date(32768, origin = "1900-01-01")
 ## Excel is said to use 1900-01-01 as day 1 (Windows default) or
 ## 1904-01-01 as day 0 (Mac default), but this is complicated by Excel
-## treating 1900 as a leap year.
+## incorrectly treating 1900 as a leap year.
 ## So for dates (post-1901) from Windows Excel
 as.Date(35981, origin = "1899-12-30") # 1998-07-05
 ## and Mac Excel
@@ -158,8 +158,9 @@ as.Date(34519, origin = "1904-01-01") # 1998-07-05
 ## (these values come from http://support.microsoft.com/kb/214330)
 
 ## Experiment shows that Matlab's origin is 719529 days before ours,
+## (it takes the non-existent 0000-01-01 as day 1)
 ## so Matlab day 734373 can be imported as
-as.Date(734373, origin = "1970-01-01") - 719529
+as.Date(734373, origin = "1970-01-01") - 719529 # 2010-08-23
 ## (value from http://www.mathworks.com/help/techdoc/matlab_prog/bspgcx2-1.html)
 
 ## Time zone effect

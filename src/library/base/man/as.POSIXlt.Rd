@@ -172,6 +172,10 @@ op <- options(digits.secs = 3)
 as.POSIXct((z+0.1)/1000, origin = "1960-01-01")
 options(op)
 
+## Matlab 'serial day number' (days and fractional days)
+z <- 7.343736909722223e5 # 2010-08-23 16:35:00
+as.POSIXct((z - 719529)*86400, origin = "1970-01-01", tz = "UTC")
+
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
 }
 \donttest{## These may not be correct names on your system
