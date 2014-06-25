@@ -391,6 +391,10 @@
       the shortcut syntax for help was used, e.g. \code{?foo}.  
       
       \item A potential segfault in string allocation has been fixed.
+      (Found by Radford Neal.)
+      
+      \item A potential memory protection error in \code{sort()} has
+      been fixed. (Found by Radford Neal.)      
     }
   }
 }
