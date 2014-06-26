@@ -83,6 +83,8 @@ capabilities(what = NULL)
 #endif
       \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
       and \code{\link{tiff}} devices?}
+    \item{ICU}{is ICU used for collation?  See \link{Comparison} and
+      \code{\link{icuSetCollate}}.},
 }
 \seealso{\code{\link{.Platform}}}
 

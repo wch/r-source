@@ -109,6 +109,8 @@
       \item A number of macros have been added to the new \file{share/Rd} 
       directory for use in package overview help
       pages, and \code{promptPackage()} now makes use of them. 
+      
+      \item \code{capabilities()} now reports if ICU is used for collation.
     }
   }
   

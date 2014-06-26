@@ -1970,8 +1970,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    PROTECT(ans = allocVector(LGLSXP, 15));
-    PROTECT(ansnames = allocVector(STRSXP, 15));
+    PROTECT(ans = allocVector(LGLSXP, 16));
+    PROTECT(ansnames = allocVector(STRSXP, 16));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -2109,6 +2109,13 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 	     R_HomeDir(), R_ARCH);
     LOGICAL(ans)[i++] = stat(path, &sb) == 0;
 }
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("ICU"));
+#ifdef USE_ICU
+    LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
