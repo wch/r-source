@@ -133,3 +133,13 @@ libtiff: the Makefiles and configuration headers used are in the
 src/gnuwin32/bitmap direcctory.  The exact sources used for these
 libraries are available on request to R-windows@r-project.org (you
 will need to specify which binary installer version).
+
+A binay build may contain compiled sources from cairographics,
+distributed under LGPL 2.1 (our choice) or MPL 1.1.  The binary
+distribution used is that at http://www.rforge.net/Cairo/files/ .
+
+A binary build may contain compiled components from ICU, whose license
+can be viewed at
+http://source.icu-project.org/repos/icu/icu/trunk/license.html: the
+sources and binary libraries used are available at
+http://www.stats.ox.ac.uk/pub/Rtools/ .
