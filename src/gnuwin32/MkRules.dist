@@ -64,10 +64,11 @@ WIN = 32
 ### END more detailed options
 
 
-# set to use ICU (experimental)
+# set to use ICU
 # USE_ICU=YES
 # path to parent of ICU headers
-ICU_PATH=/sources/icu
+ICU_PATH=/path/to/ICU
+ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
 # optional overrides for making bitmapdll: names of source directories
 # JPEGDIR = jpeg-9
@@ -92,6 +93,7 @@ MIKTEX = TRUE
 MAKEINFO = makeinfo
 # for texinfo >= 5.0.  Might also need -I/path/to/modules
 # MAKEINFO = /path/to/perl /path/to/texi2any
+# or perhaps something like
 
 # additional optimization flags (use -mtune=native for a private build)
 EOPTS = -mtune=core2

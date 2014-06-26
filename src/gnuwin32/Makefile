@@ -67,7 +67,7 @@ endif
 
 R-DLLFLAGS=-mwindows
 ifdef USE_ICU
-LIBEXTRAS+= -licuin38 -licuuc38
+LIBEXTRAS+= -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
 endif
 
 R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
