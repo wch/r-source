@@ -63,7 +63,7 @@ icuSetCollate(...)
 }
 \note{
   ICU is used by default wherever it is available: this include OS X (as
-  from 10.4) and many Linux installations.
+  from 10.4) and many Linux installations.  It is optional on Windows.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}
