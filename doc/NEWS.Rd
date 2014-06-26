@@ -243,19 +243,22 @@
       \item There is a new target \command{make uninstall-libR} to
       remove an installed shared/static \file{libR}.
 
-       \command{make install-libR} now works if a sub-architecture is
-       used, although the user will need to specify \code{libdir}
-       differently for different sub-architectures.
+      \command{make install-libR} now works if a sub-architecture is
+      used, although the user will need to specify \code{libdir}
+      differently for different sub-architectures.
 
-       \item There is more extensive advice on which LaTeX packages are
-       required to install \R or to make package manuals (as done by
-       \command{R CMD check}) in the \sQuote{Writing R Extensions}
-       manual.
+      \item There is more extensive advice on which LaTeX packages are
+      required to install \R or to make package manuals (as done by
+      \command{R CMD check}) in the \sQuote{Writing R Extensions}
+      manual.
 
-       \item Compilers were handling the visibility control in
-       \file{src/extra/xz} inconsistently, so it has been simplified.
-       (\PR{15327})
-     }
+      \item Compilers/linkers were handling the visibility controls in
+      \file{src/extra/xz} inconsistently (and apparently in some cases
+      incorrectly), so it has been simplified.  (\PR{15327})
+      
+      \item (Windows)  There is updated support from the use of ICU for
+      collation: see the \sQuote{R Installation and Administration Manual}.
+    }
   }
 
   \subsection{BUG FIXES}{

@@ -65,9 +65,9 @@ WIN = 32
 
 
 # set to use ICU
-# USE_ICU=YES
+# USE_ICU = YES
 # path to parent of ICU headers
-ICU_PATH=/path/to/ICU
+ICU_PATH = /path/to/ICU
 ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
 # optional overrides for making bitmapdll: names of source directories

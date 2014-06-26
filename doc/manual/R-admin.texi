@@ -1268,6 +1268,33 @@ the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
 
+@menu
+* Using ICU for collation::     
+@end menu
+
+@node Using ICU for collation,  , Building the cairo devices files, Building the cairo devices files
+@subsubsection Using ICU for collation
+
+It is possible (and even recommended) to build @R{} to use ICU
+(International Components for Unicode,
+@uref{http://site.icu-project.org/}) for collation, as is commonly done
+on Unix-alikes.
+
+Two settings are needed in @file{MkRules.local}, 
+@example
+# set to use ICU
+# USE_ICU = YES
+# path to parent of ICU headers
+ICU_PATH = /path/to/ICU
+@end example
+
+@noindent
+The first should be uncommented and the second set to the top-level
+directory of a suitably packaged binary build of ICU, for example that
+at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
+Depending on the build, it may be necessary to edit the macro
+@code{ICU_LIBS}.
+
 
 @node Checking the build, Building the manuals, Building the cairo devices files, Building from source
 @subsection Checking the build
