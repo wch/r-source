@@ -146,11 +146,10 @@ known to run on Windows 2000 was 2.12.2 and the last version supporting
 95/98/ME/NT4 was 2.6.1.
 
 @c 2000 went end-of-life 2010-07-13
-@c XP SP3 goes end of life 2014-04-08
+@c XP SP3 went end of life 2014-04-08
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
-32-bit XP SP3.
+mainly 64-bit Windows 7 and Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A installation takes
@@ -277,12 +276,11 @@ without creating a shortcut starting in a writable folder.
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
-Normally you can do this from the @samp{Add/Remove Programs} (XP) or
-@samp{Programs and Features} group in the Control Panel.  If it does not
-appear there, run @file{unins000.exe} in the top-level installation
-directory.  On recent versions of Windows you may well be asked to
-confirm that you wish to run a program from an `unknown' or
-`unidentified' publisher.
+Normally you can do this from the @samp{Programs and Features} group in the
+Control Panel.  If it does not appear there, run @file{unins000.exe} in
+the top-level installation directory.  On recent versions of Windows you
+may well be asked to confirm that you wish to run a program from an
+`unknown' or `unidentified' publisher.
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -421,12 +419,10 @@ The home directory is set as follows: If environment variable
 variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
-(typically @file{C:\Documents and Settings\username\My Documents} on
-Windows XP and @file{C:\Users\username\Documents} nowadays).  If that
-fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
-are set (and they normally are), the value is
-@file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
-working directory is used.
+(typically @file{C:\Users\username\Documents}).  If that fails, if both
+environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are set (and
+they normally are), the value is @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If
+all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")} or
 @code{normalizePath("~")}, @samp{~} being Unix notation for the home directory.
@@ -463,9 +459,7 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: under Windows XP/Server 2003 you can use `System' in
-the control panel or the properties of `My Computer' (under the
-`Advanced' tab).  Under recent versions of Windows, go to `User
+is system specific: under recent versions of Windows, go to `User
 Accounts' in the Control Panel, and select your account and then `Change
 my environment variables'.
 @end enumerate
@@ -797,8 +791,7 @@ layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
 some keyboards the uses of AltGr are at
 @url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}:
 you can explore those for your keyboard via the `On-Screen Keyboard'
-(under Accessories, Accessibility on XP, Accessories, Ease of access on
-Windows 7).
+(under Ease of access on Windows 7).
 
 On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad (if you have
@@ -892,12 +885,10 @@ c:\Program Files\R\R-3.0.0\bin\x64
 for 64-bit @command{Rcmd.exe}, replacing @code{x64} by @code{i386} for
 32-bit.
 
-How you set the path depends on your OS version.  On Windows XP/Server
-2003 you can use `System' in the control panel or the properties of `My
-Computer' (under the `Advanced' tab).  Under more recent versions, go to
-`User Accounts' in the Control Panel, and select your account and then
-`Change my environment variables'.  (System policies can prevent end
-users making changes.)
+How you set the path depends on your OS version.  Under recent versions,
+go to `User Accounts' in the Control Panel, and select your account and
+then `Change my environment variables'.  (System policies can prevent
+end users making changes.)
 
 An alternative is to set the @env{PATH} in the shell you are running
 (@command{Rcmd.exe} is  a command-line program).  For those using the
@@ -1002,11 +993,7 @@ sense.)  You can find suitable locale names from
 @uref{http://msdn.microsoft.com/@/library/@/default.asp?url=/@/library/@/en-us/@/vccore98/@/html/@/_crt_language_and_country_strings.asp}:
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
-GB2312).  Note that this can be rather tricky: for example, on
-International versions of Windows XP there are several places to select
-the language under the `Regional and Language Options' part of the
-control panel, and the appropriate language has to be set under
-@emph{both} the `Regional Options' and `Advanced' tabs.
+GB2312).
 
 When using @command{Rterm} the window in which it is run has to be set
 up to use a suitable font (e.g. @code{Lucida Console} or
@@ -1068,13 +1055,9 @@ to altered.
 
 In most cases they actually are, but by Windows.  Setting the locale or
 the @code{LANGUAGE} environment variable does not change the Windows
-setting of its `UI language'.  Under (international) Windows XP there
-are three tabs on the @emph{Regional and Language Options} applet in the
-Control Panel.  The first tab controls the locale, the second the UI and
-the third the fonts used for `non-Unicode' programs (but apparently also
-for Unicode ones in many cases): see Q3.3.  Vista and later talk about
-the 'UI language' and the 'system locale' for setting the language used
-for `non-Unicode' programs (on the 'Administrative' tab in Windows 7).
+setting of its `UI language'.  Vista and later talk about the 'UI
+language' and the 'system locale' for setting the language used for
+`non-Unicode' programs (on the 'Administrative' tab in Windows 7).
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
@@ -1681,13 +1664,10 @@ Fast BLAS (Basic Linear Algebra Subprograms,
 speed up numerical linear algebra.  There is support in the R sources
 for the `tuned' BLAS called ATLAS
 (@uref{http://math-atlas.sourceforge.net}).  The savings can be
-appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix @code{svd} took
-16.2 sec with the standard BLAS and 7.8 sec with ATLAS.  Because ATLAS
-is tuned to a particular chip we can't use it generally: the optimal
-routines for a P4 or an Athlon XP are quite different and neither will
-run at all on a PII.  However, linear algebra on large matrices is not
-often an important part of R computations, and more typical calculations
-on small matrices may run slower.
+appreciable but because ATLAS is tuned to a particular chip we can't use
+it generally.  However, linear algebra on large matrices is not often an
+important part of R computations, and more typical calculations on small
+matrices may run slower.
 
 BLAS support is supplied by the single DLL
 @file{R_HOME\bin\x64\Rblas.dll}, and you can add a fast BLAS just by
