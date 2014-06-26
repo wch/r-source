@@ -64,7 +64,7 @@ sysutils-CPPFLAGS=-I../gnuwin32
 util-CPPFLAGS=-DLZMA_API_STATIC -I../extra/xz/api
 
 ifdef USE_ICU
-platform-CPPFLAGS = -DUSE_ICU
+platform-CPPFLAGS += -DUSE_ICU
 util-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
 endif
 
