@@ -158,7 +158,7 @@
       \item For consistency with \code{[dpq]lnorm()},
       \code{rlnorm(sdlog = 0)} is now an error and so returns \code{NaN}.
       
-      \item Fixed an obscure bug in pairlist subassignment, reported by 
+      \item Fixed two obscure bugs in pairlist subassignment, reported by 
       Radford Neal as part of pqR issue 16.
     }
   }

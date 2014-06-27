@@ -403,11 +403,18 @@ stopifnot(.Last.value == 8.5)
 ## was 272 with a garbled message in R 3.0.0 - 3.1.0.
 
 
-## Bug reported by Radford Neal
+## Bugs reported by Radford Neal
 x <- pairlist(list(1,2))
 x[[c(1,2)]] <- NULL   # wrongly gave an error, referring to misuse
                       # of the internal SET_VECTOR_ELT procedure
 stopifnot(identical(x, pairlist(list(1))))
-##
+
+a <- pairlist(10,20,30,40,50,60)
+dim(a) <- c(2,3)
+dimnames(a) <- list(c("a","b"),c("x","y","z"))
+# print(a)              # doesn't print names, not fixed
+a[["a","x"]] <- 0   
+stopifnot(a[["a","x"]] == 0)          
+## First gave a spurious error, second caused a seg.fault
 
 proc.time()
