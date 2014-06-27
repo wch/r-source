@@ -402,4 +402,12 @@ stopifnot(identical(ans2, myFormula))
 stopifnot(.Last.value == 8.5)
 ## was 272 with a garbled message in R 3.0.0 - 3.1.0.
 
+
+## Bug reported by Radford Neal
+x <- pairlist(list(1,2))
+x[[c(1,2)]] <- NULL   # wrongly gave an error, referring to misuse
+                      # of the internal SET_VECTOR_ELT procedure
+stopifnot(identical(x, pairlist(list(1))))
+##
+
 proc.time()
