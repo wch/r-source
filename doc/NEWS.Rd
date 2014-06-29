@@ -235,6 +235,10 @@
       
       \item General help requests now default to trying all loaded 
       packages, not just those on the search path.
+      
+      \item Added a new function \code{promptImport}, to generate
+      a help page for a function that was imported from another package
+      (and presumably re-exported, or help would not be needed).
     }
   }
 

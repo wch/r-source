@@ -46,6 +46,10 @@ package.skeleton(name = "anRpackage", list,
   Stubs of help files are generated for functions, data objects, and
   S4 classes and methods, using the \code{\link{prompt}},
   \code{\link{promptClass}},  and \code{\link{promptMethods}} functions.
+  If an object from another package is intended to be imported and
+  re-exported without changes, the \code{\link{promptImport}} function
+  should be used after \code{package.skeleton}
+  to generate a simple help file linking to the original one.
 
   The package sources are placed in subdirectory \code{name} of
   \code{path}.  If \code{code_files} is supplied, these files are
