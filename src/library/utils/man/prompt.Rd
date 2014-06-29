@@ -8,6 +8,7 @@
 \alias{prompt}
 \alias{prompt.default}
 \alias{prompt.data.frame}
+\alias{promptImport}
 \description{
   Facilitate the constructing of files documenting \R objects.
 }
@@ -18,6 +19,9 @@ prompt(object, filename = NULL, name = NULL, \dots)
        force.function = FALSE, \dots)
 
 \method{prompt}{data.frame}(object, filename = NULL, name = NULL, \dots)
+
+promptImport(object, filename = NULL, name = NULL, 
+	importedFrom = NULL, importPage = name, ...)
 }
 \arguments{
   \item{object}{an \R object, typically a function for the default
@@ -30,6 +34,11 @@ prompt(object, filename = NULL, name = NULL, \dots)
   \item{force.function}{a logical.  If \code{TRUE}, treat \code{object}
     as function in any case.}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{importedFrom}{a character string naming the package from
+    which \code{object} was imported.  Defaults to the environment
+    of \code{object} if \code{object} is a function.}
+  \item{importPage}{a character string naming the help page
+    in the package from which \code{object} was imported.}
 }
 \value{
   If \code{filename} is \code{NA}, a list-style representation of the
@@ -52,6 +61,15 @@ prompt(object, filename = NULL, name = NULL, \dots)
 
   When \code{prompt} is used in \code{\link{for}} loops or scripts, the
   explicit \code{name} specification will be useful.
+  
+  The \code{importPage} argument for \code{promptImport} needs to give 
+  the base of the name of the
+  help file of the original help page.  For example,
+  the \code{\link{approx}} function is documented in \file{approxfun.Rd}
+  in the \pkg{stats} package, so if it were imported and re-exported
+  it should have \code{importPage = "approxfun"}.  
+  Objects that are imported from other packages are not
+  normally documented unless re-exported. 
 }
 \note{
   The documentation file produced by \code{prompt.data.frame} does not

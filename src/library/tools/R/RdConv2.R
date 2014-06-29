@@ -490,7 +490,7 @@ prepare2_Rd <- function(Rd, Rdfile)
             ## Some people have \docType{ package } and similar.
             docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
             if (! docTypes[i] %in%
-                c("data", "package", "methods", "class"))
+                c("data", "package", "methods", "class", "import"))
                 warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
                        " is unrecognized")
          }
