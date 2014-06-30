@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-8 The R Core Team
+ *  Copyright (C) 2000-2014 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,8 +33,11 @@ double dlnorm(double x, double meanlog, double sdlog, int give_log)
     if (ISNAN(x) || ISNAN(meanlog) || ISNAN(sdlog))
 	return x + meanlog + sdlog;
 #endif
-    if(sdlog <= 0) ML_ERR_return_NAN;
-
+    if(sdlog <= 0) {
+	if(sdlog < 0) ML_ERR_return_NAN;
+	// sdlog == 0 :
+	return (x == meanlog) ? ML_POSINF : R_D__0;
+    }
     if(x <= 0) return R_D__0;
 
     y = (log(x) - meanlog) / sdlog;

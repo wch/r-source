@@ -13,7 +13,7 @@
 \description{
   Density, distribution function, quantile function and random
   generation for the log normal distribution whose logarithm has mean
-  equal to \code{meanlog} and standard  deviation equal to \code{sdlog}.
+  equal to \code{meanlog} and standard deviation equal to \code{sdlog}.
 }
 \usage{
 dlnorm(x, meanlog = 0, sdlog = 1, log = FALSE)
@@ -37,20 +37,21 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   \code{plnorm} gives the distribution function,
   \code{qlnorm} gives the quantile function, and
   \code{rlnorm} generates random deviates.
-  
+
   The length of the result is determined by \code{n} for
   \code{rlnorm}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{n} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
-
-  \code{sdlog <= 0} is an error and returns \code{NaN}.
 }
 \source{
   \code{dlnorm} is calculated from the definition (in \sQuote{Details}).
   \code{[pqr]lnorm} are based on the relationship to the normal.
+
+  Consequently, they model a single point mass at \code{exp(meanlog)}
+  for the boundary case \code{sdlog = 0}.
 }
 \details{
   The log normal distribution has density

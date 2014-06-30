@@ -89,7 +89,7 @@
 
       (In part, wish of \PR{15819}.)
 
-      \item \code{printNum()} (and hence \code{format()} and
+      \item \code{printNum()} and hence \code{format()} and
       \code{formatC()} give a warning if \code{big.mark} and
       \code{decimal.mark} are set to the same value (period and comma
       are not uncommonly used for each, and this is a check that
@@ -111,6 +111,10 @@
       pages, and \code{promptPackage()} now makes use of them. 
       
       \item \code{capabilities()} now reports if ICU is used for collation.
+
+      % TODO: Port to 3.1.1 patched
+      \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
+      \code{[dp]lnorm(sdlog=0)} also model a point mass at \code{exp(mulog)}.
     }
   }
   
@@ -155,9 +159,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item For consistency with \code{[dpq]lnorm()},
-      \code{rlnorm(sdlog = 0)} is now an error and so returns \code{NaN}.
-      
       \item Fixed two obscure bugs in pairlist subassignment, reported by 
       Radford Neal as part of pqR issue 16.
     }
