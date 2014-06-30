@@ -844,7 +844,7 @@ loadRdMacros <- function(file, macros = TRUE) {
     # New macros are loaded into a clean environment
     if (is.logical(macros) && !macros)
     	stop("'macros' must be TRUE or must specify existing macros")
-    Rd <- parse_Rd(file, fragment = TRUE, macros = macros, warningCall = FALSE)
+    Rd <- parse_Rd(file, fragment = TRUE, macros = macros, warningCalls = FALSE)
     for(entry in Rd) {
         bad <- TRUE
 	if (is.list(entry)) break
