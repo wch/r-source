@@ -36,7 +36,7 @@ double dlnorm(double x, double meanlog, double sdlog, int give_log)
     if(sdlog <= 0) {
 	if(sdlog < 0) ML_ERR_return_NAN;
 	// sdlog == 0 :
-	return (x == meanlog) ? ML_POSINF : R_D__0;
+	return (log(x) == meanlog) ? ML_POSINF : R_D__0;
     }
     if(x <= 0) return R_D__0;
 
