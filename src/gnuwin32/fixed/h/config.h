@@ -110,11 +110,11 @@
 /* Define to 1 if you have the `cexp' function. */
 #define HAVE_CEXP 1
 
-/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+/* Define to 1 if you have the OS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. (For intl) */
 /* #undef HAVE_CFLOCALECOPYCURRENT */
 
-/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+/* Define to 1 if you have the OS X function CFPreferencesCopyAppValue in
    the CoreFoundation framework. (For intl) */
 /* #undef HAVE_CFPREFERENCESCOPYAPPVALUE */
 
