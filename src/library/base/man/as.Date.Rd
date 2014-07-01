@@ -161,7 +161,8 @@ as.Date(34519, origin = "1904-01-01") # 1998-07-05
 ## (it takes the non-existent 0000-01-01 as day 1)
 ## so Matlab day 734373 can be imported as
 as.Date(734373, origin = "1970-01-01") - 719529 # 2010-08-23
-## (value from http://www.mathworks.com/help/techdoc/matlab_prog/bspgcx2-1.html)
+## (value from 
+## http://www.mathworks.de/de/help/matlab/matlab_prog/represent-date-and-times-in-MATLAB.html)
 
 ## Time zone effect
 z <- ISOdate(2010, 04, 13, c(0,12)) # midnight and midday UTC
