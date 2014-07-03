@@ -5,7 +5,7 @@
  *  Copyright 1999-2001 Douglas M. Bates
  *                      Saikat DebRoy
  *
- *  Copyright 2005--2013  The R Core Team
+ *  Copyright 2005--2014  The R Core Team
  *  Copyright 2006	  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
