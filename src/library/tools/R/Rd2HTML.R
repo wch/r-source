@@ -518,7 +518,18 @@ Rd2HTML <-
 		       writeContent(block[[length(block)]], tag)
 		       of1('"')
 		   }
-                   of1(' />')
+                   ## <FIXME>
+                   ## We currently generate HTML 4.01 transitional.
+                   ## When using
+                   ##   <img ...... />
+                   ## W3C Markup Validator warns
+                   ##   NET-enabling start-tag requires SHORTTAG YES
+                   ## Hence use
+                   ##   <img ......  >
+                   ## for now, and change if/when moving to XHTML.
+                   of1(' >')
+                   ##   of1(' />')
+                   ## </FIXME>
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
