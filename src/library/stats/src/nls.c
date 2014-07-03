@@ -318,9 +318,9 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 	    error(_("variable '%s' is integer, not numeric"), name);
 	if(!isReal(temp))
 	    error(_("variable '%s' is not numeric"), name);
-	if (NAMED(temp) > 1) /* We'll be modifying the variable, so need to make sure it's unique PR#15849 */
+	if (MAYBE_SHARED(temp)) /* We'll be modifying the variable, so need to make sure it's unique PR#15849 */
 	    defineVar(install(name), temp = duplicate(temp), rho);
-	if (NAMED(temp) < 2) SET_NAMED(temp, 2);
+	MARK_NOT_MUTABLE(temp);
 	SET_VECTOR_ELT(pars, i, temp);
 	lengthTheta += LENGTH(VECTOR_ELT(pars, i));
     }
