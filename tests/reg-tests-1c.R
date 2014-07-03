@@ -417,4 +417,13 @@ a[["a","x"]] <- 0
 stopifnot(a[["a","x"]] == 0)          
 ## First gave a spurious error, second caused a seg.fault
 
+## numericDeriv failed to duplicate variables in
+## the expression before modifying them.  PR#15849
+x <- 10; y <- 10
+d1 <- numericDeriv(quote(x+y),c("x","y")) 
+x <- y <- 10
+d2 <- numericDeriv(quote(x+y),c("x","y"))
+stopifnot(identical(d1,d2))
+## The second gave the wrong answer
+
 proc.time()
