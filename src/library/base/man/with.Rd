@@ -12,7 +12,7 @@
 \title{Evaluate an Expression in a Data Environment}
 \description{
   Evaluate an \R expression in an environment constructed from data,
-  possibly modifying the original data.
+  possibly modifying (a copy of) the original data.
 }
 \usage{
 with(data, expr, \dots)
@@ -38,10 +38,10 @@ within(data, expr, \dots)
 
   \code{within} is similar, except that it examines the environment
   after the evaluation of \code{expr} and makes the corresponding
-  modifications to \code{data} (this may fail in the data frame case if
-  objects are created which cannot be stored in a data frame), and
-  returns it.  \code{within} can be used as an alternative to
-  \code{transform}.
+  modifications to a copy of \code{data} (this may fail in the data
+  frame case if objects are created which cannot be stored in a data
+  frame), and returns it.  \code{within} can be used as an alternative
+  to \code{transform}.
 }
 \value{
   For \code{with}, the value of the evaluated \code{expr}.  For
@@ -64,11 +64,11 @@ with(anorexia, {
 }
 
 
-
 aq <- within(airquality, {     # Notice that multiple vars can be changed
     lOzone <- log(Ozone)
     Month <- factor(month.abb[Month])
     cTemp <- round((Temp - 32) * 5/9, 1) # From Fahrenheit to Celsius
+    S.cT <- Solar.R / cTemp  # using the newly created variable
     rm(Day, Temp)
 })
 head(aq)
