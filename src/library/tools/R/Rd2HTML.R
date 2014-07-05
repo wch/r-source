@@ -581,7 +581,7 @@ Rd2HTML <-
                     stopRd(table, Rdfile,
                            "Only ", length(format),
                            " columns allowed in this table")
-            	of0('<td align="', format[col], '">')
+            	of0('<td style="text-align: ', format[col], ';">')
             	newcol <- FALSE
             }
             switch(tags[i],
