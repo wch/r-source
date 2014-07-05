@@ -12,31 +12,32 @@ function(title="R", logo=TRUE,
          headerTitle = paste("R:", title),
          outputEncoding = "UTF-8")
 {
-    result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
-	paste0('<html><head><title>', headerTitle, '</title>'),
+    result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+        '<html xmlns="http://www.w3.org/1999/xhtml">',        
+	paste0('<head><title>', headerTitle, '</title>'),
 	paste0('<meta http-equiv="Content-Type" content="text/html; charset=',
-	       mime_canonical_encoding(outputEncoding), '">'),
-	paste0('<link rel="stylesheet" type="text/css" href="', css, '">'),
+	       mime_canonical_encoding(outputEncoding), '" />'),
+	paste0('<link rel="stylesheet" type="text/css" href="', css, '" />'),
 	'</head><body>',
 	paste('<h1>', title))
     if (logo)
     	result <- c(result,
                     paste0('<img class="toplogo" src="',
                            file.path(Rhome, 'doc/html/logo.jpg'),
-                           '" alt="[R logo]">'))
-    result <- c(result, '</h1>', '<hr>')
+                           '" alt="[R logo]" />'))
+    result <- c(result, '</h1>', '<hr/>')
     if (!is.null(up) || !is.null(top)) {
-    	result <- c(result, '<div align="center">')
+    	result <- c(result, '<div style="text-align: center;">')
     	if (!is.null(up))
     	    result <- c(result,
     	        paste0('<a href="', up, '"><img class="arrow" src="',
                        file.path(Rhome, 'doc/html/left.jpg'),
-                       '" alt="[Up]"></a>'))
+                       '" alt="[Up]" /></a>'))
     	if (!is.null(top))
     	    result <- c(result,
     	    	paste0('<a href="', top, '"><img class="arrow" src="',
     	    	      file.path(Rhome, 'doc/html/up.jpg'),
-    	    	      '" alt="[Top]"></a>'))
+    	    	      '" alt="[Top]" /></a>'))
     	result <- c(result, '</div>')
     }
     result
@@ -67,9 +68,10 @@ function(x, ...)
 			   htmlify(pkg), '&rsquo;</h2>'),
 		    '<table cols="2" width="100%">',
 		    paste0('<tr>\n',
-			   ' <td align="left" valign="top" width="10%">\n',
+			   ' <td style="text-align: left; vertical-align: top; width: 10%;">\n',
 			   htmlify(out[[pkg]][, "Item"]),
-			   '\n </td>\n <td align="left" valign="top" width="90%">\n',
+			   '\n </td>\n',
+                           ' <td style="text-align: left" vertical-align: top; width: 90%;">\n',
 			   htmlify(out[[pkg]][, "Title"]),
 			   '\n </td>\n</tr>\n'),
 		    '</table>')
@@ -152,12 +154,12 @@ function(x, ...)
 
 makeVignetteTable <- function(vignettes, depth=2) {
     out <- c('<table width="100%">',
-	      '<col width="22%">',
-	      '<col width="2%">',
-	      '<col width="50%">',
-	      '<col width="8%">',
-	      '<col width="8%">',
-	      '<col width="8%">')
+	      '<col style="width: 22%;" />',
+	      '<col style="width:  2%;" />',
+	      '<col style="width: 50%;" />',
+	      '<col style="width:  8%;" />',
+	      '<col style="width:  8%;" />',
+	      '<col style="width:  8%;" />')
     for (i in seq_len(nrow(vignettes))) {
 	Outfile <- vignettes[i, "PDF"]
 	topic <- file_path_sans_ext(Outfile)
@@ -169,14 +171,14 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	link  <- c('<a href="', root,
 		  if (nchar(Outfile)) Outfile else File, '">',
 		  pkg, "::", topic, '</a>')
-	line <- c('<tr><td align="right" valign="top">', link,
+	line <- c('<tr><td style="text-align: right; vertical-align: top;">', link,
 		    '</td>\n<td></td><td valign="top">', Title,
 		    '</td>\n<td valign="top">',
 		    if (nchar(Outfile))
 			c('<a href="', root, Outfile,'">', vignette_type(Outfile), '</a>'),
 		    '</td>\n<td valign="top">',
 		    '<a href="', root, File,'">source</a>',
-		    '</td>\n<td valign="top" nowrap>',
+		    '</td>\n<td valign="top" style="white-space: nowrap">',
 		    if (nchar(R))
 		    	c('<a href="', root, R,'">R code</a>'),
 		    '</td></tr>')
@@ -208,9 +210,9 @@ makeDemoTable <- function(demos, depth=2) {
 	    link <- c(pkg, "::", topic)
 	    runlink <- ""
 	}
-	line <- c('<tr><td align="right" valign="top">', link,
+	line <- c('<tr><td style="text-align: right; vertical-align: top;">', link,
 		    '</td>\n<td></td><td valign="top">', Title,
-		    '</td>\n<td valign="top" nowrap>', runlink,
+		    '</td>\n<td valign="top" style="white-space: nowrap">', runlink,
 		    '</td></tr>')
 	out <- c(out, paste(line, collapse=''))
      }
@@ -219,9 +221,9 @@ makeDemoTable <- function(demos, depth=2) {
 
 makeHelpTable <- function(help, depth=2) {
     out <- c('<table width="100%">',
-	      '<col width="22%">',
-	      '<col width="2%">',
-	      '<col width="74%">')
+	      '<col style="width: 22%;" />',
+	      '<col style="width:  2%;" />',
+	      '<col style="width: 74%;" />')
     pkg <- help[,"Package"]
     root <- paste0(paste(rep.int("../", depth), collapse=""),
                    "library/", pkg, "/html/")
@@ -231,7 +233,7 @@ makeHelpTable <- function(help, depth=2) {
     links <- paste0('<a href="', root, topic, '.html">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
-    lines <- paste0('<tr><td align="right" valign="top">', links,
+    lines <- paste0('<tr><td style="text-align: right; vertical-align: top";>', links,
 		    '</td>\n<td></td><td valign="top">', Title,
 		    '</td></tr>')
     c(out, lines, '</table>')

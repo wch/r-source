@@ -2067,7 +2067,8 @@
 
     ## No need to handle encodings: everything is in UTF-8
 
-    html_header(desc["Package"], desc["Title"], desc["Version"], outcon)
+    html_header(desc["Package"], htmlize(desc["Title"], TRUE),
+                desc["Version"], outcon)
 
     use_alpha <- (nrow(M) > 100)
     if (use_alpha) {
@@ -2077,7 +2078,7 @@
         if (m) nm <- c(" ", nm[-m])
         m <- match("misc", nm, 0L) # force last in all locales.
         if (m) nm <- c(nm[-m], "misc")
-	writeLines(c("<p align=\"center\">",
+	writeLines(c('<p style="text-align: center;">',
 		     paste0("<a href=\"#", nm, "\">", nm, "</a>"),
 		     "</p>\n"), outcon)
         for (f in nm) {
@@ -2086,13 +2087,13 @@
                 cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                     sep = "", file = outcon)
 	    writeLines(c('<table width="100%">',
-			 paste0('<tr><td width="25%"><a href="', MM[, 2L], '.html">',
+			 paste0('<tr><td style="width: 25%;"><a href="', MM[, 2L], '.html">',
 				MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>'),
 			 "</table>"), outcon)
        }
     } else if (nrow(M)) {
 	writeLines(c('<table width="100%">',
-		     paste0('<tr><td width="25%"><a href="', M[, 2L], '.html">',
+		     paste0('<tr><td style="width: 25%;"><a href="', M[, 2L], '.html">',
 			    M$HTopic, '</a></td>\n<td>', M[, 3L],'</td></tr>'),
 		     "</table>"), outcon)
     } else { # no rows

@@ -912,9 +912,9 @@ function(pkg, con, vignetteIndex = NULL)
 	urls <- paste0('<a href="', otherfiles, '">', otherfiles, '</a>')
         html <- c(html, '<h2>Other files in the <span class="samp">doc</span> directory</h2>',
                   '<table width="100%">',
-		  '<col width="24%">',
-		  '<col width="50%">',
-		  '<col width="24%">',
+		  '<col style="width: 24%;" />',
+		  '<col style="width: 50%;" />',
+		  '<col style="width: 24%;" />',
                   paste0('<tr><td></td><td><span class="samp">',
                          iconv(urls, "", "UTF-8"), "</span></td></tr>"),
                   "</table>")
