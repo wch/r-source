@@ -413,17 +413,27 @@ a <- pairlist(10,20,30,40,50,60)
 dim(a) <- c(2,3)
 dimnames(a) <- list(c("a","b"),c("x","y","z"))
 # print(a)              # doesn't print names, not fixed
-a[["a","x"]] <- 0   
-stopifnot(a[["a","x"]] == 0)          
+a[["a","x"]] <- 0
+stopifnot(a[["a","x"]] == 0)
 ## First gave a spurious error, second caused a seg.fault
+
 
 ## numericDeriv failed to duplicate variables in
 ## the expression before modifying them.  PR#15849
 x <- 10; y <- 10
-d1 <- numericDeriv(quote(x+y),c("x","y")) 
+d1 <- numericDeriv(quote(x+y),c("x","y"))
 x <- y <- 10
 d2 <- numericDeriv(quote(x+y),c("x","y"))
 stopifnot(identical(d1,d2))
 ## The second gave the wrong answer
+
+
+## prettyNum(x, zero.print = .) failed when x had NAs
+pp <- sapply(list(TRUE, FALSE, ".", " "), function(.)
+	     prettyNum(c(0:1,NA), zero.print = . ))
+stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
+	  pp[2:3,] == c("1","NA"))
+## all 4 prettyNum() would error out
+
 
 proc.time()

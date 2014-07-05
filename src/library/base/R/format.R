@@ -306,7 +306,8 @@ prettyNum <-
 	return(x)
 
     ## else
-    if(!is.null(zero.print) && any(i0 <- as.numeric(x) == 0)) {
+    if (!is.null(zero.print) && any(i0 <- {nx <- suppressWarnings(as.numeric(x))
+					   nx == 0 & !is.na(nx)})) {
 	## print zeros according to 'zero.print' (logical or string):
 	if(length(zero.print) > 1L) stop("'zero.print' has length > 1")
 	if(is.logical(zero.print))

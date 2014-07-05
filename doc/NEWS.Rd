@@ -94,30 +94,33 @@
       \code{decimal.mark} are set to the same value (period and comma
       are not uncommonly used for each, and this is a check that
       conventions have not got mixed).
-      
+
       \item \code{merge()} can create a result which uses long vectors
       on 64-bit platforms.
-      
+
       \item \code{dget()} gains a new argument \code{keep.source} which
       defaults to \code{FALSE} for speed (\code{dput()} and
       \code{dget()} are most often used for data objects where this can
       make \code{dget()} many times faster).
-      
+
       \item Packages may now use a file of common macro definitions in their
-      help files, and may import definitions from other packages.  
-      
-      \item A number of macros have been added to the new \file{share/Rd} 
+      help files, and may import definitions from other packages.
+
+      \item A number of macros have been added to the new \file{share/Rd}
       directory for use in package overview help
-      pages, and \code{promptPackage()} now makes use of them. 
-      
+      pages, and \code{promptPackage()} now makes use of them.
+
       \item \code{capabilities()} now reports if ICU is used for collation.
 
       % TODO: Port to 3.1.1 patched
       \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
       \code{[dp]lnorm(sdlog=0)} also model a point mass at \code{exp(mulog)}.
+
+      \item \code{prettyNum(x, zero.print=*)} now also works when
+      \code{x} contains \code{NA}s.
     }
   }
-  
+
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item When building \R as a shared library, the
@@ -150,7 +153,7 @@
       \option{--run-donttest} options.
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item New C API utility \code{logspace_sum(logx[], n)}.
@@ -159,7 +162,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Fixed two obscure bugs in pairlist subassignment, reported by 
+      \item Fixed two obscure bugs in pairlist subassignment, reported by
       Radford Neal as part of pqR issue 16.
     }
   }
@@ -221,22 +224,22 @@
 
       \item Modifying internal logical scalar constants now results in
       an error instead of a warning.
-      
+
       \item \code{install.packages(repos = NULL)} now accepts
       \code{http://} or \code{ftp://} URLs of package archives as well
       as file paths, and will download as required.  In most cases
       \code{repos = NULL} can be deduced from the extension of the URL.
-      
+
       \item The warning when using partial matching with the \code{$}
       operator on data frames is now only given when
       \code{options("warnPartialMatchDollar")} is \code{TRUE}.
-      
-      \item Package help requests like \code{package?foo} now 
+
+      \item Package help requests like \code{package?foo} now
       try the package \code{foo} whether loaded or not.
-      
-      \item General help requests now default to trying all loaded 
+
+      \item General help requests now default to trying all loaded
       packages, not just those on the search path.
-      
+
       \item Added a new function \code{promptImport}, to generate
       a help page for a function that was imported from another package
       (and presumably re-exported, or help would not be needed).
@@ -265,7 +268,7 @@
       \item Compilers/linkers were handling the visibility controls in
       \file{src/extra/xz} inconsistently (and apparently in some cases
       incorrectly), so it has been simplified.  (\PR{15327})
-      
+
       \item (Windows)  There is updated support from the use of ICU for
       collation: see the \sQuote{R Installation and Administration Manual}.
     }
@@ -389,7 +392,7 @@
 
       \item \code{getParseData()} could return incorrect values for
       the parents of some elements. (Reported by Andrew Redd.)
-      
+
       \item Attempting to use data frames of 2^31 or more rows with
       \code{merge()} or to create a merged data frame of that size now
       gives a clearer error message.
@@ -399,20 +402,20 @@
       e.g. \code{parse(FALSE)} attempted to read from \code{stdin}.
 
       Nor did \code{dump()} and \code{dput()}.
-      
+
       \item The \code{"help.try.all.packages"} option was ignored when
-      the shortcut syntax for help was used, e.g. \code{?foo}.  
-      
+      the shortcut syntax for help was used, e.g. \code{?foo}.
+
       \item A potential segfault in string allocation has been fixed.
       (Found by Radford Neal.)
-      
-      \item Potential memory protection errors in \code{sort()} and 
+
+      \item Potential memory protection errors in \code{sort()} and
       \code{D()} have been fixed. (Found by Radford Neal.)
-      
+
       \item Fixed a lack of error checking in graphics event functions.
       (Found by Radford Neal; a different patch used here than the
       one in pqR.)
-      
+
       \item \code{numericDeriv()} sometimes miscalculated the gradient.
       (\PR{15849}, reported originally by Radford Neal)
     }
