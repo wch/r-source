@@ -4328,7 +4328,7 @@ setRlibs <-
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            if (identical(desc["Priority"], "base")) {	# Priority might be missing
+            if (desc["Priority"] == "base") {
                 messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
                 messageLog(Log, "skipping installation test")
@@ -4341,7 +4341,7 @@ setRlibs <-
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
-            is_rec_pkg <- identical(desc["Priority"], "recommended")
+            is_rec_pkg <- desc["Priority"] %in% "recommended"
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
