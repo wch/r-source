@@ -631,7 +631,7 @@ function(x, style = "text", .bibstyle = NULL,
                    ## </FIXME>
                    con <- textConnection(rd)
                    on.exit(close(con))
-                   f(con, fragment = TRUE, out = out, ...)
+                   f(con, fragment = TRUE, out = out, permissive = TRUE, ...)
                    paste(readLines(out), collapse = "\n")
                })
     }

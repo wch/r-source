@@ -122,7 +122,8 @@ RweaveRdOptions <- function(options)
     options
 }
 
-tagged <- function(x, tag) structure(x, Rd_tag=tag)
+tagged <- function(x, tag, srcref = NULL) 
+    structure(x, Rd_tag = tag, srcref = srcref)
 
 evalWithOpt <- function(expr, options, env)
 {

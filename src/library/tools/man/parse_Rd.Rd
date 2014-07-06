@@ -16,7 +16,7 @@
 parse_Rd(file, srcfile = NULL, encoding = "unknown",
          verbose = FALSE, fragment = FALSE, warningCalls = TRUE,
 	 macros = file.path(R.home("share"), "Rd", "macros",
-                  "system.Rd"))
+                  "system.Rd"), permissive = FALSE)
 \method{print}{Rd}(x, deparse = FALSE, \dots)
 \method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }
@@ -33,6 +33,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   \item{warningCalls}{Logical: should parser warnings include the call?}
   \item{macros}{Filename or environment from which to load additional
     macros, or a logical value.  See the Details below.}
+  \item{permissive}{Logical indicating that unrecognized macros
+    should be treated as text with no warning.}
   \item{x}{An object of class Rd.}
   \item{deparse}{If \code{TRUE}, attempt to reinstate the escape characters
     so that the resulting characters will parse to the same object.}
@@ -59,6 +61,14 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   is given, only the default built-in macros will be used; 
   \code{FALSE} indicates that no \code{"macros"} attribute
   will be returned with the result.
+  
+  The \code{permissive} argument allows text to be parsed that is
+  not completely in Rd format.  Typically it would be LaTeX code,
+  used in an Rd fragment, e.g. in a \code{\link{bibentry}}.  
+  With \code{permissive = TRUE}, this will be passed through as plain 
+  text.  Since \code{parse_Rd} doesn't know how many arguments
+  belong in LaTeX macros, it will guess based on the presence
+  of braces after the macro; this is not infallible.
 }
 \value{
   \code{parse_Rd} returns an object of class \code{"Rd"}.  The

@@ -118,6 +118,10 @@
 
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
+      
+      \item \code{tools::parse_Rd()} gains a new \code{permissive} argument,
+      which converts unrecognized macros into text.  This is used by 
+      \code{utils:::format.bibentry} to allow LaTeX markup to be ignored.
     }
   }
 
