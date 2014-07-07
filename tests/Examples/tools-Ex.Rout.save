@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-06-20 r65983) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-07-06 r66082) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -37,17 +37,18 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > cat(HTMLheader("This is a sample header"), sep="\n")
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: This is a sample header</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: This is a sample header</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
 </head><body>
 <h1> This is a sample header
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]">
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]" />
 </h1>
-<hr>
-<div align="center">
-<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]"></a>
+<hr/>
+<div style="text-align: center;">
+<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
 </div>
 > 
 > 
@@ -187,7 +188,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x20cb4a8>
+<environment: 0x3cae3d8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -793,52 +794,53 @@ function (x, ...)
 > ### ** Examples
 > 
 > cat(toHTML(demo(package = "base")), sep = "\n")
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: R</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: R</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />
 </head><body>
 <h1> R
-<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]">
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]" />
 </h1>
-<hr>
-<div align="center">
-<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]"></a>
+<hr/>
+<div style="text-align: center;">
+<a href="/doc/html/index.html"><img class="arrow" src="/doc/html/up.jpg" alt="[Top]" /></a>
 </div>
 <h2>Demos in package &lsquo;base&rsquo;</h2>
 <table cols="2" width="100%">
 <tr>
- <td align="left" valign="top" width="10%">
+ <td style="text-align: left; vertical-align: top; width: 10%;">
 error.catching
  </td>
- <td align="left" valign="top" width="90%">
+ <td style="text-align: left" vertical-align: top; width: 90%;">
 More examples on catching and handling errors
  </td>
 </tr>
 
 <tr>
- <td align="left" valign="top" width="10%">
+ <td style="text-align: left; vertical-align: top; width: 10%;">
 is.things
  </td>
- <td align="left" valign="top" width="90%">
+ <td style="text-align: left" vertical-align: top; width: 90%;">
 Explore some properties of R objects and is.FOO() functions. Not for newbies!
  </td>
 </tr>
 
 <tr>
- <td align="left" valign="top" width="10%">
+ <td style="text-align: left; vertical-align: top; width: 10%;">
 recursion
  </td>
- <td align="left" valign="top" width="90%">
+ <td style="text-align: left" vertical-align: top; width: 90%;">
 Using recursion for adaptive integration
  </td>
 </tr>
 
 <tr>
- <td align="left" valign="top" width="10%">
+ <td style="text-align: left; vertical-align: top; width: 10%;">
 scoping
  </td>
- <td align="left" valign="top" width="90%">
+ <td style="text-align: left" vertical-align: top; width: 90%;">
 An illustration of lexical scoping.
  </td>
 </tr>
@@ -971,7 +973,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.225 0.009 0.235 0 0 
+Time elapsed:  0.214 0.01 0.225 0 0 
 > grDevices::dev.off()
 null device 
           1 
