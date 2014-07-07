@@ -1,5 +1,5 @@
 
-R version 3.1.0 Patched (2014-06-17 r65958) -- "Spring Dance"
+R version 3.1.1 RC (2014-07-04 r66081) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.306 0.003 1.311 0 0 
+Time elapsed:  1.62 0.002 1.63 0 0 
 > 
 > 
