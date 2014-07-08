@@ -103,25 +103,29 @@
       \code{dget()} are most often used for data objects where this can
       make \code{dget()} many times faster).
 
-      \item Packages may now use a file of common macro definitions in their
-      help files, and may import definitions from other packages.
+      \item Packages may now use a file of common macro definitions in
+      their help files, and may import definitions from other packages.
 
-      \item A number of macros have been added to the new \file{share/Rd}
-      directory for use in package overview help
-      pages, and \code{promptPackage()} now makes use of them.
+      \item A number of macros have been added in the new
+      \file{share/Rd} directory for use in package overview help pages,
+      and \code{promptPackage()} now makes use of them.
 
       \item \code{capabilities()} now reports if ICU is used for collation.
 
       % TODO: Port to 3.1.1 patched
       \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
-      \code{[dp]lnorm(sdlog=0)} also model a point mass at \code{exp(mulog)}.
+      \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
 
-      \item \code{prettyNum(x, zero.print=*)} now also works when
+      \item \code{prettyNum(x, zero.print = *)} now also works when
       \code{x} contains \code{NA}s.
       
-      \item \code{tools::parse_Rd()} gains a new \code{permissive} argument,
-      which converts unrecognized macros into text.  This is used by 
-      \code{utils:::format.bibentry} to allow LaTeX markup to be ignored.
+      \item \code{tools::parse_Rd()} gains a new \code{permissive}
+      argument which converts unrecognized macros into text.  This is
+      used by \code{utils:::format.bibentry} to allow LaTeX markup to be
+      ignored.
+  
+      \item \code{options(OutDec=)} can now specify a multi-byte
+      character, e.g. \code{options(OutDec = "\u00b7")} in a UTF-8 locale.
     }
   }
 
@@ -161,6 +165,9 @@
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item New C API utility \code{logspace_sum(logx[], n)}.
+
+      \item Entry points \code{rbinom_mu} and \code{rmultinom} are now
+      remapped (by default).
     }
   }
 

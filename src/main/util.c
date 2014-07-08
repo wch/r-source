@@ -161,7 +161,7 @@ SEXP asChar(SEXP x)
 	    case REALSXP:
 		PrintDefaults();
 		formatReal(REAL(x), 1, &w, &d, &e, 0);
-		return mkChar(EncodeReal(REAL(x)[0], w, d, e, OutDec));
+		return mkChar(EncodeReal0(REAL(x)[0], w, d, e, OutDec));
 	    case CPLXSXP:
 		PrintDefaults();
 		formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei, 0);

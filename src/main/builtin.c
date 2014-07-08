@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2012  The R Core Team.
+ *  Copyright (C) 1999-2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -600,7 +600,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   The copy is needed as cat_newline might reuse the buffer.
 		   Use strncpy is in case these assumptions change.
 		*/
-		p = EncodeElement(s, 0, 0, OutDec);
+		p = EncodeElement0(s, 0, 0, OutDec);
 		strncpy(buf, p, 512); buf[511] = '\0';
 		p = buf;
 	    }
@@ -632,7 +632,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if (isString(s))
 			p = trChar(STRING_ELT(s, i+1));
 		    else {
-			p = EncodeElement(s, i+1, 0, OutDec);
+			p = EncodeElement0(s, i+1, 0, OutDec);
 			strncpy(buf, p, 512); buf[511] = '\0';
 			p = buf;
 		    }

@@ -991,7 +991,7 @@ static Rboolean isna(SEXP x, int indx)
 /* a version of EncodeElement with different escaping of char strings */
 static const char
 *EncodeElement2(SEXP x, int indx, Rboolean quote,
-		Rboolean qmethod, R_StringBuffer *buff, char cdec)
+		Rboolean qmethod, R_StringBuffer *buff, const char *dec)
 {
     int nbuf;
     char *q;
@@ -1015,7 +1015,7 @@ static const char
 	vmaxset(vmax);
 	return buff->data;
     }
-    return EncodeElement(x, indx, quote ? '"' : 0, cdec);
+    return EncodeElement0(x, indx, quote ? '"' : 0, dec);
 }
 
 typedef struct wt_info {
@@ -1040,7 +1040,6 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean wasopen, quote_rn = FALSE, *quote_col;
     Rconnection con;
     const char *csep, *ceol, *cna, *sdec, *tmp = NULL /* -Wall */;
-    char cdec;
     SEXP *levels;
     R_StringBuffer strBuf = {NULL, 0, MAXELTSIZE};
     wt_info wi;
@@ -1085,7 +1084,6 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
     sdec = translateChar(STRING_ELT(dec, 0));
     if(strlen(sdec) != 1)
 	error(_("'dec' must be a single character"));
-    cdec = sdec[0];
     quote_col = (Rboolean *) R_alloc(nc, sizeof(Rboolean));
     for(int j = 0; j < nc; j++) quote_col[j] = FALSE;
     for(int i = 0; i < length(quote); i++) { /* NB, quote might be NULL */
@@ -1123,7 +1121,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!isNull(rnames))
 		Rconn_printf(con, "%s%s",
 			     EncodeElement2(rnames, i, quote_rn, qmethod,
-					    &strBuf, cdec), csep);
+					    &strBuf, sdec), csep);
 	    for(int j = 0; j < nc; j++) {
 		xj = VECTOR_ELT(x, j);
 		if(j > 0) Rconn_printf(con, "%s", csep);
@@ -1135,20 +1133,19 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(TYPEOF(xj) == INTSXP)
 			    tmp = EncodeElement2(levels[j], INTEGER(xj)[i] - 1,
 						 quote_col[j], qmethod,
-						 &strBuf, cdec);
+						 &strBuf, sdec);
 			else if(TYPEOF(xj) == REALSXP)
 			    tmp = EncodeElement2(levels[j],
 						 (int) (REAL(xj)[i] - 1),
 						 quote_col[j], qmethod,
-						 &strBuf, cdec);
+						 &strBuf, sdec);
 			else
 			    error(_("column %s claims to be a factor but does not have numeric codes"),
 				  j+1);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,
-					     &strBuf, cdec);
+					     &strBuf, sdec);
 		    }
-		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(xj)); */
 		}
 		Rconn_printf(con, "%s", tmp);
 	    }
@@ -1168,14 +1165,13 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!isNull(rnames))
 		Rconn_printf(con, "%s%s",
 			     EncodeElement2(rnames, i, quote_rn, qmethod,
-					    &strBuf, cdec), csep);
+					    &strBuf, sdec), csep);
 	    for(int j = 0; j < nc; j++) {
 		if(j > 0) Rconn_printf(con, "%s", csep);
 		if(isna(x, i + j*nr)) tmp = cna;
 		else {
 		    tmp = EncodeElement2(x, i + j*nr, quote_col[j], qmethod,
-					&strBuf, cdec);
-		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(x)); */
+					&strBuf, sdec);
 		}
 		Rconn_printf(con, "%s", tmp);
 	    }

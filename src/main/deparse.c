@@ -1268,8 +1268,8 @@ static const char *EncodeNonFiniteComplexElement(Rcomplex x, char* buff)
     char Re[NB];
     char Im[NB];
 
-    strcpy(Re, EncodeReal(x.r, w, d, e, '.'));
-    strcpy(Im, EncodeReal(x.i, wi, di, ei, '.'));
+    strcpy(Re, EncodeReal0(x.r, w, d, e, "."));
+    strcpy(Im, EncodeReal0(x.i, wi, di, ei, "."));
     
     snprintf(buff, NB, "complex(real=%s, imaginary=%s)", Re, Im);
     buff[NB-1] = '\0';

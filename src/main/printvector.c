@@ -105,7 +105,7 @@ void printRealVector(double *x, R_xlen_t n, int indx)
 	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
-	Rprintf("%s", EncodeReal(x[i], w, d, e, OutDec));
+	Rprintf("%s", EncodeReal0(x[i], w, d, e, OutDec));
 	width += w;
     }
     Rprintf("\n");
@@ -127,7 +127,7 @@ void printComplexVector(Rcomplex *x, R_xlen_t n, int indx)
 	    DO_newline;
 	}
 	if (ISNA(x[i].r) || ISNA(x[i].i))
-	    Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0, OutDec));
+	    Rprintf("%s", EncodeReal0(NA_REAL, w, 0, 0, OutDec));
 	else
 	    Rprintf("%s", EncodeComplex(x[i], wr + R_print.gap , dr, er,
 					wi, di, ei, OutDec));
@@ -272,7 +272,8 @@ static void printNamedIntegerVector(int * x, int n, SEXP * names)
 
 static void printNamedRealVector(double * x, int n, SEXP * names)
     PRINT_N_VECTOR(INI_F_REAL,
-		   Rprintf("%s%*s", EncodeReal(x[k],w,d,e, OutDec),R_print.gap,""))
+		   Rprintf("%s%*s", 
+			   EncodeReal0(x[k],w,d,e, OutDec),R_print.gap,""))
 
 #undef INI_F_CPLX
 #define INI_F_CPLX					\
@@ -291,15 +292,15 @@ static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
 	{ /* PRINT_1 */
 	    if(j) Rprintf("%*s", R_print.gap, "");
 	    if (ISNA(x[j].r) || ISNA(x[j].i)) {
-		Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0, OutDec));
+		Rprintf("%s", EncodeReal0(NA_REAL, w, 0, 0, OutDec));
 	    }
 	    else {
-		Rprintf("%s", EncodeReal(x[k].r, wr, dr, er, OutDec));
+		Rprintf("%s", EncodeReal0(x[k].r, wr, dr, er, OutDec));
 		P_IMAG_NA
 		if (x[k].i >= 0)
-		    Rprintf("+%si", EncodeReal(x[k].i, wi, di, ei, OutDec));
+		    Rprintf("+%si", EncodeReal0(x[k].i, wi, di, ei, OutDec));
 		else
-		    Rprintf("-%si", EncodeReal(-x[k].i, wi, di, ei, OutDec));
+		    Rprintf("-%si", EncodeReal0(-x[k].i, wi, di, ei, OutDec));
 	    }
 	})
 

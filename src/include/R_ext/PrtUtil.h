@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2012    The R Core Team
+ *  Copyright (C) 1998-2014    The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -33,6 +33,7 @@
 #define EncodeLogical      Rf_EncodeLogical
 #define EncodeInteger      Rf_EncodeInteger
 #define EncodeReal         Rf_EncodeReal
+#define EncodeReal0        Rf_EncodeReal0
 #define EncodeComplex      Rf_EncodeComplex
 #define VectorIndex        Rf_VectorIndex
 #define printIntegerVector Rf_printIntegerVector
@@ -52,8 +53,12 @@ void formatComplex(Rcomplex *, R_xlen_t, int *, int *, int *, int *, int *, int 
 /* Formating of values */
 const char *EncodeLogical(int, int);
 const char *EncodeInteger(int, int);
+const char *EncodeReal0(double, int, int, int, const char *);
+const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, const char *);
+
+/* Legacy, misused by packages RGtk2 and qtbase */
 const char *EncodeReal(double, int, int, int, char);
-const char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
+
 
 /* Printing */
 int	IndexWidth(R_xlen_t);

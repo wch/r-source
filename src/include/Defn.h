@@ -707,7 +707,7 @@ extern0   Rboolean WinUTF8out  INI_as(FALSE);  /* Use UTF-8 for output */
 extern0   void WinCheckUTF8(void);
 #endif
 
-extern char OutDec	INI_as('.');  /* decimal point used for output */
+extern char* OutDec	INI_as(".");  /* decimal point used for output */
 extern0 Rboolean R_DisableNLinBrowser	INI_as(FALSE);
 extern0 char R_BrowserLastCommand	INI_as('n');
 
@@ -814,7 +814,9 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define DispatchOrEval		Rf_DispatchOrEval
 # define DispatchAnyOrEval      Rf_DispatchAnyOrEval
 # define dynamicfindVar		Rf_dynamicfindVar
+# define EncodeChar             Rf_EncodeChar
 # define EncodeRaw              Rf_EncodeRaw
+# define EncodeReal2            Rf_EncodeReal2
 # define EncodeString           Rf_EncodeString
 # define EnsureString 		Rf_EnsureString
 # define endcontext		Rf_endcontext

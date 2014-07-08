@@ -174,8 +174,15 @@ const char *EncodeEnvironment(SEXP x)
 
 const char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
-    static char buff[NB];
-    char *p, fmt[20];
+    char dec[2];
+    dec[0] = cdec; dec[1] = '\0';
+    return EncodeReal0(x, w, d, e, dec);
+}
+
+const char *EncodeReal0(double x, int w, int d, int e, const char *dec)
+{
+    static char buff[NB], buff2[2*NB];
+    char fmt[20], *out = buff;
 
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
@@ -201,11 +208,84 @@ const char *EncodeReal(double x, int w, int d, int e, char cdec)
     }
     buff[NB-1] = '\0';
 
-    if(cdec != '.')
-      for(p = buff; *p; p++) if(*p == '.') *p = cdec;
+    if(strcmp(dec, ".")) {
+	char *p, *q;
+	for(p = buff, q = buff2; *p; p++) {
+	    if(*p == '.') for(const char *r = dec; *r; r++) *q++ = *r;
+	    else *q++ = *p;
+	}
+	*q = '\0';
+	out = buff2;
+    }
 
-    return buff;
+    return out;
 }
+
+static const char 
+*EncodeRealDrop0(double x, int w, int d, int e, const char *dec)
+{
+    static char buff[NB], buff2[2*NB];
+    char fmt[20], *out = buff;
+
+    /* IEEE allows signed zeros (yuck!) */
+    if (x == 0.0) x = 0.0;
+    if (!R_FINITE(x)) {
+	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
+	else snprintf(buff, NB, "%*s", w, "-Inf");
+    }
+    else if (e) {
+	if(d) {
+	    sprintf(fmt,"%%#%d.%de", min(w, (NB-1)), d);
+	    snprintf(buff, NB, fmt, x);
+	}
+	else {
+	    sprintf(fmt,"%%%d.%de", min(w, (NB-1)), d);
+	    snprintf(buff, NB, fmt, x);
+	}
+    }
+    else { /* e = 0 */
+	sprintf(fmt,"%%%d.%df", min(w, (NB-1)), d);
+	snprintf(buff, NB, fmt, x);
+    }
+    buff[NB-1] = '\0';
+
+    // Drop trailing zeroes
+    for (char *p = buff; *p; p++) {
+	if(*p == '.') {
+	    char *replace = p++;
+	    while ('0' <= *p  &&  *p <= '9')
+		if(*(p++) != '0')
+		    replace = p;
+	    if(replace != p)
+		while((*(replace++) = *(p++)))
+		    ;
+	    break;
+	}
+    }
+
+    if(strcmp(dec, ".")) {
+	char *p, *q;
+	for(p = buff, q = buff2; *p; p++) {
+	    if(*p == '.') for(const char *r = dec; *r; r++) *q++ = *r;
+	    else *q++ = *p;
+	}
+	*q = '\0';
+	out = buff2;
+    }
+
+    return out;
+}
+
+SEXP attribute_hidden StringFromReal(double x, int *warn)
+{
+    int w, d, e;
+    formatReal(&x, 1, &w, &d, &e, 0);
+    if (ISNA(x)) return NA_STRING;
+    else return mkChar(EncodeRealDrop0(x, w, d, e, OutDec));
+}
+
 
 attribute_hidden
 const char *EncodeReal2(double x, int w, int d, int e)
@@ -243,7 +323,7 @@ void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 
 const char
 *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
-	       char cdec)
+	       const char *dec)
 {
     static char buff[NB];
     char Re[NB];
@@ -267,12 +347,12 @@ const char
 	 */
 	z_prec_r(&y, &x, R_print.digits);
 	/* EncodeReal has static buffer, so copy */
-	if(y.r == 0.) tmp = EncodeReal(y.r, wr, dr, er, cdec);
-	else tmp = EncodeReal(x.r, wr, dr, er, cdec);
+	if(y.r == 0.) tmp = EncodeReal0(y.r, wr, dr, er, dec);
+	else tmp = EncodeReal0(x.r, wr, dr, er, dec);
 	strcpy(Re, tmp);
 	if ( (flagNegIm = (x.i < 0)) ) x.i = -x.i;
-	if(y.i == 0.) Im = EncodeReal(y.i, wi, di, ei, cdec);
-	else Im = EncodeReal(x.i, wi, di, ei, cdec);
+	if(y.i == 0.) Im = EncodeReal0(y.i, wi, di, ei, dec);
+	else Im = EncodeReal0(x.i, wi, di, ei, dec);
 	snprintf(buff, NB, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
     }
     buff[NB-1] = '\0';
@@ -420,7 +500,7 @@ int Rstrlen(SEXP s, int quote)
    If 'quote' is non-zero the result should be quoted (and internal quotes
    escaped and NA strings handled differently).
 
-   EncodeString is called from EncodeElements, cat() (for labels when
+   EncodeString is called from EncodeElement, cat() (for labels when
    filling), to (auto)print character vectors, arrays, names and
    CHARSXPs.  It is also called by do_encodeString, but not from
    format().
@@ -676,7 +756,14 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
 /* NB this is called by R.app even though it is in no public header, so 
    alter there if you alter this */
-const char *EncodeElement(SEXP x, int indx, int quote, char dec)
+const char *EncodeElement(SEXP x, int indx, int quote, char cdec)
+{
+    char dec[2];
+    dec[0] = cdec; dec[1] = '\0';
+    return EncodeElement0(x, indx, quote, dec);
+}
+
+const char *EncodeElement0(SEXP x, int indx, int quote, const char *dec)
 {
     int w, d, e, wi, di, ei;
     const char *res;
@@ -692,7 +779,7 @@ const char *EncodeElement(SEXP x, int indx, int quote, char dec)
 	break;
     case REALSXP:
 	formatReal(&REAL(x)[indx], 1, &w, &d, &e, 0);
-	res = EncodeReal(REAL(x)[indx], w, d, e, dec);
+	res = EncodeReal0(REAL(x)[indx], w, d, e, dec);
 	break;
     case STRSXP:
 	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
