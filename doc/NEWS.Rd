@@ -179,6 +179,14 @@
     }
   }
 }
+\section{\Rlogo CHANGES IN R 3.1.1 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{dmultinom()} did not handle non-finite probabilities
+      correctly. 
+    }
+  }
+}
 
 \section{\Rlogo CHANGES IN R 3.1.1}{
   \subsection{NEW FEATURES}{

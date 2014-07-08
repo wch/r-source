@@ -1,6 +1,6 @@
 % File src/library/stats/man/Multinomal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Multinom}
@@ -25,7 +25,7 @@ dmultinom(x, size = NULL, prob, log = FALSE)
     experiment. For \code{dmultinom}, it defaults to \code{sum(x)}.}
   \item{prob}{numeric non-negative vector of length \eqn{K}, specifying
     the probability for the \eqn{K} classes; is internally normalized to
-    sum 1.}
+    sum 1. Infinite and missing values are not allowed.}
   \item{log}{logical; if TRUE, log probabilities are computed.}
 }
 \note{\code{dmultinom} is currently \emph{not vectorized} at all and has
