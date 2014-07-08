@@ -7,7 +7,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.1.0 patched}{
+\section{\Rlogo CHANGES IN R 3.1.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item When \code{attach()} reports conflicts, it does so
