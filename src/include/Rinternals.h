@@ -503,6 +503,7 @@ int  (OBJECT)(SEXP x);
 int  (MARK)(SEXP x);
 int  (TYPEOF)(SEXP x);
 int  (NAMED)(SEXP x);
+int  (REFCNT)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
 void (SET_NAMED)(SEXP x, int v);

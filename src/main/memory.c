@@ -3283,6 +3283,7 @@ int (TYPEOF)(SEXP x) { return TYPEOF(CHK(x)); }
 int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
 int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
+int (REFCNT)(SEXP x) { return REFCNT(x); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
