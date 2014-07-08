@@ -376,6 +376,7 @@
  Rf_regfree
  Rf_setIVector
  Rf_setRVector
+ Rf_sexptype2char
  Rf_ssort
  Rf_stirlerr
  Rf_strmat2intmat

@@ -426,26 +426,23 @@ static void ProbSampleNoReplace(int n, double *p, int *perm,
     }
 }
 
-void FixupProb(double *p, int n, int require_k, Rboolean replace)
+static void FixupProb(double *p, int n, int require_k, Rboolean replace)
 {
-    double sum;
-    int i, npos;
-    npos = 0;
-    sum = 0.;
-    for (i = 0; i < n; i++) {
+    double sum = 0.0;
+    int npos = 0;
+    for (int i = 0; i < n; i++) {
 	if (!R_FINITE(p[i]))
 	    error(_("NA in probability vector"));
-	if (p[i] < 0)
-	    error(_("non-positive probability"));
-	if (p[i] > 0) {
+	if (p[i] < 0.0)
+	    error(_("negative probability"));
+	if (p[i] > 0.0) {
 	    npos++;
 	    sum += p[i];
 	}
     }
     if (npos == 0 || (!replace && require_k > npos))
 	error(_("too few positive probabilities"));
-    for (i = 0; i < n; i++)
-	p[i] /= sum;
+    for (int i = 0; i < n; i++) p[i] /= sum;
 }
 
 /* Our PRNGs have at most 32 bit of precision, and all have at least 25 */
@@ -488,7 +485,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double *p = REAL(prob);
 	if (length(prob) != n)
 	    error(_("incorrect number of probabilities"));
-	FixupProb(p, n, k, (Rboolean)replace);
+	FixupProb(p, n, k, (Rboolean) replace);
 	PROTECT(x = allocVector(INTSXP, n));
 	if (replace) {
 	    int i, nc = 0;

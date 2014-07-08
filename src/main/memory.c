@@ -180,6 +180,7 @@ static R_INLINE void register_bad_sexp_type(SEXP s, int line)
 }
 
 /* also called from typename() in inspect.c */
+attribute_hidden
 const char *sexptype2char(SEXPTYPE type) {
     switch (type) {
     case NILSXP:	return "NILSXP";
