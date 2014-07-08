@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2013  The R Core Team
+ *  Copyright (C) 1998-2014  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -218,6 +218,7 @@ double  Rlog1p(double);
 #define choose		Rf_choose
 #define dbeta		Rf_dbeta
 #define dbinom		Rf_dbinom
+#define dbinom_mu	Rf_dbinom_mu
 #define dcauchy		Rf_dcauchy
 #define dchisq		Rf_dchisq
 #define dexp		Rf_dexp
@@ -327,6 +328,7 @@ double  Rlog1p(double);
 #define rhyper		Rf_rhyper
 #define rlnorm		Rf_rlnorm
 #define rlogis		Rf_rlogis
+#define rmultinom	Rf_rmultinom
 #define rnbeta		Rf_rnbeta
 #define rnbinom		Rf_rnbinom
 #define rnchisq		Rf_rnchisq
