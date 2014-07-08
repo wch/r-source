@@ -96,6 +96,8 @@
 static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+extern unsigned int Rf_TimeToSeed(void); // times.c
+
 /* Generate a temporary file name based on TMPL.  TMPL must match the
    rules for mk[s]temp (i.e. end in "XXXXXX").  The name constructed
    does not exist at the time of the call to __gen_tempname.  TMPL is
@@ -126,7 +128,7 @@ gen_tempname (char *tmpl)
   XXXXXX = &tmpl[len - 6];
 
   /* Get some more or less random data.  We need 36 bits. */
-  random_time_bits = TimeToSeed();
+  random_time_bits = Rf_TimeToSeed();
   value += (random_time_bits << 8) ^ getpid ();
 
   for (count = 0; count < TMP_MAX; value += 7777, ++count)
