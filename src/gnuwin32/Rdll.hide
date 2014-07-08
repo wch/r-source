@@ -313,6 +313,7 @@
  Rf_StringFromInteger
  Rf_StringFromLogical
  Rf_StringFromReal
+ Rf_TimeToSeed
  Rf_VectorIndex
  Rf_WarningMessage
  Rf_allocCharsxp
@@ -416,7 +417,6 @@
  SET_PRIMOFFSET
  SET_UTF8
  Sys_TempDir
- TimeToSeed
  UNLOCK_BINDING
  UNIMPLEMENTED_TYPEt
  UTF8in

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-12  The R Core Team
+ *  Copyright (C) 2000-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
       and all the nodes specifically due to it, but not for the
       space for its name nor for .Internals it references.
 */
-SEXP csduplicated(SEXP x);  /* from unique.c */
+SEXP Rf_csduplicated(SEXP x);  /* from unique.c */
 
 static R_size_t objectsize(SEXP s)
 {
@@ -86,7 +86,7 @@ static R_size_t objectsize(SEXP s)
 	break;
     case STRSXP:
 	vcnt = PTR2VEC(xlength(s));
-	dup = csduplicated(s);
+	dup = Rf_csduplicated(s);
 	for (R_xlen_t i = 0; i < xlength(s); i++) {
 	    tmp = STRING_ELT(s, i);
 	    if(tmp != NA_STRING && !LOGICAL(dup)[i])

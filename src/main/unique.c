@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2013  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1696,7 +1696,7 @@ static void HashTableSetup1(SEXP x, HashData *d)
 }
 
 /* used in utils */
-SEXP csduplicated(SEXP x)
+SEXP Rf_csduplicated(SEXP x)
 {
     SEXP ans;
     int n;

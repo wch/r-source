@@ -331,6 +331,7 @@ double  Rlog1p(double);
 #define rmultinom	Rf_rmultinom
 #define rnbeta		Rf_rnbeta
 #define rnbinom		Rf_rnbinom
+#define rnbinom_mu     	Rf_rnbinom_mu
 #define rnchisq		Rf_rnchisq
 #define rnf		Rf_rnf
 #define rnorm		Rf_rnorm

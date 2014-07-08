@@ -166,8 +166,9 @@
     \itemize{
       \item New C API utility \code{logspace_sum(logx[], n)}.
 
-      \item Entry points \code{rbinom_mu} and \code{rmultinom} are now
-      remapped (by default).
+      \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
+      \code{rmultinom} are remapped (by default).  This requires
+      packages using them to be re-installed.
     }
   }
 
