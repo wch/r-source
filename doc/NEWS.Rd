@@ -217,8 +217,8 @@
       a warning.  \R's internal code for both integer addition and
       subtraction is more robust now.  (\PR{15774})
 
-      \item The function determining the default number of knots
-      for \code{smooth.spline()} is now exported, as \code{.nknots.smspl}.
+      \item The function determining the default number of knots for
+      \code{smooth.spline()} is now exported, as \code{.nknots.smspl()}.
 
       \item \code{dbeta(, a,b)}, \code{pbeta()}, \code{qbeta()} and
       \code{rbeta()} are now defined also for \eqn{a = 0}, \eqn{b = 0},
@@ -252,8 +252,8 @@
       \item General help requests now default to trying all loaded
       packages, not just those on the search path.
 
-      \item Added a new function \code{promptImport}, to generate
-      a help page for a function that was imported from another package
+      \item Added a new function \code{promptImport()}, to generate a
+      help page for a function that was imported from another package
       (and presumably re-exported, or help would not be needed).
     }
   }
@@ -281,14 +281,14 @@
       \file{src/extra/xz} inconsistently (and apparently in some cases
       incorrectly), so it has been simplified.  (\PR{15327})
 
-      \item (Windows)  There is updated support from the use of ICU for
+      \item (Windows)  There is updated support for the use of ICU for
       collation: see the \sQuote{R Installation and Administration Manual}.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{dbinom(x,n)}, \code{pbinom()}, \code{dpois()}, etc,
+      \item \code{dbinom(x, n)}, \code{pbinom()}, \code{dpois()}, etc,
       are slightly less restrictive in checking if \code{n} is
       integer-valued.  (Wish of \PR{15734}.)
 
@@ -301,9 +301,9 @@
       would cause \R to step into expressions evaluated there,
       not just into functions being debugged.  (\PR{15770})
 
-      \item The third-party code used by \code{strptime()} rejected
-      time-zone offsets of more than \code{+1200} (\code{+1245},
-      \code{+1300} and \code{+1400} can occur).  (\PR{15768})
+      \item The C code used by \code{strptime()} rejected time-zone
+      offsets of more than \code{+1200} (\code{+1245}, \code{+1300} and
+      \code{+1400} can occur).  (\PR{15768})
 
       \item (Windows only.)
       \code{png(type = "cairo", antialias = "gray")}
