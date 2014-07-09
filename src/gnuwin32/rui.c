@@ -1214,23 +1214,6 @@ int RgetMDIheight(void)
     return RgetMDIsize()->bottom;
 }
 
-#if 0
-extern int  CharacterMode;
-int DialogSelectFile(char *buf, int len)
-{
-    char *fn;
-
-    setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilename(G_("Select file"), "");
-/*    if (!CharacterMode)
-	show(RConsole); */
-    if (fn)
-	strncpy(buf, fn, len);
-    else
-	strcpy(buf, "");
-    return (strlen(buf));
-}
-#endif
 
 static menu *usermenus;
 static char **usermenunames;

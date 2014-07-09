@@ -21,7 +21,7 @@ RESFLAGS = -I $(R_HOME)/include
 
 ## The TCL_* variables are set in etc/Makeconf.
 ## Because the 64-bit build is customized, no other Tcl/Tk build is suitable
-PKG_CPPFLAGS = -I "$(TCL_HOME)"/include -DWin32 =-I$(R_HOME)/src/include -DHAVE_CONFIG_H
+PKG_CPPFLAGS = -I "$(TCL_HOME)"/include -DWin32 -I$(R_HOME)/src/include -DHAVE_CONFIG_H
 ifeq "$(WIN)" "64"
 PKG_LIBS = -L"$(TCL_HOME)"/bin64 -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 else

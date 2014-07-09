@@ -326,7 +326,6 @@ SEXP writeClipboard(SEXP text, SEXP sformat)
 }
 
 #include "Startup.h"
-extern UImode CharacterMode;
 
 #include <graphapp/ga.h>
 #include "rui.h"
