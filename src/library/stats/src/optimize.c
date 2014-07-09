@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2003-2004  The R Foundation
- *  Copyright (C) 1998--2013  The R Core Team
+ *  Copyright (C) 1998--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <config.h>
 #endif
 
+#define NO_NLS
 #include <Defn.h>
 #include <float.h>		/* for DBL_MAX */
 #include <R_ext/Applic.h>	/* for optif9, fdhess */
