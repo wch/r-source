@@ -1,6 +1,6 @@
 % File src/library/stats/man/termplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{termplot}
@@ -32,7 +32,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   \item{rug}{add \link{rug}plots (jittered 1-d histograms) to the axes?}
   \item{terms}{which terms to plot (default \code{NULL} means all
     terms); a vector passed to
-    \code{\link{predict}(.., term = "terms", terms = *)}.}
+    \code{\link{predict}(.., type = "terms", terms = *)}.}
   \item{se}{plot pointwise standard errors?}
   \item{xlabs}{vector of labels for the x axes}
   \item{ylabs}{vector of labels for the y axes}
@@ -60,8 +60,8 @@ termplot(model, data = NULL, envir = environment(formula(model)),
    \item{plot}{if set to \code{FALSE} plots are not produced: instead a
      list is returned containing the data that would have been plotted.}
    \item{transform.x}{logical vector; if an element (recycled as necessary)
-     is \code{TRUE}, partial residuals for the corresponding term are 
-     plotted against transformed values. 
+     is \code{TRUE}, partial residuals for the corresponding term are
+     plotted against transformed values.
      The model response is then a straight line, allowing a
      ready comparison against the data or against the curve
      obtained from \code{smooth-panel.smooth}.}
@@ -69,7 +69,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
 }
 \details{
   The \code{model} object must have a \code{predict} method that accepts
-  \code{type = terms}, e.g., \code{\link{glm}} in the \pkg{stats} package,
+  \code{type = "terms"}, e.g., \code{\link{glm}} in the \pkg{stats} package,
   \code{\link[survival]{coxph}} and \code{\link[survival]{survreg}} in
   the \CRANpkg{survival} package.
 
@@ -119,9 +119,9 @@ if(!had.splines && rs) detach("package:splines")
 
 if (require(MASS)) {
     hills.lm <- lm(log(time) ~ log(climb)+log(dist), data=hills)
-    termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth, 
+    termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
              terms = "log(dist)", main = "Original")
-    termplot(hills.lm, transform.x = TRUE, partial.resid = TRUE, 
+    termplot(hills.lm, transform.x = TRUE, partial.resid = TRUE,
 	     terms = "log(dist)", main = "Transformed",
 	     smooth=panel.smooth)
 }
