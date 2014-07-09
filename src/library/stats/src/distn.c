@@ -135,37 +135,35 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
     return sy;
 } /* math2_2() */
 
-#define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN)
-#define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN)
+#define DEFMATH2_1(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sI) { \
+        return math2_1(sa, sb, sI, name); \
+    }
 
-SEXP distn2(SEXP args)
-{
-    if (!isVectorList(CAR(args))) error("incorrect usage");
-    const char *dn = CHAR(STRING_ELT(getListElement(CAR(args), "name"), 0));
-    args = CDR(args);
+DEFMATH2_1(dchisq)
+DEFMATH2_1(dexp)
+DEFMATH2_1(dgeom)
+DEFMATH2_1(dpois)
+DEFMATH2_1(dt)
+DEFMATH2_1(dsignrank)
 
-    if (streql(dn, "dchisq")) return Math2_1(args, dchisq);
-    else if (streql(dn, "pchisq")) return Math2_2(args, pchisq);
-    else if (streql(dn, "qchisq")) return Math2_2(args, qchisq);
-    else if (streql(dn, "dexp")) return Math2_1(args, dexp);
-    else if (streql(dn, "pexp")) return Math2_2(args, pexp);
-    else if (streql(dn, "qexp")) return Math2_2(args, qexp);
-    else if (streql(dn, "dgeom")) return Math2_1(args, dgeom);
-    else if (streql(dn, "pgeom")) return Math2_2(args, pgeom);
-    else if (streql(dn, "qgeom")) return Math2_2(args, qgeom);
-    else if (streql(dn, "dpois")) return Math2_1(args, dpois);
-    else if (streql(dn, "ppois")) return Math2_2(args, ppois);
-    else if (streql(dn, "qpois")) return Math2_2(args, qpois);
-    else if (streql(dn, "dt")) return Math2_1(args, dt);
-    else if (streql(dn, "pt")) return Math2_2(args, pt);
-    else if (streql(dn, "qt")) return Math2_2(args, qt);
-    else if (streql(dn, "dsignrank")) return Math2_1(args, dsignrank);
-    else if (streql(dn, "psignrank")) return Math2_2(args, psignrank);
-    else if (streql(dn, "qsignrank")) return Math2_2(args, qsignrank);
-    else error("unknown distribution %s", dn);
-    return R_NilValue;
-}
+#define DEFMATH2_2(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sI, SEXP sJ) { \
+        return math2_2(sa, sb, sI, sJ, name); \
+    }
 
+DEFMATH2_2(pchisq)
+DEFMATH2_2(qchisq)
+DEFMATH2_2(pexp)
+DEFMATH2_2(qexp)
+DEFMATH2_2(pgeom)
+DEFMATH2_2(qgeom)
+DEFMATH2_2(ppois)
+DEFMATH2_2(qpois)
+DEFMATH2_2(pt)
+DEFMATH2_2(qt)
+DEFMATH2_2(psignrank)
+DEFMATH2_2(qsignrank)
 
 /* Mathematical Functions of Three (Real) Arguments */
 
@@ -266,63 +264,62 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
     return sy;
 } /* math3_2 */
 
-#define Math3_1(A, FUN)	math3_1(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN)
-#define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN)
+#define DEFMATH3_1(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sc, SEXP sI) { \
+        return math3_1(sa, sb, sc, sI, name); \
+    }
 
-SEXP distn3(SEXP args)
-{
-    if (!isVectorList(CAR(args))) error("incorrect usage");
-    const char *dn = CHAR(STRING_ELT(getListElement(CAR(args), "name"), 0));
-    args = CDR(args);
+DEFMATH3_1(dbeta)
+DEFMATH3_1(dbinom)
+DEFMATH3_1(dcauchy)
+DEFMATH3_1(df)
+DEFMATH3_1(dgamma)
+DEFMATH3_1(dlnorm)
+DEFMATH3_1(dlogis)
+DEFMATH3_1(dnbinom)
+DEFMATH3_1(dnbinom_mu)
+DEFMATH3_1(dnorm)
+DEFMATH3_1(dweibull)
+DEFMATH3_1(dunif)
+DEFMATH3_1(dnt)
+DEFMATH3_1(dnchisq)
+DEFMATH3_1(dwilcox)
 
-    if (streql(dn, "dbeta")) return Math3_1(args, dbeta);
-    else if (streql(dn, "pbeta")) return Math3_2(args, pbeta);
-    else if (streql(dn, "qbeta")) return Math3_2(args, qbeta);
-    else if (streql(dn, "dbinom")) return Math3_1(args, dbinom);
-    else if (streql(dn, "pbinom")) return Math3_2(args, pbinom);
-    else if (streql(dn, "qbinom")) return Math3_2(args, qbinom);
-    else if (streql(dn, "dcauchy")) return Math3_1(args, dcauchy);
-    else if (streql(dn, "pcauchy")) return Math3_2(args, pcauchy);
-    else if (streql(dn, "qcauchy")) return Math3_2(args, qcauchy);
-    else if (streql(dn, "df")) return Math3_1(args, df);
-    else if (streql(dn, "pf")) return Math3_2(args, pf);
-    else if (streql(dn, "qf")) return Math3_2(args, qf);
-    else if (streql(dn, "dgamma")) return Math3_1(args, dgamma);
-    else if (streql(dn, "pgamma")) return Math3_2(args, pgamma);
-    else if (streql(dn, "qgamma")) return Math3_2(args, qgamma);
-    else if (streql(dn, "dlnorm")) return Math3_1(args, dlnorm);
-    else if (streql(dn, "plnorm")) return Math3_2(args, plnorm);
-    else if (streql(dn, "qlnorm")) return Math3_2(args, qlnorm);
-    else if (streql(dn, "dlogis")) return Math3_1(args, dlogis);
-    else if (streql(dn, "plogis")) return Math3_2(args, plogis);
-    else if (streql(dn, "qlogis")) return Math3_2(args, qlogis);
-    else if (streql(dn, "dnbinom")) return Math3_1(args, dnbinom);
-    else if (streql(dn, "pnbinom")) return Math3_2(args, pnbinom);
-    else if (streql(dn, "qnbinom")) return Math3_2(args, qnbinom);
-    else if (streql(dn, "dnbinom_mu")) return Math3_1(args, dnbinom_mu);
-    else if (streql(dn, "pnbinom_mu")) return Math3_2(args, pnbinom_mu);
-    else if (streql(dn, "qnbinom_mu")) return Math3_2(args, qnbinom_mu);
-    else if (streql(dn, "dnorm")) return Math3_1(args, dnorm);
-    else if (streql(dn, "pnorm")) return Math3_2(args, pnorm);
-    else if (streql(dn, "qnorm")) return Math3_2(args, qnorm);
-    else if (streql(dn, "dweibull")) return Math3_1(args, dweibull);
-    else if (streql(dn, "pweibull")) return Math3_2(args, pweibull);
-    else if (streql(dn, "qweibull")) return Math3_2(args, qweibull);
-    else if (streql(dn, "dunif")) return Math3_1(args, dunif);
-    else if (streql(dn, "punif")) return Math3_2(args, punif);
-    else if (streql(dn, "qunif")) return Math3_2(args, qunif);
-    else if (streql(dn, "dnt")) return Math3_1(args, dnt);
-    else if (streql(dn, "pnt")) return Math3_2(args, pnt);
-    else if (streql(dn, "qnt")) return Math3_2(args, qnt);
-    else if (streql(dn, "dnchisq")) return Math3_1(args, dnchisq);
-    else if (streql(dn, "pnchisq")) return Math3_2(args, pnchisq);
-    else if (streql(dn, "qnchisq")) return Math3_2(args, qnchisq);
-    else if (streql(dn, "dwilcox")) return Math3_1(args, dwilcox);
-    else if (streql(dn, "pwilcox")) return Math3_2(args, pwilcox);
-    else if (streql(dn, "qwilcox")) return Math3_2(args, qwilcox);
-    else error("unknown distribution %s", dn);
-    return R_NilValue;
-}
+#define DEFMATH3_2(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ) { \
+        return math3_2(sa, sb, sc, sI, sJ, name); \
+    }
+
+DEFMATH3_2(pbeta)
+DEFMATH3_2(qbeta)
+DEFMATH3_2(pbinom)
+DEFMATH3_2(qbinom)
+DEFMATH3_2(pcauchy)
+DEFMATH3_2(qcauchy)
+DEFMATH3_2(pf)
+DEFMATH3_2(qf)
+DEFMATH3_2(pgamma)
+DEFMATH3_2(qgamma)
+DEFMATH3_2(plnorm)
+DEFMATH3_2(qlnorm)
+DEFMATH3_2(plogis)
+DEFMATH3_2(qlogis)
+DEFMATH3_2(pnbinom)
+DEFMATH3_2(qnbinom)
+DEFMATH3_2(pnbinom_mu)
+DEFMATH3_2(qnbinom_mu)
+DEFMATH3_2(pnorm)
+DEFMATH3_2(qnorm)
+DEFMATH3_2(pweibull)
+DEFMATH3_2(qweibull)
+DEFMATH3_2(punif)
+DEFMATH3_2(qunif)
+DEFMATH3_2(pnt)
+DEFMATH3_2(qnt)
+DEFMATH3_2(pnchisq)
+DEFMATH3_2(qnchisq)
+DEFMATH3_2(pwilcox)
+DEFMATH3_2(qwilcox)
 
 /* Mathematical Functions of Four (Real) Arguments */
 
@@ -428,36 +425,28 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
     return sy;
 } /* math4_2() */
 
+#define DEFMATH4_1(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI) { \
+        return math4_1(sa, sb, sc, sd, sI, name); \
+    }
 
-#define CAD3R	CADDDR
-/* This is not (yet) in Rinternals.h : */
-#define CAD5R(e)	CAR(CDR(CDR(CDR(CDR(CDR(e))))))
+DEFMATH4_1(dhyper)
+DEFMATH4_1(dnbeta)
+DEFMATH4_1(dnf)
 
-#define Math4_1(A, FUN) math4_1(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), \
-				FUN)
-#define Math4_2(A, FUN) math4_2(CAR(A), CADR(A), CADDR(A), CAD3R(A), CAD4R(A), \
-				CAD5R(A), FUN)
+#define DEFMATH4_2(name) \
+    SEXP do_##name(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ) { \
+        return math4_2(sa, sb, sc, sd, sI, sJ, name); \
+    }
 
-SEXP distn4(SEXP args)
-{
-    if (!isVectorList(CAR(args))) error("incorrect usage");
-    const char *dn = CHAR(STRING_ELT(getListElement(CAR(args), "name"), 0));
-    args = CDR(args);
-
-    if (streql(dn, "dhyper")) return Math4_1(args, dhyper);
-    else if (streql(dn, "phyper")) return Math4_2(args, phyper);
-    else if (streql(dn, "qhyper")) return Math4_2(args, qhyper);
-    else if (streql(dn, "dnbeta")) return Math4_1(args, dnbeta);
-    else if (streql(dn, "pnbeta")) return Math4_2(args, pnbeta);
-    else if (streql(dn, "qnbeta")) return Math4_2(args, qnbeta);
-    else if (streql(dn, "dnf")) return Math4_1(args, dnf);
-    else if (streql(dn, "pnf")) return Math4_2(args, pnf);
-    else if (streql(dn, "qnf")) return Math4_2(args, qnf);
-    else if (streql(dn, "ptukey")) return Math4_2(args, ptukey);
-    else if (streql(dn, "qtukey")) return Math4_2(args, qtukey);
-    else error("unknown distribution %s", dn);
-    return R_NilValue;
-}
+DEFMATH4_2(phyper)
+DEFMATH4_2(qhyper)
+DEFMATH4_2(pnbeta)
+DEFMATH4_2(qnbeta)
+DEFMATH4_2(pnf)
+DEFMATH4_2(qnf)
+DEFMATH4_2(ptukey)
+DEFMATH4_2(qtukey)
 
 /* These are here to get them in the correct package */
 
