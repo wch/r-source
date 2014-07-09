@@ -25,8 +25,6 @@
 
 #include "methods.h"
 
-extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);
-
 /* substitute in an _evaluated_ object, with an explicit list as
    second arg (although old-style lists and environments are allowed).
 

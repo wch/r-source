@@ -463,7 +463,6 @@ const static struct {
     { "bmp", BMP }
 };
 
-extern void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file);
 /*
    cairo(filename, type, width, height, pointsize, bg, res, antialias, 
          quality, family)
