@@ -101,9 +101,6 @@ static int R_Profiling = 0;
 
 static FILE *R_ProfileOutfile = NULL;
 static int R_Mem_Profiling=0;
-extern void get_current_mem(size_t *,size_t *,size_t *); /* in memory.c */
-extern unsigned long get_duplicate_counter(void);  /* in duplicate.c */
-extern void reset_duplicate_counter(void);         /* in duplicate.c */
 static int R_GC_Profiling = 0;                     /* indicates GC profiling */
 static int R_Line_Profiling = 0;                   /* indicates line profiling, and also counts the filenames seen (+1) */
 static char **R_Srcfiles;			   /* an array of pointers into the filename buffer */

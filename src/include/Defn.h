@@ -1197,6 +1197,7 @@ void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
+int Rf_AdobeSymbol2ucs2(int n);
 
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
@@ -1220,6 +1221,21 @@ Rboolean mbcsValid(const char *str);
 Rboolean utf8Valid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
+
+SEXP fixup_NaRm(SEXP args); /* summary.c */
+void invalidate_cached_recodings(void);  /* from sysutils.c */
+void resetICUcollator(void); /* from util.c */
+void dt_invalidate_locale(); /* from Rstrptime.h */
+int R_OutputCon; /* from connections.c */
+int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
+void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
+unsigned long get_duplicate_counter(void);  /* from duplicate.c */
+extern void reset_duplicate_counter(void);  /* from duplicate.c */
+
+// Unix and Windows versions
+double R_getClockIncrement(void);
+void R_getProcTime(double *data);
+
 
 #ifdef Win32
 void R_fixslash(char *s);

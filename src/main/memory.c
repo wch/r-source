@@ -2758,9 +2758,6 @@ static void R_gc_full(R_size_t size_needed)
     R_gc_internal(size_needed);
 }
 
-extern double R_getClockIncrement(void);
-extern void R_getProcTime(double *data);
-
 static double gctimes[5], gcstarttimes[5];
 static Rboolean gctime_enabled = FALSE;
 

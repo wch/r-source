@@ -1735,12 +1735,6 @@ SEXP attribute_hidden do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString(p ? p : "");
 }
 
-extern void invalidate_cached_recodings(void);  /* from sysutils.c */
-
-extern void resetICUcollator(void); /* from util.c */
-
-extern void dt_invalidate_locale(); /* from Rstrptime.h */
-
 /* Locale specs are always ASCII */
 SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

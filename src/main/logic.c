@@ -406,8 +406,6 @@ static int checkValues(int op, int na_rm, int *x, R_xlen_t n)
     return NA_LOGICAL; /* -Wall */
 }
 
-extern SEXP fixup_NaRm(SEXP args); /* summary.c */
-
 /* all, any */
 SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
