@@ -25,8 +25,10 @@
 */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h> /* for affinity function checks and sigaction */
+# include <config.h> /* for affinity function checks and sigaction */
 #endif
+#define NO_NLS
+#include <Defn.h> // for R_isForkedChild
 
 #include "parallel.h"
 
@@ -38,8 +40,8 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include <R.h>
-#include <Rinternals.h>
+//#include <R.h>
+//#include <Rinternals.h>
 #include <Rinterface.h> /* for R_Interactive */
 
 #ifndef FILE_LOG
@@ -237,9 +239,6 @@ static void parent_sig_handler(int sig) {
 	clean_zombies();
 }
 #endif
-
-/* from Defn.h */
-extern Rboolean R_isForkedChild;
 
 SEXP mc_fork(SEXP sEstranged)
 {

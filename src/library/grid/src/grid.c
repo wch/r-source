@@ -30,8 +30,6 @@
  * package used to be called "lattice"
  */
 
-extern int gridRegisterIndex;
-
 void getDeviceSize(pGEDevDesc dd, double *devWidthCM, double *devHeightCM) 
 {
     double left, right, bottom, top;

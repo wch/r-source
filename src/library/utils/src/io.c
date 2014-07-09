@@ -168,10 +168,6 @@ static int Strtoi(const char *nptr, int base)
     return (int) res;
 }
 
-// ../../../main/util.c
-extern double R_strtod5(const char *str, char **endptr, char dec,
-			Rboolean NA, Rboolean exact);
-
 static double
 Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d, int i_exact)
 {

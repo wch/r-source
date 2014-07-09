@@ -1198,6 +1198,8 @@ void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);
+double R_strtod5(const char *str, char **endptr, char dec,
+		 Rboolean NA, Rboolean exact);
 
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
@@ -1270,22 +1272,23 @@ extern const char *locale2charset(const char *);
 
 /* Localization */
 
-#ifdef ENABLE_NLS
-#include <libintl.h>
-#ifdef Win32
-#define _(String) libintl_gettext (String)
-#undef gettext /* needed for graphapp */
-#else
-#define _(String) gettext (String)
+#ifndef NO_NLS
+# ifdef ENABLE_NLS
+#  include <libintl.h>
+#  ifdef Win32
+#   define _(String) libintl_gettext (String)
+#   undef gettext /* needed for graphapp */
+#  else
+#   define _(String) gettext (String)
+#  endif
+#  define gettext_noop(String) String
+#  define N_(String) gettext_noop (String)
+#  else /* not NLS */
+#  define _(String) (String)
+#  define N_(String) String
+#  define ngettext(String, StringP, N) (N > 1 ? StringP: String)
+# endif
 #endif
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-#else /* not NLS */
-#define _(String) (String)
-#define N_(String) String
-#define ngettext(String, StringP, N) (N > 1 ? StringP: String)
-#endif
-
 
 /* Macros for suspending interrupts: also in GraphicsDevice.h */
 #define BEGIN_SUSPEND_INTERRUPTS do { \

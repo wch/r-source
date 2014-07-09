@@ -17,10 +17,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#include <R.h>
-#include <Rdefines.h>
-#define NewEnvironment		Rf_NewEnvironment
-#define substitute		Rf_substitute
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+#define NO_NLS
+#include <Defn.h>
+
 #include "methods.h"
 
 extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);

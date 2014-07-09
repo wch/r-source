@@ -37,8 +37,6 @@
 #define _(String) (String)
 #endif
 
-/* From src/main/devices.c */
-extern int baseRegisterIndex;
 
 static R_INLINE GPar* dpSavedptr(pGEDevDesc dd) {
     if (baseRegisterIndex == -1)
