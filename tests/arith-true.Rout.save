@@ -1,5 +1,5 @@
 
-R version 3.1.1 RC (2014-07-04 r66081) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-07-10 r66121) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.239 0.004 0.245 0 0 
+Time elapsed:  0.188 0.001 0.188 0 0 
 > 

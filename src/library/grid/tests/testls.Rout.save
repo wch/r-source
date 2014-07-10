@@ -1,5 +1,5 @@
 
-R version 3.1.1 RC (2014-07-04 r66081) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-07-10 r66121) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.278   0.019   0.289 
+  0.209   0.012   0.218 

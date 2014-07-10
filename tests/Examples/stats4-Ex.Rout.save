@@ -1,5 +1,5 @@
 
-R version 3.1.1 RC (2014-07-04 r66081) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-07-10 r66121) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -184,7 +184,7 @@ Coefficients:
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.484 0.003 0.49 0 0 
+Time elapsed:  0.383 0.002 0.385 0 0 
 > grDevices::dev.off()
 null device 
           1 
