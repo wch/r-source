@@ -1512,7 +1512,7 @@ int attribute_hidden Rf_AdobeSymbol2ucs2(int n)
 }
 
 double R_strtod5(const char *str, char **endptr, char dec,
-		 Rboolean NA, Rboolean exact)
+		 Rboolean NA, int exact)
 {
     LDOUBLE ans = 0.0, p10 = 10.0, fac = 1.0;
     int n, expn = 0, sign = 1, ndigits = 0, exph = -1;
