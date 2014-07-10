@@ -46,7 +46,7 @@
 # define R_rint rint
 #else
 # define R_rint private_rint
-extern double private_rint(double x);
+# include "nmath2.h" // for private_rint
 #endif
 
 /* Improvements by Martin Maechler, May 1997;

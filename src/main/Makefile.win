@@ -45,6 +45,7 @@ endif
 
 platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'
 
+RNG-CPPFLAGS=-I../nmath
 agrep-CPPFLAGS=-I../extra
 # array-CPPFLAGS=$(OPENMP) # too slow to be useful.
 builtin-CPPFLAGS=-I../gnuwin32

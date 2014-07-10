@@ -150,7 +150,7 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
 #  define R_nearbyint rint
 # else
 #  define R_nearbyint private_rint
-extern double private_rint(double x);/* in ../nmath/fround.c  */
+#  include "nmath2.h" // for private_rint
 # endif
 #endif
 
