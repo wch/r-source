@@ -1240,6 +1240,7 @@ void R_getProcTime(double *data);
 
 
 #ifdef Win32
+Rboolean UseInternet2;
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
