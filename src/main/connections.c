@@ -4833,8 +4833,6 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32
-#include <R_ext/RStartup.h>
-extern UImode CharacterMode;
 void WinCheckUTF8(void)
 {
     if(CharacterMode == RGui) WinUTF8out = (SinkCons[R_SinkNumber] == 1);
