@@ -850,7 +850,7 @@ LibExtern Rboolean mbcslocale;
 #endif
 
 /* Useful for devices: translates Adobe symbol encoding to UTF-8 */
-extern void *AdobeSymbol2utf8(char*out, const char *in, int nwork);
+extern void *AdobeSymbol2utf8(char*out, const char *in, size_t nwork);
 /* Translates Unicode point to UTF-8 */
 extern size_t Rf_ucstoutf8(char *s, const unsigned int c);
 

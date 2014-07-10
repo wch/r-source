@@ -149,12 +149,12 @@ qbinom <- function(p, size, prob, lower.tail = TRUE, log.p = FALSE)
 rbinom <- function(n, size, prob) .External(C_rbinom, n, size, prob)
 
 ## Multivariate: that's why there's no C interface (yet) for d...():
-dmultinom <- function(x, size=NULL, prob, log = FALSE)
+dmultinom <- function(x, size = NULL, prob, log = FALSE)
 {
     K <- length(prob)
     if(length(x) != K) stop("x[] and prob[] must be equal length vectors.")
-    if(any(prob < 0) || (s <- sum(prob)) == 0)
-	stop("probabilities cannot be negative nor all 0")
+    if(any(!is.finite(prob)) || any(prob < 0) || (s <- sum(prob)) == 0)
+	stop("probabilities must be finite, non-negative and not all 0")
     prob <- prob / s
 
     x <- as.integer(x + 0.5)
