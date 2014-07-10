@@ -73,8 +73,6 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 static int ParseBrowser(SEXP, SEXP);
 
 
-extern void InitDynload(void);
-
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
 static void R_ReplFile(FILE *fp, SEXP rho)
@@ -461,7 +459,6 @@ static void win32_segv(int signum)
    2005-12-17 BDR */
 
 static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE];
-extern void R_CleanTempDir(void);
 
 static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 {

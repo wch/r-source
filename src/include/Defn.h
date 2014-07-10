@@ -1237,7 +1237,8 @@ extern void reset_duplicate_counter(void);  /* from duplicate.c */
 // Unix and Windows versions
 double R_getClockIncrement(void);
 void R_getProcTime(double *data);
-
+void InitDynload(void);
+void R_CleanTempDir(void);
 
 #ifdef Win32
 Rboolean UseInternet2;

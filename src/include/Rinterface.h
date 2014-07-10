@@ -79,9 +79,12 @@ extern FILE * R_Consolefile;
 extern FILE * R_Outputfile;
 
 
-/* in sys-unix.c */
+/* in unix/sys-unix.c */
 void R_setStartTime(void);
 void fpu_setup(Rboolean);
+
+/* in unix/system.c */
+int R_running_as_main_program; 
 
 #ifdef CSTACK_DEFNS
 /* duplicating Defn.h */
