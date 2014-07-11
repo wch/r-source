@@ -15,6 +15,9 @@
 
       \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
       \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
+
+      \item \code{prettyNum(x, zero.print=*)} now also works when
+      \code{x} contains \code{NA}s.
     }
   }
 }

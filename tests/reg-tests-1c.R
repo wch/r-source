@@ -349,13 +349,23 @@ hw <- hclust(dist(sqrt(1:5)), method=c(M = "ward"))
 ## failed for 2 days in R-devel/-alpha
 
 
+
 ## numericDeriv failed to duplicate variables in
 ## the expression before modifying them.  PR#15849
 x <- 10; y <- 10
-d1 <- numericDeriv(quote(x+y),c("x","y")) 
+d1 <- numericDeriv(quote(x+y),c("x","y"))
 x <- y <- 10
 d2 <- numericDeriv(quote(x+y),c("x","y"))
 stopifnot(identical(d1,d2))
 ## The second gave the wrong answer
+
+
+## prettyNum(x, zero.print = .) failed when x had NAs
+pp <- sapply(list(TRUE, FALSE, ".", " "), function(.)
+	     prettyNum(c(0:1,NA), zero.print = . ))
+stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
+	  pp[2:3,] == c("1","NA"))
+## all 4 prettyNum() would error out
+
 
 proc.time()
