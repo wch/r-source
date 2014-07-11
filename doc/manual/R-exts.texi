@@ -10187,10 +10187,9 @@ The C code is
 @group
 SEXP mkans(double x)
 @{
-    SEXP ans;
-    ans = PROTECT(allocVector(REALSXP, 1));
+    // no need for PROTECT() here, as REAL(.) does not allocate:
+    SEXP ans = allocVector(REALSXP, 1); 
     REAL(ans)[0] = x;
-    UNPROTECT(1);
     return ans;
 @}
 @end group
@@ -10198,8 +10197,13 @@ SEXP mkans(double x)
 @group
 double feval(double x, SEXP f, SEXP rho)
 @{
-    defineVar(install("x"), mkans(x), rho);
-    return REAL(eval(f, rho))[0];
+    // a version with (too) much PROTECT()ion .. "better safe than sorry"
+    SEXP symbol, value;
+    PROTECT(symbol = install("x"));
+    PROTECT(value = mkans(x));
+    defineVar(symbol, value, rho);
+    UNPROTECT(2);
+    return(REAL(eval(f, rho))[0]);
 @}
 @end group
 
