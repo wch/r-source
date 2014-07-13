@@ -2524,10 +2524,10 @@ make this easier for users. See
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
-if it defaults to @samp{C} (as it sometimes does when logging it
-remotely and in batch jobs: note whether @command{Terminal} sets the
-@env{LANG} environment variable is an (advanced) option, but the
-default).
+if it defaults to @samp{C} (as it sometimes does when logging in
+remotely and for batch jobs: note whether @command{Terminal} sets the
+@env{LANG} environment variable is an (advanced) preference, but does so
+by default).
 
 Internally OS X uses a form similar to Linux: the main difference from
 other Unix-alikes is that where a character set is not specified it is
