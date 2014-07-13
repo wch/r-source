@@ -793,6 +793,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define allocCharsxp		Rf_allocCharsxp
 # define asVecSize		Rf_asVecSize
 # define begincontext		Rf_begincontext
+# define BindDomain		Rf_BindDomain
 # define check_stack_balance	Rf_check_stack_balance
 # define check1arg		Rf_check1arg
 # define CheckFormals		Rf_CheckFormals
@@ -1232,7 +1233,9 @@ int R_OutputCon; /* from connections.c */
 int R_InitReadItemDepth, R_ReadItemDepth; /* from serialize.c */
 void get_current_mem(size_t *,size_t *,size_t *); /* from memory.c */
 unsigned long get_duplicate_counter(void);  /* from duplicate.c */
-extern void reset_duplicate_counter(void);  /* from duplicate.c */
+void reset_duplicate_counter(void);  /* from duplicate.c */
+void BindDomain(char *); /* from main.c */
+Rboolean LoadInitFile;  /* from startup.c */
 
 // Unix and Windows versions
 double R_getClockIncrement(void);

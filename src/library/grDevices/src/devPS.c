@@ -704,7 +704,7 @@ pserror:
 }
 
 
-extern int Ri18n_wcwidth(wchar_t c);
+#include <rlocale.h> /* for Ri18n_wcwidth */
 
 
 static double

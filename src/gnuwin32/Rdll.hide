@@ -35,7 +35,6 @@
  BZ2_hbMakeCodeLengths
  BZ2_indexIntoF
  BZ2_rNums
- BindDomain
  CPFun
  ConsoleAcceptCmd
  DebugMenuitem
@@ -253,6 +252,7 @@
  Rcons_vprintf
  Rconsolesetwidth
  Rf_AdobeSymbol2ucs2
+ Rf_BindDomain
  Rf_CheckFormals
  Rf_CoercionWarning
  Rf_ComplexFromInteger

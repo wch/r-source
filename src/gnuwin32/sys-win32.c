@@ -33,8 +33,6 @@
 
 #include <ctype.h> /* for isalpha */
 
-extern Rboolean LoadInitFile;
-
 /*
  *  4) INITIALIZATION AND TERMINATION ACTIONS
  */
