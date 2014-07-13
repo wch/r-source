@@ -80,6 +80,16 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		     DllReference *dll);
 static SEXP pkgtrim(SEXP args, DllReference *dll);
 
+static R_INLINE Rboolean isNativeSymbolInfo(SEXP op)
+{
+    /* was: inherits(op, "NativeSymbolInfo")
+     * inherits() is slow because of string comparisons, so use
+     * structural check instead. */
+    return (TYPEOF(op) == VECSXP &&
+	    LENGTH(op) >= 2 &&
+	    TYPEOF(VECTOR_ELT(op, 1)) == EXTPTRSXP);
+}
+
 /*
   Called from resolveNativeRoutine (and itself).
 
@@ -101,10 +111,16 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
     if (isValidString(op)) return;
 
     if(TYPEOF(op) == EXTPTRSXP) {
+	static SEXP native_symbol = NULL;
+	static SEXP registered_native_symbol = NULL;
+	if (native_symbol == NULL) {
+	    native_symbol = install("native symbol");
+	    registered_native_symbol = install("registered native symbol");
+	}
 	char *p = NULL;
-	if(R_ExternalPtrTag(op) == install("native symbol"))
+	if(R_ExternalPtrTag(op) == native_symbol)
 	   *fun = R_ExternalPtrAddrFn(op);
-	else if(R_ExternalPtrTag(op) == install("registered native symbol")) {
+	else if(R_ExternalPtrTag(op) == registered_native_symbol) {
 	   R_RegisteredNativeSymbol *tmp;
 	   tmp = (R_RegisteredNativeSymbol *) R_ExternalPtrAddr(op);
 	   if(tmp) {
@@ -150,7 +166,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 
 	return;
     }
-    else if(inherits(op, "NativeSymbolInfo")) {
+    else if(isNativeSymbolInfo(op)) {
 	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun, symbol, buf);
 	return;
     }
