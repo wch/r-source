@@ -5426,8 +5426,8 @@ $as_echo "found zi4.sty" >&6; }
   else
     ${KPSEWHICH} inconsolata.sty > /dev/null
     if test $? -ne 0; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: found insonsolata.sty" >&5
-$as_echo "found insonsolata.sty" >&6; }
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: found inconsolata.sty" >&5
+$as_echo "found inconsolata.sty" >&6; }
     else
       r_rd4pdf="times,hyper"
       if test -z "${R_RD4PDF}" ;  then

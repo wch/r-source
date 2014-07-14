@@ -40,8 +40,6 @@
 #include <errno.h>
 #include <fcntl.h>
 
-//#include <R.h>
-//#include <Rinternals.h>
 #include <Rinterface.h> /* for R_Interactive */
 
 #ifndef FILE_LOG
