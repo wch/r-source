@@ -175,10 +175,10 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return ccumprod(t, s);
 	    break;
 	case 3: /* cummax */
-	    errorcall(call, _("'cummin' not defined for complex numbers"));
+	    errorcall(call, _("'cummax' not defined for complex numbers"));
 	    break;
 	case 4: /* cummin */
-	    errorcall(call, _("'cummax' not defined for complex numbers"));
+	    errorcall(call, _("'cummin' not defined for complex numbers"));
 	    break;
 	default:
 	    errorcall(call, "unknown cumxxx function");
