@@ -70,22 +70,18 @@
       read-compatible with \code{ascii = TRUE} but avoids
       binary->decimal->binary conversions with potential loss of
       precision.  Unfortunately Windows' lack of C99 compliance means
-      that the format can be written but not read correctly there in \R
-      before 3.2.0.
+      that the format cannot read correctly there in \R before 3.2.0.
 
       \item The default for \code{formatC(decimal.mark =)} has been
       changed to be \code{getOption("OutDec")}; this makes it more
       consistent with \code{format()} and suitable for use in print
-      methods.
-
-      \item The print methods for classes \code{"density"},
-      \code{"ecdf"}, \code{"kmeans"}, \code{"stepfun"} and
-      \code{"summary.lm"} now consult \code{getOption("OutDec")} even
-      where \code{formatC()} or \code{sprintf()} is used.
-
-      Similarly when \code{cut()}, \code{dendrogram()}, \code{plot.ts()}
-      and \code{quantile()} construct labels, and for the report from
-      \code{legend(trace = TRUE)}.
+      methods, e.g. those for classes \code{"density"}, \code{"ecdf"},
+      \code{"stepfun"} and \code{"summary.lm"}.
+      
+      \code{getOption("OutDec")} is now consulted by the print methd for
+      class\code{"kmeans"}, by \code{cut()}, \code{dendrogram()},
+      \code{plot.ts()} and \code{quantile()} when constructing labels
+      and for the report from \code{legend(trace = TRUE)}.
 
       (In part, wish of \PR{15819}.)
 
