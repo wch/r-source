@@ -26,6 +26,9 @@
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
       documented). (Wish of \PR{15790}.)
+      
+      \item LaTeX package \pkg{upquote} is no longer required for \R's
+      use of \pkg{inconsolata}.
     }
   }
   
