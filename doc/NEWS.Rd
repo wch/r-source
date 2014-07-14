@@ -120,9 +120,6 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item LaTeX package \pkg{upquote} is no longer required for \R's
-      use of \pkg{inconsolata}.
-
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
       \command{make check TEST_DONTTEST=TRUE}.
@@ -164,7 +161,7 @@
     \itemize{
      \item For consistency with \code{[dpqr]norm()},
     \code{[dp]lnorm(sdlog = 0)} model a point mass at
-    \code{exp(mulog)}.
+    \code{exp(mulog)} rather than return \code{NaN} (for an error).
     }
   }
   
@@ -178,6 +175,9 @@
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
       documented). (Wish of \PR{15790}.)
+      
+      \item LaTeX package \pkg{upquote} is no longer required for \R's
+      use of \pkg{inconsolata}.
     }
   }
   
