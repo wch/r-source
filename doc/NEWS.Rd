@@ -8,6 +8,14 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.1.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+     \item For consistency with \code{[dpqr]norm()},
+    \code{[dp]lnorm(sdlog = 0)} model a point mass at
+    \code{exp(mulog)} rather than return \code{NaN} (for an error).
+    }
+  }
+  
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item When building \R as a shared library, the
@@ -25,9 +33,6 @@
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
       correctly.
-
-      \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
-      \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
 
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
@@ -132,7 +137,7 @@
       \command{R CMD check}) in the \sQuote{Writing R Extensions}
       manual.
 
-      \item Compilers/linkers were handling the visibility controls in
+      \item Compilers/linkers were handling the visibility control in
       \file{src/extra/xz} inconsistently (and apparently in some cases
       incorrectly), so it has been simplified.  (\PR{15327})
 
