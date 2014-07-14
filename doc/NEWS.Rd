@@ -107,13 +107,6 @@
       and \code{promptPackage()} now makes use of them.
 
       \item \code{capabilities()} now reports if ICU is used for collation.
-
-      % TODO: Port to 3.1.1 patched
-      \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
-      \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
-
-      \item \code{prettyNum(x, zero.print = *)} now also works when
-      \code{x} contains \code{NA}s.
       
       \item \code{tools::parse_Rd()} gains a new \code{permissive}
       argument which converts unrecognized macros into text.  This is
@@ -127,15 +120,6 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item When building \R as a shared library, the
-      \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
-      link commands used during installation and when packages are
-      installed: this helps ensure that the current build has priority if
-      an \R shared library has already been installed by e.g.
-      \command{install-libR} in a library mentioned in \env{LDFLAGS}
-      (and not in \sQuote{your system's library directory} as
-      documented). (Wish of \PR{15790}.)
-
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
 
@@ -176,10 +160,29 @@
   }
 }
 \section{\Rlogo CHANGES IN R 3.1.1 patched}{
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item When building \R as a shared library, the
+      \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
+      link commands used during installation and when packages are
+      installed: this helps ensure that the current build has priority if
+      an \R shared library has already been installed by e.g.
+      \command{install-libR} in a library mentioned in \env{LDFLAGS}
+      (and not in \sQuote{your system's library directory} as
+      documented). (Wish of \PR{15790}.)
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
-      correctly. 
+      correctly.
+
+      \item For consistency with \code{[dpqr]norm()}, and \code{[qr]lnorm()},
+      \code{[dp]lnorm(sdlog = 0)} also model a point mass at \code{exp(mulog)}.
+
+      \item \code{prettyNum(x, zero.print=*)} now also works when
+      \code{x} contains \code{NA}s.
     }
   }
 }
