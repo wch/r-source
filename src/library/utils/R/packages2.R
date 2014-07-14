@@ -496,7 +496,7 @@ install.packages <-
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
         if(substr(type, 1L, 10L) == "mac.binary") {
-            if(!length(grep("darwin", R.version$platform)))
+            if(!grepl("darwin", R.version$platform))
                 stop("cannot install MacOS X binary packages on this platform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,

@@ -58,8 +58,7 @@ function(dir, outDir)
     }
 
     OStype <- R.version$platform
-    if (length(grep("-apple-darwin", R.version$platform)) &&
-        nzchar(Sys.getenv("R_ARCH")))
+    if (grepl("-apple-darwin", OStype) && nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
 	paste0("R ",

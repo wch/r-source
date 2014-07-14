@@ -470,7 +470,7 @@
 		## important since we will blow away .o files so there
 		## is no way to create it later.
 
-		if (dsym && length(grep("^darwin", R.version$os)) ) {
+		if (dsym && grepl("^darwin", R.version$os) ) {
 		    message(gettextf("generating debug symbols (%s)", "dSYM"),
                             domain = NA)
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
