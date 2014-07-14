@@ -78,8 +78,8 @@
       methods, e.g. those for classes \code{"density"}, \code{"ecdf"},
       \code{"stepfun"} and \code{"summary.lm"}.
       
-      \code{getOption("OutDec")} is now consulted by the print methd for
-      class\code{"kmeans"}, by \code{cut()}, \code{dendrogram()},
+      \code{getOption("OutDec")} is now consulted by the print methods
+      for class \code{"kmeans"}, by \code{cut()}, \code{dendrogram()},
       \code{plot.ts()} and \code{quantile()} when constructing labels
       and for the report from \code{legend(trace = TRUE)}.
 
@@ -120,7 +120,7 @@
       used by \code{utils:::format.bibentry} to allow LaTeX markup to be
       ignored.
   
-      \item \code{options(OutDec=)} can now specify a multi-byte
+      \item \code{options(OutDec =)} can now specify a multi-byte
       character, e.g. \code{options(OutDec = "\u00b7")} in a UTF-8 locale.
     }
   }
