@@ -21,11 +21,6 @@
       \env{R_SHELL}, the preferred way to select a non-default shell,
       can be used instead.
 
-      \item \code{embedFonts()} now defaults to \code{format =
-      "ps2write"} for \file{.ps} and \file{.eps} files.  This is
-      available in Ghostscript 9.x (since 2010) whereas the previous
-      default, \code{format = "pswrite"}, was removed in 9.10.
-
       \item Some unusual arguments to \code{embedFonts()} can now be
       specified as character vectors, and the defaults have changed
       accordingly.
@@ -159,9 +154,14 @@
 \section{\Rlogo CHANGES IN R 3.1.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-     \item For consistency with \code{[dpqr]norm()},
-    \code{[dp]lnorm(sdlog = 0)} model a point mass at
-    \code{exp(mulog)} rather than return \code{NaN} (for an error).
+      \item \code{embedFonts()} now defaults to \code{format =
+      "ps2write"} for \file{.ps} and \file{.eps} files.  This is
+      available in Ghostscript 9.x (since 2010) whereas the previous
+      default, \code{format = "pswrite"}, was removed in 9.10.
+
+      \item For consistency with \code{[dpqr]norm()},
+      \code{[dp]lnorm(sdlog = 0)} model a point mass at
+      \code{exp(mulog)} rather than return \code{NaN} (for an error).
     }
   }
   
