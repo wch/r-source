@@ -1,6 +1,6 @@
 % File src/library/methods/man/setLoadActions.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2012-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setLoadActions}
@@ -14,29 +14,26 @@
 Set Actions For Package Loading
 }
 \description{
-These functions
-provide a mechanism
-for packages to specify computations to be done during the loading of
-the package namespace.
-Such actions are a flexible way to provide information only available
-at load time (such as locations in a dynamically linked library).
+  These functions provide a mechanism for packages to specify
+  computations to be done during the loading of the package namespace.
+  Such actions are a flexible way to provide information only available at
+  load time (such as locations in a dynamically linked library).
 
 
-  A call to
-\code{setLoadAction()}  or \code{setLoadActions()} specifies one or more functions
-to be
-called when the corresponding package is loaded, with the \dots{} argument
-names being used as identifying names for the actions.
+  A call to \code{setLoadAction()} or \code{setLoadActions()} specifies
+  one or more functions to be called when the corresponding namespace is
+  loaded, with the \dots{} argument names being used as identifying
+  names for the actions.
 
-\code{getLoadActions} reports the currently defined load actions,
-given a package's namespace as its argument.
+  \code{getLoadActions} reports the currently defined load actions,
+  given a package's namespace as its argument.
 
-\code{hasLoadAction} returns \code{TRUE} if a load action
-corresponding to the given name has previously been set for the
-\code{where} namespace.
+  \code{hasLoadAction} returns \code{TRUE} if a load action
+  corresponding to the given name has previously been set for the
+  \code{where} namespace.
 
-\code{evalOnLoad()} and \code{evalqOnLoad()} schedule a specific expression for
-evaluation at load time.
+  \code{evalOnLoad()} and \code{evalqOnLoad()} schedule a specific
+  expression for evaluation at load time.
 }
 \usage{
 
@@ -117,11 +114,12 @@ constructed, in a subsequent call.
 The replacement must still be a valid function, but can of course do
 nothing if the intention was to remove a previously specified action.
 
-The functions must have at least one argument.  They will be called
-with one argument, the namespace of the package.
-The functions will be called at the end of processing of S4 metadata, after
-dynamically linking any libraries, the call to \code{.onLoad()}, if
-any, and caching method and class definitions, but before the namespace is sealed.
+The functions must have at least one argument.  They will be called with
+one argument, the namespace of the package.  The functions will be
+called at the end of processing of S4 metadata, after dynamically
+linking any compiled code, the call to \code{.onLoad()}, if any, and
+caching method and class definitions, but before the namespace is
+sealed.
 
 Functions may therefore assign or modify objects in the namespace
 supplied as the argument in the call.
@@ -154,6 +152,13 @@ supplied namespace.
 \code{hasLoadAction()} returns \code{TRUE} if the specified action
 name appears in the actions for this package.
 }
+
+\seealso{
+  \code{\link{setHook}} for safer (since they are run after the
+  namespace is sealed) and more comprehensive versions in the
+  base package.
+}
+
 \examples{
 \dontrun{
 ## in the code for some package
