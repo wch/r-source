@@ -46,12 +46,13 @@ embedFonts(file, format, outfile = file, fontpaths = character(),
   of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
 
-  The \code{format} is by default \code{"pswrite"}, when the original
+  The \code{format} is by default \code{"ps2write"}, when the original
   file has a \code{.ps} or \code{.eps} suffix, or \code{"pdfwrite"} when
-  the original file has a \code{.pdf} suffix.  In recent versions of
-  ghostscript, the \code{"pswrite"} format has been deprecated, so you
-  may have to provide an explicit format: \code{"ps2write"} and
-  \code{"eps2write"} (from version 9.14) should be available.
+  the original file has a \code{.pdf} suffix.  For versions of
+  Ghostscript before 9.10, \code{format = "pswrite"} or \code{format =
+  "epswrite"} can be used: as from 9.14 \code{format = "eps2write"} is
+  also available.  If an invalid device is given, the error message will
+  list the available devices.
   
   Note that Ghostscript may do font substitution, so the font embedded
   may differ from that specified in the original file.
