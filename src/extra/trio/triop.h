@@ -36,7 +36,8 @@
 #endif
 
 /* R defines */
-#define TRIO_FEATURE_SCANF 0
+#define TRIO_FEATURE_SCANF 1
+#define TRIO_FUNC_TO_FLOAT 1
 #define TRIO_FEATURE_FD 0
 #define TRIO_FEATURE_CLOSURE 0
 #define TRIO_FEATURE_STRERR 0
