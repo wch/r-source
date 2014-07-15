@@ -65,7 +65,7 @@
       read-compatible with \code{ascii = TRUE} but avoids
       binary->decimal->binary conversions with potential loss of
       precision.  Unfortunately Windows' lack of C99 compliance means
-      that the format cannot be read correctly there in \R before 3.2.0.
+      that the format cannot be read correctly there in \R before 3.1.2.
 
       \item The default for \code{formatC(decimal.mark =)} has been
       changed to be \code{getOption("OutDec")}; this makes it more

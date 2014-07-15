@@ -156,7 +156,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   
   Loading files saved with \code{ASCII = NA} requires a C99-compliant C
   function \code{sscanf}: this is a problem on Windows, first worked
-  around in \R 3.2.0: they should be readable in earlier versions of \R
+  around in \R 3.1.2: they should be readable in earlier versions of \R
   on all other platforms.
 }
 \seealso{
