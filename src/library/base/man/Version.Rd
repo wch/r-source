@@ -26,10 +26,10 @@ version
  \code{R.Version} returns a list with character-string components
  \item{platform}{the platform for which \R was built.  A triplet of the
    form CPU-VENDOR-OS, as determined by the configure script.  E.g,
-   \code{"i586-unknown-linux"} or \code{"i386-pc-mingw32"}.
+   \code{"i686-unknown-linux-gnu"} or \code{"i386-pc-mingw32"}.
  }
   \item{arch}{the architecture (CPU) \R was built on/for.}
-  \item{os}{the underlying operating system}
+  \item{os}{the underlying operating system.}
   \item{system}{CPU and OS, separated by a comma.}
   \item{status}{the status of the version (e.g., \code{"Alpha"})}
   \item{major}{the major version number}
@@ -59,10 +59,19 @@ version
   \code{R.version.string} is a copy of \code{R.version$version.string}
   for simplicity and backwards compatibility.
 }
+\details{
+  This gives details of the OS under which \R was built, not the one
+  under which it is currently running (for which see
+  \code{\link{Sys.info}}).
+  
+  Note that OS names might not be what you expect: for example OS X
+  Mavericks 10.9.4 identifies itself as \samp{darwin13.3.0}, Linux
+  usually as \samp{linux-gnu} and Solaris 10 as \samp{solaris2.10}.
+}
 \seealso{
   \code{\link{sessionInfo}} which provides additional information;
   \code{\link{getRversion}} typically used inside R code,
-  \code{\link{.Platform}}.
+  \code{\link{.Platform}}, \code{\link{Sys.info}}.
 }
 \examples{
 require(graphics)
@@ -70,6 +79,9 @@ require(graphics)
 R.version$os # to check how lucky you are ...
 plot(0) # any plot
 mtext(R.version.string, side = 1, line = 4, adj = 1) # a useful bottom-right note
+
+## a good way to detect OS X:
+if(grepl("^darwin", R.version$os)) message("running on OS X")
 }
 \keyword{environment}
 \keyword{sysdata}
