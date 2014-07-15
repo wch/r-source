@@ -1590,18 +1590,49 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap = args, call2;
-    int n = length(args), nprotect = 2;
+    PROTECT(args = evalListKeepMissing(args, env));
+    int n = length(args);
 
-    if (n >= 2 && isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
+    if (n == 1 && TAG(args) == R_NilValue) {
+	SEXP x = CAR(args);
+	SEXP res;
+	if (! OBJECT(x)) {
+	    if (isComplex(x))
+		res = complex_math1(call, op, args, env);
+	    else
+		res = math1(x, R_log, call);
+	    UNPROTECT(1);
+	    return res;
+	}
+    }
+    else if (n == 2 &&
+	     TAG(args) == R_NilValue &&
+	     (TAG(CDR(args)) == R_NilValue || TAG(CDR(args)) == R_baseSymbol)) {
+	/* log(x, y) or log(x, base = y) are handled here */
+	SEXP x = CAR(args);
+	SEXP y = CADR(args);
+	SEXP res;
+	if (! OBJECT(x) && ! OBJECT(y)) {
+	    if (isComplex(x) || isComplex(y))
+		res = complex_math2(call, op, args, env);
+	    else
+		res = math2(x, y, logbase, call);
+	    UNPROTECT(1);
+	    return res;
+	}
+    }
+
+    SEXP res, ap = args, call2;
+    int nprotect = 2;
+
+    if (n >= 2 && CADR(args) == R_MissingArg) {
 #ifdef M_E
 	double e = M_E;
 #else
 	double e = exp(1.);
 #endif
-	PROTECT(args = list2(CAR(args), ScalarReal(e))); nprotect++;
+	SETCADR(args, ScalarReal(e));
     }
-    PROTECT(args = evalListKeepMissing(args, env));
     PROTECT(call2 = lang2(CAR(call), R_NilValue));
     SETCDR(call2, args);
 
@@ -1618,7 +1649,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* match argument names if supplied */
 	    PROTECT(ap = list2(R_NilValue, R_NilValue));
 	    SET_TAG(ap, install("x"));
-	    SET_TAG(CDR(ap), install("base"));
+	    SET_TAG(CDR(ap), R_baseSymbol);
 	    PROTECT(args = matchArgs(ap, args, call));
 	    nprotect += 2;
 	    if (length(CADR(args)) == 0)

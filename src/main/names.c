@@ -1072,6 +1072,7 @@ static void SymbolShortcuts(void)
     R_TripleColonSymbol = install(":::");
     R_ConnIdSymbol = install("conn_id");
     R_DevicesSymbol = install(".Devices");
+    R_baseSymbol = install("base");
 
     R_dot_Generic = install(".Generic");
     R_dot_Method = install(".Method");
