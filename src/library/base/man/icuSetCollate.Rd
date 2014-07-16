@@ -24,13 +24,16 @@ icuSetCollate(...)
 
   Possible arguments are
   \describe{
-    \item{\code{locale}:}{A character string such as \code{"da_DK"} giving the
-      country whose collation rules are to be used.  If present, this
-      should be the first argument.}
+    \item{\code{locale}:}{A character string such as \code{"da_DK"}
+      giving the country whose collation rules are to be used.  If present,
+      this should be the first argument.  Value \code{"default"} obtains
+      the locale from the OS as is done at the start of the session.
+      Values \code{""} and \code{"root"} give the \sQuote{root} collation: see
+      \url{http://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.}
     \item{\code{case_first}:}{\code{"upper"}, \code{"lower"} or
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
-      all languages (see the Danish example).}
+      all languages.}
     \item{\code{alternate_handling}:}{Controls the handling of
       \sQuote{variable} characters (mainly punctuation and symbols).
       Possible values are \code{"non_ignorable"} (primary strength) and
@@ -60,10 +63,14 @@ icuSetCollate(...)
 
   Note that these settings have no effect if collation is set to the
   \code{C} locale, unless \code{locale} is specified.
+
+  All customizations are reset to the default for the locale if
+  \code{locale} is specified: the collation engine is reset if the
+  OS collation locate category is changed by \code{\link{Sys.setlocale}}.
 }
 \note{
-  ICU is used by default wherever it is available: this include OS X (as
-  from 10.4) and many Linux installations.  It is optional on Windows.
+  ICU is used by default wherever it is available: this include OS X,
+  Solaris and many Linux installations.  It is optional on Windows.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}.
@@ -74,13 +81,17 @@ icuSetCollate(...)
   (\url{http://userguide.icu-project.org/collation}).
 }
 \examples{\donttest{
-## these examples depend on having ICU available, and on the locale
-x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
-sort(x)
-icuSetCollate(case_first = "upper"); sort(x)
-icuSetCollate(case_first = "lower"); sort(x)
+## These examples depend on having ICU available, and on the locale.
+## As we don't know the current settings, we can only reset to the default.
+if(capabilities("ICU")) {
+    x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
+    print(sort(x))
+    icuSetCollate(case_first = "upper"); print(sort(x))
+    icuSetCollate(case_first = "lower"); print(sort(x))
 
-icuSetCollate(locale = "da_DK", case_first = "default"); sort(x)
-icuSetCollate(locale = "et_EE"); sort(x)
+    icuSetCollate(locale = "da_DK", case_first = "default"); print(sort(x))
+    icuSetCollate(locale = "et_EE"); print(sort(x))
+    icuSetCollate(locale = "default")
+}
 }}
 \keyword{ utilities }

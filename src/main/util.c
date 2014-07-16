@@ -1898,7 +1898,9 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	s = CHAR(STRING_ELT(x, 0));
 	if (streql(this, "locale")) {
 	    if (collator) ucol_close(collator);
-	    uloc_setDefault(s, &status);
+	    // or setlocale(LC_COLLATE, NULL) as below.
+	    if(streql(s, "default")) uloc_setDefault(NULL, &status);
+	    else uloc_setDefault(s, &status);
 	    if(U_FAILURE(status))
 		error("failed to set ICU locale %s (%d)", s, status);
 	    collator = ucol_open(NULL, &status);

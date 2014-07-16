@@ -167,6 +167,9 @@
       against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
       informative error messages to be given.
+      
+      \item \code{icuSetCollate()} allows \code{locale = "default"} to
+      use the OS locale collation category.
     }
   }
   
