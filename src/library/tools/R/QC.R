@@ -6351,10 +6351,12 @@ function(dir)
                                   lines <- readLines(fp, warn = FALSE)
                                   ## Should this use the package
                                   ## encoding?
-                                  pos <- grep("[^[:blank:]]", lines)
+                                  ## (no, as we have LICENSE files with
+                                  ## copyright signs in ASCII packages)
+                                  pos <- grep("[^[:blank:]]", lines,
+                                              useBytes = TRUE)
                                   c(p, if(len <- length(pos)) {
-                                      lines[seq(from = pos[1L],
-                                                to = pos[len])]
+                                      lines[seq(from = pos[1L], to = pos[len])]
                                   })
                               } else NULL
                           }))
