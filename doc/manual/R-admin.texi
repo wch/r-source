@@ -4783,12 +4783,12 @@ Mountain Lion and later).
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
-conflicting event loops, but for those only using command-line @R{} this
-provides a much more intuitive interface to Tk for experienced Mac
-users. Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current versions of Tcl/Tk (8.5.9 in Mountain Lion and
-Mavericks).  It is better to install Tcl/Tk 8.6.x or 8.5.x from the
-sources or a binary distribution from
+conflicts over the OS X menu, but for those only using command-line @R{}
+this provides a much more intuitive interface to Tk for experienced Mac
+users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
+are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mountain
+Lion and Mavericks).  It is better to install Tcl/Tk 8.6.x or 8.5.x from
+the sources or a binary distribution from
 @uref{http://www.activestate.com/activetcl/downloads}.  Configure @R{}
 with
 @example
@@ -4799,6 +4799,12 @@ with
 @noindent
 (for the versions bundled with OS X, use paths starting with
 @file{/System/Library}).
+
+If you need to find out which version of Tk in use at run time, use
+@example
+library(tcltk)
+tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
+@end example
 
 @node Java (OS X), Frameworks, Tcl/Tk headers and libraries, OS X
 @subsection Java
