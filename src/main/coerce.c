@@ -1756,7 +1756,7 @@ Rcomplex asComplex(SEXP x)
 SEXP attribute_hidden do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    return ScalarString(type2str(TYPEOF(CAR(args))));
+    return type2rstr(TYPEOF(CAR(args)));
 }
 
 /* Define many of the <primitive> "is.xxx" functions :

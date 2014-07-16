@@ -242,18 +242,64 @@ SEXPTYPE str2type(const char *s)
     return (SEXPTYPE) -1;
 }
 
-SEXP type2str_nowarn(SEXPTYPE t)
-{
-    int i;
+static struct {
+    const char *cstrName;
+    SEXP rcharName;
+    SEXP rstrName;
+    SEXP rsymName;
+} Type2Table[MAX_NUM_SEXPTYPE];
 
+
+int findTypeInTypeTable(SEXPTYPE t) {
+    int i;
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    return mkChar(TypeTable[i].str);
+	    return i;
+    }
+    return -1;
+}
+
+void InitTypeTables(void) {
+
+    /* Type2Table */
+    int type;
+    for (type = 0; type < MAX_NUM_SEXPTYPE; type++) {
+        int j = findTypeInTypeTable(type);
+
+        if (j != -1) {
+            const char *cstr = TypeTable[j].str;
+            SEXP rchar = PROTECT(mkChar(cstr));
+            SEXP rstr = ScalarString(rchar);
+            MARK_NOT_MUTABLE(rstr);
+            R_PreserveObject(rstr);
+            UNPROTECT(1); /* rchar */
+            SEXP rsym = install(cstr);
+
+            Type2Table[type].cstrName = cstr;
+            Type2Table[type].rcharName = rchar;
+            Type2Table[type].rstrName = rstr;
+            Type2Table[type].rsymName = rsym;
+        } else {
+            Type2Table[type].cstrName = NULL;
+            Type2Table[type].rcharName = NULL;
+            Type2Table[type].rstrName = NULL;
+            Type2Table[type].rsymName = NULL;
+        }
+    }
+}
+
+SEXP type2str_nowarn(SEXPTYPE t) /* returns a CHARSXP */
+{
+    if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rcharName;
+        if (res != NULL) {
+            return res;
+        }
     }
     return R_NilValue;
 }
 
-SEXP type2str(SEXPTYPE t)
+SEXP type2str(SEXPTYPE t) /* returns a CHARSXP */
 {
     SEXP s = type2str_nowarn(t);
     if (s != R_NilValue) {
@@ -265,13 +311,25 @@ SEXP type2str(SEXPTYPE t)
     return mkChar(buf);
 }
 
-const char *type2char(SEXPTYPE t)
+SEXP type2rstr(SEXPTYPE t) /* returns a STRSXP */
 {
-    int i;
+    if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rstrName;
+        if (res != NULL) {
+            return res;
+        }
+    }
+    error(_("type %d is unimplemented in '%s'"), t, "type2ImmutableScalarString");
+    return R_NilValue; /* for -Wall */
+}
 
-    for (i = 0; TypeTable[i].str; i++) {
-	if (TypeTable[i].type == t)
-	    return TypeTable[i].str;
+const char *type2char(SEXPTYPE t) /* returns a char* */
+{
+    if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        const char * res = Type2Table[t].cstrName;
+        if (res != NULL) {
+            return res;
+        }
     }
     warning(_("type %d is unimplemented in '%s'"), t, "type2char");
     static char buf[50];
@@ -282,13 +340,11 @@ const char *type2char(SEXPTYPE t)
 #ifdef UNUSED
 SEXP type2symbol(SEXPTYPE t)
 {
-    int i;
-    /* for efficiency, a hash table set up to index TypeTable, and
-       with TypeTable pointing to both the
-       character string and to the symbol would be better */
-    for (i = 0; TypeTable[i].str; i++) {
-	if (TypeTable[i].type == t)
-	    return install((const char *)&TypeTable[i].str);
+    if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
+        SEXP res = Type2Table[t].rsymName;
+        if (res != NULL) {
+            return res;
+        }
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2symbol");
     return R_NilValue; /* for -Wall */

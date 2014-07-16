@@ -808,6 +808,7 @@ const char * Rf_translateChar(SEXP);
 const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
+SEXP Rf_type2rstr(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 SEXP Rf_type2str_nowarn(SEXPTYPE);
 #ifndef INLINE_PROTECT
@@ -1190,6 +1191,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define translateChar0		Rf_translateChar0
 #define translateCharUTF8      	Rf_translateCharUTF8
 #define type2char		Rf_type2char
+#define type2rstr		Rf_type2rstr
 #define type2str		Rf_type2str
 #define type2str_nowarn		Rf_type2str_nowarn
 #define unprotect		Rf_unprotect

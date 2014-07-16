@@ -793,6 +793,7 @@ void setup_Rmainloop(void)
     InitOptions();
     InitEd();
     InitGraphics();
+    InitTypeTables(); /* must be before InitS3DefaultTypes */
     InitS3DefaultTypes();
     
     R_Is_Running = 1;
