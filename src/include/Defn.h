@@ -847,6 +847,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
 # define InitStringHash		Rf_InitStringHash
+# define InitS3DefaultTypes	Rf_InitS3DefaultTypes
 # define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
 # define IntegerFromComplex	Rf_IntegerFromComplex
@@ -1050,6 +1051,7 @@ void InitStringHash(void);
 void Init_R_Variables(SEXP);
 void InitTempDir(void);
 void initStack(void);
+void InitS3DefaultTypes(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);

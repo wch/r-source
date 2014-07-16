@@ -174,8 +174,12 @@ typedef enum {
  */
 
 /* Flags */
+
+#define TYPE_BITS 5
+#define MAX_NUM_SEXPTYPE (1<<TYPE_BITS)
+
 struct sxpinfo_struct {
-    SEXPTYPE type      :  5;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
+    SEXPTYPE type      :  TYPE_BITS;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
 			     * -> warning: `type' is narrower than values
 			     *              of its type
 			     * when SEXPTYPE was an enum */
@@ -805,6 +809,7 @@ const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);
 const char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
+SEXP Rf_type2str_nowarn(SEXPTYPE);
 #ifndef INLINE_PROTECT
 void Rf_unprotect(int);
 #endif
@@ -1186,6 +1191,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define translateCharUTF8      	Rf_translateCharUTF8
 #define type2char		Rf_type2char
 #define type2str		Rf_type2str
+#define type2str_nowarn		Rf_type2str_nowarn
 #define unprotect		Rf_unprotect
 #define unprotect_ptr		Rf_unprotect_ptr
 #define VectorToPairList	Rf_VectorToPairList
