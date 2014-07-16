@@ -19,6 +19,8 @@
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
       \code{exp(mulog)} rather than return \code{NaN} (for an error).
       
+      \item \code{capabilities()} now reports if ICU is used for collation.
+      
       \item (OS X only.) Package \pkg{tcltk} checks if it is linked
       against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
