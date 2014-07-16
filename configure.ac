@@ -2821,29 +2821,45 @@ if test "${acx_lapack_ok}" = "yes"; then
   esac
   R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
-if test "${use_ICU}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [ICU], [, ])
-fi
 if test "${have_lzma}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [lzma], [, ])
 fi
+
 r_capabilities=
+r_no_capabilities=
 if test "${have_png}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [PNG], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [PNG], [, ])
 fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [JPEG], [, ])
 fi
 if test "${have_tiff}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [TIFF], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [TIFF], [, ])
 fi
 if test "${USE_NLS}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [NLS], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [NLS], [, ])
 fi
 if test "${r_cv_cairo_works}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [cairo], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [cairo], [, ])
 fi
+if test "${use_ICU}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [ICU], [, ])
+else
+  R_SH_VAR_ADD(r_no_capabilities, [ICU], [, ])
+fi
+
 r_options=
+r_no_options=
 if test "${want_R_framework}" = yes; then
   R_SH_VAR_ADD(r_options, [framework], [, ])
 elif test "${want_R_shlib}" = yes; then
@@ -2853,12 +2869,18 @@ elif test "${want_R_static}" = yes; then
 fi
 if test "${use_blas_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared BLAS], [, ])
+else
+  R_SH_VAR_ADD(r_no_options, [shared BLAS], [, ])
 fi
 if test "${want_R_profiling}" = yes; then
   R_SH_VAR_ADD(r_options, [R profiling], [, ])
+else
+  R_SH_VAR_ADD(r_no_options, [R profiling], [, ])
 fi
 if test "${want_memory_profiling}" = yes; then
   R_SH_VAR_ADD(r_options, [memory profiling], [, ])
+else
+  R_SH_VAR_ADD(r_no_options, [memory profiling], [, ])
 fi
 if test "${use_maintainer_mode}" = yes; then
   R_SH_VAR_ADD(r_options, [maintainer mode], [, ])
@@ -2868,6 +2890,8 @@ if test "${use_strict_barrier}" = yes; then
 fi
 if test "${want_linux_lfs}" = yes; then
   R_SH_VAR_ADD(r_options, [Linux LFS], [, ])
+else
+  R_SH_VAR_ADD(r_no_options, [Linux LFS], [, ])
 fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
@@ -2892,6 +2916,9 @@ R is now configured for ${host}
   External libraries:        ${r_external_libs}
   Additional capabilities:   ${r_capabilities}
   Options enabled:           ${r_options}
+
+  Capabilities skipped:      ${r_no_capabilities}
+  Options not enabled:       ${r_no_options}
 
   Recommended packages:      ${use_recommended_packages} 
 ])

@@ -46085,15 +46085,6 @@ else
   r_external_libs="${r_external_libs}${separator}LAPACK(${r_lapack})"
 fi
 fi
-if test "${use_ICU}" = yes; then
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_external_libs}"; then
-  r_external_libs="ICU"
-else
-  r_external_libs="${r_external_libs}${separator}ICU"
-fi
-fi
 if test "${have_lzma}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
@@ -46103,7 +46094,9 @@ else
   r_external_libs="${r_external_libs}${separator}lzma"
 fi
 fi
+
 r_capabilities=
+r_no_capabilities=
 if test "${have_png}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
@@ -46111,6 +46104,14 @@ if test -z "${r_capabilities}"; then
   r_capabilities="PNG"
 else
   r_capabilities="${r_capabilities}${separator}PNG"
+fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="PNG"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}PNG"
 fi
 fi
 if test "${have_jpeg}" = yes; then
@@ -46121,6 +46122,14 @@ if test -z "${r_capabilities}"; then
 else
   r_capabilities="${r_capabilities}${separator}JPEG"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="JPEG"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}JPEG"
+fi
 fi
 if test "${have_tiff}" = yes; then
   separator=", "
@@ -46129,6 +46138,14 @@ if test -z "${r_capabilities}"; then
   r_capabilities="TIFF"
 else
   r_capabilities="${r_capabilities}${separator}TIFF"
+fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="TIFF"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}TIFF"
 fi
 fi
 if test "${USE_NLS}" = yes; then
@@ -46139,6 +46156,14 @@ if test -z "${r_capabilities}"; then
 else
   r_capabilities="${r_capabilities}${separator}NLS"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="NLS"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}NLS"
+fi
 fi
 if test "${r_cv_cairo_works}" = yes; then
   separator=", "
@@ -46148,8 +46173,35 @@ if test -z "${r_capabilities}"; then
 else
   r_capabilities="${r_capabilities}${separator}cairo"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="cairo"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}cairo"
 fi
+fi
+if test "${use_ICU}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_capabilities}"; then
+  r_capabilities="ICU"
+else
+  r_capabilities="${r_capabilities}${separator}ICU"
+fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_capabilities}"; then
+  r_no_capabilities="ICU"
+else
+  r_no_capabilities="${r_no_capabilities}${separator}ICU"
+fi
+fi
+
 r_options=
+r_no_options=
 if test "${want_R_framework}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
@@ -46183,6 +46235,14 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}shared BLAS"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options="shared BLAS"
+else
+  r_no_options="${r_no_options}${separator}shared BLAS"
+fi
 fi
 if test "${want_R_profiling}" = yes; then
   separator=", "
@@ -46191,6 +46251,14 @@ if test -z "${r_options}"; then
   r_options="R profiling"
 else
   r_options="${r_options}${separator}R profiling"
+fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options="R profiling"
+else
+  r_no_options="${r_no_options}${separator}R profiling"
 fi
 fi
 if test "${want_memory_profiling}" = yes; then
@@ -46201,6 +46269,14 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}memory profiling"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options="memory profiling"
+else
+  r_no_options="${r_no_options}${separator}memory profiling"
+fi
 fi
 if test "${use_maintainer_mode}" = yes; then
   separator=", "
@@ -46209,6 +46285,14 @@ if test -z "${r_options}"; then
   r_options="maintainer mode"
 else
   r_options="${r_options}${separator}maintainer mode"
+fi
+else
+  separator="maintainer mode,"
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options=""
+else
+  r_no_options="${r_no_options}${separator}"
 fi
 fi
 if test "${use_strict_barrier}" = yes; then
@@ -46219,6 +46303,14 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}strict barrier"
 fi
+else
+  separator="strict barrier, "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options=""
+else
+  r_no_options="${r_no_options}${separator}"
+fi
 fi
 if test "${want_linux_lfs}" = yes; then
   separator=", "
@@ -46228,6 +46320,14 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}Linux LFS"
 fi
+else
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options="Linux LFS"
+else
+  r_no_options="${r_no_options}${separator}Linux LFS"
+fi
 fi
 if test "${want_prebuilt_html}" = yes; then
   separator=", "
@@ -46236,6 +46336,14 @@ if test -z "${r_options}"; then
   r_options="static HTML"
 else
   r_options="${r_options}${separator}static HTML"
+fi
+else
+  separator="static HTML"
+test -z "${separator}" && separator=" "
+if test -z "${r_no_options}"; then
+  r_no_options=""
+else
+  r_no_options="${r_no_options}${separator}"
 fi
 fi
 
@@ -46258,6 +46366,9 @@ R is now configured for ${host}
   Additional capabilities:   ${r_capabilities}
   Options enabled:           ${r_options}
 
+  Capabilities skipped:      ${r_no_capabilities}
+  Options not enabled:       ${r_no_options}
+
   Recommended packages:      ${use_recommended_packages}
 " >&5
 $as_echo "
@@ -46278,6 +46389,9 @@ R is now configured for ${host}
   External libraries:        ${r_external_libs}
   Additional capabilities:   ${r_capabilities}
   Options enabled:           ${r_options}
+
+  Capabilities skipped:      ${r_no_capabilities}
+  Options not enabled:       ${r_no_options}
 
   Recommended packages:      ${use_recommended_packages}
 " >&6; }
