@@ -100,8 +100,6 @@
       \item A number of macros have been added in the new
       \file{share/Rd} directory for use in package overview help pages,
       and \code{promptPackage()} now makes use of them.
-
-      \item \code{capabilities()} now reports if ICU is used for collation.
       
       \item \code{tools::parse_Rd()} gains a new \code{permissive}
       argument which converts unrecognized macros into text.  This is
@@ -162,6 +160,8 @@
       \item For consistency with \code{[dpqr]norm()},
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
       \code{exp(mulog)} rather than return \code{NaN} (for an error).
+      
+      \item \code{capabilities()} now reports if ICU is used for collation.
       
       \item (OS X only.) Package \pkg{tcltk} checks if it is linked
       against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk

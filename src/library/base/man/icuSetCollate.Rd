@@ -66,7 +66,9 @@ icuSetCollate(...)
   from 10.4) and many Linux installations.  It is optional on Windows.
 }
 \seealso{
-  \link{Comparison}, \code{\link{sort}}
+  \link{Comparison}, \code{\link{sort}}.
+
+  \code{\link{capabilities}} for whether ICU is in use.
 
   The ICU user guide chapter on collation
   (\url{http://userguide.icu-project.org/collation}).
