@@ -487,6 +487,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## cache generics, classes in this namespace (but not methods itself,
             ## which pre-cached at install time
             methods:::cacheMetaData(ns, TRUE, ns)
+            ## This also ran .doLoadActions
             ## load actions may have added objects matching patterns
             for (p in nsInfo$exportPatterns) {
                 expp <- ls(ns, pattern = p, all.names = TRUE)
