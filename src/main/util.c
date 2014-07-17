@@ -1894,7 +1894,7 @@ static const char *getLocale(void)
     WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
 			locale, BUFFER_SIZE, NULL, NULL);
     printf("locale = %s\n", locale);
-    // replace en-US by en_US and lang-script-REGION by lang_REGION
+    // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
     return "en_US";
 }
 #else
