@@ -820,7 +820,7 @@ setRlibs <-
                        "po", "src", "tests", "vignettes",
                        "build",       # used by R CMD build
                        ".aspell",     # used for spell checking packages
-                       "java", "tools") # common dirs in packages.
+                       "java", "tools", "noweb") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
                 topfiles <- setdiff(topfiles, "AUTHORS")
