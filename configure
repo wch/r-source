@@ -46127,14 +46127,6 @@ if test -z "${r_options}"; then
 else
   r_options="${r_options}${separator}maintainer mode"
 fi
-else
-  separator="maintainer mode,"
-test -z "${separator}" && separator=" "
-if test -z "${r_no_options}"; then
-  r_no_options=""
-else
-  r_no_options="${r_no_options}${separator}"
-fi
 fi
 if test "${use_strict_barrier}" = yes; then
   separator=", "
@@ -46143,14 +46135,6 @@ if test -z "${r_options}"; then
   r_options="strict barrier"
 else
   r_options="${r_options}${separator}strict barrier"
-fi
-else
-  separator="strict barrier, "
-test -z "${separator}" && separator=" "
-if test -z "${r_no_options}"; then
-  r_no_options=""
-else
-  r_no_options="${r_no_options}${separator}"
 fi
 fi
 if test "${want_linux_lfs}" = yes; then
@@ -46177,14 +46161,6 @@ if test -z "${r_options}"; then
   r_options="static HTML"
 else
   r_options="${r_options}${separator}static HTML"
-fi
-else
-  separator="static HTML"
-test -z "${separator}" && separator=" "
-if test -z "${r_no_options}"; then
-  r_no_options=""
-else
-  r_no_options="${r_no_options}${separator}"
 fi
 fi
 
