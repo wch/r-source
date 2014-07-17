@@ -73,7 +73,7 @@
       methods, e.g. those for classes \code{"density"}, \code{"ecdf"},
       \code{"stepfun"} and \code{"summary.lm"}.
       
-      \code{getOption("OutDec")} is now consulted by the print methods
+      \code{getOption("OutDec")} is now consulted by the print method
       for class \code{"kmeans"}, by \code{cut()}, \code{dendrogram()},
       \code{plot.ts()} and \code{quantile()} when constructing labels
       and for the report from \code{legend(trace = TRUE)}.
@@ -121,7 +121,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item There is some support for testing the \code{\\dontrun} and
+      \item There is support for testing the \code{\\dontrun} and
       \code{\\donttest} parts of examples in packages.
 
       \code{tools::testInstalledPackage()} accepts new arguments
