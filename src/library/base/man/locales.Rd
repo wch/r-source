@@ -71,6 +71,12 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   Note that the \env{LANGUAGE} environment variable has precedence over
   \code{"LC_MESSAGES"} in selecting the language for message translation
   on most \R platforms.
+  
+  On platforms where ICU is used for collation the locale used for
+  collation can be reset by \code{\link{icuSetCollate}}).  Except on
+  Windows, the initial setting is taken from the \code{"LC_COLLATE"}
+  category, and it is reset when this is changed by a call to
+  \code{Sys.setlocale}.
 }
 \value{
   A character string of length one describing the locale in use (after
