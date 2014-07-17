@@ -1295,6 +1295,9 @@ at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
 Depending on the build, it may be necessary to edit the macro
 @code{ICU_LIBS}.
 
+Unlike on a Unix-alike, it is currently necessary to call
+@code{icuSetCollate} to set a locale before ICU is actually used for
+collation.
 
 @node Checking the build, Building the manuals, Building the cairo devices files, Building from source
 @subsection Checking the build
