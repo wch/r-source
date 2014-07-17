@@ -1843,11 +1843,14 @@ void uloc_setDefault(const char* localeID, UErrorCode* status);
 
 static UCollator *collator = NULL;
 
+static Rboolean collationLocaleSet = FALSE;
+
 /* called from platform.c */
 void attribute_hidden resetICUcollator(void)
 {
     if (collator) ucol_close(collator);
     collator = NULL;
+    collationLocaleSet = FALSE;
 }
 
 static const struct {
@@ -1876,6 +1879,11 @@ static const struct {
     { NULL,  0 }
 };
 
+// Idea is to remap Windows' locale names in due course
+static const char *getLocale(void)
+{
+    return setlocale(LC_COLLATE, NULL);
+}
 
 SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1892,15 +1900,23 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid '%s' argument"), this);
 	s = CHAR(STRING_ELT(x, 0));
 	if (streql(this, "locale")) {
-	    if (collator) ucol_close(collator);
-	    // or setlocale(LC_COLLATE, NULL) as below.
-	    if(streql(s, "default")) uloc_setDefault(NULL, &status);
-	    else uloc_setDefault(s, &status);
-	    if(U_FAILURE(status))
-		error("failed to set ICU locale %s (%d)", s, status);
-	    collator = ucol_open(NULL, &status);
-	    if (U_FAILURE(status)) 
-		error("failed to open ICU collator (%d)", status);
+	    if (collator) {
+		ucol_close(collator);
+		collator = NULL;
+	    }
+	    if(strcmp(s, "none")) {
+		if(streql(s, "default")) 
+		    uloc_setDefault(getLocale(), &status);
+		else uloc_setDefault(s, &status);
+		if(U_FAILURE(status))
+		    error("failed to set ICU locale %s (%d)", s, status);
+		collator = ucol_open(NULL, &status);
+		if (U_FAILURE(status)) {
+		    collator = NULL;
+		    error("failed to open ICU collator (%d)", status);
+		}
+	    }
+	    collationLocaleSet = TRUE;
 	} else {
 	    int i, at = -1, val = -1;
 	    for (i = 0; ATtable[i].str; i++)
@@ -1932,28 +1948,33 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
-    int result = 0;
-    UErrorCode  status = U_ZERO_ERROR;
-    UCharIterator aIter, bIter;
-    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
-    int len1 = (int) strlen(as), len2 = (int) strlen(bs);
-
-    if (collator == NULL && strcmp("C", setlocale(LC_COLLATE, NULL)) ) {
-	/* do better later */
-	uloc_setDefault(setlocale(LC_COLLATE, NULL), &status);
-	if(U_FAILURE(status))
-	    error("failed to set ICU locale (%d)", status);
-	collator = ucol_open(NULL, &status);
-	if (U_FAILURE(status)) 
-	    error("failed to open ICU collator (%d)", status);
+    if (!collationLocaleSet) {
+	collationLocaleSet = TRUE;
+#ifndef Win32
+	if (strcmp("C", getLocale()) ) {
+	    UErrorCode status = U_ZERO_ERROR;
+	    uloc_setDefault(getLocale(), &status);
+	    if(U_FAILURE(status))
+		error("failed to set ICU locale (%d)", status);
+	    collator = ucol_open(NULL, &status);
+	    if (U_FAILURE(status)) {
+		collator = NULL;
+		error("failed to open ICU collator (%d)", status);
+	    }
+	}
+#endif
     }
     if (collator == NULL)
 	return strcoll(translateChar(a), translateChar(b));
 
+    UCharIterator aIter, bIter;
+    const char *as = translateCharUTF8(a), *bs = translateCharUTF8(b);
+    int len1 = (int) strlen(as), len2 = (int) strlen(bs);
     uiter_setUTF8(&aIter, as, len1);
     uiter_setUTF8(&bIter, bs, len2);
-    result = ucol_strcollIter(collator, &aIter, &bIter, &status);
-    if (U_FAILURE(status)) error("could not collate");
+    UErrorCode status = U_ZERO_ERROR;
+    int result = ucol_strcollIter(collator, &aIter, &bIter, &status);
+    if (U_FAILURE(status)) error("could not collate using ICU");
     return result;
 }
 

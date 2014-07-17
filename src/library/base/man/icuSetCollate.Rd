@@ -25,11 +25,8 @@ icuSetCollate(...)
   Possible arguments are
   \describe{
     \item{\code{locale}:}{A character string such as \code{"da_DK"}
-      giving the country whose collation rules are to be used.  If present,
-      this should be the first argument.  Value \code{"default"} obtains
-      the locale from the OS as is done at the start of the session.
-      Values \code{""} and \code{"root"} give the \sQuote{root} collation: see
-      \url{http://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.}
+      giving the language and country whose collation rules are to be
+      used.  If present, this should be the first argument.}
     \item{\code{case_first}:}{\code{"upper"}, \code{"lower"} or
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
@@ -57,12 +54,31 @@ icuSetCollate(...)
   Only the first three are likely to be of interest except to those with a
   detailed understanding of collation and specialized requirements.
 
+  Some special values are accepted for \code{locale}:
+  \describe{
+    \item{\code{"none"}:}{ICU is not used for collation: the OS's
+      collation services are used instead.  (As from \R 3.1.2.)}
+    \item{\code{"default"}:}{
+      obtains the locale from the OS as is done at the start of the
+      session. (As from \R 3.1.2:
+      \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
+      can be used in earlier versions.)
+    }
+    \item{\code{""}, \code{"root"}:}{
+      the \sQuote{root} collation: see
+      \url{http://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.
+    }
+  }
+  
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
   space and punctuation characters.
-
-  Note that these settings have no effect if collation is set to the
-  \code{C} locale, unless \code{locale} is specified.
+  
+  Initially ICU will not be used for collation if the OS is set to use
+  the \code{C} locale for collation.  Once this function is called with
+  a value for \code{locale}, ICU will be used until it is called again
+  with \code{locale = "none"} (and \code{locale = "default"} will use
+  ICU's idea of a C locale, which does not agree with the C standards).
 
   All customizations are reset to the default for the locale if
   \code{locale} is specified: the collation engine is reset if the
@@ -70,7 +86,12 @@ icuSetCollate(...)
 }
 \note{
   ICU is used by default wherever it is available: this include OS X,
-  Solaris and many Linux installations.  It is optional on Windows.
+  Solaris and many Linux installations.  As it works internally in
+  UTF-8, it will be most efficient in UTF-8 locales.
+
+  It is optional on Windows: if \R has been built against ICU, it will
+  only be used once \code{icuSetCollate} is called to select the locale
+  (as ICU and Windows differ in their idea of locale names).
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}.

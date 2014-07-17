@@ -169,7 +169,8 @@
       informative error messages to be given.
       
       \item \code{icuSetCollate()} allows \code{locale = "default"} to
-      use the OS locale collation category.
+      use the OS locale collation category, and \code{locale = "none"}
+      to use OS services rather than ICU for collation.
     }
   }
   
