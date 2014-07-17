@@ -46137,23 +46137,6 @@ else
   r_options="${r_options}${separator}strict barrier"
 fi
 fi
-if test "${want_linux_lfs}" = yes; then
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_options}"; then
-  r_options="Linux LFS"
-else
-  r_options="${r_options}${separator}Linux LFS"
-fi
-else
-  separator=", "
-test -z "${separator}" && separator=" "
-if test -z "${r_no_options}"; then
-  r_no_options="Linux LFS"
-else
-  r_no_options="${r_no_options}${separator}Linux LFS"
-fi
-fi
 if test "${want_prebuilt_html}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
