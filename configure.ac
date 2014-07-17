@@ -2888,11 +2888,6 @@ fi
 if test "${use_strict_barrier}" = yes; then
   R_SH_VAR_ADD(r_options, [strict barrier], [, ])
 fi
-if test "${want_linux_lfs}" = yes; then
-  R_SH_VAR_ADD(r_options, [Linux LFS], [, ])
-else
-  R_SH_VAR_ADD(r_no_options, [Linux LFS], [, ])
-fi
 if test "${want_prebuilt_html}" = yes; then
   R_SH_VAR_ADD(r_options, [static HTML], [, ])
 fi
