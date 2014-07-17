@@ -18,6 +18,9 @@
  *  http://www.r-project.org/Licenses/
  */
 
+#ifdef _WIN32
+#define _WIN32_WINNT 0x0600
+#endif
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -1880,10 +1883,26 @@ static const struct {
 };
 
 // Idea is to remap Windows' locale names in due course
+#ifdef Win32_not_yet
+#define BUFFER_SIZE 512
+static const char *getLocale(void)
+{
+    char locale[BUFFER_SIZE];
+    WCHAR wcBuffer[BUFFER_SIZE];
+    // This call is >= Vista/Server 2008
+    GetSystemDefaultLocaleName(wcBuffer, BUFFER_SIZE);
+    WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
+			locale, BUFFER_SIZE, NULL, NULL);
+    printf("locale = %s\n", locale);
+    // replace en-US by en_US and lang-script-REGION by lang_REGION
+    return "en_US";
+}
+#else
 static const char *getLocale(void)
 {
     return setlocale(LC_COLLATE, NULL);
 }
+#endif
 
 SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
