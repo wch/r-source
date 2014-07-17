@@ -69,6 +69,10 @@ icuSetCollate(...)
       \url{http://www.unicode.org/reports/tr35/tr35-collation.html#Root_Collation}.
     }
   }
+  For the specifications of \sQuote{real} ICU locales, see
+  \url{http://userguide.icu-project.org/locale}.  Note that ICU does not
+  report that a locale is not supported, but fallbacks to its idea of
+  \sQuote{best fit} (which could be rather different).
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
@@ -77,8 +81,7 @@ icuSetCollate(...)
   Initially ICU will not be used for collation if the OS is set to use
   the \code{C} locale for collation.  Once this function is called with
   a value for \code{locale}, ICU will be used until it is called again
-  with \code{locale = "none"} (and \code{locale = "default"} will use
-  ICU's idea of a C locale, which does not agree with the C standards).
+  with \code{locale = "none"}.
 
   All customizations are reset to the default for the locale if
   \code{locale} is specified: the collation engine is reset if the
