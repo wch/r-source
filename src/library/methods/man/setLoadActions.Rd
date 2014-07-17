@@ -136,7 +136,7 @@ evalqOnLoad(expr, where=, aname=)
   \code{setLoadAction()} and \code{setLoadActions()} are called for
   their side effect and return no useful value.
 
-  \codeq{getLoadActions()} returns a named list of the actions in the
+  \code{getLoadActions()} returns a named list of the actions in the
   supplied namespace.
 
   \code{hasLoadAction()} returns \code{TRUE} if the specified action
