@@ -1,6 +1,6 @@
 % File src/library/base/man/userhooks.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{userhooks}
@@ -53,6 +53,8 @@ packageEvent(pkgname,
   \enumerate{
   \item The package namespace is loaded.
   \item The package's \code{\link{.onLoad}} function is run.
+  \item If S4 methods dispatch is on, any actions set by
+  \code{\link{setLoadAction}} are run.
   \item The namespace is sealed.
   \item The user's \code{"onLoad"} hook is run.
   \item The package is added to the search path.
