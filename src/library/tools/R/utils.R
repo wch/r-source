@@ -1045,8 +1045,7 @@ function()
                "RcmdrModels",
                "RcppModules",
                "Roxygen",
-               "biocViews",
-               "noweb") # used by compiler, coxme, kinship2, noweb
+               "biocViews")
              ))
 }
 
