@@ -3736,6 +3736,10 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 } while (0)
 #endif
 
+/* compute the type of the function on the stack for hich arguments
+   are being accumulated */
+#define CURRENT_FTYPE() TYPEOF(GETSTACK(-3))
+
 #define PUSHCALLARG(v) PUSHCALLARG_CELL(CONS_NR(v, R_NilValue))
 
 #define PUSHCALLARG_CELL(c) do { \
@@ -3808,11 +3812,12 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   else { \
     SEXP tag = TAG(CDR(call)); \
     SEXP cell = CONS_NR(value, R_NilValue); \
-    BCNSTACKCHECK(3); \
+    BCNSTACKCHECK(4); \
     SETSTACK(0, call); \
-    SETSTACK(1, cell); \
+    SETSTACK(1, R_NilValue); \
     SETSTACK(2, cell); \
-    R_BCNodeStackTop += 3; \
+    SETSTACK(3, cell); \
+    R_BCNodeStackTop += 4; \
     if (tag != R_NilValue) \
       SET_TAG(cell, CreateTag(tag)); \
   } \
@@ -3820,10 +3825,10 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 } while (0)
 
 #define DO_DFLTDISPATCH(fun, symbol) do { \
-  SEXP call = GETSTACK(-3); \
+  SEXP call = GETSTACK(-4); \
   SEXP args = GETSTACK(-2); \
   value = fun(call, symbol, args, rho); \
-  R_BCNodeStackTop -= 3; \
+  R_BCNodeStackTop -= 4; \
   SETSTACK(-1, value); \
   NEXT(); \
 } while (0)
@@ -3848,11 +3853,12 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   else { \
     SEXP tag = TAG(CDR(call)); \
     SEXP cell = CONS_NR(lhs, R_NilValue); \
-    BCNSTACKCHECK(3); \
+    BCNSTACKCHECK(4); \
     SETSTACK(0, call); \
-    SETSTACK(1, cell); \
+    SETSTACK(1, R_NilValue); \
     SETSTACK(2, cell); \
-    R_BCNodeStackTop += 3; \
+    SETSTACK(3, cell); \
+    R_BCNodeStackTop += 4; \
     if (tag != R_NilValue) \
       SET_TAG(cell, CreateTag(tag)); \
   } \
@@ -3860,12 +3866,12 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 } while (0)
 
 #define DO_DFLT_ASSIGN_DISPATCH(fun, symbol) do { \
-  SEXP rhs = GETSTACK(-4); \
-  SEXP call = GETSTACK(-3); \
+  SEXP rhs = GETSTACK(-5); \
+  SEXP call = GETSTACK(-4); \
   SEXP args = GETSTACK(-2); \
   PUSHCALLARG(rhs); \
   value = fun(call, symbol, args, rho); \
-  R_BCNodeStackTop -= 4; \
+  R_BCNodeStackTop -= 5; \
   SETSTACK(-1, value);	 \
   NEXT(); \
 } while (0)
@@ -4268,7 +4274,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   SEXP value, constants;
   BCODE *pc, *codebase;
-  int ftype = 0;
   R_bcstack_t *oldntop = R_BCNodeStackTop;
   static int evalcount = 0;
 #ifdef BC_INT_STACK
@@ -4536,7 +4541,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 	/* initialize the function type register, push the function, and
 	   push space for creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(3);
 	SETSTACK(0, value);
 	SETSTACK(1, R_NilValue);
@@ -4556,7 +4560,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 	/* initialize the function type register, push the function, and
 	   push space for creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(3);
 	SETSTACK(0, value);
 	SETSTACK(1, R_NilValue);
@@ -4580,7 +4583,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 	/* initialize the function type register, push the function, and
 	   push space for creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(3);
 	SETSTACK(0, value);
 	SETSTACK(1, R_NilValue);
@@ -4599,7 +4601,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 
 	/* push the function and push space for creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(3);
 	SETSTACK(0, value);
 	SETSTACK(1, R_NilValue);
@@ -4617,7 +4618,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		CHAR(PRINTNAME(symbol)));
 
 	/* push the function and push space for creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(3);
 	SETSTACK(0, value);
 	SETSTACK(1, R_NilValue);
@@ -4635,7 +4635,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 
 	/* initialize the function type register, and push space for
 	   creating the argument list. */
-	ftype = TYPEOF(value);
 	BCNSTACKCHECK(2);
 	SETSTACK(0, R_NilValue);
 	SETSTACK(1, R_NilValue);
@@ -4645,6 +4644,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(MAKEPROM, 1):
       {
 	SEXP code = VECTOR_ELT(constants, GETOP());
+	SEXPTYPE ftype = CURRENT_FTYPE();
 	if (ftype != SPECIALSXP) {
 	  if (ftype == BUILTINSXP)
 	      value = bcEval(code, rho, TRUE);
@@ -4656,12 +4656,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(DOMISSING, 0):
       {
+	SEXPTYPE ftype = CURRENT_FTYPE();
 	if (ftype != SPECIALSXP)
 	  PUSHCALLARG(R_MissingArg);
 	NEXT();
       }
     OP(SETTAG, 1):
       {
+	SEXPTYPE ftype = CURRENT_FTYPE();
 	SEXP tag = VECTOR_ELT(constants, GETOP());
 	SEXP cell = GETSTACK(-1);
 	if (ftype != SPECIALSXP && cell != R_NilValue)
@@ -4670,6 +4672,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(DODOTS, 0):
       {
+	SEXPTYPE ftype = CURRENT_FTYPE();
 	if (ftype != SPECIALSXP) {
 	  SEXP h = findVar(R_DotsSymbol, rho);
 	  if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
@@ -4703,7 +4706,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args = GETSTACK(-2);
 	int flag;
-	switch (ftype) {
+	switch (TYPEOF(fun)) {
 	case BUILTINSXP:
 	  checkForMissings(args, call);
 	  flag = PRIMPRINT(fun);
@@ -4724,7 +4727,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	R_BCNodeStackTop -= 2;
 	SETSTACK(-1, value);
-	ftype = 0;
 	NEXT();
       }
     OP(CALLBUILTIN, 1):
@@ -5024,7 +5026,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  SETSTACK(-5, lhs);
 	  SET_NAMED(lhs, 1);
 	}
-	switch (ftype) {
+	switch (TYPEOF(fun)) {
 	case BUILTINSXP:
 	  /* push RHS value onto arguments with 'value' tag */
 	  PUSHCALLARG(rhs);
@@ -5070,7 +5072,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	R_BCNodeStackTop -= 4;
 	SETSTACK(-1, value);
-	ftype = 0;
 	NEXT();
       }
     OP(GETTER_CALL, 1):
@@ -5079,7 +5080,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP fun = GETSTACK(-3);
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args, prom;
-	switch (ftype) {
+	switch (TYPEOF(fun)) {
 	case BUILTINSXP:
 	  /* replace first argument with LHS value */
 	  args = GETSTACK(-2);
@@ -5112,7 +5113,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	}
 	R_BCNodeStackTop -= 2;
 	SETSTACK(-1, value);
-	ftype = 0;
 	NEXT();
       }
     OP(SWAP, 0): {
