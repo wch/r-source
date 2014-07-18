@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -19,7 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "cannot handle object of mode '%s'"
 msgstr "не могу работать с объектом вида '%s'"
@@ -102,6 +103,14 @@ msgstr "'pb' не из класса %s"
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' должны быть символьной матрицей из двух колонок"
 
+msgid ""
+"Tcl/Tk libraries are missing: install the Tcl/Tk component from the R "
+"installer"
+msgstr ""
+
+msgid "X11 library is missing: install XQuartz from xquartz.macosforge.org"
+msgstr ""
+
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Эта система не пододдерживает Tcl/Tk"
 
@@ -110,6 +119,6 @@ msgstr "файлы поддержки Tcl/Tk не установлены"
 
 #~ msgid "Loading Tcl/Tk interface ..."
 #~ msgstr "Загружаю интерфейс Tcl/Tk..."
+
 #~ msgid "done"
 #~ msgstr "готово"
-

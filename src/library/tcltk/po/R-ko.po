@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-12-30 14:07\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-26 21:18-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -100,6 +100,14 @@ msgstr "'pb'는 클래스 %s로부터 나온것이 아닙니다"
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters'는 반드시 2개의 열을 가진 문자형 행렬이어야 합니다"
+
+msgid ""
+"Tcl/Tk libraries are missing: install the Tcl/Tk component from the R "
+"installer"
+msgstr ""
+
+msgid "X11 library is missing: install XQuartz from xquartz.macosforge.org"
+msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "이 시스템에서는 Tcl/Tk을 지원하지 않습니다"

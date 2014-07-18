@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:36\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -745,6 +745,10 @@ msgstr "建立一名字叫%s的文件。"
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "修改文件再把它放到合适的目录中去。"
+
+#, fuzzy
+msgid "cannot determine import name"
+msgstr "无法指定一个可以用的名字"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr "没有种类为%s和題目为%s的文件(或是在处理帮助文件时发生了错误)"

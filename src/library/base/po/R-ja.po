@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:35\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-26 13:57+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -301,7 +301,8 @@ msgstr " 存在しない列中の要素の置き換えです: %s "
 msgid "only a single element should be replaced"
 msgstr " ただ一つの要素しか置き換えられるべきではありません "
 
-msgid "Name partially matched in data frame"
+#, fuzzy
+msgid "Partial match of '%s' to '%s' in data frame"
 msgstr " データフレーム中の名前は部分的にマッチしました "
 
 msgid "names do not match previous names"

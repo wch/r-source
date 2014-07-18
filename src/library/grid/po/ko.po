@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-27 09:03-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -20,53 +20,53 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: grid.c:214
+#: grid.c:212
 msgid "cannot clip to rotated viewport"
 msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
-#: grid.c:691 grid.c:696 grid.c:785 grid.c:790
+#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나"
 "요?)"
 
-#: grid.c:970
+#: grid.c:968
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1302
+#: grid.c:1300
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1522
+#: grid.c:1520
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1531
+#: grid.c:1529
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:1685
+#: grid.c:1683
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:2001
+#: grid.c:1999
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:2866
+#: grid.c:2864
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:2907
+#: grid.c:2905
 msgid "Empty raster"
 msgstr "비어있는 래스터입니다"
 
-#: grid.c:3359
+#: grid.c:3357
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3445
+#: grid.c:3443
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 
@@ -114,6 +114,6 @@ msgstr "'units'은 반드시 문자이어야 합니다"
 msgid "'units' must be of length > 0"
 msgstr "유닛은 반드시 길이가 0 보다 커야 합니다"
 
-#: viewport.c:317
+#: viewport.c:315
 msgid "non-finite location and/or size for viewport"
 msgstr "뷰포트의 위치 그리고/또는 크기가 유한하지 않습니다"

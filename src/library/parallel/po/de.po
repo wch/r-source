@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-03 11:50+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2013-03-01 16:29+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -16,73 +16,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: fork.c:254 fork.c:257
+#: fork.c:251 fork.c:254
 msgid "unable to create a pipe"
 msgstr "kann keine pipe erzeugen"
 
-#: fork.c:274
+#: fork.c:271
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "kann nicht forken, möglicher Grund: %s"
 
-#: fork.c:320
+#: fork.c:317
 msgid "memory allocation error"
 msgstr "Speicherallozierungsfehler"
 
-#: fork.c:373
+#: fork.c:370
 msgid "only children can send data to the master process"
 msgstr "nur Kindprozesse können Daten zum Elternprozess schicken"
 
-#: fork.c:375
+#: fork.c:372
 msgid "there is no pipe to the master process"
 msgstr "es gibt keine pipe zum Elternprozess"
 
-#: fork.c:377
+#: fork.c:374
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr "zu schickender Inhalt muss RAW sein, nutze serialize() wenn nötig"
 
-#: fork.c:386 fork.c:393 fork.c:715
+#: fork.c:383 fork.c:390 fork.c:712
 msgid "write error, closing pipe to the master"
 msgstr "Schreibfehler, schließe pipe zum Elternprozess"
 
-#: fork.c:406
+#: fork.c:403
 msgid "only the master process can send data to a child process"
 msgstr "nur der Elternprozess kann Daten zum Kindprozess schicken"
 
-#: fork.c:413
+#: fork.c:410
 #, c-format
 msgid "child %d does not exist"
 msgstr "Kindprozess %d existiert nicht"
 
-#: fork.c:419
+#: fork.c:416
 msgid "write error"
 msgstr "Schreibfehler"
 
-#: fork.c:487 fork.c:609
+#: fork.c:484 fork.c:606
 #, c-format
 msgid "error '%s' in select"
 msgstr "Fehler '%s' in select"
 
-#: fork.c:697
+#: fork.c:694
 msgid "'mckill' failed"
 msgstr "'mckill' fehlgeschlagen"
 
-#: fork.c:707
+#: fork.c:704
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' kann nur von Kindprozessen genutzt werden"
 
-#: fork.c:728
+#: fork.c:725
 msgid "'mcexit' failed"
 msgstr "'mcexit' fehlgeschlagen"
 
-#: fork.c:758 fork.c:767
+#: fork.c:755 fork.c:764
 msgid "invalid CPU affinity specification"
 msgstr "unzulässige CPU-Affinitätsspezifikation "
 
-#: fork.c:778
+#: fork.c:775
 msgid "requested CPU set is too large for this system"
 msgstr "angeforderte CPU Menge ist für dieses System zu groß"
 
-#: fork.c:801
+#: fork.c:798
 msgid "retrieving CPU affinity set failed"
 msgstr "anfordern einer CPU-Affinitätsmenge fehlgeschlagen"

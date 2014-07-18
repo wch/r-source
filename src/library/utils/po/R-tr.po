@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:36\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -720,6 +720,9 @@ msgid "Created file named %s."
 msgstr ""
 
 msgid "Edit the file and move it to the appropriate directory."
+msgstr ""
+
+msgid "cannot determine import name"
 msgstr ""
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"

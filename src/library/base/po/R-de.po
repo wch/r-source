@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:35\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -305,7 +305,8 @@ msgstr "ersetze Element in nicht existierender Spalte: %s"
 msgid "only a single element should be replaced"
 msgstr "nur ein einzelnes Element sollte ersetzt werden"
 
-msgid "Name partially matched in data frame"
+#, fuzzy
+msgid "Partial match of '%s' to '%s' in data frame"
 msgstr "Name mit partieller Übereinstimmung in data frame:"
 
 msgid "names do not match previous names"

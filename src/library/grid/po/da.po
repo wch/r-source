@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2011-11-28 23:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,58 +17,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: grid.c:214
+#: grid.c:212
 #, fuzzy
 msgid "cannot clip to rotated viewport"
 msgstr "Kan ikke klippe til roteret viewport"
 
-#: grid.c:691 grid.c:696 grid.c:785 grid.c:790
+#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
 #, fuzzy
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "Kan ikke pop topniveau-viewporten (gitter og grafiks uddata blandet?)"
 
-#: grid.c:970
+#: grid.c:968
 msgid "attempt to plot on null device"
 msgstr "forsøg på at plotte på null-enhed"
 
-#: grid.c:1302
+#: grid.c:1300
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "Der er ingen layout defineret"
 
-#: grid.c:1522
+#: grid.c:1520
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkant ikke fundet (nulbredde eller nulhøjde?)"
 
-#: grid.c:1531
+#: grid.c:1529
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "Polygonkant ikke fundet"
 
-#: grid.c:1685
+#: grid.c:1683
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Kræver mindst to punkter at tegne pil"
 
-#: grid.c:2001
+#: grid.c:1999
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ikkebegrænsende kontrolpunkter i Xspline"
 
-#: grid.c:2866
+#: grid.c:2864
 msgid "non-finite x or y in graphics path"
 msgstr "ikkebegrænsende x eller y i grafiksti"
 
-#: grid.c:2907
+#: grid.c:2905
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3359
+#: grid.c:3357
 msgid "invalid plotting symbol"
 msgstr "ugyldigt plotsymbol"
 
-#: grid.c:3445
+#: grid.c:3443
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Kan ikke klippe til roteret rektangel"
@@ -124,7 +124,7 @@ msgstr "Enheder skal være tegn"
 msgid "'units' must be of length > 0"
 msgstr "Enheder skal have længde > 0"
 
-#: viewport.c:317
+#: viewport.c:315
 #, fuzzy
 msgid "non-finite location and/or size for viewport"
 msgstr "Ikkebegrænsende placeirng og/eller størrelse for viewport"

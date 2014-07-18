@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: grid.c:214
+#: grid.c:212
 msgid "cannot clip to rotated viewport"
 msgstr ""
 
-#: grid.c:691 grid.c:696 grid.c:785 grid.c:790
+#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 
-#: grid.c:970
+#: grid.c:968
 msgid "attempt to plot on null device"
 msgstr ""
 
-#: grid.c:1302
+#: grid.c:1300
 msgid "there is no layout defined"
 msgstr ""
 
-#: grid.c:1522
+#: grid.c:1520
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 
-#: grid.c:1531
+#: grid.c:1529
 msgid "polygon edge not found"
 msgstr ""
 
-#: grid.c:1685
+#: grid.c:1683
 msgid "require at least two points to draw arrow"
 msgstr ""
 
-#: grid.c:2001
+#: grid.c:1999
 msgid "non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:2866
+#: grid.c:2864
 msgid "non-finite x or y in graphics path"
 msgstr ""
 
-#: grid.c:2907
+#: grid.c:2905
 msgid "Empty raster"
 msgstr ""
 
-#: grid.c:3359
+#: grid.c:3357
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: grid.c:3445
+#: grid.c:3443
 msgid "unable to clip to rotated rectangle"
 msgstr ""
 
@@ -109,6 +109,6 @@ msgstr ""
 msgid "'units' must be of length > 0"
 msgstr ""
 
-#: viewport.c:317
+#: viewport.c:315
 msgid "non-finite location and/or size for viewport"
 msgstr ""

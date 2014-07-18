@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -473,8 +473,8 @@ msgstr ""
 "%s\n"
 "в NAMESPACE."
 
-msgid "argument 'file' must be a character string or connection"
-msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr "пропущенное/пустое %s поле в '%s'"
@@ -503,6 +503,16 @@ msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "Не найдено помощи %s в RdDB %s"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "Не могу найти документации для пакета %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "более чем одна \\секция примеров, использую первую"
@@ -542,6 +552,10 @@ msgstr "неправильное значение '%s' : %s"
 
 msgid "Only one Rd section per %s is supported."
 msgstr "Поддерживается только один раздел Rd на %s."
+
+#, fuzzy
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"
 
 #, fuzzy
 msgid "Vignette product %s does not have a known filename extension (%s)"
@@ -1389,6 +1403,9 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
+
 #~ msgid "to logical"
 #~ msgstr "в логический"
 
@@ -1905,9 +1922,6 @@ msgstr[2] ""
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Не могу найти документ помощи %s в пакете %s"
-
-#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"

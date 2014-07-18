@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -441,7 +441,7 @@ msgid ""
 "in NAMESPACE."
 msgstr ""
 
-msgid "argument 'file' must be a character string or connection"
+msgid "Rd object required"
 msgstr ""
 
 msgid "missing/empty %s field in '%s'"
@@ -469,6 +469,15 @@ msgid "cannot deal with Rd objects with missing/empty names"
 msgstr ""
 
 msgid "No help on %s found in RdDB %s"
+msgstr ""
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+msgid "No Rd macros in package '%s'."
 msgstr ""
 
 msgid "more than one \\examples section, using the first"
@@ -508,6 +517,9 @@ msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "Only one Rd section per %s is supported."
+msgstr ""
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
 msgstr ""
 
 msgid "Vignette product %s does not have a known filename extension (%s)"

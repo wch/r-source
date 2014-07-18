@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -485,8 +485,8 @@ msgstr ""
 "%s\n"
 "dans NAMESPACE."
 
-msgid "argument 'file' must be a character string or connection"
-msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr "champ %s manquant ou vide dans '%s'"
@@ -519,6 +519,16 @@ msgstr ""
 
 msgid "No help on %s found in RdDB %s"
 msgstr "Pas d'aide pour %s trouvée dans RdDB %s"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "Pas de docs trouvés pour le package %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "plus d'une section \\example, utilisation de la première"
@@ -558,6 +568,9 @@ msgstr "valeur inexacte pour '%s' : %s"
 
 msgid "Only one Rd section per %s is supported."
 msgstr "Seulement une section Rd par %s est supportée."
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr ""
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr ""
@@ -1411,6 +1424,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
+
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr ""
+#~ "l'argument 'file' doit être une chaîne de caractères ou une connexion"
 
 #~ msgid "with %\\SweaveUTF8"
 #~ msgstr "avec %\\SweaveUTF8"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -448,8 +448,8 @@ msgstr ""
 "%s\n"
 "在名字空间。"
 
-msgid "argument 'file' must be a character string or connection"
-msgstr "参数'document'必需是字符串或联结"
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr "'%2$s'里缺少或有空白的%s域"
@@ -477,6 +477,16 @@ msgstr "无法使用缺少或有空白名字的Rd对象"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %2$s里找不到关于%1$s的帮助"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "程序包%s里没有任何文件"
 
 msgid "more than one \\examples section, using the first"
 msgstr "多个\\example段，取用第一段"
@@ -516,6 +526,10 @@ msgstr "'%s'值无效：%s"
 
 msgid "Only one Rd section per %s is supported."
 msgstr "每%s只支持一个Rd章节"
+
+#, fuzzy
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr "程序包'%s'缺少'DESCRIPTION.in'"
 
 #, fuzzy
 msgid "Vignette product %s does not have a known filename extension (%s)"
@@ -1297,6 +1311,9 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr "参数'document'必需是字符串或联结"
+
 #~ msgid "to logical"
 #~ msgstr "为逻辑值"
 
@@ -1788,9 +1805,6 @@ msgstr[0] ""
 #~ "'可能不对'的链结一般具有\\link[pkg]{a}这样的格式，这里 'a'指的是别名但不是"
 #~ "真的文件名字--这种链结不能在小于2.10.0版本的R里用, 而且也只能在这个版本R的"
 #~ "HTML帮助里用(PDF不行)。"
-
-#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr "程序包'%s'缺少'DESCRIPTION.in'"
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"

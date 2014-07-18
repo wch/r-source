@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -66,7 +66,7 @@ msgstr "niepoprawny typ argumentu"
 # error(_("can only transform 100 pars in arima0"))
 # stats/src/arima.c: 530
 # error(_("can only transform 100 pars in arima0"))
-#: arima.c:444 arima.c:530 pacf.c:331 pacf.c:371
+#: arima.c:444 arima.c:530 pacf.c:327 pacf.c:366
 msgid "can only transform 100 pars in arima0"
 msgstr "można przekształcić tylko do 100 par w 'arima0'"
 
@@ -740,7 +740,7 @@ msgstr "'dir' nie jest wektorem liczbowym o poprawnej długości"
 # error(_("Missing value or an infinity produced when evaluating the model"))
 # stats/src/nls.c: 341
 # error(_("Missing value or an infinity produced when evaluating the model"))
-#: nls.c:311 nls.c:341
+#: nls.c:311 nls.c:344
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 "Brakuje wartości lub wyprodukowano wartości nieskończone podczas wyliczania "
@@ -850,7 +850,7 @@ msgstr "nieznana wartość 'method'"
 # warning(_("NA replaced by maximum positive value"))
 # stats/src/optimize.c: 530
 # warning(_("NA replaced by maximum positive value"))
-#: optimize.c:217 optimize.c:309 optimize.c:530
+#: optimize.c:220 optimize.c:306 optimize.c:527
 msgid "NA replaced by maximum positive value"
 msgstr "wartość NA zastąpiona przez maksymalną dodatnią wartość"
 
@@ -860,13 +860,13 @@ msgstr "wartość NA zastąpiona przez maksymalną dodatnią wartość"
 # warning(_("NA/Inf replaced by maximum positive value"))
 # stats/src/optimize.c: 538
 # warning(_("NA/Inf replaced by maximum positive value"))
-#: optimize.c:225 optimize.c:321 optimize.c:538
+#: optimize.c:228 optimize.c:318 optimize.c:535
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "wartości NA/Inf zastąpione przez maksymalne dodatnie wartości"
 
 # stats/src/optimize.c: 234
 # error(_("invalid function value in 'optimize'"))
-#: optimize.c:234
+#: optimize.c:237
 msgid "invalid function value in 'optimize'"
 msgstr "niepoprawna wartość funkcji w funkcji 'optimize()'"
 
@@ -876,7 +876,7 @@ msgstr "niepoprawna wartość funkcji w funkcji 'optimize()'"
 # error(_("attempt to minimize non-function"))
 # stats/src/optimize.c: 723
 # error(_("attempt to minimize non-function"))
-#: optimize.c:252 optimize.c:350 optimize.c:723
+#: optimize.c:255 optimize.c:347 optimize.c:720
 msgid "attempt to minimize non-function"
 msgstr "próba minimalizacji nie-funkcji"
 
@@ -892,8 +892,8 @@ msgstr "próba minimalizacji nie-funkcji"
 # error(_("invalid '%s' value"), "xmax")
 # stats/src/optimize.c: 376
 # error(_("invalid '%s' value"), "tol")
-#: optimize.c:259 optimize.c:266 optimize.c:275 optimize.c:355 optimize.c:360
-#: optimize.c:376
+#: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
+#: optimize.c:373
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
@@ -902,19 +902,19 @@ msgstr "niepoprawna wartość '%s'"
 # error(_("'xmin' not less than 'xmax'"))
 # stats/src/optimize.c: 361
 # error(_("'xmin' not less than 'xmax'"))
-#: optimize.c:268 optimize.c:361
+#: optimize.c:271 optimize.c:358
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' nie jest mniejsze niż 'xmax'"
 
 # stats/src/optimize.c: 318
 # warning(_("-Inf replaced by maximally negative value"))
-#: optimize.c:318
+#: optimize.c:315
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf zastąpiona maksymalną ujemną wartością"
 
 # stats/src/optimize.c: 331
 # error(_("invalid function value in 'zeroin'"))
-#: optimize.c:331
+#: optimize.c:328
 msgid "invalid function value in 'zeroin'"
 msgstr "niepoprawna wartość funkcji w funkcji 'zeroin()'"
 
@@ -922,26 +922,26 @@ msgstr "niepoprawna wartość funkcji w funkcji 'zeroin()'"
 # error(_("NA value for '%s' is not allowed"), "f.lower")
 # stats/src/optimize.c: 371
 # error(_("NA value for '%s' is not allowed"), "f.upper")
-#: optimize.c:366 optimize.c:371
+#: optimize.c:363 optimize.c:368
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "wartość NA dla '%s' nie jest dozwolona"
 
 # stats/src/optimize.c: 381
 # error(_("'maxiter' must be positive"))
-#: optimize.c:381
+#: optimize.c:378
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' musi być liczbą dodatnią"
 
 # stats/src/optimize.c: 522
 # error(_("non-finite value supplied by 'nlm'"))
-#: optimize.c:522
+#: optimize.c:519
 msgid "non-finite value supplied by 'nlm'"
 msgstr "nieskończona wartość dostarczona przez 'nlm'"
 
 # stats/src/optimize.c: 557
 # error(_("invalid function value in 'nlm' optimizer"))
-#: optimize.c:557
+#: optimize.c:554
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 
@@ -949,26 +949,26 @@ msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 # error(_("function value caching for optimization is seriously confused"))
 # stats/src/optimize.c: 583
 # error(_("function value caching for optimization is seriously confused"))
-#: optimize.c:568 optimize.c:583
+#: optimize.c:565 optimize.c:580
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 "buforowanie wartości funkcji na potrzeby optymalizacji poważnie pomylone"
 
 # stats/src/optimize.c: 598
 # error(_("numeric parameter expected"))
-#: optimize.c:598
+#: optimize.c:595
 msgid "numeric parameter expected"
 msgstr "oczekiwano parametru liczbowego"
 
 # stats/src/optimize.c: 602
 # error(_("conflicting parameter lengths"))
-#: optimize.c:602
+#: optimize.c:599
 msgid "conflicting parameter lengths"
 msgstr "kolidujące długości parametrów"
 
 # stats/src/optimize.c: 606
 # error(_("invalid parameter length"))
-#: optimize.c:606
+#: optimize.c:603
 msgid "invalid parameter length"
 msgstr "niepoprawna długość parametru"
 
@@ -976,73 +976,73 @@ msgstr "niepoprawna długość parametru"
 # error(_("missing value in parameter"))
 # stats/src/optimize.c: 623
 # error(_("missing value in parameter"))
-#: optimize.c:616 optimize.c:623
+#: optimize.c:613 optimize.c:620
 msgid "missing value in parameter"
 msgstr "brakuje wartości w parametrze"
 
 # stats/src/optimize.c: 628
 # error(_("invalid parameter type"))
-#: optimize.c:628
+#: optimize.c:625
 msgid "invalid parameter type"
 msgstr "niepoprawny typ parametru"
 
 # stats/src/optimize.c: 639
 # error(_("non-positive number of parameters in nlm"))
-#: optimize.c:639
+#: optimize.c:636
 msgid "non-positive number of parameters in nlm"
 msgstr "niedodatnia liczba parametrów w 'nlm'"
 
 # stats/src/optimize.c: 641
 # error(_("nlm is inefficient for 1-d problems"))
-#: optimize.c:641
+#: optimize.c:638
 msgid "nlm is inefficient for 1-d problems"
 msgstr "'nlm' jest nieefektywna dla jednowymiarowych problemów"
 
 # stats/src/optimize.c: 643
 # error(_("invalid gradient tolerance in nlm"))
-#: optimize.c:643
+#: optimize.c:640
 msgid "invalid gradient tolerance in nlm"
 msgstr "niepoprawna tolerancja gradientu w 'nlm'"
 
 # stats/src/optimize.c: 645
 # error(_("invalid iteration limit in nlm"))
-#: optimize.c:645
+#: optimize.c:642
 msgid "invalid iteration limit in nlm"
 msgstr "niepoprawna granica iteracji w 'nlm'"
 
 # stats/src/optimize.c: 647
 # error(_("minimization function has no good digits in nlm"))
-#: optimize.c:647
+#: optimize.c:644
 msgid "minimization function has no good digits in nlm"
 msgstr "funkcja minimalizacyjna nie ma dobrych cyfr w 'nlm'"
 
 # stats/src/optimize.c: 649
 # error(_("no analytic gradient to check in nlm!"))
-#: optimize.c:649
+#: optimize.c:646
 msgid "no analytic gradient to check in nlm!"
 msgstr "brak analitycznego gradientu do sprawdzenia w 'nlm'!"
 
 # stats/src/optimize.c: 651
 # error(_("no analytic Hessian to check in nlm!"))
-#: optimize.c:651
+#: optimize.c:648
 msgid "no analytic Hessian to check in nlm!"
 msgstr "brak analitycznego hesjanu do sprawdzenia w 'nlm'!"
 
 # stats/src/optimize.c: 653
 # error(_("probable coding error in analytic gradient"))
-#: optimize.c:653
+#: optimize.c:650
 msgid "probable coding error in analytic gradient"
 msgstr "prawdopodobny błąd kodowania w analitycznym gradiencie"
 
 # stats/src/optimize.c: 655
 # error(_("probable coding error in analytic Hessian"))
-#: optimize.c:655
+#: optimize.c:652
 msgid "probable coding error in analytic Hessian"
 msgstr "prawdopodobny błąd kodowania w analitycznym hesjanie"
 
 # stats/src/optimize.c: 657
 # error(_("*** unknown error message (msg = %d) in nlm()\n*** should not happen!"), nerr)
-#: optimize.c:657
+#: optimize.c:654
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -1051,26 +1051,26 @@ msgstr ""
 "*** nieznany komunikat błędu (wiadomość = %d) w funkcji 'nlm()'\n"
 "*** to nie powinno się wydarzyć!"
 
-#: optimize.c:668
+#: optimize.c:665
 msgid "Relative gradient close to zero.\n"
 msgstr "Gradient względny bliski zera.\n"
 
-#: optimize.c:669 optimize.c:673
+#: optimize.c:666 optimize.c:670
 msgid "Current iterate is probably solution.\n"
 msgstr "Bieżąca iteracja prawdopodobnie jest rozwiązaniem.\n"
 
-#: optimize.c:672
+#: optimize.c:669
 msgid "Successive iterates within tolerance.\n"
 msgstr "Kolejna iteracja w granicach tolerancji.\n"
 
-#: optimize.c:676
+#: optimize.c:673
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 "Ostatni globalny krok nie dał rady zlokalizować punktu niższego niż 'x'.\n"
 
 # stats/src/optimize.c: 677
 # (_("Either x is an approximate local minimum of the function,\nthe function is too non-linear for this algorithm,\nor steptol is too large.\n"))
-#: optimize.c:677
+#: optimize.c:674
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -1080,11 +1080,11 @@ msgstr ""
 "funkcja jest zbyt nieliniowa dla tego algorytmu,\n"
 "lub 'steptol' jest zbyt duży.\n"
 
-#: optimize.c:682
+#: optimize.c:679
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Osiągnięto graniczną wartość iteracji. Algorytm nie powiódł się.\n"
 
-#: optimize.c:685
+#: optimize.c:682
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -1112,14 +1112,14 @@ msgstr ""
 # error(_("invalid NA value in parameter"))
 # stats/src/optimize.c: 773
 # error(_("invalid NA value in parameter"))
-#: optimize.c:747 optimize.c:752 optimize.c:756 optimize.c:760 optimize.c:764
-#: optimize.c:768 optimize.c:773
+#: optimize.c:744 optimize.c:749 optimize.c:753 optimize.c:757 optimize.c:761
+#: optimize.c:765 optimize.c:770
 msgid "invalid NA value in parameter"
 msgstr "niepoprawna wartość NA w parametrze"
 
 # stats/src/optimize.c: 804
 # warning(_("hessian supplied is of the wrong length or mode, so ignored"))
-#: optimize.c:804
+#: optimize.c:801
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony hesjan posiada niepoprawną długość lub tryb, tak więc został "
@@ -1127,7 +1127,7 @@ msgstr ""
 
 # stats/src/optimize.c: 808
 # warning(_("gradient supplied is of the wrong length or mode, so ignored"))
-#: optimize.c:808
+#: optimize.c:805
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony gradient posiada niepoprawną długość lub tryb, tak więc został "
@@ -1135,27 +1135,27 @@ msgstr ""
 
 # stats/src/pacf.c: 94
 # error(_("bad Starma struct"))
-#: pacf.c:94
+#: pacf.c:90
 msgid "bad Starma struct"
 msgstr "zła struktura 'Starma'"
 
 # stats/src/pacf.c: 240
 # error(_("starma error code %d"), ifault)
-#: pacf.c:240
+#: pacf.c:236
 #, c-format
 msgid "starma error code %d"
 msgstr "starma: kod błędu %d"
 
 # stats/src/pacf.c: 300
 # error(_("forkal error code %d"), ifault)
-#: pacf.c:300
+#: pacf.c:296
 #, c-format
 msgid "forkal error code %d"
 msgstr "forkal: kod błędu %d"
 
 # stats/src/pacf.c: 474
 # error(_("invalid value of lag.max"))
-#: pacf.c:474
+#: pacf.c:469
 msgid "invalid value of lag.max"
 msgstr "niepoprawna wartość 'lag.max'"
 
@@ -1281,6 +1281,22 @@ msgstr "'scal' musi być kwadratową, rzeczywistą macierzą"
 msgid "'scal' matrix is not positive-definite"
 msgstr "macierz 'scal' nie jest dodatnio określona"
 
+# stats/src/random.c: 95
+# warning(_("NAs produced"))
+# stats/src/random.c: 121
+# warning(_("NAs produced"))
+# stats/src/random.c: 194
+# warning(_("NAs produced"))
+# stats/src/random.c: 222
+# warning(_("NAs produced"))
+# stats/src/random.c: 270
+# warning(_("NAs produced"))
+# stats/src/random.c: 289
+# warning(_("NAs produced"))
+#: random.c:53 random.c:126 random.c:198 random.c:282
+msgid "NAs produced"
+msgstr "wyprodukowano wartości NA"
+
 # stats/src/random.c: 66
 # error(_("invalid arguments"))
 # stats/src/random.c: 70
@@ -1307,38 +1323,32 @@ msgstr "macierz 'scal' nie jest dodatnio określona"
 # error(_("invalid arguments"))
 # stats/src/random.c: 355
 # error(_("invalid arguments"))
-#: random.c:66 random.c:70 random.c:75 random.c:80 random.c:161 random.c:167
-#: random.c:172 random.c:177 random.c:240 random.c:245 random.c:250
-#: random.c:264 random.c:355
+#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:159 random.c:240
+#: random.c:374
 msgid "invalid arguments"
 msgstr "niepoprawne argumenty"
 
-# stats/src/random.c: 95
-# warning(_("NAs produced"))
-# stats/src/random.c: 121
-# warning(_("NAs produced"))
-# stats/src/random.c: 194
-# warning(_("NAs produced"))
-# stats/src/random.c: 222
-# warning(_("NAs produced"))
-# stats/src/random.c: 270
-# warning(_("NAs produced"))
-# stats/src/random.c: 289
-# warning(_("NAs produced"))
-#: random.c:95 random.c:121 random.c:194 random.c:222 random.c:270
-#: random.c:289
-msgid "NAs produced"
-msgstr "wyprodukowano wartości NA"
+#: random.c:308
+msgid "NA in probability vector"
+msgstr ""
+
+#: random.c:310
+msgid "negative probability"
+msgstr ""
+
+#: random.c:316
+msgid "no positive probabilities"
+msgstr ""
 
 # stats/src/random.c: 308
 # error(_("invalid first argument 'n'"))
-#: random.c:308
+#: random.c:328
 msgid "invalid first argument 'n'"
 msgstr "niepoprawny pierwszy argument 'n'"
 
 # stats/src/random.c: 310
 # error(_("invalid second argument 'size'"))
-#: random.c:310
+#: random.c:330
 msgid "invalid second argument 'size'"
 msgstr "niepoprawny drugi argument 'size'"
 

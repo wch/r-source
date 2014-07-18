@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:36\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -791,6 +791,10 @@ msgstr "Création du fichier %s."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Editez le fichier et déplacez-le dans le répertoire approprié"
+
+#, fuzzy
+msgid "cannot determine import name"
+msgstr "impossible de trouver un nom utilisable"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""

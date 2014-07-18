@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-02-19 07:55+0000\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: 2014-03-17 10:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
 
-#: grid.c:214
+#: grid.c:212
 msgid "cannot clip to rotated viewport"
 msgstr "impossible de couper une vue pivotée"
 
-#: grid.c:691 grid.c:696 grid.c:785 grid.c:790
+#: grid.c:689 grid.c:694 grid.c:783 grid.c:788
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "impossible de rendre la vue de plus haut niveau active (sorties 'grid' et "
 "'graphics' mixées ?)"
 
-#: grid.c:970
+#: grid.c:968
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1302
+#: grid.c:1300
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1522
+#: grid.c:1520
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1531
+#: grid.c:1529
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:1685
+#: grid.c:1683
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:2001
+#: grid.c:1999
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
-#: grid.c:2866
+#: grid.c:2864
 msgid "non-finite x or y in graphics path"
 msgstr "x ou y infinis dans le chemin graphique"
 
-#: grid.c:2907
+#: grid.c:2905
 msgid "Empty raster"
 msgstr "graphique raster vide"
 
-#: grid.c:3359
+#: grid.c:3357
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:3445
+#: grid.c:3443
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 
@@ -113,7 +113,7 @@ msgstr "les unités dans 'units' doivent être une chaîne de caractères"
 msgid "'units' must be of length > 0"
 msgstr "Les unités dans 'units' doivent être de longueur > 0"
 
-#: viewport.c:317
+#: viewport.c:315
 msgid "non-finite location and/or size for viewport"
 msgstr "position et / ou taille de vue non finies"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -467,8 +467,8 @@ msgstr ""
 "%s\n"
 "in NAMESPACE."
 
-msgid "argument 'file' must be a character string or connection"
-msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr "fehlendes oder leeres %s Feld in '%s'"
@@ -497,6 +497,16 @@ msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
 
 msgid "No help on %s found in RdDB %s"
 msgstr "Keine Hilfe zu %s in RdDB %s gefunden"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "Keine Dokumente zu Paket %s gefunden"
 
 msgid "more than one \\examples section, using the first"
 msgstr "mehr als eine \\examples section, benutze die erste"
@@ -536,6 +546,10 @@ msgstr "Ungültiger Wert für '%s' : %s"
 
 msgid "Only one Rd section per %s is supported."
 msgstr "Nur ein Rd Abschnitt pro %s wird unterstützt"
+
+#, fuzzy
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr "'DESCRIPTION.in' fehlt für Paket '%s'"
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "Vignettenprodukt %s hat keine bekannte Dateinamenserweiterung (%s)"
@@ -1363,6 +1377,9 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
 
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"
+
 #~ msgid "with %\\SweaveUTF8"
 #~ msgstr "with %\\SweaveUTF8"
 
@@ -1892,9 +1909,6 @@ msgstr[1] "%d der Pakettests fehlgeschlagen"
 #~ "'Suspect' Links sind von der Form \\\\link[pkg]{a}, wobei 'a' zwar als "
 #~ "Link, nicht aber als Datei exisitert. Solche Links funktionieren nicht in "
 #~ "R < 2.10.0 und nur in HTML (nicht PDF) Hilfe in der aktuellen Version)"
-
-#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr "'DESCRIPTION.in' fehlt für Paket '%s'"
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr "Fehler: dies ist R Version %s, Bündel '%s' benötigt R %s %s"

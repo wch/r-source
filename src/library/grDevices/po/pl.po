@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:36+0100\n"
+"POT-Creation-Date: 2014-07-18 13:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -201,14 +201,14 @@ msgstr "maksymalna liczba kolorów wynosi %d"
 # grDevices/src/devPS.c: 560
 # warning(_("afm file '%s' could not be opened"), 
 # 		    R_ExpandFileName(buf))
-#: devPS.c:563
+#: devPS.c:560
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "plik afm '%s' nie mógł zostać otwarty"
 
 # grDevices/src/devPS.c: 628
 # warning(_("unknown AFM entity encountered"))
-#: devPS.c:631
+#: devPS.c:628
 msgid "unknown AFM entity encountered"
 msgstr "napotkano nieznany obiekt AFM"
 
@@ -224,7 +224,7 @@ msgstr "napotkano nieznany obiekt AFM"
 # warning(_("invalid string in '%s'"), "PS_Text")
 # grDevices/src/devPS.c: 7905
 # warning(_("invalid string in '%s'"), "PDF_Text")
-#: devPS.c:743 devPS.c:746 devPS.c:4423 devPS.c:7914 devPicTeX.c:484
+#: devPS.c:740 devPS.c:743 devPS.c:4420 devPS.c:7911 devPicTeX.c:484
 #: devPicTeX.c:486
 #, c-format
 msgid "invalid string in '%s'"
@@ -232,7 +232,7 @@ msgstr "niepoprawny łańcuch w '%s'"
 
 # grDevices/src/devPS.c: 774
 # warning(_("font width unknown for character 0x%x"), *p)
-#: devPS.c:777
+#: devPS.c:774
 #, c-format
 msgid "font width unknown for character 0x%x"
 msgstr "nieznana szerokość czcionki dla znaku '0x%x'"
@@ -240,7 +240,7 @@ msgstr "nieznana szerokość czcionki dla znaku '0x%x'"
 # grDevices/src/devPS.c: 832
 # error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
 # 		  encoding)
-#: devPS.c:835
+#: devPS.c:832
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr "nieznane kodowanie '%s' w 'PostScriptMetricInfo'"
@@ -249,14 +249,14 @@ msgstr "nieznane kodowanie '%s' w 'PostScriptMetricInfo'"
 # warning(_("font metrics unknown for Unicode character U+%04x"), c)
 # grDevices/src/devPS.c: 859
 # warning(_("font metrics unknown for Unicode character U+%04x"), c)
-#: devPS.c:851 devPS.c:862
+#: devPS.c:848 devPS.c:859
 #, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
 msgstr "nieznane metryki czcionki dla znaku Unicode 'U+%04x'"
 
 # grDevices/src/devPS.c: 867
 # warning(_("font metrics unknown for character 0x%x"), c)
-#: devPS.c:870
+#: devPS.c:867
 #, c-format
 msgid "font metrics unknown for character 0x%x"
 msgstr "nieznane metryki czcionki dla znaku '0x%x'"
@@ -264,7 +264,7 @@ msgstr "nieznane metryki czcionki dla znaku '0x%x'"
 # grDevices/src/devPS.c: 881
 # error(_("invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"),
 # 		  c)
-#: devPS.c:884
+#: devPS.c:881
 #, c-format
 msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
@@ -275,7 +275,7 @@ msgstr ""
 
 # grDevices/src/devPS.c: 889
 # error(_("invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"))
-#: devPS.c:892
+#: devPS.c:889
 msgid ""
 "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr ""
@@ -284,31 +284,31 @@ msgstr ""
 
 # grDevices/src/devPS.c: 994
 # warning(_("failed to allocate CID font info"))
-#: devPS.c:997
+#: devPS.c:994
 msgid "failed to allocate CID font info"
 msgstr "nie udało się przydzielić informacji o czcionce CID"
 
 # grDevices/src/devPS.c: 1009
 # warning(_("failed to allocate Type 1 font info"))
-#: devPS.c:1012
+#: devPS.c:1009
 msgid "failed to allocate Type 1 font info"
 msgstr "nie udało się przydzielić informacji o czcionce  Type 1"
 
 # grDevices/src/devPS.c: 1029
 # warning(_("failed to allocate encoding info"))
-#: devPS.c:1032
+#: devPS.c:1029
 msgid "failed to allocate encoding info"
 msgstr "nie udało się przydzielić informacji o kodowaniu"
 
 # grDevices/src/devPS.c: 1047
 # warning(_("failed to allocate CID font family"))
-#: devPS.c:1050
+#: devPS.c:1047
 msgid "failed to allocate CID font family"
 msgstr "nie udało się przydzielić rodziny czcionek CID"
 
 # grDevices/src/devPS.c: 1060
 # warning(_("failed to allocate Type 1 font family"))
-#: devPS.c:1063
+#: devPS.c:1060
 msgid "failed to allocate Type 1 font family"
 msgstr "nie udało się przydzielić rodziny czcionek Type 1"
 
@@ -316,25 +316,25 @@ msgstr "nie udało się przydzielić rodziny czcionek Type 1"
 # warning(_("failed to allocate font list"))
 # grDevices/src/devPS.c: 1110
 # warning(_("failed to allocate font list"))
-#: devPS.c:1102 devPS.c:1113
+#: devPS.c:1099 devPS.c:1110
 msgid "failed to allocate font list"
 msgstr "nie udało się przydzielić listy czcionek"
 
 # grDevices/src/devPS.c: 1161
 # warning(_("failed to allocated encoding list"))
-#: devPS.c:1164
+#: devPS.c:1161
 msgid "failed to allocated encoding list"
 msgstr "nie udało się przydzielić listy kodowań"
 
 # grDevices/src/devPS.c: 1309
 # warning(_("truncated string which was too long for copy"))
-#: devPS.c:1312
+#: devPS.c:1309
 msgid "truncated string which was too long for copy"
 msgstr "przycięty łańcuch, który był zbyt długi do skopiowania"
 
 # grDevices/src/devPS.c: 1349
 # warning(_("failed to load encoding file '%s'"), encpath)
-#: devPS.c:1352
+#: devPS.c:1349
 #, c-format
 msgid "failed to load encoding file '%s'"
 msgstr "nie udało się załadować pliku strony kodowej '%s'"
@@ -343,7 +343,7 @@ msgstr "nie udało się załadować pliku strony kodowej '%s'"
 # error(_("invalid font name or more than one font name"))
 # grDevices/src/devPS.c: 1475
 # error(_("invalid font name or more than one font name"))
-#: devPS.c:1445 devPS.c:1478
+#: devPS.c:1442 devPS.c:1475
 msgid "invalid font name or more than one font name"
 msgstr "niepoprawna nazwa czcionki lub więcej niż jedna nazwa czcionki"
 
@@ -353,7 +353,7 @@ msgstr "niepoprawna nazwa czcionki lub więcej niż jedna nazwa czcionki"
 # grDevices/src/devPS.c: 1630
 # warning(_("font family '%s' not found in PostScript font database"),
 # 		family)
-#: devPS.c:1598 devPS.c:1633
+#: devPS.c:1595 devPS.c:1630
 #, c-format
 msgid "font family '%s' not found in PostScript font database"
 msgstr ""
@@ -369,7 +369,7 @@ msgstr ""
 # grDevices/src/devPS.c: 1811
 # warning(_("font encoding for family '%s' not found in font database"),
 # 		family)
-#: devPS.c:1705 devPS.c:1787 devPS.c:1814
+#: devPS.c:1702 devPS.c:1784 devPS.c:1811
 #, c-format
 msgid "font encoding for family '%s' not found in font database"
 msgstr ""
@@ -382,7 +382,7 @@ msgstr ""
 # grDevices/src/devPS.c: 1756
 # warning(_("font CMap for family '%s' not found in font database"),
 # 		family)
-#: devPS.c:1732 devPS.c:1759
+#: devPS.c:1729 devPS.c:1756
 #, c-format
 msgid "font CMap for family '%s' not found in font database"
 msgstr "czcionka CMap dla rodziny '%s' nie została znaleziona w bazie danych"
@@ -393,27 +393,27 @@ msgstr "czcionka CMap dla rodziny '%s' nie została znaleziona w bazie danych"
 # warning(_("cannot load afm file '%s'"), afmpath)
 # grDevices/src/devPS.c: 2097
 # warning(_("cannot load afm file '%s'"), afmpaths[i])
-#: devPS.c:1953 devPS.c:2032 devPS.c:2100
+#: devPS.c:1950 devPS.c:2029 devPS.c:2097
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr "nie można załadować pliku afm '%s'"
 
 # grDevices/src/devPS.c: 2385
 # warning(_("corrupt loaded encodings;  encoding not recorded"))
-#: devPS.c:2388
+#: devPS.c:2385
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr ""
 "załadowane kodowania są uszkodzone; kodowanie nie zostało zarejestrowane"
 
 # grDevices/src/devPS.c: 2396
 # warning(_("failed to record device encoding"))
-#: devPS.c:2399
+#: devPS.c:2396
 msgid "failed to record device encoding"
 msgstr "nie udało się zapisać kodowania urządzenia"
 
 # grDevices/src/devPS.c: 2565
 # error(_("object '.ps.prolog' is not a character vector"))
-#: devPS.c:2568
+#: devPS.c:2565
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "obiekt '.ps.prolog' nie jest wektorem tekstowym"
 
@@ -423,7 +423,7 @@ msgstr "obiekt '.ps.prolog' nie jest wektorem tekstowym"
 # error(_("invalid line end"))
 # grDevices/src/devPS.c: 6409
 # error(_("invalid line end"))
-#: devPS.c:2641 devPS.c:6418 devWindows.c:784
+#: devPS.c:2638 devPS.c:6415 devWindows.c:784
 msgid "invalid line end"
 msgstr "błędny koniec linii"
 
@@ -433,13 +433,13 @@ msgstr "błędny koniec linii"
 # error(_("invalid line join"))
 # grDevices/src/devPS.c: 6428
 # error(_("invalid line join"))
-#: devPS.c:2660 devPS.c:6437 devWindows.c:797
+#: devPS.c:2657 devPS.c:6434 devWindows.c:797
 msgid "invalid line join"
 msgstr "błędny łącznik linii"
 
 # grDevices/src/devPS.c: 2665
 # error(_("invalid line mitre"))
-#: devPS.c:2668
+#: devPS.c:2665
 msgid "invalid line mitre"
 msgstr "niepoprawny ukośnik linii"
 
@@ -458,8 +458,8 @@ msgstr "niepoprawny ukośnik linii"
 # warning(_("attempt to use invalid font %d replaced by font 1"), face)
 # grDevices/src/devPS.c: 7800
 # warning(_("attempt to use invalid font %d replaced by font 1"), face)
-#: devPS.c:2877 devPS.c:3773 devPS.c:4221 devPS.c:4248 devPS.c:5258
-#: devPS.c:7764 devPS.c:7809
+#: devPS.c:2874 devPS.c:3770 devPS.c:4218 devPS.c:4245 devPS.c:5255
+#: devPS.c:7761 devPS.c:7806
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "próba użycia niepoprawnej czcionki %d zastąpionej przez czcionkę 1"
@@ -470,7 +470,7 @@ msgstr "próba użycia niepoprawnej czcionki %d zastąpionej przez czcionkę 1"
 # error(_("filename too long in %s()"), "xfig")
 # grDevices/src/devPS.c: 5830
 # error(_("filename too long in %s()"), "pdf")
-#: devPS.c:3099 devPS.c:4723 devPS.c:5837
+#: devPS.c:3096 devPS.c:4720 devPS.c:5834
 #, c-format
 msgid "filename too long in %s()"
 msgstr "nazwa pliku w '%s()' jest zbyt długa"
@@ -481,7 +481,7 @@ msgstr "nazwa pliku w '%s()' jest zbyt długa"
 # error(_("memory allocation problem in %s()"), "xfig")
 # grDevices/src/devPS.c: 5836
 # error(_("memory allocation problem in %s()"), "pdf")
-#: devPS.c:3105 devPS.c:4729 devPS.c:5843
+#: devPS.c:3102 devPS.c:4726 devPS.c:5840
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr "problem przydziału pamięci w '%s()'"
@@ -490,7 +490,7 @@ msgstr "problem przydziału pamięci w '%s()'"
 # error(_("encoding path is too long in %s()"), "postscript")
 # grDevices/src/devPS.c: 5896
 # error(_("encoding path is too long in %s()"), "pdf")
-#: devPS.c:3122 devPS.c:5903
+#: devPS.c:3119 devPS.c:5900
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr "ścieżka kodowa w '%s()' jest zbyt długa"
@@ -499,7 +499,7 @@ msgstr "ścieżka kodowa w '%s()' jest zbyt długa"
 # error(_("failed to load encoding file in %s()"), "postscript")
 # grDevices/src/devPS.c: 4764
 # error(_("failed to load encoding file in %s()"), "xfig")
-#: devPS.c:3136 devPS.c:4769
+#: devPS.c:3133 devPS.c:4766
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "nie udało się załadować pliku kodowego w %s()"
@@ -514,43 +514,43 @@ msgstr "nie udało się załadować pliku kodowego w %s()"
 # error(_("invalid font type"))
 # grDevices/src/devPS.c: 7635
 # error(_("invalid font type"))
-#: devPS.c:3181 devPS.c:3244 devPS.c:5962 devPS.c:6017 devPS.c:7644
+#: devPS.c:3178 devPS.c:3241 devPS.c:5959 devPS.c:6014 devPS.c:7641
 msgid "invalid font type"
 msgstr "niepoprawny typ czcionki"
 
 # grDevices/src/devPS.c: 3202
 # error(_("failed to initialise default PostScript font"))
-#: devPS.c:3205
+#: devPS.c:3202
 msgid "failed to initialise default PostScript font"
 msgstr "nie udało się zainicjalizować domyślnej czcionki PostScript"
 
 # grDevices/src/devPS.c: 3268
 # error(_("failed to initialise additional PostScript fonts"))
-#: devPS.c:3271
+#: devPS.c:3268
 msgid "failed to initialise additional PostScript fonts"
 msgstr "nie udało się zainicjalizować dodatkowych czcionek PostScript"
 
 # grDevices/src/devPS.c: 3284
 # error(_("invalid foreground/background color (postscript)"))
-#: devPS.c:3287
+#: devPS.c:3284
 msgid "invalid foreground/background color (postscript)"
 msgstr "niepoprawny kolor pierwszego planu/tła (postscript)"
 
 # grDevices/src/devPS.c: 3289
 # error(_("'command' is too long"))
-#: devPS.c:3292
+#: devPS.c:3289
 msgid "'command' is too long"
 msgstr "'command' jest zbyt długie"
 
 # grDevices/src/devPS.c: 3294
 # error(_("'postscript(print.it=TRUE)' used with an empty 'print' command"))
-#: devPS.c:3297
+#: devPS.c:3294
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "'postscript(print.it=TRUE)' użyte z pustą komendą 'print'"
 
 # grDevices/src/devPS.c: 3343
 # error(_("invalid page type '%s' (postscript)"), pd->papername)
-#: devPS.c:3346
+#: devPS.c:3343
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "niepoprawny typ '%s' strony (postscript)"
@@ -561,7 +561,7 @@ msgstr "niepoprawny typ '%s' strony (postscript)"
 # warning(_("semi-transparency is not supported on this device: reported only once per page"))
 # grDevices/src/devPS.c: 4568
 # warning(_("semi-transparency is not supported on this device: reported only once per page"))
-#: devPS.c:3460 devPS.c:4573 devWindows.c:2341
+#: devPS.c:3457 devPS.c:4570 devWindows.c:2341
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -574,7 +574,7 @@ msgstr ""
 # grDevices/src/devPS.c: 3570
 # error(_("cannot open 'postscript' pipe to '%s'"),
 # 		    pd->filename + 1)
-#: devPS.c:3566 devPS.c:3575
+#: devPS.c:3563 devPS.c:3572
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "nie można otworzyć kanału 'postscript' w '%s'"
@@ -589,7 +589,7 @@ msgstr "nie można otworzyć kanału 'postscript' w '%s'"
 # error(_("cannot open file '%s'"), pd->tmpname)
 # grDevices/src/devPS.c: 7060
 # error(_("cannot open file '%s'"), buf)
-#: devPS.c:3586 devPS.c:4978 devPS.c:4989 devPS.c:7069 qdPDF.c:98
+#: devPS.c:3583 devPS.c:4975 devPS.c:4986 devPS.c:7066 qdPDF.c:98
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "nie można otworzyć pliku '%s'"
@@ -600,7 +600,7 @@ msgstr "nie można otworzyć pliku '%s'"
 # grDevices/src/devPS.c: 3724
 # warning(_("error from postscript() in running:\n    %s"),
 # 			buff)
-#: devPS.c:3714 devPS.c:3729
+#: devPS.c:3711 devPS.c:3726
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -612,7 +612,7 @@ msgstr ""
 # grDevices/src/devPS.c: 3756
 # error(_("CID family '%s' not included in postscript() device"),
 # 	      family)
-#: devPS.c:3761
+#: devPS.c:3758
 #, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "rodzina CID '%s' nie jest uwzględniona w urządzeniu 'postScript()'"
@@ -628,14 +628,14 @@ msgstr "rodzina CID '%s' nie jest uwzględniona w urządzeniu 'postScript()'"
 # grDevices/src/devPS.c: 4358
 # error(_("family '%s' not included in postscript() device"),
 # 		  gc->fontfamily)
-#: devPS.c:3779 devPS.c:3790 devPS.c:4228 devPS.c:4258 devPS.c:4363
+#: devPS.c:3776 devPS.c:3787 devPS.c:4225 devPS.c:4255 devPS.c:4360
 #, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr "rodzina '%s' nie jest uwzględniona w urządzeniu 'postScript()'"
 
 # grDevices/src/devPS.c: 4298
 # error(_("unknown encoding '%s' in 'mbcsToSbcs'"), encoding)
-#: devPS.c:4303
+#: devPS.c:4300
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "nieznana strona kodowa '%s' w 'mbcsToSbcs'"
@@ -643,7 +643,7 @@ msgstr "nieznana strona kodowa '%s' w 'mbcsToSbcs'"
 # grDevices/src/devPS.c: 4308
 # warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
 # 		in, (unsigned char) *i_buf)
-#: devPS.c:4313
+#: devPS.c:4310
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr "niepowodzenie konwersji '%s' w 'mbcsToSbcs': kropka zastąpiona <%02x>"
@@ -651,7 +651,7 @@ msgstr "niepowodzenie konwersji '%s' w 'mbcsToSbcs': kropka zastąpiona <%02x>"
 # grDevices/src/devPS.c: 4386
 # warning(_("failed open converter to encoding '%s'"),
 # 			cidfont->encoding)
-#: devPS.c:4391
+#: devPS.c:4388
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "nie udało się otworzyć konwertera dla kodowania '%s'"
@@ -665,21 +665,21 @@ msgstr "nie udało się otworzyć konwertera dla kodowania '%s'"
 # grDevices/src/devPS.c: 7890
 # warning(_("failed in text conversion to encoding '%s'"),
 # 			cidfont->encoding)
-#: devPS.c:4409 devPS.c:5303 devPS.c:7899
+#: devPS.c:4406 devPS.c:5300 devPS.c:7896
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "konwersja tesktu dla kodowania '%s' nie powiodła się"
 
 # grDevices/src/devPS.c: 4582
 # error(_("ran out of colors in xfig()"))
-#: devPS.c:4587
+#: devPS.c:4584
 msgid "ran out of colors in xfig()"
 msgstr "zabrakło kolorów w 'xfig()'"
 
 # grDevices/src/devPS.c: 4611
 # warning(_("unimplemented line texture %08x: using Dash-double-dotted"),
 # 		lty)
-#: devPS.c:4616
+#: devPS.c:4613
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "niezaimplementowana tekstura linii %08x: używanie kreska-dwie-kropki"
@@ -687,46 +687,46 @@ msgstr "niezaimplementowana tekstura linii %08x: używanie kreska-dwie-kropki"
 # grDevices/src/devPS.c: 4677
 # warning(_("unknown postscript font family '%s', using Helvetica"),
 # 		name)
-#: devPS.c:4682
+#: devPS.c:4679
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr "nieznana rodzina czcionki postscript '%s', używanie Helvetica"
 
 # grDevices/src/devPS.c: 4749
 # error(_("invalid foreground/background color (xfig)"))
-#: devPS.c:4754
+#: devPS.c:4751
 msgid "invalid foreground/background color (xfig)"
 msgstr "niepoprawny kolor pierwszego planu/tła (xfig)"
 
 # grDevices/src/devPS.c: 4782
 # error(_("only Type 1 fonts supported for XFig"))
-#: devPS.c:4787
+#: devPS.c:4784
 msgid "only Type 1 fonts supported for XFig"
 msgstr "tylko czcionki 'Type 1' są wspierane w XFig"
 
 # grDevices/src/devPS.c: 4795
 # error(_("failed to initialise default XFig font"))
-#: devPS.c:4800
+#: devPS.c:4797
 msgid "failed to initialise default XFig font"
 msgstr "nie udało się zainicjalizować domyślnej czcionki XFig"
 
 # grDevices/src/devPS.c: 4832
 # error(_("invalid page type '%s' (xfig)"), pd->papername)
-#: devPS.c:4837
+#: devPS.c:4834
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "niepoprawny typ '%s' strony ('xfig')"
 
 # grDevices/src/devPS.c: 4840
 # warning(_("xfig(%s, onefile=FALSE) will only return the last plot"), pd->filename)
-#: devPS.c:4845
+#: devPS.c:4842
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "'xfig(%s, onefile=FALSE)' zwróci tylko ostatni wykres"
 
 # grDevices/src/devPS.c: 4963
 # error(_("empty file name"))
-#: devPS.c:4970
+#: devPS.c:4967
 msgid "empty file name"
 msgstr "pusta nazwa pliku"
 
@@ -740,13 +740,13 @@ msgstr "pusta nazwa pliku"
 # error(_("write failed"))
 # grDevices/src/devPS.c: 7120
 # error(_("write failed"))
-#: devPS.c:5035 devPS.c:5087 devPS.c:5665 devPS.c:5709 devPS.c:7129
+#: devPS.c:5032 devPS.c:5084 devPS.c:5662 devPS.c:5706 devPS.c:7126
 msgid "write failed"
 msgstr "zapis nie powiódł się"
 
 # grDevices/src/devPS.c: 5285
 # warning(_("unable to use encoding '%s'"), pd->encoding)
-#: devPS.c:5292
+#: devPS.c:5289
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr "nie można użyć strony kodowej '%s'"
@@ -755,87 +755,87 @@ msgstr "nie można użyć strony kodowej '%s'"
 # error(_("failed to increase 'maxRaster'"))
 # grDevices/src/devPS.c: 5549
 # error(_("failed to increase 'maxRaster'"))
-#: devPS.c:5553 devPS.c:5556
+#: devPS.c:5550 devPS.c:5553
 msgid "failed to increase 'maxRaster'"
 msgstr "nie udało się zwiększyć 'maxRaster'"
 
 # grDevices/src/devPS.c: 5561
 # error(_("unable to allocate raster image"))
-#: devPS.c:5568
+#: devPS.c:5565
 msgid "unable to allocate raster image"
 msgstr "nie można przydzielić obrazu rastrowego"
 
 # grDevices/src/devPS.c: 5762
 # warning(_("corrupt loaded encodings;  font not added"))
-#: devPS.c:5769
+#: devPS.c:5766
 msgid "corrupt loaded encodings;  font not added"
 msgstr "załadowane kodowania są uszkodzone; czcionka nie została dodana"
 
 # grDevices/src/devPS.c: 5771
 # warning(_("failed to record device encoding; font not added"))
-#: devPS.c:5778
+#: devPS.c:5775
 msgid "failed to record device encoding; font not added"
 msgstr ""
 "nie udało się zarejestrować kodowania urządzenia; czcionka nie została dodana"
 
 # grDevices/src/devPS.c: 5882
 # warning(_("increasing the PDF version to 1.2"))
-#: devPS.c:5889
+#: devPS.c:5886
 msgid "increasing the PDF version to 1.2"
 msgstr "zwiększanie wersji PDF do 1.2"
 
 # grDevices/src/devPS.c: 5912
 # error(_("failed to load default encoding"))
-#: devPS.c:5919
+#: devPS.c:5916
 msgid "failed to load default encoding"
 msgstr "nie udało się załadować domyślnej strony kodowej"
 
 # grDevices/src/devPS.c: 5978
 # error(_("failed to initialise default PDF font"))
-#: devPS.c:5985
+#: devPS.c:5982
 msgid "failed to initialise default PDF font"
 msgstr "nie udało się zainicjalizować domyślnej czcionki PDF"
 
 # grDevices/src/devPS.c: 6033
 # error(_("failed to initialise additional PDF fonts"))
-#: devPS.c:6040
+#: devPS.c:6037
 msgid "failed to initialise additional PDF fonts"
 msgstr "nie udało się zainicjalizować dodatkowych czcionek PDF"
 
 # grDevices/src/devPS.c: 6046
 # error(_("failed to allocate rasters"))
-#: devPS.c:6053
+#: devPS.c:6050
 msgid "failed to allocate rasters"
 msgstr "nie udało się przydzielić rastrów"
 
 # grDevices/src/devPS.c: 6053
 # error(_("failed to allocate masks"))
-#: devPS.c:6060
+#: devPS.c:6057
 msgid "failed to allocate masks"
 msgstr "nie udało się przydzielić masek"
 
 # grDevices/src/devPS.c: 6116
 # error(_("invalid paper type '%s' (pdf)"), pd->papername)
-#: devPS.c:6123
+#: devPS.c:6120
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "niepoprawny typ '%s' papieru (pdf)"
 
 # grDevices/src/devPS.c: 6140
 # error(_("invalid foreground/background color (pdf)"))
-#: devPS.c:6147
+#: devPS.c:6144
 msgid "invalid foreground/background color (pdf)"
 msgstr "niepoprawny kolor pierwszego planu/tła (pdf)"
 
 # grDevices/src/devPS.c: 6257
 # error(_("invalid 'alpha' value in PDF"))
-#: devPS.c:6266
+#: devPS.c:6263
 msgid "invalid 'alpha' value in PDF"
 msgstr "niepoprawna wartość 'alpha' w PDF"
 
 # grDevices/src/devPS.c: 6282
 # warning(_("increasing the PDF version to 1.4"))
-#: devPS.c:6291
+#: devPS.c:6288
 msgid "increasing the PDF version to 1.4"
 msgstr "zwiększanie wersji PDF do 1.4"
 
@@ -843,44 +843,44 @@ msgstr "zwiększanie wersji PDF do 1.4"
 # warning(_("unknown 'colormodel', using 'srgb'"))
 # grDevices/src/devPS.c: 6380
 # warning(_("unknown 'colormodel', using 'srgb'"))
-#: devPS.c:6342 devPS.c:6389
+#: devPS.c:6339 devPS.c:6386
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "nieznany 'colormodel', używanie 'srgb'"
 
 # grDevices/src/devPS.c: 6574
 # error(_("failed to load sRGB colorspace file"))
-#: devPS.c:6583
+#: devPS.c:6580
 msgid "failed to load sRGB colorspace file"
 msgstr "nie udało się załadować pliku przestrzeni kolorów sRGB"
 
 # grDevices/src/devPS.c: 6838
 # error(_("corrupt encodings in PDF device"))
-#: devPS.c:6847
+#: devPS.c:6844
 msgid "corrupt encodings in PDF device"
 msgstr "uszkodzone kodowania w urządzeniu PDF"
 
 # grDevices/src/devPS.c: 6919
 # warning(_("increasing the PDF version to 1.3"))
-#: devPS.c:6928
+#: devPS.c:6925
 msgid "increasing the PDF version to 1.3"
 msgstr "zwiększanie wersji PDF do 1.3"
 
 # grDevices/src/devPS.c: 7044
 # error(_("cannot open 'pdf' pipe to '%s'"), pd->cmd)
-#: devPS.c:7053
+#: devPS.c:7050
 #, c-format
 msgid "cannot open 'pdf' pipe to '%s'"
 msgstr "nie można otworzyć kanału 'pdf' w '%s'"
 
 # grDevices/src/devPS.c: 7050
 # warning(_("file = \"|cmd\" implies 'onefile = TRUE'"))
-#: devPS.c:7059
+#: devPS.c:7056
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\" sugeruje, że 'onefile = TRUE'"
 
 # grDevices/src/devPS.c: 7193
 # error(_("cannot open 'pdf' file argument '%s'\n  please shut down the PDF device"), buf)
-#: devPS.c:7202
+#: devPS.c:7199
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -895,7 +895,7 @@ msgstr ""
 # error(_("failed to find or load PDF font"))
 # grDevices/src/devPS.c: 8069
 # error(_("failed to find or load PDF font"))
-#: devPS.c:7669 devPS.c:8031 devPS.c:8078
+#: devPS.c:7666 devPS.c:8028 devPS.c:8075
 msgid "failed to find or load PDF font"
 msgstr "nie udało się znaleźć lub załadować czcionkę PDF"
 
@@ -903,7 +903,7 @@ msgstr "nie udało się znaleźć lub załadować czcionkę PDF"
 # error(_("failed to find or load PDF CID font"))
 # grDevices/src/devPS.c: 7977
 # error(_("failed to find or load PDF CID font"))
-#: devPS.c:7853 devPS.c:7986
+#: devPS.c:7850 devPS.c:7983
 msgid "failed to find or load PDF CID font"
 msgstr "nie udało się znaleźć lub załadować czcionkę CID PDF"
 
@@ -915,7 +915,7 @@ msgstr "nie udało się znaleźć lub załadować czcionkę CID PDF"
 # error(_("invalid 'family' parameter in %s"), call)
 # grDevices/src/devPS.c: 8376
 # error(_("invalid 'family' parameter in %s"), call)
-#: devPS.c:8217 devPS.c:8221 devPS.c:8381 devPS.c:8385
+#: devPS.c:8214 devPS.c:8218 devPS.c:8378 devPS.c:8382
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "niepoprawny parametr 'family' w %s"
@@ -924,7 +924,7 @@ msgstr "niepoprawny parametr 'family' w %s"
 # error(_("invalid 'fonts' parameter in %s"), call)
 # grDevices/src/devPS.c: 8388
 # error(_("invalid 'fonts' parameter in %s"), call)
-#: devPS.c:8239 devPS.c:8397
+#: devPS.c:8236 devPS.c:8394
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "niepoprawny parametr 'fonts' w %s"
@@ -951,9 +951,9 @@ msgstr "niepoprawny parametr 'fonts' w %s"
 # error(_("invalid value of '%s'"), "fillOddEven")
 # grDevices/src/devPS.c: 8401
 # error(_("invalid value of '%s'"), "useCompression")
-#: devPS.c:8245 devPS.c:8407 devPS.c:8410 devWindows.c:3649 devWindows.c:3653
-#: devWindows.c:3661 devWindows.c:3672 devWindows.c:3678 devWindows.c:3685
-#: devWindows.c:3692 devWindows.c:3696
+#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3648 devWindows.c:3652
+#: devWindows.c:3660 devWindows.c:3671 devWindows.c:3677 devWindows.c:3684
+#: devWindows.c:3691 devWindows.c:3695
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "niepoprawna wartość '%s'"
@@ -968,7 +968,7 @@ msgstr "niepoprawna wartość '%s'"
 # error(_("unable to start %s() device"), "xfig")
 # grDevices/src/devPS.c: 8415
 # error(_("unable to start %s() device"), "pdf")
-#: devPS.c:8258 devPS.c:8325 devPS.c:8424 devPicTeX.c:742 devWindows.c:3737
+#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3736
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -1191,7 +1191,7 @@ msgstr "metaplik '%s' nie mógł zostać utworzony"
 # (_("R Graphics"))
 # grDevices/src/devWindows.c: 3754
 # (_("R Graphics"))
-#: devWindows.c:3112 devWindows.c:3761
+#: devWindows.c:3112 devWindows.c:3760
 msgid "R Graphics"
 msgstr "R Grafika"
 
@@ -1266,7 +1266,7 @@ msgstr "Nie można załadować 'Rbitmap.dll'"
 
 # grDevices/src/devWindows.c: 3641
 # error(_("invalid 'width' or 'height'"))
-#: devWindows.c:3644
+#: devWindows.c:3643
 msgid "invalid 'width' or 'height'"
 msgstr "niepoprawna wartość 'width' lub 'height'"
 

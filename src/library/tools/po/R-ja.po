@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -481,8 +481,8 @@ msgstr ""
 " %s \n"
 " (NAMESPACE 中に)。 "
 
-msgid "argument 'file' must be a character string or connection"
-msgstr " 引数 'file' は文字ベクトルかコネクションでなければなりません "
+msgid "Rd object required"
+msgstr ""
 
 msgid "missing/empty %s field in '%s'"
 msgstr " 欠如もしくは空の %s 欄があります ('%s' 中) "
@@ -512,6 +512,16 @@ msgstr " 欠損もしくは空の名前を持つ Rd オブジェクトは扱え�
 
 msgid "No help on %s found in RdDB %s"
 msgstr " %s に関するいかなるヘルプも RdDB %s 中にはありません "
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr " package %s にドキュメントは見つけられませんでした "
 
 msgid "more than one \\examples section, using the first"
 msgstr " 2 つ以上の \\examples 節があります、1 番目を用います "
@@ -552,6 +562,10 @@ msgstr " '%s' に対する不正な値 : %s "
 
 msgid "Only one Rd section per %s is supported."
 msgstr " %s は Rd セクションを 1 つしか持てません。 "
+
+#, fuzzy
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr " パッケージ '%s' には 'DESCRIPTION.in' がありません "
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr " ビニエットの生成物 %s は既知の拡張子を持っていません( %s ) "
@@ -1364,6 +1378,9 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr " 引数 'file' は文字ベクトルかコネクションでなければなりません "
+
 #~ msgid "with %\\SweaveUTF8"
 #~ msgstr " with %\\SweaveUTF8 "
 
@@ -1883,9 +1900,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 #~ " 想定されるリンクは \\link[pkg]{a} の形で、ここで 'a' はファイル名ではなく"
 #~ "エイリアスとして存在します。こうしたリンクは R < 2.10.0　では使えず、現在"
 #~ "のバージョンでは,  HTML (PDF ではなく) ヘルプ中でのみ有効です。 "
-
-#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr " パッケージ '%s' には 'DESCRIPTION.in' がありません "
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr ""

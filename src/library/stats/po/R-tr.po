@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -756,8 +756,8 @@ msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] ve prob[] eşit uzunlukta matris olmalı"
 
 #, fuzzy
-msgid "probabilities cannot be negative nor all 0"
-msgstr "olasılıklar negatif veya 0 olamaz"
+msgid "probabilities must be finite, non-negative and not all 0"
+msgstr "olasılıklar negatif olmamalı"
 
 msgid "'x' must be non-negative"
 msgstr "'x' negatif olmamalı"
@@ -2542,6 +2542,10 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#, fuzzy
+#~ msgid "probabilities cannot be negative nor all 0"
+#~ msgstr "olasılıklar negatif veya 0 olamaz"
 
 #, fuzzy
 #~ msgid "'init' must have 1 or %d columns"

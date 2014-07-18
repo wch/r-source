@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:36\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1480,6 +1480,16 @@ msgstr "Utworzono plik o nazwie %s."
 #             domain = NA)
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Edytuj ten plik i przenieś go do odpowiedniego katalogu."
+
+# utils/R/prompt.R: 55
+# stop("cannot determine a usable name")
+# utils/R/prompt.R: 185
+# stop("cannot determine a usable name")
+# utils/R/prompt.R: 215
+# stop("cannot determine a usable name")
+#, fuzzy
+msgid "cannot determine import name"
+msgstr "nie można wyznaczyć użytecznej nazwy"
 
 # utils/R/question.R: 87
 # stop(gettextf("no documentation of type %s and topic %s (or error in processing help)",

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-06-17 08:35\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -310,7 +310,7 @@ msgid "only a single element should be replaced"
 msgstr "только одиночный элемент можно заменить"
 
 #, fuzzy
-msgid "Name partially matched in data frame"
+msgid "Partial match of '%s' to '%s' in data frame"
 msgstr "нечисловая переменная переменная в таблице данных:"
 
 msgid "names do not match previous names"

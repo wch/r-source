@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-27 09:11\n"
+"POT-Creation-Date: 2014-07-18 13:11\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1051,10 +1051,8 @@ msgstr ""
 "%s\n"
 "w pliku 'NAMESPACE'."
 
-# tools/R/Rd.R: 38
-# stop("argument 'file' must be a character string or connection")
-msgid "argument 'file' must be a character string or connection"
-msgstr "argument 'file' musi być łańcuchem tekstowym lub połączeniem"
+msgid "Rd object required"
+msgstr ""
 
 # tools/R/Rd.R: 55
 # gettextf("missing/empty %s field in '%s'",
@@ -1110,6 +1108,19 @@ msgstr "nie można poradzić sobie z obiektami Rd z brakującymi/pustymi nazwami
 #                      domain = NA)
 msgid "No help on %s found in RdDB %s"
 msgstr "Nie znaleziono pomocy na temat %s w zbiorach RdDB %s"
+
+msgid "'macros' must be TRUE or must specify existing macros"
+msgstr ""
+
+msgid "Macro file %s should only contain Rd macro definitions and comments"
+msgstr ""
+
+# tools/R/dynamicHelp.R: 358
+# gettextf("No docs found for package %s",
+#                                        mono(pkg))
+#, fuzzy
+msgid "No Rd macros in package '%s'."
+msgstr "Nie znaleziono dokumentów dla pakietu '%s'"
 
 # tools/R/Rd2ex.R: 145
 # warning("more than one \\examples section, using the first")
@@ -1209,6 +1220,9 @@ msgstr "niepoprawna wartość dla '%s' : %s"
 #                              domain = NA)
 msgid "Only one Rd section per %s is supported."
 msgstr "Tylko jedna sekcja Rd na %s jest wspierana."
+
+msgid "DESCRIPTION file is for package '%s', not '%s'"
+msgstr ""
 
 # tools/R/Vignettes.R: 29
 # stop(gettextf("Vignette product %s does not have a known filename extension (%s)",
@@ -3026,6 +3040,11 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+# tools/R/Rd.R: 38
+# stop("argument 'file' must be a character string or connection")
+#~ msgid "argument 'file' must be a character string or connection"
+#~ msgstr "argument 'file' musi być łańcuchem tekstowym lub połączeniem"
 
 # tools/R/Vignettes.R: 698
 # stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
