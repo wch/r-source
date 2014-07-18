@@ -171,6 +171,10 @@
       \item \code{icuSetCollate()} allows \code{locale = "default"} to
       use the OS locale collation category, and \code{locale = "none"}
       to use OS services rather than ICU for collation.
+
+      Environment variable \env{R_ICU_LOCALE} can be used to set the
+      initial ICU locale, in case the one derived from the OS locale is
+      inappropriate (this is currently necessary on Windows).
     }
   }
   
