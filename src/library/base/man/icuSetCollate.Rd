@@ -5,6 +5,8 @@
 
 \name{icuSetCollate}
 \alias{icuSetCollate}
+\alias{R_ICU_LOCALE}
+
 \title{ Setup Collation by ICU }
 \description{
   Controls the way collation is done by ICU (an optional part of the \R
@@ -30,7 +32,7 @@ icuSetCollate(...)
     \item{\code{case_first}:}{\code{"upper"}, \code{"lower"} or
       \code{"default"}, asking for upper- or lower-case characters to be
       sorted first.  The default is usually lower-case first, but not in
-      all languages.}
+      all languages (not under the default settings for Danish, for example).}
     \item{\code{alternate_handling}:}{Controls the handling of
       \sQuote{variable} characters (mainly punctuation and symbols).
       Possible values are \code{"non_ignorable"} (primary strength) and
@@ -62,7 +64,9 @@ icuSetCollate(...)
       obtains the locale from the OS as is done at the start of the
       session. (As from \R 3.1.2:
       \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
-      can be used in earlier versions.)
+      can be used in earlier versions.)  If environment variable
+      \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
+      rather than that from the OS.
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -93,8 +97,9 @@ icuSetCollate(...)
   UTF-8, it will be most efficient in UTF-8 locales.
 
   It is optional on Windows: if \R has been built against ICU, it will
-  only be used once \code{icuSetCollate} is called to select the locale
-  (as ICU and Windows differ in their idea of locale names).
+  only be used if environment variable \env{R_ICU_LOCALE} is set or once
+  \code{icuSetCollate} is called to select the locale (as ICU and
+  Windows, at least pre-Vista, differ in their idea of locale names).
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}.
@@ -113,7 +118,9 @@ if(capabilities("ICU")) {
     icuSetCollate(case_first = "upper"); print(sort(x))
     icuSetCollate(case_first = "lower"); print(sort(x))
 
-    icuSetCollate(locale = "da_DK", case_first = "default"); print(sort(x))
+    ## Danish collates upper-case-first and with 'aa' as a single letter
+    icuSetCollate(locale = "da_DK", case_first = "default"); print(sort(x)) 
+    ## Estonian collates Z between S and T
     icuSetCollate(locale = "et_EE"); print(sort(x))
     icuSetCollate(locale = "default")
 }

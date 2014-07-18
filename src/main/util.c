@@ -1820,10 +1820,11 @@ static const struct {
     { NULL,  0 }
 };
 
-// Idea is to remap Windows' locale names in due course
+// Idea is to remap Windows' locale names by 3.2.0.
 static const char *getLocale(void)
 {
-    return setlocale(LC_COLLATE, NULL);
+    const char *p = getenv("R_ICU_LOCALE");
+    return (p && p[0]) ? p : setlocale(LC_COLLATE, NULL);
 }
 
 SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1901,6 +1902,21 @@ int Scollate(SEXP a, SEXP b)
 	    if (U_FAILURE(status)) {
 		collator = NULL;
 		error("failed to open ICU collator (%d)", status);
+	    }
+	}
+#else
+	{
+	    const char *p = getenv("R_ICU_LOCALE");
+	    if(p && p[0]) {
+		UErrorCode status = U_ZERO_ERROR;
+		uloc_setDefault(p, &status);
+		if(U_FAILURE(status))
+		    error("failed to set ICU locale (%d)", status);
+		collator = ucol_open(NULL, &status);
+		if (U_FAILURE(status)) {
+		    collator = NULL;
+		    error("failed to open ICU collator (%d)", status);
+		}
 	    }
 	}
 #endif
