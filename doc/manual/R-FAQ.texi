@@ -489,18 +489,24 @@ Apple installer packages at @uref{http://r.research.att.com}.
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
 
-@c Linux binaries as of 2011-07-05:
+@c Linux binaries as of 2014-07-19:
 @c
 @c debian
 @c   etch-cran
 @c            i386   2.11.0  Johannes Ranke
 @c            amd64  2.11.0  Johannes Ranke
 @c   lenny-cran
-@c            i386   2.13.0  Johannes Ranke
-@c            amd64  2.13.0  Johannes Ranke
+@c            i386   2.14.1  Johannes Ranke
+@c            amd64  2.14.1  Johannes Ranke
 @c   squeeze-cran
-@c            i386   2.13.0  Johannes Ranke
-@c            amd64  2.13.0  Johannes Ranke
+@c            i386   2.15.3  Johannes Ranke
+@c            amd64  2.15.3  Johannes Ranke
+@c   squeeze-cran3
+@c            i386   3.1.1
+@c            amd64  3.1.1
+@c   wheezy-cran3
+@c            i386   3.1.1
+@c            amd64  3.1.1
 @c redhat
 @c   el4      i386   2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
 @c            x86_64 2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
@@ -511,28 +517,21 @@ Apple installer packages at @uref{http://r.research.att.com}.
 @c   fedora11 i386   2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c            x86_64 2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
 @c ubuntu
-@c   intrepid [Intrepid Ibex, 8.10]
-@c           i386   2.8.1  Vincent Goulet
-@c           amd64  2.8.1  Michael Rutter
-@c   hardy [Hardy Heron, 8.04]
-@c           i386   2.8.1  Vincent Goulet
-@c           amd64  2.8.1  Michael Rutter
-@c   gutsy [Gutsy Gibbon, 7.10]
-@c           i386   2.8.1  Vincent Goulet
-@c           amd64  2.8.1  Michael Rutter
-@c   dapper [Dapper Drake, 6.06]
-@c           i386   2.8.1  Vincent Goulet
-@c           amd64  2.8.1  Michael Rutter
+@c   Trusty Tahr (14.04)
+@c   Saucy Salamander (13.10)
+@c   Quantal Quetzal (12.10)
+@c   Precise Pangolin (12.04; LTS)
+@c   Lucid Lynx (10.04; LTS)
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Red Hat} {i386/x86_64} {hardy/lucid/natty/oneiric/precise} {Martyn Plummer}
+@multitable {Red Hat} {i386/x86_64} {lucid/precise/quantal/saucy/trusty} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64 @tab etch/lenny/squeeze @tab Johannes Ranke
+@item Debian   @tab i386/amd64 @tab etch/lenny/squeeze/wheezy @tab Johannes Ranke
 @item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11 @tab Martyn Plummer
-@item Ubuntu   @tab i386/amd64 @tab hardy/lucid/natty/oneiric/precise @tab Michael Rutter
+@item Ubuntu   @tab i386/amd64 @tab lucid/precise/quantal/saucy/trusty @tab Michael Rutter
 @end multitable
 @end quotation
 
