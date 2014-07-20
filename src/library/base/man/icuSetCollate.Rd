@@ -5,6 +5,7 @@
 
 \name{icuSetCollate}
 \alias{icuSetCollate}
+\alias{icuGetCollate}
 \alias{R_ICU_LOCALE}
 
 \title{ Setup Collation by ICU }
@@ -14,9 +15,13 @@
 }
 \usage{
 icuSetCollate(...)
+
+icuGetCollate(type = c("actual", "valid"))
 }
 \arguments{
   \item{\dots}{Named arguments, see \sQuote{Details}.}
+  \item{type}{either the actual locale in use for collation or the most
+    specific locale which would be valid.}
 }
 \details{
   Optionally, \R can be built to collate character strings by ICU
@@ -66,7 +71,7 @@ icuSetCollate(...)
       \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
       can be used in earlier versions.)  If environment variable
       \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
-      rather than that from the OS.
+      rather than that obtained from the OS.
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -91,6 +96,13 @@ icuSetCollate(...)
   \code{locale} is specified: the collation engine is reset if the
   OS collation locate category is changed by \code{\link{Sys.setlocale}}.
 }
+\value{
+  For \code{icuGetCollate}, a character vector of length one describing
+  the ICU locale in use (which may be reported as \code{"ICU not in
+  use"}).  This may be simpler than the requested locale: for example
+  \code{"da"} rather than \code{"da_DK"}: English locales are likely to
+  report \code{"root"}.
+}
 \note{
   ICU is used by default wherever it is available: this include OS X,
   Solaris and many Linux installations.  As it works internally in
@@ -113,6 +125,8 @@ icuSetCollate(...)
 ## These examples depend on having ICU available, and on the locale.
 ## As we don't know the current settings, we can only reset to the default.
 if(capabilities("ICU")) {
+    print(icuGetCollate())
+    print(icuGetCollate("valid"))
     x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
     print(sort(x))
     icuSetCollate(case_first = "upper"); print(sort(x))

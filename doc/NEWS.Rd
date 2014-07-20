@@ -108,6 +108,9 @@
   
       \item \code{options(OutDec =)} can now specify a multi-byte
       character, e.g. \code{options(OutDec = "\u00b7")} in a UTF-8 locale.
+      
+      \item New function \code{icuGetCollate()} to report on the ICU
+      collation locale in use (if any).
     }
   }
 
@@ -163,17 +166,17 @@
       
       \item \code{capabilities()} now reports if ICU is used for collation.
       
-      \item (OS X only.) Package \pkg{tcltk} checks if it is linked
-      against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
+      \item (OS X only.) Package \pkg{tcltk} checks when loaded if it is
+      linked against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
       informative error messages to be given.
       
-      \item \code{icuSetCollate()} allows \code{locale = "default"} to
-      use the OS locale collation category, and \code{locale = "none"}
-      to use OS services rather than ICU for collation.
+      \item \code{icuSetCollate()} allows \code{locale = "default"}, and
+      \code{locale = "none"} to use OS services rather than ICU for
+      collation.
 
       Environment variable \env{R_ICU_LOCALE} can be used to set the
-      initial ICU locale, in case the one derived from the OS locale is
+      default ICU locale, in case the one derived from the OS locale is
       inappropriate (this is currently necessary on Windows).
     }
   }
