@@ -1908,7 +1908,7 @@ static const char *getLocale(void)
     printf("locale = %s\n", locale);
     // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
     const char *p = getenv("R_ICU_LOCALE");
-    return (p && p[0]) ? p : "en_US";
+    return (p && p[0]) ? p : "root";
 }
 #else
 static const char *getLocale(void)

@@ -80,8 +80,11 @@ icuGetCollate(type = c("actual", "valid"))
   }
   For the specifications of \sQuote{real} ICU locales, see
   \url{http://userguide.icu-project.org/locale}.  Note that ICU does not
-  report that a locale is not supported, but fallbacks to its idea of
-  \sQuote{best fit} (which could be rather different).
+  report that a locale is not supported, but falls back to its idea of
+  \sQuote{best fit} (which could be rather different and is reported by
+  \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
+  locales fall back to \code{"root"} as although e.g. \code{"en_GB"} is
+  a valid locale, it contains no special rules for collation.
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
@@ -97,11 +100,11 @@ icuGetCollate(type = c("actual", "valid"))
   OS collation locate category is changed by \code{\link{Sys.setlocale}}.
 }
 \value{
-  For \code{icuGetCollate}, a character vector of length one describing
-  the ICU locale in use (which may be reported as \code{"ICU not in
-  use"}).  This may be simpler than the requested locale: for example
-  \code{"da"} rather than \code{"da_DK"}: English locales are likely to
-  report \code{"root"}.
+  For \code{icuGetCollate}, a character string describing the ICU locale
+  in use (which may be reported as \code{"ICU not in use"}).  The
+  \sQuote{actual} locale may be simpler than the requested locale: for
+  example \code{"da"} rather than \code{"da_DK"}: English locales are
+  likely to report \code{"root"}.
 }
 \note{
   ICU is used by default wherever it is available: this include OS X,
