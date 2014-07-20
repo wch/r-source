@@ -89,7 +89,7 @@ SORT=sort
 
 %.dll:
 	@$(ECHO) EXPORTS > $*.def
-	@$(NM) $^ | $(SED) -n $(SYMPAT) >> $*.def
+	@$(NM) $^ | $(SED) -n $(SYMPAT) $(NM_FILTER) >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 
