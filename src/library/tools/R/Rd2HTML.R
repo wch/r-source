@@ -519,6 +519,7 @@ Rd2HTML <-
 		       of1('alt="')
 		       writeContent(block[[length(block)]], tag)
 		       of1('"')
+                   }
                    of1(' />')
                },
                "\\dontshow" =,
