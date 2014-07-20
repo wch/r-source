@@ -66,7 +66,7 @@ icuSetCollate(...)
       \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
       can be used in earlier versions.)  If environment variable
       \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
-      rather than that from the OS.
+      rather than that obtained from the OS.
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -75,7 +75,7 @@ icuSetCollate(...)
   }
   For the specifications of \sQuote{real} ICU locales, see
   \url{http://userguide.icu-project.org/locale}.  Note that ICU does not
-  report that a locale is not supported, but fallbacks to its idea of
+  report that a locale is not supported, but falls back to its idea of
   \sQuote{best fit} (which could be rather different).
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
