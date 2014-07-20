@@ -14,7 +14,7 @@ $(SHLIB): $(OBJECTS)
 	    $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $(BASE)-win.def $(OBJECTS) $(ALL_LIBS); \
 	  else \
 	    echo EXPORTS > tmp.def; \
-	    $(NM) $^ | $(SED) -n $(SYMPAT) >> tmp.def; \
+	    $(NM) $^ | $(SED) -n $(SYMPAT) $(NM_FILTER) >> tmp.def; \
 	    echo $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
 	    $(SHLIB_LD) -shared $(DLLFLAGS) -o $@ tmp.def $(OBJECTS) $(ALL_LIBS); \
 	    $(RM) tmp.def; \
