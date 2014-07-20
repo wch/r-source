@@ -61,6 +61,8 @@ WIN = 32
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
 
+# some toolchains set up for the 'medium code' model need
+# NM_FILTER = | $(SED) -e '/.refptr./d'
 ### END more detailed options
 
 
