@@ -91,16 +91,16 @@ Kurt Hornik                      @*
 @end ifnottex
 
 @menu
-* Introduction::                
-* R Basics::                    
-* R and S::                     
-* R Web Interfaces::            
-* R Add-On Packages::           
-* R and Emacs::                 
-* R Miscellanea::               
-* R Programming::               
-* R Bugs::                      
-* Acknowledgments::             
+* Introduction::
+* R Basics::
+* R and S::
+* R Web Interfaces::
+* R Add-On Packages::
+* R and Emacs::
+* R Miscellanea::
+* R Programming::
+* R Bugs::
+* Acknowledgments::
 @end menu
 
 @node Introduction, R Basics, Top, Top
@@ -110,11 +110,11 @@ This document contains answers to some of the most frequently asked
 questions about R.
 
 @menu
-* Legalese::                    
-* Obtaining this document::     
-* Citing this document::        
-* Notation::                    
-* Feedback::                    
+* Legalese::
+* Obtaining this document::
+* Citing this document::
+* Notation::
+* Feedback::
 @end menu
 
 @node Legalese, Obtaining this document, Introduction, Introduction
@@ -196,13 +196,13 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 Feedback via email to @email{Kurt.Hornik@@R-project.org} is of course
 most welcome.
 
-In particular, note that I do not have access to Windows or Macintosh
-systems.  Features specific to the Windows and Mac OS X ports of R are
+In particular, note that I do not have access to Windows or Mac
+systems.  Features specific to the Windows and OS X ports of R are
 described in the
 @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
-OS X @acronym{FAQ}''}.  If you have information on Macintosh or Windows
+OS X @acronym{FAQ}''}.  If you have information on Mac or Windows
 systems that you think should be added to this document, please let me
 know.
 
@@ -215,20 +215,20 @@ know.
 @chapter R Basics
 
 @menu
-* What is R?::                  
-* What machines does R run on?::  
-* What is the current version of R?::  
-* How can R be obtained?::      
-* How can R be installed?::     
-* Are there Unix-like binaries for R?::  
-* What documentation exists for R?::  
-* Citing R::                    
-* What mailing lists exist for R?::  
-* What is CRAN?::               
-* Can I use R for commercial purposes?::  
-* Why is R named R?::           
-* What is the R Foundation?::   
-* What is R-Forge?::            
+* What is R?::
+* What machines does R run on?::
+* What is the current version of R?::
+* How can R be obtained?::
+* How can R be installed?::
+* Are there Unix-like binaries for R?::
+* What documentation exists for R?::
+* Citing R::
+* What mailing lists exist for R?::
+* What is CRAN?::
+* Can I use R for commercial purposes?::
+* Why is R named R?::
+* What is the R Foundation?::
+* What is R-Forge?::
 @end menu
 
 @node What is R?, What machines does R run on?, R Basics, R Basics
@@ -369,9 +369,9 @@ versions of R can be found at
 @section How can R be installed?
 
 @menu
-* How can R be installed (Unix-like)::  
-* How can R be installed (Windows)::  
-* How can R be installed (Macintosh)::  
+* How can R be installed (Unix-like)::
+* How can R be installed (Windows)::
+* How can R be installed (Mac)::
 @end menu
 
 @node How can R be installed (Unix-like), How can R be installed (Windows), How can R be installed?, How can R be installed?
@@ -454,7 +454,7 @@ To install DVI, info and PDF versions of the manuals, use @kbd{make
 install-dvi}, @kbd{make install-info} and @kbd{make install-pdf},
 respectively.
 
-@node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix-like), How can R be installed?
+@node How can R be installed (Windows), How can R be installed (Mac), How can R be installed (Unix-like), How can R be installed?
 @subsection How can R be installed (Windows)
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
@@ -471,15 +471,15 @@ versions of R.
 See the @url{http://CRAN.R-project.org/bin/windows/base/@/rw-FAQ.html,
 ``R for Windows @acronym{FAQ}''} for more details.
 
-@node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
-@subsection How can R be installed (Macintosh)
+@node How can R be installed (Mac),  , How can R be installed (Windows), How can R be installed?
+@subsection How can R be installed (Mac)
 
 The @file{bin/macosx} directory of a @CRAN{} site contains a standard
 Apple installer package to run on OS X 10.6 (`Snow Leopard') and later.
 Once downloaded and executed, the installer will install the current
-release of R and a R.app Mac OS X @acronym{GUI}.  This port of R for Mac
-OS X is maintained by @email{Simon.Urbanek@@R-project.org, Simon
-Urbanek} (and previously by Stefano Iacus).  The
+release of R and an R.app OS X @acronym{GUI}.  This port of R for OS X
+is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
+(and previously by Stefano Iacus).  The
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}} has more details.
 
@@ -845,7 +845,7 @@ From @CRAN{}, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current source trees), as gzipped and
 bzipped tar files, a wealth of additional contributed code, as well as
 prebuilt binaries for various operating systems (Linux, Mac OS Classic,
-Mac OS X, and MS Windows).  @CRAN{} also provides access to
+OS X, and MS Windows).  @CRAN{} also provides access to
 documentation on R, existing mailing lists and the R Bug Tracking
 system.
 
@@ -937,11 +937,11 @@ development using R-Forge'', @url{http://journal.R-project.org/, ,
 @chapter R and S
 
 @menu
-* What is S?::                  
-* What is S-PLUS?::             
-* What are the differences between R and S?::  
-* Is there anything R can do that S-PLUS cannot?::  
-* What is R-plus?::             
+* What is S?::
+* What is S-PLUS?::
+* What are the differences between R and S?::
+* Is there anything R can do that S-PLUS cannot?::
+* What is R-plus?::
 @end menu
 
 @node What is S?, What is S-PLUS?, R and S, R and S
@@ -1032,9 +1032,9 @@ For the remainder of this section, ``S'' refers to the S engines and not
 the S language.
 
 @menu
-* Lexical scoping::             
-* Models::                      
-* Others::                      
+* Lexical scoping::
+* Models::
+* Others::
 @end menu
 
 @node Lexical scoping, Models, What are the differences between R and S?, What are the differences between R and S?
@@ -1706,23 +1706,23 @@ additional information.
 @chapter R Add-On Packages
 
 @menu
-* Which add-on packages exist for R?::  
-* How can add-on packages be installed?::  
-* How can add-on packages be used?::  
-* How can add-on packages be removed?::  
-* How can I create an R package?::  
-* How can I contribute to R?::  
+* Which add-on packages exist for R?::
+* How can add-on packages be installed?::
+* How can add-on packages be used?::
+* How can add-on packages be removed?::
+* How can I create an R package?::
+* How can I contribute to R?::
 @end menu
 
 @node Which add-on packages exist for R?, How can add-on packages be installed?, R Add-On Packages, R Add-On Packages
 @section Which add-on packages exist for R?
 
 @menu
-* Add-on packages in R::        
-* Add-on packages from CRAN::   
-* Add-on packages from Omegahat::  
-* Add-on packages from Bioconductor::  
-* Other add-on packages::       
+* Add-on packages in R::
+* Add-on packages from CRAN::
+* Add-on packages from Omegahat::
+* Add-on packages from Bioconductor::
+* Other add-on packages::
 @end menu
 
 @node Add-on packages in R, Add-on packages from CRAN, Which add-on packages exist for R?, Which add-on packages exist for R?
@@ -2090,9 +2090,9 @@ various other writeups, ideas lists, and SVN miscellanea.
 @chapter R and Emacs
 
 @menu
-* Is there Emacs support for R?::  
-* Should I run R from within Emacs?::  
-* Debugging R from within Emacs::  
+* Is there Emacs support for R?::
+* Should I run R from within Emacs?::
+* Debugging R from within Emacs::
 @end menu
 
 @node Is there Emacs support for R?, Should I run R from within Emacs?, R and Emacs, R and Emacs
@@ -2214,48 +2214,48 @@ dir /opt/R/src/unix
 @chapter R Miscellanea
 
 @menu
-* How can I set components of a list to NULL?::  
-* How can I save my workspace?::  
-* How can I clean up my workspace?::  
-* How can I get eval() and D() to work?::  
-* Why do my matrices lose dimensions?::  
-* How does autoloading work?::  
-* How should I set options?::   
-* How do file names work in Windows?::  
-* Why does plotting give a color allocation error?::  
-* How do I convert factors to numeric?::  
-* Are Trellis displays implemented in R?::  
-* What are the enclosing and parent environments?::  
-* How can I substitute into a plot label?::  
-* What are valid names?::       
-* Are GAMs implemented in R?::  
-* Why is the output not printed when I source() a file?::  
-* Why does outer() behave strangely with my function?::  
-* Why does the output from anova() depend on the order of factors in the model?::  
-* How do I produce PNG graphics in batch mode?::  
-* How can I get command line editing to work?::  
-* How can I turn a string into a variable?::  
-* Why do lattice/trellis graphics not work?::  
-* How can I sort the rows of a data frame?::  
-* Why does the help.start() search engine not work?::  
-* Why did my .Rprofile stop working when I updated R?::  
-* Where have all the methods gone?::  
-* How can I create rotated axis labels?::  
-* Why is read.table() so inefficient?::  
-* What is the difference between package and library?::  
-* I installed a package but the functions are not there::  
-* Why doesn't R think these numbers are equal?::  
-* How can I capture or ignore errors in a long simulation?::  
-* Why are powers of negative numbers wrong?::  
-* How can I save the result of each iteration in a loop into a separate file?::  
-* Why are p-values not displayed when using lmer()?::  
-* Why are there unwanted borders::  
-* Why does backslash behave strangely inside strings?::  
-* How can I put error bars or confidence bands on my plot?::  
-* How do I create a plot with two y-axes?::  
-* How do I access the source code for a function?::  
-* Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::  
-* Why is R apparently not releasing memory?::  
+* How can I set components of a list to NULL?::
+* How can I save my workspace?::
+* How can I clean up my workspace?::
+* How can I get eval() and D() to work?::
+* Why do my matrices lose dimensions?::
+* How does autoloading work?::
+* How should I set options?::
+* How do file names work in Windows?::
+* Why does plotting give a color allocation error?::
+* How do I convert factors to numeric?::
+* Are Trellis displays implemented in R?::
+* What are the enclosing and parent environments?::
+* How can I substitute into a plot label?::
+* What are valid names?::
+* Are GAMs implemented in R?::
+* Why is the output not printed when I source() a file?::
+* Why does outer() behave strangely with my function?::
+* Why does the output from anova() depend on the order of factors in the model?::
+* How do I produce PNG graphics in batch mode?::
+* How can I get command line editing to work?::
+* How can I turn a string into a variable?::
+* Why do lattice/trellis graphics not work?::
+* How can I sort the rows of a data frame?::
+* Why does the help.start() search engine not work?::
+* Why did my .Rprofile stop working when I updated R?::
+* Where have all the methods gone?::
+* How can I create rotated axis labels?::
+* Why is read.table() so inefficient?::
+* What is the difference between package and library?::
+* I installed a package but the functions are not there::
+* Why doesn't R think these numbers are equal?::
+* How can I capture or ignore errors in a long simulation?::
+* Why are powers of negative numbers wrong?::
+* How can I save the result of each iteration in a loop into a separate file?::
+* Why are p-values not displayed when using lmer()?::
+* Why are there unwanted borders::
+* Why does backslash behave strangely inside strings?::
+* How can I put error bars or confidence bands on my plot?::
+* How do I create a plot with two y-axes?::
+* How do I access the source code for a function?::
+* Why does summary() report strange results for the R^2 estimate when I fit a linear model with no intercept?::
+* Why is R apparently not releasing memory?::
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2797,7 +2797,7 @@ Under a Unix-like, if your installation supports the
 problems, and the default settings should just work.  This option is not
 available for versions of R prior to 2.7.0, or without support for
 cairo.  From R 2.7.0 @code{png()} by default uses the Quartz device
-on Mac OS X, and that too works in batch mode.
+on OS X, and that too works in batch mode.
 
 Earlier versions of the @code{png()} device used the X11 driver, which
 is a problem in batch mode or for remote operation.  If you have
@@ -3171,7 +3171,7 @@ For some common viewers, consider the following:
 There are options in Preferences to enable/disable text smoothing, image
 smoothing and line art smoothing.
 Disable line art smoothing.
-@item Preview (Mac OS X)
+@item Preview (OS X)
 There is an option in Preferences to enable/disable anti-aliasing of
 text and line art.
 Disable this option. 
@@ -3404,11 +3404,11 @@ actually used memory as well as unused memory that cannot be released.
 @chapter R Programming
 
 @menu
-* How should I write summary methods?::  
-* How can I debug dynamically loaded code?::  
-* How can I inspect R objects when debugging?::  
-* How can I change compilation flags?::  
-* How can I debug S4 methods?::  
+* How should I write summary methods?::
+* How can I debug dynamically loaded code?::
+* How can I inspect R objects when debugging?::
+* How can I change compilation flags?::
+* How can I debug S4 methods?::
 @end menu
 
 @node How should I write summary methods?, How can I debug dynamically loaded code?, R Programming, R Programming
@@ -3497,8 +3497,8 @@ details.
 @chapter R Bugs
 
 @menu
-* What is a bug?::              
-* How to report a bug::         
+* What is a bug?::
+* How to report a bug::
 @end menu
 
 @node What is a bug?, How to report a bug, R Bugs, R Bugs
