@@ -1841,9 +1841,9 @@ typedef enum {
 } ULocDataLocaleType ;
 
 
-const char* ucol_getLocale(const UCollator *coll,
-			   ULocDataLocaleType type,
-			   UErrorCode *status);
+const char* ucol_getLocaleByType(const UCollator *coll,
+				 ULocDataLocaleType type,
+				 UErrorCode *status);
 
 #define U_ZERO_ERROR 0
 #define U_FAILURE(x) ((x)>U_ZERO_ERROR)
@@ -1993,9 +1993,10 @@ SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int type = asInteger(CAR(args));
 	if (type < 1 || type > 2)
 	    error(_("invalid '%s' value"), "type");
-	res = ucol_getLocale(collator, 
-			     type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE, 
-			     &status);
+	
+	res = ucol_getLocaleByType(collator, 
+				   type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE, 
+				   &status);
 	if(!U_FAILURE(status) && res) ans = res;
     } else ans = "ICU not in use";
     return mkString(ans);
