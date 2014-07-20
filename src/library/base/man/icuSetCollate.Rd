@@ -67,11 +67,8 @@ icuGetCollate(type = c("actual", "valid"))
       collation services are used instead.  (As from \R 3.1.2.)}
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
-      session. (As from \R 3.1.2:
-      \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
-      can be used in earlier versions.)  If environment variable
-      \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
-      rather than that obtained from the OS.
+      session.  If environment variable \env{R_ICU_LOCALE} is set to a
+      non-empty value, its value is used rather than consulting the OS.
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -84,7 +81,8 @@ icuGetCollate(type = c("actual", "valid"))
   \sQuote{best fit} (which could be rather different and is reported by
   \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
   locales fall back to \code{"root"} as although e.g. \code{"en_GB"} is
-  a valid locale, it contains no special rules for collation.
+  a valid locale (at least on some platforms), it contains no special
+  rules for collation.
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
@@ -114,7 +112,10 @@ icuGetCollate(type = c("actual", "valid"))
   It is optional on Windows: if \R has been built against ICU, it will
   only be used if environment variable \env{R_ICU_LOCALE} is set or once
   \code{icuSetCollate} is called to select the locale (as ICU and
-  Windows, at least pre-Vista, differ in their idea of locale names).
+  Windows differ in their idea of locale names).  Note that
+  \code{icuSetCollate(locale = "default")} should work reasonably well
+  for \R >= 3.2.0 and Windows Vista/Server 2008 and later (but finds the
+  system default ignoring environment variables such as \env{LC_COLLATE}).
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}.
@@ -139,7 +140,7 @@ if(capabilities("ICU")) {
     icuSetCollate(locale = "da_DK", case_first = "default"); print(sort(x)) 
     ## Estonian collates Z between S and T
     icuSetCollate(locale = "et_EE"); print(sort(x))
-    icuSetCollate(locale = "default")
+    icuSetCollate(locale = "default"); print(icuGetCollate("valid"))
 }
 }}
 \keyword{ utilities }

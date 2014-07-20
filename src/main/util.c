@@ -18,10 +18,6 @@
  *  http://www.r-project.org/Licenses/
  */
 
-#ifdef _WIN32
-#define _WIN32_WINNT 0x0600
-#endif
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -1894,21 +1890,28 @@ static const struct {
     { NULL,  0 }
 };
 
-// Idea is to remap Windows' locale names in due course
-#ifdef Win32_not_yet
+#ifdef Win32
 #define BUFFER_SIZE 512
+typedef int (WINAPI *PGSDLN)(LPWSTR, int);
+
 static const char *getLocale(void)
 {
-    char locale[BUFFER_SIZE];
-    WCHAR wcBuffer[BUFFER_SIZE];
-    // This call is >= Vista/Server 2008
-    GetSystemDefaultLocaleName(wcBuffer, BUFFER_SIZE);
-    WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
-			locale, BUFFER_SIZE, NULL, NULL);
-    printf("locale = %s\n", locale);
-    // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
     const char *p = getenv("R_ICU_LOCALE");
-    return (p && p[0]) ? p : "root";
+    if (p && p[0]) return p;
+
+    // This call is >= Vista/Server 2008
+    // ICU should accept almost all of these, e.g. en-US and uz-Latn-UZ
+    PGSDLN pGSDLN = (PGSDLN)
+	GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),
+		       "GetSystemDefaultLocaleName");
+    if(pGSDLN) {
+	WCHAR wcBuffer[BUFFER_SIZE];
+	pGSDLN(wcBuffer, BUFFER_SIZE);
+	static char locale[BUFFER_SIZE];
+	WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1,
+			    locale, BUFFER_SIZE, NULL, NULL);
+	return locale;
+    } else return "root";
 }
 #else
 static const char *getLocale(void)
@@ -1949,14 +1952,6 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error("failed to open ICU collator (%d)", status);
 		}
 	    }
-#if 0
-	    const char *res = 
-		ucol_getLocale (collator, ULOC_ACTUAL_LOCALE, &status);
-	    if(!U_FAILURE(status)) {
-		if(res) printf("ICU locale = %s\n", res);
-		else printf("Derived ICU locale");
-	    }
-#endif
 	    collationLocaleSet = TRUE;
 	} else {
 	    int i, at = -1, val = -1;
