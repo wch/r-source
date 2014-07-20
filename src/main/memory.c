@@ -3630,15 +3630,24 @@ void attribute_hidden
 void attribute_hidden (LOCK_BINDING)(SEXP b) {LOCK_BINDING(b);}
 void attribute_hidden (UNLOCK_BINDING)(SEXP b) {UNLOCK_BINDING(b);}
 
+attribute_hidden
 void (SET_BASE_SYM_CACHED)(SEXP b) { SET_BASE_SYM_CACHED(b); }
+attribute_hidden
 void (UNSET_BASE_SYM_CACHED)(SEXP b) { UNSET_BASE_SYM_CACHED(b); }
+attribute_hidden
 Rboolean (BASE_SYM_CACHED)(SEXP b) { return BASE_SYM_CACHED(b); }
 
+attribute_hidden
 void (SET_SPECIAL_SYMBOL)(SEXP b) { SET_SPECIAL_SYMBOL(b); }
+attribute_hidden
 void (UNSET_SPECIAL_SYMBOL)(SEXP b) { UNSET_SPECIAL_SYMBOL(b); }
+attribute_hidden
 Rboolean (IS_SPECIAL_SYMBOL)(SEXP b) { return IS_SPECIAL_SYMBOL(b); }
+attribute_hidden
 void (SET_NO_SPECIAL_SYMBOLS)(SEXP b) { SET_NO_SPECIAL_SYMBOLS(b); }
+attribute_hidden
 void (UNSET_NO_SPECIAL_SYMBOLS)(SEXP b) { UNSET_NO_SPECIAL_SYMBOLS(b); }
+attribute_hidden
 Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b) { return NO_SPECIAL_SYMBOLS(b); }
 
 /* R_FunTab accessors, only needed when write barrier is on */

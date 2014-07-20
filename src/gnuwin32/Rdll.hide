@@ -1,3 +1,4 @@
+ BASE_SYM_CACHED
  BINDING_IS_LOCKED
  BM_norm_keep
  BZ2_blockSort
@@ -46,6 +47,7 @@
  IS_ASCII
  IS_BYTES
  IS_LATIN1
+ IS_SPECIAL_SYMBOL
  IS_UTF8
  InitDynload
  InitParser
@@ -55,6 +57,7 @@
  MDIset
  MDIsize
  MainThread
+ NO_SPECIAL_SYMBOLS
  PrintUsage
  ProfileEvent
  R_BCNodeStackBase
@@ -96,6 +99,7 @@
  R_GetVarLocValue
  R_HandlerStack
  R_HiddenFile
+ R_InitReadItemDepth
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
@@ -134,6 +138,7 @@
  R_PendingPromises
  R_Primitive
  R_Quiet
+ R_ReadItemDepth
  R_RecursiveSymbol
  R_RestartStack
  R_RestartToken
@@ -412,16 +417,22 @@
  Rwin_wrename
  SET_ACTIVE_BINDING_BIT
  SET_ASCII
+ SET_BASE_SYM_CACHED
  SET_BYTES
  SET_CACHED
  SET_CXTAIL
  SET_HASHASH
  SET_LATIN1
+ SET_NO_SPECIAL_SYMBOLS
  SET_PRIMOFFSET
+ SET_SPECIAL_SYMBOL
  SET_UTF8
  Sys_TempDir
  UNLOCK_BINDING
  UNIMPLEMENTED_TYPEt
+ UNSET_BASE_SYM_CACHED
+ UNSET_NO_SPECIAL_SYMBOLS
+ UNSET_SPECIAL_SYMBOL
  UTF8in
  UTF8out
  UseInternet2
@@ -535,6 +546,7 @@
  do_D2POSIXlt
  do_External
  do_Externalgr
+ do ICUget
  do_ICUset
  do_Math2
  do_POSIXlt2D

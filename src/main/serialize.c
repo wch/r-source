@@ -1312,8 +1312,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
  * Unserialize Code
  */
 
-int R_ReadItemDepth = 0;
-int R_InitReadItemDepth;
+attribute_hidden int R_ReadItemDepth = 0, R_InitReadItemDepth;
 static char lastname[8192];
 
 #define INITIAL_REFREAD_TABLE_SIZE 128
