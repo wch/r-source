@@ -283,8 +283,10 @@
  Rf_InitMemory
  Rf_InitNames
  Rf_InitOptions
+ Rf_InitS3DefaultTypes
  Rf_InitStringHash
  Rf_InitTempDir
+ Rf_InitTypeTables
  Rf_IntegerFromComplex
  Rf_IntegerFromLogical
  Rf_IntegerFromReal

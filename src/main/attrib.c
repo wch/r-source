@@ -629,7 +629,8 @@ static SEXP s_dot_S3Class = 0;
 static SEXP R_S4_extends_table = 0;
 
  
-static SEXP cache_class(const char *class, SEXP klass) {
+static SEXP cache_class(const char *class, SEXP klass)
+{
     if(!R_S4_extends_table) {
 	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(R_S4_extends_table);
@@ -680,37 +681,31 @@ static struct {
 } Type2DefaultClass[MAX_NUM_SEXPTYPE];
 
 
-static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3) {
-
+static SEXP createDefaultClass(SEXP part1, SEXP part2, SEXP part3)
+{
     int size = 0;
     if (part1 != R_NilValue) size++;
     if (part2 != R_NilValue) size++;
     if (part3 != R_NilValue) size++;
 
-    if (size == 0 || part2 == R_NilValue) {
-        return R_NilValue;
-    }
+    if (size == 0 || part2 == R_NilValue) return R_NilValue;
+
     SEXP res = allocVector(STRSXP, size);
     R_PreserveObject(res);
 
     int i = 0;
-    if (part1 != R_NilValue) {
-        SET_STRING_ELT(res, i++, part1);
-    }
-    if (part2 != R_NilValue) {
-        SET_STRING_ELT(res, i++, part2);
-    }
-    if (part3 != R_NilValue) {
-        SET_STRING_ELT(res, i, part3);
-    }
+    if (part1 != R_NilValue) SET_STRING_ELT(res, i++, part1);
+    if (part2 != R_NilValue) SET_STRING_ELT(res, i++, part2);
+    if (part3 != R_NilValue) SET_STRING_ELT(res, i, part3);
+
     MARK_NOT_MUTABLE(res);
     return res;
 }
 
-void InitS3DefaultTypes() {
-    int type;
-
-    for(type = 0; type < MAX_NUM_SEXPTYPE; type++) {
+attribute_hidden
+void InitS3DefaultTypes()
+{
+    for(int type = 0; type < MAX_NUM_SEXPTYPE; type++) {
         SEXP part2 = R_NilValue;
         SEXP part3 = R_NilValue;
         int nprotected = 0;
