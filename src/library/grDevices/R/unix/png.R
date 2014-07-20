@@ -77,7 +77,7 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
     g <- .geometry(width, height, units, res)
     new <- list(...)
-    if(!missing(type)) new$type <- match.arg(type)
+    type <- if(!missing(type)) match.arg(type) else getOption("bitmapType")
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
