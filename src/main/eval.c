@@ -3736,7 +3736,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 } while (0)
 #endif
 
-/* compute the type of the function on the stack for hich arguments
+/* compute the type of the function on the stack for which arguments
    are being accumulated */
 #define CURRENT_FTYPE() TYPEOF(GETSTACK(-3))
 
