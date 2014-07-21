@@ -490,6 +490,11 @@ Apple installer packages at @uref{http://r.research.att.com}.
 @section Are there Unix-like binaries for R?
 
 @c Linux binaries as of 2014-07-19:
+@c Providers:
+@c   Bob Kinney <rhel_cran@hmdc.harvard.edu>
+@c   Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   Johannes Ranke <jranke@uni-bremen.de>
+@c   Michael Rutter <mar36@psu.edu>
 @c
 @c debian
 @c   etch-cran
@@ -526,12 +531,14 @@ Apple installer packages at @uref{http://r.research.att.com}.
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
+@need 1000
 @quotation
-@multitable {Red Hat} {i386/x86_64} {lucid/precise/quantal/saucy/trusty} {Martyn Plummer}
+@multitable {Red Hat} {i386/x86_64} {lucid/precise/trusty} {Martyn Plummer}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386/amd64 @tab etch/lenny/squeeze/wheezy @tab Johannes Ranke
-@item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11 @tab Martyn Plummer
-@item Ubuntu   @tab i386/amd64 @tab lucid/precise/quantal/saucy/trusty @tab Michael Rutter
+@item Debian   @tab i386/amd64  @tab squeeze/wheezy       @tab Johannes Ranke
+@item          @tab armel       @tab wheezy               @tab Johannes Ranke
+@item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11    @tab Martyn Plummer
+@item Ubuntu   @tab i386/amd64  @tab lucid/precise/trusty @tab Michael Rutter
 @end multitable
 @end quotation
 
