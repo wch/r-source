@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-07-22 09:54+0100\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -193,7 +193,7 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/main/grep.c:1077 src/main/grep.c:1079 src/main/grep.c:1524
 #: src/main/grep.c:1528 src/main/grep.c:1533 src/main/grep.c:2338
 #: src/main/grep.c:2343 src/main/grep.c:2639 src/main/grep.c:2644
-#: src/main/memory.c:3754 src/main/paste.c:96 src/main/paste.c:395
+#: src/main/memory.c:3763 src/main/paste.c:96 src/main/paste.c:395
 #: src/main/paste.c:402 src/main/paste.c:409 src/main/paste.c:414
 #: src/main/paste.c:419 src/main/paste.c:424 src/main/paste.c:427
 #: src/main/paste.c:435 src/main/paste.c:601 src/main/paste.c:606
@@ -230,12 +230,12 @@ msgstr "'%ls'를 표시하는데 문제가 발생했습니다"
 #: src/main/sysutils.c:599 src/main/sysutils.c:605 src/main/sysutils.c:609
 #: src/main/sysutils.c:1836 src/main/sysutils.c:1840 src/main/unique.c:969
 #: src/main/unique.c:1275 src/main/unique.c:1335 src/main/unique.c:1342
-#: src/main/unique.c:1736 src/main/util.c:643 src/main/util.c:646
-#: src/main/util.c:1921 src/main/util.c:2122 src/main/util.c:2123
-#: src/main/util.c:2124 src/main/util.c:2141 src/main/util.c:2165
-#: src/main/util.c:2169 src/main/util.c:2171 src/main/util.c:2196
-#: src/main/util.c:2198 src/main/util.c:2200 src/main/util.c:2203
-#: src/main/util.c:2206 src/main/util.c:2210 src/main/util.c:2212
+#: src/main/unique.c:1736 src/main/util.c:639 src/main/util.c:642
+#: src/main/util.c:1936 src/main/util.c:2149 src/main/util.c:2150
+#: src/main/util.c:2151 src/main/util.c:2168 src/main/util.c:2192
+#: src/main/util.c:2196 src/main/util.c:2198 src/main/util.c:2223
+#: src/main/util.c:2225 src/main/util.c:2227 src/main/util.c:2230
+#: src/main/util.c:2233 src/main/util.c:2237 src/main/util.c:2239
 #: src/modules/X11/devX11.c:3241 src/modules/X11/devX11.c:3244
 #: src/modules/X11/devX11.c:3247 src/modules/X11/devX11.c:3271
 #: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
@@ -264,13 +264,13 @@ msgstr "지원되지 않는 윈도우즈 버전입니다"
 #: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
 #: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:221
-#: src/main/summary.c:886 src/main/sysutils.c:250 src/main/util.c:1053
-#: src/main/util.c:1058 src/main/util.c:1065 src/main/util.c:1068
-#: src/modules/X11/devX11.c:3142 src/modules/X11/devX11.c:3169
-#: src/modules/X11/devX11.c:3174 src/modules/X11/devX11.c:3179
-#: src/modules/X11/devX11.c:3189 src/modules/X11/devX11.c:3194
-#: src/modules/X11/devX11.c:3198 src/modules/X11/devX11.c:3202
-#: src/unix/sys-std.c:1290
+#: src/main/summary.c:886 src/main/sysutils.c:250 src/main/util.c:1049
+#: src/main/util.c:1054 src/main/util.c:1061 src/main/util.c:1064
+#: src/main/util.c:1990 src/modules/X11/devX11.c:3142
+#: src/modules/X11/devX11.c:3169 src/modules/X11/devX11.c:3174
+#: src/modules/X11/devX11.c:3179 src/modules/X11/devX11.c:3189
+#: src/modules/X11/devX11.c:3194 src/modules/X11/devX11.c:3198
+#: src/modules/X11/devX11.c:3202 src/unix/sys-std.c:1290
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'의 값이 잘못되었습니다"
@@ -287,7 +287,7 @@ msgstr "사용자 컴퓨터 주소공간의 한계는 4Gb입니다"
 msgid "cannot decrease memory limit: ignored"
 msgstr "메모리 한계를 줄일 수 없기 때문에 무시되었습니다"
 
-#: src/gnuwin32/extra.c:427 src/gnuwin32/extra.c:528 src/main/util.c:964
+#: src/gnuwin32/extra.c:427 src/gnuwin32/extra.c:528 src/main/util.c:960
 msgid "'path' must be a character vector"
 msgstr "'path'는 반드시 문자형 벡터이어야 합니다"
 
@@ -401,8 +401,8 @@ msgstr "<에러: 인코딩 '%s'으로부터 재인코딩에 실패했습니다>\
 #: src/gnuwin32/system.c:555 src/gnuwin32/system.c:1047
 #: src/gnuwin32/system.c:1059 src/main/connections.c:589
 #: src/main/connections.c:594 src/main/dounzip.c:177 src/main/saveload.c:1961
-#: src/main/serialize.c:2587 src/main/serialize.c:2592
-#: src/main/serialize.c:2677 src/main/serialize.c:2722 src/unix/system.c:321
+#: src/main/serialize.c:2586 src/main/serialize.c:2591
+#: src/main/serialize.c:2676 src/main/serialize.c:2721 src/unix/system.c:321
 #: src/unix/system.c:341
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -634,7 +634,7 @@ msgstr "DLLname '%s'는 너무 깁니다"
 msgid "could not allocate space for 'name'"
 msgstr "'name'에 공간을 할당할 수 없습니다"
 
-#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:765
+#: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:761
 msgid "character argument expected"
 msgstr "문자형 인자가 필요합니다"
 
@@ -1083,12 +1083,12 @@ msgstr "유효하지 않은 객체에 클래스 \"factor\"를 추가하고 있�
 msgid "attempt to set invalid 'class' attribute"
 msgstr "유효하지 않은 'class' 속성을 지정하려고 시도합니다"
 
-#: src/main/attrib.c:839
+#: src/main/attrib.c:834
 #, c-format
 msgid "class '%s' has no 'names' slot"
 msgstr "클래스 '%s'는 'names' 슬롯을 가지고 있지 않습니다"
 
-#: src/main/attrib.c:841
+#: src/main/attrib.c:836
 #, c-format
 msgid ""
 "class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1097,7 +1097,7 @@ msgstr ""
 "클래스 '%s'는 아무런 'names' 슬롯을 가지지 않기 때문에 names 속성을 부여하는 "
 "것은 유효하지 않은 객체를 생성하게 할 것입니다"
 
-#: src/main/attrib.c:844
+#: src/main/attrib.c:839
 #, c-format
 msgid ""
 "invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1105,133 +1105,133 @@ msgstr ""
 "벡터가 아닌 클래스 ('%s')에 있는 'names' 슬롯을 지정하기 위해서 names()<- 와 "
 "같은 구문을 이용하는 것은 유효하지 않습니다"
 
-#: src/main/attrib.c:874
+#: src/main/attrib.c:869
 msgid "incompatible 'names' argument"
 msgstr "'names' 인자는 함께 사용될 수 없습니다"
 
-#: src/main/attrib.c:929
+#: src/main/attrib.c:924
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "%s는 'names' 속성을 지정하는데 유효한 타입이 아닙니다"
 
-#: src/main/attrib.c:1000
+#: src/main/attrib.c:995
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames'가 배열이 아닌 객체에 적용되었습니다"
 
-#: src/main/attrib.c:1005
+#: src/main/attrib.c:1000
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'은 반드시 리스트이어야 합니다"
 
-#: src/main/attrib.c:1008 src/main/attrib.c:1036
+#: src/main/attrib.c:1003 src/main/attrib.c:1031
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'의 길이 [%d]는 반드시 'dims'의 길이 [%d]와 같아야 합니다"
 
-#: src/main/attrib.c:1042
+#: src/main/attrib.c:1037
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 "%s는 'dimnames'에 유효한 유형이 아닙니다 (이는 반드시 벡터이어야 합니다)"
 
-#: src/main/attrib.c:1045
+#: src/main/attrib.c:1040
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'의 길이 [%d]가 배열의 크기와 같지 않습니다"
 
-#: src/main/attrib.c:1117 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1112 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1614 src/main/envir.c:1742 src/main/envir.c:1804
 #: src/main/envir.c:1926 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1735
 msgid "invalid first argument"
 msgstr "첫번째 인자가 유효하지 않습니다"
 
-#: src/main/attrib.c:1120
+#: src/main/attrib.c:1115
 msgid "invalid second argument"
 msgstr "두번째 인자가 유효하지 않습니다"
 
-#: src/main/attrib.c:1128
+#: src/main/attrib.c:1123
 msgid "length-0 dimension vector is invalid"
 msgstr "차원벡터의 길이가 0인 것은 유효하지 않습니다"
 
-#: src/main/attrib.c:1133
+#: src/main/attrib.c:1128
 msgid "the dims contain missing values"
 msgstr "dims에 누락된 값들이 있습니다"
 
-#: src/main/attrib.c:1135
+#: src/main/attrib.c:1130
 msgid "the dims contain negative values"
 msgstr "dims에 음수값들이 포함되어 있습니다"
 
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1135
 msgid "dims do not match the length of object"
 msgstr "dims가 객체의 길이와 일치하지 않습니다"
 
-#: src/main/attrib.c:1142
+#: src/main/attrib.c:1137
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]가 객체 [%d]의 길이와 일치하지 않습니다"
 
-#: src/main/attrib.c:1244
+#: src/main/attrib.c:1239
 msgid "attributes must be a list or NULL"
 msgstr "속성들은 반드시 리스트 또는 NULL이어야 합니다"
 
-#: src/main/attrib.c:1249
+#: src/main/attrib.c:1244
 msgid "attributes must be named"
 msgstr "속성들은 반드시 이름이 주어져야 합니다"
 
-#: src/main/attrib.c:1253
+#: src/main/attrib.c:1248
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 "모든 속성들은 반드시 이름을 가지고 있어야 합니다 [그러나 %d는 그렇지 않습니"
 "다]"
 
-#: src/main/attrib.c:1352
+#: src/main/attrib.c:1347
 msgid "'which' must be of mode character"
 msgstr "'which'는 반드시 문자형 모드이어야 합니다"
 
-#: src/main/attrib.c:1354
+#: src/main/attrib.c:1349
 msgid "exactly one attribute 'which' must be given"
 msgstr "오로지 한개의 속성만이 'which'에 주어질 수 있습니다"
 
-#: src/main/attrib.c:1412 src/main/attrib.c:1435 src/main/subscript.c:240
+#: src/main/attrib.c:1407 src/main/attrib.c:1430 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'는 '%s'에 부분적으로만 일치합니다"
 
-#: src/main/attrib.c:1473
+#: src/main/attrib.c:1468
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "'%s'는 슬롯이름에 유효한 타입이 아닙니다"
 
-#: src/main/attrib.c:1511
+#: src/main/attrib.c:1506
 msgid "'name' must be non-null character string"
 msgstr "'name'은 반드시 NULL이 아닌 문자열이어야 합니다"
 
-#: src/main/attrib.c:1635 src/main/attrib.c:1706 src/main/attrib.c:1743
+#: src/main/attrib.c:1630 src/main/attrib.c:1701 src/main/attrib.c:1738
 msgid "invalid type or length for slot name"
 msgstr "슬롯이름의 유형 또는 길이가 잘못되었습니다"
 
-#: src/main/attrib.c:1669
+#: src/main/attrib.c:1664
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "유형 \"%2$s\"를 가지는 객체로부터 슬롯 (\"%1$s\")를 얻을 수 없습니다"
 
-#: src/main/attrib.c:1680
+#: src/main/attrib.c:1675
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "클래스 \"%2$s\"를 가지는 이 객체에는 \"%1$s\" 이름을 가진 슬롯이 없습니다"
 
-#: src/main/attrib.c:1697
+#: src/main/attrib.c:1692
 msgid "attempt to set slot on NULL object"
 msgstr "NULL 객체에 슬롯을 지정하려고 했습니다"
 
-#: src/main/attrib.c:1738
+#: src/main/attrib.c:1733
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "'methods' 패키지없이 formal classes를 사용할 수 없습니다"
 
-#: src/main/attrib.c:1750
+#: src/main/attrib.c:1745
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1239,7 +1239,7 @@ msgid ""
 msgstr ""
 "슬롯이 없는 기본 클래스 (\"%2$s\")로부터 슬롯 \"%1$s\"를 가져오려 했습니다"
 
-#: src/main/attrib.c:1754
+#: src/main/attrib.c:1749
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1323,7 +1323,7 @@ msgstr "지정된 벡터의 크기가 너무 큽니다"
 #: src/main/envir.c:3003 src/main/envir.c:3038 src/main/envir.c:3059
 #: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5311
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
-#: src/main/saveload.c:2362 src/main/serialize.c:2744
+#: src/main/saveload.c:2362 src/main/serialize.c:2743
 msgid "use of NULL environment is defunct"
 msgstr "NULL 인바이런먼트의 사용은 더이상 지원되지 않습니다"
 
@@ -1356,7 +1356,7 @@ msgstr "'parent'는 인바이런먼트가 아닙니다"
 #: src/main/connections.c:4478 src/main/connections.c:4548
 #: src/main/connections.c:4757 src/main/connections.c:4761
 #: src/main/connections.c:5120 src/main/deparse.c:362 src/main/deparse.c:450
-#: src/main/serialize.c:2035
+#: src/main/serialize.c:2034
 msgid "cannot write to this connection"
 msgstr "이 연결에 쓰기를 할 수 없습니다"
 
@@ -1395,7 +1395,7 @@ msgstr "유효하지 않은 값입니다"
 #: src/main/builtin.c:942 src/main/coerce.c:2536 src/main/coerce.c:2577
 #: src/main/eval.c:561 src/main/eval.c:681 src/main/eval.c:2091
 #: src/main/eval.c:2168 src/main/eval.c:2228 src/main/eval.c:2561
-#: src/main/eval.c:4686 src/main/eval.c:4806
+#: src/main/eval.c:4689 src/main/eval.c:4808
 msgid "'...' used in an incorrect context"
 msgstr "'...'가 잘못된 맥락에서 사용되었습니다"
 
@@ -1865,8 +1865,8 @@ msgstr ""
 #: src/main/connections.c:4421 src/main/connections.c:4541
 #: src/main/connections.c:4753 src/main/connections.c:5101 src/main/dcf.c:94
 #: src/main/deparse.c:354 src/main/deparse.c:442 src/main/saveload.c:2267
-#: src/main/saveload.c:2348 src/main/scan.c:933 src/main/serialize.c:2206
-#: src/main/serialize.c:2257 src/main/source.c:266
+#: src/main/saveload.c:2348 src/main/scan.c:933 src/main/serialize.c:2205
+#: src/main/serialize.c:2256 src/main/source.c:266
 msgid "cannot open the connection"
 msgstr "커넥션을 열 수 없습니다"
 
@@ -2098,8 +2098,8 @@ msgid "cannot close 'message' sink connection"
 msgstr "'message' sink 커넥션을 닫을 수 없습니다"
 
 #: src/main/connections.c:3392 src/main/connections.c:5119
-#: src/main/connections.c:5127 src/main/serialize.c:2025
-#: src/main/serialize.c:2033
+#: src/main/connections.c:5127 src/main/serialize.c:2024
+#: src/main/serialize.c:2032
 msgid "connection is not open"
 msgstr "커넥션이 열려 있지 않습니다"
 
@@ -2110,7 +2110,7 @@ msgstr "행이 버퍼사이즈보다 길어지고 있습니다"
 #: src/main/connections.c:3572 src/main/connections.c:3574
 #: src/main/connections.c:3850 src/main/connections.c:4404
 #: src/main/connections.c:4429 src/main/connections.c:5128 src/main/dcf.c:101
-#: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:2027
+#: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:2026
 #: src/main/source.c:273
 msgid "cannot read from this connection"
 msgstr "이 커넥션으로부터 읽을수 없습니다"
@@ -2515,7 +2515,7 @@ msgstr "'opts'는 반드시 음이 아닌 작은 정수이어야 합니다"
 
 #: src/main/deparse.c:415 src/main/envir.c:1772 src/main/envir.c:1854
 #: src/main/eval.c:567 src/main/eval.c:1249 src/main/eval.c:3619
-#: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2762
+#: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2761
 #, c-format
 msgid "object '%s' not found"
 msgstr "객체 '%s'를 찾을 수 없습니다"
@@ -3481,7 +3481,7 @@ msgstr "인자의 길이가 0입니다"
 msgid "non-symbol loop variable"
 msgstr "심볼이 아닌 루프 변수입니다"
 
-#: src/main/eval.c:1508 src/main/eval.c:4400
+#: src/main/eval.c:1508 src/main/eval.c:4405
 msgid "invalid for() loop sequence"
 msgstr "유효한 for() 루프 시퀀스가 아닙니다"
 
@@ -3589,41 +3589,41 @@ msgstr "정수형 스택 오버플로우입니다"
 msgid "bad opcode"
 msgstr "잘못된 opcode입니다"
 
-#: src/main/eval.c:4211
+#: src/main/eval.c:4217
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %s y'에 유효하지 않은 %s 타입입니다"
 
-#: src/main/eval.c:4302
+#: src/main/eval.c:4307
 msgid "bytecode version mismatch; using eval"
 msgstr "바이트코드 버전이 일치하지 않으므로 eval을 사용합니다"
 
-#: src/main/eval.c:4307
+#: src/main/eval.c:4312
 msgid "bytecode version is too old"
 msgstr "바이트코드 버전이 너무 오래되었습니다"
 
-#: src/main/eval.c:4308
+#: src/main/eval.c:4313
 msgid "bytecode version is too new"
 msgstr "바이트코드 버전이 너무 앞서 있습니다"
 
-#: src/main/eval.c:4342
+#: src/main/eval.c:4347
 msgid "byte code version mismatch"
 msgstr "바이트 코드 버전이 불일치합니다"
 
-#: src/main/eval.c:4469
+#: src/main/eval.c:4474
 msgid "invalid sequence argument in for loop"
 msgstr "for 루프에 유효하지 않은 시퀀스 인자가 있습니다"
 
-#: src/main/eval.c:4616 src/main/names.c:1185
+#: src/main/eval.c:4617 src/main/names.c:1186
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ".Internal 함수 '%s'는 없습니다"
 
-#: src/main/eval.c:4723 src/main/eval.c:5069 src/main/eval.c:5111
+#: src/main/eval.c:4726 src/main/eval.c:5071 src/main/eval.c:5112
 msgid "bad function"
 msgstr "잘못된 함수입니다"
 
-#: src/main/eval.c:4738
+#: src/main/eval.c:4740
 msgid "not a BUILTIN function"
 msgstr "BUILTIN 함수가 아닙니다"
 
@@ -3662,7 +3662,7 @@ msgid "'file' must be non-empty string"
 msgstr "'file'은 반드시 비어있지 않은 문자열이어야 합니다"
 
 #: src/main/eval.c:5414 src/main/saveload.c:1944 src/main/saveload.c:2244
-#: src/main/serialize.c:2179
+#: src/main/serialize.c:2178
 msgid "'ascii' must be logical"
 msgstr "'ascii'는 반드시 논리적이어야 합니다"
 
@@ -4272,38 +4272,38 @@ msgstr ""
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3676
+#: src/main/memory.c:3685
 msgid "memory profiling is not available on this system"
 msgstr "이 시스템에서는 메모리 프로파일링 기능을 이용가능하지 않습니다"
 
-#: src/main/memory.c:3741
+#: src/main/memory.c:3750
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: 출력파일 '%s'을 열 수 없습니다"
 
-#: src/main/memory.c:3849
+#: src/main/memory.c:3858
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr "아직까지는 지원되지 않는 긴 벡터들입니다: %s:%d"
 
-#: src/main/names.c:999
+#: src/main/names.c:1000
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어 집니다"
 
-#: src/main/names.c:1002
+#: src/main/names.c:1003
 msgid "no such primitive function"
 msgstr "그러한 프리미티브 함수는 없습니다"
 
-#: src/main/names.c:1150
+#: src/main/names.c:1151
 msgid "attempt to use zero-length variable name"
 msgstr "길이가 0인 변수명을 사용하려고 시도했습니다"
 
-#: src/main/names.c:1152
+#: src/main/names.c:1153
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "변수명들은 최대 %d 바이트까지 허용됩니다"
 
-#: src/main/names.c:1180 src/main/names.c:1183
+#: src/main/names.c:1181 src/main/names.c:1184
 msgid "invalid .Internal() argument"
 msgstr "유효하지 않은 .Internal() 인자입니다"
 
@@ -5055,8 +5055,8 @@ msgstr "'a'와 'b'는 반드시 같은 유형이어야 합니다"
 #: src/main/saveload.c:1386 src/main/saveload.c:1430 src/main/saveload.c:1498
 #: src/main/saveload.c:1507 src/main/serialize.c:347 src/main/serialize.c:354
 #: src/main/serialize.c:367 src/main/serialize.c:371 src/main/serialize.c:398
-#: src/main/serialize.c:412 src/main/serialize.c:2419
-#: src/main/serialize.c:2427
+#: src/main/serialize.c:412 src/main/serialize.c:2418
+#: src/main/serialize.c:2426
 msgid "read error"
 msgstr "읽기 오류입니다"
 
@@ -5098,7 +5098,7 @@ msgstr "데이터파일에 잘못된 SEXP 유형이 있습니다"
 msgid "mismatch on types"
 msgstr "타입들이 일치하지 않습니다"
 
-#: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1665
+#: src/main/saveload.c:607 src/main/saveload.c:1270 src/main/serialize.c:1664
 #, c-format
 msgid "unrecognized internal function name \"%s\""
 msgstr "인식할 수 없는 인터널 함수명 \"%s\"입니다"
@@ -5200,8 +5200,8 @@ msgstr "xdr 복소수형 데이터 쓰기 에러가 발생했습니다"
 msgid "an xdr complex data read error occurred"
 msgstr "xdr 복소수형 데이터 읽기 에러가 발생했습니다"
 
-#: src/main/saveload.c:1783 src/main/serialize.c:1987
-#: src/main/serialize.c:2603 src/modules/internet/internet.c:351
+#: src/main/saveload.c:1783 src/main/serialize.c:1986
+#: src/main/serialize.c:2602 src/modules/internet/internet.c:351
 #: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
 msgid "write failed"
 msgstr "쓰기에 실패했습니다"
@@ -5248,8 +5248,8 @@ msgstr "첫번째 인자는 반드시 파일이름이어야 합니다"
 msgid "XDR write failed"
 msgstr "XDR 쓰기에 실패했습니다"
 
-#: src/main/saveload.c:2121 src/main/saveload.c:2146 src/main/serialize.c:1391
-#: src/main/serialize.c:1427 src/main/serialize.c:1465
+#: src/main/saveload.c:2121 src/main/saveload.c:2146 src/main/serialize.c:1390
+#: src/main/serialize.c:1426 src/main/serialize.c:1464
 msgid "XDR read failed"
 msgstr "XDR 읽기에 실패했습니다"
 
@@ -5258,12 +5258,12 @@ msgstr "XDR 읽기에 실패했습니다"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "데이터를 저장할 수 없습니다 -- '%1$s'를 열 수 없습니다: %2$s"
 
-#: src/main/saveload.c:2254 src/main/serialize.c:2192
+#: src/main/saveload.c:2254 src/main/serialize.c:2191
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr ""
 
-#: src/main/saveload.c:2277 src/main/serialize.c:2217
+#: src/main/saveload.c:2277 src/main/serialize.c:2216
 msgid "connection not open for writing"
 msgstr "쓰기를 위해서 열린 커넥션이 아닙니다"
 
@@ -5271,13 +5271,13 @@ msgstr "쓰기를 위해서 열린 커넥션이 아닙니다"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "텍스트 모드 커넥션에 XDR형식을 저장할 수 없습니다"
 
-#: src/main/saveload.c:2296 src/main/serialize.c:2095
-#: src/main/serialize.c:2109 src/main/serialize.c:2293
-#: src/main/serialize.c:2315
+#: src/main/saveload.c:2296 src/main/serialize.c:2094
+#: src/main/serialize.c:2108 src/main/serialize.c:2292
+#: src/main/serialize.c:2314
 msgid "error writing to connection"
 msgstr ""
 
-#: src/main/saveload.c:2357 src/main/serialize.c:2265
+#: src/main/saveload.c:2357 src/main/serialize.c:2264
 msgid "connection not open for reading"
 msgstr "읽기위해서 열린 커넥션이 아닙니다"
 
@@ -5471,51 +5471,51 @@ msgstr "WriteItem: 알 수 없는 타입 %i입니다"
 msgid "version %d not supported"
 msgstr "지원되지 않는 버전 %d입니다"
 
-#: src/main/serialize.c:1334
+#: src/main/serialize.c:1333
 msgid "reference index out of range"
 msgstr ""
 
-#: src/main/serialize.c:1364
+#: src/main/serialize.c:1363
 msgid "names in persistent strings are not supported yet"
 msgstr ""
 
-#: src/main/serialize.c:1492
+#: src/main/serialize.c:1491
 msgid "negative serialized length for vector"
 msgstr ""
 
-#: src/main/serialize.c:1500
+#: src/main/serialize.c:1499
 msgid "invalid upper part of serialized vector length"
 msgstr ""
 
-#: src/main/serialize.c:1505
+#: src/main/serialize.c:1504
 msgid ""
 "negative serialized vector length:\n"
 "perhaps long vector from 64-bit version of R?"
 msgstr ""
 
-#: src/main/serialize.c:1736
+#: src/main/serialize.c:1735
 msgid "this version of R cannot read class references"
 msgstr "이 버전의 R은 클래스 레퍼런스를 읽을 수 없습니다"
 
-#: src/main/serialize.c:1738
+#: src/main/serialize.c:1737
 msgid "this version of R cannot read generic function references"
 msgstr "이 버전의 R은 제네릭 함수 레퍼런스를 읽을 수 없습니다"
 
-#: src/main/serialize.c:1755
+#: src/main/serialize.c:1754
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 "ReadItem: 알 수 없는 타입 %i입니다.  아마도 R의 이후버전에 의해서 작성된 것 "
 "같습니다"
 
-#: src/main/serialize.c:1911
+#: src/main/serialize.c:1910
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d."
 "%d"
 msgstr ""
 
-#: src/main/serialize.c:1915
+#: src/main/serialize.c:1914
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -5524,82 +5524,82 @@ msgstr ""
 "R %2$d.%3$d.%4$d에 의해 작성된 워크스페이스 버전 %1$d을 읽을 수 없습니다; 따"
 "라서, R %5$d.%6$d.%7$d 또는 그 이후의 버전이 필요합니다"
 
-#: src/main/serialize.c:1994
+#: src/main/serialize.c:1993
 msgid "read failed"
 msgstr "읽기 실패입니다"
 
-#: src/main/serialize.c:2057
+#: src/main/serialize.c:2056
 msgid "error reading from ascii connection"
 msgstr "ascii 커넥션으로부터 읽기 에러가 발생했습니다"
 
-#: src/main/serialize.c:2059
+#: src/main/serialize.c:2058
 msgid "unexpected format in ascii connection"
 msgstr "ascii 커넥션으로부터 예상치 못한 포맷을 발견했습니다"
 
-#: src/main/serialize.c:2064 src/main/serialize.c:2078
+#: src/main/serialize.c:2063 src/main/serialize.c:2077
 msgid "error reading from connection"
 msgstr "커넥션으로부터 읽기 에러가 발생했습니다"
 
-#: src/main/serialize.c:2120
+#: src/main/serialize.c:2119
 msgid "only ascii format can be written to text mode connections"
 msgstr "텍스트 모드 커넥션에 ascii 포맷만을 쓸 수 있습니다"
 
-#: src/main/serialize.c:2134
+#: src/main/serialize.c:2133
 msgid "only ascii format can be read from text mode connections"
 msgstr "텍스트 모드 커넥션으로부터 ascii 포맷만을 읽어올 수 있습니다"
 
-#: src/main/serialize.c:2190 src/main/serialize.c:2343
-#: src/main/serialize.c:2492
+#: src/main/serialize.c:2189 src/main/serialize.c:2342
+#: src/main/serialize.c:2491
 msgid "bad version value"
 msgstr "잘못된 버전정보입니다"
 
-#: src/main/serialize.c:2215
+#: src/main/serialize.c:2214
 msgid "binary-mode connection required for ascii=FALSE"
 msgstr "ascii=FALSE에는 바이너리 모드 커넥션이 요구됩니다"
 
-#: src/main/serialize.c:2371 src/main/serialize.c:2408
-#: src/main/serialize.c:2471
+#: src/main/serialize.c:2370 src/main/serialize.c:2407
+#: src/main/serialize.c:2470
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:2388
+#: src/main/serialize.c:2387
 msgid "cannot allocate buffer"
 msgstr "버퍼를 할당할 수 없습니다"
 
-#: src/main/serialize.c:2581 src/main/serialize.c:2654
+#: src/main/serialize.c:2580 src/main/serialize.c:2653
 msgid "not a proper file name"
 msgstr "적합한 파일명이 아닙니다"
 
-#: src/main/serialize.c:2583
+#: src/main/serialize.c:2582
 msgid "not a proper raw vector"
 msgstr ""
 
-#: src/main/serialize.c:2604
+#: src/main/serialize.c:2603
 msgid "could not determine file position"
 msgstr "파일위치를 알 수 없습니다"
 
-#: src/main/serialize.c:2656
+#: src/main/serialize.c:2655
 msgid "bad offset/length argument"
 msgstr ""
 
-#: src/main/serialize.c:2680 src/main/serialize.c:2693
-#: src/main/serialize.c:2702 src/main/serialize.c:2712
-#: src/main/serialize.c:2725
+#: src/main/serialize.c:2679 src/main/serialize.c:2692
+#: src/main/serialize.c:2701 src/main/serialize.c:2711
+#: src/main/serialize.c:2724
 #, c-format
 msgid "seek failed on %s"
 msgstr "%s에서 시크가 실패했습니다"
 
-#: src/main/serialize.c:2697 src/main/serialize.c:2706
-#: src/main/serialize.c:2716 src/main/serialize.c:2729
+#: src/main/serialize.c:2696 src/main/serialize.c:2705
+#: src/main/serialize.c:2715 src/main/serialize.c:2728
 #, c-format
 msgid "read failed on %s"
 msgstr "%s에서 읽기가 실패했습니다"
 
-#: src/main/serialize.c:2748
+#: src/main/serialize.c:2747
 msgid "bad environment"
 msgstr "잘못된 인바이런먼트입니다"
 
-#: src/main/serialize.c:2750
+#: src/main/serialize.c:2749
 msgid "bad variable names"
 msgstr "변수명들이 잘못되었습니다"
 
@@ -6217,144 +6217,144 @@ msgstr "'names' must be a character vector"
 msgid "'sep' must be a character string"
 msgstr "'sep'는 반드시 문자열이어야 합니다"
 
-#: src/main/util.c:91 src/main/util.c:109
+#: src/main/util.c:87 src/main/util.c:105
 msgid "object is not a matrix"
 msgstr "객체가 행렬이 아닙니다"
 
-#: src/main/util.c:309 src/main/util.c:321 src/main/util.c:332
-#: src/main/util.c:347
+#: src/main/util.c:305 src/main/util.c:317 src/main/util.c:328
+#: src/main/util.c:343
 #, c-format
 msgid "type %d is unimplemented in '%s'"
 msgstr "%d는 '%s'에서 구현되지 않은 유형입니다"
 
-#: src/main/util.c:359
+#: src/main/util.c:355
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "'%s'은 '%s'에서 구현되지 않은 유형입니다\n"
 
-#: src/main/util.c:361
+#: src/main/util.c:357
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "%d은 '%s'에서 구현되지 않은 유형입니다\n"
 
-#: src/main/util.c:486
+#: src/main/util.c:482
 msgid "invalid tag in name extraction"
 msgstr ""
 
-#: src/main/util.c:496
+#: src/main/util.c:492
 #, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
 msgstr[0] "%3$d를 필요로 하는 .Internal(%2$s)에 인자 %1$d가 전달되었습니다"
 
-#: src/main/util.c:502
+#: src/main/util.c:498
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "%3$d를 필요로 하는 '%2$s'에 인자 %1$d가 전달되었습니다"
 
-#: src/main/util.c:517
+#: src/main/util.c:513
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
 msgstr "주어진 인자명 '%s'이 '%s'에 매치되지 않습니다"
 
-#: src/main/util.c:527
+#: src/main/util.c:523
 #, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr ""
 
-#: src/main/util.c:532
+#: src/main/util.c:528
 msgid "'nthcdr' needs a list to CDR down"
 msgstr ""
 
-#: src/main/util.c:648
+#: src/main/util.c:644
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "'all.x'는 반드시 TRUE 또는 FALSE이어야 합니다"
 
-#: src/main/util.c:650
+#: src/main/util.c:646
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y'는 반드시 TRUE 또는 FALSE이어야 합니다"
 
-#: src/main/util.c:675
+#: src/main/util.c:671
 msgid "number of rows in the result exceeds maximum vector length"
 msgstr ""
 
-#: src/main/util.c:767
+#: src/main/util.c:763
 msgid "missing value is invalid"
 msgstr ""
 
-#: src/main/util.c:776 src/main/util.c:783
+#: src/main/util.c:772 src/main/util.c:779
 msgid "cannot change working directory"
 msgstr "작업디렉토리를 변경할 수 없습니다"
 
-#: src/main/util.c:802 src/main/util.c:836 src/main/util.c:877
-#: src/main/util.c:919 src/main/util.c:1048 src/main/util.c:1107
-#: src/main/util.c:1130
+#: src/main/util.c:798 src/main/util.c:832 src/main/util.c:873
+#: src/main/util.c:915 src/main/util.c:1044 src/main/util.c:1103
+#: src/main/util.c:1126
 msgid "a character vector argument expected"
 msgstr "문자형 벡터 인자가 와야합니다"
 
-#: src/main/util.c:809 src/main/util.c:844 src/main/util.c:886
-#: src/main/util.c:927
+#: src/main/util.c:805 src/main/util.c:840 src/main/util.c:882
+#: src/main/util.c:923
 msgid "path too long"
 msgstr "경로가 너무 깁니다"
 
-#: src/main/util.c:1062
+#: src/main/util.c:1058
 msgid "only the first character of 'quote' will be used"
 msgstr "오로지 'quote'의 첫번째 문자만이 사용될 것입니다"
 
-#: src/main/util.c:1132
+#: src/main/util.c:1128
 msgid "a character vector 'value' expected"
 msgstr "문자형 벡터 'value'가 와야합니다"
 
-#: src/main/util.c:1135
+#: src/main/util.c:1131
 msgid "'value' must be of positive length"
 msgstr "'value'는 반드시 길이가 양수이어야 합니다"
 
-#: src/main/util.c:1264 src/main/util.c:1272
+#: src/main/util.c:1260 src/main/util.c:1268
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "'utf8towcs'내에 입력 '%s'이 잘못되었습니다"
 
-#: src/main/util.c:1357
+#: src/main/util.c:1353
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "'%s'에서 유효하지 않은 멀티바이트 문자열이 있습니다"
 
-#: src/main/util.c:1466
+#: src/main/util.c:1462
 msgid "error message truncated to 255 chars"
 msgstr "에러메시지가 255 문자까지 보여집니다"
 
-#: src/main/util.c:1479
+#: src/main/util.c:1475
 msgid "warning message truncated to 255 chars"
 msgstr "경고메시지가 255 문자까지 보여집니다"
 
-#: src/main/util.c:1628
+#: src/main/util.c:1624
 #, c-format
 msgid "accuracy loss in conversion from \"%s\" to numeric"
 msgstr ""
 
-#: src/main/util.c:1915
+#: src/main/util.c:1930
 msgid "all arguments must be named"
 msgstr "모든 인자들에는 반드시 이름이 주어져야 합니다"
 
-#: src/main/util.c:2021
+#: src/main/util.c:2042
 msgid "ICU is not supported on this build"
 msgstr "이 빌드에서는 ICU는 지원되지 않습니다"
 
-#: src/main/util.c:2082
+#: src/main/util.c:2109
 msgid "'breaks' is not sorted"
 msgstr "'breaks'가 정렬되지 않았습니다"
 
-#: src/main/util.c:2116 src/main/util.c:2162
+#: src/main/util.c:2143 src/main/util.c:2189
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "긴 벡터 '%s'는 지원되지 않습니다"
 
-#: src/main/util.c:2215
+#: src/main/util.c:2242
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "'eps.correct'는 반드시 0, 1, 또는 2 이어야 합니다"
 
-#: src/main/util.c:2243
+#: src/main/util.c:2270
 msgid "'x' must be a vector"
 msgstr "'x'는 반드시 벡터이어야 합니다"
 
