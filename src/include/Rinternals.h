@@ -166,6 +166,10 @@ typedef enum {
 } SEXPTYPE;
 #endif
 
+/* These are also used with the write barrier on, in attrib.c and util.c */
+#define TYPE_BITS 5
+#define MAX_NUM_SEXPTYPE (1<<TYPE_BITS)
+
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.
  * It defines internal structures that are otherwise only accessible
@@ -175,8 +179,6 @@ typedef enum {
 
 /* Flags */
 
-#define TYPE_BITS 5
-#define MAX_NUM_SEXPTYPE (1<<TYPE_BITS)
 
 struct sxpinfo_struct {
     SEXPTYPE type      :  TYPE_BITS;/* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
