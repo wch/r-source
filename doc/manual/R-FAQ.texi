@@ -537,7 +537,6 @@ packages.
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian   @tab i386/amd64  @tab squeeze/wheezy       @tab Johannes Ranke
 @item          @tab armel       @tab wheezy               @tab Johannes Ranke
-@item Red Hat  @tab i386/x86_64 @tab fedora10/fedora11    @tab Martyn Plummer
 @item Ubuntu   @tab i386/amd64  @tab lucid/precise/trusty @tab Michael Rutter
 @end multitable
 @end quotation
@@ -558,17 +557,23 @@ provided by Michael Rutter.
 
 R binaries for Fedora, maintained by Tom ``Spot'' Callaway, are provided
 as part of the Fedora distribution and can be accessed through
-@command{yum}, the RPM installer/updater.  The Fedora R RPM is a
-``meta-package'' which installs all the user and developer components of
-R (available separately as @code{R-core} and @code{R-devel}), as well as
-the standalone R math library (@code{libRmath} and
-@code{libRmath-devel}).  RPMs for a selection of R packages are also
-provided by Fedora.  The Extra Packages for Enterprise Linux (EPEL)
-project (@url{http://fedoraproject.org/wiki/EPEL}) provides ports of the
-Fedora RPMs for RedHat Enterprise Linux and compatible distributions.
-When a new version of R is released, there may be a delay of up to 2 
-weeks until the Fedora RPM becomes publicly available, as it must pass
-through the statutory Fedora review process.
+@command{yum}, the RPM installer/updater.  Note that the ``Software''
+application (gnome-software), which is the default @acronym{GUI} for
+software installation in Fedora 20, cannot be used to install R.  It is
+therefore recommended to use the yum command line tool.
+The Fedora R RPM is a ``meta-package'' which installs all the user and
+developer components of R (available separately as @code{R-core} and
+@code{R-devel}), as well as @code{R-java}, which ensures that R is
+configured for use with Java.  The R RPM also installs the standalone R
+math library (@code{libRmath} and @code{libRmath-devel}), although this
+is not necessary to use R.  When a new version of R is released, there
+may be a delay of up to 2 weeks until the Fedora RPM becomes publicly
+available, as it must pass through the statutory Fedora review process.
+RPMs for a selection of R packages are also provided by Fedora.  The
+Extra Packages for Enterprise Linux (EPEL) project
+(@url{http://fedoraproject.org/wiki/EPEL}) provides ports of the Fedora
+RPMs for RedHat Enterprise Linux and compatible distributions (e.g.,
+Centos, Scientific Linux, Oracle Linux).
 
 See @url{http://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about RPMs for openSUSE.
