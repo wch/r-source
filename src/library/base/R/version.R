@@ -118,54 +118,88 @@ function()
 
 ## Workhorses.
 
-## <NOTE>
-## Could use this for or as as.double.numeric_version() ...
-## </NOTE>
-
 .encode_numeric_version <-
-function(x, base = NULL)
+function(x, width = NULL)
 {
     if(!is.numeric_version(x)) stop("wrong class")
-    if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
+    if(is.null(width))
+        width <- floor(log(max(unlist(x), 1L, na.rm = TRUE),
+                           base = 8L)) + 1L
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
     lens <- vapply(x, length, 1L)
-    ## We store the lengths so that we know when to stop when decoding.
-    ## Alternatively, we need to be smart about trailing zeroes.  One
-    ## approach is to increment all numbers in the version specs and
-    ## base by 1, and when decoding only retain the non-zero entries and
-    ## decrement by 1 one again.
-    x <- vapply(x, function(t)
-		sum(t / base^seq.int(0, length.out = length(t))), 1.)
-    structure(ifelse(lens > 0L, x, NA_real_),
-              base = base, lens = lens, .classes = classes, names = nms)
+    fmt <- sprintf("%%0%io", width)
+    x <- vapply(x, 
+                function(e) paste(sprintf(fmt, e), collapse = ""),
+                "")
+    ## (As we do not pad with trailing zeroes, storing the lengths is
+    ## not really necessary for decoding.)
+    structure(ifelse(lens > 0L, x, NA_character_),
+              width = width, lens = lens, .classes = classes, names = nms)
 }
+
+## .encode_numeric_version <-
+## function(x, base = NULL)
+## {
+##     if(!is.numeric_version(x)) stop("wrong class")
+##     if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
+##     classes <- class(x)
+##     nms <- names(x)
+##     x <- unclass(x)
+##     lens <- vapply(x, length, 1L)
+##     ## We store the lengths so that we know when to stop when decoding.
+##     ## Alternatively, we need to be smart about trailing zeroes.  One
+##     ## approach is to increment all numbers in the version specs and
+##     ## base by 1, and when decoding only retain the non-zero entries and
+##     ## decrement by 1 one again.
+##     x <- vapply(x, function(t)
+## 		sum(t / base^seq.int(0, length.out = length(t))), 1.)
+##     structure(ifelse(lens > 0L, x, NA_real_),
+##               base = base, lens = lens, .classes = classes, names = nms)
+## }
 
 ## <NOTE>
 ## Currently unused.
-## Is there any point in having a 'base' argument?
 ## </NOTE>
+
 .decode_numeric_version <-
-function(x, base = NULL)
+function(x)
 {
-    if(is.null(base)) base <- attr(x, "base")
-    if(!is.numeric(base)) stop("wrong argument")
-    lens <- attr(x, "lens")
-    y <- vector("list", length = length(x))
-    for(i in seq_along(x)) {
-        n <- lens[i]
-        encoded <- x[i]
-        decoded <- integer(n)
-        for(k in seq_len(n)) {
-            decoded[k] <- encoded %/% 1
-            encoded <- base * (encoded %% 1)
-        }
-        y[[i]] <- as.integer(decoded)
-    }
-    class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
+    width <- attr(x, "width")
+    y <- lapply(x,
+                function(e) {
+                    if(is.na(e)) return(integer())
+                    len <- nchar(e) / width
+                    first <- seq(from = 1L, length.out = len, by = width)
+                    last <- seq(from = width, length.out = len, by = width)
+                    strtoi(substring(e, first, last), 8L)
+                })
+    names(y) <- names(x)
+    class(y) <-  unique(c(attr(x, ".classes"), "numeric_version"))
     y
 }
+
+## .decode_numeric_version <-
+## function(x)
+## {
+##     base <- attr(x, "base")
+##     if(!is.numeric(base)) stop("wrong argument")
+##     lens <- attr(x, "lens")
+##     y <- vector("list", length = length(x))
+##     for(i in seq_along(x)) {
+##         n <- lens[i]
+##         encoded <- x[i]
+##         decoded <- integer(n)
+##         for(k in seq_len(n)) {
+##             decoded[k] <- encoded %/% 1
+##             encoded <- base * (encoded %% 1)
+##         }
+##         y[[i]] <- as.integer(decoded)
+##     }
+##     class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
+##     y
+## }
 
 ## Methods.
 
@@ -232,9 +266,13 @@ function(e1, e2)
                       .Generic), domain = NA)
     if(!is.numeric_version(e1)) e1 <- as.numeric_version(e1)
     if(!is.numeric_version(e2)) e2 <- as.numeric_version(e2)
-    base <- max(unlist(e1), unlist(e2), 0) + 1
-    e1 <- .encode_numeric_version(e1, base = base)
-    e2 <- .encode_numeric_version(e2, base = base)
+    ## base <- max(unlist(e1), unlist(e2), 0) + 1
+    ## e1 <- .encode_numeric_version(e1, base = base)
+    ## e2 <- .encode_numeric_version(e2, base = base)
+    width <- floor(log(max(unlist(e1), unlist(e2), 1L, na.rm = TRUE),
+                       base = 8L)) + 1L
+    e1 <- .encode_numeric_version(e1, width = width)
+    e2 <- .encode_numeric_version(e2, width = width)
     NextMethod(.Generic)
 }
 
@@ -246,7 +284,7 @@ function(..., na.rm)
         stop(gettextf("%s not defined for \"numeric_version\" objects",
                       .Generic), domain = NA)
     x <- do.call("c", lapply(list(...), as.numeric_version))
-    v <- .encode_numeric_version(x)
+    v <- xtfrm(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]
         if(as.character(.Generic) == "range")
@@ -309,9 +347,20 @@ function(x, ...)
     y
 }
 
-is.na.numeric_version <- function(x) is.na(.encode_numeric_version(x))
+is.na.numeric_version <-
+function(x)
+    is.na(.encode_numeric_version(x))
+
+`is.na<-.numeric_version` <-
+function(x, value)
+{
+    x[value] <- rep.int(list(integer()), length(value))
+    x
+}
+
 anyNA.numeric_version <-
-    function(x, recursive = FALSE) anyNA(.encode_numeric_version(x))
+function(x, recursive = FALSE)
+    anyNA(.encode_numeric_version(x))
 
 print.numeric_version <-
 function(x, ...)
@@ -334,7 +383,10 @@ function(x, incomparables = FALSE, ...)
 
 xtfrm.numeric_version <-
 function(x)
-    .encode_numeric_version(x)
+{
+    x <- .encode_numeric_version(x)
+    NextMethod("xtfrm")
+}
 
 ## <NOTE>
 ## Versions of R prior to 2.6.0 had only a package_version class.
