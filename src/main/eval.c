@@ -3738,7 +3738,7 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 
 /* compute the type of the function on the stack for which arguments
    are being accumulated */
-#define CURRENT_FTYPE() TYPEOF(GETSTACK(-3))
+#define CALL_FRAME_FTYPE() TYPEOF(GETSTACK(-3))
 
 #define PUSHCALLARG(v) PUSHCALLARG_CELL(CONS_NR(v, R_NilValue))
 
@@ -4644,7 +4644,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(MAKEPROM, 1):
       {
 	SEXP code = VECTOR_ELT(constants, GETOP());
-	SEXPTYPE ftype = CURRENT_FTYPE();
+	SEXPTYPE ftype = CALL_FRAME_FTYPE();
 	if (ftype != SPECIALSXP) {
 	  if (ftype == BUILTINSXP)
 	      value = bcEval(code, rho, TRUE);
@@ -4656,14 +4656,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(DOMISSING, 0):
       {
-	SEXPTYPE ftype = CURRENT_FTYPE();
+	SEXPTYPE ftype = CALL_FRAME_FTYPE();
 	if (ftype != SPECIALSXP)
 	  PUSHCALLARG(R_MissingArg);
 	NEXT();
       }
     OP(SETTAG, 1):
       {
-	SEXPTYPE ftype = CURRENT_FTYPE();
+	SEXPTYPE ftype = CALL_FRAME_FTYPE();
 	SEXP tag = VECTOR_ELT(constants, GETOP());
 	SEXP cell = GETSTACK(-1);
 	if (ftype != SPECIALSXP && cell != R_NilValue)
@@ -4672,7 +4672,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(DODOTS, 0):
       {
-	SEXPTYPE ftype = CURRENT_FTYPE();
+	SEXPTYPE ftype = CALL_FRAME_FTYPE();
 	if (ftype != SPECIALSXP) {
 	  SEXP h = findVar(R_DotsSymbol, rho);
 	  if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
