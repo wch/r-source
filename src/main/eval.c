@@ -5039,9 +5039,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  value = PRIMFUN(fun) (call, fun, args, rho);
 	  break;
 	case SPECIALSXP:
-	  /* duplicate arguments and put into stack for GC protection */
-	  args = duplicate(CDR(call));
-	  SETSTACK(-2, args);
+	  /* duplicate arguments and protect */
+	  PROTECT(args = duplicate(CDR(call)));
 	  /* insert evaluated promise for LHS as first argument */
 	  /* promise won't be captured so don't track refrences */
 	  prom = R_mkEVPROMISE_NR(R_TmpvalSymbol, lhs);
@@ -5054,6 +5053,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  SETCAR(last, prom);
 	  /* make the call */
 	  value = PRIMFUN(fun) (call, fun, args, rho);
+	  UNPROTECT(1);
 	  break;
 	case CLOSXP:
 	  /* push evaluated promise for RHS onto arguments with 'value' tag */
