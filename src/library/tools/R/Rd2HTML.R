@@ -465,7 +465,7 @@ Rd2HTML <-
                	   inPara <<- savePara
                },
                "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
-               "\\cr" = of1(HTMLEscapes[tag]),
+               "\\cr" =,
                "\\dots" =,
                "\\ldots" =,
                "\\R" = {
@@ -485,6 +485,7 @@ Rd2HTML <-
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
+                   enterPara(doParas)
                    inEqn <<- TRUE
                    of1("<i>")
                    block <- block[[length(block)]];
@@ -504,6 +505,7 @@ Rd2HTML <-
                    inEqn <<- FALSE
                },
                "\\figure" = {
+                   enterPara(doParas)
                    ## This is what is needed for static html pages
                    if(dynamic) of1('<img src="figures/')
                    else of1('<img src="../help/figures/')

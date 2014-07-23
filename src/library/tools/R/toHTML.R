@@ -136,7 +136,8 @@ function(x, ...)
                             c(vheaders[i],
                               Map(function(h, t)
                                   c(h, print_items(t$Text)),
-                                  sprintf("<h3>%s</h3>", names(cchunks)),
+                                  sprintf("<h3>%s</h3>",
+                                          htmlify2(names(cchunks))),
                                   cchunks))
                         } else {
                             c(vheaders[i],
