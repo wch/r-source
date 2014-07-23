@@ -57,6 +57,7 @@ Lebanon,Lebanon,Byblos,http://rmirror.lau.edu.lb/,"Lebanese American University,
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no
+Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Edward Santos <edward.p.santos # upd.edu.ph>, ops # pregi.net",1,ph
 Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",1,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
