@@ -2069,7 +2069,7 @@ stopifnot(!is.na(z$tension))
 
 
 ## recursive listing of directories
-p <- file.path(R.home(), "share","texmf") # always exists, readable
+p <- file.path(R.home("share"),"texmf") # always exists, readable
 lfri <- list.files(p, recursive=TRUE, include.dirs=TRUE)
 subdirs <- c("bibtex", "tex")
 lfnd <- setdiff(list.files(p, all.files=TRUE, no..=TRUE), ".svn")
