@@ -1,48 +1,67 @@
-body {margin-left: 5%; margin-right: 5%;}
+body {
+    margin-left: 5%;
+    margin-right: 5%;
+}
 
-H1 {             
+h1 {             
     background: white;
     color: rgb(25%, 25%, 25%);
     font-family: monospace;
     font-size: xx-large;
-    text-align: center
+    text-align: center;
 }
 
-H2 {
+h2 {
     background: white;
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
     font-size: x-large;
-    text-align: center
+    text-align: center;
 }
 
-H3 {
+h3 {
     background: white;
     color: rgb(40%, 40%, 40%);
     font-family: monospace;
-    font-size: large
+    font-size: large;
 }
 
-H4 {
+h4 {
     background: white;
     color: rgb(40%, 40%, 40%);
-    font-family: monospace
+    font-family: monospace;
 }
 
-span.samp{font-family: monospace}
-span.command{font-family: monospace}
-span.option{font-family: monospace}
-span.file{font-family: monospace}
-span.env{font-family: monospace}
+span.samp {
+    font-family: monospace;
+}
+
+span.command {
+    font-family: monospace;
+}
+
+span.option {
+    font-family: monospace;
+}
+
+span.file {
+    font-family: monospace;
+}
+
+span.env {
+    font-family: monospace;
+}
 
 ul {
     margin-top: 0.25ex;
     margin-bottom: 0.25ex;
 }
+
 li {
     margin-top: 0.25ex;
     margin-bottom: 0.25ex;
 }
+
 p {
     margin-top: 0.6ex;
     margin-bottom: 1.2ex;
