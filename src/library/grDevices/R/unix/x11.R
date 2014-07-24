@@ -53,6 +53,20 @@ X11.options <- function(..., reset = FALSE)
     if(reset || l... > 0) invisible(old) else old
 }
 
+check_for_XQuartz <- function()
+{
+    r_arch <- .Platform$r_arch
+    DSO <- file.path(R.home("modules"), "R_X11.so")
+    out <- system2("otool", c("-L", shQuote(DSO)), stdout = TRUE)
+    ind <- grep("libX11[.][0-9]+[.]dylib", out)
+    if(length(ind)) {
+        this <- sub(" .*", "", sub("^\t", "", out[ind]))
+        if(!file.exists(this))
+            stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+    }
+}
+
+
 X11 <- function(display = "", width, height, pointsize, gamma,
                 bg, canvas, fonts, family,
                 xpos, ypos, title, type, antialias)
@@ -104,6 +118,7 @@ X11 <- function(display = "", width, height, pointsize, gamma,
     ## Aargh -- trkplot has a trapdoor and does not set type.
     if (display == "XImage") type <- 0L
     antialias <- match(d$antialias, aa.cairo)
+    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
     .External2(C_X11, d$display, d$width, d$height, d$pointsize, d$gamma,
                d$colortype, d$maxcubesize, d$bg, d$canvas, d$fonts,
                NA_integer_, d$xpos, d$ypos, d$title,

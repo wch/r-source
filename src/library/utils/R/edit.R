@@ -16,6 +16,19 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+check_for_XQuartz <- function()
+{
+    r_arch <- .Platform$r_arch
+    DSO <- file.path(R.home("modules"), "R_de.so")
+    out <- system2("otool", c("-L", shQuote(DSO)), stdout = TRUE)
+    ind <- grep("libX11[.][0-9]+[.]dylib", out)
+    if(length(ind)) {
+        this <- sub(" .*", "", sub("^\t", "", out[ind]))
+        if(!file.exists(this))
+            stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+    }
+}
+
 dataentry <- function (data, modes)
 {
     if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
@@ -23,6 +36,7 @@ dataentry <- function (data, modes)
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
         stop("invalid 'modes' argument")
+    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
     .External2(C_dataentry, data, modes)
 }
 
@@ -43,6 +57,7 @@ View <- function (x, title)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
        !max(sapply(x, length)))
         stop("invalid 'x' argument")
+    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
     invisible(.External2(C_dataviewer, x, title))
 }
 
@@ -69,6 +84,8 @@ edit.data.frame <-
     if (length(name) && !all(sapply(name, is.vector.unclass)
                                  | sapply(name, is.factor)))
         stop("can only handle vector and factor elements")
+
+    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
 
     factor.mode <- match.arg(factor.mode)
 
@@ -175,6 +192,9 @@ edit.matrix <-
        ! mode(name) %in% c("numeric", "character", "logical") ||
        any(dim(name) < 1))
         stop("invalid input matrix")
+
+    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
+
     ## logical matrices will be edited as character
     logicals <- is.logical(name)
     if (logicals) mode(name) <- "character"

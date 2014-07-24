@@ -171,6 +171,10 @@
       component and the X11 libraries are installed.  This allows more
       informative error messages to be given.
       
+      The \code{X11()} device and X11-based versions of the data editor
+      and viewer (invoked by \code{edit()} and \code{View()} for data
+      frames and matrices) check that the X11 libraries are installed.
+      
       \item \code{icuSetCollate()} allows \code{locale = "default"}, and
       \code{locale = "none"} to use OS services rather than ICU for
       collation.
@@ -183,7 +187,7 @@
   
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item \command{configure} reports on the more important
+      \item The \command{configure} script reports on the more important
       capabilities/options which are not compiled in.
  
       \item When building \R as a shared library, the
