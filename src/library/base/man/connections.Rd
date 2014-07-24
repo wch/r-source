@@ -372,8 +372,10 @@ isIncomplete(con)
   choose the appropriate byte order, some (including earlier versions of
   \code{glibc}) will not.  There is a subtle distinction between
   \code{"UTF-16"} and \code{"UCS-2"} (see
-  \url{http://en.wikipedia.org/wiki/UTF-16/UCS-2}: the use of surrogate
-  pairs is very rare so \code{"UCS-2LE"} is an appropriate first choice.
+  \url{http://en.wikipedia.org/wiki/UTF-16}: the use of characters in
+  the \sQuote{Supplementary Planes} which need surrogate pairs is very
+  rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
+  widely implemented).
 
   As from \R 3.0.0 the encoding \code{"UTF-8-BOM"} is accepted for
   reading and will remove a Byte Order Mark if present (which it often
@@ -400,7 +402,7 @@ isIncomplete(con)
 
 \section{Blocking}{
   Whether or not the connection blocks can be specified for file, url
-  (default yes) fifo and socket connections (default not).
+  (default yes), fifo and socket connections (default not).
 
   In blocking mode, functions using the connection do not return to the
   \R evaluator until the read/write is complete.  In non-blocking mode,
