@@ -36,7 +36,7 @@ dataentry <- function (data, modes)
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
         stop("invalid 'modes' argument")
-    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os)) check_for_XQuartz()
     .External2(C_dataentry, data, modes)
 }
 
@@ -57,7 +57,7 @@ View <- function (x, title)
     if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
        !max(sapply(x, length)))
         stop("invalid 'x' argument")
-    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os)) check_for_XQuartz()
     invisible(.External2(C_dataviewer, x, title))
 }
 
@@ -85,7 +85,7 @@ edit.data.frame <-
                                  | sapply(name, is.factor)))
         stop("can only handle vector and factor elements")
 
-    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os)) check_for_XQuartz()
 
     factor.mode <- match.arg(factor.mode)
 
@@ -193,7 +193,7 @@ edit.matrix <-
        any(dim(name) < 1))
         stop("invalid input matrix")
 
-    if (!grepl("darwin", R.version$os)) check_for_XQuartz()
+    if (grepl("darwin", R.version$os)) check_for_XQuartz()
 
     ## logical matrices will be edited as character
     logicals <- is.logical(name)
