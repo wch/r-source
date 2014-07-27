@@ -78,6 +78,16 @@ function(x)
         ## Simplify eventually ...
         structure(x, class = c(class(x), "numeric_version"))
     }
+    else if(is.list(x) && all(vapply(x, is.integer, NA))) {
+        bad <- vapply(x,
+                      function(e) anyNA(e) || any(e < 0L),
+                      NA)
+        if(any(bad)) {
+            x[bad] <- rep.int(list(integer()), sum(bad))
+        }
+        class(x) <- "numeric_version"
+        x
+    }
     else numeric_version(x)
 }
 
@@ -119,7 +129,7 @@ function()
 ## Workhorses.
 
 .encode_numeric_version <-
-function(x, width = NULL)
+function(x, width = NULL, maxlen = NULL)
 {
     if(!is.numeric_version(x)) stop("wrong class")
     if(is.null(width))
@@ -128,13 +138,13 @@ function(x, width = NULL)
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
-    lens <- vapply(x, length, 1L)
+    lens <- vapply(x, length, 0L)
+    if(is.null(maxlen))
+        maxlen <- max(lens, 0L)
     fmt <- sprintf("%%0%io", width)
-    x <- vapply(x, 
+    x <- vapply(Map(c, x, lapply(maxlen - lens, integer)), 
                 function(e) paste(sprintf(fmt, e), collapse = ""),
                 "")
-    ## (As we do not pad with trailing zeroes, storing the lengths is
-    ## not really necessary for decoding.)
     structure(ifelse(lens > 0L, x, NA_character_),
               width = width, lens = lens, .classes = classes, names = nms)
 }
@@ -167,14 +177,13 @@ function(x, width = NULL)
 function(x)
 {
     width <- attr(x, "width")
-    y <- lapply(x,
-                function(e) {
-                    if(is.na(e)) return(integer())
-                    len <- nchar(e) / width
-                    first <- seq(from = 1L, length.out = len, by = width)
-                    last <- seq(from = width, length.out = len, by = width)
-                    strtoi(substring(e, first, last), 8L)
-                })
+    y <- Map(function(elt, len) {
+        if(is.na(elt)) return(integer())
+        first <- seq(from = 1L, length.out = len, by = width)
+        last <- seq(from = width, length.out = len, by = width)
+        strtoi(substring(elt, first, last), 8L)
+    },
+             x, attr(x, "lens"))
     names(y) <- names(x)
     class(y) <-  unique(c(attr(x, ".classes"), "numeric_version"))
     y
@@ -218,6 +227,28 @@ function(x, i, j)
     y
 }
 
+`[<-.numeric_version` <-
+function(x, i, j, value)
+{
+    y <- unclass(x)
+    if(missing(j))
+        y[i] <- unclass(as.numeric_version(value))
+    else {
+        ## Listify value as needed and validate.
+        if(!is.list(value)) value <- list(value)
+        value <- lapply(value, as.integer)
+        if(any(vapply(value,
+                      function(e) anyNA(e) || any(e < 0L),
+                      NA)))
+            stop("invalid 'value'")
+        ## Listify j as needed.
+        if(!is.list(j)) j <- list(j)
+        y[i] <- Map(`[<-`, y[i], j, value)
+    }
+    class(y) <- class(x)
+    y
+}
+
 `[[.numeric_version` <-
 function(x, ..., exact = NA)
 {
@@ -252,7 +283,6 @@ function(x, ..., value)
    structure(z, class = oldClass(x))
 }
 
-
 Ops.numeric_version <-
 function(e1, e2)
 {
@@ -271,8 +301,11 @@ function(e1, e2)
     ## e2 <- .encode_numeric_version(e2, base = base)
     width <- floor(log(max(unlist(e1), unlist(e2), 1L, na.rm = TRUE),
                        base = 8L)) + 1L
-    e1 <- .encode_numeric_version(e1, width = width)
-    e2 <- .encode_numeric_version(e2, width = width)
+    maxlen <- max(vapply(unclass(e1), length, 0L),
+                  vapply(unclass(e2), length, 0L),
+                  0L)
+    e1 <- .encode_numeric_version(e1, width = width, maxlen = maxlen)
+    e2 <- .encode_numeric_version(e2, width = width, maxlen = maxlen)
     NextMethod(.Generic)
 }
 
@@ -360,7 +393,13 @@ function(x, value)
 
 anyNA.numeric_version <-
 function(x, recursive = FALSE)
+{
+    ## <NOTE>
+    ## Assuming *valid* numeric_version objects, we could simply do:
+    ##   any(vapply(unclass(x), length, 0L) == 0L)
+    ## </NOTE>
     anyNA(.encode_numeric_version(x))
+}
 
 print.numeric_version <-
 function(x, ...)

@@ -15,6 +15,7 @@
 \alias{getRversion}
 % Methods.
 \alias{[.numeric_version}
+\alias{[<-.numeric_version}
 \alias{[[.numeric_version}
 \alias{[[<-.numeric_version}
 \alias{Ops.numeric_version}
