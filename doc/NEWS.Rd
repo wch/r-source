@@ -30,7 +30,8 @@
       
       The \code{X11()} device and X11-based versions of the data editor
       and viewer (invoked by \code{edit()} and \code{View()} for data
-      frames and matrices) check that the X11 libraries are installed.
+      frames and matrices from command-line \R) check that the X11
+      libraries are installed.
       
       \item \code{icuSetCollate()} allows \code{locale = "default"}, and
       \code{locale = "none"} to use OS services rather than ICU for
@@ -39,6 +40,9 @@
       Environment variable \env{R_ICU_LOCALE} can be used to set the
       default ICU locale, in case the one derived from the OS locale is
       inappropriate (this is currently necessary on Windows).
+      
+      \item New function \code{icuGetCollate()} to report on the ICU
+      collation locale in use (if any).
     }
   }
   

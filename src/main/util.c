@@ -1772,8 +1772,20 @@ void uiter_setUTF8(UCharIterator *iter, const char *s, int32_t length);
 
 void uloc_setDefault(const char* localeID, UErrorCode* status);
 
+typedef enum {
+    ULOC_ACTUAL_LOCALE = 0,
+    ULOC_VALID_LOCALE = 1,
+    ULOC_DATA_LOCALE_TYPE_LIMIT = 3
+} ULocDataLocaleType ;
+
+
+const char* ucol_getLocaleByType(const UCollator *coll,
+				 ULocDataLocaleType type,
+				 UErrorCode *status);
+
 #define U_ZERO_ERROR 0
 #define U_FAILURE(x) ((x)>U_ZERO_ERROR)
+#define ULOC_ACTUAL_LOCALE 0
 
 #else
 #include <unicode/utypes.h>
@@ -1884,6 +1896,24 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    const char *ans = "unknown", *res;
+    checkArity(op, args);
+
+    if(collator) {
+	UErrorCode  status = U_ZERO_ERROR;
+	int type = asInteger(CAR(args));
+	if (type < 1 || type > 2)
+	    error(_("invalid '%s' value"), "type");
+	
+	res = ucol_getLocaleByType(collator, 
+				   type == 1 ? ULOC_ACTUAL_LOCALE : ULOC_VALID_LOCALE, 
+				   &status);
+	if(!U_FAILURE(status) && res) ans = res;
+    } else ans = "ICU not in use";
+    return mkString(ans);
+}
 
 /* Caller has to manage the R_alloc stack */
 /* NB: strings can have equal collation weight without being identical */
@@ -1894,6 +1924,10 @@ int Scollate(SEXP a, SEXP b)
 	collationLocaleSet = TRUE;
 #ifndef Win32
 	if (strcmp("C", getLocale()) ) {
+#else
+	const char *p = getenv("R_ICU_LOCALE");
+        if(p && p[0]) {
+#endif
 	    UErrorCode status = U_ZERO_ERROR;
 	    uloc_setDefault(getLocale(), &status);
 	    if(U_FAILURE(status))
@@ -1904,22 +1938,6 @@ int Scollate(SEXP a, SEXP b)
 		error("failed to open ICU collator (%d)", status);
 	    }
 	}
-#else
-	{
-	    const char *p = getenv("R_ICU_LOCALE");
-	    if(p && p[0]) {
-		UErrorCode status = U_ZERO_ERROR;
-		uloc_setDefault(p, &status);
-		if(U_FAILURE(status))
-		    error("failed to set ICU locale (%d)", status);
-		collator = ucol_open(NULL, &status);
-		if (U_FAILURE(status)) {
-		    collator = NULL;
-		    error("failed to open ICU collator (%d)", status);
-		}
-	    }
-	}
-#endif
     }
     if (collator == NULL)
 	return strcoll(translateChar(a), translateChar(b));
@@ -1941,6 +1959,12 @@ SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning(_("ICU is not supported on this build"));
     return R_NilValue;
+}
+
+SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return mkString("ICU not in use");
 }
 
 void attribute_hidden resetICUcollator(void) {}
