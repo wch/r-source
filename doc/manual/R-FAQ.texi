@@ -489,38 +489,20 @@ Apple installer packages at @uref{http://r.research.att.com}.
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
 
-@c Linux binaries as of 2014-07-19:
+@c Linux binaries as of 2014-07-27:
 @c Providers:
-@c   Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   Johannes Ranke <jranke@uni-bremen.de>
-@c   Michael Rutter <mar36@psu.edu>
+@c   Debian: Johannes Ranke <jranke@uni-bremen.de>
+@c   Ubuntu: Michael Rutter <mar36@psu.edu>
 @c
 @c debian
-@c   etch-cran
-@c            i386   2.11.0  Johannes Ranke
-@c            amd64  2.11.0  Johannes Ranke
-@c   lenny-cran
-@c            i386   2.14.1  Johannes Ranke
-@c            amd64  2.14.1  Johannes Ranke
-@c   squeeze-cran
-@c            i386   2.15.3  Johannes Ranke
-@c            amd64  2.15.3  Johannes Ranke
-@c   squeeze-cran3
-@c            i386   3.1.1
-@c            amd64  3.1.1
-@c   wheezy-cran3
-@c            i386   3.1.1
-@c            amd64  3.1.1
-@c redhat
-@c   el4      i386   2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c            x86_64 2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   el5      i386   2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c            x86_64 2.10.0  Bob Kinney <rhel_cran@hmdc.harvard.edu>
-@c   fedora10 i386   2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c            x86_64 2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c   fedora11 i386   2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
-@c            x86_64 2.10.0  Martyn Plummer <Martyn.Plummer@R-project.org>
+@c   current:
+@c     wheezy-cran3     i386/amd64/armel        3.1.1
+@c     squeeze-cran3    i386/amd64              3.1.1
+@c   archive:
+@c     squeeze-cran     i386/amd64              2.15.3
+@c     lenny-cran       i386/amd64              2.14.1
+@c     etch-cran        i386/amd64              2.11.0
+@c   
 @c ubuntu
 @c   Trusty Tahr (14.04)
 @c   Saucy Salamander (13.10)
@@ -578,30 +560,8 @@ Centos, Scientific Linux, Oracle Linux).
 See @url{http://CRAN.R-project.org/bin/linux/suse/README.html} for
 information about RPMs for openSUSE.
 
-@c The @file{bin/osf} directory of a @CRAN{} site contains RPMs
-@c by Albrecht Gebhardt for alpha systems running Alpha Unix
-@c (OSF/Tru64).
-
-@c There are also `tar' distributions for NEXTSTEP on the i386 and m68k
-@c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
-@c created by Stephen Shiboski <steve@biostat.ucsf.edu>.
-
-@c The @file{bin/solaris} directory of a @CRAN{} site contains binary
-@c packages for Solaris on the SPARC and x64 platforms, provided by Mithun
-@c Sridharan.
-
 No other binary distributions are currently publically available via
 @CRAN{}.
-
-@c A ``live'' Linux distribution with a particular focus on R is
-@c @dfn{Quantian}, which provides a directly bootable and self-configuring
-@c ``Live DVD'' containing numerous applications of interests to scientists
-@c and researchers, including several hundred @CRAN{} and Bioconductor
-@c packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java
-@c @acronym{GUI} for R, the Ggobi visualization tool as well as several
-@c other R interfaces. The @dfn{Quantian} website at
-@c @url{http://dirk.eddelbuettel.com/quantian/} contains more details as
-@c well download information.
 
 @node What documentation exists for R?, Citing R, Are there Unix-like binaries for R?, R Basics
 @section What documentation exists for R?
