@@ -3575,9 +3575,9 @@ function(dfile, dir)
                 ok <- FALSE
             }
         }
-        depr <- c("Modified BSD License", "BSD")
-        if(any(status$components %in% depr)) {
-            status$deprecated <- intersect(status$components, depr)
+        patt <- "(^Modified BSD License$|^BSD$|^CC BY.* [23][.]0)"
+        if(any(ind <- grepl(patt, status$component))) {
+            status$deprecated <- status$components[ind]
             ok <- FALSE
         }
         ## Components with extensions but not extensible:
