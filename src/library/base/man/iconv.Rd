@@ -102,7 +102,7 @@ iconvlist()
   \code{U+FEFF} at the beginning of a file in these encodings and
   perhaps also in UTF-8.  In that usage the character is known as a BOM,
   and should be handled during input (see the \sQuote{Encodings} section
-  under \code{\link{connnection}}: re-encoded connections have some
+  under \code{\link{connection}}: re-encoded connections have some
   special handling of BOMs).  The rest of this section applies when this
   has not been done so \code{x} starts with a BOM.
 
