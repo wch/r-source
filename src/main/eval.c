@@ -3392,9 +3392,9 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define BCNPOP() (R_BCNodeStackTop--, GETSTACK(0))
 #define BCNPOP_IGNORE_VALUE() R_BCNodeStackTop--
 
-#define BCNSTACKCHECK(n)  do { \
-  if (R_BCNodeStackTop + 1 > R_BCNodeStackEnd) nodeStackOverflow(); \
-} while (0)
+#define BCNSTACKCHECK(n)  do {						\
+	if (R_BCNodeStackTop + (n) > R_BCNodeStackEnd) nodeStackOverflow(); \
+    } while (0)
 
 #define BCIPUSHPTR(v)  do { \
   void *__value__ = (v); \
