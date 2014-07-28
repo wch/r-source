@@ -3013,7 +3013,9 @@ unless a file @file{index.html} exists in directory
 the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to @HTML{} help
-files or to the @file{DESCRIPTION} file.
+files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
+confirmed via the @uref{http://validator.w3.org, W3C Markup Validation
+Service} or @uref{http://validator.nu/, Validator.nu}.
 
 Sweave/Stangle allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not

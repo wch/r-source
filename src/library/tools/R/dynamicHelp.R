@@ -30,7 +30,7 @@ httpd <- function(path, query, ...)
     .HTMLdirListing <- function(dir, base, up)
     {
         files <- list.files(dir)    # note, no hidden files are listed
-        out <- HTMLheader(paste0("Listing of directory<br>", dir),
+        out <- HTMLheader(paste0("Listing of directory<br/>", dir),
         		  headerTitle = paste("R:", dir), logo=FALSE,
         		  up = up)
         if(!length(files))
@@ -41,7 +41,7 @@ httpd <- function(path, query, ...)
                      paste0("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
                      "</dl>")
         }
-        out <- c(out, "<hr>\n</body></html>")
+        out <- c(out, "<hr/>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -56,7 +56,7 @@ httpd <- function(path, query, ...)
          	out <- c(out, paste0('<h2>Manuals in package', sQuote(pkg),'</h2>'),
          		 makeVignetteTable(cbind(Package=pkg, vinfo[,c("File", "Title", "PDF", "R"), drop = FALSE])))
      	}
-        out <- c(out, "<hr>\n</body></html>")
+        out <- c(out, "<hr/>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -100,7 +100,7 @@ httpd <- function(path, query, ...)
         out <- c(HTMLheader(title),
                  if ("pattern" %in% names(query))
                      paste0('The search string was <b>"', query["pattern"], '"</b>'),
-                 '<hr>\n')
+                 '<hr/>\n')
 
         if(!NROW(res))
             out <- c(out, gettext("No results found"))
@@ -141,7 +141,7 @@ httpd <- function(path, query, ...)
 		    })
 	    }
         }
-        out <- c(out, "<hr>\n</body></html>")
+        out <- c(out, "<hr/>\n</body></html>")
         list(payload = paste(out, collapse="\n"))
     }
 
@@ -334,7 +334,7 @@ httpd <- function(path, query, ...)
                     path <- dirname(dirname(files))
                     files <- paste0('/library/', basename(path), '/html/',
                                     basename(files), '.html')
-                    msg <- c(msg, "<br>",
+                    msg <- c(msg, "<br/>",
                              "However, you might be looking for one of",
                              "<p></p>",
                              paste0('<p><a href="', files, '">',
