@@ -1,6 +1,6 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
@@ -171,7 +171,7 @@ rref <- bibentry(
    author = person("R Core Team"),
    organization = "R Foundation for Statistical Computing",
    address = "Vienna, Austria",
-   year = 2013,
+   year = 2014,
    url = "http://www.R-project.org/")
 
 ## Different printing styles
