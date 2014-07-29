@@ -7408,9 +7408,10 @@ With @command{gcc} additional control is available @emph{via} the
 @option{--params} flag: see its @command{man} page.  For some builds on
 @code{x86_64} Linux this includes enabling the leak sanitizer
 (@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
-which might even be enabled by default: this means any leaks give the
-process a failure error status (by default @code{23}).  To disable this
-and some strict checking use
+which might even be enabled by default@footnote{it was the @command{gcc}
+trunk in mid-2014.} when any leaks give the process a failure error
+status (by default @code{23}).  To disable both this and some strict
+checking use
 
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
@@ -7428,10 +7429,6 @@ break __asan_report_error
 @node Using Undefined Behaviour Sanitizer, Other analyses with `clang', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
 
-`UBSanitizer' is a tool for C/C++ source code selected by
-@option{-fsanitize=undefined} in suitable builds
-of @command{clang}, and GCC as from 4.9.0.
-
 `Undefined behaviour' is where the language standard does not require
 particular behaviour from the compiler.  Examples include division by
 zero (where for doubles @R{} requires the
@@ -7439,15 +7436,22 @@ zero (where for doubles @R{} requires the
 of zero-length arrays, shifts too far for signed types (e.g.@: @code{int
 x, y; y = x << 31;}), out-of-range coercion, invalid C++ casts and
 mis-alignment.  Not uncommon examples of out-of-range coercion in @R{}
-are attempts to coerce a @code{NaN} to type @code{int} or
-@code{NA_INTEGER} to an unsigned type such as @code{size_t}.  Also
-common is @code{y[x - 1]} forgetting that @code{x} might be
-@code{NA_INTEGER}.
+packages are attempts to coerce a @code{NaN} or infinity to type
+@code{int} or @code{NA_INTEGER} to an unsigned type such as
+@code{size_t}.  Also common is @code{y[x - 1]} forgetting that @code{x}
+might be @code{NA_INTEGER}.
+
+`UBSanitizer' is a tool for C/C++ source code selected by
+@option{-fsanitize=undefined} in suitable builds of @command{clang}, and
+GCC as from 4.9.0.  Its runtime library is linked into each package's
+DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
+
+Some versions have greatly increased compilation times on a few files
+(e.g. @file{src/extra/bzip2/decompress.c} in the @R{} sources with
+@command{clang} 3.5rc1).
 
 This sanitizer can be combined with the Address Sanitizer by
-@option{-fsanitize=undefined,address}.  Its runtime library is linked
-into each package's DLL, so it is less often needed to be included in
-@env{MAIN_LDFLAGS}.
+@option{-fsanitize=undefined,address}.
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
@@ -7474,6 +7478,15 @@ In addition,
 @end example
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
+
+Pre-release versions of @command{clang} 3.5 need
+
+@example
+-fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
+@end example
+
+@noindent
+for C++ code (in @code{CXX} and @code{CXX1X}).
 
 A smaller selection is available for GCC, currently defaulting to
 @example
