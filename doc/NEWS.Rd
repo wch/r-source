@@ -214,6 +214,10 @@
 
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
+      
+      \item A longstanding bug in \code{nlminb()} on Windows was traced
+      to a compiler bug in gcc 4.6.3; a workaround has been put in place.
+      (\PR{15244} and \PR{15914}).
     }
   }
 }
