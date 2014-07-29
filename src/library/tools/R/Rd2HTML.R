@@ -110,6 +110,13 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
     x
 }
 
+shtmlify <- function(s) {
+    s <- gsub("&", "&amp;", s, fixed = TRUE)
+    s <- gsub("<", "&lt;", s, fixed = TRUE)
+    s <- gsub(">", "&gt;", s, fixed = TRUE)
+    s
+}
+
 # URL encode anything other than alphanumeric, . and _
 
 urlify <- function(x) { # make a string legal in a URL
@@ -441,21 +448,23 @@ Rd2HTML <-
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
                    enterPara(doParas)
-                   of0('<a href="mailto:', url, '">', htmlify(url), '</a>')},
+                   of0('<a href="mailto:', shtmlify(url), '">',
+                       htmlify(url), '</a>')},
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) {
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
                    enterPara(doParas)
-                   of0('<a href="', escapeAmpersand(url), '">', htmlify(url), '</a>')
+                   of0('<a href="', shtmlify(url), '">',
+                       htmlify(url), '</a>')
                },
                "\\href" = {
                	   if(length(block[[1L]])) {
                	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- gsub("\n", "", url)
 		        enterPara(doParas)
-               	   	of0('<a href="', escapeAmpersand(url), '">')
+               	   	of0('<a href="', shtmlify(url), '">')
                	   	closing <- "</a>"
                	   } else closing <- ""
                	   savePara <- inPara
