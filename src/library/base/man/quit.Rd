@@ -79,6 +79,13 @@ quit(save = "default", status = 0, runLast = TRUE)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 }
+\section{Warning}{
+  The value of \code{.Last} is for the end user to control: as
+  it can be replaced later in the session, it cannot safely be used
+  programatically, e.g. by a package.  The other way to set code to be run
+  at the end of the session is to use a \emph{finalizer}: see
+  \code{\link{reg.finalizer}}.
+}
 \note{
   The \code{R.app} GUI on OS X has its own version of these functions
   with slightly different behaviour for the \code{save} argument (the
