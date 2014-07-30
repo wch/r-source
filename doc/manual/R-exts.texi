@@ -1228,8 +1228,7 @@ set (and note that @option{--as-cran} sets it).
 
 Subdirectory @file{exec} could contain additional executable scripts the
 package needs, typically scripts for interpreters such as the shell,
-Perl, or Tcl.  This mechanism is currently used only by a very few
-packages.  NB: only files (and not directories) under @file{exec} are
+Perl, or Tcl.  NB: only files (and not directories) under @file{exec} are
 installed (and those with names starting with a dot are ignored), and
 they are all marked as executable (mode @code{755}, moderated by
 @samp{umask}) on POSIX platforms.  Note too that this is not suitable
@@ -1330,21 +1329,32 @@ is included in the @file{src} subdirectory and discussed elsewhere in
 this document.
 
 Subdirectory @file{exec} could be used for scripts for interpreters such
-as the shell (e.g.@: @CRANpkg{arulesSequences}), BUGS, Java, JavaScript,
-Matlab, Perl (@CRANpkg{FEST}), php (@CRANpkg{amap}), Python or Tcl, or
-even @R{}.  However, it seems more common to use the @file{inst}
-directory, for example @file{AMA/inst/java}, @file{WriteXLS/inst/Perl},
-@file{Amelia/inst/tklibs}, @file{NMF/inst/matlab} and
-@file{emdbook/inst/BUGS}.
+as the shell, BUGS, JavaScript, Matlab, Perl, php (@CRANpkg{amap}),
+Python or Tcl (@CRANpkg{Simile}), or even @R{}.  However, it seems more
+common to use the @file{inst} directory, for example
+@file{WriteXLS/inst/Perl}, @file{NMF/inst/m-files},
+@file{RnavGraph/inst/tcl}, @file{RProtoBuf/inst/python} and
+@file{emdbook/inst/BUGS} and @file{gridSVG/inst/js}.
+
+Java code is a special case: except for very small programs,
+@file{.java} files should be byte-compiled (to a @file{.class} file) and
+distributed as part of a @file{.jar} file: the conventional location for
+the @file{.jar} file(s) is @file{inst/java}.  It is desirable (and
+required under an Open Source license) to make the Java source files
+available: this is best done in a top-level @file{java} directory in the
+package---the source files should not be installed.
 
 If your package requires one of these interpreters or an extension then
 this should be declared in the @samp{SystemRequirements} field of its
-@file{DESCRIPTION} file.  Windows and Mac users should be aware that the
-Tcl extensions @samp{BWidget} and @samp{Tktable} which are currently
-included with the @R{} for Windows and OS X installers @emph{are}
-extensions and do need to be declared.  @samp{Tktable} did ship as part
-of the X11-based Tcl/Tk provided on @acronym{CRAN} for OS X prior to
-@R{} 3.0.0, but you will need to tell your users how to make use of it:
+@file{DESCRIPTION} file.  (Users of Java most often do so @emph{via}
+@CRANpkg{rJava}, when depending on/importing that suffices.)
+
+Windows and Mac users should be aware that the Tcl extensions
+@samp{BWidget} and @samp{Tktable} which are currently included with the
+@R{} for Windows and in the OS X installers @emph{are} extensions and do
+need to be declared.  @samp{Tktable} did ship as part of the X11-based
+Tcl/Tk provided on @acronym{CRAN} for OS X prior to @R{} 3.0.0, but you
+will need to tell your users how to make use of it:
 
 @example
 > addTclPath('/usr/local/lib/Tktable2.9')
@@ -4228,10 +4238,10 @@ makefiles, watch out in particular for dependencies on the toolchain's
 runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
 @file{libgcc_s}.
 
-For OS X, using @code{R CMD otool -L} on the package's shared objects in
+For OS X, using @code{R CMD otool -L} on the package's shared object(s) in
 the @file{libs} directory will show what they depend on: watch for any
 dependencies in @file{/usr/local/lib}, notably
-@file{libgfortran.2.dylib}.
+@file{libgfortran.2.dylib} or @file{libgfortran.3.dylib}.
 
 Many people (including the @acronym{CRAN} package repository) will not
 accept source packages containing binary files as the latter are a
