@@ -7458,7 +7458,7 @@ Finer control of what is checked can be achieved by other options: for
 @uref{http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation}.
 The current set for @command{clang} is (on a single line):
 @example
--fsanitize=alignment,array-bounds,bool,enum,float-cast-overflow,
+-fsanitize=alignment,bounds,bool,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
 return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
@@ -7490,7 +7490,8 @@ for C++ code (in @code{CXX} and @code{CXX1X}).
 
 A smaller selection is available for GCC, currently defaulting to
 @example
--fsanitize=integer-divide-by-zero,null,return,shift,signed-integer-overflow,unreachable,vla-bound
+-fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,return,shift,
+signed-integer-overflow,unreachable,vla-bound
 @end example
 
 @noindent
