@@ -6690,6 +6690,19 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for Java files without sources (in the right place)
+    ## NB: this is only a basic check: that directory need
+    ## not contain all (or any) of the sources.
+    ## We might in due course want to prompt looking into it.
+    if (foss && !dir.exists(file.path(dir, "java"))) {
+        allfiles <- list.files(file.path(dir, "inst"),
+                               full.names = TRUE, recursive = TRUE)
+        allfiles <- c(allfiles,  # misused by ndtv, sisus
+                      list.files(file.path(dir, "exec"), full.names = TRUE))
+        javafiles <- grep(".*[.](class|jar)$", allfiles, value = TRUE)
+        if(length(javafiles)) out$javafiles <- javafiles
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -6923,6 +6936,9 @@ function(x, ...)
       },
       if(length(y <- x$missing_manual_pdf)) {
           "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
+      },
+      if(length(y <- x$javafiles)) {
+          "Package has FOSS license, installs .class/.jar but has no 'java' directory."
       }
       )
 }
