@@ -21,22 +21,30 @@
   \item{onexit}{logical: should the finalizer be run if the object is
     still uncollected at the end of the \R session?}
 }
-\value{
-  \code{NULL}.
-}
-\note{
+\details{
   The main purpose of this function is to allow objects that refer to
   external items (a temporary file, say) to perform cleanup actions when
   they are no longer referenced from within \R.  This only makes sense
   for objects that are never copied on assignment, hence the restriction
   to environments and external pointers.
 
-  Note that as \R's interpreter is not re-entrant, the finalizer may
-  be run in the middle of a computation.  So there are many functions
-  which it is not safe to call from \code{f}: one example which caused
-  trouble is \code{\link{options}}. As from \R 3.0.3 finalizers are
-  marked to be run at garbage collection but only run at a relatively
-  safe time thereafter.
+  \emph{Inter alia}, it provides a way to program code to be run at
+  the end of an \R session without manipluating \code{\link{.Last}}.
+  For use in a package, it is often a good idea to set a finalizer on an
+  object in the namespace: then it will be called at the end of the
+  session, or soon after the namespace is unloaded if that is done
+  during the session.
+}
+\value{
+  \code{NULL}.
+}
+\note{
+  \R's interpreter is not re-entrant and the finalizer could be run in
+  the middle of a computation.  So there are many functions which it is
+  potentially unsafe to call from \code{f}: one example which caused
+  trouble is \code{\link{options}}.  As from \R 3.0.3 finalizers are
+  scheduled at garbage collection but only run at a relatively safe time
+  thereafter.
 }
 \seealso{
   \code{\link{gc}} and \code{\link{Memory}} for garbage collection and
