@@ -87,7 +87,9 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
   People do often forget to \code{\link{detach}} databases.
 
   In interactive use, \code{\link{with}} is usually preferable to the
-  use of \code{attach}/\code{detach}.
+  use of \code{attach}/\code{detach}, unless when \code{what} is
+  \code{\link{save}()}-produced file in which case
+  \code{attach()} is a (safety) wrapper for \code{\link{load}()}.
 
   In programming, functions should not change the search path unless
   that is their purpose.  Often \code{\link{with}} can be used within a

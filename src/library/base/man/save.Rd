@@ -10,7 +10,8 @@
 \description{
   \code{save} writes an external representation of \R objects to the
   specified file.  The objects can be read back from the file at a later
-  date by using the function \code{load} (or \code{data} in some cases).
+  date by using the function \code{\link{load}} or \code{\link{attach}}
+  (or \code{\link{data}} in some cases).
 
   \code{save.image()} is just a short-cut for \sQuote{save my current
     workspace}, i.e., \code{save(list = ls(all = TRUE), file =
@@ -50,7 +51,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     \command{gzip} compression, and character strings \code{"gzip"},
     \code{"bzip2"} or \code{"xz"} specify the type of
     compression.  Ignored when \code{file} is a connection and
-    for workspace format version 1.} 
+    for workspace format version 1.}
   \item{compression_level}{integer: the level of compression to be
     used.  Defaults to \code{6} for \command{gzip} compression and to
     \code{9} for \command{bzip2} or \command{xz} compression.}
@@ -153,7 +154,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 
   One such \sQuote{later addition} was long vectors, introduced in \R
   3.0.0 and loadable only on 64-bit platforms.
-  
+
   Loading files saved with \code{ASCII = NA} requires a C99-compliant C
   function \code{sscanf}: this is a problem on Windows, first worked
   around in \R 3.1.2: they should be readable in earlier versions of \R

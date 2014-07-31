@@ -42,14 +42,14 @@ load(file, envir = parent.frame(), verbose = FALSE)
   0.99.0, and \code{RD[ABX]1} from \R 0.99.0 to \R 1.3.1.  These are all
   obsolete, and you are strongly recommended to re-save such files in a
   current format.
-  
+
   The \code{verbose} argument is mainly intended for debugging.  If it
   is \code{TRUE}, then as objects from the file are loaded, their
-  names will be printed to the console.  If \code{verbose} is set to 
+  names will be printed to the console.  If \code{verbose} is set to
   an integer value greater than one, additional names corresponding to
   attributes and other parts of individual objects will also be printed.
   Larger values will print names to a greater depth.
-  
+
   Objects can be saved with references to namespaces, usually as part of
   the environment of a function or formula.  As from \R 3.1.0 such
   objects can be loaded even if the namespace is not available: it is
@@ -65,6 +65,14 @@ load(file, envir = parent.frame(), verbose = FALSE)
   \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end of line markers.  \code{load} tries to detect such a
   conversion and gives an informative error message.
+
+  \code{load(<file>)} replaces all existing objects with the same names
+  in the current environment, typically your workspace,
+  \code{\link{.Globalenv}} and hence potentially destroys precious data.
+  It is considerably safer to use \code{envir = } to load into a
+  different environment, or to \code{\link{attach}(file)} which
+  \code{load()}s the file into a new entry in the \code{\link{search}}
+  path.
 }
 #ifdef windows
 \note{
@@ -73,7 +81,8 @@ load(file, envir = parent.frame(), verbose = FALSE)
 }
 #endif
 \seealso{
-  \code{\link{save}}, \code{\link{download.file}}.
+  \code{\link{save}}, \code{\link{download.file}}; further
+  \code{\link{attach}} as wrapper for \code{load()}.
 
   For other interfaces to the underlying serialization format, see
   \code{\link{unserialize}} and \code{\link{readRDS}}.
@@ -89,9 +98,20 @@ local({
    load("all.RData")
    ls()
 })
-## restore the saved values to the user's workspace
-load("all.RData", .GlobalEnv)
 
+xx <- exp(1:3)
+## restore the saved values to the user's workspace
+load("all.RData") ## which is here *equivalent* to
+## load("all.RData", .GlobalEnv)
+## This however annihilates all objects in .GlobalEnv with the same names !
+xx # no longer exp(1:3)
+rm(xx)
+attach("all.RData") # safer and will warn about masked objects w/ same name in .GlobalEnv
+ls(pos = 2)
+##  also typically need to cleanup the search path:
+detach("file:all.RData")
+
+## clean up (the example):
 unlink("all.RData")
 
 \dontrun{
