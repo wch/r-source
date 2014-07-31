@@ -4249,7 +4249,7 @@ static R_INLINE void DO_SETMATSUBSET(SEXP rho)
 	} \
     } while(0)
 
-static R_INLINE void checkForMissings(SEXP args, SEXP call)
+static void signalMissingArgError(SEXP args, SEXP call)
 {
     SEXP a, c;
     int n, k;
@@ -4277,6 +4277,18 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	    errorcall(call, "argument %d is missing", n);
 #endif
 	}
+}
+
+static R_INLINE void checkForMissings(SEXP args, SEXP call)
+{
+    Rboolean found = FALSE;
+    for (SEXP a = args; a != R_NilValue; a = CDR(a))
+	if (CAR(a) == R_MissingArg) {
+	    found = TRUE;
+	    break;
+	}
+    if (found)
+	signalMissingArgError(args, call);
 }
 
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
