@@ -82,7 +82,7 @@ quit(save = "default", status = 0, runLast = TRUE)
 \section{Warning}{
   The value of \code{.Last} is for the end user to control: as
   it can be replaced later in the session, it cannot safely be used
-  programatically, e.g. by a package.  The other way to set code to be run
+  programmatically, e.g. by a package.  The other way to set code to be run
   at the end of the session is to use a \emph{finalizer}: see
   \code{\link{reg.finalizer}}.
 }
