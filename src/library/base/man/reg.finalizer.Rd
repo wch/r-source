@@ -29,7 +29,7 @@
   to environments and external pointers.
 
   \emph{Inter alia}, it provides a way to program code to be run at
-  the end of an \R session without manipluating \code{\link{.Last}}.
+  the end of an \R session without manipulating \code{\link{.Last}}.
   For use in a package, it is often a good idea to set a finalizer on an
   object in the namespace: then it will be called at the end of the
   session, or soon after the namespace is unloaded if that is done
