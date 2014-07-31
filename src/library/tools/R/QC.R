@@ -6703,6 +6703,16 @@ function(dir)
         if(length(javafiles)) out$javafiles <- javafiles
     }
 
+    ## Check for installing Java source files
+    {
+        dotjava <- list.files(file.path(dir, "inst"), pattern = ".*[.]java$",
+                              full.names = TRUE, recursive = TRUE)
+        dotjava <- c(dotjava,  # misused by ndtv
+                     list.files(file.path(dir, "exec"), pattern = ".*[.]java$",
+                                full.names = TRUE))
+        if(length(dotjava)) out$dotjava <- dotjava
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -6936,6 +6946,9 @@ function(x, ...)
       },
       if(length(y <- x$missing_manual_pdf)) {
           "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
+      },
+      if(length(y <- x$dotjava)) {
+          "Package installs .java files."
       },
       if(length(y <- x$javafiles)) {
           "Package has FOSS license, installs .class/.jar but has no 'java' directory."

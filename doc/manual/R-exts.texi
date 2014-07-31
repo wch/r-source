@@ -11034,6 +11034,10 @@ by @R{}'s internal allocation mechanism.  These will only come into play
 on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
 just under 16Gb.
 
+The memory returned is only guaranteed to be aligned as required for
+@code{double} pointers: take precautions if casting to a pointer which
+needs more (e.g.@: @code{(long double *)} on some platforms).
+
 These functions should only be used in code called by @code{.C} etc,
 never from front-ends.  They are not thread-safe.
 
@@ -11073,6 +11077,9 @@ conveniently from an @code{on.exit} action in the calling @R{} function
 Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
 comes from the same pool as used by @code{malloc}: in particular do not
 use @code{free} or @code{strdup} with it.
+
+Memory obtained by these functions should be aligned in the same way as
+@code{malloc}, that is `suitably aligned for any kind of variable'.
 
 These entry points need to be prefixed by @code{R_} if
 @code{STRICT_R_HEADERS} has been defined.
