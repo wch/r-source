@@ -1,6 +1,6 @@
 % File src/library/stats/man/alias.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{alias}
@@ -46,7 +46,7 @@ alias(object, \dots)
   \CRANpkg{MASS} to be installed. 
 }
 \value{
-  A list (of \code{\link{class}} \code{"listof"}) containing components
+  A list (of \code{\link{class}} \code{"\link{listof}"}) containing components
   \item{Model}{Description of the model; usually the formula.}
   \item{Complete}{A matrix with columns corresponding to effects that
     are linearly dependent on the rows.}
