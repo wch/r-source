@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -68,11 +68,10 @@ load(file, envir = parent.frame(), verbose = FALSE)
 
   \code{load(<file>)} replaces all existing objects with the same names
   in the current environment, typically your workspace,
-  \code{\link{.Globalenv}} and hence potentially destroys precious data.
+  \code{\link{.Globalenv}} and hence potentially overwrites important data.
   It is considerably safer to use \code{envir = } to load into a
   different environment, or to \code{\link{attach}(file)} which
-  \code{load()}s the file into a new entry in the \code{\link{search}}
-  path.
+  \code{load()}s into a new entry in the \code{\link{search}} path.
 }
 #ifdef windows
 \note{

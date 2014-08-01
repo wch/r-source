@@ -165,7 +165,7 @@ if test -n "${KPSEWHICH}"; then
   else
     ${KPSEWHICH} inconsolata.sty > /dev/null
     if test $? -ne 0; then
-      AC_MSG_RESULT([found inconsolata.sty]) 
+      AC_MSG_RESULT([found inconsolata.sty])
     else
       r_rd4pdf="times,hyper"
       if test -z "${R_RD4PDF}" ;  then

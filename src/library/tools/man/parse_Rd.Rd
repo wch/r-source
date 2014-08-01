@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-10 R Core Team
+% Copyright 2008-14 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -15,8 +15,8 @@
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown",
          verbose = FALSE, fragment = FALSE, warningCalls = TRUE,
-	 macros = file.path(R.home("share"), "Rd", "macros",
-                  "system.Rd"), permissive = FALSE)
+	 macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"),
+         permissive = FALSE)
 \method{print}{Rd}(x, deparse = FALSE, \dots)
 \method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }

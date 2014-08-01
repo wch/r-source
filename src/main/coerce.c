@@ -302,42 +302,7 @@ SEXP attribute_hidden StringFromInteger(int x, int *warn)
     else return mkChar(EncodeInteger(x, w));
 }
 
-#if OLD
-// moved to printutils.c
-static const char* dropTrailing0(char *s, const char *dec)
-{
-    /* Note that  's'  is modified */
-    char *p = s, cdec = dec[0];
-    for (p = s; *p; p++) {
-	if(*p == cdec) {
-	    char *replace = p++;
-	    while ('0' <= *p  &&  *p <= '9')
-		if(*(p++) != '0')
-		    replace = p;
-	    if(replace != p)
-		while((*(replace++) = *(p++)))
-		    ;
-	    break;
-	}
-    }
-    return s;
-}
-
-SEXP attribute_hidden StringFromReal(double x, int *warn)
-{
-    int w, d, e;
-    formatReal(&x, 1, &w, &d, &e, 0);
-    if (ISNA(x)) return NA_STRING;
-    else {
-	/* Note that we recast EncodeReal()'s value to possibly modify it
-	 * destructively; this is harmless here (in a sequential
-	 * environment), as mkChar() creates a copy */
-	/* Do it this way to avoid (3x) warnings in gcc 4.2.x */
-	char * tmp = (char *) EncodeReal(x, w, d, e, OutDec);
-	return mkChar(dropTrailing0(tmp, OutDec));
-    }
-}
-#endif
+// dropTrailing0 and StringFromReal moved to printutils.c
 
 SEXP attribute_hidden StringFromComplex(Rcomplex x, int *warn)
 {
