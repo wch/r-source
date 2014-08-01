@@ -1,5 +1,5 @@
 
-R version 3.1.1 Patched (2014-07-10 r66121) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-08-01 r66293) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.113   0.007   0.113 
+  0.105   0.013   0.111 
