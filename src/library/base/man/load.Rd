@@ -67,8 +67,8 @@ load(file, envir = parent.frame(), verbose = FALSE)
   conversion and gives an informative error message.
 
   \code{load(<file>)} replaces all existing objects with the same names
-  in the current environment, typically your workspace,
-  \code{\link{.Globalenv}} and hence potentially overwrites important data.
+  in the current environment (typically your workspace,
+  \code{\link{.GlobalEnv}}) and hence potentially overwrites important data.
   It is considerably safer to use \code{envir = } to load into a
   different environment, or to \code{\link{attach}(file)} which
   \code{load()}s into a new entry in the \code{\link{search}} path.
