@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snow.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -86,14 +86,16 @@ initDefaultClusterOptions <- function(libname)
     port <- if (identical(port, "random")) NA else as.integer(port)
     if (is.na(port))
         port <- 11000 + 1000 * ((stats::runif(1L) + unclass(Sys.time())/300) %% 1)
+    Sys.i <- Sys.info()
     options <- list(port = as.integer(port),
                     timeout = 60 * 60 * 24 * 30, # 30 days
-                    master =  Sys.info()["nodename"],
+                    master = Sys.i[["nodename"]],
                     homogeneous = TRUE,
                     type = "PSOCK",
                     outfile = "/dev/null",
                     rscript = rscript,
-                    user = Sys.info()["user"],
+                    rscript_args = character(),
+                    user = Sys.i[["user"]],
                     rshcmd = "ssh",
                     manual = FALSE,
                     methods = TRUE,
@@ -104,7 +106,8 @@ initDefaultClusterOptions <- function(libname)
                     scriptdir = file.path(libname, "parallel"),
                     rprog = file.path(R.home("bin"), "R"),
                     snowlib = .libPaths()[1],
-                    useRscript = TRUE, useXDR = TRUE)
+                    useRscript = TRUE, # for use by snow clusters
+                    useXDR = TRUE)
     defaultClusterOptions <<- addClusterOptions(emptyenv(), options)
 }
 

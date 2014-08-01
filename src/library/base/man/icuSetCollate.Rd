@@ -67,11 +67,8 @@ icuGetCollate(type = c("actual", "valid"))
       collation services are used instead.  (As from \R 3.1.2.)}
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
-      session. (As from \R 3.1.2:
-      \code{icuSetCollation(locale = Sys.getlocale("LC_COLLATE"))}
-      can be used in earlier versions.)  If environment variable
-      \env{R_ICU_LOCALE} is set to a non-empty value, its value is used
-      rather than that obtained from the OS.
+      session.  If environment variable \env{R_ICU_LOCALE} is set to a
+      non-empty value, its value is used rather than consulting the OS.
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -81,7 +78,11 @@ icuGetCollate(type = c("actual", "valid"))
   For the specifications of \sQuote{real} ICU locales, see
   \url{http://userguide.icu-project.org/locale}.  Note that ICU does not
   report that a locale is not supported, but falls back to its idea of
-  \sQuote{best fit} (which could be rather different).
+  \sQuote{best fit} (which could be rather different and is reported by
+  \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
+  locales fall back to \code{"root"} as although e.g. \code{"en_GB"} is
+  a valid locale (at least on some platforms), it contains no special
+  rules for collation.
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
@@ -97,11 +98,11 @@ icuGetCollate(type = c("actual", "valid"))
   OS collation locate category is changed by \code{\link{Sys.setlocale}}.
 }
 \value{
-  For \code{icuGetCollate}, a character vector of length one describing
-  the ICU locale in use (which may be reported as \code{"ICU not in
-  use"}).  This may be simpler than the requested locale: for example
-  \code{"da"} rather than \code{"da_DK"}: English locales are likely to
-  report \code{"root"}.
+  For \code{icuGetCollate}, a character string describing the ICU locale
+  in use (which may be reported as \code{"ICU not in use"}).  The
+  \sQuote{actual} locale may be simpler than the requested locale: for
+  example \code{"da"} rather than \code{"da_DK"}: English locales are
+  likely to report \code{"root"}.
 }
 \note{
   ICU is used by default wherever it is available: this include OS X,

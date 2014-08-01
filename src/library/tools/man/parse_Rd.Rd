@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-10 R Core Team
+% Copyright 2008-14 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}
@@ -41,6 +41,11 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown",
   It generates a warning for each parse error and attempts to continue
   parsing.  In order to continue, it is generally necessary to drop some
   parts of the file, so such warnings should not be ignored.
+  
+  Files without a marked encoding are by default assumed to be in the
+  native encoding.  An alternate default can be set using the
+  \code{encoding} argument.  All text in files is translated to the
+  UTF-8 encoding in the parsed object.
 }
 \value{
   \code{parse_Rd} returns an object of class \code{"Rd"}.  The

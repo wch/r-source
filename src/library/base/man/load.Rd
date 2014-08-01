@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -42,14 +42,14 @@ load(file, envir = parent.frame(), verbose = FALSE)
   0.99.0, and \code{RD[ABX]1} from \R 0.99.0 to \R 1.3.1.  These are all
   obsolete, and you are strongly recommended to re-save such files in a
   current format.
-  
+
   The \code{verbose} argument is mainly intended for debugging.  If it
   is \code{TRUE}, then as objects from the file are loaded, their
-  names will be printed to the console.  If \code{verbose} is set to 
+  names will be printed to the console.  If \code{verbose} is set to
   an integer value greater than one, additional names corresponding to
   attributes and other parts of individual objects will also be printed.
   Larger values will print names to a greater depth.
-  
+
   Objects can be saved with references to namespaces, usually as part of
   the environment of a function or formula.  As from \R 3.1.0 such
   objects can be loaded even if the namespace is not available: it is
@@ -65,6 +65,13 @@ load(file, envir = parent.frame(), verbose = FALSE)
   \code{ascii = TRUE}, so ensure that they are transferred without
   conversion of end of line markers.  \code{load} tries to detect such a
   conversion and gives an informative error message.
+
+  \code{load(<file>)} replaces all existing objects with the same names
+  in the current environment, typically your workspace,
+  \code{\link{.Globalenv}} and hence potentially overwrites important data.
+  It is considerably safer to use \code{envir = } to load into a
+  different environment, or to \code{\link{attach}(file)} which
+  \code{load()}s into a new entry in the \code{\link{search}} path.
 }
 #ifdef windows
 \note{
