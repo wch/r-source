@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:17\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -102,14 +102,6 @@ msgstr "'pb' не из класса %s"
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' должны быть символьной матрицей из двух колонок"
-
-msgid ""
-"Tcl/Tk libraries are missing: install the Tcl/Tk component from the R "
-"installer"
-msgstr ""
-
-msgid "X11 library is missing: install XQuartz from xquartz.macosforge.org"
-msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Эта система не пододдерживает Tcl/Tk"

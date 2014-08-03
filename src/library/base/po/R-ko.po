@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -1454,9 +1454,6 @@ msgstr ""
 msgid "invalid version specification %s"
 msgstr "유효하지 않은 버전지정 %s입니다"
 
-msgid "wrong argument"
-msgstr "잘못된 인자입니다"
-
 msgid "invalid 'value'"
 msgstr "유효하지 않은 'value'입니다"
 
@@ -1676,6 +1673,9 @@ msgstr[0] "%s는 TRUE가 아닙니다"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 메시지:\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "잘못된 인자입니다"
 
 #~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
 #~ msgstr "'nu'는 반드시 0, nrow(x) 또는 ncol(x)이어야 합니다. "

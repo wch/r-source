@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-08-03 12:17+0100\n"
 "PO-Revision-Date: 2014-03-26 21:13-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -697,6 +697,10 @@ msgstr "lag.max의 값이 유효하지 않습니다"
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d는 반드시 1, 2, 3, 또는 4이어야 합니다"
+
+#: port.c:149
+msgid "port algorithms 3 or higher are not supported"
+msgstr ""
 
 #: port.c:312
 #, c-format

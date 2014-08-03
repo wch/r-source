@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1527,9 +1527,6 @@ msgstr "Tilbakesporing finst ikkje"
 msgid "invalid version specification %s"
 msgstr "ugyldig versjonsspesifikasjon"
 
-msgid "wrong argument"
-msgstr "feil argument"
-
 #, fuzzy
 msgid "invalid 'value'"
 msgstr "ugyldig verdi"
@@ -1797,6 +1794,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "feil argument"
 
 #~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
 #~ msgstr "«nu» må vera 0, nrow(x) eller ncol(x)"

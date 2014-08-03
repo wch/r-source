@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-22 09:54+0100\n"
+"POT-Creation-Date: 2014-08-03 12:16+0100\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -132,8 +132,8 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/agrep.c:135 src/main/agrep.c:775 src/main/agrep.c:780
 #: src/main/apply.c:293 src/main/apply.c:295 src/main/apply.c:298
 #: src/main/array.c:87 src/main/array.c:1137 src/main/array.c:1263
-#: src/main/array.c:1265 src/main/array.c:1266 src/main/array.c:1592
-#: src/main/array.c:1594 src/main/array.c:1596 src/main/attrib.c:196
+#: src/main/array.c:1265 src/main/array.c:1266 src/main/array.c:1607
+#: src/main/array.c:1609 src/main/array.c:1611 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:147 src/main/builtin.c:534
 #: src/main/builtin.c:550 src/main/builtin.c:739 src/main/builtin.c:741
@@ -901,19 +901,19 @@ msgstr "'data' 必須是向量類型"
 msgid "non-numeric matrix extent"
 msgstr "非數值的矩陣範圍"
 
-#: src/main/array.c:97 src/main/array.c:1535
+#: src/main/array.c:97 src/main/array.c:1550
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "無效的 'nrow' 值 (太大或無法取得)"
 
-#: src/main/array.c:99 src/main/array.c:1537
+#: src/main/array.c:99 src/main/array.c:1552
 msgid "invalid 'nrow' value (< 0)"
 msgstr "無效的 'nrow' 值 (< 0)"
 
-#: src/main/array.c:105 src/main/array.c:1540
+#: src/main/array.c:105 src/main/array.c:1555
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "無效的 'ncol' 值 (太大或無法取得)"
 
-#: src/main/array.c:107 src/main/array.c:1542
+#: src/main/array.c:107 src/main/array.c:1557
 msgid "invalid 'ncol' value (< 0)"
 msgstr "無效的 'ncol' 值 (< 0)"
 
@@ -942,7 +942,7 @@ msgstr "資料長度 [%d] 並非欄位數量 [%d] 的因數或倍數"
 msgid "data length exceeds size of matrix"
 msgstr "資料長度超過矩陣的大小"
 
-#: src/main/array.c:147 src/main/array.c:1453 src/main/array.c:1549
+#: src/main/array.c:147 src/main/array.c:1453 src/main/array.c:1564
 msgid "too many elements specified"
 msgstr "指定了太多的元素"
 
@@ -1020,12 +1020,12 @@ msgstr "'x' 必須是數值"
 msgid "'dims' cannot be of length 0"
 msgstr "'hadj' 的長度必須是 1"
 
-#: src/main/array.c:1545
+#: src/main/array.c:1560
 #, fuzzy
 msgid "'x' must have positive length"
 msgstr "'value' 必須是正值的長度"
 
-#: src/main/array.c:1605
+#: src/main/array.c:1620
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1308,13 +1308,13 @@ msgstr "指定的向量大小太大"
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1540 src/main/connections.c:3064 src/main/engine.c:2967
+#: src/main/coerce.c:1505 src/main/connections.c:3064 src/main/engine.c:2967
 #: src/main/envir.c:996 src/main/envir.c:1049 src/main/envir.c:1139
 #: src/main/envir.c:1623 src/main/envir.c:1747 src/main/envir.c:1815
 #: src/main/envir.c:1933 src/main/envir.c:2590 src/main/envir.c:2650
 #: src/main/envir.c:2930 src/main/envir.c:2959 src/main/envir.c:2980
 #: src/main/envir.c:3003 src/main/envir.c:3038 src/main/envir.c:3059
-#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5311
+#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5310
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2362 src/main/serialize.c:2743
 msgid "use of NULL environment is defunct"
@@ -1381,14 +1381,14 @@ msgid "invalid argument"
 msgstr "引數不正確"
 
 #: src/main/builtin.c:899 src/main/builtin.c:909 src/main/builtin.c:911
-#: src/main/character.c:366 src/main/coerce.c:2823
+#: src/main/character.c:366 src/main/coerce.c:2788
 msgid "invalid value"
 msgstr "無效的值"
 
-#: src/main/builtin.c:942 src/main/coerce.c:2536 src/main/coerce.c:2577
+#: src/main/builtin.c:942 src/main/coerce.c:2501 src/main/coerce.c:2542
 #: src/main/eval.c:561 src/main/eval.c:681 src/main/eval.c:2091
 #: src/main/eval.c:2168 src/main/eval.c:2228 src/main/eval.c:2561
-#: src/main/eval.c:4689 src/main/eval.c:4808
+#: src/main/eval.c:4692 src/main/eval.c:4809
 msgid "'...' used in an incorrect context"
 msgstr "'...' 的上下文用得不正確"
 
@@ -1401,7 +1401,7 @@ msgstr "重複切換預設值：'%s' 和 '%s'"
 msgid "'EXPR' is missing"
 msgstr "缺少 'EXPR'"
 
-#: src/main/builtin.c:1000 src/main/eval.c:5148
+#: src/main/builtin.c:1000 src/main/eval.c:5147
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR 必須是長度為 1 的向量"
 
@@ -1527,154 +1527,154 @@ msgstr "強制變更時丟棄了虛數部分"
 msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "在強制變更成純量值時，任何溢位值當作 0 來處理"
 
-#: src/main/coerce.c:419
+#: src/main/coerce.c:384
 #, c-format
 msgid "invalid data of mode '%s' (too short)"
 msgstr "無效的模式 '%s' 資料 (太短)"
 
-#: src/main/coerce.c:1021
+#: src/main/coerce.c:986
 #, c-format
 msgid "'pairlist' object cannot be coerced to type '%s'"
 msgstr "'pairlist' 物件無法強制變更成 '%s'"
 
-#: src/main/coerce.c:1139
+#: src/main/coerce.c:1104
 #, c-format
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "(串列) 物件無法強制變更成 '%s'"
 
-#: src/main/coerce.c:1162
+#: src/main/coerce.c:1127
 #, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
 msgstr "(符號) 物件無法強制變更成 '%s'"
 
-#: src/main/coerce.c:1178 src/main/coerce.c:1488
+#: src/main/coerce.c:1143 src/main/coerce.c:1453
 msgid "no method for coercing this S4 class to a vector"
 msgstr "沒有方法可將這個 S4 類別強制變更成向量"
 
-#: src/main/coerce.c:1237
+#: src/main/coerce.c:1202
 msgid "environments cannot be coerced to other types"
 msgstr "環境物件不能被強制變更成其它類型"
 
-#: src/main/coerce.c:1384
+#: src/main/coerce.c:1349
 msgid "attempting to coerce non-factor"
 msgstr "試圖強制變更非向量"
 
-#: src/main/coerce.c:1536
+#: src/main/coerce.c:1501
 msgid "list argument expected"
 msgstr "需要串列引數"
 
-#: src/main/coerce.c:1544 src/main/eval.c:5315
+#: src/main/coerce.c:1509 src/main/eval.c:5314
 msgid "invalid environment"
 msgstr "環境物件不正確"
 
-#: src/main/coerce.c:1548
+#: src/main/coerce.c:1513
 msgid "argument must have length at least 1"
 msgstr "引數的長度至少要為 1"
 
-#: src/main/coerce.c:1570
+#: src/main/coerce.c:1535
 msgid "invalid body for function"
 msgstr "函數本體不正確"
 
-#: src/main/coerce.c:1593
+#: src/main/coerce.c:1558
 msgid "invalid length 0 argument"
 msgstr "長度為 0 的引數是不正確的"
 
-#: src/main/coerce.c:1608
+#: src/main/coerce.c:1573
 msgid "invalid argument list"
 msgstr "引數串列不正確"
 
-#: src/main/coerce.c:1919
+#: src/main/coerce.c:1884
 msgid "type \"single\" unimplemented in R"
 msgstr "類型 \"single\" 目前在 R 中還沒有實作"
 
-#: src/main/coerce.c:1921
+#: src/main/coerce.c:1886
 msgid "unimplemented predicate"
 msgstr "尚未實作 predicate"
 
-#: src/main/coerce.c:2072
+#: src/main/coerce.c:2037
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() 套用到非串列或向量類型 '%s'"
 
-#: src/main/coerce.c:2270 src/main/coerce.c:2333 src/main/coerce.c:2401
+#: src/main/coerce.c:2235 src/main/coerce.c:2298 src/main/coerce.c:2366
 #, c-format
 msgid "default method not implemented for type '%s'"
 msgstr "預設方法尚未於類型 '%s' 中實作"
 
-#: src/main/coerce.c:2419
+#: src/main/coerce.c:2384
 msgid "'name' is missing"
 msgstr "缺少 'name'"
 
-#: src/main/coerce.c:2426
+#: src/main/coerce.c:2391
 msgid "first argument must be a character string"
 msgstr "第一個引數必須是字串"
 
-#: src/main/coerce.c:2459
+#: src/main/coerce.c:2424
 msgid "'what' must be a character string or a function"
 msgstr "'what' 必須是字串或函數"
 
-#: src/main/coerce.c:2463
+#: src/main/coerce.c:2428
 #, fuzzy
 msgid "'args' must be a list or expression"
 msgstr "'args' 必須是串列"
 
-#: src/main/coerce.c:2466
+#: src/main/coerce.c:2431
 msgid "'args' must be a list"
 msgstr "'args' 必須是串列"
 
-#: src/main/coerce.c:2470
+#: src/main/coerce.c:2435
 msgid "'envir' must be an environment"
 msgstr "'envir' 必須是環境物件"
 
-#: src/main/coerce.c:2625
+#: src/main/coerce.c:2590
 msgid "invalid environment specified"
 msgstr "環境設定不正確"
 
-#: src/main/coerce.c:2691
+#: src/main/coerce.c:2656
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "設定 class(x) 為空值； 結果將不再是 S4 物件"
 
-#: src/main/coerce.c:2694
+#: src/main/coerce.c:2659
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
 msgstr "設定 class(x) 為多重字串 (\"%s\", \"%s\", ...)；結果將不再是 S4 物件"
 
-#: src/main/coerce.c:2698
+#: src/main/coerce.c:2663
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr "設定 class(x) 為 \"%s\" 設定屬性為空值；結果將不再是 S4 物件"
 
-#: src/main/coerce.c:2731
+#: src/main/coerce.c:2696
 msgid "invalid replacement object to be a class string"
 msgstr "字串類別的替換物件不正確"
 
-#: src/main/coerce.c:2752
+#: src/main/coerce.c:2717
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr "只有在物件有此一類別的情況下才能設 \"%s\"；不應該有 \"%s\""
 
-#: src/main/coerce.c:2770
+#: src/main/coerce.c:2735
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr "除非維度的長度為 2(目前是 %d)，否則不能設為矩陣類別"
 
-#: src/main/coerce.c:2778
+#: src/main/coerce.c:2743
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "除非維度的長度 >0，否則不能設為 \"array\" 類別"
 
-#: src/main/coerce.c:2814
+#: src/main/coerce.c:2779
 msgid "'value' must be non-null character string"
 msgstr "'value' 必須是非空字串"
 
-#: src/main/coerce.c:2827
+#: src/main/coerce.c:2792
 msgid "invalid to change the storage mode of a factor"
 msgstr "變更因子的儲存體模式無效"
 
@@ -3428,7 +3428,7 @@ msgstr "評估巢狀太深：無窮遞迴/選項(表示式=)?"
 msgid "argument is missing, with no default"
 msgstr "缺少引數, 也沒有預設值"
 
-#: src/main/eval.c:677 src/main/eval.c:4634
+#: src/main/eval.c:677 src/main/eval.c:4643
 msgid "attempt to apply non-function"
 msgstr "不適用於非函數"
 
@@ -3467,7 +3467,7 @@ msgstr "引數長度為零"
 msgid "non-symbol loop variable"
 msgstr "非符號循環變數"
 
-#: src/main/eval.c:1508 src/main/eval.c:4405
+#: src/main/eval.c:1508 src/main/eval.c:4447
 msgid "invalid for() loop sequence"
 msgstr "不當的 for() 循環序列"
 
@@ -3576,103 +3576,103 @@ msgstr "整數堆疊向上溢位"
 msgid "bad opcode"
 msgstr "不當的操作代碼"
 
-#: src/main/eval.c:4217
+#: src/main/eval.c:4247
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %2$s y' 中無效的 %1$s 類型"
 
-#: src/main/eval.c:4307
+#: src/main/eval.c:4349
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不符；使用 eval"
 
-#: src/main/eval.c:4312
+#: src/main/eval.c:4354
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太舊"
 
-#: src/main/eval.c:4313
+#: src/main/eval.c:4355
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:4347
+#: src/main/eval.c:4389
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不符"
 
-#: src/main/eval.c:4474
+#: src/main/eval.c:4516
 msgid "invalid sequence argument in for loop"
 msgstr "迴圈中的序列引數不正確"
 
-#: src/main/eval.c:4617 src/main/names.c:1186
+#: src/main/eval.c:4632 src/main/names.c:1186
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "沒有 \"%s\" 這個內部函數"
 
-#: src/main/eval.c:4726 src/main/eval.c:5071 src/main/eval.c:5112
+#: src/main/eval.c:4729 src/main/eval.c:5072 src/main/eval.c:5112
 msgid "bad function"
 msgstr "不當的函數"
 
-#: src/main/eval.c:4740
+#: src/main/eval.c:4742
 msgid "not a BUILTIN function"
 msgstr "非 BUILTIN 函數"
 
-#: src/main/eval.c:5152
+#: src/main/eval.c:5151
 #, fuzzy
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "switch() 需要數值而無需具名的替代方案"
 
-#: src/main/eval.c:5248
+#: src/main/eval.c:5247
 msgid "cannot find index for threaded code address"
 msgstr "找不到執行緒程式碼位址的索引"
 
-#: src/main/eval.c:5308
+#: src/main/eval.c:5307
 msgid "invalid body"
 msgstr "無效的主體"
 
-#: src/main/eval.c:5328
+#: src/main/eval.c:5327
 msgid "invalid symbol"
 msgstr "符號不正確"
 
-#: src/main/eval.c:5372
+#: src/main/eval.c:5371
 msgid "argument is not a byte code object"
 msgstr "引數不是位元組碼物件"
 
-#: src/main/eval.c:5393
+#: src/main/eval.c:5392
 msgid "bad file name"
 msgstr "不當的檔案名稱"
 
-#: src/main/eval.c:5397 src/main/eval.c:5418
+#: src/main/eval.c:5396 src/main/eval.c:5417
 msgid "unable to open 'file'"
 msgstr "無法開啟 'file'"
 
-#: src/main/eval.c:5412 src/main/saveload.c:1942
+#: src/main/eval.c:5411 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "'file' 必須是非空字串"
 
-#: src/main/eval.c:5414 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:5413 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2178
 msgid "'ascii' must be logical"
 msgstr "'ascii' 必須是邏輯值"
 
-#: src/main/eval.c:5485 src/main/eval.c:5504 src/main/eval.c:5534
+#: src/main/eval.c:5484 src/main/eval.c:5503 src/main/eval.c:5533
 msgid "constant buffer must be a generic vector"
 msgstr "常數緩衝區必須是個一般向量"
 
-#: src/main/eval.c:5536
+#: src/main/eval.c:5535
 msgid "bad constant count"
 msgstr "不當的常數計數"
 
-#: src/main/eval.c:5572
+#: src/main/eval.c:5571
 msgid "profile timer in use"
 msgstr "程式概要分析計時器在使用中"
 
-#: src/main/eval.c:5574
+#: src/main/eval.c:5573
 msgid "already byte code profiling"
 msgstr "已經在進行位元組碼程式概要分析"
 
-#: src/main/eval.c:5592
+#: src/main/eval.c:5591
 msgid "setting profile timer failed"
 msgstr "程式概要分析計時器設置失敗"
 
-#: src/main/eval.c:5609
+#: src/main/eval.c:5608
 msgid "not byte code profiling"
 msgstr "非位元組碼程式概要分析"
 

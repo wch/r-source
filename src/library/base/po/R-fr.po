@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1519,9 +1519,6 @@ msgstr "Pas d'historique des fonctions appelées ('traceback') disponible"
 msgid "invalid version specification %s"
 msgstr "spécification de version incorrecte %s"
 
-msgid "wrong argument"
-msgstr "mauvais argument"
-
 msgid "invalid 'value'"
 msgstr "'value' incorrecte"
 
@@ -1794,6 +1791,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "mauvais argument"
 
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"

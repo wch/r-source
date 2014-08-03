@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -1455,9 +1455,6 @@ msgstr "Ingen tilbagesporing tilgængelig"
 msgid "invalid version specification %s"
 msgstr "ugyldig versionspecifikation %s"
 
-msgid "wrong argument"
-msgstr "forkert argument"
-
 msgid "invalid 'value'"
 msgstr "ugyldig 'value'"
 
@@ -1724,6 +1721,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "forkert argument"
 
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"

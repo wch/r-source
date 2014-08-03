@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1477,9 +1477,6 @@ msgstr "Kein traceback vefügbar"
 msgid "invalid version specification %s"
 msgstr "ungültige Versionsspezifikation %s"
 
-msgid "wrong argument"
-msgstr "falsches Argument"
-
 msgid "invalid 'value'"
 msgstr "ungültiger 'value'"
 
@@ -1750,6 +1747,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "falsches Argument"
 
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"

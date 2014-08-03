@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -4097,11 +4097,6 @@ msgstr "Śledzenie nie jest dostepne"
 msgid "invalid version specification %s"
 msgstr "niepoprawne określenie wersji %s"
 
-# src/library/base/R/version.R: 153
-# stop("wrong argument")
-msgid "wrong argument"
-msgstr "błędny argument"
-
 # src/library/base/R/version.R: 207
 # stop("invalid 'value'")
 # src/library/base/R/version.R: 210
@@ -4703,6 +4698,11 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+# src/library/base/R/version.R: 153
+# stop("wrong argument")
+#~ msgid "wrong argument"
+#~ msgstr "błędny argument"
 
 # src/library/base/R/library.R: 218
 # sprintf(ngettext(length(same),

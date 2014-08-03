@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:17\n"
 "PO-Revision-Date: 2011-11-29 14:36+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,14 +94,6 @@ msgstr "'pb' er ikke fra klasse »tkProgressBar«"
 
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' skal være en 2-kolonne tegnmatrix"
-
-msgid ""
-"Tcl/Tk libraries are missing: install the Tcl/Tk component from the R "
-"installer"
-msgstr ""
-
-msgid "X11 library is missing: install XQuartz from xquartz.macosforge.org"
-msgstr ""
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Tcl/Tk-understøttelse er ikke tilgængelig på dette system"

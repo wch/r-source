@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-08-03 12:17+0100\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,6 +703,10 @@ msgstr "ugyldig værdi for lag.max"
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divsæt: alg = %d skal være 1, 2, 3 eller 4 "
+
+#: port.c:149
+msgid "port algorithms 3 or higher are not supported"
+msgstr ""
 
 #: port.c:312
 #, c-format

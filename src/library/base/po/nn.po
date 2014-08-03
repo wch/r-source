@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-22 09:54+0100\n"
+"POT-Creation-Date: 2014-08-03 12:16+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -132,8 +132,8 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/agrep.c:135 src/main/agrep.c:775 src/main/agrep.c:780
 #: src/main/apply.c:293 src/main/apply.c:295 src/main/apply.c:298
 #: src/main/array.c:87 src/main/array.c:1137 src/main/array.c:1263
-#: src/main/array.c:1265 src/main/array.c:1266 src/main/array.c:1592
-#: src/main/array.c:1594 src/main/array.c:1596 src/main/attrib.c:196
+#: src/main/array.c:1265 src/main/array.c:1266 src/main/array.c:1607
+#: src/main/array.c:1609 src/main/array.c:1611 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:147 src/main/builtin.c:534
 #: src/main/builtin.c:550 src/main/builtin.c:739 src/main/builtin.c:741
@@ -921,19 +921,19 @@ msgstr "«path» må vera ein teiknvektor"
 msgid "non-numeric matrix extent"
 msgstr "ikkje-numerisk matrisestorleik"
 
-#: src/main/array.c:97 src/main/array.c:1535
+#: src/main/array.c:97 src/main/array.c:1550
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "ugyldig «nrow»-verdi (for stor eller NA)"
 
-#: src/main/array.c:99 src/main/array.c:1537
+#: src/main/array.c:99 src/main/array.c:1552
 msgid "invalid 'nrow' value (< 0)"
 msgstr "negativ «nrow»-verdi"
 
-#: src/main/array.c:105 src/main/array.c:1540
+#: src/main/array.c:105 src/main/array.c:1555
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "ugyldig «ncol»-verdi (for stor eller NA)"
 
-#: src/main/array.c:107 src/main/array.c:1542
+#: src/main/array.c:107 src/main/array.c:1557
 msgid "invalid 'ncol' value (< 0)"
 msgstr "negativ «ncol»-verdi"
 
@@ -965,7 +965,7 @@ msgstr ""
 msgid "data length exceeds size of matrix"
 msgstr "datalengda er større enn matrisa"
 
-#: src/main/array.c:147 src/main/array.c:1453 src/main/array.c:1549
+#: src/main/array.c:147 src/main/array.c:1453 src/main/array.c:1564
 msgid "too many elements specified"
 msgstr "for mange oppgjevne element"
 
@@ -1043,12 +1043,12 @@ msgstr "«x» må vera numerisk"
 msgid "'dims' cannot be of length 0"
 msgstr "«hadj» må ha lengd 1"
 
-#: src/main/array.c:1545
+#: src/main/array.c:1560
 #, fuzzy
 msgid "'x' must have positive length"
 msgstr "«value» må ha positiv lengd"
 
-#: src/main/array.c:1605
+#: src/main/array.c:1620
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1338,13 +1338,13 @@ msgstr "den oppgjevne vektorstorleiken er for stor"
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:293
 #: src/main/builtin.c:326 src/main/builtin.c:365 src/main/builtin.c:375
-#: src/main/coerce.c:1540 src/main/connections.c:3064 src/main/engine.c:2967
+#: src/main/coerce.c:1505 src/main/connections.c:3064 src/main/engine.c:2967
 #: src/main/envir.c:996 src/main/envir.c:1049 src/main/envir.c:1139
 #: src/main/envir.c:1623 src/main/envir.c:1747 src/main/envir.c:1815
 #: src/main/envir.c:1933 src/main/envir.c:2590 src/main/envir.c:2650
 #: src/main/envir.c:2930 src/main/envir.c:2959 src/main/envir.c:2980
 #: src/main/envir.c:3003 src/main/envir.c:3038 src/main/envir.c:3059
-#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5311
+#: src/main/envir.c:3365 src/main/envir.c:3370 src/main/eval.c:5310
 #: src/main/objects.c:197 src/main/objects.c:203 src/main/saveload.c:2070
 #: src/main/saveload.c:2362 src/main/serialize.c:2743
 msgid "use of NULL environment is defunct"
@@ -1411,14 +1411,14 @@ msgid "invalid argument"
 msgstr "ugyldig argument"
 
 #: src/main/builtin.c:899 src/main/builtin.c:909 src/main/builtin.c:911
-#: src/main/character.c:366 src/main/coerce.c:2823
+#: src/main/character.c:366 src/main/coerce.c:2788
 msgid "invalid value"
 msgstr "ugyldig verdi"
 
-#: src/main/builtin.c:942 src/main/coerce.c:2536 src/main/coerce.c:2577
+#: src/main/builtin.c:942 src/main/coerce.c:2501 src/main/coerce.c:2542
 #: src/main/eval.c:561 src/main/eval.c:681 src/main/eval.c:2091
 #: src/main/eval.c:2168 src/main/eval.c:2228 src/main/eval.c:2561
-#: src/main/eval.c:4689 src/main/eval.c:4808
+#: src/main/eval.c:4692 src/main/eval.c:4809
 msgid "'...' used in an incorrect context"
 msgstr "«...» brukt i feil samanheng"
 
@@ -1431,7 +1431,7 @@ msgstr "duplikat standardverdi i «switch»: «%s» og «%s»"
 msgid "'EXPR' is missing"
 msgstr "«EXPR» manglar"
 
-#: src/main/builtin.c:1000 src/main/eval.c:5148
+#: src/main/builtin.c:1000 src/main/eval.c:5147
 msgid "EXPR must be a length 1 vector"
 msgstr "«EXPR» må vera ein vektor av lengd 1"
 
@@ -1557,114 +1557,114 @@ msgstr "imaginærdel forkasta ved talomgjering"
 msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "verdiar utanfor gyldig talområde vart 0 ved omgjering til råverdiar"
 
-#: src/main/coerce.c:419
+#: src/main/coerce.c:384
 #, c-format
 msgid "invalid data of mode '%s' (too short)"
 msgstr "ugyldig data av modus «%s» (for kort)"
 
-#: src/main/coerce.c:1021
+#: src/main/coerce.c:986
 #, c-format
 msgid "'pairlist' object cannot be coerced to type '%s'"
 msgstr "«pairlist»-objekt kan ikkje gjerast om til typen «%s»"
 
-#: src/main/coerce.c:1139
+#: src/main/coerce.c:1104
 #, c-format
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "(liste-)objekt kan ikkje gjerast om til typen «%s»"
 
-#: src/main/coerce.c:1162
+#: src/main/coerce.c:1127
 #, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
 msgstr "(symbol-)objekt kan ikkje gjerast om til typen «%s»"
 
-#: src/main/coerce.c:1178 src/main/coerce.c:1488
+#: src/main/coerce.c:1143 src/main/coerce.c:1453
 msgid "no method for coercing this S4 class to a vector"
 msgstr "manglar metode for å gjera denne S4-klassen om til ein vektor"
 
-#: src/main/coerce.c:1237
+#: src/main/coerce.c:1202
 msgid "environments cannot be coerced to other types"
 msgstr "omgjevnader kan ikkje gjerast om til andre typar"
 
-#: src/main/coerce.c:1384
+#: src/main/coerce.c:1349
 msgid "attempting to coerce non-factor"
 msgstr "prøvde å gjera om ein ikkje-faktor"
 
-#: src/main/coerce.c:1536
+#: src/main/coerce.c:1501
 msgid "list argument expected"
 msgstr "venta listeargument"
 
-#: src/main/coerce.c:1544 src/main/eval.c:5315
+#: src/main/coerce.c:1509 src/main/eval.c:5314
 msgid "invalid environment"
 msgstr "ugyldig omgjevnad"
 
-#: src/main/coerce.c:1548
+#: src/main/coerce.c:1513
 msgid "argument must have length at least 1"
 msgstr "argumentet må ha lengd større enn 0"
 
-#: src/main/coerce.c:1570
+#: src/main/coerce.c:1535
 msgid "invalid body for function"
 msgstr "ugyldig funksjonskropp"
 
-#: src/main/coerce.c:1593
+#: src/main/coerce.c:1558
 msgid "invalid length 0 argument"
 msgstr "ugyldig argument av lengd 0"
 
-#: src/main/coerce.c:1608
+#: src/main/coerce.c:1573
 msgid "invalid argument list"
 msgstr "ugyldig argumentliste"
 
-#: src/main/coerce.c:1919
+#: src/main/coerce.c:1884
 msgid "type \"single\" unimplemented in R"
 msgstr "typen «single» er ikkje implementert i R"
 
-#: src/main/coerce.c:1921
+#: src/main/coerce.c:1886
 msgid "unimplemented predicate"
 msgstr "ikkje-implementert predikat"
 
-#: src/main/coerce.c:2072
+#: src/main/coerce.c:2037
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() brukt på ikkje-(liste eller vektor) av typen «%s»"
 
-#: src/main/coerce.c:2270 src/main/coerce.c:2333 src/main/coerce.c:2401
+#: src/main/coerce.c:2235 src/main/coerce.c:2298 src/main/coerce.c:2366
 #, fuzzy, c-format
 msgid "default method not implemented for type '%s'"
 msgstr "ikkje-implementert type «%s» i «%s»\n"
 
-#: src/main/coerce.c:2419
+#: src/main/coerce.c:2384
 msgid "'name' is missing"
 msgstr "«name» manglar"
 
-#: src/main/coerce.c:2426
+#: src/main/coerce.c:2391
 msgid "first argument must be a character string"
 msgstr "det første argumentet må vera ein teiknstreng"
 
-#: src/main/coerce.c:2459
+#: src/main/coerce.c:2424
 msgid "'what' must be a character string or a function"
 msgstr "«what» må vera ein teiknstreng eller ein funksjon"
 
-#: src/main/coerce.c:2463
+#: src/main/coerce.c:2428
 #, fuzzy
 msgid "'args' must be a list or expression"
 msgstr "«args» må vera ei liste"
 
-#: src/main/coerce.c:2466
+#: src/main/coerce.c:2431
 msgid "'args' must be a list"
 msgstr "«args» må vera ei liste"
 
-#: src/main/coerce.c:2470
+#: src/main/coerce.c:2435
 msgid "'envir' must be an environment"
 msgstr "«envir» må vera ein omgjevnad"
 
-#: src/main/coerce.c:2625
+#: src/main/coerce.c:2590
 msgid "invalid environment specified"
 msgstr "ugyldig omgjevnad oppgjeven"
 
-#: src/main/coerce.c:2691
+#: src/main/coerce.c:2656
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Set class(x) til NULL. Resultatet vil ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2694
+#: src/main/coerce.c:2659
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1673,7 +1673,7 @@ msgstr ""
 "Set class(x) til fleire teiknstrengar («%s», «%s», ...). Resultatet vil "
 "ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2698
+#: src/main/coerce.c:2663
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1682,18 +1682,18 @@ msgstr ""
 "Ved å setja class(x) til «%s», vert attributtet sett til NULL. Resultatet "
 "vil ikkje lenger vera eit S4-objekt."
 
-#: src/main/coerce.c:2731
+#: src/main/coerce.c:2696
 msgid "invalid replacement object to be a class string"
 msgstr "ugyldig erstattingsobjekt for å vera ein klassestreng"
 
-#: src/main/coerce.c:2752
+#: src/main/coerce.c:2717
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 "«%s» kan berre setjast som klasse viss objektet har denne typen (fann «%s»)"
 
-#: src/main/coerce.c:2770
+#: src/main/coerce.c:2735
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1702,18 +1702,18 @@ msgstr ""
 "kan ikkje setja klassen til «matrix» med mindre dimensjonsattributtet er av "
 "lengd 2 (var %d)"
 
-#: src/main/coerce.c:2778
+#: src/main/coerce.c:2743
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "kan ikkje setja klassen til «array» med mindre dimensjonsattributtet har "
 "lengd > 0"
 
-#: src/main/coerce.c:2814
+#: src/main/coerce.c:2779
 msgid "'value' must be non-null character string"
 msgstr "«value» må vera ein teiknstreng ulik null"
 
-#: src/main/coerce.c:2827
+#: src/main/coerce.c:2792
 msgid "invalid to change the storage mode of a factor"
 msgstr "kan ikkje endra lagringsmodus til ein faktor"
 
@@ -3495,7 +3495,7 @@ msgstr "for djup evaluering: uendeleg rekursjon / options(expressions=)?"
 msgid "argument is missing, with no default"
 msgstr "argumentet manglar (og har ikkje nokon standardverdi)"
 
-#: src/main/eval.c:677 src/main/eval.c:4634
+#: src/main/eval.c:677 src/main/eval.c:4643
 msgid "attempt to apply non-function"
 msgstr "prøvde å køyra ikkje-funksjon"
 
@@ -3534,7 +3534,7 @@ msgstr "argumentet har lengd null"
 msgid "non-symbol loop variable"
 msgstr "lykkje-variabel som ikkje er eit symbol"
 
-#: src/main/eval.c:1508 src/main/eval.c:4405
+#: src/main/eval.c:1508 src/main/eval.c:4447
 msgid "invalid for() loop sequence"
 msgstr "ugyldig for()-lykkje"
 
@@ -3643,104 +3643,104 @@ msgstr "overflytsfeil i heiltalsstakk"
 msgid "bad opcode"
 msgstr "Ugyldig opcode"
 
-#: src/main/eval.c:4217
+#: src/main/eval.c:4247
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "ugyldig %s-type i «x %s y»"
 
-#: src/main/eval.c:4307
+#: src/main/eval.c:4349
 msgid "bytecode version mismatch; using eval"
 msgstr "feil bytekode-versjon (brukar eval)"
 
-#: src/main/eval.c:4312
+#: src/main/eval.c:4354
 msgid "bytecode version is too old"
 msgstr "bytekode-versjonen er for gammal"
 
-#: src/main/eval.c:4313
+#: src/main/eval.c:4355
 msgid "bytecode version is too new"
 msgstr "bytekode-versjonen er for ny"
 
-#: src/main/eval.c:4347
+#: src/main/eval.c:4389
 msgid "byte code version mismatch"
 msgstr "feil i bytekode-versjon"
 
-#: src/main/eval.c:4474
+#: src/main/eval.c:4516
 msgid "invalid sequence argument in for loop"
 msgstr "ugyldig følgjeargument i for-lykkje"
 
-#: src/main/eval.c:4617 src/main/names.c:1186
+#: src/main/eval.c:4632 src/main/names.c:1186
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "internfunksjonen «%s» finst ikkje"
 
-#: src/main/eval.c:4726 src/main/eval.c:5071 src/main/eval.c:5112
+#: src/main/eval.c:4729 src/main/eval.c:5072 src/main/eval.c:5112
 msgid "bad function"
 msgstr "ugyldig funksjon"
 
-#: src/main/eval.c:4740
+#: src/main/eval.c:4742
 msgid "not a BUILTIN function"
 msgstr "ikkje ein BUIILTIN-funksjon"
 
-#: src/main/eval.c:5152
+#: src/main/eval.c:5151
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr ""
 
-#: src/main/eval.c:5248
+#: src/main/eval.c:5247
 msgid "cannot find index for threaded code address"
 msgstr "finn ikkje indeks for tråda kodeadresse"
 
-#: src/main/eval.c:5308
+#: src/main/eval.c:5307
 #, fuzzy
 msgid "invalid body"
 msgstr "ugyldig symbol"
 
-#: src/main/eval.c:5328
+#: src/main/eval.c:5327
 msgid "invalid symbol"
 msgstr "ugyldig symbol"
 
-#: src/main/eval.c:5372
+#: src/main/eval.c:5371
 msgid "argument is not a byte code object"
 msgstr "argumentet er ikkje eit bytekode-objekt"
 
-#: src/main/eval.c:5393
+#: src/main/eval.c:5392
 msgid "bad file name"
 msgstr "ugyldig filnamn"
 
-#: src/main/eval.c:5397 src/main/eval.c:5418
+#: src/main/eval.c:5396 src/main/eval.c:5417
 msgid "unable to open 'file'"
 msgstr "klarte ikkje opna «file»"
 
-#: src/main/eval.c:5412 src/main/saveload.c:1942
+#: src/main/eval.c:5411 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "«file» må vera ein ikkje-tom teiknstreng"
 
-#: src/main/eval.c:5414 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:5413 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2178
 msgid "'ascii' must be logical"
 msgstr "«ascii» må vera ein logisk verdi"
 
-#: src/main/eval.c:5485 src/main/eval.c:5504 src/main/eval.c:5534
+#: src/main/eval.c:5484 src/main/eval.c:5503 src/main/eval.c:5533
 #, fuzzy
 msgid "constant buffer must be a generic vector"
 msgstr "«code» må vera ein generisk vektor"
 
-#: src/main/eval.c:5536
+#: src/main/eval.c:5535
 msgid "bad constant count"
 msgstr ""
 
-#: src/main/eval.c:5572
+#: src/main/eval.c:5571
 msgid "profile timer in use"
 msgstr "profiltidtakar i bruk"
 
-#: src/main/eval.c:5574
+#: src/main/eval.c:5573
 msgid "already byte code profiling"
 msgstr "profilerer alt bytekode"
 
-#: src/main/eval.c:5592
+#: src/main/eval.c:5591
 msgid "setting profile timer failed"
 msgstr "klarte ikkje velja profiltidtakar"
 
-#: src/main/eval.c:5609
+#: src/main/eval.c:5608
 msgid "not byte code profiling"
 msgstr "profilerer ikkje bytekode"
 

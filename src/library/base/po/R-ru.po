@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1468,9 +1468,6 @@ msgstr "Трассировка недоступна"
 msgid "invalid version specification %s"
 msgstr "неправильное указание версии %s"
 
-msgid "wrong argument"
-msgstr "неправильный аргумент"
-
 msgid "invalid 'value'"
 msgstr "неправильное 'value'"
 
@@ -1770,6 +1767,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "неправильный аргумент"
 
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1438,9 +1438,6 @@ msgstr "无traceback"
 msgid "invalid version specification %s"
 msgstr "版本设定不对%s"
 
-msgid "wrong argument"
-msgstr "参数不对"
-
 msgid "invalid 'value'"
 msgstr "'value'无效"
 
@@ -1667,6 +1664,9 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "wrong argument"
+#~ msgstr "参数不对"
 
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"

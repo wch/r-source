@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-08-03 12:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -158,14 +158,6 @@ msgstr "'pb' nie pochodzi z klasy %s"
 # stop("'filters' must be a 2-column character matrix")
 msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' muszą być 2-kolumnowymi macierzami znaków"
-
-msgid ""
-"Tcl/Tk libraries are missing: install the Tcl/Tk component from the R "
-"installer"
-msgstr ""
-
-msgid "X11 library is missing: install XQuartz from xquartz.macosforge.org"
-msgstr ""
 
 # tcltk/R/unix/zzzstub.R: 20
 # stop("Tcl/Tk support is not available on this system", domain = "R-tcltk")
