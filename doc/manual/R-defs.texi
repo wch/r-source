@@ -44,7 +44,7 @@ $\t\$%
 
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2013 R Core Team
+Copyright @copyright{} \year\--2014 R Core Team
 @end macro
 
 @macro permission{}
