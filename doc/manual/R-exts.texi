@@ -7145,6 +7145,13 @@ Note that memory access errors may be seen with LAPACK, BLAS and
 Java-using packages: some at least of these seem to be intentional, and
 some are related to passing characters to Fortran.
 
+Some of these tools can detect mismatched allocation and deallocation.
+C++ programmers should note that memory allocated by @code{new []} must
+be freed by @code{delete []}, other uses of @code{new} by @code{delete},
+and memory allocated by @code{malloc}, @code{calloc} and @code{realloc}
+by @code{free}.  Some platforms will tolerate mismatches (perhaps with
+memory leaks) but others will segfault.
+
 @menu
 * Using gctorture::             
 * Using valgrind::              
