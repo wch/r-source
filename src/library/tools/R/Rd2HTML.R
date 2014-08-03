@@ -1,7 +1,6 @@
-
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -117,13 +116,23 @@ shtmlify <- function(s) {
     s
 }
 
-# URL encode anything other than alphanumeric, . and _
+## URL encode anything other than alphanumeric, . - _ $
 
-urlify <- function(x) { # make a string legal in a URL
+urlify <- function(x) {
+    ## Like utils::URLencode(reserved = TRUE):
+    ## Hence also already escapes '&' and can be used directly for href
+    ## attributes.  See
+    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
+    ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
+    ##   RFC 3986 <http://tools.ietf.org/html/rfc3986>
     chars <- unlist(strsplit(x, ""))
-    hex <- paste0("%", as.character(charToRaw(x)))
-    mixed <- ifelse(grepl("[0-9a-zA-Z._]", chars), chars, hex)
-    paste(mixed, collapse="")
+    hex <- vapply(chars,
+                  function(x)
+                  paste0("%", as.character(charToRaw(x)),
+                         collapse = ""),
+                  "")
+    mixed <- ifelse(grepl("[0-9a-zA-Z._~-]", chars), chars, hex)
+    paste(mixed, collapse = "")
 }
 
 # Ampersands should be escaped in proper HTML URIs
@@ -448,7 +457,7 @@ Rd2HTML <-
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
                    enterPara(doParas)
-                   of0('<a href="mailto:', shtmlify(url), '">',
+                   of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
@@ -456,7 +465,7 @@ Rd2HTML <-
                    url <- paste(as.character(block), collapse="")
                    url <- gsub("\n", "", url)
                    enterPara(doParas)
-                   of0('<a href="', shtmlify(url), '">',
+                   of0('<a href="', urlify(url), '">',
                        htmlify(url), '</a>')
                },
                "\\href" = {
@@ -464,7 +473,7 @@ Rd2HTML <-
                	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- gsub("\n", "", url)
 		        enterPara(doParas)
-               	   	of0('<a href="', shtmlify(url), '">')
+               	   	of0('<a href="', urlify(url), '">')
                	   	closing <- "</a>"
                	   } else closing <- ""
                	   savePara <- inPara
@@ -796,7 +805,7 @@ Rd2HTML <-
 	    '" />\n')
 
 	of0('<link rel="stylesheet" type="text/css" href="',
-	    stylesheet,
+	    urlify(stylesheet),
 	    '" />\n',
 	    '</head><body>\n\n',
 	    '<table width="100%" summary="page for ', htmlify(name))
