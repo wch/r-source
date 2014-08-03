@@ -107,7 +107,12 @@
       ignored.
   
       \item \code{options(OutDec =)} can now specify a multi-byte
-      character, e.g. \code{options(OutDec = "\u00b7")} in a UTF-8 locale.
+      character, e.g. ,\code{options(OutDec = "\u00b7")} in a UTF-8
+      locale.
+
+      \item \code{utils::URLencode()} was updated to use unreserved and
+      reserved chararacters from RFC 3986
+      \url{http://tools.ietf.org/html/rfc3986} instead of RFC 1738.
     }
   }
 

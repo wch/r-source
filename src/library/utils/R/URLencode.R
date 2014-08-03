@@ -1,7 +1,7 @@
 #  File src/library/utils/R/URLencode.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ URLencode <- function(URL, reserved = FALSE)
     ## It is unsafe to use ranges here as collation is locale-dependent.
     ## We want to do this on characters and not on bytes.
     OK <- paste0("[^-ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		"abcdefghijklmnopqrstuvwxyz0123456789$_.+!*'(),",
-		if(!reserved) ";/?:@=&", "]")
+                "abcdefghijklmnopqrstuvwxyz0123456789._~",
+                if(!reserved) "!$&'()*+,;=:/?@#[]", "]")
     x <- strsplit(URL, "")[[1L]]
     z <- grep(OK, x)
     if(length(z)) {
@@ -30,7 +30,7 @@ URLencode <- function(URL, reserved = FALSE)
                     paste0("%", as.character(charToRaw(x)), collapse = ""))
         x[z] <- y
     }
-    paste(x, collapse="")
+    paste(x, collapse = "")
 }
 
 URLdecode <- function(URL)
