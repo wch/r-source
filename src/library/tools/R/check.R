@@ -160,7 +160,7 @@ setRlibs <-
       " R_LIBS_SITE='no_such_dir'")
 }
 
-###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
+###- The main function for "R CMD check"
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -4498,7 +4498,8 @@ setRlibs <-
 
     } ## end for (pkg in pkgs)
 
-} ## end{ .check_packages }
+}
+###--- end{ .check_packages }
 
 .format_lines_with_indent <-
 function(x)
