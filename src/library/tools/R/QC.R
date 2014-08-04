@@ -3324,6 +3324,9 @@ function(x, ...)
     invisible(x)
 }
 
+## needed in two places
+dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+
 ### * .check_package_description2
 
 .check_package_description2 <-
@@ -3342,7 +3345,6 @@ function(dfile)
     have_src <- TRUE # dummy
     if(length(llinks)) {
         ## This is pointless unless there is compilable code
-        dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         have_src <- dir.exists(file.path(dirname(dfile), "src"))
 
         ## See if this is installable under 3.0.1:
