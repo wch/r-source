@@ -160,7 +160,7 @@ setRlibs <-
       " R_LIBS_SITE='no_such_dir'")
 }
 
-###- The main function for "R CMD check"
+###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -2414,8 +2414,7 @@ setRlibs <-
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
-		times <- read.table(tfile, header = TRUE, row.names = 1L,
-				    colClasses = c("character", rep("numeric", 3)))
+                times <- read.table(tfile, header = TRUE, row.names = 1L, colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1]]+times[[2]], decreasing = TRUE)
                 times <- times[o, ]
                 keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
@@ -3113,7 +3112,7 @@ setRlibs <-
                   grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", dots) |
                   grepl("vignettes/[.]Rinstignore$", dots) |
                   grepl("^src.*/[.]deps$", dots)
-		if (all(known))
+               if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
@@ -3829,7 +3828,6 @@ setRlibs <-
             "			(default is yes for a tarball, no otherwise)",
             "      --as-cran         select customizations similar to those used",
             "                        for CRAN incoming checking",
-            "      --level=          set test intensity level as non-negative number",
             "",
             "The following options apply where sub-architectures are in use:",
             "      --extra-arch      do only runtime tests needed for an additional",
@@ -3902,6 +3900,7 @@ setRlibs <-
     as_cran <- FALSE
     run_dontrun <- FALSE
     run_donttest <- FALSE
+
     libdir <- ""
     outdir <- ""
     pkgs <- character()
@@ -3979,13 +3978,6 @@ setRlibs <-
             force_multiarch  <- TRUE
         } else if (a == "--as-cran") {
             as_cran  <- TRUE
-	} else if (substr(a, 1, 8) == "--level=") {
-	    levN <- as.numeric(levelStr <- substr(a, 9, 32))
-	    if(length(levN) == 1 && !is.na(levN) && levN >= 0) {
-		R_check_level <- levN
-	    } else {
-		warning("invalid level ignored:", sQuote(levelStr))
-	    }
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -4121,17 +4113,6 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
     R_check_toplevel_files <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
-    if(!exists("R_check_level")) { # not set above by command-line switches
-	levelStr <- Sys.getenv("_R_CHECK_LEVEL_", "1")
-	levN <- as.numeric(levelStr)
-        if(length(levN) == 1 && !is.na(levN) && levN >= 0) {
-	    R_check_level <- levN
-	} else {
-	    warning("invalid value of environment variable _R_CHECK_LEVEL_ ignored: ",
-		    sQuote(levelStr))
-	    R_check_level <- 1
-	}
-    }
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -4150,7 +4131,6 @@ setRlibs <-
         if(is.na(prev)) Sys.setenv("_R_CHECK_LIMIT_CORES_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
-        R_check_level <- 1
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4170,8 +4150,6 @@ setRlibs <-
             Sys.setenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_" = "TRUE")
     }
 
-    ## "The" action: getCheckLevel() looks at the env.var.:
-    Sys.setenv("_R_CHECK_LEVEL_" = R_check_level)
 
     if (extra_arch) {
         R_check_Rd_contents <- R_check_all_non_ISO_C <-
@@ -4526,8 +4504,7 @@ setRlibs <-
 
     } ## end for (pkg in pkgs)
 
-}
-###--- end{ .check_packages }
+} ## end{ .check_packages }
 
 .format_lines_with_indent <-
 function(x)
