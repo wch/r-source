@@ -142,7 +142,7 @@ setOldClass <- function(Classes, prototype = NULL,
     def@slots <- c(def@slots, curDef@slots)
     ext <- c(def@contains, curDef@contains)
     ## correct ordering & duplicate resolution: copied from .walkClassGraph
-    distOrder <- sort.list(sapply(ext, function(x)x@distance))
+    distOrder <- sort.list(vapply(ext, function(x) x@distance, 1))
     ext <- ext[distOrder]
     if(anyDuplicated(names(ext)))
         ext <- .resolveSuperclasses(def, ext, where)

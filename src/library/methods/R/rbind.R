@@ -56,11 +56,11 @@ rbind <- function(..., deparse.level = 1)
 	## determine ncol(<result>)  for e.g.,	rbind(diag(2), 1, 2)
 	## only when the last two argument have *no* dim attribute:
 	nrs <- unname(lapply(argl, ncol)) # of length na
-	iV <- sapply(nrs, is.null)# is 'vector'
+	iV <- vapply(nrs, is.null, NA)# is 'vector'
 	fix.na <- identical(nrs[(na-1):na], list(NULL,NULL))
 	if(fix.na) {
 	    ## "fix" last argument, using 1-row `matrix' of proper ncol():
-	    nr <- max(if(all(iV)) sapply(argl, length) else unlist(nrs[!iV]))
+	    nr <- max(if(all(iV)) vapply(argl, length, 1) else unlist(nrs[!iV]))
 	    argl[[na]] <- rbind(rep(argl[[na]], length.out = nr),
 				deparse.level = 0)
 	    ## and since it's a 'matrix' now, rbind() below may not name it
