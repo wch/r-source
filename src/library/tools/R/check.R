@@ -160,7 +160,7 @@ setRlibs <-
       " R_LIBS_SITE='no_such_dir'")
 }
 
-###- The main function for "R CMD check"  {currently extends all the way to the end-of-file}
+###- The main function for "R CMD check"
 .check_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -2414,7 +2414,8 @@ setRlibs <-
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
-                times <- read.table(tfile, header = TRUE, row.names = 1L, colClasses = c("character", rep("numeric", 3)))
+		times <- read.table(tfile, header = TRUE, row.names = 1L,
+				    colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1]]+times[[2]], decreasing = TRUE)
                 times <- times[o, ]
                 keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
@@ -3112,7 +3113,7 @@ setRlibs <-
                   grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", dots) |
                   grepl("vignettes/[.]Rinstignore$", dots) |
                   grepl("^src.*/[.]deps$", dots)
-               if (all(known))
+		if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
@@ -4504,7 +4505,8 @@ setRlibs <-
 
     } ## end for (pkg in pkgs)
 
-} ## end{ .check_packages }
+}
+###--- end{ .check_packages }
 
 .format_lines_with_indent <-
 function(x)
