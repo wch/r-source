@@ -72,7 +72,7 @@
       consistent with \code{format()} and suitable for use in print
       methods, e.g. those for classes \code{"density"}, \code{"ecdf"},
       \code{"stepfun"} and \code{"summary.lm"}.
-      
+
       \code{getOption("OutDec")} is now consulted by the print method
       for class \code{"kmeans"}, by \code{cut()}, \code{dendrogram()},
       \code{plot.ts()} and \code{quantile()} when constructing labels
@@ -100,12 +100,12 @@
       \item A number of macros have been added in the new
       \file{share/Rd} directory for use in package overview help pages,
       and \code{promptPackage()} now makes use of them.
-      
+
       \item \code{tools::parse_Rd()} gains a new \code{permissive}
       argument which converts unrecognized macros into text.  This is
       used by \code{utils:::format.bibentry} to allow LaTeX markup to be
       ignored.
-  
+
       \item \code{options(OutDec =)} can now specify a multi-byte
       character, e.g. ,\code{options(OutDec = "\u00b7")} in a UTF-8
       locale.
@@ -113,6 +113,10 @@
       \item \code{utils::URLencode()} was updated to use unreserved and
       reserved chararacters from RFC 3986
       \url{http://tools.ietf.org/html/rfc3986} instead of RFC 1738.
+
+      \item \code{is.recursive(x)} is no longer true when \code{x} is an
+      external pointer, a weak reference or byte code; the first enables
+      \code{all.equal(x,x)} when \code{x <- getClass(.)}.
     }
   }
 
@@ -165,21 +169,21 @@
       \item For consistency with \code{[dpqr]norm()},
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
       \code{exp(mulog)} rather than return \code{NaN} (for an error).
-      
+
       \item \code{capabilities()} now reports if ICU is compiled in for
       use for collation (it is only actually used if a suitable locale
       is set for collation, and never for a \code{C} locale).
-      
+
       \item (OS X only.) Package \pkg{tcltk} checks when loaded if it is
       linked against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
       informative error messages to be given.
-      
+
       The \code{X11()} device and X11-based versions of the data editor
       and viewer (invoked by \code{edit()} and \code{View()} for data
       frames and matrices from command-line \R) check that the X11
       libraries are installed.
-      
+
       \item \code{icuSetCollate()} allows \code{locale = "default"}, and
       \code{locale = "none"} to use OS services rather than ICU for
       collation.
@@ -187,17 +191,17 @@
       Environment variable \env{R_ICU_LOCALE} can be used to set the
       default ICU locale, in case the one derived from the OS locale is
       inappropriate (this is currently necessary on Windows).
-      
+
       \item New function \code{icuGetCollate()} to report on the ICU
       collation locale in use (if any).
     }
   }
-  
+
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The \command{configure} script reports on the more important
       capabilities/options which are not compiled in.
- 
+
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
@@ -206,12 +210,12 @@
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
       documented). (Wish of \PR{15790}.)
-      
+
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
@@ -219,7 +223,7 @@
 
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
-      
+
       \item A longstanding bug in \code{nlminb()} on Windows was traced
       to a compiler bug in gcc 4.6.3; a workaround has been put in place.
       (\PR{15244} and \PR{15914}).

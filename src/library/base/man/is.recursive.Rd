@@ -26,9 +26,11 @@ is.recursive(x)
   (\code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
 
-  Most types of objects are regarded as recursive, except for the atomic
-  types, \code{NULL} and symbols (as given by \code{\link{as.name}}).
-  
+  Most types of objects are regarded as recursive.  Exceptions are the atomic
+  types, \code{NULL}, symbols (as given by \code{\link{as.name}}),
+  \code{S4} objects with slots, external pointers, and---rarely visible
+  from \R---weak references and byte code, see \code{\link{typeof}}.
+
   It is common to call the atomic types \sQuote{atomic vectors}, but
   note that \code{\link{is.vector}} imposes further restrictions: an
   object can be atomic but not a vector (in that sense).
@@ -55,7 +57,8 @@ is.a.r(list())          # FALSE TRUE - a list is a list
 is.a.r(list(2))         # FALSE TRUE
 is.a.r(lm)              # FALSE TRUE
 is.a.r(y ~ x)           # FALSE TRUE
-is.a.r(expression(x+1)) # FALSE TRUE (nowadays)
+is.a.r(expression(x+1)) # FALSE TRUE
+is.a.r(quote(exp))      # FALSE FALSE
 }
 \keyword{programming}
 \keyword{classes}

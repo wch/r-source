@@ -1857,9 +1857,10 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case DOTSXP:
 	case ANYSXP:
 	case EXPRSXP:
-	case EXTPTRSXP:
-	case BCODESXP:
-	case WEAKREFSXP:
+	// Not recursive, as long as not subsettable (on the R level)
+	// case EXTPTRSXP:
+	// case BCODESXP:
+	// case WEAKREFSXP:
 	    LOGICAL(ans)[0] = 1;
 	    break;
 	default:
