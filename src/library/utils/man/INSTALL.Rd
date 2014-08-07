@@ -162,11 +162,11 @@
 }
 
 \seealso{
-  \code{\link{REMOVE}} and \code{\link{library}} for information on
-  using several library trees;
+  \code{\link{REMOVE}};
+  \code{\link{.libPaths}} for information on using several library trees;
+  \code{\link{install.packages}} for \R-level installation of packages;
   \code{\link{update.packages}} for automatic update of packages using
-  the internet (or other \R level installation of packages, such as by
-  \code{install.packages}).
+  the Internet or a local repository.
 
   The section on \dQuote{Add-on packages} in \dQuote{R Installation and
     Administration} and the chapter on \dQuote{Creating R packages} in
