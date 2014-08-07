@@ -2099,8 +2099,8 @@ stopifnot(identical(NA_character_, enc2utf8(NA_character_)))
 ## checking all.equal() with externalptr
 library(methods) # getClass()'s versionKey is an e.ptr
 cA <- getClass("ANY")
-stopinfot(all.equal(cA, cA)),
-          is.character(all.equal(cA, getClass("S4")))
+stopifnot(all.equal(cA, cA),
+          is.character(all.equal(cA, getClass("S4"))))
 # both all.equal() failed in R <= 3.1.1
 
 
