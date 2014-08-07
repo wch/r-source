@@ -1983,6 +1983,7 @@ setRlibs <-
         ## Now look for TeX leftovers (and soiltexture, Amelia ...).
         bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
                      files, ignore.case = TRUE)
+        bad <- bad | (files %in% c("Rplots.ps", "Rplots.pdf"))
         if (any(bad)) {
             if(!any) noteLog(Log)
             any <- TRUE
