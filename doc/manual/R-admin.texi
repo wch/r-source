@@ -2187,8 +2187,8 @@ where there is an @file{configure} script, or a file @file{src/Makefile}.
 where there is a non-empty @file{configure.win} script, or a file
 @file{src/Makefile.win} (with some exceptions where the package is known
 to have an architecture-independent @file{configure.win}, or if
-@option{--force-biarch} or a field in the @file{DESCRIPTION} file is
-used to assert so).
+@option{--force-biarch} or field @samp{Biarch} in the @file{DESCRIPTION}
+file is used to assert so).
 
 @end table
 

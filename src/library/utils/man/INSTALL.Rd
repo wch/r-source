@@ -148,16 +148,16 @@
   \file{src/Makefile.win} on Windows), when only compiled code for the
   sub-architecture running \command{R CMD INSTALL} is installed.
 
-  To install a source package with compiled code only for
+  To install a source package with compiled code only for the
   sub-architecture used by \command{R CMD INSTALL}, use
   \option{--no-multiarch}.  To install just the compiled code for
   another sub-architecture, use \option{--libs-only}.
 
   There are two ways to install for all available sub-architecures.  If
-  the configure script is known to work for all, use flag
-  \option{--force-biarch} (and packages can specify this \emph{via} a
-  \samp{Biarch} field in their \code{DESCRIPTION} files).  Otherwise a
-  single tarball can be installed with
+  the configure script is known to work for both Windows architectures,
+  use flag \option{--force-biarch} (and packages can specify this
+  \emph{via} a \samp{Biarch} field in their \code{DESCRIPTION} files).
+  Second, a single tarball can be installed with
 \preformatted{R CMD INSTALL --merge-multiarch mypkg_version.tar.gz}
 }
 
