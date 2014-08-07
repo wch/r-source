@@ -161,10 +161,10 @@
 \section{\Rlogo CHANGES IN R 3.1.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{embedFonts()} now defaults to \code{format =
-      "ps2write"} for \file{.ps} and \file{.eps} files.  This is
-      available in Ghostscript 9.x (since 2010) whereas the previous
-      default, \code{format = "pswrite"}, was removed in 9.10.
+      \item \code{embedFonts()} now defaults to
+      \code{format = "ps2write"} for \file{.ps} and \file{.eps} files.
+      This is available in Ghostscript 9.x (since 2010) whereas the
+      previous default, \code{format = "pswrite"}, was removed in 9.10.
 
       \item For consistency with \code{[dpqr]norm()},
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
@@ -227,6 +227,9 @@
       \item A longstanding bug in \code{nlminb()} on Windows was traced
       to a compiler bug in gcc 4.6.3; a workaround has been put in place.
       (\PR{15244} and \PR{15914}).
+      
+      \item Rendering of \code{\\command} in HTML has been improved:
+      this is particularly evident on the help page for \code{INSTALL}.
     }
   }
 }
