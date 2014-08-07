@@ -81,7 +81,8 @@ file.size(\dots)
 
   If \code{extra_cols} is false, only the first six columns are
   returned: as these can all be found from a single C system call this
-  can be faster.
+  can be faster.  (However, properly configured systems will use a
+  \sQuote{name service cache daemon} to speed up the name lookups.)
   
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
