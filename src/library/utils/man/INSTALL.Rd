@@ -106,16 +106,6 @@
   for distribution as a binary package (as used on OS X).  This is done
   by \code{utils::tar} unless environment variable \env{R_INSTALL_TAR}
   is set.
-
-  Some platforms (notably Windows) make use of
-  sub-architectures in which binaries for different CPUs are installed
-  within the same library tree. For such installations, the default
-  behaviour is to try to build packages for all installed
-  sub-architectures unless the package has a configure script or a
-  \file{src/Makefile}, when only the sub-architecture running \command{R
-  CMD INSTALL} is used.  To use only that sub-architecture, use
-  \option{--no-multiarch}.  To install just the compiled code for
-  another sub-architecture, use \option{--libs-only}.
 #endif
 
   By default a package is installed with static HTML help pages if and
@@ -145,6 +135,30 @@
   mounted as \code{noexec}, environment variable \env{TMPDIR} may need
   to be set to a directory from which execution is allowed.
 #endif
+}
+
+\section{Sub-architectures}{
+  An \R installation can support more than one sub-architecture:
+  currently this is most commonly used for 32- and 64-bit builds on
+  Windows.
+  
+  For such installations, the default behaviour is to try to install
+  source packages for all installed sub-architectures unless the package
+  has a configure script or a \file{src/Makefile} (or
+  \file{src/Makefile.win} on Windows), when only compiled code for the
+  sub-architecture running \command{R CMD INSTALL} is installed.
+
+  To install a source package with compiled code only for
+  sub-architecture used by \command{R CMD INSTALL}, use
+  \option{--no-multiarch}.  To install just the compiled code for
+  another sub-architecture, use \option{--libs-only}.
+
+  There are two ways to install for all available sub-architecures.  If
+  the configure script is known to work for all, use flag
+  \option{--force-biarch} (and packages can specify this \emph{via} a
+  \samp{Biarch} field in their \code{DESCRIPTION} files).  Otherwise a
+  single tarball can be installed with
+\preformatted{R CMD INSTALL --merge-multiarch mypkg_version.tar.gz}
 }
 
 \seealso{

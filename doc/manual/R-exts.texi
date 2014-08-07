@@ -1100,17 +1100,17 @@ should have files @file{src/Makefile} and @file{src/Makefile.win}
 
 In very special cases packages may create binary files other than the
 shared objects/DLLs in the @file{src} directory.  Such files will not be
-installed in a multi-arch setting since @code{R CMD INSTALL --libs-only}
-is used to merge multiple architectures and it only copies shared
-objects/DLLs.  If a package wants to install other binaries (for example
-executable programs), it should provide an @R{} script
-@file{src/install.libs.R} which will be run as part of the installation
-in the @code{src} build directory @emph{instead of} copying the shared
-objects/DLLs. The script is run in a separate @R{} environment
-containing the following variables: @code{R_PACKAGE_NAME} (the name of
-the package), @code{R_PACKAGE_SOURCE} (the path to the source directory
-of the package), @code{R_PACKAGE_DIR} (the path of the target
-installation directory of the package), @code{R_ARCH} (the
+installed in a multi-architecture setting since @code{R CMD INSTALL
+--libs-only} is used to merge multiple sub-architectures and it only
+copies shared objects/DLLs.  If a package wants to install other
+binaries (for example executable programs), it should provide an @R{}
+script @file{src/install.libs.R} which will be run as part of the
+installation in the @code{src} build directory @emph{instead of} copying
+the shared objects/DLLs. The script is run in a separate @R{}
+environment containing the following variables: @code{R_PACKAGE_NAME}
+(the name of the package), @code{R_PACKAGE_SOURCE} (the path to the
+source directory of the package), @code{R_PACKAGE_DIR} (the path of the
+target installation directory of the package), @code{R_ARCH} (the
 arch-dependent part of the path, often empty), @code{SHLIB_EXT} (the
 extension of shared objects) and @code{WINDOWS} (@code{TRUE} on Windows,
 @code{FALSE} elsewhere).  Something close to the default behavior could
@@ -1138,7 +1138,7 @@ if ( any(file.exists(execs)) ) @{
 @end example
 
 @noindent
-Note the use of architecture-specific subdirectories if @file{bin} where
+Note the use of architecture-specific subdirectories of @file{bin} where
 needed.
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
