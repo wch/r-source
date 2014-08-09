@@ -2007,7 +2007,7 @@ return  function  quote  switch
 @item
 Language elements and basic @emph{operator}s (i.e., functions usually
 @emph{not} called as @code{foo(a, b, ...)}) for subsetting, assignment,
-arithmetic and logic:
+arithmetic, comparison and logic:
 
 @example
 @group
@@ -2019,6 +2019,10 @@ arithmetic and logic:
 |    ||   &    &&    !
 @end group
 @end example
+
+@noindent
+When the arithmetic, comparison and logical operators are called as
+functions, any argument names are discarded so positional matching is used.
 
 @item
 ``Low level'' 0-- and 1--argument functions which belong to one of the
@@ -2182,8 +2186,9 @@ documentation: this is also done for replacement functions with one
 argument plus @code{value}.
 
 The net effect is that argument matching for primitives intended for
-end-user use is done in the same way as for interpreted functions except
-for the six exceptions where positional matching is required.
+end-user use @emph{as functions} is done in the same way as for
+interpreted functions except for the six exceptions where positional
+matching is required.
 
 @menu
 * Special primitives::          
