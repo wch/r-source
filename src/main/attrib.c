@@ -1325,21 +1325,22 @@ fairly minor.  LT */
 
 SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ap, argList, s, t, tag = R_NilValue, alist, ans;
+    SEXP argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
     int nargs = length(args), exact = 0;
     enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
+    static SEXP do_attr_formals = NULL;
+
+    if (do_attr_formals == NULL)
+        do_attr_formals = allocFormalsList3(install("x"), install("which"),
+					    install("exact"));
+
+    argList = matchArgs(do_attr_formals, args, call);
 
     if (nargs < 2 || nargs > 3)
 	errorcall(call, "either 2 or 3 arguments are required");
 
     /* argument matching */
-    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("x"));
-    SET_TAG(CDR(ap), install("which"));
-    SET_TAG(CDDR(ap), install("exact"));
-    argList = matchArgs(ap, args, call);
-    UNPROTECT(1); /* ap */
     PROTECT(argList);
     s = CAR(argList);
     t = CADR(argList);
@@ -1451,7 +1452,8 @@ static void check_slot_assign(SEXP obj, SEXP input, SEXP value, SEXP env)
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /*  attr(x, which = "<name>")  <-  value  */
-    SEXP obj, name, ap, argList;
+    SEXP obj, name, argList;
+    static SEXP do_attrgets_formals = NULL;
 
     checkArity(op, args);
 
@@ -1493,12 +1495,10 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(obj);
 
     /* argument matching */
-    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("x"));
-    SET_TAG(CDR(ap), install("which"));
-    SET_TAG(CDDR(ap), install("value"));
-    argList = matchArgs(ap, args, call);
-    UNPROTECT(1); /* ap */
+    if (do_attrgets_formals == NULL)
+        do_attrgets_formals = allocFormalsList3(install("x"), install("which"),
+						install("value"));
+    argList = matchArgs(do_attrgets_formals, args, call);
     PROTECT(argList);
 
     name = CADR(argList);

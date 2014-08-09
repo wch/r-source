@@ -132,13 +132,14 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
-    SEXP code, oldcode, tmp, ap, argList;
+    SEXP code, oldcode, tmp, argList;
     int addit = 0;
+    static SEXP do_onexit_formals = NULL;
 
-    PROTECT(ap = list2(R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("expr"));
-    SET_TAG(CDR(ap), install("add"));
-    PROTECT(argList =  matchArgs(ap, args, call));
+    if (do_onexit_formals == NULL)
+        do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
+
+    PROTECT(argList =  matchArgs(do_onexit_formals, args, call));
     if (CAR(argList) == R_MissingArg) code = R_NilValue;
     else code = CAR(argList);
     if (CADR(argList) != R_MissingArg) {
@@ -179,7 +180,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    ctxt->conexit = code;
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return R_NilValue;
 }
 

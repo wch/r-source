@@ -1518,8 +1518,9 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, ap, call2;
+    SEXP res, call2;
     int n, nprotect = 2;
+    static SEXP do_Math2_formals = NULL;
 
     if (length(args) >= 2 &&
 	isSymbol(CADR(args)) && R_isMissing(CADR(args), env)) {
@@ -1546,11 +1547,11 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* If named, do argument matching by name */
 	    if (TAG(args) != R_NilValue || TAG(CDR(args)) != R_NilValue) {
-		PROTECT(ap = CONS(R_NilValue, list1(R_NilValue)));
-		SET_TAG(ap,  install("x"));
-		SET_TAG(CDR(ap), install("digits"));
-		PROTECT(args = matchArgs(ap, args, call));
-		nprotect +=2;
+	        if (do_Math2_formals == NULL)
+                    do_Math2_formals = allocFormalsList2(install("x"),
+							 install("digits"));
+		PROTECT(args = matchArgs(do_Math2_formals, args, call));
+		nprotect++;
 	    }
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid second argument of length 0"));
@@ -1592,6 +1593,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     PROTECT(args = evalListKeepMissing(args, env));
     int n = length(args);
+    static SEXP do_log_formals = NULL;
 
     if (n == 1 && TAG(args) == R_NilValue) {
 	SEXP x = CAR(args);
@@ -1622,7 +1624,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    SEXP res, ap = args, call2;
+    SEXP res, call2;
     int nprotect = 2;
 
     if (n >= 2 && CADR(args) == R_MissingArg) {
@@ -1647,11 +1649,10 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 2:
 	{
 	    /* match argument names if supplied */
-	    PROTECT(ap = list2(R_NilValue, R_NilValue));
-	    SET_TAG(ap, install("x"));
-	    SET_TAG(CDR(ap), R_baseSymbol);
-	    PROTECT(args = matchArgs(ap, args, call));
-	    nprotect += 2;
+	    if (do_log_formals == NULL)
+                do_log_formals = allocFormalsList2(install("x"), R_baseSymbol);
+	    PROTECT(args = matchArgs(do_log_formals, args, call));
+	    nprotect++;
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid argument 'base' of length 0"));
 	    if (isComplex(CAR(args)) || isComplex(CADR(args)))

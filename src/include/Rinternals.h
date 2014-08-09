@@ -733,6 +733,11 @@ typedef struct R_allocator R_allocator_t;
 char * Rf_acopy_string(const char *);
 SEXP Rf_alloc3DArray(SEXPTYPE, int, int, int);
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
+SEXP Rf_allocFormalsList2(SEXP sym1, SEXP sym2);
+SEXP Rf_allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3);
+SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
+SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
+SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
 SEXP Rf_allocS4Object(void);
@@ -1048,6 +1053,11 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define acopy_string		Rf_acopy_string
 #define alloc3DArray            Rf_alloc3DArray
 #define allocArray		Rf_allocArray
+#define allocFormalsList2	Rf_allocFormalsList2
+#define allocFormalsList3	Rf_allocFormalsList3
+#define allocFormalsList4	Rf_allocFormalsList4
+#define allocFormalsList5	Rf_allocFormalsList5
+#define allocFormalsList6	Rf_allocFormalsList6
 #define allocList		Rf_allocList
 #define allocMatrix		Rf_allocMatrix
 #define allocS4Object		Rf_allocS4Object

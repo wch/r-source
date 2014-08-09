@@ -29,6 +29,7 @@
 
 #define USE_RINTERNALS
 
+#include <stdarg.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -2744,6 +2745,49 @@ SEXP allocS4Object(void)
    return s;
 }
 
+SEXP allocFormalsList(int nargs, ...) {
+    SEXP res = R_NilValue;
+    SEXP n;
+    int i;
+    va_list(syms);
+    va_start(syms, nargs);
+
+    for(i = 0; i < nargs; i++) {
+        res = CONS(R_NilValue, res);
+    }
+    R_PreserveObject(res);
+
+    n = res;
+    for(i = 0; i < nargs; i++) {
+        SET_TAG(n, (SEXP) va_arg(syms, SEXP));
+        MARK_NOT_MUTABLE(n);
+        n = CDR(n);
+    }
+    va_end(syms);
+
+    return res;
+}
+
+
+SEXP allocFormalsList2(SEXP sym1, SEXP sym2) {
+    return allocFormalsList(2, sym1, sym2);
+}
+
+SEXP allocFormalsList3(SEXP sym1, SEXP sym2, SEXP sym3) {
+    return allocFormalsList(3, sym1, sym2, sym3);
+}
+
+SEXP allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4) {
+    return allocFormalsList(4, sym1, sym2, sym3, sym4);
+}
+
+SEXP allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5) {
+    return allocFormalsList(5, sym1, sym2, sym3, sym4, sym5);
+}
+
+SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6) {
+    return allocFormalsList(6, sym1, sym2, sym3, sym4, sym5, sym6);
+}
 
 /* "gc" a mark-sweep or in-place generational garbage collector */
 

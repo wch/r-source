@@ -388,13 +388,15 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
     SEXP callenv, defenv;
-    SEXP ap, argList;
+    SEXP argList;
     RCNTXT *cptr;
+    static SEXP do_usemethod_formals = NULL;
 
-    PROTECT(ap = list2(R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("generic"));
-    SET_TAG(CDR(ap), install("object"));
-    PROTECT(argList =  matchArgs(ap, args, call));
+    if (do_usemethod_formals == NULL)
+        do_usemethod_formals = allocFormalsList2(install("generic"),
+						 install("object"));
+
+    PROTECT(argList =  matchArgs(do_usemethod_formals, args, call));
     if (CAR(argList) == R_MissingArg)
 	errorcall(call, _("there must be a 'generic' argument"));
     else
@@ -448,7 +450,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
-	UNPROTECT(3); /* obj, ap, argList */
+	UNPROTECT(2); /* obj, argList */
 	PROTECT(ans);
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
     }

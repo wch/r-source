@@ -207,13 +207,15 @@ void memtrace_report(void * old, void * _new)
 SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
-    SEXP object, previous, ans, ap, argList;
+    SEXP object, previous, ans, argList;
     char buffer[21];
+    static SEXP do_retracemem_formals = NULL;
 
-    PROTECT(ap = list2(R_NilValue, R_NilValue));
-    SET_TAG(ap,  install("x"));
-    SET_TAG(CDR(ap), install("previous"));
-    PROTECT(argList =  matchArgs(ap, args, call));
+    if (do_retracemem_formals == NULL)
+        do_retracemem_formals = allocFormalsList2(install("x"),
+						  install("previous"));
+
+    PROTECT(argList =  matchArgs(do_retracemem_formals, args, call));
     if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
     if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), R_NilValue);
 
@@ -245,7 +247,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    memtrace_stack_dump();
 	}
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return ans;
 #else
     R_Visible = 0; /* for consistency with other case */
