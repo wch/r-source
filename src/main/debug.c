@@ -213,7 +213,7 @@ SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (do_retracemem_formals == NULL)
         do_retracemem_formals = allocFormalsList2(install("x"),
-						  install("previous"));
+						  R_PreviousSymbol);
 
     PROTECT(argList =  matchArgs(do_retracemem_formals, args, call));
     if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);

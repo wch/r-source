@@ -1975,7 +1975,7 @@ SEXP termsform(SEXP args)
     a = CDR(a);
 
     SETCAR(a, mkString("terms"));
-    SET_TAG(a, install("class"));
+    SET_TAG(a, R_ClassSymbol);
     SET_OBJECT(ans, 1);
 
     SETCDR(a, R_NilValue);  /* truncate if necessary */

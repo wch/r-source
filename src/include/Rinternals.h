@@ -689,9 +689,11 @@ LibExtern SEXP	R_NameSymbol;	    /* "name" */
 LibExtern SEXP	R_NamesSymbol;	    /* "names" */
 LibExtern SEXP	R_NaRmSymbol;	    /* "na.rm" */
 LibExtern SEXP  R_PackageSymbol;    /* "package" */
+LibExtern SEXP  R_PreviousSymbol;   /* "previous" */
 LibExtern SEXP  R_QuoteSymbol;	    /* "quote" */
 LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
 LibExtern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
+LibExtern SEXP	R_SortListSymbol;   /* "sort.list" */
 LibExtern SEXP	R_SourceSymbol;     /* "source" */
 LibExtern SEXP	R_TspSymbol;	    /* "tsp" */
 

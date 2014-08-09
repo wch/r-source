@@ -1333,7 +1333,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (do_attr_formals == NULL)
         do_attr_formals = allocFormalsList3(install("x"), install("which"),
-					    install("exact"));
+					    R_ExactSymbol);
 
     argList = matchArgs(do_attr_formals, args, call);
 

@@ -300,7 +300,7 @@ attribute_hidden
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
-    SEXP klass, method, sxp, sort_list;
+    SEXP klass, method, sxp;
     SEXP op;
     char buf[512];
     int i, j, nclass;
@@ -330,7 +330,6 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     }
 
     PROTECT(klass = R_data_class2(obj));
-    sort_list = install("sort.list");
 
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
@@ -343,7 +342,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	vmaxset(vmax);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
 	if (isFunction(sxp)) {
-	    if(method == sort_list && CLOENV(sxp) == R_BaseNamespace)
+	    if(method == R_SortListSymbol && CLOENV(sxp) == R_BaseNamespace)
 		continue; /* kludge because sort.list is not a method */
             if (i > 0) {
 	        int ii;
@@ -351,7 +350,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 		SEXP dotClass = PROTECT(allocVector(STRSXP, ndotClass));
 		for(j = 0, ii = i; j < ndotClass; j++, ii++)
 		      SET_STRING_ELT(dotClass, j, STRING_ELT(klass, ii));
-		setAttrib(dotClass, install("previous"), klass);
+		setAttrib(dotClass, R_PreviousSymbol, klass);
 		*ans = dispatchMethod(op, sxp, dotClass, cptr, method, generic,
 				      rho, callrho, defrho);
 		UNPROTECT(1); /* dotClass */
@@ -789,7 +788,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(m = allocSExp(ENVSXP));
     for (j = 0; j < length(s); j++)
 	SET_STRING_ELT(s, j, duplicate(STRING_ELT(klass, i++)));
-    setAttrib(s, install("previous"), klass);
+    setAttrib(s, R_PreviousSymbol, klass);
     defineVar(R_dot_Class, s, m);
     /* It is possible that if a method was called directly that
 	'method' is unset */

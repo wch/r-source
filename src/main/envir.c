@@ -677,7 +677,7 @@ void attribute_hidden InitGlobalEnv()
     R_PreserveObject(R_BaseNamespaceName);
     R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
     R_PreserveObject(R_NamespaceRegistry);
-    defineVar(install("base"), R_BaseNamespace, R_NamespaceRegistry);
+    defineVar(R_baseSymbol, R_BaseNamespace, R_NamespaceRegistry);
     /**** needed to properly initialize the base namespace */
 }
 

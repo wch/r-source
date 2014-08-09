@@ -872,7 +872,7 @@ void setup_Rmainloop(void)
 #endif
     /* At least temporarily unlock some bindings used in graphics */
     R_unLockBinding(R_DeviceSymbol, R_BaseEnv);
-    R_unLockBinding(install(".Devices"), R_BaseEnv);
+    R_unLockBinding(R_DevicesSymbol, R_BaseEnv);
     R_unLockBinding(install(".Library.site"), R_BaseEnv);
 
     /* require(methods) if it is in the default packages */
