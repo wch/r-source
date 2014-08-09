@@ -94,6 +94,10 @@ x != y
   not allow for the finite representation of fractions, nor for rounding
   error.  Using \code{\link{all.equal}} with \code{identical} is almost
   always preferable.  See the examples.
+  
+  These operators are sometimes called as functions as e.g.
+  \code{`<`(x, y)}: see the description of how argument-matching is done
+  in \code{\link[base]{Ops}}.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Compare}} group generic,
