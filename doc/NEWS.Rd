@@ -116,7 +116,7 @@
 
       \item \code{is.recursive(x)} is no longer true when \code{x} is an
       external pointer, a weak reference or byte code; the first enables
-      \code{all.equal(x,x)} when \code{x <- getClass(.)}.
+      \code{all.equal(x, x)} when \code{x <- getClass(.)}.
     }
   }
 
