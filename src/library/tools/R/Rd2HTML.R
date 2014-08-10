@@ -116,12 +116,12 @@ shtmlify <- function(s) {
     s
 }
 
-## URL encode anything other than alphanumeric, . - _ $
-
+## URL encode anything other than alphanumeric, . - _ $ and reserved
+## characters in URLs.
 urlify <- function(x) {
-    ## Like utils::URLencode(reserved = TRUE):
-    ## Hence also already escapes '&' and can be used directly for href
-    ## attributes.  See
+    ## Like utils::URLencode(reserved = FALSE), but with '&' replaced by
+    ## '&amp;' and hence directly usable for href attributes.
+    ## See
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
     ##   RFC 3986 <http://tools.ietf.org/html/rfc3986>
@@ -131,13 +131,19 @@ urlify <- function(x) {
                   paste0("%", as.character(charToRaw(x)),
                          collapse = ""),
                   "")
-    mixed <- ifelse(grepl("[0-9a-zA-Z._~-]", chars), chars, hex)
-    paste(mixed, collapse = "")
+    todo <- paste0("[^",
+                   "][!$&'()*+,;=:/?@#",
+                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                   "abcdefghijklmnopqrstuvwxyz0123456789._~-",
+                   "]")
+    mixed <- ifelse(grepl(todo, chars), hex, chars)
+    gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
 }
+## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
 
 # Ampersands should be escaped in proper HTML URIs
 
-escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed=TRUE)
+escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed = TRUE)
 
 ## This gets used two ways:
 
