@@ -46,8 +46,8 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE)
     \code{getOption("repos")}), the types of reverse dependencies
     (default: \code{c("Depends", "Imports", "LinkingTo")}), and
     indicating whether to also check reverse dependencies of reverse
-    dependencies (and so on), or \code{NULL} (default), in which case no
-    reverse dependencies are checked.}
+    dependencies and so on (default: \code{FALSE}), or \code{NULL}
+    (default), in which case no reverse dependencies are checked.}
   \item{check_env}{a character vector of name=value strings to set
     environment variables for checking, or a list of length two of such
     character vectors to be used for checking packages and reverse

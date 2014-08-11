@@ -13,10 +13,10 @@
 \alias{gregexpr}
 \alias{regexec}
 \description{
-  \code{grep}, \code{grepl}, \code{regexpr} and \code{gregexpr} search
-  for matches to argument \code{pattern} within each element of a
-  character vector: they differ in the format of and amount of detail in
-  the results.
+  \code{grep}, \code{grepl}, \code{regexpr}, \code{gregexpr} and
+  \code{regexec} search for matches to argument \code{pattern} within
+  each element of a character vector: they differ in the format of and
+  amount of detail in the results.
 
   \code{sub} and \code{gsub} perform replacement of the first and all
   matches respectively.
@@ -56,7 +56,7 @@ regexec(pattern, text, ignore.case = FALSE,
     vector.  \link{Long vectors} are supported.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{perl}{logical.  Should perl-compatible regexps be used?}
+  \item{perl}{logical.  Should Perl-compatible regexps be used?}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})
     indices of the matches determined by \code{grep} is returned, and if
     \code{TRUE}, a vector containing the matching elements themselves is
