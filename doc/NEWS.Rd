@@ -117,6 +117,8 @@
       \item \code{is.recursive(x)} is no longer true when \code{x} is an
       external pointer, a weak reference or byte code; the first enables
       \code{all.equal(x, x)} when \code{x <- getClass(.)}.
+
+      \item \code{as.list.environment()} gains a new argument \code{sorted}.
     }
   }
 
@@ -227,7 +229,7 @@
       \item A longstanding bug in \code{nlminb()} on Windows was traced
       to a compiler bug in gcc 4.6.3; a workaround has been put in place.
       (\PR{15244} and \PR{15914}).
-      
+
       \item Rendering of \code{\\command} in HTML has been improved:
       this is particularly evident on the help page for \code{INSTALL}.
     }

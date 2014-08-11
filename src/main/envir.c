@@ -162,7 +162,7 @@ static SEXP getActiveValue(SEXP fun)
 Rboolean R_envHasNoSpecialSymbols (SEXP env)
 {
     SEXP frame;
-   
+
     if (HASHTAB(env) != R_NilValue)
 	return FALSE;
 
@@ -1597,7 +1597,7 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 /* get environment from a subclass if possible; else return NULL */
 #define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
 
-	    
+
 
 /*----------------------------------------------------------------------
 
@@ -2576,7 +2576,7 @@ SEXP R_lsInternal(SEXP env, Rboolean all)
     return ans;
 }
 
-/* transform an environment into a named list */
+/* transform an environment into a named list: as.list.environment(.) */
 
 SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -2599,6 +2599,9 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     all = asLogical(CADR(args)); /* all.names = TRUE/FALSE */
     if (all == NA_LOGICAL) all = 0;
+
+    int sort_nms = asLogical(CADDR(args)); /* sorted = TRUE/FALSE */
+    if (sort_nms == NA_LOGICAL) sort_nms = 0;
 
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	k = BuiltinSize(all, 0);
@@ -2626,9 +2629,28 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	FrameNames(FRAME(env), all, names, &k);
 
-    setAttrib(ans, R_NamesSymbol, names);
-    UNPROTECT(2);
-    return(ans);
+    if(sort_nms) {
+	// return list with *sorted* names
+	SEXP sind = PROTECT(allocVector(INTSXP, k));
+	int *indx = INTEGER(sind);
+	for (int i = 0; i < k; i++) indx[i] = i;
+	orderVector1(indx, k, names, /* nalast */ TRUE, /* decreasing */ FALSE,
+		     R_NilValue);
+	SEXP ans2   = PROTECT(allocVector(VECSXP, k));
+	SEXP names2 = PROTECT(allocVector(STRSXP, k));
+	for(int i = 0; i < k; i++) {
+	    SET_STRING_ELT(names2, i, STRING_ELT(names, indx[i]));
+	    SET_VECTOR_ELT(ans2,   i, VECTOR_ELT(ans,   indx[i]));
+	}
+	setAttrib(ans2, R_NamesSymbol, names2);
+	UNPROTECT(5);
+	return(ans2);
+    }
+    else {
+	setAttrib(ans, R_NamesSymbol, names);
+	UNPROTECT(2);
+	return(ans);
+    }
 }
 
 /*
@@ -3363,7 +3385,7 @@ SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(impenv) == NILSXP)
 	error(_("use of NULL environment is defunct"));
-    if (TYPEOF(impenv) != ENVSXP && 
+    if (TYPEOF(impenv) != ENVSXP &&
 	TYPEOF((impenv = simple_as_environment(impenv))) != ENVSXP)
 	error(_("bad import environment argument"));
     if (TYPEOF(expenv) == NILSXP)
