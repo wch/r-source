@@ -153,7 +153,7 @@
   \option{--no-multiarch}.  To install just the compiled code for
   another sub-architecture, use \option{--libs-only}.
 
-  There are two ways to install for all available sub-architecures.  If
+  There are two ways to install for all available sub-architectures.  If
   the configure script is known to work for both Windows architectures,
   use flag \option{--force-biarch} (and packages can specify this
   \emph{via} a \samp{Biarch} field in their \code{DESCRIPTION} files).
