@@ -48,7 +48,7 @@
 
    level 0 is no additional instrumentation
    level 1 marks uninitialized numeric, logical, integer, raw, 
-          complex vectors and R_alloc memory
+           complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
            when they are freed.
    level 3 marks the first three bytes of sxpinfo and the ATTRIB
@@ -1631,7 +1631,7 @@ static void RunGenCollect(R_size_t size_needed)
 
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
-    for (SEXP *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
+    for (R_bcstack_t *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
 	FORWARD_NODE(*sp);
 
     /* main processing loop */
@@ -2055,7 +2055,8 @@ void attribute_hidden InitMemory()
     ATTRIB(R_NilValue) = R_NilValue;
     MARK_NOT_MUTABLE(R_NilValue);
 
-    R_BCNodeStackBase = (SEXP *) malloc(R_BCNODESTACKSIZE * sizeof(SEXP));
+    R_BCNodeStackBase =
+	(R_bcstack_t *) malloc(R_BCNODESTACKSIZE * sizeof(R_bcstack_t));
     if (R_BCNodeStackBase == NULL)
 	R_Suicide("couldn't allocate node stack");
 #ifdef BC_INT_STACK
@@ -2411,7 +2412,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 #if VALGRIND_LEVEL > 0
     R_size_t actual_size = 0;
 #endif
-    
+
     /* Handle some scalars directly to improve speed. */
     if (length == 1) {
 	switch(type) {
@@ -3590,6 +3591,7 @@ void (SET_RSTEP)(SEXP x, int v) { SET_RSTEP(CHK(x), v); }
 /* These are only needed with the write barrier on */
 #ifdef TESTING_WRITE_BARRIER
 /* Primitive Accessors */
+attribute_hidden
 int (PRIMOFFSET)(SEXP x) { return PRIMOFFSET(x); }
 attribute_hidden
 void (SET_PRIMOFFSET)(SEXP x, int v) { SET_PRIMOFFSET(x, v); }

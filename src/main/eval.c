@@ -234,7 +234,7 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	    if(strlen(buf) < PROFLINEMAX) {
 		strcat(buf, "\"");
 		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
-			"<Anonymous>");
+		       "<Anonymous>");
 		strcat(buf, "\" ");
 		if (R_Line_Profiling)
 		    lineprof(buf, cptr->srcref);
@@ -697,8 +697,9 @@ void SrcrefPrompt(const char * prefix, SEXP srcref)
 	if (TYPEOF(srcfile) == ENVSXP) {
 	    SEXP filename = findVar(install("filename"), srcfile);
 	    if (isString(filename) && length(filename)) {
-		Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)),
-					    asInteger(srcref));
+		Rprintf(_("%s at %s#%d: "), prefix,
+			CHAR(STRING_ELT(filename, 0)),
+			asInteger(srcref));
 		return;
 	    }
 	}
@@ -1353,9 +1354,9 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Stmt = CAR(CDR(args));
     else {
 	if (length(args) > 2)
-	   Stmt = CAR(CDR(CDR(args)));
+	    Stmt = CAR(CDR(CDR(args)));
 	else
-	   vis = 1;
+	    vis = 1;
     }
     if( !vis && RDEBUG(rho) && !BodyHasBraces(Stmt) && !R_GlobalContext->browserfinish) {
 	SrcrefPrompt("debug", R_Srcref);
@@ -1542,7 +1543,6 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
-
 
     dbg = RDEBUG(rho);
     body = CADR(args);
@@ -2169,7 +2169,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	}
 	else {
 	    if (CAR(el) == R_MissingArg ||
-		 (isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))
+		(isSymbol(CAR(el)) && R_isMissing(CAR(el), rho)))
 		ev = CONS_NR(R_MissingArg, R_NilValue);
 	    else
 		ev = CONS_NR(eval(CAR(el), rho), R_NilValue);
@@ -3371,7 +3371,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   SEXP __value__ = (v); \
   R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
   if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-  __ntop__[-1] = __value__; \
+  SETSTACK(0, __value__); \
   R_BCNodeStackTop = __ntop__; \
 } while (0)
 
@@ -4373,7 +4373,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       if (R_BCNodeStackTop + n > R_BCNodeStackEnd)
 	  nodeStackOverflow();
       while (n > 0) {
-	  *R_BCNodeStackTop = R_NilValue;
+	  SETSTACK(0, R_NilValue);
 	  R_BCNodeStackTop++;
 	  n--;
       }

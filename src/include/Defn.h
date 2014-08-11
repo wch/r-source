@@ -497,7 +497,7 @@ typedef struct RCNTXT {
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
-    SEXP *nodestack;
+    R_bcstack_t *nodestack;
 #ifdef BC_INT_STACK
     IStackval *intstack;
 #endif
@@ -729,7 +729,7 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 void resetTimeLimits(void);
 
 #define R_BCNODESTACKSIZE 100000
-extern0 SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
+extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
 #ifdef BC_INT_STACK
 # define R_BCINTSTACKSIZE 10000
 extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
