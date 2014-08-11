@@ -1062,6 +1062,46 @@ function(texi = NULL)
     sort(unique(sub(re, "", lines[grepl(re, lines)])))
 }
 
+### ** .gsub_with_transformed_matches
+
+.gsub_with_transformed_matches <-
+function(pattern, replacement, x, trafo, count, ...)
+{
+    ## gsub() with replacements featuring transformations of matches.
+    ##
+    ## Character string (%s) conversion specifications in 'replacement'
+    ## will be replaced by applying the respective transformations in
+    ## 'trafo' to the respective matches (parenthesized subexpressions of
+    ## 'pattern') specified by 'count'.
+    ##
+    ## Argument 'trafo' should be a single unary function, or a list of
+    ## such functions.
+    ## Argument 'count' should be a vector of with the numbers of
+    ## parenthesized subexpressions to be transformed (0 gives the whole
+    ## match).
+
+    replace <- function(yi) {
+        do.call(sprintf,
+                c(list(replacement),
+                  Map(function(tr, co) tr(yi[co]),
+                      trafo, count + 1L)))
+    }
+
+    if(!is.list(trafo)) trafo <- list(trafo)
+    m <- gregexpr(pattern, x, ...)
+    v <- lapply(regmatches(x, m),
+                function(e) {
+                    y <- regmatches(e, regexec(pattern, e, ...))
+                    unlist(Map(function(ei, yi) {
+                        sub(pattern, replace(yi), ei, ...)
+                    },
+                               e,
+                               y))
+                })
+    regmatches(x, m) <- v
+    x
+}
+
 ### ** .is_ASCII
 
 .is_ASCII <-
@@ -1534,6 +1574,23 @@ function(x)
                 utils:::.format_authors_at_R_field_for_maintainer(aar)
     }
     y
+}
+
+### ** .replace_chars_by_hex_subs
+
+.replace_chars_by_hex_subs <-
+function(x, re) {
+    char_to_hex_sub <- function(s) {
+        paste0("<", charToRaw(s), ">", collapse = "")
+    }
+    vapply(strsplit(x, ""),
+           function(e) {
+               pos <- grep(re, e, perl = TRUE)
+               if(length(pos))
+                   e[pos] <- vapply(e[pos], char_to_hex_sub, "")
+               paste(e, collapse = "")
+           },
+           "")
 }
 
 ### ** .source_assignments
