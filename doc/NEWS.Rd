@@ -111,7 +111,7 @@
       locale.
 
       \item \code{utils::URLencode()} was updated to use unreserved and
-      reserved chararacters from RFC 3986,
+      reserved characters from RFC 3986,
       \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
 
       \item \code{is.recursive(x)} is no longer true when \code{x} is an

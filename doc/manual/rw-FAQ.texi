@@ -154,7 +154,7 @@ mainly 64-bit Windows 7 and Server 2008.
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A installation takes
 75--105Mb of disk space (up to 145Mb if ICU was included in the build,
-which is not curently the default).
+which is not currently the default).
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
