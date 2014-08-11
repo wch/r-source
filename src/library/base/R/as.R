@@ -1,7 +1,7 @@
 #  File src/library/base/R/as.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,8 +42,8 @@ as.list.data.frame <- function(x,...) {
     x
 }
 
-as.list.environment <- function(x, all.names=FALSE, ...)
-    .Internal(env2list(x, all.names))
+as.list.environment <- function(x, all.names=FALSE, sorted = FALSE, ...)
+    .Internal(env2list(x, all.names, sorted))
 
 ## NB: as.vector is used for several other as.xxxx, including
 ## as.expression, as.list, as.pairlist, as.single, as.symbol.
