@@ -212,7 +212,8 @@ function(dir,
     depends <-
         c(setdiff(depends, installed),
           intersect(intersect(depends, installed),
-                    utils::old.packages(libs, contriburl = curls)[, "Package"]))
+                    utils::old.packages(libs,
+                                        available = available)[, "Package"]))
     if(length(depends)) {
         message(paste(strwrap(sprintf("installing dependencies %s",
                                       paste(sQuote(depends),
