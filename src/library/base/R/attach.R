@@ -197,7 +197,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
 
 ls <- objects <-
     function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
-              pattern)
+              pattern, sorted = TRUE)
 {
     if (!missing(name)) {
         pos <- tryCatch(name, error = function(e)e)
@@ -210,7 +210,7 @@ ls <- objects <-
             pos <- name
         }
     }
-    all.names <- .Internal(ls(envir, all.names))
+    all.names <- .Internal(ls(envir, all.names, sorted))
     if (!missing(pattern)) {
         if ((ll <- length(grep("[", pattern, fixed = TRUE))) &&
             ll != length(grep("]", pattern, fixed = TRUE))) {

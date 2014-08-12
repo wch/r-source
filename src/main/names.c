@@ -681,7 +681,7 @@ FUNTAB R_FunTab[] =
 {"recordGraphics", do_recordGraphics, 0, 211,     3,      {PP_FOREIGN, PREC_FN,	0}},
 {"dyn.load",	do_dynload,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"ls",		do_ls,		1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"ls",		do_ls,		1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"typeof",	do_typeof,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"eval",	do_eval,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.parent",	do_sys,		1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},

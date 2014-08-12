@@ -118,7 +118,8 @@
       external pointer, a weak reference or byte code; the first enables
       \code{all.equal(x, x)} when \code{x <- getClass(.)}.
 
-      \item \code{as.list.environment()} gains a new argument \code{sorted}.
+      \item \code{ls()} (aka \code{objects()}) and
+      \code{as.list.environment()} gain a new argument \code{sorted}.
     }
   }
 

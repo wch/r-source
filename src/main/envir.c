@@ -2368,7 +2368,7 @@ SEXP attribute_hidden do_search(SEXP call, SEXP op, SEXP args, SEXP env)
   do_ls
 
   This code implements the functionality of the "ls" and "objects"
-  functions.  [ ls(envir, all.names) ]
+  functions.  [ ls(envir, all.names, sorted) ]
 
 */
 
@@ -2517,8 +2517,6 @@ BuiltinValues(int all, int intern, SEXP values, int *indx)
 
 SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env;
-    int all;
     checkArity(op, args);
 
     if(IS_USER_DATABASE(CAR(args))) {
@@ -2527,23 +2525,25 @@ SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return(tb->objects(tb));
     }
 
-    env = CAR(args);
+    SEXP env = CAR(args);
 
     /* if (env == R_BaseNamespace) env = R_BaseEnv; */
 
-    all = asLogical(CADR(args));
+    int all = asLogical(CADR(args));
     if (all == NA_LOGICAL) all = 0;
 
-    return R_lsInternal(env, all);
+    int sort_nms = asLogical(CADDR(args)); /* sorted = TRUE/FALSE */
+    if (sort_nms == NA_LOGICAL) sort_nms = 0;
+
+    return R_lsInternal(env, all, sort_nms);
 }
 
 /* takes a *list* of environments and a boolean indicating whether to get all
    names */
-SEXP R_lsInternal(SEXP env, Rboolean all)
+SEXP R_lsInternal(SEXP env, Rboolean all, Rboolean sorted)
 {
     int  k;
     SEXP ans;
-
 
     /* Step 1 : Compute the Vector Size */
     k = 0;
@@ -2572,7 +2572,7 @@ SEXP R_lsInternal(SEXP env, Rboolean all)
     }
 
     UNPROTECT(1);
-    sortVector(ans, FALSE);
+    if(sorted) sortVector(ans, FALSE);
     return ans;
 }
 

@@ -969,9 +969,9 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     exports <- getNamespaceInfo(expenv, "exports")
-    ex <- .Internal(ls(exports, TRUE))
-    if(!all(expnames %in% ex)) {
-        miss <- expnames[! expnames %in% ex]
+    ex <- .Internal(ls(exports, TRUE, FALSE))
+    if(!all(eie <- expnames %in% ex)) {
+        miss <- expnames[!eie]
         ## if called (indirectly) for namespaceImportClasses
         ## these are all classes
         if(all(grepl("^\\.__C__", miss))) {
@@ -1008,7 +1008,7 @@ namespaceExport <- function(ns, vars) {
             exports <- getNamespaceInfo(ns, "exports")
             expnames <- names(new)
             intnames <- new
-            objs <- .Internal(ls(exports, TRUE))
+            objs <- .Internal(ls(exports, TRUE, FALSE))
             ex <- expnames %in% objs
             if(any(ex))
                 warning(sprintf(ngettext(sum(ex),
@@ -1032,7 +1032,7 @@ namespaceExport <- function(ns, vars) {
         }
         new <- makeImportExportNames(unique(vars))
         ## calling exists each time is too slow, so do two phases
-        undef <- new[! new %in% .Internal(ls(ns, TRUE))]
+        undef <- new[! new %in% .Internal(ls(ns, TRUE, FALSE))]
         undef <- undef[! vapply(undef, exists, NA, envir = ns)]
         if (length(undef)) {
             undef <- do.call("paste", as.list(c(undef, sep = ", ")))
@@ -1405,7 +1405,7 @@ registerS3methods <- function(info, package, env)
     z <- is.na(info[,3])
     info[z,3] <- methname[z]
     Info <- cbind(info, methname)
-    loc <- .Internal(ls(env, TRUE))
+    loc <- .Internal(ls(env, TRUE, FALSE))
     notex <- !(info[,3] %in% loc)
     if(any(notex))
         warning(sprintf(ngettext(sum(notex),

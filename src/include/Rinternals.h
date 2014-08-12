@@ -790,7 +790,7 @@ Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUnsorted(SEXP, Rboolean);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP Rf_xlengthgets(SEXP, R_xlen_t);
-SEXP R_lsInternal(SEXP, Rboolean);
+SEXP R_lsInternal(SEXP, Rboolean, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_matchE(SEXP, SEXP, int, SEXP);
 SEXP Rf_namesgets(SEXP, SEXP);
