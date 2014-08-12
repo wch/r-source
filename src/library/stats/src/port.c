@@ -235,7 +235,8 @@ double F77_NAME(dv2nrm)(int *n, const double x[])
 /* dv7cpy.... copy src to dest */
 void F77_NAME(dv7cpy)(int *n, double dest[], const double src[])
 {
-    memcpy(dest, src, *n * sizeof(double));
+    /* Was memcpy, but overlaps seen */
+    memmove(dest, src, *n * sizeof(double));
 }
 
 /* dv7ipr... applies forward permutation to vector.  */
