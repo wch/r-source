@@ -725,6 +725,11 @@ static int R_disable_bytecode = 0;
 
 void attribute_hidden R_init_jit_enabled(void)
 {
+    /* Need to force the lazy loading promise to avoid recursive
+       promise evaluation when JIT is enabled. Might be better to do
+       this in baseloader.R. */
+    eval(install(".ArgsEnv"), R_BaseEnv);
+
     if (R_jit_enabled <= 0) {
 	char *enable = getenv("R_ENABLE_JIT");
 	if (enable != NULL) {
@@ -1416,7 +1421,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if ( !isSymbol(sym) ) errorcall(call, _("non-symbol loop variable"));
 
-    if (R_jit_enabled > 2 && ! R_PendingPromises) {
+    if (R_jit_enabled > 2) {
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
@@ -1539,7 +1544,7 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if (R_jit_enabled > 2 && ! R_PendingPromises) {
+    if (R_jit_enabled > 2) {
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
@@ -1580,7 +1585,7 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if (R_jit_enabled > 2 && ! R_PendingPromises) {
+    if (R_jit_enabled > 2) {
 	R_compileAndExecute(call, rho);
 	return R_NilValue;
     }
