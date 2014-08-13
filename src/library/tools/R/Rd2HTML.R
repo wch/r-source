@@ -53,8 +53,7 @@ get_link <- function(arg, tag, Rdfile) {
     list(topic = topic, dest = dest, pkg = pkg, targetfile = targetfile)
 }
 
-
-# translation of Utils.pm function of the same name, plus "unknown"
+## translation of Utils.pm function of the same name, plus "unknown"
 mime_canonical_encoding <- function(encoding)
 {
     encoding[encoding %in% c("", "unknown")] <-
@@ -119,9 +118,11 @@ urlify <- function(x) { # make a string legal in a URL
     paste(mixed, collapse="")
 }
 
-# Ampersands should be escaped in proper HTML URIs
-
+## Ampersands should be escaped in proper HTML URIs
 escapeAmpersand <- function(x) gsub("&", "&amp;", x, fixed=TRUE)
+
+invalid_HTML_chars_re <-
+    "[\u0001-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]"
 
 ## This gets used two ways:
 
@@ -869,3 +870,4 @@ function(dir)
     unlist(lapply(rev(dir(dir, full.names = TRUE)),
                   .find_HTML_links_in_package))
 }
+
