@@ -3088,73 +3088,24 @@ SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef TYPED_STACK
-static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
-{
-    /* no error checking since only called with tag != 0 */
-    int type = s->tag;
-    SEXP value = allocVector(type, 1);
-    switch (type) {
-    case REALSXP: REAL(value)[0] = s->u.dval; break;
-    case INTSXP: INTEGER(value)[0] = s->u.ival; break;
-    case LGLSXP: LOGICAL(value)[0] = s->u.ival; break;
-    }
-    s->tag = 0;
-    s->u.sxpval = value;
-    return value;
-}
-#define GETSTACK_PTR(s) ((s)->tag ? GETSTACK_PTR_TAG(s) : (s)->u.sxpval)
-#else
 #define GETSTACK_PTR(s) (*(s))
-#endif
 #define GETSTACK(i) GETSTACK_PTR(R_BCNodeStackTop + (i))
 
-#ifdef TYPED_STACK
-#define SETSTACK_PTR(s, v) do { \
-    SEXP __v__ = (v); \
-    (s)->tag = 0; \
-    (s)->u.sxpval = __v__; \
-} while (0)
-#else
 #define SETSTACK_PTR(s, v) do { \
     SEXP __v__ = (v); \
     *(s) = __v__; \
 } while (0)
-#endif
 
 #define SETSTACK(i, v) SETSTACK_PTR(R_BCNodeStackTop + (i), v)
 
-#ifdef TYPED_STACK
-#define SETSTACK_REAL_PTR(s, v) do { \
-    double __v__ = (v); \
-    (s)->tag = REALSXP; \
-    (s)->u.dval = __v__; \
-} while (0)
-#else
 #define SETSTACK_REAL_PTR(s, v) SETSTACK_PTR(s, ScalarReal(v))
-#endif
 
 #define SETSTACK_REAL(i, v) SETSTACK_REAL_PTR(R_BCNodeStackTop + (i), v)
 
-#ifdef TYPED_STACK
-#define SETSTACK_INTEGER_PTR(s, v) do { \
-    int __v__ = (v); \
-    (s)->tag = INTSXP; \
-    (s)->u.ival = __v__; \
-} while (0)
-#else
 #define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
-#endif
 
 #define SETSTACK_INTEGER(i, v) SETSTACK_INTEGER_PTR(R_BCNodeStackTop + (i), v)
 
-#ifdef TYPED_STACK
-#define SETSTACK_LOGICAL_PTR(s, v) do { \
-    int __v__ = (v); \
-    (s)->tag = LGLSXP; \
-    (s)->u.ival = __v__ ? TRUE : FALSE; \
-} while (0)
-#else
 #define SETSTACK_LOGICAL_PTR(s, v) do { \
     int __ssl_v__ = (v); \
     if (__ssl_v__ == NA_LOGICAL) \
@@ -3162,7 +3113,6 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     else \
 	SETSTACK_PTR(s, __ssl_v__ ? R_TrueValue : R_FalseValue); \
 } while(0)
-#endif
 
 #define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
 
@@ -3174,47 +3124,6 @@ typedef union { double dval; int ival; } scalar_value_t;
    value and the value is returned in the structure pointed to by the
    second argument; if not, then zero is returned as the function
    value. */
-#ifdef TYPED_STACK
-static R_INLINE int bcStackScalar(R_bcstack_t *s, scalar_value_t *v)
-{
-    int tag = s->tag;
-    if (tag) {
-	switch(tag) {
-	case REALSXP: v->dval = s->u.dval; return tag;
-	case INTSXP: v->ival = s->u.ival; return tag;
-	case LGLSXP: v->ival = s->u.ival; return tag;
-	}
-	return tag; /* not reached */
-    }
-    else {
-	SEXP x = s->u.sxpval;
-	if (ATTRIB(x) == R_NilValue) {
-	    switch(TYPEOF(x)) {
-	    case REALSXP:
-		if (XLENGTH(x) == 1) {
-		    v->dval = REAL(x)[0];
-		    return REALSXP;
-		}
-		else return 0;
-	    case INTSXP:
-		if (XLENGTH(x) == 1) {
-		    v->ival = INTEGER(x)[0];
-		    return INTSXP;
-		}
-		else return 0;
-	    case LGLSXP:
-		if (XLENGTH(x) == 1) {
-		    v->ival = LOGICAL(x)[0];
-		    return LGLSXP;
-		}
-		else return 0;
-	    default: return 0;
-	    }
-	}
-	else return 0;
-    }
-}
-#else
 static R_INLINE int bcStackScalar(R_bcstack_t *s, scalar_value_t *v)
 {
     SEXP x = *s;
@@ -3243,7 +3152,6 @@ static R_INLINE int bcStackScalar(R_bcstack_t *s, scalar_value_t *v)
     }
     else return 0;
 }
-#endif
 
 #define DO_FAST_RELOP2(op,a,b) do { \
     SKIP_OP(); \
@@ -3387,7 +3295,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Math1(which) Builtin1(do_math1,which,rho)
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
-#if defined(NO_SAVE_ALLOC) || defined(TYPED_STACK)
+#ifdef NO_SAVE_ALLOC
 # define DO_FAST_BINOP(op,a,b) do { \
     SKIP_OP(); \
     SETSTACK_REAL(-2, (a) op (b)); \
@@ -3406,8 +3314,8 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 } while(0)
 #else
 /* these reuse one of the two values on the top of the stack if it is
-   of the right type and has no references. It is known that both of
-   these will have length one and have no attributes. */
+   of the right type and has NAMED = 0. It is known that both of these
+   will have length one and have no attributes. */
 # define DO_FAST_BINOP(op,a,b) do {					\
 	SKIP_OP();							\
 	SEXP sa = R_BCNodeStackTop[-2];					\
@@ -3471,26 +3379,6 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   SETSTACK(0, __value__); \
   R_BCNodeStackTop = __ntop__; \
 } while (0)
-
-#ifdef TYPED_STACK
-#define BCNPUSH_REAL(v) do { \
-  double __value__ = (v); \
-  R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
-  if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-  __ntop__[-1].u.dval = __value__; \
-  __ntop__[-1].tag = REALSXP; \
-  R_BCNodeStackTop = __ntop__; \
-} while (0)
-
-#define BCNPUSH_INTEGER(v) do { \
-  int __value__ = (v); \
-  R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
-  if (__ntop__ > R_BCNodeStackEnd) nodeStackOverflow(); \
-  __ntop__[-1].u.ival = __value__; \
-  __ntop__[-1].tag = INTSXP; \
-  R_BCNodeStackTop = __ntop__; \
-} while (0)
-#endif
 
 #define BCNDUP() do { \
     R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
@@ -3676,15 +3564,6 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 # define CACHE_ON_STACK
 # ifdef CACHE_ON_STACK
 typedef R_bcstack_t * R_binding_cache_t;
-#ifdef TYPED_STACK
-#  define GET_CACHED_BINDING_CELL(vcache, sidx) \
-    (vcache ? vcache[CACHEIDX(sidx)].u.sxpval : R_NilValue)
-#  define GET_SMALLCACHE_BINDING_CELL(vcache, sidx) \
-    (vcache ? vcache[sidx].u.sxpval : R_NilValue)
-
-#  define SET_CACHED_BINDING(vcache, sidx, cell) \
-    do { if (vcache) vcache[CACHEIDX(sidx)].u.sxpval = (cell); } while (0)
-#else
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
     (vcache ? vcache[CACHEIDX(sidx)] : R_NilValue)
 #  define GET_SMALLCACHE_BINDING_CELL(vcache, sidx) \
@@ -3692,7 +3571,6 @@ typedef R_bcstack_t * R_binding_cache_t;
 
 #  define SET_CACHED_BINDING(vcache, sidx, cell) \
     do { if (vcache) vcache[CACHEIDX(sidx)] = (cell); } while (0)
-#endif
 # else
 typedef SEXP R_binding_cache_t;
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
@@ -4117,43 +3995,6 @@ static void loopWithContext(volatile SEXP code, volatile SEXP rho)
     endcontext(&cntxt);
 }
 
-#ifdef TYPED_STACK
-static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
-{
-    switch(s->tag) {
-    case INTSXP:
-	if (s->u.ival != NA_INTEGER)
-	    return s->u.ival;
-	else return -1;
-    case REALSXP:
-	{
-	    double val = s->u.dval;
-	    if (! ISNAN(val) && val <= R_XLEN_T_MAX && val > 0)
-		return (R_xlen_t) s->u.dval;
-	    else return -1;
-	}
-    default:
-	{
-	    SEXP idx = s->u.sxpval;
-	    switch(TYPEOF(idx)) {
-	    case INTSXP:
-		if (XLENGTH(idx) == 1 && INTEGER(idx)[0] != NA_INTEGER)
-		    return INTEGER(idx)[0];
-		else return -1;
-	    case REALSXP:
-		if (XLENGTH(idx) == 1) {
-		    double val = REAL(idx)[0];
-		    if (! ISNAN(val) && val <= R_XLEN_T_MAX && val > 0)
-			return (R_xlen_t) val;
-		    else return -1;
-		}
-		else return -1;
-	    default: return -1;
-	    }
-	}
-    }
-}
-#else
 static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
 {
     SEXP idx = *s;
@@ -4173,7 +4014,6 @@ static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
     default: return -1;
     }
 }
-#endif
 
 static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 				   R_bcstack_t *sv, SEXP rho)
@@ -4229,7 +4069,7 @@ static R_INLINE SEXP getMatrixDim(SEXP mat)
 	TAG(ATTRIB(mat)) == R_DimSymbol &&
 	CDR(ATTRIB(mat)) == R_NilValue) {
 	SEXP dim = CAR(ATTRIB(mat));
-	if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2)
+	if (TYPEOF(dim) == INTSXP && XLENGTH(dim) == 2)
 	    return dim;
 	else return R_NilValue;
     }
@@ -4565,22 +4405,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int callidx = GETOP();
 	int label = GETOP();
 	int cond;
-#ifdef TYPED_STACK
-	R_bcstack_t *s = R_BCNodeStackTop - 1;
-        if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL) {
-	    cond = s->u.ival;
-	    R_BCNodeStackTop--;
-	}
-	else {
-	    SEXP call = VECTOR_ELT(constants, callidx);
-	    value = BCNPOP();
-	    cond = asLogicalNoNA(value, call);
-	}
-#else
 	SEXP call = VECTOR_ELT(constants, callidx);
 	value = BCNPOP();
 	cond = asLogicalNoNA(value, call);
-#endif
 	if (! cond) {
 	    BC_CHECK_SIGINT(); /**** only on back branch?*/
 	    pc = codebase + label;
@@ -4624,16 +4451,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	else errorcall(VECTOR_ELT(constants, callidx),
 		       _("invalid for() loop sequence"));
 	BCNPUSH(value);
-#ifdef TYPED_STACK
-#define FASTFORLOOP
-#ifdef FASTFORLOOP
-	{
-	  int len = INTEGER(value)[1];
-	  R_BCNodeStackTop[-1].tag = len ? len : -1;
-	  R_BCNodeStackTop[-1].u.ival = -1;
-	}
-#endif
-#endif
 
 	/* bump up NAMED count of seq to avoid modification by loop code */
 	INCREMENT_NAMED(seq);
@@ -4660,13 +4477,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STEPFOR, 1):
       {
 	int label = GETOP();
-#ifdef FASTFORLOOP
-	int i = ++(R_BCNodeStackTop[-2].u.ival);
-	int n = R_BCNodeStackTop[-2].tag;
-#else
 	int i = ++(INTEGER(GETSTACK(-2))[0]);
 	int n = INTEGER(GETSTACK(-2))[1];
-#endif
 	if (i < n) {
 	  SEXP seq = GETSTACK(-4);
 	  SEXP cell = GETSTACK(-3);
@@ -4733,22 +4545,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(LDCONST, 1):
       R_Visible = TRUE;
       value = VECTOR_ELT(constants, GETOP());
-#ifdef TYPED_STACK
-      if (ATTRIB(value) == R_NilValue) {
-	  switch(TYPEOF(value)) {
-	  case REALSXP:
-	      if (XLENGTH(value) == 1) {
-		  BCNPUSH_REAL(REAL(value)[0]);
-		  NEXT();
-	      }
-	  case INTSXP:
-	      if (XLENGTH(value) == 1) {
-		  BCNPUSH_INTEGER(INTEGER(value)[0]);
-		  NEXT();
-	      }
-	  }
-      }
-#endif
       /* make sure NAMED = 2 -- lower values might be safe in some cases but
 	 not in general, especially if the constant pool was created by
 	 unserializing a compiled expression. */
@@ -4770,26 +4566,6 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    SEXP symbol = VECTOR_ELT(constants, sidx);
 	    loc = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
 	}
-#ifdef TYPED_STACK
-	R_bcstack_t *s = R_BCNodeStackTop - 1;
-	/* reading the locked bit is OK even if cell is R_NilValue */
-	if (s->tag && ! BINDING_IS_LOCKED(loc)) {
-	    /* if cell is R_NilValue or an active binding, or if the value
-	       is R_UnboundValue, then TYPEOF(CAR(cell)) will not match the
-	       immediate value tag */
-	    SEXP x = CAR(loc);  /* fast, but assumes binding is a CONS */
-	    int type = TYPEOF(x);
-	    if (type == s->tag &&
-		! MAYBE_SHARED(x) && XLENGTH(x) == 1 &&
-		ATTRIB(x) == R_NilValue) {
-		switch (type) {
-		case REALSXP: REAL(x)[0] = s->u.dval; NEXT();
-		case INTSXP: INTEGER(x)[0] = s->u.ival; NEXT();
-		case LGLSXP: LOGICAL(x)[0] = s->u.ival; NEXT();
-		}
-	    }
-	}
-#endif
 	value = GETSTACK(-1);
 	INCREMENT_NAMED(value);
 	if (! SET_BINDING_VALUE(loc, value)) {
@@ -5054,15 +4830,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	BCNPUSH(value);
 	BCNDUP2ND();
 	/* top three stack entries are now RHS value, LHS value, RHS value */
-#ifdef TYPED_STACK
-	if (R_BCNodeStackTop[-1].tag == 0) {
-	    FIXUP_RHS_NAMED(GETSTACK(-1));
-	    INCREMENT_REFCNT(GETSTACK(-1));
-	}
-#else
 	FIXUP_RHS_NAMED(GETSTACK(-1));
 	INCREMENT_REFCNT(GETSTACK(-1));
-#endif
 	NEXT();
       }
     OP(ENDASSIGN, 1):
@@ -5081,15 +4850,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   conservative mark the value as NAMED = 2 */
 	SET_NAMED(GETSTACK(-1), 2);
 #else
-# ifdef TYPED_STACK
-	if (R_BCNodeStackTop[-1].tag == 0) {
-	    INCREMENT_NAMED(GETSTACK(-1));
-	    DECREMENT_REFCNT(GETSTACK(-1));
-	}
-# else
 	INCREMENT_NAMED(GETSTACK(-1));
 	DECREMENT_REFCNT(GETSTACK(-1));
-# endif
 #endif
 	NEXT();
       }
@@ -5372,18 +5134,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   will need to see an unmodified LHS value. This heuristic
 	   fails if the accessor function called here is not a closure
 	   but the replacement function is. */
-#ifdef TYPED_STACK
-	if (! tmp.tag && MAYBE_REFERENCED(tmp.u.sxpval)) {
-	    R_bcstack_t cont = R_BCNodeStackTop[-3];
-	    if (MAYBE_SHARED(tmp.u.sxpval) ||
-		(! cont.tag && MAYBE_SHARED(cont.u.sxpval)))
-		tmp.u.sxpval = shallow_duplicate(tmp.u.sxpval);
-	}
-#else
 	if (MAYBE_REFERENCED(tmp) &&
 	    (MAYBE_SHARED(tmp) || MAYBE_SHARED(R_BCNodeStackTop[-3])))
 	    tmp = shallow_duplicate(tmp);
-#endif
 	R_BCNodeStackTop[-1] = R_BCNodeStackTop[-2];
 	R_BCNodeStackTop[-2] = tmp;
 	NEXT();
