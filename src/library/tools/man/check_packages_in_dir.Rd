@@ -28,7 +28,10 @@ summarize_check_packages_in_dir_results(dir, all = TRUE,
                                         full = FALSE)
 summarize_check_packages_in_dir_timings(dir, all = FALSE,
                                         full = FALSE)
-summarize_check_packages_in_dir_depends(dir, all = FALSE)
+summarize_check_packages_in_dir_depends(dir, all = FALSE,
+                                        which = c("Depends",
+                                                  "Imports",
+                                                  "LinkingTo"))
 }
 \arguments{
   \item{dir}{a character string giving the path to the directory with
@@ -65,6 +68,7 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE)
   \item{full}{a logical indicating whether to also give details for
     checks with non-ok results, or summarize check example timings (if
     available).}
+  \item{which}{see \code{\link{package_dependencies}}.}
 }
 \details{
   \code{check_packages_in_dir} allows to conveniently check source
@@ -94,6 +98,10 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE)
   Installation and checking is performed in parallel if \code{Ncpus} is
   greater than one: this will use \code{\link[parallel]{mclapply}} on
   Unix and \code{\link[parallel]{parLapply}} on Windows.
+
+  \code{check_packages_in_dir} returns an object inheriting from class
+  \code{"check_packages_in_dir"} which has \code{\link{print}} and
+  \code{\link{summary}} methods.
 }
 \note{
   This functionality is still experimental: interfaces may change in
