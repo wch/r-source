@@ -4020,28 +4020,28 @@ static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 {
     SEXP idx, args, value;
     SEXP vec = GETSTACK_PTR(sx);
-    int i = bcStackIndex(si) - 1;
+    R_xlen_t i = bcStackIndex(si) - 1;
 
     if (ATTRIB(vec) == R_NilValue && i >= 0) {
 	switch (TYPEOF(vec)) {
 	case REALSXP:
-	    if (LENGTH(vec) <= i) break;
+	    if (XLENGTH(vec) <= i) break;
 	    SETSTACK_REAL_PTR(sv, REAL(vec)[i]);
 	    return;
 	case INTSXP:
-	    if (LENGTH(vec) <= i) break;
+	    if (XLENGTH(vec) <= i) break;
 	    SETSTACK_INTEGER_PTR(sv, INTEGER(vec)[i]);
 	    return;
 	case LGLSXP:
-	    if (LENGTH(vec) <= i) break;
+	    if (XLENGTH(vec) <= i) break;
 	    SETSTACK_LOGICAL_PTR(sv, LOGICAL(vec)[i]);
 	    return;
 	case CPLXSXP:
-	    if (LENGTH(vec) <= i) break;
+	    if (XLENGTH(vec) <= i) break;
 	    SETSTACK_PTR(sv, ScalarComplex(COMPLEX(vec)[i]));
 	    return;
 	case RAWSXP:
-	    if (LENGTH(vec) <= i) break;
+	    if (XLENGTH(vec) <= i) break;
 	    SETSTACK_PTR(sv, ScalarRaw(RAW(vec)[i]));
 	    return;
 	}
@@ -4069,7 +4069,7 @@ static R_INLINE SEXP getMatrixDim(SEXP mat)
 	TAG(ATTRIB(mat)) == R_DimSymbol &&
 	CDR(ATTRIB(mat)) == R_NilValue) {
 	SEXP dim = CAR(ATTRIB(mat));
-	if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2)
+	if (TYPEOF(dim) == INTSXP && XLENGTH(dim) == 2)
 	    return dim;
 	else return R_NilValue;
     }
@@ -4083,30 +4083,30 @@ static R_INLINE void DO_MATSUBSET(SEXP rho)
     SEXP dim = getMatrixDim(mat);
 
     if (dim != R_NilValue) {
-	int i = (int) bcStackIndex(R_BCNodeStackTop - 2);
-	int j = (int) bcStackIndex(R_BCNodeStackTop - 1);
-	int nrow = INTEGER(dim)[0];
-	int ncol = INTEGER(dim)[1];
+	R_xlen_t i = bcStackIndex(R_BCNodeStackTop - 2);
+	R_xlen_t j = bcStackIndex(R_BCNodeStackTop - 1);
+	R_xlen_t nrow = INTEGER(dim)[0];
+	R_xlen_t ncol = INTEGER(dim)[1];
 	if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
-	    int k = i - 1 + nrow * (j - 1);
+	    R_xlen_t k = i - 1 + nrow * (j - 1);
 	    switch (TYPEOF(mat)) {
 	    case REALSXP:
-		if (LENGTH(mat) <= k) break;
+		if (XLENGTH(mat) <= k) break;
 		R_BCNodeStackTop -= 2;
 		SETSTACK_REAL(-1, REAL(mat)[k]);
 		return;
 	    case INTSXP:
-		if (LENGTH(mat) <= k) break;
+		if (XLENGTH(mat) <= k) break;
 		R_BCNodeStackTop -= 2;
 		SETSTACK_INTEGER(-1, INTEGER(mat)[k]);
 		return;
 	    case LGLSXP:
-		if (LENGTH(mat) <= k) break;
+		if (XLENGTH(mat) <= k) break;
 		R_BCNodeStackTop -= 2;
 		SETSTACK_LOGICAL(-1, LOGICAL(mat)[k]);
 		return;
 	    case CPLXSXP:
-		if (LENGTH(mat) <= k) break;
+		if (XLENGTH(mat) <= k) break;
 		R_BCNodeStackTop -= 2;
 		SETSTACK(-1, ScalarComplex(COMPLEX(mat)[k]));
 		return;
@@ -4167,7 +4167,7 @@ static R_INLINE void SETVECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 	SET_NAMED(vec, 0);
 
     if (ATTRIB(vec) == R_NilValue) {
-	int i = bcStackIndex(si);
+	R_xlen_t i = bcStackIndex(si);
 	if (i > 0) {
 	    scalar_value_t v;
 	    int typev = bcStackScalar(srhs, &v);
@@ -4213,14 +4213,14 @@ static R_INLINE void DO_SETMATSUBSET(SEXP rho)
     dim = getMatrixDim(mat);
 
     if (dim != R_NilValue) {
-	int i = (int) bcStackIndex(R_BCNodeStackTop - 2);
-	int j = (int) bcStackIndex(R_BCNodeStackTop - 1);
-	int nrow = INTEGER(dim)[0];
-	int ncol = INTEGER(dim)[1];
+	R_xlen_t i = bcStackIndex(R_BCNodeStackTop - 2);
+	R_xlen_t j = bcStackIndex(R_BCNodeStackTop - 1);
+	R_xlen_t nrow = INTEGER(dim)[0];
+	R_xlen_t ncol = INTEGER(dim)[1];
 	if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 	    scalar_value_t v;
 	    int typev = bcStackScalar(R_BCNodeStackTop - 3, &v);
-	    int k = i - 1 + nrow * (j - 1);
+	    R_xlen_t k = i - 1 + nrow * (j - 1);
 	    if (setElementFromScalar(mat, k, typev, &v)) {
 		R_BCNodeStackTop -= 3;
 		SETSTACK(-1, mat);
@@ -4246,7 +4246,7 @@ static R_INLINE void DO_SETMATSUBSET(SEXP rho)
 
 #define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
 	SEXP val = GETSTACK(-1); \
-	if (TYPEOF(val) != LGLSXP || LENGTH(val) != 1) { \
+	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1) { \
 	    if (!isNumber(val))	\
 		errorcall(VECTOR_ELT(constants, callidx), \
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
