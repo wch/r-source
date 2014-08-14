@@ -4925,7 +4925,7 @@ function(x, ...)
               unlist(Map(.fmt_entries_for_file, x, names(x)),
                      use.names = FALSE),
               if(has_bad_wrong_args)
-              strwrap(gettextf("Package detach functions should have one arguments with names starting with %s.", sQuote("lib")),
+              strwrap(gettextf("Package detach functions should have one argument with name starting with %s.", sQuote("lib")),
                       exdent = 2L),
               if(length(call))
               strwrap(gettextf("Package detach functions should not call %s.",
