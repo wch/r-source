@@ -4194,6 +4194,8 @@ setRlibs <-
         Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
         setwd(startdir)
     }
+    ## set libPaths() for computations here, e.g. setRlibs
+    .libPaths(strsplit(R_LIBS, .Platform$path.sep)[[1L]])
 
     ## all the analysis code is run with --slave
     ## examples and tests are not.
