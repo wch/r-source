@@ -367,6 +367,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # define IS_LONG_VEC(x) 0
 # define IS_SCALAR(x, type) (TYPEOF(x) == (type) && LENGTH(x) == 1)
 #endif
+#define IS_SIMPLE_SCALAR(x, type) \
+    (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
 
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
@@ -498,6 +500,7 @@ Rboolean (Rf_isObject)(SEXP s);
 # define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
 #endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
+#define NOT_SHARED(x) (! MAYBE_SHARED(x))
 
 /* Complex assignment support */
 /* temporary definition that will need to be refined to distinguish
