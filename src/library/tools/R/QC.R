@@ -3761,25 +3761,30 @@ function(x, ...)
 function(package, lib.loc = NULL)
 {
     is_base <- package == "base"
+
+    check_without_loading <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITHOUT_LOADING_",
+                                         "FALSE"))
+        
     if(!is_base) {
-        .load_package_quietly(package, lib.loc)
-
-        .eval_with_capture({
-            ## avoid warnings about code in other packages the package
-            ## uses
-            desc <- readRDS(file.path(find.package(package, NULL),
-                                       "Meta", "package.rds"))
-            pkgs1 <- sapply(desc$Suggests, "[[", "name")
-            pkgs2 <- sapply(desc$Enhances, "[[", "name")
-            for(pkg in unique(c(pkgs1, pkgs2)))
-                ## tcltk warns if no DISPLAY variable
-		##, errors if not compiled in
-                suppressWarnings(suppressMessages(try(require(pkg,
-                                                              character.only = TRUE,
-                                                              quietly = TRUE),
-                                                      silent = TRUE)))
-        }, type = "output")
-
+        if(!check_without_loading) {
+            .load_package_quietly(package, lib.loc)
+            .eval_with_capture({
+                ## avoid warnings about code in other packages the package
+                ## uses
+                desc <- readRDS(file.path(find.package(package, NULL),
+                                          "Meta", "package.rds"))
+                pkgs1 <- sapply(desc$Suggests, "[[", "name")
+                pkgs2 <- sapply(desc$Enhances, "[[", "name")
+                for(pkg in unique(c(pkgs1, pkgs2)))
+                    ## tcltk warns if no DISPLAY variable
+                    ##, errors if not compiled in
+                    suppressWarnings(suppressMessages(try(require(pkg,
+                                                                  character.only = TRUE,
+                                                                  quietly = TRUE),
+                                                          silent = TRUE)))
+            }, type = "output")
+        }
         runif(1) # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
@@ -3889,6 +3894,7 @@ function(package, lib.loc = NULL)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)
+        on.exit(detach("compat"))
     }
 
     ## A simple function for catching the output from the codetools
@@ -3941,9 +3947,15 @@ function(package, lib.loc = NULL)
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
-    args <- c(list(package, report = foo), args)
-    suppressMessages(do.call(codetools::checkUsagePackage, args))
-    suppressMessages(do.call(checkMethodUsagePackage, args))
+    if(check_without_loading) {
+        args <- c(list(getNamespace(package), report = foo), args)
+        suppressMessages(do.call(codetools::checkUsageEnv, args))
+        suppressMessages(do.call(checkMethodUsageEnv, args))
+    } else {
+        args <- c(list(package, report = foo), args)
+        suppressMessages(do.call(codetools::checkUsagePackage, args))
+        suppressMessages(do.call(checkMethodUsagePackage, args))
+    }
 
     out <- unique(out)
     class(out) <- "check_code_usage_in_package"
