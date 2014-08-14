@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2013   The R Core Team.
+ *  Copyright (C) 1999-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -16,6 +16,11 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, a copy is available at
  *  http://www.r-project.org/Licenses/
+ */
+
+/* This file is installed and available to packages, but only a small
+   part of the contents is within the API.  See chapter 6 of 'Writing
+   R Extensions'.
  */
 
 #ifndef R_INTERNALS_H_
@@ -170,6 +175,7 @@ typedef enum {
 #define TYPE_BITS 5
 #define MAX_NUM_SEXPTYPE (1<<TYPE_BITS)
 
+// ======================= USE_RINTERNALS section
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.
  * It defines internal structures that are otherwise only accessible
@@ -426,13 +432,14 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define SET_ENVFLAGS(x,v)	(((x)->sxpinfo.gp)=(v))
 
 #else /* not USE_RINTERNALS */
+// ======================= not USE_RINTERNALS section
 
 typedef struct SEXPREC *SEXP;
 
 #define CHAR(x)		R_CHAR(x)
 const char *(R_CHAR)(SEXP x);
 
-/* Various tests with macro versions below */
+/* Various tests with macro versions in the USE_RINTERNALS section */
 Rboolean (Rf_isNull)(SEXP s);
 Rboolean (Rf_isSymbol)(SEXP s);
 Rboolean (Rf_isLogical)(SEXP s);
@@ -1316,7 +1323,7 @@ SEXP R_FixupRHS(SEXP x, SEXP y);
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\
-	    R_SignalCStackOverflow(usage);					\
+	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
 #endif
 
