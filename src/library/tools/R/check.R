@@ -3540,7 +3540,19 @@ setRlibs <-
         res <- .check_package_CRAN_incoming(pkgdir)
         if(length(res)) {
             out <- format(res)
-            if(length(res$bad_package)) {
+            if((length(out) == 1L) &&
+               grepl("^Maintainer: ", out)) {
+                ## Special-case when there is only the maintainer
+                ## address to note (if at all).
+                maintainer <- res$Maintainer
+                if(nzchar(maintainer) &&
+                   identical(maintainer,
+                             Sys.getenv("_R_CHECK_MAINTAINER_ADDRESS_"))) {
+                    resultLog(Log, "OK")
+                    out <- character()
+                }
+                else resultLog(Log, "Note_to_CRAN_maintainers")
+            } else if(length(res$bad_package)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
