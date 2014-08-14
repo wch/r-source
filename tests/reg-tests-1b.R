@@ -2104,4 +2104,14 @@ stopifnot(all.equal(cA, cA),
 # both all.equal() failed in R <= 3.1.1
 
 
+## as.hexmode(x), as.octmode(x)  when x is double
+x <- c(NA, 1)
+stopifnot(identical(x == x,
+		    as.hexmode(x) == as.octmode(x)))
+p <- c(1, pi)
+assertError(as.hexmode(p))
+assertError(as.octmode(p))
+## where all "wrong" in R <= 3.1.1
+
+
 proc.time()

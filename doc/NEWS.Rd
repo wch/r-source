@@ -233,6 +233,10 @@
 
       \item Rendering of \code{\\command} in HTML has been improved:
       this is particularly evident on the help page for \code{INSTALL}.
+
+      \item \code{as.hexmode(x)} and \code{as.octmode(x)} now behave
+      correctly for some numeric \code{x}, e.g., \code{c(NA, 1)} or
+      \code{c(1, pi)}.
     }
   }
 }
