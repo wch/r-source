@@ -78,7 +78,7 @@
     the smallest positive power of \code{double.base} that overflows.  Normally
     \code{1024}.}
   \item{integer.max}{the largest integer which can be represented.
-    Always \code{2147483647}.}
+    Always \eqn{2^31 - 1 = 2147483647}.}
   \item{sizeof.long}{the number of bytes in a C \code{long} type:
     \code{4} or \code{8} (most 64-bit systems, but not Windows).}
   \item{sizeof.longlong}{the number of bytes in a C \code{long long}
@@ -95,8 +95,8 @@
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.  As all
   current implementations of \R use 32-bit integers and use IEC 60559
-  floating-point (double precision) arithmetic, all but the last two
-  values are the same for almost all \R builds.
+  floating-point (double precision) arithmetic, all but three of the
+  last four values are the same for almost all \R builds. % sizeof.(long|longdouble|pointer)
 
   Note that on most platforms smaller positive values than
   \code{.Machine$double.xmin} can occur.  On a typical \R platform the
