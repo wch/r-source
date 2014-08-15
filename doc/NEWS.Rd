@@ -240,6 +240,10 @@
       
       \item \code{drop1()} failed if the \code{scope} argument had
       no variables to drop.  (\PR{15935})
+      
+      \item \code{edit()} (and hence \code{fix()} failed if 
+      an object had a non-character attribute named \code{"source"}
+      (an attribute that had been used in \R prior to version 2.15.0).
     }
   }
 }
