@@ -5150,6 +5150,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
        value = BCNPOP();
        if (!isVector(value) || length(value) != 1)
 	   errorcall(call, _("EXPR must be a length 1 vector"));
+       if (isFactor(value))
+	   warningcall(call,
+		       _("EXPR is a \"factor\", treated as integer.\n"
+			 " Consider using '%s' instead."),
+		       "switch(as.character( * ), ...)");
        if (TYPEOF(value) == STRSXP) {
 	   int i, n, which;
 	   if (names == R_NilValue)
