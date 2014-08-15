@@ -384,6 +384,12 @@ and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @uref{http://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
 has the version for the latest release of @R{}).
 
+Note: if you already have @R{} installed, check that where you installed
+@R{} replaces or comes eariier in your path than the previous
+installation.  Some systems are set up to have @file{/usr/bin} (the
+standard place for a system installation) ahead of @file{/usr/local/bin}
+(the default place for installation of @R{}) in their default path.
+
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
 
@@ -620,8 +626,10 @@ the option @option{--prefix}, as in
 This causes @command{make install} to install the @R{} script to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
-displayed at the end of @command{configure}.  You can install into
-another directory tree by using
+displayed at the end of @command{configure}.  The installation may need
+to be done by the owner of @file{@var{prefix}}, often a root account.
+
+You can install into another directory tree by using
 
 @example
 make prefix=/path/to/here install
