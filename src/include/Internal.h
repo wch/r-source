@@ -331,6 +331,7 @@ SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_resetCondHands(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_return(SEXP, SEXP, SEXP, SEXP);
+SEXP do_returnValue(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rgb(SEXP, SEXP, SEXP, SEXP);
 SEXP do_RGB2hsv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Rhome(SEXP, SEXP, SEXP, SEXP);

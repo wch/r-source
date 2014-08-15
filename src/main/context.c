@@ -134,6 +134,8 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 	}
 	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
 	    SEXP s = c->conexit;
+	    RCNTXT* savecontext = R_ExitContext;
+	    R_ExitContext = c;
 	    c->conexit = R_NilValue; /* prevent recursion */
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
@@ -148,7 +150,10 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 	    R_CheckStack();
 	    eval(s, c->cloenv);
 	    UNPROTECT(1);
+	    R_ExitContext = savecontext;
 	}
+	if (R_ExitContext == c)
+	    R_ExitContext = NULL; /* Not necessary?  Better safe than sorry. */
     }
 }
 
@@ -195,6 +200,7 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
     /* run onexit/cend code for all contexts down to but not including
        the jump target */
     PROTECT(val);
+    cptr->returnValue = val;/* in case the on.exit code wants to see it */
     R_run_onexits(cptr);
     UNPROTECT(1);
     R_Visible = savevis;
@@ -243,6 +249,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->srcref = R_Srcref;    
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;
+    cptr->returnValue = NULL;
 
     R_GlobalContext = cptr;
 }
@@ -257,12 +264,17 @@ void endcontext(RCNTXT * cptr)
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	Rboolean savevis = R_Visible;
+	RCNTXT* savecontext = R_ExitContext;
+	R_ExitContext = cptr;
 	cptr->conexit = R_NilValue; /* prevent recursion */
 	PROTECT(s);
 	eval(s, cptr->cloenv);
 	UNPROTECT(1);
+	R_ExitContext = savecontext;
 	R_Visible = savevis;
     }
+    if (R_ExitContext == cptr)
+    	R_ExitContext = NULL;
     R_GlobalContext = cptr->nextcontext;
 }
 
@@ -296,9 +308,12 @@ void attribute_hidden R_JumpToContext(RCNTXT *target, int mask, SEXP val)
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;
 	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
-	 cptr = cptr->nextcontext)
+	 cptr = cptr->nextcontext) {
 	if (cptr == target)
 	    jumpfun(cptr, mask, val);
+        if (cptr == R_ExitContext)
+	    R_ExitContext = NULL;
+    }
     error(_("target context is not on the stack"));
 }
 

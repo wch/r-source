@@ -503,6 +503,7 @@ typedef struct RCNTXT {
 #endif
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;     /* should browser finish this context without stopping */
+    SEXP returnValue;			/* only set during on.exit calls */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -629,6 +630,7 @@ extern0 RCNTXT R_Toplevel;	      /* Storage for the toplevel context */
 extern0 RCNTXT* R_ToplevelContext;  /* The toplevel context */
 LibExtern RCNTXT* R_GlobalContext;    /* The global context */
 extern0 RCNTXT* R_SessionContext;   /* The session toplevel context */
+extern0 RCNTXT* R_ExitContext;      /* The active context for on.exit processing */
 #endif
 extern Rboolean R_Visible;	    /* Value visibility flag */
 extern0 int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */

@@ -123,6 +123,10 @@
             
       \item The \code{"source"} attribute (which has not been added by \R
       since before \R version 2.14.0) is no longer treated as special.
+      
+      \item An experimental function \code{returnValue()} has been added
+      to give \code{on.exit()} code access to a function's return
+      value for debugging purposes.
     }
   }
 

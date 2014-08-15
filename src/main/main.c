@@ -823,6 +823,7 @@ void setup_Rmainloop(void)
     R_Toplevel.restartstack = R_RestartStack;
     R_Toplevel.srcref = R_NilValue;
     R_GlobalContext = R_ToplevelContext = R_SessionContext = &R_Toplevel;
+    R_ExitContext = NULL;
 
     R_Warnings = R_NilValue;
 

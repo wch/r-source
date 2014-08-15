@@ -1046,7 +1046,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     else {
 	PROTECT(tmp = eval(body, newrho));
     }
-
+    cntxt.returnValue = tmp;
     endcontext(&cntxt);
 
     if (RDEBUG(op)) {
@@ -1143,7 +1143,7 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     else {
 	PROTECT(tmp = eval(body, newrho));
     }
-
+    cntxt.returnValue = tmp; /* make it available to on.exit */
     endcontext(&cntxt);
 
     if (RDEBUG(op)) {
@@ -5639,4 +5639,12 @@ SEXP attribute_hidden do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rh
 	    R_num_math_threads = R_max_num_math_threads;
     }
     return ScalarInteger(old);
+}
+
+SEXP attribute_hidden do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    if (R_ExitContext && R_ExitContext->returnValue)
+        return R_ExitContext->returnValue;
+    return CAR(args); /* default */
 }
