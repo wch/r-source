@@ -54,7 +54,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans[1L,  ] <- extractAIC(object, scale, k = k, ...)
     n0 <- nobs(object, use.fallback = TRUE)
     env <- environment(formula(object))
-    for(i in seq(ns)) {
+    for(i in seq_len(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
 	    cat("trying +", tt, "\n", sep = "")
