@@ -1088,6 +1088,31 @@ static void SymbolShortcuts(void)
     R_dot_GenericDefEnv = install(".GenericDefEnv");
 }
 
+
+#define N_DDVAL_SYMBOLS 65
+
+static SEXP DDVALSymbols[N_DDVAL_SYMBOLS];
+
+static SEXP createDDVALSymbol(int n) {
+    char buf[10];
+    snprintf(buf, 10, "..%d", n);
+    return install(buf);
+}
+
+static void initializeDDVALSymbols() {
+    for(int i = 0; i < N_DDVAL_SYMBOLS; i++) {
+        DDVALSymbols[i] = createDDVALSymbol(i);
+    }
+}
+
+SEXP attribute_hidden installDDVAL(int n) {
+    if (n < N_DDVAL_SYMBOLS)
+        return DDVALSymbols[n];
+
+    return createDDVALSymbol(n);
+}
+
+
 /* initialize the symbol table */
 void attribute_hidden InitNames()
 {
@@ -1136,6 +1161,7 @@ void attribute_hidden InitNames()
         SET_SPECIAL_SYMBOL(install(Spec_name[i]));
 
     R_initAsignSymbols();
+    initializeDDVALSymbols();
     R_initialize_bcode();
 }
 
@@ -1165,6 +1191,37 @@ SEXP install(const char *name)
 
     R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
     return (sym);
+}
+
+attribute_hidden
+SEXP installS3Signature(const char *className, const char *methodName) {
+
+    const char *src;
+    const int maxLength = 512;
+    char signature[maxLength];
+
+    int i = 0;
+    for(src = className; *src; src++) {
+        if (i == maxLength)
+            error(_("class name too long in '%s'"), className);
+        signature[i++] = *src;
+    }
+
+    if (i == maxLength)
+        error(_("class name too long in '%s'"), className);
+    signature[i++] = '.';
+
+    for(src = methodName; *src; src++) {
+        if (i == maxLength)
+            error(_("class name too long in '%s'"), className);
+        signature[i++] = *src;
+    }
+
+    if (i == maxLength)
+        error(_("class name too long in '%s'"), className);
+    signature[i] = 0;
+
+    return install(signature);
 }
 
 
