@@ -3941,14 +3941,15 @@ function(package, lib.loc = NULL)
                    config_val_to_logical)
     }
     ## look for globalVariables declaration in package
-    .glbs <- utils::globalVariables(,package)
+    .glbs <- suppressMessages(utils::globalVariables(,package))
     if(length(.glbs))
         ## codetools doesn't allow adding to its default
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
     if(check_without_loading) {
-        args <- c(list(getNamespace(package), report = foo), args)
+        env <- getNamespace(package)
+        args <- c(list(env, report = foo), args)
         suppressMessages(do.call(codetools::checkUsageEnv, args))
         suppressMessages(do.call(checkMethodUsageEnv, args))
     } else {
