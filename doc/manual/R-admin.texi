@@ -385,7 +385,7 @@ and the @R{} @acronym{FAQ} (files @file{FAQ} or
 has the version for the latest release of @R{}).
 
 Note: if you already have @R{} installed, check that where you installed
-@R{} replaces or comes eariier in your path than the previous
+@R{} replaces or comes earlier in your path than the previous
 installation.  Some systems are set up to have @file{/usr/bin} (the
 standard place for a system installation) ahead of @file{/usr/local/bin}
 (the default place for installation of @R{}) in their default path.
