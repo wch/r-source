@@ -120,6 +120,9 @@
 
       \item \code{ls()} (aka \code{objects()}) and
       \code{as.list.environment()} gain a new argument \code{sorted}.
+            
+      \item The \code{"source"} attribute (which has not been added by \R
+      since before \R version 2.14.0) is no longer treated as special.
     }
   }
 
@@ -243,7 +246,7 @@
       
       \item \code{edit()} (and hence \code{fix()} failed if 
       an object had a non-character attribute named \code{"source"}
-      (an attribute that had been used in \R prior to version 2.15.0).
+      (an attribute that had been used in \R prior to version 2.14.0).
     }
   }
 }

@@ -868,7 +868,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		if (TAG(a) == R_NamesSymbol)
 		    goto nextattr;
 	    }
-	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol || TAG(a) == R_SrcrefSymbol
+	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SrcrefSymbol
 	       || TAG(a) == R_WholeSrcrefSymbol || TAG(a) == R_SrcfileSymbol)
 		goto nextattr;
 	    if(useSlots)
