@@ -388,7 +388,8 @@ Note: if you already have @R{} installed, check that where you installed
 @R{} replaces or comes earlier in your path than the previous
 installation.  Some systems are set up to have @file{/usr/bin} (the
 standard place for a system installation) ahead of @file{/usr/local/bin}
-(the default place for installation of @R{}) in their default path.
+(the default place for installation of @R{}) in their default path, and
+some do not have @file{/usr/local/bin} on the default path.
 
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
@@ -636,8 +637,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} (and current Solaris and
-FreeBSD @command{make}, but not some older Unix makes).
+at least with @acronym{GNU} @command{make} (and current Solaris
+@command{make}, but not some older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -702,8 +703,8 @@ supported, stripped libraries in directories @file{lib} and
 @file{modules} and in the standard packages.
 
 Note that installing @R{} into a directory whose path contains spaces is
-not supported, and at least some aspects (such as installing source
-packages) will not work.
+not supported, and some aspects (such as installing source packages)
+will not work.
 @c The main problem is the Makefile include in etc/Makeconf
 
 @cindex Manuals, installing
