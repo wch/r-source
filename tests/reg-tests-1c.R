@@ -436,4 +436,12 @@ stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
 ## all 4 prettyNum() would error out
 
 
+## PR#15935
+y <- 1:3
+drop1(lm(y ~ 1))
+drop1(glm(y ~ 1))
+stats:::drop1.default(glm(y ~ 1))
+## gave error in R < 3.1.2
+
+
 proc.time()
