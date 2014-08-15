@@ -237,6 +237,9 @@
       \item \code{as.hexmode(x)} and \code{as.octmode(x)} now behave
       correctly for some numeric \code{x}, e.g., \code{c(NA, 1)} or
       \code{c(1, pi)}.
+      
+      \item \code{drop1()} failed if the \code{scope} argument had
+      no variables to drop.  (\PR{15935})
     }
   }
 }
