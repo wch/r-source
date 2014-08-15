@@ -380,7 +380,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     ans[1, ] <- extractAIC(object, scale, k = k, ...)
     n0 <- nobs(object, use.fallback = TRUE)
     env <- environment(formula(object))
-    for(i in seq(ns)) {
+    for(i in seq_len(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
 	    cat("trying -", tt, "\n", sep = "")
@@ -439,7 +439,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     y <- object$residuals + object$fitted.values
     ## predict(object) applies na.action where na.exclude results in too long
     na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
-    for(i in 1L:ns) {
+    for(i in seq_len(ns)) {
 	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(if(all.cols) seq(ncol(x)) else na.coef, ii)
 	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
@@ -525,7 +525,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT", "Ch
 #    na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)
-    for(i in 1L:ns) {
+    for(i in seq_len(ns)) {
 	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(seq(ncol(x)), ii)
 	z <-  glm.fit(x[, jj, drop = FALSE], y, wt, offset=object$offset,
