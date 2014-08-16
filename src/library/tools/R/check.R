@@ -3607,6 +3607,21 @@ setRlibs <-
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
+            OK <- TRUE
+            ## Look for empty importFrom
+            imp <- ns$imports
+            nm <- sapply(imp, "[[", 1)
+            lens <- sapply(imp, function(x) length(x[[2]]))
+            bad <- nm[lens == 0L]
+            if(length(bad)) {
+                OK <- FALSE
+                msg <- if(length(bad) == 1L)
+                    sprintf("  Namespace with nothing imported: %s", sQuote(bad))
+                else
+                    paste("  Namespaces with nothing imported:",
+                          .pretty_format(sort(bad)), sep = "\n")
+                noteLog(Log, msg)
+            }
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
                 ## check that this is installable in R 3.0.1
@@ -3630,13 +3645,13 @@ setRlibs <-
                     if(status != 0L)  break
                 }
                 if (status == 0L) {
+                    OK <- FALSE
                     msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
                                    nS3methods)
                     noteLog(Log, msg)
-                } else
-                    resultLog(Log, "OK")
-            } else
-                resultLog(Log, "OK")
+                }
+            }
+            if(OK) resultLog(Log, "OK")
         }
 
         checkingLog(Log, "package dependencies")
