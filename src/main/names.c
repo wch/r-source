@@ -1194,11 +1194,11 @@ SEXP install(const char *name)
     return (sym);
 }
 
+#define maxLength 512
 attribute_hidden
 SEXP installS3Signature(const char *className, const char *methodName) {
 
     const char *src;
-    const int maxLength = 512;
     char signature[maxLength];
 
     int i = 0;
