@@ -5192,8 +5192,9 @@ function(package, dir, lib.loc = NULL)
                 c("methods", "stats4"))
     ## It helps to know if non-default standard packages are require()d
     ## safer to list them: parallel got included for years
+    ## Some people depend on 'base'!
     default_package_names <-
-        c("datasets", "grDevices", "graphics", "stats", "utils")
+        c("base", "datasets", "grDevices", "graphics", "stats", "utils")
     depends_suggests <- c(depends, suggests, enhances, pkg_name, default_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
