@@ -466,7 +466,6 @@ Rd2HTML <-
                    enterPara(doParas)
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
-               ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) {
                    url <- paste(as.character(block), collapse="")
@@ -583,7 +582,7 @@ Rd2HTML <-
 
         tags <- RdTags(content)
 
-	leavePara(FALSE)
+	leavePara(NA)
 	of1('\n<table summary="Rd table">\n')
         newrow <- TRUE
         newcol <- TRUE
@@ -614,11 +613,11 @@ Rd2HTML <-
             	newcol <- TRUE
             },
             writeBlock(content[[i]], tags[i], "\\tabular"))
-            leavePara(FALSE)
         }
         if (!newcol) of1('</td>')
         if (!newrow) of1('\n</tr>\n')
         of1('\n</table>\n')
+        inPara <<- FALSE
     }
 
     writeContent <- function(blocks, blocktag) {
