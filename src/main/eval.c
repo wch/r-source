@@ -5643,8 +5643,11 @@ SEXP attribute_hidden do_setmaxnumthreads(SEXP call, SEXP op, SEXP args, SEXP rh
 
 SEXP attribute_hidden do_returnValue(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    SEXP val;
     checkArity(op, args);
-    if (R_ExitContext && R_ExitContext->returnValue)
-        return R_ExitContext->returnValue;
+    if (R_ExitContext && (val = R_ExitContext->returnValue)){
+        MARK_NOT_MUTABLE(val);
+        return val;
+    }
     return CAR(args); /* default */
 }
