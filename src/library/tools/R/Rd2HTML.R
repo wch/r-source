@@ -222,7 +222,7 @@ Rd2HTML <-
     inEqn <- FALSE		# Should we do edits needed in an eqn?
     sectionLevel <- 0L		# How deeply nested within section/subsection
     inPara <- FALSE		# Are we in a <p> paragraph? If NA, we're not, but we're not allowed to be
-
+    inAsIs <- FALSE             # Should we show characters "as is"?
 
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="b",
@@ -299,6 +299,9 @@ Rd2HTML <-
             leavePara(NA)
         else
             enterPara()
+        saveAsIs <- inAsIs
+        asis <- !is.na(match(tag, "\\command"))
+        if(asis) inAsIs <<- TRUE
         if (!isBlankRd(block)) {
     	    of0("<", HTMLTags[tag], ">")
     	    writeContent(block, tag)
@@ -306,6 +309,7 @@ Rd2HTML <-
     	}
         if(HTMLTags[tag] == "pre")
             inPara <<- FALSE
+        if(asis) inAsIs <<- saveAsIs
     }
 
     checkInfixMethod <- function(blocks)
@@ -434,7 +438,7 @@ Rd2HTML <-
                UNKNOWN =,
                VERB = of1(vhtmlify(block, inEqn)),
                RCODE = of1(vhtmlify(block)),
-               TEXT = of1(if(doParas) addParaBreaks(htmlify(block))else vhtmlify(block)),
+               TEXT = of1(if(doParas && !inAsIs) addParaBreaks(htmlify(block)) else vhtmlify(block)),
                USERMACRO =,
                "\\newcommand" =,
                "\\renewcommand" =,
