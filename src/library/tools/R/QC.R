@@ -5181,9 +5181,9 @@ function(package, dir, lib.loc = NULL)
         setdiff(.get_standard_package_names()$base,
                 c("methods", "stats4"))
     ## It helps to know if non-default standard packages are require()d
-    default_package_names<-
-        setdiff(standard_package_names,
-                c("grid", "splines", "tcltk", "tools"))
+    ## safer to list them: parallel got included for years
+    default_package_names <-
+        c("datasets", "grDevices", "graphics", "stats", "utils")
     depends_suggests <- c(depends, suggests, enhances, pkg_name, default_package_names)
     imports <- c(imports, depends, suggests, enhances, pkg_name,
                  standard_package_names)
@@ -5290,7 +5290,6 @@ function(package, dir, lib.loc = NULL)
 
     for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
 
-    depends_not_import <- character()
     if(length(ns)) {
         imp <- c(ns$imports, ns$importClasses, ns$importMethods)
         if (length(imp)) {
@@ -5299,7 +5298,9 @@ function(package, dir, lib.loc = NULL)
         }
     } else imp <- character()
     bad_imp <- setdiff(imports0, all_imports)
-    depends_not_import <- setdiff(depends, c(imp, standard_package_names))
+
+    ## All the non-default packages need to be imported from.
+    depends_not_import <- setdiff(depends, c(imp, default_package_names))
 
     methods_message <-
         if(uses_methods && !"methods" %in% c(depends, imports))
