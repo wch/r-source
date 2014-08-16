@@ -3610,15 +3610,17 @@ setRlibs <-
             OK <- TRUE
             ## Look for empty importFrom
             imp <- ns$imports
+            lens <- sapply(imp, length)
+            imp <- imp[lens == 2L]
             nm <- sapply(imp, "[[", 1)
             lens <- sapply(imp, function(x) length(x[[2]]))
             bad <- nm[lens == 0L]
             if(length(bad)) {
                 OK <- FALSE
                 msg <- if(length(bad) == 1L)
-                    sprintf("  Namespace with nothing imported: %s", sQuote(bad))
+                    sprintf("  Namespace with empty importFrom: %s", sQuote(bad))
                 else
-                    paste("  Namespaces with nothing imported:",
+                    paste("  Namespaces with empty importFrom:",
                           .pretty_format(sort(bad)), sep = "\n")
                 noteLog(Log, msg)
             }
