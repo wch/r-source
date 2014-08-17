@@ -5191,7 +5191,7 @@ function(package, dir, lib.loc = NULL)
         setdiff(.get_standard_package_names()$base,
                 c("methods", "stats4"))
     ## It helps to know if non-default standard packages are require()d
-    ## safer to list them: parallel got included for years
+    ## but safer to list them: compiler & parallel got included for years
     ## Some people depend on 'base'!
     default_package_names <-
         c("base", "datasets", "grDevices", "graphics", "stats", "utils")

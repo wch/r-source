@@ -150,9 +150,10 @@
       \command{R CMD check} gains \option{--run-dontrun} and
       \option{--run-donttest} options.
       
-      \command{R CMD check} now reports empty imports in
-      \file{NAMESPACE} as these are common errors (writing
-      \code{importFrom(Pkg)} where \code{import(Pkg)} was intended).
+      \command{R CMD check} now reports empty \code{importFrom}
+      declarations in a \file{NAMESPACE} file, as these are common
+      errors (writing \code{importFrom(Pkg)} where \code{import(Pkg)}
+      was intended).
 
       \item \command{R CMD check --as-cran} now checks code usage
       directly on the package namespace without loading and attaching
