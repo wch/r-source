@@ -1688,6 +1688,14 @@ function(x)
 
 ### ** .strip_whitespace
 
+## <NOTE>
+## Other languages have this as strtrim() (or variants for left or right
+## trimming only), but R has a different strtrim().
+## So perhaps strstrip()?
+## Could more generally do
+##   strstrip(x, pattern, which = c("both", "left", "right"))
+## </NOTE>
+
 .strip_whitespace <-
 function(x)
 {
