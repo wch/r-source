@@ -329,6 +329,13 @@ URL_parts <- function(x) {
     parts
 }
 URL_parts(x)
+
+## There is no gregexec() yet, but one can emulate it by running
+## regexec() on the regmatches obtained via gregexpr().  E.g.:
+pattern <- "([[:alpha:]]+)([[:digit:]]+)"
+s <- "Test: A1 BC23 DEF456"
+lapply(regmatches(s, gregexpr(pattern, s)), 
+       function(e) regmatches(e, regexec(pattern, e)))
 }
 \keyword{character}
 \keyword{utilities}
