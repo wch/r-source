@@ -5363,7 +5363,10 @@ function(package, dir, lib.loc = NULL)
             } else NULL
             if (!inherits(value, "error")) {
                 exps <- c(ls(envir = getNamespaceInfo(p, "exports"),
-                             all.names = TRUE), extras[[p]])
+                             all.names = TRUE),
+                          ls(envir = getNamespaceInfo(p, "lazydata"),
+                             all.names = TRUE),
+                          extras[[p]])
                 this2 <- setdiff(this, exps)
                 if(length(this2))
                     imp2un <- c(imp2un, paste(p, this2, sep = "::"))
