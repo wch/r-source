@@ -961,15 +961,15 @@ session and relies on functions in that package not being masked by
 other @code{require} or @code{library} calls.  It is better practice to
 use code like
 @example
-   if (requireNamespace("rgl")) @{
-      if (display=="persp") rgl::scatterplot3d(...) else rgl::plot3d(...)
+   if (requireNamespace("rgl", quietly = TRUE)) @{
+      rgl::plot3d(...)
    @} else @{
       ## do something else not involving rgl.
    @}
 @end example
 @noindent
-Note the use of @code{rgl::} as these objects would not necessarily be
-visible (and if they are, need not be the ones from that namespace:
+Note the use of @code{rgl::} as that object would not necessarily be
+visible (and if it is, it need not be the one from that namespace:
 @code{plot3d} occurs in several other packages).  If the intention is to
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
