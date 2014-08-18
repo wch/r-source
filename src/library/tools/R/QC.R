@@ -5200,17 +5200,17 @@ function(package, dir, lib.loc = NULL)
                  standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
-    common_names <- c("pkg", "pkgName", "package", "pos")
+    common_names <- c("pkg", "pkgName", "package", "pos", "dep_name")
 
-    bad_exprs <- character()
+    bad_exprs <- bad_deps <- bad_imps <- character()
     bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
-    bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if((Call %in% c("library", "require")) &&
-               (length(e) >= 2L)) {
+            if((Call %in%
+                c("library", "require", "loadNamespace", "requireNamespace"))
+               && (length(e) >= 2L)) {
                 ## We need to rempve '...': OTOH the argument could be NULL
                 keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
@@ -5229,11 +5229,20 @@ function(package, dir, lib.loc = NULL)
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
                     if(!dunno) {
-                        pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
-                        if(! pkg %in% c(depends_suggests, common_names))
-                            bad_exprs <<- c(bad_exprs, pkg)
-                        if(pkg %in% depends)
-                            bad_deps <<- c(bad_deps, pkg)
+                        if (Call %in% c("loadNamespace", "requireNamespace")) {
+                            if (identical(class(pkg), "character")) {
+                                pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                                if(! pkg %in%
+                                   c(imports, depends_suggests, common_names))
+                                    bad_imps <<- c(bad_imps, pkg)
+                            }
+                       } else {
+                           pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                            if(! pkg %in% c(depends_suggests, common_names))
+                                bad_exprs <<- c(bad_exprs, pkg)
+                            if(pkg %in% depends)
+                                bad_deps <<- c(bad_deps, pkg)
+                        }
                     }
                 }
             } else if(Call %in% "::") {
@@ -5432,6 +5441,7 @@ function(package, dir, lib.loc = NULL)
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
@@ -5469,6 +5479,15 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$imps)) {
+          if(length(xx) > 1L) {
+              c(gettext("'loadNamespace' or 'requireNamespace' calls not declared from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("'loadNamespace' or 'requireNamespace' call not declared from: %s",
                        sQuote(xx))
           }
       },
@@ -5608,7 +5627,8 @@ function(db, files)
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
             if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in% c("library", "require")) {
+            if(Call %in%
+               c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
                     ## We need to rempve '...': OTOH the argument could be NULL
                     keep <- sapply(e, function(x) deparse(x)[1L] != "...")
