@@ -591,19 +591,23 @@ The @samp{Type} field specifies the type of the package:
 @pxref{Package types}.
 
 @c DESCRIPTION field Classification/ACM
+@c DESCRIPTION field Classification/ACM-2012
 @c DESCRIPTION field Classification/JEL
 @c DESCRIPTION field Classification/MSC
+@c DESCRIPTION field Classification/MSC-2010
 One can add subject classifications for the content of the package using
-the fields @samp{Classification/ACM} (using the Computing
-Classification System of the Association for Computing Machinery,
-@uref{http://www.acm.org/class/}), @samp{Classification/JEL} (the
-Journal of Economic Literature Classification System,
+the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
+(using the Computing Classification System of the Association for
+Computing Machinery, @uref{http://www.acm.org/class/}; the former refers
+to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
+Literature Classification System,
 @uref{http://www.aeaweb.org/journal/jel_class_system.html}), or
-@samp{Classification/MSC} (the Mathematics Subject Classification of the
-American Mathematical Society, @uref{http://www.ams.org/msc/}).  The
-subject classifications should be comma-separated lists of the
-respective classification codes, e.g.,
-@samp{Classification/ACM: G.4, H.2.8, I.5.1}.
+@samp{Classification/MSC} or @samp{Classification/MSC-2010} (the
+Mathematics Subject Classification of the American Mathematical Society,
+@uref{http://www.ams.org/msc/}; the former refers to the 2000 version).
+The subject classifications should be comma-separated lists of the
+respective classification codes, e.g., @samp{Classification/ACM: G.4,
+H.2.8, I.5.1}.
 
 @c DESCRIPTION field Language
 A @samp{Language} field can be used to indicate if the package
