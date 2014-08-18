@@ -150,7 +150,7 @@
       \command{R CMD check} gains \option{--run-dontrun} and
       \option{--run-donttest} options.
       
-      \command{R CMD check} now reports empty \code{importFrom}
+      \item \command{R CMD check} now reports empty \code{importFrom}
       declarations in a \file{NAMESPACE} file, as these are common
       errors (writing \code{importFrom(Pkg)} where \code{import(Pkg)}
       was intended).
