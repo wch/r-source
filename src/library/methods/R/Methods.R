@@ -1236,10 +1236,8 @@ callGeneric <- function(...)
             }
         }
         else {
-            if(is.null(formals(fdef)$...))
-                call <- substitute(fname(...))
-            else # substitute will screw up if ... is a formal arg to generic
-                call <- as.call(c(list(fname), eval(quote(list(...)))))
+            call <- sys.call() # just use the arguments to callGeneric()
+            call[[1]] <- fname
         }
     }
     eval(call, sys.frame(sys.parent()))
