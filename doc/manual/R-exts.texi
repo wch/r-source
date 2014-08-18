@@ -826,12 +826,7 @@ suppose an example from package @pkg{foo} uses a dataset from package
 @pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
 unless one wants to execute all the examples/tests/vignettes: it is
 useful to have @pkg{bar}, but not necessary.  Version requirements can
-be specified, and will be used by @command{R CMD check}.  Note that
-someone wanting to run the examples/tests/vignettes may not have a
-suggested package available (and it may not even be possible to install
-it for that platform), so it is desirable that the use of suggested
-packages is made conditional @emph{via}
-@code{if(require(@var{pkgname}))}).
+be specified, and will be used by @command{R CMD check}.
 
 @c DESCRIPTION field Enhances
 Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
@@ -946,6 +941,38 @@ CRAN packages @CRANpkg{BH} and almost all users of
 
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
+
+@menu
+* Suggested packages::          
+@end menu
+
+@node Suggested packages,  , Package Dependencies, Package Dependencies
+@subsubsection Suggested packages
+
+Note that someone wanting to run the examples/tests/vignettes may not
+have a suggested package available (and it may not even be possible to
+install it for that platform).  The recommendation used to be to make
+their use conditional @emph{via} @code{if(require("@var{pkgname}"))}):
+this is fine is that conditioning is done in examples/tests/vignettes.
+
+However, using @code{require} for conditioning @emph{in package code} is
+not good practice as it alters the search path for the rest of the
+session and relies on functions in that package not being masked by
+other @code{require} or @code{library} calls.  It is better practice to
+use code like
+@example
+   if (requireNamespace("rgl")) @{
+      if (display=="persp") rgl::scatterplot3d(...) else rgl::plot3d(...)
+   @} else @{
+      ## do something else not involving rgl.
+   @}
+@end example
+@noindent
+Note the use of @code{rgl::} as these objects would not necessarily be
+visible (and if they are, need not be the ones from that namespace:
+@code{plot3d} occurs in several other packages).  If the intention is to
+give an error if the suggested package is not available, simply use
+e.g.@: @code{rgl::plot3d}.
 
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
