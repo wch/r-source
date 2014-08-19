@@ -173,9 +173,9 @@
       packages using them to be re-installed.
       
       \item The alignment of memory allocated by \code{R_alloc} is now
-      guaranteed to be sufficient for C types \code{double complex} and
-      \code{long double}.  Packages using \code{USE_RINTERNALS} may need
-      to be re-installed on some platforms.
+      guaranteed to be sufficient for C type \code{long double}.
+      Packages using \code{USE_RINTERNALS} may need to be re-installed
+      on some platforms.
     }
   }
 
