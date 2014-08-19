@@ -171,11 +171,6 @@
       \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
       \code{rmultinom} are remapped (by default).  This requires
       packages using them to be re-installed.
-      
-      \item The alignment of memory allocated by \code{R_alloc} is now
-      guaranteed to be sufficient for C type \code{long double}.
-      Packages using \code{USE_RINTERNALS} may need to be re-installed
-      on some platforms.
     }
   }
 

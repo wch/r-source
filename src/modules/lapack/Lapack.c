@@ -210,14 +210,14 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     return ret;
 }
 
-static SEXP unscramble(const double* imag, int n,
+static SEXP unscramble(const double* imaginary, int n,
 		       const double* vecs)
 {
     int i, j;
     SEXP s = allocMatrix(CPLXSXP, n, n);
     size_t N = n;
     for (j = 0; j < n; j++) {
-	if (imag[j] != 0) {
+	if (imaginary[j] != 0) {
 	    int j1 = j + 1;
 	    for (i = 0; i < n; i++) {
 		COMPLEX(s)[i+N*j].r = COMPLEX(s)[i+N*j1].r = vecs[i + j * N];

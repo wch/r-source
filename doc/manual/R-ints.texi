@@ -130,7 +130,7 @@ Both types of node structure have as their first three fields a 32-bit
 previous and next node in a doubly-linked list), and then some further
 fields.  On a 32-bit platform a node@footnote{strictly, a @code{SEXPREC}
 node; @code{VECTOR_SEXPREC} nodes are slightly smaller but followed by
-data in the node.} typically occupies 28 bytes: on a 64-bit platform 56
+data in the node.} occupies 28 bytes: on a 64-bit platform typically 56
 bytes (depending on alignment constraints).
 
 The first five bits of the @code{sxpinfo} header specify one of up to 32
@@ -403,14 +403,11 @@ current use is for hash tables of environments (@code{VECSXP}s), where
 number of primary slots in use, and for the reference hash tables in
 serialization (@code{VECSXP}s), where @code{truelength} is the number of
 slots in use.} of the vector, and then followed by the data (aligned as
-required@footnote{On some 32-bit systems with a 24-byte
-@code{VECTOR_SEXPREC} node the data can follow immediately after the
-node.  But the requirements of alignment for @code{double complex} and
-@code{long double} pointers added in @R{} 3.2.0 may require padding to a
-multiple of 16 bytes.}).  The data are a block of memory of the
-appropriate length to store `true length' elements (rounded up to a
-multiple of 8 bytes, with the 8-byte blocks being the `Vcells' referred
-in the documentation for @code{gc()}).
+required: on most 32-bit systems with a 24-byte @code{VECTOR_SEXPREC}
+node the data can follow immediately after the node).  The data are a
+block of memory of the appropriate length to store `true length'
+elements (rounded up to a multiple of 8 bytes, with the 8-byte blocks
+being the `Vcells' referred in the documentation for @code{gc()}).
 
 The `data' for the various types are given in the table below.  A lot of
 this is interpretation, i.e. the types are not checked.

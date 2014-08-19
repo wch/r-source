@@ -287,22 +287,7 @@ typedef struct VECTOR_SEXPREC {
     struct vecsxp_struct vecsxp;
 } VECTOR_SEXPREC, *VECSEXP;
 
-// alignment increased for R 3.2.0: previous only for doubles.
-// Too much trouble with packages using USE_RINTERNALS for now.
-// #include <complex.h>
-// avoid namespace pollution, at least on OS X
-//#ifndef R_USE_COMPLEX
-//# undef I
-//#endif
-typedef union {
-    VECTOR_SEXPREC s;
-    double dbl_align;
-//    double complex dcpl_align;
-#ifdef HAVE_LONG_DOUBLE
-    long double ldbl_align;
-#endif
-} SEXPREC_ALIGN;
-
+typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
