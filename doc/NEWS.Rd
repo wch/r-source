@@ -183,6 +183,9 @@
     \itemize{
       \item Fixed two obscure bugs in pairlist subassignment, reported by
       Radford Neal as part of pqR issue 16.
+
+      \item Fixes for bugs in handling empty arguments and argument
+      matching by name in \code{log()}.
     }
   }
 }

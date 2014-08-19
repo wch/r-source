@@ -1587,6 +1587,11 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
     return res;
 }
 
+#ifdef M_E
+# define DFLT_LOG_BASE M_E
+#else
+# define DFLT_LOG_BASE exp(1.)
+#endif
 
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1632,52 +1637,45 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     SEXP call2;
-    int nprotect = 2;
-
-    if (n >= 2 && CADR(args) == R_MissingArg) {
-#ifdef M_E
-	double e = M_E;
-#else
-	double e = exp(1.);
-#endif
-	SETCADR(args, ScalarReal(e));
-    }
     PROTECT(call2 = lang2(CAR(call), R_NilValue));
     SETCDR(call2, args);
 
-    if (! DispatchGroup("Math", call2, op, args, env, &res)) {
-	switch (n) {
-	case 1:
-	    if(CAR(args) == R_MissingArg ||
-	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
-		error(_("argument \"%s\" is missing, with no default"), "x");
+    if (n == 1) {
+	if (CAR(args) == R_MissingArg ||
+	    (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
+	    error(_("argument \"%s\" is missing, with no default"), "x");
 
+	if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	    if (isComplex(CAR(args)))
 		res = complex_math1(call, op, args, env);
 	    else
 		res = math1(CAR(args), R_log, call);
-	    break;
-	case 2:
-	{
-	    /* match argument names if supplied */
-	    PROTECT(args = matchArgs(do_log_formals, args, call));
-	    nprotect++;
+	}
+	UNPROTECT(2);
+	return res;
+    }
+    else {
+	/* match argument names if supplied */
+	/* will signal an error unless there are one or two arguments */
+	/* after the match, length(args) will be 2 */
+	PROTECT(args = matchArgs(do_log_formals, args, call));
+
+	if(CAR(args) == R_MissingArg)
+	    error(_("argument \"%s\" is missing, with no default"), "x");
+	if (CADR(args) == R_MissingArg)
+	    SETCADR(args, ScalarReal(DFLT_LOG_BASE));
+
+	if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid argument 'base' of length 0"));
 	    if (isComplex(CAR(args)) || isComplex(CADR(args)))
 		res = complex_math2(call, op, args, env);
 	    else
 		res = math2(CAR(args), CADR(args), logbase, call);
-	    break;
 	}
-	default:
-        error(ngettext("%d argument passed to '%s' which requires 1 or 2 arguments", 
-		       "%d arguments passed to '%s'which requires 1 or 2 arguments", n),
-              n, "log");
-	}
+	UNPROTECT(3);
+	return res;
     }
-    UNPROTECT(nprotect);
-    return res;
 }
 
 
