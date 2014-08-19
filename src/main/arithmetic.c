@@ -1648,6 +1648,10 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     if (! DispatchGroup("Math", call2, op, args, env, &res)) {
 	switch (n) {
 	case 1:
+	    if(CAR(args) == R_MissingArg ||
+	       (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
+		error(_("argument \"%s\" is missing, with no default"), "x");
+
 	    if (isComplex(CAR(args)))
 		res = complex_math1(call, op, args, env);
 	    else
