@@ -11077,7 +11077,11 @@ Prior to @R{} 3.2.0 the memory returned was only guaranteed to be
 aligned as required for @code{double} pointers: take precautions if
 casting to a pointer which needs more (e.g.@: @code{(long double *)} on
 some platforms).  Currently alignment for @code{long double *} and
-@code{double complex} is guaranteed.
+@code{double complex} is guaranteed: however what this is
+platform-specific (it could be 4, 8 or 16 bytes, or with no alignment
+constraint: e.g.@: @cputype{x86} Linux is 4 and @cputype{x64_84} Linux
+is 16, even though the @code{long double} type is the same 80-bit
+IEC60559 type).
 
 These functions should only be used in code called by @code{.C} etc,
 never from front-ends.  They are not thread-safe.
