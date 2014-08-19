@@ -1236,7 +1236,8 @@ callGeneric <- function(...)
             }
         }
         else {
-            call <- substitute(fname(...))
+            call <- sys.call() # just use the arguments to callGeneric()
+            call[[1]] <- fname
         }
     }
     eval(call, sys.frame(sys.parent()))

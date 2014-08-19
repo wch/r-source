@@ -90,6 +90,9 @@
       \item \code{edit()} (and hence \code{fix()}) failed if 
       an object had a non-character attribute named \code{"source"}
       (an attribute that had been used in \R prior to version 2.15.0).
+
+      \item \code{callGeneric()} could fail if the generic had
+        \code{\dots} as a formal argument. (\PR{15937}).
     }
   }
 }
