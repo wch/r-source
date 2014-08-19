@@ -57,6 +57,8 @@
 #undef HAVE_CPOW
 #endif
 
+// next is for Rinternals.h
+#define R_USE_COMPLEX 1
 #include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Internal.h>
 #include <Rmath.h>

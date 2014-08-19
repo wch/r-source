@@ -11073,9 +11073,11 @@ by @R{}'s internal allocation mechanism.  These will only come into play
 on 64-bit systems, where the limit for @var{n} prior to @R{} 3.0.0 was
 just under 16Gb.
 
-The memory returned is only guaranteed to be aligned as required for
-@code{double} pointers: take precautions if casting to a pointer which
-needs more (e.g.@: @code{(long double *)} on some platforms).
+Prior to @R{} 3.2.0 the memory returned was only guaranteed to be
+aligned as required for @code{double} pointers: take precautions if
+casting to a pointer which needs more (e.g.@: @code{(long double *)} on
+some platforms).  Currently alignment for @code{long double *} and
+@code{double complex} is guaranteed.
 
 These functions should only be used in code called by @code{.C} etc,
 never from front-ends.  They are not thread-safe.
