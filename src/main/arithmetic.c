@@ -1636,22 +1636,18 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	do_log_formals = allocFormalsList2(R_x_Symbol, R_baseSymbol);
     }
 
-    SEXP call2;
-    PROTECT(call2 = lang2(CAR(call), R_NilValue));
-    SETCDR(call2, args);
-
     if (n == 1) {
 	if (CAR(args) == R_MissingArg ||
 	    (TAG(args) != R_NilValue && TAG(args) != R_x_Symbol))
 	    error(_("argument \"%s\" is missing, with no default"), "x");
 
-	if (! DispatchGroup("Math", call2, op, args, env, &res)) {
+	if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	    if (isComplex(CAR(args)))
 		res = complex_math1(call, op, args, env);
 	    else
 		res = math1(CAR(args), R_log, call);
 	}
-	UNPROTECT(2);
+	UNPROTECT(1);
 	return res;
     }
     else {
@@ -1665,7 +1661,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (CADR(args) == R_MissingArg)
 	    SETCADR(args, ScalarReal(DFLT_LOG_BASE));
 
-	if (! DispatchGroup("Math", call2, op, args, env, &res)) {
+	if (! DispatchGroup("Math", call, op, args, env, &res)) {
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid argument 'base' of length 0"));
 	    if (isComplex(CAR(args)) || isComplex(CADR(args)))
@@ -1673,7 +1669,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		res = math2(CAR(args), CADR(args), logbase, call);
 	}
-	UNPROTECT(3);
+	UNPROTECT(2);
 	return res;
     }
 }
