@@ -18,21 +18,21 @@
       \item For consistency with \code{[dpqr]norm()},
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
       \code{exp(mulog)} rather than return \code{NaN} (for an error).
-      
+
       \item \code{capabilities()} now reports if ICU is compiled in for
       use for collation (it is only actually used if a suitable locale
       is set for collation, and never for a \code{C} locale).
-      
+
       \item (OS X only.) Package \pkg{tcltk} checks when loaded if it is
       linked against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
       informative error messages to be given.
-      
+
       The \code{X11()} device and X11-based versions of the data editor
       and viewer (invoked by \code{edit()} and \code{View()} for data
       frames and matrices from command-line \R) check that the X11
       libraries are installed.
-      
+
       \item \code{icuSetCollate()} allows \code{locale = "default"}, and
       \code{locale = "none"} to use OS services rather than ICU for
       collation.
@@ -40,17 +40,17 @@
       Environment variable \env{R_ICU_LOCALE} can be used to set the
       default ICU locale, in case the one derived from the OS locale is
       inappropriate (this is currently necessary on Windows).
-      
+
       \item New function \code{icuGetCollate()} to report on the ICU
       collation locale in use (if any).
     }
   }
-  
+
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The \command{configure} script reports on the more important
       capabilities/options which are not compiled in.
- 
+
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
@@ -59,12 +59,12 @@
       \command{install-libR} in a library mentioned in \env{LDFLAGS}
       (and not in \sQuote{your system's library directory} as
       documented). (Wish of \PR{15790}.)
-      
+
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
@@ -72,11 +72,11 @@
 
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
-      
+
       \item A longstanding bug in \code{nlminb()} on Windows was traced
       to a compiler bug in gcc 4.6.3; a workaround has been put in place.
       (\PR{15244} and \PR{15914}).
-      
+
       \item Rendering of \code{\\command} in HTML has been improved:
       this is particularly evident on the help page for \code{INSTALL}.
 
