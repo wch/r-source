@@ -297,7 +297,9 @@ typedef union {
     VECTOR_SEXPREC s;
     double dbl_align;
     double complex dcpl_align;
+#ifdef HAVE_LONG_DOUBLE
     long double ldbl_align;
+#endif
 } SEXPREC_ALIGN;
 
 
