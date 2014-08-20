@@ -4225,6 +4225,8 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 	R_BCNodeStackTop -= rank;					\
     } while (0)
 
+#define INTEGER_TO_LOGICAL(x) \
+    ((x) == NA_INTEGER ? NA_LOGICAL : (x) ? TRUE : FALSE)
 #define INTEGER_TO_REAL(x) ((x) == NA_INTEGER ? NA_REAL : (x))
 #define LOGICAL_TO_REAL(x) ((x) == NA_LOGICAL ? NA_REAL : (x))
 
@@ -4245,7 +4247,7 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i, int typev,
 	if (XLENGTH(vec) <= i) return FALSE;
 	switch(typev) {
 	case INTSXP: INTEGER(vec)[i] = v->ival; return TRUE;
-	case LGLSXP: LOGICAL(vec)[i] = v->ival ? TRUE : FALSE; return TRUE;
+	case LGLSXP: LOGICAL(vec)[i] = INTEGER_TO_LOGICAL(v->ival); return TRUE;
 	}
     }
     return FALSE;
