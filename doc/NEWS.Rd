@@ -1,4 +1,4 @@
-f% -*- coding: utf-8 -*-
+% -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
