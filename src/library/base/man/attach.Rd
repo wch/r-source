@@ -40,7 +40,7 @@ attach(what, pos = 2L, name = deparse(substitute(what)),
 
   By attaching a data frame (or list) to the search path it is possible
   to refer to the variables in the data frame by their names alone,
-  rather than as components of the data frame (e.g. in the example below,
+  rather than as components of the data frame (e.g., in the example below,
   \code{height} rather than \code{women$height}).
 
   By default the database is attached in position 2 in the search path,

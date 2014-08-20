@@ -32,7 +32,7 @@ The previous setting is returned, invisibly if \code{use} is not \code{NA}.
   R does not load either \file{internet.dll} or \file{internet2.dll}
   until needed, so it is certainly safe to call this function before
   making any calls that access the Internet
-  (e.g. \code{\link{download.file}}).  If one of the DLLs has already
+  (e.g., \code{\link{download.file}}).  If one of the DLLs has already
   been loaded, this function will switch to the other one without
   unloading the first one, so there is a potential resource leak.
 }

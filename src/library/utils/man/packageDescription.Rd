@@ -40,7 +40,7 @@ packageVersion(pkg, lib.loc = NULL)
   directory but no valid \file{DESCRIPTION} file.
 
   An \link{attach}ed environment named to look like a package
-  (e.g. \code{package:utils2}) will be ignored.
+  (e.g., \code{package:utils2}) will be ignored.
 
   \code{packageVersion()} is a convenience shortcut, allowing things
   like \code{if (packageVersion("MASS") < "7.3") { do.things } }.

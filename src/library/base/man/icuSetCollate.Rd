@@ -80,7 +80,7 @@ icuGetCollate(type = c("actual", "valid"))
   report that a locale is not supported, but falls back to its idea of
   \sQuote{best fit} (which could be rather different and is reported by
   \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
-  locales fall back to \code{"root"} as although e.g. \code{"en_GB"} is
+  locales fall back to \code{"root"} as although e.g.\sspace{}\code{"en_GB"} is
   a valid locale (at least on some platforms), it contains no special
   rules for collation.
   

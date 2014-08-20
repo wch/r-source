@@ -137,7 +137,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \note{
   Methods \code{"wget"} and \code{"lynx"} are mainly for historical
   compatibility, but they and \code{"curl"} can be used for URLs
-  (e.g. \samp{https://} URLs or those that use cookies) which the
+  (e.g., \samp{https://} URLs or those that use cookies) which the
   internal method does not support.  They will block all other activity
   on the \R process.
 

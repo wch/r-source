@@ -123,7 +123,7 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
 
     \item{\code{listFromMlist}:}{
       Undo the recursive nature of the methods list, making a list of
-      \code{list(sigs,methods)} of function definitions, i.e. of
+      \code{list(sigs,methods)} of function definitions, i.e.\sspace{}of
       matching signatures and methods.
       \code{prefix} is the partial signature (a named list of classes)
       to be prepended to the signatures in this object.  If \code{sigs.}

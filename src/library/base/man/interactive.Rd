@@ -35,7 +35,7 @@ interactive()
 
   Internally, whether a session is interactive determines
   \itemize{
-    \item how some errors are handled and reported, e.g. see
+    \item how some errors are handled and reported, e.g.\sspace{}see
     \code{\link{stop}} and \code{\link{options}("showWarnCalls")}.
 
     \item  whether one of \option{--save}, \option{--no-save} or

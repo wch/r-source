@@ -60,7 +60,7 @@
   and should not be exported (whereas \code{.Last.lib} should be).
 
   Note that packages are not detached nor namespaces unloaded at the end
-  of an \R session unless the user arranges to do so (e.g. \emph{via}
+  of an \R session unless the user arranges to do so (e.g., \emph{via}
   \code{\link{.Last}}).
 
   Anything needed for the functioning of the namespace should be
@@ -98,10 +98,10 @@
   before 2.14.2 if package installation is going on in parallel.  See
   its help page for alternatives.
 
-  Compiled code should be loaded (e.g. \emph{via}
+  Compiled code should be loaded (e.g., \emph{via}
   \code{\link{library.dynam}}) in \code{.onLoad} or a \code{useDynLib}
   directive in the \file{NAMESPACE} file, and not in \code{.onAttach}.
-  Similarly, compiled code should not be unloaded (e.g. \emph{via}
+  Similarly, compiled code should not be unloaded (e.g., \emph{via}
   \code{\link{library.dynam.unload}}) in \code{.Last.lib} nor
   \code{.onDetach}, only in \code{.onUnload}.
 }

@@ -66,7 +66,7 @@ attr.all.equal(target, current, \dots,
   \code{all.equal} is a generic function, dispatching methods on the
   \code{target} argument.  To see the available methods, use
   \code{\link{methods}("all.equal")}, but note that the default method
-  also does some dispatching, e.g. using the raw method for logical
+  also does some dispatching, e.g.\sspace{}using the raw method for logical
   targets.
   
   Remember that arguments which follow \code{\dots} must be specified by

@@ -78,7 +78,7 @@ iconvlist()
   the \dQuote{R Installation and Administration Manual} recommends
   installing GNU \samp{libiconv} on Solaris and AIX, for example.
 
-  There are other implementations, e.g. NetBSD has used one from the
+  There are other implementations, e.g\sspace{} NetBSD has used one from the
   Citrus project (which does not support \samp{//TRANSLIT}) and there is
   an older FreeBSD port (\samp{libiconv} is usually used there): it has
   not been reported whether or not these work with \R.
@@ -138,7 +138,7 @@ iconvlist()
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for
   \code{from} (as from \R 2.8.0) and \code{to} (as from \R 3.0.3) by
-  \code{iconv}, but not for e.g. \code{fileEncoding} arguments.
+  \code{iconv}, but not for e.g.\sspace{}\code{fileEncoding} arguments.
   \code{"macintosh"} is the official (and most widely supported) name
   for \sQuote{Mac Roman}
   (\url{http://en.wikipedia.org/wiki/Mac_OS_Roman}).

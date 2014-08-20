@@ -65,7 +65,7 @@ X11.options(\dots, reset = FALSE)
 
   \item{xpos, ypos}{integer: initial position of the top left corner of the
     window, in pixels.  Negative values are from the opposite corner,
-    e.g. \code{xpos = -100} says the top right corner should be 100 pixels
+    e.g.\sspace{}\code{xpos = -100} says the top right corner should be 100 pixels
     from the right edge of the screen.  If \code{NA} (the default),
     successive devices are cascaded in 20 pixel steps from the top left.
     See also \sQuote{Resources}.}
@@ -123,7 +123,7 @@ X11.options(\dots, reset = FALSE)
   buffering, and supports \code{\link{dev.hold}} and \code{dev.flush}.
   \code{type = "dbcairo"} buffers output and updates the screen about
   every 100ms (by default).  The refresh interval can be set (in units
-  of seconds) by e.g.  \code{\link{options}(X11updates = 0.25)}: the
+  of seconds) by e.g.\sspace{}\code{\link{options}(X11updates = 0.25)}: the
   value is consulted when a device is opened.  Updates are only looked
   for every 50ms (at most), and during heavy graphics computations only
   every 500ms.
@@ -181,7 +181,7 @@ X11.options(\dots, reset = FALSE)
 
   For UTF-8 locales, the \code{XLC_LOCALE} databases provide mappings
   between character encodings, and you may need to add an entry for your
-  locale (e.g. Fedora Core 3 lacked one for \code{ru_RU.utf8}).
+  locale (e.g., Fedora Core 3 lacked one for \code{ru_RU.utf8}).
 }
 
 \section{Cairo Fonts}{
@@ -215,7 +215,7 @@ X11.options(\dots, reset = FALSE)
   Serif"}.  To match LaTeX text, use something like \code{"CM Roman"}.
 
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
-  Problems with incorrect rendering of symbols (e.g. of
+  Problems with incorrect rendering of symbols (e.g., of
   \code{quote(pi)} and \code{expression(10^degree))})
   have been seen on Linux systems which have the Wine
   symbol font installed -- \code{fontconfig} then prefers this and
@@ -307,7 +307,7 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   Anti-aliasing is only supported for cairographics-based devices, and
   applies to both graphics and fonts.  It is generally preferable for
   lines and text, but can lead to undesirable effects for fills,
-  e.g. for \code{\link{image}} plots, and so is never used for fills.
+  e.g.\sspace{}for \code{\link{image}} plots, and so is never used for fills.
 
   \code{antialias = "default"} is in principle platform-dependent, but
   seems most often equivalent to \code{antialias = "gray"}.

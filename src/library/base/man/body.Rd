@@ -33,7 +33,7 @@ body(fun, envir = environment(fun)) <- value
 \value{
   \code{body} returns the body of the function specified.  This is
   normally a \link{language object}, most often a call to \code{\{}, but
-  it can also be an object (e.g. \code{pi}) to be the return value of
+  it can also be an object (e.g., \code{pi}) to be the return value of
   the function.
 
   The replacement form sets the body of a function to the

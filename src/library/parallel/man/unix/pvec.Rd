@@ -9,7 +9,7 @@
 \description{
   \code{pvec} parellelizes the execution of a function on vector elements
   by splitting the vector and submitting each part to one core. The
-  function must be a vectorized map, i.e. it takes a vector input and
+  function must be a vectorized map, i.e.\sspace{}it takes a vector input and
   creates a vector output of exactly the same length as the input which
   doesn't depend on the partition of the vector.
 
@@ -29,7 +29,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{mc.silent}{if set to \code{TRUE} then all output on \file{stdout} will
     be suppressed for all parallel processes forked (\file{stderr} is not
     affected).}
-  \item{mc.cores}{The number of cores to use, i.e. at most how many
+  \item{mc.cores}{The number of cores to use, i.e.\sspace{}at most how many
     child processes will be run simultaneously.  Must be at least one,
     and at least two for parallel operation.  The option is initialized
     from environment variable \env{MC_CORES} if set.}

@@ -70,7 +70,7 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
   will throw an error.
 
   Unloading some namespaces has undesirable side effects:
-  e.g. unloading \pkg{grid} closes all graphics devices, and on some
+  e.g.\sspace{}unloading \pkg{grid} closes all graphics devices, and on some
   systems \pkg{tcltk} cannot be reloaded once it has been unloaded and
   may crash \R if this is attempted.
 }

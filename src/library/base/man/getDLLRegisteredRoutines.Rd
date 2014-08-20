@@ -17,7 +17,7 @@
   and potentially security in the future.
   This function provides a description of each of the
   registered routines in the DLL for the different interfaces,
-  i.e. \code{\link{.C}}, \code{\link{.Call}}, \code{\link{.Fortran}}
+  i.e.\sspace{}\code{\link{.C}}, \code{\link{.Call}}, \code{\link{.Fortran}}
   and \code{\link{.External}}.
 }
 \usage{

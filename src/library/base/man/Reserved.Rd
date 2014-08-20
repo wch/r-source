@@ -32,7 +32,7 @@
   references to the objects linked to in the \sQuote{Description}, and
   hence they are not allowed as syntactic names (see
   \code{\link{make.names}}).  They \bold{are} allowed as non-syntactic
-  names, e.g. inside \link{backtick} quotes.
+  names, e.g.\sspace{}inside \link{backtick} quotes.
 }
 \keyword{programming}
 \keyword{documentation}

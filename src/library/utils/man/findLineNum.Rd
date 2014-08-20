@@ -74,7 +74,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   package NAMESPACE.  If you set \code{envir} to the environment of a
   function in the package, by default \code{findLineNum} will find both
   versions, and \code{setBreakpoint} will set the breakpoint in both.
-  (This can be controlled using \code{lastenv}; e.g.  \code{envir =
+  (This can be controlled using \code{lastenv}; e.g., \code{envir =
   environment(foo)}, \code{lastenv = globalenv()} will find only the
   private copy, as the search is stopped before seeing the public copy.)
 
@@ -83,7 +83,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   package, so it is usually necessary to have \code{lastenv = emptyenv()}
   in order to find them.  In some cases transformations are done by \R
   when storing them and \code{findLineNum} may not be able to find the
-  original code.  Many special cases, e.g. methods on primitive
+  original code.  Many special cases, e.g.\sspace{}methods on primitive
   generics, are not yet supported.
 }
 \value{

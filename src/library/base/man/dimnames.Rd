@@ -73,7 +73,7 @@ provideDimnames(x, sep = "", base = list(LETTERS))
   values.
 
   \code{provideDimnames(x)} returns \code{x}, with \dQuote{\code{NULL} -
-    free} \code{dimnames}, i.e. each component a character vector of
+    free} \code{dimnames}, i.e.\sspace{}each component a character vector of
   correct length.
 }
 \note{

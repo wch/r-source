@@ -58,7 +58,7 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
   \code{mcparallel} evaluates the \code{expr} expression in parallel to
   the current \R process.  Everything is shared read-only (or in fact
   copy-on-write) between the parallel process and the current process,
-  i.e. no side-effects of the expression affect the main process.  The
+  i.e.\sspace{}no side-effects of the expression affect the main process.  The
   result of the parallel execution can be collected using
   \code{mccollect} function.
 

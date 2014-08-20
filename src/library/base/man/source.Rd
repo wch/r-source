@@ -81,7 +81,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
 %   Using \code{echo = TRUE} and \code{keep.source = TRUE} may interact
 %   badly with source code that includes \samp{#line nn "filename"}
-%   directives (e.g. code produced by older versions of
+%   directives (e.g., code produced by older versions of
 %   \code{\link{Stangle}()}): \code{source()} will attempt to obtain the
 %   source from the named file which may have changed since the code was
 %   produced.  Use \code{keep.source = FALSE} to avoid this.
@@ -101,7 +101,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 \section{Encodings}{
   By default the input is read and parsed in  the current encoding of
   the \R session.  This is usually what it required, but occasionally
-  re-encoding is needed, e.g. if a file from a UTF-8-using system is to
+  re-encoding is needed, e.g.\sspace{}if a file from a UTF-8-using system is to
   be read on Windows (or \emph{vice versa}).
 
   The rest of this paragraph applies if \code{file} is an actual

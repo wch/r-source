@@ -39,7 +39,7 @@ x != y
   \code{\link{locales}}.  The collating sequence of locales such as
   \samp{en_US} is normally different from \samp{C} (which should use
   ASCII) and can be surprising.  Beware of making \emph{any} assumptions
-  about the collation order: e.g. in Estonian \code{Z} comes between
+  about the collation order: e.g.\sspace{}in Estonian \code{Z} comes between
   \code{S} and \code{T}, and collation is not necessarily
   character-by-character -- in Danish \code{aa} sorts as a single
   letter, after \code{z}.  In Welsh \code{ng} may or may not be a single

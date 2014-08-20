@@ -20,7 +20,7 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   \item{fixed}{Named list.  Parameter values to keep fixed during
     optimization.}
   \item{nobs}{optional integer: the number of observations, to be used for
-    e.g. computing \code{\link{BIC}}.}
+    e.g.\sspace{}computing \code{\link{BIC}}.}
   \item{\dots}{Further arguments to pass to \code{\link{optim}}.}
 }
 \details{

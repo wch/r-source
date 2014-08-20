@@ -123,7 +123,7 @@ get_all_vars(formula, data, \dots)
   \code{"\link[=terms.object]{terms}"} derived from \code{formula},
   and possibly \code{"na.action"} giving information on the handling of
   \code{NA}s (which will not be present if no special handling was done,
-  e.g. by \code{\link{na.pass}}).
+  e.g.\sspace{}by \code{\link{na.pass}}).
 }
 \seealso{\code{\link{model.matrix}} for the \sQuote{design matrix},
   \code{\link{formula}} for formulas  and

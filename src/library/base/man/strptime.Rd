@@ -194,9 +194,9 @@ strptime(x, format, tz = "")
       \code{"\%a \%b \%e \%H:\%M:\%S \%Z \%Y"}. May depend on the locale.}
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
-  numbers in an alternative locale-dependent format (e.g. roman
+  numbers in an alternative locale-dependent format (e.g., roman
   numerals), and \code{\%E[cCyYxX]} which can use an alternative
-  \sQuote{era} (e.g. a different religious calendar).  Which of these
+  \sQuote{era} (e.g., a different religious calendar).  Which of these
   are supported is OS-dependent.  These are accepted for input, but with
   the standard interpretation.
 
@@ -302,7 +302,7 @@ strptime(x, format, tz = "")
   used by \R on Windows in all locales.
   
   That \code{\%A \%a \%B \%b} on input match both full and abbreviated names
-  caused problems in some locales prior to \R 3.0.3: e.g. in French on
+  caused problems in some locales prior to \R 3.0.3: e.g.\sspace{}in French on
   OS X \samp{juillet} was matched by \code{jui}, the abbreviation for
   June.
   

@@ -24,7 +24,7 @@ wilcox.test(x, \dots)
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{numeric vector of data values.  Non-finite (e.g. infinite or
+  \item{x}{numeric vector of data values.  Non-finite (e.g., infinite or
     missing) values will be omitted.}
   \item{y}{an optional numeric vector of data values: as with \code{x}
     non-finite values will be omitted.}

@@ -95,7 +95,7 @@
 \note{
   The presence of \code{panel.first} and \code{panel.last} is a
   historical anomaly: default plots do not have \sQuote{panels}, unlike
-  e.g. \code{\link{pairs}} plots.  For more control, use lower-level
+  e.g.\sspace{}\code{\link{pairs}} plots.  For more control, use lower-level
   plotting functions: \code{plot.default} calls in turn some of
   \code{\link{plot.new}}, \code{\link{plot.window}},
   \code{\link{plot.xy}}, \code{\link{axis}}, \code{\link{box}} and

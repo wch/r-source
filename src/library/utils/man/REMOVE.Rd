@@ -31,7 +31,7 @@
 #ifdef unix
 \note{
   Some binary distributions of \R have \code{REMOVE} in a separate
-  bundle, e.g. an \code{R-devel} RPM.
+  bundle, e.g.\sspace{}an \code{R-devel} RPM.
 }
 #endif
 \seealso{

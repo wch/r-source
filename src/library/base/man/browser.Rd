@@ -28,7 +28,7 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
   current expression and allows access to the \R interpreter.
 
   The purpose of the \code{text} and \code{condition} arguments are to
-  allow helper programs (e.g. external debuggers) to insert specific
+  allow helper programs (e.g., external debuggers) to insert specific
   values here, so that the specific call to browser (perhaps its location
   in a source file) can be identified and special processing can be
   achieved.  The values can be retrieved by calling \code{\link{browserText}}

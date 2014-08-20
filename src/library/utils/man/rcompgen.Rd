@@ -139,7 +139,7 @@ rc.options(\dots)
   using \code{rc.settings}.  The most basic level, which can not be
   turned off once the completion functionality is activated, provides
   completion on names visible on the search path, along with a few
-  special keywords (e.g. \code{TRUE}).  This type of completion is not
+  special keywords (e.g., \code{TRUE}).  This type of completion is not
   attempted if the partial \sQuote{word} (a.k.a. token) being completed
   is empty (since there would be too many completions).  The more
   advanced types of completion are described below.
@@ -168,11 +168,11 @@ rc.options(\dots)
       the string \code{"package:foopkg"}.
 
       The completion of package namespaces applies only to attached
-      packages, i.e. if \code{MASS} is not attached (whether or not it
+      packages, i.e.\sspace{}if \code{MASS} is not attached (whether or not it
       is loaded), \code{MAS} will not complete to \code{MASS::}.
       However, attempted completion \emph{inside} an apparent namespace
       will attempt to load the namespace if it is not already loaded,
-      e.g. trying to complete on \code{MASS::fr} will load \code{MASS}
+      e.g.\sspace{}trying to complete on \code{MASS::fr} will load \code{MASS}
       (but not necessarily attach it) even if it is not already loaded.
     }
 
@@ -239,7 +239,7 @@ rc.options(\dots)
       \code{\link{library}} and \code{\link{require}} will complete on
       \emph{installed packages}, is disabled by default because the
       first call to \code{\link{installed.packages}} is potentially time
-      consuming (e.g. when packages are installed on a remote network
+      consuming (e.g., when packages are installed on a remote network
       file server).  Note, however, that the results of a call to
       \code{\link{installed.packages}} is cached, so subsequent calls
       are usually fast, so turning this option on is not particularly

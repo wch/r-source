@@ -237,9 +237,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   them from multiple-master fonts.  This can be seen in imprecise
   centering of characters, for example the multiply and divide signs in
   Helvetica.  This can be circumvented by embedding fonts where
-  possible.  Most other viewers substitute fonts, e.g. URW fonts for the
-  standard Helvetica and Times fonts, and these too often have different
-  font metrics from the true fonts.
+  possible.  Most other viewers substitute fonts, e.g.\sspace{}URW fonts
+  for the standard Helvetica and Times fonts, and these too often have
+  different font metrics from the true fonts.
 
   Acrobat Reader can be extended by \sQuote{font packs}, and these will
   be needed for the full use of encodings other than Latin-1 (although
@@ -267,10 +267,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 #endif
 #ifdef windows
   The TeXworks PDF viewer was one of those which has been seen to fail to
-  display Dingbats (used by e.g. \code{pch = 1}) correctly.  Whereas on
-  other platforms the problems seen were incorrect output, on Windows
-  points were silently omitted: however recent versions seem to manage
-  to display Dingbats.
+  display Dingbats (used by e.g.\sspace{}\code{pch = 1}) correctly.
+  Whereas on other platforms the problems seen were incorrect output, on
+  Windows points were silently omitted: however recent versions seem to
+  manage to display Dingbats.
 #endif
 
   There is a different font bug in the \command{pdf.js} viewer included

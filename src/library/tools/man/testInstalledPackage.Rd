@@ -37,7 +37,7 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   \item{Ropts}{Additional options such as \option{-d valgrind} to be
     passed to \command{R CMD BATCH} when running examples or tests.}
   \item{\dots}{additional arguments use when preparing the files to be
-    run, e.g. \code{commentDontrun} and \code{commentDonttest}.}
+    run, e.g.\sspace{}\code{commentDontrun} and \code{commentDonttest}.}
   \item{scope}{Which set(s) should be tested?}
 }
 \details{

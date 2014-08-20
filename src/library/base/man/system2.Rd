@@ -84,7 +84,7 @@ system2(command, args = character(),
   \code{0} (the conventional success value).
 #ifdef windows
   Some Windows commands return out-of-range status values
-  (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
+  (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.
 #endif
 }
 

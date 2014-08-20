@@ -114,8 +114,8 @@ srcref(srcfile, lloc)
   class \code{"srcfilecopy"}, the lines are taken from the saved copy
   using the "parsed" line counts.  If not, an attempt
   is made to read the file, and the original line numbers of the
-  \code{srcref} record (i.e. elements 1 and 3) are used.  If an error
-  occurs (e.g. the file no longer exists), text like
+  \code{srcref} record (i.e., elements 1 and 3) are used.  If an error
+  occurs (e.g., the file no longer exists), text like
   \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
   indicating the \code{line:column} ranges of the first and last
   character.  The \code{summary} method defaults to this type of

@@ -55,7 +55,7 @@ do.call(what, args, quote = FALSE, envir = parent.frame())
 \examples{
 do.call("complex", list(imag = 1:3))
 
-## if we already have a list (e.g. a data frame)
+## if we already have a list (e.g., a data frame)
 ## we need c() to add further arguments
 tmp <- expand.grid(letters[1:2], 1:3, c("+", "-"))
 do.call("paste", c(tmp, sep = ""))

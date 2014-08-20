@@ -63,7 +63,7 @@ points(x, \dots)
   The \link{graphical parameters} \code{pch}, \code{col}, \code{bg},
   \code{cex} and \code{lwd} can be vectors (which will be recycled as
   needed) giving a value for each point plotted.  If lines are to be
-  plotted (e.g. for \code{type = "b"}) the first element of \code{lwd}
+  plotted (e.g., for \code{type = "b"}) the first element of \code{lwd}
   is used.
 
   Points whose \code{x}, \code{y}, \code{pch}, \code{col} or \code{cex}
@@ -121,7 +121,7 @@ points(x, \dots)
   give the ASCII characters.  In a single-byte locale
   \code{pch = 128:255} give the corresponding character (if any) in
   the locale's character set.  Where supported by the OS, negative
-  values specify a Unicode code point, so e.g. \code{-0x2642L}
+  values specify a Unicode code point, so e.g.\sspace{}\code{-0x2642L}
   is a \sQuote{male sign} and \code{-0x20ACL} is the Euro.
 
   A character string consisting of a single character is converted to an

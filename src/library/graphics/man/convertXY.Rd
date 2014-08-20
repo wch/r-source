@@ -37,7 +37,7 @@ grconvertY(y, from = "user", to = "user")
 
   Device coordinates are those in which the device works: they are
   usually in pixels where that makes sense and in big points (1/72 inch)
-  otherwise (e.g. \code{\link{pdf}} and \code{\link{postscript}}).
+  otherwise (e.g., \code{\link{pdf}} and \code{\link{postscript}}).
 }
 \value{
   A numeric vector of the same length as the input.

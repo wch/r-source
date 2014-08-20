@@ -24,7 +24,7 @@ median(x, na.rm = FALSE)
   the default method makes use of \code{is.na}, \code{sort} and
   \code{mean} from package \pkg{base} all of which are generic, and so
   the default method will work for most classes
-  (e.g. \code{"\link{Date}"}) for which a median is a reasonable
+  (e.g., \code{"\link{Date}"}) for which a median is a reasonable
   concept.
 }
 \value{

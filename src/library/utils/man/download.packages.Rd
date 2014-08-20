@@ -59,7 +59,7 @@ download.packages(pkgs, destdir, available = NULL,
   destination directory, downloads the newest versions and saves them in
   \code{destdir}.  If the list of available packages is not given as
   argument, it is obtained from repositories.  If a repository is local,
-  i.e. the URL starts with \code{"file:"}, then the packages are not
+  i.e.\sspace{}the URL starts with \code{"file:"}, then the packages are not
   downloaded but used directly.  Both \code{"file:"} and
   \code{"file:///"} are allowed as prefixes to a file path.  Use the
   latter only for URLs: see \code{\link{url}} for their interpretation.

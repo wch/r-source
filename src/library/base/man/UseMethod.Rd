@@ -70,7 +70,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   \code{NextMethod} should not be called except in methods called by
   \code{UseMethod} or from internal generics (see
   \link{InternalGenerics}).  In particular it will not work inside
-  anonymous calling functions (e.g. \code{get("print.ts")(AirPassengers)}).
+  anonymous calling functions (e.g., \code{get("print.ts")(AirPassengers)}).
 
   Namespaces can register methods for generic functions.  To support
   this, \code{UseMethod} and \code{NextMethod} search for methods in

@@ -96,7 +96,7 @@ OlsonNames()
   Almost all \R platforms make use of a time-zone database originally
   compiled by Arthur David Olson and now managed by IANA, in which the
   preferred way to refer to a time zone is by a location (typically of a
-  city) e.g. \code{Europe/London}, \code{America/Los_Angeles},
+  city), e.g., \code{Europe/London}, \code{America/Los_Angeles},
   \code{Pacific/Easter}.  Some traditional designations are also allowed
   such as \code{EST5EDT} or \code{GB}.  (Beware that some of these
   designations may not be what you expect: in particular \code{EST} is a
@@ -121,7 +121,7 @@ OlsonNames()
   
   The function \code{OlsonNames} returns the time-zone names known to
   the Olson/IANA database on the current system. The system-specific
-  location in the file system varies, e.g.  \file{/usr/share/zoneinfo}
+  location in the file system varies, e.g.\sspace{}\file{/usr/share/zoneinfo}
   (Linux, OS X, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
   \ldots.  It is likely that there is a file named something like
   \file{zone.tab} under that directory listing the locations known as
@@ -136,7 +136,7 @@ OlsonNames()
   \file{VERSION} in that directory states the version.  Environment
   variable \env{TZDIR} can be used to point to a different
   \file{zoneinfo} directory (this is also supported by some OSes,
-  e.g. Linux).
+  e.g.\sspace{}Linux).
 #endif
 #ifdef windows
 

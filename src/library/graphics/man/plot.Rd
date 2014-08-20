@@ -45,7 +45,7 @@ plot(x, y, \dots)
       All other \code{type}s give a warning or an error; using, e.g.,
       \code{type = "punkte"} being equivalent to \code{type = "p"} for S
       compatibility.  Note that some methods,
-      e.g. \code{\link{plot.factor}}, do not accept this.
+      e.g.\sspace{}\code{\link{plot.factor}}, do not accept this.
     }
     \item{\code{main}}{an overall title for the plot: see \code{\link{title}}.}
     \item{\code{sub}}{a sub title for the plot: see \code{\link{title}}.}

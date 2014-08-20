@@ -45,7 +45,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   If \code{buildPkg} is specified, it will be loaded before the vignette
   is processed, and will be used as the default package in the search
   for a vignette engine, but an explicitly specified package in the
-  vignette source (e.g. using \code{\\VignetteEngine\{utils::Sweave\}}
+  vignette source (e.g., using \code{\\VignetteEngine\{utils::Sweave\}}
   to specify the \code{Sweave} engine in the \pkg{utils} package) will
   override it.  In contrast, if the \code{engine} argument is given, it
   will override the vignette source.

@@ -55,7 +55,7 @@ system(command, intern = FALSE,
   
   \code{command} is parsed as a command plus arguments separated by
   spaces.  So if the path to the command (or a single argument such as a
-  file path) contains spaces, it must be quoted e.g. by
+  file path) contains spaces, it must be quoted e.g.\sspace{}by
   \code{\link{shQuote}}.
 #ifdef windows
   Only double quotes are allowed on Windows: see the examples.  (Note: a
@@ -119,7 +119,7 @@ system(command, intern = FALSE,
   \code{0} (the conventional success value).
 #ifdef windows
   Some Windows commands return out-of-range status values
-  (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
+  (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.
 
   If \code{intern = FALSE, wait = TRUE, show.output.on.console = TRUE} the
   \file{stdout} and \file{stderr} (unless \code{ignore.stdout = TRUE} or

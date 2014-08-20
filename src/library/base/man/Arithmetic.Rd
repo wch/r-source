@@ -104,7 +104,7 @@ x \%/\% y
   given if this is detected.
 
   \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
-  e.g. \code{1 \%/\% 0.2}, but the results are subject to representation
+  e.g.\sspace{}\code{1 \%/\% 0.2}, but the results are subject to representation
   error and so may be platform-dependent.  Because the IEC 60059
   representation of \code{0.2} is a binary fraction slightly larger than
   \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but

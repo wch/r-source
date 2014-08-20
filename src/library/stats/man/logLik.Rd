@@ -38,9 +38,9 @@ logLik(object, \dots)
 %   \code{varFunc}.
 \details{
   \code{logLik} is most commonly used for a model fitted by maximum
-  likelihood, and some uses, e.g. by \code{\link{AIC}}, assume this.  So
-  care is needed where other fit criteria have been used, for example
-  REML (the default for \code{"lme"}).
+  likelihood, and some uses, e.g.\sspace{}by \code{\link{AIC}}, assume
+  this.  So care is needed where other fit criteria have been used, for
+  example REML (the default for \code{"lme"}).
 
   For a \code{"glm"} fit the \code{\link{family}} does not have to
   specify how to calculate the log-likelihood, so this is based on using
