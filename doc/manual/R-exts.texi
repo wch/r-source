@@ -938,7 +938,7 @@ Note that someone wanting to run the examples/tests/vignettes may not
 have a suggested package available (and it may not even be possible to
 install it for that platform).  The recommendation used to be to make
 their use conditional @emph{via} @code{if(require("@var{pkgname}"))}):
-this is fine is that conditioning is done in examples/tests/vignettes.
+this is fine if that conditioning is done in examples/tests/vignettes.
 
 However, using @code{require} for conditioning @emph{in package code} is
 not good practice as it alters the search path for the rest of the
@@ -1049,6 +1049,10 @@ they do not need to be documented (@pxref{Package namespaces}).
 
 Having a @file{man} directory containing no documentation files may give
 an installation error.
+
+The @file{man} subdirectory may contain a subdirectory named @file{macros};
+this will contain source for user-defined Rd macroa used in @R{} 3.2.0
+and later.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
@@ -3034,7 +3038,9 @@ unless a file @file{index.html} exists in directory
 the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to @HTML{} help
-files or to the @file{DESCRIPTION} file.
+files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
+confirmed via the @uref{http://validator.w3.org, W3C Markup Validation
+Service} or @uref{http://validator.nu/, Validator.nu}.
 
 Sweave/Stangle allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not
@@ -10777,6 +10783,9 @@ obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
+Note too that the use of @samp{USE_RINTERNALS} when the header is
+included in C++ code is not supported: doing so uses C99 features which
+are not necessarily in C++.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
@@ -12201,11 +12210,11 @@ Header @file{R_ext/Visibility} has some definitions for controlling the
 visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
-@file{R_ext/Visibility.h}).  It is generally defined on modern
-Unix-alikes with a recent compiler, but not supported on OS X nor
+@file{R_ext/Visibility.h}).  It is defined on most Unix-alikes (it
+needs both compiler and linker support), but not used on OS X nor
 Windows.  Minimizing the visibility of symbols in a shared library will
 both speed up its loading (unlikely to be significant) and reduce the
-possibility of linking to the wrong entry points of the same name.
+possibility of linking to other entry points of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
