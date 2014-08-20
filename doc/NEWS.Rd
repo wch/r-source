@@ -1,4 +1,4 @@
-% -*- coding: utf-8 -*-
+f% -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
@@ -266,7 +266,7 @@
       
       \item \code{edit()} (and hence \code{fix()}) failed if 
       an object had a non-character attribute named \code{"source"}
-      (an attribute that had been used in \R prior to version 2.15.0).
+      (an attribute that had been used in \R prior to version 2.14.0).
 
       \item \code{callGeneric()} could fail if the generic had
         \code{\dots} as a formal argument. (\PR{15937}).
