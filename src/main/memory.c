@@ -2108,9 +2108,12 @@ void vmaxset(const void *ovmax)
 
 char *R_alloc(size_t nelem, int eltsize)
 {
-    R_size_t size = nelem * eltsize;
+    /* From a historical mistake, this over-allocated by 1 byte.
+       Circumvent bugs in packages by still doing so. */
+    // To ensure 16-byte alignment, initially over-allocate by 16
+    R_size_t size = nelem * eltsize + 16;
     /* doubles are a precaution against integer overflow on 32-bit */
-    double dsize = (double) nelem * eltsize;
+    double dsize = (double) nelem * eltsize + 16;
     if (dsize > 0) {
 	SEXP s;
 #ifdef LONG_VECTOR_SUPPORT
@@ -2118,16 +2121,18 @@ char *R_alloc(size_t nelem, int eltsize)
 	if(dsize > R_XLEN_T_MAX)  /* currently 4096 TB */
 	    error(_("cannot allocate memory block of size %0.f Tb"),
 		  dsize/R_pow_di(1024.0, 4));
-	s = allocVector(RAWSXP, size + 1);
+	s = allocVector(RAWSXP, size);
 #else
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
 	    error(_("cannot allocate memory block of size %0.1f Gb"),
 		  dsize/R_pow_di(1024.0, 3));
-	s = allocVector(RAWSXP, size + 1);
+	s = allocVector(RAWSXP, size);
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
-	return (char *) DATAPTR(s);
+	char *res = (char *) DATAPTR(s);
+	unsigned int align = ((uintptr_t) res) % 16;
+	return (align > 0) ? res + (16-align) : res;
     }
     /* One programmer has relied on this, but it is undocumented! */
     else return NULL;

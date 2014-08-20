@@ -953,7 +953,7 @@ Note that someone wanting to run the examples/tests/vignettes may not
 have a suggested package available (and it may not even be possible to
 install it for that platform).  The recommendation used to be to make
 their use conditional @emph{via} @code{if(require("@var{pkgname}"))}):
-this is fine is that conditioning is done in examples/tests/vignettes.
+this is fine if that conditioning is done in examples/tests/vignettes.
 
 However, using @code{require} for conditioning @emph{in package code} is
 not good practice as it alters the search path for the rest of the
@@ -2326,7 +2326,8 @@ which was published in 2007.  Finally a revised standard was published
 in 2011 and compilers with fairly complete implementations are becoming
 available.  C++11 added all of the C99 features which are not otherwise
 implemented in C++, and C++ compilers commonly accept C99 extensions to
-C++98.
+C++98. A minor update to C++11 (sometimes known as C++14) was approved
+in August 2014.
 
 From version 3.1.0, @R{} provides support for C++11 in packages, in
 addition to C++98.  This support is not uniform across platforms as
@@ -2382,13 +2383,13 @@ empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
 compiler @samp{CXX} and the flag @samp{CXX1XSTD} defaults to
 @option{-std=c++11} or @option{-std=c++0x} (the latter on Windows).  It
 is possible to specify @samp{CXX1X} to be a distinct compiler just for
-C++11--using packages, e.g.@: @command{g++ 4.8.x} on Solaris.  Note
+C++11--using packages, e.g.@: @command{g++ 4.9.x} on Solaris.  Note
 however that different C++ compilers (and even different versions of the
 same compiler) often differ in their ABI so their outputs can rarely be
 mixed. By setting @samp{CXX1XSTD} it is also possible to choose a
 different dialect of the standard, such as @option{-std=gnu++11}, or
-enable experimental support for the next revision (tentatively planned
-for 2017) using something like @option{-std=c++1y}.
+enable support for the 2014 revision using something like @option{-std=c++14}
+or @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The default
 compiler@footnote{OS X 10.7 and later have @command{clang++} but for
@@ -10819,6 +10820,9 @@ obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
+Note too that the use of @samp{USE_RINTERNALS} when the header is
+included in C++ code is not supported: doing so uses C99 features which
+are not necessarily in C++.
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
