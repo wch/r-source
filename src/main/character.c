@@ -1350,3 +1350,21 @@ SEXP attribute_hidden do_strtoi(SEXP call, SEXP op, SEXP args, SEXP env)
     
     return ans;
 }
+
+/* creates a new STRSXP which is a suffix of string, starting
+   with given index; the result is returned unprotected  */
+
+SEXP attribute_hidden stringSuffix(SEXP string, int fromIndex) {
+
+    int origLen = LENGTH(string);
+    int newLen = origLen - fromIndex;
+
+    SEXP res = PROTECT(allocVector(STRSXP, newLen));
+    int i;
+    for(i = 0; i < newLen; i++) {
+        SET_STRING_ELT(res, i, STRING_ELT(string, fromIndex++));
+    }
+
+    UNPROTECT(1); /* res */
+    return res;
+}

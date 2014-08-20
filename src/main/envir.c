@@ -650,6 +650,7 @@ static SEXP R_HashProfile(SEXP table)
 static SEXP R_GlobalCache, R_GlobalCachePreserve;
 #endif
 static SEXP R_BaseNamespaceName;
+static SEXP R_NamespaceSymbol;
 
 void attribute_hidden InitBaseEnv()
 {
@@ -659,6 +660,8 @@ void attribute_hidden InitBaseEnv()
 
 void attribute_hidden InitGlobalEnv()
 {
+    R_NamespaceSymbol = install(".__NAMESPACE__.");
+
     R_GlobalEnv = R_NewHashedEnv(R_BaseEnv, ScalarInteger(0));
     R_MethodsNamespace = R_GlobalEnv; // so it is initialized.
 #ifdef NEW_CODE /* Not used */
@@ -3254,7 +3257,7 @@ Rboolean R_IsNamespaceEnv(SEXP rho)
     if (rho == R_BaseNamespace)
 	return TRUE;
     else if (TYPEOF(rho) == ENVSXP) {
-	SEXP info = findVarInFrame3(rho, install(".__NAMESPACE__."), TRUE);
+	SEXP info = findVarInFrame3(rho, R_NamespaceSymbol, TRUE);
 	if (info != R_UnboundValue && TYPEOF(info) == ENVSXP) {
 	    SEXP spec = findVarInFrame3(info, install("spec"), TRUE);
 	    if (spec != R_UnboundValue &&
@@ -3283,7 +3286,7 @@ SEXP R_NamespaceEnvSpec(SEXP rho)
     if (rho == R_BaseNamespace)
 	return R_BaseNamespaceName;
     else if (TYPEOF(rho) == ENVSXP) {
-	SEXP info = findVarInFrame3(rho, install(".__NAMESPACE__."), TRUE);
+	SEXP info = findVarInFrame3(rho, R_NamespaceSymbol, TRUE);
 	if (info != R_UnboundValue && TYPEOF(info) == ENVSXP) {
 	    SEXP spec = findVarInFrame3(info, install("spec"), TRUE);
 	    if (spec != R_UnboundValue &&

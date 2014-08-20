@@ -192,6 +192,7 @@ attribute_hidden
 SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 {
     SEXP val;
+    static SEXP s_S3MethodsTable = NULL;
 
     if (TYPEOF(callrho) == NILSXP) {
 	error(_("use of NULL environment is defunct"));
@@ -214,8 +215,10 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	return val;
     else {
 	/* We assume here that no one registered a non-function */
+	if (!s_S3MethodsTable)
+	    s_S3MethodsTable = install(".__S3MethodsTable__.");
 	SEXP table = findVarInFrame3(defrho,
-				     install(".__S3MethodsTable__."),
+				     s_S3MethodsTable,
 				     TRUE);
 	if (TYPEOF(table) == PROMSXP) table = eval(table, R_BaseEnv);
 	if (TYPEOF(table) == ENVSXP) {
@@ -271,6 +274,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 	    for (t = formals; t != R_NilValue; t = CDR(t))
 	        if (TAG(t) == TAG(s)) {
 		    matched = 1;
+		    break;
 		}
 	    if (!matched) defineVar(TAG(s), CAR(s), newrho);
 	}
@@ -302,7 +306,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 {
     SEXP klass, method, sxp;
     SEXP op;
-    int i, j, nclass;
+    int i, nclass;
     RCNTXT *cptr;
 
     /* Get the context which UseMethod was called from. */
@@ -341,11 +345,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    if(method == R_SortListSymbol && CLOENV(sxp) == R_BaseNamespace)
 		continue; /* kludge because sort.list is not a method */
             if (i > 0) {
-	        int ii;
-	        int ndotClass = nclass - i;
-		SEXP dotClass = PROTECT(allocVector(STRSXP, ndotClass));
-		for(j = 0, ii = i; j < ndotClass; j++, ii++)
-		      SET_STRING_ELT(dotClass, j, STRING_ELT(klass, ii));
+		SEXP dotClass = PROTECT(stringSuffix(klass, i));
 		setAttrib(dotClass, R_PreviousSymbol, klass);
 		*ans = dispatchMethod(op, sxp, dotClass, cptr, method, generic,
 				      rho, callrho, defrho);
@@ -486,7 +486,10 @@ static SEXP fixcall(SEXP call, SEXP args)
 	if(TAG(t) != R_NilValue) {
 		found = 0;
 		for(s = call; CDR(s) != R_NilValue; s = CDR(s))
-		    if(TAG(CDR(s)) == TAG(t)) found = 1;
+		    if(TAG(CDR(s)) == TAG(t)) {
+                        found = 1;
+                        break;
+                    }
 		if( !found ) {
 			SETCDR(s, allocList(1));
 			SET_TAG(CDR(s), TAG(t));
@@ -789,12 +792,9 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    PROTECT(s = allocVector(STRSXP, length(klass) - i));
-    PROTECT(klass = duplicate(klass));
-    PROTECT(m = allocSExp(ENVSXP));
-    for (j = 0; j < length(s); j++)
-	SET_STRING_ELT(s, j, duplicate(STRING_ELT(klass, i++)));
+    PROTECT(s = stringSuffix(klass, i));
     setAttrib(s, R_PreviousSymbol, klass);
+    PROTECT(m = allocSExp(ENVSXP));
     defineVar(R_dot_Class, s, m);
     /* It is possible that if a method was called directly that
 	'method' is unset */
@@ -821,7 +821,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ans = applyMethod(newcall, nextfun, matchedarg, env, m);
     vmaxset(vmax);
-    UNPROTECT(10);
+    UNPROTECT(9);
     return(ans);
 }
 

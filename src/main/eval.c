@@ -2866,16 +2866,9 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     defineVar(R_dot_Method, m, newrho);
     UNPROTECT(1);
-    PROTECT(t = mkString(generic));
-    defineVar(R_dot_Generic, t, newrho);
-    UNPROTECT(1);
+    defineVar(R_dot_Generic, mkString(generic), newrho);
     defineVar(R_dot_Group, lgr, newrho);
-    set = length(lclass) - lwhich;
-    PROTECT(t = allocVector(STRSXP, set));
-    for(j = 0 ; j < set ; j++ )
-	SET_STRING_ELT(t, j, duplicate(STRING_ELT(lclass, lwhich++)));
-    defineVar(R_dot_Class, t, newrho);
-    UNPROTECT(1);
+    defineVar(R_dot_Class, stringSuffix(lclass, lwhich), newrho);
     defineVar(R_dot_GenericCallEnv, rho, newrho);
     defineVar(R_dot_GenericDefEnv, R_BaseEnv, newrho);
 
