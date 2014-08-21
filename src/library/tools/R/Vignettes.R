@@ -674,8 +674,8 @@ buildVignette <-
 
 getVignetteEncoding <-  function(file, ...)
 {
-    # Look for inputen[cx] first, then %\SweaveUTF8.  Complain about
-    # inconsistencies.
+    ## Look for inputen[cx] first, then %\SweaveUTF8.  Complain about
+    ## inconsistencies.
 
     lines <- readLines(file, warn = FALSE)
     result1 <- .getVignetteEncoding(lines, ...)
@@ -692,25 +692,28 @@ getVignetteEncoding <-  function(file, ...)
 
 .getVignetteEncoding <- function(lines, convert = FALSE)
 {
-    ## Look for input enc lines using inputenc or inputenx
-    ## Note, multiple encodings are excluded.
+    res <- .get_vignette_metadata(lines, "Encoding")[1L]
 
-    poss <-
-        grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
-             lines, useBytes = TRUE)
-    ## Check it is in the preamble
-    start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
-                  lines, useBytes = TRUE)
-    if(length(start)) poss <- poss[poss < start[1L]]
-    if(!length(poss)) {
-        asc <- iconv(lines, "latin1", "ASCII")
-        ind <- is.na(asc) | asc != lines
-        if(any(ind)) return("non-ASCII")
-        return("") # or "ASCII"
+    if(is.na(res)) {
+        ## Look for input enc lines using inputenc or inputenx
+        ## Note, multiple encodings are excluded.
+        poss <-
+            grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
+                 lines, useBytes = TRUE)
+        ## Check it is in the preamble
+        start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
+                      lines, useBytes = TRUE)
+        if(length(start)) poss <- poss[poss < start[1L]]
+        if(!length(poss)) {
+            asc <- iconv(lines, "latin1", "ASCII")
+            ind <- is.na(asc) | asc != lines
+            if(any(ind)) return("non-ASCII")
+            return("") # or "ASCII"
+        }
+        poss <- lines[poss[1L]]
+        res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
+                    poss)               # This line should be ASCII.
     }
-    poss <- lines[poss[1L]]
-    res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
-                poss) # This line should be ASCII.
     if (convert) {
         ## see Rd2latex.R.
         ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
