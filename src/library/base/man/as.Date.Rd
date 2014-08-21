@@ -23,7 +23,7 @@
 }
 \usage{
 as.Date(x, \dots)
-\method{as.Date}{character}(x, format = "", \dots)
+\method{as.Date}{character}(x, format, \dots)
 \method{as.Date}{numeric}(x, origin, \dots)
 \method{as.Date}{POSIXct}(x, tz = "UTC", \dots)
 
@@ -35,7 +35,8 @@ as.Date(x, \dots)
   \item{x}{An object to be converted.}
   \item{format}{A character string.  If not specified, it will try
     \code{"\%Y-\%m-\%d"} then \code{"\%Y/\%m/\%d"} on the first
-    non-\code{NA} element, and give an error if neither works.}
+    non-\code{NA} element, and give an error if neither works.
+    Otherwise, the processing is via \code{\link{strptime}}}
   \item{origin}{a Date object, or something which can be coerced by
     \code{as.Date(origin, \dots)} to such an object.}
   \item{tz}{a time zone name.}
