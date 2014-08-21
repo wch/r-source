@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-08-14 r66372) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-08-20 r66449) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(available.packages(contrib.url("http://cran.r-project.org")))
-[1] 5820
+[1] 5807
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -61,6 +61,9 @@ Type 'q()' to quit R.
 > 
 > ## check graceful failure:
 > try(zz <- url("http://foo.bar", "r"))
+Error in url("http://foo.bar", "r") : cannot open the connection
+In addition: Warning message:
+In url("http://foo.bar", "r") : unable to connect to 'foo.bar' on port 80.
 > 
 > # and via read.table, test http and ftp.
 > 
