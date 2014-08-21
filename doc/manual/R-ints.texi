@@ -4063,11 +4063,11 @@ check is skipped, and any other non-empty value gives an error when more
 than 2 children are spawned.
 Default: unset (but @samp{TRUE} for CRAN submission checks).
 
-@item _R_CHECK_CODE_USAGE_WITHOUT_LOADING_
+@item _R_CHECK_CODE_USAGE_VIA_NAMESPACES_
 If set, check code usage (via @CRANpkg{codetools}) directly on the
 package namespace without loading and attaching the package and its
 suggests and enhances.
-Default: false (but true for CRAN submission checks).
+Default: true (and true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -4084,7 +4084,7 @@ _R_CHECK_DOC_SIZES2_=TRUE
 _R_CHECK_CODE_ASSIGN_TO_GLOBALENV_=TRUE
 _R_CHECK_CODE_ATTACH_=TRUE
 _R_CHECK_CODE_DATA_INTO_GLOBALENV_=TRUE
-_R_CHECK_CODE_USAGE_WITHOUT_LOADING_=TRUE
+_R_CHECK_CODE_USAGE_VIA_NAMESPACES_=TRUE
 _R_CHECK_DOT_FIRSTLIB_=TRUE
 _R_CHECK_DEPRECATED_DEFUNCT_=TRUE
 _R_CHECK_REPLACING_IMPORTS_=TRUE

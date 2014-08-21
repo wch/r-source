@@ -155,7 +155,7 @@
       errors (writing \code{importFrom(Pkg)} where \code{import(Pkg)}
       was intended).
 
-      \item \command{R CMD check --as-cran} now checks code usage
+      \item \command{R CMD check} now by default checks code usage
       directly on the package namespace without loading and attaching
       the package and its suggests and enhances.
 

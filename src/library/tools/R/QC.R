@@ -3763,8 +3763,8 @@ function(package, lib.loc = NULL)
     is_base <- package == "base"
 
     check_without_loading <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITHOUT_LOADING_",
-                                         "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_",
+                                         "TRUE"))
 
     if(!is_base) {
         if(!check_without_loading) {
