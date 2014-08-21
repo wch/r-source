@@ -1,5 +1,5 @@
 
-R version 3.1.1 Patched (2014-08-18 r66420) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-08-20 r66449) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2562,6 +2562,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.137 0.013 0.15 0 0 
+Time elapsed:  0.137 0.012 0.149 0 0 
 > 
 > 
