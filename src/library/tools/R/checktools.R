@@ -741,6 +741,13 @@ function(log, drop_ok = TRUE)
     }
 
     analyze_lines <- function(lines) {
+        ## Windows has
+        ##   * loading checks for arch
+        ##   * checking examples ...
+        ##   * checking tests ...
+        ## headers: drop these.
+        re <- "^\\* (loading checks for arch|checking (examples|tests) \\.\\.\\.$)"
+        lines <- lines[!grepl(re, lines, perl = TRUE, useBytes = TRUE)]
         ## We might still have
         ##   * package encoding:
         ## entries for packages declaring a package encoding.
