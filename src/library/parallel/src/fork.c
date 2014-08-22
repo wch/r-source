@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-11 Simon Urbanek
- *      Copyright 2011-2 R Core Team.
+ *      Copyright 2011-2014 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,9 @@
 #include "parallel.h"
 
 #include <sys/types.h>
-#include <unistd.h>
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 #include <sys/select.h>
 #include <sys/wait.h>
 #include <signal.h>
@@ -154,7 +156,7 @@ static void child_sig_handler(int sig)
 #endif
 	child_can_exit = 1;
 	if (child_exit_status >= 0)
-	    exit(child_exit_status);
+	    _exit(child_exit_status);
     }
 }
 
@@ -262,6 +264,7 @@ SEXP mc_fork(SEXP sEstranged)
     /* make sure we get SIGCHLD to clean up the child process */
     setup_sig_handler();
 
+    fflush(stdout); // or children may output pending text
     pid = fork();
     if (pid == -1) {
 	if (!estranged) {
@@ -721,7 +724,7 @@ SEXP mc_exit(SEXP sRes)
 #ifdef MC_DEBUG
     Dprintf("child %d: exiting\n", getpid());
 #endif
-    exit(res);
+    _exit(res);
     error(_("'mcexit' failed"));
     return R_NilValue;
 }

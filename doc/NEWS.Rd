@@ -269,7 +269,14 @@
       (an attribute that had been used in \R prior to version 2.14.0).
 
       \item \code{callGeneric()} could fail if the generic had
-        \code{\dots} as a formal argument. (\PR{15937}).
+      \code{\dots} as a formal argument. (\PR{15937}).
+	
+      \item Forking in package \pkg{parallel} called C entry point
+      \code{exit} in the child.  This was unsafe (\code{_exit} should
+      have been called), and could flush \code{stdin} of the main \R
+      process (seen most often on Solaris).
+
+      For good practice, \code{stdout} is flushed before forking a child.
     }
   }
 }
