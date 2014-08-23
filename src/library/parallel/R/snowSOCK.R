@@ -120,7 +120,11 @@ recvOneData.SOCKcluster <- function(cl)
 
 makePSOCKcluster <- function(names, ...)
 {
-    if (is.numeric(names)) names <- rep('localhost', names[1])
+    if (is.numeric(names)) {
+        names <- as.integer(names[1L])
+        if(is.na(names) || names < 1L) stop("numeric 'names' must be >= 1")
+        names <- rep('localhost', names)
+    }
     .check_ncores(length(names))
     options <- addClusterOptions(defaultClusterOptions, list(...))
     cl <- vector("list", length(names))
