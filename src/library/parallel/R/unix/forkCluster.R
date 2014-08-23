@@ -18,7 +18,8 @@
 
 makeForkCluster <- function(nnodes = getOption("mc.cores", 2L), ...)
 {
-    if(nnodes < 1L) stop("'nnodes' must be >= 1")
+    nnodes <- as.integer(nnodes)
+    if(is.na(nnodes) || nnodes < 1L) stop("'nnodes' must be >= 1")
     .check_ncores(nnodes)
     cl <- vector("list", nnodes)
     for (i in seq_along(cl)) cl[[i]] <- newForkNode(..., rank = i)

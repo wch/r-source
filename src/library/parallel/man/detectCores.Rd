@@ -1,6 +1,6 @@
 % File src/library/parallel/man/detectCores.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2011-2013 R Core Team
+% Copyright 2011-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detectCores}
@@ -63,6 +63,12 @@ detectCores(all.tests = FALSE, logical = FALSE)
 }
 \author{
   Simon Urbanek and Brian Ripley
+}
+\note{
+  This is not suitable for use directly for the \code{mc.cores} argument
+  of \code{mclapply} nor specifying the number of cores in
+  \code{makeCluster}.  First because it may return \code{NA}, and second
+  because it does not give the number of \emph{allowed} cores.
 }
 \examples{
 detectCores()
