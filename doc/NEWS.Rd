@@ -110,10 +110,6 @@
       character, e.g., \code{options(OutDec = "\u00b7")} in a UTF-8
       locale.
 
-      \item \code{utils::URLencode()} was updated to use unreserved and
-      reserved characters from RFC 3986,
-      \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
-
       \item \code{is.recursive(x)} is no longer true when \code{x} is an
       external pointer, a weak reference or byte code; the first enables
       \code{all.equal(x, x)} when \code{x <- getClass(.)}.
@@ -220,6 +216,10 @@
 
       \item New function \code{icuGetCollate()} to report on the ICU
       collation locale in use (if any).
+
+      \item \code{utils::URLencode()} was updated to use unreserved and
+      reserved characters from RFC 3986,
+      \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
     }
   }
 
