@@ -4519,6 +4519,7 @@ setRlibs <-
                 }
             }
         }
+        messageLog(Log, "DONE")
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }
