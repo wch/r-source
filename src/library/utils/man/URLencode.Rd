@@ -21,22 +21,22 @@ URLdecode(URL)
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
-  \samp{$ - _ . + ! * ' ( ) ,} should be encoded as \code{\%}
+  \samp{- _ . ~} should be encoded as \code{\%}
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded as
   byte-by-byte.)
 
-  In addition, \samp{; / ? : @ = &} are reserved characters, and should
-  be encoded unless used in their reserved sense, which is scheme
-  specific.  The default in \code{URLencode} is to leave them alone, which
-  is appropriate for \samp{file://} URLs, but probably not for
-  \samp{http://} ones.
+  In addition, \samp{! $ & ' ( ) * + , ; = : / ? @ # [ ]} are reserved
+  characters, and should be encoded unless used in their reserved sense,
+  which is scheme specific.  The default in \code{URLencode} is to leave
+  them alone, which is appropriate for \samp{file://} URLs, but probably
+  not for \samp{http://} ones.
 }
 \value{
   A character string.
 }
 \references{
-  RFC1738, \url{http://www.rfc-editor.org/rfc/rfc1738.txt}
+  RFC 3986 \url{http://tools.ietf.org/html/rfc3986}
 }
 \examples{
 (y <- URLencode("a url with spaces and / and @"))

@@ -43,6 +43,10 @@
 
       \item New function \code{icuGetCollate()} to report on the ICU
       collation locale in use (if any).
+
+      \item \code{utils::URLencode()} was updated to use unreserved and
+      reserved characters from RFC 3986,
+      \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
     }
   }
 
