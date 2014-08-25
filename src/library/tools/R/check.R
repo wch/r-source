@@ -2175,11 +2175,12 @@ setRlibs <-
                 if(haveObjs)
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead",
-                      "of to the console.\n")
+                      "of to the console, nor the C RNG.\n")
                 else
                     c("Compiled code should not call entry points which",
                       "might terminate R nor write to stdout/stderr instead",
-                      "of to the console.  The detected symbols are linked",
+                      "of to the console, nor the C RNG.",
+                      "The detected symbols are linked",
                       "into the code but might come from libraries",
                       "and not actually be called.\n")
             } else character()
