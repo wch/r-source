@@ -83,7 +83,7 @@ static char tagbuf[TAGBUFLEN0];
 
 
 /* Used in X11 module for dataentry */
-/* NB this is called by R.app even though it is in no public header, so 
+/* NB this is called by R.app even though it is in no public header, so
    alter there if you alter this */
 void PrintDefaults(void)
 {
@@ -328,6 +328,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 
     ns = length(s);
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
+	// special case: array-like list
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	/* FIXME: check (ns <= R_print.max +1) ? ns : R_print.max; */
@@ -430,7 +431,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	UNPROTECT(2);
     }
-    else { /* .. no dim() .. */
+    else { // no dim()
 	names = getAttrib(s, R_NamesSymbol);
 	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
@@ -447,7 +448,10 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    STRING_ELT(names, i) != R_NilValue &&
 		    *CHAR(STRING_ELT(names, i)) != '\0') {
 		    const void *vmax = vmaxget();
-		    const char *ss = translateChar(STRING_ELT(names, i));
+		    /* Bug for L <- list(`a\\b` = 1, `a\\c` = 2)  :
+		       const char *ss = translateChar(STRING_ELT(names, i));
+		    */
+		    const char *ss = EncodeChar(STRING_ELT(names, i));
 		    if (taglen + strlen(ss) > TAGBUFLEN) {
 		    	if (taglen <= TAGBUFLEN)
 			    sprintf(ptag, "$...");
@@ -518,9 +522,11 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	UNPROTECT(1);
     }
     printAttributes(s, env, FALSE);
-}
+} // PrintGenericVector
 
 
+// For pairlist()s only --- the predecessor of PrintGenericVector() above,
+// and hence very similar  (and no longer compatible!)
 static void printList(SEXP s, SEXP env)
 {
     int i, taglen;
@@ -529,6 +535,7 @@ static void printList(SEXP s, SEXP env)
     const char *rn, *cn;
 
     if ((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
+	// special case: array-like list
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	i = 0;
@@ -588,7 +595,7 @@ static void printList(SEXP s, SEXP env)
 	}
 	UNPROTECT(2);
     }
-    else {
+    else { // no dim()
 	i = 1;
 	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
@@ -872,11 +879,9 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 	       || TAG(a) == R_WholeSrcrefSymbol || TAG(a) == R_SrcfileSymbol)
 		goto nextattr;
 	    if(useSlots)
-		sprintf(ptag, "Slot \"%s\":",
-			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
+		sprintf(ptag, "Slot \"%s\":", EncodeChar(PRINTNAME(TAG(a))));
 	    else
-		sprintf(ptag, "attr(,\"%s\")",
-			EncodeString(PRINTNAME(TAG(a)), 0, 0, Rprt_adj_left));
+		sprintf(ptag, "attr(,\"%s\")", EncodeChar(PRINTNAME(TAG(a))));
 	    Rprintf("%s", tagbuf); Rprintf("\n");
 	    if (TAG(a) == R_RowNamesSymbol) {
 		/* need special handling AND protection */
