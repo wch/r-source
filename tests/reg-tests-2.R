@@ -2900,3 +2900,14 @@ options(op)
 ## those parts using formatC still used a decimal point.
 
 
+## Printing a list with "bad" component names
+L <- list(`a\\b` = 1, `a\\c` = 2, `a\bc` = "backspace")
+setClass("foo", representation(`\\C` = "numeric"))
+## the next three all print correctly:
+names(L)
+unlist(L)
+as.pairlist(L)
+cat(names(L), "\n")# yes, backspace is backspace here
+L
+new("foo")
+## the last two lines printed wrongly in R <= 3.1.1

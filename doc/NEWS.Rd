@@ -116,11 +116,11 @@
 
       \item \code{ls()} (aka \code{objects()}) and
       \code{as.list.environment()} gain a new argument \code{sorted}.
-            
-      \item The \code{"source"} attribute (which has not been added 
+
+      \item The \code{"source"} attribute (which has not been added
       to functions by \R
       since before \R version 2.14.0) is no longer treated as special.
-      
+
       \item An experimental function \code{returnValue()} has been added
       to give \code{on.exit()} code access to a function's return
       value for debugging purposes.
@@ -145,7 +145,7 @@
 
       \command{R CMD check} gains \option{--run-dontrun} and
       \option{--run-donttest} options.
-      
+
       \item \command{R CMD check} now reports empty \code{importFrom}
       declarations in a \file{NAMESPACE} file, as these are common
       errors (writing \code{importFrom(Pkg)} where \code{import(Pkg)}
@@ -260,23 +260,25 @@
       \item \code{as.hexmode(x)} and \code{as.octmode(x)} now behave
       correctly for some numeric \code{x}, e.g., \code{c(NA, 1)} or
       \code{c(1, pi)}.
-      
+
       \item \code{drop1()} failed if the \code{scope} argument had
       no variables to drop.  (\PR{15935})
-      
-      \item \code{edit()} (and hence \code{fix()}) failed if 
+
+      \item \code{edit()} (and hence \code{fix()}) failed if
       an object had a non-character attribute named \code{"source"}
       (an attribute that had been used in \R prior to version 2.14.0).
 
       \item \code{callGeneric()} could fail if the generic had
       \code{\dots} as a formal argument. (\PR{15937}).
-	
+
       \item Forking in package \pkg{parallel} called C entry point
       \code{exit} in the child.  This was unsafe (\code{_exit} should
       have been called), and could flush \code{stdin} of the main \R
       process (seen most often on Solaris).
 
       For good practice, \code{stdout} is flushed before forking a child.
+
+      \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
     }
   }
 }
