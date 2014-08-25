@@ -774,7 +774,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* we use the natural coercion for vector types. */
 
     mode = NILSXP;
-    if (data.ans_flags & 512)	   mode = EXPRSXP;
+    if      (data.ans_flags & 512) mode = EXPRSXP;
     else if (data.ans_flags & 256) mode = VECSXP;
     else if (data.ans_flags & 128) mode = STRSXP;
     else if (data.ans_flags &  64) mode = CPLXSXP;
@@ -1088,7 +1088,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     mode = NILSXP;
-    if (data.ans_flags & 512)	   mode = EXPRSXP;
+    if      (data.ans_flags & 512) mode = EXPRSXP;
     else if (data.ans_flags & 256) mode = VECSXP;
     else if (data.ans_flags & 128) mode = STRSXP;
     else if (data.ans_flags &  64) mode = CPLXSXP;
