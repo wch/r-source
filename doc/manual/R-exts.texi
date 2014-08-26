@@ -3952,7 +3952,9 @@ package authors are often mistaken about that.
 @item
 Compiled code should not call the system random number generators such
 as @code{rand}, @code{drand48} and @code{random}, but rather use the
-interfaces to @R{}'s RNGs described in @ref{Random numbers}.
+interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
+particular, if more than one package initializes the system RNG (e.g.@:
+@emph{via} @code{srand}), they will interfere with each other.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -12258,7 +12260,7 @@ is configured and recorded in header @file{Rconfig.h} (included by
 Unix-alikes with a recent compiler, but not supported on OS X nor
 Windows.  Minimizing the visibility of symbols in a shared library will
 both speed up its loading (unlikely to be significant) and reduce the
-possibility of linking to the wrong entry points of the same name.
+possibility of linking to other entry points of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
