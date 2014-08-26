@@ -3936,7 +3936,9 @@ package authors are often mistaken about that.
 @item
 Compiled code should not call the system random number generators such
 as @code{rand}, @code{drand48} and @code{random}, but rather use the
-interfaces to @R{}'s RNGs described in @ref{Random numbers}.
+interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
+particular, if more than one package initializes the system RNG (e.g.@:
+@emph{via} @code{srand}), they will interfere with each other.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -12216,8 +12218,8 @@ Header @file{R_ext/Visibility} has some definitions for controlling the
 visibility of entry points.  These are only effective when
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined -- this is checked when @R{}
 is configured and recorded in header @file{Rconfig.h} (included by
-@file{R_ext/Visibility.h}).  It is defined on most Unix-alikes (it
-needs both compiler and linker support), but not used on OS X nor
+@file{R_ext/Visibility.h}).  It is generally defined on modern
+Unix-alikes with a recent compiler, but not supported on OS X nor
 Windows.  Minimizing the visibility of symbols in a shared library will
 both speed up its loading (unlikely to be significant) and reduce the
 possibility of linking to other entry points of the same name.
