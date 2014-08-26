@@ -118,7 +118,7 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isEnvironment(aenv)) error(_("invalid '%s' argument"), "assign.env");
 
     for(i = 0; i < XLENGTH(names); i++) {
-	SEXP name = install(CHAR(STRING_ELT(names, i)));
+	SEXP name = installChar(STRING_ELT(names, i));
 	PROTECT(val = eval(VECTOR_ELT(values, i), eenv));
 	PROTECT(expr0 = duplicate(expr));
 	SETCAR(CDR(expr0), val);

@@ -1198,6 +1198,44 @@ SEXP install(const char *name)
     return (sym);
 }
 
+SEXP installChar(SEXP charSXP)
+{
+    SEXP sym;
+    int i, hashcode;
+
+    if( !HASHASH(charSXP) ) {
+        hashcode = R_Newhashpjw(CHAR(charSXP));
+        SET_HASHVALUE(charSXP, hashcode);
+        SET_HASHASH(charSXP, 1);
+    } else {
+        hashcode = HASHVALUE(charSXP);
+    }
+    i = hashcode % HSIZE;
+    /* Check to see if the symbol is already present;  if it is, return it. */
+    for (sym = R_SymbolTable[i]; sym != R_NilValue; sym = CDR(sym))
+        if (strcmp(CHAR(charSXP), CHAR(PRINTNAME(CAR(sym)))) == 0) return (CAR(sym));
+    /* Create a new symbol node and link it into the table. */
+    int len = LENGTH(charSXP);
+    if (len == 0)
+        error(_("attempt to use zero-length variable name"));
+    if (len > MAXIDSIZE)
+        error(_("variable names are limited to %d bytes"), MAXIDSIZE);
+    if (IS_ASCII(charSXP) || (IS_UTF8(charSXP) && utf8locale) ||
+                                        (IS_LATIN1(charSXP) && latin1locale) )
+        sym = mkSYMSXP(charSXP, R_UnboundValue);
+    else {
+        /* This branch is to match behaviour of install (which is older):
+           symbol C-string names are always interpreted as if
+           in the native locale, even when they are not in the native locale */
+        sym = mkSYMSXP(mkChar(CHAR(charSXP)), R_UnboundValue);
+        SET_HASHVALUE(PRINTNAME(sym), hashcode);
+        SET_HASHASH(PRINTNAME(sym), 1);
+    }
+
+    R_SymbolTable[i] = CONS(sym, R_SymbolTable[i]);
+    return (sym);
+}
+
 #define maxLength 512
 attribute_hidden
 SEXP installS3Signature(const char *className, const char *methodName) {

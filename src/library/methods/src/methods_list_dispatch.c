@@ -377,7 +377,7 @@ static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
     SEXP vl, generic = R_UnboundValue, gpackage; const char *pkg; Rboolean ok;
     if(!isSymbol(symbol))
-	symbol = install(CHAR(asChar(symbol)));
+	symbol = installChar(asChar(symbol));
     pkg = CHAR(STRING_ELT(package, 0)); /* package is guaranteed single string */
 
     while (rho != R_NilValue) {
@@ -581,7 +581,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     else
 	/* shouldn't happen, since argument in class MethodsList has class
 	   "name" */
-	arg_sym = install(CHAR(asChar(arg_slot)));
+	arg_sym = installChar(asChar(arg_slot));
     if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
 	error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
 	      CHAR(asChar(fname)));
@@ -861,7 +861,7 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
     SEXP value;
     if(TYPEOF(class) == STRSXP) {
 	SEXP package = PACKAGE_SLOT(class);
-	value = findVarInFrame(table, install(CHAR(STRING_ELT(class, 0))));
+	value = findVarInFrame(table, installChar(STRING_ELT(class, 0)));
 	if(value == R_UnboundValue)
 	    return R_NilValue;
 	else if(TYPEOF(package) == STRSXP) {
