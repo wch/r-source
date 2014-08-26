@@ -871,7 +871,6 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 	PROTECT(klass = R_data_class2(x));
     else
 	PROTECT(klass = R_data_class(x, FALSE));
-    int nclass = length(klass);
 
     if(!isString(what))
 	error(_("'what' must be a character vector"));
@@ -891,19 +890,14 @@ static SEXP inherits3(SEXP x, SEXP what, SEXP which)
 	PROTECT(rval = allocVector(INTSXP, nwhat));
 
     for(j = 0; j < nwhat; j++) {
-	const char *ss = translateChar(STRING_ELT(what, j)); int i;
-	if(isvec)
-	    INTEGER(rval)[j] = 0;
-	for(i = 0; i < nclass; i++) {
-	    if(!strcmp(translateChar(STRING_ELT(klass, i)), ss)) {
-		if(isvec)
-		    INTEGER(rval)[j] = i+1;
-		else {
-		    UNPROTECT(1);
-		    return mkTrue();
-		}
-		break;
-	    }
+	const char *ss = translateChar(STRING_ELT(what, j));
+	int i = stringPositionTr(klass, ss);
+	if (isvec)
+	    INTEGER(rval)[j] = i+1; /* 0 when ss is not in klass */
+	else if (i >= 0) {
+	    vmaxset(vmax);
+	    UNPROTECT(1);
+	    return mkTrue();
 	}
     }
     vmaxset(vmax);
