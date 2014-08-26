@@ -4055,8 +4055,7 @@ function(package, dir, lib.loc = NULL)
         config_val_to_logical(Sys.getenv("_R_CHECK_XREFS_USE_ALIASES_FROM_CRAN_",
                                          FALSE))
     if(use_aliases_from_CRAN) {
-        CRAN <- .get_standard_repository_URLs()[1L]
-        CRAN_aliases_db <- NULL
+        aliases_db <- NULL
     }
 
     for (pkg in unique(thispkg[have_anchor])) {
@@ -4080,16 +4079,11 @@ function(package, dir, lib.loc = NULL)
             } else FALSE
             db[this, "bad"] <- !good & !suspect
         } else if(use_aliases_from_CRAN) {
-            if(is.null(CRAN_aliases_db)) {
+            if(is.null(aliases_db)) {
                 ## Not yet read in.
-                ## message("Reading in aliases db ...")
-                con <- gzcon(url(sprintf("%s/src/contrib/Meta/aliases.rds",
-                                         CRAN),
-                                 "rb"))
-                CRAN_aliases_db <- readRDS(con)
-                close(con)
+                aliases_db <- CRAN_aliases_db()
             }
-            aliases <- CRAN_aliases_db[[pkg]]
+            aliases <- aliases_db[[pkg]]
             if(is.null(aliases)) {
                 unknown <- c(unknown, pkg)
                 next
@@ -6562,13 +6556,8 @@ function(dir)
         }
     }
 
-    ## For now, information about the CRAN package archive is provided
-    ## in CRAN's src/contrib/Meta/archive.rds.
-    con <- gzcon(url(sprintf("%s/src/contrib/Meta/archive.rds", CRAN),
-                     "rb"))
-    CRAN_archive_db <- readRDS(con)
-    close(con)
-    packages_in_CRAN_archive <- names(CRAN_archive_db)
+    archive_db <- CRAN_archive_db()
+    packages_in_CRAN_archive <- names(archive_db)
 
     ## Package names must be unique within standard repositories when
     ## ignoring case.
@@ -6762,7 +6751,7 @@ function(dir)
             out$CRAN_archive <- TRUE
             v_m <- package_version(meta["Version"])
             v_a <- sub("^.*_(.*)\\.tar.gz$", "\\1",
-                       basename(rownames(CRAN_archive_db[[package]])))
+                       basename(rownames(archive_db[[package]])))
             v_a <- max(package_version(v_a, strict = FALSE),
                        na.rm = TRUE)
             if(v_m <= v_a)
@@ -6789,16 +6778,13 @@ function(dir)
         out$version_with_jump_in_minor <- list(v_m, v_d)
 
     ## Check submission recency and frequency.
-    con <- gzcon(url(sprintf("%s/src/contrib/Meta/current.rds", CRAN),
-                     "rb"))
-    CRAN_current_db <- readRDS(con)
-    close(con)
-    mtimes <- c(CRAN_current_db[match(package,
+    current_db <- CRAN_current_db()
+    mtimes <- c(current_db[match(package,
                                       sub("_.*", "",
-                                          rownames(CRAN_current_db)),
+                                          rownames(current_db)),
                                       nomatch = 0L),
                                 "mtime"],
-                CRAN_archive_db[[package]]$mtime)
+                archive_db[[package]]$mtime)
     if(length(mtimes)) {
         deltas <- Sys.Date() - as.Date(sort(mtimes, decreasing = TRUE))
         ## Number of days since last update.
@@ -6814,9 +6800,7 @@ function(dir)
     ## Watch out for maintainer changes.
     ## Note that we cannot get the maintainer info from the PACKAGES
     ## files.
-    con <- gzcon(url(sprintf("%s/web/packages/packages.rds", CRAN), "rb"))
-    db <- tryCatch(readRDS(con), error = identity)
-    close(con)
+    db <- tryCatch(CRAN_package_db(), error = identity)
     if(inherits(db, "error")) return(out)
 
     m_m <- as.vector(meta["Maintainer"]) # drop name

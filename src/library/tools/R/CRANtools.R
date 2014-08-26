@@ -177,43 +177,97 @@ function(x, ...)
 }
 
 
-CRAN_check_results <-
-function()
-{
-    ## This allows for partial local mirrors, or to
-    ## look at a more-freqently-updated mirror
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/check_results.rds"),
-                     open = "rb"))
-    results <- readRDS(rds)
-    close(rds)
+## CRAN_check_results <-
+## function()
+## {
+##     ## This allows for partial local mirrors, or to
+##     ## look at a more-freqently-updated mirror
+##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
+##                              "web/checks/check_results.rds"),
+##                      open = "rb"))
+##     results <- readRDS(rds)
+##     close(rds)
+##
+##     results
+## }
 
-    results
+## CRAN_check_details <-
+## function()
+## {
+##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
+##                              "web/checks/check_details.rds"),
+##                      open = "rb"))
+##     details <- readRDS(rds)
+##     close(rds)
+##
+##     details
+## }
+
+## CRAN_memtest_notes <-
+## function()
+## {
+##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
+##                              "web/checks/memtest_notes.rds"),
+##                      open = "rb"))
+##     mtnotes <- readRDS(rds)
+##     close(rds)
+##
+##     mtnotes
+## }
+
+CRAN_baseurl_for_src_area <-
+function()
+    .get_standard_repository_URLs()[1L]
+
+## This allows for partial local mirrors, or to look at a
+## more-freqently-updated mirror.
+CRAN_baseurl_for_web_area <-
+function()
+    Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
+
+read_CRAN_object <-
+function(cran, path)
+{
+    con <- gzcon(url(sprintf("%s/%s", cran, path),
+                     open = "rb"))
+    on.exit(close(con))
+    readRDS(con)
 }
+
+CRAN_check_results <- 
+function()
+    read_CRAN_object(CRAN_baseurl_for_web_area(),
+                     "web/checks/check_results.rds")
 
 CRAN_check_details <-
 function()
-{
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/check_details.rds"),
-                     open = "rb"))
-    details <- readRDS(rds)
-    close(rds)
-
-    details
-}
+    read_CRAN_object(CRAN_baseurl_for_web_area(),
+                     "web/checks/check_details.rds")
 
 CRAN_memtest_notes <-
 function()
-{
-    CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-    rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-                             "web/checks/memtest_notes.rds"),
-                     open = "rb"))
-    mtnotes <- readRDS(rds)
-    close(rds)
+    read_CRAN_object(CRAN_baseurl_for_web_area(),
+                     "web/checks/memtest_notes.rds")
 
-    mtnotes
-}
+CRAN_package_db <-
+function()
+    read_CRAN_object(CRAN_baseurl_for_web_area(),
+                     "web/packages/packages.rds")
+
+CRAN_aliases_db <-
+function()    
+    read_CRAN_object(CRAN_baseurl_for_src_area(),
+                     "src/contrib/Meta/aliases.rds")
+
+CRAN_archive_db <-
+function()
+    read_CRAN_object(CRAN_baseurl_for_src_area(),
+                     "src/contrib/Meta/archive.rds")
+
+CRAN_current_db <-
+function()
+    read_CRAN_object(CRAN_baseurl_for_src_area(),
+                     "src/contrib/Meta/current.rds")
