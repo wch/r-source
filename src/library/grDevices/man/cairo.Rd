@@ -1,15 +1,16 @@
-% File src/library/grDevices/man/unix/png.Rd
+% File src/library/grDevices/man/cairo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
 \alias{svg}
 \alias{cairo_pdf}
 \alias{cairo_ps}
-\title{Cairo-based SVG, PDF and PostScript Graphics Devices}
+\title{Cairographics-based SVG, PDF and PostScript Graphics Devices}
 \description{
-  Graphics devices for SVG, PDF and PostScript graphics files.
+  Graphics devices for SVG, PDF and PostScript graphics files using
+  the cairo graphics API.
 }
 \usage{
 svg(filename = if(onefile) "Rplots.svg" else "Rplot\%03d.svg",
@@ -53,11 +54,10 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 }
 \details{
   SVG (Scalar Vector Graphics) is a W3C standard for vector graphics.
-  See \url{http://www.w3.org/Graphics/SVG/}.  The output is SVG version
-  1.1 for \code{onefile = FALSE} (the default), otherwise SVG 1.2.  (Very few
-  SVG viewers are capable of displaying multi-page SVG files.)  Although
-  this only requires cairo >= 1.2, the output produced by cairo 1.2.4
-  (in Centos/RHEL 5) is incorrect.
+  See \url{http://www.w3.org/Graphics/SVG/}.  The output from \code{svg}
+  is SVG version 1.1 for \code{onefile = FALSE} (the default), otherwise
+  SVG 1.2.  (Very few SVG viewers are capable of displaying multi-page
+  SVG files.)
 
   Note that unlike \code{\link{postscript}} and \code{\link{pdf}},
   \code{cairo_pdf} and \code{cairo_ps} sometimes record \emph{bitmaps}
@@ -68,10 +68,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   The output produced by \code{cairo_ps(onefile = FALSE)} will be
   encapsulated postscript on a platform with cairo >= 1.6.
 
-  \R can be compiled without support for any of these
-  devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  They all require cairo version 1.2 or
-  later.
+  \R can be compiled without support for any of these devices: this will
+  be reported if you attempt to use them on a system where they are not
+  supported.  They all require cairo version 1.2 (from 2006) or later.
 
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in
@@ -81,6 +80,15 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   There is full support of transparency, but using this is one of the
   things liable to trigger bitmap output (and will always do so for
   \code{cairo_ps}).
+}
+
+\note{
+  Cairo 1.2.4 (seen in Centos/RHEL 5) is known to give incorrect SVG output.
+  
+  In principle these devices are independent of X11 (as is seen by their
+  presence on Windows).  But on a Unix-alike the cairo libraries may be
+  distributed as part of the X11 system and hence that (on OS X,
+  XQuartz) may need to be installed.
 }
 
 \value{
