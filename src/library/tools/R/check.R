@@ -2164,8 +2164,9 @@ setRlibs <-
             ## If we have named objects then we have symbols.rds and
             ## will not be picking up symbols just in system libraries.
             haveObjs <- any(grepl("^ *Object", out))
-            if(haveObjs && any(grepl("(abort|assert|exit)", out)) &&
-               !pkgname %in% c("multicore", "parallel")) # these need to call exit
+            pat <- paste("possibly from",
+                         sQuote("(abort|assert|exit|_exit|_Exit)"))
+            if(haveObjs && any(grepl(pat, out)) && !pkgname %in% "parallel")
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
