@@ -2166,7 +2166,8 @@ setRlibs <-
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
                          sQuote("(abort|assert|exit|_exit|_Exit)"))
-            if(haveObjs && any(grepl(pat, out)) && !pkgname %in% "parallel")
+            if(haveObjs && any(grepl(pat, out)) &&
+               !pkgname %in% c("parallel", "fork")) # need _exit in forked child
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))

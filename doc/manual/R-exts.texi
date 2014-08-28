@@ -3930,7 +3930,8 @@ in C on all @R{} platforms.
 
 @item
 Under no circumstances should your compiled code ever call @code{abort}
-or @code{exit}: these terminate the user's @R{} process, quite possibly
+or @code{exit}@footnote{or where supported the variants @code{_Exit} and
+@code{_exit}.}: these terminate the user's @R{} process, quite possibly
 including all his unsaved work.  One usage that could call @code{abort}
 is the @code{assert} macro in C or C++ functions, which should never be
 active in production code.  The normal way to ensure that is to define
