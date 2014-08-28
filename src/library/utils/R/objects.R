@@ -400,7 +400,7 @@ function(x)
             if(!is.null(f) && !is.null(environment(f))) {
                 ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
-                objs <- c(objs, f)
+		objs <- c(objs, list(f))
                 msg <- paste("registered S3 method for", gen)
                 if(!is.null(nmev))
                     msg <- paste(msg, "from namespace", nmev)
@@ -414,7 +414,7 @@ function(x)
         ns <- asNamespace(i)
         if(exists(x, envir = ns, inherits = FALSE)) {
             f <- get(x, envir = ns, inherits = FALSE)
-            objs <- c(objs, f)
+	    objs <- c(objs, list(f))
             where <- c(where, paste("namespace", i, sep=":"))
             visible <- c(visible, FALSE)
         }
@@ -430,9 +430,8 @@ function(x)
                     dups[i] <- TRUE
                     break
                 }
-    res <- list(name=x, objs=objs, where=where, visible=visible, dups=dups)
-    class(res) <- "getAnywhere"
-    res
+    structure(list(name=x, objs=objs, where=where, visible=visible, dups=dups),
+              class = "getAnywhere")
 }
 
 print.getAnywhere <-

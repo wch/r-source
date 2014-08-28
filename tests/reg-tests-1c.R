@@ -368,4 +368,18 @@ stopifnot(identical(pp[1,], c("0", " ", ".", " ")),
 ## all 4 prettyNum() would error out
 
 
+## PR#15935
+y <- 1:3
+drop1(lm(y ~ 1))
+drop1(glm(y ~ 1))
+stats:::drop1.default(glm(y ~ 1))
+## gave error in R < 3.1.2
+
+## getAnywhere() wrongly dealing with namespace hidden list object
+nm <- deparse(body(pbinom)[[2]])# == "C_pbinom" currently
+gg <- getAnywhere(nm)
+stopifnot(length(gg$objs) == 1)
+## was 4 and printed "4 differing objects matching ‘C_pbinom’ ..." in R <= 3.1.1
+
+
 proc.time()
