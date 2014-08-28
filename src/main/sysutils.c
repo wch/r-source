@@ -923,7 +923,7 @@ const char *translateChar(SEXP x)
 SEXP installTrChar(SEXP x)
 {
     if(TYPEOF(x) != CHARSXP)
-	error(_("'%s' must be called on a CHARSXP"), "translateChar");
+	error(_("'%s' must be called on a CHARSXP"), "installTrChar");
     nttype_t t = needsTranslation(x);
     if (t == NT_NONE) return installChar(x);
 
