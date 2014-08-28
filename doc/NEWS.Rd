@@ -279,6 +279,8 @@
       For good practice, \code{stdout} is flushed before forking a child.
 
       \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
+
+      \item \code{getAnywhere("C_pbinom")} now works correctly.
     }
   }
 }
