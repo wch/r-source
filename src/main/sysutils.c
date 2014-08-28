@@ -899,7 +899,7 @@ SEXP installTrChar(SEXP x)
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     if(TYPEOF(x) != CHARSXP)
-	error(_("'%s' must be called on a CHARSXP"), "translateChar");
+	error(_("'%s' must be called on a CHARSXP"), "installTrChar");
     if(x == NA_STRING || !(ENC_KNOWN(x))) return install(ans);
     if(IS_BYTES(x))
 	error(_("translating strings with \"bytes\" encoding is not allowed"));
