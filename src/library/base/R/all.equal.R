@@ -144,7 +144,15 @@ all.equal.character <-
     else msg
 }
 
-## visible, so need to test both args
+## In 'base' these are all visible, so need to test both args:
+
+all.equal.environment <- function (target, current, all.names=TRUE, ...) {
+    if(!is.environment (target)) return( "'target' is not an environment")
+    if(!is.environment(current)) return("'current' is not an environment")
+    all.equal.list(as.list(target , all.names=all.names, sorted=TRUE),
+                   as.list(current, all.names=all.names, sorted=TRUE), ...)
+}
+
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
 {
     if(!inherits(target, "factor"))

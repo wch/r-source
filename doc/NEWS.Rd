@@ -289,6 +289,8 @@
       \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
 
       \item \code{getAnywhere("C_pbinom")} now works correctly.
+
+      \item \code{all.equal()} gets a method for \code{environment}'s.
     }
   }
 }
