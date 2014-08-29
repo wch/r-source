@@ -4216,6 +4216,11 @@ type may have `overloading ambiguity' as it could be promoted to any of the
 supported floating-point types: this is commonly seen on Solaris.
 (C++11 requires additional overloads for integer types.)
 
+A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
+@code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
+@code{x/y} does integer division, the result is an @code{int} and
+`overloading ambiguity' may be reported.
+
 @item
 Function @code{fabs} is defined for only for floating-point types,
 except in C++11 which has overloads in @file{<cmath>} for integer types.
@@ -4234,6 +4239,15 @@ currently in use on @R{} platforms: use @R{}'s versions such as
 
 It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
+
+@item
+Including C headers in C++ code is not portable.  Including the C99
+header @file{math.h} in C++ code often causes conflicts with
+@file{cmath} which may be included by other headers.  This is
+particularly problematic with C++11 compilers, as functions like
+@code{sqrt} and @code{isnan} are defined for @code{double} arguments in
+@file{math.h} and for a range of types including @code{double} in
+@file{cmath}.
 
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
