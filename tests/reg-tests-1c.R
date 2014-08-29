@@ -450,4 +450,13 @@ stopifnot(length(gg$objs) == 1)
 ## was 4 and printed "4 differing objects matching ‘C_pbinom’ ..." in R <= 3.1.1
 
 
+## Radford (R-devel, June 24, 2014); M.Maechler
+m <- matrix(1:2, 1,2); v <- 1:3
+stopifnot(identical(crossprod(2, v), t(2) %*% v),
+	  identical(crossprod(m, v), t(m) %*% v),
+	  identical(5 %*% v, 5 %*% t(v)),
+          identical(tcrossprod(m, 1:2), m %*% 1:2) )
+## gave error "non-conformable arguments" in R <= 3.2.0
+
+
 proc.time()

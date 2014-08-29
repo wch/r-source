@@ -124,6 +124,12 @@
       \item An experimental function \code{returnValue()} has been added
       to give \code{on.exit()} code access to a function's return
       value for debugging purposes.
+
+      \item \code{crossprod(x, y)} is allowing more matrix coercions when
+      \code{x} or \code{y} are vectors, now equalling to \code{t(x) \%*\% y}
+      in these cases (also reported by Radford Neal).  Similarly,
+      \code{tcrossprod(x,y)} and \code{\%*\%} work in more cases with
+      vectors.
     }
   }
 

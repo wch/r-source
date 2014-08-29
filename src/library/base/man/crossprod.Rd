@@ -1,6 +1,6 @@
 % File src/library/base/man/crossprod.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{crossprod}
@@ -19,8 +19,8 @@ crossprod(x, y = NULL)
 tcrossprod(x, y = NULL)
 }
 \arguments{
-  \item{x, y}{numeric or complex matrices: \code{y = NULL} is taken to
-    be the same matrix as \code{x}.  Vectors are promoted to
+  \item{x, y}{numeric or complex matrices (or vectors): \code{y = NULL}
+    is taken to be the same matrix as \code{x}.  Vectors are promoted to
     single-column or single-row matrices, depending on the context.}
 }
 \value{
@@ -32,6 +32,10 @@ tcrossprod(x, y = NULL)
   row matrices, but their \code{\link{names}} are usually \bold{not}
   promoted to \code{\link{dimnames}}.  Hence, currently, the last
   example has empty dimnames.
+
+  In the same situation, these matrix products (also \code{\link{\%*\%}})
+  are more flexible in promotion of vectors to row or column matrices, such
+  that more cases are allowed, since \R 3.2.0.
 }
 %% Consider using a new optional argument, say 'make.names = NA'
 %% {as in kronecker} with possible values  FALSE / NA / TRUE  where
