@@ -2412,9 +2412,9 @@ setRlibs <-
                 cmd <- paste0("invisible(tools::Rdiff('",
                               exout, "', '", exsave, "',TRUE,TRUE))")
                 out <- R_runR(cmd, R_opts2)
+                resultLog(Log, "OK")
                 if(length(out))
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
-                resultLog(Log, "OK")
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
