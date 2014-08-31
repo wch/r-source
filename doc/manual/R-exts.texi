@@ -3914,7 +3914,8 @@ in C on all @R{} platforms.
 
 @item
 Under no circumstances should your compiled code ever call @code{abort}
-or @code{exit}: these terminate the user's @R{} process, quite possibly
+or @code{exit}@footnote{or where supported the variants @code{_Exit} and
+@code{_exit}.}: these terminate the user's @R{} process, quite possibly
 including all his unsaved work.  One usage that could call @code{abort}
 is the @code{assert} macro in C or C++ functions, which should never be
 active in production code.  The normal way to ensure that is to define
@@ -6004,10 +6005,12 @@ which defines @code{\PR} to be a single argument macro; then code like
 @example
 \PR@{1234@}
 @end example
+@noindent
 will expand to
 @example
 \Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
 @end example
+@noindent
 when parsed.
 
 @node Encoding, Processing documentation files, User-defined macros, Writing R documentation files
@@ -7443,10 +7446,10 @@ With @command{gcc} additional control is available @emph{via} the
 @option{--params} flag: see its @command{man} page.  For some builds on
 @code{x86_64} Linux this includes enabling the leak sanitizer
 (@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
-which might even be enabled by default@footnote{it was the @command{gcc}
-trunk in mid-2014.} when any leaks give the process a failure error
-status (by default @code{23}).  To disable both this and some strict
-checking use
+which might even be enabled by default@footnote{it was in the @command{gcc}
+trunk in mid-2014, and for @command{clang} 3.5.} when any
+leaks give the process a failure error status (by default @code{23}).
+To disable both this and some strict checking use
 
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
@@ -7536,8 +7539,10 @@ with
 @end example
 
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined}.  See 
-@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html}
+as a separate option not enabled by @code{-fsanitize=undefined}.  See
+@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
+manual for your version of GCC).  GCC 5.0.0 (under development) can
+detect alignment errors.
 
 Other useful flags include
 @example
