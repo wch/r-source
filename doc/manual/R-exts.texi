@@ -7480,10 +7480,10 @@ With @command{gcc} additional control is available @emph{via} the
 @option{--params} flag: see its @command{man} page.  For some builds on
 @code{x86_64} Linux this includes enabling the leak sanitizer
 (@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
-which might even be enabled by default@footnote{it was the @command{gcc}
-trunk in mid-2014.} when any leaks give the process a failure error
-status (by default @code{23}).  To disable both this and some strict
-checking use
+which might even be enabled by default@footnote{it was in the @command{gcc}
+trunk in mid-2014, and for @command{clang} 3.5.} when any
+leaks give the process a failure error status (by default @code{23}).
+To disable both this and some strict checking use
 
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
@@ -7573,8 +7573,10 @@ with
 @end example
 
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined}.  See 
-@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html}
+as a separate option not enabled by @code{-fsanitize=undefined}.  See
+@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
+manual for your version of GCC).  GCC 5.0.0 (under development) can
+detect alignment errors.
 
 Other useful flags include
 @example
