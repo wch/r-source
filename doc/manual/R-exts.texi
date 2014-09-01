@@ -7309,22 +7309,23 @@ maximal information use a build with debugging symbols.  We know there
 will be some small memory leaks from @code{readline} and @R{} itself ---
 these are memory areas that are in use right up to the end of the @R{}
 session.  Expect this to run around 20x slower than without
-@code{valgrind}, and in some cases even slower than that.  Several
+@code{valgrind}, and in some cases much slower than that.  Several
 versions of @code{valgrind} were not happy with some optimized BLASes
 that use @acronym{CPU}-specific instructions so you may need to build a
 version of @R{} specifically to use with @code{valgrind}.
 
-On platforms supported by @code{valgrind} you can build a version of
-@R{} with extra instrumentation to help @code{valgrind} detect errors in
-the use of memory allocated from the @R{} heap.  The @command{configure}
-option is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1, 2 or 3.  Level 0 is the default and does not add
-any anything.  Level 1 will detect use of uninitialised memory and has
-little impact on speed. Levels 2 and 3@footnote{see the @R{} source file
-@file{src/main/memory.c} for precisely what these do.} will detect many
-other memory-use bugs but make @R{} much slower when running under
-@code{valgrind}.  Using this in conjunction with @code{gctorture} can be
-even more effective (and even slower).
+On platforms where @code{valgrind} is installed you can build a version
+of @R{} with extra instrumentation to help @code{valgrind} detect errors
+in the use of memory allocated from the @R{} heap.  The
+@command{configure} option is
+@option{--with-valgrind-instrumentation=@var{level}}, where @var{level}
+is 0, 1, 2 or 3.  Level 0 is the default and does not add any anything.
+Level 1 will detect some uses of uninitialised memory and has little
+impact on speed (compared to level 0). Levels 2 and 3@footnote{see the
+@R{} source file @file{src/main/memory.c} for precisely what these do.}
+will detect many other memory-use bugs but make @R{} much slower when
+running under @code{valgrind}.  Using this in conjunction with
+@code{gctorture} can be even more effective (and even slower).
 
 An example of @code{valgrind} output is
 @smallexample
@@ -7520,7 +7521,7 @@ DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few files
 (e.g. @file{src/extra/bzip2/decompress.c} in the @R{} sources with
-@command{clang} 3.5rc1).
+@command{clang} 3.5).
 
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address}.
@@ -7532,7 +7533,8 @@ The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bounds,bool,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,null,object-size,
-return,shift,signed-integer-overflow,unreachable,vla-bound,vptr
+return,returns-nonnull-attribute,shift,signed-integer-overflow,
+unreachable,vla-bound,vptr
 @end example
 
 @noindent
@@ -7560,7 +7562,7 @@ Pre-release versions of @command{clang} 3.5 need
 @noindent
 for C++ code (in @code{CXX} and @code{CXX1X}).
 
-A smaller selection is available for GCC, currently defaulting to
+A smaller selection is available for GCC, for 4.9.x defaulting to
 @example
 -fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,return,shift,
 signed-integer-overflow,unreachable,vla-bound
@@ -7573,7 +7575,8 @@ with
 @end example
 
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined}.  See
+as a separate option not enabled by @code{-fsanitize=undefined} (and not
+desirable for @R{} uses).  See
 @uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
 manual for your version of GCC).  GCC 5.0.0 (under development) can
 detect alignment errors.
@@ -7597,14 +7600,14 @@ For more details on the topic see
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
 (which has 3 parts).
 
-This option does not currently compile OpenMP code.
+This option may not compile OpenMP code.
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
 
-@command{clang} has a `Static Analyser' run on the source files during
-compilation: see @uref{http://clang-analyzer.llvm.org/}.
+@command{clang} has a `Static Analyser' which can be run on the source
+files during compilation: see @uref{http://clang-analyzer.llvm.org/}.
 
 Some versions of @command{clang} have a (currently experimental) memory
 sanitizer invoked by @option{-fsanitize=memory} which detects uses of
@@ -7619,12 +7622,14 @@ variable
 @example
 ASAN_OPTIONS='detect_leaks=1'
 @end example
+@noindent
+(which may be the default on some builds).
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
 @subsection Using `Dr. Memory'
 
 `Dr. Memory' from @uref{http://www.drmemory.org/} is a memory checker
-for (currently) 32-bit Windows and Linux with similar aims to
+for (currently) 32-bit Windows, Linux and OS X with similar aims to
 @command{valgrind}.  It works with unmodified executables@footnote{but
 works better if inlining and frame pointer optimizations are disabled.}
 and detects memory access errors, uninitialized reads and memory leaks.
