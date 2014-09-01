@@ -3948,7 +3948,7 @@ function(package, lib.loc = NULL)
             c(codetools:::dfltSuppressUndefined, .glbs)
 
     if(check_without_loading) {
-        env <- getNamespace(package)
+        env <- suppressWarnings(suppressMessages(getNamespace(package)))
         args <- c(list(env, report = foo), args)
         suppressMessages(do.call(codetools::checkUsageEnv, args))
         suppressMessages(do.call(checkMethodUsageEnv, args))
