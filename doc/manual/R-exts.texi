@@ -4212,9 +4212,10 @@ Mathematical functions such as @code{sqrt} are defined in C++ for
 floating-point arguments.  It is legitimate in C++ to overload these
 with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
-type may have `overloading ambiguity' as it could be promoted to any of the
-supported floating-point types: this is commonly seen on Solaris.
-(C++11 requires additional overloads for integer types.)
+type may have `overloading ambiguity' as it could be promoted to any of
+the supported floating-point types: this is commonly seen on Solaris,
+but for @code{pow} also seen on OS X.  (C++11 requires additional
+overloads for integer types.)
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
