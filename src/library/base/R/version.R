@@ -108,9 +108,12 @@ function(x, strict = TRUE)
                           "package_version")
 }
 
-is.package_version <- function(x) inherits(x, "package_version")
+is.package_version <-
+function(x)
+    inherits(x, "package_version")
 
-as.package_version <- function(x)
+as.package_version <-
+function(x)
     if(is.package_version(x)) x else package_version(x)
 
 ## R system versions must have exactly three integers.
@@ -129,45 +132,41 @@ function()
 ## Workhorses.
 
 .encode_numeric_version <-
-function(x, width = NULL, maxlen = NULL)
+function(x)
 {
+    strings <- function(char, n) {
+        vapply(Map(rep.int,
+                   rep_len(char, length(n)),
+                   n,
+                   USE.NAMES = FALSE),
+               paste, "", collapse = "")
+    }
+
+    strlpad <- function(x, char, width)
+        paste0(strings(char, width - nchar(x)), x)
+
+    strrpad <- function(x, char, width)
+        paste0(x, strings(char, width - nchar(x)))
+
     if(!is.numeric_version(x)) stop("wrong class")
-    if(is.null(width))
-        width <- floor(log(max(unlist(x), 1L, na.rm = TRUE),
-                           base = 8L)) + 1L
+
     classes <- class(x)
     nms <- names(x)
     x <- unclass(x)
     lens <- vapply(x, length, 0L)
-    if(is.null(maxlen))
-        maxlen <- max(lens, 0L)
-    fmt <- sprintf("%%0%io", width)
-    x <- vapply(Map(c, x, lapply(maxlen - lens, integer)), 
-                function(e) paste(sprintf(fmt, e), collapse = ""),
+    y <- lapply(x, function(e) sprintf("%o", e))
+    ## Maximal number of octal digits needed.
+    width <- max(nchar(unlist(y)), 0L)
+    ## Left-pad octals with zeros to common width, collapse, and
+    ## right-pad with zeros to total common width.
+    y <- vapply(y,
+                function(e)
+                paste(strlpad(e, "0", width), collapse = ""),
                 "")
-    structure(ifelse(lens > 0L, x, NA_character_),
+    y <- strrpad(y, "0", max(nchar(y), 0L))
+    structure(ifelse(lens > 0L, y, NA_character_),
               width = width, lens = lens, .classes = classes, names = nms)
 }
-
-## .encode_numeric_version <-
-## function(x, base = NULL)
-## {
-##     if(!is.numeric_version(x)) stop("wrong class")
-##     if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
-##     classes <- class(x)
-##     nms <- names(x)
-##     x <- unclass(x)
-##     lens <- vapply(x, length, 1L)
-##     ## We store the lengths so that we know when to stop when decoding.
-##     ## Alternatively, we need to be smart about trailing zeroes.  One
-##     ## approach is to increment all numbers in the version specs and
-##     ## base by 1, and when decoding only retain the non-zero entries and
-##     ## decrement by 1 one again.
-##     x <- vapply(x, function(t)
-## 		sum(t / base^seq.int(0, length.out = length(t))), 1.)
-##     structure(ifelse(lens > 0L, x, NA_real_),
-##               base = base, lens = lens, .classes = classes, names = nms)
-## }
 
 ## <NOTE>
 ## Currently unused.
@@ -188,27 +187,6 @@ function(x)
     class(y) <-  unique(c(attr(x, ".classes"), "numeric_version"))
     y
 }
-
-## .decode_numeric_version <-
-## function(x)
-## {
-##     base <- attr(x, "base")
-##     if(!is.numeric(base)) stop("wrong argument")
-##     lens <- attr(x, "lens")
-##     y <- vector("list", length = length(x))
-##     for(i in seq_along(x)) {
-##         n <- lens[i]
-##         encoded <- x[i]
-##         decoded <- integer(n)
-##         for(k in seq_len(n)) {
-##             decoded[k] <- encoded %/% 1
-##             encoded <- base * (encoded %% 1)
-##         }
-##         y[[i]] <- as.integer(decoded)
-##     }
-##     class(y) <- unique(c(attr(x, ".classes"), "numeric_version"))
-##     y
-## }
 
 ## Methods.
 
@@ -296,16 +274,12 @@ function(e1, e2)
                       .Generic), domain = NA)
     if(!is.numeric_version(e1)) e1 <- as.numeric_version(e1)
     if(!is.numeric_version(e2)) e2 <- as.numeric_version(e2)
-    ## base <- max(unlist(e1), unlist(e2), 0) + 1
-    ## e1 <- .encode_numeric_version(e1, base = base)
-    ## e2 <- .encode_numeric_version(e2, base = base)
-    width <- floor(log(max(unlist(e1), unlist(e2), 1L, na.rm = TRUE),
-                       base = 8L)) + 1L
-    maxlen <- max(vapply(unclass(e1), length, 0L),
-                  vapply(unclass(e2), length, 0L),
-                  0L)
-    e1 <- .encode_numeric_version(e1, width = width, maxlen = maxlen)
-    e2 <- .encode_numeric_version(e2, width = width, maxlen = maxlen)
+    n1 <- length(e1)
+    n2 <- length(e2)
+    e <- split(.encode_numeric_version(c(e1, e2)),
+               rep.int(c(1L, 2L), c(n1, n2)))
+    e1 <- e[[1L]]
+    e2 <- e[[2L]]
     NextMethod(.Generic)
 }
 
