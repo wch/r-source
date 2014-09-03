@@ -4293,10 +4293,11 @@ makefiles, watch out in particular for dependencies on the toolchain's
 runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
 @file{libgcc_s}.
 
-For OS X, using @code{R CMD otool -L} on the package's shared object(s) in
-the @file{libs} directory will show what they depend on: watch for any
-dependencies in @file{/usr/local/lib}, notably
-@file{libgfortran.2.dylib} or @file{libgfortran.3.dylib}.
+For OS X, using @code{R CMD otool -L} on the package's shared object(s)
+in the @file{libs} directory will show what they depend on: watch for
+any dependencies in @file{/usr/local/lib}, notably
+@file{libgfortran.2.dylib}, @file{libgfortran.3.dylib} or
+@file{libquadmath.0.dylib}.
 
 Many people (including the @acronym{CRAN} package repository) will not
 accept source packages containing binary files as the latter are a
