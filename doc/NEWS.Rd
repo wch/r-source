@@ -293,6 +293,10 @@
       \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
 
       \item \code{getAnywhere("C_pbinom")} now works correctly.
+      
+      \item The \code{confint()} function failed on results of 
+      \code{nls()} fits that specified parameter limits despite using 
+      an algorithm other than \code{"port"}.  (\PR{15960})
     }
   }
 }

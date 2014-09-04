@@ -594,8 +594,11 @@ nls <-
     }
     ## Iterate
     if (algorithm != "port") {
-	if (!identical(lower, -Inf) || !identical(upper, +Inf))
+	if (!identical(lower, -Inf) || !identical(upper, +Inf)) {
 	    warning('upper and lower bounds ignored unless algorithm = "port"')
+	    cl$lower <- NULL # see PR#15960 -- confint() would use these regardless of algorithm
+	    cl$upper <- NULL
+	}
         convInfo <- .Call(C_nls_iter, m, ctrl, trace)
 	nls.out <- list(m = m, convInfo = convInfo,
 			data = substitute(data), call = cl)
