@@ -276,6 +276,7 @@ function(e1, e2)
     if(!is.numeric_version(e2)) e2 <- as.numeric_version(e2)
     n1 <- length(e1)
     n2 <- length(e2)
+    if(!n1 || !n2) return(logical())
     e <- split(.encode_numeric_version(c(e1, e2)),
                rep.int(c(1L, 2L), c(n1, n2)))
     e1 <- e[[1L]]
