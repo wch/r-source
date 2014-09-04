@@ -461,7 +461,7 @@ if(.Platform$OS.type == "windows") {
             so <- attr(x, "file")
             osnames_in_objects <- unique(as.character(unlist(symbols)))
             x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
-            attr(x, "file") <- so
+            attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
 
             attr(x, "objects") <-
                 split(rep.int(names(symbols), sapply(symbols, length)),
@@ -489,7 +489,10 @@ if(.Platform$OS.type == "windows") {
         } else NULL
         nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "i386"),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad <- c(bad, Filter(length, nAPIs))
@@ -512,7 +515,10 @@ if(.Platform$OS.type == "windows") {
         } else NULL
         nAPIs <- lapply(lapply(so_files, check_so_symbols, rarch = "x64"),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad2 <- c(bad2, Filter(length, nAPIs))
@@ -547,7 +553,7 @@ if(.Platform$OS.type == "windows") {
             ## for class "check_so_symbols".)
             osnames_in_objects <- unique(as.character(unlist(symbols)))
             x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
-            attr(x, "file") <- so
+            attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
             attr(x, "objects") <-
                 split(rep.int(names(symbols), sapply(symbols, length)),
                       unlist(symbols))
@@ -574,7 +580,10 @@ if(.Platform$OS.type == "windows") {
             cat("Note: information on .o files is not available\n")
         nAPIs <- lapply(lapply(so_files, check_so_symbols),
                         function(x) if(length(z <- attr(x, "nonAPI")))
-                        structure(z, file = attr(x, "file"),
+                        structure(z,
+                                  file =
+                                  .file_path_relative_to_dir(attr(x, "file"),
+                                                             dir, TRUE),
                                   class = "check_nonAPI_calls"))
 
         bad <- c(bad, Filter(length, nAPIs))
