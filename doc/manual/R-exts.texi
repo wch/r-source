@@ -7566,8 +7566,8 @@ for C++ code (in @code{CXX} and @code{CXX1X}).
 
 A smaller selection is available for GCC, for 4.9.x defaulting to
 @example
--fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,return,shift,
-signed-integer-overflow,unreachable,vla-bound
+-fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,
+return,shift,signed-integer-overflow,unreachable,vla-bound
 @end example
 
 @noindent
