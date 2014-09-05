@@ -4469,6 +4469,18 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
    true BUILTIN from a .Internal. LT */
 #define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
 
+static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
+						    SEXP constants) 
+{
+    SEXP value = GETSTACK_PTR(s); 
+    if (IS_SCALAR(value, LGLSXP) && LOGICAL(value)[0] != NA_LOGICAL)
+	return LOGICAL(value)[0];
+    else {
+	SEXP call = VECTOR_ELT(constants, callidx);
+	return asLogicalNoNA(value, call);
+    }
+}
+
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   SEXP value, constants;
@@ -4556,10 +4568,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       {
 	int callidx = GETOP();
 	int label = GETOP();
-	int cond;
-	SEXP call = VECTOR_ELT(constants, callidx);
-	value = BCNPOP();
-	cond = asLogicalNoNA(value, call);
+	Rboolean cond = GETSTACK_LOGICAL_NO_NA_PTR(R_BCNodeStackTop - 1,
+						   callidx, constants);
+	BCNPOP_IGNORE_VALUE();
 	if (! cond) {
 	    BC_CHECK_SIGINT(); /**** only on back branch?*/
 	    pc = codebase + label;
