@@ -3091,15 +3091,23 @@ typedef union { double dval; int ival; } scalar_value_t;
    one and no attributes.  If so, the type is returned as the function
    value and the value is returned in the structure pointed to by the
    second argument; if not, then zero is returned as the function
-   value. */
-static R_INLINE int bcStackScalar(R_bcstack_t *s, scalar_value_t *v)
+   value. The boxed value can be returned through a pointer argument
+   if it is suitable for re-use. */
+static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
+				    SEXP *pv)
 {
     SEXP x = *s;
     if (IS_SIMPLE_SCALAR(x, REALSXP)) {
+#ifndef NO_SAVE_ALLOC
+	if (pv && NO_REFERENCES(x)) *pv = x;
+#endif
 	v->dval = REAL(x)[0];
 	return REALSXP;
     }
     else if (IS_SIMPLE_SCALAR(x, INTSXP)) {
+#ifndef NO_SAVE_ALLOC
+	if (pv && NO_REFERENCES(x)) *pv = x;
+#endif
 	v->ival = INTEGER(x)[0];
 	return INTSXP;
     }
@@ -3109,6 +3117,8 @@ static R_INLINE int bcStackScalar(R_bcstack_t *s, scalar_value_t *v)
     }
     else return 0;
 }
+
+#define bcStackScalar(s, v) bcStackScalarEx(s, v, NULL)
 
 #define DO_FAST_RELOP2(op,a,b) do { \
     SKIP_OP(); \
@@ -3253,14 +3263,14 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
 #ifdef NO_SAVE_ALLOC
-# define DO_FAST_BINOP(op,a,b) do { \
+# define DO_FAST_BINOP(op,a,b,v) do {		\
     SKIP_OP(); \
     SETSTACK_REAL(-2, (a) op (b)); \
     R_BCNodeStackTop--; \
     NEXT(); \
 } while (0)
 
-# define DO_FAST_BINOP_INT(op, a, b) do { \
+# define DO_FAST_BINOP_INT(op, a, b, v) do {	    \
     double dval = ((double) (a)) op ((double) (b)); \
     if (dval <= INT_MAX && dval >= INT_MIN + 1) { \
 	SKIP_OP(); \
@@ -3273,32 +3283,28 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 /* these reuse one of the two values on the top of the stack if it is
    of the right type and has no references. It is known that both of
    these will have length one and have no attributes. */
-# define DO_FAST_BINOP(op,a,b) do {					\
+# define DO_FAST_BINOP(op, a, b, ans) do {				\
 	SKIP_OP();							\
-	SEXP sa = R_BCNodeStackTop[-2];					\
-	SEXP sb = R_BCNodeStackTop[-1];					\
-	SEXP ans;							\
-	if (NO_REFERENCES(sa) && TYPEOF(sa) == REALSXP) ans = sa;	\
-	else if (NO_REFERENCES(sb) && TYPEOF(sb) == REALSXP) ans = sb;	\
-	else ans = allocVector(REALSXP, 1);				\
-	REAL(ans)[0] = (a) op (b);					\
-	SETSTACK(-2, ans);						\
+	double dval = (a) op (b);					\
+	if (ans) {							\
+	    REAL(ans)[0] = dval;					\
+	    SETSTACK(-2, ans);						\
+	}								\
+	else SETSTACK_REAL(-2, dval);					\
 	R_BCNodeStackTop--;						\
 	NEXT();								\
     } while (0)
 
-# define DO_FAST_BINOP_INT(op, a, b) do { \
-	double dval = ((double) (a)) op ((double) (b)); \
-	if (dval <= INT_MAX && dval >= INT_MIN + 1) {	\
+# define DO_FAST_BINOP_INT(op, a, b, ans) do {				\
+	double dval = ((double) (a)) op ((double) (b));			\
+	if (dval <= INT_MAX && dval >= INT_MIN + 1) {			\
+	    int val = (int) dval;					\
 	    SKIP_OP();							\
-	    SEXP sa = R_BCNodeStackTop[-2];				\
-	    SEXP sb = R_BCNodeStackTop[-1];				\
-	    SEXP ans;							\
-	    if (NO_REFERENCES(sa) && TYPEOF(sa) == INTSXP) ans = sa;	\
-	    else if (NO_REFERENCES(sb) && TYPEOF(sb) == INTSXP) ans = sb; \
-	    else ans = allocVector(INTSXP, 1);				\
-	    INTEGER(ans)[0] = (int) dval;				\
-	    SETSTACK(-2, ans);						\
+	    if (ans) {							\
+		INTEGER(ans)[0] = val;					\
+		SETSTACK(-2, ans);					\
+	    }								\
+	    else SETSTACK_INTEGER(-2, val);				\
 	    R_BCNodeStackTop--;						\
 	    NEXT();							\
 	}								\
@@ -3308,22 +3314,24 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 # define FastBinary(op,opval,opsym) do { \
     scalar_value_t vx; \
     scalar_value_t vy; \
-    int typex = bcStackScalar(R_BCNodeStackTop - 2, &vx); \
-    int typey = bcStackScalar(R_BCNodeStackTop - 1, &vy); \
+    SEXP sa = NULL; \
+    SEXP sb = NULL; \
+    int typex = bcStackScalarEx(R_BCNodeStackTop - 2, &vx, &sa);	\
+    int typey = bcStackScalarEx(R_BCNodeStackTop - 1, &vy, &sb);	\
     if (typex == REALSXP) { \
 	if (typey == REALSXP) \
-	    DO_FAST_BINOP(op, vx.dval, vy.dval); \
+	    DO_FAST_BINOP(op, vx.dval, vy.dval, sa ? sa : sb);	\
 	else if (typey == INTSXP && vy.ival != NA_INTEGER) \
-	    DO_FAST_BINOP(op, vx.dval, vy.ival); \
+	    DO_FAST_BINOP(op, vx.dval, vy.ival, sa);	   \
     } \
     else if (typex == INTSXP && vx.ival != NA_INTEGER) { \
 	if (typey == REALSXP) \
-	    DO_FAST_BINOP(op, vx.ival, vy.dval); \
+	    DO_FAST_BINOP(op, vx.ival, vy.dval, sb);	     \
 	else if (typey == INTSXP && vy.ival != NA_INTEGER) { \
 	    if (opval == DIVOP) \
-		DO_FAST_BINOP(op, (double) vx.ival, (double) vy.ival); \
+		DO_FAST_BINOP(op, (double) vx.ival, (double) vy.ival, NULL); \
 	    else \
-		DO_FAST_BINOP_INT(op, vx.ival, vy.ival); \
+		DO_FAST_BINOP_INT(op, vx.ival, vy.ival, sa ? sa : sb);	\
 	} \
     } \
     Arith2(opval, opsym); \
