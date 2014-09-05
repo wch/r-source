@@ -4469,12 +4469,6 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
    true BUILTIN from a .Internal. LT */
 #define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
 
-static R_INLINE SEXP BUMPREFCNT(SEXP x)
-{
-    INCREMENT_REFCNT(x);
-    return x;
-}
-
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 {
   SEXP value, constants;
@@ -4703,11 +4697,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(LDCONST, 1):
       R_Visible = TRUE;
       value = VECTOR_ELT(constants, GETOP());
-      /* make sure NAMED = 2 -- lower values might be safe in some cases but
-	 not in general, especially if the constant pool was created by
-	 unserializing a compiled expression. */
-      /*if (NAMED(value) < 2) SET_NAMED(value, 2);*/
-      BCNPUSH(duplicate(value));
+      MARK_NOT_MUTABLE(value);
+      BCNPUSH(value);
       NEXT();
     OP(LDNULL, 0): R_Visible = TRUE; BCNPUSH(R_NilValue); NEXT();
     OP(LDTRUE, 0): R_Visible = TRUE; BCNPUSH(R_TrueValue); NEXT();
@@ -4861,7 +4852,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  be defensive against bad package C code */
     OP(PUSHCONSTARG, 1):
       value = VECTOR_ELT(constants, GETOP());
-      PUSHCALLARG(BUMPREFCNT(duplicate(value)));
+      MARK_NOT_MUTABLE(value);
+      PUSHCALLARG(value);
       NEXT();
     OP(PUSHNULLARG, 0): PUSHCALLARG(R_NilValue); NEXT();
     OP(PUSHTRUEARG, 0): PUSHCALLARG(R_TrueValue); NEXT();
