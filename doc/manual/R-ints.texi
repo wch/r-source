@@ -1915,7 +1915,7 @@ indicating if the serialized objects were compressed: compression is
 always used nowadays. We later added the values @code{compressed = 2}
 and @code{3} for @command{bzip2} and @command{xz} compression (with the
 possibility of future expansion to other methods): these formats add a
-fifth byte to the header for the type of compression, and stores
+fifth byte to the header for the type of compression, and store
 serialized objects uncompressed if compression expands them.
 
 The loader for a lazy-load database of code or data is function
@@ -1932,6 +1932,16 @@ entries is done by calls to @code{.Call("R_lazyLoadDBinsertValue",
 Lazy-load databases of less than 10MB are cached in memory at first use:
 this was found necessary when using file systems with high latency
 (removable devices and network-mounted file systems on Windows).
+
+Lazy-load databases are loaded into the exports for a package, but not
+into the namespace environment itself.  Thus they are visible when the
+package is @emph{attached}, and also @emph{via} the @code{::} operator.
+This was a deliberate design decision, as packages mostly make datasets
+available for use by the end user (or other packages), and they should
+not be found preferentially from functions in the package, surprising
+users who expected the normal search path to be used.  (There is an
+alternative mechanism, @file{sysdata.rda}, for `system datasets' that
+are intended primarily to be used within the package.)
 
 The same database mechanism is used to store parsed @file{Rd} files.
 One or all of the parsed objects is fetched by a call to

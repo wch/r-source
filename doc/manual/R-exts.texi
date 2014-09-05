@@ -3221,10 +3221,15 @@ conditional processing of @code{if} statements is implemented.
 
 Packages are loaded and attached to the search path by calling
 @code{library} or @code{require}.  Only the exported variables are
-placed in the attached frame.  Loading a package that imports
-variables from other packages will cause these other packages to be
-loaded as well (unless they have already been loaded), but they will
-@emph{not} be placed on the search path by these implicit loads.
+placed in the attached frame.  Loading a package that imports variables
+from other packages will cause these other packages to be loaded as well
+(unless they have already been loaded), but they will @emph{not} be
+placed on the search path by these implicit loads.  Thus code in the
+package can only depend on objects in its own namespace and its imports
+(including the @pkg{base} namespace) being visible@footnote{Note that
+lazy-loaded datasets are @emph{not} in the package's namespace so need
+to be accessed @emph{via} @code{::}, e.g.@:
+@code{survival::survexp.us}.}.
 
 Namespaces are @emph{sealed} once they are loaded.  Sealing means that
 imports and exports cannot be changed and that internal variable
@@ -3241,6 +3246,7 @@ then the normal search path.
 Prior to @R{} 2.14.0, namespaces were optional in packages: a default
 namespace was generated on installation in 2.14.x and 2.15.x.  As from
 3.0.0 a namespace is mandatory.
+
 
 @menu
 * Specifying imports and exports::  
@@ -3806,8 +3812,8 @@ repository such as @acronym{CRAN}).
 @end menu
 
 Portable packages should have simple file names: use only alphanumeric
-@acronym{ASCII} characters and @code{.}, and avoid those names not
-allowed under Windows which are mentioned above.
+@acronym{ASCII} characters and period (@code{.}), and avoid those names
+not allowed under Windows which are mentioned above.
 
 Many of the graphics devices are platform-specific: even @code{X11()}
 (aka @code{x11()}) which although emulated on Windows may not be
@@ -3999,6 +4005,11 @@ If you do not yourself have a Windows system, consider submitting your
 source package to WinBuilder (@uref{http://win-builder.r-project.org/})
 before distribution.
 
+@item
+It is bad practice for package code to alter the search path using
+@code{library}, @code{require} or @code{attach} and this often does not
+work as intended.  For alternatives, see @ref{Suggested packages} and
+@code{with}.
 @end itemize
 
 Do be careful in what your tests actually test.  Bad practice seen in
@@ -7480,26 +7491,53 @@ For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
 @uref{https://code.google.com/p/address-sanitizer/wiki/Flags#Run-time_flags}.
 With @command{gcc} additional control is available @emph{via} the
-@option{--params} flag: see its @command{man} page.  For some builds on
-@code{x86_64} Linux this includes enabling the leak sanitizer
-(@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}),
-which might even be enabled by default@footnote{it was in the @command{gcc}
-trunk in mid-2014, and for @command{clang} 3.5.} when any
-leaks give the process a failure error status (by default @code{23}).
+@option{--params} flag: see its @command{man} page.
+
+For more detailed information on an error, @R{} can be run under a
+debugger with a breakpoint set before the address sanitizer report is
+produced: for @command{gdb} or @command{lldb} you could use
+@example
+break __asan_report_error
+@end example
+(See
+@uref{http://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
+
+@menu
+* Using Leak Sanitizer::        
+@end menu
+
+@node Using Leak Sanitizer,  , Using Address Sanitizer, Using Address Sanitizer
+@subsubsection Using the Leak Sanitizer
+
+For @code{x86_64} Linux there is a leak sanitizer, `LSan': see
+@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}.
+This is available on recent versions of @code{gcc} and @code{clang}, and
+where available is compiled in as part of ASan.
+
+One way to invoke this from an ASan-enabled build is by the environment
+variable
+
+@example
+ASAN_OPTIONS='detect_leaks=1'
+@end example
+@noindent
+However, this is the default on @command{clang} 3.5 and pre-releases of
+@command{gcc} 5.0.0.
+
+When LSan is enabled, leaks give the process a failure error status (by
+default @code{23}).  For an @R{} package this means the @R{} process,
+and as the parser retains some memory to the end of the process, if @R{}
+itself was built against ASAN, all runs will have a failure error status
+(and that includes running @R{} as part of building @R{} itself).
+
 To disable both this and some strict checking use
 
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0'
 @end example
 
-For more detailed information @R{} can be run under a debugger with a
-breakpoint set before the address sanitizer report is produced: for
-@command{gdb} or @command{lldb} you could use
-@example
-break __asan_report_error
-@end example
-(See
-@uref{http://code.google.com/p/address-sanitizer/wiki/AddressSanitizer#gdb}.)
+LSan also has a `stand-alone' mode where it is compiled in using
+@option{-fsanitize=leak} and avoids the run-time overhead of ASan.
 
 @node Using Undefined Behaviour Sanitizer, Other analyses with `clang', Using Address Sanitizer, Checking memory access
 @subsection Using the Undefined Behaviour Sanitizer
@@ -7522,7 +7560,7 @@ GCC as from 4.9.0.  Its runtime library is linked into each package's
 DLL, so it is less often needed to be included in @env{MAIN_LDFLAGS}.
 
 Some versions have greatly increased compilation times on a few files
-(e.g. @file{src/extra/bzip2/decompress.c} in the @R{} sources with
+(e.g.@: @file{src/extra/bzip2/decompress.c} in the @R{} sources with
 @command{clang} 3.5).
 
 This sanitizer can be combined with the Address Sanitizer by
@@ -7585,13 +7623,21 @@ detect alignment errors.
 
 Other useful flags include
 @example
--no-fsanitize=recover
+-no-fsanitize-recover
 @end example
 
 @noindent
 which causes the first report to be fatal (it always is for the
-@code{unreachable} and @code{return} suboptions).
-
+@code{unreachable} and @code{return} suboptions).  For more detailed
+information on where the runtime error occurs, @R{} can be run under a
+debugger with a breakpoint set before the sanitizer report is produced:
+for @command{gdb} or @command{lldb} you could use
+@example
+break __ubsan_handle_float_cast_overflow
+break __ubsan_handle_float_cast_overflow_abort
+@end example
+@noindent
+or similar (there are handlers for each type of undefined behaviour).
 
 There are also the compiler flags @option{-fcatch-undefined-behavior}
 and @option{-ftrapv}, said to be more reliable in @command{clang} than
@@ -7604,28 +7650,20 @@ For more details on the topic see
 
 This option may not compile OpenMP code.
 
+
+
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
+Recent versions of @command{clang} on some platforms have
+`ThreadSanitizer' (@uref{https://code.google.com/p/thread-sanitizer/}),
+a `data race detector for C/C++ programs', and `MemorySanitizer'
+(@uref{https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer})
+for the detection of uninitialized memory.  Both are based on and
+provide similar functionality to tools in @command{valgrind}.
 
 @command{clang} has a `Static Analyser' which can be run on the source
 files during compilation: see @uref{http://clang-analyzer.llvm.org/}.
-
-Some versions of @command{clang} have a (currently experimental) memory
-sanitizer invoked by @option{-fsanitize=memory} which detects uses of
-uninitialized memory. See
-@uref{http://clang.llvm.org/docs/MemorySanitizer.html}.  
-
-For @code{x86_64} Linux there is a leak sanitizer: see
-@uref{https://code.google.com/p/address-sanitizer/wiki/LeakSanitizer}:
-one way to invoke this from an ASAN-enabled build is by the environment
-variable
-
-@example
-ASAN_OPTIONS='detect_leaks=1'
-@end example
-@noindent
-(which may be the default on some builds).
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
 @subsection Using `Dr. Memory'
