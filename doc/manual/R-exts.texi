@@ -412,9 +412,10 @@ sentences, but only one paragraph.
 
 @c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a short description of the
-package. Some package listings may truncate the title to 65 characters.
-It should be capitalized, not use any markup, not have any continuation
-lines, and not end in a period.
+package.  Some package listings may truncate the title to 65 characters.
+It should use @emph{title case} (that is, use capitals for the principal
+words), not use any markup, not have any continuation lines, and not end
+in a period.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
@@ -7410,14 +7411,19 @@ as the @file{R.framework}) and can be slow.  Installing packages with
 also be done by setting environment variable @env{PKG_MAKE_DSYM} to a
 non-empty value before the @command{INSTALL}.)
 
+This section has described the use of @command{memtest}, the default
+(and most useful) of @code{valgrind}'s tools.  There are others
+described in its documentation: @command{helgrind} can be useful for
+threaded programs.
+
 @node Using Address Sanitizer, Using Undefined Behaviour Sanitizer, Using valgrind, Checking memory access
 @subsection Using the Address Sanitizer
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{not including the versions distributed by Apple in
-@code{Xcode} 4.6 or 5, nor of @command{clang} in Fedora prior to an
-update in Fedora 19. On some platforms, e.g.@: Fedora, the runtime
+builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
+and OS X, not including the versions distributed by Apple in
+@code{Xcode} 4.6 or 5. On some platforms, e.g.@: Fedora, the runtime
 library, @pkg{libasan}, needs to be installed separately. OS X users can
 install a suitable @command{clang} from the sources or possibly
 distributions such as MacPorts or Homebrew.} of @command{gcc} 4.8.0 or
@@ -7527,7 +7533,7 @@ However, this is the default on @command{clang} 3.5 and pre-releases of
 When LSan is enabled, leaks give the process a failure error status (by
 default @code{23}).  For an @R{} package this means the @R{} process,
 and as the parser retains some memory to the end of the process, if @R{}
-itself was built against ASAN, all runs will have a failure error status
+itself was built against ASan, all runs will have a failure error status
 (and that includes running @R{} as part of building @R{} itself).
 
 To disable both this and some strict checking use
@@ -7593,7 +7599,7 @@ In addition,
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-Pre-release versions of @command{clang} 3.5 need
+@command{clang} 3.5 needs
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
@@ -7655,10 +7661,11 @@ This option may not compile OpenMP code.
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
 @subsection Other analyses with `clang'
 
-Recent versions of @command{clang} on some platforms have
+Recent versions of @command{clang} on @cputype{x86_64} Linux have
 `ThreadSanitizer' (@uref{https://code.google.com/p/thread-sanitizer/}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
-(@uref{https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer})
+(@uref{http://clang.llvm.org/docs/MemorySanitizer.html},
+@uref{https://code.google.com/p/memory-sanitizer/wiki/MemorySanitizer})
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 
