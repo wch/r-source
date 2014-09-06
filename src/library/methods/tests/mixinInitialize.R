@@ -77,3 +77,10 @@ stopifnot(is(tryCatch(as(a3 <- array(1:24, 2:4), "matrix"), error=function(e)e),
 	  ## and yes, "for now":
 	  identical(a2, matrix(1:12, 3)))
 
+## subclassing a class that did not allow new() w/o extra args failed
+## through version 3.1.1
+setClass("BAR", slots = c(y="integer"))
+
+setMethod("initialize", "BAR", function(.Object, Y) {.Object@y <- Y; .Object})
+
+setClass("BAR3", contains = "BAR")
