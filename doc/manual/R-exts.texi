@@ -4013,8 +4013,8 @@ work as intended.  For alternatives, see @ref{Suggested packages} and
 @code{with}.
 @end itemize
 
-Do be careful in what your tests actually test.  Bad practice seen in
-distributed packages include:
+Do be careful in what your tests (and examples) actually test.  Bad
+practice seen in distributed packages include:
 
 @itemize
 
@@ -4025,8 +4025,19 @@ you can test a ratio of times, and even that is fraught with
 difficulties.
 
 @item
-Do not test the exact format of @R{} error messages: they change, and
+Do not test the exact format of @R{} error messages: They change, and
 they can be translated.
+
+Worse, packages have tested the exact format of system error messages,
+which are platform-dependent and perhaps locale-dependent.
+
+@item
+If you use functions such as @code{View}, remember that in testing there
+is no one to look at the output.  It is better to use something like one of
+@example
+if(interactive()) View(obj) else print(head(obj))
+if(interactive()) View(obj) else str(obj)
+@end example
 
 @item
 Only test the accuracy of results if you have done a formal error
