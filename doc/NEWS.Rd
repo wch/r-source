@@ -115,6 +115,10 @@
 
       \item Subclassing an S4 class failed if the class required
       arguments to the generator, through its \code{initialize()} method.
+      
+      \item \code{removeSource()} did not properly handle expressions
+      containing arguments that were supplied as missing, e.g. 
+      \code{x[i,]}. (\PR{15957})
     }
   }
 }
