@@ -4208,7 +4208,8 @@ function(pkgDir)
     non_ASCII <- where <- character()
     latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
-    suppressPackageStartupMessages({
+    ## (and some more ...)
+    suppressMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
             check_one(get(ds, envir = dataEnv), ds)
     })
