@@ -297,10 +297,9 @@
       \item The \code{confint()} function failed on results of 
       \code{nls()} fits that specified parameter limits despite using 
       an algorithm other than \code{"port"}.  (\PR{15960})
-      
-      \item \code{removeSource()} did not properly handle expressions
-      containing arguments that were supplied as missing, e.g. 
-      \code{x[i,]}. (\PR{15957})
+
+      \item Subclassing an S4 class failed if the class required
+      arguments to the generator, through its \code{initialize()} method.
     }
   }
 }
