@@ -25,8 +25,6 @@
     \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
     passed on to the foreign function.  If \code{FALSE}, the presence of
     \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
-  \item{DUP}{if \code{TRUE} then arguments are duplicated if necessary
-    before their addresses are passed to C or Fortran.}
   \item{PACKAGE}{if supplied, confine the search for a character string
     \code{.NAME} to the DLL given by this argument (plus the
     conventional extension, \file{.so}, \file{.dll}, \dots).
@@ -35,7 +33,7 @@
     using this argument that no other package can override their external
     symbols, and also speeds up the search (see \sQuote{Note}).}
 
-  \item{ENCODING}{For back-compatibility, accepted but ignored.}
+  \item{DUP, ENCODING}{For back-compatibility, accepted but ignored.}
 }
 
 \details{
@@ -119,41 +117,6 @@
   environments are now deprecated.
 }
 
-\section{Warning}{
-  \code{DUP = FALSE} \emph{is dangerous} and may be disabled in future
-  versions of \R.  It was deprecated in \R 3.1.0.
-
-  People concerned about performance and especially memory usage are
-  strongly recommended to use the \code{\link{.Call}} interface instead
-  of these interfaces.
-
-  If you pass a local variable to \code{.C}/\code{.Fortran} with
-  \code{DUP = FALSE}, your compiled code can alter the local variable and
-  not just the copy in the return list.  Worse, if you pass a local
-  variable that is a formal parameter of the calling function, you may
-  be able to change not only the local variable but the variable one
-  level up.  This will be very hard to trace.
-
-  With \code{DUP = FALSE}, character vectors cannot be used, and single
-  precision values will not be returned.
-
-  It is safe to set \code{DUP = FALSE} provided you do not change any of
-  the variables that might be affected, e.g.,
-
-  \code{.C("Cfunction", input = x, output = numeric(10))}.
-
-  In this case the \code{output} variable did not exist before the call
-  so is not copied (even with \code{DUP = TRUE}).  \emph{If} the
-  \code{input} variable is not changed in the C code of \code{Cfunction}
-  you would be safe.  Unfortunately, there is no automated check that
-  the C function does not change its argument, and authors have
-  frequently done so without realizing it.
-
-  However, in recent versions of \R most unnecessary copying is avoided:
-  on the other hand using \code{DUP = FALSE} can omit \emph{necessary}
-  copying.
-}
-
 \section{Fortran symbol names}{
   All Fortran compilers known to be usable to compile \R map symbol names
   to lower case, and so does \code{.Fortran}.
@@ -174,16 +137,13 @@
 }
 
 \section{Copying of arguments}{
-  If \code{DUP = TRUE} there are up to two copies made of each argument
-  in \code{\dots}.
+  Character vectors are copied before calling the compiled code and to
+  collect the results.  For other atomic vectors the argument is copied
+  before calling the compiled code if it is otherwise used in the
+  calling code.
 
-  Prior to \R 2.15.1 there were always two for vectors (one before
-  calling the compiled code and one to collect the results), and this is
-  still the case for character vectors.  For other atomic vectors, the
-  argument is not copied before calling the compiled code if it is not
-  otherwise used in the calling code (such as \code{output} in the
-  example above).  Non-atomic-vector objects are read-only to the C code
-  and are never copied.
+  Non-atomic-vector objects are read-only to the C code and are never
+  copied.
 
   This behaviour can be changed by setting
   \code{\link{options}(CBoundsCheck = TRUE)}.  In that case raw,
@@ -203,14 +163,6 @@
   You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
-
-  \code{PACKAGE = ""} used to be accepted (but was undocumented): it is
-  now an error.
-
-  The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
-  was not as documented.  This has been corrected, but the
-  \code{\link{.Call}} and \code{\link{.External}} interfaces are much
-  preferred for passing anything other than atomic vectors.
 }
 
 \references{
