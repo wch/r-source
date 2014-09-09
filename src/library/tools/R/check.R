@@ -3280,7 +3280,9 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-security\\]",
                              ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
-                             ": warning: .* \\[-Wunsequenced\\]")
+                             ": warning: .* \\[-Wunsequenced\\]",
+                             ": warning: .* \\[-Wvla-extension\\]"
+                             )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
