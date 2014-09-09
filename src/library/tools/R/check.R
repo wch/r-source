@@ -1353,8 +1353,8 @@ setRlibs <-
                             "for use only by R itself",
                             "and subject to change without notice.")
                 else if(any(grepl("with DUP = FALSE:", out)))
-                    wrapLog("DUP = FALSE is deprecated and may be",
-                            "disabled in future versions of R.")
+                    wrapLog("DUP = FALSE is no longer supported",
+                            "and will be ignored.")
                 else
                     wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")

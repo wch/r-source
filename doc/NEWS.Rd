@@ -179,6 +179,11 @@
       \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
       \code{rmultinom} are remapped (by default).  This requires
       packages using them to be re-installed.
+      
+      \item \code{.C(DUP = FALSE)} and \code{.Fortran(DUP = FALSE)} are
+      now ignored, so arguments are duplicated if \code{DUP = TRUE}
+      would do so.  As their help has long said, \code{.Call()} is much
+      preferred.
     }
   }
 

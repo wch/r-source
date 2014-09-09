@@ -1426,6 +1426,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     args = enctrim(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, symName, &nargs,
 				&naok, &dup, call, env);
+    dup = 1; // for now: clean up later
     fun = (VarFun) ofun;
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {
