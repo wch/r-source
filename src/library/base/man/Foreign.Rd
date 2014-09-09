@@ -120,8 +120,8 @@
 }
 
 \section{Warning}{
-  \code{DUP = FALSE} \emph{is dangerous} and may be disabled in future
-  versions of \R.  It was deprecated in \R 3.1.0.
+  \code{DUP = FALSE} \emph{is dangerous}.  It was deprecated in \R 3.1.0
+  and will be disabled in \R 3.2.0.
 
   People concerned about performance and especially memory usage are
   strongly recommended to use the \code{\link{.Call}} interface instead
@@ -149,9 +149,8 @@
   the C function does not change its argument, and authors have
   frequently done so without realizing it.
 
-  However, in recent versions of \R most unnecessary copying is avoided:
-  on the other hand using \code{DUP = FALSE} can omit \emph{necessary}
-  copying.
+  In recent versions of \R most unnecessary copying is avoided: on the
+  other hand using \code{DUP = FALSE} can omit \emph{necessary} copying.
 }
 
 \section{Fortran symbol names}{
@@ -174,16 +173,13 @@
 }
 
 \section{Copying of arguments}{
-  If \code{DUP = TRUE} there are up to two copies made of each argument
-  in \code{\dots}.
+  Character vectors are copied before calling the compiled code and to
+  collect the results.  For \code{DUP = TRUE} and other atomic vectors,
+  the argument is copied before calling the compiled code if it is
+  otherwise used in the calling code.
 
-  Prior to \R 2.15.1 there were always two for vectors (one before
-  calling the compiled code and one to collect the results), and this is
-  still the case for character vectors.  For other atomic vectors, the
-  argument is not copied before calling the compiled code if it is not
-  otherwise used in the calling code (such as \code{output} in the
-  example above).  Non-atomic-vector objects are read-only to the C code
-  and are never copied.
+  Non-atomic-vector objects are read-only to the C code and are never
+  copied.
 
   This behaviour can be changed by setting
   \code{\link{options}(CBoundsCheck = TRUE)}.  In that case raw,
@@ -203,14 +199,6 @@
   You may see \code{PACKAGE = "base"} for symbols linked into \R.  Do
   not use this in your own code: such symbols are not part of the API
   and may be changed without warning.
-
-  \code{PACKAGE = ""} used to be accepted (but was undocumented): it is
-  now an error.
-
-  The way \link{pairlist}s were passed by \code{.C} prior to \R 2.15.0
-  was not as documented.  This has been corrected, but the
-  \code{\link{.Call}} and \code{\link{.External}} interfaces are much
-  preferred for passing anything other than atomic vectors.
 }
 
 \references{
