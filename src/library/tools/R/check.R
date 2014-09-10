@@ -3290,8 +3290,8 @@ setRlibs <-
                              ": warning: .* \\[-Wunsequenced\\]",
                              ": warning: .* \\[-Wvla-extension\\]",
                              ": warning: .* format string contains '\\0' within the string body",
-                             ": warning: .* \\[-C++11-long-long\\]",
-                             ": warning:: empty macro arguments are a C99 feature"
+                             ": warning: .* \\[-C[+][+]11-long-long\\]",
+                             ": warning: empty macro arguments are a C99 feature"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
