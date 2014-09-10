@@ -3240,9 +3240,11 @@ setRlibs <-
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
-                             ## clang warning about invalid returns.
                              "warning: void function",
+                             ## gcc warning about invalid returns.
                              "warning: control reaches end of non-void function",
+                             ## clang warning about invalid returns.
+                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
@@ -3286,7 +3288,10 @@ setRlibs <-
                              ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]",
-                             ": warning: .* \\[-Wvla-extension\\]"
+                             ": warning: .* \\[-Wvla-extension\\]",
+                             ": warning: .* format string contains '\\0' within the string body",
+                             ": warning: .* \\[-C++11-long-long\\]",
+                             ": warning:: empty macro arguments are a C99 feature"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
