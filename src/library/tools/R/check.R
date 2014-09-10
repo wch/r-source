@@ -3240,8 +3240,8 @@ setRlibs <-
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
+                             ## clang warning about invalid returns.
                              "warning: void function",
-                             ## gcc warning about invalid returns.
                              "warning: control reaches end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
@@ -3287,15 +3287,14 @@ setRlibs <-
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]",
                              ": warning: .* \\[-Wvla-extension\\]",
-                             ": warning: .* format string contains '\\0' within the string body",
-                             ": warning: .* \\[-C[+][+]11-long-long\\]",
+                             ": warning: format string contains '[\\]0'",
+                             ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
-
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
