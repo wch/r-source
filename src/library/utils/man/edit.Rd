@@ -30,12 +30,18 @@ xedit(name = NULL, file = "")
     then the file specified by \code{file} is opened for editing.}
   \item{file}{a string naming the file to write the edited version to.}
   \item{title}{a display name for the object being edited.}
-  \item{editor}{a string naming the text editor you want to use.  On
-    Unix the default is set from the environment variables \env{EDITOR}
-    or \env{VISUAL} if either is set, otherwise \code{vi} is used.  On
-    Windows it defaults to \code{"internal"}, the script editor.  On the
-    OS X GUI the argument is ignored and the document editor is
-    always used.}
+  \item{editor}{usually a string naming the text editor you want to use.
+    On Unix the default is set from the environment variables
+    \env{EDITOR} or \env{VISUAL} if either is set, otherwise \code{vi}
+    is used.  On Windows it defaults to \code{"internal"}, the script
+    editor.  On the OS X GUI the argument is ignored and the document
+    editor is always used.
+
+    \code{editor} can also be a function, in which case it is called
+    with the arguments \code{name}, \code{file}, and \code{title}.  Note
+    that such a function will need to independently implement all
+    desired functionality.
+  }
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{

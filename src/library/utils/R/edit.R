@@ -82,7 +82,7 @@ edit.default <-
               editor = getOption("editor"), ...)
 {
     if (is.null(title)) title <- deparse(substitute(name))
-    if (is.function(editor)) invisible(editor(name, file, title))
+    if (is.function(editor)) invisible(editor(name = name, file = file, title = title))
     else .External2(C_edit, name, file, title, editor)
 }
 

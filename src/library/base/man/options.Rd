@@ -506,11 +506,10 @@ getOption(x, default = NULL)
     \item{\code{demo.ask}:}{default for the \code{ask} argument of
       \code{\link{demo}}.}
 
-    \item{\code{editor}:}{a non-empty string, or a function that is
-      called with a file path as argument.  Sets the default text
-      editor, e.g., for \code{\link{edit}}.  Set from the environment
-      variable \env{EDITOR} on UNIX, or if unset \env{VISUAL} or
-      \command{vi}.}
+    \item{\code{editor}:}{a non-empty string or a function that sets the
+      default text editor, e.g., for \code{\link{edit}}.  Set from the
+      environment variable \env{EDITOR} on UNIX, or if unset
+      \env{VISUAL} or \command{vi}.}
 
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}
