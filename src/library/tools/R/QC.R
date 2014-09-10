@@ -2058,8 +2058,7 @@ function(package, dir, file, lib.loc = NULL,
             ## </NOTE>
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 if(registration) check_registration(e, fr)
-                dup <- e[["DUP"]]
-                if(!identical(dup, TRUE))
+                if(!is.null(e[["DUP"]]))
                     dup_false <<- c(dup_false, e)
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
