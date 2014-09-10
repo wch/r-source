@@ -3243,8 +3243,6 @@ setRlibs <-
                              "warning: void function",
                              ## gcc warning about invalid returns.
                              "warning: control reaches end of non-void function",
-                             ## clang warning about invalid returns.
-                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
