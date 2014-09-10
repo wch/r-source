@@ -1352,9 +1352,8 @@ setRlibs <-
                             "They are not part of the API,",
                             "for use only by R itself",
                             "and subject to change without notice.")
-                else if(any(grepl("with DUP = FALSE:", out)))
-                    wrapLog("DUP = FALSE is no longer supported",
-                            "and will be ignored.")
+                else if(any(grepl("with DUP:", out)))
+                    wrapLog("DUP is no longer supported and will be ignored.")
                 else
                     wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")

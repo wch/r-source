@@ -2059,7 +2059,7 @@ function(package, dir, file, lib.loc = NULL,
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 if(registration) check_registration(e, fr)
                 dup <- e[["DUP"]]
-                if(identical(dup, FALSE))
+                if(!identical(dup, TRUE))
                     dup_false <<- c(dup_false, e)
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
@@ -2261,8 +2261,8 @@ function(x, ...)
     z3 <- attr(x, "dup_false")
      if (length(z3)) {
     	msg <- ngettext(length(z3),
-    		        "Call with DUP = FALSE:",
-    		        "Calls with DUP = FALSE:",
+    		        "Call with DUP:",
+    		        "Calls with DUP:",
     		        domain = NA)
         res <- c(res, msg)
         for (i in seq_along(z3)) {
