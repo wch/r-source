@@ -459,4 +459,10 @@ stopifnot(identical(crossprod(2, v), t(2) %*% v),
 ## gave error "non-conformable arguments" in R <= 3.2.0
 
 
+## list <--> environment
+L0 <- list()
+stopifnot(identical(L0, as.list(as.environment(L0))))
+## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.2.0
+
+
 proc.time()

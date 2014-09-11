@@ -313,7 +313,9 @@
       \item \code{all.equal()} gets a method for \code{environment}s and
       \code{refClass}es.
 
-      \item \code{as.environment(list())} now works.
+      \item \code{as.environment(list())} now works, and
+      \code{as.list()} of such an environment is now the same as
+      \code{list()}.
             
       \item Several \pkg{tcltk} functions failed when run in unusual 
       environments. (\PR{15970})

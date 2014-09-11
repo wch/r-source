@@ -2633,6 +2633,10 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	FrameNames(FRAME(env), all, names, &k);
 
+    if(k == 0) { // no sorting, keep NULL names
+	UNPROTECT(2);
+	return(ans);
+    }
     if(sort_nms) {
 	// return list with *sorted* names
 	SEXP sind = PROTECT(allocVector(INTSXP, k));
