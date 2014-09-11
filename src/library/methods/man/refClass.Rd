@@ -1,6 +1,6 @@
 % File src/library/methods/man/refClass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010-2 R Core Team
+% Copyright 2010-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ReferenceClasses}
@@ -73,7 +73,7 @@ used by accessor functions.
 
 Note that fields are distinct from
 the slots, if any, in the object.  Slots are, as always, handled by
-standard \R{} object management.  
+standard \R{} object management.
 It is not generally a good idea to mix slots and fields in the same
 class; this confuses the distinction in behavior between reference
 classes and regular S4 classes.  See the comments in the
@@ -285,7 +285,7 @@ In particular, methods should not use non-exported entries in the
 package's namespace, because the methods may be inherited by a
 reference class in another package.
 
-Methods for \code{$initialze()} %$
+Methods for \code{$initialize()} %$
 have special requirements.  See the comments in the \dQuote{Value}
 section.
 
@@ -633,7 +633,7 @@ In a method for this class, the field can be accessed by the name
 \code{data}.
 A field that is not locked can be set by an expression of the form
 \code{x$data <- value}.%$
-Inside a method, a field can be assigned by an expresion of the form
+Inside a method, a field can be assigned by an expression of the form
 \code{x <<- value}.
 Note the \link[=assignOps]{non-local assignment} operator.
 The standard \R interpretation of this operator works to assign it in
