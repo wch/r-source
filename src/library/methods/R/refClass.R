@@ -937,16 +937,12 @@ setRefClass <- function(Class, fields = character(),
     ## Note:  the classGeneratorFunction has the class name, not the explicit definition
     classFun <- setClass(Class, contains = superClasses,
              where = where, ...)
-    ## kludge: as.environment fails on an empty list
-    asEnv <- function(x) {
-        if(length(x)) as.environment(x) else new.env(FALSE)
-    }
     ## now, override the class definiton with the complete definition
     classDef <- new("refClassRepresentation",
                     getClassDef(Class, where = where),
                     fieldClasses = fieldClasses,
-                    refMethods = asEnv(refMethods),
-                    fieldPrototypes = asEnv(fieldPrototypes),
+                    refMethods = as.environment(refMethods),
+                    fieldPrototypes = as.environment(fieldPrototypes),
                     refSuperClasses = refSuperClasses)
     assignClassDef(Class, classDef, where)
     generator <- new("refGeneratorSlot")

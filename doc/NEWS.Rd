@@ -308,6 +308,8 @@
 
       \item \code{all.equal()} gets a method for \code{environment}s and
       \code{refClass}es.
+
+      \item \code{as.environment(list())} now works.
     }
   }
 }
