@@ -23,7 +23,7 @@ all.equal.default <-
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "integer"
-    if(is.language(target) || is.function(target) || is.environment(target))
+    if(is.language(target) || is.function(target))
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
@@ -144,7 +144,26 @@ all.equal.character <-
     else msg
 }
 
-## visible, so need to test both args
+## In 'base' these are all visible, so need to test both args:
+
+all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
+    ## ?setRefClass explicitly says users should not use ".<foo>" fields:
+    if(is.na(all.names)) all.names <- FALSE
+    ## try preventing infinite recursion by not looking at  .self :
+    T <- if(all.names) function(ls) ls[names(ls) != ".self"] else identity
+    if(!is.environment (target)) return( "'target' is not an environment")
+    if(!is.environment(current)) return("'current' is not an environment")
+    all.equal.list(T(as.list(target , all.names=all.names, sorted=TRUE)),
+                   T(as.list(current, all.names=all.names, sorted=TRUE)), ...)
+}
+
+all.equal.environment <- function (target, current, all.names=TRUE, ...) {
+    if(!is.environment (target)) return( "'target' is not an environment")
+    if(!is.environment(current)) return("'current' is not an environment")
+    all.equal.list(as.list(target , all.names=all.names, sorted=TRUE),
+                   as.list(current, all.names=all.names, sorted=TRUE), ...)
+}
+
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)
 {
     if(!inherits(target, "factor"))

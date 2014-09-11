@@ -179,7 +179,7 @@
       \item Entry points \code{rbinom_mu}, \code{rnbinom_mu} and
       \code{rmultinom} are remapped (by default).  This requires
       packages using them to be re-installed.
-      
+
       \item \code{.C(DUP = FALSE)} and \code{.Fortran(DUP = FALSE)} are
       now ignored, so arguments are duplicated if \code{DUP = TRUE}
       would do so.  As their help has long said, \code{.Call()} is much
@@ -298,13 +298,16 @@
       \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
 
       \item \code{getAnywhere("C_pbinom")} now works correctly.
-      
-      \item The \code{confint()} function failed on results of 
-      \code{nls()} fits that specified parameter limits despite using 
+
+      \item The \code{confint()} function failed on results of
+      \code{nls()} fits that specified parameter limits despite using
       an algorithm other than \code{"port"}.  (\PR{15960})
 
       \item Subclassing an S4 class failed if the class required
       arguments to the generator, through its \code{initialize()} method.
+
+      \item \code{all.equal()} gets a method for \code{environment}s and
+      \code{refClass}es.
     }
   }
 }
