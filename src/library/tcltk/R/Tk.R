@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/Tk.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -166,14 +166,14 @@
 .Tk.ID <- function(win) win$ID
 
 .Tk.newwin <- function(ID) {
-    win <- list(ID = ID, env = evalq(new.env(), .GlobalEnv))
-    evalq(num.subwin <- 0, win$env)
+    win <- list(ID = ID, env = new.env(parent = emptyenv()))
+    win$env$num.subwin <- 0
     class(win) <- "tkwin"
     win
 }
 
 .Tk.subwin <- function(parent) {
-    ID <- paste(parent$ID, evalq(num.subwin <- num.subwin + 1, parent$env),
+    ID <- paste(parent$ID, parent$env$num.subwin <- parent$env$num.subwin + 1,
                 sep = ".")
     win <- .Tk.newwin(ID)
     assign(ID, win, envir = parent$env)
@@ -192,7 +192,7 @@ tkdestroy  <- function(win) {
 is.tkwin <- function(x) inherits(x, "tkwin")
 
 tclVar <- function(init = "") {
-   n <- evalq(TclVarCount <- TclVarCount + 1L, .TkRoot$env)
+   n <- .TkRoot$env$TclVarCount <- .TkRoot$env$TclVarCount + 1L
    name <- paste0("::RTcl", n)
    l <- list(env = new.env())
    assign(name, NULL, envir = l$env)
@@ -281,7 +281,7 @@ tclServiceMode <- function(on = NULL)
 
 .TkRoot <- .Tk.newwin("")
 tclvar  <- structure(NULL, class = "tclvar")
-evalq(TclVarCount <- 0, .TkRoot$env)
+.TkRoot$env$TclVarCount <- 0
 
 
 # ------ Widgets ------

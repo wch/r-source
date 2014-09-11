@@ -121,6 +121,9 @@
       \code{x[i,]}. (\PR{15957})
 
       \item \code{as.environment(list())} now works.
+            
+      \item Several \pkg{tcltk} functions failed when run in unusual 
+      environments. (\PR{15970})
     }
   }
 }
