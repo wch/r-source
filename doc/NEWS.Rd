@@ -119,6 +119,8 @@
       \item \code{removeSource()} did not properly handle expressions
       containing arguments that were supplied as missing, e.g. 
       \code{x[i,]}. (\PR{15957})
+
+      \item \code{as.environment(list())} now works.
     }
   }
 }
