@@ -157,7 +157,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 	    errorcall(call, _("NULL value passed as symbol address"));
 
 	/* copy the symbol name. */
-	if (p) {
+	if (p && buf) {
 	    if (strlen(p) >= MaxSymbolBytes)
 		error(_("symbol '%s' is too long"), p);
 	    memcpy(buf, p, strlen(p)+1);
@@ -175,6 +175,14 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
     return; /* not reached */
 }
 
+attribute_hidden
+DL_FUNC R_dotCallFn(SEXP op, SEXP call, int nargs) {
+    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
+    DL_FUNC fun = NULL;
+    checkValidSymbolId(op, call, &fun, &symbol, NULL);
+    /* should check arg count here as well */
+    return fun;
+}
 
 /*
   This is the routine that is called by do_dotCode, do_dotcall and
@@ -549,38 +557,10 @@ typedef SEXP (*VarFun)(...);
 typedef DL_FUNC VarFun;
 #endif
 
-/* .Call(name, <args>) */
-SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DL_FUNC ofun = NULL;
+SEXP attribute_hidden R_doDotCall(DL_FUNC ofun, int nargs, SEXP *cargs,
+				  SEXP call) {
     VarFun fun = NULL;
-    SEXP retval, cargs[MAX_ARGS], pargs;
-    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
-
-    int nargs;
-    const void *vmax = vmaxget();
-    char buf[MaxSymbolBytes];
-
-    if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
-    check1arg2(args, call, ".NAME");
-
-    args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL, call, env);
-    args = CDR(args);
-
-    for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
-	if (nargs == MAX_ARGS)
-	    errorcall(call, _("too many arguments in foreign function call"));
-	cargs[nargs] = CAR(pargs);
-	nargs++;
-    }
-    if(symbol.symbol.call && symbol.symbol.call->numArgs > -1) {
-	if(symbol.symbol.call->numArgs != nargs)
-	    errorcall(call,
-		      _("Incorrect number of arguments (%d), expecting %d for '%s'"),
-		      nargs, symbol.symbol.call->numArgs, buf);
-    }
-
-    retval = R_NilValue;	/* -Wall */
+    SEXP retval = R_NilValue;	/* -Wall */
     fun = (VarFun) ofun;
     switch (nargs) {
     case 0:
@@ -1235,6 +1215,40 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, _("too many arguments, sorry"));
     }
+    return retval;
+}
+
+/* .Call(name, <args>) */
+SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DL_FUNC ofun = NULL;
+    SEXP retval, cargs[MAX_ARGS], pargs;
+    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
+
+    int nargs;
+    const void *vmax = vmaxget();
+    char buf[MaxSymbolBytes];
+
+    if (length(args) < 1) errorcall(call, _("'.NAME' is missing"));
+    check1arg2(args, call, ".NAME");
+
+    args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL, call, env);
+    args = CDR(args);
+
+    for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
+	if (nargs == MAX_ARGS)
+	    errorcall(call, _("too many arguments in foreign function call"));
+	cargs[nargs] = CAR(pargs);
+	nargs++;
+    }
+    if(symbol.symbol.call && symbol.symbol.call->numArgs > -1) {
+	if(symbol.symbol.call->numArgs != nargs)
+	    errorcall(call,
+		      _("Incorrect number of arguments (%d), expecting %d for '%s'"),
+		      nargs, symbol.symbol.call->numArgs, buf);
+    }
+
+    retval = R_doDotCall(ofun, nargs, cargs, call);
     vmaxset(vmax);
     return retval;
 }
