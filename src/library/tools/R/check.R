@@ -1353,7 +1353,7 @@ setRlibs <-
                             "for use only by R itself",
                             "and subject to change without notice.")
                 else if(any(grepl("with DUP != TRUE:", out)))
-                    wrapLog("DUP = FALSE is deprecated and may be",
+                    wrapLog("DUP = FALSE is deprecated and will be",
                             "disabled in future versions of R.")
                 else
                     wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
@@ -2415,7 +2415,8 @@ setRlibs <-
             }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
-                times <- read.table(tfile, header = TRUE, row.names = 1L, colClasses = c("character", rep("numeric", 3)))
+		times <- read.table(tfile, header = TRUE, row.names = 1L,
+				    colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1]]+times[[2]], decreasing = TRUE)
                 times <- times[o, ]
                 keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
@@ -3111,7 +3112,7 @@ setRlibs <-
                   grepl("inst/doc/[.](Rinstignore|build[.]timestamp)$", dots) |
                   grepl("vignettes/[.]Rinstignore$", dots) |
                   grepl("^src.*/[.]deps$", dots)
-               if (all(known))
+		if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
@@ -3281,13 +3282,15 @@ setRlibs <-
                              ": warning: .* \\[-Wheader-guard\\]",
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]",
-                             ": warning: .* \\[-Wvla-extension\\]"
+                             ": warning: .* \\[-Wvla-extension\\]",
+                             ": warning: format string contains '[\\]0'",
+                             ": warning: .* \\[-Wc[+][+]11-long-long\\]",
+                             ": warning: empty macro arguments are a C99 feature"
                              )
 
                 warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
-
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
@@ -3724,8 +3727,7 @@ setRlibs <-
                     fi <- file.info(srcfiles)
                     srcfiles <- srcfiles[!fi$isdir]
                     srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
-                                     srcfiles,
-                                     invert = TRUE, value = TRUE)
+                                     srcfiles, invert = TRUE, value = TRUE)
                     if (length(srcfiles)) {
                         if (!any) warningLog(Log)
                         any <- TRUE
@@ -4325,7 +4327,7 @@ setRlibs <-
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            if (desc["Priority"] == "base") {
+            if (identical(desc["Priority"], c(Priority = "base"))) {	# Priority might be missing
                 messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
                 messageLog(Log, "skipping installation test")
@@ -4338,7 +4340,7 @@ setRlibs <-
         if (!is_base_pkg) {
             desc <- check_description()
             pkgname <- desc["Package"]
-            is_rec_pkg <- desc["Priority"] %in% "recommended"
+            is_rec_pkg <- identical(desc["Priority"], c(Priority = "recommended"))
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
