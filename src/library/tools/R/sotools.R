@@ -91,6 +91,7 @@ so_symbol_names_table <-
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
       "linux, C, gcc, rand, rand",
+      "linux, C, gcc, random, random",
       "linux, C, gcc, rand_r, rand_r",
       "linux, C, gcc, srand, srand",
       "linux, C, gcc, srandom, srandom",
@@ -118,6 +119,7 @@ so_symbol_names_table <-
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
       "osx, C, gcc, rand, _rand",
+      "osx, C, gcc, random, _random",
       "osx, C, gcc, rand_r, _rand_r",
       "osx, C, gcc, srand, _srand",
       "osx, C, gcc, srandom, _srandom",
@@ -145,6 +147,7 @@ so_symbol_names_table <-
       "freebsd, C++, gxx, std::cout, _ZSt4cout",
       "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
       "freebsd, C, gcc, rand, rand",
+      "freebsd, C, gcc, random, random",
       "freebsd, C, gcc, srand, srand",
       "freebsd, C, gcc, srandom, srandom",
       "freebsd, C, gcc, srand48, srand48",
@@ -165,6 +168,7 @@ so_symbol_names_table <-
       "solaris, C, solcc, vprintf, vprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
+      "solaris, C, gcc, random, random",
       "solaris, C, gcc, rand, rand",
       "solaris, C, gcc, rand_r, rand_r",
       "solaris, C, gcc, srand, srand",
@@ -199,10 +203,10 @@ so_symbol_names_table <-
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
       "windows, C, gcc, vprintf, vprintf",
+      ## Windows does not have (s)random
       "windows, C, gcc, rand, rand",
       "windows, C, gcc, rand_r, rand_r",
       "windows, C, gcc, srand, srand",
-      "windows, C, gcc, srandom, srandom",
       "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit"
       )
