@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-internals}
@@ -87,3 +87,15 @@ loadingNamespaceInfo()
 
 \keyword{internal}
 \author{Luke Tierney}
+\examples{
+## Only for for the daring ones, trying to get into the bowels :
+
+lsNamespaceInfo <- function(ns, ...) {
+    ns <- asNamespace(ns, base.OK = FALSE)
+    ls(..., envir = get(".__NAMESPACE__.", envir = ns, inherits = FALSE))
+}
+allinfoNS <- function(ns) sapply(lsNamespaceInfo(ns), getNamespaceInfo, ns=ns)
+
+utils::str(allinfoNS("stats"))
+utils::str(allinfoNS("stats4"))
+}
