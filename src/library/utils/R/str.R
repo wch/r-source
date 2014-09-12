@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -204,7 +204,8 @@ str.default <-
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
     deParse <- function(.) deparse(., width.cutoff = min(500,max(20, width-10)))
-
+    n.of. <- function(n, singl, plural) paste(n, ngettext(n, singl, plural))
+    n.of <- function(n, noun) n.of.(n, noun, paste0(noun,"s"))
     if (is.null(object))
 	cat(" NULL\n")
     else if(S4) {
@@ -222,20 +223,20 @@ str.default <-
 			      object=object, simplify = FALSE)
 	    cat("Reference class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		length(a)," fields\n", sep = "")
+                n.of(length(a), "field"), "\n", sep = "")
 	} else {
 	    a <- sapply(methods::.slotNames(object), methods::slot,
 			object=object, simplify = FALSE)
 	    cat("Formal class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		length(a)," slots\n", sep = "")
+		n.of(length(a), "slot"), "\n", sep = "")
 	}
 	if(isRef) {
 	    strSub(a, no.list=TRUE, give.length=give.length,
 		   nest.lev = nest.lev + 1)
-	    cat(indent.str, "and ", length(meths), " methods,", sep = "")
-	    if(length(oMeths)) {
-		cat(" of which", length(oMeths), "are possibly relevant")
+	    cat(indent.str, "and ", n.of(length(meths), "method"), sep = "")
+	    if(lo <- length(oMeths)) {
+		cat(", of which", lo, ngettext(lo, "is", "are"), " possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
 		    cat(":",
 			strwrap(paste(oMeths, collapse=", "),
@@ -245,10 +246,11 @@ str.default <-
 		else cat("\n")
 	    }
 	    if(length(sNms)) {
-		cat(" and", length(sNms), "slots\n")
+		cat(" and ", n.of(length(sNms), "slot"), "\n", sep="")
 		strSub(sls, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		       indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	    }
+	    else if(lo == 0) cat(".\n")
 	}
 	else { ## S4
 	    strSub(a, comp.str = "@ ", no.list=TRUE, give.length=give.length,
@@ -413,7 +415,7 @@ str.default <-
 
 	    std.attr <- c("levels", "class")
 	} else if(typeof(object) %in%
-		  c("externalptr", "weakref", "environment")) {
+		  c("externalptr", "weakref", "environment", "bytecode")) {
 	    ## Careful here, we don't want to change pointer objects
 	    if(has.class)
                 cat(pClass(cl))
