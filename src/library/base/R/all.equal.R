@@ -147,14 +147,24 @@ all.equal.character <-
 ## In 'base' these are all visible, so need to test both args:
 
 all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
+    ## Compromise: fast is.env*() knowing that envRefClass is always env.
+    if(!is.environment (target)) return( "'target' is not an envRefClass")
+    if(!is.environment(current)) return("'current' is not an envRefClass")
+    if(!isTRUE(ae <- all.equal(cl <- class(target), class(current), ...)))
+	return(c("Classes differ:", ae))
+    ## Can have slots (apart from '.xData'), though not recommended; check these:
+    sns <- names(target$getClass()@slots); sns <- sns[sns != ".xData"]
+    msg <- if(length(sns)) lapply(sns, function(sn)
+        all.equal(slot(target, sn), slot(current, sn), ...))
+    msg <- unlist(msg[vapply(msg, is.character, NA)])
     ## ?setRefClass explicitly says users should not use ".<foo>" fields:
     if(is.na(all.names)) all.names <- FALSE
     ## try preventing infinite recursion by not looking at  .self :
     T <- if(all.names) function(ls) ls[names(ls) != ".self"] else identity
-    if(!is.environment (target)) return( "'target' is not an environment")
-    if(!is.environment(current)) return("'current' is not an environment")
-    all.equal.list(T(as.list(target , all.names=all.names, sorted=TRUE)),
-                   T(as.list(current, all.names=all.names, sorted=TRUE)), ...)
+    n <- all.equal.list(T(as.list(as.environment(target) , all.names=all.names, sorted=TRUE)),
+                        T(as.list(as.environment(current), all.names=all.names, sorted=TRUE)), ...)
+    if(is.character(n)) msg <- c(msg, n)
+    if(is.null(msg)) TRUE else msg
 }
 
 all.equal.environment <- function (target, current, all.names=TRUE, ...) {
