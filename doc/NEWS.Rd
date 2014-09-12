@@ -194,6 +194,9 @@
 
       \item Fixes for bugs in handling empty arguments and argument
       matching by name in \code{log()}.
+
+      \item \code{all.equal()} gets a method for \code{environment}s and
+      \code{refClass}es.
     }
   }
 }
@@ -310,14 +313,11 @@
       containing arguments that were supplied as missing, e.g.
       \code{x[i,]}. (\PR{15957})
 
-      \item \code{all.equal()} gets a method for \code{environment}s and
-      \code{refClass}es.
-
       \item \code{as.environment(list())} now works, and
       \code{as.list()} of such an environment is now the same as
       \code{list()}.
-            
-      \item Several \pkg{tcltk} functions failed when run in unusual 
+
+      \item Several \pkg{tcltk} functions failed when run in unusual
       environments. (\PR{15970})
     }
   }
