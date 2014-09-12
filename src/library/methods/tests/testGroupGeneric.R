@@ -35,8 +35,8 @@ f2 <- function(b,c,d, a) {
 
 ## use callGeneric both directly (f1) and indirectly (f2)
 ## Latter failed pre rev. 66408; Bug ID 15937
-stopifnot(all.equal(c(1,2,3,4), as.vector(unlist(f1(2,3,4)))))
-stopifnot(all.equal(c(1,2,3,4), as.vector(unlist(f2(2,3,4)))))
+stopifnot(identical(c(1,2,3,4), as.vector(unlist(f1(2,3,4)))))
+stopifnot(identical(c(1,2,3,4), as.vector(unlist(f2(2,3,4)))))
 
 ## test callGeneric() with no arguments.  This is rarely used
 ## because nearly all applications use the groups Ops, etc.
