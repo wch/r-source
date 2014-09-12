@@ -78,6 +78,9 @@
     assign(".saveImage", TRUE, envir = where)
     cat(" done\n")
 
+    assign(".envRefMethods",
+	   ls(getClassDef("envRefClass")@refMethods, all.names = TRUE),
+	   envir = where)
     assign(".onLoad", ..onLoad, envir = where)
     rm(...onLoad, ..onLoad, envir = where)
     dbbase <- file.path(libname, pkgname, "R", pkgname)
