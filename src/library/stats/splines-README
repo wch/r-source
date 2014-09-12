@@ -1,41 +1,41 @@
 smooth.spline()  [R]
  |
- \--> qsbart()                          ./qsbart.f
+ \--> rbart() [ = C_rbart() ]           src/qsbart.f
       |
-      \--> sbart()                      ./sbart.c
-           |--> sgram()                 ./sgram.f  [was ratfor !]
-           |    |--> interv()           ./bvalue.f [was ratfor !]
-           |    \--> bsplvd()           ./bsplvd.f [was ratfor !]
+      \--> sbart()                      src/sbart.c
+           |--> sgram()                 src/sgram.f
+           |    |--> interv()           src/bvalue.f
+           |    \--> bsplvd()           src/bsplvd.f
            |         \--> bsplvb()          "
-           |--> stxwx()                 ./stxwx.f  [was ratfor !]
+           |--> stxwx()                 src/stxwx.f
            |    |--> interv()             (see above)
            |    \--> bsplvd()               "
            |         \--> bsplvb()          "
-           \--> sslvrg()                ./sslvrg.f [was ratfor !]
-                |--> sinerp()           ./sinerp.f [was ratfor !]
-                |--> bvalue()           ./bvalue.f   (above)
+           \--> sslvrg()                src/sslvrg.f
+                |--> sinerp()           src/sinerp.f
+                |--> bvalue()           src/bvalue.f   (above)
                 |    \--> interv()        (see above)
                 |--> interv()               "
                 |--> bsplvd()               "
                 |    \--> bsplvb()          "
-                |--> dpbfa()            ../../../appl/dpbfa.f  {Linpack}
-                \--> dpbsl()            ../../../appl/dpbsl.f
+                |--> dpbfa()            ../../appl/dpbfa.f  {Linpack}
+                \--> dpbsl()            ../../appl/dpbsl.f
 
 
 predict.smooth.spline()  [R]
  |
- \--> bvalus()                          ./bvalus.f
+ \--> bvalus()                          src/bvalus.f
        \--> bvalue()                    (see above)
              \--> interv()                "
 
 
 -------------
 
-But note that supsmu() / ppr() also call on smoothing splines :
+But note that both supsmu() and ppr() also call on smoothing splines :
 
 supsmu() [R]
  |
- |-> setsmu				./ppr.f
+ |-> setsmu				src/ppr.f
  \-> supsmu                               "
      |
      |--> smooth                          "
@@ -43,16 +43,16 @@ supsmu() [R]
           |
           |- intpr()
           |- dblepr()
-          |- bdrsplerr()                ./ksmooth.c
+          |- bdrsplerr()                src/ksmooth.c
           |
-          \- qsbart()                   (see above)
+          \- rbart()                    (see above)
              \-> sbart()  .....etc..... (see above)
 
 
 
 ppr()   [R]
  |
- |-> setppr				./ppr.f
+ |-> setppr				src/ppr.f
  |
  |-> pppred				  "
  |   \-> fsort                            "
