@@ -25,6 +25,8 @@ all.equal.default <-
     ## use data.class as unlike class it does not give "integer"
     if(is.language(target) || is.function(target))
 	return(all.equal.language(target, current, ...))
+    if(is.environment(target))
+	return(all.equal.environment(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
     msg <- switch (mode(target),
@@ -152,17 +154,20 @@ all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
     if(!is.environment(current)) return("'current' is not an envRefClass")
     if(!isTRUE(ae <- all.equal(cl <- class(target), class(current), ...)))
 	return(c("Classes differ:", ae))
-    ## Can have slots (apart from '.xData'), though not recommended; check these:
-    sns <- names(target$getClass()@slots); sns <- sns[sns != ".xData"]
-    msg <- if(length(sns)) lapply(sns, function(sn)
-        all.equal(slot(target, sn), slot(current, sn), ...))
-    msg <- unlist(msg[vapply(msg, is.character, NA)])
+    cld <- target$getClass()
     ## ?setRefClass explicitly says users should not use ".<foo>" fields:
     if(is.na(all.names)) all.names <- FALSE
     ## try preventing infinite recursion by not looking at  .self :
-    T <- if(all.names) function(ls) ls[names(ls) != ".self"] else identity
-    n <- all.equal.list(T(as.list(as.environment(target) , all.names=all.names, sorted=TRUE)),
-                        T(as.list(as.environment(current), all.names=all.names, sorted=TRUE)), ...)
+    T <- function(ls) ls[is.na(match(names(ls), c(".self", methods:::.envRefMethods)))]
+    asL <- function(E) T(as.list(as.environment(E), all.names=all.names, sorted=TRUE))
+    n <- all.equal.list(asL(target), asL(current), ...)
+    ## Can have slots (apart from '.xData'), though not recommended; check these:
+    sns <- names(cld@slots); sns <- sns[sns != ".xData"]
+    msg <- if(length(sns)) {
+	L <- lapply(sns, function(sn)
+	    all.equal(slot(target, sn), slot(current, sn), ...))
+	unlist(L[vapply(L, is.character, NA)])
+    }
     if(is.character(n)) msg <- c(msg, n)
     if(is.null(msg)) TRUE else msg
 }
