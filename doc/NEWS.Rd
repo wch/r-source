@@ -120,7 +120,9 @@
       containing arguments that were supplied as missing, e.g.
       \code{x[i,]}. (\PR{15957})
 
-      \item \code{as.environment(list())} now works.
+      \item \code{as.environment(list())} now works, and
+      \code{as.list()} of such an environment is now the same as
+      \code{list()}.
             
       \item Several \pkg{tcltk} functions failed when run in unusual 
       environments. (\PR{15970})

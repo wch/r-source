@@ -2618,7 +2618,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	FrameNames(FRAME(env), all, names, &k);
 
-    setAttrib(ans, R_NamesSymbol, names);
+    if (k > 0) setAttrib(ans, R_NamesSymbol, names);
     UNPROTECT(2);
     return(ans);
 }
