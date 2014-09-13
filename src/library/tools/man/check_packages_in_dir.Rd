@@ -47,10 +47,12 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
     \code{"which"}, or \code{"recursive"}, giving the repositories to
     use for locating reverse dependencies (default:
     \code{getOption("repos")}), the types of reverse dependencies
-    (default: \code{c("Depends", "Imports", "LinkingTo")}), and
-    indicating whether to also check reverse dependencies of reverse
-    dependencies and so on (default: \code{FALSE}), or \code{NULL}
-    (default), in which case no reverse dependencies are checked.}
+    (default: \code{c("Depends", "Imports", "LinkingTo")}, with
+    shorthands \code{"most"} and \code{"all"} as for
+    \code{\link{package_dependencies}}), and indicating whether to also
+    check reverse dependencies of reverse dependencies and so on
+    (default: \code{FALSE}), or \code{NULL} (default), in which case no
+    reverse dependencies are checked.} 
   \item{check_env}{a character vector of name=value strings to set
     environment variables for checking, or a list of length two of such
     character vectors to be used for checking packages and reverse
@@ -108,3 +110,23 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
   future versions. 
 }
 \keyword{utilities}
+\examples{
+\dontrun{
+## Check packages in dir without reverse dependencies:
+check_packages_in_dir(dir)
+## Check packages in dir and their reverse dependencies using the
+## defaults (all repositories in getOption("repos"), all "strong"
+## reverse dependencies, no recursive reverse dependencies):
+check_packages_in_dir(dir, reverse = list())
+## Check packages in dir with their reverse dependencies from CRAN,
+## using all strong reverse dependencies and reverse suggests:
+check_packages_in_dir(dir,
+                      reverse = list(repos = getOption("repos")["CRAN"],
+                                     which = "most"))                   
+## Check packages in dir with their reverse dependencies from CRAN,
+## using '--as-cran' for the former but not the latter:
+check_packages_in_dir(dir,
+                      check_args = c("--as-cran", ""),
+                      reverse = list(repos = getOption("repos")["CRAN"]))
+}
+}
