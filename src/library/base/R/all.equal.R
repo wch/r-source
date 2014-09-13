@@ -25,7 +25,7 @@ all.equal.default <-
     ## use data.class as unlike class it does not give "integer"
     if(is.language(target) || is.function(target))
 	return(all.equal.language(target, current, ...))
-    if(is.environment(target))
+    if(is.environment(target) || is.environment(current))# both: unclass() fails on env.
 	return(all.equal.environment(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
@@ -149,17 +149,19 @@ all.equal.character <-
 ## In 'base' these are all visible, so need to test both args:
 
 all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
-    ## Compromise: fast is.env*() knowing that envRefClass is always env.
-    if(!is.environment (target)) return( "'target' is not an envRefClass")
-    if(!is.environment(current)) return("'current' is not an envRefClass")
-    if(!isTRUE(ae <- all.equal(cl <- class(target), class(current), ...)))
-	return(c("Classes differ:", ae))
-    cld <- target$getClass()
-    ## ?setRefClass explicitly says users should not use ".<foo>" fields:
-    if(is.na(all.names)) all.names <- FALSE
-    ## try preventing infinite recursion by not looking at  .self :
-    T <- function(ls) ls[is.na(match(names(ls), c(".self", methods:::.envRefMethods)))]
-    asL <- function(E) T(as.list(as.environment(E), all.names=all.names, sorted=TRUE))
+    if(!is (target, "envRefClass")) return("'target' is not an envRefClass")
+    if(!is(current, "envRefClass")) return("'current' is not an envRefClass")
+    if(!isTRUE(ae <- all.equal(class(target), class(current), ...)) ||
+       !identical(cld <- target$getClass(), current$getClass()))
+	return(sprintf("Classes differ%s",
+		       if(!isTRUE(ae)) paste(":", ae, collapse=" ")else ""))
+    flds <- names(cld@fieldClasses)
+    asL <- function(O) sapply(flds, function(ch) O[[ch]], simplify = FALSE)
+    ## ## ?setRefClass explicitly says users should not use ".<foo>" fields:
+    ## if(is.na(all.names)) all.names <- FALSE
+    ## ## try preventing infinite recursion by not looking at  .self :
+    ## T <- function(ls) ls[is.na(match(names(ls), c(".self", methods:::.envRefMethods)))]
+    ## asL <- function(E) T(as.list(as.environment(E), all.names=all.names, sorted=TRUE))
     n <- all.equal.list(asL(target), asL(current), ...)
     ## Can have slots (apart from '.xData'), though not recommended; check these:
     sns <- names(cld@slots); sns <- sns[sns != ".xData"]

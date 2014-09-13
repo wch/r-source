@@ -462,7 +462,16 @@ stopifnot(identical(crossprod(2, v), t(2) %*% v),
 ## list <--> environment
 L0 <- list()
 stopifnot(identical(L0, as.list(as.environment(L0))))
-## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.2.0
+## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.1.1
+
+## all.equal() for environments
+RR <- setRefClass("Ex", fields = list(info = "character"))
+m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(info = "3.14"); m4 <- RR$new(info="I")
+ee <- emptyenv()
+stopifnot(all.equal(ee,ee), identical(ee,ee), identical(m3,m3), !identical(m1,m2),
+          all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4))
+          )
+## did not work in R <= 3.1.1
 
 
 proc.time()
