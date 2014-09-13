@@ -715,10 +715,9 @@ install.packages <-
             setwd(cwd); on.exit()
             unlink(tmpd, recursive = TRUE)
         } else {
+            outfiles <- paste0(update[, 1L], ".out")
             for(i in seq_len(nrow(update))) {
-                outfile <- if(keep_outputs) {
-                    paste0(update[i, 1L], ".out")
-                } else output
+                outfile <- if(keep_outputs) outfiles[i] else output
                 args <- c(args0,
                           get_install_opts(update[i, 3L]),
                           "-l", shQuote(update[i, 2L]),
@@ -739,8 +738,10 @@ install.packages <-
                             domain = NA)
                 }
             }
-            if(keep_outputs && (outdir != getwd()))
-                file.copy(paste0(update[, 1L], ".out"), outdir)
+            if(keep_outputs && (outdir != getwd())) {
+                file.copy(outfiles, outdir)
+                file.remove(outfiles)
+            }
         }
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded source packages are in\n\t%s",
