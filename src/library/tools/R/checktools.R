@@ -352,7 +352,10 @@ function(dir,
         file.rename(rfiles, sprintf("rdepends_%s", rfiles))
     }
 
-    .check_packages_in_dir_retval(dir, pfiles, pnames, rnames)
+    .check_packages_in_dir_retval(dir,
+                                  pfiles,
+                                  setdiff(pnames, rnames),
+                                  rnames)
 }
 
 ### ** print.check_packages_in_dir
