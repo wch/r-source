@@ -1076,6 +1076,7 @@ static void SymbolShortcuts(void)
     R_WholeSrcrefSymbol = install("wholeSrcref");
     R_TmpvalSymbol = install("*tmp*");
     R_UseNamesSymbol = install("use.names");
+    R_ColonSymbol = install(":");
     R_DoubleColonSymbol = install("::");
     R_TripleColonSymbol = install(":::");
     R_ConnIdSymbol = install("conn_id");

@@ -86,6 +86,7 @@ extern0 SEXP	R_RecursiveSymbol;  /* "recursive" */
 extern0 SEXP	R_WholeSrcrefSymbol;   /* "wholeSrcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
+extern0 SEXP	R_ColonSymbol;         /* ":" */
 extern0 SEXP	R_DoubleColonSymbol;   /* "::" */
 extern0 SEXP	R_TripleColonSymbol;   /* ":::" */
 extern0 SEXP    R_ConnIdSymbol;  /* "conn_id" */
