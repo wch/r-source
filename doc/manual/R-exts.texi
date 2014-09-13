@@ -3903,11 +3903,10 @@ files.
  R-admin,  R Installation and Administration},
 @end ifset
 
-Although there is a 2011 version of the C++ standard, it is not yet
-fully implemented and partial implementations are not universally
-available. Portable C++ code needs to follow the 1998 standard (and not
-use features from C99). 
-See also @ref{Using C++11 code} to specify a C++11 compiler.
+Although there is a 2011 version of the C++ standard, even partial
+implementations are not universally available.  Portable C++ code needs
+to follow the 1998 standard (and not use features from C99).  See also
+@ref{Using C++11 code} to specify a C++11 compiler.
 
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
@@ -3959,10 +3958,14 @@ package authors are often mistaken about that.
 
 @item
 Compiled code should not call the system random number generators such
-as @code{rand}, @code{drand48} and @code{random}, but rather use the
+as @code{rand}, @code{drand48} and @code{random}@footnote{This and
+@code{srandom} are in any case not portable.  They are in POSIX but not
+in the C99 standard, and not available on Windows.}, but rather use the
 interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes the system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.
+
+Nor should the C++11 random number library be used.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
