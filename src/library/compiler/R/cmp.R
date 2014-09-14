@@ -1102,23 +1102,7 @@ haveInlineHandler <- function(name, package = "base") {
 
 ## tryInline implements the rule permitting inlining as they stand now:
 ## Inlining is controlled by the optimize compiler option, with possible
-## values 0, 1, 2, which mean
-##
-##   optimize = 0 -- no inlining
-##   optimize = 1 -- can inline syntactically special functions and
-##                   functions found via a namespace
-##   optimize = 2 -- can inline any functions from case packages
-##
-## This can easily be modified to allow functions to do things like
-##
-##     declare(optimize = 2)
-##
-## or
-##
-##     declare(notinline = c("diag", "dim"))
-##
-## **** need to figure out if there is a sensible way to declare things at
-## **** the package level
+## values 0, 1, 2, 3.
 
 getInlineInfo <- function(name, cntxt) {
     optimize <- cntxt$optimize
@@ -2716,12 +2700,20 @@ setCompilerOptions <- function(...) {
                    }
                })
     }
-    old
+    invisible(old)
 }
 
 .onLoad <- function(libname, pkgname) {
     if (Sys.getenv("R_COMPILER_SUPPRESS_ALL") != "")
         setCompilerOptions(suppressAll = TRUE)
+    if (Sys.getenv("R_COMPILER_SUPPRESS_UNDEFINED") != "")
+        setCompilerOptions(suppressUndefined = TRUE)
+    if (Sys.getenv("R_COMPILER_OPTIMIZE") != "")
+        tryCatch({
+            lev <- as.integer(Sys.getenv("R_COMPILER_OPTIMIZE"))
+            if (0 <= lev && lev <= 3)
+                setCompilerOptions(optimize = lev)
+        }, error = function(e) e, warning = function(w) w)
 }
 
 

@@ -4694,18 +4694,28 @@ setCompilerOptions <- function(...) {
                    }
                })
     }
-    old
+    invisible(old)
 }
 @ %def
 
 For now, a [[.onLoad]] function is used to allow all warning to be
 suppressed.  This is probably useful for building packages, since the
 way lazy loading is done means variables defined in shared libraries
-are not available and produce a raft of warnings.
+are not available and produce a raft of warnings.  The [[.onLoad]]
+function also allows undefined variables to be suppressed and the
+optimization level to be specified using environment variables.
 <<[[.onLoad]] function>>=
 .onLoad <- function(libname, pkgname) {
     if (Sys.getenv("R_COMPILER_SUPPRESS_ALL") != "")
         setCompilerOptions(suppressAll = TRUE)
+    if (Sys.getenv("R_COMPILER_SUPPRESS_UNDEFINED") != "")
+        setCompilerOptions(suppressUndefined = TRUE)
+    if (Sys.getenv("R_COMPILER_OPTIMIZE") != "")
+        tryCatch({
+            lev <- as.integer(Sys.getenv("R_COMPILER_OPTIMIZE"))
+            if (0 <= lev && lev <= 3)
+                setCompilerOptions(optimize = lev)
+        }, error = function(e) e, warning = function(w) w)
 }
 @ %def .onLoad
 
@@ -5539,23 +5549,7 @@ Opcodes.names <- names(Opcodes.argc)
 
 ## tryInline implements the rule permitting inlining as they stand now:
 ## Inlining is controlled by the optimize compiler option, with possible
-## values 0, 1, 2, which mean
-##
-##   optimize = 0 -- no inlining
-##   optimize = 1 -- can inline syntactically special functions and
-##                   functions found via a namespace
-##   optimize = 2 -- can inline any functions from case packages
-##
-## This can easily be modified to allow functions to do things like
-##
-##     declare(optimize = 2)
-##
-## or
-##
-##     declare(notinline = c("diag", "dim"))
-##
-## **** need to figure out if there is a sensible way to declare things at
-## **** the package level
+## values 0, 1, 2, 3.
 
 <<[[getInlineInfo]] function>>
 
