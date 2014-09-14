@@ -825,8 +825,11 @@ function(dir, logs = NULL, drop_ok = TRUE)
                       lens))
     }
 
-    if(is.null(logs))
+    if(is.null(logs)) {
+        if(inherits(dir, "check_packages_in_dir"))
+            dir <- attr(dir, "dir")
         logs <- Sys.glob(file.path(dir, "*.Rcheck", "00check.log"))
+    }
 
     db <- db_from_logs(logs, drop_ok)
     colnames(db) <- c("Package", "Version", "Check", "Status",
@@ -865,6 +868,126 @@ function(dir, logs = NULL, drop_ok = TRUE)
     db$Status <- as.factor(db$Status)
 
     db
+}
+
+### ** check_packages_in_dir_changes
+
+check_packages_in_dir_changes <-
+function(dir, old, outputs = FALSE, sources = FALSE)
+{
+    check_packages_in_dir_changes_classes <-
+        c("check_packages_in_dir_changes", "data.frame")
+
+    dir <- if(inherits(dir, "check_packages_in_dir"))
+        dir <- attr(dir, "dir")
+    else
+        normalizePath(dir)
+
+    outdirs <- tools:::R_check_outdirs(dir, all = sources, invert = TRUE)
+    logs <- file.path(outdirs, "00check.log")
+    logs <- logs[file_test("-f", logs)]
+    new <- tools:::check_packages_in_dir_details(logs = logs)
+
+    ## Use
+    ##   old = tools:::CRAN_check_details(FLAVOR)
+    ## to compare against the results/details of a CRAN check flavor.
+
+    if(!inherits(old, "check_details"))
+        old <- tools:::check_packages_in_dir_details(old)
+
+    ## Simplify matters by considering only "changes" in *available*
+    ## results/details.
+
+    packages <- intersect(old$Package, new$Package)
+
+    if(!length(packages)) {
+        db <- data.frame(Package = character(),
+                         Check = character(),
+                         Old = character(),
+                         New = character(),
+                         stringsAsFactors = FALSE)
+        class(db) <- check_packages_in_dir_changes_classes
+        return(db)
+    }
+
+    db <- merge(old[!is.na(match(old$Package, packages)), ],
+                new[!is.na(match(new$Package, packages)), ],
+                by = c("Package", "Check"), all = TRUE)
+
+    ## Even with the above simplification, missing entries do not
+    ## necessarily indicate "OK" (checks could have been skipped).
+    ## Hence leave as missing and show as empty in the diff.
+
+    ## Complete possibly missing version information.
+    chunks <-
+        lapply(split(db, db$Package),
+               function(e) {
+                   len <- nrow(e)
+                   if(length(pos <- which(!is.na(e$Version.x))))
+                       e$Version.x <-
+                           rep.int(e[pos[1L], "Version.x"], len)
+                    if(length(pos <- which(!is.na(e$Version.y))))
+                       e$Version.y <-
+                           rep.int(e[pos[1L], "Version.y"], len)
+                   e
+               })
+    db <- do.call(rbind, chunks)
+
+    sx <- as.character(db$Status.x)
+    sy <- as.character(db$Status.y)
+    if(outputs) {
+        sx <- sprintf("%s\n  %s", sx,
+                      gsub("\n", "\n  ", db$Output.x, fixed = TRUE))
+        sy <- sprintf("%s\n  %s", sy,
+                      gsub("\n", "\n  ", db$Output.y, fixed = TRUE))
+    }
+    sx[is.na(db$Status.x)] <- ""
+    sy[is.na(db$Status.y)] <- ""
+    ind <- if(outputs)
+        (.canonicalize_quotes(sx) != .canonicalize_quotes(sy))
+    else
+        (sx != sy)
+
+    db <- cbind(db[ind, ], Old = sx[ind], New = sy[ind],
+                stringsAsFactors = FALSE)
+
+    ## Add information about possible version changes.
+    ind <- (db$Version.x != db$Version.y)
+    if(any(ind))
+        db$Package[ind] <-
+            sprintf("%s [Old version: %s, New version: %s]",
+                    db$Package[ind],
+                    db$Version.x[ind],
+                    db$Version.y[ind])
+
+    db <- db[c("Package", "Check", "Old", "New")]
+
+    class(db) <- check_packages_in_dir_changes_classes
+
+    db
+}
+
+format.check_packages_in_dir_changes <-
+function(x, ...)
+{
+    if(!nrow(x)) return(character())
+    sprintf("Package: %s\nCheck: %s%s%s",
+            x$Package,
+            x$Check,
+            ifelse(nzchar(old <- x$Old),
+                   sprintf("\nOld result: %s", old),
+                   ""),
+            ifelse(nzchar(new <- x$New),
+                   sprintf("\nNew result: %s", new),
+                   ""))
+}
+
+print.check_packages_in_dir_changes <-
+function(x, ...)
+{
+    if(length(y <- format(x)))
+        writeLines(paste(y, collapse = "\n\n"))
+    invisible(x)
 }
 
 ### Local variables: ***
