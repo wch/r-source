@@ -534,6 +534,19 @@ function(val) {
     }
 }
 
+
+### ** .canonicalize_quotes
+
+.canonicalize_quotes <-
+function(txt)
+{
+    txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
+                perl = TRUE, useBytes = TRUE)
+    txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
+                perl = TRUE, useBytes = TRUE)
+    txt
+}
+
 ### ** .eval_with_capture
 
 .eval_with_capture <-

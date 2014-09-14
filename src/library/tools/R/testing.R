@@ -153,10 +153,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         ## remove pointer addresses from listings
             txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt)
         ## regularize fancy quotes.  First UTF-8 ones:
-        txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
-                      perl = TRUE, useBytes = TRUE)
-        txt <- gsub("(\xe2\x80\x9c|\xe2\x80\x9d)", '"', txt,
-                      perl = TRUE, useBytes = TRUE)
+        txt <- .canonicalize_quotes(txt)
         if(.Platform$OS.type == "windows") {
             ## not entirely safe ...
             txt <- gsub("(\x91|\x92)", "'", txt, perl = TRUE, useBytes = TRUE)
