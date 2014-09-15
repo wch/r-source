@@ -73,7 +73,8 @@ rep_len(x, length.out)
   \code{length.out} takes priority and \code{times} is ignored.
 
   Non-integer values of \code{times} will be truncated towards zero.
-  If \code{times} is a computed quantity it is prudent to add a small fuzz.
+  If \code{times} is a computed quantity it is prudent to add a small
+  fuzz or use \code{\link{round}}.  And analogously for \code{each}.
 
   If \code{x} has length zero and \code{length.out} is supplied and is
   positive, the values are filled in using the extraction rules, that is
