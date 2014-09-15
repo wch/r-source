@@ -3063,26 +3063,43 @@ SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
 #define GETSTACK_PTR(s) (*(s))
-#define GETSTACK(i) GETSTACK_PTR(R_BCNodeStackTop + (i))
 
 #define SETSTACK_PTR(s, v) do { \
     SEXP __v__ = (v); \
     *(s) = __v__; \
 } while (0)
 
-#define SETSTACK(i, v) SETSTACK_PTR(R_BCNodeStackTop + (i), v)
-
 #define SETSTACK_REAL_PTR(s, v) SETSTACK_PTR(s, ScalarReal(v))
+#define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
+#define SETSTACK_LOGICAL_PTR(s, v) SETSTACK_PTR(s, ScalarLogical(v))
+
+#define GETSTACK(i) GETSTACK_PTR(R_BCNodeStackTop + (i))
+
+#define SETSTACK(i, v) SETSTACK_PTR(R_BCNodeStackTop + (i), v)
 
 #define SETSTACK_REAL(i, v) SETSTACK_REAL_PTR(R_BCNodeStackTop + (i), v)
 
-#define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
-
 #define SETSTACK_INTEGER(i, v) SETSTACK_INTEGER_PTR(R_BCNodeStackTop + (i), v)
 
-#define SETSTACK_LOGICAL_PTR(s, v) SETSTACK_PTR(s, ScalarLogical(v))
-
 #define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
+
+/* The next two macros will reuse a provided scalar box, if
+   provided. The box is assumed to be of the correct typa and size. */
+#define SETSTACK_REAL_EX(idx, dval, ans) do { \
+	if (ans) {			      \
+	    REAL(ans)[0] = dval;	      \
+	    SETSTACK(idx, ans);		      \
+	}				      \
+	else SETSTACK_REAL(idx, dval);	      \
+    } while (0)
+
+#define SETSTACK_INTEGER_EX(idx, ival, ans) do { \
+	if (ans) {				 \
+	    INTEGER(ans)[0] = ival;		 \
+	    SETSTACK(idx, ans);			 \
+	}					 \
+	else SETSTACK_INTEGER(idx, ival);	 \
+    } while (0)
 
 typedef union { double dval; int ival; } scalar_value_t;
 
@@ -3259,19 +3276,35 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 
 #define Arith2(opval,opsym) NewBuiltin2(cmp_arith2,opval,opsym,rho)
-#define Math1(which) Builtin1(do_math1,which,rho)
 #define Relop2(opval,opsym) NewBuiltin2(cmp_relop,opval,opsym,rho)
 
+#define FastMath1(fun, sym) do {					\
+	scalar_value_t vx;						\
+	SEXP sa = NULL;							\
+	int typex = bcStackScalarEx(R_BCNodeStackTop - 1, &vx, &sa);	\
+	if (typex == REALSXP) {						\
+	    SKIP_OP();							\
+	    SETSTACK_REAL_EX(-1, fun(vx.dval), sa);			\
+	    NEXT();							\
+	}								\
+	else if (typex == INTSXP && vx.ival != NA_INTEGER) {		\
+	    SKIP_OP();							\
+	    SETSTACK_REAL_EX(-1, fun(vx.ival), NULL);			\
+	    NEXT();							\
+	}								\
+	Builtin1(do_math1,sym,rho);					\
+    } while (0)
+
 #ifdef NO_SAVE_ALLOC
-# define DO_FAST_BINOP(op,a,b,v) do {		\
+# define DO_FAST_BINOP(fun,a,b,v) do {		\
     SKIP_OP(); \
-    SETSTACK_REAL(-2, (a) op (b)); \
+    SETSTACK_REAL(-2, fun(a, b));		\
     R_BCNodeStackTop--; \
     NEXT(); \
 } while (0)
 
-# define DO_FAST_BINOP_INT(op, a, b, v) do {	    \
-    double dval = ((double) (a)) op ((double) (b)); \
+# define DO_FAST_BINOP_INT(fun, a, b, v) do {	    \
+    double dval = fun((double) (a), (double) (b));	\
     if (dval <= INT_MAX && dval >= INT_MIN + 1) { \
 	SKIP_OP(); \
 	SETSTACK_INTEGER(-2, (int) dval); \
@@ -3283,33 +3316,42 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 /* these reuse one of the two values on the top of the stack if it is
    of the right type and has no references. It is known that both of
    these will have length one and have no attributes. */
-# define DO_FAST_BINOP(op, a, b, ans) do {				\
+# define DO_FAST_BINOP(fun, a, b, ans) do {				\
 	SKIP_OP();							\
-	double dval = (a) op (b);					\
-	if (ans) {							\
-	    REAL(ans)[0] = dval;					\
-	    SETSTACK(-2, ans);						\
-	}								\
-	else SETSTACK_REAL(-2, dval);					\
+	double dval = fun(a, b);					\
+	SETSTACK_REAL_EX(-2, dval, ans);				\
 	R_BCNodeStackTop--;						\
 	NEXT();								\
     } while (0)
 
-# define DO_FAST_BINOP_INT(op, a, b, ans) do {				\
-	double dval = ((double) (a)) op ((double) (b));			\
+# define DO_FAST_BINOP_INT(fun, a, b, ans) do {				\
+	double dval = fun((double) (a), (double) (b));			\
 	if (dval <= INT_MAX && dval >= INT_MIN + 1) {			\
 	    int val = (int) dval;					\
 	    SKIP_OP();							\
-	    if (ans) {							\
-		INTEGER(ans)[0] = val;					\
-		SETSTACK(-2, ans);					\
-	    }								\
-	    else SETSTACK_INTEGER(-2, val);				\
+	    SETSTACK_INTEGER_EX(-2, val, ans);				\
 	    R_BCNodeStackTop--;						\
 	    NEXT();							\
 	}								\
     } while(0)
 #endif
+
+#define FastUnary(op, opsym) do {					\
+	scalar_value_t vx;						\
+	SEXP sa = NULL;							\
+	int typex = bcStackScalarEx(R_BCNodeStackTop - 1, &vx, &sa);	\
+	if (typex == REALSXP) {						\
+	    SKIP_OP();							\
+	    SETSTACK_REAL_EX(-1, op vx.dval, sa);			\
+	    NEXT();							\
+	}								\
+	else if (typex == INTSXP && vx.ival != NA_INTEGER) {		\
+	    SKIP_OP();							\
+	    SETSTACK_INTEGER_EX(-1, op vx.ival, sa);			\
+	    NEXT();							\
+	}								\
+	Arith1(opsym);							\
+    } while (0)
 
 # define FastBinary(op,opval,opsym) do { \
     scalar_value_t vx; \
@@ -3328,7 +3370,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	if (typey == REALSXP) \
 	    DO_FAST_BINOP(op, vx.ival, vy.dval, sb);	     \
 	else if (typey == INTSXP && vy.ival != NA_INTEGER) { \
-	    if (opval == DIVOP) \
+	    if (opval == DIVOP || opval == POWOP) \
 		DO_FAST_BINOP(op, (double) vx.ival, (double) vy.ival, NULL); \
 	    else \
 		DO_FAST_BINOP_INT(op, vx.ival, vy.ival, sa ? sa : sb);	\
@@ -3336,6 +3378,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
     } \
     Arith2(opval, opsym); \
 } while (0)
+
+#define R_ADD(x, y) ((x) + (y))
+#define R_SUB(x, y) ((x) - (y))
+#define R_MUL(x, y) ((x) * (y))
+#define R_DIV(x, y) ((x) / (y))
+
+#include "arithmetic.h"
 
 #define BCNPUSH(v) do { \
   SEXP __value__ = (v); \
@@ -3529,13 +3578,14 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 # define CACHE_ON_STACK
 # ifdef CACHE_ON_STACK
 typedef R_bcstack_t * R_binding_cache_t;
+#  define VCACHE(i) vcache[i]
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
-    (vcache ? vcache[CACHEIDX(sidx)] : R_NilValue)
+    (vcache ? VCACHE(CACHEIDX(sidx)) : R_NilValue)
 #  define GET_SMALLCACHE_BINDING_CELL(vcache, sidx) \
-    (vcache ? vcache[sidx] : R_NilValue)
+    (vcache ? VCACHE(sidx) : R_NilValue)
 
 #  define SET_CACHED_BINDING(vcache, sidx, cell) \
-    do { if (vcache) vcache[CACHEIDX(sidx)] = (cell); } while (0)
+    do { if (vcache) VCACHE(CACHEIDX(sidx)) = (cell); } while (0)
 # else
 typedef SEXP R_binding_cache_t;
 #  define GET_CACHED_BINDING_CELL(vcache, sidx) \
@@ -4648,8 +4698,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STEPFOR, 1):
       {
 	int label = GETOP();
-	int i = ++(INTEGER(GETSTACK(-2))[0]);
-	int n = INTEGER(GETSTACK(-2))[1];
+	int *loopinfo = INTEGER(GETSTACK(-2));
+	int i = ++loopinfo[0];
+	int n = loopinfo[1];
 	if (i < n) {
 	  SEXP seq = GETSTACK(-4);
 	  SEXP cell = GETSTACK(-3);
@@ -4962,15 +5013,15 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	BCNPUSH(value);
 	NEXT();
       }
-    OP(UMINUS, 1): Arith1(R_SubSym);
-    OP(UPLUS, 1): Arith1(R_AddSym);
-    OP(ADD, 1): FastBinary(+, PLUSOP, R_AddSym);
-    OP(SUB, 1): FastBinary(-, MINUSOP, R_SubSym);
-    OP(MUL, 1): FastBinary(*, TIMESOP, R_MulSym);
-    OP(DIV, 1): FastBinary(/, DIVOP, R_DivSym);
-    OP(EXPT, 1): Arith2(POWOP, R_ExptSym);
-    OP(SQRT, 1): Math1(R_SqrtSym);
-    OP(EXP, 1): Math1(R_ExpSym);
+    OP(UMINUS, 1): FastUnary(-, R_SubSym);
+    OP(UPLUS, 1): FastUnary(+, R_AddSym);
+    OP(ADD, 1): FastBinary(R_ADD, PLUSOP, R_AddSym);
+    OP(SUB, 1): FastBinary(R_SUB, MINUSOP, R_SubSym);
+    OP(MUL, 1): FastBinary(R_MUL, TIMESOP, R_MulSym);
+    OP(DIV, 1): FastBinary(R_DIV, DIVOP, R_DivSym);
+    OP(EXPT, 1): FastBinary(R_POW, POWOP, R_ExptSym);
+    OP(SQRT, 1): FastMath1(sqrt, R_SqrtSym);
+    OP(EXP, 1): FastMath1(exp, R_ExpSym);
     OP(EQ, 1): FastRelop2(==, EQOP, R_EqSym);
     OP(NE, 1): FastRelop2(!=, NEOP, R_NeSym);
     OP(LT, 1): FastRelop2(<, LTOP, R_LtSym);
