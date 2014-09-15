@@ -3243,6 +3243,7 @@ setRlibs <-
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
+                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
@@ -3297,7 +3298,7 @@ setRlibs <-
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
                 ## skip for now some c++11-long-long warnings.
-                ex_re <- "(/BH/include/boost/|/usr/include|/usr/local/include|/opt/X11/include).*\\[-Wc[+][+]11-long-long\\]"
+                ex_re <- "(/BH/include/boost/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
                 lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
                               useBytes = TRUE)
 
