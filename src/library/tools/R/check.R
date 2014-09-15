@@ -3296,6 +3296,12 @@ setRlibs <-
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
+                ## skip for now some c++11-long-long warnings.
+                ex_re <- "(BH/include/boost/cstdint.hpp|/usr/include|/usr/local/include).*\\[-Wc[+][+]11-long-long\\]"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
+
+
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
                 ## come from .install_package_indices(), and should be
