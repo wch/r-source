@@ -197,11 +197,6 @@ static double myfloor(double x1, double x2)
     return floor(q) + floor(tmp/x2);
 }
 
-/* some systems get this wrong, possibly depend on what libs are loaded */
-static R_INLINE double R_log(double x) {
-    return x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf;
-}
-
 double R_pow(double x, double y) /* = x ^ y */
 {
     /* squaring is the most common of the specially handled cases so
@@ -242,11 +237,6 @@ double R_pow(double x, double y) /* = x ^ y */
     return R_NaN; // all other cases: (-Inf)^{+-Inf, non-int}; (neg)^{+-Inf}
 }
 
-static R_INLINE double R_POW(double x, double y) /* handle x ^ 2 inline */
-{
-    return y == 2.0 ? x * x : R_pow(x, y);
-}
-
 double R_pow_di(double x, int n)
 {
     double xn = 1.0;
@@ -270,22 +260,6 @@ double R_pow_di(double x, int n)
 
 
 /* General Base Logarithms */
-
-/* Note that the behaviour of log(0) required is not necessarily that
-   mandated by C99 (-HUGE_VAL), and the behaviour of log(x < 0) is
-   optional in C99.  Some systems return -Inf for log(x < 0), e.g.
-   libsunmath on Solaris.
-*/
-static double logbase(double x, double base)
-{
-#ifdef HAVE_LOG10
-    if(base == 10) return x > 0 ? log10(x) : x < 0 ? R_NaN : R_NegInf;
-#endif
-#ifdef HAVE_LOG2
-    if(base == 2) return x > 0 ? log2(x) : x < 0 ? R_NaN : R_NegInf;
-#endif
-    return R_log(x) / R_log(base);
-}
 
 SEXP R_unary(SEXP, SEXP, SEXP);
 SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
@@ -1593,10 +1567,19 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 # define DFLT_LOG_BASE exp(1.)
 #endif
 
-/* This is a primitive SPECIALSXP with internal argument matching */
+/* do_log is a primitive SPECIALSXP with internal argument
+   matching. do_log_builtin is the BUILTIN version that expects
+   evaluated arguments to be passed as 'args', expect that these may
+   contain missing arguments.  */
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    PROTECT(args = evalListKeepMissing(args, env));
+    args = evalListKeepMissing(args, env);
+    return  do_log_builtin(call, op, args, env);
+}    
+
+SEXP attribute_hidden do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    PROTECT(args);
     int n = length(args);
     SEXP res;
 

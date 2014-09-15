@@ -31,6 +31,35 @@ SEXP complex_math2(SEXP, SEXP, SEXP, SEXP);
 SEXP complex_unary(ARITHOP_TYPE, SEXP, SEXP);
 SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
 
+double R_pow(double x, double y);
+static R_INLINE double R_POW(double x, double y) /* handle x ^ 2 inline */
+{
+    return y == 2.0 ? x * x : R_pow(x, y);
+}
+
+/* some systems get this wrong, possibly depend on what libs are loaded */
+static R_INLINE double R_log(double x) {
+    return x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf;
+}
+
+/* Note that the behaviour of log(0) required is not necessarily that
+   mandated by C99 (-HUGE_VAL), and the behaviour of log(x < 0) is
+   optional in C99.  Some systems return -Inf for log(x < 0), e.g.
+   libsunmath on Solaris.
+*/
+static R_INLINE double logbase(double x, double base)
+{
+#ifdef HAVE_LOG10
+    if(base == 10) return x > 0 ? log10(x) : x < 0 ? R_NaN : R_NegInf;
+#endif
+#ifdef HAVE_LOG2
+    if(base == 2) return x > 0 ? log2(x) : x < 0 ? R_NaN : R_NegInf;
+#endif
+    return R_log(x) / R_log(base);
+}
+
+SEXP do_log_builtin(SEXP call, SEXP op, SEXP args, SEXP env);
+
 /* for binary operations */
 /* adapted from Radford Neal's pqR */
 static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
