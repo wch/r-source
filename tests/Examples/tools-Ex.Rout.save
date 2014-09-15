@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-09-06 r66533) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-09-14 r66601) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -188,7 +188,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x22a0c08>
+<environment: 0x2df3900>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -425,6 +425,42 @@ _Journal of the Royal Statistical Society, Series B_, *26*, pp.
 > ##D bad <- is.na(res$ASCII) | res$ASCII | (res$size > 1e4 & res$compress == "none")
 > ##D res[bad, ]
 > ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("check_packages_in_dir")
+> ### * check_packages_in_dir
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: check_packages_in_dir
+> ### Title: Check Source Packages and Their Reverse Dependencies
+> ### Aliases: check_packages_in_dir summarize_check_packages_in_dir_depends
+> ###   summarize_check_packages_in_dir_results
+> ###   summarize_check_packages_in_dir_timings
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ## Check packages in dir without reverse dependencies:
+> ##D check_packages_in_dir(dir)
+> ##D ## Check packages in dir and their reverse dependencies using the
+> ##D ## defaults (all repositories in getOption("repos"), all "strong"
+> ##D ## reverse dependencies, no recursive reverse dependencies):
+> ##D check_packages_in_dir(dir, reverse = list())
+> ##D ## Check packages in dir with their reverse dependencies from CRAN,
+> ##D ## using all strong reverse dependencies and reverse suggests:
+> ##D check_packages_in_dir(dir,
+> ##D                       reverse = list(repos = getOption("repos")["CRAN"],
+> ##D                                      which = "most"))                   
+> ##D ## Check packages in dir with their reverse dependencies from CRAN,
+> ##D ## using '--as-cran' for the former but not the latter:
+> ##D check_packages_in_dir(dir,
+> ##D                       check_args = c("--as-cran", ""),
+> ##D                       reverse = list(repos = getOption("repos")["CRAN"]))
+> ## End(Not run)
+> 
 > 
 > 
 > cleanEx()
@@ -973,7 +1009,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.21 0.011 0.222 0 0 
+Time elapsed:  0.213 0.009 0.223 0 0 
 > grDevices::dev.off()
 null device 
           1 

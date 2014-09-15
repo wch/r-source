@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-09-06 r66533) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-09-14 r66601) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -61,8 +61,6 @@ Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
 > x   <- rbind(x1, x2)
 > 
 > dcols <- densCols(x)
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
 > graphics::plot(x, col = dcols, pch = 20, main = "n = 1000")
 > 
 > 
