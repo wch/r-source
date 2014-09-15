@@ -2899,6 +2899,7 @@ static SEXP R_AndSym = NULL;
 static SEXP R_OrSym = NULL;
 static SEXP R_NotSym = NULL;
 static SEXP R_CSym = NULL;
+static SEXP R_LogSym = NULL;
 
 #if defined(__GNUC__) && ! defined(BC_PROFILING) && (! defined(NO_THREADED_CODE))
 # define THREADED_CODE
@@ -2924,6 +2925,7 @@ void R_initialize_bcode(void)
   R_OrSym = install("|");
   R_NotSym = install("!");
   R_CSym = install("c");
+  R_LogSym = install("log");
 
 #ifdef THREADED_CODE
   bcEval(NULL, NULL, FALSE);
@@ -3047,6 +3049,8 @@ enum {
   SUBSET2_N_OP,
   SUBASSIGN_N_OP,
   SUBASSIGN2_N_OP,
+  LOG_OP,
+  LOGBASE_OP,
   OPCOUNT
 };
 
@@ -3136,6 +3140,23 @@ static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 }
 
 #define bcStackScalar(s, v) bcStackScalarEx(s, v, NULL)
+
+#define INTEGER_TO_LOGICAL(x) \
+    ((x) == NA_INTEGER ? NA_LOGICAL : (x) ? TRUE : FALSE)
+#define INTEGER_TO_REAL(x) ((x) == NA_INTEGER ? NA_REAL : (x))
+#define LOGICAL_TO_REAL(x) ((x) == NA_LOGICAL ? NA_REAL : (x))
+
+static R_INLINE int bcStackScalarRealEx(R_bcstack_t *s, scalar_value_t *px,
+					SEXP *pv)
+{
+    int typex = bcStackScalarEx(s, px, pv);
+    if (typex == INTSXP) {
+	typex = REALSXP;
+	px->dval = INTEGER_TO_REAL(px->ival);
+	if (pv) *pv = NULL;
+    }
+    return typex;
+}
 
 #define DO_FAST_RELOP2(op,a,b) do { \
     SKIP_OP(); \
@@ -3385,6 +3406,44 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 #define R_DIV(x, y) ((x) / (y))
 
 #include "arithmetic.h"
+
+#define DO_LOG() do {							\
+	scalar_value_t vx;						\
+	SEXP sa = NULL;							\
+	int typex = bcStackScalarRealEx(R_BCNodeStackTop - 1, &vx, &sa); \
+	if (typex == REALSXP) {						\
+	    SKIP_OP();							\
+	    SETSTACK_REAL_EX(-1, R_log(vx.dval), sa);			\
+	    NEXT();							\
+	}								\
+	SEXP call = VECTOR_ELT(constants, GETOP());			\
+	SEXP args = CONS_NR(GETSTACK(-1), R_NilValue);			\
+	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\
+	SETSTACK(-1, args); /* to protect */				\
+	SETSTACK(-1, do_log_builtin(call, op, args, rho));		\
+	NEXT();								\
+ } while (0)
+
+#define DO_LOGBASE() do {						\
+	scalar_value_t vx, vy;						\
+	SEXP sa = NULL;							\
+	SEXP sb = NULL;							\
+	int typex = bcStackScalarRealEx(R_BCNodeStackTop - 2, &vx, &sa); \
+	int typey = bcStackScalarRealEx(R_BCNodeStackTop - 1, &vy, &sb); \
+	if (typex == REALSXP && typey == REALSXP) {			\
+	    SKIP_OP();							\
+	    R_BCNodeStackTop--;						\
+	    SETSTACK_REAL_EX(-1, logbase(vx.dval, vy.dval), sa);	\
+	    NEXT();							\
+	}								\
+	SEXP call = VECTOR_ELT(constants, GETOP());			\
+	SEXP args = CONS_NR(GETSTACK(-2), CONS_NR(GETSTACK(-1), R_NilValue)); \
+	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\
+	R_BCNodeStackTop--;						\
+	SETSTACK(-1, args); /* to protect */				\
+	SETSTACK(-1, do_log_builtin(call, op, args, rho));		\
+	NEXT();								\
+    } while (0)
 
 #define BCNPUSH(v) do { \
   SEXP __value__ = (v); \
@@ -4262,11 +4321,6 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 		     constants, callidx, sub2);				\
 	R_BCNodeStackTop -= rank;					\
     } while (0)
-
-#define INTEGER_TO_LOGICAL(x) \
-    ((x) == NA_INTEGER ? NA_LOGICAL : (x) ? TRUE : FALSE)
-#define INTEGER_TO_REAL(x) ((x) == NA_INTEGER ? NA_REAL : (x))
-#define LOGICAL_TO_REAL(x) ((x) == NA_LOGICAL ? NA_REAL : (x))
 
 static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i, int typev,
 					      scalar_value_t *v)
@@ -5420,6 +5474,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(SUBSET2_N, 2): DO_SUBSET_N(rho, TRUE); NEXT();
     OP(SUBASSIGN_N, 2): DO_SUBASSIGN_N(rho, FALSE); NEXT();
     OP(SUBASSIGN2_N, 2): DO_SUBASSIGN_N(rho, TRUE); NEXT();
+    OP(LOG, 1): DO_LOG(); NEXT();
+    OP(LOGBASE, 1): DO_LOGBASE(); NEXT();
     LASTOP;
   }
 
