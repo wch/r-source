@@ -215,8 +215,7 @@ str.default <-
 	    a <- sapply(nFlds, function(ch) object[[ch]],
 			simplify = FALSE)
 	    meths <- ls(cld@refMethods, all.names = TRUE)
-	    dfltMs <- ls(getClassDef("envRefClass")@refMethods, all.names = TRUE)
-	    oMeths <- meths[is.na(match(meths, dfltMs))]
+	    oMeths <- meths[is.na(match(meths, methods:::.envRefMethods))]
 	    sNms <- names(cld@slots)
 	    if(length(sNms <- sNms[sNms != ".xData"]))
 		sls <- sapply(sNms, methods::slot,
