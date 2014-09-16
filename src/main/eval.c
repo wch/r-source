@@ -3052,6 +3052,7 @@ enum {
   LOG_OP,
   LOGBASE_OP,
   MATH1_OP,
+  DOTCALL_OP,
   OPCOUNT
 };
 
@@ -3508,6 +3509,35 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	SEXP op = getPrimitive(sym, BUILTINSXP);			\
 	SETSTACK(-1, args); /* to protect */				\
 	SETSTACK(-1, do_math1(call, op, args, rho));			\
+	NEXT();								\
+    } while (0)
+
+#include <Rdynpriv.h>
+
+#define DOTCALL_MAX 16
+#define DO_DOTCALL() do {						\
+	SEXP call = VECTOR_ELT(constants, GETOP());			\
+	int nargs = GETOP();						\
+	DL_FUNC ofun = R_dotCallFn(GETSTACK(- nargs - 1), call, nargs);	\
+	if (ofun && nargs <= DOTCALL_MAX) {				\
+	    SEXP cargs[DOTCALL_MAX];					\
+	    for (int i = 0; i < nargs; i++)				\
+		cargs[i] = GETSTACK(i - nargs);				\
+	    SEXP val = R_doDotCall(ofun, nargs, cargs, call);		\
+	    R_BCNodeStackTop -= nargs;					\
+	    SETSTACK(-1, val);						\
+	    NEXT();							\
+	}								\
+	SEXP args = R_NilValue;						\
+	while (nargs-- > 0) {						\
+	    args = CONS_NR(GETSTACK(-1), args);				\
+	    BCNPOP_IGNORE_VALUE();					\
+	}								\
+	args = CONS_NR(GETSTACK(-1), args);				\
+	SETSTACK(-1, args); /* to protect */				\
+	SEXP sym = CAR(call);						\
+	SEXP op = getPrimitive(sym, BUILTINSXP);			\
+	SETSTACK(-1, do_dotcall(call, op, args, rho));			\
 	NEXT();								\
     } while (0)
 
@@ -5544,6 +5574,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(LOG, 1): DO_LOG(); NEXT();
     OP(LOGBASE, 1): DO_LOGBASE(); NEXT();
     OP(MATH1, 2): DO_MATH1(); NEXT();
+    OP(DOTCALL, 2): DO_DOTCALL(); NEXT();
     LASTOP;
   }
 
