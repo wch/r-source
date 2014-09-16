@@ -3053,6 +3053,9 @@ enum {
   LOGBASE_OP,
   MATH1_OP,
   DOTCALL_OP,
+  COLON_OP,
+  SEQALONG_OP,
+  SEQLEN_OP,
   OPCOUNT
 };
 
@@ -3067,6 +3070,20 @@ SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
+
+static SEXP seq_int(int n1, int n2)
+{
+    int n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
+    SEXP ans = allocVector(INTSXP, n);
+    int *data = INTEGER(ans);
+    if (n1 <= n2)
+	for (int i = 0; i < n; i++)
+	    data[i] = n1 + i;
+    else
+	for (int i = 0; i < n; i++)
+	    data[i] = n1 - i;
+    return ans;
+}
 
 #define GETSTACK_PTR(s) (*(s))
 
@@ -3539,6 +3556,58 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	SEXP op = getPrimitive(sym, BUILTINSXP);			\
 	SETSTACK(-1, do_dotcall(call, op, args, rho));			\
 	NEXT();								\
+    } while (0)
+
+#define SETSTACK_INTSEQ(idx, rn1, rn2) do {		\
+	SETSTACK(idx, seq_int((int) rn1, (int) rn2));	\
+    } while (0)
+
+#define DO_COLON() do {							\
+	scalar_value_t vx;						\
+	scalar_value_t vy;						\
+	int typex = bcStackScalarRealEx(R_BCNodeStackTop - 2, &vx, NULL); \
+	int typey = bcStackScalarRealEx(R_BCNodeStackTop - 1, &vy, NULL); \
+	if (typex == REALSXP && typey == REALSXP) {			\
+	    double rn1 = vx.dval;					\
+	    double rn2 = vy.dval;					\
+	    if (INT_MIN <= rn1 && INT_MAX >= rn1 &&			\
+		INT_MIN <= rn2 && INT_MAX >- rn2 &&			\
+		rn1 == (int) rn1 && rn2 == (int) rn2) {			\
+		SKIP_OP(); /* skip 'call' index */			\
+		R_BCNodeStackTop--;					\
+		SETSTACK_INTSEQ(-1, rn1, rn2);				\
+		NEXT();							\
+	    }								\
+	}								\
+	Builtin2(do_colon, R_ColonSymbol, rho);				\
+    } while (0)
+
+#define DO_SEQ_ALONG() do {					\
+	SEXP x = GETSTACK(-1);					\
+	if (! OBJECT(x)) {					\
+	    R_xlen_t len = xlength(x);				\
+	    if (len >= 1 && len <= INT_MAX) {			\
+		SKIP_OP(); /* skip 'call' index */		\
+		SETSTACK_INTSEQ(-1, 1, len);			\
+		NEXT();						\
+	    }							\
+	}							\
+	Builtin1(do_seq_along, install("seq_along"), rho);	\
+    } while (0)
+
+#define DO_SEQ_LEN() do {						\
+	scalar_value_t vx;						\
+	int typex = bcStackScalarRealEx(R_BCNodeStackTop - 1, &vx, NULL); \
+	if (typex == REALSXP) {						\
+	    double rlen = vx.dval;					\
+	    if (1 <= rlen && INT_MAX >= rlen &&				\
+		rlen == (int) rlen) {					\
+		SKIP_OP(); /* skip 'call' index */			\
+		SETSTACK_INTSEQ(-1, 1, rlen);				\
+		NEXT();							\
+	    }								\
+	}								\
+	Builtin1(do_seq_len, install("seq_len"), rho);			\
     } while (0)
 
 #define BCNPUSH(v) do { \
@@ -5575,6 +5644,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(LOGBASE, 1): DO_LOGBASE(); NEXT();
     OP(MATH1, 2): DO_MATH1(); NEXT();
     OP(DOTCALL, 2): DO_DOTCALL(); NEXT();
+    OP(COLON, 1): DO_COLON(); NEXT();
+    OP(SEQALONG, 1): DO_SEQ_ALONG(); NEXT();
+    OP(SEQLEN, 1): DO_SEQ_LEN(); NEXT();
     LASTOP;
   }
 
