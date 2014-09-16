@@ -474,4 +474,10 @@ stopifnot(all.equal(ee,ee), identical(ee,ee), identical(m3,m3), !identical(m1,m2
 ## did not work in R <= 3.1.1
 
 
+## 0-length consistency of options(), PR#15979
+stopifnot(identical(options(list()), options(NULL)))
+## options(list()) failed in R <= 3.1.1
+
+
+
 proc.time()

@@ -324,6 +324,8 @@
 
       \item Several \pkg{tcltk} functions failed when run in unusual
       environments. (\PR{15970})
+
+      \item \code{options(list())} now works (trivially). (\PR{15979})
     }
   }
 }
