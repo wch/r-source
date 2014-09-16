@@ -3592,7 +3592,8 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
        used. The value must be a power of 2 so a modulus computation x
        % CACHE_MAX can be done as x & (CACHE_MAX - 1). More than 90%
        of the closures in base have constant pools with fewer than 128
-       entries when compiled, to that is a good value to use.
+       entries when compiled, to that is a good value to use. But
+       increasing to 256 handles some benchmark scripts a bit better.
 
    On average about 1/3 of constant pool entries are symbols, so this
    approach wastes some space.  This could be avoided by grouping the
@@ -3626,7 +3627,7 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
 #define USE_BINDING_CACHE
 # ifdef USE_BINDING_CACHE
 /* CACHE_MAX must be a power of 2 for modulus using & CACHE_MASK to work*/
-# define CACHE_MAX 128
+# define CACHE_MAX 256
 # ifdef CACHE_MAX
 #  define CACHE_MASK (CACHE_MAX - 1)
 #  define CACHEIDX(i) ((i) & CACHE_MASK)
