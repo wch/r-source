@@ -3096,6 +3096,9 @@ static SEXP seq_int(int n1, int n2)
 #define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
 #define SETSTACK_LOGICAL_PTR(s, v) SETSTACK_PTR(s, ScalarLogical(v))
 
+#define SETSTACK_INTSEQ(idx, rn1, rn2) \
+    SETSTACK(idx, seq_int((int) rn1, (int) rn2))
+
 #define GETSTACK(i) GETSTACK_PTR(R_BCNodeStackTop + (i))
 
 #define SETSTACK(i, v) SETSTACK_PTR(R_BCNodeStackTop + (i), v)
@@ -3556,10 +3559,6 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	SEXP op = getPrimitive(sym, BUILTINSXP);			\
 	SETSTACK(-1, do_dotcall(call, op, args, rho));			\
 	NEXT();								\
-    } while (0)
-
-#define SETSTACK_INTSEQ(idx, rn1, rn2) do {		\
-	SETSTACK(idx, seq_int((int) rn1, (int) rn2));	\
     } while (0)
 
 #define DO_COLON() do {							\
