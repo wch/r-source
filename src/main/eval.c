@@ -3051,6 +3051,7 @@ enum {
   SUBASSIGN2_N_OP,
   LOG_OP,
   LOGBASE_OP,
+  MATH1_OP,
   OPCOUNT
 };
 
@@ -3442,6 +3443,71 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	R_BCNodeStackTop--;						\
 	SETSTACK(-1, args); /* to protect */				\
 	SETSTACK(-1, do_log_builtin(call, op, args, rho));		\
+	NEXT();								\
+    } while (0)
+
+#include <Rmath.h>
+/* Keep the order consistent with the order in the byte code compiler! */
+static struct { const char *name; SEXP sym; double (*fun)(double); }
+    math1funs[] = {
+	{"floor", NULL, floor},
+	{"ceiling", NULL, ceil},
+	{"sign", NULL, sign},
+
+	{"expm1", NULL, expm1},
+	{"log1p", NULL, log1p},
+	
+	{"cos", NULL, cos},
+	{"sin", NULL, sin},
+	{"tan", NULL, tan},
+	{"acos", NULL, acos},
+	{"asin", NULL, asin},
+	{"atan", NULL, atan},
+	
+	{"cosh", NULL, cosh},
+	{"sinh", NULL, sinh},
+	{"tanh", NULL, tanh},
+	{"acosh", NULL, acosh},
+	{"asinh", NULL, asinh},
+	{"atanh", NULL, atanh},
+	
+	{"lgamma", NULL, lgammafn},
+	{"gamma", NULL, gammafn},
+	{"digamma", NULL, digamma},
+	{"trigamma", NULL, trigamma},
+	
+	{"cospi", NULL, cospi},
+	{"sinpi", NULL, sinpi},
+#ifndef HAVE_TANPI
+	{"tanpi", NULL, tanpi}
+#else
+	{"tanpi", NULL, Rtanpi}
+#endif
+    };
+    
+static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
+    if (math1funs[i].sym == NULL)
+	math1funs[i].sym = install(math1funs[i].name);
+    if (CAR(call) != math1funs[i].sym)
+	error("math1 compiler/interpreter mismatch");
+    return math1funs[i].fun;
+}
+    
+#define DO_MATH1() do {							\
+	SEXP call = VECTOR_ELT(constants, GETOP());			\
+	double (*fun)(double) = getMath1Fun(GETOP(), call);		\
+	scalar_value_t vx;						\
+	SEXP sa = NULL;							\
+	int typex = bcStackScalarRealEx(R_BCNodeStackTop - 1, &vx, &sa); \
+	if (typex == REALSXP) {						\
+	    SETSTACK_REAL_EX(-1, fun(vx.dval), sa);			\
+	    NEXT();							\
+	}								\
+	SEXP args = CONS_NR(GETSTACK(-1), R_NilValue);			\
+	SEXP sym = CAR(call);						\
+	SEXP op = getPrimitive(sym, BUILTINSXP);			\
+	SETSTACK(-1, args); /* to protect */				\
+	SETSTACK(-1, do_math1(call, op, args, rho));			\
 	NEXT();								\
     } while (0)
 
@@ -5477,6 +5543,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(SUBASSIGN2_N, 2): DO_SUBASSIGN_N(rho, TRUE); NEXT();
     OP(LOG, 1): DO_LOG(); NEXT();
     OP(LOGBASE, 1): DO_LOGBASE(); NEXT();
+    OP(MATH1, 2): DO_MATH1(); NEXT();
     LASTOP;
   }
 
