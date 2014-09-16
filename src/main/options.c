@@ -359,7 +359,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
 	    options = CDR(options);
 	}
-	SEXP sind = PROTECT(allocVector(INTSXP, n));  
+	SEXP sind = PROTECT(allocVector(INTSXP, n));
 	int *indx = INTEGER(sind);
 	for (int i = 0; i < n; i++) indx[i] = i;
 	orderVector1(indx, n, names, TRUE, FALSE, R_NilValue);
@@ -396,9 +396,11 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     case LISTSXP:
 	break;
     case VECSXP:
-	argnames = getAttrib(args, R_NamesSymbol);
-	if(LENGTH(argnames) != n)
-	    error(_("list argument has no valid names"));
+	if(n > 0) {
+	    argnames = getAttrib(args, R_NamesSymbol);
+	    if(LENGTH(argnames) != n)
+		error(_("list argument has no valid names"));
+	}
 	break;
     default:
 	UNIMPLEMENTED_TYPE("options", args);

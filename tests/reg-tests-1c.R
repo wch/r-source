@@ -382,4 +382,10 @@ stopifnot(length(gg$objs) == 1)
 ## was 4 and printed "4 differing objects matching ‘C_pbinom’ ..." in R <= 3.1.1
 
 
+## 0-length consistency of options(), PR#15979
+stopifnot(identical(options(list()), options(NULL)))
+## options(list()) failed in R <= 3.1.1
+
+
+
 proc.time()
