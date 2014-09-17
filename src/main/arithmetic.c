@@ -1131,12 +1131,6 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     return sy;
 }
 
-#ifdef HAVE_TANPI
-// we document that tanpi(0.5) is NaN, but the draft C11 extension
-// does not require this and the Solaris version gives Inf.
-double Rtanpi(double);
-#endif
-
 SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;

@@ -31,6 +31,12 @@ SEXP complex_math2(SEXP, SEXP, SEXP, SEXP);
 SEXP complex_unary(ARITHOP_TYPE, SEXP, SEXP);
 SEXP complex_binary(ARITHOP_TYPE, SEXP, SEXP);
 
+#ifdef HAVE_TANPI
+// we document that tanpi(0.5) is NaN, but the draft C11 extension
+// does not require this and the Solaris version gives Inf.
+double Rtanpi(double);
+#endif
+
 double R_pow(double x, double y);
 static R_INLINE double R_POW(double x, double y) /* handle x ^ 2 inline */
 {
