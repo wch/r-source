@@ -17,7 +17,7 @@ stopifnot(z == c(101, 204, 309, 104, 210, 318))
 ## https://stat.ethz.ch/pipermail/r-devel/2013-January/065700.html
 x <- 1:6
 y <- split(x, 1:2)
-class(x) <- "A"
+class(x) <- "ABC" ## class(x) <- "A" creates an invalid object
 yy <- split(x, 1:2)
 stopifnot(identical(y, yy))
 ## were different in R < 3.0.0
@@ -68,7 +68,7 @@ ftable(m)
 ## Artificial example [was "infinite loop" on x86_64; PR#15364]
 rr <- c(rep(-0.4, 5), rep(-0.4- 1.11e-16, 14), -.5)
 r. <- signif(rr, 12)
-try ( k3 <- kmeans(rr, 3, trace=2) ) ## Warning: Quick-Transfer.. steps exceed
+k3 <- kmeans(rr, 3, trace=2) ## Warning: Quick-Transfer.. steps exceed
 try ( k. <- kmeans(r., 3) ) # after rounding, have only two distinct points
       k. <- kmeans(r., 2)   # fine
 

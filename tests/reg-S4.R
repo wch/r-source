@@ -668,3 +668,12 @@ setOldClass(c("foo", "numeric"))
 n <- structure(1, class=c("foo", "numeric"))
 try(?f(n))
 ## different failures in R < 3.1.0.
+
+
+## 'attributes<-' did not treat [and identical() did not look at] S4 bit:
+a <- 1:5
+b <- setClass("B", "integer")(a)
+stopifnot(is.character(all.equal(a, b)))
+attributes(a) <- attributes(b)
+stopifnot(identical(a, b), isS4(a))
+## failed in R <= 3.1.1

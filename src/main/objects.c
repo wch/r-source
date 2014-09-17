@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2002-3     The R Foundation
- *  Copyright (C) 1999-2013  The R Core Team.
+ *  Copyright (C) 1999-2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -162,7 +162,7 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
    loaded, and back to R_GlobalEnv when it is unloaded. */
 
 #ifdef S3_for_S4_warn /* not currently used */
-static SEXP s_check_S3_for_S4 = 0;
+static SEXP s_check_S3_for_S4 = NULL;
 void R_warn_S3_for_S4(SEXP method) {
   SEXP call;
   if(!s_check_S3_for_S4)
@@ -242,13 +242,13 @@ static int match_to_obj(SEXP arg, SEXP obj) {
    to an object from an S4 subclass.
 */
 int isBasicClass(const char *ss) {
-    static SEXP s_S3table = 0;
+    static SEXP s_S3table = NULL;
     if(!s_S3table) {
       s_S3table = findVarInFrame3(R_MethodsNamespace, install(".S3MethodsClasses"), TRUE);
       if(s_S3table == R_UnboundValue)
 	error(_("no '.S3MethodsClass' table, cannot use S4 objects with S3 methods ('methods' package not attached?)"));
-	if (TYPEOF(s_S3table) == PROMSXP)  /* findVar... ignores lazy data */
-	    s_S3table = eval(s_S3table, R_MethodsNamespace);
+      if (TYPEOF(s_S3table) == PROMSXP)  /* findVar... ignores lazy data */
+	s_S3table = eval(s_S3table, R_MethodsNamespace);
     }
     if(s_S3table == R_UnboundValue)
       return FALSE; /* too screwed up to do conversions */
@@ -831,17 +831,17 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     check1arg(args, call, "x");
 
-    switch(TYPEOF(CAR(args))) {
-    case ENVSXP:
-	errorcall(call, _("cannot unclass an environment"));
-	break;
-    case EXTPTRSXP:
-	errorcall(call, _("cannot unclass an external pointer"));
-	break;
-    default:
-	break;
-    }
     if (isObject(CAR(args))) {
+	switch(TYPEOF(CAR(args))) {
+	case ENVSXP:
+	    errorcall(call, _("cannot unclass an environment"));
+	    break;
+	case EXTPTRSXP:
+	    errorcall(call, _("cannot unclass an external pointer"));
+	    break;
+	default:
+	    break;
+	}
 	if (MAYBE_REFERENCED(CAR(args)))
 	    SETCAR(args, shallow_duplicate(CAR(args)));
 	setAttrib(CAR(args), R_ClassSymbol, R_NilValue);
@@ -1041,6 +1041,7 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
     return old;
 }
 
+// R's .isMethodsDispatchOn() -> do_S4on() ->
 static SEXP R_isMethodsDispatchOn(SEXP onOff)
 {
     R_stdGen_ptr_t old = R_get_standardGeneric_ptr();
@@ -1056,9 +1057,7 @@ static SEXP R_isMethodsDispatchOn(SEXP onOff)
 	    // so not already on
 	    // This may not work correctly: the default arg is incorrect.
 	    warning("R_isMethodsDispatchOn(TRUE) called -- may not work correctly");
-	    // FIXME: use call = PROTECT(lang1(install("initMethodDispatch")));
-	    SEXP call = PROTECT(allocList(2));
-	    SETCAR(call, install("initMethodDispatch"));
+	    SEXP call = PROTECT(lang1(install("initMethodDispatch")));
 	    eval(call, R_MethodsNamespace); // only works with methods loaded
 	    UNPROTECT(1);
 	}
@@ -1080,7 +1079,7 @@ Rboolean isMethodsDispatchOn(void)
 
    It seems it is not currently called with onOff = TRUE (and would
    not have worked prior to 3.0.2).
-*/ 
+*/
 attribute_hidden
 SEXP do_S4on(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1514,20 +1513,50 @@ SEXP R_do_MAKE_CLASS(const char *what)
     return(e);
 }
 
-/* this very similar, but gives NULL instead of an error for a non-existing class */
-SEXP R_getClassDef(const char *what)
+// similar, but gives NULL instead of an error for a non-existing class
+// and 'what' is never checked
+SEXP R_getClassDef_R(SEXP what)
 {
     static SEXP s_getClassDef = NULL;
-    SEXP e, call;
-    if(!what)
-	error(_("R_getClassDef(.) called with NULL string pointer"));
     if(!s_getClassDef) s_getClassDef = install("getClassDef");
-    PROTECT(call = allocVector(LANGSXP, 2));
-    SETCAR(call, s_getClassDef);
-    SETCAR(CDR(call), mkString(what));
-    e = eval(call, R_MethodsNamespace);
+    if(!isMethodsDispatchOn()) error(_("'methods' package not yet loaded"));
+    SEXP call = PROTECT(lang2(s_getClassDef, what));
+    SEXP e = eval(call, R_MethodsNamespace);
     UNPROTECT(1);
     return(e);
+}
+
+SEXP R_getClassDef(const char *what)
+{
+    if(!what)
+	error(_("R_getClassDef(.) called with NULL string pointer"));
+    return( R_getClassDef_R(mkString(what)) );
+}
+
+Rboolean R_isVirtualClass(SEXP class_def, SEXP env)
+{
+    if(!isMethodsDispatchOn()) return(FALSE);
+    static SEXP isVCl_sym = NULL;
+    if(!isVCl_sym) isVCl_sym = install("isVirtualClass");
+    SEXP call = PROTECT(lang2(isVCl_sym, class_def));
+    SEXP e = eval(call, env);
+    UNPROTECT(1);
+    // return(LOGICAL(e)[0]);
+    // more cautious:
+    return (asLogical(e) == TRUE);
+}
+
+Rboolean R_extends(SEXP class1, SEXP class2, SEXP env)
+{
+    if(!isMethodsDispatchOn()) return(FALSE);
+    static SEXP extends_sym = NULL;
+    if(!extends_sym) extends_sym = install("extends");
+    SEXP call = PROTECT(lang3(extends_sym, class1, class2));
+    SEXP e = eval(call, env);
+    UNPROTECT(1);
+    // return(LOGICAL(e)[0]);
+    // more cautious:
+    return (asLogical(e) == TRUE);
 }
 
 /* in Rinternals.h */

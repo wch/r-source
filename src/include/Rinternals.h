@@ -1034,6 +1034,9 @@ int R_has_slot(SEXP obj, SEXP name);
 /* class definition, new objects (objects.c) */
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
+SEXP R_getClassDef_R(SEXP what);
+Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
+Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
 SEXP R_do_new_object(SEXP class_def);
 /* supporting  a C-level version of  is(., .) : */
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
