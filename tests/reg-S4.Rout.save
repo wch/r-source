@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-09-15 r66611) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-09-14 r66601) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -961,13 +961,4 @@ Error in .helpForCall(topicExpr, parent.frame()) :
 Error in .helpForCall(topicExpr, parent.frame()) : 
   no documentation for function 'f' and signature 'x = "numeric"'
 > ## different failures in R < 3.1.0.
-> 
-> 
-> ## 'attributes<-' did not treat [and identical() did not look at] S4 bit:
-> a <- 1:5
-> b <- setClass("B", "integer")(a)
-> stopifnot(is.character(all.equal(a, b)))
-> attributes(a) <- attributes(b)
-> stopifnot(identical(a, b), isS4(a))
-> ## failed in R <= 3.1.1
 > 

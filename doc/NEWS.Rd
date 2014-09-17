@@ -204,9 +204,6 @@
       \code{refClass}es.
 
       \item \code{identical()} now also looks at the S4 bit.
-
-      \item \code{attributes<-} or \code{class<-} now also copies or
-      sets the S4 bit.
     }
   }
 }
