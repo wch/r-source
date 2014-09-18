@@ -177,8 +177,35 @@ all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
 all.equal.environment <- function (target, current, all.names=TRUE, ...) {
     if(!is.environment (target)) return( "'target' is not an environment")
     if(!is.environment(current)) return("'current' is not an environment")
-    all.equal.list(as.list(target , all.names=all.names, sorted=TRUE),
-                   as.list(current, all.names=all.names, sorted=TRUE), ...)
+    ae.run <- dynGet("__all.eq.E__", NULL)
+    if(is.null(ae.run))
+	"__all.eq.E__" <- environment() # -> 5 visible + 6 ".<..>" objects
+    else { ## ae.run contains previous target, current, ..
+
+	## If we exactly match one of these, we return TRUE here,
+	## otherwise, divert to all.equal(as.list(.), ...) below
+
+	## needs recursive function -- a loop with  em <- em$mm	 destroys the env!
+	do1 <- function(em) {
+	    if(identical(target, em$target) && identical(current, em$current))
+		TRUE
+	    else if(!is.null(em$ mm)) ## recurse
+		do1(em$ mm)
+	    else {
+		## add the new (target, current) pair, and return FALSE
+		e <- new.env(parent = emptyenv())
+		e$target  <- target
+		e$current <- current
+		em$ mm <- e
+		FALSE
+	    }
+	}
+
+	if(do1(ae.run)) return(TRUE)
+	## else, continue:
+    }
+    all.equal.list(as.list.environment(target , all.names=all.names, sorted=TRUE),
+		   as.list.environment(current, all.names=all.names, sorted=TRUE), ...)
 }
 
 all.equal.factor <- function(target, current, ..., check.attributes = TRUE)

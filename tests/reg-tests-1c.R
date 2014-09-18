@@ -464,14 +464,29 @@ L0 <- list()
 stopifnot(identical(L0, as.list(as.environment(L0))))
 ## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.1.1
 
-## all.equal() for environments
-RR <- setRefClass("Ex", fields = list(info = "character"))
-m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(info = "3.14"); m4 <- RR$new(info="I")
-ee <- emptyenv()
-stopifnot(all.equal(ee,ee), identical(ee,ee), identical(m3,m3), !identical(m1,m2),
-          all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4))
-          )
+## all.equal() for environments and refClass()es
+RR <- setRefClass("Ex", fields = list(nr = "numeric"))
+m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(nr = pi); m4 <- RR$new(nr=3.14159)
+ee <- emptyenv(); e2 <- new.env()
+stopifnot(all.equal(ee,ee), identical(ee,ee), !identical(ee,e2), all.equal(ee,e2),
+	  identical(m3,m3), !identical(m1,m2),
+	  all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4)),
+	  all.equal(m3,m4, tol=1e-6), grepl("relative difference", all.equal(m3,m4)),
+	  TRUE)
 ## did not work in R <= 3.1.1
+e3 <- new.env()
+e3$p <- "p"; e2$p <- "p"; ae.p <- all.equal(e2,e3)
+e3$q <- "q";              ae.q <- all.equal(e2,e3)
+e2$q <- "Q";              ae.Q <- all.equal(e2,e3)
+stopifnot(ae.p, grepl("^Length", ae.q), grepl("string mismatch", ae.Q))
+e2$q <- "q"; e2$r <- pi; e3$r <- 3.14159265
+stopifnot(all.equal(e2,e3),
+	  grepl("relative difference", all.equal(e2,e3, tol=1e-10)))
+g <- globalenv() # so it now contains itself
+l <- list(e = g)
+stopifnot(all.equal(g,g),
+	  all.equal(l,l))
+## these ran into infinite recursion error.
 
 
 ## 0-length consistency of options(), PR#15979
