@@ -45,7 +45,7 @@ as.dendrogram(object, \dots)
 
 \method{merge}{dendrogram}(x, y, \dots, height)
 
-\method{nobs}{dendrogram}(objects, \dots)
+\method{nobs}{dendrogram}(object, \dots)
 
 \method{print}{dendrogram}(x, digits, \dots)
 
@@ -180,7 +180,7 @@ is.leaf(object)
   optional further arguments) as branches.
 
   \code{\link{nobs}(object)} returns the total number of leaves (the
-  \code{members} attribute, see above).}
+  \code{members} attribute, see above).
 
   \code{is.leaf(object)} returns logical indicating if \code{object} is a
   leaf (the most simple dendrogram).
