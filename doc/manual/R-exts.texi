@@ -429,7 +429,7 @@ the sole (and maybe not even the main) author.
 
 @c DESCRIPTION field Maintainer
 The mandatory @samp{Maintainer} field should give a @emph{single} name
-followed a @emph{valid} (RFC 2822) email address in angle brackets.  It
+followed by a @emph{valid} (RFC 2822) email address in angle brackets.  It
 should not end in a period or comma.  This field is what is reported by
 the @code{maintainer} function and used by @code{bug.report}.  For a
 @acronym{CRAN} package it should be a @emph{person}, not a mailing list
