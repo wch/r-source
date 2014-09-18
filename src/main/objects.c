@@ -255,6 +255,15 @@ int isBasicClass(const char *ss) {
     return findVarInFrame3(s_S3table, install(ss), FALSE) != R_UnboundValue;
 }
 
+/* Note that ./attrib.c 's S4_extends() has an alternative
+   'sanity check for methods package available' */
+Rboolean R_has_methods_attached(void) {
+    return(
+	isMethodsDispatchOn() &&
+	// based on unlockBinding() in ../library/methods/R/zzz.R  {since 2003}:
+	!R_BindingIsLocked(install(".BasicFunsList"), R_MethodsNamespace));
+}
+
 static
 SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		    const char *generic, SEXP rho, SEXP callrho, SEXP defrho) {

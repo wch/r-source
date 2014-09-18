@@ -1035,6 +1035,7 @@ int R_has_slot(SEXP obj, SEXP name);
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
 SEXP R_getClassDef_R(SEXP what);
+Rboolean R_has_methods_attached(void);
 Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
 Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
 SEXP R_do_new_object(SEXP class_def);
