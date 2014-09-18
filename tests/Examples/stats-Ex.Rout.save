@@ -1,5 +1,5 @@
 
-R version 3.1.1 Patched (2014-09-13 r66601) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-09-17 r66630) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -5541,8 +5541,8 @@ NULL
 > ### Title: General Tree Structures
 > ### Aliases: dendrogram as.dendrogram as.dendrogram.dendrogram
 > ###   as.dendrogram.hclust as.hclust.dendrogram cut.dendrogram
-> ###   [[.dendrogram merge.dendrogram plot.dendrogram print.dendrogram
-> ###   rev.dendrogram str.dendrogram is.leaf
+> ###   [[.dendrogram merge.dendrogram nobs.dendrogram plot.dendrogram
+> ###   print.dendrogram rev.dendrogram str.dendrogram is.leaf
 > ### Keywords: multivariate tree hplot
 > 
 > ### ** Examples
@@ -5711,7 +5711,7 @@ NULL
         |--leaf "Michigan" 
         '--leaf "Nevada" 
 > 
-> ## to peak at the inner structure "if you must", use '[..]' indexing :
+> ## to peek at the inner structure "if you must", use '[..]' indexing :
 > str(d3[2][[1]]) ## or the full
 List of 2
  $ :List of 2

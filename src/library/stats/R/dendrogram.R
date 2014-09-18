@@ -280,9 +280,11 @@ function (object, max.level = NA, digits.d = 3L, give.attr = FALSE,
 ## The ``generic'' method for "[["  (analogous to e.g., "[[.POSIXct"):
 ## --> subbranches (including leafs!) are dendrograms as well!
 `[[.dendrogram` <- function(x, ..., drop = TRUE) {
-    structure(NextMethod("[["), class = "dendrogram")
+    if(!is.null(r <- NextMethod("[[")))
+        structure(r, class = "dendrogram")
 }
 
+nobs.dendrogram <- function(object, ...) attr(object, "members")
 
 ## FIXME: need larger par("mar")[1L] or [4L] for longish labels !
 ## {probably don't change, just print a warning ..}
@@ -628,10 +630,13 @@ labels.dendrogram <- function(object, ...)
 
 merge.dendrogram <- function(x, y, ..., height) {
     stopifnot(inherits(x,"dendrogram"), inherits(y,"dendrogram"))
+    add.ifleaf <- function(i, add) if(is.leaf(i)) i + add else i
+    add <- max(unlist(x))
+    y <- dendrapply(y, add.ifleaf, add=add)
     r <- list(x,y)
     if(length(xtr <- list(...))) {
-	xpr <- substitute(c(...))
 	if(!all(is.d <- vapply(xtr, inherits, NA, what="dendrogram"))) {
+	    xpr <- substitute(c(...))
 	    nms <- sapply(xpr[-1][!is.d], deparse, nlines = 1L)
             ## do not simplify: xgettext needs this form
             msg <- ngettext(length(nms),
@@ -639,6 +644,11 @@ merge.dendrogram <- function(x, y, ..., height) {
                             "extra arguments %s are not of class \"%s\"s")
 	    stop(sprintf(msg, paste(nms, collapse=", "), "dendrogram"),
                  domain = NA)
+	}
+	add <- max(add, unlist(y))
+	for(i in seq_along(xtr)) {
+	    if(i > 1L) add <- max(add, unlist(xtr[i-1L]))
+	    xtr[[i]] <- dendrapply(xtr[[i]], add.ifleaf, add=add)
 	}
 	r <- c(r, xtr)
     }
