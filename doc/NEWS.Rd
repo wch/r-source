@@ -133,6 +133,9 @@
       \code{t(x) \%*\% y} in these cases (also reported by Radford Neal).
       Similarly, \code{tcrossprod(x,y)} and \code{\%*\%} work in more
       cases with vector arguments.
+
+      \item An experimental utility \code{dynGet()} useful for detecting
+      cycles, aka infinite recursions.
     }
   }
 

@@ -167,26 +167,27 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
     invisible(env)
 }
 
+## *inside* another function, useful to check for cycles
+dynGet <- function(x, ifnotfound = stop(gettextf("%s not found",
+			     sQuote(x)), domain = NA),
+		   minframe = 1L, inherits = FALSE)
+{
+    n <- sys.nframe()
+    while (n > minframe) {
+	n <- n - 1L
+	env <- sys.frame(n)
+	if ( exists   (x, envir = env, inherits=inherits))
+	    return(get(x, envir = env, inherits=inherits))
+    }
+    ifnotfound
+}
+
 loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
                            partial = FALSE, versionCheck = NULL)
 {
     package <- as.character(package)[[1L]]
 
-    ## check for cycles
-    dynGet <- function(name,
-                       notFound = stop(gettextf("%s not found", name),
-                       domain = NA))
-    {
-        n <- sys.nframe()
-        while (n > 1) {
-            n <- n - 1
-            env <- sys.frame(n)
-            if (exists(name, envir = env, inherits = FALSE))
-                return(get(name, envir = env, inherits = FALSE))
-        }
-        notFound
-    }
     loading <- dynGet("__NameSpacesLoading__", NULL)
     if (match(package, loading, 0L))
         stop("cyclic namespace dependency detected when loading ",
@@ -675,19 +676,6 @@ requireNamespace <- function (package, ..., quietly = FALSE)
 }
 
 loadingNamespaceInfo <- function() {
-    dynGet <- function(name,
-                       notFound = stop(gettextf("%s not found", sQuote(name)),
-                       domain = NA))
-    {
-        n <- sys.nframe()
-        while (n > 1) {
-            n <- n - 1
-            env <- sys.frame(n)
-            if (exists(name, envir = env, inherits = FALSE))
-                return(get(name, envir = env, inherits = FALSE))
-        }
-        notFound
-    }
     dynGet("__LoadingNamespaceInfo__", stop("not loading a namespace"))
 }
 
