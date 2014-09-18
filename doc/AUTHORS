@@ -12,12 +12,13 @@ Peter Dalgaard
 Seth Falcon
 Robert Gentleman
 Kurt Hornik
-Stefano Iacus
 Ross Ihaka
+Michael Lawrence
 Friedrich Leisch
 Uwe Ligges
 Thomas Lumley
 Martin Maechler
+Martin Morgan
 Duncan Murdoch
 Paul Murrell
 Martyn Plummer
@@ -27,7 +28,8 @@ Duncan Temple Lang
 Luke Tierney
 Simon Urbanek
 
-plus Heiner Schwarte up to October 1999 and Guido Masarotto up to June 2003.
+plus Heiner Schwarte up to October 1999, Guido Masarotto up to June 2003 and
+Stefano Iacus up to July 2014.
 
 Current R-core members can be contacted via email to R-project.org
 with name made up by replacing spaces by dots in the name listed above.
