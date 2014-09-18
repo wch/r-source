@@ -328,6 +328,9 @@
       environments. (\PR{15970})
 
       \item \code{options(list())} now works (trivially). (\PR{15979})
+
+      \item \code{merge(<dendrogram>, ..)} now works correctly.
+      (\PR{15648})
     }
   }
 }

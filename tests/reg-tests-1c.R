@@ -479,5 +479,22 @@ stopifnot(identical(options(list()), options(NULL)))
 ## options(list()) failed in R <= 3.1.1
 
 
+## merge.dendrogram(), PR#15648
+mkDend <- function(n, lab, rGen = function(n) 1+round(16*abs(rnorm(n)))) {
+    stopifnot(is.numeric(n), length(n) == 1, n >= 1, is.character(lab))
+    a <- matrix(rGen(n*n), n, n)
+    colnames(a) <- rownames(a) <- paste0(lab, 1:n)
+    as.dendrogram(hclust(as.dist(a + t(a))))
+}
+set.seed(7)
+da <- mkDend(4, "A")
+db <- mkDend(3, "B")
+d.ab <- merge(da, db)
+hcab <- as.hclust(d.ab)
+stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
+	  hcab$labels == c(paste0("A", 1:4), paste0("B", 1:3)))
+## was wrong in R <= 3.1.1
+
+
 
 proc.time()

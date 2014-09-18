@@ -14,6 +14,7 @@
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{merge.dendrogram}
+\alias{nobs.dendrogram}
 \alias{plot.dendrogram}
 \alias{print.dendrogram}
 \alias{rev.dendrogram}
@@ -43,6 +44,8 @@ as.dendrogram(object, \dots)
 \method{cut}{dendrogram}(x, h, \dots)
 
 \method{merge}{dendrogram}(x, y, \dots, height)
+
+\method{nobs}{dendrogram}(objects, \dots)
 
 \method{print}{dendrogram}(x, digits, \dots)
 
@@ -98,7 +101,7 @@ is.leaf(object)
   \item{frame.plot}{logical indicating if a box around the plot should
     be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
-  \item{height}{height at which the two dendrogram should be merged.  If not
+  \item{height}{height at which the two dendrograms should be merged.  If not
     specified (or \code{NULL}), the default is ten percent larger than
     the (larger of the) two component heights.}
   \item{xlim, ylim}{optional x- and y-limits of the plot, passed to
@@ -172,9 +175,12 @@ is.leaf(object)
   \code{rev.dendrogram} simply returns the dendrogram \code{x} with
   reversed nodes, see also \code{\link{reorder.dendrogram}}.
 
-  The \code{\link{merge}(x, y, ...)} method which merges two or more
+  The \code{\link{merge}(x, y, ...)} method merges two or more
   dendrograms into a new one which has \code{x} and \code{y} (and
   optional further arguments) as branches.
+
+  \code{\link{nobs}(object)} returns the total number of leaves (the
+  \code{members} attribute, see above).}
 
   \code{is.leaf(object)} returns logical indicating if \code{object} is a
   leaf (the most simple dendrogram).
@@ -238,7 +244,7 @@ d3 <- dend2$lower[[2]][[2]][[1]]
 stopifnot(identical(d3, dend2$lower[[2]][[c(2,1)]]))
 str(d3, last.str = "'")
 
-## to peak at the inner structure "if you must", use '[..]' indexing :
+## to peek at the inner structure "if you must", use '[..]' indexing :
 str(d3[2][[1]]) ## or the full
 str(d3[])
 
