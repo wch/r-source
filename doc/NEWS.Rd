@@ -269,6 +269,11 @@
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
+      
+      \item (Windows only) If both 32 and 64 bit versions of \R are
+      installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
+      now run 64 bit \R.  (To run 32 bit \R, overwrite these files
+      with copies of \file{bin/i386/Rfe.exe}.)
     }
   }
 
@@ -334,6 +339,10 @@
 
       \item \code{merge(<dendrogram>, ..)} now works correctly.
       (\PR{15648})
+      
+      \item (Windows only) If a user chose to install 64 bit \R but not
+      32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
+      failed to run.  (\PR{15981})
     }
   }
 }

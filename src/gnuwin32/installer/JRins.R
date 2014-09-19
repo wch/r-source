@@ -110,8 +110,38 @@
 	else "main"
 
         if (component == "x64" && !have64bit) next
+        
+        # Skip the /bin front ends, they are installed below
+        if (grepl("bin/R.exe$", f)) next
+        if (grepl("bin/Rscript.exe$", f)) next
+        
+        f <- gsub("/", "\\", f, fixed = TRUE)   
+        
+        # The /bin front ends are installed according to this rule:
+        #  - If x64 is installed, use that version of Rfe
+        #  - Otherwise, use the i386 version
+        if (grepl("Rfe\\.exe$", f)) {
+            if (component == "i386") 
+                comp <- "i386 and not x64"
+            else 
+            	comp <- component
+            bindir <- gsub("/", "\\", dirname(dir), fixed = TRUE)
+            cat('Source: "', srcdir, '\\', f, '"; ',
+                'DestDir: "{app}', bindir, '"; ',
+                'DestName: "R.exe"; ',
+                'Flags: ignoreversion; ',
+                'Components: ', comp,
+                '\n',
+                file = con, sep = "")   
+            cat('Source: "', srcdir, '\\', f, '"; ',
+                'DestDir: "{app}', bindir, '"; ',
+                'DestName: "Rscript.exe"; ',
+                'Flags: ignoreversion; ',
+                'Components: ', comp,
+                '\n',
+                file = con, sep = "")            
+        }
 
-        f <- gsub("/", "\\", f, fixed = TRUE)
         cat('Source: "', srcdir, '\\', f, '"; ',
             'DestDir: "{app}', dir, '"; ',
             'Flags: ignoreversion; ',
@@ -120,6 +150,9 @@
         if(f %in% c("etc\\Rprofile.site", "etc\\Rconsole"))
             cat("; AfterInstall: EditOptions()", file = con)
         cat("\n", file = con)
+        
+
+        
     }
 
     close(con)
