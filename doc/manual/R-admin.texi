@@ -598,7 +598,8 @@ make install
 
 @noindent
 A parallel make can be used (but run @command{make} before @command{make
-install}).
+install}).  Those using GNU @command{make} 4.0 or later may want to use
+@command{make -j @var{n} -O} to avoid interleaving of output.
 
 This will install to the following directories:
 
