@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2013  The R Core Team
+ *  Copyright (C) 2006-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -162,10 +162,10 @@ int main(int argc, char *argv[])
 	}
 	if(strcmp(argv[1], "--version") == 0) {
 	    if(strlen(R_STATUS) == 0)
-		fprintf(stderr, "R scripting front-end version %s.%s (%s-%s-%s)\n", 
+		fprintf(stderr, "R scripting front-end version %s.%s (%s-%s-%s)\n",
 			R_MAJOR, R_MINOR, R_YEAR, R_MONTH, R_DAY);
-	    else 
-		fprintf(stderr, "R scripting front-end version %s.%s %s (%s-%s-%s r%d)\n", 
+	    else
+		fprintf(stderr, "R scripting front-end version %s.%s %s (%s-%s-%s r%d)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 			R_SVN_REVISION);
 	    exit(0);
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
 #endif
     if(verbose) {
 	fprintf(stderr, "running\n  '%s", cmd);
-	for(i = 1; i < ac-1; i++) fprintf(stderr, " %s", av[i]);
+	for(i = 1; i < ac; i++) fprintf(stderr, " %s", av[i]);
 	fprintf(stderr, "'\n\n");
     }
 #ifndef _WIN32
