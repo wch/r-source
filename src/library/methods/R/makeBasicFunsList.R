@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -176,6 +176,12 @@ utils::globalVariables(".addBasicGeneric")
 	       useAsDefault = function(x, ...) base::chol2inv(x, ...),
 	       signature = "x", where = where)
     setGenericImplicit("chol2inv", where, FALSE)
+
+    setGeneric ("determinant", function(x, logarithm=TRUE, ...) standardGeneric("determinant"),
+		useAsDefault = function(x, logarithm=TRUE, ...)
+		base::determinant(x, logarithm, ...),
+		signature = c("x", "logarithm"), where = where)
+    setGenericImplicit("determinant", where, FALSE)
 
     setGeneric("rcond", function(x, norm, ...) standardGeneric("rcond"),
 	       useAsDefault = function(x, norm, ...) base::rcond(x, norm, ...),
