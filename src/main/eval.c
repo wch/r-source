@@ -4293,6 +4293,11 @@ static R_INLINE SEXP mkVector1(SEXP s)
 	}							\
     } while (0)
 
+#define FAST_VECELT_OK(vec) \
+    (ATTRIB(vec) == R_NilValue ||		\
+     (TAG(ATTRIB(vec)) == R_DimSymbol &&	\
+      CDR(ATTRIB(vec)) == R_NilValue))
+
 static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 				   R_bcstack_t *sv, SEXP rho,
 				   SEXP consts, int callidx,
@@ -4302,7 +4307,7 @@ static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
     SEXP vec = GETSTACK_PTR(sx);
     R_xlen_t i = bcStackIndex(si) - 1;
 
-    if (ATTRIB(vec) == R_NilValue && i >= 0)
+    if (i >= 0 && (subset2 || FAST_VECELT_OK(vec)))
 	DO_FAST_VECELT(sv, vec, i, subset2);
 
     /* fall through to the standard default handler */
@@ -4329,27 +4334,23 @@ static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 
 static R_INLINE SEXP getMatrixDim(SEXP mat)
 {
-    if (! OBJECT(mat) &&
-	TAG(ATTRIB(mat)) == R_DimSymbol &&
-	CDR(ATTRIB(mat)) == R_NilValue) {
-	SEXP dim = CAR(ATTRIB(mat));
-	if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2)
-	    return dim;
-	else return R_NilValue;
-    }
+    SEXP attr = ATTRIB(mat);
+    /* look for the common case of 'dim' as the only attribute first */
+    SEXP dim = TAG(attr) == R_DimSymbol ? CAR(attr) :
+	getAttrib(mat, R_DimSymbol);
+    if (TYPEOF(dim) == INTSXP && LENGTH(dim) == 2)
+	return dim;
     else return R_NilValue;
 }
 
 static R_INLINE SEXP getArrayDim(SEXP mat)
 {
-    if (! OBJECT(mat) &&
-	TAG(ATTRIB(mat)) == R_DimSymbol &&
-	CDR(ATTRIB(mat)) == R_NilValue) {
-	SEXP dim = CAR(ATTRIB(mat));
-	if (TYPEOF(dim) == INTSXP && LENGTH(dim) > 0)
-	    return dim;
-	else return R_NilValue;
-    }
+    SEXP attr = ATTRIB(mat);
+    /* look for the common case of 'dim' as the only attribute first */
+    SEXP dim = TAG(attr) == R_DimSymbol ? CAR(attr) :
+	getAttrib(mat, R_DimSymbol);
+    if (TYPEOF(dim) == INTSXP && LENGTH(dim) > 0)
+	return dim;
     else return R_NilValue;
 }
 
@@ -4385,16 +4386,18 @@ static R_INLINE void MATSUBSET_PTR(R_bcstack_t *sx,
 {
     SEXP idx, jdx, args, value;
     SEXP mat = GETSTACK_PTR(sx);
-    SEXP dim = getMatrixDim(mat);
 
-    if (dim != R_NilValue) {
-	R_xlen_t i = bcStackIndex(si);
-	R_xlen_t j = bcStackIndex(sj);
-	R_xlen_t nrow = INTEGER(dim)[0];
-	R_xlen_t ncol = INTEGER(dim)[1];
-	if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
-	    R_xlen_t k = i - 1 + nrow * (j - 1);
-	    DO_FAST_VECELT(sv, mat, k, subset2);
+    if (subset2 || FAST_VECELT_OK(mat)) {
+	SEXP dim = getMatrixDim(mat);
+	if (dim != R_NilValue) {
+	    R_xlen_t i = bcStackIndex(si);
+	    R_xlen_t j = bcStackIndex(sj);
+	    R_xlen_t nrow = INTEGER(dim)[0];
+	    R_xlen_t ncol = INTEGER(dim)[1];
+	    if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
+		R_xlen_t k = i - 1 + nrow * (j - 1);
+		DO_FAST_VECELT(sv, mat, k, subset2);
+	    }
 	}
     }
 
@@ -4443,12 +4446,14 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 {
     SEXP args, value;
     SEXP x = GETSTACK_PTR(sx);
-    SEXP dim = getArrayDim(x);
 
-    if (dim != R_NilValue) {
-	R_xlen_t k = colMajorStackIndex(dim, rank, si);
-	if (k >= 0)
-	    DO_FAST_VECELT(sv, x, k, subset2);
+    if (subset2 || FAST_VECELT_OK(x)) {
+	SEXP dim = getArrayDim(x);
+	if (dim != R_NilValue) {
+	    R_xlen_t k = colMajorStackIndex(dim, rank, si);
+	    if (k >= 0)
+		DO_FAST_VECELT(sv, x, k, subset2);
+	}
     }
 
     /* fall through to the standard default handler */
@@ -4504,9 +4509,11 @@ static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i, int typev,
 	}								\
 	else if (subassign2 && TYPEOF(vec) == VECSXP && i < XLENGTH(vec)) { \
 	    SEXP rhs = R_FixupRHS(vec, GETSTACK_PTR(srhs));		\
-	    SET_VECTOR_ELT(vec, i, rhs);				\
-	    SETSTACK_PTR(sv, vec);					\
-	    return;							\
+	    if (rhs != R_NilValue) {					\
+		SET_VECTOR_ELT(vec, i, rhs);				\
+		SETSTACK_PTR(sv, vec);					\
+		return;							\
+	    }								\
 	}								\
     } while (0)
 
@@ -4525,11 +4532,9 @@ static R_INLINE void VECSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
     else if (NAMED(vec) == 1)
 	SET_NAMED(vec, 0);
 
-    if (ATTRIB(vec) == R_NilValue) {
-	R_xlen_t i = bcStackIndex(si) - 1;
-	if (i >= 0)
-	    DO_FAST_SETVECELT(sv, srhs, vec,  i, subset2);
-    }
+    R_xlen_t i = bcStackIndex(si) - 1;
+    if (i >= 0)
+	DO_FAST_SETVECELT(sv, srhs, vec,  i, subset2);
 
     /* fall through to the standard default handler */
     value = GETSTACK_PTR(srhs);
