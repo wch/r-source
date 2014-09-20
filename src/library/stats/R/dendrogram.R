@@ -87,12 +87,17 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 as.hclust.dendrogram <- function(x, ...)
 {
     stopifnot(is.list(x), length(x) == 2)
-    n <- length(ord <- unlist(x))
+    n <- length(ord <- as.integer(unlist(x)))
+    iOrd <- sort.list(ord)
+    if(!identical(ord[iOrd], seq_len(n)))
+	stop(gettextf(
+	    "dendrogram entries must be 1,2,..,%d (in any order), to be coercable to \"hclust\"",
+	    n), domain=NA)
     stopifnot(n == attr(x, "members"))
     n.h <- n - 1L
     ## labels: not sure, if we'll use this; there should be a faster way!
     labsu <- unlist(labels(x))
-    labs <- labsu[sort.list(ord)]
+    labs <- labsu[iOrd]
     x <- .add.dendrInd(x)
 
     SIMP <- function(d) {
@@ -628,11 +633,22 @@ rev.dendrogram <- function(x) {
 labels.dendrogram <- function(object, ...)
     unlist(dendrapply(object, function(n) attr(n,"label")))
 
-merge.dendrogram <- function(x, y, ..., height) {
+merge.dendrogram <- function(x, y, ..., height,
+                             adjust = c("auto", "add.max", "none"))
+{
     stopifnot(inherits(x,"dendrogram"), inherits(y,"dendrogram"))
-    add.ifleaf <- function(i, add) if(is.leaf(i)) i + add else i
-    add <- max(unlist(x))
-    y <- dendrapply(y, add.ifleaf, add=add)
+    if((adjust <- match.arg(adjust)) == "auto")
+        adjust <-
+            ## dendrograms as from hclust(), have entries {1,2,..,n}; "cheap" check:
+            if(min(unlist(x)) == 1 && min(unlist(y)) == 1)
+                "add.max"
+            else # for now, can imagine more:
+                "none"
+    if(adjust == "add.max") {
+        add.ifleaf <- function(i, add) if(is.leaf(i)) i + add else i
+        add <- max(unlist(x))
+        y <- dendrapply(y, add.ifleaf, add=add)
+    }
     r <- list(x,y)
     if(length(xtr <- list(...))) {
 	if(!all(is.d <- vapply(xtr, inherits, NA, what="dendrogram"))) {
@@ -645,10 +661,12 @@ merge.dendrogram <- function(x, y, ..., height) {
 	    stop(sprintf(msg, paste(nms, collapse=", "), "dendrogram"),
                  domain = NA)
 	}
-	add <- max(add, unlist(y))
-	for(i in seq_along(xtr)) {
-	    if(i > 1L) add <- max(add, unlist(xtr[i-1L]))
-	    xtr[[i]] <- dendrapply(xtr[[i]], add.ifleaf, add=add)
+	if(adjust == "add.max") {
+	    add <- max(add, unlist(y))
+	    for(i in seq_along(xtr)) {
+		if(i > 1L) add <- max(add, unlist(xtr[i-1L]))
+		xtr[[i]] <- dendrapply(xtr[[i]], add.ifleaf, add=add)
+	    }
 	}
 	r <- c(r, xtr)
     }

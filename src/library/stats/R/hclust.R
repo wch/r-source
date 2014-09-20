@@ -113,36 +113,42 @@ hclust <- function(d, method="complete", members=NULL)
 }
 
 plot.hclust <-
-    function (x, labels = NULL, hang = 0.1,
+    function (x, labels = NULL, hang = 0.1, check = TRUE,
               axes = TRUE, frame.plot = FALSE, ann = TRUE,
               main = "Cluster Dendrogram",
               sub = NULL, xlab = NULL, ylab = "Height", ...)
 {
     merge <- x$merge
-    if (!is.matrix(merge) || ncol(merge) != 2)
-	stop("invalid dendrogram")
-    ## merge should be integer but might not be after dump/restore.
-    if (any(as.integer(merge) != merge))
-        stop("'merge' component in dendrogram must be integer")
+    if(check) {
+        if (!is.matrix(merge) || ncol(merge) != 2)
+            stop("invalid dendrogram")
+        ## merge should be integer but might not be after dump/restore.
+        if (any(as.integer(merge) != merge))
+            stop("'merge' component in dendrogram must be integer")
+    }
     storage.mode(merge) <- "integer"
-    n <- nrow(merge)
+    n1 <- nrow(merge) # == #{obs} - 1
+    n <- n1+1L
     height <- as.double(x$height)
+    if(check) {
+	stopifnot(length(x$order) == n,
+		  length( height) == n1)
+	if(!identical(sort(merge), c(-(n:1L), +seq_len(n-2))))
+	       stop("'merge' matrix has invalid contents")
+    }
     labels <-
 	if(missing(labels) || is.null(labels)) {
-	    if (is.null(x$labels))
-		paste(1L:(n+1L))
-	    else
-		as.character(x$labels)
+	    as.character(if(is.null(x$labels)) seq_len(n) else x$labels)
 	} else {
 	    if(is.logical(labels) && !labels)# FALSE
-		character(n+1L)
+		character(n)
 	    else
 		as.character(labels)
 	}
 
     dev.hold(); on.exit(dev.flush())
     plot.new()
-    graphics:::plotHclust(n, merge, height, order(x$order), hang, labels, ...)
+    graphics:::plotHclust(n1, merge, height, order(x$order), hang, labels, ...)
     if(axes)
         axis(2, at=pretty(range(height)), ...)
     if (frame.plot)

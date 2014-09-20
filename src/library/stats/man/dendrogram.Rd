@@ -43,7 +43,8 @@ as.dendrogram(object, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
-\method{merge}{dendrogram}(x, y, \dots, height)
+\method{merge}{dendrogram}(x, y, \dots, height,
+      adjust = c("auto", "by.max", "none"))
 
 \method{nobs}{dendrogram}(object, \dots)
 
@@ -104,6 +105,13 @@ is.leaf(object)
   \item{height}{height at which the two dendrograms should be merged.  If not
     specified (or \code{NULL}), the default is ten percent larger than
     the (larger of the) two component heights.}
+  \item{adjust}{a string determining if the leaf values should be
+    adjusted.  The default, \code{"auto"}, checks if the (first) two
+    dendrograms both start at \code{1}; if they do, code{"add.max"} is
+    chosen, which adds the maximum of the previous dendrogram leaf
+    values to each leaf of the \dQuote{next} dendrogram.  Specifying
+    \code{adjust} to another value skips the check and hence is a tad
+    more efficient.}
   \item{xlim, ylim}{optional x- and y-limits of the plot, passed to
     \code{\link{plot.default}}.  The defaults for these show the full
     dendrogram.}
@@ -177,7 +185,9 @@ is.leaf(object)
 
   The \code{\link{merge}(x, y, ...)} method merges two or more
   dendrograms into a new one which has \code{x} and \code{y} (and
-  optional further arguments) as branches.
+  optional further arguments) as branches.  Note that before \R 3.1.2,
+  \code{adjust = "none"} was used implicitly, which is invalid when,
+  e.g., the dendrograms are from \code{\link{as.dendrogram}(hclust(..))}.
 
   \code{\link{nobs}(object)} returns the total number of leaves (the
   \code{members} attribute, see above).
