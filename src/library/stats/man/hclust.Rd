@@ -15,7 +15,7 @@
 \usage{
 hclust(d, method = "complete", members = NULL)
 
-\method{plot}{hclust}(x, labels = NULL, hang = 0.1,
+\method{plot}{hclust}(x, labels = NULL, hang = 0.1, check = TRUE,
      axes = TRUE, frame.plot = FALSE, ann = TRUE,
      main = "Cluster Dendrogram",
      sub = NULL, xlab = NULL, ylab = "Height", \dots)
@@ -37,10 +37,15 @@ hclust(d, method = "complete", members = NULL)
   \item{hang}{The fraction of the plot height by which labels should hang
     below the rest of the plot.
     A negative value will cause the labels to hang down from 0.}
-
+  \item{check}{logical indicating if the \code{x} object should be
+    checked for consistency.  This check is not necessary when \code{x}
+    is known to be valid such as when it is the direct result of
+    \code{hclust()}.  The default is \code{check=TRUE}, as invalid
+    inputs may crash \R due to memory violation in the internal C
+    plotting code.}
   \item{labels}{A character vector of labels for the leaves of the
-    tree. By default the row names or row numbers of the original data are
-    used. If \code{labels = FALSE} no labels at all are plotted.}
+    tree.  By default the row names or row numbers of the original data are
+    used.  If \code{labels = FALSE} no labels at all are plotted.}
 
   \item{axes, frame.plot, ann}{logical flags as in \code{\link{plot.default}}.}
 

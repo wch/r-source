@@ -269,7 +269,7 @@
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
-      
+
       \item (Windows only) If both 32 and 64 bit versions of \R are
       installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
       now run 64 bit \R.  (To run 32 bit \R, overwrite these files
@@ -337,9 +337,15 @@
 
       \item \code{options(list())} now works (trivially). (\PR{15979})
 
-      \item \code{merge(<dendrogram>, ..)} now works correctly.
-      (\PR{15648})
-      
+      \item \code{merge(<dendrogram>, ..)} now works correctly for two
+      `independent' dendrograms (\PR{15648}), and still compatibly via
+      \code{adjust = "auto"} e.g. for two branches of an existing
+      dendrogram.
+
+      \item The \code{plot} method for \code{"hclust"} objects gets an
+      optional argument \code{check};  When that is true, as per
+      default, it checks more carefully for valid input.
+
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
       failed to run.  (\PR{15981})
