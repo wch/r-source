@@ -1,5 +1,5 @@
 
-R version 3.1.1 Patched (2014-09-17 r66630) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-09-20 r66650) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3274,8 +3274,8 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [46] unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
- [6] labels        merge         plot          print         reorder      
-[11] rev           str          
+ [6] labels        merge         nobs          plot          print        
+[11] reorder       rev           str          
 > ## --> the output may need somewhat frequent updating..
 > 
 > 
