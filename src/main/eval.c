@@ -3429,6 +3429,18 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 #include "arithmetic.h"
 
+/* The curren (as of r66652) Windows toolchain compiles explicit sqrt
+   calls in a way that returns a different NaN than NA_real_ when
+   called with N__real_. Not sure this is a bug in the Windows
+   toolchain or in our expectations, but these defines attempt to work
+   around this. */
+#if defined(_WIN32) && !defined(_WIN64) && defined(__GNUC__) && \
+    __GNUC__ <= 3 || (__GNUC__ == 4 && __GNUC_MINOR__ < 7)
+# define R_sqrt(x) (ISNAN(x) ? x : sqrt(x))
+#else
+# define R_sqrt sqrt
+#endif
+
 #define DO_LOG() do {							\
 	scalar_value_t vx;						\
 	SEXP sa = NULL;							\
@@ -5227,7 +5239,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(MUL, 1): FastBinary(R_MUL, TIMESOP, R_MulSym);
     OP(DIV, 1): FastBinary(R_DIV, DIVOP, R_DivSym);
     OP(EXPT, 1): FastBinary(R_POW, POWOP, R_ExptSym);
-    OP(SQRT, 1): FastMath1(sqrt, R_SqrtSym);
+    OP(SQRT, 1): FastMath1(R_sqrt, R_SqrtSym);
     OP(EXP, 1): FastMath1(exp, R_ExpSym);
     OP(EQ, 1): FastRelop2(==, EQOP, R_EqSym);
     OP(NE, 1): FastRelop2(!=, NEOP, R_NeSym);
