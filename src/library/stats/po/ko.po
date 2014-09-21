@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:17+0100\n"
+"POT-Creation-Date: 2014-09-21 07:12+0100\n"
 "PO-Revision-Date: 2014-03-26 21:13-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -435,7 +435,7 @@ msgstr "수렴했습니다"
 msgid "'theta' should be of type character"
 msgstr "'theta'는 반드시 문자형이어야 합니다"
 
-#: nls.c:290 port.c:375
+#: nls.c:290 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr "NULL environment의 사용은 더 이상 지원되지 않습니다"
 
@@ -503,11 +503,11 @@ msgstr "'ndeps'의 길이가 잘못되었습니다"
 msgid "unknown 'method'"
 msgstr "알수없는 'method'입니다"
 
-#: optimize.c:220 optimize.c:306 optimize.c:527
+#: optimize.c:220 optimize.c:306 optimize.c:528
 msgid "NA replaced by maximum positive value"
 msgstr "NA가 양의 최대값으로 대체되었습니다"
 
-#: optimize.c:228 optimize.c:318 optimize.c:535
+#: optimize.c:228 optimize.c:318 optimize.c:536
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf가 양의 최대값으로 대체되었습니다"
 
@@ -515,7 +515,7 @@ msgstr "NA/Inf가 양의 최대값으로 대체되었습니다"
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'에 유효하지 않은 함수값이 있습니다"
 
-#: optimize.c:255 optimize.c:347 optimize.c:720
+#: optimize.c:255 optimize.c:347 optimize.c:721
 msgid "attempt to minimize non-function"
 msgstr "함수가 아닌 것을 최소화하려 하였습니다"
 
@@ -546,75 +546,75 @@ msgstr "'%s'에 NA값은 허용되지 않습니다"
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'는 반드시 양수이어야 합니다"
 
-#: optimize.c:519
+#: optimize.c:520
 msgid "non-finite value supplied by 'nlm'"
 msgstr "무한값이 'nlm'에 의해 제공되었습니다"
 
-#: optimize.c:554
+#: optimize.c:555
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm' 옵티마이저에서 유효하지 않은 함수값이 있습니다"
 
-#: optimize.c:565 optimize.c:580
+#: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 
-#: optimize.c:595
+#: optimize.c:596
 msgid "numeric parameter expected"
 msgstr "수치형 파라미터가 와야 합니다"
 
-#: optimize.c:599
+#: optimize.c:600
 msgid "conflicting parameter lengths"
 msgstr "파마미터의 길이들이 일치하지 않습니다"
 
-#: optimize.c:603
+#: optimize.c:604
 msgid "invalid parameter length"
 msgstr "유효하지 않은 파라미터 길이입니다"
 
-#: optimize.c:613 optimize.c:620
+#: optimize.c:614 optimize.c:621
 msgid "missing value in parameter"
 msgstr "파라미터에 누락된 값이 있습니다"
 
-#: optimize.c:625
+#: optimize.c:626
 msgid "invalid parameter type"
 msgstr "유효하지 않은 파라미터 타입입니다"
 
-#: optimize.c:636
+#: optimize.c:637
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm에 파라미터의 개수가 양수가 아닙니다"
 
-#: optimize.c:638
+#: optimize.c:639
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm의 사용은 1차원 문제에 대해서 효율적이지 않습니다"
 
-#: optimize.c:640
+#: optimize.c:641
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm에 이용되는 gradient tolerance는 유효하지 않습니다"
 
-#: optimize.c:642
+#: optimize.c:643
 msgid "invalid iteration limit in nlm"
 msgstr "nlm에 이용되는 iteration limit의 값이 유효하지 않습니다"
 
-#: optimize.c:644
+#: optimize.c:645
 msgid "minimization function has no good digits in nlm"
 msgstr ""
 
-#: optimize.c:646
+#: optimize.c:647
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm에서 확인할 수 있는 analytic gradient가 없습니다!"
 
-#: optimize.c:648
+#: optimize.c:649
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm에서 확인할 수 있는 analytic Hessian이 없습니다"
 
-#: optimize.c:650
+#: optimize.c:651
 msgid "probable coding error in analytic gradient"
 msgstr "analytic gradient에 아마도 코딩에러가 있는 것 같습니다"
 
-#: optimize.c:652
+#: optimize.c:653
 msgid "probable coding error in analytic Hessian"
 msgstr "analytic Hessian에 아마도 코딩에러가 있는 것 같습니다"
 
-#: optimize.c:654
+#: optimize.c:655
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -623,23 +623,23 @@ msgstr ""
 "*** nlm()에서 알 수 없는 메시지 (msg = %d)가 있습니다\n"
 "*** 이것은 일어나서는 안되는 경우입니다!"
 
-#: optimize.c:665
+#: optimize.c:666
 msgid "Relative gradient close to zero.\n"
 msgstr "Relative gradient의 값이 0에 가깝습니다.\n"
 
-#: optimize.c:666 optimize.c:670
+#: optimize.c:667 optimize.c:671
 msgid "Current iterate is probably solution.\n"
 msgstr "current iterate가 아마도 찾고자 하는 솔루션일 것입니다.\n"
 
-#: optimize.c:669
+#: optimize.c:670
 msgid "Successive iterates within tolerance.\n"
 msgstr "허용치내의 successive iterates입니다.\n"
 
-#: optimize.c:673
+#: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 
-#: optimize.c:674
+#: optimize.c:675
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -649,11 +649,11 @@ msgstr ""
 "함수가 이 알고리즘의 적용에 대해서는 너무 비선형이거나,\n"
 "steptol이 너무 큽니다.\n"
 
-#: optimize.c:679
+#: optimize.c:680
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Iteration limit을 초과하였으므로 알고리즘이 실패했습니다.\n"
 
-#: optimize.c:682
+#: optimize.c:683
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -662,16 +662,16 @@ msgid ""
 "or stepmx is too small.\n"
 msgstr ""
 
-#: optimize.c:744 optimize.c:749 optimize.c:753 optimize.c:757 optimize.c:761
-#: optimize.c:765 optimize.c:770
+#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
+#: optimize.c:766 optimize.c:771
 msgid "invalid NA value in parameter"
 msgstr "파라미터에 유효하지 않은 NA값이 있습니다"
 
-#: optimize.c:801
+#: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "얻어진 hessian의 길이 또는 모드가 잘못되었으므로, 무시됩니다"
 
-#: optimize.c:805
+#: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "얻어진 gradient의 길이 또는 모드가 잘못되었으므로, 무시됩니다"
 
@@ -702,69 +702,69 @@ msgstr "Rf_divset: alg = %d는 반드시 1, 2, 3, 또는 4이어야 합니다"
 msgid "port algorithms 3 or higher are not supported"
 msgstr ""
 
-#: port.c:312
+#: port.c:313
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "gradient function은 반드시 길이가 %d인 수치형 벡터를 반환해야 합니다"
 
-#: port.c:324
+#: port.c:325
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
 
-#: port.c:379
+#: port.c:380
 msgid "'rho' must be an environment"
 msgstr "'rho'는 반드시 environment이어야 합니다"
 
-#: port.c:381 port.c:542
+#: port.c:382 port.c:543
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
-#: port.c:383
+#: port.c:384
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Hessian이 정의되었다면, 반드시 gradient 또한 정의되어져야 합니다"
 
-#: port.c:386
+#: port.c:387
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
-#: port.c:400
+#: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'와 'upper'는 반드시 수치형 벡터들이어야 합니다"
 
-#: port.c:456
+#: port.c:457
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:477
+#: port.c:478
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()를 찾을 수 없습니다"
 
-#: port.c:490
+#: port.c:491
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 합니다"
 
-#: port.c:511
+#: port.c:512
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
 "였습니다"
 
-#: port.c:524
+#: port.c:525
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store에 유효하지 않은 타입입니다"
 
-#: port.c:543
+#: port.c:544
 msgid "m must be a list"
 msgstr "m은 반드시 리스트이어야 합니다"
 
-#: port.c:563
+#: port.c:564
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'와 'upperb'는 반드시 수치형 벡터들이어야 합니다"
 

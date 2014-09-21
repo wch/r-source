@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-02-19 07:12\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2012-01-07 21:49+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,6 +40,10 @@ msgstr "ikke en gyldig klynge"
 
 msgid "unknown cluster type"
 msgstr "ukendt klyngetype"
+
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "»nnodes« skal være >= 1"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "knude for en sokkelklynge på vært %s med pid %d"

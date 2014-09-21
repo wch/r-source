@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -343,9 +343,9 @@ msgstr "Startfunktionen des Pakets sollten %s nicht aufrufen."
 msgid "See section %s in '%s'."
 msgstr "Siehe Abschnitt %s in '%s'."
 
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 "Detachfuktion für Pakete sollte ein Argumente haben, deren Namen\n"
 "mit %s beginnen."
@@ -372,6 +372,14 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"

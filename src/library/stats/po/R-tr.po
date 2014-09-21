@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -627,6 +627,11 @@ msgstr "'k' nın öğeleri 1 ve %d arasında olmalı"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' ve 'height' uymuyor!"
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 msgid "dendrogram node with non-positive #{branches}"
 msgstr ""
 
@@ -1146,6 +1151,9 @@ msgid "invalid dendrogram"
 msgstr "geçersiz ağaç diyagramı"
 
 msgid "'merge' component in dendrogram must be integer"
+msgstr ""
+
+msgid "'merge' matrix has invalid contents"
 msgstr ""
 
 #, fuzzy

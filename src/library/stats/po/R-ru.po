@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-11 10:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -636,6 +636,11 @@ msgstr "элементы 'k' должны быть между 1 и %d"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' и 'height' не соответствуют!"
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "узел дендрограммы с неположительными #{branches}"
 
@@ -1160,6 +1165,9 @@ msgstr "неправильная дендрограмма"
 
 msgid "'merge' component in dendrogram must be integer"
 msgstr "компонент дендрограммы 'merge' должен быть целым"
+
+msgid "'merge' matrix has invalid contents"
+msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr "аргумент 'x' не может быть конвертирован в класс %s"

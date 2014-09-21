@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:17+0100\n"
+"POT-Creation-Date: 2014-09-21 07:12+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -436,7 +436,7 @@ msgstr "convergiu"
 msgid "'theta' should be of type character"
 msgstr "'theta' deve ser do tipo caractere"
 
-#: nls.c:290 port.c:375
+#: nls.c:290 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL é obsoleto"
 
@@ -505,11 +505,11 @@ msgstr "'ndeps' tem o comprimento errado"
 msgid "unknown 'method'"
 msgstr "'method' desconhecido"
 
-#: optimize.c:220 optimize.c:306 optimize.c:527
+#: optimize.c:220 optimize.c:306 optimize.c:528
 msgid "NA replaced by maximum positive value"
 msgstr "NA substituido pelo máximo valor positivo"
 
-#: optimize.c:228 optimize.c:318 optimize.c:535
+#: optimize.c:228 optimize.c:318 optimize.c:536
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf substituido pelo máximo valor positivo"
 
@@ -517,7 +517,7 @@ msgstr "NA/Inf substituido pelo máximo valor positivo"
 msgid "invalid function value in 'optimize'"
 msgstr "valor de função inválido em 'optimize'"
 
-#: optimize.c:255 optimize.c:347 optimize.c:720
+#: optimize.c:255 optimize.c:347 optimize.c:721
 msgid "attempt to minimize non-function"
 msgstr "tentativa de minimizar algo diferente de função"
 
@@ -549,75 +549,75 @@ msgstr "valor NA para '%s' não são permitidos"
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' deve ser positivo"
 
-#: optimize.c:519
+#: optimize.c:520
 msgid "non-finite value supplied by 'nlm'"
 msgstr "valores não finitos fornecidos por 'nlm'"
 
-#: optimize.c:554
+#: optimize.c:555
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "valor de função inválido em otimizador 'nlm'"
 
-#: optimize.c:565 optimize.c:580
+#: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
 msgstr "cache de valores de função para otimização está seriamente confuso"
 
-#: optimize.c:595
+#: optimize.c:596
 msgid "numeric parameter expected"
 msgstr "parâmetro numérico esperado"
 
-#: optimize.c:599
+#: optimize.c:600
 msgid "conflicting parameter lengths"
 msgstr "parâmetros de comprimentos incompatíveis"
 
-#: optimize.c:603
+#: optimize.c:604
 msgid "invalid parameter length"
 msgstr "parâmetro de comprimento inválido"
 
-#: optimize.c:613 optimize.c:620
+#: optimize.c:614 optimize.c:621
 msgid "missing value in parameter"
 msgstr "parâmetro com valor faltante"
 
-#: optimize.c:625
+#: optimize.c:626
 msgid "invalid parameter type"
 msgstr "parâmetro com tipo inválido"
 
-#: optimize.c:636
+#: optimize.c:637
 msgid "non-positive number of parameters in nlm"
 msgstr "número de parâmetros não positivo em nlm"
 
-#: optimize.c:638
+#: optimize.c:639
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm é ineficiente para problemas unidimensionais"
 
-#: optimize.c:640
+#: optimize.c:641
 msgid "invalid gradient tolerance in nlm"
 msgstr "tolerância de gradiente inválida em nlm"
 
-#: optimize.c:642
+#: optimize.c:643
 msgid "invalid iteration limit in nlm"
 msgstr "limite de iteração inválido em nlm"
 
-#: optimize.c:644
+#: optimize.c:645
 msgid "minimization function has no good digits in nlm"
 msgstr "função de minimização não tem digítos significativos em nlm"
 
-#: optimize.c:646
+#: optimize.c:647
 msgid "no analytic gradient to check in nlm!"
 msgstr "nenhum gradiente analítico para verificar em nlm!"
 
-#: optimize.c:648
+#: optimize.c:649
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nenhuma Hessiana analítica para verificar em nlm!"
 
-#: optimize.c:650
+#: optimize.c:651
 msgid "probable coding error in analytic gradient"
 msgstr "provável erro no código do gradiente analítico"
 
-#: optimize.c:652
+#: optimize.c:653
 msgid "probable coding error in analytic Hessian"
 msgstr "provável erro no código da Hessiana analítica"
 
-#: optimize.c:654
+#: optimize.c:655
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -626,23 +626,23 @@ msgstr ""
 "*** mensagem de erro desconhecida (msg = %d) em nlm()\n"
 "*** não deveria acontecer!"
 
-#: optimize.c:665
+#: optimize.c:666
 msgid "Relative gradient close to zero.\n"
 msgstr "Gradiente relativo próximo de zero.\n"
 
-#: optimize.c:666 optimize.c:670
+#: optimize.c:667 optimize.c:671
 msgid "Current iterate is probably solution.\n"
 msgstr "Iteração atual é provavelmente a solução.\n"
 
-#: optimize.c:669
+#: optimize.c:670
 msgid "Successive iterates within tolerance.\n"
 msgstr "Iterações sucessivas dentro do limite de tolerância.\n"
 
-#: optimize.c:673
+#: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Último passo global falhou em achar um ponto inferior a x.\n"
 
-#: optimize.c:674
+#: optimize.c:675
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -652,11 +652,11 @@ msgstr ""
 "a função é muito não-linear para esse algorítmo,\n"
 "ou steptol é muito grande.\n"
 
-#: optimize.c:679
+#: optimize.c:680
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Limite de iterações atingido. Algoritmo falhou.\n"
 
-#: optimize.c:682
+#: optimize.c:683
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -670,16 +670,16 @@ msgstr ""
 "por cima em alguma direção\n"
 "ou stepmx é muito pequeno.\n"
 
-#: optimize.c:744 optimize.c:749 optimize.c:753 optimize.c:757 optimize.c:761
-#: optimize.c:765 optimize.c:770
+#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
+#: optimize.c:766 optimize.c:771
 msgid "invalid NA value in parameter"
 msgstr "valor NA inválido em parâmetro"
 
-#: optimize.c:801
+#: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "hessiana fornecida tem comprimento ou modo errados; ignorada"
 
-#: optimize.c:805
+#: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "gradiente fornecido tem comprimento ou modo errados; ignorado"
 
@@ -710,67 +710,67 @@ msgstr "Rf_divset: alg = %d deve ser 1, 2, 3, ou 4"
 msgid "port algorithms 3 or higher are not supported"
 msgstr ""
 
-#: port.c:312
+#: port.c:313
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "função gradiente deve retornar um vetor numérico de comprimento %d"
 
-#: port.c:324
+#: port.c:325
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "função hessiana deve retornar uma matriz quadrada numérica de ordem %d"
 
-#: port.c:379
+#: port.c:380
 msgid "'rho' must be an environment"
 msgstr "'rho' deve ser um ambiente"
 
-#: port.c:381 port.c:542
+#: port.c:382 port.c:543
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' deve ser um vetor numérico não-vazio"
 
-#: port.c:383
+#: port.c:384
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "quando a hessiana for definida o gradiente também deve ser especificado"
 
-#: port.c:386
+#: port.c:387
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "ambiente 'rho' deve conter um vetor numérico '.par' de comprimento %d"
 
-#: port.c:400
+#: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' e 'upper' devem ser vetores numéricos"
 
-#: port.c:456
+#: port.c:457
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' se aplica apenas a listas nomeadas"
 
-#: port.c:477
+#: port.c:478
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() não encontrado"
 
-#: port.c:490
+#: port.c:491
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' deve ser uma matriz numérica de dimensão (%d,%d)"
 
-#: port.c:511
+#: port.c:512
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "fcn retornou modo %d, comprimento %d - esperado modo %d, comprimento %d"
 
-#: port.c:524
+#: port.c:525
 msgid "invalid type for eval_check_store"
 msgstr "tipo inválido para eval_check_store"
 
-#: port.c:543
+#: port.c:544
 msgid "m must be a list"
 msgstr "m deve ser uma lista"
 
-#: port.c:563
+#: port.c:564
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
 

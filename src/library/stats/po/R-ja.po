@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-26 10:17+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -621,6 +621,11 @@ msgstr " 'k' の要素は 1 と %d の間になければなりません "
 msgid "'merge' and 'height' do not fit!"
 msgstr " 'merge' と 'height' が合致していません! "
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 msgid "dendrogram node with non-positive #{branches}"
 msgstr " 枝数が正でないデンドログラムノードです "
 
@@ -1148,6 +1153,9 @@ msgstr " 無効なデンドログラムです "
 
 msgid "'merge' component in dendrogram must be integer"
 msgstr " dendrogram の 'merge' 成分は整数でなければなりません "
+
+msgid "'merge' matrix has invalid contents"
+msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr " 引数 'x' をクラス %s に強制変換できません "

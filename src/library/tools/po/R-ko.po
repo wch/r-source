@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -356,9 +356,9 @@ msgstr "패키지 스타트업 함수들은 %s를 호출해서는 안됩니다."
 msgid "See section %s in '%s'."
 msgstr "'%2$s'에서 섹션 %1$s를 살펴보세요."
 
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 "패키지 분리(detach)와 관계된 함수들은 %s로 시작하는 이름을 가진 인자 한개를 "
 "반드시 가지고 있어야 합니다."
@@ -385,6 +385,14 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다: %s"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"

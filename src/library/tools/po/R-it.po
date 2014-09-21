@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -331,8 +331,7 @@ msgid "See section %s in '%s'."
 msgstr "impossibile eseguire bibtext su '%s'"
 
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 
 msgid "Package detach functions should not call %s."
@@ -357,6 +356,12 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr ""
+
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr ""
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"

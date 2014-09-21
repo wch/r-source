@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1378,6 +1378,11 @@ msgstr "elementy 'k' muszą być pomiędzy 1 a %d"
 msgid "'merge' and 'height' do not fit!"
 msgstr "argumenty 'merge' oraz 'height' nie pasują!"
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 # stats/R/dendrogram.R: 188
 # stop("dendrogram node with non-positive #{branches}")
 msgid "dendrogram node with non-positive #{branches}"
@@ -2528,6 +2533,9 @@ msgstr "niepoprawne drzewo celów"
 # stop("'merge' component in dendrogram must be integer")
 msgid "'merge' component in dendrogram must be integer"
 msgstr "komponent 'merge' w drzewie celu musi być liczbą całkowitą"
+
+msgid "'merge' matrix has invalid contents"
+msgstr ""
 
 # stats/R/hclust.R: 159
 # stop(gettextf("argument 'x' cannot be coerced to class %s",

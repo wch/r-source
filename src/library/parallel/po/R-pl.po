@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -65,6 +65,12 @@ msgstr "to nie jest poprawny klaster"
 # stop("unknown cluster type")
 msgid "unknown cluster type"
 msgstr "nieznany typ klastra"
+
+# parallel/R/unix/forkCluster.R: 21
+# stop("'nnodes' must be >= 1")
+#, fuzzy
+msgid "numeric 'names' must be >= 1"
+msgstr "argument 'nnodes' musi być >= 1"
 
 # parallel/R/snowSOCK.R: 144
 # gettextf("node of a socket cluster on host %s with pid %d",

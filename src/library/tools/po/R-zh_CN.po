@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -325,9 +325,9 @@ msgstr "程序包启动函数不应该调用%s 。"
 msgid "See section %s in '%s'."
 msgstr "参见'%2$s'里的%1$s章节"
 
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr "程序包脱离函数需要有个名字开头为%s的参数。"
 
 msgid "Package detach functions should not call %s."
@@ -352,6 +352,14 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "'library'或'require'调用没有被声明: %s"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "'library'或'require'调用没有被声明:"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "'library'或'require'调用没有被声明: %s"
 
 #, fuzzy

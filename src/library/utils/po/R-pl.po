@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2510,6 +2510,12 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "niepoprawna rzymska numeracja: %s"
 msgstr[1] "niepoprawne rzymskie numeracje: %s"
 msgstr[2] "niepoprawne rzymskie numeracje: %s"
+
+msgid "is"
+msgid_plural "are"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 # utils/R/windows/install.packages.R: 220
 # warning(sprintf(ngettext(sum(inuse),

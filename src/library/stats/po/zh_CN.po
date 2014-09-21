@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:17+0100\n"
+"POT-Creation-Date: 2014-09-21 07:12+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -429,7 +429,7 @@ msgstr "收敛了"
 msgid "'theta' should be of type character"
 msgstr "'theta'的种类必需是字符"
 
-#: nls.c:290 port.c:375
+#: nls.c:290 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr "NULL环境不再有用了"
 
@@ -498,11 +498,11 @@ msgstr "'ndeps'长度不对"
 msgid "unknown 'method'"
 msgstr "没有这样的'method'"
 
-#: optimize.c:220 optimize.c:306 optimize.c:527
+#: optimize.c:220 optimize.c:306 optimize.c:528
 msgid "NA replaced by maximum positive value"
 msgstr "NA被换成最大的正值"
 
-#: optimize.c:228 optimize.c:318 optimize.c:535
+#: optimize.c:228 optimize.c:318 optimize.c:536
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "NA/Inf被换成最大的正值"
 
@@ -510,7 +510,7 @@ msgstr "NA/Inf被换成最大的正值"
 msgid "invalid function value in 'optimize'"
 msgstr "'optimize'里的函数值不对"
 
-#: optimize.c:255 optimize.c:347 optimize.c:720
+#: optimize.c:255 optimize.c:347 optimize.c:721
 msgid "attempt to minimize non-function"
 msgstr "不能将非函数最小化"
 
@@ -541,98 +541,98 @@ msgstr "'%s'里不可有NA值"
 msgid "'maxiter' must be positive"
 msgstr "'maxiter'必需是正数"
 
-#: optimize.c:519
+#: optimize.c:520
 msgid "non-finite value supplied by 'nlm'"
 msgstr "'nlm'回复了无限值"
 
-#: optimize.c:554
+#: optimize.c:555
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "'nlm'最佳化器里的函数值不对"
 
-#: optimize.c:565 optimize.c:580
+#: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
 msgstr "最佳化时函数值暫存器出了问题"
 
-#: optimize.c:595
+#: optimize.c:596
 msgid "numeric parameter expected"
 msgstr "需要数值参数"
 
-#: optimize.c:599
+#: optimize.c:600
 msgid "conflicting parameter lengths"
 msgstr "参数的长度自相矛盾"
 
-#: optimize.c:603
+#: optimize.c:604
 msgid "invalid parameter length"
 msgstr "参数长度不对"
 
-#: optimize.c:613 optimize.c:620
+#: optimize.c:614 optimize.c:621
 msgid "missing value in parameter"
 msgstr "参数里不能有遗漏值"
 
-#: optimize.c:625
+#: optimize.c:626
 msgid "invalid parameter type"
 msgstr "参数种类不对"
 
-#: optimize.c:636
+#: optimize.c:637
 msgid "non-positive number of parameters in nlm"
 msgstr "nlm参数不能是负的"
 
-#: optimize.c:638
+#: optimize.c:639
 msgid "nlm is inefficient for 1-d problems"
 msgstr "用nlm来解决一维问题效率不高"
 
-#: optimize.c:640
+#: optimize.c:641
 msgid "invalid gradient tolerance in nlm"
 msgstr "nlm里的梯度容错不对"
 
-#: optimize.c:642
+#: optimize.c:643
 msgid "invalid iteration limit in nlm"
 msgstr "nlm里的迭代极限不对"
 
-#: optimize.c:644
+#: optimize.c:645
 msgid "minimization function has no good digits in nlm"
 msgstr "nlm最小化函数找不到可适用的数字"
 
-#: optimize.c:646
+#: optimize.c:647
 msgid "no analytic gradient to check in nlm!"
 msgstr "nlm里没有可查的分析梯度!"
 
-#: optimize.c:648
+#: optimize.c:649
 msgid "no analytic Hessian to check in nlm!"
 msgstr "nlm里没有可查的分析海森!"
 
-#: optimize.c:650
+#: optimize.c:651
 msgid "probable coding error in analytic gradient"
 msgstr "分析梯度的代码很有可能出错"
 
-#: optimize.c:652
+#: optimize.c:653
 msgid "probable coding error in analytic Hessian"
 msgstr "分析海森的代码很有可能出错"
 
-#: optimize.c:654
+#: optimize.c:655
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
 "*** should not happen!"
 msgstr "*** nlm()产生了不知是什么的错误信息(msg = %d) 。这不应该发生!"
 
-#: optimize.c:665
+#: optimize.c:666
 msgid "Relative gradient close to zero.\n"
 msgstr "相对梯度离零太近.\n"
 
-#: optimize.c:666 optimize.c:670
+#: optimize.c:667 optimize.c:671
 msgid "Current iterate is probably solution.\n"
 msgstr "当前的重复值很可能就已经是答案了.\n"
 
-#: optimize.c:669
+#: optimize.c:670
 msgid "Successive iterates within tolerance.\n"
 msgstr "在容错范围内连续迭代.\n"
 
-#: optimize.c:673
+#: optimize.c:674
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "最后一步的整体优化没有能找到比x值要小的一个点.\n"
 
-#: optimize.c:674
+#: optimize.c:675
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -640,11 +640,11 @@ msgid ""
 msgstr ""
 "要么x已经是函数的本地最小值，要么这个函数非线性太强，要么steptol设得太大。\n"
 
-#: optimize.c:679
+#: optimize.c:680
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "超过了迭代极限。算法失败.\n"
 
-#: optimize.c:682
+#: optimize.c:683
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -657,16 +657,16 @@ msgstr ""
 "从上边界达到了渐近有限值\n"
 "要么是stepmx设得太小。\n"
 
-#: optimize.c:744 optimize.c:749 optimize.c:753 optimize.c:757 optimize.c:761
-#: optimize.c:765 optimize.c:770
+#: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
+#: optimize.c:766 optimize.c:771
 msgid "invalid NA value in parameter"
 msgstr "参数里的NA值不对"
 
-#: optimize.c:801
+#: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "海森的长度不对或其状态不对，因此略过不用"
 
-#: optimize.c:805
+#: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "梯度的长度或其状态不对，因此略过不用"
 
@@ -697,65 +697,65 @@ msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"
 msgid "port algorithms 3 or higher are not supported"
 msgstr ""
 
-#: port.c:312
+#: port.c:313
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "梯度函数必需回覆长度为%d的数字向量"
 
-#: port.c:324
+#: port.c:325
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
 
-#: port.c:379
+#: port.c:380
 msgid "'rho' must be an environment"
 msgstr "'rho'必需是环境"
 
-#: port.c:381 port.c:542
+#: port.c:382 port.c:543
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'必需是非空数字向量"
 
-#: port.c:383
+#: port.c:384
 msgid "When Hessian defined must also have gradient defined"
 msgstr "如果Hessian有定义的话梯度也必需有定义"
 
-#: port.c:386
+#: port.c:387
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "'rho'环境必包含长度为%d的数字向量'.par'"
 
-#: port.c:400
+#: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'和'upper'必需为数字向量"
 
-#: port.c:456
+#: port.c:457
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement'只适用于带名串列"
 
-#: port.c:477
+#: port.c:478
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()不存在"
 
-#: port.c:490
+#: port.c:491
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'必需是一个维数为(%d,%d)的数值矩阵"
 
-#: port.c:511
+#: port.c:512
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该是%d，长度为%d"
 
-#: port.c:524
+#: port.c:525
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store的种类不对"
 
-#: port.c:543
+#: port.c:544
 msgid "m must be a list"
 msgstr "m必需为串列"
 
-#: port.c:563
+#: port.c:564
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
 

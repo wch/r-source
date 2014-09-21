@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -347,9 +347,9 @@ msgstr "Стартовые функции пакета не должны вызывать %s."
 msgid "See section %s in '%s'."
 msgstr "См. раздел %s в '%s'."
 
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 "Функции отсоединения пакета должны иметь один аргумент с именем, "
 "начинающимся с %s."
@@ -376,6 +376,14 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "не объявлен вызов 'library' или 'require' из %s"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "не объявлен вызов 'library' или 'require' из %s"
 
 #, fuzzy
@@ -1566,8 +1574,8 @@ msgstr[2] ""
 
 #~ msgid "This name was used for a base package and is remapped by library()."
 #~ msgstr ""
-#~ "Это имя использовано базовым пакетом и связано заново посредством library"
-#~ "()."
+#~ "Это имя использовано базовым пакетом и связано заново посредством "
+#~ "library()."
 
 #~ msgid "package must be loaded"
 #~ msgstr "должен быть загружен пакет"

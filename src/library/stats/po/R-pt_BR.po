@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -645,6 +645,11 @@ msgstr "elementos de 'k' deve estar entre 1 e %d"
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge' e 'height' não se encaixam!"
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "nó do dendrograma com #{ramos} não-positivos"
 
@@ -701,8 +706,9 @@ msgstr ""
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr ""
-"'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow"
-"(x)'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow(x)"
+"'RowSideColors'  deve ser um vetor de caracteres de comprimento "
+"nrow(x)'RowSideColors'  deve ser um vetor de caracteres de comprimento "
+"nrow(x)"
 
 msgid "non-matched further arguments are disregarded"
 msgstr "outros argumentos não-pareados são ignorados"
@@ -1193,6 +1199,9 @@ msgstr "dendrograma inválida"
 
 msgid "'merge' component in dendrogram must be integer"
 msgstr "componente 'merge' em dendrograma deve ser inteiro"
+
+msgid "'merge' matrix has invalid contents"
+msgstr ""
 
 #, fuzzy
 msgid "argument 'x' cannot be coerced to class %s"

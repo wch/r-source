@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-27 13:33-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -637,6 +637,11 @@ msgstr "'which'의 모든 구성요소들은 반드시 1과 %d 사이에 있어�
 msgid "'merge' and 'height' do not fit!"
 msgstr "'merge'와 'height'가 서로 맞아떨어지지 않습니다!"
 
+msgid ""
+"dendrogram entries must be 1,2,..,%d (in any order), to be coercable to "
+"\"hclust\""
+msgstr ""
+
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "양수가 아닌 #{branches}가 사용된 덴드로그램 노드입니다"
 
@@ -1164,6 +1169,9 @@ msgstr "유효하지 않은 덴드로그램입니다"
 
 msgid "'merge' component in dendrogram must be integer"
 msgstr "덴드로그램에서 'merge'요소는 반드시 정수이어야 합니다"
+
+msgid "'merge' matrix has invalid contents"
+msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr "인수 'x'를 클래스  %s로 강제형변환을 할 수 없습니다"

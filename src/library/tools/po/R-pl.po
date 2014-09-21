@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -819,9 +819,9 @@ msgstr "Zobacz sekcję %s w '%s'."
 
 # tools/R/QC.R: 4857
 # gettextf("Package detach functions should have one arguments with names starting with %s.", sQuote("lib"))
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 "Funkcje odłączające pakiet powinny jeden argument z nazwami rozpoczynającymi "
 "się od %s."
@@ -878,6 +878,19 @@ msgstr "wywołania 'library' lub 'require' nie są zadeklarowane z:"
 # gettextf("'library' or 'require' call not declared from: %s",
 #                        sQuote(xx))
 msgid "'library' or 'require' call not declared from: %s"
+msgstr "wywołanie 'library' lub 'require' nie jest zadeklarowane z: %s"
+
+# tools/R/QC.R: 5379
+# gettext("'library' or 'require' calls not declared from:")
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr "wywołania 'library' lub 'require' nie są zadeklarowane z:"
+
+# tools/R/QC.R: 5382
+# gettextf("'library' or 'require' call not declared from: %s",
+#                        sQuote(xx))
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "wywołanie 'library' lub 'require' nie jest zadeklarowane z: %s"
 
 # tools/R/QC.R: 5389

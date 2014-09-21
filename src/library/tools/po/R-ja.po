@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11\n"
+"POT-Creation-Date: 2014-09-21 07:12\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -346,9 +346,9 @@ msgstr " パッケージのスタートアップ関数は %s を呼び出して�
 msgid "See section %s in '%s'."
 msgstr " セクション %s ('%s' 中) を見てください "
 
+#, fuzzy
 msgid ""
-"Package detach functions should have one arguments with names starting with "
-"%s."
+"Package detach functions should have one argument with name starting with %s."
 msgstr ""
 " パッケージの切り離し関数は %s で始まる名前を持つ一つの引数が必要です。 "
 
@@ -375,6 +375,16 @@ msgstr ""
 " 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
 
 msgid "'library' or 'require' call not declared from: %s"
+msgstr ""
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: %s "
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
+msgstr ""
+" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
+
+#, fuzzy
+msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr ""
 " 'library' もしくは 'requires' による呼出しが以下から宣言されていません: %s "
 
