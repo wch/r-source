@@ -44,7 +44,7 @@ as.dendrogram(object, \dots)
 \method{cut}{dendrogram}(x, h, \dots)
 
 \method{merge}{dendrogram}(x, y, \dots, height,
-      adjust = c("auto", "by.max", "none"))
+      adjust = c("auto", "add.max", "none"))
 
 \method{nobs}{dendrogram}(object, \dots)
 
