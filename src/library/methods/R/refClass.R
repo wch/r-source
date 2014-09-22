@@ -164,10 +164,7 @@ envRefSetField <- function(object, field,
             if(is(fp, "defaultBindingFunction")) {
                 ## ensure an initial value
                 class <- fieldClasses[[field]]
-                if(isVirtualClass(class))
-                    value <- NULL
-                else
-                    value <- new(class)
+		value <- if(!isVirtualClass(class)) new(class) # else NULL
                 assign(.bindingMetaName(field), value, envir = selfEnv)
             }
         }
@@ -201,8 +198,6 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...)
 
 initRefFields <- function(.Object, classDef, selfEnv, args) {
     if(length(args)) {
-        fieldDefs <- classDef@fieldClasses
-        fieldNames <- names(fieldDefs)
         snames <- allNames(args)
         which <- nzchar(snames)
         elements <- args[which]
@@ -428,7 +423,8 @@ makeEnvRefMethods <- function() {
     setClassUnion("refClass", where = envir)
     ## the union of all reference objects
     ## (including those not belonging to refClass)
-    setClassUnion("refObject", c("environment", "externalptr", "name",                                "refClass"), where = envir)
+    setClassUnion("refObject", c("environment", "externalptr", "name", "refClass"),
+		  where = envir)
     ## a class for field methods, with a slot for their dependencies,
     ## allowing installation of all required instance methods
     setClassUnion("SuperClassMethod", "character")
@@ -459,7 +455,8 @@ makeEnvRefMethods <- function() {
     ## NOTE:  "$" method requires setting in methods:::.InitStructureMethods
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
-    setMethod("show", "envRefClass", function(object) object$show())
+    setMethod("show", "envRefClass",
+              function(object) object$show())
     setClass("refGeneratorSlot") # a temporary virtual class to allow the next definition
     ## the refClassGenerator class
     setClass("refObjectGenerator", representation(generator ="refGeneratorSlot"),
@@ -829,13 +826,12 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                     .makeDefaultBinding(thisName, thisField, where = where))
             else
                 fieldPrototypes[[thisName]] <-
-    new("uninitializedField", field = thisName,
+		    new("uninitializedField", field = thisName,
                         className = "ANY")
         }
         else if(is.function(thisField)) {
             fieldClasses[[i]] <- "activeBindingFunction"
-            fieldPrototypes[[thisName]] <-
-                .makeActiveBinding(thisField)
+	    fieldPrototypes[[thisName]] <- .makeActiveBinding(thisField)
         }
         else
             stop(gettextf("field %s was supplied as an object of class %s; must be a class name or a binding function",
