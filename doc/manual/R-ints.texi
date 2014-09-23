@@ -4369,8 +4369,7 @@ to 2^48 on unserialization.
 The type @code{R_xlen_t} is made available to packages in C header
 @file{Rinternals.h}: this should be fine in C code since C99 is
 required.  People do try to use @R{} internals in C++, but C++98
-compilers are not required to support these types (and there are
-currently no C++11 compilers).
+compilers are not required to support these types.
 
 @item
 Indexing can be done via the use of doubles.  The internal indexing code
@@ -4448,9 +4447,9 @@ See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
 @section Large matrices
 
 Matrices are stored as vectors and so were also limited to 2^31-1
-elements.  Now longer vectors are allowed, matrices with more elements
-are supported provided that each of the dimensions is no more than
-2^31-1.  However, not all applications can be supported.
+elements.  Now longer vectors are allowed on 64-bit platforms, matrices
+with more elements are supported provided that each of the dimensions is
+no more than 2^31-1.  However, not all applications can be supported.
 
 The main problem is linear algebra done by FORTRAN code compiled
 with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
