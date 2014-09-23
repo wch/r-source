@@ -94,3 +94,9 @@ static R_INLINE SEXP R_allocOrReuseVector(SEXP s1, SEXP s2,
 
     return allocVector(type, n);
 }
+
+#ifdef HAVE_TANPI
+// we document that tanpi(0.5) is NaN, but the draft C11 extension
+// does not require this and the Solaris version gives Inf.
+double Rtanpi(double);
+#endif
