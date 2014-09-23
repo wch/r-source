@@ -72,13 +72,13 @@
     assign(".checkRequiredGenerics", ..checkRequiredGenerics, envir = where)
     assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
     rm(..isPrototype, .isSealedMethod, ..requirePackage, .implicitGeneric,
-       ..checkRequiredGenerics, ..methodPackageSlots, envir = where)
+       ..checkRequiredGenerics, ..methodPackageSlots, .envRefMethods, envir = where)
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", where)
     assign(".saveImage", TRUE, envir = where)
     cat(" done\n")
 
-    assign(".envRefMethods",
+    assign("envRefMethodNames",
 	   ls(getClassDef("envRefClass")@refMethods, all.names = TRUE),
 	   envir = where)
     assign(".onLoad", ..onLoad, envir = where)
@@ -100,6 +100,8 @@
     where <- environment(sys.function())  # the namespace
     initMethodDispatch(where)
     .Call(C_R_set_method_dispatch, TRUE)
+    ## initialize generics cache more thoroughly:
+    setPrimitiveMethods("$", `$`, code="reset", generic = getGeneric("$"), mlist = NULL)
     assign(".methodsNamespace", where, where)
     ## assign to baseenv also, signalling methods loaded
     assign(".methodsNamespace", where, baseenv())

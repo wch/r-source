@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-09-20 r66650) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-09-22 r66656) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -20,6 +20,10 @@ Type 'q()' to quit R.
 > require(methods)
 > assertError <- tools::assertError # "import"
 > ##too fragile: showMethods(where = "package:methods")
+> 
+> ## Needs cached primitive generic for '$'
+> new("envRefClass")# failed in R <= 3.2.0
+Reference class object of class "envRefClass"
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
 > setClass("test1", representation(date="POSIXct"))
