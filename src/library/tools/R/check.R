@@ -107,9 +107,19 @@ setRlibs <-
         }
     }
 
+    sug <- if (suggests)  names(pi$Suggests)
+    else {
+        ## we always need to be able to recognise 'vignettes'
+        VB <- unname(pi$DESCRIPTION["VignetteBuilder"])
+        if(is.na(VB)) character()
+        else {
+            VB <- unlist(strsplit(VB, ","))
+            unique(gsub('[[:space:]]', '', VB))
+        }
+    }
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
                      if(LinkingTo) names(pi$LinkingTo),
-                     if(suggests) names(pi$Suggests)))
+                     sug))
     if(length(libdir) && self2) flink(file.path(libdir, thispkg), tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
