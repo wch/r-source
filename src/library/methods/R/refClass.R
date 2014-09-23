@@ -369,16 +369,20 @@ that class itself, but then you could just overrwite the object).
          untrace = function(..., classMethod = FALSE) {
              ' Untrace the method given as the first argument.
 '
-             .TraceWithMethods(..., untrace = TRUE,  where = .self, classMethod = classMethod)
+             .TraceWithMethods(..., untrace=TRUE, where = .self, classMethod=classMethod)
          },
          show = function() {
-             cat('Reference class object of class ', classLabel(class(.self)),
-        '\n', sep = "")
-             fields <- names(.refClassDef@fieldClasses)
-             for(fi in fields) {
-                 cat('Field "', fi, '":\n', sep = "")
-                 methods::show(field(fi))
-             }
+	     if(is.null(cl <- tryCatch(class(.self), error=function(e)NULL))) {
+		 cat('Prototypical reference class object\n')
+	     } else {
+		 cat('Reference class object of class ', classLabel(cl), '\n',
+		     sep = "")
+		 fields <- names(.refClassDef@fieldClasses)
+		 for(fi in fields) {
+		     cat('Field "', fi, '":\n', sep = "")
+		     methods::show(field(fi))
+		 }
+	     }
          },
          usingMethods = function(...) {
              ' Reference methods used by this method are named as the arguments
