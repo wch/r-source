@@ -511,5 +511,12 @@ stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
 ## was wrong in R <= 3.1.1
 
 
+## envRefClass prototypes are a bit special
+rc <- getClass("refClass")
+rp <- rc@prototype
+str(rp)
+## failed in R <= 3.2.0
+
+
 
 proc.time()

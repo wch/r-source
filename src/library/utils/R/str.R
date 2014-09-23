@@ -210,30 +210,24 @@ str.default <-
 	cat(" NULL\n")
     else if(S4) {
 	if(isRef <- is(object,"envRefClass")) {
-	    cld <- object$getClass()
+	    cld <- tryCatch(object$getClass(), error=function(e)e)
+	    if(inherits(cld, "error")) {
+		cat("Incomplete reference class", " '", paste(cl, collapse = "', '"),
+		    "' [package \"", attr(cl,"package"), "\"]\n", sep="")
+		## add a bit more info ??
+		return(invisible())
+	    }
 	    nFlds <- names(cld@fieldClasses)
-	    a <- sapply(nFlds, function(ch) object[[ch]],
-			simplify = FALSE)
-	    meths <- ls(cld@refMethods, all.names = TRUE)
-	    oMeths <- meths[is.na(match(meths, methods:::.envRefMethods))]
-	    sNms <- names(cld@slots)
-	    if(length(sNms <- sNms[sNms != ".xData"]))
-		sls <- sapply(sNms, methods::slot,
-			      object=object, simplify = FALSE)
+	    a <- sapply(nFlds, function(ch) object[[ch]], simplify = FALSE)
 	    cat("Reference class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
                 n.of(length(a), "field"), "\n", sep = "")
-	} else {
-	    a <- sapply(methods::.slotNames(object), methods::slot,
-			object=object, simplify = FALSE)
-	    cat("Formal class", " '", paste(cl, collapse = "', '"),
-		"' [package \"", attr(cl,"package"), "\"] with ",
-		n.of(length(a), "slot"), "\n", sep = "")
-	}
-	if(isRef) {
 	    strSub(a, no.list=TRUE, give.length=give.length,
 		   nest.lev = nest.lev + 1)
+	    meths <- ls(cld@refMethods, all.names = TRUE)
+	    oMeths <- meths[is.na(match(meths, methods:::envRefMethodNames))]
 	    cat(indent.str, "and ", n.of(length(meths), "method"), sep = "")
+	    sNms <- names(cld@slots)
 	    if(lo <- length(oMeths)) {
 		cat(", of which", lo, ngettext(lo, "is", "are"), " possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
@@ -244,14 +238,21 @@ str.default <-
 			sep = "\n")
 		else cat("\n")
 	    }
-	    if(length(sNms)) {
+	    if(length(sNms <- sNms[sNms != ".xData"])) {
+		sls <- sapply(sNms, methods::slot,
+			      object=object, simplify = FALSE)
 		cat(" and ", n.of(length(sNms), "slot"), "\n", sep="")
 		strSub(sls, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		       indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	    }
 	    else if(lo == 0) cat(".\n")
 	}
-	else { ## S4
+	else { ## S4 non-envRefClass
+	    a <- sapply(methods::.slotNames(object), methods::slot,
+			object=object, simplify = FALSE)
+	    cat("Formal class", " '", paste(cl, collapse = "', '"),
+		"' [package \"", attr(cl,"package"), "\"] with ",
+		n.of(length(a), "slot"), "\n", sep = "")
 	    strSub(a, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		   indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	}
