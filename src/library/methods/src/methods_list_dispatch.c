@@ -328,7 +328,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 	}
 	ptr = strcpy(ptr, "#"); ptr +=1;
 	ptr = strcpy(ptr, "missing"); ptr += strlen("missing");
-    }	    
+    }
     value = findVarInFrame(mtable, install(buf));
     if(value == R_UnboundValue)
 	value = R_NilValue;
@@ -647,6 +647,7 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist)
 {
     return R_set_prim_method(fname, op, code_vec, fundef, mlist);
+    // -> ../../../main/objects.c
 }
 
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
@@ -770,7 +771,7 @@ static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
 	if(thisPkg == R_NilValue)
 	    thisPkg = s_base;
 	lwidth += strlen(STRING_VALUE(thisPkg)) + 1;
-    }	
+    }
     /* make the label */
     const void *vmax = vmaxget();
     buf = (char *) R_alloc(lwidth + 1, sizeof(char));
@@ -882,7 +883,7 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
     } else /* assumes a class def, but might check */
 	return class;
 }
-	
+
 
 static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 {
@@ -937,7 +938,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
     static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength, R_dots;
     int nprotect = 0;
-    SEXP mtable, classes, thisClass = R_NilValue /* -Wall */, sigargs, 
+    SEXP mtable, classes, thisClass = R_NilValue /* -Wall */, sigargs,
 	siglength, f_env = R_NilValue, method, f, val = R_NilValue;
     char *buf, *bufptr;
     int nargs, i, lwidth = 0;
