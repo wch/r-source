@@ -148,14 +148,26 @@ all.equal.character <-
 
 ## In 'base' these are all visible, so need to test both args:
 
-all.equal.envRefClass <- function (target, current, all.names=NA, ...) {
+all.equal.envRefClass <- function (target, current, ...) {
     if(!is (target, "envRefClass")) return("'target' is not an envRefClass")
     if(!is(current, "envRefClass")) return("'current' is not an envRefClass")
-    if(!isTRUE(ae <- all.equal(class(target), class(current), ...)) ||
-       !identical(cld <- target$getClass(), current$getClass()))
-	return(sprintf("Classes differ%s",
-		       if(!isTRUE(ae)) paste(":", ae, collapse=" ")else ""))
-    flds <- names(cld@fieldClasses)
+    if(!isTRUE(ae <- all.equal(class(target), class(current), ...)))
+	return(sprintf("Classes differ: %s", paste(ae, collapse=" ")))
+    getCl <- function(x) { cl <- tryCatch(x$getClass(), error=function(e) NULL)
+			   if(is.null(cl)) class(x) else cl }
+    if(!identical(cld <- getCl(target), c2 <- getCl(current))) {
+	hasCA <- any("check.attributes" == names(list(...)))
+	ae <-
+	    if(hasCA) all.equal(cld, c2, ...)
+	    else all.equal(cld, c2, check.attributes=FALSE, ...)
+        if(isTRUE(ae) && !hasCA) ae <- all.equal(cld, c2, ...)
+	return(sprintf("Class definitions are not identical%s",
+		       if(isTRUE(ae)) "" else paste(":", ae, collapse=" ")))
+    }
+    if(!isS4(cld)) ## prototype / incomplete
+	return(if(identical(target, current)) TRUE
+	       else "different prototypical 'envRefClass' objects")
+    flds <- names(cld@fieldClasses) ## else NULL
     asL <- function(O) sapply(flds, function(ch) O[[ch]], simplify = FALSE)
     ## ## ?setRefClass explicitly says users should not use ".<foo>" fields:
     ## if(is.na(all.names)) all.names <- FALSE

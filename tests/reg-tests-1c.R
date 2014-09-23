@@ -511,12 +511,20 @@ stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
 ## was wrong in R <= 3.1.1
 
 
-## envRefClass prototypes are a bit special
+## envRefClass prototypes are a bit special -- broke all.equal() for baseenv()
 rc <- getClass("refClass")
 rp <- rc@prototype
-str(rp)
-## failed in R <= 3.2.0
-
+str(rp) ## failed
+rp ## show() failed ..
+(ner <- new("envRefClass")) # show() failed
+stopifnot(all.equal(rp,rp), all.equal(ner,ner))
+be <- baseenv()
+system.time(stopifnot(all.equal(be,be)))## <- takes a few sec's
+stopifnot(
+    grepl("not identical.*character", print(all.equal(rp, ner))),
+    grepl("not identical.*character", print(all.equal(ner, rp))))
+system.time(stopifnot(all.equal(globalenv(), globalenv())))
+## Much of the above failed in  R <= 3.2.0
 
 
 proc.time()
