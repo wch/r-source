@@ -277,6 +277,16 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item Running \command{R CMD check} when run with
+      \env{_R_CHECK_DEPENDS_ONLY_} true now makes the
+      \samp{VignetteBuilder} packages available even if they are
+      listed in \samp{Suggests}, since they are needed to recognise and
+      process non-Sweave vignettes. 
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
