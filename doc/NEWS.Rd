@@ -286,10 +286,10 @@
       \env{_R_CHECK_DEPENDS_ONLY_} true now makes the
       \samp{VignetteBuilder} packages available even if they are
       listed in \samp{Suggests}, since they are needed to recognise and
-      process non-Sweave vignettes. 
+      process non-Sweave vignettes.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{dmultinom()} did not handle non-finite probabilities
@@ -362,9 +362,12 @@
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
       failed to run.  (\PR{15981})
-      
-      \item Various possible buffer overruns have been prevented, 
+
+      \item Various possible buffer overruns have been prevented,
       and missed memory protection added. (\PR{15990})
+
+      \item \command{Rscript} no longer passes \code{--args} to
+      \command{R} when there are no extra (\dQuote{user}) arguments.
     }
   }
 }

@@ -226,8 +226,13 @@ int main(int argc, char *argv[])
 	snprintf(buf, PATH_MAX+8, "--file=%s", argv[i0]);
 	av[ac++] = buf;
     }
-    av[ac++] = "--args";
-    for(i = i0+1; i < argc; i++) av[ac++] = argv[i];
+    // copy any user arguments, preceded by "--args"
+    i = i0+1;
+    if (i < argc) {
+	av[ac++] = "--args";
+	for(; i < argc; i++)
+	    av[ac++] = argv[i];
+    }
     av[ac] = (char *) NULL;
 #ifdef HAVE_PUTENV
     if(!set_dp && !getenv("R_DEFAULT_PACKAGES"))
