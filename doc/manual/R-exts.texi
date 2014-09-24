@@ -484,7 +484,7 @@ be found.  These @acronym{URL}s are converted to active hyperlinks in
 @c DESCRIPTION field BugReports
 The @samp{BugReports} field may contain a single
 @acronym{URL} to which bug reports about the package should be
-submitted.  This @acronym{URL} will be used by @code{bug.reports}
+submitted.  This @acronym{URL} will be used by @code{bug.report}
 instead of sending an email to the maintainer.
 
 @c DESCRIPTION field Priority
