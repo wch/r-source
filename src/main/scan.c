@@ -1002,9 +1002,11 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(prompt);
     } else {
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
-	if(length(prompt) > 0)
+	if(length(prompt) > 0) {
 	    strncpy(ConsolePrompt, translateChar(STRING_ELT(prompt, 0)),
 		    CONSOLE_PROMPT_SIZE - 1);
+            ConsolePrompt[CONSOLE_PROMPT_SIZE - 1] = '\0';
+        }
     }
 
     if(R_Interactive) {

@@ -526,5 +526,11 @@ stopifnot(
 system.time(stopifnot(all.equal(globalenv(), globalenv())))
 ## Much of the above failed in  R <= 3.2.0
 
+## while did not protect its argument, which caused an error
+## under gctorture, PR#15990
+gctorture()
+suppressWarnings(while(c(FALSE, TRUE)) 1)
+gctorture(FALSE)
+## gave an error because the test got released when the warning was generated.
 
 proc.time()

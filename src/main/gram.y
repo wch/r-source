@@ -1926,15 +1926,20 @@ static void yyerror(const char *s)
                         sprintf(R_ParseErrorMsg, _("unexpected end of line"));
                                 break;
                 default:
-                sprintf(R_ParseErrorMsg, _("unexpected %s"), yytname_translations[i+1]);
+                  snprintf(R_ParseErrorMsg, _("unexpected %s"),
+                           yytname_translations[i+1], PARSE_ERROR_SIZE);
                                 break;
                 }
+                
 		return;
 	    }
 	}
-	sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1);
+	snprintf(R_ParseErrorMsg, _("unexpected %s"),
+                 s + sizeof yyunexpected - 1,
+                 PARSE_ERROR_SIZE - 1);
     } else {
 	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
+        R_ParseErrorMsg[PARSE_ERROR_SIZE - 1] = '\0';
     }
 }
 

@@ -362,6 +362,9 @@
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
       failed to run.  (\PR{15981})
+      
+      \item Various possible buffer overruns have been prevented, 
+      and missed memory protection added. (\PR{15990})
     }
   }
 }
