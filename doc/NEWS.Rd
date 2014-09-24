@@ -282,7 +282,7 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item Running \command{R CMD check} when run with
+      \item Running \command{R CMD check} with
       \env{_R_CHECK_DEPENDS_ONLY_} true now makes the
       \samp{VignetteBuilder} packages available even if they are
       listed in \samp{Suggests}, since they are needed to recognise and
