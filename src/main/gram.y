@@ -1902,41 +1902,40 @@ static void yyerror(const char *s)
                 switch(i/2)
                 {
                 case 0:
-                        sprintf(R_ParseErrorMsg, _("unexpected input"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected input"));
                                 break;
                 case 1:
-                        sprintf(R_ParseErrorMsg, _("unexpected end of input"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected end of input"));
                                 break;
                 case 2:
-                        sprintf(R_ParseErrorMsg, _("unexpected input"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected input"));
                                 break;
                 case 3:
-                        sprintf(R_ParseErrorMsg, _("unexpected string constant"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected string constant"));
                                 break;
                 case 4:
-                        sprintf(R_ParseErrorMsg, _("unexpected numeric constant"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected numeric constant"));
                                 break;
                 case 5:
-                        sprintf(R_ParseErrorMsg, _("unexpected symbol"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected symbol"));
                                 break;
                 case 6:
-                        sprintf(R_ParseErrorMsg, _("unexpected assignment"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected assignment"));
                                 break;
                 case 7:
-                        sprintf(R_ParseErrorMsg, _("unexpected end of line"));
+                        snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected end of line"));
                                 break;
                 default:
-                  snprintf(R_ParseErrorMsg, _("unexpected %s"),
-                           yytname_translations[i+1], PARSE_ERROR_SIZE);
+                  snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected %s"),
+                           yytname_translations[i+1]);
                                 break;
                 }
                 
 		return;
 	    }
 	}
-	snprintf(R_ParseErrorMsg, _("unexpected %s"),
-                 s + sizeof yyunexpected - 1,
-                 PARSE_ERROR_SIZE - 1);
+	snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE - 1, _("unexpected %s"),
+                 s + sizeof yyunexpected - 1);
     } else {
 	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
         R_ParseErrorMsg[PARSE_ERROR_SIZE - 1] = '\0';
