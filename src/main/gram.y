@@ -1912,12 +1912,15 @@ static void yyerror(const char *s)
 		sprintf(R_ParseErrorMsg, _("unexpected %s"),
 		    i/2 < YYENGLISH ? _(yytname_translations[i+1])
 				    : yytname_translations[i+1]);
+                
 		return;
 	    }
 	}
-	sprintf(R_ParseErrorMsg, _("unexpected %s"), s + sizeof yyunexpected - 1);
+	snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE - 1, _("unexpected %s"),
+                 s + sizeof yyunexpected - 1);
     } else {
 	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
+        R_ParseErrorMsg[PARSE_ERROR_SIZE - 1] = '\0';
     }
 }
 

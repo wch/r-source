@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013	The R Core Team.
+ *  Copyright (C) 1998--2014	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1304,9 +1304,12 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = NA_LOGICAL;
 
-    if (length(s) > 1)
+    if (length(s) > 1) {
+    	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
 	warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
+	UNPROTECT(1);
+    }
     if (length(s) > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {
@@ -1326,7 +1329,9 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 				 _("missing value where TRUE/FALSE needed") :
 				 _("argument is not interpretable as logical")) :
 	    _("argument is of length zero");
+	PROTECT(s);	/* Maybe needed in some weird circumstance. */
 	errorcall(call, msg);
+	UNPROTECT(1);
     }
     return cond;
 }
@@ -1554,7 +1559,7 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
+        while (asLogicalNoNA(eval(CAR(args), rho), call)) {
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
 		SrcrefPrompt("debug", R_Srcref);
 		PrintValue(body);
