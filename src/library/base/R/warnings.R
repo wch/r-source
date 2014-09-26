@@ -26,6 +26,11 @@ warnings <- function(...)
 
 `[.warnings` <- function(x, ...)
     structure(NextMethod("["), class="warnings")
+c.warnings <- function (..., recursive = FALSE)
+    structure(NextMethod("c"), class = "warnings")
+
+unique.warnings <- function(x, incomparables = FALSE, ...)
+    x[!duplicated(x, incomparables, ...)]
 
 print.warnings <- function(x, ...)
 {
