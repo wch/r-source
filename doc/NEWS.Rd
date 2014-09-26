@@ -205,8 +205,6 @@
 
       \item \code{all.equal()} gets a method for \code{environment}s and
       \code{refClass}es.
-
-      \item \code{identical()} now also looks at the S4 bit.
     }
   }
 }
@@ -370,6 +368,8 @@
 
       \item objects like \code{getClass("refClass")@prototype} now
       \code{print()} and \code{str()} without error.
+
+      \item \code{identical()} now also looks at the S4 bit.
     }
   }
 }
