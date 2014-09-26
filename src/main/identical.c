@@ -42,7 +42,7 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 /* .Internal(identical(..)) */
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1, 
+    int num_eq = 1, single_NA = 1, attr_as_set = 1, ignore_bytecode = 1,
 	ignore_env = 0, nargs = length(args), flags;
     /* avoid problems with earlier (and future) versions captured in S4
        methods: but this should be fixed where it is caused, in
@@ -58,9 +58,9 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
     num_eq = asLogical(CAR(args)); args = CDR(args);
     single_NA = asLogical(CAR(args)); args = CDR(args);
     attr_as_set = asLogical(CAR(args)); args = CDR(args);
-    if (nargs >= 6) 
+    if (nargs >= 6)
 	ignore_bytecode = asLogical(CAR(args));
-    if (nargs >= 7) 
+    if (nargs >= 7)
 	ignore_env = asLogical(CADR(args));
 
     if(num_eq == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
@@ -68,8 +68,8 @@ SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
     if(attr_as_set == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
     if(ignore_bytecode == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.bytecode");
     if(ignore_env == NA_LOGICAL) error(_("invalid '%s' value"), "ignore.environment");
-    
-    flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) + 
+
+    flags = (num_eq ? 0 : 1) + (single_NA ? 0 : 2) + (attr_as_set ? 0 : 4) +
 	(ignore_bytecode ? 0 : 8) + (ignore_env ? 0 : 16);
     return ScalarLogical(R_compute_identical(x, y, flags));
 }
@@ -88,9 +88,9 @@ R_compute_identical(SEXP x, SEXP y, int flags)
     SEXP ax, ay, atrx, atry;
     if(x == y) /* same pointer */
 	return TRUE;
-    if(TYPEOF(x) != TYPEOF(y))
-	return FALSE;
-    if(OBJECT(x) != OBJECT(y))
+    if(TYPEOF(x) != TYPEOF(y) ||
+       OBJECT(x) != OBJECT(y) ||
+       IS_S4_OBJECT(x) != IS_S4_OBJECT(y))
 	return FALSE;
 
     /* Skip attribute checks for CHARSXP

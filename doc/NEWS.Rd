@@ -140,8 +140,8 @@
       \item \code{as.environment(list())} now works, and
       \code{as.list()} of such an environment is now the same as
       \code{list()}.
-            
-      \item Several \pkg{tcltk} functions failed when run in unusual 
+
+      \item Several \pkg{tcltk} functions failed when run in unusual
       environments. (\PR{15970})
 
       \item \code{options(list())} now works (trivially). (\PR{15979})
@@ -167,6 +167,8 @@
 
       \item objects like \code{getClass("refClass")@prototype} now
       \code{print()} and \code{str()} without error.
+
+      \item \code{identical()} now also looks at the S4 bit.
     }
   }
 }
