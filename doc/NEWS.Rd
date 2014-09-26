@@ -207,9 +207,6 @@
       \code{refClass}es.
 
       \item \code{identical()} now also looks at the S4 bit.
-
-      \item objects like \code{getClass("refClass")@prototype} now
-      \code{print()} and \code{str()} without error.
     }
   }
 }
@@ -370,6 +367,9 @@
 
       \item \command{Rscript} no longer passes \code{--args} to
       \command{R} when there are no extra (\dQuote{user}) arguments.
+
+      \item objects like \code{getClass("refClass")@prototype} now
+      \code{print()} and \code{str()} without error.
     }
   }
 }
