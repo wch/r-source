@@ -2410,6 +2410,20 @@ setRlibs <-
             any <- any || bad
             if (!any) resultLog(Log, "OK")
 
+            if (do_timings) {
+                tfile <- paste0(pkgname, "-Ex.timings")
+		times <- read.table(tfile, header = TRUE, row.names = 1L,
+				    colClasses = c("character", rep("numeric", 3)))
+                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
+                times <- times[o, ]
+                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
+                if(any(keep)) {
+                    printLog(Log, "Examples with CPU or elapsed time > 5s\n")
+                    times <- capture.output(format(times[keep, ]))
+                    printLog0(Log, paste(times, collapse = "\n"), "\n")
+                }
+            }
+
             ## Try to compare results from running the examples to
             ## a saved previous version.
             exsave <- file.path(pkgdir, "tests", "Examples",
@@ -2425,19 +2439,7 @@ setRlibs <-
                 if(length(out))
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
             }
-            if (do_timings) {
-                tfile <- paste0(pkgname, "-Ex.timings")
-		times <- read.table(tfile, header = TRUE, row.names = 1L,
-				    colClasses = c("character", rep("numeric", 3)))
-                o <- order(times[[1]]+times[[2]], decreasing = TRUE)
-                times <- times[o, ]
-                keep <- (times[[1]] + times[[2]] > 5) | (times[[3]] > 5)
-                if(any(keep)) {
-                    printLog(Log, "Examples with CPU or elapsed time > 5s\n")
-                    times <- capture.output(format(times[keep, ]))
-                    printLog0(Log, paste(times, collapse = "\n"), "\n")
-                }
-            }
+
             TRUE
         }
 
