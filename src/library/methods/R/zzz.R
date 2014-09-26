@@ -78,6 +78,9 @@
     assign(".saveImage", TRUE, envir = where)
     cat(" done\n")
 
+    assign("envRefMethodNames",
+	   ls(getClassDef("envRefClass")@refMethods, all.names = TRUE),
+	   envir = where)
     assign(".onLoad", ..onLoad, envir = where)
     rm(...onLoad, ..onLoad, envir = where)
     dbbase <- file.path(libname, pkgname, "R", pkgname)
@@ -97,6 +100,8 @@
     where <- environment(sys.function())  # the namespace
     initMethodDispatch(where)
     .Call(C_R_set_method_dispatch, TRUE)
+    ## initialize generics cache more thoroughly:
+    setPrimitiveMethods("$", `$`, code="reset", generic = getGeneric("$"), mlist = NULL)
     assign(".methodsNamespace", where, where)
     ## assign to baseenv also, signalling methods loaded
     assign(".methodsNamespace", where, baseenv())

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -209,7 +209,13 @@ str.default <-
 	cat(" NULL\n")
     else if(S4) {
 	if(isRef <- is(object,"envRefClass")) {
-	    cld <- object$getClass()
+	    cld <- tryCatch(object$getClass(), error=function(e)e)
+	    if(inherits(cld, "error")) {
+		cat("Prototypical reference class", " '", paste(cl, collapse = "', '"),
+		    "' [package \"", attr(cl,"package"), "\"]\n", sep="")
+		## add a bit more info ??
+		return(invisible())
+	    }
 	    nFlds <- names(cld@fieldClasses)
 	    a <- sapply(nFlds, function(ch) object[[ch]],
 			simplify = FALSE)

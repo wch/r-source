@@ -201,8 +201,6 @@ initFieldArgs <- function(.Object, classDef, selfEnv, ...)
 
 initRefFields <- function(.Object, classDef, selfEnv, args) {
     if(length(args)) {
-        fieldDefs <- classDef@fieldClasses
-        fieldNames <- names(fieldDefs)
         snames <- allNames(args)
         which <- nzchar(snames)
         elements <- args[which]
@@ -377,13 +375,17 @@ that class itself, but then you could just overrwite the object).
              .TraceWithMethods(..., untrace = TRUE,  where = .self, classMethod = classMethod)
          },
          show = function() {
-             cat('Reference class object of class ', classLabel(class(.self)),
-        '\n', sep = "")
-             fields <- names(.refClassDef@fieldClasses)
-             for(fi in fields) {
-                 cat('Field "', fi, '":\n', sep = "")
-                 methods::show(field(fi))
-             }
+	     if(is.null(cl <- tryCatch(class(.self), error=function(e)NULL))) {
+		 cat('Prototypical reference class object\n')
+	     } else {
+		 cat('Reference class object of class ', classLabel(cl), '\n',
+		     sep = "")
+		 fields <- names(.refClassDef@fieldClasses)
+		 for(fi in fields) {
+		     cat('Field "', fi, '":\n', sep = "")
+		     methods::show(field(fi))
+		 }
+	     }
          },
          usingMethods = function(...) {
              ' Reference methods used by this method are named as the arguments
@@ -428,7 +430,8 @@ makeEnvRefMethods <- function() {
     setClassUnion("refClass", where = envir)
     ## the union of all reference objects
     ## (including those not belonging to refClass)
-    setClassUnion("refObject", c("environment", "externalptr", "name",                                "refClass"), where = envir)
+    setClassUnion("refObject", c("environment", "externalptr", "name", "refClass"),
+		  where = envir)
     ## a class for field methods, with a slot for their dependencies,
     ## allowing installation of all required instance methods
     setClassUnion("SuperClassMethod", "character")
@@ -459,7 +462,8 @@ makeEnvRefMethods <- function() {
     ## NOTE:  "$" method requires setting in methods:::.InitStructureMethods
     setMethod("$", "envRefClass", .dollarForEnvRefClass, where = envir)
     setMethod("$<-", "envRefClass", .dollarGetsForEnvRefClass, where = envir)
-    setMethod("show", "envRefClass", function(object) object$show())
+    setMethod("show", "envRefClass",
+              function(object) object$show())
     setClass("refGeneratorSlot") # a temporary virtual class to allow the next definition
     ## the refClassGenerator class
     setClass("refObjectGenerator", representation(generator ="refGeneratorSlot"),
@@ -672,13 +676,11 @@ class method modifies a field.
     }
     Call <- paste0("$", name, "(")
     for (i in seq_len(n)) {
-        Call <- paste0(Call, arg.names[i], if (noDeflt[[i]]) " = "
-            )
+        Call <- paste0(Call, arg.names[i], if (noDeflt[[i]]) " = ")
         if (i != n)
             Call <- paste0(Call, ", ")
     }
-    Call <- paste0(Call, ")\n")
-    Call
+    paste0(Call, ")\n")
 }
 
 
@@ -831,7 +833,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                     .makeDefaultBinding(thisName, thisField, where = where))
             else
                 fieldPrototypes[[thisName]] <-
-    new("uninitializedField", field = thisName,
+		    new("uninitializedField", field = thisName,
                         className = "ANY")
         }
         else if(is.function(thisField)) {
