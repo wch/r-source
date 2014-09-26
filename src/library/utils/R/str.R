@@ -212,7 +212,7 @@ str.default <-
 	if(isRef <- is(object,"envRefClass")) {
 	    cld <- tryCatch(object$getClass(), error=function(e)e)
 	    if(inherits(cld, "error")) {
-		cat("Incomplete reference class", " '", paste(cl, collapse = "', '"),
+		cat("Prototypical reference class", " '", paste(cl, collapse = "', '"),
 		    "' [package \"", attr(cl,"package"), "\"]\n", sep="")
 		## add a bit more info ??
 		return(invisible())
