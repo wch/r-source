@@ -91,7 +91,7 @@ as.hclust.dendrogram <- function(x, ...)
     iOrd <- sort.list(ord)
     if(!identical(ord[iOrd], seq_len(n)))
 	stop(gettextf(
-	    "dendrogram entries must be 1,2,..,%d (in any order), to be coercable to \"hclust\"",
+	    "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to \"hclust\"",
 	    n), domain=NA)
     stopifnot(n == attr(x, "members"))
     n.h <- n - 1L
