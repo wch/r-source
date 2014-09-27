@@ -1480,6 +1480,61 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 
 /*----------------------------------------------------------------------
 
+  addMissingVarsToNewEnv
+
+  Add given variables (addVars - list) to given environment (env) unless
+  they are already there.  Env is a "new" environment, created by
+  NewEnvironment, as in applyClosure (so it list-based).  Slots for vars are
+  re-used.  The addVars list itself can have duplicit variables.
+
+  The implementation is performance optimized towards the common case that
+  the variables from addVars are not present in env and that addVars does
+  not have duplicit variables.
+*/
+
+attribute_hidden
+void addMissingVarsToNewEnv(SEXP env, SEXP addVars)
+{
+    if (addVars == R_NilValue) return;
+
+    /* temporary sanity check */
+    if (TYPEOF(addVars) == ENVSXP)
+	error("additional variables should now be passed as a list, "
+	      "not in an environment");
+
+    /* append variables from env after addVars */
+    SEXP aprev = addVars;
+    SEXP a = CDR(addVars);
+    while (a != R_NilValue) {
+        aprev = a;
+        a = CDR(a);
+    }
+    SETCDR(aprev, FRAME(env));
+    SET_FRAME(env, addVars);
+
+    /* remove duplicates - a variable listed later has precedence over a
+       variable listed sooner */
+    SEXP end;
+    for(end = CDR(addVars); end != R_NilValue; end = CDR(end)) {
+        SEXP endTag = TAG(end);
+        SEXP sprev = R_NilValue;
+        SEXP s;
+        for(s = addVars; s != end; s = CDR(s)) {
+            if (TAG(s) == endTag) {
+                /* remove variable s from the list, because it is overriden by "end" */
+                if (sprev == R_NilValue) {
+                    addVars = CDR(s);
+                    SET_FRAME(env, addVars);
+                } else
+                    SETCDR(sprev, CDR(s));
+            } else
+                sprev = s;
+        }
+    }
+}
+
+/*----------------------------------------------------------------------
+
   setVarInFrame
 
   Assign a new value to an existing symbol in a frame.

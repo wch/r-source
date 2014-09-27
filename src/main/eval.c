@@ -671,7 +671,7 @@ SEXP eval(SEXP e, SEXP rho)
 	}
 	else if (TYPEOF(op) == CLOSXP) {
 	    PROTECT(tmp = promiseArgs(CDR(e), rho));
-	    tmp = applyClosure(e, op, tmp, rho, R_BaseEnv);
+	    tmp = applyClosure(e, op, tmp, rho, R_NilValue);
 	    UNPROTECT(1);
 	}
 	else
@@ -862,7 +862,7 @@ static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
 	return R_NilValue;
 }
 
-SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
+SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 {
     SEXP formals, actuals, savedrho;
     volatile SEXP body, newrho;
@@ -936,25 +936,16 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	a = CDR(a);
     }
 
+    /*  Fix up any extras that were supplied by usemethod. */
+
+    if (suppliedvars != R_NilValue)
+        addMissingVarsToNewEnv(newrho, suppliedvars);
+
     if (R_envHasNoSpecialSymbols(newrho))
 	SET_NO_SPECIAL_SYMBOLS(newrho);
 
-    /*  Fix up any extras that were supplied by usemethod. */
-
-    if (suppliedenv != R_NilValue) {
-	for (tmp = FRAME(suppliedenv); tmp != R_NilValue; tmp = CDR(tmp)) {
-	    for (a = actuals; a != R_NilValue; a = CDR(a))
-		if (TAG(a) == TAG(tmp))
-		    break;
-	    if (a == R_NilValue)
-		/* Use defineVar instead of earlier version that added
-		   bindings manually */
-		defineVar(TAG(tmp), CAR(tmp), newrho);
-	}
-    }
-
     /*  Terminate the previous context and start a new one with the
-	correct environment. */
+        correct environment. */
 
     endcontext(&cntxt);
 
@@ -2470,7 +2461,7 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
     if (TYPEOF(s) != CLOSXP)
 	error(_("'Recall' called from outside a closure"));
-    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_BaseEnv);
+    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
     UNPROTECT(1);
     return ans;
 }
@@ -2732,7 +2723,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
 {
     int i, nargs, lwhich, rwhich;
-    SEXP lclass, s, t, m, lmeth, lsxp, lgr, newrho;
+    SEXP lclass, s, t, m, lmeth, lsxp, lgr, newvars;
     SEXP rclass, rmeth, rgr, rsxp, value;
     char *generic;
     Rboolean useS4 = TRUE, isOps = FALSE;
@@ -2840,7 +2831,6 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     /* we either have a group method or a class method */
 
-    PROTECT(newrho = allocSExp(ENVSXP));
     PROTECT(m = allocVector(STRSXP,nargs));
     const void *vmax = vmaxget();
     s = args;
@@ -2855,13 +2845,14 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     }
     vmaxset(vmax);
 
-    defineVar(R_dot_Method, m, newrho);
-    UNPROTECT(1);
-    defineVar(R_dot_Generic, mkString(generic), newrho);
-    defineVar(R_dot_Group, lgr, newrho);
-    defineVar(R_dot_Class, stringSuffix(lclass, lwhich), newrho);
-    defineVar(R_dot_GenericCallEnv, rho, newrho);
-    defineVar(R_dot_GenericDefEnv, R_BaseEnv, newrho);
+    newvars = PROTECT(createS3Vars(
+        PROTECT(mkString(generic)),
+        lgr,
+        PROTECT(stringSuffix(lclass, lwhich)),
+        m,
+        rho,
+        R_BaseEnv
+    ));
 
     PROTECT(t = LCONS(lmeth, CDR(call)));
 
@@ -2878,8 +2869,8 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if(isOps) SET_TAG(m, R_NilValue);
     }
 
-    *ans = applyClosure(t, lsxp, s, rho, newrho);
-    UNPROTECT(5);
+    *ans = applyClosure(t, lsxp, s, rho, newvars);
+    UNPROTECT(8);
     return 1;
 }
 
@@ -5173,7 +5164,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case CLOSXP:
-	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
+	  value = applyClosure(call, fun, args, rho, R_NilValue);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -5516,7 +5507,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = CALL_FRAME_ARGS();
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
+	  value = applyClosure(call, fun, args, rho, R_NilValue);
 	  break;
 	default: error(_("bad function"));
 	}
@@ -5556,7 +5547,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  args = CALL_FRAME_ARGS();
 	  SETCAR(args, prom);
 	  /* make the call */
-	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
+	  value = applyClosure(call, fun, args, rho, R_NilValue);
 	  break;
 	default: error(_("bad function"));
 	}

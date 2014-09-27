@@ -807,6 +807,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define ComplexFromReal	Rf_ComplexFromReal
 # define ComplexFromString	Rf_ComplexFromString
 # define copyMostAttribNoTs	Rf_copyMostAttribNoTs
+# define createS3Vars		Rf_createS3Vars
 # define currentTime		Rf_currentTime
 # define CustomPrintValue	Rf_CustomPrintValue
 # define DataFrameClass		Rf_DataFrameClass
@@ -1011,6 +1012,7 @@ void R_check_locale(void);
 void check_stack_balance(SEXP op, int save);
 void CleanEd(void);
 void copyMostAttribNoTs(SEXP, SEXP);
+SEXP createS3Vars(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 void CustomPrintValue(SEXP, SEXP);
 double currentTime(void);
 void DataFrameClass(SEXP);
