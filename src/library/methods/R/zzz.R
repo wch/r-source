@@ -49,7 +49,10 @@
     .makeBasicFuns(where)
     rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
        ..mergeClassDefSlots, .classGeneratorFunction, ..classEnv,
-       ..addToMetaTable, ..extendsForS3, envir = where)
+       ..addToMetaTable, ..extendsForS3,
+       .InitClassDefinition, .InitBasicClasses, .initClassSupport,
+       .InitMethodsListClass, .setCoerceGeneric, .makeBasicFuns,
+       envir = where)
     .InitMethodDefinitions(where)
     .InitShowMethods(where)
     assign(".isPrototype", ..isPrototype, envir = where)
@@ -72,7 +75,11 @@
     assign(".checkRequiredGenerics", ..checkRequiredGenerics, envir = where)
     assign(".methodPackageSlots", ..methodPackageSlots, envir = where)
     rm(..isPrototype, .isSealedMethod, ..requirePackage, .implicitGeneric,
-       ..checkRequiredGenerics, ..methodPackageSlots, .envRefMethods, envir = where)
+       ..checkRequiredGenerics, ..methodPackageSlots, .envRefMethods,
+       .InitMethodDefinitions, .InitShowMethods, .InitClassUnion,
+       .InitS3Classes, .InitSpecialTypesAndClasses, .InitTraceFunctions,
+       .InitRefClasses, .initImplicitGenerics,
+       envir = where)
     ## unlock some bindings that must be modifiable
     unlockBinding(".BasicFunsList", where)
     assign(".saveImage", TRUE, envir = where)

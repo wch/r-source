@@ -255,6 +255,7 @@ initRefFields <- function(.Object, classDef, selfEnv, args) {
     invisible(x)
 }
 
+utils::globalVariables(".envRefMethods")# (codetools analysis)
 .envRefMethods <-
     list(
          export = function(Class) {
