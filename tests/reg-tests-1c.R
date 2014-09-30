@@ -526,11 +526,26 @@ stopifnot(
 system.time(stopifnot(all.equal(globalenv(), globalenv())))
 ## Much of the above failed in  R <= 3.2.0
 
+
 ## while did not protect its argument, which caused an error
 ## under gctorture, PR#15990
 gctorture()
 suppressWarnings(while(c(FALSE, TRUE)) 1)
 gctorture(FALSE)
 ## gave an error because the test got released when the warning was generated.
+
+
+## hist(x, breaks=*) with too large bins, PR#15988
+set.seed(5); x <- runif(99)
+Hist <- function(x, b) hist(x, breaks=b, plot=FALSE)$counts
+for(k in 1:5) {
+    b0 <- seq_len(k-1)/k
+    H.ok <- Hist(x, c(-10, b0, 10))
+    for(In in c(1000, 1e9, Inf))
+	stopifnot(identical(Hist(x, c(-In, b0, In)), H.ok),
+		  identical(Hist(x, c( 0,  b0, In)), H.ok))
+}
+## "wrong" results for k in {2,3,4} in R <= 3.1.1
+
 
 proc.time()

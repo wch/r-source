@@ -249,7 +249,7 @@
       reserved characters from RFC 3986,
       \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
 
-      \item \code{unique(warnings())} now works, as does 
+      \item \code{unique(warnings())} now works, as does
       \code{c(warnings())}.
     }
   }
@@ -371,6 +371,9 @@
       \code{print()} and \code{str()} without error.
 
       \item \code{identical()} now also looks at the S4 bit.
+
+      \item \code{hist(x, breaks)} is more robust in adding small
+      fuzz to few breaks when some are very large. (\PR{15899})
     }
   }
 }

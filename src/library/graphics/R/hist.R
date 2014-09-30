@@ -23,7 +23,7 @@ hist.default <-
 	      probability = !freq, include.lowest= TRUE,
 	      right = TRUE, density = NULL, angle = 45,
 	      col = NULL, border = NULL,
-	      main = paste("Histogram of" , xname),
+	      main = paste("Histogram of", xname),
 	      xlim = range(breaks), ylim = NULL,
 	      xlab = xname, ylab,
 	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL,
@@ -107,18 +107,15 @@ hist.default <-
     ## the boundaries
     ## As one break point could be very much larger than the others,
     ## as from 1.9.1 we no longer use the range. (PR#6931)
-    ## diddle <- 1e-7 * max(abs(range(breaks)))
-    diddle <- 1e-7 * stats::median(diff(breaks))
+    ## diddle <- 1e-7 * max(abs(range(breaks)))  ## NB: h == diff(breaks)
+    diddle <- 1e-7 * if(nB > 5) stats::median(h)
+    ## for few breaks, protect against very large bins:
+		     else if(nB <= 3) diff(range(x)) else min(h[h > 0])
     fuzz <- if(right)
-	c(if(include.lowest) - diddle else diddle,
-          rep.int(diddle, length(breaks) - 1))
+	c(if(include.lowest) -diddle else diddle, rep.int(diddle, nB - 1L))
     else
-	c(rep.int(-diddle, length(breaks) - 1),
-          if(include.lowest) diddle else -diddle)
-
+	c(rep.int(-diddle, nB - 1L), if(include.lowest) diddle else -diddle)
     fuzzybreaks <- breaks + fuzz
-    h <- diff(fuzzybreaks)
-
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are often irrelevant (but not with integer data!)
     counts <- .Call(C_BinCount, x, fuzzybreaks, right, include.lowest)
@@ -126,7 +123,7 @@ hist.default <-
 	stop("negative 'counts'. Internal Error.", domain = NA)
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
-    dens <- counts/(n*diff(breaks)) # use un-fuzzed intervals
+    dens <- counts/(n*h) # use un-fuzzed intervals
     mids <- 0.5 * (breaks[-1L] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
 			density = dens, mids = mids,
