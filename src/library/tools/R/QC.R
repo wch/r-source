@@ -2799,7 +2799,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             ## We want the dependencies of the current package,
             ## not of a version on the repository.
             pkg <- db[["Package"]]
-            this <- db[dependencies]; names(this) <- dependencies;
+            this <- db[dependencies]; names(this) <- dependencies
             known <- setdiff(utils:::.clean_up_dependencies(this), "R")
             info <- available[, dependencies, drop = FALSE]
             rn <- rownames(info)
