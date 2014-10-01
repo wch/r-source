@@ -77,7 +77,8 @@ checkPoFiles(language, dir = ".")
   Duncan Murdoch
 }
 \seealso{
-  \code{\link{xgettext}}, \code{\link{sprintf}}
+  \code{\link{update_pkg_po}()} which calls \code{checkPoFile()};
+  \code{\link{xgettext}}, \code{\link{sprintf}}.
 }
 \examples{
 \dontrun{
