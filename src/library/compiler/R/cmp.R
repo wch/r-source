@@ -2787,3 +2787,26 @@ disassemble <- function(code) {
     }
     dput(disasm(.Internal(disassemble(code))))
 }
+
+
+##
+## Experimental Utilities
+##
+
+bcprof <- function(expr) {
+    .Internal(bcprofstart())
+    expr
+    .Internal(bcprofstop())
+    val <- structure(.Internal(bcprofcounts()),
+                     names = compiler:::Opcodes.names)
+    hits <- sort(val[val > 0], decreasing = TRUE)
+    pct <- round(100 * hits / sum(hits), 1)
+    data.frame(hits = hits, pct = pct)
+}
+
+asm <- function(e, gen, env = .GlobalEnv, options = NULL) {
+    cenv <- makeCenv(env)
+    cntxt <- make.toplevelContext(cenv, options)
+    cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
+    genCode(e, cntxt, gen = gen)
+}

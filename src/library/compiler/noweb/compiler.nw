@@ -5100,6 +5100,41 @@ nsName <- function(ns) {
 @ %def nsName
 
 
+\section{Experimental utilities}
+
+This section presents two experimental utililities that, for now, are
+not exported. The first is a simple byte code profiler. This requires
+that the file [[eval.c]] be compiled with [[BC_PROFILING]] enabled,
+which on [[gcc]]-compatible compilers will disable threaded code. The
+byte code profiler uses the profile timer to record the active byte
+code instruction at interrupt time. The function [[bcprof]] runs the
+profiler while evaluating its argument expression and returns a
+summary of the counts.
+
+<<[[bcprof]] function>>=
+bcprof <- function(expr) {
+    .Internal(bcprofstart())
+    expr
+    .Internal(bcprofstop())
+    val <- structure(.Internal(bcprofcounts()),
+                     names = compiler:::Opcodes.names)
+    hits <- sort(val[val > 0], decreasing = TRUE)
+    pct <- round(100 * hits / sum(hits), 1)
+    data.frame(hits = hits, pct = pct)
+}
+@ %def bcprof
+
+The second utility is a simple interface to the code building
+mechanism that may help with experimenting with code optimizations.
+<<[[asm]] function>>=
+asm <- function(e, gen, env = .GlobalEnv, options = NULL) {
+    cenv <- makeCenv(env)
+    cntxt <- make.toplevelContext(cenv, options)
+    cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
+    genCode(e, cntxt, gen = gen)
+}
+@ %def asm
+
 \section{Opcode constants}
 \subsection{Symbolic opcode names}
 <<opcode definitions>>=
@@ -5850,5 +5885,14 @@ Opcodes.names <- names(Opcodes.argc)
 <<[[bcDecode]] function>>
 
 <<[[disassemble]] function>>
+
+
+##
+## Experimental Utilities
+##
+
+<<[[bcprof]] function>>
+
+<<[[asm]] function>>
 @ 
 \end{document}
