@@ -2,7 +2,7 @@
 #
 #  File src/library/compiler/R/cmp.R
 #  Part of the R package, http://www.R-project.org
-#  Copyright (C) 2001-2012 Luke Tierney
+#  Copyright (C) 2001-2014 Luke Tierney
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -872,13 +872,13 @@ make.loopContext <- function(cntxt, loop.label, end.label) {
 ## Compiler top level
 ##
 
-cmp <- function(e, cb, cntxt) {
+cmp <- function(e, cb, cntxt, missingOK = FALSE) {
     ce <- constantFold(e, cntxt)
     if (is.null(ce)) {
         if (typeof(e) == "language")
             cmpCall(e, cb, cntxt)
         else if (typeof(e) == "symbol")
-            cmpSym(e, cb, cntxt)
+            cmpSym(e, cb, cntxt, missingOK)
         else if (typeof(e) == "bytecode")
             cntxt$stop(gettext("cannot compile byte code literals in code"),
                        cntxt)
