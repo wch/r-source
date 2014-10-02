@@ -180,7 +180,7 @@ OlsonNames()
   (Chile has in the recent past announced changes at \emph{5 days}
   notice, and in 2014 Turkey gave only a month's notice.)
 
-  On platforms with case-insensitive file systems time zone names will be
+  On platforms with case-insensitive file systems, time zone names will be
   case-insensitive.  They may or may not be on other platforms and so,
   for example,  \code{"gmt"} is valid on some platforms and not on others.
 
