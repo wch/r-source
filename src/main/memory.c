@@ -47,7 +47,7 @@
    the value is 0.
 
    level 0 is no additional instrumentation
-   level 1 marks uninitialized numeric, logical, integer, raw, 
+   level 1 marks uninitialized numeric, logical, integer, raw,
            complex vectors and R_alloc memory
    level 2 marks the data section of vector nodes as inaccessible
            when they are freed.
@@ -875,9 +875,9 @@ static void GetNewPage(int node_class)
 	if (NodeClassSize[node_class]>0)
 	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[node_class]*sizeof(VECREC));
 #if  VALGRIND_LEVEL > 2
-        else 
+        else
             VALGRIND_MAKE_NOACCESS(&(s->u), 3*(sizeof(void *)));
-        VALGRIND_MAKE_NOACCESS(s, 3); /* start of sxpinfo */	
+        VALGRIND_MAKE_NOACCESS(s, 3); /* start of sxpinfo */
         VALGRIND_MAKE_NOACCESS(&ATTRIB(s), sizeof(void *));
 #endif
 #endif
@@ -2078,7 +2078,7 @@ void attribute_hidden InitMemory()
 
     /*  Unbound values which are to be preserved through GCs */
     R_PreciousList = R_NilValue;
-    
+
     /*  The current source line */
     R_Srcref = R_NilValue;
 
@@ -2611,7 +2611,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    void *mem = NULL; /* initialize to suppress warning */
 	    if (size < (R_SIZE_T_MAX / sizeof(VECREC)) - hdrsize) { /*** not sure this test is quite right -- why subtract the header? LT */
 		mem = allocator ?
-		    custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) : 
+		    custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) :
 		    malloc(hdrsize + size * sizeof(VECREC));
 		if (mem == NULL) {
 		    /* If we are near the address space limit, we
@@ -2619,7 +2619,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 		       all unused objects to malloc and try again. */
 		    R_gc_full(alloc_size);
 		    mem = allocator ?
-			custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) : 
+			custom_node_alloc(allocator, hdrsize + size * sizeof(VECREC)) :
 			malloc(hdrsize + size * sizeof(VECREC));
 		}
 		if (mem != NULL) {
@@ -3122,7 +3122,7 @@ int Rf_isProtected(SEXP s)
     } while ( R_PPStack[--i] != s );
 
     /* OK, got it, and  i  is indexing its location */
-    return(i);    
+    return(i);
 }
 
 
@@ -3136,12 +3136,12 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 
 void R_signal_reprotect_error(PROTECT_INDEX i)
 {
-    error(ngettext("R_Reprotect: only %d protected items, can't reprotect index %d", 
+    error(ngettext("R_Reprotect: only %d protected items, can't reprotect index %d",
 		   "R_Reprotect: only %d protected items, can't reprotect index %d",
 		   R_PPStackTop),
           R_PPStackTop, i);
 }
-    
+
 #ifndef INLINE_PROTECT
 void R_Reprotect(SEXP s, PROTECT_INDEX i)
 {
@@ -3199,7 +3199,7 @@ void *R_chk_realloc(void *ptr, size_t size)
     /* Protect against broken realloc */
     if(ptr) p = realloc(ptr, size); else p = malloc(size);
     if(!p)
-	error(_("'Realloc' could not re-allocate memory (%.0f bytes)"), 
+	error(_("'Realloc' could not re-allocate memory (%.0f bytes)"),
 	      (double) size);
     return(p);
 }
@@ -3366,7 +3366,7 @@ static R_INLINE SEXP CHK2(SEXP x)
 	error("LENGTH or similar applied to %s object", type2char(TYPEOF(x)));
     return x;
 }
- 
+
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(CHK2(x)); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
@@ -3451,7 +3451,7 @@ void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
     if(TYPEOF(v) != CHARSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
-    if (i < 0 || i >= XLENGTH(x)) 
+    if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
 	      i, XLENGTH(x));
     FIX_REFCNT(x, STRING_ELT(x, i), v);
@@ -3467,8 +3467,8 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_VECTOR_ELT", "list", type2char(TYPEOF(x)));
     }
-    if (i < 0 || i >= XLENGTH(x)) 
-	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"), 
+    if (i < 0 || i >= XLENGTH(x))
+	error(_("attempt to set index %lu/%lu in SET_VECTOR_ELT"),
 	      i, XLENGTH(x));
     FIX_REFCNT(x, VECTOR_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
@@ -3484,6 +3484,7 @@ SEXP (CAAR)(SEXP e) { return CHK(CAAR(CHK(e))); }
 SEXP (CDAR)(SEXP e) { return CHK(CDAR(CHK(e))); }
 SEXP (CADR)(SEXP e) { return CHK(CADR(CHK(e))); }
 SEXP (CDDR)(SEXP e) { return CHK(CDDR(CHK(e))); }
+SEXP (CDDDR)(SEXP e) { return CHK(CDDDR(CHK(e))); }
 SEXP (CADDR)(SEXP e) { return CHK(CADDR(CHK(e))); }
 SEXP (CADDDR)(SEXP e) { return CHK(CADDDR(CHK(e))); }
 SEXP (CAD4R)(SEXP e) { return CHK(CAD4R(CHK(e))); }
@@ -3537,8 +3538,6 @@ SEXP (SETCADDR)(SEXP x, SEXP y)
     CAR(cell) = y;
     return y;
 }
-
-#define CDDDR(x) CDR(CDR(CDR(x)))
 
 SEXP (SETCADDDR)(SEXP x, SEXP y)
 {

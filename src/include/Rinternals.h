@@ -393,6 +393,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CDAR(e)		CDR(CAR(e))
 #define CADR(e)		CAR(CDR(e))
 #define CDDR(e)		CDR(CDR(e))
+#define CDDDR(e)	CDR(CDR(CDR(e)))
 #define CADDR(e)	CAR(CDR(CDR(e)))
 #define CADDDR(e)	CAR(CDR(CDR(CDR(e))))
 #define CAD4R(e)	CAR(CDR(CDR(CDR(CDR(e)))))
@@ -566,6 +567,7 @@ SEXP (CAAR)(SEXP e);
 SEXP (CDAR)(SEXP e);
 SEXP (CADR)(SEXP e);
 SEXP (CDDR)(SEXP e);
+SEXP (CDDDR)(SEXP e);
 SEXP (CADDR)(SEXP e);
 SEXP (CADDDR)(SEXP e);
 SEXP (CAD4R)(SEXP e);
