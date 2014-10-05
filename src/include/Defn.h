@@ -466,6 +466,7 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 
+#define TYPED_STACK
 #ifdef TYPED_STACK
 /* The typed stack's entries consist of a tag and a union. An entry
    can represent a standard SEXP value (tag = 0) or an unboxed scalar
