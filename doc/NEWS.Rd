@@ -170,6 +170,12 @@
       \code{print()} and \code{str()} without error.
 
       \item \code{identical()} now also looks at the S4 bit.
+      
+      \item \code{sub()} and \code{gsub()} did not handle regular
+      expressions like \code{"\\s{2,}"} properly if the text
+      contained \code{NA} elements.  (This is a partial fix:
+      our regexp library still doesn't handle that regexp if the
+      text contains UTF-8 characters.) (\PR{16009})
     }
   }
 }
