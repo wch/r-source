@@ -466,7 +466,33 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 
+#ifdef TYPED_STACK
+/* The typed stack's entries consist of a tag and a union. An entry
+   can represent a standard SEXP value (tag = 0) or an unboxed scalar
+   value. For now real, integer, and logical values are supported. It
+   would in principle be possible to support complex scalars and short
+   scalar strings, but it isn't clear if this is worth while.
+
+   In addition to unboxed values the typed stack can hold partially
+   evaluated or incomplete allocated values. For now this is only used
+   for holding a short representation of an integer sequence as produce
+   by the colon operator, seq_len, or seq_along, and as consumed by
+   compiled 'for' loops. This could be used more extensively in the
+   future.
+*/
+typedef struct {
+    int tag;
+    union {
+	int ival;
+	double dval;
+	SEXP sxpval;
+    } u;
+} R_bcstack_t;
+# define PARTIALSXP_MASK (~255)
+# define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
+#else
 typedef SEXP R_bcstack_t;
+#endif
 #ifdef BC_INT_STACK
 typedef union { void *p; int i; } IStackval;
 #endif
