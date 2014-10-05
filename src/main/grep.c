@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2012  The R Core Team
+ *  Copyright (C) 1997--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -802,11 +802,13 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
 	if (onlyASCII)
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+	        if(STRING_ELT(text, i) == NA_STRING) continue;
 		if (!IS_ASCII(STRING_ELT(text, i))) {
 		    onlyASCII = FALSE;
 		    break;
 		}
+	    }
 	useBytes = onlyASCII;
     }
     if (!useBytes) {
@@ -1544,11 +1546,13 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
 	if (onlyASCII)
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+	    	if(STRING_ELT(text, i) == NA_STRING) continue;
 		if (!IS_ASCII(STRING_ELT(text, i))) {
 		    onlyASCII = FALSE;
 		    break;
 		}
+	    }
 	useBytes = onlyASCII;
     }
     if (!useBytes) {
@@ -2346,11 +2350,13 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
 	if (onlyASCII)
-	    for (i = 0; i < n; i++)
+	    for (i = 0; i < n; i++) {
+	        if(STRING_ELT(text, i) == NA_STRING) continue;
 		if (!IS_ASCII(STRING_ELT(text, i))) {
 		    onlyASCII = FALSE;
 		    break;
 		}
+	    }
 	useBytes = onlyASCII;
     }
     if (!useBytes) {
