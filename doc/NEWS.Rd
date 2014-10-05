@@ -136,6 +136,12 @@
 
       \item An experimental utility \code{dynGet()} useful for detecting
       cycles, aka infinite recursions.
+
+      \item The byte code compiler and interpreter now include new
+      instructions that allow many scalar subsetting and assignment and
+      scalar arithmetic operations to be handled more efficiently. This
+      can result in significant performance improvements in scalar
+      numerical code.
     }
   }
 
