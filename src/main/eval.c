@@ -2875,7 +2875,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 }
 
 /* start of bytecode section */
-static int R_bcVersion = 7;
+static int R_bcVersion = 8;
 static int R_bcMinVersion = 6;
 
 static SEXP R_AddSym = NULL;

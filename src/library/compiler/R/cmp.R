@@ -1590,13 +1590,14 @@ setSetterInlineHandler("$<-", function(afun, place, call, cb, cntxt) {
     }
 })
 
-setSetterInlineHandler("[<-", function(afun, place, call, cb, cntxt)
-    cmpSetterDispatch(STARTSUBASSIGN.OP, DFLTSUBASSIGN.OP,
-                      afun, place, call, cb, cntxt))
+# **** this is now handled differently; see "Improved subset ..."
+# setSetterInlineHandler("[<-", function(afun, place, call, cb, cntxt)
+#     cmpSetterDispatch(STARTSUBASSIGN.OP, DFLTSUBASSIGN.OP,
+#                       afun, place, call, cb, cntxt))
 
-setSetterInlineHandler("[[<-", function(afun, place, call, cb, cntxt)
-    cmpSetterDispatch(STARTSUBASSIGN2.OP, DFLTSUBASSIGN2.OP,
-                      afun, place, call, cb, cntxt))
+# setSetterInlineHandler("[[<-", function(afun, place, call, cb, cntxt)
+#     cmpSetterDispatch(STARTSUBASSIGN2.OP, DFLTSUBASSIGN2.OP,
+#                       afun, place, call, cb, cntxt))
 
 cmpGetterDispatch <- function(start.op, dflt.op, call, cb, cntxt) {
     if (any.dots(call))
@@ -1636,11 +1637,12 @@ setGetterInlineHandler("$", function(call, cb, cntxt) {
     }
 })
 
-setGetterInlineHandler("[", function(call, cb, cntxt)
-    cmpGetterDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, call, cb, cntxt))
+# **** this is now handled differently; see "Improved subset ..."
+# setGetterInlineHandler("[", function(call, cb, cntxt)
+#     cmpGetterDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, call, cb, cntxt))
 
-setGetterInlineHandler("[[", function(call, cb, cntxt)
-    cmpGetterDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, call, cb, cntxt))
+# setGetterInlineHandler("[[", function(call, cb, cntxt)
+#     cmpGetterDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, call, cb, cntxt))
 
 
 ##
@@ -1900,6 +1902,61 @@ setInlineHandler("exp", function(e, cb, cntxt)
 setInlineHandler("sqrt", function(e, cb, cntxt)
     cmpPrim1(e, cb, SQRT.OP, cntxt))
 
+setInlineHandler("log", function(e, cb, cntxt) {
+    if (dots.or.missing(e) || ! is.null(names(e)) ||
+        length(e) < 2 || length(e) > 3)
+        cmpSpecial(e, cb, cntxt)
+    else {
+        ci <- cb$putconst(e)
+        ncntxt <- make.nonTailCallContext(cntxt)
+        cmp(e[[2]], cb, ncntxt);
+        if (length(e) == 2)
+            cb$putcode(LOG.OP, ci)
+        else {
+            ncntxt <- make.argContext(cntxt)
+            cmp(e[[3]], cb, ncntxt)
+            cb$putcode(LOGBASE.OP, ci)
+        }
+        if (cntxt$tailcall)
+            cb$putcode(RETURN.OP)
+        TRUE
+    }
+})
+
+## Keep the order consistent with the order in the internal byte code
+## interpreter!
+math1funs <- c("floor", "ceiling", "sign",
+               "expm1", "log1p",
+               "cos", "sin", "tan", "acos", "asin", "atan",
+               "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
+               "lgamma", "gamma", "digamma", "trigamma",
+               "cospi", "sinpi", "tanpi")
+
+cmpMath1 <- function(e, cb, cntxt) {
+    if (dots.or.missing(e[-1]))
+        cmpBuiltin(e, cb, cntxt)
+    else if (length(e) != 2) {
+        notifyWrongArgCount(e[[1]], cntxt)
+        cmpBuiltin(e, cb, cntxt)
+    }
+    else {
+        name <- as.character(e[[1]])
+        idx <- match(name, math1funs) - 1
+        if (is.na(idx))
+            stop(sQuote(name), "is not a registered math1 function")
+        ncntxt <- make.nonTailCallContext(cntxt)
+        cmp(e[[2]], cb, ncntxt);
+        ci <- cb$putconst(e)
+        cb$putcode(MATH1.OP, ci, idx)
+        if (cntxt$tailcall)
+            cb$putcode(RETURN.OP)
+        TRUE
+    }
+}
+
+for (name in math1funs)
+    setInlineHandler(name, cmpMath1)
+
 setInlineHandler("==", function(e, cb, cntxt)
    cmpPrim2(e, cb, EQ.OP, cntxt))
 
@@ -2070,15 +2127,17 @@ cmpDispatch <- function(start.op, dflt.op, e, cb, cntxt, missingOK = TRUE) {
     }
 }
 
-setInlineHandler("[", function(e, cb, cntxt)
-    cmpDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, e, cb, cntxt))
+# **** this is now handled differently; see "Improved subset ..."
+# setInlineHandler("[", function(e, cb, cntxt)
+#     cmpDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, e, cb, cntxt))
 
 # **** c() is now a BUILTIN
 # setInlineHandler("c", function(e, cb, cntxt)
 #     cmpDispatch(STARTC.OP, DFLTC.OP, e, cb, cntxt, FALSE))
 
-setInlineHandler("[[", function(e, cb, cntxt)
-    cmpDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, e, cb, cntxt))
+# **** this is now handled differently; see "Improved subset ..."
+# setInlineHandler("[[", function(e, cb, cntxt)
+#     cmpDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, e, cb, cntxt))
 
 setInlineHandler("$", function(e, cb, cntxt) {
     if (any.dots(e) || length(e) != 3)
@@ -2420,6 +2479,47 @@ setInlineHandler("switch", function(e, cb, cntxt) {
     }
     TRUE
 })
+
+
+##
+## Inline handler for .Call
+##
+
+setInlineHandler(".Call", function(e, cb, cntxt) {
+    nargsmax <- 16 ## should match DOTCALL_MAX in eval.c
+    if (dots.or.missing(e[-1]) || ! is.null(names(e)) ||
+        length(e) < 2 || length(e) > nargsmax + 2)
+        cmpBuiltin(e, cb, cntxt) ## punt
+    else {
+        ncntxt <- make.nonTailCallContext(cntxt)
+        cmp(e[[2]], cb, ncntxt);
+        nargs <- length(e) - 2
+        if (nargs > 0) {
+            ncntxt <- make.argContext(cntxt)
+            for (a in as.list(e[-(1:2)]))
+                cmp(a, cb, ncntxt);
+        }
+        ci <- cb$putconst(e)
+        cb$putcode(DOTCALL.OP, ci, nargs)
+        if (cntxt$tailcall)
+            cb$putcode(RETURN.OP)
+        TRUE
+    }
+})
+
+
+##
+## Inline handlers for generating integer sequences
+##
+
+setInlineHandler(":", function(e, cb, cntxt)
+    cmpPrim2(e, cb, COLON.OP, cntxt))
+
+setInlineHandler("seq_along", function(e, cb, cntxt)
+    cmpPrim1(e, cb, SEQALONG.OP, cntxt))
+
+setInlineHandler("seq_len", function(e, cb, cntxt)
+    cmpPrim1(e, cb, SEQLEN.OP, cntxt))
 
 
 ##
@@ -2810,3 +2910,164 @@ asm <- function(e, gen, env = .GlobalEnv, options = NULL) {
     cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
     genCode(e, cntxt, gen = gen)
 }
+
+
+##
+## Improved subset and subassign handling
+##
+
+cmpSubsetDispatch <- function(start.op, dflt.op, e, cb, cntxt) {
+    if (dots.or.missing(e) || ! is.null(names(e)) || length(e) < 3)
+        cntxt$stop(gettext("cannot compile this expression"), cntxt)
+    else {
+        oe <- e[[2]]
+        if (missing(oe))
+            cntxt$stop(gettext("cannot compile this expression"), cntxt)
+        ncntxt <- make.argContext(cntxt)
+        ci <- cb$putconst(e)
+        label <- cb$makelabel()
+        cmp(oe, cb, ncntxt)
+        cb$putcode(start.op, ci, label)
+        indices <- e[-c(1, 2)]
+        for (i in seq_along(indices))
+            cmp(indices[[i]], cb, ncntxt, TRUE)
+        if (dflt.op$rank) cb$putcode(dflt.op$code, ci, length(indices))
+        else cb$putcode(dflt.op$code, ci)
+        cb$putlabel(label)
+        if (cntxt$tailcall) cb$putcode(RETURN.OP)
+        TRUE
+    }
+}
+
+setInlineHandler("[", function(e, cb, cntxt) {
+    if (dots.or.missing(e) || ! is.null(names(e)) || length(e) < 3)
+        cmpDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, e, cb, cntxt) ## punt
+    else {
+        nidx <- length(e) - 2;
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBSET.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBSET.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBSET_N.OP, rank = TRUE)
+        cmpSubsetDispatch(STARTSUBSET_N.OP, dflt.op, e, cb, cntxt)
+    }
+})
+
+setInlineHandler("[[", function(e, cb, cntxt) {
+    if (dots.or.missing(e) || ! is.null(names(e)) || length(e) < 3)
+        cmpDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, e, cb, cntxt) ## punt
+    else {
+        nidx <- length(e) - 2;
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBSET2.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBSET2.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBSET2_N.OP, rank = TRUE)
+        cmpSubsetDispatch(STARTSUBSET2_N.OP, dflt.op, e, cb, cntxt)
+    }
+})
+
+cmpSubassignDispatch <- function(start.op, dflt.op, afun, place, call, cb,
+                                 cntxt) {
+    if (dots.or.missing(place) || ! is.null(names(place)) || length(place) < 3)
+        cntxt$stop(gettext("cannot compile this expression"), cntxt)
+    else {
+        ci <- cb$putconst(call)
+        label <- cb$makelabel()
+        cb$putcode(start.op, ci, label)
+        indices <- place[-c(1, 2)]
+        for (i in seq_along(indices))
+            cmp(indices[[i]], cb, cntxt, TRUE)
+        if (dflt.op$rank) cb$putcode(dflt.op$code, ci, length(indices))
+        else cb$putcode(dflt.op$code, ci)
+        cb$putlabel(label)
+        TRUE
+    }
+}
+
+setSetterInlineHandler("[<-", function(afun, place, call, cb, cntxt) {
+    if (dots.or.missing(place) || ! is.null(names(place)) || length(place) < 3)
+        cmpSetterDispatch(STARTSUBASSIGN.OP, DFLTSUBASSIGN.OP,
+                          afun, place, call, cb, cntxt) ## punt
+    else {
+        nidx <- length(place) - 2
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBASSIGN.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBASSIGN.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBASSIGN_N.OP, rank = TRUE)
+        cmpSubassignDispatch(STARTSUBASSIGN_N.OP, dflt.op, afun, place, call,
+                             cb, cntxt)
+    }
+})
+
+setSetterInlineHandler("[[<-", function(afun, place, call, cb, cntxt) {
+    if (dots.or.missing(place) || ! is.null(names(place)) || length(place) < 3)
+        cmpSetterDispatch(STARTSUBASSIGN2.OP, DFLTSUBASSIGN2.OP,
+                          afun, place, call, cb, cntxt) ## punt
+    else {
+        nidx <- length(place) - 2
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBASSIGN2.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBASSIGN2.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBASSIGN2_N.OP, rank = TRUE)
+        cmpSubassignDispatch(STARTSUBASSIGN2_N.OP, dflt.op, afun, place, call,
+                             cb, cntxt)
+    }
+})
+
+cmpSubsetGetterDispatch <- function(start.op, dflt.op, call, cb, cntxt) {
+    if (dots.or.missing(call) || ! is.null(names(call)) || length(call) < 3)
+        cntxt$stop(gettext("cannot compile this expression"), cntxt)
+    else {
+        ci <- cb$putconst(call)
+        end.label <- cb$makelabel()
+        cb$putcode(DUP2ND.OP)
+        cb$putcode(start.op, ci, end.label)
+        indices <- call[-c(1, 2)]
+        for (i in seq_along(indices))
+            cmp(indices[[i]], cb, cntxt, TRUE)
+        if (dflt.op$rank)
+            cb$putcode(dflt.op$code, ci, length(indices))
+        else
+            cb$putcode(dflt.op$code, ci)
+        cb$putlabel(end.label)
+        cb$putcode(SWAP.OP)
+        TRUE
+    }
+}
+
+setGetterInlineHandler("[", function(call, cb, cntxt) {
+    if (dots.or.missing(call) || ! is.null(names(call)) || length(call) < 3)
+        cmpGetterDispatch(STARTSUBSET.OP, DFLTSUBSET.OP, call, cb, cntxt)
+    else {
+        nidx <- length(call) - 2;
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBSET.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBSET.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBSET_N.OP, rank = TRUE)
+        cmpSubsetGetterDispatch(STARTSUBSET_N.OP, dflt.op, call, cb, cntxt)
+    }
+})
+
+setGetterInlineHandler("[[", function(call, cb, cntxt) {
+    if (dots.or.missing(call) || ! is.null(names(call)) || length(call) < 3)
+        cmpGetterDispatch(STARTSUBSET2.OP, DFLTSUBSET2.OP, call, cb, cntxt)
+    else {
+        nidx <- length(call) - 2;
+        if (nidx == 1)
+            dflt.op <- list(code = VECSUBSET2.OP, rank = FALSE)
+        else if (nidx == 2)
+            dflt.op <- list(code = MATSUBSET2.OP, rank = FALSE)
+        else
+            dflt.op <- list(code = SUBSET2_N.OP, rank = TRUE)
+        cmpSubsetGetterDispatch(STARTSUBSET2_N.OP, dflt.op, call, cb, cntxt)
+    }
+})
