@@ -374,6 +374,12 @@
 
       \item \code{hist(x, breaks)} is more robust in adding small
       fuzz to few breaks when some are very large. (\PR{15899})
+      
+      \item \code{sub()} and \code{gsub()} did not handle regular
+      expressions like \code{"\\s{2,}"} properly if the text
+      contained \code{NA} elements.  (This is a partial fix:
+      our regexp library still doesn't handle that regexp if the
+      text contains UTF-8 characters.) (\PR{16009})
     }
   }
 }
