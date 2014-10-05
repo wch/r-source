@@ -98,7 +98,7 @@
 #define FAST_BASE_CACHE_LOOKUP  /* Define to enable fast lookups of symbols */
                                 /*    in global cache from base environment */
 
-#define IS_USER_DATABASE(rho)  OBJECT((rho)) && inherits((rho), "UserDefinedDatabase")
+#define IS_USER_DATABASE(rho)  (OBJECT((rho)) && inherits((rho), "UserDefinedDatabase"))
 
 /* various definitions of macros/functions in Defn.h */
 
@@ -1093,6 +1093,72 @@ static Rboolean existsVarInFrame(SEXP rho, SEXP symbol)
 SEXP findVarInFrame(SEXP rho, SEXP symbol)
 {
     return findVarInFrame3(rho, symbol, TRUE);
+}
+
+/*----------------------------------------------------------------------
+
+  readS3VarsFromFrame
+
+  Reads the S3 meta-variables from a given (single) frame.
+  R_UnboundValue marks that respective variable is not present.
+  This function is optimized to be fast in the common case when the
+  S3 meta-variables are in the expected order and that the frame is
+  represented by a pairlist.
+*/
+
+attribute_hidden
+void readS3VarsFromFrame(SEXP rho,
+    SEXP *dotGeneric, SEXP *dotGroup, SEXP *dotClass, SEXP *dotMethod,
+    SEXP *dotGenericCallEnv, SEXP *dotGenericDefEnv) {
+
+    if (TYPEOF(rho) == NILSXP ||
+        rho == R_BaseNamespace || rho == R_BaseEnv || rho == R_EmptyEnv ||
+        IS_USER_DATABASE(rho) || HASHTAB(rho) != R_NilValue) goto slowpath;
+
+    SEXP frame = FRAME(rho);
+
+    /*
+    This code speculates there is a specific order of S3 meta-variables.  It
+    holds in most (perhaps all non-fabricated) cases.  If at any time this
+    ceased to hold, this code will fall back to the slowpath, which may be
+    slow but still correct.
+    */
+
+    for(;TAG(frame) != R_dot_Generic; frame = CDR(frame))
+        if (frame == R_NilValue) goto slowpath;
+    *dotGeneric = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (TAG(frame) != R_dot_Class) goto slowpath;
+    *dotClass = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (TAG(frame) != R_dot_Method) goto slowpath;
+    *dotMethod = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (TAG(frame) != R_dot_Group) goto slowpath;
+    *dotGroup = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (TAG(frame) != R_dot_GenericCallEnv) goto slowpath;
+    *dotGenericCallEnv = BINDING_VALUE(frame);
+    frame = CDR(frame);
+
+    if (TAG(frame) != R_dot_GenericDefEnv) goto slowpath;
+    *dotGenericDefEnv = BINDING_VALUE(frame);
+
+    return;
+
+slowpath:
+    /* fall back to the slow but general implementation */
+
+    *dotGeneric = findVarInFrame3(rho, R_dot_Generic, TRUE);
+    *dotClass = findVarInFrame3(rho, R_dot_Class, TRUE);
+    *dotMethod = findVarInFrame3(rho, R_dot_Method, TRUE);
+    *dotGroup = findVarInFrame3(rho, R_dot_Group, TRUE);
+    *dotGenericCallEnv = findVarInFrame3(rho, R_dot_GenericCallEnv, TRUE);
+    *dotGenericDefEnv = findVarInFrame3(rho, R_dot_GenericDefEnv, TRUE);
 }
 
 

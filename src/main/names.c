@@ -1151,6 +1151,8 @@ void attribute_hidden InitNames()
     R_print.na_string = NA_STRING;
     /* R_BlankString */
     R_BlankString = mkChar("");
+    R_BlankScalarString = ScalarString(R_BlankString);
+    MARK_NOT_MUTABLE(R_BlankScalarString);
 
     /* Initialize the symbol Table */
     for (int i = 0; i < HSIZE; i++) R_SymbolTable[i] = R_NilValue;

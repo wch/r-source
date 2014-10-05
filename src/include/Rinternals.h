@@ -718,6 +718,7 @@ LibExtern SEXP  R_dot_target;       /* ".target" */
 #define NA_STRING	R_NaString
 LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
+LibExtern SEXP	R_BlankScalarString;	    /* "" as a STRSXP */
 
 /* srcref related functions */
 SEXP R_GetCurrentSrcref(int);
@@ -825,6 +826,7 @@ void Rf_PrintValue(SEXP);
 #ifndef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 #endif
+void Rf_readS3VarsFromFrame(SEXP, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*, SEXP*);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -1212,6 +1214,7 @@ void R_orderVector(int *indx, int n, SEXP arglist, Rboolean nalast, Rboolean dec
 #define psmatch			Rf_psmatch
 #define PrintValue		Rf_PrintValue
 #define protect			Rf_protect
+#define readS3VarsFromFrame	Rf_readS3VarsFromFrame
 #define reEnc			Rf_reEnc
 #define rownamesgets		Rf_rownamesgets
 #define S3Class                 Rf_S3Class
