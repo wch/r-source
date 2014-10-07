@@ -142,6 +142,9 @@
       scalar arithmetic operations to be handled more efficiently. This
       can result in significant performance improvements in scalar
       numerical code.
+
+      \item \code{apply(m, 2, identity)} is now the same as the matrix
+      \code{m}, also when it has \emph{named} row names.
     }
   }
 
@@ -380,7 +383,7 @@
 
       \item \code{hist(x, breaks)} is more robust in adding small
       fuzz to few breaks when some are very large. (\PR{15899})
-      
+
       \item \code{sub()} and \code{gsub()} did not handle regular
       expressions like \code{"\\s{2,}"} properly if the text
       contained \code{NA} elements.  (This is a partial fix:

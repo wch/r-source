@@ -1,6 +1,6 @@
 % File src/library/base/man/apply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright (C) 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{apply}
@@ -86,6 +86,20 @@ stopifnot( apply(x, 2, is.vector))
 ## Sort the columns of a matrix
 apply(x, 2, sort)
 
+## keeping named dimnames
+names(dimnames(x)) <- c("row", "col")
+x3 <- array(x, dim = c(dim(x),3),
+	    dimnames = c(dimnames(x), list(C = paste0("cop.",1:3))))
+identical(x,  apply( x,  2,  identity))
+identical(x3, apply(x3, 2:3, identity))
+\dontshow{
+stopifnot(identical(x, apply(x, 2, identity)),
+	  identical(dimnames(x),
+		    dimnames(apply(x, 2, format))),
+          identical(x3, apply(x3, 2:3, identity)),
+	  identical(dimnames(apply(x3, 2:1, identity)),
+		    dimnames(x3)[3:1]))
+}
 ##- function with extra args:
 cave <- function(x, c1, c2) c(mean(x[c1]), mean(x[c2]))
 apply(x, 1, cave,  c1 = "x1", c2 = c("x1","x2"))
