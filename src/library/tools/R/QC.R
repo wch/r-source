@@ -1433,9 +1433,6 @@ function(package, dir, lib.loc = NULL)
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
         if(!length(grep("-deprecated$", aliases))) {
-            functions <-
-                setdiff(functions,
-                        .functions_with_no_useful_S3_method_markup())
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -7355,27 +7352,6 @@ function(package_name)
       if(package_name == "methods") "@")
 }
 
-### ** .functions_with_no_useful_S3_method_markup
-
-## <FIXME>
-## Remove eventually ...
-.functions_with_no_useful_S3_method_markup <-
-function()
-{
-    ## Once upon a time ... there was no useful markup for S3 methods
-    ## for subscripting/subassigning and binary operators.
-
-    c(if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
-                   FALSE))
-      c("[", "[[", "$", "[<-", "[[<-", "$<-"),
-      if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_BINOPS_")),
-                   FALSE))
-      c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=", "==", "%%",
-        "%/%", "&", "|"),
-      "!")
-}
-## </FIXME>
-
 ### ** get_S4_generics_with_methods
 
 ## FIXME: make option of methods::getGenerics()
@@ -7722,8 +7698,8 @@ function(x)
 ## * one of $ [ [[
 ## * one of the binary operators
 ##   + - * / ^ < <= > >= != == | & %something%
+## * unary !
 ## (as supported by Rdconv).
-## See also .functions_with_no_useful_S3_method_markup.
 ## CLASS can be a syntactic name (we could be more precise about the
 ## fact that these must start with a letter or '.'), or anything quoted
 ## by backticks (not containing backticks itself for now).  Arguably,
