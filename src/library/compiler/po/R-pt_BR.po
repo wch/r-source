@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2014-10-08 08:09\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -52,6 +52,9 @@ msgstr "atribuição inválida 2"
 
 msgid "invalid function in complex assignment"
 msgstr "função inválida em atribuição complexa"
+
+msgid "is not a registered math1 function"
+msgstr ""
 
 msgid "missing arguments are not allowed"
 msgstr "argumentos faltantes não são permitidos"
@@ -104,6 +107,10 @@ msgstr "'%s' não é uma opção válida de compilação"
 
 msgid "function is not compiled"
 msgstr "função não está compilada"
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr "não é possível compilar promessas literais em código"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "

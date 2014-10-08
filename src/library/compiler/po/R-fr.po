@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2012-09-30 15:04\n"
+"POT-Creation-Date: 2014-10-08 08:09\n"
 "PO-Revision-Date: 2013-03-18 22:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -63,6 +63,9 @@ msgstr "mauvaise affectation 1"
 msgid "invalid function in complex assignment"
 msgstr "function incorrecte dans une affectation complexe"
 
+msgid "is not a registered math1 function"
+msgstr ""
+
 msgid "missing arguments are not allowed"
 msgstr "les arguments manquants ne sont pas autorisés"
 
@@ -113,6 +116,10 @@ msgstr "'%s' n'est pas une option de compilation reconnue"
 
 msgid "function is not compiled"
 msgstr "la fonction n'est pas compilée"
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr "impossible de compiler des promesses littérales dans le code"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "

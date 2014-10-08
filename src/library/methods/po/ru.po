@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-07-20 09:38+0100\n"
+"POT-Creation-Date: 2014-10-08 08:09+0100\n"
 "PO-Revision-Date: 2013-03-19 21:02-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
@@ -73,7 +73,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "нет прямого или наследованного метода для функции '%s' для данного вызова"
 
-#: methods_list_dispatch.c:513 methods_list_dispatch.c:1046
+#: methods_list_dispatch.c:513 methods_list_dispatch.c:1047
 msgid "invalid object (non-function) used as method"
 msgstr "не верный объект (не функция) использован как метод"
 
@@ -132,7 +132,7 @@ msgstr ""
 "должен быть R окружением; получен объект класса \"%s\""
 
 #: methods_list_dispatch.c:603 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:999
+#: methods_list_dispatch.c:1000
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -155,7 +155,7 @@ msgstr ""
 "рекурсивное использование функции '%s' в выборе метода, с отсутствием метода "
 "по-умолчанию"
 
-#: methods_list_dispatch.c:693
+#: methods_list_dispatch.c:694
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
@@ -163,38 +163,38 @@ msgstr ""
 "при разборе 'callNextMethod', найден '...' в совпадающем вызове, но нет "
 "соответствующего аргумента '...'"
 
-#: methods_list_dispatch.c:706
+#: methods_list_dispatch.c:707
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "ошибка при оценке 'primitive' следующего метода: %s"
 
-#: methods_list_dispatch.c:801
+#: methods_list_dispatch.c:802
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' должна быть одиночной строкой (получен символьный вектор длины %d)"
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:806
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' должна быть не пустой строкой; получена пустая строка"
 
-#: methods_list_dispatch.c:809
+#: methods_list_dispatch.c:810
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' должна быть одиночной строкой (получен объект класса \"%s\")"
 
-#: methods_list_dispatch.c:880
+#: methods_list_dispatch.c:881
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "класс должен быть либо именем-текстовой строкой либо определением класса"
 
-#: methods_list_dispatch.c:959
+#: methods_list_dispatch.c:960
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "не могу найти общую функцию для примитива \"%s\""
 
-#: methods_list_dispatch.c:965
+#: methods_list_dispatch.c:966
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

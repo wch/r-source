@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54\n"
+"POT-Creation-Date: 2014-10-08 08:09\n"
 "PO-Revision-Date: 2013-02-28 01:53+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -54,6 +54,9 @@ msgstr " 付値の誤り 2 "
 msgid "invalid function in complex assignment"
 msgstr " complex の付値に不正な関数があります "
 
+msgid "is not a registered math1 function"
+msgstr ""
+
 msgid "missing arguments are not allowed"
 msgstr " 引数の欠損は許されません "
 
@@ -104,6 +107,10 @@ msgstr " '%s' は有効なコンパイルオプションではありません "
 
 msgid "function is not compiled"
 msgstr " 関数はコンパイルされません "
+
+#, fuzzy
+msgid "cannot compile this expression"
+msgstr " コード中のプロミスリテラルをコンパイルできません "
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
