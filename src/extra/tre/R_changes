@@ -46,3 +46,6 @@ https://stat.ethz.ch/pipermail/r-devel/2010-February/056728.html
 
 Nov 2011: incorporated minor fixes from https://github.com/GerHobbelt/libtre
 (see http://laurikari.net/tre/website-issues-and-future-plans/#comments).
+
+Oct 2014: fixed R bug PR#16009 by copying the class member of a LITERAL
+in tre_copy_ast.
