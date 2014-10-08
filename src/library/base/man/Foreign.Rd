@@ -71,9 +71,15 @@
     other \tab SEXP\tab not allowed\cr
   }
 
-  Note that \R \code{logical} does \emph{not} map to Fortran
-  \code{logical}: using the latter may work but is platform-dependent.
+  \emph{Note:} The C types corresponding to \code{integer} and
+  \code{logical} are \code{int}, not \code{long} as in S.  This
+  difference matters on most 64-bit platforms, where \code{int} is
+  32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
 
+  \emph{Note:} The Fortran type corresponding to \code{logical} is
+  \code{integer}, not \code{logical}: the difference matters on some
+  Fortran compilers.
+  
   Numeric vectors in \R will be passed as type \code{double *} to C
   (and as \code{double precision} to Fortran) unless the argument has
   attribute \code{Csingle} set to \code{TRUE} (use
@@ -92,22 +98,13 @@
   three values: however non-zero values other than \code{INT_MIN} are
   mapped to \code{TRUE}.
 
-  \emph{Note:} The C types corresponding to \code{integer} and
-  \code{logical} are \code{int}, not \code{long} as in S.  This
-  difference matters on most 64-bit platforms, where \code{int} is
-  32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
-
-  \emph{Note:} The Fortran type corresponding to \code{logical} is
-  \code{integer}, not \code{logical}: the difference matters on some
-  Fortran compilers.
-
   Missing (\code{NA}) string values are passed to \code{.C} as the string
   "NA". As the C \code{char} type can represent all possible bit patterns
   there appears to be no way to distinguish missing strings from the
   string \code{"NA"}.  If this distinction is important use \code{\link{.Call}}.
 
-  \code{.Fortran} passes the first (only) character string of a character
-  vector is passed as a C character array to Fortran: that may be usable
+  \code{.Fortran} passes the first (only) character string of a
+  character vector as a C character array to Fortran: that may be usable
   as \code{character*255} if its true length is passed separately.  Only
   up to 255 characters of the string are passed back.  (How well this
   works, and even if it works at all, depends on the C and Fortran
@@ -133,9 +130,9 @@
   Fortran names containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
-  work if the Fortran 9x compiler used differs from the Fortran 77 compiler
-  used when configuring \R, especially if the subroutine name is not
-  lower-case or includes an underscore.  It is also possible to use
+  work if the Fortran 9x compiler used differs from the Fortran 77
+  compiler used when configuring \R, especially if the subroutine name
+  is not lower-case or includes an underscore.  It is possible to use
   \code{.C} and do any necessary symbol-name translation yourself.
 }
 
