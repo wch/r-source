@@ -1,6 +1,6 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which}
@@ -43,6 +43,11 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
   \code{arrayInd(which(x), dim(x), dimnames(x))}, namely a matrix
   whose rows each are the indices of one element of \code{x}; see
   Examples below.
+}
+\note{
+  Unlike most other base \R functions this does not coerce to \code{x}
+  to logical: only arguemnts with \code{\link{typeof}} logical are
+  accepted and others give an error.
 }
 \author{Werner Stahel and Peter Holzer (ETH Zurich) proposed the
   \code{arr.ind} option.}

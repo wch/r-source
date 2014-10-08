@@ -48,7 +48,7 @@
       reserved characters from RFC 3986,
       \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
 
-      \item \code{unique(warnings())} now works, as does 
+      \item \code{unique(warnings())} now works, as does
       \code{c(warnings())}.
     }
   }
@@ -127,9 +127,9 @@
 
       \item \code{getAnywhere("C_pbinom")} now works correctly.
 
-      \item The \code{confint()} function failed on results of
-      \code{nls()} fits that specified parameter limits despite using
-      an algorithm other than \code{"port"}.  (\PR{15960})
+      \item The \code{confint()} method for \code{nls()} fits failed it
+      these has specified parameter limits despite using an algorithm
+      other than \code{"port"}.  (\PR{15960})
 
       \item Subclassing an S4 class failed if the class required
       arguments to the generator, through its \code{initialize()} method.
@@ -170,7 +170,10 @@
       \code{print()} and \code{str()} without error.
 
       \item \code{identical()} now also looks at the S4 bit.
-      
+
+      \item \code{hist(x, breaks)} is more robust in adding a small fuzz
+      to few breaks when some are very large. (\PR{15899})
+
       \item \code{sub()} and \code{gsub()} did not handle regular
       expressions like \code{"\\s{2,}"} properly if the text
       contained \code{NA} elements.  (This is a partial fix:
