@@ -71,6 +71,9 @@
     other \tab SEXP\tab not allowed\cr
   }
 
+  Note that \R \code{logical} does \emph{not} map to Fortran
+  \code{logical}: using the latter may work but is platform-dependent.
+
   Numeric vectors in \R will be passed as type \code{double *} to C
   (and as \code{double precision} to Fortran) unless the argument has
   attribute \code{Csingle} set to \code{TRUE} (use
