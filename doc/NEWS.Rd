@@ -391,6 +391,9 @@
       (\PR{16009})
 
       \item \code{RShowDoc("NEWS")} now displays the pdf version.
+
+      \item matrices and arrays with last dimension zero did not print
+      at all or incompletely.  (\PR{16012})
     }
   }
 }

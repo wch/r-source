@@ -1894,7 +1894,7 @@ for(z in c("response", "working", "deviance", "pearson"))
 ## apply on arrays with zero extents
 ## Robin Hankin, R-help, 2006-02-13
 A <- array(0, c(3, 0, 4))
-dimnames(A) <- list(a = letters[1:3], b = NULL, c = LETTERS[1:4])
+dimnames(A) <- list(D1 = letters[1:3], D2 = NULL, D3 = LETTERS[1:4])
 f <- function(x) 5
 apply(A, 1:2, f)
 apply(A, 1, f)
@@ -2911,3 +2911,17 @@ cat(names(L), "\n")# yes, backspace is backspace here
 L
 new("foo")
 ## the last two lines printed wrongly in R <= 3.1.1
+
+
+## Printing of arrays where last dim(.) == 0 :
+r <- matrix(,0,4, dimnames=list(Row=NULL, Col=paste0("c",1:4)))
+r
+t(r) # did not print "Row", "Col"
+A <- array(dim=3:0, dimnames=list(D1=c("a","b","c"), D2=c("X","Y"), D3="I", D4=NULL))
+A ## did not print *anything*
+A[,,"I",] # ditto
+A[,,0,]   # ditto
+aperm(A, c(3:1,4))   # ditto
+aperm(A, c(1:2, 4:3))# ditto
+aperm(A, 4:1)     # was ok, unchanged
+## sometimes not printing anything in R <= 3.1.1
