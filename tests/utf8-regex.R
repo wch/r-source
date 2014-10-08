@@ -173,6 +173,5 @@ x <- c(NA, "  abc", "a b c    ", "a  b c")
 stopifnot(y[-1] == c(" abc", "a b c ", "a b c"))
 x <- c("\ue4", "  abc", "a b c    ", "a  b c")
 (y <- gsub("\\s{2,}", " ", x))
-# This test still fails after fixing example from PR#16009
-# stopifnot(y == c(x[1], " abc", "a b c ", "a b c"))
+stopifnot(y == c(x[1], " abc", "a b c ", "a b c"))
 ## results were c(x[1], " ", " ", " ") in both cases in R 3.1.1
