@@ -389,6 +389,8 @@
       contained \code{NA} elements.  (This is a partial fix:
       our regexp library still doesn't handle that regexp if the
       text contains UTF-8 characters.) (\PR{16009})
+
+      \item \code{RShowDoc("NEWS")} now displays the pdf version.
     }
   }
 }
