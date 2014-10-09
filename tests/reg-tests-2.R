@@ -2923,5 +2923,7 @@ A[,,"I",] # ditto
 A[,,0,]   # ditto
 aperm(A, c(3:1,4))   # ditto
 aperm(A, c(1:2, 4:3))# ditto
-aperm(A, 4:1)     # was ok, unchanged
+unname(A)            # ditto
+format(A[,,1,])	     # ditto
+aperm(A, 4:1) # was ok, is unchanged
 ## sometimes not printing anything in R <= 3.1.1

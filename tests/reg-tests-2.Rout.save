@@ -7609,7 +7609,22 @@ D1  X Y
   b
   c
 
-> aperm(A, 4:1)     # was ok, unchanged
+> unname(A)            # ditto
+<3 x 2 x 1 x 0 array of logical>
+     [,1] [,2]
+[1,]
+[2,]
+[3,]
+
+> format(A[,,1,])	     # ditto
+<3 x 2 x 0 array of character>
+   D2
+D1  X Y
+  a
+  b
+  c
+
+> aperm(A, 4:1) # was ok, is unchanged
 , , D2 = X, D1 = a
 
       D3
