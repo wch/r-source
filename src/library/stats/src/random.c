@@ -105,10 +105,11 @@ SEXP Random1(SEXP args)
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na]);
-		if (ISNAN(rx)) {
+		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN ) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
-		} else ix[i] = (int) rx;
+		}
+		else ix[i] = (int) rx;
 	    }
 	} else {
 	    double *rx = REAL(x);
@@ -205,7 +206,7 @@ SEXP Random2(SEXP args)
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 		rx = fn(ra[i % na], rb[i % nb]);
-		if (ISNAN(rx)) {
+		if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
 		    naflag = TRUE;
 		    ix[i] = NA_INTEGER;
 		} else ix[i] = (int) rx;
@@ -281,7 +282,7 @@ SEXP Random3(SEXP args)
 	for (R_xlen_t i = 0; i < n; i++) {
 //	    if ((i+1) % NINTERRUPT) R_CheckUserInterrupt();
 	    rx = fn(ra[i % na], rb[i % nb], rc[i % nc]);
-	    if (ISNAN(rx)) {
+	    if (ISNAN(rx) || rx > INT_MAX || rx <= INT_MIN) {
 		naflag = TRUE;
 		ix[i] = NA_INTEGER;
 	    } else ix[i] = (int) rx;
