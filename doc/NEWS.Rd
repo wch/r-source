@@ -181,6 +181,10 @@
       (\PR{16009})
 
       \item \code{RShowDoc("NEWS")} now displays the pdf version.
+      
+      \item \code{plot.histogram()} and hence \code{hist()} now respect
+      the \code{xaxs}, \code{yaxs} and \code{lab} graphics parameters.
+      (\PR{16021})
     }
   }
 }
