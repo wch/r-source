@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09+0100\n"
+"POT-Creation-Date: 2014-10-12 07:50+0100\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -5044,15 +5044,15 @@ msgstr "error de asignación de memoria en realpr"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "rutina BLAS/LAPACK  '%6s' tuvo un error de código %d"
 
-#: src/main/printarray.c:453
+#: src/main/printarray.c:327
 msgid "too few row labels"
 msgstr "muy pocos rótulos de filas"
 
-#: src/main/printarray.c:455
+#: src/main/printarray.c:329
 msgid "too few column labels"
 msgstr " muy pocos rótulos de columnas"
 
-#: src/main/printarray.c:489
+#: src/main/printarray.c:363
 #, fuzzy, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"

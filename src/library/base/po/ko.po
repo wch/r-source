@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09+0100\n"
+"POT-Creation-Date: 2014-10-12 07:50+0100\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -4884,15 +4884,15 @@ msgstr "'realpr' 내에 메모리 할당 에러입니다"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 루틴 '%6s'이 에러코드 %d를 주었습니다"
 
-#: src/main/printarray.c:453
+#: src/main/printarray.c:327
 msgid "too few row labels"
 msgstr "행 레이블의 수가 너무 적습니다"
 
-#: src/main/printarray.c:455
+#: src/main/printarray.c:329
 msgid "too few column labels"
 msgstr "열 레이블의 수가 너무 적습니다"
 
-#: src/main/printarray.c:489
+#: src/main/printarray.c:363
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"

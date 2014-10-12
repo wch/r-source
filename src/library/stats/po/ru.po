@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12+0100\n"
+"POT-Creation-Date: 2014-10-12 07:50+0100\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -787,32 +787,32 @@ msgstr "'scal' должен быть настоящей квадратной матрицей"
 msgid "'scal' matrix is not positive-definite"
 msgstr "матрица 'scal' не положительно-определенная"
 
-#: random.c:53 random.c:126 random.c:198 random.c:282
+#: random.c:53 random.c:128 random.c:200 random.c:284
 msgid "NAs produced"
 msgstr "получились NA"
 
-#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:159 random.c:240
-#: random.c:374
+#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:161 random.c:242
+#: random.c:376
 msgid "invalid arguments"
 msgstr "неправильные аргументы"
 
-#: random.c:308
+#: random.c:310
 msgid "NA in probability vector"
 msgstr ""
 
-#: random.c:310
+#: random.c:312
 msgid "negative probability"
 msgstr ""
 
-#: random.c:316
+#: random.c:318
 msgid "no positive probabilities"
 msgstr ""
 
-#: random.c:328
+#: random.c:330
 msgid "invalid first argument 'n'"
 msgstr "неправильный первый аргумент 'n'"
 
-#: random.c:330
+#: random.c:332
 msgid "invalid second argument 'size'"
 msgstr "неправильный второй аргумент 'size'"
 

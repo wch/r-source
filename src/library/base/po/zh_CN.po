@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09+0100\n"
+"POT-Creation-Date: 2014-10-12 07:50+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -4803,15 +4803,15 @@ msgstr "'realpr'内存分配错误"
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 例行程序'%6s'产生了错误%d信息"
 
-#: src/main/printarray.c:453
+#: src/main/printarray.c:327
 msgid "too few row labels"
 msgstr "行標記不够"
 
-#: src/main/printarray.c:455
+#: src/main/printarray.c:329
 msgid "too few column labels"
 msgstr "列標記不够"
 
-#: src/main/printarray.c:489
+#: src/main/printarray.c:363
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted %d row ]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12+0100\n"
+"POT-Creation-Date: 2014-10-12 07:50+0100\n"
 "PO-Revision-Date: 2011-03-26 08:58-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -786,32 +786,32 @@ msgstr ""
 msgid "'scal' matrix is not positive-definite"
 msgstr ""
 
-#: random.c:53 random.c:126 random.c:198 random.c:282
+#: random.c:53 random.c:128 random.c:200 random.c:284
 msgid "NAs produced"
 msgstr "NAs produzidos"
 
-#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:159 random.c:240
-#: random.c:374
+#: random.c:60 random.c:66 random.c:72 random.c:90 random.c:161 random.c:242
+#: random.c:376
 msgid "invalid arguments"
 msgstr "argumentos inválidos"
 
-#: random.c:308
+#: random.c:310
 msgid "NA in probability vector"
 msgstr ""
 
-#: random.c:310
+#: random.c:312
 msgid "negative probability"
 msgstr ""
 
-#: random.c:316
+#: random.c:318
 msgid "no positive probabilities"
 msgstr ""
 
-#: random.c:328
+#: random.c:330
 msgid "invalid first argument 'n'"
 msgstr "primeiro argumento 'n' inválido"
 
-#: random.c:330
+#: random.c:332
 msgid "invalid second argument 'size'"
 msgstr "segundo argumento 'size' inválido"
 

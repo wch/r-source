@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-12 07:51\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -451,7 +451,7 @@ msgstr ""
 
 msgid ""
 "If nothing happens, you should open\n"
-"'%s' yourself"
+"%s yourself"
 msgstr ""
 
 msgid ""
@@ -1065,11 +1065,6 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
-
-msgid ""
-"If nothing happens, you should open\n"
-"%s yourself"
 msgstr ""
 
 #, fuzzy

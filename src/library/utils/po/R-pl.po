@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-12 07:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -875,10 +875,10 @@ msgstr "'help.start()' wymaga aby serwer HTTP był uruchomiony"
 
 msgid ""
 "If nothing happens, you should open\n"
-"'%s' yourself"
+"%s yourself"
 msgstr ""
 "Jeśli nic się nie stanie, powinieneś otworzyć\n"
-"'%s' samemu"
+"%s samemu"
 
 # utils/R/help.start.R: 44
 # gettextf("If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window.",
@@ -2171,13 +2171,6 @@ msgstr "funkcja 'memory.limit()' jest specyficzna dla systemów Windows"
 msgid "method 'mailx' is Unix-only"
 msgstr "metoda 'mailx' jest tylko dla systemów Unix"
 
-msgid ""
-"If nothing happens, you should open\n"
-"%s yourself"
-msgstr ""
-"Jeśli nic się nie stanie, powinieneś otworzyć\n"
-"%s samemu"
-
 # utils/R/windows/install.packages.R: 30
 # stop(gettextf("zip file %s not found",
 #                              sQuote(zipname)), domain = NA)
@@ -2528,6 +2521,13 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+#~ msgid ""
+#~ "If nothing happens, you should open\n"
+#~ "'%s' yourself"
+#~ msgstr ""
+#~ "Jeśli nic się nie stanie, powinieneś otworzyć\n"
+#~ "'%s' samemu"
 
 # utils/R/filetest.R: 39
 # stop(gettextf("test '%s' is not available", op),

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-12 07:51\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -410,7 +410,7 @@ msgstr ""
 msgid "help.start() requires the HTTP server to be running"
 msgstr ""
 
-msgid "If nothing happens, you should open\n'%s' yourself"
+msgid "If nothing happens, you should open\n%s yourself"
 msgstr ""
 
 msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
@@ -990,9 +990,6 @@ msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
-
-msgid "If nothing happens, you should open\n%s yourself"
 msgstr ""
 
 msgid "zip file %s not found"
