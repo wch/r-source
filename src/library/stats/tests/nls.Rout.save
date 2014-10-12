@@ -1,5 +1,5 @@
 
-R version 3.1.1 Patched (2014-10-02 r66706) -- "Sock it to Me"
+R version 3.1.1 Patched (2014-10-10 r66745) -- "Sock it to Me"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -697,4 +697,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.303   0.032   1.330 
+  2.008   0.038   2.064 
