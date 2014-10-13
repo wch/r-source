@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2013   The R Core Team.
+ *  Copyright (C) 1998-2014   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,22 +40,22 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     find_char_fun
 
-    if (TYPEOF(CAR(args)) != CLOSXP && TYPEOF(CAR(args)) != SPECIALSXP 
+    if (TYPEOF(CAR(args)) != CLOSXP && TYPEOF(CAR(args)) != SPECIALSXP
          &&  TYPEOF(CAR(args)) != BUILTINSXP )
 	errorcall(call, _("argument must be a closure"));
     switch(PRIMVAL(op)) {
-    case 0:
+    case 0: // debug()
 	SET_RDEBUG(CAR(args), 1);
 	break;
-    case 1:
+    case 1: // undebug()
 	if( RDEBUG(CAR(args)) != 1 )
 	    warningcall(call, "argument is not being debugged");
 	SET_RDEBUG(CAR(args), 0);
 	break;
-    case 2:
+    case 2: // isdebugged()
         ans = ScalarLogical(RDEBUG(CAR(args)));
         break;
-    case 3:
+    case 3: // debugonce()
         SET_RSTEP(CAR(args), 1);
         break;
     }
@@ -87,30 +87,36 @@ SEXP attribute_hidden do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* maintain global trace state */
+/* maintain global trace & debug state */
 
-static Rboolean tracing_state = TRUE;
+static Rboolean tracing_state = TRUE, debugging_state = TRUE;
 #define GET_TRACE_STATE tracing_state
+#define GET_DEBUG_STATE debugging_state
 #define SET_TRACE_STATE(value) tracing_state = value
+#define SET_DEBUG_STATE(value) debugging_state = value
 
 SEXP attribute_hidden do_traceOnOff(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     SEXP onOff = CAR(args);
+    Rboolean trace = (PRIMVAL(op) == 0),
+	prev = trace ? GET_TRACE_STATE : GET_DEBUG_STATE;
 
-    Rboolean prev = GET_TRACE_STATE;
     if(length(onOff) > 0) {
 	Rboolean _new = asLogical(onOff);
 	if(_new == TRUE || _new == FALSE)
-	    SET_TRACE_STATE(_new);
+	    if(trace) SET_TRACE_STATE(_new);
+	    else      SET_DEBUG_STATE(_new);
 	else
-	    error("Value for tracingState must be TRUE or FALSE");
+	    error(_("Value for '%s' must be TRUE or FALSE"),
+		  trace ? "tracingState" : "debuggingState");
     }
     return ScalarLogical(prev);
 }
 
-Rboolean attribute_hidden
-R_current_trace_state() { return GET_TRACE_STATE; }
+// GUIs, packages, etc can query:
+Rboolean R_current_debug_state() { return GET_DEBUG_STATE; }
+Rboolean R_current_trace_state() { return GET_TRACE_STATE; }
 
 
 /* memory tracing */

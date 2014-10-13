@@ -1,25 +1,33 @@
-
 % File src/library/base/man/debug.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debug}
 \title{Debug a Function}
+\alias{debug}
+\alias{debugonce}
+\alias{undebug}
+\alias{isdebugged}
+\alias{debuggingState}
 \usage{
 debug(fun, text = "", condition = NULL)
 debugonce(fun, text = "", condition = NULL)
 undebug(fun)
 isdebugged(fun)
+debuggingState(on = NULL)
 }
-\alias{debug}
-\alias{debugonce}
-\alias{undebug}
-\alias{isdebugged}
 \arguments{
-\item{fun}{any interpreted \R function.}
-\item{text}{a text string that can be retrieved when the browser is entered.}
-\item{condition}{a condition that can be retrieved when the browser is entered.}
+  \item{fun}{any interpreted \R function.}
+  \item{text}{a text string that can be retrieved when the browser is entered.}
+  \item{condition}{a condition that can be retrieved when the browser is entered.}
+  \item{on}{logical; a call to the support function
+    \code{debuggingState} returns \code{TRUE} if debugging is globally
+    turned on, \code{FALSE} otherwise.  An argument of one or the other
+    of those values sets the state.  If the debugging state is
+    \code{FALSE}, none of the debugging actions will occur (but explicit
+    \code{\link{browser}} calls in functions will continue to work).}
+  %% can we describe what happens when it is turned off *inside* debugging ??
 }
 \description{
   Set, unset or query the debugging flag on a function.

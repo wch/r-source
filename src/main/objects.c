@@ -316,7 +316,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 	}
     }
 
-    if( RDEBUG(op) || RSTEP(op) ) {
+    if( (RDEBUG(op) && R_current_debug_state()) || RSTEP(op) ) {
         SET_RSTEP(sxp, 1);
     }
 
@@ -454,9 +454,8 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (nclass == 1)
 	    strcpy(cl, translateChar(STRING_ELT(klass, 0)));
 	else {
-	    int i;
 	    strcpy(cl, "c('");
-	    for (i = 0; i < nclass; i++) {
+	    for (int i = 0; i < nclass; i++) {
 		if (i > 0) strcat(cl, "', '");
 		strcat(cl, translateChar(STRING_ELT(klass, i)));
 	    }

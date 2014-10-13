@@ -145,6 +145,9 @@
 
       \item \code{apply(m, 2, identity)} is now the same as the matrix
       \code{m} when it has \emph{named} row names.
+
+      \item A new somewhat experimental function \code{debuggingState()}
+      has been added, allowing to temporarily turn off debugging.
     }
   }
 
@@ -2803,7 +2806,6 @@
       to import it explicitly from package \pkg{methods}.
     }
   }
-
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
