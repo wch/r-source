@@ -30,6 +30,9 @@
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
     desc <- read.dcf(descfile)[1, ]
+    ## Using
+    ##   desc <- .read_description(descfile)
+    ## would preserve leading white space in Description and Author ...
     if (is.character(outfile)) {
         out <- file(outfile, "a")
         on.exit(close(out))

@@ -228,7 +228,7 @@
 \def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
 \let\option=\samp
 
-\def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\@vobeyspaces\Rd@AsIsX}
+\def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\obeylines\@vobeyspaces\parskip\z@skip\Rd@AsIsX}
 \def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
 \def\Rd@AsIsX#1{\normalfont #1\egroup}
 
