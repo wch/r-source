@@ -93,12 +93,15 @@ x3 <- array(x, dim = c(dim(x),3),
 identical(x,  apply( x,  2,  identity))
 identical(x3, apply(x3, 2:3, identity))
 \dontshow{
-stopifnot(identical(x, apply(x, 2, identity)),
+xN <- x; dimnames(xN) <- list(row=NULL, col=NULL)
+stopifnot(identical( x, apply( x, 2, identity)),
+          identical(xN, apply(xN, 2, identity)),
 	  identical(dimnames(x),
 		    dimnames(apply(x, 2, format))),
           identical(x3, apply(x3, 2:3, identity)),
 	  identical(dimnames(apply(x3, 2:1, identity)),
 		    dimnames(x3)[3:1]))
+rm(xN)
 }
 ##- function with extra args:
 cave <- function(x, c1, c2) c(mean(x[c1]), mean(x[c2]))
