@@ -3310,7 +3310,7 @@ setRlibs <-
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
                 ## skip for now some c++11-long-long warnings.
-                ex_re <- "(/BH/include/boost/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
+                ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
                 lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
                               useBytes = TRUE)
 
