@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2011-2013 The R Core Team
+#  Copyright (C) 2011-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -79,6 +79,8 @@ so_symbol_names_table <-
       ## http://refspecs.freestandards.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/baselib---assert-fail-1.html
       "linux, C, gcc, assert, __assert_fail",
       "linux, C, gcc, exit, exit",
+      "linux, C, gcc, _exit, _exit",
+      "linux, C, gcc, _Exit, _Exit",
       "linux, C, gcc, printf, printf",
       "linux, C, gcc, printf, puts",
       "linux, C, gcc, puts, puts",
@@ -88,6 +90,12 @@ so_symbol_names_table <-
       "linux, C, gcc, vprintf, vprintf",
       "linux, C++, gxx, std::cout, _ZSt4cout",
       "linux, C++, gxx, std::cerr, _ZSt4cerr",
+      "linux, C, gcc, rand, rand",
+      "linux, C, gcc, random, random",
+      "linux, C, gcc, rand_r, rand_r",
+      "linux, C, gcc, srand, srand",
+      "linux, C, gcc, srandom, srandom",
+      "linux, C, gcc, srand48, srand48",
       ## libcxx variants
       "linux, C++, gxx, std::cout, _ZNSt3__14coutE",
       "linux, C++, gxx, std::cerr, _ZNSt3__14cerrE",
@@ -99,6 +107,8 @@ so_symbol_names_table <-
       "osx, C, gcc, abort, _abort",
       "osx, C, gcc, assert, ___assert_rtn",
       "osx, C, gcc, exit, _exit",
+      "osx, C, gcc, _exit, __exit",
+      "osx, C, gcc, _Exit, __Exit",
       "osx, C, gcc, printf, _printf",
       "osx, C, gcc, printf, _puts",
       "osx, C, gcc, puts, _puts",
@@ -108,6 +118,12 @@ so_symbol_names_table <-
       "osx, C, gcc, vprintf, _vprintf",
       "osx, C++, gxx, std::cout, __ZSt4cout",
       "osx, C++, gxx, std::cerr, __ZSt4cerr",
+      "osx, C, gcc, rand, _rand",
+      "osx, C, gcc, random, _random",
+      "osx, C, gcc, rand_r, _rand_r",
+      "osx, C, gcc, srand, _srand",
+      "osx, C, gcc, srandom, _srandom",
+      "osx, C, gcc, srand48, _srand48",
       ## libcxx variants
       "osx, C++, gxx, std::cout, __ZNSt3__14coutE",
       "osx, C++, gxx, std::cerr, __ZNSt3__14cerrE",
@@ -119,6 +135,8 @@ so_symbol_names_table <-
       "freebsd, C, gcc, abort, abort",
       "freebsd, C, gcc, assert, __assert",
       "freebsd, C, gcc, exit, exit",
+      "freebsd, C, gcc, _exit, _exit",
+      "freebsd, C, gcc, _Exit, _Exit",
       "freebsd, C, gcc, printf, printf",
       "freebsd, C, gcc, printf, puts",
       "freebsd, C, gcc, puts, puts",
@@ -128,6 +146,11 @@ so_symbol_names_table <-
       "freebsd, C, gcc, vprintf, vprintf",
       "freebsd, C++, gxx, std::cout, _ZSt4cout",
       "freebsd, C++, gxx, std::cerr, _ZSt4cerr",
+      "freebsd, C, gcc, rand, rand",
+      "freebsd, C, gcc, random, random",
+      "freebsd, C, gcc, srand, srand",
+      "freebsd, C, gcc, srandom, srandom",
+      "freebsd, C, gcc, srand48, srand48",
       "freebsd, Fortran, gfortran, write, _gfortran_st_write",
       "freebsd, Fortran, gfortran, print, _gfortran_st_write",
       "freebsd, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
@@ -137,12 +160,20 @@ so_symbol_names_table <-
       "solaris, C, solcc, abort, abort",
       "solaris, C, solcc, assert, __assert_c99",
       "solaris, C, solcc, exit, exit",
+      "solaris, C, solcc, _exit, _exit",
+      "solaris, C, solcc, _Exit, _Exit",
       "solaris, C, solcc, printf, printf",
       "solaris, C, solcc, putchar, putchar",
       "solaris, C, solcc, puts, puts",
       "solaris, C, solcc, vprintf, vprintf",
       "solaris, C++, solCC, std::cout, __1cDstdEcout_",
       "solaris, C++, solCC, std::cerr, __1cDstdEcerr_",
+      "solaris, C, gcc, random, random",
+      "solaris, C, gcc, rand, rand",
+      "solaris, C, gcc, rand_r, rand_r",
+      "solaris, C, gcc, srand, srand",
+      "solaris, C, gcc, srandom, srandom",
+      "solaris, C, gcc, srand48, srand48",
       "solaris, Fortran, solf95, print, __f90_eslw",
       "solaris, Fortran, solf95, write, __f90_eslw",
       "solaris, Fortran, solf95, print, __f90_esfw",
@@ -165,11 +196,18 @@ so_symbol_names_table <-
       "windows, Fortran, gfortran, runtime, abort",
       "windows, C, gcc, assert, _assert",
       "windows, C, gcc, exit, exit",
+      "windows, C, gcc, _exit, _exit",
+      "windows, C, gcc, _Exit, _Exit",
       "windows, C, gcc, printf, printf",
       "windows, C, gcc, printf, puts",
       "windows, C, gcc, puts, puts",
       "windows, C, gcc, putchar, putchar",
       "windows, C, gcc, vprintf, vprintf",
+      ## Windows does not have (s)random
+      "windows, C, gcc, rand, rand",
+      "windows, C, gcc, rand_r, rand_r",
+      "windows, C, gcc, srand, srand",
+      "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit"
       )
 so_symbol_names_table <-
