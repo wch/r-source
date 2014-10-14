@@ -975,6 +975,10 @@ visible (and if it is, it need not be the one from that namespace:
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
 
+As noted above, packages in @samp{Enhances} @emph{must} be used
+conditionally and hence objects within them should always be accessed
+@emph{via} @code{::}.
+
 @node The INDEX file, Package subdirectories, Package Dependencies, Package structure
 @subsection The @file{INDEX} file
 @cindex INDEX file
