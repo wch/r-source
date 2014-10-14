@@ -1067,6 +1067,7 @@ try to select a @samp{C} locale; Windows may not honour this).
 * Building the core files::     
 * Building the bitmap files::   
 * Building the cairo devices files::  
+* Using ICU for collation::     
 * Checking the build::          
 * Building the manuals::        
 * Building the Inno Setup installer::  
@@ -1260,7 +1261,7 @@ Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
 @file{Rbitmap.dll} and install it under
 @file{@var{R_HOME}/library/grDevices/libs}.
 
-@node Building the cairo devices files, Checking the build, Building the bitmap files, Building from source
+@node Building the cairo devices files, Using ICU for collation, Building the bitmap files, Building from source
 @subsection Building the cairo devices
 @cindex winCairo.dll
 
@@ -1278,12 +1279,8 @@ the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
 
-@menu
-* Using ICU for collation::     
-@end menu
-
-@node Using ICU for collation,  , Building the cairo devices files, Building the cairo devices files
-@subsubsection Using ICU for collation
+@node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
+@subsection Using ICU for collation
 
 It is possible (and even recommended) to build @R{} to use ICU
 (International Components for Unicode,
@@ -1309,7 +1306,7 @@ Unlike on a Unix-alike, it is currently necessary to call
 @code{icuSetCollate} to set a locale before ICU is actually used for
 collation.
 
-@node Checking the build, Building the manuals, Building the cairo devices files, Building from source
+@node Checking the build, Building the manuals, Using ICU for collation, Building from source
 @subsection Checking the build
 
 You can test a build by running
