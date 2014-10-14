@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -586,11 +586,14 @@ function(file1, file2)
 ### ** .file_path_relative_to_dir
 
 .file_path_relative_to_dir <-
-function(x, dir)
+function(x, dir, add = FALSE)
 {
     if(any(ind <- (substring(x, 1L, nchar(dir)) == dir))) {
         ## Assume .Platform$file.sep is a single character.
-        x[ind] <- substring(x, nchar(dir) + 2L)
+        x[ind] <- if(add)
+            file.path(basename(dir), substring(x[ind], nchar(dir) + 2L))
+        else
+            substring(x[ind], nchar(dir) + 2L)
     }
     x
 }
@@ -1031,6 +1034,8 @@ function()
                "Version",
                "VignetteBuilder",
                "ZipData"),
+             ## Should be documented in R-exts eventually:
+             c("Additional_repositories"),
              ## Others: adjust as needed.
              c("Repository",
                "Path",
@@ -1040,6 +1045,7 @@ function()
                "Revision",
                "RcmdrModels",
                "RcppModules",
+               "Roxygen",
                "biocViews")
              ))
 }
