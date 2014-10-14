@@ -84,6 +84,17 @@
       \samp{VignetteBuilder} packages available even if they are
       listed in \samp{Suggests}, since they are needed to recognise and
       process non-Sweave vignettes.
+
+      \item \command{R CMD check} now reports empty \code{importFrom}
+      declarations in a \file{NAMESPACE} file, as these are common
+      errors (writing \code{importFrom(\var{Pkg})} where
+      \code{import(\var{Pkg})} was intended).
+
+      \item \command{R CMD check} now by default checks code usage
+      directly on the package namespace without loading and attaching
+      the package and its suggests and enhances.  For good practice with
+      packages in the \samp{Suggests} field, see §1.1.3.1 of
+      \sQuote{Writing R Extensions}.
     }
   }
 
@@ -181,6 +192,9 @@
       (\PR{16009})
 
       \item \code{RShowDoc("NEWS")} now displays the pdf version.
+
+      \item matrices and arrays with last dimension zero did not print
+      at all or incompletely.  (\PR{16012})
       
       \item \code{plot.histogram()} and hence \code{hist()} now respect
       the \code{xaxs}, \code{yaxs} and \code{lab} graphics parameters.
@@ -2590,7 +2604,6 @@
       to import it explicitly from package \pkg{methods}.
     }
   }
-
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{

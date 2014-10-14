@@ -2174,8 +2174,10 @@ setRlibs <-
             ## If we have named objects then we have symbols.rds and
             ## will not be picking up symbols just in system libraries.
             haveObjs <- any(grepl("^ *Object", out))
-            pat <- paste("possibly from", sQuote("(abort|assert|exit)"))
-            if(haveObjs && any(grepl(pat, out)) && !pkgname %in% "parallel")
+            pat <- paste("possibly from",
+                         sQuote("(abort|assert|exit|_exit|_Exit)"))
+            if(haveObjs && any(grepl(pat, out)) &&
+               !pkgname %in% c("parallel", "fork")) # need _exit in forked child
                 warningLog(Log)
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -3607,6 +3609,23 @@ setRlibs <-
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
+            OK <- TRUE
+            ## Look for empty importFrom
+            imp <- ns$imports
+            lens <- sapply(imp, length)
+            imp <- imp[lens == 2L]
+            nm <- sapply(imp, "[[", 1)
+            lens <- sapply(imp, function(x) length(x[[2]]))
+            bad <- nm[lens == 0L]
+            if(length(bad)) {
+                OK <- FALSE
+                msg <- if(length(bad) == 1L)
+                    sprintf("  Namespace with empty importFrom: %s", sQuote(bad))
+                else
+                    paste("  Namespaces with empty importFrom:",
+                          .pretty_format(sort(bad)), sep = "\n")
+                noteLog(Log, msg)
+            }
             nS3methods <- nrow(ns$S3methods)
             if (nS3methods > 500L) {
                 ## check that this is installable in R 3.0.1
@@ -3630,13 +3649,13 @@ setRlibs <-
                     if(status != 0L)  break
                 }
                 if (status == 0L) {
+                    OK <- FALSE
                     msg <- sprintf("R < 3.0.2 had a limit of 500 registered S3 methods: found %d",
                                    nS3methods)
                     noteLog(Log, msg)
-                } else
-                    resultLog(Log, "OK")
-            } else
-                resultLog(Log, "OK")
+                }
+            }
+            if(OK) resultLog(Log, "OK")
         }
 
         checkingLog(Log, "package dependencies")
@@ -4140,6 +4159,7 @@ setRlibs <-
         if(is.na(prev)) Sys.setenv("_R_CHECK_LIMIT_CORES_" = "TRUE")
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
+        Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4496,6 +4516,7 @@ setRlibs <-
                 }
             }
         }
+        messageLog(Log, "DONE")
         if ((Log$warnings > 0L) || (Log$notes > 0L)) {
             message(""); summaryLog(Log)
         }

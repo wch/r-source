@@ -2796,7 +2796,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             ## We want the dependencies of the current package,
             ## not of a version on the repository.
             pkg <- db[["Package"]]
-            this <- db[dependencies]; names(this) <- dependencies;
+            this <- db[dependencies]; names(this) <- dependencies
             known <- setdiff(utils:::.clean_up_dependencies(this), "R")
             info <- available[, dependencies, drop = FALSE]
             rn <- rownames(info)
@@ -3761,25 +3761,30 @@ function(x, ...)
 function(package, lib.loc = NULL)
 {
     is_base <- package == "base"
+
+    check_without_loading <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_",
+                                         "TRUE"))
+
     if(!is_base) {
-        .load_package_quietly(package, lib.loc)
-
-        .eval_with_capture({
-            ## avoid warnings about code in other packages the package
-            ## uses
-            desc <- readRDS(file.path(find.package(package, NULL),
-                                       "Meta", "package.rds"))
-            pkgs1 <- sapply(desc$Suggests, "[[", "name")
-            pkgs2 <- sapply(desc$Enhances, "[[", "name")
-            for(pkg in unique(c(pkgs1, pkgs2)))
-                ## tcltk warns if no DISPLAY variable
-		##, errors if not compiled in
-                suppressWarnings(suppressMessages(try(require(pkg,
-                                                              character.only = TRUE,
-                                                              quietly = TRUE),
-                                                      silent = TRUE)))
-        }, type = "output")
-
+        if(!check_without_loading) {
+            .load_package_quietly(package, lib.loc)
+            .eval_with_capture({
+                ## avoid warnings about code in other packages the package
+                ## uses
+                desc <- readRDS(file.path(find.package(package, NULL),
+                                          "Meta", "package.rds"))
+                pkgs1 <- sapply(desc$Suggests, "[[", "name")
+                pkgs2 <- sapply(desc$Enhances, "[[", "name")
+                for(pkg in unique(c(pkgs1, pkgs2)))
+                    ## tcltk warns if no DISPLAY variable
+                    ##, errors if not compiled in
+                    suppressWarnings(suppressMessages(try(require(pkg,
+                                                                  character.only = TRUE,
+                                                                  quietly = TRUE),
+                                                          silent = TRUE)))
+            }, type = "output")
+        }
         runif(1) # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
@@ -3889,6 +3894,7 @@ function(package, lib.loc = NULL)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)
+        on.exit(detach("compat"))
     }
 
     ## A simple function for catching the output from the codetools
@@ -3935,15 +3941,22 @@ function(package, lib.loc = NULL)
                    config_val_to_logical)
     }
     ## look for globalVariables declaration in package
-    .glbs <- utils::globalVariables(,package)
+    .glbs <- suppressMessages(utils::globalVariables(,package))
     if(length(.glbs))
         ## codetools doesn't allow adding to its default
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
-    args <- c(list(package, report = foo), args)
-    suppressMessages(do.call(codetools::checkUsagePackage, args))
-    suppressMessages(do.call(checkMethodUsagePackage, args))
+    if(check_without_loading) {
+        env <- suppressWarnings(suppressMessages(getNamespace(package)))
+        args <- c(list(env, report = foo), args)
+        suppressMessages(do.call(codetools::checkUsageEnv, args))
+        suppressMessages(do.call(checkMethodUsageEnv, args))
+    } else {
+        args <- c(list(package, report = foo), args)
+        suppressMessages(do.call(codetools::checkUsagePackage, args))
+        suppressMessages(do.call(checkMethodUsagePackage, args))
+    }
 
     out <- unique(out)
     class(out) <- "check_code_usage_in_package"
@@ -4201,7 +4214,8 @@ function(pkgDir)
     non_ASCII <- where <- character()
     latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
-    suppressPackageStartupMessages({
+    ## (and some more ...)
+    suppressMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
             check_one(get(ds, envir = dataEnv), ds)
     })
@@ -5187,17 +5201,17 @@ function(package, dir, lib.loc = NULL)
                  standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
-    common_names <- c("pkg", "pkgName", "package", "pos")
+    common_names <- c("pkg", "pkgName", "package", "pos", "dep_name")
 
-    bad_exprs <- character()
+    bad_exprs <- bad_deps <- bad_imps <- character()
     bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
-    bad_deps <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
-            if((Call %in% c("library", "require")) &&
-               (length(e) >= 2L)) {
+            if((Call %in%
+                c("library", "require", "loadNamespace", "requireNamespace"))
+               && (length(e) >= 2L)) {
                 ## We need to rempve '...': OTOH the argument could be NULL
                 keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
@@ -5216,11 +5230,20 @@ function(package, dir, lib.loc = NULL)
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
                     if(!dunno) {
-                        pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
-                        if(! pkg %in% c(depends_suggests, common_names))
-                            bad_exprs <<- c(bad_exprs, pkg)
-                        if(pkg %in% depends)
-                            bad_deps <<- c(bad_deps, pkg)
+                        if (Call %in% c("loadNamespace", "requireNamespace")) {
+                            if (identical(class(pkg), "character")) {
+                                pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                                if(! pkg %in%
+                                   c(imports, depends_suggests, common_names))
+                                    bad_imps <<- c(bad_imps, pkg)
+                            }
+                       } else {
+                           pkg <- sub('^"(.*)"$', '\\1', deparse(pkg))
+                            if(! pkg %in% c(depends_suggests, common_names))
+                                bad_exprs <<- c(bad_exprs, pkg)
+                            if(pkg %in% depends)
+                                bad_deps <<- c(bad_deps, pkg)
+                        }
                     }
                 }
             } else if(Call %in% "::") {
@@ -5419,6 +5442,7 @@ function(package, dir, lib.loc = NULL)
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
                 imports = unique(bad_imports),
+                imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
                 depends_not_import = depends_not_import,
@@ -5456,6 +5480,15 @@ function(x, ...)
                 .pretty_format(sort(xx)))
           } else {
               gettextf("'library' or 'require' call not declared from: %s",
+                       sQuote(xx))
+          }
+      },
+      if(length(xx <- x$imps)) {
+          if(length(xx) > 1L) {
+              c(gettext("'loadNamespace' or 'requireNamespace' calls not declared from:"),
+                .pretty_format(sort(xx)))
+          } else {
+              gettextf("'loadNamespace' or 'requireNamespace' call not declared from: %s",
                        sQuote(xx))
           }
       },
@@ -5595,7 +5628,8 @@ function(db, files)
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
             if(length(e) >= 2L) pkg <- deparse(e[[2L]])
-            if(Call %in% c("library", "require")) {
+            if(Call %in%
+               c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
                     ## We need to rempve '...': OTOH the argument could be NULL
                     keep <- sapply(e, function(x) deparse(x)[1L] != "...")
