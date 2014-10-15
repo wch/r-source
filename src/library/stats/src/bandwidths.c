@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
- *  Copyright (C) 2012  The R Core Team
+ *  Copyright (C) 2012-2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,14 @@
 #include <stdlib.h> //abs
 #include <math.h>
 #include <Rinternals.h>
+
+// or include "stats.h"
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 #ifndef max
 #  define max(a,b) ((a) > (b) ? (a) : (b))
@@ -106,17 +114,23 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 {
     int nb = asInteger(nbin), n = LENGTH(sx);
     double xmin, xmax, rang, dd, *x = REAL(sx);
-    SEXP sc = PROTECT(allocVector(INTSXP, nb));
-    int *cnt = INTEGER(sc);
 
-    for (int i = 0; i < nb; i++) cnt[i] = 0;
-    xmin = xmax = x[0];
-    for (int i = 1; i < n; i++) {
+    xmin = R_PosInf; xmax = R_NegInf;
+    for (int i = 0; i < n; i++) {
+	if(!R_FINITE(x[i]))
+	    error(_("non-finite x[%d] in bandwidth calculation"), i+1);
 	xmin = min(xmin, x[i]);
 	xmax = max(xmax, x[i]);
     }
     rang = (xmax - xmin) * 1.01;
     dd = rang / nb;
+
+    SEXP ans = PROTECT(allocVector(VECSXP, 2)),
+	sc = SET_VECTOR_ELT(ans, 1, allocVector(INTSXP, nb));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(dd));
+    int *cnt = INTEGER(sc);
+    for (int i = 0; i < nb; i++) cnt[i] = 0;
+
     for (int i = 1; i < n; i++) {
 	int ii = (int)(x[i] / dd);
 	for (int j = 0; j < i; j++) {
@@ -124,9 +138,7 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 	    cnt[abs(ii - jj)]++;
 	}
     }
-    SEXP ans = PROTECT(allocVector(VECSXP, 2));
-    SET_VECTOR_ELT(ans, 0, ScalarReal(dd));
-    SET_VECTOR_ELT(ans, 1, sc);
-    UNPROTECT(2);
+
+    UNPROTECT(1);
     return ans;
 }
