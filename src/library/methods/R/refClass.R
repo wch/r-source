@@ -1011,17 +1011,20 @@ showClassMethod <- function(object) {
     cat(sprintf(" for method %s()\n", object@name))
     show(as(object, "function"))
     if(length(object@mayCall))
-        .printNames("Methods used: ", object@mayCall)
+        .printNames("\nMethods used: ", object@mayCall)
 }
 
 .printNames <- function(header, names, separateLine = TRUE) {
-    if(separateLine)
-        cat("\n",header,"\n    ")
-    else
-        cat(header,": ",sep="")
-    cat(paste0('"', names, '"'), sep = ", ", fill = TRUE)
-    cat("\n")
+    names <- paste0('"', names, '"')
+    if(separateLine) {
+        cat(header, "\n", sep = "")
+        cat(names, sep = ", ", fill = TRUE, labels = "    ")
+    } else {
+        cat(header, ": ", sep = "")
+        cat(names, sep = ", ", fill = TRUE)
     }
+    cat("\n")
+}
 
 showRefClassDef <- function(object, title = "Reference Class") {
     cat(title," \"", object@className,"\":\n", sep="")
@@ -1036,7 +1039,7 @@ showRefClassDef <- function(object, title = "Reference Class") {
         cat("\nNo fields defined\n")
     methods <- objects(object@refMethods, all.names = TRUE)
     if(length(methods))
-        .printNames("Class Methods: ", methods)
+        .printNames("\nClass Methods: ", methods)
     else
         cat ("\nNo Class Methods\n")
     supers <- object@refSuperClasses
