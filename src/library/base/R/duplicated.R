@@ -99,7 +99,7 @@ unique.default <-
     z <- .Internal(unique(x, incomparables, fromLast, nmax))
     if(inherits(x, "POSIXct"))
         structure(z, class = class(x), tzone = attr(x, "tzone"))
-    else if(inherits(x, "Date"))
+    else if(is.object(x) && !isS4(x)) # e.g. for "Date"
         structure(z, class = class(x))
     else z
 }
