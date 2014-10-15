@@ -2411,21 +2411,6 @@ setRlibs <-
             any <- any || bad
             if (!any) resultLog(Log, "OK")
 
-            ## Try to compare results from running the examples to
-            ## a saved previous version.
-            exsave <- file.path(pkgdir, "tests", "Examples",
-                                paste0(pkgname, "-Ex.Rout.save"))
-            if (file.exists(exsave)) {
-                checkingLog(Log, "differences from ",
-                            sQuote(basename(exout)),
-                            " to ", sQuote(basename(exsave)))
-                cmd <- paste0("invisible(tools::Rdiff('",
-                              exout, "', '", exsave, "',TRUE,TRUE))")
-                out <- R_runR(cmd, R_opts2)
-                if(length(out))
-                    printLog0(Log, paste(c("", out, ""), collapse = "\n"))
-                resultLog(Log, "OK")
-            }
             if (do_timings) {
                 tfile <- paste0(pkgname, "-Ex.timings")
 		times <- read.table(tfile, header = TRUE, row.names = 1L,
@@ -2439,6 +2424,23 @@ setRlibs <-
                     printLog0(Log, paste(times, collapse = "\n"), "\n")
                 }
             }
+
+            ## Try to compare results from running the examples to
+            ## a saved previous version.
+            exsave <- file.path(pkgdir, "tests", "Examples",
+                                paste0(pkgname, "-Ex.Rout.save"))
+            if (file.exists(exsave)) {
+                checkingLog(Log, "differences from ",
+                            sQuote(basename(exout)),
+                            " to ", sQuote(basename(exsave)))
+                cmd <- paste0("invisible(tools::Rdiff('",
+                              exout, "', '", exsave, "',TRUE,TRUE))")
+                out <- R_runR(cmd, R_opts2)
+                resultLog(Log, "OK")
+                if(length(out))
+                    printLog0(Log, paste(c("", out, ""), collapse = "\n"))
+            }
+
             TRUE
         }
 
@@ -3252,6 +3254,7 @@ setRlibs <-
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
+                             "warning: control may reach end of non-void function",
                              "warning: no return statement in function returning non-void",
                              ": #warning",
                              # these are from era of static HTML
