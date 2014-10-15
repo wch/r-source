@@ -548,4 +548,11 @@ for(k in 1:5) {
 ## "wrong" results for k in {2,3,4} in R <= 3.1.1
 
 
+## bw.SJ() and similar with NA,Inf values, PR#16024
+try(bw.SJ (c(NA,2,3)))
+try(bw.bcv(c(-Inf,2,3)))
+try(bw.ucv(c(1,NaN,3,4)))
+## seg.faulted  in  3.0.0 <= R <= 3.1.1
+
+
 proc.time()

@@ -397,10 +397,13 @@
 
       \item matrices and arrays with last dimension zero did not print
       at all or incompletely.  (\PR{16012})
-      
+
       \item \code{plot.histogram()} and hence \code{hist()} now respect
       the \code{xaxs}, \code{yaxs} and \code{lab} graphics parameters.
       (\PR{16021})
+
+      \item \code{bw.SJ(x)} and other bw.*() no longer segfault when
+      \code{x} contains non-finite values. (\PR{16024})
     }
   }
 }
