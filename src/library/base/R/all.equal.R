@@ -172,7 +172,7 @@ all.equal.envRefClass <- function (target, current, ...) {
     ## ## ?setRefClass explicitly says users should not use ".<foo>" fields:
     ## if(is.na(all.names)) all.names <- FALSE
     ## ## try preventing infinite recursion by not looking at  .self :
-    ## T <- function(ls) ls[is.na(match(names(ls), c(".self", methods:::.envRefMethods)))]
+    ## T <- function(ls) ls[is.na(match(names(ls), c(".self", methods:::envRefMethodNames)))]
     ## asL <- function(E) T(as.list(as.environment(E), all.names=all.names, sorted=TRUE))
     n <- all.equal.list(asL(target), asL(current), ...)
     ## Can have slots (apart from '.xData'), though not recommended; check these:

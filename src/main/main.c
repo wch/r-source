@@ -1100,7 +1100,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack, browselevel, tmp;
+    int savestack, browselevel;
     SEXP ap, topExp, argList;
 
     /* argument matching */
@@ -1144,7 +1144,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		&& cptr->callflag )
 	    cptr = cptr->nextcontext;
 	Rprintf("Called from: ");
-	tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
+	int tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
 	if(tmp != NA_INTEGER && tmp > 0) R_BrowseLines = tmp;
         if( cptr != R_ToplevelContext ) {
 	    PrintValueRec(cptr->call, rho);

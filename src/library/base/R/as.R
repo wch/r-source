@@ -35,14 +35,14 @@ as.list.default <- function (x, ...)
 
 as.list.function <- function (x, ...) c(formals(x), list(body(x)))
 
-## FIXME:  Really the above  as.vector(x, "list")  should work for data.frames!
+## FIXME: as.vector(., "list")  should work for data.frames!
 as.list.data.frame <- function(x,...) {
     x <- unclass(x)
     attr(x,"row.names") <- NULL
     x
 }
 
-as.list.environment <- function(x, all.names=FALSE, sorted = FALSE, ...)
+as.list.environment <- function(x, all.names=FALSE, sorted=FALSE, ...)
     .Internal(env2list(x, all.names, sorted))
 
 ## NB: as.vector is used for several other as.xxxx, including
