@@ -234,7 +234,8 @@ str.default <-
 			object=object, simplify = FALSE)
 	    cat("Formal class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		length(a)," slots\n", sep = "")
+		length(a), ifelse(length(a) > 1L, " slots\n", " slot\n"),
+                sep = "")
 	}
 	if(isRef) {
 	    strSub(a, no.list=TRUE, give.length=give.length,
