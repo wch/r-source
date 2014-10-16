@@ -98,7 +98,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                   "georgianps", "koi8r", "koi8u", "tcvn",
                   "big5" , "gb2312", "gb18030", "gbk",
                   "tis-620", "sjis", "eucn", "big5-hkscs")
-	    if (length(grep("darwin",R.version$os))) {
+	    if (grepl("darwin",R.version$os)) {
 	        k <- c(known, "ISO8859-1", "ISO8859-2", "ISO8859-4",
 		  "ISO8859-7", "ISO8859-9", "ISO8859-13", "ISO8859-15",
 		  "KOI8-U", "KOI8-R", "PT154", "ASCII", "ARMSCII-8",
@@ -125,7 +125,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
 	## HOWEVER! unlike the C code, we cannot filter out
 	## invalid locales, so it will be wrong for non-supported
 	## locales (why is this duplicated in R code anyway?)
-	if (length(grep("darwin", R.version$os))) return("UTF-8")
+	if (grepl("darwin", R.version$os)) return("UTF-8")
         ## let's hope it is a ll_* name.
         if(length(grep("^[[:alpha:]]{2}_", x[1L], perl = TRUE))) {
             ll <- substr(x[1L], 1L, 2L)
