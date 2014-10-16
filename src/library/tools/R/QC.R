@@ -3937,15 +3937,17 @@ function(package, lib.loc = NULL)
             lapply(sub(".*=[[:space:]]*", "", opts),
                    config_val_to_logical)
     }
+    if(check_without_loading)
+        env <- suppressWarnings(suppressMessages(getNamespace(package)))
     ## look for globalVariables declaration in package
-    .glbs <- suppressMessages(utils::globalVariables(,package))
+    ## (This loads the namespace if not already loaded.)
+    .glbs <- suppressMessages(utils::globalVariables(, package))
     if(length(.glbs))
         ## codetools doesn't allow adding to its default
         args$suppressUndefined <-
             c(codetools:::dfltSuppressUndefined, .glbs)
 
     if(check_without_loading) {
-        env <- suppressWarnings(suppressMessages(getNamespace(package)))
         args <- c(list(env, report = foo), args)
         suppressMessages(do.call(codetools::checkUsageEnv, args))
         suppressMessages(do.call(checkMethodUsageEnv, args))
