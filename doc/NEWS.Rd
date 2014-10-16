@@ -2,6 +2,7 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{NEWS}
 \title{R News}
@@ -67,11 +68,11 @@
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
-      installed: this helps ensure that the current build has priority if
-      an \R shared library has already been installed by e.g.
-      \command{install-libR} in a library mentioned in \env{LDFLAGS}
-      (and not in \sQuote{your system's library directory} as
-      documented). (Wish of \PR{15790}.)
+      installed: this helps ensure that the current build has priority
+      if an \R shared library has already been installed by
+      e.g.\sspace{}\command{install-libR} in a library mentioned in
+      \env{LDFLAGS} (and not in \sQuote{your system's library directory}
+      as documented). (Wish of \PR{15790}.)
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
@@ -443,12 +444,12 @@
 
       \item \code{parse()} did not check its \code{file} argument was a
       connection if it was not a character string, so
-      e.g. \code{parse(FALSE)} attempted to read from \code{stdin}.
+      e.g.\sspace{}\code{parse(FALSE)} attempted to read from \code{stdin}.
 
       Nor did \code{dump()} and \code{dput()}.
 
       \item The \code{"help.try.all.packages"} option was ignored when
-      the shortcut syntax for help was used, e.g. \code{?foo}.
+      the shortcut syntax for help was used, e.g.\sspace{}\code{?foo}.
 
       \item A potential segfault in string allocation has been fixed.
       (Found by Radford Neal.)
@@ -827,7 +828,7 @@
       suitable platforms: see \sQuote{Writing R Extensions}.
 
       \item Fake installs now install the contents of directory
-      \file{inst}: some packages use this to install e.g. C++ headers
+      \file{inst}: some packages use this to install e.g.\sspace{}C++ headers
       for use by other packages that are independent of the package
       itself.  Option \option{--no-inst} can be used to get the previous
       behaviour.
@@ -1121,7 +1122,7 @@
       an empty string which on some OSes means the \samp{UTC} time zone.
 
       \item The backtick may now be escaped in strings, to allow names
-      containing them to be constructed, e.g. \code{`\\``}.  (\PR{15621})
+      containing them to be constructed, e.g.\sspace{}\code{`\\``}.  (\PR{15621})
 
       \item \code{read.table()}, \code{readLines()} and \code{scan()}
       now warn when an embedded nul is found in the input.  (Related to
@@ -1431,7 +1432,7 @@
       \item If an invalid/corrupt \code{.Random.seed} object is
       encountered in the workspace it is ignored with a warning rather
       than giving an error.  (This allows \R itself to rely on a working
-      RNG, e.g. to choose a random port.)
+      RNG, e.g.\sspace{}to choose a random port.)
 
       \item \code{seq()} and \code{seq.int()} give more explicit error
       messages if called with invalid (e.g., \code{NaN}) inputs.
@@ -2657,7 +2658,7 @@
       \file{~/.R/Makevars}.
 
       This is convenient for those working with binary distributions of
-      \R, e.g. on OS X.
+      \R, e.g.\sspace{}on OS X.
     }
   }
 
