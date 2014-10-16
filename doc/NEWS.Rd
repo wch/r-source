@@ -215,7 +215,8 @@
       \item \code{embedFonts()} now defaults to
       \code{format = "ps2write"} for \file{.ps} and \file{.eps} files.
       This is available in Ghostscript 9.x (since 2010) whereas the
-      previous default, \code{format = "pswrite"}, was removed in 9.10.
+      previous default, \code{format = "pswrite"}, was removed in
+      Ghostscript 9.10.
 
       \item For consistency with \code{[dpqr]norm()},
       \code{[dp]lnorm(sdlog = 0)} model a point mass at
@@ -250,24 +251,29 @@
       reserved characters from RFC 3986,
       \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
 
-      \item \code{unique(warnings())} now works, as does
-      \code{c(warnings())}.
+      \item \code{unique(warnings())} and \code{c(warnings())} are now
+      supported.
+      
+      \item The Bioconductor \sQuote{version} used by
+      \code{setRepositories()} now defaults to \code{3.0}. (It can be
+      set at runtime \emph{via} environment variable
+      \env{R_BIOC_VERSION}.)
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The \command{configure} script reports on the more important
-      capabilities/options which are not compiled in.
+      capabilities/options which will not be compiled in.
 
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
-      installed: this helps ensure that the current build has priority if
-      an \R shared library has already been installed by e.g.
-      \command{install-libR} in a library mentioned in \env{LDFLAGS}
-      (and not in \sQuote{your system's library directory} as
-      documented). (Wish of \PR{15790}.)
+      installed: this helps ensure that the current build has priority
+      if an \R shared library has already been installed by
+      e.g.\sspace{}\command{install-libR} in a library mentioned in
+      \env{LDFLAGS} (and not in \sQuote{your system's library directory}
+      as documented). (Wish of \PR{15790}.)
 
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
