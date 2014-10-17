@@ -58,6 +58,8 @@ function(x, compression = FALSE)
 
 ### ** file_test
 
+## exported/documented copy is in utils.
+
 file_test <-
 function(op, x, y)
 {
@@ -603,7 +605,7 @@ function(x, dir, add = FALSE)
 .find_calls <-
 function(x, predicate = NULL, recursive = FALSE)
 {
-    x <- as.list(x)
+    x <- if(is.call(x)) list(x) else as.list(x)
 
     f <- if(is.null(predicate))
         function(e) is.call(e)
@@ -1688,6 +1690,14 @@ function(x)
 }
 
 ### ** .strip_whitespace
+
+## <NOTE>
+## Other languages have this as strtrim() (or variants for left or right
+## trimming only), but R has a different strtrim().
+## So perhaps strstrip()?
+## Could more generally do
+##   strstrip(x, pattern, which = c("both", "left", "right"))
+## </NOTE>
 
 .strip_whitespace <-
 function(x)
