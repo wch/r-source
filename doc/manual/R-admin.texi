@@ -1593,15 +1593,15 @@ The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file
 @file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
 OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
-@dots{}); it is a 64-bit (@cputype{x86_64}) build which should run on
-all Macs from mid-2008 on.  For older Intel Macs and some older versions
-of the OS you can install @R{} from the sources.
+Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build which should
+run on all Macs from mid-2008 on.  For older Intel Macs and some older
+versions of the OS you can install @R{} from the sources.
 
 There is a separate installer package,
-@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks only: the
-`Snow Leopard' installer package also works there and may have more
-binary packages available (but there are a few packages using C++11 and
-only available for the Mavericks build).
+@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks and
+Yosemite: the `Snow Leopard' installer package also works there and may
+have more binary packages available (but there are a few packages using
+C++11 and only available for the Mavericks build).
 
 It is important that if you use a binary installer package that your OS
 is fully updated: run `Software Update' from the Apple menu to be sure.
@@ -1653,8 +1653,8 @@ location of the personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
-Users of @Rapp{} under Mavericks need to be aware of its `App Nap'
-feature
+Users of @Rapp{} under Mavericks and later need to be aware of the `App
+Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are three ways to avoid it:
@@ -2075,7 +2075,7 @@ downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there is an additional type @code{mac.binary} (the default
 in the @acronym{CRAN} distribution but not when compiling from source:
-@code{mac.binary.mavericks} for a Mavericks-only build) which can be
+@code{mac.binary.mavericks} for a Mavericks build) which can be
 passed to @code{install.packages} in order to download and install
 binary packages from a suitable repository.  These OS X binary package
 files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
@@ -2094,7 +2094,7 @@ differ for the `Snow Leopard' and `Mavericks' binary installations of
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  For Mountain Lion and Mavericks see @ref{OS X} and @ref{Java (OS X)}.
+Tk.  For Mountain Lion and later see @ref{OS X} and @ref{Java (OS X)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
@@ -2324,7 +2324,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 @item 
 @code{"mac.binary.mavericks"}: located at
 @file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
-@var{3.1.z} to be run under OS X 10.9 (Mavericks) and containing
+@var{3.1.z} to be run under OS X 10.9 (Mavericks) and later, containing
 @file{.tgz} files.
 
 @item 
@@ -4566,8 +4566,8 @@ will need to register there: that allows you to download older versions
 available for your OS) or some versions of Xcode (from the App Store or
 from @uref{http://developer.apple.com/devcenter/mac/}) you can install
 the command-line tools from within Xcode, from the @samp{Downloads} pane
-in the @samp{Preferences}.  For Mavericks, see the specific sub-section
-below.
+in the @samp{Preferences}.  For Mavericks and later, see the specific
+sub-section below.
 
 Various compilers can be used.  The current @acronym{CRAN} `Snow
 Leopard' distribution of @R{} is built using
@@ -4682,6 +4682,7 @@ take this up to about 1GB).  @samp{TeX Live Utility} (available
 * Lion::                        
 * Mountain Lion::               
 * Mavericks::                   
+* Yosemite::                    
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
@@ -4738,7 +4739,7 @@ If you install the command-line tools for Xcode 4.6.3 you will get the
 compilers used for the CRAN binary distribution: those for Xcode 5 can
 be installed afterwards.
 
-@node Mavericks, Tcl/Tk headers and libraries, Mountain Lion, OS X
+@node Mavericks, Yosemite, Mountain Lion, OS X
 @subsection Mavericks
 
 Xcode for Mavericks provides different compilers, headers and libraries from
@@ -4753,8 +4754,9 @@ command-line tools, or perhaps use the versions from Xcode.  However,
 after an update to Mavericks, you are advised to re-install them.)  They
 are not available under the @samp{Downloads} preference pane in Xcode.
 
-To use the compilers from the command-line tools for Xcode 5 with the
-recommended Fortran compiler, have in @file{config.site} something like
+To use the compilers from the command-line tools for Xcode 5 or 6 with
+the recommended Fortran compiler, have in @file{config.site} something
+like
 
 @example
 CC=clang
@@ -4779,7 +4781,13 @@ when installing on Mavericks.
 
 See the comments under Mountain Lion about X11 and GTK.
 
-@node Tcl/Tk headers and libraries, Java (OS X), Mavericks, OS X
+@node Yosemite, Tcl/Tk headers and libraries, Mavericks, OS X
+@subsection Yosemite
+
+See the comments under `Mavericks'.
+
+
+@node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4831,14 +4839,14 @@ no longer supporting Java (and what it does support is Java 6, which has
 reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
-Mountain Lion and Mavericks do not come with an installed JRE, and an
+Mountain Lion and later do not come with an installed JRE, and an
 upgrade to either removes one if already installed: it is intended to be
 installed at first use. Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed this should prompt you to install it.
 
 However, you may want/need to install the latest Java from Oracle
-(currently Java 7 or 8 from
+(currently Java 8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
 
@@ -4870,7 +4878,7 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
