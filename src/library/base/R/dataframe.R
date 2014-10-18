@@ -1509,7 +1509,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	if(.row_names_info(e1) > 0L) rn <- attr(e1, "row.names")
 	cn <- names(e1)
 	if(any(dim(e2) != dim(e1)))
-	    stop(.Generic, " only defined for equally-sized data frames")
+	    stop(sQuote(.Generic), " only defined for equally-sized data frames")
     } else if(lclass) {
 	## e2 is not a data frame, but e1 is.
         nr <- .row_names_info(e1, 2L)

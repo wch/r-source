@@ -58,8 +58,7 @@ function(dir, outDir)
     }
 
     OStype <- R.version$platform
-    if (length(grep("-apple-darwin", R.version$platform)) &&
-        nzchar(Sys.getenv("R_ARCH")))
+    if (grepl("-apple-darwin", OStype) && nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
 	paste0("R ",
@@ -596,7 +595,7 @@ function(dir, outDir, encoding = "")
     ## Create a vignette index only if the vignette dir exists.
     if (!ok)
        return(invisible())
-       
+
     ## Copy the index to Meta
     file.copy(indexname, file.path(outDir, "Meta"))
 
@@ -740,7 +739,7 @@ function(dir, outDir, keep.source = TRUE)
     unlink(buildDir, recursive = TRUE)
     ## Now you need to update the HTML index!
     ## This also creates the .R files
-    .install_package_vignettes2(dir, outDir)    
+    .install_package_vignettes2(dir, outDir)
     invisible()
 }
 
