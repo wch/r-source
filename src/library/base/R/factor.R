@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -158,17 +158,18 @@ print.factor <- function (x, quote = FALSE, max.levels = NULL,
 }
 
 
-Math.factor <- function(x, ...) {
-    stop(.Generic, " not meaningful for factors")
-}
+Math.factor <- function(x, ...)
+    stop(sQuote(.Generic), " not meaningful for factors")
+
 ## The next two have an .ordered method:
 Summary.factor <- function(..., na.rm)
-    stop(.Generic, " not meaningful for factors")
+    stop(sQuote(.Generic), " not meaningful for factors")
+
 Ops.factor <- function(e1, e2)
 {
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
-	warning(.Generic, " not meaningful for factors")
+	warning(sQuote(.Generic), " not meaningful for factors")
 	return(rep.int(NA, max(length(e1), if(!missing(e2)) length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
