@@ -69,7 +69,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   \code{subdirs != FALSE} depends on recording a \code{"Path"} field in
   the \file{PACKAGES} file.
 
-  Support for more general file names (e.g. other types of compression)
+  Support for more general file names (e.g., other types of compression)
   \emph{via} a \code{"File"} field in the \file{PACKAGES} file can be
   used by \code{\link{download.packages}}.  If the file names are not of
   the standard form, use \code{addFiles = TRUE}.

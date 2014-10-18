@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{deparseOpts}
 \alias{.deparseOpts}
 \title{Options for Expression Deparsing}
@@ -57,7 +59,7 @@
     \item{\code{keepNA}}{
       Integer, real and character \code{NA}s are surrounded by coercion
       functions where necessary to ensure that they are parsed to the
-      same type.  Since e.g. \code{NA_real_} can be output in \R, this is
+      same type.  Since e.g.\sspace{}\code{NA_real_} can be output in \R, this is
       mainly used in connection with \code{S_compatible}.
     }
     \item{\code{all}}{

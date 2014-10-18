@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{contrast}
 \alias{contr.helmert}
@@ -41,7 +42,7 @@ contr.SAS(n, contrasts = TRUE, sparse = FALSE)
   a factor with \code{n} levels.  The returned value contains the
   computed contrasts.  If the argument \code{contrasts} is \code{FALSE}
   a square indicator matrix (the dummy coding) is returned \bold{except}
-  for \code{contr.poly} (which includes the 0-degree, i.e. constant,
+  for \code{contr.poly} (which includes the 0-degree, i.e.\sspace{}constant,
   polynomial when \code{contrasts = FALSE}).
 
   \code{contr.helmert} returns Helmert contrasts, which contrast the

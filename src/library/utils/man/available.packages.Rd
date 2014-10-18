@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{available.packages}
 \alias{available.packages}
 \title{List Available Packages at CRAN-like Repositories}
@@ -70,8 +72,8 @@ available.packages(contriburl =
       and \emph{vice versa}.}
     \item{\code{"subarch"}}{For binary packages, exclude those with
       compiled code that is not available for the current
-      sub-architecture, e.g. exclude packages only compiled for 32-bit
-      Windows on a 64-bit Windows \R.}
+      sub-architecture, e.g.\sspace{}exclude packages only compiled for
+      32-bit Windows on a 64-bit Windows \R.}
     \item{\code{"duplicates"}}{Only report the latest version where more
       than one version is available, and only report the first-named
       repository (in \code{contriburl}) with the latest version if that

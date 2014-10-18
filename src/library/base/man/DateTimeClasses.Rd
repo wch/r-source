@@ -148,7 +148,7 @@
   particular how it is printed.  This is usually desirable, but if you
   want to specify an object in a particular time zone but to be printed
   in the current time zone you may want to remove the \code{"tzone"}
-  attribute (e.g. by \code{c(x)}).
+  attribute (e.g., by \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
   zones and leap seconds (25 days have been 86401 seconds long so far:
@@ -221,7 +221,7 @@
   if \code{isdst} is positive or (if \code{-1}) if DST was predicted to
   be in operation in the 2030s on that day.
 
-  Note that there are places (e.g. Rome) whose offset from UTC varied
+  Note that there are places (e.g., Rome) whose offset from UTC varied
   in the years prior to 1902, and these will be handled correctly only
   where there is OS support.
 

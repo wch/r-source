@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Primitive}
 \alias{.Primitive}
 \alias{primitive}
@@ -20,7 +22,7 @@
 \details{
   The advantage of \code{.Primitive} over \code{\link{.Internal}}
   functions is the potential efficiency of argument passing, and that
-  positional matching can be used where desirable, e.g. in
+  positional matching can be used where desirable, e.g.\sspace{}in
   \code{\link{switch}}. For more details, see the \sQuote{R Internals
     Manual}.
 

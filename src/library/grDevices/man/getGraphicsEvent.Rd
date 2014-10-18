@@ -63,7 +63,7 @@ handler will be stored before being returned by \code{getGraphicsEvent()}.
 The mouse event handlers should be functions with header
 \code{function(buttons, x, y)}.  The coordinates \code{x}
 and \code{y} will be passed to mouse event handlers in device independent
-coordinates (i.e. the lower left corner of the window is \code{(0,0)},
+coordinates (i.e., the lower left corner of the window is \code{(0,0)},
 the upper right is \code{(1,1)}).  The \code{buttons} argument
 will be a vector listing the buttons
 that are pressed at the time of the event, with 0 for left, 1 for middle, and 2

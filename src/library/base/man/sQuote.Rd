@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{sQuote}
 \alias{sQuote}
 \alias{dQuote}
@@ -66,7 +68,7 @@ dQuote(x)
   windows, which by default are set up to run in the so-called OEM
   codepage, which in most locales uses a different encoding from
   Windows.  Further, if the codepage is changed (with \code{chcp.exe},
-  e.g. to 1252 in a Western European language), the default raster fonts
+  e.g.\sspace{}to 1252 in a Western European language), the default raster fonts
   do not support the directional quotes.
 
   To work around this, the default for \code{options("useFancyQuotes")}

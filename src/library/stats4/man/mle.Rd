@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{mle}
 \alias{mle}
 \title{Maximum Likelihood Estimation}
@@ -20,7 +22,7 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   \item{fixed}{Named list.  Parameter values to keep fixed during
     optimization.}
   \item{nobs}{optional integer: the number of observations, to be used for
-    e.g. computing \code{\link{BIC}}.}
+    e.g.\sspace{}computing \code{\link{BIC}}.}
   \item{\dots}{Further arguments to pass to \code{\link{optim}}.}
 }
 \details{

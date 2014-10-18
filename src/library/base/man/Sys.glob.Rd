@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Sys.glob}
 \alias{Sys.glob}
 \title{Wildcard Expansion on File Paths}
@@ -47,8 +49,8 @@ Sys.glob(paths, dirmark = FALSE)
   If a filename starts with \code{.} this may need to be matched
   explicitly: for example \code{Sys.glob("*.RData")} may or may not
   match \file{.RData} but will not usually match \file{.aa.RData}.  Note
-  that this is platform-dependent: e.g. on Solaris \code{Sys.glob("*.*")}
-  matches \file{.} and \file{..}.
+  that this is platform-dependent: e.g.\sspace{}on Solaris
+  \code{Sys.glob("*.*")} matches \file{.} and \file{..}.
 
   \code{[} begins a character class.  If the first character in
   \code{[...]} is not \code{!}, this is a character class which matches

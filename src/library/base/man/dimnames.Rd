@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{dimnames}
 \title{Dimnames of an Object}
 \alias{dimnames}
@@ -73,7 +75,7 @@ provideDimnames(x, sep = "", base = list(LETTERS))
   values.
 
   \code{provideDimnames(x)} returns \code{x}, with \dQuote{\code{NULL} -
-    free} \code{dimnames}, i.e. each component a character vector of
+    free} \code{dimnames}, i.e.\sspace{}each component a character vector of
   correct length.
 }
 \note{

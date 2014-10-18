@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{contour}
 \alias{contour}
@@ -87,7 +88,7 @@ contour(x, \dots)
   Notice that \code{contour} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row
   number and the y axis to column number, with column 1 at the bottom,
-  i.e. a 90 degree counter-clockwise rotation of the conventional textual
+  i.e.\sspace{}a 90 degree counter-clockwise rotation of the conventional textual
   layout.
 
   Alternatively, use \code{\link[lattice:levelplot]{contourplot}} from the

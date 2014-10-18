@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{regex}
 \alias{regex}
 \alias{regexp}
@@ -30,7 +32,7 @@
 
   Patterns are described here as they would be printed by \code{cat}:
   (\emph{do remember that backslashes need to be doubled when entering \R
-    character strings}, e.g. from the keyboard).
+    character strings}, e.g.\sspace{}from the keyboard).
 
   Do not assume that long regular expressions will be accepted: the
   POSIX standard only requires up to 256 \emph{bytes}.

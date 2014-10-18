@@ -79,7 +79,7 @@ promptImport(object, filename = NULL, name = NULL,
 }
 \section{Warning}{
   The default filename may not be a valid filename under limited file
-  systems (e.g. those on Windows).
+  systems (e.g., those on Windows).
 
   Currently, calling \code{prompt} on a non-function object assumes that
   the object is in fact a data set and hence documents it as such.  This

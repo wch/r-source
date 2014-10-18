@@ -33,7 +33,7 @@ Sys.Date()
 }
 \note{
   \code{Sys.time} may return fractional seconds, but they are ignored by
-  the default conversions (e.g. printing) for class \code{"POSIXct"}.
+  the default conversions (e.g., printing) for class \code{"POSIXct"}.
   See the examples and \code{\link{format.POSIXct}} for ways to reveal them.
 }
 \seealso{

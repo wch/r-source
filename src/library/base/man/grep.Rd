@@ -140,7 +140,7 @@ regexec(pattern, text, ignore.case = FALSE,
   coercion to character).  Elements of character vectors \code{x} which
   are not substituted will be returned unchanged (including any declared
   encoding).  If \code{useBytes = FALSE} a non-ASCII substituted result
-  will often be in UTF-8 with a marked encoding (e.g. if there is a
+  will often be in UTF-8 with a marked encoding (e.g., if there is a
   UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
   Such strings can be re-encoded by \code{\link{enc2native}}.
 
@@ -168,7 +168,7 @@ regexec(pattern, text, ignore.case = FALSE,
 
 \section{Warning}{
   POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
-  work correctly with repeated word-boundaries (e.g. \code{pattern =
+  work correctly with repeated word-boundaries (e.g., \code{pattern =
   "\\b"}).  Use \code{perl = TRUE} for such matches (but that may not
   work as expected with non-ASCII inputs, as the meaning of
   \sQuote{word} is system-dependent).

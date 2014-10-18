@@ -63,7 +63,7 @@ sink.number(type = c("output", "message"))
   there is no stack of connections.
 
   If \code{file} is a character string, the file will be opened using
-  the current encoding.  If you want a different encoding (e.g. to
+  the current encoding.  If you want a different encoding (e.g., to
   represent strings which have been stored in UTF-8), use a
   \code{\link{file}} connection --- but some ways to produce \R output
   will already have converted such strings to the current encoding.

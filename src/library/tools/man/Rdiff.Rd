@@ -33,7 +33,7 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
   on Windows, Windows' so-called \sQuote{smart quotes}, are mapped to
   a simple quote.  Addresses of environments, compiled bytecode and
   other exotic types expressed as hex addresses
-  (e.g. \code{<environment: 0x12345678>}) are mapped to
+  (e.g., \code{<environment: 0x12345678>}) are mapped to
   \code{0x00000000}.  The files are then compared line-by-line.  If
   there are the same number of lines and \code{useDiff} is false, a
   simple \command{diff -b} -like display of differences is printed

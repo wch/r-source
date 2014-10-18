@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{par}
 \alias{par}
@@ -169,7 +170,7 @@ par(\dots, no.readonly = FALSE)
 
   Note that graphical parameters are suggestions: plotting functions and
   devices need not make use of them (and this is particularly true of
-  non-default methods for e.g. \code{plot}).
+  non-default methods for e.g.\sspace{}\code{plot}).
 }
 
 \value{
@@ -235,7 +236,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{cex}}{A numerical value giving the amount by which
       plotting text and symbols should be magnified relative to the
       default.  This starts as \code{1} when a device is opened, and is
-      reset when the layout is changed, e.g. by setting \code{mfrow}.
+      reset when the layout is changed, e.g.\sspace{}by setting \code{mfrow}.
 
       Note that some graphics functions such as
       \code{\link{plot.default}} have an \emph{argument} of this name

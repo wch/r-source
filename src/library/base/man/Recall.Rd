@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Recall}
 \alias{Recall}
 \title{Recursive Calling}
@@ -19,7 +21,7 @@ Recall(\dots)
 }
 \note{
   \code{Recall} will not work correctly when passed as a function
-  argument, e.g. to the \code{apply} family of functions.
+  argument, e.g.\sspace{}to the \code{apply} family of functions.
 }
 \seealso{
   \code{\link{do.call}} and \code{\link{call}}.

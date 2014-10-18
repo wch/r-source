@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{bringToTop}
 \alias{bringToTop}
 \alias{stayOnTop}
@@ -24,7 +26,7 @@ bringToTop(which = dev.cur(), stay = FALSE)
   \code{-1} it brings the console to the top.
 
   If \code{stay =  TRUE}, the window is designated as a topmost window,
-  i.e. it will stay on top of any regular window.  \code{stay} may only be used
+  i.e.\sspace{}it will stay on top of any regular window.  \code{stay} may only be used
   when Rgui is run in SDI mode.  This corresponds to the \dQuote{Stay on top}
   popup menu item in Rgui.
 }

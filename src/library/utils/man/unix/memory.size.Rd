@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{memory.size}
 \alias{memory.size}
 \alias{memory.limit}
@@ -25,7 +27,7 @@ memory.limit(size = NA)
 }
 \details{
   To restrict memory usage on a Unix-alike use the facilities of the
-  shell used to launch \R, e.g. \code{limit} or \code{ulimit}.
+  shell used to launch \R, e.g.\sspace{}\code{limit} or \code{ulimit}.
 }
 \value{
   Size in bytes: always \code{Inf}.

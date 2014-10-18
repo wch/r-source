@@ -41,11 +41,11 @@ dget(file)
   \code{dput} will warn if fewer characters were written to a file than
   expected, which may indicate a full or corrupt file system.
 
-  To display saved source rather than deparsing the internal representation
-  include \code{"useSource"} in \code{control}.  \R currently saves
-  source only for function definitions.  If you do not care about source
-  representation (e.g. for a data object) set \code{options(keep.source
-    = FALSE}) before calling \code{dget}. 
+  To display saved source rather than deparsing the internal
+  representation include \code{"useSource"} in \code{control}.  \R
+  currently saves source only for function definitions.  If you do not
+  care about source representation (e.g., for a data object), for speed
+  set \code{options(keep.source = FALSE}) when calling \code{source}.
 }
 \value{
   For \code{dput}, the first argument invisibly.

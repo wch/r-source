@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{tsp}
 \title{Tsp Attribute of Time-Series-like Objects}
 \alias{tsp}
@@ -26,7 +28,7 @@ hasTsp(x)
 \details{
   The \code{tsp} attribute gives the start time \emph{in time units},
   the end time and the frequency (the number of observations per unit of
-  time, e.g. 12 for a monthly series).
+  time, e.g.\sspace{}12 for a monthly series).
 
   Assignments are checked for consistency.
 

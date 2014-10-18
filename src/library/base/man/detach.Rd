@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{detach}
 \alias{detach}
 \title{Detach Objects from the Search Path}
@@ -70,7 +72,7 @@ detach(name, pos = 2L, unload = FALSE, character.only = FALSE,
   will throw an error.
 
   Unloading some namespaces has undesirable side effects:
-  e.g. unloading \pkg{grid} closes all graphics devices, and on some
+  e.g.\sspace{}unloading \pkg{grid} closes all graphics devices, and on some
   systems \pkg{tcltk} cannot be reloaded once it has been unloaded and
   may crash \R if this is attempted.
 }

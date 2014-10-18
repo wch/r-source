@@ -3,6 +3,8 @@
 % Copyright 1995-2007 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{model.extract}
 \title{Extract Components from a Model Frame}
 \usage{
@@ -30,7 +32,7 @@ model.weights(x)
 \details{
   \code{model.extract} is provided for compatibility with S, which does
   not have the more specific functions.  It is also useful to extract
-  e.g. the \code{etastart} and \code{mustart} components of a
+  e.g.\sspace{}the \code{etastart} and \code{mustart} components of a
   \code{\link{glm}} fit.
 
   \code{model.offset} and \code{model.response} are equivalent to

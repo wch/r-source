@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{text}
 \title{Add Text to a Plot}
 \encoding{UTF-8}
@@ -94,8 +96,8 @@ text(x, \dots)
 
   What happens when \code{font = 5} (the symbol font) is selected can be
   both device- and locale-dependent.  Most often \code{labels} will be
-  interpreted in the Adobe symbol encoding, so e.g. \code{"d"} is delta,
-  and \code{"\300"} is aleph.
+  interpreted in the Adobe symbol encoding, so e.g.\sspace{}\code{"d"}
+  is delta, and \code{"\300"} is aleph.
 }
 \section{Euro symbol}{
   The Euro symbol was introduced relatively recently and may not be

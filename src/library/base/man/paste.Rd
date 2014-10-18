@@ -3,6 +3,8 @@
 % Copyright 1995-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{paste}
 \title{Concatenate Strings}
 \concept{combine strings}
@@ -33,7 +35,7 @@ paste0(\dots, collapse = NULL)
   Note that \code{paste()} coerces \code{\link{NA_character_}}, the
   character missing value, to \code{"NA"} which may seem
   undesirable, e.g., when pasting two character vectors, or very
-  desirable, e.g. in \code{paste("the value of p is ", p)}.
+  desirable, e.g.\sspace{}in \code{paste("the value of p is ", p)}.
 
   \code{paste0(\dots, collapse)} is equivalent to
   \code{paste(\dots, sep = "", collapse)}, slightly more efficiently.

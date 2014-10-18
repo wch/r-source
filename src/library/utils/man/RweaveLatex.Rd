@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{RweaveLatex}
 \alias{RweaveLatex}
 \alias{RweaveLatexSetup}
@@ -255,7 +257,7 @@ my.Swd <- function(name, width, height, ...)
   different devices can be used for different chunks.
 
   A replacement for \code{\link{dev.off}} can be provided as a function
-  with suffix \code{.off}, e.g. \code{my.Swd.off()}.
+  with suffix \code{.off}, e.g.\sspace{}\code{my.Swd.off()}.
 }
 
 \section{Hook Functions}{

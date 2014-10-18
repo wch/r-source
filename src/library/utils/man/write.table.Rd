@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{write.table}
 \alias{write.table}
@@ -83,10 +84,10 @@ write.csv2(\dots)
   columns are unquoted by default.
 
   Any columns in a data frame which are lists or have a class
-  (e.g. dates) will be converted by the appropriate \code{as.character}
+  (e.g., dates) will be converted by the appropriate \code{as.character}
   method: such columns are unquoted by default.  On the other hand,
   any class information for a matrix is discarded and non-atomic
-  (e.g. list) matrices are coerced to character.
+  (e.g., list) matrices are coerced to character.
 
   Only columns which have been converted to character will be quoted if
   specified by \code{quote}.
@@ -109,7 +110,7 @@ write.csv2(\dots)
   and then close it after use.
 
   To write a Unix-style file on Windows, use a binary connection
-  e.g. \code{file = file("filename", "wb")}.
+  e.g.\sspace{}\code{file = file("filename", "wb")}.
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If
@@ -137,9 +138,9 @@ write.csv2(\dots)
 
   CSV files do not record an encoding, and this causes problems if they
   are not ASCII for many other applications.  Windows Excel 2007/10 will
-  open files (e.g. by the file association mechanism) correctly if they
+  open files (e.g., by the file association mechanism) correctly if they
   are ASCII or UTF-16 (use \code{fileEncoding = "UTF-16LE"}) or perhaps
-  in the current Windows codepage (e.g. \code{"CP1252"}), but the
+  in the current Windows codepage (e.g., \code{"CP1252"}), but the
   \sQuote{Text Import Wizard} (from the \sQuote{Data} tab) allows far
   more choice of encodings.  Excel:mac 2004/8 can \emph{import} only
   \sQuote{Macintosh} (which seems to mean Mac Roman), \sQuote{Windows}

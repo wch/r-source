@@ -3,6 +3,9 @@
 % Copyright 2009-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
+
 \name{testInstalledPackage}
 \alias{testInstalledPackage}
 \alias{testInstalledPackages}
@@ -36,6 +39,8 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   \item{srcdir}{Optional directory to look for \code{.save} files.}
   \item{Ropts}{Additional options such as \option{-d valgrind} to be
     passed to \command{R CMD BATCH} when running examples or tests.}
+  \item{\dots}{additional arguments use when preparing the files to be
+    run, e.g.\sspace{}\code{commentDontrun} and \code{commentDonttest}.}
   \item{scope}{Which set(s) should be tested?}
 }
 \details{

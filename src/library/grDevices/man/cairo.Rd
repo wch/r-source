@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{cairo}
 \alias{svg}
 \alias{cairo_pdf}
@@ -106,7 +108,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 \section{Anti-aliasing}{
   Anti-aliasing is applied to both graphics and fonts.  It is generally
   preferable for lines and text, but can lead to undesirable effects for
-  fills, e.g. for \code{\link{image}} plots, and so is never used for
+  fills, e.g.\sspace{}for \code{\link{image}} plots, and so is never used for
   fills.
 
   \code{antialias = "default"} is in principle platform-dependent, but

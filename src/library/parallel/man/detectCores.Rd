@@ -35,7 +35,7 @@ detectCores(all.tests = FALSE, logical = FALSE)
 
   Exactly what this represents is OS-dependent: where possible by
   default it represents physical cores and not logical
-  (e.g. hyperthreaded) CPUs.
+  (e.g., hyperthreaded) CPUs.
 
   On Windows the default is the number of logical CPUs.
 #ifdef windows

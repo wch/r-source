@@ -3,6 +3,8 @@
 % Copyright 1995-2009 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{Round}
 \alias{ceiling}
 \alias{floor}
@@ -56,7 +58,7 @@ signif(x, digits = 6)
   be used, \sQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
   \code{-2}.  However, this is dependent on OS services and on
-  representation error (since e.g. \code{0.15} is not represented
+  representation error (since e.g.\sspace{}\code{0.15} is not represented
   exactly, the rounding rule applies to the represented number and not
   to the printed number, and so \code{round(0.15, 1)} could be either
   \code{0.1} or \code{0.2}).

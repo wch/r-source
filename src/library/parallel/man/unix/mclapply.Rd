@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{mclapply}
 \alias{mclapply}
@@ -60,7 +61,7 @@ mcMap(f, ...)
   \item{mc.silent}{if set to \code{TRUE} then all output on
     \file{stdout} will be suppressed for all parallel processes forked
     (\file{stderr} is not affected).}
-  \item{mc.cores}{The number of cores to use, i.e. at most how many
+  \item{mc.cores}{The number of cores to use, i.e.\sspace{}at most how many
     child processes will be run simultaneously.   The option is
     initialized from environment variable \env{MC_CORES} if set.  Must
     be at least one, and parallelization requires at least two cores.}
@@ -84,8 +85,8 @@ mcMap(f, ...)
 
   By default (\code{mc.preschedule = TRUE}) the input \code{X} is split
   into as many parts as there are cores (currently the values are spread
-  across the cores sequentially, i.e. first value to core 1, second to
-  core 2, ... (core + 1)-th value to core 1 etc.) and then one process
+  across the cores sequentially, i.e.\sspace{}first value to core 1, second to
+  core 2, \ldots (core + 1)-th value to core 1 etc.) and then one process
   is forked to each core and the results are collected.
 
   Without prescheduling, a separate job is forked for each value of

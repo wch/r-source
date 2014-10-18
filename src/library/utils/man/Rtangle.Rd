@@ -32,7 +32,7 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
 \details{
   Unless \code{split = TRUE}, the default name of the output file is
   \code{basename(file)} with an extension corresponding to the Sweave
-  syntax (e.g. \file{Rnw}, \file{Stex}) replaced by \file{R}.  File
+  syntax (e.g., \file{Rnw}, \file{Stex}) replaced by \file{R}.  File
   names \code{"stdout"} and \code{"stderr"} are interpreted as the
   output and message connection respectively.
 

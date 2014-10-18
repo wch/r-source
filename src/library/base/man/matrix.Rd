@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{matrix}
 \alias{matrix}
 \alias{as.matrix}
@@ -73,7 +75,7 @@ is.matrix(x)
   etc.
 
   The default method for \code{as.matrix} calls \code{as.vector(x)}, and
-  hence e.g. coerces factors to character vectors.
+  hence e.g.\sspace{}coerces factors to character vectors.
 
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.

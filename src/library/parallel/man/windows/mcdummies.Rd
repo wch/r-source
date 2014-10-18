@@ -3,6 +3,8 @@
 % Copyright 2009-2011 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{mclapply}
 \alias{mclapply}
 \alias{pvec}
@@ -42,7 +44,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   \item{MoreArgs, SIMPLIFY, USE.NAMES}{see \code{\link{mapply}}.}
   \item{mc.preschedule, mc.set.seed, mc.silent, mc.cleanup, mc.allow.recursive}{
     Ignored on Windows.}
-  \item{mc.cores}{The number of cores to use, i.e. at most how many
+  \item{mc.cores}{The number of cores to use, i.e.\sspace{}at most how many
     child processes will be run simultaneously.   Must be exactly 1 on
     Windows (which uses the master process).}
 }

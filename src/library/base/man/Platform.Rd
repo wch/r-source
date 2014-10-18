@@ -3,6 +3,8 @@
 % Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{.Platform}
 \title{Platform Specific Variables}
 \usage{
@@ -44,7 +46,7 @@
   \item{endian}{
     character string, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.  This is relevant when it is
-    necessary to know the order to read/write bytes of e.g. an integer or
+    necessary to know the order to read/write bytes of e.g.\sspace{}an integer or
     double from/to a \link{connection}: see \code{\link{readBin}}.
   }
   \item{pkgType}{

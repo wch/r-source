@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{termplot}
 \alias{termplot}
@@ -86,7 +87,7 @@ termplot(model, data = NULL, envir = environment(formula(model)),
   Nothing sensible happens for interaction terms, and they may cause errors.
 
   The \code{plot = FALSE} option is useful when some special action is needed,
-  e.g. to overlay the results of two different models or to plot
+  e.g.\sspace{}to overlay the results of two different models or to plot
   confidence bands.
 }
 \value{

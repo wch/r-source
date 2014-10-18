@@ -3,6 +3,8 @@
 % Copyright 1995-2012 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{.Machine}
 \alias{.Machine}
 \concept{long double}
@@ -105,7 +107,7 @@
 \note{
   \code{sizeof.longdouble} only tells you the amount of storage
   allocated for a long double (which are normally used internally by \R for
-  accumulators in e.g. \code{\link{sum}}, and can be read by
+  accumulators in e.g.\sspace{}\code{\link{sum}}, and can be read by
   \code{\link{readBin}}).  Often what is stored is the 80-bit extended
   double type of IEC 60559, padded to the double alignment used on the
   platform --- this seems to be the case for the common \R platforms

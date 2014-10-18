@@ -1,5 +1,6 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
 
 \name{CHANGES}
 \title{Windows-specific changes to R}
@@ -149,7 +150,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item The fix for \PR{14543} caused stack problems with outputting
-      large \R objects (e.g. data frames of 25,000 items).  (\PR{14698})
+      large \R objects (e.g., data frames of 25,000 items).  (\PR{14698})
 
       \item In a double-byte locale (Chinese, Japanese, Korean),
       \code{grep()} and friends might have used byte-wise matching of
@@ -283,7 +284,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item The fix for \PR{14583} caused inconsistent behaviour in other
-      areas, e.g. \PR{14628}, extra lines appearing in image displays,
+      areas, e.g.\sspace{}\PR{14628}, extra lines appearing in image displays,
       and uneven bases on histograms.  (\PR{14632}).
       
       \item Opening large numbers of \code{windows()} graphics devices
@@ -331,7 +332,7 @@
       \item Shutting down the \R session cleaned up the temporary
       directory before closing all graphics devices.  On Windows this
       necessitated changing the working directory, so some devices
-      (e.g. \code{tiff()}) could write files in the wrong directory if
+      (e.g., \code{tiff()}) could write files in the wrong directory if
       closed during shutdown.  The order has been reversed.      
     }
   }
@@ -587,7 +588,7 @@
         only be offered if they are available for the current
         architecture.
 
-	The default personal library, e.g. \file{~/R/win-library/2.12}
+	The default personal library, e.g.\sspace{}\file{~/R/win-library/2.12}
 	is now the same for both 32- and 64-bit \R.
 	
       \item The recommended 64-bit toolchain has been changed to one
@@ -600,7 +601,7 @@
 
       \item For those building \R from the sources, the 64-bit
        \code{Tcl} binary distribution for 2.12.x is in file
-       \file{R64a_Tcl_8-5-8.zip} and contains e.g. directory
+       \file{R64a_Tcl_8-5-8.zip} and contains e.g.\sspace{}directory
        \file{Tcl/bin64} and not \file{Tcl/bin}.
     }
   }
@@ -756,7 +757,7 @@
 \section{CHANGES IN R VERSION 2.10.1 patched}{
   \subsection{BUG FIXES}{
     \itemize{
-      \item Some of the MDI toolbar buttons (e.g. \code{"Open Script"})
+      \item Some of the MDI toolbar buttons (e.g., \code{"Open Script"})
        did not return the focus to the console if the user cancelled the
        action.
        

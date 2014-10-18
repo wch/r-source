@@ -3,6 +3,8 @@
 % Copyright 2007-2014 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{EnvVar}
 \alias{environment variables}
 \alias{HOME}
@@ -111,7 +113,7 @@
     \item{\env{R_LIBS_USER}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
     \item{\env{R_PAPERSIZE}:}{Optional.  Used to set the default for
-      \code{\link{options}("papersize")}, e.g. used by
+      \code{\link{options}("papersize")}, e.g.\sspace{}used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2pdf}.}

@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{plotmath}
 \alias{plotmath}
 \alias{symbol}
@@ -176,7 +178,7 @@
 
   \code{sigma1} is also known as \code{stigma}, its Unicode name.
 
-  Control characters (e.g. \samp{\\n}) are not interpreted in character
+  Control characters (e.g., \samp{\\n}) are not interpreted in character
   strings in plotmath, unlike normal plotting.
 
   The fonts used are taken from the current font family, and so can be
@@ -234,7 +236,7 @@
   \bold{9}, 582--599.
 
   The symbol codes can be found in octal in the Adobe reference manuals,
-  e.g. for Postscript
+  e.g.\sspace{}for Postscript
   \url{http://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
   or PDF
   \url{http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}

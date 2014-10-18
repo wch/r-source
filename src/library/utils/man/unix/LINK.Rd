@@ -3,6 +3,8 @@
 % Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
+\newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
+
 \name{LINK}
 \alias{LINK}
 \title{Create Executable Programs}
@@ -29,7 +31,7 @@
 }
 \note{
   Some binary distributions of \R have \code{LINK} in a separate
-  bundle, e.g. an \code{R-devel} RPM.
+  bundle, e.g.\sspace{}an \code{R-devel} RPM.
   
   This is not available on Windows.
 }
