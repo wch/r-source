@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -169,7 +169,7 @@
             }
             cnt <- 0L
             for(f in names(Rd)) {
-                bf <- basename(f)
+##                bf <- basename(f)
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
                     message(".", appendLF=FALSE, domain=NA)
@@ -759,7 +759,7 @@ setEncoding2, "
         } else if (a == "--only-meta") {
             only_meta <- TRUE
         } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
-            OS_type <- substr(a, 6, 1000)
+            OSdir <- substr(a, 6, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             enc <- substr(a, 12, 1000)
         } else if (substr(a, 1, 17) == "--outputEncoding=") {
