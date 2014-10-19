@@ -757,8 +757,7 @@ setEncoding2, "
         } else if (a == "--only-meta") {
             only_meta <- TRUE
         } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
-            ## currently unused: intended?
-            OS_type <- substr(a, 6, 1000)
+            OSdir <- substr(a, 6, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             enc <- substr(a, 12, 1000)
         } else if (substr(a, 1, 17) == "--outputEncoding=") {

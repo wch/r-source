@@ -410,6 +410,9 @@
 
       \item \code{bw.SJ(x)} and other bw.*() no longer segfault when
       \code{x} contains non-finite values. (\PR{16024})
+      
+      \item \command{R CMD Rd2pdf} unintentionally ignored its
+      \option{--os} option.
     }
   }
 }
