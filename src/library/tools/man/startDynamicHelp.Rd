@@ -1,11 +1,13 @@
 % File src/library/tools/man/startDynamicHelp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{startDynamicHelp}
 \alias{startDynamicHelp}
 \alias{help.ports}
+\alias{R_DISABLE_HTTPD}
+
 \title{Start the Dynamic HTML Help System}
 \description{
   This function starts the internal help server, so that HTML help pages

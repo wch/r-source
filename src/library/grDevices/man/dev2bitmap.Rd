@@ -6,6 +6,7 @@
 \name{dev2bitmap}
 \alias{dev2bitmap}
 \alias{bitmap}
+
 \title{Graphics Device for Bitmap Files via Ghostscript}
 \usage{
 bitmap(file, type = "png16m", height = 7, width = 7, res = 72,

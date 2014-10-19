@@ -9,6 +9,8 @@
 \alias{makeForkCluster}
 \alias{stopCluster}
 \alias{setDefaultCluster}
+\alias{R_PARALLEL_PORT}
+
 \title{
   Create a Parallel Socket Cluster
 }
@@ -42,11 +44,11 @@ setDefaultCluster(cl = NULL)
   \code{"FORK"} calls \code{makeForkCluster}.  Other types are passed to
   package \CRANpkg{snow}.
 
-  \code{makePSOCKcluster} is very similar to \code{makeSOCKcluster} in
-  package \CRANpkg{snow}.  It runs \command{Rscript} on the specified
-  host(s) to set up a worker process which listens on a socket for
-  expressions to evaluate, and returns the results (as serialized
-  objects).
+  \code{makePSOCKcluster} is an enhanced version of
+  \code{makeSOCKcluster} in package \CRANpkg{snow}.  It runs
+  \command{Rscript} on the specified host(s) to set up a worker process
+  which listens on a socket for expressions to evaluate, and returns the
+  results (as serialized objects).
 
   \code{makeForkCluster} is merely a stub on Windows.  On Unix-alike
   platforms it creates the worker process by forking.
