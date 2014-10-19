@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/setInternet2.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
@@ -8,6 +8,8 @@
 \name{setInternet2}
 \Rdversion{1.1}
 \alias{setInternet2}
+\alias{R_WIN_INTERNET2}
+
 \title{
 Set or disable the use of Internet Explorer for Internet access.
 }

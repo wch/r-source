@@ -1,10 +1,14 @@
 % File src/library/tools/man/find_gs_cmd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-2013 R Core Team
+% Copyright 2008-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{find_gs_cmd}
 \alias{find_gs_cmd}
+
+\alias{R_GSCMD}
+\alias{GSC}
+
 \title{
   Find a GhostScript Executable
 }
