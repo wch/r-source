@@ -1270,7 +1270,7 @@
     merge <- FALSE
     dsym <- nzchar(Sys.getenv("PKG_MAKE_DSYM"))
     get_user_libPaths <- FALSE
-##    data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
+    data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
     compact_docs <- FALSE
     keep.source <- getOption("keep.source.pkgs")
