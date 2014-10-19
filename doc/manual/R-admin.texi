@@ -3498,14 +3498,14 @@ The MKL interface has changed several times, and may change again: the
 following notes apply exactly only to version 10.3 but have been used
 with version 11.1.
 
-Versions 10 and later of MKL support two linking models: only the
-layered model is described here: it gives the user fine-grained control
-over four different library layers: interface, threading, computation,
-and run-time library support.  The choice of interface layer is
-important on @cputype{x86_64} since the Intel Fortran compiler returns
-complex values in different registers from the @acronym{GNU} Fortran
-compiler: you must therefore use the interface layer that matches your
-compiler (@code{mkl_intel*} or @code{mkl_gf*}).
+Versions 10 and later of MKL support two linking models.  Only the
+layered model is described here as it gives the user fine-grained
+control over four different library layers: interface, threading,
+computation, and run-time library support.  The choice of interface
+layer is important on @cputype{x86_64} since the Intel Fortran compiler
+returns complex values in different registers from the @acronym{GNU}
+Fortran compiler: you must therefore use the interface layer that
+matches your compiler (@code{mkl_intel*} or @code{mkl_gf*}).
 
 These examples are for GCC compilers on @cputype{x86_64}.
 
