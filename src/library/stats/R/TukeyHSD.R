@@ -49,7 +49,7 @@ TukeyHSD.aov <-
     for (nm in names(tabs)) {
         tab <- tabs[[nm]]
         means <- as.vector(tab)
-        nms <- if(length(d <- dim(tab)) > 1L) {
+        nms <- if(length(dim(tab)) > 1L) {
             dn <- dimnames(tab)
             apply(do.call("expand.grid", dn), 1L, paste, collapse = ":")
         } else names(tab)

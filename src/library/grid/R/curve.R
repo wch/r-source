@@ -95,23 +95,15 @@ calcSquareControlPoints <- function(x1, y1, x2, y2,
         end <- !end
     startx <- ifelse(end,
                      x1,
-                     ifelse(abs(slope) > 1,
-                            newx <- x2 - dx,
-                            newx <- x2 - sign(slope)*dy))
+                     ifelse(abs(slope) > 1, x2 - dx, x2 - sign(slope)*dy))
     starty <- ifelse(end,
                      y1,
-                     ifelse(abs(slope) > 1,
-                            newy <- y2 - sign(slope)*dx,
-                            newy <- y2 - dy))
+                     ifelse(abs(slope) > 1, y2 - sign(slope)*dx, y2 - dy))
     endx <- ifelse(end,
-                   ifelse(abs(slope) > 1,
-                          newx <- x1 + dx,
-                          newx <- x1 + sign(slope)*dy),
+                   ifelse(abs(slope) > 1, x1 + dx, x1 + sign(slope)*dy),
                    x2)
     endy <- ifelse(end,
-                   ifelse(abs(slope) > 1,
-                          newy <- y1 + sign(slope)*dx,
-                          newy <- y1 + dy),
+                   ifelse(abs(slope) > 1, y1 + sign(slope)*dx, y1 + dy),
                    y2)
 
     cps <- calcControlPoints(startx, starty, endx, endy,
@@ -138,7 +130,6 @@ calcControlPoints <- function(x1, y1, x2, y2, curvature, angle, ncp,
     dx <- x2 - x1
     dy <- y2 - y1
     slope <- dy/dx
-    oslope <- -1/slope
 
     # Calculate "corner" of region to produce control points in
     # (depends on 'angle', which MUST lie between 0 and 180)

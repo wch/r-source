@@ -207,7 +207,6 @@ Ops.factor <- function(e1, e2)
     attr(y,"contrasts") <- attr(x,"contrasts")
     attr(y,"levels") <- attr(x,"levels")
     class(y) <- oldClass(x)
-    lev <- levels(x)
     if (drop)
         factor(y, exclude = if(anyNA(levels(x))) NULL else NA ) else y
 }

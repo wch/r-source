@@ -62,7 +62,7 @@ str.Date <- str.POSIXt <- function(object, ...) {
 	if(length(iGiveHead)) # eliminate it from arg.list
 	    larg <- larg[ - iGiveHead ]
 	if(is.numeric(larg[["nest.lev"]]) &&
-	   is.numeric(v.len <- larg[["vec.len"]])) # typical call from data.frame
+	   is.numeric(larg[["vec.len"]])) # typical call from data.frame
 	    ## reduce length for typical call:
 	    larg[["vec.len"]] <-
 		min(larg[["vec.len"]],
@@ -209,7 +209,7 @@ str.default <-
     if (is.null(object))
 	cat(" NULL\n")
     else if(S4) {
-	if(isRef <- is(object,"envRefClass")) {
+	if(is(object,"envRefClass")) {
 	    cld <- tryCatch(object$getClass(), error=function(e)e)
 	    if(inherits(cld, "error")) {
 		cat("Prototypical reference class", " '", paste(cl, collapse = "', '"),

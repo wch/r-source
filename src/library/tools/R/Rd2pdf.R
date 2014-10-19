@@ -169,7 +169,7 @@
             }
             cnt <- 0L
             for(f in names(Rd)) {
-                bf <- basename(f)
+##                bf <- basename(f)
                 cnt <- cnt + 1L
                 if (!silent && cnt %% 10L == 0L)
                     message(".", appendLF=FALSE, domain=NA)
@@ -757,6 +757,7 @@ setEncoding2, "
         } else if (a == "--only-meta") {
             only_meta <- TRUE
         } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
+            ## currently unused: intended?
             OS_type <- substr(a, 6, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             enc <- substr(a, 12, 1000)

@@ -251,8 +251,6 @@ help.search <-
 	## incrementally.
 	dbMat <- vector("list", length(packages_in_hsearch_db) * 4L)
 	dim(dbMat) <- c(length(packages_in_hsearch_db), 4L)
-	defunct_standard_package_names <-
-	    tools:::.get_standard_package_names()$stubs
 
 	for(p in packages_in_hsearch_db) {
             if(incr && np %% incr == 0L) {

@@ -58,7 +58,7 @@ splineDesign <-
     o1 <- ord - 1L
 ### FIXME: the 'outer.ok && need.outer' handling would more efficiently happen
 ###        in the underlying C code - with some programming effort though..
-    if(need.outer <- any(out.x <- x < knots[ord] | knots[nk - o1] < x)) {
+    if(need.outer <- any(x < knots[ord] | knots[nk - o1] < x)) {
         if(outer.ok) { ## x[] is allowed to be 'anywhere'
             ## extend knots set "temporarily"
             in.x <- knots[1L] < x & x < knots[nk]

@@ -263,11 +263,6 @@ Rd2HTML <-
                    "\\dQuote"="&rdquo;",
                    "\\verb"="</code>")
 
-    trim <- function(x) {
-        x <- psub1("^\\s*", "", x)
-        psub1("\\s*$", "", x)
-    }
-
     addParaBreaks <- function(x) {
 	if (isBlankLineRd(x) && isTRUE(inPara)) {
 	    inPara <<- FALSE
@@ -311,14 +306,6 @@ Rd2HTML <-
             inPara <<- FALSE
         if(asis) inAsIs <<- saveAsIs
     }
-
-    checkInfixMethod <- function(blocks)
-    	# Is this a method which needs special formatting?
-    	if ( length(blocks) == 1 && RdTags(blocks) == "TEXT" &&
-    	     blocks[[1L]] %in% c("[", "[[", "$") ) {
-    	    pendingOpen <<- blocks[[1L]]
-    	    TRUE
-    	} else FALSE
 
     writeLink <- function(tag, block, doParas) {
 	parts <- get_link(block, tag, Rdfile)
@@ -404,14 +391,6 @@ Rd2HTML <-
                 writeHref()
             }
         }
-    }
-
-    writeComment <- function(txt) {
-       	txt <- psub1("^%", "", txt)
-       	txt <- fsub1("\n", "", txt)
-       	txt <- fsub("--", "- - ", txt)
-       	txt <- fsub(">", "&gt;", txt)
-	of("<!-- ", txt, " -->\n")
     }
 
     writeLR <- function(block, tag, doParas) {

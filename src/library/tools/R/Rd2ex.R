@@ -22,14 +22,11 @@ Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render",
              outputEncoding="UTF-8", commentDontrun = TRUE, ...)
 {
-    encode_warn <- FALSE
     WriteLines <- function(x, con, outputEncoding, ...) {
         if (outputEncoding != "UTF-8") {
             x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
-            if (anyNA(x)) {
+            if (anyNA(x))
                 x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
-                encode_warn <<- TRUE
-            }
         }
         writeLines(x, con, useBytes = TRUE, ...)
     }

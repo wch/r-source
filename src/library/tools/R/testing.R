@@ -280,7 +280,6 @@ testInstalledPackage <-
 {
     types <- pmatch(types, c("examples", "tests", "vignettes"))
     pkgdir <- find.package(pkg, lib.loc)
-    exdir <- file.path(pkgdir, "R-ex")
     owd <- setwd(outDir)
     on.exit(setwd(owd))
     strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
@@ -496,8 +495,6 @@ testInstalledPackage <-
              ..., commentDontrun = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
-    ## might be zipped:
-    exdir <- file.path(pkgdir, "R-ex")
 
     db <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
     if (!length(db)) {

@@ -88,9 +88,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     show <- function(x) {
 	srcref <- attr(x, "srcref")
 	firstline <- srcref[1L]
-	firstbyte <- srcref[2L]
 	lastline <- srcref[3L]
-	lastbyte <- srcref[4L]
 	firstcol <- srcref[5L]
 	lastcol <- srcref[6L]
 	tag <- attr(x, "Rd_tag")

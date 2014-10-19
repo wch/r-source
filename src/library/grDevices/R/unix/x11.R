@@ -55,7 +55,6 @@ X11.options <- function(..., reset = FALSE)
 
 check_for_XQuartz <- function()
 {
-    r_arch <- .Platform$r_arch
     DSO <- file.path(R.home("modules"), "R_X11.so")
     out <- system2("otool", c("-L", shQuote(DSO)), stdout = TRUE)
     ind <- grep("libX11[.][0-9]+[.]dylib", out)

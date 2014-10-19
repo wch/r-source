@@ -334,7 +334,7 @@ function(f, out = "") {
 Rd2HTML_NEWS_in_Rd <-
 function(f, out, ...) {
     if (grepl("[.]rds$", f)) f <- readRDS(f)
-    Rd2HTML(f, out, stages = c("install", "render"), 
+    Rd2HTML(f, out, stages = c("install", "render"),
            macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"), ...)
 }
 
@@ -344,7 +344,7 @@ function(f, pdf_file)
     if (grepl("[.]rds$", f)) f <- readRDS(f)
     f2 <- tempfile()
     ## See the comments in ?texi2dvi about spaces in paths
-    f3 <- if(grepl(" ", td <- Sys.getenv("TMPDIR")))
+    f3 <- if(grepl(" ", Sys.getenv("TMPDIR")))
         file.path("/tmp", "NEWS.tex")
     else
         file.path(tempdir(), "NEWS.tex")
@@ -528,7 +528,7 @@ function(file = NULL)
 
     db <- .extract_news_from_Rd(x)
     db <- db[db[,1L] != "CHANGES in previous versions",,drop = FALSE]
-    
+
     ## Squeeze in an empty date column.
     .make_news_db(cbind(sub("^CHANGES IN (R )?(VERSION )?", "", db[, 1L]),
                         NA_character_,

@@ -1022,8 +1022,8 @@ function(package, lib.loc = NULL)
             docSlots <-
                 docSlots[is.na(match(docSlots, c("...", "\\dots")))]
         ## was if(!identical(slots_in_code, slots_in_docs)) {
-        if(!all(d.in.c <- docSlots %in% codeSlots) ||
-           !all(c.in.d <- (setdiff(codeSlots, superSlots)) %in% docSlots) ) {
+        if(!all(docSlots %in% codeSlots) ||
+           !all(setdiff(codeSlots, superSlots) %in% docSlots) ) {
             bad_Rd_objects[[db_names[ii]]] <-
                 list(name = cl,
                      code = codeSlots,
@@ -1527,7 +1527,7 @@ function(x, ...)
 checkDocStyle <-
 function(package, dir, lib.loc = NULL)
 {
-    has_namespace <- auto_namespace <- FALSE
+    has_namespace <- FALSE
 
     ## Argument handling.
     if(!missing(package)) {
@@ -1563,10 +1563,6 @@ function(package, dir, lib.loc = NULL)
         ## auto-generated.
         if(packageHasNamespace(package, dirname(dir))) {
             has_namespace <- TRUE
-            ns <- readLines(file.path(dir, "NAMESPACE"), warn = FALSE)
-            auto_namespace <-
-                grepl("# Default NAMESPACE created by R", ns[1L],
-                      useBytes = TRUE)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
@@ -1913,8 +1909,6 @@ function(package, dir, file, lib.loc = NULL,
     }
     ## Also, need to handle base::.Call() etc ...
     FF_funs <- c(FF_funs, sprintf("base::%s", FF_fun_names))
-
-    allowed <- character()
 
     check_registration <- function(e, fr) {
     	sym <- e[[2L]]
@@ -2792,7 +2786,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             ## given a package, find its recursive dependencies.
             ## We want the dependencies of the current package,
             ## not of a version on the repository.
-            pkg <- db[["Package"]]
+##            pkg <- db[["Package"]]
             this <- db[dependencies]; names(this) <- dependencies
             known <- setdiff(utils:::.clean_up_dependencies(this), "R")
             info <- available[, dependencies, drop = FALSE]
@@ -4902,9 +4896,9 @@ function(x, ...)
 
         has_bad_wrong_args <-
             "bad_arg_names" %in% unlist(lapply(y, names))
-        calls <-
-            unique(unlist(lapply(y,
-                                 function(e) e[["bad_calls"]][["names"]])))
+##        calls <-
+##            unique(unlist(lapply(y,
+##                                 function(e) e[["bad_calls"]][["names"]])))
         .fmt_entries_for_file <- function(e, f) {
             c(gettextf("File %s:", sQuote(f)),
               unlist(Map(.fmt_entries_for_function, e, names(e))),
@@ -6255,6 +6249,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
     }
 
 
+    ## FIXME: these are set but not used.
     bad_S4methods <- list()
     bad_refs <- character()
     if(!missing(package)) {

@@ -1011,7 +1011,7 @@ function(vig_name, docDir, encoding = "", pkgdir)
     })
 
     if(length(output) == 1L) {
-        res <- tryCatch({
+        tryCatch({
             source(output, echo = TRUE)
         }, error = function(e) {
             cat("\n  When sourcing ", sQuote(output), ":\n", sep="")

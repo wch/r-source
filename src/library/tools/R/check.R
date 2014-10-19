@@ -2762,7 +2762,6 @@ setRlibs <-
 
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
-            problems <- list()
             res <- character()
             cat("\n")
             def_enc <- desc["Encoding"]

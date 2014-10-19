@@ -289,7 +289,7 @@ httpd <- function(path, query, ...)
     } else if (grepl(fileRegexp, path)) {
         ## ----------------------- package help by file ---------------------
     	pkg <- sub(fileRegexp, "\\1", path)
-    	h0 <- helpdoc <- sub(fileRegexp, "\\2", path)
+    	helpdoc <- sub(fileRegexp, "\\2", path)
         if (helpdoc == "00Index") {
             ## ------------------- package listing ---------------------
             file <- system.file("html", "00Index.html", package = pkg)
@@ -348,8 +348,8 @@ httpd <- function(path, query, ...)
 
         ## Now we know which document we want in which package
 	dirpath <- dirname(path)
-	pkgname <- basename(dirpath)
-	RdDB <- file.path(path, pkgname)
+##	pkgname <- basename(dirpath)
+##	RdDB <- file.path(path, pkgname)
         outfile <- tempfile("Rhttpd")
         Rd2HTML(utils:::.getHelpFile(file.path(path, helpdoc)),
                 out = outfile, package = dirpath,

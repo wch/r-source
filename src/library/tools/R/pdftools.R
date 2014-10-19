@@ -235,7 +235,7 @@ function(file, cache = TRUE)
             ## PDF 1.5+ cross-reference stream, hopefully.
             .con_seek(con, -1L, 2L)
             pos <- .con_seek(con)
-            hdr <- pdf_read_object_header(con)
+            pdf_read_object_header(con)
             obj <- pdf_read_object(con)
             if(!("Type" %in% names(obj)) ||
                !(obj[["Type"]] == "XRef")) {

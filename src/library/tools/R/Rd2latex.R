@@ -229,8 +229,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             latex_link_trans0(parts$dest), "}")
     }
 
-    writeComment <- function(txt) of0(txt, '\n')
-
     writeDR <- function(block, tag) {
         if (length(block) > 1L) {
             of1('## Not run: ')
@@ -297,35 +295,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x
     }
 
-    latex_code_trans  <- function(x)
-    {
-        BSL = '@BSL@';
-        LATEX_SPECIAL = '$^&~_#'
-        if(grepl(LATEX_SPECIAL, x)) {
-            x <- fsub("\\\\", BSL, x)
-            ## unescape (should not be escaped)
-            x <- psub("\\\\([$^&~_#])", "\\1", x)
-            x <- psub("[$^&~_#]", "\\1&", x) #- escape them
-            x <- fsub("^", "\\textasciicircum{}", x) # ^ is SPECIAL
-            x <- fsub("~", "\\textasciitilde{}", x)
-            x <- fsub(BSL, "\\bsl{}", x)
-            x <- fsub("\\", "\\bsl{}", x)
-        }
-        ## avoid conversion to guillemets
-        x <- fsub("<<", "<{}<", x)
-        x <- fsub(">>", ">{}>", x)
-        x <- fsub(",,", ",{},", x) # ,, is a ligature in the ae font.
-        x <- psub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\var{\\1}", x)
-        x
-}
-
-    latex_link_trans <- function(x)
-    {
-        x <- fsub("<-.", "<\\Rdash.", x)
-        x <- psub("<-$", "<\\Rdash", x)
-        x
-    }
-
     latex_code_alias <- function(x)
     {
         x <- fsub("{", "\\{", x)
@@ -336,13 +305,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         x <- fsub("<-", "<\\Rdash", x)
         x <- psub("([!|])", '"\\1', x)
         x
-    }
-
-    latex_code_aliasAA <- function(x)
-    {
-        x <- latex_code_trans(x)
-        x <- latex_link_trans(x)
-        psub("\\\\([!|])", '"\\1', x)
     }
 
     currentAlias <- NA_character_
@@ -634,8 +596,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, fragment=fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
-
-    enc <- which(sections == "\\encoding")
 
     if (is.character(out)) {
         if(out == "") {

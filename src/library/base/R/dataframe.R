@@ -257,8 +257,9 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
                                  stringsAsFactors = default.stringsAsFactors())
 {
     d <- dim(x)
-    nrows <- d[1L]; ir <- seq_len(nrows)
-    ncols <- d[2L]; ic <- seq_len(ncols)
+    nrows <- d[1L]
+    ncols <- d[2L]
+    ic <- seq_len(ncols)
     dn <- dimnames(x)
     ## surely it cannot be right to override the supplied row.names?
     ## changed in 1.8.0

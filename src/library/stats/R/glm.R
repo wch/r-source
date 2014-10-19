@@ -237,7 +237,6 @@ glm.fit <-
             }
             z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
             w <- sqrt((weights[good] * mu.eta.val[good]^2)/variance(mu)[good])
-            ngoodobs <- as.integer(nobs - sum(!good))
             ## call Fortran code via C wrapper
             fit <- .Call(C_Cdqrls, x[good, , drop = FALSE] * w, z * w,
                          min(1e-7, control$epsilon/1000), check=FALSE)
