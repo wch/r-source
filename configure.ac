@@ -2064,7 +2064,8 @@ fi
 ## check for vecLib framework (potentially to be used for BLAS)
 ## in theory vecLib is platform-independent, in practice only
 ## Apple's OS X is known to provide it
-R_CHECK_FRAMEWORK(cblas_cdotu_sub, vecLib)
+## However, as from 10.10 it only provides Accelerate.
+R_CHECK_FRAMEWORK(cblas_cdotu_sub, Accelerate)
 
 ## BLAS.
 ## <NOTE>
@@ -2806,7 +2807,7 @@ if test "${acx_blas_ok}" = "yes"; then
     *-lsgemm*) r_blas=PhiPack ;;
     *sunperf*) r_blas=SunPerf ;;
     *-lessl*)  r_blas=ESSL ;;
-    *vecLib*)  r_blas=vecLib ;;
+    *Accelerate*)  r_blas=Accelerate ;;
     "")        r_blas=none ;;
     *)         r_blas=generic ;;
   esac
