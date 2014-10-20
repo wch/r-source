@@ -2641,8 +2641,9 @@ if test "${acx_blas_ok}" = no; then
 fi
 
 ## Now check if zdotu works (fails on AMD64 with the wrong compiler;
-## also fails on OS X with vecLib and gfortran; but in that case we
-## have a work-around using USE_VECLIB_G95FIX)
+## also fails on OS X with Accelerate/vecLib and gfortran; 
+## but in that case we have a work-around using USE_VECLIB_G95FIX)
+
 if test "${acx_blas_ok}" = yes; then
   AC_MSG_CHECKING([whether double complex BLAS can be used])
   AC_CACHE_VAL([r_cv_zdotu_is_usable],

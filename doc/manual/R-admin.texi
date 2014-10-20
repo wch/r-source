@@ -3482,8 +3482,8 @@ way to use it.
 Our understanding is that this project is now frozen and so will not be
 updated for CPUs released since mid-2010.  However, OpenBLAS
 (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
-support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD
-Bulldozer).  Once installed it can be used by something like
+support for some current CPUs (e.g.@: Intel Sandy Bridge).  Once
+installed it can be used by something like
 
 @example
 --with-blas="-lopenblas"
