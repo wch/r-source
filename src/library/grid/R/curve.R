@@ -80,12 +80,9 @@ interleave <- function(ncp, ncurve, val, sval, eval, e) {
 calcSquareControlPoints <- function(x1, y1, x2, y2,
                                     curvature, angle, ncp,
                                     debug=FALSE) {
-    xm <- (x1 + x2)/2
-    ym <- (y1 + y2)/2
     dx <- x2 - x1
     dy <- y2 - y1
     slope <- dy/dx
-    oslope <- -1/slope
 
     # FIXME:  There MUST be a more compact way of calculating the
     # new end point!

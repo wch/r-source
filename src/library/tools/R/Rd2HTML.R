@@ -210,8 +210,6 @@ Rd2HTML <-
         }
     }
 
-    of <- function(...)
-        writeLinesUTF8(paste(...), con, outputEncoding, sep = "")
     of0 <- function(...)
         writeLinesUTF8(paste0(...), con, outputEncoding, sep = "")
     of1 <- function(text)

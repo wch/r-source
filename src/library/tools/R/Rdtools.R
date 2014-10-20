@@ -51,7 +51,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     ##     mycat("\n")
     ## })$output
 
-    myval <- character()
+##    myval <- character()
     mycon <- textConnection("myval", open = "w", local = TRUE,
                             encoding = "UTF-8")
     on.exit(close(mycon))

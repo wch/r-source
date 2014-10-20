@@ -1,7 +1,7 @@
 #  File src/library/base/R/warnings.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,13 +19,14 @@
 warnings <- function(...)
 {
     if(!exists("last.warning", envir=baseenv())) return()
-    last.warning <- get("last.warning", envir=baseenv())
-    if(!(n <- length(last.warning))) return()
-    structure(last.warning, dots=list(...), class="warnings")
+    last.warning <- get("last.warning", envir = baseenv())
+    if(!(length(last.warning))) return()
+    structure(last.warning, dots = list(...), class = "warnings")
 }
 
 `[.warnings` <- function(x, ...)
-    structure(NextMethod("["), class="warnings")
+    structure(NextMethod("["), class = "warnings")
+
 c.warnings <- function (..., recursive = FALSE)
     structure(NextMethod("c"), class = "warnings")
 

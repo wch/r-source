@@ -3212,7 +3212,7 @@ setRlibs <-
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
-                    env <- ""
+##                    env <- ""
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
                     install_error <- run_Rcmd(args, outfile)
