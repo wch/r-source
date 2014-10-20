@@ -45,7 +45,7 @@ Rlapack_la_OBJECTS = $(LIBOBJECTS)
 ## needed being loaded into R.bin/libR.so, and that need not be the
 ## case for a static libfortran or if a package is compiled under a
 ## different compiler.
-Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR1)
+Rlapack_la_LIBADD =  $(FLIBS_IN_SO) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBR)
 
 ALL_CFLAGS = $(ALL_CFLAGS_LO)
 ALL_FFLAGS = $(ALL_FFLAGS_LO)
