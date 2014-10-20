@@ -3482,7 +3482,15 @@ way to use it.
 Our understanding is that this project is now frozen and so will not be
 updated for CPUs released since mid-2010.  However, OpenBLAS
 (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
-support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD Bulldozer).
+support for some current CPUs (e.g.@: Intel Sandy Bridge and AMD
+Bulldozer).  Once installed it can be used by something like
+
+@example
+--with-blas="-lopenblas"
+@end example
+
+@noindent
+or as a shared BLAS.
 
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
