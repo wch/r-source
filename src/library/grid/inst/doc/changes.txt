@@ -9,6 +9,9 @@ Changes from grid_3.1.* to grid_3.2.0:
 
     Problem reported by Baptiste Auguie.
 
+2.  Fixed problem in validDetails.beziergrob(), which used to fail if
+    you tried to specify 'id.lengths'
+
 
 Changes from grid_3.0.* to grid_3.1.0:
 -------------------------------------
