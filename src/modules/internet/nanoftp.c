@@ -603,8 +603,11 @@ static void RxmlFindLength(void *ctxt, char *ptr)
 	p++;
 	q = strchr(p, 'b');
 	if(!q || strncmp(q, "bytes)", 6) != 0) return;
-	ssize_t len = (ssize_t) atol(p);
-	if(len >=0) ((RxmlNanoFTPCtxtPtr) ctxt)->contentLength = len;
+	// was atoi, but ssize_t may be > long, let alone int.
+	char *endp;
+	double len = strtod(p, &endp);
+	if(len >= 0)
+	    ((RxmlNanoFTPCtxtPtr) ctxt)->contentLength = (ssize_t) len;
     }
 }
 

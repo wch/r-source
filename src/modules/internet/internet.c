@@ -366,6 +366,8 @@ static SEXP in_do_download(SEXP args)
 #ifndef Win32
 	int ndashes = 0;
 	ssize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
@@ -386,6 +388,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -394,7 +397,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -413,9 +416,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
@@ -489,6 +493,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -497,7 +502,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -519,9 +524,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {

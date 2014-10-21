@@ -874,7 +874,12 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Content-Length:", 15)) {
         cur += 15;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
-	ctxt->contentLength = (ssize_t) atol(cur);
+	{
+	    // was atoi, but ssize_t may be > long, let alone int.
+	    char *endp;
+	    double len = strtod(cur, &endp);
+	    ctxt->contentLength = (ssize_t) len;
+	}
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Location:", 9)) {
         cur += 9;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
