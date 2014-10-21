@@ -413,6 +413,10 @@
       
       \item \command{R CMD Rd2pdf} unintentionally ignored its
       \option{--os} option.
+      
+      \item The internal method of \code{download.file()} was not
+      reporting file sizes and progress correctly on files larger than
+      2GB (inherited from \code{libxml2}).
     }
   }
 }
