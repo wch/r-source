@@ -28,8 +28,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"}, \code{"curl"} and
-    \code{"lynx"} are available, and there is a value \code{"auto"}: see
-    \sQuote{Details} and \sQuote{Note}.
+    \code{"lynx"} (deprecated) are available, and there is a value
+    \code{"auto"}: see \sQuote{Details} and \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
@@ -193,7 +193,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
-  failure.  For the \code{"wget"} and \code{"lynx"} methods this is the
+  failure.  For the \code{"wget"} and \code{"curl"} methods this is the
   status code returned by the external program.  The \code{"internal"}
   method can return \code{1}, but will in most cases throw an error.
 }

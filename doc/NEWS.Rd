@@ -65,6 +65,8 @@
       \item The \command{configure} script reports on the more important
       capabilities/options which will not be compiled in.
 
+      More types of external BLAS are recognized by name in that report.
+      
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
