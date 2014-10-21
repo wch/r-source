@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-6 The R Core Team.
+ *  Copyright (C) 2001-2014 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -41,7 +41,7 @@ int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
 void	RxmlNanoHTTPClose(void *ctx);
 int 	RxmlNanoHTTPReturnCode(void *ctx);
 char * 	RxmlNanoHTTPStatusMsg(void *ctx);
-int 	RxmlNanoHTTPContentLength(void *ctx);
+ssize_t RxmlNanoHTTPContentLength(void *ctx);
 char *	RxmlNanoHTTPContentType(void *ctx);
 void	RxmlNanoHTTPTimeout(int delay);
 
@@ -49,7 +49,7 @@ void *	RxmlNanoFTPOpen(const char *URL);
 int	RxmlNanoFTPRead(void *ctx, void *dest, int len);
 int	RxmlNanoFTPClose(void *ctx);
 void	RxmlNanoFTPTimeout(int delay);
-int 	RxmlNanoFTPContentLength(void *ctx);
+ssize_t RxmlNanoFTPContentLength(void *ctx);
 
 void    RxmlMessage(int level, const char *format, ...);
 
