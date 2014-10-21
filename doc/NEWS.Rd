@@ -416,7 +416,8 @@
       
       \item The internal method of \code{download.file()} was not
       reporting file sizes and progress correctly on files larger than
-      2GB (inherited from \code{libxml2}).
+      2GB (inherited from \code{libxml2}).  This is corrected for 64-bit
+      Unix-alikes (32-bit platforms may not support such files).
     }
   }
 }

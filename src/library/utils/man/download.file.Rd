@@ -69,10 +69,15 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   is used on Windows.
 #endif
 
+  For methods \code{"wget"}, \code{"curl"} and \code{"lynx"} a system
+  call is made to the tool given by \code{method}, and the respective
+  program must be installed on your system and be in the search path for
+  executables.  They will block all other activity on the \R process
+  until they complete: this may make a GUI unresponsive.
+
   \code{cacheOK = FALSE} is useful for \samp{http://} URLs, and will
   attempt to get a copy directly from the site rather than from an
-  intermediate cache.  (Not all platforms support it.)
-  It is used by \code{\link{available.packages}}.
+  intermediate cache.  It is used by \code{\link{available.packages}}.
 
   The remaining details apply to method \code{"internal"} only.
 
@@ -129,22 +134,18 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Code written to download binary files must use \code{mode = "wb"}, but
   the problems incurred by a text transfer will only be seen on Windows.
 #endif
+}
+\note{
+   Files of more than 2GB are only supported on 64-bit builds of \R; they
+  may be truncated on 32-bit builds.
+  
+  Method \code{"wget"} is mainly for historical compatibility, but it
+  and \code{"curl"} can be used for URLs (e.g., \samp{https://} URLs or
+  those that use cookies) which the internal method does not support.
 
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
   configuration file for \code{wget}.
-}
-\note{
-  Methods \code{"wget"} and \code{"lynx"} are mainly for historical
-  compatibility, but they and \code{"curl"} can be used for URLs
-  (e.g., \samp{https://} URLs or those that use cookies) which the
-  internal method does not support.  They will block all other activity
-  on the \R process.
-
-  For methods \code{"wget"}, \code{"curl"} and \code{"lynx"} a system
-  call is made to the tool given by \code{method}, and the respective
-  program must be installed on your system and be in the search path for
-  executables.
 
   \command{wget} (\url{http://www.gnu.org/software/wget/}) is commonly
   installed on Unix-alikes (but not OS X). Windows binaries are
