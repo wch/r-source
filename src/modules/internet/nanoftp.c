@@ -1,5 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998-2001  Daniel Veillard.
  *  Copyright (C) 2001-2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
