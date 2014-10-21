@@ -366,6 +366,8 @@ static SEXP in_do_download(SEXP args)
 #ifndef Win32
 	int ndashes = 0;
 	ssize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
@@ -386,6 +388,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -394,7 +397,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -413,9 +416,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
@@ -469,6 +473,8 @@ static SEXP in_do_download(SEXP args)
 #ifndef Win32
 	int ndashes = 0;
 	ssize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
@@ -489,6 +495,7 @@ static SEXP in_do_download(SEXP args)
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
+	    if (guess > 1e9) factor = guess/1e6;
 	    R_FlushConsole();
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
@@ -497,7 +504,7 @@ static SEXP in_do_download(SEXP args)
 	    } else strcat(buf, url);
 	    if(!quiet) {
 		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess);
+		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
@@ -519,9 +526,10 @@ static SEXP in_do_download(SEXP args)
 		if(!quiet) {
 		    if(nbytes > guess) {
 			guess *= 2;
-			setprogressbarrange(pbar.pb, 0, guess);
+			if (guess > 1e9) factor = guess/1e6;
+			setprogressbarrange(pbar.pb, 0, guess/factor);
 		    }
-		    setprogressbar(pbar.pb, nbytes);
+		    setprogressbar(pbar.pb, nbytes/factor);
 		    if (total > 0) {
 			pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
@@ -602,7 +610,8 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 	    if(!IDquiet){
 		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len > 1024*1024)
-		    REprintf(" length %ld bytes (%0.1f Mb)\n", len,
+		    // might be longer than long, and is on 64-bit windows
+		    REprintf(" length %0.0f bytes (%0.1f Mb)\n", (double)len,
 			len/1024.0/1024.0);
 		else if(len > 10240)
 		    REprintf(" length %d bytes (%d Kb)\n", len, len/1024);
@@ -841,8 +850,9 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     wictxt->type = strdup(buf);
     if(!IDquiet) {
 	if(status > 1024*1024)
-	    REprintf("Content type '%s' length %d bytes (%0.1f Mb)\n",
-		     buf, status, status/1024.0/1024.0);
+	    // might be longer than long, and is on 64-bit windows
+	    REprintf("Content type '%s' length %0.0f bytes (%0.1f Mb)\n",
+		     buf, (double) status, status/1024.0/1024.0);
 	else if(status > 10240)
 	    REprintf("Content type '%s' length %d bytes (%d Kb)\n",
 		     buf, status, status/1024);

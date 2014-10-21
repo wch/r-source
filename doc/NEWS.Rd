@@ -8,7 +8,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.1.1 patched}{
+\section{\Rlogo CHANGES IN R 3.1.2}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{embedFonts()} now defaults to
@@ -83,7 +83,7 @@
       installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
       now run 64 bit \R.  (To run 32 bit \R, overwrite these files
       with copies of \file{bin/i386/Rfe.exe}.)
-    }
+     }
   }
 
   \subsection{UTILITIES}{
@@ -218,7 +218,7 @@
       \item The internal method of \code{download.file()} was not
       reporting file sizes and progress correctly on files larger than
       2GB (inherited from \code{libxml2}).  This is corrected for 64-bit
-      Unix-alikes (32-bit platforms may not support such files).
+      builds (32-bit platforms may not support such files).
     }
   }
 }
