@@ -473,6 +473,8 @@ static SEXP in_do_download(SEXP args)
 #ifndef Win32
 	int ndashes = 0;
 	ssize_t ndots = 0;
+#else
+	int factor = 1;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
