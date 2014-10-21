@@ -196,6 +196,12 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{download.file(method = "lynx")} is defunct.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item Fixed two obscure bugs in pairlist subassignment, reported by
