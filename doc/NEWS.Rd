@@ -210,7 +210,7 @@
       \item Fixes for bugs in handling empty arguments and argument
       matching by name in \code{log()}.
 
-      \item \code{all.equal()} gains a method for \code{environment}s and
+      \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
     }
   }
