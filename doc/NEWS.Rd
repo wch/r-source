@@ -219,6 +219,16 @@
     }
   }
 }
+
+\section{\Rlogo CHANGES IN R 3.1.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{      
+      \item The internal method of \code{download.file()} can now handle
+      files larger than 2GB on 32-bit builds which support such files
+      (tested on 32-bit \R running on 64-bit Windows).
+    }
+  }
+  
 \section{\Rlogo CHANGES IN R 3.1.2}{
   \subsection{NEW FEATURES}{
     \itemize{
