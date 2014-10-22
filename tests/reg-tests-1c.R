@@ -555,4 +555,15 @@ try(bw.ucv(c(1,NaN,3,4)))
 ## seg.faulted  in  3.0.0 <= R <= 3.1.1
 
 
+## as.dendrogram() with wrong input
+x <- rbind(c( -6, -9), c(  0, 13),
+	   c(-15,  6), c(-14,  0), c(12,-10))
+dx <- dist(x,"manhattan")
+hx <- hclust(dx)
+hx$merge <- matrix(c(-3, 1, -2, 3,
+                     -4, -5, 2, 3), 4,2)
+tools::assertError(as.dendrogram(hx))
+## 8 member dendrogram and memory explosion for larger examples in R <= 3.1.2
+
+
 proc.time()

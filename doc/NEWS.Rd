@@ -201,7 +201,7 @@
       \item \code{download.file(method = "lynx")} is defunct.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Fixed two obscure bugs in pairlist subassignment, reported by
@@ -212,6 +212,10 @@
 
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
+
+      \item The \code{as.dendrogram} method for \code{"hclust"} objects
+      gets \code{check} argument protecting against memory explosion for
+      invalid inputs.
     }
   }
 }
@@ -259,7 +263,7 @@
 
       \item \code{unique(warnings())} and \code{c(warnings())} are now
       supported.
-      
+
       \item The Bioconductor \sQuote{version} used by
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
@@ -273,7 +277,7 @@
       capabilities/options which will not be compiled in.
 
       More types of external BLAS are recognized by name in that report.
-      
+
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
@@ -383,6 +387,10 @@
       optional argument \code{check};  When that is true, as per
       default, it checks more carefully for valid input.
 
+      \item The \code{as.dendrogram} method for \code{"hclust"} objects
+      gets a similar \code{check} argument which there protects against
+      memory explosion for invalid inputs.
+
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
       failed to run.  (\PR{15981})
@@ -418,10 +426,10 @@
 
       \item \code{bw.SJ(x)} and other bw.*() no longer segfault when
       \code{x} contains non-finite values. (\PR{16024})
-      
+
       \item \command{R CMD Rd2pdf} unintentionally ignored its
       \option{--os} option.
-      
+
       \item The internal method of \code{download.file()} was not
       reporting file sizes and progress correctly on files larger than
       2GB (inherited from \code{libxml2}).  This is corrected for 64-bit

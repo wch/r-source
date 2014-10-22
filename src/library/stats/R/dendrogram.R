@@ -20,7 +20,7 @@ as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
 as.dendrogram.dendrogram <- function(object, ...) object
 
-as.dendrogram.hclust <- function (object, hang = -1, ...)
+as.dendrogram.hclust <- function (object, hang = -1, check = TRUE, ...)
 ## hang = 0.1  is default for plot.hclust
 {
     stopifnot(length(object$order) > 0L)
@@ -28,11 +28,12 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	object$labels <- seq_along(object$order)
     z <- list()
     nMerge <- length(oHgt <- object$height)
-    if (nMerge != nrow(object$merge))
-	stop("'merge' and 'height' do not fit!")
+    merge <- object$merge
+    if(check && !isTRUE(msg <- .validity.hclust(object, merge)))
+	stop(msg)
     hMax <- oHgt[nMerge]
     for (k in 1L:nMerge) {
-	x <- object$merge[k, ]# no sort() anymore!
+	x <- merge[k, ]# no sort() anymore!
 	if (any(neg <- x < 0))
 	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
 	if (all(neg)) {			# two leaves
@@ -77,9 +78,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	attr(zk, "height") <- oHgt[k]
 	z[[as.character(k)]] <- zk
     }
-    z <- z[[as.character(k)]]
-    class(z) <- "dendrogram"
-    z
+    structure(z[[as.character(k)]], class = "dendrogram")
 }
 
 ## Reversing the above (as much as possible)
