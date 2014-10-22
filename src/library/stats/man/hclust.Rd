@@ -156,7 +156,7 @@ hclust(d, method = "complete", members = NULL)
   observation sequence number.
 }
 \note{
-  method \code{"centroid"} is typically meant to be used with
+  Method \code{"centroid"} is typically meant to be used with
   \emph{squared} Euclidean distances.
 }
 \references{
