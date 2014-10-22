@@ -228,6 +228,7 @@
       (tested on 32-bit \R running on 64-bit Windows).
     }
   }
+}
   
 \section{\Rlogo CHANGES IN R 3.1.2}{
   \subsection{NEW FEATURES}{
