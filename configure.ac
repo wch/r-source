@@ -2060,13 +2060,6 @@ if test "x${r_cv_have_tm_gmtoff}" = xyes; then
   AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define to 1 if your 'struct tm' has tm_gmtoff.])
 fi
 
-
-## check for vecLib framework (potentially to be used for BLAS)
-## in theory vecLib is platform-independent, in practice only
-## Apple's OS X is known to provide it
-## However, as from 10.10 it only provides Accelerate.
-R_CHECK_FRAMEWORK(cblas_cdotu_sub, Accelerate)
-
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter

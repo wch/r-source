@@ -29502,67 +29502,6 @@ $as_echo "#define HAVE_TM_GMTOFF 1" >>confdefs.h
 
 fi
 
-
-## check for vecLib framework (potentially to be used for BLAS)
-## in theory vecLib is platform-independent, in practice only
-## Apple's OS X is known to provide it
-## However, as from 10.10 it only provides Accelerate.
- { $as_echo "$as_me:${as_lineno-$LINENO}: checking for cblas_cdotu_sub in Accelerate framework" >&5
-$as_echo_n "checking for cblas_cdotu_sub in Accelerate framework... " >&6; }
-if ${r_cv_check_fw_Accelerate+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  r_cv_check_fw_save_LIBS=$LIBS
-  r_cv_check_fw_Accelerate=no
-  LIBS="-framework Accelerate  $LIBS"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char cblas_cdotu_sub ();
-#ifdef F77_DUMMY_MAIN
-
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-
-#endif
-int
-main ()
-{
-return cblas_cdotu_sub ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  r_cv_check_fw_Accelerate="-framework Accelerate"
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-  LIBS=$r_cv_check_fw_save_LIBS
-  if test "$r_cv_check_fw_Accelerate" != no; then :
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_ACCELERATE_FW 1
-_ACEOF
-
-	have_Accelerate_fw=yes
-else
-  have_Accelerate_fw=no
-fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_check_fw_Accelerate" >&5
-$as_echo "$r_cv_check_fw_Accelerate" >&6; }
-
-
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
@@ -30180,20 +30119,20 @@ fi
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   else
-    ## NB: this lot is not cached
-    if test "${r_cv_check_fw_accelerate}" != "no"; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+    case "${BLAS_LIBS}" in
+      *Accelerate* | *vecLib*)
+        ## for vecLib we have a work-around by using cblas_..._sub
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-      ## for vecLib we have a work-around by using cblas_..._sub
-      use_veclib_g95fix=yes
-      ## The fix may not work with internal lapack, but
-      ## is more likely to in R >= 2.15.2.
-    else
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        use_veclib_g95fix=yes
+        ;;
+      *)
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      BLAS_LIBS=
-      acx_blas_ok="no"
-    fi
+        BLAS_LIBS=
+        acx_blas_ok="no"
+        ;;
+    esac
   fi
 fi
 if test "${acx_blas_ok}" = yes; then
@@ -36333,11 +36272,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36336: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36275: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36340: \$? = $ac_status" >&5
+   echo "$as_me:36279: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36432,11 +36371,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36435: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36374: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36439: \$? = $ac_status" >&5
+   echo "$as_me:36378: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36484,11 +36423,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36487: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36426: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36491: \$? = $ac_status" >&5
+   echo "$as_me:36430: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
