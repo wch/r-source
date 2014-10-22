@@ -217,9 +217,9 @@ static Rconnection in_R_newurl(const char *description, const char * const mode)
 
 
 #ifndef Win32
-static void putdots(ssize_t *pold, ssize_t new)
+static void putdots(DLsize_t *pold, DLsize_t new)
 {
-    ssize_t i, old = *pold;
+    DLsize_t i, old = *pold;
     *pold = new;
     for(i = old; i < new; i++) {
 	REprintf(".");
@@ -240,7 +240,7 @@ static void putdashes(int *pold, int new)
 
 /* note, ALL the possible structures have the first two elements */
 typedef struct {
-    ssize_t length;
+    DLsize_t length;
     char *type;
     void *ctxt;
 } inetconn;
@@ -361,11 +361,11 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	ssize_t len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndashes = 0;
-	ssize_t ndots = 0;
+	DLsize_t ndots = 0;
 #else
 	int factor = 1;
 #endif
@@ -468,11 +468,11 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	ssize_t len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndashes = 0;
-	ssize_t ndots = 0;
+	DLsize_t ndots = 0;
 #else
 	int factor = 1;
 #endif
@@ -590,7 +590,7 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    ssize_t len = -1;
+    DLsize_t len = -1;
     char *type = NULL;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -651,7 +651,7 @@ static void *in_R_FTPOpen(const char *url)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    ssize_t len = 0;
+    DLsize_t len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     RxmlNanoFTPTimeout(timeout);
