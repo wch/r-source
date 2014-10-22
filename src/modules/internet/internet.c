@@ -442,10 +442,10 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
 	    }
@@ -552,10 +552,10 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
 	    }
@@ -611,10 +611,10 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len > 1024*1024)
 		    // might be longer than long, and is on 64-bit windows
-		    REprintf(" length %0.0f bytes (%0.1f Mb)\n", (double)len,
+		    REprintf(" length %0.0f bytes (%0.1f MB)\n", (double)len,
 			len/1024.0/1024.0);
 		else if(len > 10240)
-		    REprintf(" length %d bytes (%d Kb)\n", len, len/1024);
+		    REprintf(" length %d bytes (%d KB)\n", len, len/1024);
 		else if(len >= 0)
 		    REprintf(" length %d bytes\n", len);
 		else REprintf(" length unknown\n", len);
@@ -851,10 +851,10 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     if(!IDquiet) {
 	if(status > 1024*1024)
 	    // might be longer than long, and is on 64-bit windows
-	    REprintf("Content type '%s' length %0.0f bytes (%0.1f Mb)\n",
+	    REprintf("Content type '%s' length %0.0f bytes (%0.1f MB)\n",
 		     buf, (double) status, status/1024.0/1024.0);
 	else if(status > 10240)
-	    REprintf("Content type '%s' length %d bytes (%d Kb)\n",
+	    REprintf("Content type '%s' length %d bytes (%d KB)\n",
 		     buf, status, status/1024);
 	else
 	    REprintf("Content type '%s' length %d bytes\n", buf, status);
