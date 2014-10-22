@@ -25,14 +25,11 @@
 #define R_FTP_HTTP_H_
 
 /*
-  ssize_t is POSIX, but Windows has it.
-  ssize_t must be at least as long as pointers but this does not allow
-  for 'large' files (>= 2GB) on 32-bit systems, where supported.
-
-  So change in future.
+  allow for 'large' files (>= 2GB) on 32-bit systems, where supported.
 */
-#include <sys/types.h> // for ssize_t
-typedef ssize_t DLsize_t; // used for download lengths and sizes
+/* required by C99/C11 */
+#include <stdint.h>
+typedef int_fast64_t DLsize_t; // used for download lengths and sizes
 
 #ifdef __cplusplus
 extern "C" {
