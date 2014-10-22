@@ -135,8 +135,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #endif
 }
 \note{
-   Files of more than 2GB are only supported on 64-bit builds of \R; they
-  may be truncated on 32-bit builds.
+   Files of more than 2GB are supported on 64-bit builds of \R; they
+  may be truncated on some 32-bit builds.
   
   Method \code{"wget"} is mainly for historical compatibility, but it
   and \code{"curl"} can be used for URLs (e.g., \samp{https://} URLs or
