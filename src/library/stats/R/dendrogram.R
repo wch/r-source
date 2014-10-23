@@ -23,14 +23,14 @@ as.dendrogram.dendrogram <- function(object, ...) object
 as.dendrogram.hclust <- function (object, hang = -1, check = TRUE, ...)
 ## hang = 0.1  is default for plot.hclust
 {
-    stopifnot(length(object$order) > 0L)
-    if (is.null(object$labels))
+    nolabels <- is.null(object$labels)
+    merge <- object$merge
+    if(check && !isTRUE(msg <- .validity.hclust(object, merge, order=nolabels)))
+	stop(msg)
+    if(nolabels)
 	object$labels <- seq_along(object$order)
     z <- list()
     nMerge <- length(oHgt <- object$height)
-    merge <- object$merge
-    if(check && !isTRUE(msg <- .validity.hclust(object, merge)))
-	stop(msg)
     hMax <- oHgt[nMerge]
     for (k in 1L:nMerge) {
 	x <- merge[k, ]# no sort() anymore!
