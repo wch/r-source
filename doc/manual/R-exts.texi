@@ -4272,7 +4272,7 @@ It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
 
 @item
-Including C headers in C++ code is not portable.  Including the C99
+Including C headers in C++ code is not portable.  Including the C
 header @file{math.h} in C++ code often causes conflicts with
 @file{cmath} which may be included by other headers.  This is
 particularly problematic with C++11 compilers, as functions like
@@ -4283,6 +4283,23 @@ particularly problematic with C++11 compilers, as functions like
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
 compilers in use with @R{} on some platforms.
+
+@item
+Be careful to include the headers which define the functions you use.
+Some compilers (notably the GCC family) include other system headers in
+their headers which are not required by the standards, and so code may
+compile on such compilers and not on others.  (A prominent example is
+the C++11 header @code{<random>} which is indirectly included by
+@code{<algorithm>} by @command{g++}.)
+
+@item
+For C++ code, be careful to specify namespaces where needed.  Many
+functions are defined by the standards to be in the @code{std}
+namespace, but @command{g++} puts many such also in the C++ main
+namespace.  One way to do so is to use declarations such as
+@example
+using std::floor;
+@end example
 
 @item
 Macros defined by the compiler/OS can cause problems.  Macros starting
