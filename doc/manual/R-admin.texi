@@ -4634,7 +4634,7 @@ compiler from
 @uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
-build of @command{clang} has no OpenMP support.
+builds of @command{clang} currently have little or no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
