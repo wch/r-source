@@ -46,7 +46,7 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
 }
 \note{
   Unlike most other base \R functions this does not coerce to \code{x}
-  to logical: only arguemnts with \code{\link{typeof}} logical are
+  to logical: only arguments with \code{\link{typeof}} logical are
   accepted and others give an error.
 }
 \author{Werner Stahel and Peter Holzer (ETH Zurich) proposed the
