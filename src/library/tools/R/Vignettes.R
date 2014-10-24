@@ -667,6 +667,11 @@ buildVignette <-
     ##     f <- f[file_test("-f", f)]
     ##     file.remove(f)
     ## #}
+
+    if((is.na(clean) || clean) && file.exists(".build.timestamp")) {
+        file.remove(".build.timestamp")
+    }
+
     unique(keep)
 }
 
