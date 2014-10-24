@@ -1960,8 +1960,8 @@ and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
 SUPPORT_OPENMP}, a macro defined in the header @file{Rconfig.h}
 (@pxref{Platform and version information}) or @code{_OPENMP}: note that
-some toolchains used for @R{} (e.g.@: @command{clang}) have no OpenMP
-support at all, not even @file{omp.h}.
+some toolchains used for @R{} (including most of those using
+@command{clang}) have no OpenMP support at all, not even @file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -1974,13 +1974,13 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  The compilers used on OS X 10.6 (`Snow Leopard')
-had partial support for OpenMP 2.5, but this is not enabled in the
-@acronym{CRAN} build of @R{}. (Apple have discontinued support for those
-compilers, and their alternative as from OS X 10.9, @command{clang}, has
-no OpenMP support.  A project to add it has been announced at
-@uref{http://clang-omp.github.io/}, but it is unknown when or even if
-the Apple builds will incorporate it.)
+have recent versions.  The compilers used on earlier versions of OS X
+had partial support for OpenMP 2.5, but this was not enabled in the
+@acronym{CRAN} build of @R{}.  As from OS X 10.9 @command{clang} is
+used, and the Apple builds currently@footnote{Projects to add it has
+been announced at @uref{http://clang-omp.github.io/} and
+@uref{http://openmp.llvm.org/}, but it is unknown when or even if the
+Apple builds will incorporate it.} have no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and the Apple OS X (where available) implementations have
