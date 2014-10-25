@@ -1,6 +1,6 @@
 % File src/library/base/man/browser.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browser}
@@ -80,7 +80,15 @@ browser(text = "", condition = NULL, expr = TRUE, skipCalls = 0L)
 
   The number of lines printed for the deparsed call can be limited by
   setting \code{\link{options}(deparse.max.lines)}.
-
+  
+  The browser prompt is of the form \code{Browse[\var{n}]>}: here
+  \code{var{n}} indicates the \sQuote{browser level}.  The browser can
+  be called when browsing (and often is when \code{\link{debug}} is in
+  use), and each recursive call increases the number.  (The actual
+  number is the number of \sQuote{contexts} on the context stack: this
+  is usually \code{2} for the outer level of browsing and \code{1} when
+  examining dumps in \code{\link{debugger}}.)
+  
   This is a primitive function but does argument matching in the
   standard way.
 }

@@ -43,11 +43,12 @@ debuggingState(on = NULL)
   previous one destroyed).
 
   At the debug prompt the user can enter commands or \R expressions,
-  followed by a newline.  The commands are described in the \code{\link{browser}}
-  topic.
+  followed by a newline.  The commands are described in the
+  \code{\link{browser}} help topic.
 
-  To debug a function which is defined inside another function, single-step though
-  to the end of its definition, and then call \code{debug} on its name.
+  To debug a function which is defined inside another function,
+  single-step though to the end of its definition, and then call
+  \code{debug} on its name.
 
   If you want to debug a function not starting at the very beginning,
   use \code{\link{trace}(..., at = *)} or \code{\link{setBreakpoint}}.

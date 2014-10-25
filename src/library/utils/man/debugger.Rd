@@ -1,6 +1,6 @@
 % File src/library/utils/man/debugger.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debugger}
@@ -66,6 +66,9 @@ debugger(dump = last.dump)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
+  \code{\link{browser}} for the actions available at the \code{Browse}
+  prompt.
+  
   \code{\link{options}} for setting \code{error} options;
   \code{\link{recover}} is an interactive debugger working similarly to
   \code{debugger} but directly after the error occurs.
