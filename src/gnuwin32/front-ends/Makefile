@@ -57,7 +57,7 @@ $(R_HOME)/$(BINDIR)/R.exe: R.exe
 $(R_HOME)/$(BINDIR)/Rfe.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
-	
+
 $(R_HOME)/bin/R.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
@@ -95,6 +95,7 @@ rgico.o: Rgui32.manifest
 rtico.o: Rterm32.manifest
 else
 RESFLAGS = -DWN64
+rcico.o: Rcmd64.exe.manifest
 rtico.o: Rterm64.manifest
 rgico.o: Rgui64.manifest
 endif

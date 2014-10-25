@@ -216,6 +216,10 @@
       \item The \code{as.dendrogram} method for \code{"hclust"} objects
       gets \code{check} argument protecting against memory explosion for
       invalid inputs.
+
+      \item (Windows.) 64-bit \command{Rcmd.exe} and
+      \command{Rscript.exe} were missing a manifest specifying the style
+      for common controls.
     }
   }
 }
