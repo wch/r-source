@@ -234,6 +234,9 @@
       \item (Windows.) 64-bit \command{Rcmd.exe} and
       \command{Rscript.exe} were missing a manifest specifying the style
       for common controls.
+      
+      \item If a package had extra documentation files but no vignette,
+      the HTML help system produced an empty index page.
     }
   }
 }
