@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:51\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1075,9 +1075,6 @@ msgstr "'ccaddress' muss von der Länge 1 sein"
 msgid "no download method found"
 msgstr "keine Downloadmethode gefunden"
 
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr "Methode 'lynx' ist ugetestet und ab R 3.1.0 veraltet"
-
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
 
@@ -1294,6 +1291,9 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
+#~ msgstr "Methode 'lynx' ist ugetestet und ab R 3.1.0 veraltet"
 
 #~ msgid ""
 #~ "If nothing happens, you should open\n"

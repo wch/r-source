@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -792,14 +792,14 @@ msgstr ""
 msgid "No docs found for package %s"
 msgstr ""
 
+msgid "URL %s was not found"
+msgstr ""
+
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
 
 msgid "unsupported URL %s"
-msgstr ""
-
-msgid "URL %s was not found"
 msgstr ""
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"

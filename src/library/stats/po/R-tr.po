@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -624,9 +624,6 @@ msgstr ""
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k' nın öğeleri 1 ve %d arasında olmalı"
 
-msgid "'merge' and 'height' do not fit!"
-msgstr "'merge' ve 'height' uymuyor!"
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1145,15 +1142,6 @@ msgid "must have n >= 2 objects to cluster"
 msgstr ""
 
 msgid "invalid length of members"
-msgstr ""
-
-msgid "invalid dendrogram"
-msgstr "geçersiz ağaç diyagramı"
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr ""
-
-msgid "'merge' matrix has invalid contents"
 msgstr ""
 
 #, fuzzy
@@ -2550,6 +2538,12 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr "'merge' ve 'height' uymuyor!"
+
+#~ msgid "invalid dendrogram"
+#~ msgstr "geçersiz ağaç diyagramı"
 
 #, fuzzy
 #~ msgid "probabilities cannot be negative nor all 0"

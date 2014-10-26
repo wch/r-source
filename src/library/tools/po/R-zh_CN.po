@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -820,15 +820,15 @@ msgstr "程序包%s里的链结%s不存在"
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
+msgid "URL %s was not found"
+msgstr "找不到%s这个URL"
+
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr "能够查看的文件限制于帮助文件，%s, %s 和%s下的文件和程序包%s里的文件"
 
 msgid "unsupported URL %s"
 msgstr "不支持URL %s"
-
-msgid "URL %s was not found"
-msgstr "找不到%s这个URL"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr "R_DISABLE_HTTPD的设定关闭了httpd服务器"

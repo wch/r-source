@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -612,9 +612,6 @@ msgstr ""
 msgid "elements of 'k' must be between 1 and %d"
 msgstr ""
 
-msgid "'merge' and 'height' do not fit!"
-msgstr ""
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1109,15 +1106,6 @@ msgid "must have n >= 2 objects to cluster"
 msgstr ""
 
 msgid "invalid length of members"
-msgstr ""
-
-msgid "invalid dendrogram"
-msgstr ""
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr ""
-
-msgid "'merge' matrix has invalid contents"
 msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"

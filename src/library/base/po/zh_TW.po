@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:50+0100\n"
+"POT-Creation-Date: 2014-10-26 08:47+0000\n"
 "PO-Revision-Date: 2011-10-13 17:30+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -176,7 +176,7 @@ msgstr "顯示 '%ls' 時發生問題"
 #: src/main/connections.c:5005 src/main/context.c:611 src/main/context.c:620
 #: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
 #: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
-#: src/main/datetime.c:1029 src/main/datetime.c:1233 src/main/debug.c:230
+#: src/main/datetime.c:1029 src/main/datetime.c:1233 src/main/debug.c:236
 #: src/main/deparse.c:401 src/main/dotcode.c:496 src/main/dotcode.c:500
 #: src/main/dotcode.c:505 src/main/dounzip.c:323 src/main/dounzip.c:330
 #: src/main/dounzip.c:340 src/main/dounzip.c:345 src/main/dounzip.c:349
@@ -889,7 +889,7 @@ msgid "invalid second argument of length 0"
 msgstr "第二引數長度為 0，不正確"
 
 #: src/main/arithmetic.c:1620 src/main/arithmetic.c:1638 src/main/envir.c:1462
-#: src/main/envir.c:1973 src/main/eval.c:572 src/main/eval.c:3991
+#: src/main/envir.c:1973 src/main/eval.c:572 src/main/eval.c:4002
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少引數 \"%s\"，也沒有預設值"
@@ -1038,7 +1038,7 @@ msgstr ""
 
 #: src/main/attrib.c:40 src/main/attrib.c:235 src/main/attrib.c:269
 #: src/main/attrib.c:291 src/main/attrib.c:405 src/main/attrib.c:452
-#: src/main/attrib.c:502
+#: src/main/attrib.c:503
 msgid "attempt to set an attribute on NULL"
 msgstr "試圖在 NULL 上設定屬性"
 
@@ -1086,164 +1086,164 @@ msgstr "零長度向量不能指派為 'tsp'"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "試圖設定無效的 'comment' 屬性"
 
-#: src/main/attrib.c:511
+#: src/main/attrib.c:512
 msgid "adding class \"factor\" to an invalid object"
 msgstr "加入 \"factor\" 類別到無效的物件"
 
-#: src/main/attrib.c:519
+#: src/main/attrib.c:543
 msgid "attempt to set invalid 'class' attribute"
 msgstr "試圖設定無效的 'class' 屬性"
 
-#: src/main/attrib.c:834
+#: src/main/attrib.c:859
 #, fuzzy, c-format
 msgid "class '%s' has no 'names' slot"
 msgstr "類別 '%s' 沒有任何 'names' 插槽"
 
-#: src/main/attrib.c:836
+#: src/main/attrib.c:861
 #, fuzzy, c-format
 msgid ""
 "class '%s' has no 'names' slot; assigning a names attribute will create an "
 "invalid object"
 msgstr "類別 '%s' 沒有任何 'names' 插槽；指派名稱屬性將建立無效的物件"
 
-#: src/main/attrib.c:839
+#: src/main/attrib.c:864
 #, fuzzy, c-format
 msgid ""
 "invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"
 msgstr "在非向量類別 ('%s') 中使用 names()<- 以設定 'names' 插槽是不合法的"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:894
 msgid "incompatible 'names' argument"
 msgstr "不相容的 'names' 引數"
 
-#: src/main/attrib.c:924
+#: src/main/attrib.c:949
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "以無效的類型 (%s) 設定 'names' 屬性"
 
-#: src/main/attrib.c:995
+#: src/main/attrib.c:1020
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' 被應用於非陣列"
 
-#: src/main/attrib.c:1000
+#: src/main/attrib.c:1025
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' 必須是串列"
 
-#: src/main/attrib.c:1003 src/main/attrib.c:1031
+#: src/main/attrib.c:1028 src/main/attrib.c:1056
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames' 的長度 [%d] 必須同 'dims' 的長度 [%d] 相等"
 
-#: src/main/attrib.c:1037
+#: src/main/attrib.c:1062
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "設 'dimnames' 時的類型 (%s) 不正確 (必須是向量)"
 
-#: src/main/attrib.c:1040
+#: src/main/attrib.c:1065
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames' 的長度 [%d] 必須與陣列範圍相等"
 
-#: src/main/attrib.c:1112 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1927
 #: src/main/envir.c:2048 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1733
 msgid "invalid first argument"
 msgstr "第一個引數不正確"
 
-#: src/main/attrib.c:1115
+#: src/main/attrib.c:1140
 msgid "invalid second argument"
 msgstr "第二個引數不正確"
 
-#: src/main/attrib.c:1123
+#: src/main/attrib.c:1148
 msgid "length-0 dimension vector is invalid"
 msgstr "長度為零的維度向量無效"
 
-#: src/main/attrib.c:1128
+#: src/main/attrib.c:1153
 msgid "the dims contain missing values"
 msgstr "維度包含缺少值"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1155
 msgid "the dims contain negative values"
 msgstr "維度包含負值"
 
-#: src/main/attrib.c:1135
+#: src/main/attrib.c:1160
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "維度 [product %d] 不符合物件 [%d] 的長度"
 
-#: src/main/attrib.c:1137
+#: src/main/attrib.c:1162
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "維度 [product %d] 不符合物件 [%d] 的長度"
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1264
 msgid "attributes must be a list or NULL"
 msgstr "屬性必須是串列或空值"
 
-#: src/main/attrib.c:1244
+#: src/main/attrib.c:1269
 msgid "attributes must be named"
 msgstr "屬性必須命名"
 
-#: src/main/attrib.c:1248
+#: src/main/attrib.c:1273
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的屬性都必須有名稱 [%d 卻沒有]"
 
-#: src/main/attrib.c:1348
+#: src/main/attrib.c:1373
 msgid "'which' must be of mode character"
 msgstr "'which' 的模式必須是字元"
 
-#: src/main/attrib.c:1350
+#: src/main/attrib.c:1375
 msgid "exactly one attribute 'which' must be given"
 msgstr "必須給定 'which' 剛好一個屬性"
 
-#: src/main/attrib.c:1408 src/main/attrib.c:1431 src/main/subscript.c:240
+#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s' 部份匹配到 '%s'"
 
-#: src/main/attrib.c:1470
+#: src/main/attrib.c:1495
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "名稱插槽的類型或長度不正確"
 
-#: src/main/attrib.c:1506
+#: src/main/attrib.c:1531
 msgid "'name' must be non-null character string"
 msgstr "'name' 必須是非空字串"
 
-#: src/main/attrib.c:1630 src/main/attrib.c:1701 src/main/attrib.c:1738
+#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
 msgid "invalid type or length for slot name"
 msgstr "名稱插槽的類型或長度不正確"
 
-#: src/main/attrib.c:1664
+#: src/main/attrib.c:1689
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "類型 \"%2$s\" 的物件中沒有 \"%1$s\" 這樣一個插槽"
 
-#: src/main/attrib.c:1675
+#: src/main/attrib.c:1700
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\" 插槽名不存在於 \"%2$s\" 類型物件中"
 
-#: src/main/attrib.c:1692
+#: src/main/attrib.c:1717
 msgid "attempt to set slot on NULL object"
 msgstr "試圖設在空值物件上定插槽"
 
-#: src/main/attrib.c:1733
+#: src/main/attrib.c:1758
 #, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "一定要有方法套件才能使用正式類別"
 
-#: src/main/attrib.c:1745
+#: src/main/attrib.c:1770
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "無法從沒有插槽的基本類別 (\"%2$s\") 的物件中取得 \"%1$s\" 插槽"
 
-#: src/main/attrib.c:1749
+#: src/main/attrib.c:1774
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1273,8 +1273,8 @@ msgstr "正式引數 'use.names' 出現重複"
 msgid "argument not a list"
 msgstr "引數不是串列"
 
-#: src/main/bind.c:1038 src/main/names.c:1252 src/main/names.c:1257
-#: src/main/names.c:1262 src/main/names.c:1267
+#: src/main/bind.c:1038 src/main/names.c:1253 src/main/names.c:1258
+#: src/main/names.c:1263 src/main/names.c:1268
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "'%s' 中的類別名稱太長"
@@ -1319,7 +1319,7 @@ msgstr "指定的向量大小太大"
 #: src/main/envir.c:2055 src/main/envir.c:2715 src/main/envir.c:2801
 #: src/main/envir.c:3081 src/main/envir.c:3110 src/main/envir.c:3131
 #: src/main/envir.c:3154 src/main/envir.c:3189 src/main/envir.c:3210
-#: src/main/envir.c:3516 src/main/envir.c:3521 src/main/eval.c:5979
+#: src/main/envir.c:3516 src/main/envir.c:3521 src/main/eval.c:5990
 #: src/main/objects.c:191 src/main/objects.c:199 src/main/saveload.c:2070
 #: src/main/saveload.c:2362 src/main/serialize.c:2743
 msgid "use of NULL environment is defunct"
@@ -1391,9 +1391,9 @@ msgid "invalid value"
 msgstr "無效的值"
 
 #: src/main/builtin.c:943 src/main/coerce.c:2501 src/main/coerce.c:2542
-#: src/main/eval.c:562 src/main/eval.c:682 src/main/eval.c:2093
-#: src/main/eval.c:2170 src/main/eval.c:2230 src/main/eval.c:2563
-#: src/main/eval.c:5323 src/main/eval.c:5441
+#: src/main/eval.c:562 src/main/eval.c:682 src/main/eval.c:2104
+#: src/main/eval.c:2181 src/main/eval.c:2241 src/main/eval.c:2574
+#: src/main/eval.c:5334 src/main/eval.c:5452
 msgid "'...' used in an incorrect context"
 msgstr "'...' 的上下文用得不正確"
 
@@ -1406,11 +1406,11 @@ msgstr "重複切換預設值：'%s' 和 '%s'"
 msgid "'EXPR' is missing"
 msgstr "缺少 'EXPR'"
 
-#: src/main/builtin.c:1001 src/main/eval.c:5796
+#: src/main/builtin.c:1001 src/main/eval.c:5807
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR 必須是長度為 1 的向量"
 
-#: src/main/builtin.c:1004 src/main/eval.c:5799
+#: src/main/builtin.c:1004 src/main/eval.c:5810
 #, c-format
 msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
@@ -1568,7 +1568,7 @@ msgstr "試圖強制變更非向量"
 msgid "list argument expected"
 msgstr "需要串列引數"
 
-#: src/main/coerce.c:1509 src/main/eval.c:5983
+#: src/main/coerce.c:1509 src/main/eval.c:5994
 msgid "invalid environment"
 msgstr "環境物件不正確"
 
@@ -2253,7 +2253,7 @@ msgid ""
 msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 
 #: src/main/connections.c:5085 src/modules/internet/internet.c:115
-#: src/modules/internet/internet.c:569
+#: src/modules/internet/internet.c:579
 msgid "unsupported URL scheme"
 msgstr "不支援這種 URL 方案"
 
@@ -2438,23 +2438,28 @@ msgstr "引數必須是個結束"
 msgid "argument must be a function"
 msgstr "引數必須是個函數"
 
-#: src/main/debug.c:132 src/main/debug.c:166 src/main/debug.c:226
+#: src/main/debug.c:111
+#, fuzzy, c-format
+msgid "Value for '%s' must be TRUE or FALSE"
+msgstr "'all.x' 必須是 TRUE 或 FALSE"
+
+#: src/main/debug.c:138 src/main/debug.c:172 src/main/debug.c:232
 msgid "argument must not be a function"
 msgstr "引數必須不是函數"
 
-#: src/main/debug.c:135
+#: src/main/debug.c:141
 msgid "cannot trace NULL"
 msgstr "無法追蹤空值"
 
-#: src/main/debug.c:139
+#: src/main/debug.c:145
 msgid "'tracemem' is not useful for promise and environment objects"
 msgstr "'tracemem' 對於約定和環境物件不太有用"
 
-#: src/main/debug.c:142
+#: src/main/debug.c:148
 msgid "'tracemem' is not useful for weak reference or external pointer objects"
 msgstr "'tracemem' 對於弱型參考或外部指標物件不太有用"
 
-#: src/main/debug.c:148 src/main/debug.c:171
+#: src/main/debug.c:154 src/main/debug.c:177
 msgid "R was not compiled with support for memory profiling"
 msgstr "R 未被編譯以支援記憶體側寫"
 
@@ -2502,7 +2507,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' 應該是小的非負值整數"
 
 #: src/main/deparse.c:415 src/main/envir.c:1896 src/main/envir.c:1977
-#: src/main/eval.c:568 src/main/eval.c:1247 src/main/eval.c:4000
+#: src/main/eval.c:568 src/main/eval.c:1258 src/main/eval.c:4011
 #: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2761
 #, c-format
 msgid "object '%s' not found"
@@ -3407,11 +3412,11 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "評估巢狀太深：無窮遞迴/選項(表示式=)?"
 
-#: src/main/eval.c:574 src/main/eval.c:3992
+#: src/main/eval.c:574 src/main/eval.c:4003
 msgid "argument is missing, with no default"
 msgstr "缺少引數, 也沒有預設值"
 
-#: src/main/eval.c:678 src/main/eval.c:5274
+#: src/main/eval.c:678 src/main/eval.c:5285
 msgid "attempt to apply non-function"
 msgstr "不適用於非函數"
 
@@ -3420,236 +3425,236 @@ msgstr "不適用於非函數"
 msgid "%s at %s#%d: "
 msgstr "%s 於 %s#%d："
 
-#: src/main/eval.c:1174
+#: src/main/eval.c:1185
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "一般函數環境中沒有 \"%s\" 符號"
 
-#: src/main/eval.c:1192
+#: src/main/eval.c:1203
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "方法環境中沒有 \"%s\" 符號"
 
-#: src/main/eval.c:1305
+#: src/main/eval.c:1316
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "條件的長度 > 1，因此只能用其第一元素"
 
-#: src/main/eval.c:1324
+#: src/main/eval.c:1335
 msgid "missing value where TRUE/FALSE needed"
 msgstr "需要 TRUE/FALSE 值的地方有缺值"
 
-#: src/main/eval.c:1325
+#: src/main/eval.c:1336
 msgid "argument is not interpretable as logical"
 msgstr "引數無法解譯為邏輯值"
 
-#: src/main/eval.c:1326
+#: src/main/eval.c:1337
 msgid "argument is of length zero"
 msgstr "引數長度為零"
 
-#: src/main/eval.c:1419
+#: src/main/eval.c:1430
 msgid "non-symbol loop variable"
 msgstr "非符號循環變數"
 
-#: src/main/eval.c:1511 src/main/eval.c:5047
+#: src/main/eval.c:1522 src/main/eval.c:5058
 msgid "invalid for() loop sequence"
 msgstr "不當的 for() 循環序列"
 
-#: src/main/eval.c:1652
+#: src/main/eval.c:1663
 msgid "multi-argument returns are not permitted"
 msgstr "不允許多引數回傳"
 
-#: src/main/eval.c:1701
+#: src/main/eval.c:1712
 msgid "invalid (NULL) left side of assignment"
 msgstr "賦值公式左側是無效 (NULL) 值"
 
-#: src/main/eval.c:1735
+#: src/main/eval.c:1746
 msgid "target of assignment expands to non-language object"
 msgstr "賦值目標擴充到非語言的物件"
 
-#: src/main/eval.c:1818
+#: src/main/eval.c:1829
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "'%s' 中的名稱太長"
 
-#: src/main/eval.c:1908
+#: src/main/eval.c:1919
 msgid "cannot do complex assignments in base namespace"
 msgstr "無法在基本名稱空間中賦予複數值"
 
-#: src/main/eval.c:1910
+#: src/main/eval.c:1921
 msgid "cannot do complex assignments in base environment"
 msgstr "無法在基本環境中賦予複數值"
 
-#: src/main/eval.c:1948 src/main/eval.c:1975
+#: src/main/eval.c:1959 src/main/eval.c:1986
 msgid "invalid function in complex assignment"
 msgstr "複數賦值中的函數不正確"
 
-#: src/main/eval.c:2035
+#: src/main/eval.c:2046
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "(do_set) 賦值公式左側不正確"
 
-#: src/main/eval.c:2097
+#: src/main/eval.c:2108
 #, c-format
 msgid "argument %d is empty"
 msgstr "引數 %d 是空的"
 
-#: src/main/eval.c:2110
+#: src/main/eval.c:2121
 #, c-format
 msgid "'%s' is missing"
 msgstr "缺少 '%s'"
 
-#: src/main/eval.c:2261
+#: src/main/eval.c:2272
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\" 正式引數串列不正確"
 
-#: src/main/eval.c:2319 src/main/eval.c:2350 src/main/eval.c:2355
+#: src/main/eval.c:2330 src/main/eval.c:2361 src/main/eval.c:2366
 #, fuzzy, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "'%s' 引數不正確"
 
-#: src/main/eval.c:2347
+#: src/main/eval.c:2358
 msgid "numeric 'envir' arg not of length one"
 msgstr "數值 'envir' 引數的長度不是 1"
 
-#: src/main/eval.c:2371 src/main/eval.c:2393
+#: src/main/eval.c:2382 src/main/eval.c:2404
 msgid "restarts not supported in 'eval'"
 msgstr "'eval' 不支援重新啟動"
 
-#: src/main/eval.c:2450 src/main/eval.c:2463
+#: src/main/eval.c:2461 src/main/eval.c:2474
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' 從閉包外部呼叫"
 
-#: src/main/eval.c:2556
+#: src/main/eval.c:2567
 msgid "value in '...' is not a promise"
 msgstr "'...' 中的值不是一個約定"
 
-#: src/main/eval.c:2816
+#: src/main/eval.c:2827
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不相容的方法 (\"%s\", \"%s\") 用於 \"%s\""
 
-#: src/main/eval.c:2865
+#: src/main/eval.c:2876
 msgid "dispatch error in group dispatch"
 msgstr "群組派送時發生錯誤"
 
-#: src/main/eval.c:3317
+#: src/main/eval.c:3328
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "\"%s\" 並非 %s 函數"
 
-#: src/main/eval.c:3801
+#: src/main/eval.c:3812
 msgid "node stack overflow"
 msgstr "節點堆疊向上溢位"
 
-#: src/main/eval.c:3807
+#: src/main/eval.c:3818
 msgid "integer stack overflow"
 msgstr "整數堆疊向上溢位"
 
-#: src/main/eval.c:3861
+#: src/main/eval.c:3872
 #, fuzzy
 msgid "bad opcode"
 msgstr "不當的操作代碼"
 
-#: src/main/eval.c:4829
+#: src/main/eval.c:4840
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "'x %2$s y' 中無效的 %1$s 類型"
 
-#: src/main/eval.c:4941
+#: src/main/eval.c:4952
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不符；使用 eval"
 
-#: src/main/eval.c:4946
+#: src/main/eval.c:4957
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太舊"
 
-#: src/main/eval.c:4947
+#: src/main/eval.c:4958
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:4981
+#: src/main/eval.c:4992
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不符"
 
-#: src/main/eval.c:5128
+#: src/main/eval.c:5139
 msgid "invalid sequence argument in for loop"
 msgstr "迴圈中的序列引數不正確"
 
-#: src/main/eval.c:5263 src/main/names.c:1291
+#: src/main/eval.c:5274 src/main/names.c:1292
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "沒有 \"%s\" 這個內部函數"
 
-#: src/main/eval.c:5361 src/main/eval.c:5708 src/main/eval.c:5748
+#: src/main/eval.c:5372 src/main/eval.c:5719 src/main/eval.c:5759
 msgid "bad function"
 msgstr "不當的函數"
 
-#: src/main/eval.c:5374
+#: src/main/eval.c:5385
 msgid "not a BUILTIN function"
 msgstr "非 BUILTIN 函數"
 
-#: src/main/eval.c:5805
+#: src/main/eval.c:5816
 #, fuzzy
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "switch() 需要數值而無需具名的替代方案"
 
-#: src/main/eval.c:5916
+#: src/main/eval.c:5927
 msgid "cannot find index for threaded code address"
 msgstr "找不到執行緒程式碼位址的索引"
 
-#: src/main/eval.c:5976
+#: src/main/eval.c:5987
 msgid "invalid body"
 msgstr "無效的主體"
 
-#: src/main/eval.c:5996
+#: src/main/eval.c:6007
 msgid "invalid symbol"
 msgstr "符號不正確"
 
-#: src/main/eval.c:6040
+#: src/main/eval.c:6051
 msgid "argument is not a byte code object"
 msgstr "引數不是位元組碼物件"
 
-#: src/main/eval.c:6061
+#: src/main/eval.c:6072
 msgid "bad file name"
 msgstr "不當的檔案名稱"
 
-#: src/main/eval.c:6065 src/main/eval.c:6086
+#: src/main/eval.c:6076 src/main/eval.c:6097
 msgid "unable to open 'file'"
 msgstr "無法開啟 'file'"
 
-#: src/main/eval.c:6080 src/main/saveload.c:1942
+#: src/main/eval.c:6091 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "'file' 必須是非空字串"
 
-#: src/main/eval.c:6082 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:6093 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2178
 msgid "'ascii' must be logical"
 msgstr "'ascii' 必須是邏輯值"
 
-#: src/main/eval.c:6153 src/main/eval.c:6172 src/main/eval.c:6202
+#: src/main/eval.c:6164 src/main/eval.c:6183 src/main/eval.c:6213
 msgid "constant buffer must be a generic vector"
 msgstr "常數緩衝區必須是個一般向量"
 
-#: src/main/eval.c:6204
+#: src/main/eval.c:6215
 msgid "bad constant count"
 msgstr "不當的常數計數"
 
-#: src/main/eval.c:6240
+#: src/main/eval.c:6251
 msgid "profile timer in use"
 msgstr "程式概要分析計時器在使用中"
 
-#: src/main/eval.c:6242
+#: src/main/eval.c:6253
 msgid "already byte code profiling"
 msgstr "已經在進行位元組碼程式概要分析"
 
-#: src/main/eval.c:6260
+#: src/main/eval.c:6271
 msgid "setting profile timer failed"
 msgstr "程式概要分析計時器設置失敗"
 
-#: src/main/eval.c:6277
+#: src/main/eval.c:6288
 msgid "not byte code profiling"
 msgstr "非位元組碼程式概要分析"
 
-#: src/main/eval.c:6292 src/main/eval.c:6295 src/main/eval.c:6298
+#: src/main/eval.c:6303 src/main/eval.c:6306 src/main/eval.c:6309
 #, fuzzy
 msgid "byte code profiling is not supported in this build"
 msgstr "這個組建不支援 ICU"
@@ -4095,23 +4100,23 @@ msgstr "長引數長度不是短引數長度的整數倍"
 msgid "invalid partial string match"
 msgstr "部分字串比對不正確"
 
-#: src/main/match.c:228 src/main/match.c:268 src/main/objects.c:49
+#: src/main/match.c:228 src/main/match.c:266 src/main/objects.c:49
 #: src/main/objects.c:59
 #, c-format
 msgid "formal argument \"%s\" matched by multiple actual arguments"
 msgstr "正式引數 \"%s\" 有多個與之相對應的實際引數"
 
-#: src/main/match.c:231 src/main/match.c:266
+#: src/main/match.c:231 src/main/match.c:264
 #, c-format
 msgid "argument %d matches multiple formal arguments"
 msgstr "引數 %d 有多個與之相對應的正式引數"
 
-#: src/main/match.c:272
+#: src/main/match.c:270
 #, c-format
 msgid "partial argument match of '%s' to '%s'"
 msgstr "'%s' 的部份引數符合 '%s'"
 
-#: src/main/match.c:383
+#: src/main/match.c:380
 #, fuzzy, c-format
 msgid "unused argument %s"
 msgid_plural "unused arguments %s"
@@ -4256,24 +4261,24 @@ msgstr "Rprofmem：無法開啟輸出檔案 '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1005
+#: src/main/names.c:1006
 msgid "string argument required"
 msgstr "需要字串引數"
 
-#: src/main/names.c:1008
+#: src/main/names.c:1009
 msgid "no such primitive function"
 msgstr "沒有此一原始函數"
 
-#: src/main/names.c:1193 src/main/names.c:1223
+#: src/main/names.c:1194 src/main/names.c:1224
 msgid "attempt to use zero-length variable name"
 msgstr "不能用零長度的變數名"
 
-#: src/main/names.c:1195 src/main/names.c:1225
+#: src/main/names.c:1196 src/main/names.c:1226
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "變數名稱受限為 %d 位元組"
 
-#: src/main/names.c:1286 src/main/names.c:1289
+#: src/main/names.c:1287 src/main/names.c:1290
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引數不正確"
 
@@ -4309,119 +4314,119 @@ msgstr "'generic' 引數必須是字串"
 msgid "'UseMethod' used in an inappropriate fashion"
 msgstr "'UseMethod' 不能這樣使用"
 
-#: src/main/objects.c:465
+#: src/main/objects.c:464
 #, c-format
 msgid "no applicable method for '%s' applied to an object of class \"%s\""
 msgstr "沒有適用的方法可將 '%s' 套用到 \"%s\" 類別的物件"
 
-#: src/main/objects.c:553
+#: src/main/objects.c:552
 msgid "'NextMethod' called from outside a function"
 msgstr "'NextMethod' 不能在函數外呼叫"
 
-#: src/main/objects.c:559
+#: src/main/objects.c:558
 msgid "'NextMethod' called from an anonymous function"
 msgstr "'NextMethod' 不能在匿名函數內呼叫"
 
-#: src/main/objects.c:580
+#: src/main/objects.c:579
 msgid "no calling generic was found: was a method called directly?"
 msgstr "找不到呼叫此方法的一般函數: 是不是已經直接呼叫這個方法?"
 
-#: src/main/objects.c:583
+#: src/main/objects.c:582
 #, c-format
 msgid "'function' is not a function, but of type %d"
 msgstr "'function' 不是函數, 而是類型 %d"
 
-#: src/main/objects.c:656
+#: src/main/objects.c:655
 msgid "wrong argument ..."
 msgstr "引數不正確 ..."
 
-#: src/main/objects.c:668
+#: src/main/objects.c:667
 msgid "object not specified"
 msgstr "物件沒有指定"
 
-#: src/main/objects.c:676 src/main/objects.c:683
+#: src/main/objects.c:675 src/main/objects.c:682
 msgid "generic function not specified"
 msgstr "一般功能沒有指定"
 
-#: src/main/objects.c:680
+#: src/main/objects.c:679
 #, fuzzy
 msgid "invalid generic argument to 'NextMethod'"
 msgstr "NextMethod 不能用一般引數"
 
-#: src/main/objects.c:692
+#: src/main/objects.c:691
 #, fuzzy
 msgid "invalid 'group' argument found in 'NextMethod'"
 msgstr "NextMethod 不能用 'group' 引數"
 
-#: src/main/objects.c:709
+#: src/main/objects.c:708
 msgid "wrong value for .Method"
 msgstr ".Method 的值不正確"
 
-#: src/main/objects.c:719
+#: src/main/objects.c:718
 msgid "Incompatible methods ignored"
 msgstr "不相容方法，忽略不用"
 
-#: src/main/objects.c:773 src/main/objects.c:778
+#: src/main/objects.c:772 src/main/objects.c:777
 msgid "no method to invoke"
 msgstr "沒有可以呼叫的方法"
 
-#: src/main/objects.c:827
+#: src/main/objects.c:826
 msgid "cannot unclass an environment"
 msgstr "無法取消環境的類別"
 
-#: src/main/objects.c:830
+#: src/main/objects.c:829
 msgid "cannot unclass an external pointer"
 msgstr "無法取消外部指標的類別"
 
-#: src/main/objects.c:866
+#: src/main/objects.c:865
 msgid "'what' must be a character vector"
 msgstr "'what' 必須是字元向量"
 
-#: src/main/objects.c:870
+#: src/main/objects.c:869
 msgid "'which' must be a length 1 logical vector"
 msgstr "'which' 必須是長度為 1 的邏輯向量"
 
-#: src/main/objects.c:876
+#: src/main/objects.c:875
 msgid "use 'is()' instead of 'inherits()' on S4 objects"
 msgstr "在 S4 物件上使用 'is()' 來代替 'inherits()'"
 
-#: src/main/objects.c:1001
+#: src/main/objects.c:1000
 msgid "could not find correct environment; please report!"
 msgstr ""
 
-#: src/main/objects.c:1042
+#: src/main/objects.c:1041
 #, fuzzy
 msgid "'onOff' must be TRUE or FALSE"
 msgstr "'all.x' 必須是 TRUE 或 FALSE"
 
-#: src/main/objects.c:1107
+#: src/main/objects.c:1106
 #, c-format
 msgid "unable to find a non-generic version of function \"%s\""
 msgstr "無法找到非一般版本的函數 \"%s\""
 
-#: src/main/objects.c:1139
+#: src/main/objects.c:1138
 #, fuzzy
 msgid ""
 "'standardGeneric' called without 'methods' dispatch enabled (will be ignored)"
 msgstr "standardGeneric 被呼叫，但方法分派沒有啟用 (忽略不用)"
 
-#: src/main/objects.c:1148
+#: src/main/objects.c:1147
 #, fuzzy
 msgid "argument to 'standardGeneric' must be a non-empty character string"
 msgstr "standardGeneric 的引數必須是非空字串"
 
-#: src/main/objects.c:1153
+#: src/main/objects.c:1152
 #, c-format
 msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr "不能從非同屬函數中呼叫 standardGeneric(\"%s\") "
 
-#: src/main/objects.c:1177
+#: src/main/objects.c:1176
 msgid "argument 'code' must be a character string"
 msgstr "引數 'code' 必須是字串"
 
-#: src/main/objects.c:1244
+#: src/main/objects.c:1243
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4430,60 +4435,60 @@ msgstr ""
 "原始方法程式碼 (\"%s\") 不正確：應該是 \"clear\"、\"reset\"、\"set\" 或 "
 "\"suppress\""
 
-#: src/main/objects.c:1252
+#: src/main/objects.c:1251
 msgid "invalid object: must be a primitive function"
 msgstr "物件不正確: 必須是原始函數"
 
-#: src/main/objects.c:1299
+#: src/main/objects.c:1298
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
 msgstr "原始一般函數的正式定義必須是函數物件 (不能是 '%s' 類別)"
 
-#: src/main/objects.c:1329
+#: src/main/objects.c:1328
 #, fuzzy, c-format
 msgid "object returned as generic function \"%s\" does not appear to be one"
 msgstr "以通用函數 \"%s\" 型式回傳的物件看來不是一個"
 
-#: src/main/objects.c:1431
+#: src/main/objects.c:1430
 msgid "invalid primitive operation given for dispatch"
 msgstr "不能分派原始運算"
 
-#: src/main/objects.c:1457 src/main/objects.c:1476
+#: src/main/objects.c:1456 src/main/objects.c:1475
 msgid "dispatch error"
 msgstr "分派錯誤"
 
-#: src/main/objects.c:1470
+#: src/main/objects.c:1469
 #, c-format
 msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 msgstr "原始函數 \"%s\" 設定了方法，但沒有一般函數 "
 
-#: src/main/objects.c:1495
+#: src/main/objects.c:1494
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
 msgstr "C 級的 MAKE_TYPE 巨集不能用 NULL 字串指標來呼叫"
 
-#: src/main/objects.c:1511
+#: src/main/objects.c:1510
 #, fuzzy
 msgid "'methods' package not yet loaded"
 msgstr "無法載入 Hershey 字型"
 
-#: src/main/objects.c:1521
+#: src/main/objects.c:1520
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "R_getClassDef(.)  以空字串指標來呼叫"
 
-#: src/main/objects.c:1563
+#: src/main/objects.c:1562
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "C 級的 NEW 巨集不能用 null 類別定義指標來呼叫"
 
-#: src/main/objects.c:1567
+#: src/main/objects.c:1566
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "試著從虛擬類別 (\"%s\") 產生物件"
 
-#: src/main/objects.c:1644
+#: src/main/objects.c:1643
 #, fuzzy, c-format
 msgid "object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "\"%s\" 類別的物件並不相應於有效的 S3 物件"
@@ -5166,7 +5171,7 @@ msgstr "發生了 xdr 複數資料讀取錯誤"
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1986
 #: src/main/serialize.c:2602 src/modules/internet/internet.c:351
-#: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
+#: src/modules/internet/internet.c:413 src/modules/internet/internet.c:523
 msgid "write failed"
 msgstr "寫入失敗"
 
@@ -6640,94 +6645,94 @@ msgstr "正在下載"
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "無法開啟網址 '%s' ，原因是 '%s'"
 
-#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:372
-#: src/modules/internet/internet.c:474
+#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:375
+#: src/modules/internet/internet.c:482
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "無法開啟目標檔案 '%s' ，原因是 '%s'"
 
-#: src/modules/internet/internet.c:377 src/modules/internet/internet.c:479
+#: src/modules/internet/internet.c:380 src/modules/internet/internet.c:487
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "嘗試 URL '%s'\n"
 
-#: src/modules/internet/internet.c:384 src/modules/internet/internet.c:486
+#: src/modules/internet/internet.c:387 src/modules/internet/internet.c:494
 msgid "opened URL\n"
 msgstr "開啟了 URL\n"
 
-#: src/modules/internet/internet.c:455 src/modules/internet/internet.c:560
-#, c-format
-msgid "downloaded length %d != reported length %d"
+#: src/modules/internet/internet.c:460 src/modules/internet/internet.c:570
+#, fuzzy, c-format
+msgid "downloaded length %0.f != reported length %0.f"
 msgstr "下載的長度 %d != 報告的長度 %d"
 
-#: src/modules/internet/internet.c:460 src/modules/internet/internet.c:565
+#: src/modules/internet/internet.c:465 src/modules/internet/internet.c:575
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "無法開啟 URL '%s'"
 
-#: src/modules/internet/internet.c:593 src/modules/internet/internet.c:828
+#: src/modules/internet/internet.c:603 src/modules/internet/internet.c:840
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "無法開啟: HTTP 狀態是 '%d%s'"
 
-#: src/modules/internet/internet.c:772 src/modules/internet/internet.c:935
+#: src/modules/internet/internet.c:784 src/modules/internet/internet.c:948
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl 已經逾時"
 
-#: src/modules/internet/internet.c:799 src/modules/internet/internet.c:813
-#: src/modules/internet/internet.c:957 src/modules/internet/internet.c:966
+#: src/modules/internet/internet.c:811 src/modules/internet/internet.c:825
+#: src/modules/internet/internet.c:970 src/modules/internet/internet.c:979
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl 失敗: '%s'"
 
-#: src/modules/internet/internet.c:870
+#: src/modules/internet/internet.c:883
 msgid "Internet read timed out"
 msgstr "網際網路讀取逾時"
 
-#: src/modules/internet/nanoftp.c:288 src/modules/internet/nanoftp.c:301
-#: src/modules/internet/nanoftp.c:312 src/modules/internet/nanoftp.c:346
-#: src/modules/internet/nanoftp.c:356
+#: src/modules/internet/nanoftp.c:290 src/modules/internet/nanoftp.c:303
+#: src/modules/internet/nanoftp.c:314 src/modules/internet/nanoftp.c:348
+#: src/modules/internet/nanoftp.c:358
 msgid "RxmlNanoFTPScanURL: overlong (invalid?) URL"
 msgstr "RxmlNanoFTPScanURL：過長 (無效？) 網址"
 
-#: src/modules/internet/nanoftp.c:389
+#: src/modules/internet/nanoftp.c:391
 msgid "removing FTP proxy info"
 msgstr "刪除 FTP 代理主機資訊"
 
-#: src/modules/internet/nanoftp.c:391
+#: src/modules/internet/nanoftp.c:393
 #, c-format
 msgid "using FTP proxy '%s'"
 msgstr "用 FTP 代理主機 '%s'"
 
-#: src/modules/internet/nanoftp.c:402 src/modules/internet/nanoftp.c:431
+#: src/modules/internet/nanoftp.c:404 src/modules/internet/nanoftp.c:433
 msgid "RxmlNanoFTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoFTPScanProxy：過長 (無效？) 網址"
 
-#: src/modules/internet/nanoftp.c:830
+#: src/modules/internet/nanoftp.c:834
 msgid "cannot resolve host"
 msgstr "無法分辨主機"
 
-#: src/modules/internet/nanoftp.c:860
+#: src/modules/internet/nanoftp.c:864
 msgid "failed to connect to server"
 msgstr "連線不上伺服器"
 
-#: src/modules/internet/nanoftp.c:871
+#: src/modules/internet/nanoftp.c:875
 msgid "failed to get response from server"
 msgstr "伺服器沒有反應"
 
-#: src/modules/internet/nanoftp.c:1134
+#: src/modules/internet/nanoftp.c:1138
 msgid "RxmlNanoFTPGetConnection: failed to create socket"
 msgstr "RxmlNanoFTPGetConnection: 建立插槽失敗"
 
-#: src/modules/internet/nanoftp.c:1180
+#: src/modules/internet/nanoftp.c:1184
 msgid "failed to create a data connection"
 msgstr "建立資料連結失敗"
 
-#: src/modules/internet/nanoftp.c:1188
+#: src/modules/internet/nanoftp.c:1192
 msgid "failed to bind a port"
 msgstr "連線通訊埠失敗"
 
-#: src/modules/internet/nanoftp.c:1195
+#: src/modules/internet/nanoftp.c:1199
 #, c-format
 msgid "could not listen on port %d"
 msgstr "無法從通訊埠 %d 聽取資料"
@@ -6750,27 +6755,27 @@ msgstr "使用 HTTP 代理主機 '%s'"
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoHTTPScanProxy：過長 (無效？) 網址"
 
-#: src/modules/internet/nanohttp.c:1107
+#: src/modules/internet/nanohttp.c:1112
 #, c-format
 msgid "unable to resolve '%s'"
 msgstr "無法解析 '%s'"
 
-#: src/modules/internet/nanohttp.c:1134
+#: src/modules/internet/nanohttp.c:1145
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "透過通訊埠 %2$d 接通到 '%1$s'。"
 
-#: src/modules/internet/nanohttp.c:1139
+#: src/modules/internet/nanohttp.c:1150
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "無法透過通訊埠 %2$d 連線到 '%1$s'。"
 
-#: src/modules/internet/nanohttp.c:1443
+#: src/modules/internet/nanohttp.c:1454
 #, c-format
 msgid "redirect to: '%s'"
 msgstr "重新傳送到: '%s'"
 
-#: src/modules/internet/nanohttp.c:1454
+#: src/modules/internet/nanohttp.c:1465
 msgid "too many redirects, aborting ..."
 msgstr "太多重新傳送，中斷工作 ..."
 

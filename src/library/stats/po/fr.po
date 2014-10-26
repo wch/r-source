@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:50+0100\n"
+"POT-Creation-Date: 2014-10-26 08:48+0000\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -49,6 +49,11 @@ msgstr "impossible de transformer plus de 100 pars dans arima0"
 #: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "décalage maximum supporté de 350"
+
+#: bandwidths.c:121
+#, c-format
+msgid "non-finite x[%d] in bandwidth calculation"
+msgstr ""
 
 #: complete_cases.c:26
 #, c-format

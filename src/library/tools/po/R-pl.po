@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1970,6 +1970,11 @@ msgstr "Linki %s w pakiecie '%s' nie mogły zostać zlokalizowane"
 msgid "No docs found for package %s"
 msgstr "Nie znaleziono dokumentów dla pakietu '%s'"
 
+# tools/R/dynamicHelp.R: 455
+# gettextf("URL %s was not found", mono(path))
+msgid "URL %s was not found"
+msgstr "adres URL %s nie został znaleziony"
+
 # tools/R/dynamicHelp.R: 431
 # gettextf("Only help files, %s, %s and files under %s and %s in a package can be viewed", mono("NEWS"),
 #                               mono("DESCRIPTION"), mono("doc/"), mono("demo/"))
@@ -1983,11 +1988,6 @@ msgstr ""
 # gettextf("unsupported URL %s", mono(path))
 msgid "unsupported URL %s"
 msgstr "niewspierany adres URL %s"
-
-# tools/R/dynamicHelp.R: 455
-# gettextf("URL %s was not found", mono(path))
-msgid "URL %s was not found"
-msgstr "adres URL %s nie został znaleziony"
 
 # tools/R/dynamicHelp.R: 471
 # warning("httpd server disabled by R_DISABLE_HTTPD", immediate. = TRUE)

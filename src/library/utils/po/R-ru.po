@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:51\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1082,9 +1082,6 @@ msgstr "'ccaddress' должен быть длиной 1"
 
 msgid "no download method found"
 msgstr "не найдено метода скачивания"
-
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"

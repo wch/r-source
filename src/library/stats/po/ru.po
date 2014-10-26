@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:50+0100\n"
+"POT-Creation-Date: 2014-10-26 08:48+0000\n"
 "PO-Revision-Date: 2013-03-19 21:49-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -53,6 +53,11 @@ msgstr "могу трансформировать только 100 пар в arima0"
 #: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "максимальный поддерживаемый лаг -- 350"
+
+#: bandwidths.c:121
+#, c-format
+msgid "non-finite x[%d] in bandwidth calculation"
+msgstr ""
 
 #: complete_cases.c:26
 #, c-format

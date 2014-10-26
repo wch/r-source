@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -872,6 +872,9 @@ msgstr "Le lien %s dans le package %s ne peut être localisé"
 msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
 
+msgid "URL %s was not found"
+msgstr "l'URL %s est introuvable"
+
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
@@ -880,9 +883,6 @@ msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "URL %s non supportée"
-
-msgid "URL %s was not found"
-msgstr "l'URL %s est introuvable"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr "serveur http arrêté par R_DISABLE_HTTPD"

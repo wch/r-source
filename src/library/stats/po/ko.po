@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:50+0100\n"
+"POT-Creation-Date: 2014-10-26 08:48+0000\n"
 "PO-Revision-Date: 2014-03-26 21:13-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -51,6 +51,11 @@ msgstr "arima0에서는 최대 100개의 파라미터들을 변환할 수 있습
 #: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "지원되는 최대 lag의 크기는 350입니다"
+
+#: bandwidths.c:121
+#, c-format
+msgid "non-finite x[%d] in bandwidth calculation"
+msgstr ""
 
 #: complete_cases.c:26
 #, c-format

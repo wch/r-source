@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2014-03-26 10:17+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -618,9 +618,6 @@ msgstr " 'tree' の 'height' 成分は昇順にソートされていません "
 msgid "elements of 'k' must be between 1 and %d"
 msgstr " 'k' の要素は 1 と %d の間になければなりません "
 
-msgid "'merge' and 'height' do not fit!"
-msgstr " 'merge' と 'height' が合致していません! "
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1147,15 +1144,6 @@ msgstr " クラスタリングすべき 2 以上のオブジェクトが必要�
 
 msgid "invalid length of members"
 msgstr " メンバーの長さが無効です "
-
-msgid "invalid dendrogram"
-msgstr " 無効なデンドログラムです "
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr " dendrogram の 'merge' 成分は整数でなければなりません "
-
-msgid "'merge' matrix has invalid contents"
-msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr " 引数 'x' をクラス %s に強制変換できません "
@@ -2503,6 +2491,15 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr " 'merge' と 'height' が合致していません! "
+
+#~ msgid "invalid dendrogram"
+#~ msgstr " 無効なデンドログラムです "
+
+#~ msgid "'merge' component in dendrogram must be integer"
+#~ msgstr " dendrogram の 'merge' 成分は整数でなければなりません "
 
 #~ msgid "probabilities cannot be negative nor all 0"
 #~ msgstr " 確率は負になれませんし、全てが 0 にはなり得ません "

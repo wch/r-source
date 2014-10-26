@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -855,6 +855,9 @@ msgstr "패키지 %2$s 내의 링크 %1$s 를 제자리에 위치시킬 수 없�
 msgid "No docs found for package %s"
 msgstr "패키지 %s에 대한 문서를 찾을 수 없습니다"
 
+msgid "URL %s was not found"
+msgstr "URL %s을 찾을 수 없습니다"
+
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
@@ -863,9 +866,6 @@ msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "지원되지 않는 URL %s입니다"
-
-msgid "URL %s was not found"
-msgstr "URL %s을 찾을 수 없습니다"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:51\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1039,9 +1039,6 @@ msgstr "'ccaddress'的长度必需为一"
 
 msgid "no download method found"
 msgstr "没有下载方法"
-
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr ""
 
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"

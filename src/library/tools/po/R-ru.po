@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -847,6 +847,9 @@ msgstr "Ссылка %s в пакете %s не найдена"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
+msgid "URL %s was not found"
+msgstr "URL %s не найден"
+
 msgid ""
 "Only help files, %s, %s and files under %s and %s in a package can be viewed"
 msgstr ""
@@ -855,9 +858,6 @@ msgstr ""
 
 msgid "unsupported URL %s"
 msgstr "неподдерживаемые URL %s"
-
-msgid "URL %s was not found"
-msgstr "URL %s не найден"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr "сервер httpd отключен через R_DISABLE_HTTPD"

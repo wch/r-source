@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1373,11 +1373,6 @@ msgstr "komponent 'height' w 'tree' nie jest (rosnąco) posortowany"
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "elementy 'k' muszą być pomiędzy 1 a %d"
 
-# stats/R/dendrogram.R: 32
-# stop("'merge' and 'height' do not fit!")
-msgid "'merge' and 'height' do not fit!"
-msgstr "argumenty 'merge' oraz 'height' nie pasują!"
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -2523,19 +2518,6 @@ msgstr "co najmniej 2 obiekty są potrzebne aby móc grupować"
 # stop("invalid length of members")
 msgid "invalid length of members"
 msgstr "niepoprawna długość argumentu 'members'"
-
-# stats/R/hclust.R: 115
-# stop("invalid dendrogram")
-msgid "invalid dendrogram"
-msgstr "niepoprawne drzewo celów"
-
-# stats/R/hclust.R: 118
-# stop("'merge' component in dendrogram must be integer")
-msgid "'merge' component in dendrogram must be integer"
-msgstr "komponent 'merge' w drzewie celu musi być liczbą całkowitą"
-
-msgid "'merge' matrix has invalid contents"
-msgstr ""
 
 # stats/R/hclust.R: 159
 # stop(gettextf("argument 'x' cannot be coerced to class %s",
@@ -5112,6 +5094,21 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+# stats/R/dendrogram.R: 32
+# stop("'merge' and 'height' do not fit!")
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr "argumenty 'merge' oraz 'height' nie pasują!"
+
+# stats/R/hclust.R: 115
+# stop("invalid dendrogram")
+#~ msgid "invalid dendrogram"
+#~ msgstr "niepoprawne drzewo celów"
+
+# stats/R/hclust.R: 118
+# stop("'merge' component in dendrogram must be integer")
+#~ msgid "'merge' component in dendrogram must be integer"
+#~ msgstr "komponent 'merge' w drzewie celu musi być liczbą całkowitą"
 
 # stats/R/distn.R: 157
 # stop("probabilities cannot be negative nor all 0")

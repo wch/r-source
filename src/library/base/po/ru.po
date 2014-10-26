@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:50+0100\n"
+"POT-Creation-Date: 2014-10-26 08:47+0000\n"
 "PO-Revision-Date: 2014-03-11 10:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -177,7 +177,7 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/connections.c:5005 src/main/context.c:611 src/main/context.c:620
 #: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
 #: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
-#: src/main/datetime.c:1029 src/main/datetime.c:1233 src/main/debug.c:230
+#: src/main/datetime.c:1029 src/main/datetime.c:1233 src/main/debug.c:236
 #: src/main/deparse.c:401 src/main/dotcode.c:496 src/main/dotcode.c:500
 #: src/main/dotcode.c:505 src/main/dounzip.c:323 src/main/dounzip.c:330
 #: src/main/dounzip.c:340 src/main/dounzip.c:345 src/main/dounzip.c:349
@@ -891,7 +891,7 @@ msgid "invalid second argument of length 0"
 msgstr "неправильный второй аргумент нулевой длины"
 
 #: src/main/arithmetic.c:1620 src/main/arithmetic.c:1638 src/main/envir.c:1462
-#: src/main/envir.c:1973 src/main/eval.c:572 src/main/eval.c:3991
+#: src/main/envir.c:1973 src/main/eval.c:572 src/main/eval.c:4002
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "аргумент \"%s\" пропущен, умолчаний нет"
@@ -1036,7 +1036,7 @@ msgstr "вырожденная матрица 'backsolve'. Первый нуль
 
 #: src/main/attrib.c:40 src/main/attrib.c:235 src/main/attrib.c:269
 #: src/main/attrib.c:291 src/main/attrib.c:405 src/main/attrib.c:452
-#: src/main/attrib.c:502
+#: src/main/attrib.c:503
 msgid "attempt to set an attribute on NULL"
 msgstr "попытка присвоения атрибута на NULL"
 
@@ -1084,20 +1084,20 @@ msgstr "не могу присвоить 'tsp' нулевому вектору"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "попытка установить неправильный атрибут 'comment' "
 
-#: src/main/attrib.c:511
+#: src/main/attrib.c:512
 msgid "adding class \"factor\" to an invalid object"
 msgstr "добавление класса \"factor\" к неправильному объекту"
 
-#: src/main/attrib.c:519
+#: src/main/attrib.c:543
 msgid "attempt to set invalid 'class' attribute"
 msgstr "попытка установить неправильный атрибут 'class'"
 
-#: src/main/attrib.c:834
+#: src/main/attrib.c:859
 #, c-format
 msgid "class '%s' has no 'names' slot"
 msgstr "у класса '%s' нет позиции 'names'"
 
-#: src/main/attrib.c:836
+#: src/main/attrib.c:861
 #, c-format
 msgid ""
 "class '%s' has no 'names' slot; assigning a names attribute will create an "
@@ -1106,7 +1106,7 @@ msgstr ""
 "у класса '%s' нет позиции 'names'; присвоение атрибута имени создаст "
 "неправильный объект"
 
-#: src/main/attrib.c:839
+#: src/main/attrib.c:864
 #, c-format
 msgid ""
 "invalid to use names()<- to set the 'names' slot in a non-vector class ('%s')"
@@ -1114,129 +1114,129 @@ msgstr ""
 "нельзя использовать names()<- чтобы установить позицию 'names' в невекторном "
 "классе ('%s')"
 
-#: src/main/attrib.c:869
+#: src/main/attrib.c:894
 msgid "incompatible 'names' argument"
 msgstr "несовместимый аргумент 'names'"
 
-#: src/main/attrib.c:924
+#: src/main/attrib.c:949
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "неправильный (%s) тип установки атрибута 'names'"
 
-#: src/main/attrib.c:995
+#: src/main/attrib.c:1020
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' применены для не-многомерной матрицы"
 
-#: src/main/attrib.c:1000
+#: src/main/attrib.c:1025
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' должны быть списком"
 
-#: src/main/attrib.c:1003 src/main/attrib.c:1031
+#: src/main/attrib.c:1028 src/main/attrib.c:1056
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "длина 'dimnames' [%d] должна соответствовать 'dims' [%d]"
 
-#: src/main/attrib.c:1037
+#: src/main/attrib.c:1062
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "неправильный (%s) тип 'dimnames' (должен быть вектор)"
 
-#: src/main/attrib.c:1040
+#: src/main/attrib.c:1065
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
-#: src/main/attrib.c:1112 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1927
 #: src/main/envir.c:2048 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1733
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
-#: src/main/attrib.c:1115
+#: src/main/attrib.c:1140
 msgid "invalid second argument"
 msgstr "неправильный второй аргумент"
 
-#: src/main/attrib.c:1123
+#: src/main/attrib.c:1148
 msgid "length-0 dimension vector is invalid"
 msgstr "вектор размерности нулевой длины недопустим"
 
-#: src/main/attrib.c:1128
+#: src/main/attrib.c:1153
 msgid "the dims contain missing values"
 msgstr "измерения содержат пропущенные значения"
 
-#: src/main/attrib.c:1130
+#: src/main/attrib.c:1155
 msgid "the dims contain negative values"
 msgstr "змерения содержат отрицательные значения"
 
-#: src/main/attrib.c:1135
+#: src/main/attrib.c:1160
 msgid "dims do not match the length of object"
 msgstr "измерения не соответствуют длине объекта"
 
-#: src/main/attrib.c:1137
+#: src/main/attrib.c:1162
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:1239
+#: src/main/attrib.c:1264
 msgid "attributes must be a list or NULL"
 msgstr "атрибуты должны быть списком или NULL"
 
-#: src/main/attrib.c:1244
+#: src/main/attrib.c:1269
 msgid "attributes must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/attrib.c:1248
+#: src/main/attrib.c:1273
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "все атрибуты должны иметь имена [%d не имеет]"
 
-#: src/main/attrib.c:1348
+#: src/main/attrib.c:1373
 msgid "'which' must be of mode character"
 msgstr "'which' должен быть текстом"
 
-#: src/main/attrib.c:1350
+#: src/main/attrib.c:1375
 msgid "exactly one attribute 'which' must be given"
 msgstr "должен быть задан в точности один атрибут 'which'"
 
-#: src/main/attrib.c:1408 src/main/attrib.c:1431 src/main/subscript.c:240
+#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:240
 #: src/main/subscript.c:244 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "частичное соответствие между '%s' и '%s'"
 
-#: src/main/attrib.c:1470
+#: src/main/attrib.c:1495
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "неправильный тип '%s' для имени слота"
 
-#: src/main/attrib.c:1506
+#: src/main/attrib.c:1531
 msgid "'name' must be non-null character string"
 msgstr "'name' должно быть непустой строкой"
 
-#: src/main/attrib.c:1630 src/main/attrib.c:1701 src/main/attrib.c:1738
+#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
 msgid "invalid type or length for slot name"
 msgstr "неправильный тип или длина для имени слота"
 
-#: src/main/attrib.c:1664
+#: src/main/attrib.c:1689
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "не могу получить слот (\"%s\") из объекта типа \"%s\""
 
-#: src/main/attrib.c:1675
+#: src/main/attrib.c:1700
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
-#: src/main/attrib.c:1692
+#: src/main/attrib.c:1717
 msgid "attempt to set slot on NULL object"
 msgstr "попытка установить слот на NULL объект"
 
-#: src/main/attrib.c:1733
+#: src/main/attrib.c:1758
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "формальные классы не могут использоваться без пакета 'methods'"
 
-#: src/main/attrib.c:1745
+#: src/main/attrib.c:1770
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1244,7 +1244,7 @@ msgid ""
 msgstr ""
 "попытка получить слот \"%s\" из объекта базового класса (\"%s\") без слотов"
 
-#: src/main/attrib.c:1749
+#: src/main/attrib.c:1774
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1276,8 +1276,8 @@ msgstr "повторный формальный аргумент 'use.names'"
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:1038 src/main/names.c:1252 src/main/names.c:1257
-#: src/main/names.c:1262 src/main/names.c:1267
+#: src/main/bind.c:1038 src/main/names.c:1253 src/main/names.c:1258
+#: src/main/names.c:1263 src/main/names.c:1268
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "слишком длинное имя класса в '%s'"
@@ -1322,7 +1322,7 @@ msgstr "указанный размер вектора слишком велик
 #: src/main/envir.c:2055 src/main/envir.c:2715 src/main/envir.c:2801
 #: src/main/envir.c:3081 src/main/envir.c:3110 src/main/envir.c:3131
 #: src/main/envir.c:3154 src/main/envir.c:3189 src/main/envir.c:3210
-#: src/main/envir.c:3516 src/main/envir.c:3521 src/main/eval.c:5979
+#: src/main/envir.c:3516 src/main/envir.c:3521 src/main/eval.c:5990
 #: src/main/objects.c:191 src/main/objects.c:199 src/main/saveload.c:2070
 #: src/main/saveload.c:2362 src/main/serialize.c:2743
 msgid "use of NULL environment is defunct"
@@ -1394,9 +1394,9 @@ msgid "invalid value"
 msgstr "неправильное значение"
 
 #: src/main/builtin.c:943 src/main/coerce.c:2501 src/main/coerce.c:2542
-#: src/main/eval.c:562 src/main/eval.c:682 src/main/eval.c:2093
-#: src/main/eval.c:2170 src/main/eval.c:2230 src/main/eval.c:2563
-#: src/main/eval.c:5323 src/main/eval.c:5441
+#: src/main/eval.c:562 src/main/eval.c:682 src/main/eval.c:2104
+#: src/main/eval.c:2181 src/main/eval.c:2241 src/main/eval.c:2574
+#: src/main/eval.c:5334 src/main/eval.c:5452
 msgid "'...' used in an incorrect context"
 msgstr "'...' использовано в неправильном контексте"
 
@@ -1409,11 +1409,11 @@ msgstr "повторяющиеся значения по умолчанию в �
 msgid "'EXPR' is missing"
 msgstr "'EXPR' отсутствует"
 
-#: src/main/builtin.c:1001 src/main/eval.c:5796
+#: src/main/builtin.c:1001 src/main/eval.c:5807
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR должно быть вектором единичной длины"
 
-#: src/main/builtin.c:1004 src/main/eval.c:5799
+#: src/main/builtin.c:1004 src/main/eval.c:5810
 #, c-format
 msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
@@ -1570,7 +1570,7 @@ msgstr "попытка конверсии не-фактора"
 msgid "list argument expected"
 msgstr "ожидается аргумент-список"
 
-#: src/main/coerce.c:1509 src/main/eval.c:5983
+#: src/main/coerce.c:1509 src/main/eval.c:5994
 msgid "invalid environment"
 msgstr "неправильное окружение"
 
@@ -2264,7 +2264,7 @@ msgstr ""
 "второе"
 
 #: src/main/connections.c:5085 src/modules/internet/internet.c:115
-#: src/modules/internet/internet.c:569
+#: src/modules/internet/internet.c:579
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
@@ -2447,23 +2447,28 @@ msgstr "аргумент должен быть замыканием"
 msgid "argument must be a function"
 msgstr "аргумент должен быть функцией"
 
-#: src/main/debug.c:132 src/main/debug.c:166 src/main/debug.c:226
+#: src/main/debug.c:111
+#, fuzzy, c-format
+msgid "Value for '%s' must be TRUE or FALSE"
+msgstr "'all.x' должно быть TRUE или FALSE"
+
+#: src/main/debug.c:138 src/main/debug.c:172 src/main/debug.c:232
 msgid "argument must not be a function"
 msgstr "аргумент не должен быть функцией"
 
-#: src/main/debug.c:135
+#: src/main/debug.c:141
 msgid "cannot trace NULL"
 msgstr "не могу трассировать NULL"
 
-#: src/main/debug.c:139
+#: src/main/debug.c:145
 msgid "'tracemem' is not useful for promise and environment objects"
 msgstr "'tracemem' бесполезна для перспективных объектов и объектов-окружений"
 
-#: src/main/debug.c:142
+#: src/main/debug.c:148
 msgid "'tracemem' is not useful for weak reference or external pointer objects"
 msgstr "'tracemem' бесполезна для слабых ссылок и внешних указателей"
 
-#: src/main/debug.c:148 src/main/debug.c:171
+#: src/main/debug.c:154 src/main/debug.c:177
 msgid "R was not compiled with support for memory profiling"
 msgstr "R не был скомпилирован с поддержкой профилирования памяти"
 
@@ -2509,7 +2514,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' должен быть малым положительным целым числом"
 
 #: src/main/deparse.c:415 src/main/envir.c:1896 src/main/envir.c:1977
-#: src/main/eval.c:568 src/main/eval.c:1247 src/main/eval.c:4000
+#: src/main/eval.c:568 src/main/eval.c:1258 src/main/eval.c:4011
 #: src/main/saveload.c:1978 src/main/saveload.c:2310 src/main/serialize.c:2761
 #, c-format
 msgid "object '%s' not found"
@@ -3416,11 +3421,11 @@ msgstr ""
 "исполнение расположено слишком глубоко: неопределенная рекурсия / "
 "options(expressions=)?"
 
-#: src/main/eval.c:574 src/main/eval.c:3992
+#: src/main/eval.c:574 src/main/eval.c:4003
 msgid "argument is missing, with no default"
 msgstr "аргумент пропущен, умолчаний нет"
 
-#: src/main/eval.c:678 src/main/eval.c:5274
+#: src/main/eval.c:678 src/main/eval.c:5285
 msgid "attempt to apply non-function"
 msgstr "попытка применить не-функцию"
 
@@ -3429,234 +3434,234 @@ msgstr "попытка применить не-функцию"
 msgid "%s at %s#%d: "
 msgstr "%s на %s#%d: "
 
-#: src/main/eval.c:1174
+#: src/main/eval.c:1185
 #, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "не могу найти символ \"%s\" в окружении общей функции"
 
-#: src/main/eval.c:1192
+#: src/main/eval.c:1203
 #, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "символ \"%s\" не находится окружении метода"
 
-#: src/main/eval.c:1305
+#: src/main/eval.c:1316
 msgid "the condition has length > 1 and only the first element will be used"
 msgstr "длина условия > 1, будет использован только первый элемент"
 
-#: src/main/eval.c:1324
+#: src/main/eval.c:1335
 msgid "missing value where TRUE/FALSE needed"
 msgstr "пропущенное значение, а нужно TRUE/FALSE"
 
-#: src/main/eval.c:1325
+#: src/main/eval.c:1336
 msgid "argument is not interpretable as logical"
 msgstr "аргумент не интерпретируется как логический"
 
-#: src/main/eval.c:1326
+#: src/main/eval.c:1337
 msgid "argument is of length zero"
 msgstr "аргумент нулевой длины"
 
-#: src/main/eval.c:1419
+#: src/main/eval.c:1430
 msgid "non-symbol loop variable"
 msgstr "несимвольная переменная цикла"
 
-#: src/main/eval.c:1511 src/main/eval.c:5047
+#: src/main/eval.c:1522 src/main/eval.c:5058
 msgid "invalid for() loop sequence"
 msgstr "неправильная циклическая последовательность for()"
 
-#: src/main/eval.c:1652
+#: src/main/eval.c:1663
 msgid "multi-argument returns are not permitted"
 msgstr "многоаргументные возвраты не разрешены"
 
-#: src/main/eval.c:1701
+#: src/main/eval.c:1712
 msgid "invalid (NULL) left side of assignment"
 msgstr "неправильная (NULL) левая сторона присваивания"
 
-#: src/main/eval.c:1735
+#: src/main/eval.c:1746
 msgid "target of assignment expands to non-language object"
 msgstr "цель присваивания раскрывается в неязыковой объект"
 
-#: src/main/eval.c:1818
+#: src/main/eval.c:1829
 #, c-format
 msgid "overlong name in '%s'"
 msgstr "слишком длинное имя в '%s'"
 
-#: src/main/eval.c:1908
+#: src/main/eval.c:1919
 msgid "cannot do complex assignments in base namespace"
 msgstr "не могу делать комплексные присваивания в базовом пространстве имен"
 
-#: src/main/eval.c:1910
+#: src/main/eval.c:1921
 msgid "cannot do complex assignments in base environment"
 msgstr "не могу делать комплексные присваивания в базовом окружении"
 
-#: src/main/eval.c:1948 src/main/eval.c:1975
+#: src/main/eval.c:1959 src/main/eval.c:1986
 msgid "invalid function in complex assignment"
 msgstr "неправильная функция в комплексном присвоении"
 
-#: src/main/eval.c:2035
+#: src/main/eval.c:2046
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "неправильная (do_set) левая сторона в присвоении"
 
-#: src/main/eval.c:2097
+#: src/main/eval.c:2108
 #, c-format
 msgid "argument %d is empty"
 msgstr "аргумент %d пуст"
 
-#: src/main/eval.c:2110
+#: src/main/eval.c:2121
 #, c-format
 msgid "'%s' is missing"
 msgstr "'%s' отсутствует"
 
-#: src/main/eval.c:2261
+#: src/main/eval.c:2272
 msgid "invalid formal argument list for \"function\""
 msgstr "неправильный список формальных аргументов для \"функция\""
 
-#: src/main/eval.c:2319 src/main/eval.c:2350 src/main/eval.c:2355
+#: src/main/eval.c:2330 src/main/eval.c:2361 src/main/eval.c:2366
 #, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "неправильный аргумент '%s' типа '%s'"
 
-#: src/main/eval.c:2347
+#: src/main/eval.c:2358
 msgid "numeric 'envir' arg not of length one"
 msgstr "числовой аргумент 'envir' не единичной длины"
 
-#: src/main/eval.c:2371 src/main/eval.c:2393
+#: src/main/eval.c:2382 src/main/eval.c:2404
 msgid "restarts not supported in 'eval'"
 msgstr "перезапуск не поддерживается в 'eval'"
 
-#: src/main/eval.c:2450 src/main/eval.c:2463
+#: src/main/eval.c:2461 src/main/eval.c:2474
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' вызвано снаружи вложения"
 
-#: src/main/eval.c:2556
+#: src/main/eval.c:2567
 msgid "value in '...' is not a promise"
 msgstr "значение в '...' не является перспективным"
 
-#: src/main/eval.c:2816
+#: src/main/eval.c:2827
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Несовместимые методы (\"%s\", \"%s\") для \"%s\""
 
-#: src/main/eval.c:2865
+#: src/main/eval.c:2876
 msgid "dispatch error in group dispatch"
 msgstr "ошибка отправки в групповой отправке"
 
-#: src/main/eval.c:3317
+#: src/main/eval.c:3328
 #, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "'%s' не является %s функцией"
 
-#: src/main/eval.c:3801
+#: src/main/eval.c:3812
 msgid "node stack overflow"
 msgstr "переполнение стека узла"
 
-#: src/main/eval.c:3807
+#: src/main/eval.c:3818
 msgid "integer stack overflow"
 msgstr "переполнение стека целых чисел"
 
-#: src/main/eval.c:3861
+#: src/main/eval.c:3872
 msgid "bad opcode"
 msgstr "неправильный opcode"
 
-#: src/main/eval.c:4829
+#: src/main/eval.c:4840
 #, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "неправильный тип %s в 'x %s y'"
 
-#: src/main/eval.c:4941
+#: src/main/eval.c:4952
 msgid "bytecode version mismatch; using eval"
 msgstr "несоответствие версии байтового кода; использую eval"
 
-#: src/main/eval.c:4946
+#: src/main/eval.c:4957
 msgid "bytecode version is too old"
 msgstr "версия байтового кода слишком старая"
 
-#: src/main/eval.c:4947
+#: src/main/eval.c:4958
 msgid "bytecode version is too new"
 msgstr "версия байтового кода слишком новая"
 
-#: src/main/eval.c:4981
+#: src/main/eval.c:4992
 msgid "byte code version mismatch"
 msgstr "несоответствие версии байтового кода"
 
-#: src/main/eval.c:5128
+#: src/main/eval.c:5139
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:5263 src/main/names.c:1291
+#: src/main/eval.c:5274 src/main/names.c:1292
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "нет .Internal функции '%s'"
 
-#: src/main/eval.c:5361 src/main/eval.c:5708 src/main/eval.c:5748
+#: src/main/eval.c:5372 src/main/eval.c:5719 src/main/eval.c:5759
 msgid "bad function"
 msgstr "неправильная функция"
 
-#: src/main/eval.c:5374
+#: src/main/eval.c:5385
 msgid "not a BUILTIN function"
 msgstr "не BUILTIN-функция"
 
-#: src/main/eval.c:5805
+#: src/main/eval.c:5816
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "числовое EXPR требуется для 'switch' без именованных альтернатив"
 
-#: src/main/eval.c:5916
+#: src/main/eval.c:5927
 msgid "cannot find index for threaded code address"
 msgstr "не могу найти индекс для нитевого адреса кода"
 
-#: src/main/eval.c:5976
+#: src/main/eval.c:5987
 msgid "invalid body"
 msgstr "неправильное тело"
 
-#: src/main/eval.c:5996
+#: src/main/eval.c:6007
 msgid "invalid symbol"
 msgstr "неправильный символ"
 
-#: src/main/eval.c:6040
+#: src/main/eval.c:6051
 msgid "argument is not a byte code object"
 msgstr "аргумент не является объектом байтового кода"
 
-#: src/main/eval.c:6061
+#: src/main/eval.c:6072
 msgid "bad file name"
 msgstr "неправильное имя файла"
 
-#: src/main/eval.c:6065 src/main/eval.c:6086
+#: src/main/eval.c:6076 src/main/eval.c:6097
 msgid "unable to open 'file'"
 msgstr "не могу открыть 'file'"
 
-#: src/main/eval.c:6080 src/main/saveload.c:1942
+#: src/main/eval.c:6091 src/main/saveload.c:1942
 msgid "'file' must be non-empty string"
 msgstr "'file' должен быть непустой строкой"
 
-#: src/main/eval.c:6082 src/main/saveload.c:1944 src/main/saveload.c:2244
+#: src/main/eval.c:6093 src/main/saveload.c:1944 src/main/saveload.c:2244
 #: src/main/serialize.c:2178
 msgid "'ascii' must be logical"
 msgstr "'ascii' должно быть логическим"
 
-#: src/main/eval.c:6153 src/main/eval.c:6172 src/main/eval.c:6202
+#: src/main/eval.c:6164 src/main/eval.c:6183 src/main/eval.c:6213
 msgid "constant buffer must be a generic vector"
 msgstr "константный буфер должен быть общим вектором"
 
-#: src/main/eval.c:6204
+#: src/main/eval.c:6215
 msgid "bad constant count"
 msgstr "неверное число констант"
 
-#: src/main/eval.c:6240
+#: src/main/eval.c:6251
 msgid "profile timer in use"
 msgstr "используется профильный таймер"
 
-#: src/main/eval.c:6242
+#: src/main/eval.c:6253
 msgid "already byte code profiling"
 msgstr "уже есть побайтное профилирование"
 
-#: src/main/eval.c:6260
+#: src/main/eval.c:6271
 msgid "setting profile timer failed"
 msgstr "установить профильный таймер не удалось"
 
-#: src/main/eval.c:6277
+#: src/main/eval.c:6288
 msgid "not byte code profiling"
 msgstr "не побайтное профилирование"
 
-#: src/main/eval.c:6292 src/main/eval.c:6295 src/main/eval.c:6298
+#: src/main/eval.c:6303 src/main/eval.c:6306 src/main/eval.c:6309
 #, fuzzy
 msgid "byte code profiling is not supported in this build"
 msgstr "ICU не поддерживается в этой сборке"
@@ -4113,23 +4118,23 @@ msgstr "длина большего аргумента не является п�
 msgid "invalid partial string match"
 msgstr "неправильное соответствие части строки"
 
-#: src/main/match.c:228 src/main/match.c:268 src/main/objects.c:49
+#: src/main/match.c:228 src/main/match.c:266 src/main/objects.c:49
 #: src/main/objects.c:59
 #, c-format
 msgid "formal argument \"%s\" matched by multiple actual arguments"
 msgstr "формальный аргумент \"%s\" соответствует многим реальным аргументам"
 
-#: src/main/match.c:231 src/main/match.c:266
+#: src/main/match.c:231 src/main/match.c:264
 #, c-format
 msgid "argument %d matches multiple formal arguments"
 msgstr "аргумент %d соответствует многим формальным аргументам"
 
-#: src/main/match.c:272
+#: src/main/match.c:270
 #, c-format
 msgid "partial argument match of '%s' to '%s'"
 msgstr "частичное соответствие между аргументами '%s' и '%s'"
 
-#: src/main/match.c:383
+#: src/main/match.c:380
 #, c-format
 msgid "unused argument %s"
 msgid_plural "unused arguments %s"
@@ -4282,24 +4287,24 @@ msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr "длинные вектора еще не поддерживаются: %s:%d"
 
-#: src/main/names.c:1005
+#: src/main/names.c:1006
 msgid "string argument required"
 msgstr "нужен текстовый аргумент"
 
-#: src/main/names.c:1008
+#: src/main/names.c:1009
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1193 src/main/names.c:1223
+#: src/main/names.c:1194 src/main/names.c:1224
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1195 src/main/names.c:1225
+#: src/main/names.c:1196 src/main/names.c:1226
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "имена переменных ограничены %d байтами"
 
-#: src/main/names.c:1286 src/main/names.c:1289
+#: src/main/names.c:1287 src/main/names.c:1290
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
@@ -4335,115 +4340,115 @@ msgstr "'generic' аргумент должен быть текстовой ст
 msgid "'UseMethod' used in an inappropriate fashion"
 msgstr "'UseMethod' использован неподходящим образом"
 
-#: src/main/objects.c:465
+#: src/main/objects.c:464
 #, c-format
 msgid "no applicable method for '%s' applied to an object of class \"%s\""
 msgstr "нет подходящего метода для '%s' применяемого к объекту класса \"%s\""
 
-#: src/main/objects.c:553
+#: src/main/objects.c:552
 msgid "'NextMethod' called from outside a function"
 msgstr "'NextMethod' вызван снаружи функции"
 
-#: src/main/objects.c:559
+#: src/main/objects.c:558
 msgid "'NextMethod' called from an anonymous function"
 msgstr "'NextMethod' вызван из безымянной функции"
 
-#: src/main/objects.c:580
+#: src/main/objects.c:579
 msgid "no calling generic was found: was a method called directly?"
 msgstr "не был найден общий вызов: метод был вызван прямо?"
 
-#: src/main/objects.c:583
+#: src/main/objects.c:582
 #, c-format
 msgid "'function' is not a function, but of type %d"
 msgstr "'function' является не функцией, а %d"
 
-#: src/main/objects.c:656
+#: src/main/objects.c:655
 msgid "wrong argument ..."
 msgstr "неправильный аргумент ..."
 
-#: src/main/objects.c:668
+#: src/main/objects.c:667
 msgid "object not specified"
 msgstr "объект не указан"
 
-#: src/main/objects.c:676 src/main/objects.c:683
+#: src/main/objects.c:675 src/main/objects.c:682
 msgid "generic function not specified"
 msgstr "общая функция не указана"
 
-#: src/main/objects.c:680
+#: src/main/objects.c:679
 msgid "invalid generic argument to 'NextMethod'"
 msgstr "неправильный общий аргумент для 'NextMethod'"
 
-#: src/main/objects.c:692
+#: src/main/objects.c:691
 msgid "invalid 'group' argument found in 'NextMethod'"
 msgstr "неправильный аргумент 'group' найден в 'NextMethod'"
 
-#: src/main/objects.c:709
+#: src/main/objects.c:708
 msgid "wrong value for .Method"
 msgstr "неправильное значение для '.Method'"
 
-#: src/main/objects.c:719
+#: src/main/objects.c:718
 msgid "Incompatible methods ignored"
 msgstr "Несовместимый метод пропущен"
 
-#: src/main/objects.c:773 src/main/objects.c:778
+#: src/main/objects.c:772 src/main/objects.c:777
 msgid "no method to invoke"
 msgstr "нет метода для вызова"
 
-#: src/main/objects.c:827
+#: src/main/objects.c:826
 msgid "cannot unclass an environment"
 msgstr "не могу убрать класс окружения"
 
-#: src/main/objects.c:830
+#: src/main/objects.c:829
 msgid "cannot unclass an external pointer"
 msgstr "не могу убрать класс внешнего указателя"
 
-#: src/main/objects.c:866
+#: src/main/objects.c:865
 msgid "'what' must be a character vector"
 msgstr "'what' должен быть текстовым вектором"
 
-#: src/main/objects.c:870
+#: src/main/objects.c:869
 msgid "'which' must be a length 1 logical vector"
 msgstr "'which' должен быть единичным логическим вектором"
 
-#: src/main/objects.c:876
+#: src/main/objects.c:875
 msgid "use 'is()' instead of 'inherits()' on S4 objects"
 msgstr "использование 'is()' вместо 'inherits()' для S4-объекта"
 
-#: src/main/objects.c:1001
+#: src/main/objects.c:1000
 msgid "could not find correct environment; please report!"
 msgstr "не могу найти подходящее окружение, сигнализируйте об этом!"
 
-#: src/main/objects.c:1042
+#: src/main/objects.c:1041
 msgid "'onOff' must be TRUE or FALSE"
 msgstr "'onOff' должно быть TRUE или FALSE"
 
-#: src/main/objects.c:1107
+#: src/main/objects.c:1106
 #, c-format
 msgid "unable to find a non-generic version of function \"%s\""
 msgstr "не могу найти не-общую версию функции \"%s\""
 
-#: src/main/objects.c:1139
+#: src/main/objects.c:1138
 msgid ""
 "'standardGeneric' called without 'methods' dispatch enabled (will be ignored)"
 msgstr ""
 "'standardGeneric' вызван без включенных методов доставки (будет пропущен)"
 
-#: src/main/objects.c:1148
+#: src/main/objects.c:1147
 msgid "argument to 'standardGeneric' must be a non-empty character string"
 msgstr "аргумент для 'standardGeneric' должен быть непустой текстовой строкой"
 
-#: src/main/objects.c:1153
+#: src/main/objects.c:1152
 #, c-format
 msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr "вызов для 'standardGeneric' (\"%s\") не из тела данной общей функции"
 
-#: src/main/objects.c:1177
+#: src/main/objects.c:1176
 msgid "argument 'code' must be a character string"
 msgstr "аргумент 'code' должен быть текстовой строкой"
 
-#: src/main/objects.c:1244
+#: src/main/objects.c:1243
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4452,11 +4457,11 @@ msgstr ""
 "неправильный код первичного метода (\"%s\"): должен быть \"clear\", \"reset"
 "\", \"set\", или \"suppress\""
 
-#: src/main/objects.c:1252
+#: src/main/objects.c:1251
 msgid "invalid object: must be a primitive function"
 msgstr "неправильный объект: должен быть первичной функцией"
 
-#: src/main/objects.c:1299
+#: src/main/objects.c:1298
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
@@ -4465,20 +4470,20 @@ msgstr ""
 "формальное определение первичного общего должно быть объектом-функцией "
 "(получить тип '%s')"
 
-#: src/main/objects.c:1329
+#: src/main/objects.c:1328
 #, c-format
 msgid "object returned as generic function \"%s\" does not appear to be one"
 msgstr "объект, возвращенный как общая функция \"%s\", похоже, ею не является"
 
-#: src/main/objects.c:1431
+#: src/main/objects.c:1430
 msgid "invalid primitive operation given for dispatch"
 msgstr "для доставки использована неправильная первичная операция"
 
-#: src/main/objects.c:1457 src/main/objects.c:1476
+#: src/main/objects.c:1456 src/main/objects.c:1475
 msgid "dispatch error"
 msgstr "ошибка отправки"
 
-#: src/main/objects.c:1470
+#: src/main/objects.c:1469
 #, c-format
 msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
@@ -4487,29 +4492,29 @@ msgstr ""
 "для методов установлена первичная функция \"%s\", но не предложено общей "
 "функции"
 
-#: src/main/objects.c:1495
+#: src/main/objects.c:1494
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
 msgstr "макрос MAKE_CLASS уровня C вызван со строковым указателем NULL"
 
-#: src/main/objects.c:1511
+#: src/main/objects.c:1510
 #, fuzzy
 msgid "'methods' package not yet loaded"
 msgstr "шрифты 'Hershey' не могут быть загружены"
 
-#: src/main/objects.c:1521
+#: src/main/objects.c:1520
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "R_getClassDef(.) вызван со строковым указателем NULL"
 
-#: src/main/objects.c:1563
+#: src/main/objects.c:1562
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "макрос NEW уровня C вызван с пустым указателем определения класса"
 
-#: src/main/objects.c:1567
+#: src/main/objects.c:1566
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "попытка создать объект из виртуального класса (\"%s\")"
 
-#: src/main/objects.c:1644
+#: src/main/objects.c:1643
 #, c-format
 msgid "object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "объект класса \"%s\" не является правильным объектом S3"
@@ -5179,7 +5184,7 @@ msgstr "произошла ошибка чтения комплексных xdr-
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1986
 #: src/main/serialize.c:2602 src/modules/internet/internet.c:351
-#: src/modules/internet/internet.c:409 src/modules/internet/internet.c:514
+#: src/modules/internet/internet.c:413 src/modules/internet/internet.c:523
 msgid "write failed"
 msgstr "запись не удалась"
 
@@ -6665,94 +6670,94 @@ msgstr "Процент загрузки"
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "не могу открыть URL '%s' по причине '%s'"
 
-#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:372
-#: src/modules/internet/internet.c:474
+#: src/modules/internet/internet.c:346 src/modules/internet/internet.c:375
+#: src/modules/internet/internet.c:482
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "не могу открыть файл назначения '%s' по причине '%s'"
 
-#: src/modules/internet/internet.c:377 src/modules/internet/internet.c:479
+#: src/modules/internet/internet.c:380 src/modules/internet/internet.c:487
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "пробую URL '%s'\n"
 
-#: src/modules/internet/internet.c:384 src/modules/internet/internet.c:486
+#: src/modules/internet/internet.c:387 src/modules/internet/internet.c:494
 msgid "opened URL\n"
 msgstr "открытие URL\n"
 
-#: src/modules/internet/internet.c:455 src/modules/internet/internet.c:560
-#, c-format
-msgid "downloaded length %d != reported length %d"
+#: src/modules/internet/internet.c:460 src/modules/internet/internet.c:570
+#, fuzzy, c-format
+msgid "downloaded length %0.f != reported length %0.f"
 msgstr "загруженный размер %d != сообщенному размеру %d"
 
-#: src/modules/internet/internet.c:460 src/modules/internet/internet.c:565
+#: src/modules/internet/internet.c:465 src/modules/internet/internet.c:575
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "не могу открыть URL '%s'"
 
-#: src/modules/internet/internet.c:593 src/modules/internet/internet.c:828
+#: src/modules/internet/internet.c:603 src/modules/internet/internet.c:840
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "не могу открыть: статус HTTP был '%d %s'"
 
-#: src/modules/internet/internet.c:772 src/modules/internet/internet.c:935
+#: src/modules/internet/internet.c:784 src/modules/internet/internet.c:948
 msgid "InternetOpenUrl timed out"
 msgstr "тайм-аут 'InternetOpenUrl'"
 
-#: src/modules/internet/internet.c:799 src/modules/internet/internet.c:813
-#: src/modules/internet/internet.c:957 src/modules/internet/internet.c:966
+#: src/modules/internet/internet.c:811 src/modules/internet/internet.c:825
+#: src/modules/internet/internet.c:970 src/modules/internet/internet.c:979
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "'InternetOpenUrl' не удалось: '%s'"
 
-#: src/modules/internet/internet.c:870
+#: src/modules/internet/internet.c:883
 msgid "Internet read timed out"
 msgstr "тайм-аут чтения из Internet"
 
-#: src/modules/internet/nanoftp.c:288 src/modules/internet/nanoftp.c:301
-#: src/modules/internet/nanoftp.c:312 src/modules/internet/nanoftp.c:346
-#: src/modules/internet/nanoftp.c:356
+#: src/modules/internet/nanoftp.c:290 src/modules/internet/nanoftp.c:303
+#: src/modules/internet/nanoftp.c:314 src/modules/internet/nanoftp.c:348
+#: src/modules/internet/nanoftp.c:358
 msgid "RxmlNanoFTPScanURL: overlong (invalid?) URL"
 msgstr "RxmlNanoFTPScanURL: чересчур длинные (неправильные?) URL"
 
-#: src/modules/internet/nanoftp.c:389
+#: src/modules/internet/nanoftp.c:391
 msgid "removing FTP proxy info"
 msgstr "удаление информации FTP-прокси"
 
-#: src/modules/internet/nanoftp.c:391
+#: src/modules/internet/nanoftp.c:393
 #, c-format
 msgid "using FTP proxy '%s'"
 msgstr "использую FTP-прокси '%s'"
 
-#: src/modules/internet/nanoftp.c:402 src/modules/internet/nanoftp.c:431
+#: src/modules/internet/nanoftp.c:404 src/modules/internet/nanoftp.c:433
 msgid "RxmlNanoFTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoFTPScanProxy: чересчур длинные (неправильные?) URL"
 
-#: src/modules/internet/nanoftp.c:830
+#: src/modules/internet/nanoftp.c:834
 msgid "cannot resolve host"
 msgstr "не могу определить адрес хоста"
 
-#: src/modules/internet/nanoftp.c:860
+#: src/modules/internet/nanoftp.c:864
 msgid "failed to connect to server"
 msgstr "не удалось связаться с сервером"
 
-#: src/modules/internet/nanoftp.c:871
+#: src/modules/internet/nanoftp.c:875
 msgid "failed to get response from server"
 msgstr "не удалось получить ответ сервера"
 
-#: src/modules/internet/nanoftp.c:1134
+#: src/modules/internet/nanoftp.c:1138
 msgid "RxmlNanoFTPGetConnection: failed to create socket"
 msgstr "'RxmlNanoFTPGetConnection': не удалось создать сокет"
 
-#: src/modules/internet/nanoftp.c:1180
+#: src/modules/internet/nanoftp.c:1184
 msgid "failed to create a data connection"
 msgstr "не удалось создать соединение с данными"
 
-#: src/modules/internet/nanoftp.c:1188
+#: src/modules/internet/nanoftp.c:1192
 msgid "failed to bind a port"
 msgstr "не удалось привязать порт"
 
-#: src/modules/internet/nanoftp.c:1195
+#: src/modules/internet/nanoftp.c:1199
 #, c-format
 msgid "could not listen on port %d"
 msgstr "не могу прослушать порт %d"
@@ -6775,27 +6780,27 @@ msgstr "использую HTTP-прокси '%s'"
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoHTTPScanProxy: чересчур длинные (неправильные?) URL"
 
-#: src/modules/internet/nanohttp.c:1107
+#: src/modules/internet/nanohttp.c:1112
 #, c-format
 msgid "unable to resolve '%s'"
 msgstr "не могу разрешить '%s'"
 
-#: src/modules/internet/nanohttp.c:1134
+#: src/modules/internet/nanohttp.c:1145
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "соединение с '%s' через порт %d."
 
-#: src/modules/internet/nanohttp.c:1139
+#: src/modules/internet/nanohttp.c:1150
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "не могу соединиться с '%s' через порт %d."
 
-#: src/modules/internet/nanohttp.c:1443
+#: src/modules/internet/nanohttp.c:1454
 #, c-format
 msgid "redirect to: '%s'"
 msgstr "перенаправление в: '%s'"
 
-#: src/modules/internet/nanohttp.c:1454
+#: src/modules/internet/nanohttp.c:1465
 msgid "too many redirects, aborting ..."
 msgstr "слишком много перенаправлений, отключаюсь ..."
 

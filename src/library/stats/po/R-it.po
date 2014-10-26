@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -655,9 +655,6 @@ msgstr ""
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "gli elementi di 'k' devono essere tra 1 e %d"
 
-msgid "'merge' and 'height' do not fit!"
-msgstr "'merge' e 'height' in disaccordo!"
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1219,15 +1216,6 @@ msgstr "si devono avere n >= 2 oggetti per una cluster"
 
 msgid "invalid length of members"
 msgstr "lunghezza dei membri non valida"
-
-msgid "invalid dendrogram"
-msgstr "dendrogramma non valido"
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr "la componente 'merge' del dendrogramma deve essere di tipo integer"
-
-msgid "'merge' matrix has invalid contents"
-msgstr ""
 
 #, fuzzy
 msgid "argument 'x' cannot be coerced to class %s"
@@ -2714,6 +2702,15 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr "'merge' e 'height' in disaccordo!"
+
+#~ msgid "invalid dendrogram"
+#~ msgstr "dendrogramma non valido"
+
+#~ msgid "'merge' component in dendrogram must be integer"
+#~ msgstr "la componente 'merge' del dendrogramma deve essere di tipo integer"
 
 #, fuzzy
 #~ msgid "probabilities cannot be negative nor all 0"

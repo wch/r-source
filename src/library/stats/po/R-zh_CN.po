@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -611,9 +611,6 @@ msgstr "'tree'里的'height'组件没有排序(由小到大)"
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k'的单元必需在一和%d之间"
 
-msgid "'merge' and 'height' do not fit!"
-msgstr "'merge'和'height'不合!"
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1116,15 +1113,6 @@ msgstr "用群集时必需有n >= 2的对象"
 
 msgid "invalid length of members"
 msgstr "成员长度不对"
-
-msgid "invalid dendrogram"
-msgstr "系統樹圖不对"
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr "系統樹圖的'merge'组件必需是整数"
-
-msgid "'merge' matrix has invalid contents"
-msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr "无法将'x'参数強制转换成%s类别"
@@ -2448,6 +2436,15 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr "'merge'和'height'不合!"
+
+#~ msgid "invalid dendrogram"
+#~ msgstr "系統樹圖不对"
+
+#~ msgid "'merge' component in dendrogram must be integer"
+#~ msgstr "系統樹圖的'merge'组件必需是整数"
 
 #~ msgid "probabilities cannot be negative nor all 0"
 #~ msgstr "機率不能是负数，也不能全都是零。"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-03-18 13:54+0000\n"
+"POT-Creation-Date: 2014-10-26 08:48+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -18,6 +18,6 @@ msgstr ""
 
 # splines/src/splines.c: 155
 # error(_("'ord' must be a positive integer"))
-#: splines.c:155
+#: splines.c:147
 msgid "'ord' must be a positive integer"
 msgstr "argument 'ord' musi być dodatnią liczbą całkowitą"

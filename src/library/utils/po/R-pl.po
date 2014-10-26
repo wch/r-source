@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-12 07:51\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2077,13 +2077,6 @@ msgstr "argument 'ccaddress' musi być długości 1"
 msgid "no download method found"
 msgstr "nie znaleziono metody pobierania"
 
-# utils/R/unix/download.file.R: 63
-# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
-# utils/R/windows/download.file.R: 62
-# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
-msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-msgstr "metoda 'lynx()' jest nieprzetestowana i jest przestarzała od R 3.1.0"
-
 # utils/R/unix/download.file.R: 70
 # warning("download had nonzero exit status")
 # utils/R/windows/download.file.R: 72
@@ -2521,6 +2514,14 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+# utils/R/unix/download.file.R: 63
+# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
+# utils/R/windows/download.file.R: 62
+# warning("method 'lynx' is untested and deprecated as from R 3.1.0")
+#~ msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
+#~ msgstr ""
+#~ "metoda 'lynx()' jest nieprzetestowana i jest przestarzała od R 3.1.0"
 
 #~ msgid ""
 #~ "If nothing happens, you should open\n"

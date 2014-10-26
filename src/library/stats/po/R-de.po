@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09\n"
+"POT-Creation-Date: 2014-10-26 08:48\n"
 "PO-Revision-Date: 2013-03-18 10:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -621,9 +621,6 @@ msgstr "die Koponente 'height' von 'tree' ist nicht (aufsteigend) sortiert"
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "Elemente von 'k' müssen zwischen 1 und %d sein"
 
-msgid "'merge' and 'height' do not fit!"
-msgstr "'merge' und 'height' passen nicht"
-
 msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
@@ -1152,15 +1149,6 @@ msgstr "n >= 2 Objekte nötig, um zu clustern"
 
 msgid "invalid length of members"
 msgstr "unzulässige Anzahl von Teilnehmern"
-
-msgid "invalid dendrogram"
-msgstr "unzulässiges Dendrogramm"
-
-msgid "'merge' component in dendrogram must be integer"
-msgstr "Die 'merge' Komponente in einem Dendrogramm muss ganzzahlig sein"
-
-msgid "'merge' matrix has invalid contents"
-msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
 msgstr "Argument 'x' kann nicht in die Klasse %s gewandelt werden"
@@ -2560,6 +2548,15 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' ist zu kurz: benötige %d Punkt"
 msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
+
+#~ msgid "'merge' and 'height' do not fit!"
+#~ msgstr "'merge' und 'height' passen nicht"
+
+#~ msgid "invalid dendrogram"
+#~ msgstr "unzulässiges Dendrogramm"
+
+#~ msgid "'merge' component in dendrogram must be integer"
+#~ msgstr "Die 'merge' Komponente in einem Dendrogramm muss ganzzahlig sein"
 
 #~ msgid "probabilities cannot be negative nor all 0"
 #~ msgstr "Wahrscheinlichkeiten können weder negativ noch alle gleich 0 sein"
