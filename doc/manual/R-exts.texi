@@ -1293,7 +1293,7 @@ grown up to use directory @file{inst/extdata} for such files.
 Data files can have one of three types as indicated by their extension:
 plain @R{} code (@file{.R} or @file{.r}), tables (@file{.tab},
 @file{.txt}, or @file{.csv}, see @code{?data} for the file formats, and
-note that @file{.csv} is @strong{not} the standard@footnote{e.g@:
+note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
 @uref{http://tools.ietf.org/@/html/@/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
@@ -2695,10 +2695,24 @@ value.  The test of cyclic declarations@footnote{For example, in early
 2014 @CRANpkg{gdata} declared @samp{Imports: gtools} and @CRANpkg{gtools}
 declared @samp{Imports: gdata}.}in @file{DESCRIPTION} files needs
 repositories (including @acronym{CRAN}) set: do this in
-@file{~/.Rprofile}, by e.g@:
+@file{~/.Rprofile}, by e.g.@:
 @example
 options(repos = c(CRAN="http://cran.r-project.org"))
 @end example
+
+One check customization which can be revealing is
+@example
+_R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
+@end example
+@noindent
+which reports unused local assigmnents.  Not only does this point out
+computations which are unnecessary because their results are unused, it
+also can show errors.  (Two such are to intend to update an object by
+assigning a value but mistype its name or assign in the wrong scope,
+for example using @code{<-} where @code{<<-} was intended.)  This can
+give false positives, most commonly because of non-standard evaluation
+for formulae and because the intention is to return objects in the
+environment of a function for later use.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -2726,9 +2740,9 @@ to check the primary sub-architecture, and then to use something like
 @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
 @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
 additional sub-architecture just the checks@footnote{loading, examples,
-tests, vignettes} which differ by sub-architecture.  (This approach is
-required for packages which are installed by @command{R CMD INSTALL
---merge-multiarch}.)
+tests, runnning vignette code} which differ by sub-architecture.  (This
+approach is required for packages which are installed by @command{R CMD
+INSTALL --merge-multiarch}.)
 
 Where packages need additional commands to install all the
 sub-architectures these can be supplied by e.g.@:
