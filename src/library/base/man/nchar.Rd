@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -59,10 +59,10 @@ nzchar(x)
   non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test of
   validity.
 
-  A character string marked with \code{"bytes"} encoding has a number of
-  bytes, but neither a known number of characters nor a width, so the
-  latter two types are \code{NA} if \code{allowNA = TRUE}, otherwise an
-  error.
+  A character string marked with \code{"bytes"} encoding (see
+  \code{\link{Encoding}}) has a number of bytes, but neither a known
+  number of characters nor a width, so the latter two types are
+  \code{NA} if \code{allowNA = TRUE}, otherwise an error.
 
   Names, dims and dimnames are copied from the input.
 

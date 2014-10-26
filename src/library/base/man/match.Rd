@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -69,7 +69,7 @@ x \%in\% table
   useful in \code{if} conditions.
 
   Character strings will be compared as byte sequences if any input is
-  marked as \code{"bytes"}.
+  marked as \code{"bytes"} (see \code{\link{Encoding}}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
