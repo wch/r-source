@@ -110,7 +110,8 @@ regexec(pattern, text, ignore.case = FALSE,
   invalid inputs and spurious matches in multibyte locales, but for
   \code{regexpr} it changes the interpretation of the output.
   It inhibits the conversion of inputs with marked encodings, and is
-  forced if any input is found which is marked as \code{"bytes"}.
+  forced if any input is found which is marked as \code{"bytes"}
+  see \code{\link{Encoding}}).
 
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if

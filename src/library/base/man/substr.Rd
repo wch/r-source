@@ -1,6 +1,6 @@
 % File src/library/base/man/substr.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{substr}
@@ -50,8 +50,9 @@ substring(text, first, last = 1000000L) <- value
   input had a declared Latin-1 or UTF-8 encoding and the current locale
   is either Latin-1 or UTF-8.
 
-  If an input element has declared \code{"bytes"} encoding, the
-  subsetting is done in units of bytes not characters.
+  If an input element has declared \code{"bytes"} encoding (see
+  \code{\link{Encoding}}, the subsetting is done in units of bytes not
+  characters.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the

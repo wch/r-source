@@ -82,7 +82,8 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches in multibyte locales.
   It inhibits the conversion of inputs with marked encodings, and is
-  forced if any input is found which is marked as \code{"bytes"}.
+  forced if any input is found which is marked as \code{"bytes"} (see
+  \code{\link{Encoding}}).
 }
 \note{
   Since someone who read the description carelessly even filed a bug

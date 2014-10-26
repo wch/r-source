@@ -1,6 +1,6 @@
 % File src/library/base/man/unique.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unique}
@@ -73,7 +73,7 @@ unique(x, incomparables = FALSE, \dots)
   numbers!
 
   Character strings will be compared as byte sequences if any input is
-  marked as \code{"bytes"}.
+  marked as \code{"bytes"} (see \code{\link{Encoding}}).
 }
 \value{
   For a vector, an object of the same type of \code{x}, but with only
