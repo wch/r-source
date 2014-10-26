@@ -231,8 +231,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item (Windows.) 64-bit was \command{Rscript.exe} were missing a
-      manifest specifying the style for common controls.
+      \item (Windows.) \command{Rscript.exe} was missing a
+      manifest specifying the modern style for common controls (e.g.,
+      the download progress bar).
       
       \item If a package had extra documentation files but no vignette,
       the HTML help system produced an empty index page.
