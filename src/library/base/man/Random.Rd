@@ -141,7 +141,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
   default), or \code{"user-supplied"}.  (For inversion, see the
   reference in \code{\link{qnorm}}.)  The Kinderman-Ramage generator
-  used in versions prior to 1.7.1 (now called \code{"Buggy"}) had several
+  used in versions prior to 1.7.0 (now called \code{"Buggy"}) had several
   approximation errors and should only be used for reproduction of old
   results.  The \code{"Box-Muller"} generator is stateful as pairs of
   normals are generated and returned sequentially.  The state is reset
