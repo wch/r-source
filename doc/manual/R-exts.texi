@@ -4085,6 +4085,9 @@ compiler flags (such as @option{-ffloat-store} and
 @option{-fexcess-precision=standard} for @command{gcc}) to mitigate the
 effects of extended-precision calculations.
 
+Tests which involve random inputs or non-deterministic algorithms should
+normally set a seed or be tested for many seeds.
+
 @end itemize
 
 @node PDF size, Check timing, Writing portable packages, Writing portable packages
