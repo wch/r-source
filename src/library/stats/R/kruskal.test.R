@@ -32,9 +32,9 @@ function(x, g, ...)
             warning("some elements of 'x' are not numeric and will be coerced to numeric")
         k <- length(x)
         l <- sapply(x, "length")
-        if (any(l == 0))
+        if (any(l == 0L))
             stop("all groups must contain data")
-        g <- factor(rep(1 : k, l))
+        g <- factor(rep.int(seq_len(k), l))
         x <- unlist(x)
     }
     else {
@@ -49,19 +49,20 @@ function(x, g, ...)
             stop("all group levels must be finite")
         g <- factor(g)
         k <- nlevels(g)
-        if (k < 2)
+        if (k < 2L)
             stop("all observations are in the same group")
     }
 
     n <- length(x)
-    if (n < 2)
+    if (n < 2L)
         stop("not enough observations")
     r <- rank(x)
     TIES <- table(x)
     STATISTIC <- sum(tapply(r, g, "sum")^2 / tapply(r, g, "length"))
+    ## keep as n+1 to avoid (implausible) integer overflows
     STATISTIC <- ((12 * STATISTIC / (n * (n + 1)) - 3 * (n + 1)) /
                   (1 - sum(TIES^3 - TIES) / (n^3 - n)))
-    PARAMETER <- k - 1
+    PARAMETER <- k - 1L
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     names(STATISTIC) <- "Kruskal-Wallis chi-squared"
     names(PARAMETER) <- "df"
