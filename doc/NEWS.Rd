@@ -212,22 +212,22 @@
 
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
-
-      \item The \code{as.dendrogram} method for \code{"hclust"} objects
-      gets \code{check} argument protecting against memory explosion for
-      invalid inputs.
     }
   }
 }
 
 \section{\Rlogo CHANGES IN R 3.1.2 patched}{
   \subsection{NEW FEATURES}{
-    \itemize{      
+    \itemize{
       \item The internal method of \code{download.file()} can now handle
       files larger than 2GB on 32-bit builds which support such files
       (tested on 32-bit \R running on 64-bit Windows).
 
       \item \code{kruskal.test()} warns on more types of suspicious input.
+
+      \item The \code{as.dendrogram} method for \code{"hclust"} objects
+      gets a \code{check} argument protecting against memory explosion for
+      invalid inputs.
     }
   }
 
@@ -236,13 +236,13 @@
       \item (Windows.) \command{Rscript.exe} was missing a
       manifest specifying the modern style for common controls (e.g.,
       the download progress bar).
-      
+
       \item If a package had extra documentation files but no vignette,
       the HTML help system produced an empty index page.
     }
   }
 }
-  
+
 \section{\Rlogo CHANGES IN R 3.1.2}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -410,10 +410,6 @@
       \item The \code{plot} method for \code{"hclust"} objects gets an
       optional argument \code{check};  When that is true, as per
       default, it checks more carefully for valid input.
-
-      \item The \code{as.dendrogram} method for \code{"hclust"} objects
-      gets a similar \code{check} argument which there protects against
-      memory explosion for invalid inputs.
 
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
