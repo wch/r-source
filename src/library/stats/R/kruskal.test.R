@@ -1,7 +1,7 @@
 #  File src/library/stats/R/kruskal.test.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,12 @@ function(x, g, ...)
     if (is.list(x)) {
         if (length(x) < 2L)
             stop("'x' must be a list with at least 2 elements")
+        if (!missing(g))
+            warning("'x' is a list, so ignoring argument 'g'")
         DNAME <- deparse(substitute(x))
         x <- lapply(x, function(u) u <- u[complete.cases(u)])
+        if (!all(sapply(x, is.numeric)))
+            warning("some elements of 'x' are not numeric and will be coerced to numeric")
         k <- length(x)
         l <- sapply(x, "length")
         if (any(l == 0))
