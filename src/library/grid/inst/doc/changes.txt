@@ -12,6 +12,12 @@ Changes from grid_3.1.* to grid_3.2.0:
 2.  Fixed problem in validDetails.beziergrob(), which used to fail if
     you tried to specify 'id.lengths'
 
+3.  Fixed bug in downViewport() when descending more than one
+    viewport.  It was possible for this to end up with the wrong
+    clipping region (because if you ended up in a viewport that
+    inherited its clipping region from a parent, that clipping region
+    was not enforced).
+
 
 Changes from grid_3.0.* to grid_3.1.0:
 -------------------------------------

@@ -288,6 +288,13 @@ SEXP doSetViewport(SEXP vp,
 	xx2 = REAL(parentClip)[2];
 	yy2 = REAL(parentClip)[3];
 	UNPROTECT(1);
+        /* If we are revisiting a viewport that inherits a clip
+         * region from a parent viewport, we may need to reset 
+         * the clip region (at worst, we generate a redundant clip)
+         */
+        if (!pushing) {
+	    GESetClip(xx1, yy1, xx2, yy2, dd);
+        }
     }
     PROTECT(currentClip = allocVector(REALSXP, 4));
     REAL(currentClip)[0] = xx1;
