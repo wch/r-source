@@ -263,12 +263,13 @@
       \item (OS X only.) Package \pkg{tcltk} checks when loaded if it is
       linked against the CRAN X11-based Tcl/Tk and if so that the Tcl/Tk
       component and the X11 libraries are installed.  This allows more
-      informative error messages to be given.
+      informative error messages to be given advising the installation
+      of the missing component or of XQuartz.
 
       The \code{X11()} device and X11-based versions of the data editor
       and viewer (invoked by \code{edit()} and \code{View()} for data
       frames and matrices from command-line \R) check that the X11
-      libraries are installed.
+      libraries are installed and if not advises installing XQuartz.
 
       \item \code{icuSetCollate()} allows \code{locale = "default"}, and
       \code{locale = "none"} to use OS services rather than ICU for
@@ -338,7 +339,8 @@
       directly on the package namespace without loading and attaching
       the package and its suggests and enhances.  For good practice with
       packages in the \samp{Suggests} field, see §1.1.3.1 of
-      \sQuote{Writing R Extensions}.
+      \sQuote{Writing R Extensions}.  For use of lazy-data objects in
+      the package's own code, see \code{?data}.
     }
   }
 
@@ -350,12 +352,13 @@
       \item \code{prettyNum(x, zero.print=*)} now also works when
       \code{x} contains \code{NA}s.
 
-      \item A longstanding bug in \code{nlminb()} on Windows was traced
-      to a compiler bug in gcc 4.6.3; a workaround has been put in place.
-      (\PR{15244} and \PR{15914}).
+      \item A longstanding bug exhibited by \code{nlminb()} on Windows
+      was traced to a compiler bug in gcc 4.6.3; a workaround has been
+      put in place.  (\PR{15244} and \PR{15914}).
 
-      \item Rendering of \code{\\command} in HTML has been improved:
-      this is particularly evident on the help page for \code{INSTALL}.
+      \item Rendering of \code{\\command} in HTML versions of help pages
+      has been improved: this is particularly evident on the help page
+      for \code{INSTALL}.
 
       \item \code{as.hexmode(x)} and \code{as.octmode(x)} now behave
       correctly for some numeric \code{x}, e.g., \code{c(NA, 1)} or
@@ -376,11 +379,12 @@
       have been called), and could flush \code{stdin} of the main \R
       process (seen most often on Solaris).
 
-      For good practice, \code{stdout} is flushed before forking a child.
+      As good practice, \code{stdout} is now flushed before forking a child.
 
       \item \R objects such as \code{list(`a\\b` = 1)} now print correctly.
 
-      \item \code{getAnywhere("C_pbinom")} now works correctly.
+      \item \code{getAnywhere("C_pbinom")} now returns correctly a
+      single object (rather than unlisting it).
 
       \item The \code{confint()} method for \code{nls()} fits failed it
       these has specified parameter limits despite using an algorithm
@@ -408,8 +412,8 @@
       dendrogram.
 
       \item The \code{plot} method for \code{"hclust"} objects gets an
-      optional argument \code{check};  When that is true, as per
-      default, it checks more carefully for valid input.
+      optional argument \code{check}; When that is true (the default) it
+      checks more carefully for valid input.
 
       \item (Windows only) If a user chose to install 64 bit \R but not
       32 bit \R, the \file{bin/R} and \file{bin/Rscript} executables
@@ -435,9 +439,9 @@
       locale.  Part of this was due to a bug in the TRE library.
       (\PR{16009})
 
-      \item \code{RShowDoc("NEWS")} now displays the pdf version.
+      \item \code{RShowDoc("NEWS")} now displays the PDF version.
 
-      \item matrices and arrays with last dimension zero did not print
+      \item Matrices and arrays with last dimension zero did not print
       at all or incompletely.  (\PR{16012})
 
       \item \code{plot.histogram()} and hence \code{hist()} now respect
@@ -453,7 +457,8 @@
       \item The internal method of \code{download.file()} was not
       reporting file sizes and progress correctly on files larger than
       2GB (inherited from \code{libxml2}).  This is corrected for 64-bit
-      builds (32-bit platforms may not support such files).
+      builds (32-bit platforms may not support such files, but where
+      possible will be supported in future versions of \R).
     }
   }
 }
