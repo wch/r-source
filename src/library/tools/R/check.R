@@ -3313,6 +3313,10 @@ setRlibs <-
                 lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
                               useBytes = TRUE)
 
+                ## and GNU extensions in system headers
+                ex_re <- "^ *(/usr/|/opt/).*GNU extension"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
