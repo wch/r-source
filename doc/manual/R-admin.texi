@@ -1653,6 +1653,11 @@ location of the personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
+%% https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
+It has been reported that running @Rapp{} under Yosemite may fail if no
+preferences are stored, so if it fails when launched for the very first
+time, try it again (the first attempt will store some preferences).
+
 Users of @Rapp{} under Mavericks and later need to be aware of the `App
 Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
@@ -1684,6 +1689,10 @@ Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit} for data frames and matrices (the latter are the default
 for command-line @R{} but not @Rapp{}) requires an X sub-system to be
 installed: see @ref{OS X}.  (So do some third-party packages.)
+
+There are currently unresolved issues in Yosemite involving a new
+security feature in how the @env{PATH} is passed to sub-processes, and
+this affects some @R{} packages.
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -2084,6 +2093,10 @@ for installation of either binary or source packages, from
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
+
+You should not attempt to mix-and-match binary packages built for the
+`Snow Leopard' and `Mavericks' @acronym{CRAN} distributions: doing so is
+likely to lead to crashes or failures to load.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -4794,6 +4807,10 @@ See the comments under Mountain Lion about X11 and GTK.
 
 See the comments under `Mavericks'.
 
+Note that if you upgrade to Yosemite you should re-install any of
+XQuartz, the `Command-line Tools for Xcode' and Java which you have
+installed.
+
 
 @node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
 @subsection Tcl/Tk headers and libraries
@@ -4847,14 +4864,14 @@ no longer supporting Java (and what it does support is Java 6, which has
 reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
 runtime (JRE).
 
-Mountain Lion and later do not come with an installed JRE, and an
-upgrade to either removes one if already installed: it is intended to be
-installed at first use. Check if a JRE is installed by running
-@command{java -version} in a @command{Terminal} window: if Java is not
-installed this should prompt you to install it.
+Mountain Lion and later do not come with an installed JRE, and an OS X
+upgrade removes one if already installed: it is intended to be installed
+at first use.  Check if a JRE is installed by running @command{java
+-version} in a @command{Terminal} window: if Java is not installed this
+should prompt you to install it.
 
-However, you may want/need to install the latest Java from Oracle
-(currently Java 8 from
+You may want/need to install the latest Java from Oracle (currently Java
+8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
 
