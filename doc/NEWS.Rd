@@ -463,6 +463,10 @@
       2GB (inherited from \code{libxml2}).  This is corrected for 64-bit
       builds (32-bit platforms may not support such files, but where
       possible will be supported in future versions of \R).
+
+      \item Work around a bug in OS X Yosemite where key environment
+      variables may be duplicated causing issues in subprocesses. The
+      duplicates are now removed on R startup (via Rprofile). (\PR{16042})
     }
   }
 }
