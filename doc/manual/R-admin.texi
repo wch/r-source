@@ -1690,10 +1690,6 @@ and @code{edit} for data frames and matrices (the latter are the default
 for command-line @R{} but not @Rapp{}) requires an X sub-system to be
 installed: see @ref{OS X}.  (So do some third-party packages.)
 
-There are currently unresolved issues in Yosemite involving a new
-security feature in how the @env{PATH} is passed to sub-processes, and
-this affects some @R{} packages.
-
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
 
