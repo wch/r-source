@@ -467,6 +467,9 @@
       \item Work around a bug in OS X Yosemite where key environment
       variables may be duplicated causing issues in subprocesses. The
       duplicates are now removed on R startup (via Rprofile). (\PR{16042})
+
+      \item Adjust X11 auto-launch detection in DISPLAY on OS X to
+      recognize latest XQuartz.
     }
   }
 }
