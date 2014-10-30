@@ -435,7 +435,7 @@
       \item \code{identical()} now also looks at the S4 bit.
 
       \item \code{hist(x, breaks)} is more robust in adding a small fuzz
-      to few breaks when some are very large. (\PR{15899})
+      to few breaks when some are very large. (\PR{15988})
 
       \item \code{sub()} and \code{gsub()} did not handle regular
       expressions like \code{"\\s{2,}"} properly if the text
