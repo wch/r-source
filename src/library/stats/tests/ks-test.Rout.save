@@ -1,5 +1,5 @@
 
-R version 3.1.2 RC (2014-10-26 r66873) -- "Pumpkin Helmet"
+R version 3.1.2 RC (2014-10-29 r66897) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.139   0.017   0.147 
+  0.120   0.010   0.122 

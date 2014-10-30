@@ -1,5 +1,5 @@
 
-R version 3.1.2 RC (2014-10-26 r66873) -- "Pumpkin Helmet"
+R version 3.1.2 RC (2014-10-29 r66897) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.098 0.022 1.123 0 0 
+Time elapsed:  1.038 0.027 1.068 0 0 
 > 

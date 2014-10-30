@@ -1,5 +1,5 @@
 
-R version 3.1.2 RC (2014-10-26 r66873) -- "Pumpkin Helmet"
+R version 3.1.2 RC (2014-10-29 r66897) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -184,7 +184,7 @@ Coefficients:
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.364 0.001 0.366 0 0 
+Time elapsed:  0.367 0.002 0.37 0 0 
 > grDevices::dev.off()
 null device 
           1 
