@@ -11132,6 +11132,7 @@ has full control (and responsibility).
 @node Transient storage allocation, User-controlled memory, Memory allocation, Memory allocation
 @subsection Transient storage allocation
 @findex R_alloc
+@findex R_allocLD
 @findex S_alloc
 @findex S_realloc
 @findex vmaxget
@@ -11207,7 +11208,16 @@ just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more (e.g.@: @code{(long double *)} on some platforms).
+needs more. As from @R{} 3.2.0 there is also
+
+@example
+long double *R_allocLD(size_t @var{n})
+@end example
+
+@noindent
+which is guaranteed to have the 16-byte alignment needed for @code{long
+double} pointers on some platforms.
+
 
 These functions should only be used in code called by @code{.C} etc,
 never from front-ends.  They are not thread-safe.

@@ -193,6 +193,10 @@
       now ignored, so arguments are duplicated if \code{DUP = TRUE}
       would do so.  As their help has long said, \code{.Call()} is much
       preferred.
+      
+      \item New entry point \code{R_allocLD}, like \code{R_alloc} but
+      guaranteed to have sufficient alignment for \code{long double}
+      pointers.
     }
   }
 

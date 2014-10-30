@@ -40,6 +40,7 @@ void	R_gc(void);
 int	R_gc_running();
 
 char*	R_alloc(size_t, int);
+long double *R_allocLD(size_t nelem);
 char*	S_alloc(long, int);
 char*	S_realloc(char *, long, long, int);
 
