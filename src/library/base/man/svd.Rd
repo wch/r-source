@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -53,6 +53,11 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     \code{x}, present if \code{nu > 0}.  Dimension \code{c(n, nu)}.}
   \item{v}{a matrix whose columns contain the right singular vectors of
     \code{x}, present if \code{nv > 0}.  Dimension \code{c(p, nv)}.}
+
+  Recall that the singular vectors are only defined up to sign (a
+  constant of modulus one in the complex case).  If a left singular
+  vector has its sign changed, changing the sign of the corresponding
+  right vector gives an equivalent decomposition.
 
   For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
   (conjugated if complex) transpose of \code{v}.
