@@ -90,7 +90,6 @@ summary.packageStatus <- function(object, ...)
     Libs <- levels(object$inst$LibPath)
     Repos <- levels(object$avail$Repository)
 
-    byLib <- split(object$inst, object$inst$LibPath)
     Libs <- lapply(split(object$inst, object$inst$LibPath),
                    function(x) tapply(x$Package, x$Status,
                                       function(x) sort(as.character(x))))

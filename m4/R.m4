@@ -2713,18 +2713,18 @@ fi
   if test -n "${r_cv_zdotu_is_usable}"; then
     AC_MSG_RESULT([yes])
   else
-    ## NB: this lot is not cached
-    if test "${r_cv_check_fw_accelerate}" != "no"; then
-      AC_MSG_RESULT([yes])
-      ## for vecLib we have a work-around by using cblas_..._sub
-      use_veclib_g95fix=yes
-      ## The fix may not work with internal lapack, but
-      ## is more likely to in R >= 2.15.2.
-    else
-      AC_MSG_RESULT([no])
-      BLAS_LIBS=
-      acx_blas_ok="no"
-    fi
+    case "${BLAS_LIBS}" in
+      *Accelerate* | *vecLib*)
+        ## for vecLib we have a work-around by using cblas_..._sub
+        AC_MSG_RESULT([yes])
+        use_veclib_g95fix=yes
+        ;;
+      *)  
+        AC_MSG_RESULT([no])
+        BLAS_LIBS=
+        acx_blas_ok="no"
+        ;;
+    esac
   fi
 fi
 if test "${acx_blas_ok}" = yes; then

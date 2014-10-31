@@ -252,7 +252,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
         thisline <- 0L             # current output line
         lastshown <- 0L            # last line already displayed;
 
-        refline <- NA    # line containing the current named chunk ref
+##        refline <- NA    # line containing the current named chunk ref
         leading <- 1L    # How many lines get the user prompt
 
         srcrefs <- attr(chunkexps, "srcref")
@@ -736,7 +736,7 @@ RtangleRuncode <-  function(object, chunk, options)
         lnos <- grep("^#line ", chunk, value = TRUE)
         if(length(lnos)) {
             srclines <- attr(chunk, "srclines")
-            srcfilenum <- attr(chunk, "srcFilenum")
+ ##         srcfilenum <- attr(chunk, "srcFilenum")
             ## this currently includes the chunk header
             lno <- if (length(srclines)) paste(min(srclines), max(srclines), sep = "-") else srclines
             fn <- sub('[^"]*"([^"]+).*', "\\1", lnos[1L])

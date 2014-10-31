@@ -2761,7 +2761,6 @@ setRlibs <-
 
             checkingLog(Log, "running R code from vignettes")
             vigns <- pkgVignettes(dir = pkgdir)
-            problems <- list()
             res <- character()
             cat("\n")
             def_enc <- desc["Encoding"]
@@ -3212,7 +3211,7 @@ setRlibs <-
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
                         "\n\n", sep = "", file = outfile)
-                    env <- ""
+##                    env <- ""
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
                     install_error <- run_Rcmd(args, outfile)
@@ -3313,6 +3312,10 @@ setRlibs <-
                 lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
                               useBytes = TRUE)
 
+                ## and GNU extensions in system headers
+                ex_re <- "^ *(/usr/|/opt/).*GNU extension"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these

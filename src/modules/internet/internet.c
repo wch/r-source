@@ -217,9 +217,9 @@ static Rconnection in_R_newurl(const char *description, const char * const mode)
 
 
 #ifndef Win32
-static void putdots(ssize_t *pold, ssize_t new)
+static void putdots(DLsize_t *pold, DLsize_t new)
 {
-    ssize_t i, old = *pold;
+    DLsize_t i, old = *pold;
     *pold = new;
     for(i = old; i < new; i++) {
 	REprintf(".");
@@ -240,7 +240,7 @@ static void putdashes(int *pold, int new)
 
 /* note, ALL the possible structures have the first two elements */
 typedef struct {
-    ssize_t length;
+    DLsize_t length;
     char *type;
     void *ctxt;
 } inetconn;
@@ -361,11 +361,11 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	ssize_t len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndashes = 0;
-	ssize_t ndots = 0;
+	DLsize_t ndots = 0;
 #else
 	int factor = 1;
 #endif
@@ -442,10 +442,10 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
 	    }
@@ -457,8 +457,8 @@ static SEXP in_do_download(SEXP args)
 	    }
 #endif
 	    if (total > 0 && total != nbytes)
-		warning(_("downloaded length %d != reported length %d"),
-			nbytes, total);
+		warning(_("downloaded length %0.f != reported length %0.f"),
+			(double)nbytes, (double)total);
 	}
 	fclose(out);
 	R_Busy(0);
@@ -468,11 +468,11 @@ static SEXP in_do_download(SEXP args)
 
 	FILE *out;
 	void *ctxt;
-	ssize_t len, total, guess, nbytes = 0;
+	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndashes = 0;
-	ssize_t ndots = 0;
+	DLsize_t ndots = 0;
 #else
 	int factor = 1;
 #endif
@@ -552,10 +552,10 @@ static SEXP in_do_download(SEXP args)
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
-		    REprintf("downloaded %0.1f Mb\n\n",
+		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d Kb\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
 	    }
@@ -567,8 +567,8 @@ static SEXP in_do_download(SEXP args)
 	    }
 #endif
 	    if (total > 0 && total != nbytes)
-		warning(_("downloaded length %d != reported length %d"),
-			nbytes, total);
+		warning(_("downloaded length %0.f != reported length %0.f"),
+			(double)nbytes, (double)total);
 	}
 	R_Busy(0);
 	fclose(out);
@@ -590,7 +590,7 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    ssize_t len = -1;
+    DLsize_t len = -1;
     char *type = NULL;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -611,12 +611,13 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len > 1024*1024)
 		    // might be longer than long, and is on 64-bit windows
-		    REprintf(" length %0.0f bytes (%0.1f Mb)\n", (double)len,
+		    REprintf(" length %0.0f bytes (%0.1f MB)\n", (double)len,
 			len/1024.0/1024.0);
 		else if(len > 10240)
-		    REprintf(" length %d bytes (%d Kb)\n", len, len/1024);
+		    REprintf(" length %d bytes (%d KB)\n", 
+			     (int)len, (int)(len/1024));
 		else if(len >= 0)
-		    REprintf(" length %d bytes\n", len);
+		    REprintf(" length %d bytes\n", (int)len);
 		else REprintf(" length unknown\n", len);
 #ifdef Win32
 		R_FlushConsole();
@@ -651,7 +652,7 @@ static void *in_R_FTPOpen(const char *url)
     inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption1(install("timeout")));
-    ssize_t len = 0;
+    DLsize_t len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     RxmlNanoFTPTimeout(timeout);
@@ -851,13 +852,13 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     if(!IDquiet) {
 	if(status > 1024*1024)
 	    // might be longer than long, and is on 64-bit windows
-	    REprintf("Content type '%s' length %0.0f bytes (%0.1f Mb)\n",
+	    REprintf("Content type '%s' length %0.0f bytes (%0.1f MB)\n",
 		     buf, (double) status, status/1024.0/1024.0);
 	else if(status > 10240)
-	    REprintf("Content type '%s' length %d bytes (%d Kb)\n",
-		     buf, status, status/1024);
+	    REprintf("Content type '%s' length %d bytes (%d KB)\n",
+		     buf, (int) status, (int) (status/1024));
 	else
-	    REprintf("Content type '%s' length %d bytes\n", buf, status);
+	    REprintf("Content type '%s' length %d bytes\n", buf, (int) status);
 	R_FlushConsole();
     }
 

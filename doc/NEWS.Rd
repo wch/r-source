@@ -8,6 +8,29 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.1.2 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{      
+      \item The internal method of \code{download.file()} can now handle
+      files larger than 2GB on 32-bit builds which support such files
+      (tested on 32-bit \R running on 64-bit Windows).
+
+      \item \code{kruskal.test()} warns on more types of suspicious input.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item (Windows.) \command{Rscript.exe} was missing a
+      manifest specifying the modern style for common controls (e.g.,
+      the download progress bar).
+      
+      \item If a package had extra documentation files but no vignette,
+      the HTML help system produced an empty index page.
+    }
+  }
+}
+  
 \section{\Rlogo CHANGES IN R 3.1.2}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -53,7 +76,7 @@
 
       \item \code{unique(warnings())} and \code{c(warnings())} are now
       supported.
-      
+
       \item The Bioconductor \sQuote{version} used by
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
@@ -67,7 +90,7 @@
       capabilities/options which will not be compiled in.
 
       More types of external BLAS are recognized by name in that report.
-      
+
       \item When building \R as a shared library, the
       \option{-L${R_HOME}/lib${R_ARCH}} flag is placed earlier in the
       link commands used during installation and when packages are
@@ -215,10 +238,10 @@
 
       \item \code{bw.SJ(x)} and other bw.*() no longer segfault when
       \code{x} contains non-finite values. (\PR{16024})
-      
+
       \item \command{R CMD Rd2pdf} unintentionally ignored its
       \option{--os} option.
-      
+
       \item The internal method of \code{download.file()} was not
       reporting file sizes and progress correctly on files larger than
       2GB (inherited from \code{libxml2}).  This is corrected for 64-bit

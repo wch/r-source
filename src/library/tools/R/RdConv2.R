@@ -616,8 +616,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
         .messages <<- c(.messages, msg)
     }
 
-    checkWrapped <- function(tag, block) checkContent(block, tag)
-
     checkLink <- function(tag, block) {
     	option <- attr(block, "Rd_option")
     	if(!is.null(option)) checkContent(option, tag)

@@ -148,7 +148,7 @@ file.symlink <- function(from, to) {
 
 file.link <- function(from, to) {
     if (!(length(from))) stop("no files to link from")
-    if (!(nt <- length(to)))   stop("no files to link to")
+    if (!length(to))     stop("no files to link to")
     .Internal(file.link(from, to))
 }
 

@@ -114,8 +114,8 @@
    CoreFoundation framework. (For intl) */
 /* #undef HAVE_CFLOCALECOPYCURRENT */
 
-/* Define to 1 if you have the OS X function CFPreferencesCopyAppValue in
-   the CoreFoundation framework. (For intl) */
+/* Define to 1 if you have the OS X function CFPreferencesCopyAppValue in the
+   CoreFoundation framework. (For intl) */
 /* #undef HAVE_CFPREFERENCESCOPYAPPVALUE */
 
 /* Define to 1 if you have the `chdir' function. */
@@ -155,6 +155,9 @@
 
 /* Define to 1 if you have the `ctanh' function. */
 #define HAVE_CTANH 1
+
+/* define if the compiler supports basic C++11 syntax */
+#define HAVE_CXX11 1
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
@@ -794,6 +797,12 @@
 /* Define to 1 if your 'struct tm' has tm_zone. */
 /* #undef HAVE_TM_ZONE */
 
+/* Define if your system has tre. */
+/* #undef HAVE_TRE */
+
+/* Define to 1 if you have the <tre/tre.h> header file. */
+/* #undef HAVE_TRE_TRE_H */
+
 /* Define to 1 if you have the `tsearch' function. */
 #if defined(__MINGW64_VERSION_MAJOR) && __MINGW64_VERSION_MAJOR >= 2
 #define HAVE_TSEARCH 1
@@ -836,9 +845,6 @@
 
 /* Define to 1 if you have the `va_copy' function. */
 #define HAVE_VA_COPY 1
-
-/* Defined if framework vecLib is present */
-/* #undef HAVE_VECLIB_FW */
 
 /* Define to 1 or 0, depending whether the compiler supports simple visibility
    declarations. (For intl) */

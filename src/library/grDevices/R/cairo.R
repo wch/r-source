@@ -23,7 +23,6 @@ svg <- function(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
                 antialias = c("default", "none", "gray", "subpixel"))
 {
     if(!checkIntFormat(filename)) stop("invalid 'filename'")
-    new <- list()
     antialiases <- eval(formals()$antialias)
     antialias <- match(match.arg(antialias, antialiases), antialiases)
     invisible(.External(C_devCairo, filename, 4L, 72*width, 72*height, pointsize,

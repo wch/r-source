@@ -220,9 +220,9 @@ transformMethod <- function(i, blocks, Rdfile) {
 	    blocks <- rewriteBlocks()
 	} else {
             chars[char] <- "!"
-	    blocks <- rewriteBlocks()            
+	    blocks <- rewriteBlocks()
         }
-        
+
 	findClose(j)
 	chars[char] <- ""
 	blocks[j] <- editblock(blocks[[j]],
@@ -471,13 +471,6 @@ Rd2txt <-
     trim <- function(x) {
         x <- psub1("^\\s*", "", x)
         psub1("\\s*$", "", x)
-    }
-
-    striptitle <- function(text) {
-        text <- fsub("\\", "", text)
-        text <- fsub("---", "_", text)
-        text <- fsub("--", "-", text)
-        text
     }
 
     ## underline via backspacing

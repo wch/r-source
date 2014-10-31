@@ -57,7 +57,7 @@ $(R_HOME)/$(BINDIR)/R.exe: R.exe
 $(R_HOME)/$(BINDIR)/Rfe.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
-	
+
 $(R_HOME)/bin/R.exe: Rfe.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
@@ -92,10 +92,13 @@ Rterm.exe: graphappmain.o rterm.o rtico.o
 ifneq "$(WIN)" "64"
 rcico.o: Rcmd.exe.manifest
 rgico.o: Rgui32.manifest
+rsico.o: Rscript.exe.manifest
 rtico.o: Rterm32.manifest
 else
 RESFLAGS = -DWN64
+rcico.o: Rcmd64.exe.manifest
 rtico.o: Rterm64.manifest
+rsico.o: Rscript64.exe.manifest
 rgico.o: Rgui64.manifest
 endif
 
@@ -110,7 +113,7 @@ RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 Rscript.o: ../../unix/Rscript.c ../../include/Rversion.h
 	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
 
-Rscript.exe: Rscript.o rcico.o 
+Rscript.exe: Rscript.o rsico.o 
 
 ## Not currently used (2.13.0)
 Rpwd:
@@ -119,7 +122,7 @@ Rpwd:
 
 Rpwd.exe: rpwd.o rcico.o
 
-rcmd.o R.o rgui.o rterm.o RSetReg.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rcmd.o R.o rgui.o rterm.o RSetReg.o rgico.o rtico.o rcico.o rsico.c: ../../include/Rversion.h
 
 open.o: open.c
 open.exe: open.o

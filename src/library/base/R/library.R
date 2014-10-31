@@ -532,7 +532,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0L)
+    if(missing(chname) || nchar(chname, "c") == 0L)
         if(.Platform$OS.type == "windows")
             stop("no DLL was specified")
         else

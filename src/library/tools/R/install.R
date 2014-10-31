@@ -1253,11 +1253,10 @@
     build_latex <- FALSE
     build_example <- FALSE
     use_configure <- TRUE
-    auto_zip <- FALSE
     configure_args <- character()
     configure_vars <- character()
     fake <- FALSE
-    lazy <- TRUE
+##    lazy <- TRUE
     lazy_data <- FALSE
     byte_compile <- NA # means take from DESCRIPTION file.
     ## Next is not very useful unless R CMD INSTALL reads a startup file

@@ -50,7 +50,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     ##     mycat("\n")
     ## })$output
 
-    myval <- character()
+##    myval <- character()
     mycon <- textConnection("myval", open = "w", local = TRUE,
                             encoding = "UTF-8")
     on.exit(close(mycon))
@@ -87,9 +87,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     show <- function(x) {
 	srcref <- attr(x, "srcref")
 	firstline <- srcref[1L]
-	firstbyte <- srcref[2L]
 	lastline <- srcref[3L]
-	lastbyte <- srcref[4L]
 	firstcol <- srcref[5L]
 	lastcol <- srcref[6L]
 	tag <- attr(x, "Rd_tag")

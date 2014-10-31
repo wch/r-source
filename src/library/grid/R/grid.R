@@ -452,7 +452,7 @@ grid.refresh <- function() {
 grid.DLapply <- function(FUN, ...) {
     FUN <- match.fun(FUN)
     # Traverse DL and do something to each entry
-    gridDL <- grid.Call(L_getDisplayList)
+#    gridDL <- grid.Call(L_getDisplayList)
     gridDLindex <- grid.Call(L_getDLindex)
     newDL <- vector("list", gridDLindex)
     for (i in 1:(gridDLindex - 1)) {
