@@ -29,7 +29,7 @@
 }
 \usage{
 as.dendrogram(object, \dots)
-\method{as.dendrogram}{hclust}(object, hang = -1, \dots)
+\method{as.dendrogram}{hclust}(object, hang = -1, check = TRUE, \dots)
 
 \method{as.hclust}{dendrogram}(x, \dots)
 
@@ -67,6 +67,11 @@ is.leaf(object)
   \item{hang}{numeric scalar indicating how the \emph{height} of leaves
     should be computed from the heights of their parents; see
     \code{\link{plot.hclust}}.}
+  \item{check}{logical indicating if \code{object} should be checked for
+    validity.  This check is not necessary when \code{x} is known to be
+    valid such as when it is the direct result of \code{hclust()}.  The
+    default is \code{check=TRUE}, e.g. for protecting against memory
+    explosion with invalid inputs.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
     respect to the leaves in the branch.  Otherwise (default), plot them

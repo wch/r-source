@@ -112,6 +112,28 @@ hclust <- function(d, method="complete", members=NULL)
 	      class = "hclust")
 }
 
+##' @title Check hclust() object for validity
+##' @param x "hclust" object
+##' @param merge (= x$merge, passing it may save memory)
+##' @param order logical indicating if 'x$order' should be checked, too
+##' @return character vector with message or TRUE
+##' @author Martin Maechler
+.validity.hclust <- function(x, merge = x$merge, order = TRUE) {
+    if (!is.matrix(merge) || ncol(merge) != 2)
+	return("invalid dendrogram")
+    ## merge should be integer but might not be after dump/restore.
+    if (any(as.integer(merge) != merge))
+	return("'merge' component in dendrogram must be integer")
+    n1 <- nrow(merge) # == #{obs} - 1
+    n <- n1+1L
+    if(length(x$height) != n1) return("'height' is of wrong length")
+    if(order && length(x$order ) != n ) return("'order' is of wrong length")
+    if(identical(sort(as.integer(merge)), c(-(n:1L), +seq_len(n-2L))))
+	TRUE
+    else
+	"'merge' matrix has invalid contents"
+}
+
 plot.hclust <-
     function (x, labels = NULL, hang = 0.1, check = TRUE,
               axes = TRUE, frame.plot = FALSE, ann = TRUE,
@@ -119,23 +141,12 @@ plot.hclust <-
               sub = NULL, xlab = NULL, ylab = "Height", ...)
 {
     merge <- x$merge
-    if(check) {
-        if (!is.matrix(merge) || ncol(merge) != 2)
-            stop("invalid dendrogram")
-        ## merge should be integer but might not be after dump/restore.
-        if (any(as.integer(merge) != merge))
-            stop("'merge' component in dendrogram must be integer")
-    }
+    if(check && !isTRUE(msg <- .validity.hclust(x,merge)))
+	stop(msg)
     storage.mode(merge) <- "integer"
     n1 <- nrow(merge) # == #{obs} - 1
     n <- n1+1L
     height <- as.double(x$height)
-    if(check) {
-	stopifnot(length(x$order) == n,
-		  length( height) == n1)
-	if(!identical(sort(merge), c(-(n:1L), +seq_len(n-2))))
-	       stop("'merge' matrix has invalid contents")
-    }
     labels <-
 	if(missing(labels) || is.null(labels)) {
 	    as.character(if(is.null(x$labels)) seq_len(n) else x$labels)
