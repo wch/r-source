@@ -2139,12 +2139,25 @@ char *R_alloc(size_t nelem, int eltsize)
     else return NULL;
 }
 
+#ifdef HAVE_STDALIGN_H
+# include <stdalign.h>
+#endif
+
 #include <stdint.h>
+
 long double *R_allocLD(size_t nelem)
 {
-    // This asumes 16-byte alignment suffices.
+#if __alignof_is_defined
+    // This is C11: picky compilers may warn.
+    size_t ld_align = alignof(long double);
+#elif __GNUC__
+    // This is C99, but do not rely on it.
+    size_t ld_align = offsetof(struct { char __a; type __b; }, __b);
+#else
+    size_t ld_align 0x0F; // value of x86_64, known others are 4 or 8
+#endif
     uintptr_t tmp = (uintptr_t) R_alloc(nelem + 1, sizeof(long double));
-    tmp = (tmp + 15) & ~0x0F;
+    tmp = (tmp + ld_align - 1) & ~ld_align;
     return (long double *) tmp;
 }
 
