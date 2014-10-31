@@ -2154,7 +2154,7 @@ long double *R_allocLD(size_t nelem)
     // This is C99, but do not rely on it.
     size_t ld_align = offsetof(struct { char __a; type __b; }, __b);
 #else
-    size_t ld_align 0x0F; // value of x86_64, known others are 4 or 8
+    size_t ld_align = 0x0F; // value of x86_64, known others are 4 or 8
 #endif
     if (ld_align > 8) {
 	uintptr_t tmp = (uintptr_t) R_alloc(nelem + 1, sizeof(long double));
