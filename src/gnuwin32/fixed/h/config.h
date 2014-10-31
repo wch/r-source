@@ -673,6 +673,9 @@
 /* Define to 1 if you have the `stat' function. */
 #define HAVE_STAT 1
 
+/* Define to 1 if you have the <stdalign.h> header file. */
+/* #undef HAVE_STDALIGN_H */
+
 /* Define to 1 if you have the <stdarg.h> header file. */
 #define HAVE_STDARG_H 1
 
