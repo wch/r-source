@@ -243,6 +243,9 @@
 
       \item If a package had extra documentation files but no vignette,
       the HTML help system produced an empty index page.
+
+      \item \code{qr.Q()} failed on complex arguments due to 
+      pre-3.0(!) typo (\PR{16054}) 
     }
   }
 }
