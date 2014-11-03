@@ -566,4 +566,9 @@ tools::assertError(as.dendrogram(hx))
 ## 8 member dendrogram and memory explosion for larger examples in R <= 3.1.2
 
 
+## abs with named args failed, PR#16047
+abs(x=1i)
+## Complained that the arg should be named z
+
+
 proc.time()
