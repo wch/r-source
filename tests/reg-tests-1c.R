@@ -405,4 +405,9 @@ stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
 
 
 
+## abs with named args failed, PR#16047
+abs(x=1i)
+## Complained that the arg should be named z
+
+
 proc.time()
