@@ -367,7 +367,11 @@ setRlibs <-
         }
 
         ## Run the package-specific tests.
-        tests_dir <- file.path(pkgdir, "tests")
+        tests_dir <- file.path(pkgdir, test_dir)
+	if (test_dir != "tests" && !dir.exists(tests_dir)) {
+	    warningLog(Log)
+	    printLog(Log, "directory ", sQuote(test_dir), " not found\n")
+	}
         if (dir.exists(tests_dir) && # trackObjs has only *.Rin
             length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
             run_tests()
@@ -2426,7 +2430,7 @@ setRlibs <-
 
             ## Try to compare results from running the examples to
             ## a saved previous version.
-            exsave <- file.path(pkgdir, "tests", "Examples",
+            exsave <- file.path(pkgdir, test_dir, "Examples",
                                 paste0(pkgname, "-Ex.Rout.save"))
             if (file.exists(exsave)) {
                 checkingLog(Log, "differences from ",
@@ -2511,9 +2515,9 @@ setRlibs <-
     run_tests <- function()
     {
         if (!extra_arch && !is_base_pkg) {
-            checkingLog(Log, "for unstated dependencies in tests")
+            checkingLog(Log, "for unstated dependencies in ", sQuote(test_dir))
             Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
-                          sprintf("tools:::.check_packages_used_in_tests(\"%s\")\n", pkgdir))
+                          sprintf("tools:::.check_packages_used_in_tests(\"%s\", \"%s\")\n", pkgdir, test_dir))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
@@ -2523,10 +2527,14 @@ setRlibs <-
             } else resultLog(Log, "OK")
         }
 
-        checkingLog(Log, "tests")
+        if (test_dir == "tests")
+	    checkingLog(Log, "tests")
+	else
+	    checkingLog(Log, "tests in ", sQuote(test_dir))
+	    
         run_one_arch <- function(arch = "")
         {
-            testsrcdir <- file.path(pkgdir, "tests")
+            testsrcdir <- file.path(pkgdir, test_dir)
             testdir <- file.path(pkgoutdir, "tests")
             if(nzchar(arch)) testdir <- paste(testdir, arch, sep = "_")
             if(!dir.exists(testdir)) dir.create(testdir, mode = "0755")
@@ -2568,7 +2576,7 @@ setRlibs <-
                     ## (13? why not?).
                     file <- bad_files[1L]
                     lines <- readLines(file, warn = FALSE)
-                    file <- file.path("tests", sub("out\\.fail", "", file))
+                    file <- file.path(test_dir, sub("out\\.fail", "", file))
                     ll <- length(lines)
                     lines <- lines[max(1, ll-12):ll]
                     if (R_check_suppress_RandR_message)
@@ -3882,6 +3890,7 @@ setRlibs <-
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
             "      --install-args=	command-line args to be passed to INSTALL",
+	    "      --test-dir=       look in this subdirectory for test scripts (default tests)",	    
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
@@ -3951,6 +3960,7 @@ setRlibs <-
     use_valgrind <- FALSE
     do_timings <- FALSE
     install_args <- NULL
+    test_dir <- "tests"
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
     extra_arch <- FALSE
     spec_install <- FALSE
@@ -4025,6 +4035,8 @@ setRlibs <-
             do_timings  <- TRUE
         } else if (substr(a, 1, 15) == "--install-args=") {
             install_args <- substr(a, 16, 1000)
+	} else if (substr(a, 1, 11) == "--test-dir=") {
+	    test_dir <- substr(a, 12, 1000)
         } else if (substr(a, 1, 16) == "--check-subdirs=") {
             check_subdirs <- substr(a, 17, 1000)
         } else if (a == "--extra-arch") {
@@ -4531,7 +4543,7 @@ setRlibs <-
 
         if (!is_base_pkg && check_incoming && no_examples &&
             dir.exists(file.path(pkgdir, "R"))) {
-           tests_dir <- file.path(pkgdir, "tests")
+            tests_dir <- file.path(pkgdir, test_dir)
             if (dir.exists(tests_dir) &&
                 length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
                 no_examples <- FALSE

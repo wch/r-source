@@ -2630,7 +2630,14 @@ specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)  Please note that the comparison will be done in the
 end user's locale, so the target output files should be @acronym{ASCII}
-if at all possible.
+if at all possible.  (The command line option @code{--test-dir=foo} may
+be used to specify tests in a non-standard location.  For example, 
+unusually slow tests could be placed in @file{inst/slowTests} and then
+@code{R CMD check --test-dir=inst/slowTests} would be used to run them.
+Other names that have been suggested are, for example, 
+@file{inst/testWithOracle} for tests that require Oracle to be installed,
+@file{inst/randomTests} for tests which use random values and may
+occasionally fail by chance, etc.)
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is

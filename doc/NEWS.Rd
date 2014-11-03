@@ -178,6 +178,9 @@
       now returns the old values invisibly. The initial optimization
       level can also be set with the environment variable
       \env{R_COMPILER_OPTIMIZE}.
+      
+      \item \command{R CMD check} gains option \option{--test-dir=} to 
+      specify an alternative set of tests to run.
     }
   }
 

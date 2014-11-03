@@ -5732,7 +5732,7 @@ function(package, dir, lib.loc = NULL)
 ### * .check_packages_used_in_tests
 
 .check_packages_used_in_tests <-
-function(dir, lib.loc = NULL)
+function(dir, testdir, lib.loc = NULL)
 {
     ## Argument handling.
     ## Using sources from directory @code{dir} ...
@@ -5743,7 +5743,7 @@ function(dir, lib.loc = NULL)
     dfile <- file.path(dir, "DESCRIPTION")
     db <- .read_description(dfile)
 
-    testsrcdir <- file.path(dir, "tests")
+    testsrcdir <- file.path(dir, testdir)
     od <- setwd(testsrcdir)
     on.exit(setwd(od))
     Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
