@@ -219,6 +219,10 @@
 
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
+      
+      \item (Windows.) The command completion in \command{Rgui.exe}
+      messed up the console.  This is an experimental fix; if it is reported
+      to work it will be kept, otherwise it will be removed. (\PR{15791})
     }
   }
 }

@@ -995,11 +995,12 @@ static void performCompletion(control c)
 	consolewrites(c, buf1);
 
 	for (i = 0; i < min(alen, max_show); i++) {
+            consolewrites(c, "\n");
 	    consolewrites(c, CHAR(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
-	    consolewrites(c, "\n");
 	}
 	if (alen > max_show)
-	    consolewrites(c, "\n[...truncated]\n");
+	    consolewrites(c, "\n[...truncated]");
+	consolewrites(c, "\n");
 	p->wipe_completion = 1;
     }
 
