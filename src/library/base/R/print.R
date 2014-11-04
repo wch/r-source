@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -47,6 +47,9 @@ noquote <- function(obj) {
 }
 
 as.matrix.noquote <- function(x, ...) noquote(NextMethod("as.matrix", x))
+
+as.data.frame.noquote <- as.data.frame.vector
+
 c.noquote <- function(..., recursive = FALSE)
     structure(NextMethod("c"), class = "noquote")
 
