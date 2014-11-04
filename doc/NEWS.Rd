@@ -255,6 +255,9 @@
       
       \item \code{abs()} failed with named arguments when the argument
       was complex.  (\PR{16047})
+      
+      \item \code{"noquote"} objects may now be used as columns in 
+      dataframes.  (\PR{15997})
     }
   }
 }

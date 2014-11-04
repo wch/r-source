@@ -18,6 +18,7 @@
 \alias{as.data.frame.raw}
 \alias{as.data.frame.matrix}
 \alias{as.data.frame.model.matrix}
+\alias{as.data.frame.noquote}
 \alias{as.data.frame.numeric}
 \alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
@@ -63,7 +64,9 @@ is.data.frame(x)
 }
 \details{
   \code{as.data.frame} is a generic function with many methods, and
-  users and packages can supply further methods.
+  users and packages can supply further methods.  For classes that act
+  as vectors, often a copy of \code{as.data.frame.vector} will work 
+  as the method.
 
   If a list is supplied, each element is converted to a column in the
   data frame.  Similarly, each column of a matrix is converted separately.

@@ -47,6 +47,9 @@ noquote <- function(obj) {
 }
 
 as.matrix.noquote <- function(x, ...) noquote(NextMethod("as.matrix", x))
+
+as.data.frame.noquote <- as.data.frame.vector
+
 c.noquote <- function(..., recursive = FALSE)
     structure(NextMethod("c"), class = "noquote")
 
