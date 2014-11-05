@@ -4133,7 +4133,7 @@ I(x^3) -0.73        0.93 -0.99
 > 
 > ## From Agresti(2007) p.39
 > M <- as.table(rbind(c(762, 327, 468), c(484, 239, 477)))
-> dimnames(M) <- list(gender = c("M","F"),
+> dimnames(M) <- list(gender = c("F", "M"),
 +                     party = c("Democrat","Independent", "Republican"))
 > (Xsq <- chisq.test(M))  # Prints test summary
 
@@ -4145,23 +4145,23 @@ X-squared = 30.0701, df = 2, p-value = 2.954e-07
 > Xsq$observed   # observed counts (same as M)
       party
 gender Democrat Independent Republican
-     M      762         327        468
-     F      484         239        477
+     F      762         327        468
+     M      484         239        477
 > Xsq$expected   # expected counts under the null
       party
 gender Democrat Independent Republican
-     M 703.6714    319.6453   533.6834
-     F 542.3286    246.3547   411.3166
+     F 703.6714    319.6453   533.6834
+     M 542.3286    246.3547   411.3166
 > Xsq$residuals  # Pearson residuals
       party
 gender   Democrat Independent Republican
-     M  2.1988558   0.4113702 -2.8432397
-     F -2.5046695  -0.4685829  3.2386734
+     F  2.1988558   0.4113702 -2.8432397
+     M -2.5046695  -0.4685829  3.2386734
 > Xsq$stdres     # standardized residuals
       party
 gender   Democrat Independent Republican
-     M  4.5020535   0.6994517 -5.3159455
-     F -4.5020535  -0.6994517  5.3159455
+     F  4.5020535   0.6994517 -5.3159455
+     M -4.5020535  -0.6994517  5.3159455
 > 
 > 
 > ## Effect of simulating p-values
