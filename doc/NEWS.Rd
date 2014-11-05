@@ -262,6 +262,9 @@
       
       \item \code{"noquote"} objects may now be used as columns in 
       dataframes.  (\PR{15997})
+      
+      \item Some values with extremely long names were printed 
+      incorrectly.  (\PR{15999})
     }
   }
 }

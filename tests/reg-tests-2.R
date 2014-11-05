@@ -2927,3 +2927,14 @@ unname(A)            # ditto
 format(A[,,1,])	     # ditto
 aperm(A, 4:1) # was ok, is unchanged
 ## sometimes not printing anything in R <= 3.1.1
+
+
+## Printing objects with very long names cut off literal values (PR#15999)
+make_long_name <- function(n)
+{
+  paste0(rep("a", n), collapse = "")
+}
+setNames(TRUE, make_long_name(1000))  # value printed as TRU
+setNames(TRUE, make_long_name(1002))  # value printed as T
+setNames(TRUE, make_long_name(1003))  # value not printed
+##
