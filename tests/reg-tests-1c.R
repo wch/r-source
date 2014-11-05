@@ -571,4 +571,10 @@ abs(x=1i)
 ## Complained that the arg should be named z
 
 
+## Big exponents overflowed, PR#15976
+x <- 0E4933
+y <- 0x0p100000
+stopifnot(x == 0, y == 0)
+##
+
 proc.time()

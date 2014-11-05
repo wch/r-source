@@ -265,6 +265,9 @@
       
       \item Some values with extremely long names were printed 
       incorrectly.  (\PR{15999})
+      
+      \item Extremely large exponents on zero expressed in scientific
+      notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
     }
   }
 }
