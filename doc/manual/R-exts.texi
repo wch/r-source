@@ -2712,7 +2712,7 @@ One check customization which can be revealing is
 _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
 @end example
 @noindent
-which reports unused local assigmnents.  Not only does this point out
+which reports unused local assignments.  Not only does this point out
 computations which are unnecessary because their results are unused, it
 also can show errors.  (Two such are to intend to update an object by
 assigning a value but mistype its name or assign in the wrong scope,
@@ -2747,7 +2747,7 @@ to check the primary sub-architecture, and then to use something like
 @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
 @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
 additional sub-architecture just the checks@footnote{loading, examples,
-tests, runnning vignette code} which differ by sub-architecture.  (This
+tests, running vignette code} which differ by sub-architecture.  (This
 approach is required for packages which are installed by @command{R CMD
 INSTALL --merge-multiarch}.)
 
