@@ -78,7 +78,9 @@ summaryRprof <-
        	   	        tail <- basename(dirnames)
        	   	    	filenames[fnum] <- ifelse(tail == ".", filenames[fnum],
        	   	    	                          paste0(tail, "/", filenames[fnum]))
-       	   	    	dirnames <- dirname(dirnames)
+       	   	    	# May have Windows-style names here where dirname("c:/") == "c:/"
+       	   	    	parent <- dirname(dirnames)
+       	   	    	dirnames <- ifelse(dirnames == parent, ".", parent)
        	   	    }
        	   	}
        	   	chunk <- chunk[-filenamelines]
