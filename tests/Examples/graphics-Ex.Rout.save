@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-10-26 r66873) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-05 r66942) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1012,7 +1012,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > x <- rchisq(100, df = 4)
 > ## Don't show: 
 > op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))
-> ## End Don't show
+> ## End(Don't show)
 > ## Comparing data with a model distribution should be done with qqplot()!
 > qqplot(x, qchisq(ppoints(x), df = 4)); abline(0, 1, col = 2, lty = 2)
 > 
@@ -1021,7 +1021,7 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > curve(dchisq(x, df = 4), col = 2, lty = 2, lwd = 2, add = TRUE)
 > ## Don't show: 
 > par(op)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -2026,7 +2026,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x22461d8>
+<bytecode: 0x15b59c8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2897,7 +2897,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x37cec50>
+<bytecode: 0x28e4bc8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -2977,7 +2977,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.952 0.035 1.993 0 0 
+Time elapsed:  2.3 0.043 2.355 0 0 
 > grDevices::dev.off()
 null device 
           1 

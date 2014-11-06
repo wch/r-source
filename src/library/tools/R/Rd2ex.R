@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2ex.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render",
-             outputEncoding="UTF-8", commentDontrun = TRUE, ...)
+             outputEncoding="UTF-8", commentDontrun = TRUE, commentDonttest = FALSE, ...)
 {
     WriteLines <- function(x, con, outputEncoding, ...) {
         if (outputEncoding != "UTF-8") {
@@ -59,46 +59,35 @@ Rd2ex <-
 
     render <- function(x, prefix = "")
     {
-        tag <- attr(x, "Rd_tag")
-        if(tag %in% c("\\dontshow", "\\testonly")) {
-            of1("## Don't show: ")
-            if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1L] != "COMMENT")
-                writeLines("", con)
-            for(i in seq_along(x)) render(x[[i]], prefix)
-            last <- x[[length(x)]]
-            if (!grepl("\n$", last[length(last)], perl = TRUE))
-                writeLines("", con)
-            of1("## End Don't show")
-        } else if (tag  == "\\dontrun") {
-            if (commentDontrun)
-                of1("## Not run: ")
-            ## Special case for one line.
-            if (length(x) == 1L && commentDontrun) {
-                render(x[[1L]], prefix)
-            } else {
-                if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1L] != "COMMENT") {
-                    writeLines("", con)
-                    render(x[[1L]], paste0(if (commentDontrun) "##D ", prefix))
-                } else render(x[[1L]], prefix)
-                if(length(x) >= 2L)
-                    for(i in 2:length(x))
-                        render(x[[i]], paste0(if (commentDontrun) "##D ", prefix))
-                last <- x[[length(x)]]
-                if (!grepl("\n$", last[length(last)], perl = TRUE))
-                    writeLines("", con)
-                if (commentDontrun)
-                    of1("## End(Not run)")
-            }
-        } else if (tag  == "\\donttest") {
-            of1("## No test: ")
-            if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1L] != "COMMENT")
-                writeLines("", con)
-            for(i in seq_along(x)) render(x[[i]], prefix)
-            last <- x[[length(x)]]
-            if (!grepl("\n$", last[length(last)], perl = TRUE))
-                writeLines("", con)
-            of1("## End(No test)")
-        } else if (tag == "COMMENT") {
+	renderDont <- function(txt, comment, label=TRUE, xtra1=comment) {
+	    if (label)
+		of0("## ", txt, ": ")
+	    ## Special case for one line.
+	    if (xtra1 && length(x) == 1L) {
+		render(x[[1L]], prefix)
+	    } else {
+		if (!grepl("^\n", x[[1L]][1L], perl = TRUE) &&
+		    RdTags(x)[1L] != "COMMENT") {
+		    writeLines("", con)
+		    render(x[[1L]], paste0(if (comment) "##D ", prefix))
+		} else render(x[[1L]], prefix)
+		for(i in seq_along(x)[-1]) ## `` i in 2:length(x) ''
+		    render(x[[i]], paste0(if (comment) "##D ", prefix))
+		last <- x[[length(x)]]
+		if (!grepl("\n$", last[length(last)], perl = TRUE))
+		    writeLines("", con)
+		if (label)
+		    of0("## End(",txt,")")
+	    }
+	}
+	tag <- attr(x, "Rd_tag")
+	if(tag %in% c("\\dontshow", "\\testonly")) {
+	    renderDont("Don't show", comment=FALSE)
+	} else if (tag == "\\dontrun") {
+	    renderDont("Not run", commentDontrun, label=commentDontrun)
+	} else if (tag == "\\donttest") {
+	    renderDont("No test", commentDonttest, xtra1=FALSE)
+	} else if (tag == "COMMENT") {
             ## % can escape a whole line (e.g. beavers.Rd) or
             ## be trailing when we want a NL
             ## This is not right (leading spaces?) but it may do

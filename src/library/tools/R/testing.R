@@ -161,7 +161,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
             txt <- txt[!grepl('options(pager = "console")', txt,
                               fixed = TRUE, useBytes = TRUE)]
         }
-        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^/CreationDate |^/ModDate |^/Producer )'
+        pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer|bytecode):|^/CreationDate |^/ModDate |^/Producer |^End.Don\'t show)'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
     clean2 <- function(txt)
@@ -278,13 +278,13 @@ testInstalledPackage <-
              types = c("examples", "tests", "vignettes"),
              srcdir = NULL, Ropts = "", ...)
 {
-    types <- pmatch(types, c("examples", "tests", "vignettes"))
+    types <- match.arg(types, c("examples", "tests", "vignettes"), several.ok=TRUE)
     pkgdir <- find.package(pkg, lib.loc)
     owd <- setwd(outDir)
     on.exit(setwd(owd))
-    strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", "FALSE"))
+    strict <- as.logical(Sys.getenv("R_STRICT_PACKAGE_CHECK", FALSE))
 
-    if (1 %in% types) {
+    if ("examples" %in% types) {
         message(gettextf("Testing examples for package %s", sQuote(pkg)),
                 domain = NA)
         Rfile <- .createExdotR(pkg, pkgdir, silent = TRUE, ...)
@@ -336,7 +336,7 @@ testInstalledPackage <-
     }
 
     ## FIXME merge with code in .runPackageTests
-    if (2 %in% types && dir.exists(d <- file.path(pkgdir, "tests"))) {
+    if ("tests" %in% types && dir.exists(d <- file.path(pkgdir, "tests"))) {
         this <- paste(pkg, "tests", sep = "-")
         unlink(this, recursive = TRUE)
         dir.create(this)
@@ -371,7 +371,7 @@ testInstalledPackage <-
         setwd(owd)
     }
 
-    if (3 %in% types && dir.exists(file.path(pkgdir, "doc"))) {
+    if ("vignettes" %in% types && dir.exists(file.path(pkgdir, "doc"))) {
         message(gettextf("Running vignettes for package %s", sQuote(pkg)),
                 domain = NA)
         checkVignettes(pkg, lib.loc, latex = FALSE, weave =TRUE)
@@ -725,7 +725,6 @@ detachPackages <- function(pkgs, verbose = TRUE)
         do_exit(1L)
     }
 
-
     if (length(args) < 2L) {
         Usage()
         do_exit(1L)
@@ -738,4 +737,5 @@ detachPackages <- function(pkgs, verbose = TRUE)
     status <- Rdiff(left, args[2L], useDiff = TRUE)
     if(status) status <- exitstatus
     do_exit(status)
-}
+} ## .Rdiff()
+

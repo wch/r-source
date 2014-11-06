@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-10-26 r66873) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-05 r66942) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -181,7 +181,7 @@ factor> of <- ordered(ff)
 factor> stopifnot(identical(range(of, rev(of)), of[3:2]),
 factor+ 	  identical(max(of), of[2]))
 
-factor> ## End Don't show
+factor> ## End(Don't show)
 factor> 
 factor> ## suppose you want "NA" as a level, and to allow missing values.
 factor> (x <- factor(c(1, 2, NA), exclude = NULL))

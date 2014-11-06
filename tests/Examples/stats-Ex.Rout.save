@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-10-26 r66873) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-05 r66942) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -402,7 +402,7 @@ lm2  6 336.3417
 > 
 > ## Don't show: 
 > od <- options(digits = 5)
-> ## End Don't show
+> ## End(Don't show)
 > require(graphics)
 > 
 > ## Seasonal Holt-Winters
@@ -475,7 +475,7 @@ s12   0.92099
 > lines(fitted(m2)[,1], col = 3)
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -958,7 +958,7 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 > 
 > ## Don't show: 
 > options(show.nls.convergence=FALSE)
-> ## End Don't show
+> ## End(Don't show)
 > Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 > SSasymp( Lob.329$age, 100, -8.5, -3.2 )  # response only
 [1]  3.988924 11.505611 27.822517 41.130854 51.985354 60.838463
@@ -1027,7 +1027,7 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 >   arrows(0.2, 3.5, 0, 3.5, length = 0.08, angle = 25)
 >   arrows(0.8, 3.5, 1, 3.5, length = 0.08, angle = 25)
 >   text(0.5, 3.5, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -1110,7 +1110,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 >   arrows(0.7, 2.65, 0.5, 2.65, length = 0.08, angle = 25)
 >   arrows(1.3, 2.65, 1.5, 2.65, length = 0.08, angle = 25)
 >   text(1.0, 2.65, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -1149,7 +1149,7 @@ Residual standard error: 1.663 on 4 degrees of freedom
 >   arrows(0.2, 3.0, 0, 3.0, length = 0.08, angle = 25)
 >   arrows(0.8, 3.0, 1, 3.0, length = 0.08, angle = 25)
 >   text(0.5, 3.0, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -1378,7 +1378,7 @@ Residual standard error: 2.351 on 8 degrees of freedom
 >   arrows(2.3, 2.7, 2.0, 2.7, length = 0.08, angle = 25)
 >   arrows(2.7, 2.7, 3.0, 2.7, length = 0.08, angle = 25)
 >   text(2.5, 2.7, expression(phi[4]), adj = c(0.5, 0.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -1484,7 +1484,7 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 >   arrows(2.3, 3.8, 2.0, 3.8, length = 0.08, angle = 25)
 >   arrows(2.7, 3.8, 3.0, 3.8, length = 0.08, angle = 25)
 >   text(2.5, 3.8, expression(phi[3]), adj = c(0.5, 0.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
@@ -1577,7 +1577,7 @@ Residual standard error: 10.93 on 10 degrees of freedom
 >   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
 >   segments(1, 0, 1, 2.7, lty = 2, lwd = 0.75)
 >   text(1, 2.7, expression(phi[2]), adj = c(0.5, 0))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -1665,7 +1665,7 @@ Residual standard error: 2.061 on 7 degrees of freedom
 +        27, 29, 31, 33, 35, 36, 38, 39, 39, 40)
 > stopifnot(round(dsignrank(0:56, n = 10)* 2^10) == c(p, rev(p), 0),
 +           qsignrank((1:16)/ 16, n = 4) == c(0:2, rep(3:7, each = 2), 8:10))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -2031,7 +2031,7 @@ ar(3) 0.6000000 0.3000 -0.2
 > 
 > ## Don't show: 
 > od <- options(digits = 5)
-> ## End Don't show
+> ## End(Don't show)
 > require(graphics); require(utils)
 > ## following example(swiss)
 > lm1 <- lm(Fertility ~ ., data = swiss)
@@ -2083,7 +2083,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 7         3       1     25
 8         3       2     13
 9         3       3     12
-> ## End Don't show
+> ## End(Don't show)
 > drop1(glm.D93, test = "Chisq")
 Single term deletions
 
@@ -2116,7 +2116,7 @@ counts ~ outcome + treatment
 outcome:treatment  4     0.00 59.6      5.17     0.27
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -2217,7 +2217,7 @@ Aye   Buzz Hum Sum
 
 > ## Don't show: 
 > stopifnot(is.table(addmargins(A)))
-> ## End Don't show
+> ## End(Don't show)
 > ftable(A)
          Sea Black Dead Red White
 Aye Bee                          
@@ -2550,7 +2550,7 @@ Frequency = 1
 7         3       1     25
 8         3       2     13
 9         3       3     12
-> ## End Don't show
+> ## End(Don't show)
 > anova(glm.D93)
 Analysis of Deviance Table
 
@@ -3773,7 +3773,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4227e60>
+<environment: 0x3c76350>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4462,7 +4462,7 @@ factor> of <- ordered(ff)
 factor> stopifnot(identical(range(of, rev(of)), of[3:2]),
 factor+ 	  identical(max(of), of[2]))
 
-factor> ## End Don't show
+factor> ## End(Don't show)
 factor> 
 factor> ## suppose you want "NA" as a level, and to allow missing values.
 factor> (x <- factor(c(1, 2, NA), exclude = NULL))
@@ -4736,7 +4736,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x43ab2c0>
+<bytecode: 0x3df6028>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7248,7 +7248,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x4c70c10>
+<environment: 0x44f6db0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7474,7 +7474,7 @@ Crew   885
 +   dim(f10) == c(1,4),
 +   dim(f01) == c(4,1),
 +   dim(f00) == c(1,1))
-> ## End Don't show
+> ## End(Don't show)
 > ## Start with a data frame.
 > x <- ftable(mtcars[c("cyl", "vs", "am", "gear")])
 > x
@@ -7835,7 +7835,7 @@ List of 4
 > heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
 +         ColSideColors = cc, margins = c(5,10),
 +         xlab = "xlab", ylab =  "ylab")  # no main
-> ## End Don't show
+> ## End(Don't show)
 > ## "no nothing"
 > heatmap(x, Rowv = NA, Colv = NA, scale = "column",
 +         main = "heatmap(*, NA, NA) ~= image(t(x))")
@@ -8647,7 +8647,7 @@ Coefficients:
 > ## model frame :
 > stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 +                     model.frame(lm.D9)))
-> ## End Don't show
+> ## End(Don't show)
 > ### less simple examples in "See Also" above
 > 
 > 
@@ -8732,7 +8732,7 @@ List of 4
 > 
 > ## Don't show: 
 > utils::example("lm", echo = FALSE)
-> ## End Don't show
+> ## End(Don't show)
 > ##-- Continuing the  lm(.) example:
 > coef(lm.D90) # the bare coefficients
 groupCtl groupTrt 
@@ -8813,7 +8813,7 @@ List of 8
 >   id <- function(x, y) all.equal(x, y, tolerance = 1e-15, scale = 1)
 >   stopifnot(id(unname(lm.$coef), lm..$coef),
 + 	    id(unname(lmw$coef), lm.w$coef))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -9024,7 +9024,7 @@ $margin[[3]]
 > 
 > ## Don't show: 
 > utils::example("lm", echo = FALSE)
-> ## End Don't show
+> ## End(Don't show)
 > ##-- Using the same data as the lm(.) example:
 > lsD9 <- lsfit(x = unclass(gl(2, 10)), y = weight)
 > ls.print(lsD9)
@@ -10335,7 +10335,7 @@ $iterations
 > 
 > ## Don't show: 
 > od <- options(digits=5)
-> ## End Don't show
+> ## End(Don't show)
 > require(graphics)
 > 
 > DNase1 <- subset(DNase, Run == 1)
@@ -10541,7 +10541,7 @@ Consider specifying 'start' or using a selfStart model
 > 
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -10592,7 +10592,7 @@ $warnOnly
 > 
 > ## Don't show: 
 > od <- options(digits = 4)
-> ## End Don't show
+> ## End(Don't show)
 > myenv <- new.env()
 > assign("mean", 0., envir = myenv)
 > assign("sd", 1., envir = myenv)
@@ -10637,7 +10637,7 @@ attr(,"gradient")
 [31,] -0.004432 -0.01330
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -11396,7 +11396,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > for(i in 1:5) assign(paste("long.var.name", i, sep = "."), runif(10))
 > plot(lm(long.var.name.1 ~
 +         long.var.name.2 + long.var.name.3 + long.var.name.4 + long.var.name.5))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -11729,14 +11729,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4e3d788>
-<environment: 0x4e47a10>
+<bytecode: 0x488ead8>
+<environment: 0x4896ca0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4e3d670>
-<environment: 0x4e47a10>
+<bytecode: 0x488e9c0>
+<environment: 0x4896ca0>
 
 > 
 > 
@@ -12149,7 +12149,7 @@ Coefficients of ridge terms:
 > 
 > ## Don't show: 
 > old <- Sys.setlocale("LC_COLLATE", "C")
-> ## End Don't show
+> ## End(Don't show)
 > require(utils)
 > 
 > ## All the "predict" methods found
@@ -12209,7 +12209,7 @@ predict.smooth.spline.fit :
 	 function (object, x, deriv = 0, ...)  NULL 
 > ## Don't show: 
 > old <- Sys.setlocale("LC_COLLATE", old)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -12607,7 +12607,7 @@ $df
 > 
 > ## Don't show: 
 > od <- options(digits = 5)
-> ## End Don't show
+> ## End(Don't show)
 > require(graphics)
 > 
 > fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
@@ -12623,7 +12623,7 @@ $df
 > par(opar)
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -12734,7 +12734,7 @@ smooth.spline(x = speed, y = dist, df = 6.4)
 
 attr(,"class")
 [1] "smooth.spline"
-> ## End Don't show
+> ## End(Don't show)
 > 
 > ## "Proof" that the derivatives are okay, by comparing with approximation
 > diff.quot <- function(x, y) {
@@ -12760,7 +12760,7 @@ attr(,"class")
 +   lines(pp <- predict(cars.spl, xx, deriv = d), col = "red")
 + ## Don't show: 
 +   print(pp)
-+ ## End Don't show
++ ## End(Don't show)
 +   points(kn, pp$y[i.kn], pch = 3, col = "dark red")
 +   abline(h = 0, lty = 3, col = "gray")
 + }
@@ -13077,7 +13077,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ## Don't show: 
 > od <- options(digits = 4)
-> ## End Don't show
+> ## End(Don't show)
 > # obtain the fitted object
 > fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > # get the profile for the fitted model: default level is too extreme
@@ -13116,7 +13116,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > # see also example(plot.profile.nls)
 > ## Don't show: 
 > options(od)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -13803,7 +13803,7 @@ Female 1st             0     4     1   140
 [1,]           6           5           6       5
 [2,]          33          33          33      33
 >  options(op)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -15077,7 +15077,7 @@ $coef
 
 attr(,"class")
 [1] "smooth.spline.fit"
-> ## End Don't show
+> ## End(Don't show)
 > lines(cars.spl, col = "blue")
 > lines(smooth.spline(speed, dist, df = 10), lty = 2, col = "red")
 > legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
@@ -15141,7 +15141,7 @@ Penalized Criterion: 0.4973656
 > ## Don't show: 
 > stopifnot(all.equal(predict(s02, xx),
 + 		    predict(s02., xx), tolerance = 1e-15))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > cleanEx()
@@ -15451,7 +15451,7 @@ Warning in spline(x, y, n = 201, method = "periodic") :
 7         3       1     25
 8         3       2     13
 9         3       3     12
-> ## End Don't show
+> ## End(Don't show)
 > print(ag <- anova(glm.D93))
 Analysis of Deviance Table
 
@@ -15526,8 +15526,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x36d1de0>
-<environment: 0x3bc34b8>
+<bytecode: 0x3119ba8>
+<environment: 0x34ac960>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -15744,7 +15744,7 @@ N:P          4  399.3    99.8
 > 
 > ## Don't show: 
 > utils::example("lm", echo = FALSE)
-> ## End Don't show
+> ## End(Don't show)
 > ##-- Continuing the  lm(.) example:
 > coef(lm.D90)  # the bare coefficients
 groupCtl groupTrt 
@@ -16942,22 +16942,22 @@ assertCondition: caught “error”
 > curve(sinc, -6,18); abline(h=0,v=0, lty=3, col=adjustcolor("gray", 0.8))
 > ## Don't show: 
 > tools::assertWarning(
-+ ## End Don't show
++ ## End(Don't show)
 + uniroot(sinc, c(0,5), extendInt="yes", maxiter=4) #-> "just" a warning
 + ## Don't show: 
 +  , verbose=TRUE)
 Asserted warning: _NOT_ converged in 4 iterations
-> ## End Don't show
+> ## End(Don't show)
 > 
 > ## now with  check.conv=TRUE, must signal a convergence error :
 > ## Don't show: 
 > tools::assertError(
-+ ## End Don't show
++ ## End(Don't show)
 + uniroot(sinc, c(0,5), extendInt="yes", maxiter=4, check.conv=TRUE)
 + ## Don't show: 
 +  , verbose=TRUE)
 Asserted error: _NOT_ converged in 4 iterations
-> ## End Don't show
+> ## End(Don't show)
 > 
 > ### Weibull cumulative hazard (example origin, Ravi Varadhan):
 > cumhaz <- function(t, a, b) b * (t/b)^a
@@ -16983,12 +16983,12 @@ Asserted error: _NOT_ converged in 4 iterations
 > ## An error if 'extendInt' assumes "wrong zero-crossing direction":
 > ## Don't show: 
 > tools::assertError(
-+ ## End Don't show
++ ## End(Don't show)
 + uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.1, 10), extendInt="down")
 + ## Don't show: 
 +  , verbose=TRUE)
 Asserted error: no sign change found in 1000 iterations
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -17224,7 +17224,7 @@ $rotmat
 > ## following on from example(lm)
 > ## Don't show: 
 > utils::example("lm", echo = FALSE)
-> ## End Don't show
+> ## End(Don't show)
 > all.equal(weighted.residuals(lm.D9),
 +           residuals(lm.D9))
 [1] TRUE
@@ -17817,7 +17817,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.707 0.104 4.825 0 0 
+Time elapsed:  5.517 0.111 5.661 0 0 
 > grDevices::dev.off()
 null device 
           1 

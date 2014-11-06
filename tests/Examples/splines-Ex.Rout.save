@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-10-26 r66873) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-05 r66942) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -158,7 +158,7 @@ Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 
 +           identical(bs(x, df = 4), bs(x, df = 4, knots = NULL)), # not true till 2.15.2
 +           !is.null(kk <- attr(bs(x), "knots")), # not true till 1.5.1
 +           length(kk) == 0)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > cleanEx()
@@ -270,7 +270,7 @@ list(weight, ns(height, knots = c(60.8, 63.6, 66.4, 69.2), Boundary.knots = c(58
 +           identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)), # not true till 2.15.2
 +           !is.null(kk <- attr(ns(x), "knots")), # not true till 1.5.1
 +           length(kk) == 0)
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -576,7 +576,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.112 0.003 0.115 0 0 
+Time elapsed:  0.134 0.01 0.146 0 0 
 > grDevices::dev.off()
 null device 
           1 

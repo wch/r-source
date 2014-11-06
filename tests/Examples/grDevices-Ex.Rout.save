@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-10-26 r66873) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-05 r66942) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -353,7 +353,7 @@ $allowed
 +           identical(r[3:5], colors()[3:5]))
 > r[2:4] <- "black"
 > stopifnot(identical(r[1:4, 1], as.raster(c("white", rep("black", 3)))))
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -534,7 +534,7 @@ $out
 15  4.50  =    11.50  =   
 16  4.75  4.50 12.25 12.50
 17  5.00  =    13.00  =   
-> ## End Don't show
+> ## End(Don't show)
 > 
 > 
 > 
@@ -3432,7 +3432,7 @@ v    1 1.0000000 1.0000000  1.0 1.0000000 1.0000000
 > 
 > ## Don't show: 
 > set.seed(151)
-> ## End Don't show
+> ## End(Don't show)
 > (rgb3 <- floor(256 * matrix(stats::runif(3*12), 3, 12)))
      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
 [1,]  122  137  116  244   20  153  191  250  134   117    27   202
@@ -3623,7 +3623,7 @@ $number
 > ## Discretized uncorrelated Gaussian:
 > ## Don't show: 
 > set.seed(1)
-> ## End Don't show
+> ## End(Don't show)
 > require(stats)
 > xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
 > xyTable(xy, digits = 1)
@@ -3750,7 +3750,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.827 0.148 7.997 0 0 
+Time elapsed:  9.9 0.173 10.117 0 0 
 > grDevices::dev.off()
 null device 
           1 
