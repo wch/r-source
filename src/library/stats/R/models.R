@@ -216,6 +216,9 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
         # add a non-negative offset to a possibly negative index
     	ifelse(index < 0, index - offset, 
     	       ifelse(index == 0, 0, index + offset))
+    	       
+    if (is.logical(i))
+    	i <- which(rep_len(i, length.out = length(attr(termobj, "term.labels"))))
     	
     response <- attr(termobj, "response")
     if (response) 
