@@ -577,4 +577,16 @@ y <- 0x0p100000
 stopifnot(x == 0, y == 0)
 ##
 
+
+## drop.terms() dropped some attributes, PR#16029
+test <- model.frame(Employed ~ Year + poly(GNP,3) + Population, data=longley)
+mterm <- terms(test)
+mterm2 <- drop.terms(mterm, 3)
+predvars <- attr(mterm2, "predvars")
+dataClasses <- attr(mterm2, "dataClasses")
+factors <- attr(mterm2, "factors")
+stopifnot(is.language(predvars), length(predvars) == length(dataClasses)+1,
+          all(names(dataClasses) == rownames(factors)))
+## Previously dropped predvars and dataClasses
+
 proc.time()

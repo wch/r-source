@@ -174,7 +174,29 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 				  if (keep.response) termobj[[2L]] else NULL,
                                   attr(termobj, "intercept"))
         environment(newformula) <- environment(termobj)
-	terms(newformula, specials=names(attr(termobj, "specials")))
+	result <- terms(newformula, specials=names(attr(termobj, "specials")))
+	
+	# Edit the optional attributes
+	
+	response <- attr(termobj, "response")
+	if (response && !keep.response) 
+	    # we have a response in termobj, but not in the result
+	    dropOpt <- c(response, dropx + length(response))
+	else 
+	    dropOpt <- dropx + max(response)
+	 
+	if (!is.null(predvars <- attr(termobj, "predvars"))) {
+	    # predvars is a language expression giving a list of 
+	    # values corresponding to terms in the model
+            # so add 1 for the name "list"
+	    attr(result, "predvars") <- predvars[-(dropOpt+1)]
+	}
+	if (!is.null(dataClasses <- attr(termobj, "dataClasses"))) {
+	    # dataClasses is a character vector of 
+	    # values corresponding to terms in the model
+	    attr(result, "dataClasses") <- dataClasses[-dropOpt]
+	}	
+	result
     }
 }
 
@@ -186,7 +208,30 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
     if (length(newformula) == 0L) newformula <- "1"
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"))
     environment(newformula) <- environment(termobj)
-    terms(newformula, specials = names(attr(termobj, "specials")))
+    result <- terms(newformula, specials = names(attr(termobj, "specials")))
+    
+    # Edit the optional attributes
+
+    addindex <- function(index, offset) 
+        # add a non-negative offset to a possibly negative index
+    	ifelse(index < 0, index - offset, 
+    	       ifelse(index == 0, 0, index + offset))
+    	
+    response <- attr(termobj, "response")
+    if (response) 
+	iOpt <- c(if (max(i) > 0) response, # inclusive indexing
+	          addindex(i, max(response)))
+    else 
+	iOpt <- i
+
+    if (!is.null(predvars <- attr(termobj, "predvars"))) 
+	attr(result, "predvars") <- predvars[c(if (max(iOpt) > 0) 1, 
+	                                     addindex(iOpt, 1))]
+    
+    if (!is.null(dataClasses <- attr(termobj, "dataClasses"))) 
+	attr(result, "dataClasses") <- dataClasses[iOpt]
+    
+    result
 }
 
 

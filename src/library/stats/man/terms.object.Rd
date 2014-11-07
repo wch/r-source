@@ -1,6 +1,6 @@
 % File src/library/stats/man/terms.object.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{terms.object}
@@ -48,6 +48,8 @@
     \code{variables} attribute which contain these special functions.}
   \item{dataClasses}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
+  \item{predvars}{optional.  An expression to help in computing 
+    predictions at new covariate values; see \code{\link{makepredictcalls}}.}
 
   The object has class \code{c("terms", "formula")}.
 }
