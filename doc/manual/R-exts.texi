@@ -3572,13 +3572,17 @@ type of the parameters.  Using the @code{.registration} argument of
 following registration information for a DLL named @code{myDLL}:
 
 @example
-R_CMethodDef cMethods[] = @{
-   @{"foo", (DL_FUNC) &foo, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+static R_NativePrimitiveArgType foo_t[] = @{
+    REALSXP, INTSXP, STRSXP, LGLSXP
+@};
+
+static R_CMethodDef cMethods[] = @{
+   @{"foo", (DL_FUNC) &foo, 4, foo_t@},
    @{"bar_sym", (DL_FUNC) &bar, 0@},
    @{NULL, NULL, 0@}
 @};
 
-R_CallMethodDef callMethods[] = @{
+static R_CallMethodDef callMethods[] = @{
    @{"R_call_sym", (DL_FUNC) &R_call, 4@},
    @{"R_version_sym", (DL_FUNC) &R_version, 0@},
    @{NULL, NULL, 0@}
@@ -8476,7 +8480,7 @@ SEXP myCall(SEXP a, SEXP b, SEXP c);
 we would describe this as
 
 @example
-R_CallMethodDef callMethods[]  = @{
+static R_CallMethodDef callMethods[]  = @{
   @{"myCall", (DL_FUNC) &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
@@ -8521,8 +8525,12 @@ void myC(double *x, int *n, char **names, int *status);
 We would register it as
 
 @example
-R_CMethodDef cMethods[] = @{
-   @{"myC", (DL_FUNC) &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+static R_NativePrimitiveArgType myC_t[] = @{
+    REALSXP, INTSXP, STRSXP, LGLSXP
+@};
+
+static R_CMethodDef cMethods[] = @{
+   @{"myC", (DL_FUNC) &myC, 4, myC_t@}
    @{NULL, NULL, 0@}
 @};
 @end example
