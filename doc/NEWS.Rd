@@ -223,9 +223,13 @@
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  This is an experimental fix; if it is reported
       to work it will be kept, otherwise it will be removed. (\PR{15791})
-      
+
       \item \code{drop.terms()} dropped some of the attributes of the
       object it was working with.  (\PR{16029})
+
+      \item \code{nlm()} no longer modifies the callback argument in place (a
+      new vector is allocated for each invocation, which mimics the
+      implicit duplication that occurred in R < 3.1.0). (\PR{15958})
     }
   }
 }
@@ -271,6 +275,10 @@
       
       \item Extremely large exponents on zero expressed in scientific
       notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
+
+      \item \code{nlm()} no longer modifies the callback argument in place (a
+      new vector is allocated for each invocation, which mimics the
+      implicit duplication that occurred in R < 3.1.0). (\PR{15958})
     }
   }
 }
