@@ -148,6 +148,11 @@
 
       \item A new somewhat experimental function \code{debuggingState()}
       has been added, allowing to temporarily turn off debugging.
+
+      \item \code{example()} gets new optional argument \code{run.dontcheck}
+      and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
+      with a default such that \code{example(..)} in help examples will
+      run \code{\\dontcheck} code only if used interactively.
     }
   }
 
@@ -178,8 +183,8 @@
       now returns the old values invisibly. The initial optimization
       level can also be set with the environment variable
       \env{R_COMPILER_OPTIMIZE}.
-      
-      \item \command{R CMD check} gains option \option{--test-dir=} to 
+
+      \item \command{R CMD check} gains option \option{--test-dir=} to
       specify an alternative set of tests to run.
     }
   }
@@ -196,7 +201,7 @@
       now ignored, so arguments are duplicated if \code{DUP = TRUE}
       would do so.  As their help has long said, \code{.Call()} is much
       preferred.
-      
+
       \item New entry point \code{R_allocLD}, like \code{R_alloc} but
       guaranteed to have sufficient alignment for \code{long double}
       pointers.
@@ -219,7 +224,7 @@
 
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
-      
+
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  This is an experimental fix; if it is reported
       to work it will be kept, otherwise it will be removed. (\PR{15791})
@@ -257,22 +262,22 @@
 
       \item If a package had extra documentation files but no vignette,
       the HTML help system produced an empty index page.
-      
+
       \item The parser now gives an error if a null character is included
       in a string using Unicode escapes. (\PR{16046})
 
-      \item \code{qr.Q()} failed on complex arguments due to 
-      pre-3.0(!) typo. (\PR{16054}) 
-      
+      \item \code{qr.Q()} failed on complex arguments due to
+      pre-3.0(!) typo. (\PR{16054})
+
       \item \code{abs()} failed with named arguments when the argument
       was complex.  (\PR{16047})
-      
-      \item \code{"noquote"} objects may now be used as columns in 
+
+      \item \code{"noquote"} objects may now be used as columns in
       dataframes.  (\PR{15997})
-      
-      \item Some values with extremely long names were printed 
+
+      \item Some values with extremely long names were printed
       incorrectly.  (\PR{15999})
-      
+
       \item Extremely large exponents on zero expressed in scientific
       notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
 
