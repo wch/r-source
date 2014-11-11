@@ -286,7 +286,7 @@
       implicit duplication that occurred in R < 3.1.0). (\PR{15958})
       
       \item \code{download.file()} reported downloaded sizes as 0KB if
-      less than 1MB, only in \R 3.1.2 on big-endian platforms.
+      less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
     }
   }
 }

@@ -7366,8 +7366,8 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on a common CPU type or supported versions
-of OS X@footnote{at the time of writing mainly for 10.7 with some
-support for 10.8, none for the current 10.9.} you can use
+of OS X@footnote{at the time of writing mainly for 10.9 with some
+support for 10.8, none for the current 10.10.} you can use
 @code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
 with `tinned') to check for possible problems.  To run some examples
 under @code{valgrind} use something like
