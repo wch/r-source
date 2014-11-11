@@ -68,7 +68,7 @@
    See comment near the top of valgrind.h on how to use them.
 */
 
-#include "valgrind/valgrind.h"
+#include "vg/valgrind.h"
 
 typedef
    enum { 
