@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2013  The R Core Team.
+ *  Copyright (C) 1998--2014  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,9 +74,9 @@
 // internal version of headers.
 #  include "vg/memcheck.h"
 # endif
-// for later external headers: currently only levels 1 and 2 work.
-# if defined(__VALGRIND_MAJOR__) && defined(__VALGRIND_MINOR__)   \
-    && (__VALGRIND_MAJOR__ > 3 || (__VALGRIND_MAJOR__ == 3 && __VALGRIND_MINOR__ >= 8))
+// for more recent external headers (>= 3.8.0?): 
+// currently only levels 1 and 2 work with such headers.
+# ifndef VALGRIND_MAKE_NOACCESS
 #  define VALGRIND_MAKE_NOACCESS VALGRIND_MAKE_MEM_NOACCESS
 #  define VALGRIND_MAKE_READABLE VALGRIND_MAKE_MEM_DEFINED
 #  define VALGRIND_MAKE_WRITABLE VALGRIND_MAKE_MEM_UNDEFINED
