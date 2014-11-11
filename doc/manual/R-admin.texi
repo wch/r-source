@@ -3819,8 +3819,9 @@ requested by option @option{--with-system-valgrind-headers}: they will
 be used if present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
 code in @R{} will be compatible with future @command{valgrind} headers.
-(An incompatible change was made in @command{valgrind} version 3.10.0 and
-currently level 3 does not work with such headers.)
+(An incompatible change was made in a version not later than 3.8.0, not
+even mentioned in the release notes, and currently level 3 does not work
+with recent headers.)
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
