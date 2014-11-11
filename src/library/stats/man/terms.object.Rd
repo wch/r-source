@@ -49,7 +49,7 @@
   \item{dataClasses}{optional.  A named character vector giving the classes
     (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
   \item{predvars}{optional.  An expression to help in computing 
-    predictions at new covariate values; see \code{\link{makepredictcalls}}.}
+    predictions at new covariate values; see \code{\link{makepredictcall}}.}
 
   The object has class \code{c("terms", "formula")}.
 }
