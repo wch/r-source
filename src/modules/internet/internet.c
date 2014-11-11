@@ -445,9 +445,9 @@ static SEXP in_do_download(SEXP args)
 		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", (int) nbytes/1024, url);
 		else
-		    REprintf("downloaded %d bytes\n\n", nbytes, url);
+		    REprintf("downloaded %d bytes\n\n", (int) nbytes, url);
 	    }
 #ifdef Win32
 	    R_FlushConsole();
@@ -555,9 +555,9 @@ static SEXP in_do_download(SEXP args)
 		    REprintf("downloaded %0.1f MB\n\n",
 			     (double)nbytes/1024/1024, url);
 		else if(nbytes > 10240)
-		    REprintf("downloaded %d KB\n\n", nbytes/1024, url);
+		    REprintf("downloaded %d KB\n\n", (int) nbytes/1024, url);
 		else
-		    REprintf("downloaded %d bytes\n\n", nbytes, url);
+		    REprintf("downloaded %d bytes\n\n", (int) nbytes, url);
 	    }
 #ifdef Win32
 	    R_FlushConsole();
