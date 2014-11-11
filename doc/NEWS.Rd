@@ -284,6 +284,9 @@
       \item \code{nlm()} no longer modifies the callback argument in place (a
       new vector is allocated for each invocation, which mimics the
       implicit duplication that occurred in R < 3.1.0). (\PR{15958})
+      
+      \item \code{download.file()} reported downloaded sizes as 0KB if
+      less than 1MB, only in \R 3.1.2 on big-endian platforms.
     }
   }
 }
