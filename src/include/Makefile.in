@@ -22,10 +22,10 @@ INT_HEADERS = Defn.h Errormsg.h Fileio.h Graphics.h GraphicsBase.h \
    Rdynpriv.h Rgraphics.h Rinlinedfuns.h Startup.h rlocale.h
 
 DISTFILES = Makefile.in Makefile.win $(INT_HEADERS) $(SRC_HEADERS) \
-  config.h.in stamp-h.in Rmath.h0.in memcheck.h valgrind.h
+  config.h.in stamp-h.in Rmath.h0.in
 
 SUBDIRS = R_ext
-SUBDIRS_WITH_NO_BUILD = Rmodules
+SUBDIRS_WITH_NO_BUILD = Rmodules valgrind
 
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.tsa)
 
