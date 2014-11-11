@@ -434,7 +434,7 @@ AC_ARG_WITH([system-xz],
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
-[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
+[AS_HELP_STRING([--with-valgrind-instrumentation],[Level of additional instrumentation for Valgrind (0/1/2/3) @<:@0@:>@])],
 [valgrind_level=${withval}],
 [valgrind_level=0])
 
@@ -2324,7 +2324,8 @@ AC_FUNC_FSEEKO
 if test ${valgrind_level} -eq 0; then
   AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
 fi
-AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
+
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1, 2 or 3 to specify levels of Valgrind instrumentation])
 
 if test x${use_internal_tzcode} = xdefault; then
 case "${host_os}" in

@@ -3824,6 +3824,12 @@ way.  Also, because packages are linked against @R{} they are on some
 OSes also linked against the dynamic libraries @R{} itself is linked
 against, and this can lead to symbol conflicts.
 
+For maximally effective use of @command{valgrind}, @R{} should be
+compiled with valgrind instrumentation. The @command{configure} option
+is @option{--with-valgrind-instrumentation=@var{level}}, where
+@var{level} is 0, 1, 2 or 3.  (Level 0 is the default and does not add
+any anything.)
+
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
 
