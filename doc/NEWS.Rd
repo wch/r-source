@@ -262,7 +262,7 @@
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
-      \item The included version of PCRE has been updated to 8.35.
+      \item The included version of PCRE has been updated to 8.36.
     }
   }
   
