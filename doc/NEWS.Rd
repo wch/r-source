@@ -157,7 +157,7 @@
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{
+    \itemize{      
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
       \command{make check TEST_DONTTEST=TRUE}.
@@ -260,6 +260,12 @@
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included version of PCRE has been updated to 8.35.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
