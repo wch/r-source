@@ -1,5 +1,5 @@
 
-R version 3.1.2 RC (2014-10-29 r66897) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2014-11-11 r66960) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -43,4 +43,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.133   0.014   0.270 
+  0.145   0.017   0.241 

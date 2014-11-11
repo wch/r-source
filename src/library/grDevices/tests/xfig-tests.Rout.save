@@ -1,5 +1,5 @@
 
-R version 3.1.2 RC (2014-10-29 r66897) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2014-11-11 r66960) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.181   0.019   0.192 
+  0.173   0.012   0.177 
