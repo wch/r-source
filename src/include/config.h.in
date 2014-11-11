@@ -833,6 +833,9 @@
 /* Define to 1 if you have the <utime.h> header file. */
 #undef HAVE_UTIME_H
 
+/* Define to 1 if you have the <valgrind/memcheck.h> header file. */
+#undef HAVE_VALGRIND_MEMCHECK_H
+
 /* Define to 1 if you have the `vasprintf' function. */
 #undef HAVE_VASPRINTF
 
@@ -1119,7 +1122,7 @@
 /* Define according to your operating system type. */
 #undef Unix
 
-/* Define as 1 or 2 to specify levels of Valgrind instrumentation */
+/* Define as 1, 2 or 3 to specify levels of Valgrind instrumentation */
 #undef VALGRIND_LEVEL
 
 /* Version number of package */
