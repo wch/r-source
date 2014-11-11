@@ -492,8 +492,8 @@ Based on gettextize from gettext 0.17
    Distributed under the GNU Library General Public License
    version 2 or later.
 
-src/include/memcheck.h
-src/include/valgrind.h
+src/include/vg/memcheck.h
+src/include/vg/valgrind.h
 
 From valgrind,
 

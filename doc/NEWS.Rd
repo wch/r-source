@@ -161,6 +161,12 @@
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
       \command{make check TEST_DONTTEST=TRUE}.
+
+      \item It is possible to request the use of system
+      \command{valgrind} headers \emph{via} option
+      \option{--with-system-valgrind-headers}: note the possible
+      incompatibility of such headers discussed in the 'R Installation
+      and Administration' manual. (Wish of \PR{16808}.)
     }
   }
 
