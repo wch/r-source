@@ -1929,7 +1929,7 @@ Optional Packages:
   --with-system-xz        use system xz (lzma) library (if available) [yes]
   --with-valgrind-instrumentation
                           Level of additional instrumentation for Valgrind
-                          (0/1/2) [0]
+                          (0/1/2/3) [0]
   --with-internal-tzcode  use internal time-zone code [no]
   --with-recommended-packages
                           use/install recommended R packages [yes]
@@ -35178,6 +35178,7 @@ $as_echo "#define NVALGRIND 1" >>confdefs.h
 
 fi
 
+
 cat >>confdefs.h <<_ACEOF
 #define VALGRIND_LEVEL ${valgrind_level}
 _ACEOF
@@ -36431,11 +36432,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36434: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36435: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36438: \$? = $ac_status" >&5
+   echo "$as_me:36439: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36530,11 +36531,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36533: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36534: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36537: \$? = $ac_status" >&5
+   echo "$as_me:36538: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36582,11 +36583,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36585: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36586: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36589: \$? = $ac_status" >&5
+   echo "$as_me:36590: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
