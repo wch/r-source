@@ -67,6 +67,11 @@
 #endif
 #endif
 
+
+#ifndef VALGRIND_LEVEL
+# define VALGRIND_LEVEL 0
+#endif
+
 #ifndef NVALGRIND
 # ifdef HAVE_VALGRIND_MEMCHECK_H
 #  include "valgrind/memcheck.h"
@@ -77,15 +82,13 @@
 // for more recent external headers (>= 3.8.0?): 
 // currently only levels 1 and 2 work with such headers.
 # ifndef VALGRIND_MAKE_NOACCESS
+# if VALGRIND_LEVEL > 2
+#  error "Only valgrind instrumentation levels 1/2 are supported with these headers"
+#  endif
 #  define VALGRIND_MAKE_NOACCESS VALGRIND_MAKE_MEM_NOACCESS
 #  define VALGRIND_MAKE_READABLE VALGRIND_MAKE_MEM_DEFINED
 #  define VALGRIND_MAKE_WRITABLE VALGRIND_MAKE_MEM_UNDEFINED
 # endif
-#endif
-
-
-#ifndef VALGRIND_LEVEL
-# define VALGRIND_LEVEL 0
 #endif
 
 #define R_USE_SIGNALS 1
