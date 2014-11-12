@@ -23,6 +23,12 @@
     }
   }
 
+  \subsection{INSTALLATION and INCLUDED SOFTWARE}{
+    \itemize{
+      \item The included version of PCRE has been updated to 8.36.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
