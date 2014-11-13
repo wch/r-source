@@ -101,6 +101,7 @@ function(object, filename = NULL, name = NULL,
 
     ## escape "%" :
     x.def <- gsub("%", "\\\\%", x.def)
+    Call <- gsub("%", "\\\\%", Call)
 
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),

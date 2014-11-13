@@ -416,4 +416,13 @@ y <- 0x0p100000
 stopifnot(x == 0, y == 0)
 ##
 
+
+## prompt() did not escape percent signs properly
+fn <- function(fmt = "%s") {}
+f <- tempfile(fileext = ".Rd")
+prompt(fn, filename = f)
+rd <- tools::parse_Rd(f)
+## Gave syntax errors because the percent sign in Usage 
+## was taken as the start of a comment.
+
 proc.time()
