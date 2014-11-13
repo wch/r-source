@@ -302,6 +302,9 @@
 
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
+      
+      \item \code{prompt()} did not escape percent signs in the
+      automatically generated usage section of help files.
     }
   }
 }
