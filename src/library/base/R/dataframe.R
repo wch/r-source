@@ -1189,7 +1189,7 @@ xpdrows.data.frame <- function(x, old.rows, new.rows)
 cbind.data.frame <- function(..., deparse.level = 1)
     data.frame(..., check.names = FALSE)
 
-rbind.data.frame <- function(..., deparse.level = 1)
+rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 {
     match.names <- function(clabs, nmi)
     {
@@ -1202,6 +1202,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
             m
 	} else stop("names do not match previous names")
     }
+    if(make.row.names)
     Make.row.names <- function(nmi, ri, ni, nrow)
     {
 	if(nzchar(nmi)) {
@@ -1234,7 +1235,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
     if(is.null(nms))
 	nms <- character(n)
     cl <- NULL
-    perm <- rows <- rlabs <- vector("list", n)
+    perm <- rows <- vector("list", n)
+    rlabs <- if(make.row.names) rows # else NULL
     nrow <- 0L
     value <- clabs <- NULL
     all.levs <- list()
@@ -1249,7 +1251,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		cl <- oldClass(xi)
 	    ri <- attr(xi, "row.names")
 	    ni <- length(ri)
-	    if(is.null(clabs))
+	    if(is.null(clabs)) ## first time
 		clabs <- names(xi)
 	    else {
                 if(length(xi) != length(clabs))
@@ -1258,15 +1260,13 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if( !is.null(pi) ) perm[[i]] <- pi
 	    }
 	    rows[[i]] <- seq.int(from = nrow + 1L, length.out = ni)
-	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
+	    if(make.row.names) rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    nrow <- nrow + ni
-	    if(is.null(value)) {
+	    if(is.null(value)) { ## first time ==> setup once:
 		value <- unclass(xi)
 		nvar <- length(value)
 		all.levs <- vector("list", nvar)
-		has.dim <- logical(nvar)
-                facCol <- logical(nvar)
-                ordCol <- logical(nvar)
+		has.dim <- facCol <- ordCol <- logical(nvar)
 		for(j in seq_len(nvar)) {
 		    xj <- value[[j]]
 		    if( !is.null(levels(xj)) ) {
@@ -1297,7 +1297,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    rows[[i]] <- ri <-
                 as.integer(seq.int(from = nrow + 1L, length.out = ni))
 	    nrow <- nrow + ni
-	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
+	    if(make.row.names) rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    if(length(nmi <- names(xi)) > 0L) {
 		if(is.null(clabs))
 		    clabs <- nmi
@@ -1311,7 +1311,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	}
 	else if(length(xi)) {
 	    rows[[i]] <- nrow <- nrow + 1L
-	    rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
+            if(make.row.names) rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
 	}
     }
     nvar <- length(clabs)
@@ -1325,9 +1325,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	value <- list()
 	value[pseq] <- list(logical(nrow)) # OK for coercion except to raw.
         all.levs <- vector("list", nvar)
-        has.dim <- logical(nvar)
-        facCol <- logical(nvar)
-        ordCol <- logical(nvar)
+	has.dim <- facCol <- ordCol <- logical(nvar)
     }
     names(value) <- clabs
     for(j in pseq)
@@ -1370,15 +1368,16 @@ rbind.data.frame <- function(..., deparse.level = 1)
             }
 	}
     }
-    rlabs <- unlist(rlabs)
-    if(anyDuplicated(rlabs))
-        rlabs <- make.unique(as.character(unlist(rlabs)), sep = "")
+    if(make.row.names) {
+	rlabs <- unlist(rlabs)
+	if(anyDuplicated(rlabs))
+	    rlabs <- make.unique(as.character(rlabs), sep = "")
+    }
     if(is.null(cl)) {
 	as.data.frame(value, row.names = rlabs)
     } else {
-	class(value) <- cl
-	attr(value, "row.names") <- rlabs
-	value
+	structure(value, class = cl,
+		  row.names = if(is.null(rlabs)) .set_row_names(nrow) else rlabs)
     }
 }
 

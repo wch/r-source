@@ -153,11 +153,14 @@
       and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
       with a default such that \code{example(..)} in help examples will
       run \code{\\dontcheck} code only if used interactively.
+
+      \item \code{rbind.data.frame()} gets optional argument
+      \code{make.row.names}, for potential speedup.
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
-    \itemize{      
+    \itemize{
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
       \command{make check TEST_DONTTEST=TRUE}.
@@ -265,7 +268,7 @@
       \item The included version of PCRE has been updated to 8.36.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
@@ -296,7 +299,7 @@
       \item \code{nlm()} no longer modifies the callback argument in place (a
       new vector is allocated for each invocation, which mimics the
       implicit duplication that occurred in R < 3.1.0). (\PR{15958})
-      
+
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
     }
