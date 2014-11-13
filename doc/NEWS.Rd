@@ -65,6 +65,9 @@
       
       \item \code{prompt()} did not escape percent signs in the
       automatically generated usage section of help files.
+      
+      \item \code{drop.terms()} dropped some of the attributes of the
+      object it was working with.  (\PR{16029})      
     }
   }
 }
