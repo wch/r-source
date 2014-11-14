@@ -234,9 +234,6 @@
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
 
-      \item (Windows.) The command completion in \command{Rgui.exe}
-      messed up the console.  (\PR{15791})
-
       \item \code{nlm()} no longer modifies the callback argument in place (a
       new vector is allocated for each invocation, which mimics the
       implicit duplication that occurred in R < 3.1.0). (\PR{15958})
@@ -304,6 +301,9 @@
       
       \item \code{drop.terms()} dropped some of the attributes of the
       object it was working with.  (\PR{16029})      
+
+      \item (Windows.) The command completion in \command{Rgui.exe}
+      messed up the console.  (\PR{15791})
     }
   }
 }
