@@ -598,4 +598,11 @@ rd <- tools::parse_Rd(f)
 ## Gave syntax errors because the percent sign in Usage 
 ## was taken as the start of a comment.
 
+
+## The factor component of terms() did not handle no-intercept 
+## models properly, PR#16070
+f <- ~ -1 + Species 
+stopifnot(attr(terms(f, data=iris), "factors") == 2)
+## Returned 1 previously
+
 proc.time()

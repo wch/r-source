@@ -304,6 +304,10 @@
 
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  (\PR{15791})
+      
+      \item The \code{"factors"} component of the result of 
+      \code{terms()} was not computed properly when no intercept
+      was in the model.  (\PR{16070})
     }
   }
 }
