@@ -61,9 +61,9 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 \details{
   The factor analysis model is
   \deqn{x = \Lambda f + e}
-  for a \eqn{p}--element row-vector \eqn{x}, a \eqn{p \times k}{p x k}
+  for a \eqn{p}--element vector \eqn{x}, a \eqn{p \times k}{p x k}
   matrix \eqn{\Lambda} of \emph{loadings}, a \eqn{k}--element vector
-  \eqn{f} of \emph{scores} and a \eqn{p}--element vector \eqn{e}of
+  \eqn{f} of \emph{scores} and a \eqn{p}--element vector \eqn{e} of
   errors.  None of the components other than \eqn{x} is observed, but
   the major restriction is that the scores be uncorrelated and of unit
   variance, and that the errors be independent with variances
@@ -72,7 +72,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 
   Thus factor analysis is in essence a model for the correlation matrix
   of \eqn{x},
-  \deqn{\Sigma = \Lambda^\prime\Lambda + \Psi}{\Sigma = \Lambda'\Lambda + \Psi}
+  \deqn{\Sigma = \Lambda\Lambda^\prime + \Psi}{\Sigma = \Lambda \Lambda' + \Psi}
   There is still some indeterminacy in the model for it is unchanged
   if \eqn{\Lambda} is replaced by \eqn{G \Lambda} for
   any orthogonal matrix \eqn{G}.  Such matrices \eqn{G} are known as
