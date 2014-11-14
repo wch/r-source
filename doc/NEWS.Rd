@@ -68,6 +68,9 @@
       
       \item \code{drop.terms()} dropped some of the attributes of the
       object it was working with.  (\PR{16029})      
+
+      \item (Windows.) The command completion in \command{Rgui.exe}
+      messed up the console.  (\PR{15791})
     }
   }
 }
