@@ -6596,7 +6596,7 @@ function(dir)
         out$suggests_or_enhances_not_in_mainstream_repositories <-
             suggests_or_enhances
         if(!is.na(aurls <- meta["Additional_repositories"])) {
-            aurls <- unique(unlist(strsplit(aurls, ", *")))
+            aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
             adb <-
                 tryCatch(utils::available.packages(utils::contrib.url(aurls,
                                                                       "source"),
