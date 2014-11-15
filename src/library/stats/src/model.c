@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1584,8 +1584,7 @@ static SEXP EncodeVars(SEXP formula)
 /* encoded by dummy variables.  This is decided using */
 /* the heuristic described in Statistical Models in S, page 38. */
 
-static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term,
-                    int intercept)
+static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
 {
     SEXP t;
     int allzero, i;
@@ -1607,19 +1606,8 @@ static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term,
 	    break;
 	}
     }
-    if (allzero) {
-        /* This indicates that we have a main effect term.  We want a 1 
-           if there is an intercept in the model, or if it is not the
-           first term in the formula. See PR#16070.  Remember
-           that terms are sorted by bitcount... */
-	if (intercept)
-	   return 1;
-	t = termlist;	    
-	for (i = 0; i < nwords; i++) 
-	    if (INTEGER(CAR(t))[i] != INTEGER(CAR(thisterm))[i])
-	    	return 1;
-	return 2;
-    }
+    if (allzero)
+	return 1;
 
     for (t = termlist; t != thisterm; t = CDR(t)) {
 	allzero = 1;
@@ -1857,7 +1845,7 @@ SEXP termsform(SEXP args)
 	    for (i = 1; i <= nvar; i++) {
 		if (GetBit(CAR(call), i))
 		    INTEGER(pattern)[i-1+n*nvar] =
-			TermCode(formula, call, i, term, intercept);
+			TermCode(formula, call, i, term);
 	    }
 	    n++;
 	}
