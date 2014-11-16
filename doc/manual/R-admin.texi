@@ -3372,7 +3372,9 @@ problems, and you may want to disable profiling if you use a
 multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
 @acronym{BLAS} can result in taking more @acronym{CPU} time and even
 more elapsed time (occasionally dramatically so) than using a similar
-single-threaded @acronym{BLAS}.
+single-threaded @acronym{BLAS}.  On a machine running other tasks, there
+can be contention for CPU caches that reduces the effectiveness of the
+optimization of cache use by a @acronym{BLAS} implementation.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -3383,8 +3385,14 @@ such as @CRANpkg{quantreg} will need to be re-installed.
 @R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
 external @acronym{BLAS}.  This can be broken if for example the code
 assumes that terms with a zero factor are always zero and do not need to
-be computed---whereas @code{x*0} can be @code{NaN}. This is checked in
+be computed---whereas @code{x*0} can be @code{NaN}.  This is checked in
 the test suite.
+
+External @acronym{BLAS} implementations often make less use of
+extended-precision floating-point registers and will almost certainly
+re-order computations.  This can result in less accuracy than using the
+internal @acronym{BLAS}, and may result in different solutions, e.g.@:
+different signs in SVD and eigendecompositions.
 
 
 @menu
@@ -3400,7 +3408,7 @@ the test suite.
 
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
-Unfortunately it is usually built as a static library that on some
+Unfortunately it is built by default as a static library that on some
 platforms cannot be used with shared objects such as are used in @R{}
 packages.  Be careful when using pre-built versions of ATLAS (they seem
 to work on @cputype{ix86} platforms, but not always on @cputype{x86_64}
@@ -3432,17 +3440,17 @@ multi-threaded version of ATLAS, by specifying
 --with-blas="-lptf77blas -lpthread -latlas"
 @end example
 
-Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code: that file also describes how to build ATLAS
-as a shared library.
+Consult its installation guide for how to build ATLAS with
+position-independent code, and as a shared library.
 
 @node ACML, Goto and OpenBLAS, ATLAS, BLAS
 @subsubsection ACML
 
 @c : there used to be Solaris 10, but it seems no more.
-For @cputype{x86_64} and @cputype{i686} processors under Linux there is
-the AMD Core Math Library (ACML) @uref{http://www.amd.com/@/acml}.  For
-the @command{gcc} version we could use
+For @cputype{x86_64} processors@footnote{and @cputype{i686} for earlier
+versions.}  under Linux there is the AMD Core Math Library (ACML)
+@uref{http://developer.amd.com/@/tools-and-sdks/@/cpu-development/@/amd-core-math-library-acml/}.
+For the @command{gcc} version we could use
 
 @example
 --with-blas="-lacml"
@@ -3477,8 +3485,7 @@ Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is available
 for several processors and OSes.  The final version is known as
 GotoBLAS2, and was re-released under a much less restrictive licence.
 Source code can be obtained from
-@uref{http://www.tacc.utexas.edu/@/tacc-projects/@/gotoblas2/}
-
+@uref{https://www.tacc.utexas.edu/@/research-development/@/tacc-software/@/gotoblas2}.
 Once it is built and installed, it can be used by configuring @R{} with
 
 @example
@@ -3505,7 +3512,7 @@ or as a shared BLAS.
 @subsubsection Intel MKL
 For Intel processors, and perhaps others, and some distributions of
 Linux, there is Intel's Math Kernel Library
-(@uref{http://www.intel.com/@/software/@/products/@/mkl/}).  You are
+(@uref{https://software.intel.com/@/en-us/@/intel-mkl}).  You are
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.  There are also
 versions of MKL for OS X and Windows, but they did not work with the
@@ -3637,9 +3644,9 @@ mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
 ln -s /opt/acml5.1.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
-link works for some versions of the Goto @acronym{BLAS} and perhaps
-for MKL (provided the appropriate @file{lib} directory is in the
-run-time library path or @command{ld.so} cache).
+link works for some versions of Goto @acronym{BLAS}, OpenBLAS and MKL
+(provided the appropriate @file{lib} directory is in the run-time
+library path or @command{ld.so} cache).
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3733,7 +3740,7 @@ BLAS used, so it may be simpler to use CLAPACK built to use CBLAS and
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
 meant that on Sun Sparc using the native compilers the flag
-@option{-dalign} is needed so @code{sunperf} can be used.
+@option{-dalign} is needed if @code{sunperf} is to be used.
 
 On some systems it is necessary that an external @acronym{BLAS}/LAPACK
 was built with the same FORTRAN compiler used to build @R{}: known
@@ -3819,9 +3826,8 @@ requested by option @option{--with-system-valgrind-headers}: they will
 be used if present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
 code in @R{} will be compatible with future @command{valgrind} headers.
-(An incompatible change was made in a version not later than 3.8.0, not
-even mentioned in the release notes, and currently level 3 does not work
-with recent headers.)
+(An incompatible change was made in a version 3.3.0 and currently level
+3 does not work with recent headers.)
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
