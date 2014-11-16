@@ -3394,6 +3394,8 @@ re-order computations.  This can result in less accuracy than using the
 internal @acronym{BLAS}, and may result in different solutions, e.g.@:
 different signs in SVD and eigendecompositions.
 
+The URIs for several of these BLAS are subject to frequent gratuitous
+changes, so you will need to search for their current locations.
 
 @menu
 * ATLAS::                       
@@ -3446,10 +3448,8 @@ position-independent code, and as a shared library.
 @node ACML, Goto and OpenBLAS, ATLAS, BLAS
 @subsubsection ACML
 
-@c : there used to be Solaris 10, but it seems no more.
 For @cputype{x86_64} processors@footnote{and @cputype{i686} for earlier
-versions.}  under Linux there is the AMD Core Math Library (ACML)
-@uref{http://developer.amd.com/@/tools-and-sdks/@/cpu-development/@/amd-core-math-library-acml/}.
+versions.}  under Linux there is the AMD Core Math Library (ACML).
 For the @command{gcc} version we could use
 
 @example
@@ -3481,11 +3481,9 @@ handling of @code{NA}s.
 @node Goto and OpenBLAS, MKL, ACML, BLAS
 @subsubsection Goto and OpenBLAS
 
-Dr Kazushige Goto wrote another tuned @acronym{BLAS} which is available
-for several processors and OSes.  The final version is known as
+Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors and
+OSes,  which was  frozen in  mid-2010.  The  final version  is  known as
 GotoBLAS2, and was re-released under a much less restrictive licence.
-Source code can be obtained from
-@uref{https://www.tacc.utexas.edu/@/research-development/@/tacc-software/@/gotoblas2}.
 Once it is built and installed, it can be used by configuring @R{} with
 
 @example
@@ -3495,11 +3493,9 @@ Once it is built and installed, it can be used by configuring @R{} with
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
-Our understanding is that this project is now frozen and so will not be
-updated for CPUs released since mid-2010.  However, OpenBLAS
-(@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant project with
-support for some current CPUs (e.g.@: Intel Sandy Bridge).  Once
-installed it can be used by something like
+OpenBLAS (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant
+project with support for some current CPUs (e.g.@: Intel Sandy Bridge).
+Once installed it can be used by something like
 
 @example
 --with-blas="-lopenblas"
@@ -3511,12 +3507,11 @@ or as a shared BLAS.
 @node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors, and perhaps others, and some distributions of
-Linux, there is Intel's Math Kernel Library
-(@uref{https://software.intel.com/@/en-us/@/intel-mkl}).  You are
-strongly encouraged to read the MKL User's Guide, which is installed
-with the library, before attempting to link to MKL.  There are also
-versions of MKL for OS X and Windows, but they did not work with the
-standard compilers used for @R{} on those platforms.
+Linux, there is Intel's Math Kernel Library.  You are strongly
+encouraged to read the MKL User's Guide, which is installed with the
+library, before attempting to link to MKL.  There are also versions of
+MKL for OS X and Windows, but they did not work with the standard
+compilers used for @R{} on those platforms.
 
 The MKL interface has changed several times, and may change again: the
 following notes apply exactly only to version 10.3 but have been used
@@ -3588,8 +3583,7 @@ MKL="   -L$@{MKL_LIB_PATH@}                               \
 systems and may not be needed everywhere.)
 
 The MKL documentation includes a `link line advisor' which will suggest
-appropriate incantations: an on-line version was available at
-@uref{http://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor/}
+appropriate incantations.
 
 @node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
