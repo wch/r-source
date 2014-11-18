@@ -207,12 +207,7 @@ SEXP chooseFiles(SEXP def, SEXP caption, SEXP smulti, SEXP filters, SEXP sindex)
     res = askfilenamesW(filenameToWchar(STRING_ELT(caption, 0), 0), path,
 			multi, cfilters, filterindex, NULL);
 
-    if(!multi) {
-	/* only one filename possible */
-	count = 1;
-    } else {
-	count = countFilenamesW(res);
-    }
+    count = countFilenamesW(res);
 
     SEXP ans;
     if (count < 2) PROTECT(ans = allocVector(STRSXP, count));

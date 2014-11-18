@@ -304,6 +304,10 @@
 
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  (\PR{15791})
+      
+      \item (Windows.) The \code{choose.files()} command returned a 
+      blank string when the user asked for a single file but cancelled
+      the request.  (\PR{16074})
     }
   }
 }
