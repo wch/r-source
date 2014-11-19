@@ -170,6 +170,9 @@
       \option{--with-system-valgrind-headers}: note the possible
       incompatibility of such headers discussed in the 'R Installation
       and Administration' manual. (Wish of \PR{16808}.)
+
+      \item The included version of \code{lzmautils} has been updated to
+      \code{xz-utils} 5.0.7 (minor bug fixes from 5.0.5).
     }
   }
 
