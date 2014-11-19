@@ -1244,17 +1244,18 @@ If there is a corresponding@footnote{The best way to generate such a
 file is to copy the @file{.Rout} from a successful run of @command{R CMD
 check}.  If you want to generate it separately, do run @R{} with options
 @option{--vanilla --slave} and with environment variable
-@env{LANGUAGE=en} set to get messages in English.} @file{.Rout.save}
-file, these two are compared, with differences being reported but not
-causing an error.  The directory @file{tests} is copied to the check
-area, and the tests are run with the copy as the working directory and
-with @code{R_LIBS} set to ensure that the copy of the package installed
-during testing will be found by @code{library(@var{pkg_name})}.  Note
-that the package-specific tests are run in a vanilla @R{} session
-without setting the random-number seed, so tests which use random
-numbers will need to set the seed to obtain reproducible results (and it
-can be helpful to do so in all cases, to avoid occasional failures when
-tests are run).
+@env{LANGUAGE=en} set to get messages in English.  Be careful not to use
+the option @option{--timings} (and note that @option{--as-cran} sets
+it).} @file{.Rout.save} file, these two are compared, with differences
+being reported but not causing an error.  The directory @file{tests} is
+copied to the check area, and the tests are run with the copy as the
+working directory and with @code{R_LIBS} set to ensure that the copy of
+the package installed during testing will be found by
+@code{library(@var{pkg_name})}.  Note that the package-specific tests
+are run in a vanilla @R{} session without setting the random-number
+seed, so tests which use random numbers will need to set the seed to
+obtain reproducible results (and it can be helpful to do so in all
+cases, to avoid occasional failures when tests are run).
 
 If directory @file{tests} has a subdirectory @file{Examples} containing
 a file @code{@var{pkg}-Ex.Rout.save}, this is compared to the output
