@@ -154,7 +154,7 @@
       with a default such that \code{example(..)} in help examples will
       run \code{\\dontcheck} code only if used interactively.
 
-      \item \code{rbind.data.frame()} gets optional argument
+      \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
     }
   }
@@ -256,6 +256,10 @@
       \item The \code{as.dendrogram} method for \code{"hclust"} objects
       gets a \code{check} argument protecting against memory explosion for
       invalid inputs.
+      
+      \item \code{capabilities()} has a new item \code{long.double}
+      which indicates if the build uses a \code{long double} type which
+      is longer than \code{double}.
     }
   }
 
