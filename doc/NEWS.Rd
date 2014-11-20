@@ -24,6 +24,12 @@
       \item \code{capabilities()} has a new item \code{long.double}
       which indicates if the build uses a \code{long double} type which
       is longer than \code{double}.
+
+      \item \code{nlm()} no longer modifies the callback argument in
+      place (a new vector is allocated for each invocation, which mimics
+      the implicit duplication that occurred in R < 3.1.0); note that
+      this is a change from the previously documented
+      behavior. (\PR{15958})
     }
   }
 
@@ -59,10 +65,6 @@
 
       \item Extremely large exponents on zero expressed in scientific
       notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
-
-      \item \code{nlm()} no longer modifies the callback argument in place (a
-      new vector is allocated for each invocation, which mimics the
-      implicit duplication that occurred in R < 3.1.0). (\PR{15958})
 
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
