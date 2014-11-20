@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:47+0000\n"
+"POT-Creation-Date: 2014-11-20 11:48+0000\n"
 "PO-Revision-Date: 2014-03-18 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -191,7 +191,7 @@ msgstr "problem med visning af '%ls'"
 #: src/main/grep.c:1079 src/main/grep.c:1081 src/main/grep.c:1526
 #: src/main/grep.c:1530 src/main/grep.c:1535 src/main/grep.c:2342
 #: src/main/grep.c:2347 src/main/grep.c:2645 src/main/grep.c:2650
-#: src/main/memory.c:3814 src/main/paste.c:96 src/main/paste.c:392
+#: src/main/memory.c:3854 src/main/paste.c:96 src/main/paste.c:392
 #: src/main/paste.c:399 src/main/paste.c:406 src/main/paste.c:411
 #: src/main/paste.c:416 src/main/paste.c:421 src/main/paste.c:424
 #: src/main/paste.c:432 src/main/paste.c:598 src/main/paste.c:603
@@ -207,12 +207,12 @@ msgstr "problem med visning af '%ls'"
 #: src/main/platform.c:1610 src/main/platform.c:1613 src/main/platform.c:1616
 #: src/main/platform.c:1699 src/main/platform.c:1715 src/main/platform.c:1748
 #: src/main/platform.c:1750 src/main/platform.c:1821 src/main/platform.c:1905
-#: src/main/platform.c:2187 src/main/platform.c:2247 src/main/platform.c:2424
-#: src/main/platform.c:2427 src/main/platform.c:2430 src/main/platform.c:2433
-#: src/main/platform.c:2436 src/main/platform.c:2439 src/main/platform.c:2644
-#: src/main/platform.c:2647 src/main/platform.c:2650 src/main/platform.c:2653
-#: src/main/platform.c:2656 src/main/platform.c:2659 src/main/platform.c:2737
-#: src/main/platform.c:2745 src/main/platform.c:2781 src/main/platform.c:2831
+#: src/main/platform.c:2190 src/main/platform.c:2250 src/main/platform.c:2427
+#: src/main/platform.c:2430 src/main/platform.c:2433 src/main/platform.c:2436
+#: src/main/platform.c:2439 src/main/platform.c:2442 src/main/platform.c:2647
+#: src/main/platform.c:2650 src/main/platform.c:2653 src/main/platform.c:2656
+#: src/main/platform.c:2659 src/main/platform.c:2662 src/main/platform.c:2740
+#: src/main/platform.c:2748 src/main/platform.c:2784 src/main/platform.c:2834
 #: src/main/print.c:242 src/main/print.c:248 src/main/print.c:270
 #: src/main/print.c:276 src/main/print.c:283 src/main/random.c:467
 #: src/main/random.c:471 src/main/random.c:478 src/main/random.c:506
@@ -229,11 +229,11 @@ msgstr "problem med visning af '%ls'"
 #: src/main/sysutils.c:1781 src/main/sysutils.c:1785 src/main/unique.c:969
 #: src/main/unique.c:1273 src/main/unique.c:1333 src/main/unique.c:1340
 #: src/main/unique.c:1734 src/main/util.c:639 src/main/util.c:642
-#: src/main/util.c:1936 src/main/util.c:2149 src/main/util.c:2150
-#: src/main/util.c:2151 src/main/util.c:2168 src/main/util.c:2192
-#: src/main/util.c:2196 src/main/util.c:2198 src/main/util.c:2223
-#: src/main/util.c:2225 src/main/util.c:2227 src/main/util.c:2230
-#: src/main/util.c:2233 src/main/util.c:2237 src/main/util.c:2239
+#: src/main/util.c:1938 src/main/util.c:2151 src/main/util.c:2152
+#: src/main/util.c:2153 src/main/util.c:2170 src/main/util.c:2194
+#: src/main/util.c:2198 src/main/util.c:2200 src/main/util.c:2225
+#: src/main/util.c:2227 src/main/util.c:2229 src/main/util.c:2232
+#: src/main/util.c:2235 src/main/util.c:2239 src/main/util.c:2241
 #: src/modules/X11/devX11.c:3241 src/modules/X11/devX11.c:3244
 #: src/modules/X11/devX11.c:3247 src/modules/X11/devX11.c:3271
 #: src/modules/internet/internet.c:284 src/modules/internet/internet.c:290
@@ -264,7 +264,7 @@ msgstr "Windowsversion er ikke understøttet"
 #: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:225
 #: src/main/summary.c:886 src/main/sysutils.c:250 src/main/util.c:1049
 #: src/main/util.c:1054 src/main/util.c:1061 src/main/util.c:1064
-#: src/main/util.c:1990 src/modules/X11/devX11.c:3142
+#: src/main/util.c:1992 src/modules/X11/devX11.c:3142
 #: src/modules/X11/devX11.c:3169 src/modules/X11/devX11.c:3174
 #: src/modules/X11/devX11.c:3179 src/modules/X11/devX11.c:3189
 #: src/modules/X11/devX11.c:3194 src/modules/X11/devX11.c:3198
@@ -854,30 +854,30 @@ msgstr ""
 msgid "unimplemented complex function"
 msgstr ""
 
-#: src/main/arithmetic.c:1480 src/main/arithmetic.c:1878
-#: src/main/arithmetic.c:2057 src/main/arithmetic.c:2169
+#: src/main/arithmetic.c:1481 src/main/arithmetic.c:1879
+#: src/main/arithmetic.c:2058 src/main/arithmetic.c:2170
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:1507
+#: src/main/arithmetic.c:1508
 #, fuzzy, c-format
 msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
 msgid_plural "%d arguments passed to '%s'which requires 1 or 2 arguments"
 msgstr[0] "tilvalg '%s' kræver et argument"
 msgstr[1] "tilvalg '%s' kræver et argument"
 
-#: src/main/arithmetic.c:1526
+#: src/main/arithmetic.c:1527
 msgid "invalid second argument of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1620 src/main/arithmetic.c:1638 src/main/envir.c:1462
+#: src/main/arithmetic.c:1621 src/main/arithmetic.c:1639 src/main/envir.c:1462
 #: src/main/envir.c:1973 src/main/eval.c:572 src/main/eval.c:4002
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr ""
 
-#: src/main/arithmetic.c:1644
+#: src/main/arithmetic.c:1645
 msgid "invalid argument 'base' of length 0"
 msgstr ""
 
@@ -3716,64 +3716,70 @@ msgstr ""
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: src/main/gram.y:2359
+#: src/main/gram.y:2345 src/main/gram.y:2368 src/main/gram.y:2405
+#: src/main/gram.y:2441
+#, c-format
+msgid "nul character not allowed (line %d)"
+msgstr ""
+
+#: src/main/gram.y:2361
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2373
+#: src/main/gram.y:2377
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2388
+#: src/main/gram.y:2392
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2396
+#: src/main/gram.y:2400
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2408
+#: src/main/gram.y:2414
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2423
+#: src/main/gram.y:2429
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2431
+#: src/main/gram.y:2437
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2472
+#: src/main/gram.y:2480
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2531
+#: src/main/gram.y:2539
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
 msgstr ""
 
-#: src/main/gram.y:2535
+#: src/main/gram.y:2543
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
 
-#: src/main/gram.y:3133 src/main/gram.y:3140 src/main/gram.y:3146
-#: src/main/gram.y:3153
+#: src/main/gram.y:3141 src/main/gram.y:3148 src/main/gram.y:3154
+#: src/main/gram.y:3161
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr ""
 
-#: src/main/gram.y:3248
+#: src/main/gram.y:3256
 #, c-format
 msgid "internal parser error at line %d"
 msgstr ""
@@ -3889,9 +3895,9 @@ msgstr ""
 msgid "internet routines cannot be loaded"
 msgstr ""
 
-#: src/main/internet.c:114 src/main/memory.c:3504 src/main/memory.c:3514
-#: src/main/memory.c:3526 src/main/memory.c:3540 src/main/memory.c:3555
-#: src/main/memory.c:3573
+#: src/main/internet.c:114 src/main/memory.c:3544 src/main/memory.c:3554
+#: src/main/memory.c:3566 src/main/memory.c:3580 src/main/memory.c:3595
+#: src/main/memory.c:3613
 msgid "bad value"
 msgstr ""
 
@@ -4054,142 +4060,142 @@ msgid_plural "unused arguments %s"
 msgstr[0] "ubrugt argument %s"
 msgstr[1] "ubrugte argumenter %s"
 
-#: src/main/memory.c:1234
+#: src/main/memory.c:1249
 msgid "can only weakly reference/finalize reference objects"
 msgstr ""
 
-#: src/main/memory.c:1268
+#: src/main/memory.c:1283
 msgid "finalizer must be a function or NULL"
 msgstr ""
 
-#: src/main/memory.c:1324 src/main/memory.c:1332 src/main/memory.c:1343
+#: src/main/memory.c:1339 src/main/memory.c:1347 src/main/memory.c:1358
 msgid "not a weak reference"
 msgstr "ikke en svag reference"
 
-#: src/main/memory.c:1474
+#: src/main/memory.c:1489
 msgid "first argument must be environment or external pointer"
 msgstr ""
 
-#: src/main/memory.c:1476
+#: src/main/memory.c:1491
 msgid "second argument must be a function"
 msgstr ""
 
-#: src/main/memory.c:1480
+#: src/main/memory.c:1495
 msgid "third argument must be 'TRUE' or 'FALSE'"
 msgstr ""
 
-#: src/main/memory.c:1978
+#: src/main/memory.c:1993
 msgid "vector memory exhausted (limit reached?)"
 msgstr ""
 
-#: src/main/memory.c:1984
+#: src/main/memory.c:1999
 msgid "cons memory exhausted (limit reached?)"
 msgstr ""
 
-#: src/main/memory.c:1989
+#: src/main/memory.c:2004
 msgid "memory exhausted (limit reached?)"
 msgstr ""
 
-#: src/main/memory.c:2125
+#: src/main/memory.c:2140
 #, c-format
 msgid "cannot allocate memory block of size %0.f Tb"
 msgstr ""
 
-#: src/main/memory.c:2130
+#: src/main/memory.c:2145
 #, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
 msgstr ""
 
-#: src/main/memory.c:2466
+#: src/main/memory.c:2506
 msgid "vector is too large"
 msgstr ""
 
-#: src/main/memory.c:2469
+#: src/main/memory.c:2509
 msgid "negative length vectors are not allowed"
 msgstr ""
 
-#: src/main/memory.c:2495 src/main/memory.c:2508 src/main/memory.c:2521
-#: src/main/memory.c:2536
+#: src/main/memory.c:2535 src/main/memory.c:2548 src/main/memory.c:2561
+#: src/main/memory.c:2576
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr ""
 
-#: src/main/memory.c:2557
+#: src/main/memory.c:2597
 #, c-format
 msgid "invalid type/length (%s/%d) in vector allocation"
 msgstr ""
 
-#: src/main/memory.c:2660
+#: src/main/memory.c:2700
 #, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
 msgstr ""
 
-#: src/main/memory.c:2664
+#: src/main/memory.c:2704
 #, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
 msgstr ""
 
-#: src/main/memory.c:2668
+#: src/main/memory.c:2708
 #, c-format
 msgid "cannot allocate vector of size %0.f Kb"
 msgstr ""
 
-#: src/main/memory.c:3065
+#: src/main/memory.c:3105
 msgid "protect(): protection stack overflow"
 msgstr ""
 
-#: src/main/memory.c:3072
+#: src/main/memory.c:3112
 #, c-format
 msgid "unprotect(): only %d protected item"
 msgid_plural "unprotect(): only %d protected items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/memory.c:3107
+#: src/main/memory.c:3147
 msgid "unprotect_ptr: pointer not found"
 msgstr ""
 
-#: src/main/memory.c:3145
+#: src/main/memory.c:3185
 #, c-format
 msgid "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/memory.c:3197
+#: src/main/memory.c:3237
 #, c-format
 msgid "'Calloc' could not allocate memory (%.0f of %u bytes)"
 msgstr ""
 
-#: src/main/memory.c:3208
+#: src/main/memory.c:3248
 #, c-format
 msgid "'Realloc' could not re-allocate memory (%.0f bytes)"
 msgstr ""
 
-#: src/main/memory.c:3449
+#: src/main/memory.c:3489
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:3461
+#: src/main/memory.c:3501
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
 msgstr ""
 
-#: src/main/memory.c:3477
+#: src/main/memory.c:3517
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
 msgstr ""
 
-#: src/main/memory.c:3736
+#: src/main/memory.c:3776
 msgid "memory profiling is not available on this system"
 msgstr ""
 
-#: src/main/memory.c:3801
+#: src/main/memory.c:3841
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr ""
 
-#: src/main/memory.c:3909
+#: src/main/memory.c:3949
 #, c-format
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
@@ -4624,91 +4630,91 @@ msgstr ""
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:2136
+#: src/main/platform.c:2139
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:2142
+#: src/main/platform.c:2145
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:2149
+#: src/main/platform.c:2152
 msgid "unknown format returned by C function 'gethostbyname'"
 msgstr ""
 
-#: src/main/platform.c:2158
+#: src/main/platform.c:2161
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:2229
+#: src/main/platform.c:2232
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' findes allerede"
 
-#: src/main/platform.c:2232
+#: src/main/platform.c:2235
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "kan ikke oprette mappe '%s', årsag '%s'"
 
-#: src/main/platform.c:2278
+#: src/main/platform.c:2281
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls' findes allerede"
 
-#: src/main/platform.c:2282
+#: src/main/platform.c:2285
 #, c-format
 msgid "cannot create dir '%ls', reason '%s'"
 msgstr "kan ikke oprette mappe '%ls', årsag '%s'"
 
-#: src/main/platform.c:2316 src/main/platform.c:2525
+#: src/main/platform.c:2319 src/main/platform.c:2528
 msgid "too deep nesting"
 msgstr ""
 
-#: src/main/platform.c:2324 src/main/platform.c:2337 src/main/platform.c:2355
+#: src/main/platform.c:2327 src/main/platform.c:2340 src/main/platform.c:2358
 msgid "over-long path"
 msgstr ""
 
-#: src/main/platform.c:2344
+#: src/main/platform.c:2347
 #, c-format
 msgid "problem creating directory %ls: %s"
 msgstr "problem ved oprettelse af mappe %ls: %s"
 
-#: src/main/platform.c:2364
+#: src/main/platform.c:2367
 #, c-format
 msgid "problem reading dir %ls: %s"
 msgstr "problem ved læsning af mappe %ls: %s"
 
-#: src/main/platform.c:2375 src/main/platform.c:2541 src/main/platform.c:2554
-#: src/main/platform.c:2574 src/main/platform.c:2596
+#: src/main/platform.c:2378 src/main/platform.c:2544 src/main/platform.c:2557
+#: src/main/platform.c:2577 src/main/platform.c:2599
 msgid "over-long path length"
 msgstr ""
 
-#: src/main/platform.c:2383
+#: src/main/platform.c:2386
 #, c-format
 msgid "problem copying %ls to %ls: %s"
 msgstr ""
 
-#: src/main/platform.c:2563
+#: src/main/platform.c:2566
 #, c-format
 msgid "problem creating directory %s: %s"
 msgstr ""
 
-#: src/main/platform.c:2583
+#: src/main/platform.c:2586
 #, c-format
 msgid "problem reading directory %s: %s"
 msgstr "problem ved læsning af mappe %s: %s"
 
-#: src/main/platform.c:2605
+#: src/main/platform.c:2608
 #, c-format
 msgid "problem copying %s to %s: %s"
 msgstr "problem med at kopiere %s til %s: %s"
 
-#: src/main/platform.c:2742
+#: src/main/platform.c:2745
 msgid "'mode' must be of length at least one"
 msgstr "'mode' skal mindst have længden en"
 
-#: src/main/platform.c:2809
+#: src/main/platform.c:2812
 msgid "insufficient OS support on this platform"
 msgstr "utilstrækkelig OS-understøttelse på denne platform"
 
@@ -6204,28 +6210,28 @@ msgstr ""
 msgid "accuracy loss in conversion from \"%s\" to numeric"
 msgstr ""
 
-#: src/main/util.c:1930
+#: src/main/util.c:1932
 msgid "all arguments must be named"
 msgstr ""
 
-#: src/main/util.c:2042
+#: src/main/util.c:2044
 msgid "ICU is not supported on this build"
 msgstr ""
 
-#: src/main/util.c:2109
+#: src/main/util.c:2111
 msgid "'breaks' is not sorted"
 msgstr "'breaks' er ikke sorteret"
 
-#: src/main/util.c:2143 src/main/util.c:2189
+#: src/main/util.c:2145 src/main/util.c:2191
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "lang vektor '%s' er ikke understøttet"
 
-#: src/main/util.c:2242
+#: src/main/util.c:2244
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr ""
 
-#: src/main/util.c:2270
+#: src/main/util.c:2272
 msgid "'x' must be a vector"
 msgstr "'x' skal være en vektor"
 

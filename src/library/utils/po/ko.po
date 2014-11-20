@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-11-20 11:48+0000\n"
 "PO-Revision-Date: 2014-03-26 23:03-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -241,15 +241,15 @@ msgstr "하나 이상을 선택해 주세요"
 msgid "Select one"
 msgstr "하나를 선택해주세요"
 
-#: windows/widgets.c:182 windows/widgets.c:252
+#: windows/widgets.c:182 windows/widgets.c:247
 msgid "'default' must be a character string"
 msgstr "'default'는 반드시 문자열이어야 합니다"
 
-#: windows/widgets.c:184 windows/widgets.c:254
+#: windows/widgets.c:184 windows/widgets.c:249
 msgid "'default' is overlong"
 msgstr "'default'가 너무 깁니다"
 
-#: windows/widgets.c:188 windows/widgets.c:258
+#: windows/widgets.c:188 windows/widgets.c:253
 msgid "'caption' must be a character string"
 msgstr "'caption'은 반드시 문자열이어야 합니다"
 
