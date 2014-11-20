@@ -44,11 +44,13 @@ capabilities(what = NULL)
       X11-based data editor available?  This loads the X11 module if not
       already loaded, and checks that the default display can be
       contacted unless a \code{X11} device has already been used.}
-    \item{aqua}{Are the \code{R.app} GUI components and the
-      \code{\link{quartz}} function operational?  Only on some OS X
-      builds.  Note that this is distinct from
-      \code{.Platform$GUI == "AQUA"}, which is true when using the Mac
-      \code{R.app} GUI console.}
+
+    \item{aqua}{Is the \code{\link{quartz}} function operational?
+      Only on some OS X builds, including \acronym{CRAN} binary
+      distributions of \R.
+
+      Note that this is distinct from \code{.Platform$GUI == "AQUA"},
+      which is true only when using the Mac \code{R.app} GUI console.}
 #endif
 #ifdef windows
     \item{X11}{always \code{FALSE} on Windows.}
@@ -83,8 +85,18 @@ capabilities(what = NULL)
 #endif
       \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
       and \code{\link{tiff}} devices?}
-    \item{ICU}{is ICU used for collation?  See \link{Comparison} and
-      \code{\link{icuSetCollate}}.},
+    \item{ICU}{is ICU used for collation?  See the help on
+      \link{Comparison} and \code{\link{icuSetCollate}}.}
+    
+    \item{long.double}{does this build use a \code{C} \code{long double}
+      type which is longer than \code{double}?  Some platforms do not
+      have such a type, and on others its use can be suppressed by the
+      configure option \option{--disable-long-double}.
+
+      Although not guaranteed, it is a reasonable assumption that if
+      present long doubles will have at least as much range and accuracy
+      as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
+    }
 }
 \seealso{\code{\link{.Platform}}}
 

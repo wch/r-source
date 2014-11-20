@@ -20,6 +20,10 @@
       \item The \code{as.dendrogram} method for \code{"hclust"} objects
       gets a \code{check} argument protecting against memory explosion for
       invalid inputs.
+      
+      \item \code{capabilities()} has a new item \code{long.double}
+      which indicates if the build uses a \code{long double} type which
+      is longer than \code{double}.
     }
   }
 
@@ -28,7 +32,7 @@
       \item The included version of PCRE has been updated to 8.36.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
@@ -37,29 +41,29 @@
 
       \item If a package had extra documentation files but no vignette,
       the HTML help system produced an empty index page.
-      
+
       \item The parser now gives an error if a null character is included
       in a string using Unicode escapes. (\PR{16046})
 
-      \item \code{qr.Q()} failed on complex arguments due to 
-      pre-3.0(!) typo. (\PR{16054}) 
-      
+      \item \code{qr.Q()} failed on complex arguments due to
+      pre-3.0(!) typo. (\PR{16054})
+
       \item \code{abs()} failed with named arguments when the argument
       was complex.  (\PR{16047})
-      
-      \item \code{"noquote"} objects may now be used as columns in 
+
+      \item \code{"noquote"} objects may now be used as columns in
       dataframes.  (\PR{15997})
-      
-      \item Some values with extremely long names were printed 
+
+      \item Some values with extremely long names were printed
       incorrectly.  (\PR{15999})
-      
+
       \item Extremely large exponents on zero expressed in scientific
       notation (e.g. \code{0.0e50000}) could give \code{NaN}.  (\PR{15976})
 
       \item \code{nlm()} no longer modifies the callback argument in place (a
       new vector is allocated for each invocation, which mimics the
       implicit duplication that occurred in R < 3.1.0). (\PR{15958})
-      
+
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
       
