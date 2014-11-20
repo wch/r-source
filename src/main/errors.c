@@ -1730,11 +1730,11 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
     UNPROTECT(1);
     PROTECT(name = mkString(browser ? "browser" : "tryRestart"));
     PROTECT(entry = allocVector(VECSXP, 2));
-    PROTECT(SET_VECTOR_ELT(entry, 0, name));
+    SET_VECTOR_ELT(entry, 0, name);
     SET_VECTOR_ELT(entry, 1, R_MakeExternalPtr(cptr, R_NilValue, R_NilValue));
     setAttrib(entry, R_ClassSymbol, mkString("restart"));
     R_RestartStack = CONS(entry, R_RestartStack);
-    UNPROTECT(3);
+    UNPROTECT(2);
 }
 
 SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
