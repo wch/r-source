@@ -202,6 +202,7 @@ void fallbackQSort3 ( UInt32* fmap,
       bhtab [ 0 .. 2+(nblock/32) ] destroyed
 */
 
+// R_change: these shifts on signed ints are undefined behaviour.
 #define       SET_BH(zz)  bhtab[(zz) >> 5] |= (1U << ((zz) & 31))
 #define     CLEAR_BH(zz)  bhtab[(zz) >> 5] &= ~(1U << ((zz) & 31))
 #define     ISSET_BH(zz)  (bhtab[(zz) >> 5] & (1U << ((zz) & 31)))
