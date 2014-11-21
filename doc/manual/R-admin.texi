@@ -3155,9 +3155,9 @@ PCRE will be used if specified by @option{--with-system-zlib} (version
 8.34@footnote{which is what is supplied with @R{}: PCRE must be built
 with UTF-8 support (not the default) and support for Unicode properties
 is assumed by some @R{} packages. Neither are tested by
-@command{configure}.}): otherwise versions in the @R{} sources will be
-compiled in.  As the latter suffice and are tested with @R{} you should
-not need to change this.
+@command{configure}. JIT support is desirable.}): otherwise versions in
+the @R{} sources will be compiled in.  As the latter suffice and are
+tested with @R{} you should not need to change this.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository
