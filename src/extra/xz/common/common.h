@@ -23,9 +23,7 @@
 #	else
 #		define LZMA_API_EXPORT
 #	endif
-// Don't use ifdef or defined() below.
-#elif HAVE_VISIBILITY
-#	define LZMA_API_EXPORT __attribute__((__visibility__("default")))
+// R change: we do not want all symbols visible
 #else
 #	define LZMA_API_EXPORT
 #endif

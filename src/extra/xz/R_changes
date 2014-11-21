@@ -19,6 +19,23 @@ common/sysdefs.h is a modified copy of xz-utils/src/common/sysdefs.h which
 - r51513: Change _Bool to _Bool8 to avoid clashes on one Solaris 10 system.
   (Solaris 10 has stdbool.h, but it was not being found on that system.)
 
+We control visibility and make most symbols hidden.
+
+--- xz-5.0.7/src/liblzma/common/common.h	2014-09-20 17:48:05.000000000 +0100
++++ common/common.h	2014-11-21 18:16:04.000000000 +0000
+@@ -23,9 +23,7 @@
+ #	else
+ #		define LZMA_API_EXPORT
+ #	endif
+-// Don't use ifdef or defined() below.
+-#elif HAVE_VISIBILITY
+-#	define LZMA_API_EXPORT __attribute__((__visibility__("default")))
++// R change: we do not want all symbols visible
+ #else
+ #	define LZMA_API_EXPORT
+ #endif
+
+
 --- xz-5.0.7/src/common/sysdefs.h	2014-09-20 17:48:05.000000000 +0100
 +++ /common/sysdefs.h	2014-11-19 10:07:45.000000000 +0000
 @@ -24,10 +24,12 @@
