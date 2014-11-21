@@ -1,31 +1,19 @@
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
-diff -ur pcre-8.36/pcre_config.c ./pcre_config.c
---- pcre-8.36/pcre_config.c	2014-01-31 14:32:08.000000000 +0000
-+++ ./pcre_config.c	2013-12-29 21:35:20.000000000 +0000
-@@ -46,7 +46,7 @@
- #endif
- 
- /* Keep the original link size. */
--static int real_link_size = LINK_SIZE;
-+static int real_link_size = 2; //LINK_SIZE;
- 
- #include "pcre_internal.h"
- 
 diff -ur pcre-8.36/pcre_internal.h ./pcre_internal.h
 --- pcre-8.36/pcre_internal.h	2014-05-27 19:20:05.000000000 +0100
 +++ ./pcre_internal.h	2014-11-11 21:44:03.000000000 +0000
-@@ -46,6 +46,35 @@
+@@ -46,6 +46,33 @@
  #ifndef PCRE_INTERNAL_H
  #define PCRE_INTERNAL_H
  
 +#include <config.h>
 +
 +/* and those that are not in R's configure */
+/* and those that are not in R's configure:
+   LINK_SIZE is set on the command line */
 +#define HAVE_MEMMOVE 1
-+#ifndef LINK_SIZE
-+#define LINK_SIZE 2
 +#define MATCH_LIMIT 10000000
 +#define MATCH_LIMIT_RECURSION MATCH_LIMIT
 +#define MAX_NAME_COUNT 10000
@@ -33,8 +21,8 @@ diff -ur pcre-8.36/pcre_internal.h ./pcre_internal.h
 +#define NEWLINE 10
 +#define PARENS_NEST_LIMIT 250
 +#define POSIX_MALLOC_THRESHOLD 10
-+#define SUPPORT_UTF8
 +#define SUPPORT_UCP
++#define SUPPORT_UTF
 +
 +/* See http://sourceforge.net/p/predef/wiki/Architectures/
 +   SPARC_32 support added in 8.32, 'experimental'.
@@ -45,8 +33,6 @@ diff -ur pcre-8.36/pcre_internal.h ./pcre_internal.h
 +#if defined(WIN32) || defined(__i386__) || defined(__i386) || defined(__x86_64__) || defined(__ppc64__) || defined(__powerpc64__) || defined(__ppc__) || defined(__powerpc__) || defined(__sparc__)
 +# define SUPPORT_JIT
 +#endif
-+#endif
-+
 +#endif
 +
  /* Define PCRE_DEBUG to get debugging output on stdout. */

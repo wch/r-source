@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-DEFS=-DWIN32 -DPCRE_STATIC
+DEFS=-DWIN32 -DPCRE_STATIC -DLINK_SIZE=2
 
 CPPFLAGS=-I../../include -I. $(DEFS)
 

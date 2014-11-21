@@ -46,7 +46,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 /* Keep the original link size. */
-static int real_link_size = 2; //LINK_SIZE;
+static int real_link_size = LINK_SIZE;
 
 #include "pcre_internal.h"
 
