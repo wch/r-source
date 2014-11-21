@@ -1,20 +1,79 @@
-This is subdirectory src/liblzma of xz-utils-5.0.0, except for files
-Makefile.in, Makefile.win and R_changes
-
-common/{bswap,mythread,tuklib*}.h are from xz-utils-5.0.0/src/common.
-
-check/{sha256.c,crc_macros.h} is modified to look on the usual include path.
-
-common/local.h is a set of definitions of features to be built, and
-common/sysdefs.h is a modified copy of
-xz-utils-5.0.0/src/common/sysdefs.h which includes it.
-
 All the files from xz-utils are in the public domain.
 
-x86 performance optimizations are only used on (32-bit) Windows: 
-it is assumed that on other OSes an optimized system liblzma is or 
-could be made available.
+This is (most of) subdirectory src/liblzma of xz-utils, except for
+files Makefile.in, Makefile.win and R_changes and with the patches
+below.
 
-common/sysdefs.h:
-  Change _Bool to _Bool8 to avoid clashes on one Solaris 10 system.
-  (Solaris 10 has stdbool.h, but it was not being found.)
+common/{bswap,mythread,tuklib*}.h are from xz-utils/src/common.
+
+common/local.h is a new file (the set of definitions of features to be built).
+
+x86 performance optimizations are only used on (32-bit) Windows: it is
+assumed that on other 32-bit OSes an optimized system liblzma is or
+could be made available (and this directory is not compiled if a
+system version is available).
+
+common/sysdefs.h is a modified copy of xz-utils/src/common/sysdefs.h which 
+- includes local.h
+- avoids Mingw versions of stdio.
+- r51513: Change _Bool to _Bool8 to avoid clashes on one Solaris 10 system.
+  (Solaris 10 has stdbool.h, but it was not being found on that system.)
+
+--- xz-5.0.7/src/common/sysdefs.h	2014-09-20 17:48:05.000000000 +0100
++++ /common/sysdefs.h	2014-11-19 10:07:45.000000000 +0000
+@@ -24,10 +24,12 @@
+ #	include <config.h>
+ #endif
+ 
++// R change
++#include "local.h"
+ // Get standard-compliant stdio functions under MinGW and MinGW-w64.
+-#ifdef __MINGW32__
+-#	define __USE_MINGW_ANSI_STDIO 1
+-#endif
++//#ifdef __MINGW32__
++//#	define __USE_MINGW_ANSI_STDIO 1
++//#endif
+ 
+ // size_t and NULL
+ #include <stddef.h>
+@@ -143,9 +145,10 @@
+ #	include <stdbool.h>
+ #else
+ #	if ! HAVE__BOOL
+-typedef unsigned char _Bool;
++/* _Bool gave problems on one Solaris system */
++typedef unsigned char _Bool8;
+ #	endif
+-#	define bool _Bool
++#	define bool _Bool8
+ #	define false 0
+ #	define true 1
+ #	define __bool_true_false_are_defined 1
+
+--- xz-5.0.7/src/liblzma/check/crc64_fast.c	2014-09-20 17:48:05.000000000 +0100
++++ check/crc64_fast.c	2014-11-19 10:09:11.000000000 +0000
+@@ -25,8 +25,10 @@
+ #endif
+ 
+ 
++// R_Change: Used in package utils, so needs to be visible
++#include <R_ext/Visibility.h>
+ // See the comments in crc32_fast.c. They aren't duplicated here.
+-extern LZMA_API(uint64_t)
++extern attribute_visible LZMA_API(uint64_t)
+ lzma_crc64(const uint8_t *buf, size_t size, uint64_t crc)
+ {
+ 	crc = ~crc;
+
+--- xz-5.0.7/src/liblzma/check/crc_macros.h	2014-09-20 17:48:05.000000000 +0100
++++ check/crc_macros.h	2011-03-30 14:00:45.000000000 +0100
+@@ -11,6 +11,8 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ 
+ #ifdef WORDS_BIGENDIAN
++#	include "bswap.h"
++
+ #	define A(x) ((x) >> 24)
+ #	define B(x) (((x) >> 16) & 0xFF)
+ #	define C(x) (((x) >> 8) & 0xFF)
