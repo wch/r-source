@@ -441,8 +441,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
-	UNPROTECT(2); /* obj, argList */
-	PROTECT(ans);
+	UNPROTECT(3); /* obj, generic, argList */
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
     }
     else {
