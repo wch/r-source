@@ -1942,7 +1942,7 @@ Optional Packages:
   --with-x                use the X Window System
   --with-libpth-prefix[=DIR]  search for libpth in DIR/include and DIR/lib
   --without-libpth-prefix     don't search for libpth in includedir and libdir
-  --with-included-gettext use the GNU gettext library included here
+  --with-included-gettext use the GNU gettext library included here [no]
   --with-libintl-prefix[=DIR]  search for libintl in DIR/include and DIR/lib
   --without-libintl-prefix     don't search for libintl in includedir and libdir
 
