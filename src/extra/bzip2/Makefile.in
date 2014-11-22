@@ -14,7 +14,7 @@ include $(top_builddir)/Makeconf
 BZIP2_CPPFLAGS = -I$(srcdir)
 ALL_CPPFLAGS = $(BZIP2_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = blocksort.c bzlib.c bzcompress.c crctable.c decompress.c \
+SOURCES = blocksort.c bzlib.c compress.c crctable.c decompress.c \
   huffman.c randtable.c
 HEADERS = bzlib.h bzlib_private.h
 DEPENDS = $(SOURCES:.c=.d)

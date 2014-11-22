@@ -8,7 +8,7 @@ file bzlib.c and decompress.c to avoid issues with semantics of
 'extern inline'.
 
 fdopen is POSIX but not C89
-Solaris' cc objects to inlining functions with names starting with 'main'.
+Solaris' cc objected to inlining functions with names starting with 'main'.
 C character strings are limited to ca 500 chars.
 Various casts were missing.
 Solaris cc complained about unused code, hence the use of UNREACHED.
@@ -325,7 +325,19 @@ diff -ru bzip2-1.0.6/bzlib_private.h bzip2/bzlib_private.h
  #include <stdlib.h>
  
  #ifndef BZ_NO_STDIO
-diff -ru bzip2-1.0.6/decompress.c bzip2/decompress.c
+diff -ur bzip2-1.0.6/compress.c bzip2/compress.c
+--- bzip2-1.0.6/compress.c	2014-11-21 10:38:37.000000000 +0000
++++ bzip2/compress.c	2011-03-30 14:00:46.000000000 +0100
+@@ -69,7 +69,7 @@
+ 
+ /*---------------------------------------------------*/
+ static
+-__inline__
++R_INLINE
+ void bsW ( EState* s, Int32 n, UInt32 v )
+ {
+    bsNEEDW ( n );
+diff -ur bzip2-1.0.6/decompress.c bzip2/decompress.c
 --- bzip2-1.0.6/decompress.c	2010-09-10 23:43:17.000000000 +0100
 +++ bzip2/decompress.c	2011-03-30 14:00:46.000000000 +0100
 @@ -209,13 +209,13 @@
@@ -346,16 +358,4 @@ diff -ru bzip2-1.0.6/decompress.c bzip2/decompress.c
 +         s->tt  = (UInt32 *) BZALLOC( s->blockSize100k * 100000 * sizeof(Int32) );
           if (s->tt == NULL) RETURN(BZ_MEM_ERROR);
        }
-
-diff -u bzip2-1.0.6/compress.c bzip2/bzcompress.c 
---- bzip2-1.0.6/compress.c	2014-11-21 10:38:37.000000000 +0000
-+++ bzip2/bzcompress.c	2011-03-30 14:00:46.000000000 +0100
-@@ -69,7 +69,7 @@
  
- /*---------------------------------------------------*/
- static
--__inline__
-+R_INLINE
- void bsW ( EState* s, Int32 n, UInt32 v )
- {
-    bsNEEDW ( n );
