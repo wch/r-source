@@ -3166,7 +3166,7 @@ the resulting build will not pass its checks.).
 
 @code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
-configuring with @option{--with-system-xz=no}.  Systems differ in what
+configuring with @option{--without-system-xz}.  Systems differ in what
 they call the package including this: e.g.@: on Fedora the library is in
 @samp{xz-libs} and the headers in @samp{xz-devel}.
 
