@@ -282,12 +282,13 @@
   and \samp{\\X} matches any number of Unicode characters that form an
   extended Unicode sequence.
 
-  In UTF-8 mode, some Unicode properties are supported via
-  \samp{\\p\{xx\}} and \samp{\\P\{xx\}} which match
-  characters with and without property \samp{xx} respectively.
-  For a list of supported properties see the PCRE documentation, but for
-  example \samp{Lu} is \sQuote{upper case letter} and \samp{Sc} is
-  \sQuote{currency symbol}.
+  In UTF-8 mode, some Unicode properties may be supported via
+  \samp{\\p\{xx\}} and \samp{\\P\{xx\}} which match characters with and
+  without property \samp{xx} respectively.  For a list of supported
+  properties see the PCRE documentation, but for example \samp{Lu} is
+  \sQuote{upper case letter} and \samp{Sc} is \sQuote{currency symbol}.
+  (This support depends on the PCRE library being compiled with
+  \sQuote{Unicode property support}: an external library might not be.)
 
   The sequence \samp{(?#} marks the start of a comment which continues
   up to the next closing parenthesis.  Nested parentheses are not
