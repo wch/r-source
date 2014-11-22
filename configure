@@ -45916,6 +45916,24 @@ else
   r_external_libs="${r_external_libs}${separator}LAPACK(${r_lapack})"
 fi
 fi
+if test "${have_zlib}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="zlib"
+else
+  r_external_libs="${r_external_libs}${separator}zlib"
+fi
+fi
+if test "${have_bzlib}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="bzlib"
+else
+  r_external_libs="${r_external_libs}${separator}bzlib"
+fi
+fi
 if test "${have_lzma}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
@@ -45923,6 +45941,24 @@ if test -z "${r_external_libs}"; then
   r_external_libs="lzma"
 else
   r_external_libs="${r_external_libs}${separator}lzma"
+fi
+fi
+if test "${have_pcre}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="PCRE"
+else
+  r_external_libs="${r_external_libs}${separator}PCRE"
+fi
+fi
+if test "${have_tre}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="tre"
+else
+  r_external_libs="${r_external_libs}${separator}tre"
 fi
 fi
 

@@ -2830,8 +2830,20 @@ if test "${acx_lapack_ok}" = "yes"; then
   esac
   R_SH_VAR_ADD(r_external_libs, [LAPACK(${r_lapack})], [, ])
 fi
+if test "${have_zlib}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [zlib], [, ])
+fi
+if test "${have_bzlib}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [bzlib], [, ])
+fi
 if test "${have_lzma}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [lzma], [, ])
+fi
+if test "${have_pcre}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [PCRE], [, ])
+fi
+if test "${have_tre}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [tre], [, ])
 fi
 
 r_capabilities=
