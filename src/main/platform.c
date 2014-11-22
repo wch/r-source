@@ -2994,15 +2994,27 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <pcre.h>
 #endif
 
+#ifdef USE_ICU
+# ifndef USE_ICU_APPLE
+#  include <unicode/uversion.h>
+# else
+#  define U_MAX_VERSION_LENGTH 4
+#  define U_MAX_VERSION_STRING_LENGTH 20
+typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
+void u_versionToString(const UVersionInfo versionArray, char *versionString);
+void u_getVersion(UVersionInfo versionArray);
+# endif
+#endif
+
 SEXP attribute_hidden
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 4));
-    SEXP nms = PROTECT(allocVector(STRSXP, 4));
+    SEXP ans = PROTECT(allocVector(STRSXP, 6));
+    SEXP nms = PROTECT(allocVector(STRSXP, 6));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
-    char p[50] = "unknown";
+    char p[50];
     snprintf(p, 50, "%s", zlibVersion());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("zlib"));
@@ -3014,7 +3026,20 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(nms, i++, mkChar("xz"));
     snprintf(p, 50, "%s", pcre_version());
     SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("pcre"));
+    SET_STRING_ELT(nms, i++, mkChar("PCRE"));
+#ifdef USE_ICU
+    UVersionInfo icu;
+    char pu[U_MAX_VERSION_STRING_LENGTH];
+    u_getVersion(icu);
+    u_versionToString(icu, pu);
+    SET_STRING_ELT(ans, i, mkChar(pu));
+#else
+    SET_STRING_ELT(ans, i, mkChar(""));
+#endif
+    SET_STRING_ELT(nms, i++, mkChar("ICU"));
+    snprintf(p, 50, "%s", tre_version());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("tre"));
     UNPROTECT(2);
     return ans;
 }

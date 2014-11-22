@@ -160,7 +160,7 @@
       \item New function \code{extSoftVersion()} to report on the
       versions of third-party software in use in this session.
       Currently reports versions of \code{zlib}, \code{bzlib}, the
-      \code{liblzma} from \code{xz} and PCRE.
+      \code{liblzma} from \code{xz}, PCRE, ICU and \code{tre}.
     }
   }
 
