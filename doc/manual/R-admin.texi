@@ -4665,6 +4665,10 @@ most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 and useful for many packages: it will also be used if present when
 configuring the @code{X11()} device.
 
+Recent versions of OS X ship with @code{zlib} version 1.2.8 and
+@code{bzlib} version 1.0.6, sufficient for @command{configure} options
+@option{--with-system-zlib --with-system-bzlib}).
+
 @cindex BLAS library
 @cindex LAPACK library
 The @code{Accelerate} library can be used @emph{via} the configuration options
@@ -5007,7 +5011,9 @@ installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 
 A large selection of Open Source software can be installed from
 @uref{http://www.opencsw.org}, by default installed under
-@file{/opt/csw}.
+@file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
+(sufficient for @option{--with-system-bzlib}) but @code{zlib} version
+1.2.3 (too old for @option{--with-system-zlib}): OpenCSW has 1.2.8.
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
