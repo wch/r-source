@@ -668,6 +668,7 @@
  do_envirName
  do_envirgets
  do_envprofile
+ do_eSoftVersion
  do_eval
  do_expression
  do_fft

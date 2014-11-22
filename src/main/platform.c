@@ -2985,6 +2985,40 @@ SEXP attribute_hidden do_mkjunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
+#include <zlib.h>
+#include <bzlib.h>
+#include <lzma.h>
+#ifdef HAVE_PCRE_PCRE_H
+# include <pcre/pcre.h>
+#else
+# include <pcre.h>
+#endif
+
+SEXP attribute_hidden
+do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP ans = PROTECT(allocVector(STRSXP, 4));
+    SEXP nms = PROTECT(allocVector(STRSXP, 4));
+    setAttrib(ans, R_NamesSymbol, nms);
+    unsigned int i = 0;
+    char p[50] = "unknown";
+    snprintf(p, 50, "%s", zlibVersion());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("zlib"));
+    snprintf(p, 50, "%s", BZ2_bzlibVersion());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("bzlib"));
+    snprintf(p, 50, "%s", lzma_version_string());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("xz"));
+    snprintf(p, 50, "%s", pcre_version());
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("pcre"));
+    UNPROTECT(2);
+    return ans;
+}
+
 /* Formerly src/appl/machar.c:
  * void machar()  -- computes ALL `machine constants' at once.
  * -------------  -- compare with ../nmath/i1mach.c & ../nmath/d1mach.c
