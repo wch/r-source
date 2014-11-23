@@ -238,6 +238,10 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{download.file(method = "lynx")} is defunct.
+
+      \item Use of the included versions of \code{zlib}, \code{bzlib},
+      \code{xz} and PCRE is deprecated: these are frozen and will
+      eventually be removed.
     }
   }
 
