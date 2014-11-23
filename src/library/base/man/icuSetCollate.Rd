@@ -120,7 +120,8 @@ icuGetCollate(type = c("actual", "valid"))
 \seealso{
   \link{Comparison}, \code{\link{sort}}.
 
-  \code{\link{capabilities}} for whether ICU is in use.
+  \code{\link{capabilities}} for whether ICU is available;
+  \code{\link{extSoftVersion}} for its version.
 
   The ICU user guide chapter on collation
   (\url{http://userguide.icu-project.org/collation}).
