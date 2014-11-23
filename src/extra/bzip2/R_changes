@@ -7,18 +7,19 @@ __inline__ is not portable.  We make use of static inlining in the
 file bzlib.c and decompress.c to avoid issues with semantics of 
 'extern inline'.
 
-fdopen is POSIX but not C89
-Solaris' cc objected to inlining functions with names starting with 'main'.
+fdopen is POSIX but not C89 nor C99.
+Solaris' cc at one time objected to inlining functions with names 
+starting with 'main'.
 C character strings are limited to ca 500 chars.
 Various casts were missing.
 Solaris cc complained about unused code, hence the use of UNREACHED.
 The shifts on signed ints are undefined behaviour (this has been
-reported upstrem with no response).
+reported upstream with no response).
 
 
 diff -ru bzip2-1.0.6/blocksort.c bzip2/blocksort.c
 --- bzip2-1.0.6/blocksort.c	2010-09-10 23:37:02.000000000 +0100
-+++ bzip2/blocksort.c	2014-11-21 09:56:18.000000000 +0000
++++ bzip2/blocksort.c	2014-11-22 22:18:15.000000000 +0000
 @@ -28,7 +28,7 @@
  
  /*---------------------------------------------*/
@@ -42,56 +43,21 @@ diff -ru bzip2-1.0.6/blocksort.c bzip2/blocksort.c
  #define      WORD_BH(zz)  bhtab[(zz) >> 5]
  #define UNALIGNED_BH(zz)  ((zz) & 0x01f)
  
-@@ -342,9 +343,10 @@
+@@ -342,8 +343,12 @@
  /*---------------------------------------------*/
  
  /*---------------------------------------------*/
 +/* Solaris cc objects to inlining functions whose names start with `main' */
++#ifdef __SUNPRO_C
++# define mainGtU BZmainGtU
++#endif
  static
 -__inline__
--Bool mainGtU ( UInt32  i1, 
 +R_INLINE
-+Bool BZmainGtU ( UInt32  i1, 
+ Bool mainGtU ( UInt32  i1, 
                 UInt32  i2,
                 UChar*  block, 
-                UInt16* quadrant,
-@@ -355,7 +357,7 @@
-    UChar  c1, c2;
-    UInt16 s1, s2;
- 
--   AssertD ( i1 != i2, "mainGtU" );
-+   AssertD ( i1 != i2, "BZmainGtU" );
-    /* 1 */
-    c1 = block[i1]; c2 = block[i2];
-    if (c1 != c2) return (c1 > c2);
-@@ -511,7 +513,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -525,7 +527,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -539,7 +541,7 @@
-          if (i > hi) break;
-          v = ptr[i];
-          j = i;
--         while ( mainGtU ( 
-+         while ( BZmainGtU ( 
-                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
-                  ) ) {
-             ptr[j] = ptr[j-h];
-@@ -579,7 +581,7 @@
+@@ -579,7 +584,7 @@
  }
  
  static 
@@ -102,7 +68,7 @@ diff -ru bzip2-1.0.6/blocksort.c bzip2/blocksort.c
     UChar t;
 diff -ru bzip2-1.0.6/bzlib.c bzip2/bzlib.c
 --- bzip2-1.0.6/bzlib.c	2010-09-10 23:38:23.000000000 +0100
-+++ bzip2/bzlib.c	2011-03-30 14:00:46.000000000 +0100
++++ bzip2/bzlib.c	2014-11-23 07:43:39.000000000 +0000
 @@ -53,8 +53,9 @@
        BZ2_bzlibVersion()
     );
@@ -300,14 +266,17 @@ diff -ru bzip2-1.0.6/bzlib.c bzip2/bzlib.c
        fp = NULL;
  #else
        fp = fdopen(fd,mode2);
-@@ -1514,10 +1528,9 @@
+@@ -1513,11 +1527,11 @@
+ /*---------------------------------------------------*/
  void BZ_API(BZ2_bzclose) (BZFILE* b)
  {
++   if (b==NULL) return;
++
     int bzerr;
 -   FILE *fp;
 +   FILE *fp = ((bzFile *)b)->handle;
     
-    if (b==NULL) {return;}
+-   if (b==NULL) {return;}
 -   fp = ((bzFile *)b)->handle;
     if(((bzFile*)b)->writing){
        BZ2_bzWriteClose(&bzerr,b,0,NULL,NULL);
@@ -325,7 +294,7 @@ diff -ru bzip2-1.0.6/bzlib_private.h bzip2/bzlib_private.h
  #include <stdlib.h>
  
  #ifndef BZ_NO_STDIO
-diff -ur bzip2-1.0.6/compress.c bzip2/compress.c
+diff -ru bzip2-1.0.6/compress.c bzip2/compress.c
 --- bzip2-1.0.6/compress.c	2014-11-21 10:38:37.000000000 +0000
 +++ bzip2/compress.c	2011-03-30 14:00:46.000000000 +0100
 @@ -69,7 +69,7 @@
@@ -337,7 +306,7 @@ diff -ur bzip2-1.0.6/compress.c bzip2/compress.c
  void bsW ( EState* s, Int32 n, UInt32 v )
  {
     bsNEEDW ( n );
-diff -ur bzip2-1.0.6/decompress.c bzip2/decompress.c
+diff -ru bzip2-1.0.6/decompress.c bzip2/decompress.c
 --- bzip2-1.0.6/decompress.c	2010-09-10 23:43:17.000000000 +0100
 +++ bzip2/decompress.c	2011-03-30 14:00:46.000000000 +0100
 @@ -209,13 +209,13 @@

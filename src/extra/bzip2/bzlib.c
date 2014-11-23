@@ -1527,10 +1527,11 @@ int BZ_API(BZ2_bzflush) (BZFILE *b)
 /*---------------------------------------------------*/
 void BZ_API(BZ2_bzclose) (BZFILE* b)
 {
+   if (b==NULL) return;
+
    int bzerr;
    FILE *fp = ((bzFile *)b)->handle;
    
-   if (b==NULL) {return;}
    if(((bzFile*)b)->writing){
       BZ2_bzWriteClose(&bzerr,b,0,NULL,NULL);
       if(bzerr != BZ_OK){

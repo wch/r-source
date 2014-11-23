@@ -344,9 +344,12 @@ void fallbackSort ( UInt32* fmap,
 
 /*---------------------------------------------*/
 /* Solaris cc objects to inlining functions whose names start with `main' */
+#ifdef __SUNPRO_C
+# define mainGtU BZmainGtU
+#endif
 static
 R_INLINE
-Bool BZmainGtU ( UInt32  i1, 
+Bool mainGtU ( UInt32  i1, 
                UInt32  i2,
                UChar*  block, 
                UInt16* quadrant,
@@ -357,7 +360,7 @@ Bool BZmainGtU ( UInt32  i1,
    UChar  c1, c2;
    UInt16 s1, s2;
 
-   AssertD ( i1 != i2, "BZmainGtU" );
+   AssertD ( i1 != i2, "mainGtU" );
    /* 1 */
    c1 = block[i1]; c2 = block[i2];
    if (c1 != c2) return (c1 > c2);
@@ -513,7 +516,7 @@ void mainSimpleSort ( UInt32* ptr,
          if (i > hi) break;
          v = ptr[i];
          j = i;
-         while ( BZmainGtU ( 
+         while ( mainGtU ( 
                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                  ) ) {
             ptr[j] = ptr[j-h];
@@ -527,7 +530,7 @@ void mainSimpleSort ( UInt32* ptr,
          if (i > hi) break;
          v = ptr[i];
          j = i;
-         while ( BZmainGtU ( 
+         while ( mainGtU ( 
                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                  ) ) {
             ptr[j] = ptr[j-h];
@@ -541,7 +544,7 @@ void mainSimpleSort ( UInt32* ptr,
          if (i > hi) break;
          v = ptr[i];
          j = i;
-         while ( BZmainGtU ( 
+         while ( mainGtU ( 
                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
                  ) ) {
             ptr[j] = ptr[j-h];
