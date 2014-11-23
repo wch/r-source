@@ -1923,9 +1923,9 @@ Optional Packages:
   --with-libpng           use libpng library (if available) [yes]
   --with-jpeglib          use jpeglib library (if available) [yes]
   --with-libtiff          use libtiff library (if available) [yes]
-  --with-system-zlib      use system zlib library (if available) [no]
-  --with-system-bzlib     use system bzlib library (if available) [no]
-  --with-system-pcre      use system PCRE library (if available) [no]
+  --with-system-zlib      use system zlib library (if available) [yes]
+  --with-system-bzlib     use system bzlib library (if available) [yes]
+  --with-system-pcre      use system PCRE library (if available) [yes]
   --with-system-tre       use system tre library (if available) [no]
   --with-system-xz        use system xz (lzma) library (if available) [yes]
   --with-valgrind-instrumentation
@@ -4251,7 +4251,7 @@ else
 fi
 
 else
-  use_system_zlib=no
+  use_system_zlib=yes
 fi
 
 
@@ -4264,7 +4264,7 @@ else
 fi
 
 else
-  use_system_bzlib=no
+  use_system_bzlib=yes
 fi
 
 
@@ -4277,7 +4277,7 @@ else
 fi
 
 else
-  use_system_pcre=no
+  use_system_pcre=yes
 fi
 
 

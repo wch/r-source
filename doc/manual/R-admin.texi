@@ -3148,16 +3148,17 @@ into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
 
 If you have them installed (including the appropriate headers and of
-suitable versions), system versions of @code{zlib}, @code{libbz2} and
-PCRE will be used if specified by @option{--with-system-zlib} (version
-1.2.5 or later), @option{--with-system-bzlib} (version 1.0.6 or later)
-or @option{--with-system-pcre} (version 8.10 or later, preferably 8.32
-or later@footnote{PCRE must be built with UTF-8 support (not the
+suitable versions), system versions of @code{zlib} (version 1.2.5 or
+later),, @code{libbz2} (version 1.0.6 or later: called
+@pkg{bzip2-libs}/@pkg{bzip2-devel} or @pkg{libbz2-1.0}/@pkg{libbz2-dev}
+by some Linux distributions) and PCRE (version 8.10 or later, preferably
+8.32 or later@footnote{PCRE must be built with UTF-8 support (not the
 default) and support for Unicode properties is assumed by some @R{}
 packages.  Neither are tested by @command{configure}. JIT support is
-desirable.}): otherwise versions in the @R{} sources will be compiled
-in.  As the latter suffice and are tested with @R{} you should not need
-to change this.
+desirable.}): will be used, otherwise versions in the @R{} sources will
+be compiled in.  The external versions can be avoided by configure
+options @option{--without-system-zlib}, @option{--without-system-bzlib}
+and or @option{--without-system-pcre}.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository
@@ -4369,7 +4370,14 @@ installed.  So please check the @code{configure} output to see if the
 expected features are detected: if for example @samp{readline} is
 missing add the developer package.  (On most systems you will also need
 @samp{ncurses} and its developer package, although these should be
-dependencies of the @samp{readline} package(s).)
+dependencies of the @samp{readline} package(s).)  You should expect to
+see in the @command{configure} summary
+
+@example
+  Interfaces supported:      X11, tcltk
+  External libraries:        readline, zlib, bzlib, lzma, PCRE
+  Additional capabilities:   PNG, JPEG, TIFF, NLS, cairo, ICU
+@end example
 
 When @R{} has been installed from a binary distribution there are
 sometimes problems with missing components such as the FORTRAN
@@ -4666,8 +4674,8 @@ and useful for many packages: it will also be used if present when
 configuring the @code{X11()} device.
 
 Recent versions of OS X ship with @code{zlib} version 1.2.8 and
-@code{bzlib} version 1.0.6, sufficient for @command{configure} options
-@option{--with-system-zlib --with-system-bzlib}).
+@code{bzlib} version 1.0.6, sufficient for the default
+@command{configure} checks.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4689,7 +4697,7 @@ Looking at the top of
 will show the compilers and configuration options used for the
 @acronym{CRAN} binary package for @R{}: at the time of writing
 @example
---with-system-zlib --enable-memory-profiling --disable-openmp
+--enable-memory-profiling --disable-openmp
 @end example
 @noindent
 was used for `Snow Leopard' and the first two for `Mavericks'.
@@ -5012,8 +5020,9 @@ installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 A large selection of Open Source software can be installed from
 @uref{http://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
-(sufficient for @option{--with-system-bzlib}) but @code{zlib} version
-1.2.3 (too old for @option{--with-system-zlib}): OpenCSW has 1.2.8.
+(sufficient for the default @option{--with-system-bzlib}) but
+@code{zlib} version 1.2.3 (too old for @option{--with-system-zlib}):
+OpenCSW has 1.2.8.
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.

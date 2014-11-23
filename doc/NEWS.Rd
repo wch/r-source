@@ -178,6 +178,16 @@
 
       \item The included version of \code{lzmautils} has been updated to
       \code{xz-utils} 5.0.7 (minor bug fixes from 5.0.5).
+      
+      \item \command{configure} options \option{--with-system-zlib},
+       \option{--with-system-bzlib} and \option{--with-system-pcre} are
+       now the default.  For the time being there is fallback to the
+       versions included in the \R sources if no system versions are
+       found or (unlikely) if they are too old.
+
+       Linux users should check that the \code{-devel} or \code{-dev}
+       versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
+       \code{pcre} (or similar names) are installed.
     }
   }
 

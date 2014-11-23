@@ -412,17 +412,17 @@ AC_ARG_WITH([libtiff],
 [R_ARG_USE(libtiff)],
 [use_libtiff=yes])
 AC_ARG_WITH([system-zlib],
-[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(zlib)],
-[use_system_zlib=no])
+[use_system_zlib=yes])
 AC_ARG_WITH([system-bzlib],
-[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(bzlib)],
-[use_system_bzlib=no])
+[use_system_bzlib=yes])
 AC_ARG_WITH([system-pcre],
-[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@no@:>@])],
+[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
-[use_system_pcre=no])
+[use_system_pcre=yes])
 AC_ARG_WITH([system-tre],
 [AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(tre)],
