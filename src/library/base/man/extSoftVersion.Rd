@@ -29,11 +29,12 @@ extSoftVersion()
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
   \item{PCRE}{The version of \code{PCRE} in use.}
   \item{ICU}{The version of \code{ICU} in use (if any).}
-  \item{tre}{The version of \code{tre} in use.}
+  \item{TRE}{The version of \code{libtre} in use.}
 
   All are character strings.  Note that the values for \code{bzlib} and
   \code{pcre} normally contain a date as well as the version number, and
-  that for \code{tre} includes a licence in parentheses.
+  that for \code{tre} includes several items separated by spaces, the
+  version number being the second.
 }
 \seealso{
   \code{\link{La_version}} for the version of LAPACK in use.

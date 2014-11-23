@@ -3039,7 +3039,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(nms, i++, mkChar("ICU"));
     snprintf(p, 50, "%s", tre_version());
     SET_STRING_ELT(ans, i, mkChar(p));
-    SET_STRING_ELT(nms, i++, mkChar("tre"));
+    SET_STRING_ELT(nms, i++, mkChar("TRE"));
     UNPROTECT(2);
     return ans;
 }
