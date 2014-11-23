@@ -77,7 +77,7 @@ capabilities(what = NULL)
     \item{NLS}{is there Natural Language Support (for message translations)?}
     \item{profmem}{is there support for memory profiling?  See
       \code{\link{tracemem}}.}
-    \item{cairo}{is there support the \code{\link{svg}},
+    \item{cairo}{is there support for the \code{\link{svg}},
       \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
       for \code{type = "cairo"} in the
 #ifdef unix
@@ -85,8 +85,9 @@ capabilities(what = NULL)
 #endif
       \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
       and \code{\link{tiff}} devices?}
-    \item{ICU}{is ICU used for collation?  See the help on
-      \link{Comparison} and \code{\link{icuSetCollate}}.}
+    \item{ICU}{is ICU available for collation?  See the help on
+      \link{Comparison} and \code{\link{icuSetCollate}}: it is never
+      used for a C locale.}
     
     \item{long.double}{does this build use a \code{C} \code{long double}
       type which is longer than \code{double}?  Some platforms do not
