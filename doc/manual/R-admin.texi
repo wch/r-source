@@ -3150,14 +3150,14 @@ and these may need also to be present.
 If you have them installed (including the appropriate headers and of
 suitable versions), system versions of @code{zlib}, @code{libbz2} and
 PCRE will be used if specified by @option{--with-system-zlib} (version
-1.2.5 or later), @option{--with-system-bzlib} or
-@option{--with-system-pcre} (version 8.10 or later, preferably
-8.34@footnote{which is what is supplied with @R{}: PCRE must be built
-with UTF-8 support (not the default) and support for Unicode properties
-is assumed by some @R{} packages. Neither are tested by
-@command{configure}. JIT support is desirable.}): otherwise versions in
-the @R{} sources will be compiled in.  As the latter suffice and are
-tested with @R{} you should not need to change this.
+1.2.5 or later), @option{--with-system-bzlib} (version 1.0.6 or later)
+or @option{--with-system-pcre} (version 8.10 or later, preferably 8.32
+or later@footnote{PCRE must be built with UTF-8 support (not the
+default) and support for Unicode properties is assumed by some @R{}
+packages.  Neither are tested by @command{configure}. JIT support is
+desirable.}): otherwise versions in the @R{} sources will be compiled
+in.  As the latter suffice and are tested with @R{} you should not need
+to change this.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository

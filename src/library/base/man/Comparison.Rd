@@ -116,16 +116,18 @@ x != y
   \url{http://en.wikipedia.org/wiki/Collating_sequence}.  The
   \emph{Unicode Collation Algorithm}
   (\url{http://unicode.org/reports/tr10/}) is likely to be increasingly
-  influential.  Where available \R makes use of ICU
-  (\url{http://site.icu-project.org/} for collation.
+  influential.  Where available \R by default makes use of ICU
+  (\url{http://site.icu-project.org/}) for collation (except in a C
+  locale).
 }
 \seealso{
   \code{\link{factor}} for the behaviour with factor arguments.
 
   \code{\link{Syntax}} for operator precedence.
 
+  \code{\link{capabilities}} for whether ICU is available, and
   \code{\link{icuSetCollate}} to tune the string collation algorithm
-  when ICU is in use.
+  when it is.
 }
 \examples{
 x <- stats::rnorm(20)
@@ -142,7 +144,7 @@ identical(all.equal(x1, x2), TRUE) # TRUE everywhere
 z <- c(32:126, 160:255)
 x <- if(l10n_info()$MBCS) {
     intToUtf8(z, multiple = TRUE)
-} else rawToChar(as.raw(z), multiple= TRUE)
+} else rawToChar(as.raw(z), multiple = TRUE)
 ## by number
 writeLines(strwrap(paste(x, collapse=" "), width = 60))
 ## by locale collation
