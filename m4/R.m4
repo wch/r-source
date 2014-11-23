@@ -3062,8 +3062,7 @@ caddr_t hello() {
 ## ------
 ## If selected, try finding system pcre library and headers.
 ## RedHat put the headers in /usr/include/pcre.
-## R (2.15.3, 3.0.0) includes 8.32: there are problems < 8.10 and
-## distros are often slow to update.
+## There are known problems < 8.10.
 AC_DEFUN([R_PCRE],
 [if test "x${use_system_pcre}" = xyes; then
   AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
