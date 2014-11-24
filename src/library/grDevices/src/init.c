@@ -71,6 +71,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(palette, 1),
     CALLDEF(palette2, 1),
     CALLDEF(cairoVersion, 0),
+    CALLDEF(bmVersion, 0),
 
 #ifndef _WIN32
     CALLDEF(makeQuartzDefault, 0),
@@ -78,7 +79,6 @@ static const R_CallMethodDef CallEntries[] = {
 #else
     CALLDEF(bringToTop, 2),
     CALLDEF(msgWindow, 2),
-    CALLDEF(bmVersion, 0),
 #endif
     {NULL, NULL, 0}
 };

@@ -670,7 +670,11 @@ __declspec(dllexport) const char * R_jpegVersion(void)
 {
 #ifdef HAVE_JPEG
     static char ans[10];
+#ifdef JPEG_LIB_VERSION_MAJOR
     sprintf(ans, "%d.%d", JPEG_LIB_VERSION_MAJOR, JPEG_LIB_VERSION_MINOR);
+#else
+    sprintf(ans, "%d.%d", JPEG_LIB_VERSION/10, JPEG_LIB_VERSION%10);
+#endif
     return ans;
 #else
     return "";

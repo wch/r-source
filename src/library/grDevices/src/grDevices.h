@@ -68,7 +68,6 @@ SEXP devga(SEXP);
 SEXP savePlot(SEXP);
 SEXP bringToTop(SEXP, SEXP);
 SEXP msgWindow(SEXP, SEXP);
-SEXP bmVersion(void);
 #endif
 
 SEXP devcap(SEXP args);
@@ -112,3 +111,4 @@ unsigned int inR_GE_str2col(const char *s);
 void initPalette(void);
 
 SEXP cairoVersion(void);
+SEXP bmVersion(void);

@@ -3389,6 +3389,11 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 }
 
 #include <R_ext/Rdynload.h>
+
+extern const char * in_R_pngVersion(void);
+extern const char * in_R_jpegVersion(void);
+extern const char * in_R_tiffVersion(void);
+
 void R_init_R_X11(DllInfo *info)
 {
     R_X11Routines *tmp;
@@ -3402,5 +3407,8 @@ void R_init_R_X11(DllInfo *info)
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
     tmp->readclp = in_R_X11readclp;
+    tmp->R_pngVersion = in_R_pngVersion;
+    tmp->R_jpegVersion = in_R_jpegVersion;
+    tmp->R_tiffVersion = in_R_tiffVersion;
     R_setX11Routines(tmp);
 }

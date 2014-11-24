@@ -163,4 +163,8 @@ bmp <- function(filename = "Rplot%03d.bmp",
                              0L, 0L, "", 0, 0, d$family))
 }
 
-grSoftVersion <- function() c(cairo = cairoVersion())
+grSoftVersion <- function() {
+    bm <- .Call(C_bmVersion)
+    bm[3L] <- strsplit(bm[3L], "\n")[[1L]][1L]
+    c(cairo = cairoVersion(), bm)
+}

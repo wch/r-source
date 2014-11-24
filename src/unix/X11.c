@@ -114,6 +114,24 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
 	return FALSE;
     }
 }
+
+SEXP do_bmVersion(void)
+{
+   SEXP ans = PROTECT(allocVector(STRSXP, 3)),
+	nms = PROTECT(allocVector(STRSXP, 3));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("libpng"));
+    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
+    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    R_X11_Init();
+    if(initialized > 0) {
+	SET_STRING_ELT(ans, 0, mkChar((*ptr->R_pngVersion)()));
+	SET_STRING_ELT(ans, 1, mkChar((*ptr->R_jpegVersion)()));
+	SET_STRING_ELT(ans, 2, mkChar((*ptr->R_tiffVersion)()));
+    }
+    UNPROTECT(2);
+    return ans;
+}
 #else /* No HAVE_X11 */
 
 Rboolean attribute_hidden R_access_X11(void)
@@ -143,5 +161,17 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn con, char *type)
 {
     error(_("X11 is not available"));
     return FALSE;
+}
+
+SEXP do_bmVersion(void)
+{
+    SEXP ans = PROTECT(allocVector(STRSXP, 3)),
+	nms = PROTECT(allocVector(STRSXP, 3));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("libpng"));
+    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
+    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    UNPROTECT(2);
+    return ans;
 }
 #endif
