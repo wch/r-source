@@ -657,3 +657,30 @@ int R_SaveAsBmp(void  *d, int width, int height,
     }
     return 1;
 }
+
+__declspec(dllexport) const char * R_pngVersion(void)
+{
+#ifdef HAVE_PNG
+    return png_get_header_ver(NULL /*ignored*/);
+#else
+    return "";
+#endif
+}
+__declspec(dllexport) const char * R_jpegVersion(void)
+{
+#ifdef HAVE_JPEG
+    static char ans[10];
+    sprintf(ans, "%d.%d", JPEG_LIB_VERSION_MAJOR, JPEG_LIB_VERSION_MINOR);
+    return ans;
+#else
+    return "";
+#endif
+}
+__declspec(dllexport) const char * R_tiffVersion(void)
+{
+#ifdef HAVE_TIFF
+    return TIFFGetVersion();
+#else
+    return "";
+#endif
+}

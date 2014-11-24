@@ -17,6 +17,17 @@ grSoftVersion()
   
   \item{cairo}{the version of cairographics in use, or \code{""} if
     cairographics is not available.}
+
+#ifdef windows
+  On Windows it also contains the versions of third-party software used
+  by the standard (not cairo-based) bitmap devices:
+  \item{libpng}{the version of libpng in use, or \code{""} if
+    not available.}
+  \item{jpeg}{the version of jpeg headers used from compliation,
+    or \code{""} if not compiled in.}
+  \item{libtiff}{the version of libtiff in use, or \code{""} if
+    not available.}
+#endif
   
   Unless otherwise stated the reported version is that of the (possibly
   dynamically-linked) library in use at runtime.

@@ -3822,7 +3822,7 @@ static int RcairoAlreadyLoaded = 0;
 static HINSTANCE hRcairoDll;
 
 typedef SEXP (*R_cairoVersion_t)(void);
-static R_cairoVersion_t R_cairoVersion;
+static R_cairoVersion_t R_cairoVersion = NULL;
 
 static int Load_Rcairo_Dll()
 {
@@ -3863,6 +3863,23 @@ SEXP devCairo(SEXP args)
 
 SEXP cairoVersion(void)
 {
-    if (!Load_Rcairo_Dll()) return mkString("");
+    if (!Load_Rcairo_Dll() || R_cairoVersion == NULL) return mkString("");
     else return (R_cairoVersion)();
+}
+
+SEXP bmVersion(void)
+{
+    SEXP ans = PROTECT(allocVector(STRSXP, 3)),
+	nms = PROTECT(allocVector(STRSXP, 3));
+    setAttrib(ans, R_NamesSymbol, nms);
+    SET_STRING_ELT(nms, 0, mkChar("libpng"));
+    SET_STRING_ELT(nms, 1, mkChar("jpeg"));
+    SET_STRING_ELT(nms, 2, mkChar("libtiff"));
+    if (Load_Rbitmap_Dll()) {
+	SET_STRING_ELT(ans, 0, mkChar((R_pngVersion)()));
+	SET_STRING_ELT(ans, 1, mkChar((R_jpegVersion)()));
+	SET_STRING_ELT(ans, 2, mkChar((R_tiffVersion)()));
+    }
+    UNPROTECT(2);
+    return ans;
 }

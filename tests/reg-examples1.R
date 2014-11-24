@@ -52,6 +52,7 @@ example(ability.cov)
 example(npk)
 
 ## grDevices
+example(grSoftVersion)
 if(.Platform$OS.type == "windows") {
     example(windowsFonts)
 } else {

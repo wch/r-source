@@ -78,6 +78,7 @@ static const R_CallMethodDef CallEntries[] = {
 #else
     CALLDEF(bringToTop, 2),
     CALLDEF(msgWindow, 2),
+    CALLDEF(bmVersion, 0),
 #endif
     {NULL, NULL, 0}
 };

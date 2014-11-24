@@ -68,6 +68,7 @@ SEXP devga(SEXP);
 SEXP savePlot(SEXP);
 SEXP bringToTop(SEXP, SEXP);
 SEXP msgWindow(SEXP, SEXP);
+SEXP bmVersion(void);
 #endif
 
 SEXP devcap(SEXP args);
