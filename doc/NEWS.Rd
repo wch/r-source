@@ -162,7 +162,7 @@
       Currently reports versions of \code{zlib}, \code{bzlib}, the
       \code{liblzma} from \code{xz}, PCRE, ICU and TRE.
 
-      A similar function \code{grSoftVersion} in package \pkg{grDevices}
+      A similar function \code{grSoftVersion()} in package \pkg{grDevices}
       reports on third-party graphics software.
     }
   }
@@ -243,8 +243,8 @@
       \item \code{download.file(method = "lynx")} is defunct.
 
       \item Use of the included versions of \code{zlib}, \code{bzip2},
-      \code{xz} and PCRE is deprecated: these are frozen and will
-      eventually be removed.
+      \code{xz} and PCRE is deprecated: these are essentially frozen and
+      will eventually be removed.
     }
   }
 
