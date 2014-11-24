@@ -27,15 +27,18 @@ grSoftVersion()
   X11-based
 #endif
   (not cairo-based) bitmap devices:
-  \item{libpng}{the version of libpng in use, or \code{""} if
+  \item{libpng}{the version of \code{libpng} in use, or \code{""} if
     not available.}
-  \item{jpeg}{the version of jpeg headers used for compliation,
-    or \code{""} if JPEG support  was  not compiled in.}
-  \item{libtiff}{the version of libtiff in use, or \code{""} if
+  \item{jpeg}{the version of the JPEG headers used for compliation,
+    or \code{""} if JPEG support was not compiled in.}
+  \item{libtiff}{the version of \code{libtiff} in use, or \code{""} if
     not available.}
   
   Unless otherwise stated the reported version is that of the (possibly
   dynamically-linked) library in use at runtime.
+
+  Note that \code{libjpeg-turbo} used on some Linux distributions
+  reports its version as \code{"6.2"}, the IJG version from which it forked.
 }
 
 \seealso{
