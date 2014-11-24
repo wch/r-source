@@ -163,7 +163,7 @@
       \code{liblzma} from \code{xz}, PCRE, ICU and TRE.
 
       A similar function \code{grSoftVersion} in package \pkg{grDevices}
-      reports on third-party graphics software such as cairographics.
+      reports on third-party graphics software.
     }
   }
 

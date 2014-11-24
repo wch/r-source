@@ -23,8 +23,8 @@ grSoftVersion()
   by the standard (not cairo-based) bitmap devices:
   \item{libpng}{the version of libpng in use, or \code{""} if
     not available.}
-  \item{jpeg}{the version of jpeg headers used from compliation,
-    or \code{""} if not compiled in.}
+  \item{jpeg}{the version of jpeg headers used for compliation,
+    or \code{""} if it was  not compiled in.}
   \item{libtiff}{the version of libtiff in use, or \code{""} if
     not available.}
 #endif
@@ -34,7 +34,7 @@ grSoftVersion()
 }
 
 \seealso{
-  \code{\link{extSoftVersion}} for non-graphics software.
+  \code{\link{extSoftVersion}} for versions of non-graphics software.
 }
 %% output is variable
 \examples{
