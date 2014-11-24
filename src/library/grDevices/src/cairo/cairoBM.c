@@ -534,3 +534,11 @@ SEXP in_Cairo(SEXP args)
     vmaxset(vmax);
     return R_NilValue;
 }
+
+SEXP in_CairoVersion(void)
+{
+    SEXP ans = PROTECT(allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, mkChar(cairo_version_string()));
+    UNPROTECT(1);
+    return ans;
+}

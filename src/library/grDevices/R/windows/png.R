@@ -174,3 +174,5 @@ tiff <-
                             family, match(antialias, aa.win)))
     }
 }
+
+grSoftVersion <- function() c(cairo = cairoVersion())

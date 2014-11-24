@@ -1,0 +1,30 @@
+% File src/library/grDevices/man/grSoftVersion.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2014 R Core Team
+% Distributed under GPL 2 or later
+
+\name{grSoftVersion}
+\alias{grSoftVersion}
+\title{Report Versions of Graphics Software}
+\description{
+  Report versions of third-party graphics software.
+}
+\usage{
+grSoftVersion()
+}
+\value{
+  A named character vector containing at least the element
+  
+  \item{cairo}{the version of cairographics in use, or \code{""} if
+    cairographics is not available.}
+  
+  Unless otherwise stated the reported version is that of the (possibly
+  dynamically-linked) library in use at runtime.
+}
+
+\seealso{
+  \code{\link{extSoftVersion}} for non-graphics software.
+}
+\examples{
+grSoftVersion()
+}

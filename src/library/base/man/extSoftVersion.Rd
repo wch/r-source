@@ -38,6 +38,8 @@ extSoftVersion()
 }
 \seealso{
   \code{\link{La_version}} for the version of LAPACK in use.
+
+  \code{\link{grSoftVersion}} for third-party graphics software.
 }
 \examples{
 extSoftVersion()
