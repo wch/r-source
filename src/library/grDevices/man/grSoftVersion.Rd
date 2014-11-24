@@ -25,6 +25,7 @@ grSoftVersion()
 \seealso{
   \code{\link{extSoftVersion}} for non-graphics software.
 }
+%% output is variable
 \examples{
-grSoftVersion()
+\donttest{grSoftVersion()}
 }

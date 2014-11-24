@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-11-20 r67007) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-11-23 r67046) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -2075,6 +2075,21 @@ character(0)
 > ##D getGraphicsEvent()
 > ##D par(savepar)
 > ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("grSoftVersion")
+> ### * grSoftVersion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: grSoftVersion
+> ### Title: Report Versions of Graphics Software
+> ### Aliases: grSoftVersion
+> 
+> ### ** Examples
+> 
 > 
 > 
 > 
