@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-2013   The R Core Team
+ *  Copyright (C) 2004-2014   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3821,6 +3821,9 @@ static R_SaveAsBitmap R_devCairo;
 static int RcairoAlreadyLoaded = 0;
 static HINSTANCE hRcairoDll;
 
+typedef SEXP (*R_cairoVersion_t)(void);
+static R_cairoVersion_t R_cairoVersion;
+
 static int Load_Rcairo_Dll()
 {
     if (!RcairoAlreadyLoaded) {
@@ -3833,6 +3836,8 @@ static int Load_Rcairo_Dll()
 	    ((R_devCairo =
 	      (R_SaveAsBitmap)GetProcAddress(hRcairoDll, "in_Cairo"))
 	     != NULL)) {
+	    R_cairoVersion = (R_cairoVersion_t)
+		GetProcAddress(hRcairoDll, "in_CairoVersion");
 	    RcairoAlreadyLoaded = 1;
 	} else {
 	    if (hRcairoDll != NULL) FreeLibrary(hRcairoDll);
@@ -3854,4 +3859,10 @@ SEXP devCairo(SEXP args)
 	error("unable to load winCairo.dll: was it built?");
     else (R_devCairo)(args);
     return R_NilValue;
+}
+
+SEXP cairoVersion(void)
+{
+    if (!Load_Rcairo_Dll()) return mkString("");
+    else return (R_cairoVersion)();
 }
