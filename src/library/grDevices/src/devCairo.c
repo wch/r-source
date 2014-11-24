@@ -59,6 +59,10 @@ SEXP devCairo(SEXP args)
 
 SEXP cairoVersion(void)
 {
+#ifdef HAVE_WORKING_CAIRO
     if (Load_Rcairo_Dll() < 0) return mkString("");
     else return (R_cairoVersion)();
+#else
+    return mkString("");
+#endif
 }
