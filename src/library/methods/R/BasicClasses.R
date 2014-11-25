@@ -299,16 +299,27 @@
              representation(names = "character", row.names = "data.frameRowLabels"),
              contains = "list", prototype = unclass(data.frame()), where = envir) # the S4 version
     setOldClass("data.frame", S4Class = "data.frame", where = envir)
-    ## the S3 method for $<- does some stupid things to class()
+    ## the S3 methods for $<-, [[<- and [<- do some stupid things to class()
     ## This buffers the effect from S4 classes
     setMethod("$<-", "data.frame", where = envir,
               function(x, name, value) {
-                  x@.Data <- as.list(`$<-.data.frame`(structure(x@.Data, names = x@names,
-                         row.names = x@row.names, class = "data.frame"),
-                     name, value))
-                  ## Assert:  the only slot/attribute that can change
-                  ## in $<-.data.frame is "names", and the assignment
-                  ## of the .Data "slot" copies in the new names
+                  S3Part(x) <- `$<-.data.frame`(S3Part(x, TRUE), name, value)
+                  x
+              })
+    setMethod("[<-", "data.frame", where = envir,
+              function (x, i, j, ..., value) {
+                  call <- sys.call()
+                  call[[1L]] <- quote(`[<-.data.frame`)
+                  call[[2L]] <- S3Part(x, TRUE)
+                  S3Part(x) <- eval(call)
+                  x
+              })
+    setMethod("[[<-", "data.frame", where = envir,
+              function (x, i, j, ..., value) {
+                  call <- sys.call()
+                  call[[1L]] <- quote(`[[<-.data.frame`)
+                  call[[2L]] <- S3Part(x, TRUE)
+                  S3Part(x) <- eval(call)
                   x
               })
     ## methods to go from S4 to S3; first, using registered class; second, general S4 object
