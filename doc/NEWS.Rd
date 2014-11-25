@@ -164,6 +164,9 @@
 
       A similar function \code{grSoftVersion()} in package \pkg{grDevices}
       reports on third-party graphics software.
+
+      Calling \code{callGeneric()} without arguments now works with
+      primitive generics to some extent.
     }
   }
 
@@ -258,6 +261,9 @@
 
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
+
+      \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
+      avoid corruption of S4 class information by the S3 methods.
     }
   }
 }

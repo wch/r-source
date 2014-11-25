@@ -1206,13 +1206,9 @@ callGeneric <- function(...)
     }
 
     if(is.primitive(fdef)) {
-        if(nargs() == 0)
-            stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
-        else {
-            call <- substitute(fdef(...))
-        }
+        fdef <- getGeneric(fdef)
     }
-    else {
+    {
         env <- environment(fdef)
         if(!exists(".Generic", env, inherits = FALSE))
             stop("'callGeneric' must be called from a generic function or method")
