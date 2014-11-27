@@ -353,7 +353,7 @@
               function(x, digits) {
                   value <- x
                   x <- x@.Data
-                  value@Data  <- callGeneric()
+                  value@.Data  <- callGeneric(x=x, digits=digits)
                   value
               })
     ## some methods for nonStructure, ensuring that the class and slots
@@ -377,7 +377,7 @@
     setMethod("Math2", "nonStructure", where = where,
               function(x, digits) {
                   x <- x@.Data
-                  callGeneric()
+                  callGeneric(x=x, digits=digits)
               })
     setMethod("[", "nonStructure", where = where,
                         function (x, i, j, ..., drop = TRUE)
