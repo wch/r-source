@@ -341,6 +341,9 @@
       \item (Windows.) The \code{choose.files()} command returned a 
       blank string when the user asked for a single file but cancelled
       the request.  (\PR{16074})
+
+      \item \code{Math2} group generics failed to correctly dispatch
+      \code{"structure"} and \code{"nonStructure"}-derived classes.
     }
   }
 }
