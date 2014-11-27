@@ -4830,7 +4830,13 @@ See the comments under `Mavericks'.
 
 Note that if you upgrade to Yosemite you should re-install any of
 XQuartz, the `Command-line Tools for Xcode' and Java which you have
-installed.
+installed.  (Upgrading may partially remove previous versions which can
+be confusing.)
+
+There are some problems with the recommended @command{gfortran} builds
+under Yosemite.  They give warnings and @command{gfortran-4.8} is
+reported to be unable to link packages containing Fortran 9x code.  (The
+solution is to use a compiler built under Yosemite.)
 
 
 @node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
@@ -4895,6 +4901,10 @@ You may want/need to install the latest Java from Oracle (currently Java
 8 from
 @uref{http://www.oracle.com/technetwork/java/javase/downloads/index.html});
 this is for Lion and later.
+
+You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
+@code{Java For OS X 2014-001}.} to suppress pop-up messages, at least
+under Yosemite, even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
