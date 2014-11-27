@@ -4100,7 +4100,9 @@ If you must try to establish a tolerance empirically, configure and
 build @R{} with @option{--disable-long-double} and use appropriate
 compiler flags (such as @option{-ffloat-store} and
 @option{-fexcess-precision=standard} for @command{gcc}, depending on the
-CPU type) to mitigate the effects of extended-precision calculations.
+CPU type@footnote{These are not needed for the default compiler settings
+on @cputype{x86_64} but are likely to be needed on @cputype{ix86}.}) to
+mitigate the effects of extended-precision calculations.
 
 Tests which involve random inputs or non-deterministic algorithms should
 normally set a seed or be tested for many seeds.
