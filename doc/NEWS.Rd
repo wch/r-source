@@ -354,6 +354,9 @@
 
       \item \code{Math2} group generics failed to correctly dispatch
       \code{"structure"} and \code{"nonStructure"}-derived classes.
+      
+      \item \code{loadNamespace()} imposed undocumented restrictions
+      on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
     }
   }
 }

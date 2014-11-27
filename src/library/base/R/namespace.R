@@ -198,11 +198,12 @@ loadNamespace <- function (package, lib.loc = NULL,
 
     ns <- .Internal(getRegisteredNamespace(as.name(package)))
     if (! is.null(ns)) {
-        if(length(z <- versionCheck) == 3L) {
+        if(!is.null(zop <- versionCheck[["op"]]) &&
+           !is.null(zversion <- versionCheck[["version"]])) {
             current <- getNamespaceVersion(ns)
-            if(!do.call(z$op, list(as.numeric_version(current), z$version)))
+            if(!do.call(zop, list(as.numeric_version(current), zversion)))
                 stop(gettextf("namespace %s %s is already loaded, but %s %s is required",
-                              sQuote(package), current, z$op, z$version),
+                              sQuote(package), current, zop, zversion),
                      domain = NA)
         }
         ns
@@ -378,10 +379,11 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
             if(dependsMethods) loadNamespace("methods")
-            if(length(z <- versionCheck) == 3L &&
-               !do.call(z$op, list(as.numeric_version(version), z$version)))
+            if(!is.null(zop <- versionCheck[["op"]]) &&
+               !is.null(zversion <- versionCheck[["version"]]) &&
+               !do.call(zop, list(as.numeric_version(version), zversion)))
                 stop(gettextf("namespace %s %s is being loaded, but %s %s is required",
-                              sQuote(package), version, z$op, z$version),
+                              sQuote(package), version, zop, zversion),
                      domain = NA)
         }
         ns <- makeNamespace(package, version = version, lib = package.lib)
