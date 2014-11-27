@@ -242,7 +242,7 @@
   }
   
   \subsection{PACKAGE INSTALLATION}{
-    \itemize {
+    \itemize{
       \item  (Windows) The use of macro \code{ZLIB_LIBS} (which has not
       been documented for a long time) now requires an external
       \file{libz.a} to be available (it is part of the \sQuote{goodies} used
