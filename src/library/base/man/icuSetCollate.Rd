@@ -65,6 +65,9 @@ icuGetCollate(type = c("actual", "valid"))
   \describe{
     \item{\code{"none"}:}{ICU is not used for collation: the OS's
       collation services are used instead.  (As from \R 3.1.2.)}
+    \item{\code{"ASCII"}:}{ICU is not used for collation: the C function
+      \code{strcmp} is used instead, which should sort byte-by-byte in
+      (unsigned) numerical order.  (As from \R 3.1.3.)}
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
       session.  If environment variable \env{R_ICU_LOCALE} is set to a
@@ -82,7 +85,7 @@ icuGetCollate(type = c("actual", "valid"))
   \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
   locales fall back to \code{"root"} as although e.g.\sspace{}\code{"en_GB"} is
   a valid locale (at least on some platforms), it contains no special
-  rules for collation.
+  rules for collation.  Note that \code{"C"} is not a supported ICU locale.
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
