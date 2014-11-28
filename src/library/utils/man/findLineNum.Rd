@@ -87,7 +87,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE,
   generics, are not yet supported.
 }
 \value{
-  \code{fineLineNum} returns a list of objects containing location
+  \code{findLineNum} returns a list of objects containing location
   information.  A \code{print} method is defined for them.
 
   \code{setBreakpoint} has no useful return value; it is called for the
