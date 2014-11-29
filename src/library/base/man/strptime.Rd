@@ -74,7 +74,7 @@ strptime(x, format, tz = "")
   
   % strftime is C99: strptime is POSIX.
   The details of the formats are platform-specific, but the following are
-  defined by the POSIX standard and are likely to be widely available.
+  likely to be widely available: most are defined by the POSIX standard.
   A \emph{conversion specification} is introduced by \code{\%}, usually
   followed by a single letter or \code{O} or \code{E} and then a single
   letter.  Any character in the format string not part of a conversion
@@ -133,7 +133,7 @@ strptime(x, format, tz = "")
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       Sunday as the first day 1 of the week (and typically with the
       first Sunday of the year as day 1 of week 1).  The US convention.}
-    \item{\code{\%V}}{Week of the year as decimal number (00--53) as
+    \item{\code{\%V}}{Week of the year as decimal number (01--53) as
       defined in ISO 8601.
       If the week (starting on Monday) containing 1 January has four or
       more days in the new year, then it is considered week 1.  Otherwise, it
@@ -163,7 +163,7 @@ strptime(x, format, tz = "")
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
       \code{+1400} are accepted as from \R 3.1.1: previous versions only
-      accepted up to \code{+1200}.} 
+      accepted up to \code{+1200}.  (Standard only for output.)} 
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
