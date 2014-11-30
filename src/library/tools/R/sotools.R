@@ -213,6 +213,7 @@ so_symbol_names_table <-
       "windows, C, gcc, srand, srand",
       "windows, C, gcc, srand48, srand48",
       "windows, Fortran, gfortran, stop, exit",
+      ## next will not show up with static libgfortran
       "windows, Fortran, gfortran, rand, _gfortran_rand"
       )
 so_symbol_names_table <-
