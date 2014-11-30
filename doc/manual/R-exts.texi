@@ -3906,10 +3906,12 @@ SystemRequirements: GNU make
 Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
-Moreover, Bash extensions also need to be avoided in shell scripts,
-including expressions in Makefiles (which are passed to the shell for
-processing).  Some @R{} platforms use strictly POSIX-conformant Bourne
-shells, and Windows and some Unix-alike OSes use @command{ash}
+@item
+Bash extensions also to be avoided in shell scripts, including
+expressions in Makefiles (which are passed to the shell for processing).
+Some @R{} platforms use strict@footnote{For example, @command{test}
+options @option{-a} and @option{-e} are not portable.} Bourne shells,
+and Windows and some Unix-alike OSes use @command{ash}
 (@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a rather minimal
 shell with few builtins.  Beware of assuming that all the POSIX
 command-line utilities are available, especially on Windows where only a
