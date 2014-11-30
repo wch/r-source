@@ -300,6 +300,10 @@
       the implicit duplication that occurred in R < 3.1.0); note that
       this is a change from the previously documented
       behavior. (\PR{15958})
+      
+      \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
+      which uses the basic C function \code{strcmp} and so collates
+      strings byte-by-byte in numerical order.
     }
   }
 
@@ -357,6 +361,9 @@
       
       \item \code{loadNamespace()} imposed undocumented restrictions
       on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
+      
+      \item Rare over-runs detected by AddressSanitizer in
+      \code{substr()} and its replacement version have been avoided.
     }
   }
 }
