@@ -1061,6 +1061,13 @@ Building is only tested in a 8-bit locale: using a multi-byte locale (as
 used for CJK languages) is unsupported and may not work (the scripts do
 try to select a @samp{C} locale; Windows may not honour this).
 
+@strong{NB:} The build process is currently being changed to support
+using external binary distributions.  Their location can be set using
+macro @code{EXT_LIBS} in @file{src/gnuwin32/MkRules.local}: a suitable
+distribution can be obtained from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.  The rest
+of this section has not yet been updated to reflect that.
+
 @menu
 * Getting the tools::           
 * Getting the source files::    
@@ -1256,9 +1263,8 @@ The file
 @file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is
 not built automatically.
 
-Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
-@code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32} should build
-@file{Rbitmap.dll} and install it under
+Running @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32}
+should build @file{Rbitmap.dll} and install it under
 @file{@var{R_HOME}/library/grDevices/libs}.
 
 @node Building the cairo devices files, Using ICU for collation, Building the bitmap files, Building from source

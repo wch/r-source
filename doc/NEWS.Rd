@@ -194,7 +194,12 @@
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
        \code{pcre} (or similar names) are installed.
-    }
+       
+       \item (Windows.) Installation using external binary distributions
+       of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
+       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now supported
+       and likely to be the preferred or only way before release.
+     }
   }
 
   \subsection{UTILITIES}{
