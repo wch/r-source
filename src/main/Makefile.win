@@ -49,21 +49,30 @@ RNG-CPPFLAGS=-I../nmath
 agrep-CPPFLAGS=-I../extra
 # array-CPPFLAGS=$(OPENMP) # too slow to be useful.
 builtin-CPPFLAGS=-I../gnuwin32
-connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
-connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
+
 dcf-CPPFLAGS=-I../extra
 ## gcc warns incorrectly about %a
 deparse-CFLAGS=-Wno-format
-dounzip-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
 edit-CPPFLAGS=-I../gnuwin32
-grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
 memory-CPPFLAGS=$(malloc-DEFS)
-platform-CPPFLAGS+=-I../extra/zlib -I../extra/bzip2 -I../extra/xz/api -I../extra/pcre -DPCRE_STATIC -DLZMA_API_STATIC
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
 serialize-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
-util-CPPFLAGS=-DLZMA_API_STATIC -I../extra/xz/api
+
+ifdef EXT_LIBS
+connections-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+dounzip-CPPFLAGS = -I$(EXT_LIBS)/include
+grep-CPPFLAGS = -DPCRE_STATIC -I../extra -I../gnuwin32 -I"$(EXT_LIBS)"/include
+platform-CPPFLAGS += -DPCRE_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
+else
+connections-CPPFLAGS = -DLZMA_API_STATIC -I../extra/zlib -I../extra/bzip2 -I../extra/xz/api
+dounzip-CPPFLAGS = -I../extra/zlib -I../extra/bzip2
+grep-CPPFLAGS = -DPCRE_STATIC -I../extra -I../extra/pcre -I../gnuwin32
+platform-CPPFLAGS += -DPCRE_STATIC -DLZMA_API_STATIC -I../extra/zlib -I../extra/bzip2 -I../extra/xz/api -I../extra/pcre
+util-CPPFLAGS = -DLZMA_API_STATIC -I../extra/xz/api
+endif
 
 ifdef USE_ICU
 platform-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include

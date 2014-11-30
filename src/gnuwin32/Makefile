@@ -36,7 +36,7 @@ bytecode-base:
 
 
 rpackages:
-	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
+	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN) EXT_LIBS="$(EXT_LIBS)"
 	@$(MK) -C ../library -f Makefile.win docs
 
 
@@ -67,10 +67,9 @@ endif
 
 R-DLLFLAGS=-mwindows
 ifdef USE_ICU
-LIBEXTRAS+= -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
+LIBEXTRAS = -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
 endif
 
-R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
 CSOURCES = \
   console.c dynload.c editor.c embeddedR.c extra.c \
@@ -82,9 +81,17 @@ ifeq "$(WIN)" "32"
 endif
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
-   ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a \
-   ../extra/tre/libtre.a ../extra/xz/liblzma.a
+   ../extra/tre/libtre.a
+
+ifdef EXT_LIBS
+LIBEXTRAS += -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
+R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
+else
+EXTRALIBS += ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
+   ../extra/xz/liblzma.a
+R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
+endif
 
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
@@ -122,9 +129,14 @@ rlibs:
 	$(MK) -C ../nmath CFLAGS='$(CFLAGS)' FFLAGS='${FFLAGS}' -f Makefile.win
 	$(MK) -C ../main CFLAGS='$(CFLAGS)' FFLAGS='$(FFLAGS)' malloc-DEFS='$(malloc-DEFS)' -f Makefile.win
 	$(MK) -C ./getline CFLAGS='$(CFLAGS)'
-	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv xz; do \
+	@for ex in graphapp xdr tre trio tzone win_iconv ; do \
 	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
 	done
+ifndef EXT_LIBS
+	@for ex in pcre bzip2 zlib xz; do \
+	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
+	done
+endif
 
 rmodules:
 	@$(MKDIR) -p ../../modules$(R_ARCH)

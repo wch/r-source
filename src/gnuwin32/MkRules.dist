@@ -11,15 +11,19 @@ LOCAL_SOFT =
 
 ## ============== configuration macros for building R ===================
 
+# External library directory, containing zlib, bzlib, liblzma, pcre,
+# libpng, libjpeg, libtiff.  No spaces in the path.
+# EXT_LIBS =
+
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
-G_FLAG=-gdwarf-2
+G_FLAG = -gdwarf-2
 
 # Comment out if the msvcrt.dll malloc/free is required (not tested recently)
-LEA_MALLOC=YES
+LEA_MALLOC = YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
-USE_ATLAS=NO
-ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
+USE_ATLAS = NO
+ATLAS_PATH = /R/ATLAS/lib/WinNT_P4SSE2
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
@@ -109,13 +113,13 @@ PTHREAD = -pthread
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.[34].x was installed. Spaces allowed.
-ISDIR=C:/packages/Inno
+ISDIR = C:/packages/Inno
 
 # optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.
-QPDF=
+QPDF =
 
 # home of 32-bit files for combined installer on 64-bit build
-HOME32=
+HOME32 =
 
 # Full paths of extra DLLs that need to be shipped
 # e.g
@@ -128,9 +132,9 @@ DLLs64 =
 
 # location where WiX 3.x executables were installed. Spaces allowed.
 # The MSI uses '/bin': other packagings may not
-WIX3DIR=C:/packages/WiX3.5/bin
+WIX3DIR = C:/packages/WiX3.5/bin
 
 # set to 1 for a non-elevated per-user installer
-WIX_PERSONAL=0
+WIX_PERSONAL = 0
 
 ## =============== end of user-customizable parts  ===================

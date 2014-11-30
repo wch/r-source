@@ -32,7 +32,12 @@ arch_DEFS = -DR_ARCH='"i386"'
 endif
 devWindows-CPPFLAGS=-I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
 
-PKG_LIBS=-lRgraphapp -lRzlib
+ifneq "$(EXT_LIBS)" ""
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lz
+else
+PKG_LIBS = -lRgraphapp -lRzlib
+endif
+
 
 all: makeMakedeps shlib
 

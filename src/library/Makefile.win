@@ -43,7 +43,8 @@ R:
 	  done; \
 	fi
 	@for pkg in $(R_PKGS_BASE1); do \
-	  $(MAKE) -C $${pkg} -f Makefile.win R_ARCH=$(R_ARCH) \
+	  $(MAKE) -C $${pkg} -f Makefile.win \
+             R_ARCH=$(R_ARCH) EXT_LIBS="$(EXT_LIBS)" \
 	     all install-tests || exit 1; \
 	done
 	@$(MAKE) -C translations -f Makefile.win

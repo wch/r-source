@@ -133,7 +133,7 @@ mksrc:
 
 mksrc-win2:
 	@if test -d src; then \
-	  (cd src && $(MAKE) -f Makefile.win) || exit 1; \
+	  (cd src && $(MAKE) -f Makefile.win EXT_LIBS="$(EXT_LIBS)") || exit 1; \
 	fi
 
 ## install man/figures: currently only used for graphics
