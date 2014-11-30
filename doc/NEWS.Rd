@@ -369,6 +369,10 @@
       
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
+
+      \item Loading packages incorrectly defining an S4 generic followed
+      by a function of the same name caused an erroneous cyclic
+      namespace dependency error.
     }
   }
 }

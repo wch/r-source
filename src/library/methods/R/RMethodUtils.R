@@ -470,20 +470,19 @@ getGeneric <-
         value
     else {
         if(nzchar(package) && is.na(match(package, c("methods", "base")))) {
-            ## try to load package, or attach it if necessary
-            ev <- tryCatch(loadNamespace(package), error = function(e)e)
-            if(is(ev, "error") &&
-               require(package, character.only =TRUE))
-                ev <- as.environment(paste("package",package,sep=":"))
-            if(is.environment(ev))
-                value <- .getGeneric(f, ev, package)
+            value <- tryCatch({
+                ## try to load package namespace
+                if (!package %in% loadedNamespaces())
+                    loadNamespace(package)
+                ev <- getNamespace(package)
+                .getGeneric(f, ev, package)
+            }, error = function(e) NULL)
         }
         if(is.function(value))
             value
         else if(mustFind)
             ## the C code will have thrown an error if f is not a single string
-            stop(gettextf("no generic function found for %s",
-                          sQuote(f)),
+            stop(gettextf("no generic function found for %s", sQuote(f)),
                  domain = NA)
         else
             NULL
