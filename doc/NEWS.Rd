@@ -165,8 +165,8 @@
       A similar function \code{grSoftVersion()} in package \pkg{grDevices}
       reports on third-party graphics software.
 
-      Calling \code{callGeneric()} without arguments now works with
-      primitive generics to some extent.
+      \item Calling \code{callGeneric()} without arguments now works
+      with primitive generics to some extent.
 
       \item \code{vapply(x, FUN, FUN.VALUE)} is more efficient notably
       for large \code{length(FUN.VALUE)}; as extension of \PR{16061}.
