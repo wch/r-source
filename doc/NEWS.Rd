@@ -156,7 +156,7 @@
 
       \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
-      
+
       \item New function \code{extSoftVersion()} to report on the
       versions of third-party software in use in this session.
       Currently reports versions of \code{zlib}, \code{bzlib}, the
@@ -167,6 +167,9 @@
 
       Calling \code{callGeneric()} without arguments now works with
       primitive generics to some extent.
+
+      \item \code{vapply(x, FUN, FUN.VALUE)} is more efficient notably
+      for large \code{length(FUN.VALUE)}; as extension of \PR{16061}.
     }
   }
 
@@ -180,11 +183,11 @@
       \command{valgrind} headers \emph{via} \command{configure} option
       \option{--with-system-valgrind-headers}: note the possible
       incompatibility of such headers discussed in the 'R Installation
-      and Administration' manual. (Wish of \PR{16808}.)
+      and Administration' manual. (Wish of \PR{16068}.)
 
       \item The included version of \code{liblzma} has been updated to
       \code{xz-utils} 5.0.7 (minor bug fixes from 5.0.5).
-      
+
       \item \command{configure} options \option{--with-system-zlib},
        \option{--with-system-bzlib} and \option{--with-system-pcre} are
        now the default.  For the time being there is fallback to the
@@ -194,7 +197,7 @@
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
        \code{pcre} (or similar names) are installed.
-       
+
        \item (Windows.) Installation using external binary distributions
        of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
        \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now supported
@@ -245,7 +248,7 @@
       pointers.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item  (Windows) The use of macro \code{ZLIB_LIBS} (which has not
@@ -255,7 +258,7 @@
       \code{-lz} directly.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{download.file(method = "lynx")} is defunct.
@@ -305,7 +308,7 @@
       the implicit duplication that occurred in R < 3.1.0); note that
       this is a change from the previously documented
       behavior. (\PR{15958})
-      
+
       \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
       which uses the basic C function \code{strcmp} and so collates
       strings byte-by-byte in numerical order.
@@ -347,26 +350,26 @@
 
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
-      
+
       \item \code{prompt()} did not escape percent signs in the
       automatically generated usage section of help files.
-      
+
       \item \code{drop.terms()} dropped some of the attributes of the
-      object it was working with.  (\PR{16029})      
+      object it was working with.  (\PR{16029})
 
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  (\PR{15791})
-      
-      \item (Windows.) The \code{choose.files()} command returned a 
+
+      \item (Windows.) The \code{choose.files()} command returned a
       blank string when the user asked for a single file but cancelled
       the request.  (\PR{16074})
 
       \item \code{Math2} group generics failed to correctly dispatch
       \code{"structure"} and \code{"nonStructure"}-derived classes.
-      
+
       \item \code{loadNamespace()} imposed undocumented restrictions
       on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
-      
+
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
 
