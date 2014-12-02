@@ -306,20 +306,30 @@
                   S3Part(x) <- `$<-.data.frame`(S3Part(x, TRUE), name, value)
                   x
               })
+    callBracketReplaceGeneric <- function() {
+        call <- sys.call(sys.parent())
+        which.ij <- if (length(call) > 4L) 3:4 else 3L
+        ij <- as.list(call[which.ij])
+        present <- logical(length(ij))
+        for (a in seq_along(ij)) {
+            arg <- ij[[a]]
+            present[a] <- !missing(arg)
+        }
+        ij[present] <- head(c(quote(i), quote(j)), length(ij))[present]
+        call <- as.call(c(call[[1L]], quote(x3), ij, quote(...),
+                          value=quote(value)))
+        eval(call, parent.frame())
+    }
     setMethod("[<-", "data.frame", where = envir,
               function (x, i, j, ..., value) {
-                  call <- sys.call()
-                  call[[1L]] <- quote(`[<-.data.frame`)
-                  call[[2L]] <- S3Part(x, TRUE)
-                  S3Part(x) <- eval(call)
+                  x3 <- S3Part(x, TRUE)
+                  S3Part(x) <- callBracketReplaceGeneric()
                   x
               })
     setMethod("[[<-", "data.frame", where = envir,
               function (x, i, j, ..., value) {
-                  call <- sys.call()
-                  call[[1L]] <- quote(`[[<-.data.frame`)
-                  call[[2L]] <- S3Part(x, TRUE)
-                  S3Part(x) <- eval(call)
+                  x3 <- S3Part(x, TRUE)
+                  S3Part(x) <- callBracketReplaceGeneric()
                   x
               })
     ## methods to go from S4 to S3; first, using registered class; second, general S4 object
