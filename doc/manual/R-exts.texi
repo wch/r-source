@@ -6755,7 +6755,7 @@ The analysis for @file{libc} showed that calls to @code{wcsftime}
 dominated, so those calls were cached for @R{} 3.0.3: the time spent in
 @code{no-vmlinux} (the kernel) was reduced dramatically.
 
-On platforms which support it, callgraphs can be produced by
+On platforms which support it, call graphs can be produced by
 @command{opcontrol --callgraph} if collected via @command{operf
 --callgraph}.
 
