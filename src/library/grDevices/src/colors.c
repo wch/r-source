@@ -204,7 +204,10 @@ SEXP hsv(SEXP h, SEXP s, SEXP v, SEXP a)
     if (max < nv) max = nv;
     if (max < na) max = na;
     SEXP c = PROTECT(allocVector(STRSXP, max));
-    if(max == 0) return(c);
+    if(max == 0) {
+        UNPROTECT(5);
+        return(c);
+    }
 
     if(isNull(a)) {
 	for (i = 0; i < max; i++) {
