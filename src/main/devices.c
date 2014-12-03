@@ -459,7 +459,10 @@ void GEaddDevice2(pGEDevDesc gdd, const char *name)
 void GEaddDevice2f(pGEDevDesc gdd, const char *name, const char *file)
 {
     SEXP f = PROTECT(mkString(name));
-    if(file) setAttrib(f, install("filepath"), mkString(file));
+    if(file) {
+      SEXP s_filepath = install("filepath");
+      setAttrib(f, s_filepath, mkString(file));
+    }
     gsetVar(R_DeviceSymbol, f, R_BaseEnv);
     UNPROTECT(1);
     GEaddDevice(gdd);

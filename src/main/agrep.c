@@ -849,7 +849,8 @@ SEXP attribute_hidden do_aregexec(SEXP call, SEXP op, SEXP args, SEXP env)
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	if(STRING_ELT(vec, i) == NA_STRING) {
 	    PROTECT(matchpos = ScalarInteger(NA_INTEGER));
-	    setAttrib(matchpos, install("match.length"),
+	    SEXP s_match_length = install("match.length");
+	    setAttrib(matchpos, s_match_length,
 		      ScalarInteger(NA_INTEGER));
 	    SET_VECTOR_ELT(ans, i, matchpos);
 	    UNPROTECT(1);

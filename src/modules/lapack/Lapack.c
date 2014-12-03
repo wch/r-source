@@ -963,7 +963,8 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 		      -info, "dpstrf");
 	}
 	setAttrib(ans, install("pivot"), piv);
-	setAttrib(ans, install("rank"), ScalarInteger(rank));
+	SEXP s_rank = install("rank");
+	setAttrib(ans, s_rank, ScalarInteger(rank));
 	SEXP cn, dn = getAttrib(ans, R_DimNamesSymbol);
 	if (!isNull(dn) && !isNull(cn = VECTOR_ELT(dn, 1))) {
 	    // need to pivot the colnames
