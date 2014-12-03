@@ -562,17 +562,19 @@ void PrintWarnings(void)
 
 static SEXP GetSrcLoc(SEXP srcref)
 {
-    SEXP sep, line, result;
-    SEXP srcfile = R_GetSrcFilename(srcref);
+    SEXP sep, line, result, srcfile;
     if (TYPEOF(srcref) != INTSXP || length(srcref) < 4)
 	return ScalarString(mkChar(""));
+
+    PROTECT(srcref);
+    PROTECT(srcfile = R_GetSrcFilename(srcref));
     SEXP e2 = PROTECT(lang2( install("basename"), srcfile));
     PROTECT(srcfile = eval(e2, R_BaseEnv ) );
     PROTECT(sep = ScalarString(mkChar("#")));
     PROTECT(line = ScalarInteger(INTEGER(srcref)[0]));
     SEXP e = PROTECT(lang4( install("paste0"), srcfile, sep, line ));
     result = eval(e, R_BaseEnv );
-    UNPROTECT(5);
+    UNPROTECT(7);
     return result;
 }
 

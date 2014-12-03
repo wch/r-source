@@ -1799,17 +1799,22 @@ SEXP attribute_hidden
 R_getS4DataSlot(SEXP obj, SEXPTYPE type)
 {
   static SEXP s_xData, s_dotData; SEXP value = R_NilValue;
+  PROTECT_INDEX opi;
+
+  PROTECT_WITH_INDEX(obj, &opi);
   if(!s_xData) {
     s_xData = install(".xData");
     s_dotData = install(".Data");
   }
   if(TYPEOF(obj) != S4SXP || type == S4SXP) {
     SEXP s3class = S3Class(obj);
-    if(s3class == R_NilValue && type == S4SXP)
+    if(s3class == R_NilValue && type == S4SXP) {
+      UNPROTECT(1); /* obj */
       return R_NilValue;
+    }
     PROTECT(s3class);
-    if(MAYBE_REFERENCED(obj)) obj = shallow_duplicate(obj);
-    UNPROTECT(1);
+    if(MAYBE_REFERENCED(obj))
+      REPROTECT(obj = shallow_duplicate(obj), opi);
     if(s3class != R_NilValue) {/* replace class with S3 class */
       setAttrib(obj, R_ClassSymbol, s3class);
       setAttrib(obj, s_dot_S3Class, R_NilValue); /* not in the S3 class */
@@ -1817,20 +1822,26 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
     else { /* to avoid inf. recursion, must unset class attribute */
       setAttrib(obj, R_ClassSymbol, R_NilValue);
     }
+    UNPROTECT(1); /* s3class */
     UNSET_S4_OBJECT(obj);
-    if(type == S4SXP)
+    if(type == S4SXP) {
+      UNPROTECT(1); /* obj */
       return obj;
+    }
     value = obj;
   }
   else
       value = getAttrib(obj, s_dotData);
   if(value == R_NilValue)
       value = getAttrib(obj, s_xData);
+
+  UNPROTECT(1); /* obj */
 /* the mechanism for extending abnormal types.  In the future, would b
    good to consolidate under the ".Data" slot, but this has
    been used to mean S4 objects with non-S4 type, so for now
    a secondary slot name, ".xData" is used to avoid confusion
-*/  if(value != R_NilValue &&
+*/
+  if(value != R_NilValue &&
      (type == ANYSXP || type == TYPEOF(value)))
      return value;
   else
