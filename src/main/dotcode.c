@@ -1690,7 +1690,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (t == LISTSXP)
 		warning(_("pairlists are passed as SEXP as from R 2.15.0"));
 	    cargs[na] =  (void*) s;
-	    continue;
+	    break;
 	}
 	if (nprotect) UNPROTECT(nprotect);
     }
