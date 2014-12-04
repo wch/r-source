@@ -532,8 +532,8 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *sb, *sg, *sk;
     SEXP ans, s, t, klass, method, matchedarg, generic;
     SEXP nextfun, nextfunSignature;
-    SEXP sysp, m, formals, actuals, tmp, newcall;
-    SEXP a, group, basename;
+    SEXP sysp, formals, newcall;
+    SEXP group, basename;
     SEXP callenv, defenv;
     RCNTXT *cptr;
     int i, j;
@@ -584,54 +584,8 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* get formals and actuals; attach the names of the formals to
        the actuals, expanding any ... that occurs */
     formals = FORMALS(s);
-    PROTECT(actuals = matchArgs(formals, cptr->promargs, call));
+    PROTECT(matchedarg = patchArgsByActuals(formals, cptr->promargs, cptr->cloenv));
 
-    i = 0;
-    for(s = formals, t = actuals; s != R_NilValue; s = CDR(s), t = CDR(t)) {
-	SET_TAG(t, TAG(s));
-	if(TAG(t) == R_DotsSymbol) i = length(CAR(t));
-    }
-    if(i) {   /* we need to expand out the dots */
-	PROTECT(t = allocList(i+length(actuals)-1));
-	for(s = actuals, m = t; s != R_NilValue; s = CDR(s)) {
-	    if(TYPEOF(CAR(s)) == DOTSXP) {
-		for(i = 1, a = CAR(s); a != R_NilValue;
-		    a = CDR(a), i++, m = CDR(m)) {
-		    SET_TAG(m, installDDVAL(i));
-		    SETCAR(m, CAR(a));
-		}
-	    } else {
-		SET_TAG(m, TAG(s));
-		SETCAR(m, CAR(s));
-		m = CDR(m);
-	    }
-	}
-	UNPROTECT(1);
-	actuals = t;
-    }
-    PROTECT(actuals);
-
-
-    /* we can't duplicate because it would force the promises */
-    /* so we do our own duplication of the promargs */
-
-    PROTECT(matchedarg = allocList(length(cptr->promargs)));
-    for (t = matchedarg, s = cptr->promargs; t != R_NilValue;
-	 s = CDR(s), t = CDR(t)) {
-	SETCAR(t, CAR(s));
-	SET_TAG(t, TAG(s));
-    }
-    for (t = matchedarg; t != R_NilValue; t = CDR(t)) {
-	for (m = actuals; m != R_NilValue; m = CDR(m))
-	    if (CAR(m) == CAR(t))  {
-		if (CAR(m) == R_MissingArg) {
-		    tmp = findVarInFrame3(cptr->cloenv, TAG(m), TRUE);
-		    if (tmp == R_MissingArg) break;
-		}
-		SETCAR(t, mkPROMISE(TAG(m), cptr->cloenv));
-		break;
-	   }
-    }
     /*
       Now see if there were any other arguments passed in
       Currently we seem to only allow named args to change
@@ -809,7 +763,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ans = applyMethod(newcall, nextfun, matchedarg, env, newvars);
     vmaxset(vmax);
-    UNPROTECT(9);
+    UNPROTECT(7);
     return(ans);
 }
 

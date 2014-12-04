@@ -919,6 +919,7 @@ LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 # define onsigusr1              Rf_onsigusr1
 # define onsigusr2              Rf_onsigusr2
 # define parse			Rf_parse
+# define patchArgsByActuals	Rf_patchArgsByActuals
 # define PrintDefaults		Rf_PrintDefaults
 # define PrintGreeting		Rf_PrintGreeting
 # define PrintValueEnv		Rf_PrintValueEnv
@@ -1117,6 +1118,7 @@ RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
 R_xlen_t OneIndex(SEXP, SEXP, R_xlen_t, int, SEXP*, int, SEXP);
 SEXP parse(FILE*, int);
+SEXP patchArgsByActuals(SEXP, SEXP, SEXP);
 void PrintDefaults(void);
 void PrintGreeting(void);
 void PrintValueEnv(SEXP, SEXP);
