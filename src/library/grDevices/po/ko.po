@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2014-03-26 20:46-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -69,67 +69,67 @@ msgstr "알파레벨 0:255 내에 있어야 하는데 %d입니다"
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv에서 rgb로의 색상전환이 잘못되었습니다"
 
-#: colors.c:215 colors.c:229
+#: colors.c:218 colors.c:232
 msgid "invalid hsv color"
 msgstr "유효하지 않은 hsv 색입니다"
 
-#: colors.c:341 colors.c:361
+#: colors.c:344 colors.c:364
 msgid "invalid hcl color"
 msgstr "유효하지 않은 hcl 색입니다"
 
-#: colors.c:393
+#: colors.c:396
 msgid "invalid value of 'maxColorValue'"
 msgstr "'maxColorValue'의 값이 올바르지 않습니다"
 
-#: colors.c:421
+#: colors.c:424
 msgid "invalid 'names' vector"
 msgstr "유효하지 않은 'names' 벡터입니다"
 
-#: colors.c:480 colors.c:489
+#: colors.c:483 colors.c:492
 msgid "invalid gray level, must be in [0,1]."
 msgstr "명암수준은 반드시 [0,1]내에 있어야 합니다"
 
-#: colors.c:545
+#: colors.c:548
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s' 값입니다"
 
-#: colors.c:1337
+#: colors.c:1340
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "'color' 또는 'lty'에 유효하지 않은 16진수가 있습니다"
 
-#: colors.c:1347 colors.c:1357
+#: colors.c:1350 colors.c:1360
 msgid "invalid RGB specification"
 msgstr "유효하지 않은 RGB 지정입니다"
 
-#: colors.c:1390
+#: colors.c:1393
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "유효하지 않은 색상명 '%s'입니다"
 
-#: colors.c:1440 colors.c:1449
+#: colors.c:1443 colors.c:1452
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr "유효하지 않은 색상지정 \"%s\"입니다"
 
-#: colors.c:1477
+#: colors.c:1480
 msgid "supplied color is neither numeric nor character"
 msgstr "제공된 색상은 숫자도 아니고 문자도 아닙니다"
 
-#: colors.c:1481
+#: colors.c:1484
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr "색상을 정하는 숫자값은 반드시 0보다 크거나 같아야 하며 %d를 찾았습니다"
 
-#: colors.c:1492
+#: colors.c:1495
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 유형입니다"
 
-#: colors.c:1503
+#: colors.c:1506
 msgid "unknown palette (need >= 2 colors)"
 msgstr "알수없는 파렛트입니다 (2개 이상의 색상이 필요합니다)"
 
-#: colors.c:1507 colors.c:1529
+#: colors.c:1510 colors.c:1532
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr "사용할 수 있는 색상의 최대개수는 %d입니다"
@@ -743,7 +743,7 @@ msgstr "QuartzBitmap_Output - 파일 '%s'를 열 수 없습니다"
 msgid "not a supported scheme, no image data written"
 msgstr ""
 
-#: stubs.c:99
+#: stubs.c:104
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다"

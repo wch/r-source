@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -68,69 +68,69 @@ msgstr " アルファ値 %d が 0:255 の範囲内にありません "
 msgid "bad hsv to rgb color conversion"
 msgstr " hsv から rgb への色変換に失敗しました "
 
-#: colors.c:215 colors.c:229
+#: colors.c:218 colors.c:232
 msgid "invalid hsv color"
 msgstr " hsv カラーが不正です "
 
-#: colors.c:341 colors.c:361
+#: colors.c:344 colors.c:364
 msgid "invalid hcl color"
 msgstr " hcl カラーが不正です "
 
-#: colors.c:393
+#: colors.c:396
 msgid "invalid value of 'maxColorValue'"
 msgstr " 'maxColorValue' の値が不正です "
 
-#: colors.c:421
+#: colors.c:424
 msgid "invalid 'names' vector"
 msgstr " 'names' ベクトルが不正です "
 
-#: colors.c:480 colors.c:489
+#: colors.c:483 colors.c:492
 msgid "invalid gray level, must be in [0,1]."
 msgstr " 濃淡度が不正です。濃淡度は [0, 1] の範囲内にある必要があります "
 
-#: colors.c:545
+#: colors.c:548
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
 
-#: colors.c:1337
+#: colors.c:1340
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr " 'color' または 'lty' 中の 16 進数が不正です "
 
-#: colors.c:1347 colors.c:1357
+#: colors.c:1350 colors.c:1360
 msgid "invalid RGB specification"
 msgstr " RGB の指定が不正です "
 
-#: colors.c:1390
+#: colors.c:1393
 #, c-format
 msgid "invalid color name '%s'"
 msgstr " 色名 '%s' が不正です "
 
-#: colors.c:1440 colors.c:1449
+#: colors.c:1443 colors.c:1452
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr " 色の指定 \"%s\" が不正です "
 
-#: colors.c:1477
+#: colors.c:1480
 msgid "supplied color is neither numeric nor character"
 msgstr " 与えられた色が数値でも文字列でもありません "
 
-#: colors.c:1481
+#: colors.c:1484
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr ""
 " 色を数値で指定する場合、数値は 0 以上である必要があります。%d が指定されまし"
 "た "
 
-#: colors.c:1492
+#: colors.c:1495
 msgid "invalid argument type"
 msgstr " 引数の型が不正です "
 
-#: colors.c:1503
+#: colors.c:1506
 msgid "unknown palette (need >= 2 colors)"
 msgstr " パレットが不正です (2 色以上必要です) "
 
-#: colors.c:1507 colors.c:1529
+#: colors.c:1510 colors.c:1532
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr " パレットの色数の最大値は %d です "
@@ -755,7 +755,7 @@ msgstr ""
 " サポートされていないスキーム (scheme) なのでイメージデータは書き出されませ"
 "ん "
 
-#: stubs.c:99
+#: stubs.c:104
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " 引数 '%s' が不正です "

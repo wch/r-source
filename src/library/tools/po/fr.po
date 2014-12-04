@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:03+0000\n"
 "PO-Revision-Date: 2013-03-19 20:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -56,89 +56,89 @@ msgstr ""
 "une seule astérisque '*' est supportée au maximum dans chaque spécification "
 "de conversion "
 
-#: gramLatex.y:685 gramRd.y:1321
+#: gramLatex.c:2376 gramRd.c:3893
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 "impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
 
-#: gramLatex.y:922 gramRd.y:1810 gramRd.y:1816
+#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
 
-#: gramRd.y:303 gramRd.y:306
+#: gramRd.c:2531 gramRd.c:2534
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "marque erronée (espace additionel ?) à %s:%d:%d"
 
-#: gramRd.y:543
+#: gramRd.c:3113
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "La macro '%s' est déjà précédemment définie."
 
-#: gramRd.y:553
+#: gramRd.c:3123
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
 "Un maximum de 4 arguments est autorisé pour les macros définies par "
 "l'utilisateur."
 
-#: gramRd.y:587
+#: gramRd.c:3157
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Pas de définition de macro pour '%s'."
 
-#: gramRd.y:739 gramRd.y:743
+#: gramRd.c:3311 gramRd.c:3315
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
 "retour de ligne à l'intérieur d'une chaîne de caractères entre guillemets à "
 "%s:%d"
 
-#: gramRd.y:762
+#: gramRd.c:3334
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
 "impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
 
-#: gramRd.y:792
+#: gramRd.c:3364
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "macros imbriquées trop profondément : récursion infinie ?"
 
-#: gramRd.y:1186
+#: gramRd.c:3758
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Macro %s introuvable"
 
-#: gramRd.y:1381
+#: gramRd.c:3953
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 "Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:"
 "%d:%d)"
 
-#: gramRd.y:1823
+#: gramRd.c:4395
 msgid "cannot open the connection"
 msgstr "impossible d'ouvrir la connexion"
 
-#: gramRd.y:1830
+#: gramRd.c:4402
 msgid "cannot read from this connection"
 msgstr "impossible de lire depuis cette connexion"
 
-#: gramRd.y:1838
+#: gramRd.c:4410
 msgid "invalid Rd file"
 msgstr "fichier Rd incorrect"
 
-#: gramRd.y:1857
+#: gramRd.c:4429
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' ne peut décoder que des éléments textuels"
 
-#: gramRd.y:1860
+#: gramRd.c:4432
 msgid "bad state"
 msgstr "état incorrect"
 
-#: gramRd.y:1873
+#: gramRd.c:4445
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "mode de texte %d erroné dans 'deparseRd'"

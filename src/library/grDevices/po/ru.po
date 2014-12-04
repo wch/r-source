@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-07-18 13:11+0100\n"
+"POT-Creation-Date: 2014-12-04 22:02+0000\n"
 "PO-Revision-Date: 2013-03-19 19:32-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -70,68 +70,68 @@ msgstr "уровень альфа %d, не в 0:255"
 msgid "bad hsv to rgb color conversion"
 msgstr "неправильное преобразование hsv в rgb"
 
-#: colors.c:215 colors.c:229
+#: colors.c:218 colors.c:232
 msgid "invalid hsv color"
 msgstr "неправильный цвет hsv"
 
-#: colors.c:341 colors.c:361
+#: colors.c:344 colors.c:364
 msgid "invalid hcl color"
 msgstr "неправильный цвет hcl"
 
-#: colors.c:393
+#: colors.c:396
 #, fuzzy
 msgid "invalid value of 'maxColorValue'"
 msgstr "неправильное значение '%s'"
 
-#: colors.c:421
+#: colors.c:424
 msgid "invalid 'names' vector"
 msgstr "неправильный вектор 'names'"
 
-#: colors.c:480 colors.c:489
+#: colors.c:483 colors.c:492
 msgid "invalid gray level, must be in [0,1]."
 msgstr "неправильный уровень серого, должен быть в [0,1]."
 
-#: colors.c:545
+#: colors.c:548
 #, c-format
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
 
-#: colors.c:1337
+#: colors.c:1340
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "неправильная шестнадцатеричная цифра в 'color' или 'lty'"
 
-#: colors.c:1347 colors.c:1357
+#: colors.c:1350 colors.c:1360
 msgid "invalid RGB specification"
 msgstr "неправильное указание RGB"
 
-#: colors.c:1390
+#: colors.c:1393
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "неправильное название цвета '%s'"
 
-#: colors.c:1440 colors.c:1449
+#: colors.c:1443 colors.c:1452
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr "неправильное указание цвета \"%s\""
 
-#: colors.c:1477
+#: colors.c:1480
 msgid "supplied color is neither numeric nor character"
 msgstr "заданный цвет не число и не текст"
 
-#: colors.c:1481
+#: colors.c:1484
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr "числовые значения цветов должны быть >= 0, а они %d"
 
-#: colors.c:1492
+#: colors.c:1495
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
 
-#: colors.c:1503
+#: colors.c:1506
 msgid "unknown palette (need >= 2 colors)"
 msgstr "неправильная палитра (надо >= 2 цветов)"
 
-#: colors.c:1507 colors.c:1529
+#: colors.c:1510 colors.c:1532
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr "максимальное количество цветов %d"
@@ -743,7 +743,7 @@ msgstr "QuartzBitmap_Output - не могу открыть файл '%s'"
 msgid "not a supported scheme, no image data written"
 msgstr "схема не поддерживается, данные изображения не записаны"
 
-#: stubs.c:99
+#: stubs.c:104
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент %s"
