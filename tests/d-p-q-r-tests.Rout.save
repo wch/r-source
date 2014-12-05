@@ -1,5 +1,5 @@
 
-R version 3.1.2 Patched (2014-11-20 r67007) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2014-12-03 r67103) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1365,5 +1365,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.754 0.009 0.764 0 0 
+Time elapsed:  0.795 0.009 0.804 0 0 
 > 
