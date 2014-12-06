@@ -3881,7 +3881,7 @@ GNU extensions.  Commonly misused GNU extensions are conditional
 inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
 @code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.  Also,
 the use of @code{$<} other than in implicit rules is a GNU extension, as
-is the @code{$^} macro  Unfortunately makefiles which use GNU
+is the @code{$^} macro.  Unfortunately makefiles which use GNU
 extensions often run on other platforms but do not have the intended
 results.
 
@@ -3907,15 +3907,16 @@ Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
 
 @item
-Bash extensions also to be avoided in shell scripts, including
+Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
-options @option{-a} and @option{-e} are not portable.} Bourne shells,
-and Windows and some Unix-alike OSes use @command{ash}
-(@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a rather minimal
-shell with few builtins.  Beware of assuming that all the POSIX
-command-line utilities are available, especially on Windows where only a
-minimal set is provided for use with @R{}.
+options @option{-a} and @option{-e} are not portable, and not supported
+in the AT&T Bourne shell used on Solaris. Even though they are in the
+POSIX standard.} Bourne shells, and Windows and some Unix-alike OSes use
+@command{ash} (@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a
+rather minimal shell with few builtins.  Beware of assuming that all the
+POSIX command-line utilities are available, especially on Windows where
+only a minimal set is provided for use with @R{}.
 @ifset UseExternalXrefs
 (@xref{The command line tools, , The command line tools,
 R-admin, R Installation and Administration}.)
@@ -3948,6 +3949,13 @@ to follow the 1998 standard (and not use features from C99).  See also
 If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
 of conformance to the standard.
+
+Not all common @R{} platforms conform to the expected standards, e.g.@:
+C99 for C code.  One common area of problems is the @code{*printf}
+functions where Windows does not support @code{%lld}, @code{%Lf} and
+similar formats (and has its own formats such as @code{%I64d} for 64-bit
+integers).  It is very rare to need to output such types, and 64-bit
+integers can usually be converted to doubles for output.
 
 @item
 Do be very careful with passing arguments between @R{}, C and
