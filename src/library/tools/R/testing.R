@@ -492,7 +492,7 @@ testInstalledPackage <-
 
 .createExdotR <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
-             ..., commentDontrun = TRUE)
+             ..., commentDontrun = TRUE, commentDonttest = FALSE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
 
@@ -514,7 +514,8 @@ testInstalledPackage <-
         nm <- sub("\\.[Rr]d$", "", basename(f))
         Rd2ex(db[[f]],
               file.path(filedir, paste(nm, "R", sep = ".")),
-              defines = NULL, commentDontrun = commentDontrun)
+              defines = NULL, commentDontrun = commentDontrun,
+              commentDonttest = commentDonttest)
         cnt <- cnt + 1L
         if(!silent && cnt %% 10L == 0L)
             message(".", appendLF = FALSE, domain = NA)
@@ -523,7 +524,7 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, use_gct, addTiming, ...)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming, commentDonttest = commentDonttest, ...)
     invisible(Rfile)
 }
 
