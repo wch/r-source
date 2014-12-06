@@ -4023,6 +4023,17 @@ and checking if any of the symbols marked @code{U} is unexpected is a
 good way to avoid this.
 
 @item
+Linkers have a lot of freedom in how to resolve entry points in
+dynamically-loaded code, so the results may differ by platform.  One
+area that has caused grief is packages including copies of standard
+system software such as @code{libz} (especially those already linked
+into @R{}).  In the case in point, entry point @code{gzgets} was
+sometimes resolved against the old version compiled into the package,
+sometimes against the copy compiled into @R{} and sometimes against the
+system dynamic library.  The only safe solution is to rename the entry
+points in the copy in the package.
+
+@item
 Conflicts between symbols in DLLs are handled in very platform-specific
 ways.  Good ways to avoid trouble are to make as many symbols as
 possible static (check with @code{nm -pg}), and to use names which are
