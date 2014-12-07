@@ -1281,7 +1281,7 @@ tarball unpacks with a top-level directory @file{src/}:
 @node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
 @subsection Using ICU for collation
 
-It is possible (and even recommended) to build @R{} to use ICU
+It is possible (and even recommended) to build @R{} to support ICU
 (International Components for Unicode,
 @uref{http://site.icu-project.org/}) for collation, as is commonly done
 on Unix-alikes.
@@ -1301,9 +1301,9 @@ at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
 Depending on the build, it may be necessary to edit the macro
 @code{ICU_LIBS}.
 
-Unlike on a Unix-alike, it is currently necessary to call
+Unlike on a Unix-alike, it is normally necessary to call
 @code{icuSetCollate} to set a locale before ICU is actually used for
-collation.
+collation, or set the environment variable @env{R_ICU_LOCALE}.
 
 @node Checking the build, Building the manuals, Using ICU for collation, Building from source
 @subsection Checking the build
@@ -1336,7 +1336,7 @@ make check-all
 @end example
 
 @noindent
-for @code{check-devel} and @code{check-recommended}.
+for both @code{check-devel} and @code{check-recommended}.
 
 If a test fails, there will almost always be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
@@ -1409,7 +1409,7 @@ bitmapdll @r{(the bitmap support files)}
 cairodevices @r{(the cairo-based graphics devices)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in base packages:}
-	  @r{ only needed if building from an svn checkout)}
+	  @r{ only needed if building from an @command{svn} checkout)}
 manuals @r{(the PDF manuals)}
 rinstaller @r{(the install program)}
 crandir @r{(the @acronym{CRAN} distribution directory, only for 64-bit builds)}
@@ -1451,7 +1451,7 @@ Both methods create an executable with a standard name such as
 @file{@value{RWVERSION}-win.exe}, so please rename it to indicate that
 it is customized.  If you intend to @emph{distribute} a customized
 installer please do check that license requirements are met -- note that
-the installer will state that the contents are distributed under GPL-2
+the installer will state that the contents are distributed under GPL
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
 of R, and also the sources of any extra packages (including their
@@ -1477,11 +1477,11 @@ make 32-bit
 @end example
 
 @noindent
-is needed), and then building 64-bit R with the macro @code{HOME32} set
-in file @file{MkRules.local} to the top-level directory of the 32-bit
-build.  Then the @command{make rinstaller} step copies the files that
-differ between architectures from the 32-bit build as it builds the
-installer image.
+is needed), and then (in a separate directory) building 64-bit R with
+the macro @code{HOME32} set in file @file{MkRules.local} to the
+top-level directory of the 32-bit build.  Then the @command{make
+rinstaller} step copies the files that differ between architectures from
+the 32-bit build as it builds the installer image.
 
 @node Building the MSI installer, 64-bit Windows builds, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
@@ -5759,9 +5759,9 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The preferred toolchain since @R{} 2.14.2 is part of
-@code{Rtools30.exe}: this uses a beta version of @command{gcc 4.6.3}
-and version 2.0.1 of the MinGW-w64 project's runtime.
+The preferred toolchain is part of @code{Rtools31.exe}: this uses a beta
+version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
+project's runtime.
 
 This toolchain uses @emph{multilib}: that is there is a single front-end
 such as @command{gcc.exe} for each of the compilers and 32-bit (the
@@ -5802,7 +5802,7 @@ Developers of packages will find some of the `goodies' at
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The
-binary distribution is included in @file{Rtools30.exe}.
+binary distribution is included in @file{Rtools31.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
