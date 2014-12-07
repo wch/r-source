@@ -16,10 +16,10 @@ arch_DEFS = -DR_ARCH='"i386"'
 R_ARCH = /i386
 endif
 
-PKG_CPPFLAGS=-I$(R_HOME)/src/include -I. -I.. -DHAVE_CONFIG_H  $(arch_DEFS)
-PKG_CPPFLAGS+= -I"$(CAIRO_HOME)/win$(WIN)"
+PKG_CPPFLAGS = -I$(R_HOME)/src/include -I. -I.. -DHAVE_CONFIG_H \
+  $(arch_DEFS) -I"$(CAIRO_HOME)/win$(WIN)"
 
-PKG_LIBS=-L"$(CAIRO_HOME)/win$(WIN)" -lcairo -lpixman-1 -lpng -lz \
+PKG_LIBS = -L"$(CAIRO_HOME)/win$(WIN)" -lcairo -lpixman-1 -lpng -lz \
   -lgdi32 -lmsimg32
 
 SOURCES = cairoBM.c
