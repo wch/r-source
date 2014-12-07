@@ -102,7 +102,6 @@ MIKTEX = TRUE
 MAKEINFO = makeinfo
 # for texinfo >= 5.0.  Might also need -I/path/to/modules
 # MAKEINFO = /path/to/perl /path/to/texi2any
-# or perhaps something like
 
 # additional optimization flags (use -mtune=native for a private build)
 EOPTS = -mtune=core2
