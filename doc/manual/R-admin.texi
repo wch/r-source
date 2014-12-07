@@ -1021,8 +1021,8 @@ but use a UTF-8 or Latin-1 locale.
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows XP or later on ix86 @acronym{CPU}s
-(including AMD64/Intel64 cpus and Windows x64).
+from @acronym{CRAN} to run on 32- or 64-bit Windows (XP or later) on
+@cputype{ix86} and @cputype{x86_64} @acronym{CPU}s.
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
