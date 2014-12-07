@@ -1061,18 +1061,18 @@ Building is only tested in a 8-bit locale: using a multi-byte locale (as
 used for CJK languages) is unsupported and may not work (the scripts do
 try to select a @samp{C} locale; Windows may not honour this).
 
-@strong{NB:} The build process is currently being changed to support
-using external binary distributions.  Their location can be set using
-macro @code{EXT_LIBS} in @file{src/gnuwin32/MkRules.local}: a suitable
-distribution can be obtained from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.  The rest
-of this section has not yet been updated to reflect that.
+@strong{NB:} The build process is currently being changed to require
+external binary distributions of third-party software.  Their location
+can be set using macro @code{EXT_LIBS} in
+@file{src/gnuwin32/MkRules.local}: a suitable distribution can be
+obtained from
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.  This is
+not yet obligatory, but the instructions here assume it has been set.
 
 @menu
 * Getting the tools::           
 * Getting the source files::    
 * Building the core files::     
-* Building the bitmap files::   
 * Building the cairo devices files::  
 * Using ICU for collation::     
 * Checking the build::          
@@ -1143,9 +1143,39 @@ automatically by running in @file{@var{R_HOME}/src/gnuwin32}
 make rsync-recommended
 @end example
 
+@item
+The binary distributions of external software.  Download
+
+@example
+http://www.stats.ox.ac.uk/pub/Rtools/goodies/multilib/local320.zip
+@end example
+
+@noindent
+create an empty directory, say @file{c:/R/extsoft}, and unpack it in
+that directory by e.g.@:
+
+@example
+unzip local320.zip -d c:/R/extsoft
+@end example
+
+@item
+Make a local copy of the configuration rules by
+
+@example
+cd @var{R_HOME}/src/gnuwin32
+cp MkRules.dist MkRules.local
+@end example
+
+@noindent
+and edit @file{MkRules.local}, uncommenting @code{EXT_LIBS} and setting
+it to the appropriate path (in our example @file{c:/R/extsoft}).
+
+Look through the file @file{MkRules.local} and make any other changes
+needed: in particular, this is where a 64-bit build is selected.
+
 @end itemize
 
-The following additional items are normally installed by
+The following additional item is normally installed by
 @file{Rtools31.exe}.  If instead you choose to do a completely manual
 build you will also need
 
@@ -1159,41 +1189,9 @@ install the right version: there is a 32-bit version and a 64-bit
 version.  They should be installed to @file{@var{R_HOME}}, creating
 directory @file{Tcl} there.
 
-@item
-You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
-(available, e.g., from @uref{http://www.libpng.org/},
-@uref{http://www.ijg.org} and
-@uref{http://download.osgeo.org/@/libtiff/}); current versions are
-recommended and @code{jpeg} 7 or later is required.  It is also possible
-to use @samp{libjpeg-turbo} from
-@uref{http://sourceforge.net/@/projects/@/libjpeg-turbo/@/files/}.
-
-Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
-install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 9 is named @file{jpeg-9}; if
-you use a different version (e.g.@: @file{jpeg-9a} or
-@file{libjpeg-turbo}), copy file @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit the definition of
-@code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
-directories can also be set there.
-
-Example:
-
-@example
-> tar -zxf libpng-1.6.10.tar.gz
-> mv libpng-1.6.10 libpng
-> tar -zxf jpegsrc.v9a.tar.gz
-> tar -zxf tiff-4.0.3.tar.gz
-> mv tiff-4.0.3/libtiff .
-> rm -rf tiff-4.0.3
-@end example
-
-@noindent
-(and see the comment above about @option{--no-same-owner}).
-
 @end itemize
 
-@node Building the core files, Building the bitmap files, Getting the source files, Building from source
+@node Building the core files, Building the cairo devices files, Getting the source files, Building from source
 @subsection Building the core files
 
 @enindex TMPDIR
@@ -1206,13 +1204,10 @@ You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.
 
-Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Look at
-@file{MkRules.dist} and if settings need to be altered, copy it to
-@file{MkRules.local} and edit the settings there.  In particular, this
-is where a 64-bit build is selected.  Then run
+Open a command window at @file{@var{R_HOME}/src/gnuwin32}, then run
 
 @example
-make all recommended
+make all recommended bitmapdll
 @end example
 
 @noindent
@@ -1228,19 +1223,12 @@ anti-virus checking such as the on-access scanning of Sophos can slow
 the build down several-fold.
 
 @item
-By default Doug Lea's @code{malloc} in the file
-@file{@var{R_HOME}/src/gnuwin32/malloc.c} is used for R's internal
-memory allocations.  You can opt out of this by setting
-@code{LEA_MALLOC=NO} in @file{MkRules.dist}, in which case the @code{malloc}
-in @file{msvcrt.dll} is used.  This does impose a considerable
-performance penalty and has not been tested recently.
-
-@item
 You can run a parallel make by e.g.
 
 @example
 make -j4 all
 make -j4 recommended
+make -j4 bitmapdll
 @end example
 
 @noindent
@@ -1255,19 +1243,7 @@ packages.
 
 @end itemize
 
-@node Building the bitmap files, Building the cairo devices files, Building the core files, Building from source
-@subsection Building the bitmap files
-@cindex Rbitmap.dll
-
-The file
-@file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is
-not built automatically.
-
-Running @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32}
-should build @file{Rbitmap.dll} and install it under
-@file{@var{R_HOME}/library/grDevices/libs}.
-
-@node Building the cairo devices files, Using ICU for collation, Building the bitmap files, Building from source
+@node Building the cairo devices files, Using ICU for collation, Building the core files, Building from source
 @subsection Building the cairo devices
 @cindex winCairo.dll
 
@@ -1275,8 +1251,8 @@ The devices based on cairographics (@code{svg}, @code{cairo_pdf},
 @code{cairo_ps} and the @code{type = "cairo"} versions of @code{png},
 @code{jpeg}, @code{tiff} and @code{bmp}) are implemented in a separate
 DLL @file{winCairo.dll} which is loaded when one of these devices is
-first used.  It is not built by default, and needs to be built after
-@file{Rbitmap.dll}, by @command{make cairodevices}.
+first used.  It is not built by default, and needs to be built (after
+@command{make bitmapdll}) by @command{make cairodevices}.
 
 To enable the building of these devices you need to install the static
 cairographics libraries built by Simon Urbanek at
@@ -1288,10 +1264,9 @@ tarball unpacks with a top-level directory @file{src/}:
 @node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
 @subsection Using ICU for collation
 
-It is possible (and even recommended) to build @R{} to use ICU
-(International Components for Unicode,
-@uref{http://site.icu-project.org/}) for collation, as is commonly done
-on Unix-alikes.
+It is and even recommended to build @R{} to support ICU (International
+Components for Unicode, @uref{http://site.icu-project.org/}) for
+collation, as is commonly done on Unix-alikes.
 
 Two settings are needed in @file{MkRules.local}, 
 @example
@@ -1308,9 +1283,9 @@ at @url{http://www.stats.ox.ac.uk/pub/Rtools/goodies/ICU_531.zip}.
 Depending on the build, it may be necessary to edit the macro
 @code{ICU_LIBS}.
 
-Unlike on a Unix-alike, it is currently necessary to call
+Unlike on a Unix-alike, it is normally necessary to call
 @code{icuSetCollate} to set a locale before ICU is actually used for
-collation.
+collation, or set the environment variable @env{R_ICU_LOCALE}.
 
 @node Checking the build, Building the manuals, Using ICU for collation, Building from source
 @subsection Checking the build
@@ -1343,7 +1318,7 @@ make check-all
 @end example
 
 @noindent
-for @code{check-devel} and @code{check-recommended}.
+for both @code{check-devel} and @code{check-recommended}.
 
 If a test fails, there will almost always be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
@@ -1384,8 +1359,8 @@ Version 4.x of @command{makeinfo} from Rtools is assumed by default.  If
 you have version 5.x of @pkg{texinfo}, @command{makeinfo} has been
 replaced by a @command{Perl} script @command{texi2any}: file
 @file{MkRules.dist} contains alternative macros to allow that to be used
-(copy it to @file{MkRules.local} before editing).  (A package of
-@pkg{texinfo} 5.x for use on Windows is available at
+(edit the copy @file{MkRules.local}).  (A package of @pkg{texinfo} 5.x
+for use on Windows is available at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
 install @command{Perl}.)
 
@@ -1416,7 +1391,7 @@ bitmapdll @r{(the bitmap support files)}
 cairodevices @r{(the cairo-based graphics devices)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in base packages:}
-	  @r{ only needed if building from an svn checkout)}
+	  @r{ only needed if building from an @command{svn} checkout)}
 manuals @r{(the PDF manuals)}
 rinstaller @r{(the install program)}
 crandir @r{(the @acronym{CRAN} distribution directory, only for 64-bit builds)}
@@ -1458,7 +1433,7 @@ Both methods create an executable with a standard name such as
 @file{@value{RWVERSION}-win.exe}, so please rename it to indicate that
 it is customized.  If you intend to @emph{distribute} a customized
 installer please do check that license requirements are met -- note that
-the installer will state that the contents are distributed under GPL-2
+the installer will state that the contents are distributed under GPL
 and this has a requirement for @emph{you} to supply the complete sources
 (including the R sources even if you started with a binary distribution
 of R, and also the sources of any extra packages (including their
@@ -1484,11 +1459,11 @@ make 32-bit
 @end example
 
 @noindent
-is needed), and then building 64-bit R with the macro @code{HOME32} set
-in file @file{MkRules.local} to the top-level directory of the 32-bit
-build.  Then the @command{make rinstaller} step copies the files that
-differ between architectures from the 32-bit build as it builds the
-installer image.
+is needed), and then (in a separate directory) building 64-bit R with
+the macro @code{HOME32} set in file @file{MkRules.local} to the
+top-level directory of the 32-bit build.  Then the @command{make
+rinstaller} step copies the files that differ between architectures from
+the 32-bit build as it builds the installer image.
 
 @node Building the MSI installer, 64-bit Windows builds, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
@@ -5765,9 +5740,9 @@ Windows-style paths.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
-The preferred toolchain since @R{} 2.14.2 is part of
-@code{Rtools30.exe}: this uses a beta version of @command{gcc 4.6.3}
-and version 2.0.1 of the MinGW-w64 project's runtime.
+The preferred toolchain is part of @code{Rtools31.exe}: this uses a beta
+version of @command{gcc 4.6.3} and version 2.0.1 of the MinGW-w64
+project's runtime.
 
 This toolchain uses @emph{multilib}: that is there is a single front-end
 such as @command{gcc.exe} for each of the compilers and 32-bit (the
@@ -5808,7 +5783,7 @@ Developers of packages will find some of the `goodies' at
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.  The
-binary distribution is included in @file{Rtools30.exe}.
+binary distribution is included in @file{Rtools31.exe}.
 
 The file @file{xzutils.zip} contains the program @command{xz} which can
 be used to (de)compress files with that form of compression.
