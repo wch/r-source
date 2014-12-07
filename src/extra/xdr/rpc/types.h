@@ -62,7 +62,7 @@
 #if !defined(_WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
 #include <stdlib.h> // for malloc
 #endif
-#if defined(_WIN32) && defined(LEA_MALLOC)
+#if defined(_WIN32)
 #include <stddef.h>
 extern void *Rm_malloc(size_t n);
 extern void Rm_free(void * p);

@@ -93,13 +93,6 @@ EXTRALIBS += ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
 R-DLLLIBS =$(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 endif
 
-# flags to ensure that Doug Lea's malloc is used:
-ifdef LEA_MALLOC
-extra-CFLAGS+=-DLEA_MALLOC
-OBJS-EXTRA=malloc.o
-malloc-DEFS=-DLEA_MALLOC
-endif
-
 .PHONY:  clean veryclean rlibs fixfiles front-ends rmodules
 
 

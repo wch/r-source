@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2013  The R Core Team
+ *  Copyright (C) 2005--2014  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -274,7 +274,6 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-#ifdef LEA_MALLOC
 #define MALLINFO_FIELD_TYPE size_t
 struct mallinfo {
     MALLINFO_FIELD_TYPE arena;    /* non-mmapped space allocated from system */
@@ -291,7 +290,6 @@ struct mallinfo {
 extern R_size_t R_max_memory;
 
 struct mallinfo mallinfo(void);
-#endif 
 
 SEXP in_memsize(SEXP ssize)
 {
@@ -305,7 +303,6 @@ SEXP in_memsize(SEXP ssize)
 	double mem = asReal(ssize);
 	if (!R_FINITE(mem))
 	    error(_("incorrect argument"));
-#ifdef LEA_MALLOC
 #ifndef _WIN64
 	if(mem >= 4096)
 	    error(_("don't be silly!: your machine has a 4Gb address limit"));
@@ -315,12 +312,10 @@ SEXP in_memsize(SEXP ssize)
 	    warning(_("cannot decrease memory limit: ignored"));
 	else
 	    R_max_memory = newmax;
-#endif
     } else
 	error(_("incorrect argument"));
 	
     PROTECT(ans = allocVector(REALSXP, 1));
-#ifdef LEA_MALLOC
     if(maxmem == NA_LOGICAL)
 	REAL(ans)[0] = R_max_memory;
     else if(maxmem)
@@ -328,9 +323,6 @@ SEXP in_memsize(SEXP ssize)
     else
 	REAL(ans)[0] = mallinfo().uordblks;
     REAL(ans)[0] /= 1048576.0;
-#else
-    REAL(ans)[0] = NA_REAL;
-#endif
     UNPROTECT(1);
     return ans;
 }

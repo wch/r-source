@@ -95,8 +95,7 @@
 #include <R_ext/Rallocators.h> /* for R_allocator_t structure */
 #include <Rmath.h> // R_pow_di
 
-#if defined(Win32) && defined(LEA_MALLOC)
-/*#include <stddef.h> */
+#if defined(Win32)
 extern void *Rm_malloc(size_t n);
 extern void *Rm_calloc(size_t n_elements, size_t element_size);
 extern void Rm_free(void * p);
