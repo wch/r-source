@@ -1256,9 +1256,8 @@ The file
 @file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is
 not built automatically.
 
-Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
-@code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32} should build
-@file{Rbitmap.dll} and install it under
+Running @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32}
+should build @file{Rbitmap.dll} and install it under
 @file{@var{R_HOME}/library/grDevices/libs}.
 
 @node Building the cairo devices files, Using ICU for collation, Building the bitmap files, Building from source
@@ -3828,8 +3827,8 @@ against, and this can lead to symbol conflicts.
 For maximally effective use of @command{valgrind}, @R{} should be
 compiled with valgrind instrumentation. The @command{configure} option
 is @option{--with-valgrind-instrumentation=@var{level}}, where
-@var{level} is 0, 1, 2 or 3.  (Level 0 is the default and does not add
-any anything.)
+@var{level} is 0, 1 or 2.  (Level 0 is the default and does not add any
+anything.)
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.

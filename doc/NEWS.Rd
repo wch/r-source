@@ -20,7 +20,7 @@
       \item The \code{as.dendrogram} method for \code{"hclust"} objects
       gets a \code{check} argument protecting against memory explosion for
       invalid inputs.
-      
+
       \item \code{capabilities()} has a new item \code{long.double}
       which indicates if the build uses a \code{long double} type which
       is longer than \code{double}.
@@ -30,7 +30,7 @@
       the implicit duplication that occurred in R < 3.1.0); note that
       this is a change from the previously documented
       behavior. (\PR{15958})
-      
+
       \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
       which uses the basic C function \code{strcmp} and so collates
       strings byte-by-byte in numerical order.
@@ -43,6 +43,14 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The \command{configure} option
+      \option{--with-valgrind-instrumentation=3} is deprecated and will
+      be removed in \R 3.2.0.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
@@ -72,26 +80,26 @@
 
       \item \code{download.file()} reported downloaded sizes as 0KB if
       less than 1MB, only for \R 3.1.2 and only on big-endian platforms.
-      
+
       \item \code{prompt()} did not escape percent signs in the
       automatically generated usage section of help files.
-      
+
       \item \code{drop.terms()} dropped some of the attributes of the
-      object it was working with.  (\PR{16029})      
+      object it was working with.  (\PR{16029})
 
       \item (Windows.) The command completion in \command{Rgui.exe}
       messed up the console.  (\PR{15791})
-      
-      \item (Windows.) The \code{choose.files()} command returned a 
+
+      \item (Windows.) The \code{choose.files()} command returned a
       blank string when the user asked for a single file but cancelled
       the request.  (\PR{16074})
 
       \item \code{Math2} group generics failed to correctly dispatch
       \code{"structure"} and \code{"nonStructure"}-derived classes.
-      
+
       \item \code{loadNamespace()} imposed undocumented restrictions
       on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
-      
+
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
 
