@@ -490,9 +490,10 @@ testInstalledPackage <-
     return(nfail)
 }
 
+## Defaults for commenting are the same as per-3.2.0 version.
 .createExdotR <-
     function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
-             ..., commentDontrun = TRUE, commentDonttest = FALSE)
+             ..., commentDontrun = TRUE, commentDonttest = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
 

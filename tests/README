@@ -32,7 +32,9 @@ The \dontest sections of the examples can be run by
 
      make check TEST_DONTTEST=TRUE
 
-(but expect some differences from the reference ouput).
+(but expect some differences from the reference ouput).  This requires
+functional Tcl/Tk, e.g. for X11-based versions DISPLAY must be set to
+a usable X server.
 
 
 	---------- Historical Information -----------

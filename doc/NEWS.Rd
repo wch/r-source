@@ -177,7 +177,7 @@
     \itemize{
       \item The \code{\\donttest} sections of \R's help files can be
       tested by\cr
-      \command{make check TEST_DONTTEST=TRUE}.
+      \command{make check TEST_DONTTEST=TRUE} .
 
       \item It is possible to request the use of system
       \command{valgrind} headers \emph{via} \command{configure} option
@@ -227,6 +227,10 @@
 
       \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
+      
+      \item \command{R CMD check} now checks the packages used in
+      \code{\\donttest} sections of the examples.  (These will be needed
+      to run the examples interactively.)
     }
   }
 

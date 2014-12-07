@@ -5714,7 +5714,8 @@ function(package, dir, lib.loc = NULL)
     }
     pkg_name <- db["Package"]
 
-    file <- .createExdotR(pkg_name, dir, silent = TRUE)
+    file <- .createExdotR(pkg_name, dir, silent = TRUE,
+                          commentDonttest = FALSE)
     if (is.null(file)) return(invisible(NULL)) # e.g, no examples
     on.exit(unlink(file))
     enc <- db["Encoding"]
