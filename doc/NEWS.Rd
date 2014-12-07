@@ -322,6 +322,14 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The \command{configure} option
+      \option{--with-valgrind-instrumentation=3} is deprecated and will
+      be removed in \R 3.2.0.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
