@@ -262,6 +262,11 @@
       \item Use of the included versions of \code{zlib}, \code{bzip2},
       \code{xz} and PCRE is deprecated: these are essentially frozen and
       will eventually be removed.
+
+      \item The \command{configure} option
+      \option{--with-valgrind-instrumentation=3} has been withdrawn, as
+      it did not work with recent \command{valgrind} headers: it is now
+      treated as level \code{2}.
     }
   }
 

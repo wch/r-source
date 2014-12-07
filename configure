@@ -1930,7 +1930,7 @@ Optional Packages:
   --with-system-xz        use system xz (lzma) library (if available) [yes]
   --with-valgrind-instrumentation
                           Level of additional instrumentation for Valgrind
-                          (0/1/2/3) [0]
+                          (0/1/2) [0]
   --with-system-valgrind-headers
                           use system valgrind headers (if available) [no]
   --with-internal-tzcode  use internal time-zone code [no]
