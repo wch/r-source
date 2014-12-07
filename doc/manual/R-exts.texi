@@ -823,11 +823,12 @@ The @samp{Suggests} field uses the same syntax as @samp{Depends} and
 lists packages that are not necessarily needed.  This includes packages
 used only in examples, tests or vignettes (@pxref{Writing package
 vignettes}), and packages loaded in the body of functions.  E.g.,
-suppose an example from package @pkg{foo} uses a dataset from package
-@pkg{bar}. Then it is not necessary to have @pkg{bar} use @pkg{foo}
-unless one wants to execute all the examples/tests/vignettes: it is
-useful to have @pkg{bar}, but not necessary.  Version requirements can
-be specified, and will be used by @command{R CMD check}.
+suppose an example@footnote{even one wrapped in @code{\donttest}.} from
+package @pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
+necessary to have @pkg{bar} use @pkg{foo} unless one wants to execute
+all the examples/tests/vignettes: it is useful to have @pkg{bar}, but
+not necessary.  Version requirements can be specified, and will be used
+by @command{R CMD check}.
 
 @c DESCRIPTION field Enhances
 Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
@@ -5259,7 +5260,9 @@ line) to mark code that should be run by @code{examples()} but not by
 used for code which might fail in circumstances that are hard to test
 for, for example in some locales.  (Use e.g. @code{capabilities()} to
 test for features needed in the examples wherever possible, and you can
-also use @code{try()} or @code{tryCatch()}.)
+also use @code{try()} or @code{tryCatch()}.)  Note that code included in
+@code{\donttest} must be correct @R{} code, and any packages used should
+be declared in the @file{DESCRIPTION} file.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -5426,7 +5429,7 @@ another @file{Rd} file, it is helpful to use this as an additional
 @code{\alias}.
 
 Skeletons of documentation for a package can be generated using the
-function @code{promptPackage()}.  If the @code{final = TRUE} argument
+function @code{promptPackage()}.  If the @code{final = LIBS} argument
 is used, then the @file{Rd} file will be generated in final form, containing
 the information that would be produced up to
 @code{library(help = @var{pkgname})}.  Otherwise (the default) comments
