@@ -33,7 +33,13 @@ massageExamples <-
     if(is.character(outFile)) {
         out <- file(outFile, "wt")
         on.exit(close(out))
-    } else out <- outFile
+        cntFile <- paste0(outFile, "-cnt")
+    } else {
+        out <- outFile
+        cntFile <- NULL
+    }
+
+    count <- 0L # of files using \donttest
 
     lines <- c(paste0('pkgname <- "', pkg, '"'),
                'source(file.path(R.home("share"), "R", "examples-header.R"))',
@@ -104,8 +110,10 @@ massageExamples <-
             dont_test <- FALSE
             for (line in lines) {
                 if(any(grepl("^[[:space:]]*## No test:", line,
-                             perl = TRUE, useBytes = TRUE)))
+                             perl = TRUE, useBytes = TRUE))) {
                     dont_test <- TRUE
+                    count <- count + 1L
+                }
                 if(!dont_test) cat(line, "\n", sep = "", file = out)
                 if(any(grepl("^[[:space:]]*## End\\(No test\\)", line,
                              perl = TRUE, useBytes = TRUE)))
@@ -127,11 +135,13 @@ massageExamples <-
 
     cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
         sep = "\n", file = out)
+
+    if(count && !is.null(cntFile)) writeLines(as.character(count), cntFile)
 }
 
 ## compares 2 files
 Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
-                  nullPointers=TRUE, Log = FALSE)
+                  nullPointers = TRUE, Log = FALSE)
 {
     clean <- function(txt)
     {
@@ -525,7 +535,8 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, use_gct, addTiming, commentDonttest = commentDonttest, ...)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming,
+                    commentDonttest = commentDonttest, ...)
     invisible(Rfile)
 }
 
