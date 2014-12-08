@@ -1171,7 +1171,9 @@ and edit @file{MkRules.local}, uncommenting @code{EXT_LIBS} and setting
 it to the appropriate path (in our example @file{c:/R/extsoft}).
 
 Look through the file @file{MkRules.local} and make any other changes
-needed: in particular, this is where a 64-bit build is selected.
+needed: in particular, this is where a 64-bit build is selected and the
+locations are set of external software for ICU collation and the
+cairo-based devices.
 
 @end itemize
 
@@ -1207,7 +1209,7 @@ lower case) did not work.
 Open a command window at @file{@var{R_HOME}/src/gnuwin32}, then run
 
 @example
-make all recommended bitmapdll
+make all recommended bitmapdll vignettes
 @end example
 
 @noindent
@@ -1228,7 +1230,7 @@ You can run a parallel make by e.g.
 @example
 make -j4 all
 make -j4 recommended
-make -j4 bitmapdll
+make bitmapdll vignettes
 @end example
 
 @noindent
@@ -1264,9 +1266,9 @@ tarball unpacks with a top-level directory @file{src/}:
 @node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
 @subsection Using ICU for collation
 
-It is and even recommended to build @R{} to support ICU (International
-Components for Unicode, @uref{http://site.icu-project.org/}) for
-collation, as is commonly done on Unix-alikes.
+It is recommended to build @R{} to support ICU (International Components
+for Unicode, @uref{http://site.icu-project.org/}) for collation, as is
+commonly done on Unix-alikes.
 
 Two settings are needed in @file{MkRules.local}, 
 @example
