@@ -2454,6 +2454,7 @@ setRlibs <-
             status <- R_runR(cmd, R_opts2, "LC_ALL=C",
                              stdout = Rout, stderr = Rout)
             if (status) {
+                exfile <- paste0(pkgname, "-Ex.R")
                 errorLog(Log,
                          paste("Running massageExamples to create",
                                sQuote(exfile), "failed"))
