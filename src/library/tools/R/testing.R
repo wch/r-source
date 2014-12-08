@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -21,7 +21,8 @@
 ## functions principally for testing R and packages
 
 massageExamples <-
-    function(pkg, files, outFile = stdout(), use_gct = FALSE, addTiming = FALSE)
+    function(pkg, files, outFile = stdout(), use_gct = FALSE,
+             addTiming = FALSE, commentDonttest = TRUE)
 {
     if(file_test("-d", files[1L])) {
         old <- Sys.setlocale("LC_COLLATE", "C")
@@ -96,18 +97,22 @@ massageExamples <-
 
         cat("### * ", nm, "\n\n", sep = "", file = out)
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
-        dont_test <- FALSE
         if(addTiming)
             cat("base::assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
                 file = out)
-        for (line in lines) {
-            if(any(grepl("^[[:space:]]*## No test:", line, perl = TRUE, useBytes = TRUE)))
-                dont_test <- TRUE
-            if(!dont_test) cat(line, "\n", sep = "", file = out)
-            if(any(grepl("^[[:space:]]*## End\\(No test\\)",
-                         line, perl = TRUE, useBytes = TRUE)))
-                dont_test <- FALSE
-        }
+        if (commentDonttest) {
+            dont_test <- FALSE
+            for (line in lines) {
+                if(any(grepl("^[[:space:]]*## No test:", line,
+                             perl = TRUE, useBytes = TRUE)))
+                    dont_test <- TRUE
+                if(!dont_test) cat(line, "\n", sep = "", file = out)
+                if(any(grepl("^[[:space:]]*## End\\(No test\\)", line,
+                             perl = TRUE, useBytes = TRUE)))
+                    dont_test <- FALSE
+            }
+        } else
+            for (line in lines) cat(line, "\n", sep = "", file = out)
 
         if(addTiming) {
             cat("base::assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
@@ -486,7 +491,8 @@ testInstalledPackage <-
 }
 
 .createExdotR <-
-    function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE)
+    function(pkg, pkgdir, silent = FALSE, use_gct = FALSE, addTiming = FALSE,
+             commentDonttest = TRUE)
 {
     Rfile <- paste0(pkg, "-Ex.R")
 
@@ -517,7 +523,8 @@ testInstalledPackage <-
     nof <- length(Sys.glob(file.path(filedir, "*.R")))
     if(!nof) return(invisible(NULL))
 
-    massageExamples(pkg, filedir, Rfile, use_gct, addTiming)
+    massageExamples(pkg, filedir, Rfile, use_gct, addTiming,
+                    commentDonttest = commentDonttest)
     invisible(Rfile)
 }
 
@@ -718,7 +725,6 @@ detachPackages <- function(pkgs, verbose = TRUE)
         Usage()
         do_exit(1L)
     }
-
 
     if (length(args) < 2L) {
         Usage()
