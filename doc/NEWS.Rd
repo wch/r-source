@@ -227,10 +227,6 @@
 
       \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
-      
-      \item \command{R CMD check} now checks the packages used in
-      \code{\\donttest} sections of the examples.  (These will be needed
-      to run the examples interactively.)
     }
   }
 
@@ -329,7 +325,15 @@
       \item The included version of PCRE has been updated to 8.36.
     }
   }
-
+  
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} now checks the packages used in
+      \code{\\donttest} sections of the examples are specified in the
+      \file{DESCRIPTION} file.
+      (These are needed to run the examples interactively.)
+    }
+  }
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The \command{configure} option
