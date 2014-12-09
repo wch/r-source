@@ -5265,7 +5265,9 @@ wherever possible, and you can also use @code{try()} or
 @code{tryCatch()}.  Use @code{interactive()} to condition examples which
 need someone to interact with.)  Note that code included in
 @code{\donttest} must be correct @R{} code, and any packages used should
-be declared in the @file{DESCRIPTION} file.
+be declared in the @file{DESCRIPTION} file.  It is good practice to
+include a comment in the @code{\donttest} section explaining why it is
+needed.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
