@@ -5255,14 +5255,15 @@ standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
 Finally, there is @code{\donttest}, used (at the beginning of a separate
-line) to mark code that should be run by @code{examples()} but not by
+line) to mark code that should be run by @code{example()} but not by
 @code{R CMD check}.  This should be needed only occasionally but can be
 used for code which might fail in circumstances that are hard to test
 for, for example in some locales.  (Use e.g. @code{capabilities()} to
 test for features needed in the examples wherever possible, and you can
-also use @code{try()} or @code{tryCatch()}.)  Note that code included in
-@code{\donttest} must be correct @R{} code, and any packages used should
-be declared in the @file{DESCRIPTION} file.
+also use @code{try()} or @code{tryCatch()}.  Use @code{interactive()} to
+condition examples which need someone to interact with.)  Note that code
+included in @code{\donttest} must be correct @R{} code, and any packages
+used should be declared in the @file{DESCRIPTION} file.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
