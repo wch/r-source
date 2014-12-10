@@ -87,7 +87,8 @@ static void cbm_Size(double *left, double *right,
 #include "cairoFns.c"
 
 #ifdef Win32
-# include "rbitmap.h"
+typedef int (*R_SaveAsBitmap)(/* variable set of args */);
+static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
 #else
 # include "bitmap.h"
 #endif
@@ -98,12 +99,6 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
     cairo_status_t res;
     if (xd->type == PNG || xd->type == JPEG ||
 	xd->type == TIFF || xd->type == BMP) {
-#ifdef Win32
-	if (!Load_Rbitmap_Dll()) {
-	    warning("Unable to load Rbitmap.dll");
-	    return FALSE;
-	}
-#endif
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 					    xd->windowWidth,
 					    xd->windowHeight);
