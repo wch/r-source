@@ -1021,7 +1021,7 @@ case "${host_os}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
 	## pre-processor to increase the size of an internal table.  It
-	## seems that src/modules/vfonts/g_her_glyph.c contains a line
+	## seems that src/main/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
 	R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-Wp,-H16000])
 	;;
@@ -2752,7 +2752,6 @@ AC_CONFIG_FILES(
   src/modules/X11/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile
-  src/modules/vfonts/Makefile
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile

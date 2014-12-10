@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
 
-MODULES=internet lapack vfonts
+MODULES = internet lapack
 
 ifndef DEBUG
   DLLFLAGS=-s

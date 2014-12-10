@@ -35,7 +35,8 @@ SOURCES_C = \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	times.c \
 	unique.c util.c \
-	version.c vfonts.c
+	version.c \
+	g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 
 SOURCES_F =  xxxpr.f
 
@@ -58,7 +59,9 @@ HEADERS = \
 	rlocale_data.h \
 	unzip.h \
 	valid_utf8.h \
-	xspline.c
+	xspline.c \
+	g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
+
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \

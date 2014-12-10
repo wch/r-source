@@ -1764,12 +1764,9 @@ regarded as a variable created by the user.
 chosen to be loaded `on demand' rather than linked as dynamic libraries
 or incorporated into the main executable/dynamic library.
 
-For a few of these (e.g.@: @code{vfonts}) the issue is size: the
-database for the Hershey fonts is included in the C code of the module
-and was at one time an appreciable part of the codebase for a rarely
-used feature.  However, for most of the modules the motivation has been
-the amount of (often optional) code they will bring in via libraries to
-which they are linked.
+For the remaining modules the motivation has been the amount of (often
+optional) code they will bring in via libraries to which they are
+linked.
 
 @table @asis
 

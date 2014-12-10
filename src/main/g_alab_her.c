@@ -26,7 +26,6 @@
 #include "g_extern.h"
 #include "g_control.h"
 #include "g_her_metr.h"
-#include <Rmodules/Rvfonts.h>
 
 /* Shearing factor for oblique fonts, new_x = x + SHEAR * y  */
 
@@ -151,9 +150,12 @@ static void _draw_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
 
 /* this is the version of the flabelwidth() method that is specific to the
    case when the current Plotter font is a Hershey font; called in
-   g_flabelwidth () */
-static double R_VF_VStrWidth (const char *s,
-			      const pGEcontext gc, pGEDevDesc dd)
+   g_flabelwidth () .
+   
+   Argument 'enc' is ignored: these are in their own encoding.
+*/
+double R_GE_VStrWidth (const char *s, cetype_t enc, 
+		       const pGEcontext gc, pGEDevDesc dd)
 {
   double label_width;
   unsigned short *codestring;
@@ -188,7 +190,8 @@ static double _label_height_hershey (const pGEcontext gc,
     return( HERSHEY_Y_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
-static double R_VF_VStrHeight (const char *s, const pGEcontext gc, pGEDevDesc dd)
+double R_GE_VStrHeight (const char *s, cetype_t enc, 
+			const pGEcontext gc, pGEDevDesc dd)
 {
   double label_height;
   unsigned short *codestring;
@@ -218,10 +221,9 @@ static double R_VF_VStrHeight (const char *s, const pGEcontext gc, pGEDevDesc dd
 
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
-static void R_VF_VText (double x, double y, const char *s,
-			double x_justify, double y_justify, double rotation,
-			const pGEcontext gc,
-			pGEDevDesc dd)
+void R_GE_VText (double x, double y, const char *s, cetype_t enc,
+		 double x_justify, double y_justify, double rotation,
+		 const pGEcontext gc, pGEDevDesc dd)
 {
   unsigned short *codestring;
   double label_width, label_height;
@@ -973,8 +975,3 @@ static bool _composite_char (unsigned char *composite,
   return found;
 }
 
-#include <R_ext/Rdynload.h>
-void R_init_vfonts(DllInfo *dll)
-{
-    R_GE_setVFontRoutines(R_VF_VStrWidth, R_VF_VStrHeight, R_VF_VText);
-}
