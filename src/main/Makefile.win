@@ -60,19 +60,11 @@ saveload-CPPFLAGS=-I../extra/xdr
 serialize-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
 
-ifdef EXT_LIBS
 connections-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 dounzip-CPPFLAGS = -I$(EXT_LIBS)/include
 grep-CPPFLAGS = -DPCRE_STATIC -I../extra -I../gnuwin32 -I"$(EXT_LIBS)"/include
 platform-CPPFLAGS += -DPCRE_STATIC -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
 util-CPPFLAGS = -DLZMA_API_STATIC -I"$(EXT_LIBS)"/include
-else
-connections-CPPFLAGS = -DLZMA_API_STATIC -I../extra/zlib -I../extra/bzip2 -I../extra/xz/api
-dounzip-CPPFLAGS = -I../extra/zlib -I../extra/bzip2
-grep-CPPFLAGS = -DPCRE_STATIC -I../extra -I../extra/pcre -I../gnuwin32
-platform-CPPFLAGS += -DPCRE_STATIC -DLZMA_API_STATIC -I../extra/zlib -I../extra/bzip2 -I../extra/xz/api -I../extra/pcre
-util-CPPFLAGS = -DLZMA_API_STATIC -I../extra/xz/api
-endif
 
 ifdef USE_ICU
 platform-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include

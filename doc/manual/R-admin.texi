@@ -1063,11 +1063,10 @@ try to select a @samp{C} locale; Windows may not honour this).
 
 @strong{NB:} The build process is currently being changed to require
 external binary distributions of third-party software.  Their location
-can be set using macro @code{EXT_LIBS} in
+must be set using macro @code{EXT_LIBS} in
 @file{src/gnuwin32/MkRules.local}: a suitable distribution can be
 obtained from
-@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.  This is
-not yet obligatory, but the instructions here assume it has been set.
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.
 
 @menu
 * Getting the tools::           
@@ -1209,7 +1208,7 @@ lower case) did not work.
 Open a command window at @file{@var{R_HOME}/src/gnuwin32}, then run
 
 @example
-make all recommended bitmapdll vignettes
+make all recommended vignettes
 @end example
 
 @noindent
@@ -1230,7 +1229,7 @@ You can run a parallel make by e.g.
 @example
 make -j4 all
 make -j4 recommended
-make bitmapdll vignettes
+make vignettes
 @end example
 
 @noindent
@@ -1254,7 +1253,7 @@ The devices based on cairographics (@code{svg}, @code{cairo_pdf},
 @code{jpeg}, @code{tiff} and @code{bmp}) are implemented in a separate
 DLL @file{winCairo.dll} which is loaded when one of these devices is
 first used.  It is not built by default, and needs to be built (after
-@command{make bitmapdll}) by @command{make cairodevices}.
+@command{make all}) by @command{make cairodevices}.
 
 To enable the building of these devices you need to install the static
 cairographics libraries built by Simon Urbanek at
@@ -1389,7 +1388,6 @@ building all the parts in the sequence:
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackages @r{(the base packages)}
 htmldocs @r{(the HTML documentation)}
-bitmapdll @r{(the bitmap support files)}
 cairodevices @r{(the cairo-based graphics devices)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in base packages:}

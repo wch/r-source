@@ -76,11 +76,6 @@ WIN = 32
 ICU_PATH = /path/to/ICU
 ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
-# optional overrides for making bitmapdll: names of source directories
-# JPEGDIR = jpeg-9
-# PNGDIR = libpng
-# TIFFDIR = libtiff
-
 # For the cairographics devices
 # Optionally use a static build of cairographics from
 #   http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz

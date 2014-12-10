@@ -200,8 +200,8 @@
 
        \item (Windows.) Installation using external binary distributions
        of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
-       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now preferred
-       and likely to become the only way before release.
+       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
+       and the build instructions have been revised.
      }
   }
 

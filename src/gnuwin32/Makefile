@@ -40,7 +40,6 @@ rpackages:
 	@$(MK) -C ../library -f Makefile.win docs
 
 
-## must come after bitmapdll
 cairodevices:
 ifneq "$(CAIRO_HOME)" ""
 	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all \
@@ -67,8 +66,9 @@ endif
 
 
 R-DLLFLAGS=-mwindows
+LIBEXTRAS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
 ifdef USE_ICU
-LIBEXTRAS = -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
+LIBEXTRAS += -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
 endif
 
 dllversion-RESFLAGS = -I../include
@@ -85,14 +85,8 @@ EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a \
    ../extra/tre/libtre.a
 
-ifdef EXT_LIBS
-LIBEXTRAS += -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
-R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
-else
-EXTRALIBS += ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
-   ../extra/xz/liblzma.a
-R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
-endif
+R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp \
+  -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 
 
 .PHONY:  clean veryclean rlibs fixfiles front-ends rmodules
@@ -127,11 +121,6 @@ rlibs:
 	@for ex in graphapp xdr tre trio tzone win_iconv ; do \
 	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
 	done
-ifndef EXT_LIBS
-	@for ex in pcre bzip2 zlib xz; do \
-	  $(MK) -C ../extra/$${ex} CFLAGS='$(CFLAGS)' -f Makefile.win || exit 1; \
-	done
-endif
 
 rmodules:
 	@$(MKDIR) -p ../../modules$(R_ARCH)
@@ -209,23 +198,11 @@ libRiconv.dll.a: unicode/iconv.def
 front-ends:
 	$(MK) -C front-ends
 
-../extra/zlib/libz.a:
-	$(MK) -C ../extra/zlib -f Makefile.win
-
-../extra/pcre/libpcre.a:
-	$(MK) -C ../extra/pcre -f Makefile.win
-
 ../extra/tre/libtre.a:
 	$(MK) -C ../extra/tre -f Makefile.win
 
-../extra/bzip2/libbz2.a:
-	$(MK) -C ../extra/bzip2  -f Makefile.win libbz2.a
-
 ../extra/trio/libtrio.a:
 	$(MK) -C ../extra/trio -f Makefile.win
-
-../extra/xz/liblzma.a:
-	$(MK) -C ../extra/xz -f Makefile.win
 
 NEWSdocs:
 	@$(MK) -C ../../doc -f Makefile.win
@@ -256,7 +233,7 @@ PKGDIR=../library
 pkgclean-%:
 	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
 
-EXTRA_DIRS = blas bzip2 graphapp intl pcre tre trio tzone xdr xz win_iconv zlib
+EXTRA_DIRS = blas graphapp intl tre trio tzone xdr win_iconv
 
 clean: cleanwin
 	@$(MAKE) -C ../library -f Makefile.win clean
@@ -325,7 +302,6 @@ cleanwin: MkRules fixfiles
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C bitmap clean
 	$(MAKE) -C ../library/grDevices/src/cairo -f Makefile.win clean WIN=$(WIN)
 	-$(MAKE) -C installer clean
 
@@ -383,8 +359,6 @@ bytecode-recommended:
 docfiles:
 	@$(MK) -C ../../doc/manual -f Makefile.win FAQ
 
-bitmapdll:
-	@$(MAKE) -C bitmap
 
 EXTRA_PKGS=
 rinstaller:
@@ -398,7 +372,6 @@ endif
 
 distribution:
 	@$(MK) all
-	@$(MK) bitmapdll
 	@$(MK) cairodevices
 	@$(MK) recommended
 	@$(MK) vignettes
@@ -410,7 +383,6 @@ distribution:
 ## Builds what is needed in a 32-bit build to copy to 64/32-bit installer
 32-bit:
 	@$(MK) all
-	@$(MK) bitmapdll
 	@$(MK) cairodevices
 	@$(MK) recommended
 

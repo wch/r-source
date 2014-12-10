@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SOURCES_C = axis_scales.c chull.c devices.c init.c stubs.c colors.c \
-   devPicTeX.c devPS.c devWindows.c
+   devPicTeX.c devPS.c devWindows.c winbitmap.c
 SOURCES_F =
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) ../../../gnuwin32/dllversion.o
@@ -23,11 +23,7 @@ RESFLAGS = -I $(R_HOME)/include
 ## need config.h
 PKG_CPPFLAGS = -I$(R_HOME)/src/include -DHAVE_CONFIG_H
 ## devPS needs zlib.h and run.h
-ifneq "$(EXT_LIBS)" ""
 devPS-CPPFLAGS = -I"$(EXT_LIBS)" -I$(R_HOME)/src/gnuwin32
-else
-devPS-CPPFLAGS = -I$(R_HOME)/src/extra/zlib -I$(R_HOME)/src/gnuwin32
-endif
 
 ## devWindows needs opt.h, console.h, rui.h and graphapp headers
 ifeq "$(WIN)" "64"
@@ -37,11 +33,9 @@ arch_DEFS = -DR_ARCH='"i386"'
 endif
 devWindows-CPPFLAGS = -I$(R_HOME)/src/gnuwin32 -I$(R_HOME)/src/extra $(arch_DEFS)
 
-ifneq "$(EXT_LIBS)" ""
-PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lz
-else
-PKG_LIBS = -lRgraphapp -lRzlib
-endif
+winbitmap-CPPFLAGS = -DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I"$(EXT_LIBS)"
+
+PKG_LIBS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lRgraphapp -lpng -ltiff -ljpeg -lz
 
 
 all: makeMakedeps shlib
