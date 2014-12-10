@@ -1527,7 +1527,7 @@ acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
 Windows 64-bit is now completely integrated into the @R{} and package
-build systems.
+build systems: a 64-bit build is selected in file @file{MkRules.local}.
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
