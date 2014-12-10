@@ -87,8 +87,7 @@ static void cbm_Size(double *left, double *right,
 #include "cairoFns.c"
 
 #ifdef Win32
-typedef int (*R_SaveAsBitmap)(/* variable set of args */);
-static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
+# include "winbitmap.h"
 #else
 # include "bitmap.h"
 #endif
