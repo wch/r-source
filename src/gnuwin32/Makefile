@@ -1,11 +1,6 @@
 ## first time through MkRules will not exist.
-ifeq ($(wildcard MkRules?local),MkRules.local)
 include MkRules.local
-else
-include MkRules.dist
-endif
 include MkRules.rules
-
 include ../../share/make/vars.mk
 
 MK = $(MAKE) --no-print-directory
@@ -43,15 +38,20 @@ rpackages:
 cairodevices:
 ifneq "$(CAIRO_HOME)" ""
 	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all \
-	  WIN=$(WIN) CAIRO_HOME=$(CAIRO_HOME) CAIRO_TYPE=$(CAIRO_TYPE)
+	  WIN=$(WIN) CAIRO_HOME=$(CAIRO_HOME)
 endif
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
 MkRules: MkRules.local MkRules.rules
+ifeq "$(EXT_LIBS)" ""
+	@echo "*** EXT_LIBS must be set in MkRules.local (and not empty)"
+	@exit 1
+endif
 	cat MkRules.local MkRules.rules > MkRules
 else
-MkRules: MkRules.dist MkRules.rules
-	cat MkRules.dist MkRules.rules > MkRules
+MkRules:
+	@echo "*** copy MkRules.dist to MkRules.local and edit it"
+	@exit 1
 endif
 
 CFLAGS=-O3 -Wall -pedantic $(EOPTS)
@@ -68,7 +68,7 @@ endif
 R-DLLFLAGS=-mwindows
 LIBEXTRAS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
 ifdef USE_ICU
-LIBEXTRAS += -L$(ICU_PATH)/lib$(R_ARCH) $(ICU_LIBS)
+LIBEXTRAS += -L"$(ICU_PATH)"/lib$(R_ARCH) $(ICU_LIBS)
 endif
 
 dllversion-RESFLAGS = -I../include
