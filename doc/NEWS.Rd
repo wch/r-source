@@ -170,6 +170,9 @@
 
       \item \code{vapply(x, FUN, FUN.VALUE)} is more efficient notably
       for large \code{length(FUN.VALUE)}; as extension of \PR{16061}.
+
+      \item \code{as.table()} now allows tables with one or more
+      dimensions of length 0 (as with \code{as.table(integer())}).
     }
   }
 
