@@ -13,7 +13,7 @@ C character strings are limited to ca 500 chars.
 Various casts were missing.
 Solaris cc complained about unused code, hence the use of UNREACHED.
 The shifts on signed ints are undefined behaviour (this has been
-reported upstrem with no response).
+reported upstream with no response).
 
 
 diff -ru bzip2-1.0.6/blocksort.c bzip2/blocksort.c

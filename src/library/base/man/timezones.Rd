@@ -137,8 +137,8 @@ OlsonNames()
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  Environment
   variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} directory (this is also supported by some OSes,
-  e.g.\sspace{}Linux).
+  \file{zoneinfo} directory: this is also supported by the native
+  services on some OSes, e.g.\sspace{}Linux).
 #endif
 #ifdef windows
 
