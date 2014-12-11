@@ -53,7 +53,11 @@ callNextMethod <- function(...) {
     }
     else {
         ## may be a method call for a primitive; not available as .Method
-        f <- as.character(mcall[[1L]])
+        if (is.primitive(mcall[[1L]])) {
+            f <- .primname(mcall[[1L]])
+        } else {
+            f <- as.character(mcall[[1L]])
+        }
         fdef <- genericForPrimitive(f)
         ## check that this could be a basic function with methods
         if(is.null(fdef))
@@ -122,7 +126,7 @@ callNextMethod <- function(...) {
            }
         }
         else
-            call <- match.call(method, mcall, expand.dots = FALSE)
+            call <- match.call(maybeMethod, mcall, expand.dots = FALSE)
         .Call(C_R_nextMethodCall, call, callEnv)
     }
 }

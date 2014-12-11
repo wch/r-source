@@ -290,6 +290,9 @@
 
       \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
       avoid corruption of S4 class information by the S3 methods.
+
+      \code{callNextMethod()} should now work within a \code{.local}
+      call when \code{\dots} is absent from \code{formals(.local)}.
     }
   }
 }
