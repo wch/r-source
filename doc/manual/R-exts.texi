@@ -4073,11 +4073,13 @@ work as intended.  For alternatives, see @ref{Suggested packages} and
 @code{with}.
 
 @item
-Examples can be run interactively @emph{via} example as well as in batch
-mode when checking.  So they should behave appropriately in both
-scenarios, conditioning by @code{interactive()} the parts which need an
-operator or observer.  For instance, progress bars are only appropriate
-in interactive use, as is displaying help pages or calling @code{View()}.
+Examples can be run interactively @emph{via} @code{example} as well as
+in batch mode when checking.  So they should behave appropriately in
+both scenarios, conditioning by @code{interactive()} the parts which
+need an operator or observer.  For instance, progress bars are only
+appropriate in interactive use, as is displaying help pages or calling
+@code{View()} (see below).
+
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
