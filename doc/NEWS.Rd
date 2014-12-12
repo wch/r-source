@@ -252,6 +252,8 @@
       \item New entry point \code{R_allocLD}, like \code{R_alloc} but
       guaranteed to have sufficient alignment for \code{long double}
       pointers.
+
+      \item \code{isPairList} now returns \code{TRUE} for DOTSXP.
     }
   }
 

@@ -424,6 +424,7 @@ INLINE_FUN Rboolean isPairList(SEXP s)
     case NILSXP:
     case LISTSXP:
     case LANGSXP:
+    case DOTSXP:
 	return TRUE;
     default:
 	return FALSE;
