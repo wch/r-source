@@ -173,6 +173,9 @@
 
       \item \code{as.table()} now allows tables with one or more
       dimensions of length 0 (as with \code{as.table(integer())}).
+
+      \item \code{names(x) <- NULL} now clears the names of call
+      and \code{\dots} objects.
     }
   }
 
