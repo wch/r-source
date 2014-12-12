@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-12-10 r67150) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-12-11 r67157) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -94,6 +94,7 @@ Type 'q()' to quit R.
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.table(res))
+[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] TRUE
@@ -220,6 +221,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.table(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
@@ -318,6 +320,7 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.table( f )))
+[1] TRUE
 > f <- try(as.vector( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
@@ -2565,6 +2568,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.144 0.009 0.152 0 0 
+Time elapsed:  0.136 0.01 0.146 0 0 
 > 
 > 
