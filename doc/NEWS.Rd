@@ -296,6 +296,9 @@
 
       \code{callNextMethod()} should now work within a \code{.local}
       call when \code{\dots} is absent from \code{formals(.local)}.
+
+      \code{dput(pairlist(x))} generates a call to the \code{pairlist}
+      constructor, instead of the \code{list} constructor.
     }
   }
 }

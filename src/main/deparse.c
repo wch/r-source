@@ -826,7 +826,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case LISTSXP:
 	if (localOpts & SHOWATTRIBUTES) attr1(s, d);
-	print2buff("list(", d);
+	print2buff("pairlist(", d);
 	d->inlist++;
 	for (t=s ; CDR(t) != R_NilValue ; t=CDR(t) ) {
 	    if( TAG(t) != R_NilValue ) {
