@@ -2114,6 +2114,15 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
   It is also called in arithmetic.c. for e.g. do_log
 */
 
+static SEXP findRootPromise(SEXP p) {
+    if (TYPEOF(p) == PROMSXP) {
+        while(TYPEOF(PREXPR(p)) == PROMSXP) {
+            p = PREXPR(p);
+        }
+    }
+    return p;
+}
+
 int attribute_hidden
 R_isMissing(SEXP symbol, SEXP rho)
 {
@@ -2149,6 +2158,7 @@ R_isMissing(SEXP symbol, SEXP rho)
 	    return 1;
 	if (IS_ACTIVE_BINDING(vl))
 	    return 0;
+        SETCAR(vl, findRootPromise(CAR(vl)));
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
@@ -2224,6 +2234,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     }
 
+    t = findRootPromise(t);
     if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
     else LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
     return rval;

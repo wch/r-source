@@ -293,14 +293,17 @@
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
 
-      \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
+      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
       avoid corruption of S4 class information by the S3 methods.
 
-      \code{callNextMethod()} should now work within a \code{.local}
+      \item \code{callNextMethod()} should now work within a \code{.local}
       call when \code{\dots} is absent from \code{formals(.local)}.
 
-      \code{dput(pairlist(x))} generates a call to the \code{pairlist}
+      \item \code{dput(pairlist(x))} generates a call to the \code{pairlist}
       constructor, instead of the \code{list} constructor.
+
+      \item Fix \code{missing()} when arguments are propagated through
+      \code{\dots}; see \PR{15707}.
     }
   }
 }
