@@ -11,7 +11,7 @@
 \usage{
 buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE, 
               quiet = TRUE, clean = TRUE, keep = character(),
-              engine = NULL, buildPkg = NULL, ...)
+              engine = NULL, buildPkg = NULL, encoding, ...)
 }
 \arguments{
   \item{file}{character; the vignette source file}
@@ -28,7 +28,9 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   \item{engine}{\code{NULL} or character; name of vignette engine to
     use.  Overrides any \code{\\VignetteEngine\{\}} markup in the vignette.}
   \item{buildPkg}{\code{NULL} or character; an optional package in which to find
-    the vignette engine}
+    the vignette engine.}
+  \item{encoding}{the encoding to assume for the file.  If not specified, it will
+    be inferred from the file contents.}
   \item{...}{Additional arguments passed to weave and tangle.}
 
 }

@@ -3140,15 +3140,26 @@ need to be declared to @LaTeX{} via a line like
 @end example
 @noindent
 (It is also possible to use the more recent @samp{inputenx} @LaTeX{}
-package.)  If the encoding is UTF-8, this can also be declared using
+package.) For files where this line is not needed (e.g. chapters
+included within the body of a larger document, or non-Sweave 
+vignettes), the encoding may be declared using a comment like
+@example
+%!\VignetteEncoding@{UTF-8@}
+@end example
+@noindent
+If the encoding is UTF-8, this can also be declared using
 the declaration
 @example
 %!\SweaveUTF8
 @end example
 @noindent
-but be aware that @LaTeX{} may require the @samp{usepackage} declaration.
-@command{R CMD check} will warn about any non-@acronym{ASCII}
-vignettes it finds which do not have one of these declarations.
+If no declaration is given in the vignette, it will be assumed to be
+in the encoding declared for the package.  If there is no encoding
+declared in either place, then it is an error to use non-@acronym{ASCII}
+characters in the vignette.
+
+In any case, be aware that @LaTeX{} may require the @samp{usepackage} 
+declaration.
 
 @code{Sweave()} will also parse and evaluate the @R{} code in each
 chunk.  The @R{} output will also be in the current locale (or @acronym{UTF-8}

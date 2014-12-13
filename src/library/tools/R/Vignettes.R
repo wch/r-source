@@ -166,12 +166,15 @@ function(package, dir, lib.loc = NULL,
         file <- basename(file)
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engines[i])
-
+	enc <- vigns$encodings[i]
+        if (enc == "non-ASCII")
+            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", name),
+                 domain = NA)
         if(tangle) {
             message("  Running ", sQuote(file))
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
-                    engine$tangle(file, quiet = TRUE)
+                    engine$tangle(file, quiet = TRUE, encoding = enc)
                     setwd(startdir) # in case a vignette changes the working dir
                     find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
                 }, error = function(e) e)
@@ -181,7 +184,7 @@ function(package, dir, lib.loc = NULL,
             setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
-                    engine$weave(file, quiet = TRUE)
+                    engine$weave(file, quiet = TRUE, encoding = enc)
                     setwd(startdir)
                     find_vignette_product(name, by = "weave", engine = engine)
                 }, error = function(e) e)
@@ -413,8 +416,11 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     stopifnot(length(names)    == length(docs),
 	      length(engines)  == length(docs),
 	      length(patterns) == length(docs), !anyDuplicated(docs))
-
-    z <- list(docs=docs, names=names, engines=engines, patterns=patterns,
+	      
+    defaultEncoding <- .get_package_metadata(dir)["Encoding"]	      
+    encodings <- vapply(docs, getVignetteEncoding, "", default = defaultEncoding)
+    
+    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, encodings = encodings,
 	      dir = docdir, pkgdir = dir, msg = msg)
 
     if (output) {
@@ -501,10 +507,14 @@ buildVignettes <-
         file <- basename(vigns$docs[i])
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engine[i])
-
+        enc <- vigns$encodings[i]
+        if (enc == "non-ASCII") 
+            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", 
+                 file), domain = NA, call. = FALSE)
+        
         output <- tryCatch({
             ## FIXME: run this in a separate process
-            engine$weave(file, quiet = quiet)
+            engine$weave(file, quiet = quiet, encoding = enc)
             setwd(startdir)
             find_vignette_product(name, by = "weave", engine = engine)
         }, error = function(e) {
@@ -522,7 +532,7 @@ buildVignettes <-
         if (tangle) {  # This is set for all engines as of 3.0.2
             output <- tryCatch({
                 ## FIXME: run this in a separate process
-                engine$tangle(file, quiet = quiet)
+                engine$tangle(file, quiet = quiet, encoding = enc)
                 setwd(startdir)
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
@@ -586,7 +596,8 @@ buildVignettes <-
 buildVignette <-
     function(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
              quiet = TRUE, clean = TRUE, keep = character(),
-             engine = NULL, buildPkg = NULL, ...)
+             engine = NULL, buildPkg = NULL, 
+	     encoding = getVignetteEncoding(file), ...)
 {
     if (!file_test("-f", file))
 	stop(gettextf("file '%s' not found", file), domain = NA)
@@ -615,6 +626,9 @@ buildVignette <-
 		file, paste(engine$package, engine$name, sep="::")),
 		domain = NA)
 
+    if (encoding == "non-ASCII") 
+    	stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", name))
+
     # Set output directory temporarily
     file <- file_path_as_absolute(file)
     olddir <- setwd(dir)
@@ -631,7 +645,7 @@ buildVignette <-
 
     # Weave
     final <- if (weave) {
-	engine$weave(file, quiet = quiet, ...)
+	engine$weave(file, quiet = quiet, encoding = encoding, ...)
 	setwd(tdir)  # In case weave/vignette changed it
 	output <- find_vignette_product(name, by = "weave", engine = engine)
 
@@ -645,7 +659,7 @@ buildVignette <-
 
     # Tangle
     sources <- if (tangle) {
-	engine$tangle(file, quiet = quiet, ...)
+	engine$tangle(file, quiet = quiet, encoding = encoding, ...)
 	setwd(tdir)  # In case tangle changed it
 	find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
     } # else NULL
@@ -675,72 +689,70 @@ buildVignette <-
     unique(keep)
 }
 
-### * .getVignetteEncoding
+### * getVignetteEncoding
 
 getVignetteEncoding <-  function(file, ...)
 {
-    ## Look for inputen[cx] first, then %\SweaveUTF8.  Complain about
-    ## inconsistencies.
-
     lines <- readLines(file, warn = FALSE)
-    result1 <- .getVignetteEncoding(lines, ...)
-
-    poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
-    if (length(poss)) {
-    	result <- "UTF-8"
-    	if (!(result1 %in% c("", "non-ASCII", "UTF-8")))
-    	    stop(gettextf("Inconsistent encoding specifications: %s with %%\\SweaveUTF8", result1), domain = NA)
-    } else
-    	result <- result1
-    result
+    .getVignetteEncoding(lines, ...)
 }
 
-.getVignetteEncoding <- function(lines, convert = FALSE)
+.getVignetteEncoding <- function(lines, default = NA)
 {
     res <- .get_vignette_metadata(lines, "Encoding")[1L]
 
     if(is.na(res)) {
-        ## Look for input enc lines using inputenc or inputenx
-        ## Note, multiple encodings are excluded.
-        poss <-
-            grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
-                 lines, useBytes = TRUE)
-        ## Check it is in the preamble
-        start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
-                      lines, useBytes = TRUE)
-        if(length(start)) poss <- poss[poss < start[1L]]
-        if(!length(poss)) {
-            asc <- iconv(lines, "latin1", "ASCII")
-            ind <- is.na(asc) | asc != lines
-            if(any(ind)) return("non-ASCII")
-            return("") # or "ASCII"
+        poss <- grep("^[[:space:]]*%+[[:space:]]*\\\\SweaveUTF8[[:space:]]*$", lines, useBytes = TRUE)
+        if (length(poss)) 
+            res <- "UTF-8"
+        else {
+            ## Look for input enc lines using inputenc or inputenx
+            ## Note, multiple encodings are excluded.
+            poss <-
+                grep("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\]\\{inputen[cx]\\}",
+                     lines, useBytes = TRUE)
+            ## Check it is in the preamble
+            start <- grep("^[[:space:]]*\\\\begin\\{document\\}",
+                          lines, useBytes = TRUE)
+            if(length(start)) 
+                poss <- poss[poss < start[1L]]
+            if(length(poss)) {
+        	poss <- lines[poss[1L]]
+        	res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
+                            poss)               # This line should be ASCII.
+	    ## see Rd2latex.R.
+	    ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
+	    res <- switch(res,
+		   "utf8" =, "utf8x" = "UTF-8",
+		   "latin1" =, "iso-8859-1" = "latin1",
+		   "latin2" =, "iso-8859-2" = "latin2",
+		   "latin9" =, "iso-8859-15" = "latin-9", # only form known to GNU libiconv
+		   "latin10" =, "iso-8859-16" = "latin10",
+		   "cyrillic" =, "iso-8859-5" =  "ISO-8859-5", # inputenx
+		   "koi8-r" =  "KOI8-R", # inputenx
+		   "arabic" = "ISO-8859-6", # Not clear next 3 are known to latex
+		   "greek" =, "iso-8859-7" = "ISO-8859-7",
+		   "hebrew" =, "iso-8859-8" = "ISO-8859-8",
+		   "ansinew" = "CP1252",
+		   "applemac" = "macroman",
+		   ## assume these only get used on Windows
+		   "cp1250" = "CP1250",
+		   "cp1252" = "CP1252",
+		   "cp1257" = "CP1257",
+		   "unknown")
+	    } else if (!is.na(default)) {
+		res <- default
+            } else { # Nothing else has indicated an encoding, maybe it's just ASCII
+                asc <- iconv(lines, "latin1", "ASCII")
+                ind <- is.na(asc) | asc != lines
+                if(any(ind)) 
+                    res <- "non-ASCII"
+                else
+                    res <- "" # or "ASCII"
+            }
         }
-        poss <- lines[poss[1L]]
-        res <- gsub("^[[:space:]]*\\\\usepackage\\[([[:alnum:]]+)\\].*", "\\1",
-                    poss)               # This line should be ASCII.
     }
-    if (convert) {
-        ## see Rd2latex.R.
-        ## Currently utf8, utf8x, latin1, latin9 and ansinew are in use.
-        switch(res,
-               "utf8" =, "utf8x" = "UTF-8",
-               "latin1" =, "iso-8859-1" = "latin1",
-               "latin2" =, "iso-8859-2" = "latin2",
-               "latin9" =, "iso-8859-15" = "latin-9", # only form known to GNU libiconv
-               "latin10" =, "iso-8859-16" = "latin10",
-               "cyrillic" =, "iso-8859-5" =  "ISO-8859-5", # inputenx
-               "koi8-r" =  "KOI8-R", # inputenx
-               "arabic" = "ISO-8859-6", # Not clear next 3 are known to latex
-               "greek" =, "iso-8859-7" = "ISO-8859-7",
-               "hebrew" =, "iso-8859-8" = "ISO-8859-8",
-               "ansinew" = "CP1252",
-               "applemac" = "macroman",
-               ## assume these only get used on Windows
-               "cp1250" = "CP1250",
-               "cp1252" = "CP1252",
-               "cp1257" = "CP1257",
-               "unknown")
-    } else res
+    res
 }
 
 ### * .build_vignette_index

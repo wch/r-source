@@ -216,7 +216,8 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
     if (encoding != "bytes")  {
         ## now sort out an encoding, if needed.
-        enc <- tools:::.getVignetteEncoding(text, convert = TRUE)
+        enc <- tools:::.getVignetteEncoding(text, 
+			    default = if (identical(encoding, "")) NA else encoding)
         if (enc == "non-ASCII") {
             enc <- if (nzchar(encoding)) {
                 encoding

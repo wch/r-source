@@ -2670,7 +2670,8 @@ setRlibs <-
                                         sQuote(basename(bad_vignettes))),
                                   "", ""), collapse = "\n"))
             }
-            encs <- vapply(vigns$docs, getVignetteEncoding, "")
+	    defaultEncoding <- .get_package_metadata(pkgdir)["Encoding"]
+            encs <- vapply(vigns$docs, getVignetteEncoding, "", default = defaultEncoding)
             bad_vignettes <- vigns$docs[encs == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
                 if(!any) warningLog(Log)
@@ -2746,8 +2747,9 @@ setRlibs <-
         ## If the vignettes declare an encoding, are they actually in it?
         ## (We don't check the .tex, though)
         bad_vignettes <- character()
-        for (v in vigns$docs) {
-            enc <- getVignetteEncoding(v, TRUE)
+        for (i in seq_along(vigns$docs)) {
+	    v <- vigns$docs[i]
+            enc <- vigns$encodings[i]
             if (enc %in% c("", "non-ASCII", "unknown")) next
             lines <- readLines(v, warn = FALSE) # some miss final NA
             lines2 <- iconv(lines, enc, "UTF-16LE", toRaw = TRUE)
@@ -2785,8 +2787,7 @@ setRlibs <-
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
-                enc <- getVignetteEncoding(file, TRUE)
-                if(enc %in% c("non-ASCII", "unknown")) enc <- def_enc
+                enc <- vigns$encodings[i]
                 cat("  ", sQuote(basename(file)),
                     if(nzchar(enc)) paste("using", sQuote(enc)),
                     "...")

@@ -530,8 +530,7 @@ function(dir, outDir, encoding = "")
             if (!is.null(vigns$sources) && !is.null(vigns$sources[file][[1]]))
             	next
             file <- basename(file)
-            enc <- getVignetteEncoding(file, TRUE)
-            if(enc %in% c("non-ASCII", "unknown")) enc <- encoding
+            enc <- vigns$encodings[i]
 
             cat("  ", sQuote(basename(file)),
                 if(nzchar(enc)) paste("using", sQuote(enc)), "\n")
