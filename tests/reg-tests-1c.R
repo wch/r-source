@@ -598,4 +598,13 @@ rd <- tools::parse_Rd(f)
 ## Gave syntax errors because the percent sign in Usage 
 ## was taken as the start of a comment.
 
+## PR#15707: missing argument did not propagate through '...'
+## missing() was unable to handle recursive promises
+check <- function(x,y,z) {
+  c(missing(x), missing(y), missing(z))
+}
+check1 <- function(...) check(...)
+check2 <- function(...) check1(...)
+stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
+
 proc.time()
