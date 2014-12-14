@@ -27,6 +27,7 @@ function(filename = "")
     Log$con <- con
     Log$filename <- filename
     Log$stars <- "*"
+    Log$errors <- 0L
     Log$warnings <- 0L
     Log$notes <- 0L
 
@@ -78,6 +79,7 @@ function(Log, ...)
     resultLog(Log, "ERROR")
     text <- paste0(...)
     if (length(text) && nzchar(text)) printLog(Log, ..., "\n")
+    Log$errors <- Log$errors + 1L
 }
 
 ## <NOTE>
@@ -104,7 +106,15 @@ function(Log, text = "")
 summaryLog <-
 function(Log)
 {
-    if((Log$warnings > 0L) || (Log$notes > 0L)) {
+    if((Log$errors > 0L) || (Log$warnings > 0L) || (Log$notes > 0L)) {
+        if(Log$errors > 1L)
+            printLog(Log,
+                     sprintf("WARNING: There were %d errors.\n",
+                             Log$errors))
+        else if(Log$errors == 1L)
+            printLog(Log,
+                     sprintf("WARNING: There was 1 error.\n"))
+
         if(Log$warnings > 1L)
             printLog(Log,
                      sprintf("WARNING: There were %d warnings.\n",
