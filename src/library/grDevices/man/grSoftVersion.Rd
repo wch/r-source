@@ -29,7 +29,7 @@ grSoftVersion()
   (not cairo-based) bitmap devices:
   \item{libpng}{the version of \code{libpng} in use, or \code{""} if
     not available.}
-  \item{jpeg}{the version of the JPEG headers used for compliation,
+  \item{jpeg}{the version of the JPEG headers used for compilation,
     or \code{""} if JPEG support was not compiled in.}
   \item{libtiff}{the version of \code{libtiff} in use, or \code{""} if
     not available.}
