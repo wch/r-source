@@ -464,6 +464,7 @@ setRlibs <-
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
+	    maybe_exit(1L)
         }
 
         ## Next check for name clashes on case-insensitive file systems
@@ -479,6 +480,7 @@ setRlibs <-
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
+	    maybe_exit(1L)
         }
 
         ## NB: the omission of ' ' is deliberate.
@@ -534,6 +536,8 @@ setRlibs <-
                     "final component.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
+	    if (!OK)
+		maybe_exit(1L)
         }
         if (!any) resultLog(Log, "OK")
 
@@ -575,7 +579,8 @@ setRlibs <-
             wrapLog("Found the following files with insufficient permissions:\n")
             printLog0(Log, .format_lines_with_indent(bad_files), "\n")
             wrapLog("Permissions should be at least 700 for directories and 400 for files.\nPlease fix permissions and try again.\n")
-        }
+	    maybe_exit(1L)
+	}
 
         ## Phase B.  Top-level scripts 'configure' and 'cleanup'
         ## should really be mode at least 500, or they will not be
@@ -1250,6 +1255,7 @@ setRlibs <-
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
+	    maybe_exit(1L)
         } else if (length(out)) {
             warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1387,6 +1393,7 @@ setRlibs <-
                 wrapLog("The system-specific extension for",
                         "shared objects must not be added.\n",
                         "See ?library.dynam.\n")
+		maybe_exit(1L)
             }
         }
 
@@ -1637,6 +1644,7 @@ setRlibs <-
             if (length(err)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+		maybe_exit(1L)
             } else if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2228,6 +2236,7 @@ setRlibs <-
             wrapLog("\nIt looks like this package",
                     "has a loading problem: see the messages",
                     "for details.\n")
+	    maybe_exit(1L)		    
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
@@ -2461,6 +2470,7 @@ setRlibs <-
                           paste(readLines(Rout, warn = FALSE),
                                 collapse = "\n"),
                           "\n")
+		maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
             exfile <- paste0(pkgname, "-Ex.R")
@@ -2470,7 +2480,7 @@ setRlibs <-
                 } else ""
                 if (!this_multiarch) {
                     exout <- paste0(pkgname, "-Ex.Rout")
-                    run_one_arch(exfile, exout)
+                    if(!run_one_arch(exfile, exout)) maybe_exit(1L)
                 } else {
                     printLog(Log, "\n")
                     Log$stars <<-  "**"
@@ -2498,6 +2508,7 @@ setRlibs <-
                         }
                     }
                     Log$stars <<-  "*"
+                    if (!res) maybe_exit(1L)
                 }
                 cntFile <- paste0(exfile, "-cnt")
                 if (file.exists(cntFile)) {
@@ -2615,6 +2626,7 @@ setRlibs <-
                         res <- res & run_one_arch(arch)
                     }
             }
+            if (!res) maybe_exit(1L)
         } else resultLog(Log, "SKIPPED")
     }
 
@@ -2851,6 +2863,7 @@ setRlibs <-
                 } else {
                     errorLog(Log, "Errors in running code in vignettes:")
                     printLog0(Log, paste(c(res, "", ""), collapse = "\n"))
+		    maybe_exit(1L)
                 }
             } else resultLog(Log, "OK")
 
@@ -2960,6 +2973,7 @@ setRlibs <-
                               invert = TRUE, value = TRUE)
                 printLog0(Log, paste(c(lines, ""), collapse = "\n"))
                 unlink(build_dir, recursive = TRUE)
+		maybe_exit(1L)
             } else if (res > 0) {
                 latex_file <- file.path(build_dir, "Rd2.tex")
                 if (file.exists(latex_file))
@@ -3009,6 +3023,7 @@ setRlibs <-
                         run_Rcmd(args)
                     }
                     unlink(build_dir, recursive = TRUE)
+		    maybe_exit(1L)
                 } else {
                     unlink(build_dir, recursive = TRUE)
                     resultLog(Log, "OK")
@@ -3600,6 +3615,7 @@ setRlibs <-
             } else if(length(res$bad_package)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+		maybe_exit(1L)
             } else if(length(res$bad_version) ||
                       identical(res$foss_with_BuildVigettes, TRUE) ||
                       res$empty_Maintainer_name ||
@@ -3858,6 +3874,14 @@ setRlibs <-
     }
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
+    
+    maybe_exit <- function(status = 1L) {
+	if (R_check_exit_on_first_error) {
+	    printLog(Log, "NOTE:  Quitting check on first error.\n")
+	    summaryLog(Log)
+	    do_exit(status)
+	}
+    }
 
     env_path <- function(...) {
         paths <- c(...)
@@ -4197,6 +4221,8 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_FF_DUP_", "TRUE"))
     R_check_toplevel_files <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
+    R_check_exit_on_first_error <-
+	config_val_to_logical(Sys.getenv("_R_CHECK_EXIT_ON_FIRST_ERROR_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -4477,6 +4503,7 @@ setRlibs <-
                 wrapLog("All packages need a namespace as from R 3.0.0.\n",
                         "R CMD build will produce a suitable starting point,",
                         "but it is better to handcraft a NAMESPACE file.")
+	        maybe_exit(1L)
             } else {
                 noteLog(Log)
                 wrapLog("Packages without R code can be installed without",

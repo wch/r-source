@@ -237,9 +237,9 @@
       \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
       
-      \item \command{R CMD check} will now continue with testing after
-      many types of errors, and will output a summary count of errors at
-      the end if any have occurred.
+      \item \command{R CMD check} will now by default continue with
+      testing after many types of errors, and will output a summary
+      count of errors at the end if any have occurred.      
     }
   }
 

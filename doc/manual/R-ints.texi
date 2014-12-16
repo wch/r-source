@@ -4076,6 +4076,10 @@ If set, check code usage (via @CRANpkg{codetools}) directly on the
 package namespace without loading and attaching the package and its
 suggests and enhances.
 Default: true (and true for CRAN submission checks).
+
+@item _R_CHECK_EXIT_ON_FIRST_ERROR_
+If set to a true value, the check will exit on the first error.
+Default:  false.
 @end vtable
 
 CRAN's submission checks use something like
