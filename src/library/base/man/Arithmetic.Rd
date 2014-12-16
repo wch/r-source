@@ -43,9 +43,10 @@ x \%/\% y
   All attributes (including class) are preserved if there is no
   coercion: logical \code{x} is coerced to integer and names, dims and
   dimnames are preserved.
-  
+
   The binary operators return vectors containing the result of the element
-  by element operations.  The elements of shorter vectors are recycled
+  by element operations.  If involving a zero-length vector the result
+  has length zero.  Otherwise, the elements of shorter vectors are recycled
   as necessary (with a \code{\link{warning}} when they are recycled only
   \emph{fractionally}).  The operators are \code{+} for addition,
   \code{-} for subtraction, \code{*} for multiplication, \code{/} for
@@ -78,7 +79,7 @@ x \%/\% y
   if both are) are used.  For arrays (and an array result) the
   dimensions and dimnames are taken from first argument if it is an
   array, otherwise the second.
-  
+
 }
 \details{
   The unary and binary arithmetic operators are generic functions:
@@ -147,6 +148,9 @@ x \%/\% y
   zero \code{x}.
 }
 \note{
+  All logical operations involving a zero-length vector have a
+  zero-length result.
+
   The binary operators are sometimes called as functions as e.g.
   \code{`&`(x, y)}: see the description of how argument-matching is done
   in \code{\link[base]{Ops}}.
