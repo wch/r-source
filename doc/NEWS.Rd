@@ -166,6 +166,8 @@
       A similar function \code{grSoftVersion()} in package \pkg{grDevices}
       reports on third-party graphics software.
 
+      Function \code{tcltk::tclVersion()} reports the Tcl/Tk version.
+
       \item Calling \code{callGeneric()} without arguments now works
       with primitive generics to some extent.
 
