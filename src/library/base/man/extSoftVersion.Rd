@@ -30,6 +30,7 @@ extSoftVersion()
   \item{PCRE}{The version of \code{PCRE} in use.}
   \item{ICU}{The version of \code{ICU} in use (if any).}
   \item{TRE}{The version of \code{libtre} in use.}
+  \item{iconv}{The version of the \code{iconv} library in use (if known).}
 
   All are character strings.  Note that the values for \code{bzlib} and
   \code{pcre} normally contain a date as well as the version number, and

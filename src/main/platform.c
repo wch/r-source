@@ -3006,25 +3006,30 @@ void u_getVersion(UVersionInfo versionArray);
 # endif
 #endif
 
+#include <iconv.h>
+#if defined(__GLIBC__)
+# include <gnu/libc-version.h>
+#endif
+
 SEXP attribute_hidden
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 6));
-    SEXP nms = PROTECT(allocVector(STRSXP, 6));
+    SEXP ans = PROTECT(allocVector(STRSXP, 7));
+    SEXP nms = PROTECT(allocVector(STRSXP, 7));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
-    char p[50];
-    snprintf(p, 50, "%s", zlibVersion());
+    char p[256];
+    snprintf(p, 256, "%s", zlibVersion());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("zlib"));
-    snprintf(p, 50, "%s", BZ2_bzlibVersion());
+    snprintf(p, 256, "%s", BZ2_bzlibVersion());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("bzlib"));
-    snprintf(p, 50, "%s", lzma_version_string());
+    snprintf(p, 256, "%s", lzma_version_string());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("xz"));
-    snprintf(p, 50, "%s", pcre_version());
+    snprintf(p, 256, "%s", pcre_version());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("PCRE"));
 #ifdef USE_ICU
@@ -3037,9 +3042,23 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, i, mkChar(""));
 #endif
     SET_STRING_ELT(nms, i++, mkChar("ICU"));
-    snprintf(p, 50, "%s", tre_version());
+    snprintf(p, 256, "%s", tre_version());
     SET_STRING_ELT(ans, i, mkChar(p));
     SET_STRING_ELT(nms, i++, mkChar("TRE"));
+#ifdef _LIBICONV_VERSION
+    {
+	int ver = _libiconv_version;
+	snprintf(p, 256, "GNU libiconv %d.%d", ver/0x0100, ver%0x0100);
+    }
+#elif defined(_WIN32)
+    snprintf(p, 256, "%s", "win_iconv");
+#elif defined(__GLIBC__)
+    snprintf(p, 256, "glibc %s", gnu_get_libc_version());
+#else
+    snprintf(p, 256, "%s", "unknown");
+#endif
+    SET_STRING_ELT(ans, i, mkChar(p));
+    SET_STRING_ELT(nms, i++, mkChar("iconv"));
     UNPROTECT(2);
     return ans;
 }

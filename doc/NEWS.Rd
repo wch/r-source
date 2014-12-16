@@ -160,7 +160,8 @@
       \item New function \code{extSoftVersion()} to report on the
       versions of third-party software in use in this session.
       Currently reports versions of \code{zlib}, \code{bzlib}, the
-      \code{liblzma} from \code{xz}, PCRE, ICU and TRE.
+      \code{liblzma} from \code{xz}, PCRE, ICU, TRE and the \code{iconv}
+      library.
 
       A similar function \code{grSoftVersion()} in package \pkg{grDevices}
       reports on third-party graphics software.
