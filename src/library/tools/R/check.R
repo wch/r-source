@@ -762,6 +762,30 @@ setRlibs <-
             wrapLog("These files are defunct.",
                     "See manual 'Writing R Extensions'.\n")
         }
+        ## if README.md is present, it must be able to be processed
+        ## by CRAN to README.html, which is done by pandoc.
+        if (file.exists("README.md") && check_incoming) {
+            if (nzchar(Sys.which("pandoc"))) {
+                rfile <- file.path(tempdir(), "README.html")
+                out <- .system_with_capture("pandoc",
+                                            paste("README.md", "-s",
+                                                  "--email-obfuscation=references",
+                                                  "--css=../CRAN_web.css",
+                                                  "-o", rfile))
+                if(out$status) {
+                    if(!any) warningLog(Log)
+                    any <- TRUE
+                    printLog(Log, "Conversion of README.md failed:\n",
+                             paste(out$stderr, collapse = "\n"), "\n")
+                }
+            } else {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log,
+                         "File README.md cannot be checked without ",
+                         "'pandoc' being installed.\n")
+            }
+        }
         topfiles <- Sys.glob(c("LICENCE", "LICENSE"))
         if (length(topfiles)) {
             ## Are these mentioned in DESCRIPTION?
@@ -2236,7 +2260,7 @@ setRlibs <-
             wrapLog("\nIt looks like this package",
                     "has a loading problem: see the messages",
                     "for details.\n")
-	    maybe_exit(1L)		    
+	    maybe_exit(1L)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
@@ -3874,7 +3898,7 @@ setRlibs <-
     }
 
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
-    
+
     maybe_exit <- function(status = 1L) {
 	if (R_check_exit_on_first_error) {
 	    printLog(Log, "NOTE:  Quitting check on first error.\n")

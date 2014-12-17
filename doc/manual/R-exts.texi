@@ -2729,6 +2729,10 @@ give false positives, most commonly because of non-standard evaluation
 for formulae and because the intention is to return objects in the
 environment of a function for later use.
 
+Complete checking of a package which contains a file @file{README.md}
+needs @command{pandoc} installed: see
+@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
+
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
 to fail some of the checks in a @code{C} locale, and @command{R CMD
@@ -7651,7 +7655,7 @@ ASAN_OPTIONS='detect_leaks=1'
 However, this is the default on @command{clang} 3.5 and pre-releases of
 @command{gcc} 5.0.0.
 
-When LSan is enabled, leaks give the process a failure error status (by
+When LSan is enabled, leaks give the process a failure error implementation (by
 default @code{23}).  For an @R{} package this means the @R{} process,
 and as the parser retains some memory to the end of the process, if @R{}
 itself was built against ASan, all runs will have a failure error status
