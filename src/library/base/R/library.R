@@ -809,64 +809,71 @@ function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE
     invisible()
 }
 
+### FIXME: utils::packageVersion() should be pushed up here instead
+.findVersion <- function(pkg, lib.loc = NULL) {
+    pfile <- system.file("Meta", "package.rds",
+                         package = pkg, lib.loc = lib.loc)
+    if (nzchar(pfile))
+        as.numeric_version(readRDS(pfile)$DESCRIPTION["Version"])  
+    else
+        NULL
+}
+
+.findAllVersions <- function(pkg, lib.loc = NULL) {
+    if (is.null(lib.loc))
+        lib.loc <- .libPaths()
+    do.call(c, Filter(Negate(is.null), lapply(lib.loc, .findVersion, pkg=pkg)))
+}
+
 .getRequiredPackages2 <-
 function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
     pkgs <- unique(names(pkgInfo$Depends))
-    if (length(pkgs)) {
-        pkgname <- pkgInfo$DESCRIPTION["Package"]
-        for(pkg in pkgs) {
-            ## several packages 'Depends' on base!
-            if (pkg == "base") next
-            ## allow for multiple occurrences
-            zs <- pkgInfo$Depends[names(pkgInfo$Depends) == pkg]
-            have_vers <- any(vapply(zs, length, 1L) > 1L)
-            if ( !paste("package", pkg, sep = ":") %in% search() ) {
-                if (have_vers) {
-                    pfile <- system.file("Meta", "package.rds",
-                                         package = pkg, lib.loc = lib.loc)
-                    if(!nzchar(pfile))
-                        stop(gettextf("package %s required by %s could not be found",
-                                      sQuote(pkg), sQuote(pkgname)),
-                             call. = FALSE, domain = NA)
-                    current <- readRDS(pfile)$DESCRIPTION["Version"]
-                    for(z in zs)
-                        if(length(z) > 1L) {
-                            target <- as.numeric_version(z$version)
-                            if (!do.call(z$op, list(as.numeric_version(current), target)))
-##                            if (!eval(parse(text=paste("current", z$op, "target"))))
-                                stop(gettextf("package %s %s was found, but %s %s is required by %s",
-                                              sQuote(pkg), current, z$op,
-                                              target, sQuote(pkgname)),
-                                     call. = FALSE, domain = NA)
-                        }
+    pkgname <- pkgInfo$DESCRIPTION["Package"]
+    for(pkg in setdiff(pkgs, "base")) {
+        ## allow for multiple occurrences
+        depends <- pkgInfo$Depends[names(pkgInfo$Depends) == pkg]
+        attached <- paste("package", pkg, sep = ":") %in% search()
+        current <- .findVersion(pkg, lib.loc)
+        if(is.null(current))
+            stop(gettextf("package %s required by %s could not be found",
+                          sQuote(pkg), sQuote(pkgname)),
+                 call. = FALSE, domain = NA)
+        have_vers <- vapply(depends, length, 1L) > 1L
+        for(dep in depends[have_vers]) {
+            target <- as.numeric_version(dep$version)
+            sufficient <- do.call(dep$op, list(current, target))
+            if (!sufficient) {
+                if (is.null(lib.loc))
+                    lib.loc <- .libPaths()
+                versions <- .findAllVersions(pkg, lib.loc)
+                sufficient <- vapply(versions, dep$op, logical(1L), target)
+                if (any(sufficient)) {
+                    warning(gettextf("version %s of %s masked by %s in %s",
+                                     versions[which(sufficient)[1L]],
+                                     sQuote(pkg),
+                                     current,
+                                     lib.loc[which(sufficient)[1L]-1L]),
+                            call. = FALSE, domain = NA)
                 }
-
-                if (!quietly)
-                    packageStartupMessage(gettextf("Loading required package: %s",
-                                     pkg), domain = NA)
-                library(pkg, character.only = TRUE, logical.return = TRUE,
-                        lib.loc = lib.loc) ||
+                if (attached)
+                    msg <- "package %s %s is loaded, but %s %s is required by %s"
+                else
+                    msg <- "package %s %s was found, but %s %s is required by %s"
+                stop(gettextf(msg, sQuote(pkg), current, dep$op,
+                              target, sQuote(pkgname)),
+                     call. = FALSE, domain = NA)
+            }
+        }
+        
+        if (!attached) {
+            if (!quietly)
+                packageStartupMessage(gettextf("Loading required package: %s",
+                                               pkg), domain = NA)
+            library(pkg, character.only = TRUE, logical.return = TRUE,
+                    lib.loc = lib.loc) ||
                 stop(gettextf("package %s could not be loaded", sQuote(pkg)),
                      call. = FALSE, domain = NA)
-            } else {
-                ## check the required version number, if any
-                if (have_vers) {
-                    pfile <- system.file("Meta", "package.rds",
-                                         package = pkg, lib.loc = lib.loc)
-                    current <- readRDS(pfile)$DESCRIPTION["Version"]
-                    for(z in zs)
-                        if (length(z) > 1L) {
-                            target <- as.numeric_version(z$version)
-                            if (!do.call(z$op, list(as.numeric_version(current), target)))
-##                            if (!eval(parse(text=paste("current", z$op, "target"))))
-                                stop(gettextf("package %s %s is loaded, but %s %s is required by %s",
-                                              sQuote(pkg), current, z$op,
-                                              target, sQuote(pkgname)),
-                                     call. = FALSE, domain = NA)
-                        }
-                }
-            }
         }
     }
     if(useImports) {
