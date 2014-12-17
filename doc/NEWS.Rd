@@ -324,9 +324,9 @@
 
       \item \code{kruskal.test()} warns on more types of suspicious input.
 
-      \item The \code{as.dendrogram} method for \code{"hclust"} objects
-      gets a \code{check} argument protecting against memory explosion for
-      invalid inputs.
+      \item The \code{as.dendrogram()} method for \code{"hclust"}
+      objects gains a \code{check} argument protecting against memory
+      explosion for invalid inputs.
 
       \item \code{capabilities()} has a new item \code{long.double}
       which indicates if the build uses a \code{long double} type which
@@ -409,8 +409,8 @@
       blank string when the user asked for a single file but cancelled
       the request.  (\PR{16074})
 
-      \item \code{Math2} group generics failed to correctly dispatch
-      \code{"structure"} and \code{"nonStructure"}-derived classes.
+      \item \code{Math2} S4 group generics failed to correctly dispatch
+      \code{"structure"}- and \code{"nonStructure"}-derived classes.
 
       \item \code{loadNamespace()} imposed undocumented restrictions
       on the \code{versionCheck} parameter.  (Reported by Geoff Lee.)
