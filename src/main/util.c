@@ -49,7 +49,7 @@ static void R_wfixslash(wchar_t *s);
 extern "C" {
 #endif
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
-void F77_SYMBOL(rexitc)(char *msg, int *nchar);
+void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 
 #ifdef __cplusplus
 }
@@ -332,7 +332,7 @@ const char *type2char(SEXPTYPE t) /* returns a char* */
 }
 
 #ifdef UNUSED
-SEXP type2symbol(SEXPTYPE t)
+SEXP NORET type2symbol(SEXPTYPE t)
 {
     if (t >= 0 && t < MAX_NUM_SEXPTYPE) { /* FIXME: branch not really needed */
         SEXP res = Type2Table[t].rsymName;
@@ -341,12 +341,11 @@ SEXP type2symbol(SEXPTYPE t)
         }
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2symbol");
-    return R_NilValue; /* for -Wall */
 }
 #endif
 
 attribute_hidden
-void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
+void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
 {
     int i;
 
@@ -357,7 +356,7 @@ void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
     error(_("unimplemented type (%d) in '%s'\n"), t, s);
 }
 
-void UNIMPLEMENTED_TYPE(const char *s, SEXP x)
+void NORET UNIMPLEMENTED_TYPE(const char *s, SEXP x)
 {
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
@@ -1454,7 +1453,7 @@ void R_fixbackslash(char *s)
 }
 #endif
 
-void F77_SYMBOL(rexitc)(char *msg, int *nchar)
+void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar)
 {
     int nc = *nchar;
     char buf[256];

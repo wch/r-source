@@ -1874,10 +1874,9 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 }
 
 
-static int R_X11IOErr(Display *dsp)
+static int NORET R_X11IOErr(Display *dsp)
 {
     error("X11 fatal IO error: please save work and shut down R");
-    return 0; /* but should never get here */
 }
 
 /* set up the window, print the grid and column/row labels */

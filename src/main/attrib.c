@@ -390,7 +390,7 @@ static void checkNames(SEXP x, SEXP s)
 
 /* Time Series Parameters */
 
-static void badtsp(void)
+static void NORET badtsp(void)
 {
     error(_("invalid time series parameters specified"));
 }

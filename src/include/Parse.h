@@ -70,6 +70,6 @@ SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile);
 
 	/* Report a parse error */
 	
-void parseError(SEXP call, int linenum);
+void NORET parseError(SEXP call, int linenum);
 
 #endif /* not R_PARSE_H */

@@ -630,7 +630,7 @@ static double *fixparam(SEXP p, int *n)
 
 	/* Fatal errors - we don't deliver an answer */
 
-static void opterror(int nerr)
+static void NORET opterror(int nerr)
 {
     switch(nerr) {
     case -1:

@@ -225,7 +225,7 @@ Rconnection getConnection_no_err(int n)
 
 }
 
-static void set_iconv_error(Rconnection con, char* from, char* to)
+static void NORET set_iconv_error(Rconnection con, char* from, char* to)
 {
     char buf[100];
     snprintf(buf, 100, _("unsupported conversion from '%s' to '%s'"), from, to);
@@ -282,10 +282,9 @@ void set_iconv(Rconnection con)
 
 /* ------------------- null connection functions --------------------- */
 
-static Rboolean null_open(Rconnection con)
+static Rboolean NORET null_open(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "open");
-    return FALSE;		/* -Wall */
 }
 
 static void null_close(Rconnection con)
@@ -298,10 +297,9 @@ static void null_destroy(Rconnection con)
     if(con->private) free(con->private);
 }
 
-static int null_vfprintf(Rconnection con, const char *format, va_list ap)
+static int NORET null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error(_("%s not enabled for this connection"), "printing");
-    return 0;			/* -Wall */
 }
 
 /* va_copy is C99, but a draft standard had __va_copy.  Glibc has
@@ -450,19 +448,17 @@ int dummy_fgetc(Rconnection con)
 	return con->fgetc_internal(con);
 }
 
-static int null_fgetc(Rconnection con)
+static int NORET null_fgetc(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'getc'");
-    return 0;			/* -Wall */
 }
 
-static double null_seek(Rconnection con, double where, int origin, int rw)
+static double NORET null_seek(Rconnection con, double where, int origin, int rw)
 {
     error(_("%s not enabled for this connection"), "'seek'");
-    return 0.;			/* -Wall */
 }
 
-static void null_truncate(Rconnection con)
+static void NORET null_truncate(Rconnection con)
 {
     error(_("%s not enabled for this connection"), "truncation");
 }
@@ -472,18 +468,16 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-static size_t null_read(void *ptr, size_t size, size_t nitems,
+static size_t NORET null_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'read'");
-    return 0;			/* -Wall */
 }
 
-static size_t null_write(const void *ptr, size_t size, size_t nitems,
+static size_t NORET null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error(_("%s not enabled for this connection"), "'write'");
-    return 0;			/* -Wall */
 }
 
 void init_con(Rconnection new, const char *description, int enc,

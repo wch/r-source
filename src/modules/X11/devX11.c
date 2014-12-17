@@ -1247,15 +1247,14 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
     return 0;
 }
 
-static int R_X11IOErrSimple(Display *dsp)
+static int NORET R_X11IOErrSimple(Display *dsp)
 {
     char *dn = XDisplayName(dspname);
     strcpy(dspname, "");
     error(_("X11 I/O error while opening X11 connection to '%s'"), dn);
-    return 0; /* but should never get here */
 }
 
-static int R_X11IOErr(Display *dsp)
+static int NORET R_X11IOErr(Display *dsp)
 {
     int fd = ConnectionNumber(display);
     /*
@@ -1270,7 +1269,6 @@ static int R_X11IOErr(Display *dsp)
     strcpy(dspname, "");
     */
     error(_("X11 fatal IO error: please save work and shut down R"));
-    return 0; /* but should never get here */
 }
 
 #define USE_Xt 1

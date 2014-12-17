@@ -56,7 +56,6 @@
 # define extern0 extern
 #endif
 
-
 #define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
 			   and occasionally as a limit. */
 
@@ -1059,7 +1058,7 @@ int envlength(SEXP);
 SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
-void findcontext(int, SEXP, SEXP);
+void NORET findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
 SEXP frameSubscript(int, SEXP, SEXP);
@@ -1091,7 +1090,7 @@ void InitS3DefaultTypes(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
 int isValidName(const char *);
-void jump_to_toplevel(void);
+void NORET jump_to_toplevel(void);
 void KillAllDevices(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
@@ -1177,7 +1176,7 @@ SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int framedepth(RCNTXT*);
 void R_InsertRestartHandlers(RCNTXT *, Rboolean);
-void R_JumpToContext(RCNTXT *, int, SEXP);
+void NORET R_JumpToContext(RCNTXT *, int, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
@@ -1191,7 +1190,7 @@ void R_restore_globals(RCNTXT *);
 SEXP ItemName(SEXP, R_xlen_t);
 
 /* ../main/errors.c : */
-void ErrorMessage(SEXP, int, ...);
+void NORET ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 SEXP R_GetTraceback(int);
 
@@ -1233,8 +1232,8 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 #include <wchar.h>
 
 /* main/util.c */
-void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
-void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
+void NORET UNIMPLEMENTED_TYPE(const char *s, SEXP x);
+void NORET UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
 int Rf_AdobeSymbol2ucs2(int n);

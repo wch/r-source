@@ -70,7 +70,7 @@
    (2) we can be arrived here from a button or menuitem callback maybe
    in a different thread from the one where R runs.
 */
-static void my_png_error(png_structp png_ptr, png_const_charp msg)
+static void NORET my_png_error(png_structp png_ptr, png_const_charp msg)
 {
     R_ShowMessage((char *) msg);
 #if PNG_LIBPNG_VER < 10400
@@ -325,7 +325,7 @@ typedef struct my_error_mgr * my_error_ptr;
  * Here's the routine that will replace the standard error_exit method:
 */
 
-static void my_error_exit (j_common_ptr cinfo)
+static void NORET my_error_exit (j_common_ptr cinfo)
 {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_ptr myerr = (my_error_ptr) cinfo->err;

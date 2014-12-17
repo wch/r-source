@@ -41,7 +41,7 @@ extern "C" {
 #include <R_ext/Arith.h>
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
-#include <R_ext/Error.h>
+#include <R_ext/Error.h>  // includes NORET macro
 #include <R_ext/Memory.h>
 #include <R_ext/Utils.h>
 #include <R_ext/Print.h>
@@ -326,7 +326,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 
 /* Vector Access Macros */
 #ifdef LONG_VECTOR_SUPPORT
-    R_len_t R_BadLongVector(SEXP, const char *, int);
+    R_len_t NORET R_BadLongVector(SEXP, const char *, int);
 # define IS_LONG_VEC(x) (SHORT_VEC_LENGTH(x) == R_LONG_VEC_TOKEN)
 # define SHORT_VEC_LENGTH(x) (((VECSEXP) (x))->vecsxp.length)
 # define SHORT_VEC_TRUELENGTH(x) (((VECSEXP) (x))->vecsxp.truelength)
@@ -554,7 +554,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
 void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP *(STRING_PTR)(SEXP x);
-SEXP *(VECTOR_PTR)(SEXP x);
+SEXP * NORET (VECTOR_PTR)(SEXP x);
 
 /* List Access Functions */
 /* These also work for ... objects */
@@ -846,9 +846,9 @@ void Rf_unprotect(int);
 #endif
 void Rf_unprotect_ptr(SEXP);
 
-void R_signal_protect_error(void);
-void R_signal_unprotect_error(void);
-void R_signal_reprotect_error(PROTECT_INDEX i);
+void NORET R_signal_protect_error(void);
+void NORET R_signal_unprotect_error(void);
+void NORET R_signal_reprotect_error(PROTECT_INDEX i);
 
 #ifndef INLINE_PROTECT
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
@@ -1344,7 +1344,7 @@ SEXP R_FixupRHS(SEXP x, SEXP y);
 
 /* macro version of R_CheckStack */
 #define R_CheckStack() do {						\
-	void R_SignalCStackOverflow(intptr_t);				\
+	void NORET R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\

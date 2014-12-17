@@ -292,7 +292,7 @@ static double yDevtoCharUnits(double y, pGEDevDesc dd)
     return yDevtoNDCUnits(y, dd)/(gpptr(dd)->cex * gpptr(dd)->yNDCPerChar);
 }
 
-static void BadUnitsError(const char *where)
+static void NORET BadUnitsError(const char *where)
 {
     error(_("bad units specified in '%s'"), where);
 }
@@ -1735,7 +1735,7 @@ static Rboolean validFigureMargins(pGEDevDesc dd)
 	    (gpptr(dd)->plt[2] < gpptr(dd)->plt[3]));
 }
 
-static void invalidError(const char *message, pGEDevDesc dd)
+static void NORET invalidError(const char *message, pGEDevDesc dd)
 {
     dpptr(dd)->currentFigure -= 1;
     if (dpptr(dd)->currentFigure < 1)
@@ -2547,7 +2547,7 @@ void GLine(double x1, double y1, double x2, double y2, int coords, pGEDevDesc dd
 */
 static void (*old_close)(pDevDesc) = NULL;
 
-static void locator_close(pDevDesc dd)
+static void NORET locator_close(pDevDesc dd)
 {
     if(old_close) old_close(dd);
     dd->close = old_close;

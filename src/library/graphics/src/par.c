@@ -155,7 +155,7 @@ static int ParCode(const char *what)
 }
 
 
-static void par_error(const char *what)
+static void NORET par_error(const char *what)
 {
     error(_("invalid value specified for graphical parameter \"%s\""),  what);
 }

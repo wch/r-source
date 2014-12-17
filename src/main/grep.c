@@ -88,7 +88,7 @@ strsplit grep [g]sub [g]regexpr
 
 /* we allow pat == NULL if the regex cannot be safely expressed
    as a string (e.g., when using grepRaw) */
-static void reg_report(int rc,  regex_t *reg, const char *pat)
+static void NORET reg_report(int rc,  regex_t *reg, const char *pat)
 {
     char errbuf[1001];
     tre_regerror(rc, reg, errbuf, 1001);

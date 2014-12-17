@@ -698,7 +698,7 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
     return ScalarLogical(1);
 }
 
-SEXP mc_exit(SEXP sRes) 
+SEXP NORET mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG
@@ -726,7 +726,6 @@ SEXP mc_exit(SEXP sRes)
 #endif
     _exit(res);
     error(_("'mcexit' failed"));
-    return R_NilValue;
 }
 
 /* NA = query, TRUE/FALSE = set R_Interactive accordingly */
