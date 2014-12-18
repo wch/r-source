@@ -10265,7 +10265,7 @@ code.  In this example the special values are no problem, as
 implementation this is also true of @code{NA} as it is a type of
 @code{NaN}, but it is unwise to rely on such details.  Thus we will
 re-write the code to handle @code{NA}s using macros defined in
-@file{R_exts/Arith.h} included by @file{R.h}.
+@file{R_ext/Arith.h} included by @file{R.h}.
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
