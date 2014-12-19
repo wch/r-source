@@ -154,6 +154,7 @@ static void _draw_stroke (vfontContext *vc, const pGEcontext gc, pGEDevDesc dd,
    
    Argument 'enc' is ignored: these are in their own encoding.
 */
+attribute_hidden
 double R_GE_VStrWidth (const char *s, cetype_t enc, 
 		       const pGEcontext gc, pGEDevDesc dd)
 {
@@ -190,6 +191,7 @@ static double _label_height_hershey (const pGEcontext gc,
     return( HERSHEY_Y_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
+attribute_hidden
 double R_GE_VStrHeight (const char *s, cetype_t enc, 
 			const pGEcontext gc, pGEDevDesc dd)
 {
@@ -221,6 +223,7 @@ double R_GE_VStrHeight (const char *s, cetype_t enc,
 
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
+attribute_hidden
 void R_GE_VText (double x, double y, const char *s, cetype_t enc,
 		 double x_justify, double y_justify, double rotation,
 		 const pGEcontext gc, pGEDevDesc dd)

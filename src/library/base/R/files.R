@@ -162,7 +162,7 @@ file.info <- function(..., extra_cols = TRUE)
     attr(res, "row.names") <- fn # not row.names<- as that does a length check
     res
 }
-## wrappers introduced in R 3.1.0
+## wrappers introduced in R 3.2.0
 file.mode <- function(...) file.info(..., extra_cols = TRUE)$mode
 file.mtime <- function(...) file.info(..., extra_cols = TRUE)$mtime
 file.size <- function(...) file.info(..., extra_cols = TRUE)$size
