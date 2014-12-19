@@ -117,6 +117,10 @@
       
       \item Declared vignette encodings are now always passed to the
       vignette engine.
+
+      \item Port Thomas Kalibera's fix from R-devel that restores the
+      loadMethod fast path, effectively doubling the speed of S4
+      dispatch.
     }
   }
 }
