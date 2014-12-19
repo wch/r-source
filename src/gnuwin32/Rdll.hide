@@ -608,7 +608,6 @@
  do_bind
  do_bindtextdomain
  do_bitwise
- do_bmVersion
  do_bndIsActive
  do_bndIsLocked
  do_body

@@ -164,7 +164,6 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn con, char *type)
     return FALSE;
 }
 
-attribute_hidden
 SEXP do_bmVersion(void)
 {
     SEXP ans = PROTECT(allocVector(STRSXP, 3)),
