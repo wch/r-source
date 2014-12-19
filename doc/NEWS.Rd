@@ -114,6 +114,9 @@
       \item Loading packages incorrectly defining an S4 generic followed
       by a function of the same name caused an erroneous cyclic
       namespace dependency error.
+      
+      \item Declared vignette encodings are now always passed to the
+      vignette engine.
     }
   }
 }
