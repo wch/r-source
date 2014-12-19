@@ -16,11 +16,11 @@ extSoftVersion()
 }
 \details{
   The reports the versions of third-party software libraries in use.
-  These are often external but might have been compiled into \R which it
+  These are often external but might have been compiled into \R when it
   was installed.
 
   With dynamic linking, these are the versions of the libraries linked
-  to in this session.
+  to in this session: with static linking, of those compiled in.
 }
 \value{
   A named character vector, currently with components
@@ -28,14 +28,15 @@ extSoftVersion()
   \item{bzlib}{The version of \code{bzlib} (from \command{bzip2}) in use.}
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
   \item{PCRE}{The version of \code{PCRE} in use.}
-  \item{ICU}{The version of \code{ICU} in use (if any).}
+  \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}
   \item{TRE}{The version of \code{libtre} in use.}
-  \item{iconv}{The version of the \code{iconv} library in use (if known).}
+  \item{iconv}{The implementation and version of the \code{iconv}
+  library in use (if known).}
 
-  All are character strings.  Note that the values for \code{bzlib} and
-  \code{pcre} normally contain a date as well as the version number, and
-  that for \code{tre} includes several items separated by spaces, the
-  version number being the second.
+  Note that the values for \code{bzlib} and \code{pcre} normally contain
+  a date as well as the version number, and that for \code{tre} includes
+  several items separated by spaces, the version number being the
+  second.
 
   For \code{iconv} this will give the implementation as well as the
   version, for example \code{"GNU libiconv 1.14"}, \code{"glibc
