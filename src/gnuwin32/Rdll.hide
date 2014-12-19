@@ -104,6 +104,7 @@
  R_InitSrcRefState
  R_InitialData
  R_InsertRestartHandlers
+ R_Interactive
  R_IoBufferFree
  R_IoBufferGetc
  R_IoBufferInit
@@ -129,6 +130,7 @@
  R_OpenSiteFile
  R_OpenSysInitFile
  R_OutputCon
+ R_PPStackSize
  R_Parse1Buffer
  R_Parse1File
  R_ParseBuffer
@@ -186,7 +188,6 @@
  R_compress1
  R_compress2
  R_compress3
- R_current_trace_state
  R_data_class2
  R_dec_min_exponent
  R_decompress1
@@ -231,6 +232,7 @@
  R_newsock
  R_newunz
  R_newurl
+ R_num_math_threads
  R_nwarnings
  R_osDynSymbol
  R_possible_dispatch
@@ -448,6 +450,7 @@
  WinCheckUTF8
  WinUTF8out
  WrongArgCount
+ _controlify
  _hershey_font_info
  _nl_explode_name
  _nl_find_domain
