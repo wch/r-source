@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -856,14 +856,11 @@ msgstr "패키지 %s에 대한 문서"
 msgid "package %s required by %s could not be found"
 msgstr "%s에 의해 요구된 패키지 %s를 찾을 수 없습니다"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "패키지 %s %s를 찾았으나, %s %s는 %s에 의해서 요구되어 집니다"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "패키지 %s는 로드되어질 수 없습니다"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "패키지 %s %s가 로드되었으나 %s %s는 %s에 의하여 요구되어 집니다"
 
 msgid "empty (zero-byte) input file"
 msgstr ""
@@ -1673,6 +1670,12 @@ msgstr[0] "%s는 TRUE가 아닙니다"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "경고 메시지:\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "패키지 %s %s를 찾았으나, %s %s는 %s에 의해서 요구되어 집니다"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "패키지 %s %s가 로드되었으나 %s %s는 %s에 의하여 요구되어 집니다"
 
 #~ msgid "wrong argument"
 #~ msgstr "잘못된 인자입니다"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12+0100\n"
+"POT-Creation-Date: 2014-12-19 10:57+0000\n"
 "PO-Revision-Date: 2011-11-29 09:15+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,14 +79,14 @@ msgstr "mcexit kan kun bruges i en underproces"
 msgid "'mcexit' failed"
 msgstr "mcexit fejlede"
 
-#: fork.c:758 fork.c:767
+#: fork.c:757 fork.c:766
 msgid "invalid CPU affinity specification"
 msgstr ""
 
-#: fork.c:778
+#: fork.c:777
 msgid "requested CPU set is too large for this system"
 msgstr ""
 
-#: fork.c:801
+#: fork.c:800
 msgid "retrieving CPU affinity set failed"
 msgstr ""

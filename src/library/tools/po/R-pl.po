@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1289,6 +1289,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "nie można utworzyć katalogu tymczasowego %s"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 # tools/R/Vignettes.R: 178
 # message("  Running ", sQuote(file))
 msgid "Running"
@@ -1356,12 +1359,6 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 "nazwa pliku ilustracji '%s' nie zgadza się z żadną ze ścieżek nazwy pliku "
 "'%s'"
-
-# tools/R/Vignettes.R: 698
-# stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "Niespójne specyfikacje strony kodowej:"
 
 # tools/R/Vignettes.R: 824
 # stop(gettextf("In '%s' vignettes '%s' and '%s' have the same vignette name",
@@ -3053,6 +3050,12 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+# tools/R/Vignettes.R: 698
+# stop("Inconsistent encoding specifications: ", result1, " with %\\SweaveUTF8")
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "Niespójne specyfikacje strony kodowej:"
 
 # tools/R/Rd.R: 38
 # stop("argument 'file' must be a character string or connection")

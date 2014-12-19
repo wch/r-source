@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12+0100\n"
+"POT-Creation-Date: 2014-12-19 10:57+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -116,19 +116,19 @@ msgstr "'mcexit' nie powiodło się"
 # error(_("invalid CPU affinity specification"))
 # parallel/src/fork.c: 719
 # error(_("invalid CPU affinity specification"))
-#: fork.c:758 fork.c:767
+#: fork.c:757 fork.c:766
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
 # parallel/src/fork.c: 730
 # error(_("requested CPU set is too large for this system"))
-#: fork.c:778
+#: fork.c:777
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
 # parallel/src/fork.c: 753
 # error(_("retrieving CPU affinity set failed"))
-#: fork.c:801
+#: fork.c:800
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"
 

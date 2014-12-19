@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -896,14 +896,11 @@ msgstr "Documentation pour le package %s"
 msgid "package %s required by %s could not be found"
 msgstr "le package %s nécessaire pour %s, mais est introuvable"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "le package %s %s est trouvé, mais %s %s est réquis par %s"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "le package %s ne peut être chargé"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "le package %s %s est chargé, mais %s %s est requis par %s"
 
 msgid "empty (zero-byte) input file"
 msgstr "fichier d'entrée vide (0 octets)"
@@ -1791,6 +1788,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "le package %s %s est trouvé, mais %s %s est réquis par %s"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "le package %s %s est chargé, mais %s %s est requis par %s"
 
 #~ msgid "wrong argument"
 #~ msgstr "mauvais argument"

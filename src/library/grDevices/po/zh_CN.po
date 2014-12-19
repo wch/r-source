@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02+0000\n"
+"POT-Creation-Date: 2014-12-19 10:57+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -252,11 +252,11 @@ msgstr "无法记录装置编码"
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "对象'.ps.prolog'不是字符向量"
 
-#: devPS.c:2638 devPS.c:6415 devWindows.c:784
+#: devPS.c:2638 devPS.c:6415 devWindows.c:801
 msgid "invalid line end"
 msgstr "行尾出错"
 
-#: devPS.c:2657 devPS.c:6434 devWindows.c:797
+#: devPS.c:2657 devPS.c:6434 devWindows.c:814
 msgid "invalid line join"
 msgstr "行接連處出错"
 
@@ -319,7 +319,7 @@ msgstr "'postscript(print.it=TRUE)'不能用在空'print'命令里"
 msgid "invalid page type '%s' (postscript)"
 msgstr "页类别'%s'(postscript)不对"
 
-#: devPS.c:3457 devPS.c:4570 devWindows.c:2341
+#: devPS.c:3457 devPS.c:4570 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -532,14 +532,14 @@ msgstr "%s里的'system'参数不对"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3648 devWindows.c:3652
-#: devWindows.c:3660 devWindows.c:3671 devWindows.c:3677 devWindows.c:3684
-#: devWindows.c:3691 devWindows.c:3695
+#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3646 devWindows.c:3650
+#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
+#: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "'%s'的值不对"
 
-#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3736
+#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr "无法启动%s()装置"
@@ -579,139 +579,135 @@ msgstr "无法建立quartz()装置，可能不支持所提供的种类"
 msgid "Quartz device is not available on this platform"
 msgstr "这个平台上没有石英装置"
 
-#: devWindows.c:341 devWindows.c:387 devWindows.c:458
+#: devWindows.c:358 devWindows.c:404 devWindows.c:475
 msgid "Not enough memory to copy graphics window"
 msgstr "内存不够，无法拷贝图形窗"
 
-#: devWindows.c:346 devWindows.c:392 devWindows.c:463
+#: devWindows.c:363 devWindows.c:409 devWindows.c:480
 msgid "No device available to copy graphics window"
 msgstr "没有装置来拷贝图形窗"
 
-#: devWindows.c:396 devWindows.c:467
+#: devWindows.c:413 devWindows.c:484
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "文件名字中不能有'%%'"
 
-#: devWindows.c:604
+#: devWindows.c:621
 msgid "invalid font specification"
 msgstr "字体设置出错"
 
-#: devWindows.c:643
+#: devWindows.c:660
 msgid "font family not found in Windows font database"
 msgstr "Windows字体数据库里没有这样的字体系列"
 
-#: devWindows.c:1074
+#: devWindows.c:1091
 msgid "plot history seems corrupted"
 msgstr "绘图历史好象坏了"
 
-#: devWindows.c:1081
+#: devWindows.c:1098
 msgid "no plot history!"
 msgstr "没有绘图历史!"
 
-#: devWindows.c:1798
+#: devWindows.c:1815
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "%s()調用里的文本名字太长"
 
-#: devWindows.c:1807 devWindows.c:1846 devWindows.c:1880
+#: devWindows.c:1820 devWindows.c:1855 devWindows.c:1885
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d'这样的像素值很可能不对"
 
-#: devWindows.c:1815 devWindows.c:1820 devWindows.c:1849 devWindows.c:1854
-#: devWindows.c:1883 devWindows.c:1888
+#: devWindows.c:1828 devWindows.c:1833 devWindows.c:1858 devWindows.c:1863
+#: devWindows.c:1888 devWindows.c:1893
 msgid "unable to allocate bitmap"
 msgstr "无法分配bitmap"
 
-#: devWindows.c:1826 devWindows.c:1860 devWindows.c:2184
+#: devWindows.c:1839 devWindows.c:1869 devWindows.c:2189
 #, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "无法打开'%s'文本写入"
 
-#: devWindows.c:1843
+#: devWindows.c:1852
 msgid "filename too long in jpeg() call"
 msgstr "jpeg()調用中的文本名字太长"
 
-#: devWindows.c:1877
+#: devWindows.c:1882
 msgid "filename too long in tiff() call"
 msgstr "tiff()調用里的文本名字太长"
 
-#: devWindows.c:1909
+#: devWindows.c:1914
 msgid "filename too long in win.metafile() call"
 msgstr "win.metafile()調用里的文本名字太长"
 
-#: devWindows.c:1919
+#: devWindows.c:1924
 #, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "无法打开元文本'%s'写入"
 
-#: devWindows.c:1921
+#: devWindows.c:1926
 msgid "unable to open clipboard to write metafile"
 msgstr "无法打开剪輯板来写入元文本"
 
-#: devWindows.c:2132
+#: devWindows.c:2137
 msgid "Insufficient memory for resize. Killing device"
 msgstr "内存不够，无法重新修改大小. 关闭装置"
 
-#: devWindows.c:2140
+#: devWindows.c:2145
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "内存不够，无法重新修改大小. 关闭alpha混合"
 
-#: devWindows.c:2169
+#: devWindows.c:2174
 msgid "a clipboard metafile can store only one figure."
 msgstr "剪輯板元文本只能保存一个图片。"
 
-#: devWindows.c:2175
+#: devWindows.c:2180
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "无法建立元文本'%s'"
 
-#: devWindows.c:3112 devWindows.c:3760
+#: devWindows.c:3117 devWindows.c:3758
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:3126
+#: devWindows.c:3131
 msgid "attempt to use the locator after dev.hold()"
 msgstr "调用dev.hold()后不能再用定位器"
 
-#: devWindows.c:3392
+#: devWindows.c:3397
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "'windowsTimeouts'选择项必需是整数"
 
-#: devWindows.c:3413
+#: devWindows.c:3418
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'里的装置数目出了错"
 
-#: devWindows.c:3415
+#: devWindows.c:3420
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'装置出错"
 
-#: devWindows.c:3418
+#: devWindows.c:3423
 msgid "invalid filename argument in 'savePlot'"
 msgstr "'savePlot'文本名字参数不对"
 
-#: devWindows.c:3423
+#: devWindows.c:3428
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'类别参数不对"
 
-#: devWindows.c:3450
+#: devWindows.c:3455
 msgid "unknown type in savePlot"
 msgstr "savePlot里没有类别"
 
-#: devWindows.c:3495 devWindows.c:3528 devWindows.c:3557 devWindows.c:3589
-#: devWindows.c:3614
+#: devWindows.c:3500 devWindows.c:3532 devWindows.c:3560 devWindows.c:3591
+#: devWindows.c:3612
 msgid "processing of the plot ran out of memory"
 msgstr "处理图象时内存用完了"
 
-#: devWindows.c:3574
+#: devWindows.c:3576
 msgid "Impossible to open "
 msgstr "无法打开"
 
-#: devWindows.c:3601
-msgid "Impossible to load Rbitmap.dll"
-msgstr "无法载入Rbitmap.dll"
-
-#: devWindows.c:3643
+#: devWindows.c:3641
 msgid "invalid 'width' or 'height'"
 msgstr "'width'或'height'的值不对"
 
@@ -736,6 +732,9 @@ msgstr "不支持这个规划，因此没有写任何图象数据"
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "'%s'参数不对"
+
+#~ msgid "Impossible to load Rbitmap.dll"
+#~ msgstr "无法载入Rbitmap.dll"
 
 #~ msgid "Invalid line end"
 #~ msgstr "行尾出错"

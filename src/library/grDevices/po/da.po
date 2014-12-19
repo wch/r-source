@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02+0000\n"
+"POT-Creation-Date: 2014-12-19 10:57+0000\n"
 "PO-Revision-Date: 2011-11-29 09:07+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,12 +262,12 @@ msgstr "Kunne ikke optage enhedskodning"
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "Object.ps.prolog er ikke en tegnvektor"
 
-#: devPS.c:2638 devPS.c:6415 devWindows.c:784
+#: devPS.c:2638 devPS.c:6415 devWindows.c:801
 #, fuzzy
 msgid "invalid line end"
 msgstr "Ugyldig linjeafslutning"
 
-#: devPS.c:2657 devPS.c:6434 devWindows.c:797
+#: devPS.c:2657 devPS.c:6434 devWindows.c:814
 #, fuzzy
 msgid "invalid line join"
 msgstr "Ugyldig linjeforbindelse"
@@ -339,7 +339,7 @@ msgstr "postscript(print.it=TRUE) brugt med en tom print-kommando"
 msgid "invalid page type '%s' (postscript)"
 msgstr "ugyldig sidetype '%s' (postscript)"
 
-#: devPS.c:3457 devPS.c:4570 devWindows.c:2341
+#: devPS.c:3457 devPS.c:4570 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -575,15 +575,15 @@ msgstr "ugyldigt 'family'-parameter i %s"
 msgid "invalid 'fonts' parameter in %s"
 msgstr "ugyldigt 'fonts'-parameter i %s"
 
-#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3648 devWindows.c:3652
-#: devWindows.c:3660 devWindows.c:3671 devWindows.c:3677 devWindows.c:3684
-#: devWindows.c:3691 devWindows.c:3695
+#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3646 devWindows.c:3650
+#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
+#: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "ugyldig værdi for '%s'"
 
 # 85%
-#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3736
+#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr "kan ikke starte %s()-enhed"
@@ -627,148 +627,144 @@ msgstr ""
 msgid "Quartz device is not available on this platform"
 msgstr "Quartz-enhed er ikke tilgængelig på denne platform"
 
-#: devWindows.c:341 devWindows.c:387 devWindows.c:458
+#: devWindows.c:358 devWindows.c:404 devWindows.c:475
 msgid "Not enough memory to copy graphics window"
 msgstr "Ikke nok hukommelse til at kopiere grafikvindue"
 
-#: devWindows.c:346 devWindows.c:392 devWindows.c:463
+#: devWindows.c:363 devWindows.c:409 devWindows.c:480
 msgid "No device available to copy graphics window"
 msgstr "Ingen enhed tilgængelig til at kopiere grafikvindue"
 
-#: devWindows.c:396 devWindows.c:467
+#: devWindows.c:413 devWindows.c:484
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "'%%' er ikke tilladt i filnavnet"
 
-#: devWindows.c:604
+#: devWindows.c:621
 #, fuzzy
 msgid "invalid font specification"
 msgstr "Ugyldig skriftspecifikation"
 
 # 77%
-#: devWindows.c:643
+#: devWindows.c:660
 #, fuzzy
 msgid "font family not found in Windows font database"
 msgstr "Skriftfamilie ikke fundet i Windows-skriftdatabasen"
 
-#: devWindows.c:1074
+#: devWindows.c:1091
 msgid "plot history seems corrupted"
 msgstr "plot-historik ser ud til at være ødelagt"
 
-#: devWindows.c:1081
+#: devWindows.c:1098
 msgid "no plot history!"
 msgstr "ingen plot-historik!"
 
 # 83%
-#: devWindows.c:1798
+#: devWindows.c:1815
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "filnavn er for langt i %s()-kald"
 
-#: devWindows.c:1807 devWindows.c:1846 devWindows.c:1880
+#: devWindows.c:1820 devWindows.c:1855 devWindows.c:1885
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'bredde=%d, højde=%d' er usandsynlige værdier i billedpunkter"
 
-#: devWindows.c:1815 devWindows.c:1820 devWindows.c:1849 devWindows.c:1854
-#: devWindows.c:1883 devWindows.c:1888
+#: devWindows.c:1828 devWindows.c:1833 devWindows.c:1858 devWindows.c:1863
+#: devWindows.c:1888 devWindows.c:1893
 #, fuzzy
 msgid "unable to allocate bitmap"
 msgstr "Kan ikke allokere bitmap"
 
-#: devWindows.c:1826 devWindows.c:1860 devWindows.c:2184
+#: devWindows.c:1839 devWindows.c:1869 devWindows.c:2189
 #, fuzzy, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "Kan ikke åbne fil '%s' for skrivning"
 
-#: devWindows.c:1843
+#: devWindows.c:1852
 msgid "filename too long in jpeg() call"
 msgstr "filnavn for langt i jpeg()-kald"
 
-#: devWindows.c:1877
+#: devWindows.c:1882
 msgid "filename too long in tiff() call"
 msgstr "filnavn for langt i tiff()-kald"
 
-#: devWindows.c:1909
+#: devWindows.c:1914
 msgid "filename too long in win.metafile() call"
 msgstr "filnavn for langt i win.metafile()-kald"
 
-#: devWindows.c:1919
+#: devWindows.c:1924
 #, fuzzy, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "Kan ikke åben metafil '%s' for skrivning"
 
-#: devWindows.c:1921
+#: devWindows.c:1926
 #, fuzzy
 msgid "unable to open clipboard to write metafile"
 msgstr "Kan ikke åbne udklipsholder for at skrive metafil"
 
-#: devWindows.c:2132
+#: devWindows.c:2137
 msgid "Insufficient memory for resize. Killing device"
 msgstr "Ikke nok hukommelse for ændring af størrelse. Dræber enhed"
 
-#: devWindows.c:2140
+#: devWindows.c:2145
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "Ikke nok hukommelse for at ændre størrelse. Deaktiverer alfablanding"
 
-#: devWindows.c:2169
+#: devWindows.c:2174
 #, fuzzy
 msgid "a clipboard metafile can store only one figure."
 msgstr "En metafil for udklipsholderen kan kun lagre en figur."
 
 # 76%
-#: devWindows.c:2175
+#: devWindows.c:2180
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "metafilfil '%s' kunne ikke oprettes"
 
-#: devWindows.c:3112 devWindows.c:3760
+#: devWindows.c:3117 devWindows.c:3758
 msgid "R Graphics"
 msgstr "R-grafik"
 
-#: devWindows.c:3126
+#: devWindows.c:3131
 msgid "attempt to use the locator after dev.hold()"
 msgstr "forsøg på at bruge afgrænseren efter dev.hold()"
 
-#: devWindows.c:3392
+#: devWindows.c:3397
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "tilvalg 'windows Timeouts' skal være et heltal"
 
-#: devWindows.c:3413
+#: devWindows.c:3418
 msgid "invalid device number in 'savePlot'"
 msgstr "ugyldigt enhedstal i 'savePlot'"
 
-#: devWindows.c:3415
+#: devWindows.c:3420
 msgid "invalid device in 'savePlot'"
 msgstr "ugyldig enhed i 'savePlot'"
 
-#: devWindows.c:3418
+#: devWindows.c:3423
 #, fuzzy
 msgid "invalid filename argument in 'savePlot'"
 msgstr "ugyldigt filnavnsargument i savePlot"
 
-#: devWindows.c:3423
+#: devWindows.c:3428
 msgid "invalid type argument in 'savePlot'"
 msgstr "ugyldigt typeargument i 'savePlot'"
 
-#: devWindows.c:3450
+#: devWindows.c:3455
 msgid "unknown type in savePlot"
 msgstr "ukendt type i savePlot"
 
-#: devWindows.c:3495 devWindows.c:3528 devWindows.c:3557 devWindows.c:3589
-#: devWindows.c:3614
+#: devWindows.c:3500 devWindows.c:3532 devWindows.c:3560 devWindows.c:3591
+#: devWindows.c:3612
 msgid "processing of the plot ran out of memory"
 msgstr "behandlingem af plottet løb tør for hukommelse"
 
-#: devWindows.c:3574
+#: devWindows.c:3576
 msgid "Impossible to open "
 msgstr "Umulig at åbne "
 
-#: devWindows.c:3601
-msgid "Impossible to load Rbitmap.dll"
-msgstr "Umuligt at indlæse Rbitmap.dll"
-
-#: devWindows.c:3643
+#: devWindows.c:3641
 msgid "invalid 'width' or 'height'"
 msgstr "ugyldig 'bredde' eller 'højde'"
 
@@ -795,6 +791,9 @@ msgstr "Ikke et understøttet skema, ingen billeddata skrevet"
 #, fuzzy, c-format
 msgid "invalid '%s' argument"
 msgstr "ugyldigt 'fil'-argument"
+
+#~ msgid "Impossible to load Rbitmap.dll"
+#~ msgstr "Umuligt at indlæse Rbitmap.dll"
 
 #~ msgid "Invalid line end"
 #~ msgstr "Ugyldig linjeafslutning"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -579,6 +579,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr "Ausführen"
 
@@ -614,10 +617,6 @@ msgstr "Datei '%s' nicht gefunden"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "Vignettendateiname '%s' passt zu keinem der %s' Dateinamenmuster"
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr "Inkonsistente Kodierungsspezifikationen:"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
@@ -1384,6 +1383,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr "Inkonsistente Kodierungsspezifikationen:"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "Argument 'file' muss eine Zeichenkette oder eine Verbindung sein"

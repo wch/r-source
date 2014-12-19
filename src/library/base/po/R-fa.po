@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2012-11-27 01:11+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -821,13 +821,10 @@ msgstr ""
 msgid "package %s required by %s could not be found"
 msgstr ""
 
-msgid "package %s %s was found, but %s %s is required by %s"
+msgid "version %s of %s masked by %s in %s"
 msgstr ""
 
 msgid "package %s could not be loaded"
-msgstr ""
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 
 msgid "empty (zero-byte) input file"

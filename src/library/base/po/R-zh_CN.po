@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -847,14 +847,11 @@ msgstr "关于这个程辑包%s的说明书"
 msgid "package %s required by %s could not be found"
 msgstr "找不到%2$s所需要的程辑包%1$s"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "找到了程辑包%1$s %2$s，但%5$s需要%3$s %4$s"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "无法载入程辑包%s"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "载入了程辑包%1$s %2$s，但%5$s需要%3$s %4$s "
 
 msgid "empty (zero-byte) input file"
 msgstr "空的(零字节)输入文件"
@@ -1664,6 +1661,12 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "找到了程辑包%1$s %2$s，但%5$s需要%3$s %4$s"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "载入了程辑包%1$s %2$s，但%5$s需要%3$s %4$s "
 
 #~ msgid "wrong argument"
 #~ msgstr "参数不对"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -860,14 +860,11 @@ msgstr "Документация для пакета %s"
 msgid "package %s required by %s could not be found"
 msgstr "пакет %s, требуемый для %s, не найден"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "пакет %s %s найден, но %s %s требуется для %s"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "пакет %s нельзя загрузить"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "пакет %s %s загружен, но %s %s требуется для %s"
 
 msgid "empty (zero-byte) input file"
 msgstr "пустой (ноль бит) входной файл"
@@ -1767,6 +1764,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "пакет %s %s найден, но %s %s требуется для %s"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "пакет %s %s загружен, но %s %s требуется для %s"
 
 #~ msgid "wrong argument"
 #~ msgstr "неправильный аргумент"

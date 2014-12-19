@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -853,14 +853,11 @@ msgstr "Dokumentation for pakke %s"
 msgid "package %s required by %s could not be found"
 msgstr "pakke %s krævet af %s kunne ikke findes"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "pakke %s %s blev fundet, men %s %s er krævet af %s"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "pakke %s kunne ikke indlæses"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "pakke %s %s er indlæst, men %s %s er krævet af %s"
 
 msgid "empty (zero-byte) input file"
 msgstr "tom (zerobyte) inddatafil"
@@ -1721,6 +1718,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "pakke %s %s blev fundet, men %s %s er krævet af %s"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "pakke %s %s er indlæst, men %s %s er krævet af %s"
 
 #~ msgid "wrong argument"
 #~ msgstr "forkert argument"

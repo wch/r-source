@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02+0000\n"
+"POT-Creation-Date: 2014-12-19 10:57+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -423,7 +423,7 @@ msgstr "obiekt '.ps.prolog' nie jest wektorem tekstowym"
 # error(_("invalid line end"))
 # grDevices/src/devPS.c: 6409
 # error(_("invalid line end"))
-#: devPS.c:2638 devPS.c:6415 devWindows.c:784
+#: devPS.c:2638 devPS.c:6415 devWindows.c:801
 msgid "invalid line end"
 msgstr "błędny koniec linii"
 
@@ -433,7 +433,7 @@ msgstr "błędny koniec linii"
 # error(_("invalid line join"))
 # grDevices/src/devPS.c: 6428
 # error(_("invalid line join"))
-#: devPS.c:2657 devPS.c:6434 devWindows.c:797
+#: devPS.c:2657 devPS.c:6434 devWindows.c:814
 msgid "invalid line join"
 msgstr "błędny łącznik linii"
 
@@ -561,7 +561,7 @@ msgstr "niepoprawny typ '%s' strony (postscript)"
 # warning(_("semi-transparency is not supported on this device: reported only once per page"))
 # grDevices/src/devPS.c: 4568
 # warning(_("semi-transparency is not supported on this device: reported only once per page"))
-#: devPS.c:3457 devPS.c:4570 devWindows.c:2341
+#: devPS.c:3457 devPS.c:4570 devWindows.c:2346
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
@@ -951,9 +951,9 @@ msgstr "niepoprawny parametr 'fonts' w %s"
 # error(_("invalid value of '%s'"), "fillOddEven")
 # grDevices/src/devPS.c: 8401
 # error(_("invalid value of '%s'"), "useCompression")
-#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3648 devWindows.c:3652
-#: devWindows.c:3660 devWindows.c:3671 devWindows.c:3677 devWindows.c:3684
-#: devWindows.c:3691 devWindows.c:3695
+#: devPS.c:8242 devPS.c:8404 devPS.c:8407 devWindows.c:3646 devWindows.c:3650
+#: devWindows.c:3658 devWindows.c:3669 devWindows.c:3675 devWindows.c:3682
+#: devWindows.c:3689 devWindows.c:3693
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "niepoprawna wartość '%s'"
@@ -968,7 +968,7 @@ msgstr "niepoprawna wartość '%s'"
 # error(_("unable to start %s() device"), "xfig")
 # grDevices/src/devPS.c: 8415
 # error(_("unable to start %s() device"), "pdf")
-#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3736
+#: devPS.c:8255 devPS.c:8322 devPS.c:8421 devPicTeX.c:740 devWindows.c:3734
 #, c-format
 msgid "unable to start %s() device"
 msgstr "nie można uruchomić urządzenia '%s()'"
@@ -1031,7 +1031,7 @@ msgstr "urządzenie Quartz nie jest dostępne na tej platformie"
 # (_("Not enough memory to copy graphics window"))
 # grDevices/src/devWindows.c: 458
 # (_("Not enough memory to copy graphics window"))
-#: devWindows.c:341 devWindows.c:387 devWindows.c:458
+#: devWindows.c:358 devWindows.c:404 devWindows.c:475
 msgid "Not enough memory to copy graphics window"
 msgstr "Zbyt mało pamięci aby skopiować okno grafiki"
 
@@ -1041,7 +1041,7 @@ msgstr "Zbyt mało pamięci aby skopiować okno grafiki"
 # (_("No device available to copy graphics window"))
 # grDevices/src/devWindows.c: 463
 # (_("No device available to copy graphics window"))
-#: devWindows.c:346 devWindows.c:392 devWindows.c:463
+#: devWindows.c:363 devWindows.c:409 devWindows.c:480
 msgid "No device available to copy graphics window"
 msgstr "Brak dostępnego urządzenia aby skopiować okno grafiki"
 
@@ -1049,40 +1049,40 @@ msgstr "Brak dostępnego urządzenia aby skopiować okno grafiki"
 # error(_("'%%' is not allowed in file name"))
 # grDevices/src/devWindows.c: 467
 # error(_("'%%' is not allowed in file name"))
-#: devWindows.c:396 devWindows.c:467
+#: devWindows.c:413 devWindows.c:484
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "'%%' nie jest dozwolone w nazwie pliku"
 
 # grDevices/src/devWindows.c: 604
 # error(_("invalid font specification"))
-#: devWindows.c:604
+#: devWindows.c:621
 msgid "invalid font specification"
 msgstr "niepoprawne określenie czcionki"
 
 # grDevices/src/devWindows.c: 643
 # warning(_("font family not found in Windows font database"))
-#: devWindows.c:643
+#: devWindows.c:660
 msgid "font family not found in Windows font database"
 msgstr ""
 "rodzina czcionek nie została znaleziona w bazie czcionek systemu Windows"
 
 # grDevices/src/devWindows.c: 1074
 # (_("plot history seems corrupted"))
-#: devWindows.c:1074
+#: devWindows.c:1091
 msgid "plot history seems corrupted"
 msgstr "historia wykresu wygląda na uszkodzoną"
 
 # grDevices/src/devWindows.c: 1081
 # (_("no plot history!"))
-#: devWindows.c:1081
+#: devWindows.c:1098
 msgid "no plot history!"
 msgstr "brak historii wykresu!"
 
 # grDevices/src/devWindows.c: 1798
 # error(_("filename too long in %s() call"),
 # 				       (dsp[0]=='p') ? "png" : "bmp")
-#: devWindows.c:1798
+#: devWindows.c:1815
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "nazwa pliku jest zbyt długa w wywołaniu '%s()'"
@@ -1096,7 +1096,7 @@ msgstr "nazwa pliku jest zbyt długa w wywołaniu '%s()'"
 # grDevices/src/devWindows.c: 1880
 # warning(_("'width=%d, height=%d' are unlikely values in pixels"),
 # 		    (int) w, (int) h)
-#: devWindows.c:1807 devWindows.c:1846 devWindows.c:1880
+#: devWindows.c:1820 devWindows.c:1855 devWindows.c:1885
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' są mało prawdopodobnymi wartościami w pikselach"
@@ -1113,8 +1113,8 @@ msgstr "'width=%d, height=%d' są mało prawdopodobnymi wartościami w pikselach
 # warning(_("unable to allocate bitmap"))
 # grDevices/src/devWindows.c: 1888
 # warning(_("unable to allocate bitmap"))
-#: devWindows.c:1815 devWindows.c:1820 devWindows.c:1849 devWindows.c:1854
-#: devWindows.c:1883 devWindows.c:1888
+#: devWindows.c:1828 devWindows.c:1833 devWindows.c:1858 devWindows.c:1863
+#: devWindows.c:1888 devWindows.c:1893
 msgid "unable to allocate bitmap"
 msgstr "nie można przydzielić bitmapy"
 
@@ -1124,65 +1124,65 @@ msgstr "nie można przydzielić bitmapy"
 # warning(_("unable to open file '%s' for writing"), buf)
 # grDevices/src/devWindows.c: 2184
 # error(_("unable to open file '%s' for writing"), buf)
-#: devWindows.c:1826 devWindows.c:1860 devWindows.c:2184
+#: devWindows.c:1839 devWindows.c:1869 devWindows.c:2189
 #, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "nie można otworzyć pliku '%s' do zapisu"
 
 # grDevices/src/devWindows.c: 1843
 # error(_("filename too long in jpeg() call"))
-#: devWindows.c:1843
+#: devWindows.c:1852
 msgid "filename too long in jpeg() call"
 msgstr "nazwa pliku w wywołaniu 'jpeg()' jest zbyt długa"
 
 # grDevices/src/devWindows.c: 1877
 # error(_("filename too long in tiff() call"))
-#: devWindows.c:1877
+#: devWindows.c:1882
 msgid "filename too long in tiff() call"
 msgstr "nazwa pliku w wywołaniu 'tiff()' jest zbyt długa"
 
 # grDevices/src/devWindows.c: 1909
 # error(_("filename too long in win.metafile() call"))
-#: devWindows.c:1909
+#: devWindows.c:1914
 msgid "filename too long in win.metafile() call"
 msgstr "nazwa pliku w wywołaniu 'win.metafile()' jest zbyt długa"
 
 # grDevices/src/devWindows.c: 1919
 # warning(_("unable to open metafile '%s' for writing"), buf)
-#: devWindows.c:1919
+#: devWindows.c:1924
 #, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "nie można otworzyć metapliku '%s' do zapisu"
 
 # grDevices/src/devWindows.c: 1921
 # warning(_("unable to open clipboard to write metafile"))
-#: devWindows.c:1921
+#: devWindows.c:1926
 msgid "unable to open clipboard to write metafile"
 msgstr "nie można otworzyć schowka aby zapisać metaplik"
 
 # grDevices/src/devWindows.c: 2132
 # (_("Insufficient memory for resize. Killing device"))
-#: devWindows.c:2132
+#: devWindows.c:2137
 msgid "Insufficient memory for resize. Killing device"
 msgstr ""
 "Niewystarczająca ilość pamięci do zmiany rozmiaru. Zabijanie urządzenia"
 
 # grDevices/src/devWindows.c: 2140
 # (_("Insufficient memory for resize. Disabling alpha blending"))
-#: devWindows.c:2140
+#: devWindows.c:2145
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr ""
 "Niewystarczająca ilość pamięci do zmiany rozmiaru. Wyłączenie mieszania alfa"
 
 # grDevices/src/devWindows.c: 2169
 # error(_("a clipboard metafile can store only one figure."))
-#: devWindows.c:2169
+#: devWindows.c:2174
 msgid "a clipboard metafile can store only one figure."
 msgstr "metaplik schowka może przechowywać tylko jeden obrazek."
 
 # grDevices/src/devWindows.c: 2175
 # error(_("metafile '%s' could not be created"), buf)
-#: devWindows.c:2175
+#: devWindows.c:2180
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "metaplik '%s' nie mógł zostać utworzony"
@@ -1191,49 +1191,49 @@ msgstr "metaplik '%s' nie mógł zostać utworzony"
 # (_("R Graphics"))
 # grDevices/src/devWindows.c: 3754
 # (_("R Graphics"))
-#: devWindows.c:3112 devWindows.c:3760
+#: devWindows.c:3117 devWindows.c:3758
 msgid "R Graphics"
 msgstr "R Grafika"
 
 # grDevices/src/devWindows.c: 3126
 # error(_("attempt to use the locator after dev.hold()"))
-#: devWindows.c:3126
+#: devWindows.c:3131
 msgid "attempt to use the locator after dev.hold()"
 msgstr "próba użycia 'locator' po 'dev.hold()'"
 
 # grDevices/src/devWindows.c: 3390
 # warning(_("option 'windowsTimeouts' should be integer"))
-#: devWindows.c:3392
+#: devWindows.c:3397
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "opcja 'windowsTimeouts' powinna być liczba całkowitą"
 
 # grDevices/src/devWindows.c: 3411
 # error(_("invalid device number in 'savePlot'"))
-#: devWindows.c:3413
+#: devWindows.c:3418
 msgid "invalid device number in 'savePlot'"
 msgstr "niepoprawny numer urządzenia w 'savePlot'"
 
 # grDevices/src/devWindows.c: 3413
 # error(_("invalid device in 'savePlot'"))
-#: devWindows.c:3415
+#: devWindows.c:3420
 msgid "invalid device in 'savePlot'"
 msgstr "niepoprawne urządzenie w 'savePlot'"
 
 # grDevices/src/devWindows.c: 3416
 # error(_("invalid filename argument in 'savePlot'"))
-#: devWindows.c:3418
+#: devWindows.c:3423
 msgid "invalid filename argument in 'savePlot'"
 msgstr "niepoprawny argument nazwy pliku w 'savePlot'"
 
 # grDevices/src/devWindows.c: 3421
 # error(_("invalid type argument in 'savePlot'"))
-#: devWindows.c:3423
+#: devWindows.c:3428
 msgid "invalid type argument in 'savePlot'"
 msgstr "niepoprawny typ argumentu w 'savePlot'"
 
 # grDevices/src/devWindows.c: 3448
 # error(_("unknown type in savePlot"))
-#: devWindows.c:3450
+#: devWindows.c:3455
 msgid "unknown type in savePlot"
 msgstr "nieznany typ w 'savePlot'"
 
@@ -1247,26 +1247,20 @@ msgstr "nieznany typ w 'savePlot'"
 # warning(_("processing of the plot ran out of memory"))
 # grDevices/src/devWindows.c: 3612
 # warning(_("processing of the plot ran out of memory"))
-#: devWindows.c:3495 devWindows.c:3528 devWindows.c:3557 devWindows.c:3589
-#: devWindows.c:3614
+#: devWindows.c:3500 devWindows.c:3532 devWindows.c:3560 devWindows.c:3591
+#: devWindows.c:3612
 msgid "processing of the plot ran out of memory"
 msgstr "zabrakło pamięci podczas przetwarzania wykresu"
 
 # grDevices/src/devWindows.c: 3572
 #  _("Impossible to open ")
-#: devWindows.c:3574
+#: devWindows.c:3576
 msgid "Impossible to open "
 msgstr "Nie można otworzyć "
 
-# grDevices/src/devWindows.c: 3599
-# (_("Impossible to load Rbitmap.dll"))
-#: devWindows.c:3601
-msgid "Impossible to load Rbitmap.dll"
-msgstr "Nie można załadować 'Rbitmap.dll'"
-
 # grDevices/src/devWindows.c: 3641
 # error(_("invalid 'width' or 'height'"))
-#: devWindows.c:3643
+#: devWindows.c:3641
 msgid "invalid 'width' or 'height'"
 msgstr "niepoprawna wartość 'width' lub 'height'"
 
@@ -1317,3 +1311,8 @@ msgstr "to nie jest wspierany schemat, nie zapisano danych obrazka"
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
+
+# grDevices/src/devWindows.c: 3599
+# (_("Impossible to load Rbitmap.dll"))
+#~ msgid "Impossible to load Rbitmap.dll"
+#~ msgstr "Nie można załadować 'Rbitmap.dll'"

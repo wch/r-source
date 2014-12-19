@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -597,6 +597,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr " 一時ディレクトリ %s を生成することが出来ません "
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr " 実行中 "
 
@@ -636,10 +639,6 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 " ビニエットファイル名 '%s' が、ファイル名パターン '%s' のいずれとも一致しませ"
 "ん "
-
-#, fuzzy
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-msgstr " 一貫していないエンコーディングの指定: "
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
@@ -1387,6 +1386,10 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
+
+#, fuzzy
+#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
+#~ msgstr " 一貫していないエンコーディングの指定: "
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr " 引数 'file' は文字ベクトルかコネクションでなければなりません "

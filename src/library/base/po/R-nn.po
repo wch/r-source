@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -897,14 +897,11 @@ msgstr "Dokumentasjon for pakken «%s»"
 msgid "package %s required by %s could not be found"
 msgstr "fann ikkje pakken «%s» som «%s» treng"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "fann pakken «%s %s», men «%s %s» trengst av «%s»"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "klarte ikkje lasta pakken «%s»"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
 msgid "empty (zero-byte) input file"
 msgstr "tom innfil (0 byte)"
@@ -1794,6 +1791,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "fann pakken «%s %s», men «%s %s» trengst av «%s»"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
 #~ msgid "wrong argument"
 #~ msgstr "feil argument"

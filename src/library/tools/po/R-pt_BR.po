@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Colin Robert <beasley@ufpa.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -537,6 +537,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr ""
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 msgid "Running"
 msgstr ""
 
@@ -565,9 +568,6 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
-
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"

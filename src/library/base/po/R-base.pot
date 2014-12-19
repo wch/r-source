@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -794,13 +794,10 @@ msgstr ""
 msgid "package %s required by %s could not be found"
 msgstr ""
 
-msgid "package %s %s was found, but %s %s is required by %s"
+msgid "version %s of %s masked by %s in %s"
 msgstr ""
 
 msgid "package %s could not be loaded"
-msgstr ""
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
 msgstr ""
 
 msgid "empty (zero-byte) input file"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1888,28 +1888,14 @@ msgstr "Dokumentacja dla pakietu %s"
 msgid "package %s required by %s could not be found"
 msgstr "pakiet %s wymagany przez pakiet %s nie mógł zostać znaleziony"
 
-# src/library/base/R/library.R: 844
-# stop(gettextf("package %s %s was found, but %s %s is required by %s",
-#                                               sQuote(pkg), current, z$op,
-#                                               target, sQuote(pkgname)),
-#                                      call. = FALSE, domain = NA)
-msgid "package %s %s was found, but %s %s is required by %s"
+msgid "version %s of %s masked by %s in %s"
 msgstr ""
-"pakiet %s %s został znaleziony, ale %s %s jest wymagane przez pakiet %s"
 
 # src/library/base/R/library.R: 856
 # stop(gettextf("package %s could not be loaded", sQuote(pkg)),
 #                      call. = FALSE, domain = NA)
 msgid "package %s could not be loaded"
 msgstr "pakiet %s nie mógł zostać załadowany"
-
-# src/library/base/R/library.R: 869
-# stop(gettextf("package %s %s is loaded, but %s %s is required by %s",
-#                                               sQuote(pkg), current, z$op,
-#                                               target, sQuote(pkgname)),
-#                                      call. = FALSE, domain = NA)
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "pakiet %s %s jest załadowany, ale %s %s jest wymagane przez pakiet %s"
 
 # src/library/base/R/load.R: 29
 # stop("empty (zero-byte) input file")
@@ -4698,6 +4684,24 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Komunikat ostrzegawczy:\n"
 msgstr[1] "Komunikaty ostrzegawcze:\n"
 msgstr[2] "Komunikaty ostrzegawcze:\n"
+
+# src/library/base/R/library.R: 844
+# stop(gettextf("package %s %s was found, but %s %s is required by %s",
+#                                               sQuote(pkg), current, z$op,
+#                                               target, sQuote(pkgname)),
+#                                      call. = FALSE, domain = NA)
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr ""
+#~ "pakiet %s %s został znaleziony, ale %s %s jest wymagane przez pakiet %s"
+
+# src/library/base/R/library.R: 869
+# stop(gettextf("package %s %s is loaded, but %s %s is required by %s",
+#                                               sQuote(pkg), current, z$op,
+#                                               target, sQuote(pkgname)),
+#                                      call. = FALSE, domain = NA)
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr ""
+#~ "pakiet %s %s jest załadowany, ale %s %s jest wymagane przez pakiet %s"
 
 # src/library/base/R/version.R: 153
 # stop("wrong argument")

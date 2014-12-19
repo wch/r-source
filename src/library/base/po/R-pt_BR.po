@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -942,17 +942,12 @@ msgstr "Documentação para o pacote '%s'"
 msgid "package %s required by %s could not be found"
 msgstr "pacote '%s' exigido por '%s' não pôde ser encontrado"
 
-#, fuzzy
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "pacote '%s' %s foi encontrado, mas %s %s é exigido por '%s'"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 #, fuzzy
 msgid "package %s could not be loaded"
 msgstr "pacote '%s' não pôde ser carregado"
-
-#, fuzzy
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "pacote '%s' %s está carregado, mas %s %s é exigido por '%s'"
 
 msgid "empty (zero-byte) input file"
 msgstr ""
@@ -1861,6 +1856,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "pacote '%s' %s foi encontrado, mas %s %s é exigido por '%s'"
+
+#, fuzzy
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "pacote '%s' %s está carregado, mas %s %s é exigido por '%s'"
 
 #~ msgid "wrong argument"
 #~ msgstr "argumento errado"

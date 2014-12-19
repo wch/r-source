@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-26 08:48\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -556,6 +556,9 @@ msgstr ""
 msgid "unable to create temp directory %s"
 msgstr "impossibile creare directory temporanea"
 
+msgid "Vignette '%s' is non-ASCII but has no declared encoding"
+msgstr ""
+
 #, fuzzy
 msgid "Running"
 msgstr "analizzo '%s'"
@@ -586,9 +589,6 @@ msgid "file '%s' not found"
 msgstr "file '%s' non trovato"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
-
-msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 msgstr ""
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-08-03 12:16\n"
+"POT-Creation-Date: 2014-12-19 10:57\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -865,14 +865,11 @@ msgstr "Dokumentation für Paket %s"
 msgid "package %s required by %s could not be found"
 msgstr "Paket %s benötigt von %s nicht gefunden"
 
-msgid "package %s %s was found, but %s %s is required by %s"
-msgstr "Paket %s %s gefunden, aber %s %s wird von %s benötigt"
+msgid "version %s of %s masked by %s in %s"
+msgstr ""
 
 msgid "package %s could not be loaded"
 msgstr "Paket %s konnte nicht geladen werden"
-
-msgid "package %s %s is loaded, but %s %s is required by %s"
-msgstr "Paket %s %s ist geladen, aber %s %s wird von %s benötigt"
 
 msgid "empty (zero-byte) input file"
 msgstr "leere (Null Bytes) Eingabedatei"
@@ -1747,6 +1744,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "package %s %s was found, but %s %s is required by %s"
+#~ msgstr "Paket %s %s gefunden, aber %s %s wird von %s benötigt"
+
+#~ msgid "package %s %s is loaded, but %s %s is required by %s"
+#~ msgstr "Paket %s %s ist geladen, aber %s %s wird von %s benötigt"
 
 #~ msgid "wrong argument"
 #~ msgstr "falsches Argument"
