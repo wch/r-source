@@ -6586,9 +6586,21 @@ function(dir)
     if(length(repositories))
         out$repositories <- repositories
 
+    ## Does this have strong dependencies not in mainstream
+    ## repositories?  This should not happen, and hence is not compared
+    ## against possibly given additional repositories.
+    strong_dependencies <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
+                         .extract_dependency_package_names(meta["Imports"]),
+                         .extract_dependency_package_names(meta["LinkingTo"]))),
+                c(.get_standard_package_names()$base, db[, "Package"]))
+    if(length(strong_dependencies)) {
+        out$strong_dependencies_not_in_mainstream_repositories <-
+            strong_dependencies
+    }
+
     ## Does this have Suggests or Enhances not in mainstream
     ## repositories?
-
     suggests_or_enhances <-
         setdiff(unique(c(.extract_dependency_package_names(meta["Suggests"]),
                          .extract_dependency_package_names(meta["Enhances"]))),
@@ -6596,53 +6608,67 @@ function(dir)
     if(length(suggests_or_enhances)) {
         out$suggests_or_enhances_not_in_mainstream_repositories <-
             suggests_or_enhances
-        if(!is.na(aurls <- meta["Additional_repositories"])) {
-            aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
-            adb <-
-                tryCatch(utils::available.packages(utils::contrib.url(aurls,
-                                                                      "source"),
-                                                   filters =
-                                                   c("R_version",
-                                                     "duplicates")))
-            if(inherits(adb, "error")) {
-                out$additional_repositories_analysis_failed_with <-
-                    conditionMessage(adb)
-            } else {
-                pos <- match(suggests_or_enhances, rownames(adb), nomatch =
-                             0L)
-                ind <- (pos > 0L)
-                tab <- matrix(character(), nrow = 0L, ncol = 3L)
-                if(any(ind))
-                    tab <- rbind(tab,
-                                 cbind(suggests_or_enhances[ind],
-                                       "yes",
-                                       adb[pos[ind], "Repository"]))
-                ind <- !ind
-                if(any(ind))
-                    tab <- rbind(tab,
-                                 cbind(suggests_or_enhances[ind],
-                                       "no",
-                                       ""))
-                ## Map Repository fields to URLs, and determine unused
-                ## URLs.
-                ## Note that available.packages() possibly adds Path
-                ## information in the Repository field, so matching
-                ## given contrib URLs to these fields is not trivial.
-                unused <- character()
-                for(u in aurls) {
-                    cu <- utils::contrib.url(u, "source")
-                    ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
-                    if(any(ind)) {
-                        tab[ind, 3L] <- u
-                    } else {
-                        unused <- c(unused, u)
-                    }
+    }
+    if(!is.na(aurls <- meta["Additional_repositories"])) {
+        aurls <- unique(unlist(strsplit(aurls, ",[[:space:]]*")))
+        ## Get available packages separately for each given URL, so that
+        ## we can spot the ones which do not provide any packages.
+        adb <-
+            tryCatch(lapply(aurls,
+                            function(u) {
+                                utils::available.packages(utils::contrib.url(u,
+                                                                             "source"),
+                                                          filters =
+                                                              c("R_version",
+                                                                "duplicates"))
+                            }))
+        if(inherits(adb, "error")) {
+            out$additional_repositories_analysis_failed_with <-
+                conditionMessage(adb)
+        } else {
+            ## Check for additional repositories with no packages.
+            ind <- sapply(adb, NROW) == 0L
+            if(any(ind))
+                out$additional_repositories_with_no_packages <-
+                    aurls[ind]
+            ## Merge available packages dbs and remove duplicates.
+            adb <- do.call(rbind, adb)
+            adb <- utils:::available_packages_filters_db$duplicates(adb)
+            ## Ready.
+            dependencies <- unique(c(strong_dependencies, suggests_or_enhances))
+            pos <- match(dependencies, rownames(adb), nomatch = 0L)
+            ind <- (pos > 0L)
+            tab <- matrix(character(), nrow = 0L, ncol = 3L)
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "yes",
+                                   adb[pos[ind], "Repository"]))
+            ind <- !ind
+            if(any(ind))
+                tab <- rbind(tab,
+                             cbind(dependencies[ind],
+                                   "no",
+                                   "?"))
+            ## Map Repository fields to URLs, and determine unused
+            ## URLs.
+            ## Note that available.packages() possibly adds Path
+            ## information in the Repository field, so matching
+            ## given contrib URLs to these fields is not trivial.
+            unused <- character()
+            for(u in aurls) {
+                cu <- utils::contrib.url(u, "source")
+                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                if(any(ind)) {
+                    tab[ind, 3L] <- u
+                } else {
+                    unused <- c(unused, u)
                 }
-                if(length(unused))
-                    tab <- rbind(tab, cbind("", "", unused))
-                dimnames(tab) <- NULL
-                out$additional_repositories_analysis_results <- tab
             }
+            if(length(unused))
+                tab <- rbind(tab, cbind("?", "?", unused))
+            dimnames(tab) <- NULL
+            out$additional_repositories_analysis_results <- tab
         }
     }
 
@@ -6912,23 +6938,30 @@ function(x, ...)
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
-      if(length(y <-
-                x$suggests_or_enhances_not_in_mainstream_repositories)) {
+      if(length(y <- x$strong_dependencies_not_in_mainstream_repositories)) {
+          c("Strong dependencies not in mainstream repositories:",
+            strwrap(paste(y, collapse = ", "),
+                    indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$suggests_or_enhances_not_in_mainstream_repositories)) {
           c("Suggests or Enhances not in mainstream repositories:",
             strwrap(paste(y, collapse = ", "),
-                    indent = 2L, exdent = 4L),
-            if(length(y <-
-                      x$additional_repositories_analysis_failed_with)) {
-                c("Using Additional_repositories specification failed with:",
-                  paste(" ", y))
-            } else if(length(y <-
-                             x$additional_repositories_analysis_results)) {
-                c("Availability using Additional_repositories specification:",
-                  sprintf("  %s   %s   %s",
-                          format(y[, 1L], justify = "left"),
-                          format(y[, 2L], justify = "right"),
-                          format(y[, 3L], justify = "left")))
-            })
+                    indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$additional_repositories_analysis_failed_with)) {
+          c("Using Additional_repositories specification failed with:",
+            paste(" ", y))
+      },
+      if(length(y <- x$additional_repositories_analysis_results)) {
+          c("Availability using Additional_repositories specification:",
+            sprintf("  %s   %s   %s",
+                    format(y[, 1L], justify = "left"),
+                    format(y[, 2L], justify = "right"),
+                    format(y[, 3L], justify = "left")))
+      },
+      if(length(y <- x$additional_repositories_with_no_packages)) {
+          c("Additional repositories with no packages:",
+            paste(" ", y))
       },
       if (length(y <- x$uses)) {
           paste(if(length(y) > 1L)
