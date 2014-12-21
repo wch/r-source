@@ -809,25 +809,24 @@ function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE
     invisible()
 }
 
-### FIXME: utils::packageVersion() should be pushed up here instead
-.findVersion <- function(pkg, lib.loc = NULL) {
-    pfile <- system.file("Meta", "package.rds",
-                         package = pkg, lib.loc = lib.loc)
-    if (nzchar(pfile))
-        as.numeric_version(readRDS(pfile)$DESCRIPTION["Version"])  
-    else
-        NULL
-}
-
-.findAllVersions <- function(pkg, lib.loc = NULL) {
-    if (is.null(lib.loc))
-        lib.loc <- .libPaths()
-    do.call(c, Filter(Negate(is.null), lapply(lib.loc, .findVersion, pkg=pkg)))
-}
-
 .getRequiredPackages2 <-
 function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
+### FIXME: utils::packageVersion() should be pushed up here instead
+    .findVersion <- function(pkg, lib.loc = NULL) {
+        pfile <- system.file("Meta", "package.rds",
+                             package = pkg, lib.loc = lib.loc)
+        if (nzchar(pfile))
+            as.numeric_version(readRDS(pfile)$DESCRIPTION["Version"])  
+        else
+            NULL
+    }
+    .findAllVersions <- function(pkg, lib.loc = NULL) {
+        if (is.null(lib.loc))
+            lib.loc <- .libPaths()
+        do.call(c, Filter(Negate(is.null),
+                          lapply(lib.loc, .findVersion, pkg=pkg)))
+    }
     pkgs <- unique(names(pkgInfo$Depends))
     pkgname <- pkgInfo$DESCRIPTION["Package"]
     for(pkg in setdiff(pkgs, "base")) {
