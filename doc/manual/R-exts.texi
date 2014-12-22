@@ -1058,7 +1058,7 @@ Having a @file{man} directory containing no documentation files may give
 an installation error.
 
 The @file{man} subdirectory may contain a subdirectory named @file{macros};
-this will contain source for user-defined Rd macroa used in @R{} 3.2.0
+this will contain source for user-defined Rd macros used in @R{} 3.2.0
 and later.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
@@ -4062,11 +4062,13 @@ work as intended.  For alternatives, see @ref{Suggested packages} and
 @code{with}.
 
 @item
-Examples can be run interactively @emph{via} example as well as in batch
-mode when checking.  So they should behave appropriately in both
-scenarios, conditioning by @code{interactive()} the parts which need an
-operator or observer.  For instance, progress bars are only appropriate
-in interactive use, as is displaying help pages or calling @code{View()}.
+Examples can be run interactively @emph{via} @code{example} as well as
+in batch mode when checking.  So they should behave appropriately in
+both scenarios, conditioning by @code{interactive()} the parts which
+need an operator or observer.  For instance, progress bars are only
+appropriate in interactive use, as is displaying help pages or calling
+@code{View()} (see below).
+
 @end itemize
 
 Do be careful in what your tests (and examples) actually test.  Bad
@@ -5252,16 +5254,18 @@ info).
 
 Finally, there is @code{\donttest}, used (at the beginning of a separate
 line) to mark code that should be run by @code{example()} but not by
-@code{R CMD check}.  This should be needed only occasionally but can be
-used for code which might fail in circumstances that are hard to test
-for, for example in some locales.  (Use e.g. @code{capabilities()} to
-test for features needed in the examples wherever possible, and you can
-also use @code{try()} or @code{tryCatch()}.  Use @code{interactive()} to
-condition examples which need someone to interact with.)  Note that code
-included in @code{\donttest} must be correct @R{} code, and any packages
-used should be declared in the @file{DESCRIPTION} file.  It is good
-practice to include a comment in the @code{\donttest} section explaining
-why it is needed.
+@code{R CMD check} (by default: as from @R{} 3.2.0 the option
+@option{--run-donttest} can be used).  This should be needed only
+occasionally but can be used for code which might fail in circumstances
+that are hard to test for, for example in some locales.  (Use
+e.g. @code{capabilities()} to test for features needed in the examples
+wherever possible, and you can also use @code{try()} or
+@code{tryCatch()}.  Use @code{interactive()} to condition examples which
+need someone to interact with.)  Note that code included in
+@code{\donttest} must be correct @R{} code, and any packages used should
+be declared in the @file{DESCRIPTION} file.  It is good practice to
+include a comment in the @code{\donttest} section explaining why it is
+needed.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -5274,7 +5278,7 @@ within @R{}.  There can be more than one @code{\keyword} entry if the @R{}
 object being documented falls into more than one category, or none.
 
 Do strongly consider using @code{\concept} (@pxref{Indices}) instead of
-@code{\keyword} if you are about to use more than very few non standard
+@code{\keyword} if you are about to use more than very few non-standard
 keywords. 
 
 The special keyword @samp{internal} marks a page of internal objects
@@ -10217,7 +10221,7 @@ code.  In this example the special values are no problem, as
 implementation this is also true of @code{NA} as it is a type of
 @code{NaN}, but it is unwise to rely on such details.  Thus we will
 re-write the code to handle @code{NA}s using macros defined in
-@file{R_exts/Arith.h} included by @file{R.h}.
+@file{R_ext/Arith.h} included by @file{R.h}.
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
