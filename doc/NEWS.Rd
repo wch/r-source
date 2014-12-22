@@ -183,6 +183,8 @@
       \item \code{library()} will report a warning when an insufficient
       dependency version is masking a sufficient one later on the
       library search path.
+
+      \item A new \code{plot.raster()} method has been added.
     }
   }
 

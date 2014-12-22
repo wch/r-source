@@ -26,3 +26,19 @@ rasterImage <- function (image, xleft, ybottom, xright, ytop,
                        as.double(angle), as.logical(interpolate), ...)
     invisible()
 }
+
+plot.raster <- function(x,                  # a "raster" object
+                        y,                  # not used
+                        xlim=c(0, ncol(x)), # by default based on raster dims
+                        ylim=c(0, nrow(x)),
+                        xaxs="i",           # by default fill plot region
+                        yaxs="i",
+                        asp=1,              # by default retain aspect ratio
+                        add=FALSE,          # by default new plot
+                        ...) {
+    if (!add) {
+        plot.new()
+        plot.window(xlim=xlim, ylim=ylim, asp=asp, xaxs=xaxs, yaxs=yaxs)
+    }
+    rasterImage(x, 0, 0, ncol(x), nrow(x), ...)
+}
