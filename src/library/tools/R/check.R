@@ -770,7 +770,7 @@ setRlibs <-
                 out <- .system_with_capture("pandoc",
                                             paste("README.md", "-s",
                                                   "--email-obfuscation=references",
-                                                  "--css=../CRAN_web.css",
+                                                  "--css=../../CRAN_web.css",
                                                   "-o", rfile))
                 if(out$status) {
                     if(!any) warningLog(Log)

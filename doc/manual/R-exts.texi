@@ -5305,7 +5305,7 @@ within @R{}.  There can be more than one @code{\keyword} entry if the @R{}
 object being documented falls into more than one category, or none.
 
 Do strongly consider using @code{\concept} (@pxref{Indices}) instead of
-@code{\keyword} if you are about to use more than very few non standard
+@code{\keyword} if you are about to use more than very few non-standard
 keywords. 
 
 The special keyword @samp{internal} marks a page of internal objects
