@@ -282,3 +282,79 @@ CRAN_current_db <-
 function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
                      "src/contrib/Meta/current.rds")
+
+check_CRAN_mirrors <-
+function(mirrors = NULL, verbose = FALSE)
+{
+    read_package_db <- function(baseurl) {
+        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", baseurl),
+                     "rb"))
+        on.exit(close(con))
+        readLines(con)
+    }
+
+    check_mirror <- function(mirror) {
+        mirror_packages <- tryCatch(read_package_db(mirror),
+                                    error = identity)
+        if(inherits(mirror_packages, "error"))
+            stop(sprintf("Reading %ssrc/contrib/PACKAGES.gz failed with message: %s",
+                         mirror, conditionMessage(mirror_packages)))
+        mirror_ts1 <- tryCatch(readLines(sprintf("%s%s", mirror,
+                                                 path_ts1)),
+                               error = identity)
+        if(inherits(mirror_ts1, "error"))
+            stop(sprintf("Reading %s%s failed with message: %s",
+                         mirror, path_ts1, conditionMessage(mirror_ts1)))
+        mirror_ts2 <- tryCatch(readLines(sprintf("%s%s", mirror,
+                                                 path_ts2)),
+                               error = identity)
+        if(inherits(mirror_ts2, "error"))
+            stop(sprintf("Reading %s%s failed with message: %s",
+                         mirror, path_ts2, conditionMessage(mirror_ts2)))
+
+        list("PACKAGES" =
+             c("Delta_master_mirror" =
+               sprintf("%d/%d",
+                       length(setdiff(master_packages,
+                                      mirror_packages)),
+                       length(master_packages)),
+               "Delta_mirror_master" =
+               sprintf("%d/%d",
+                       length(setdiff(mirror_packages,
+                                      master_packages)),
+                       length(mirror_packages))),
+             "TIME_r-release" =
+             difftime(as.POSIXct(as.numeric(master_ts1),
+                                 origin = "1970-01-01"),
+                      as.POSIXct(as.numeric(mirror_ts1),
+                                 origin = "1970-01-01")),
+             "TIME_r-old-release" =
+             difftime(as.POSIXct(as.numeric(master_ts2),
+                                 origin = "1970-01-01"),
+                      as.POSIXct(as.numeric(mirror_ts2),
+                                 origin = "1970-01-01"))
+             )
+    }
+
+    master <- "http://CRAN.R-project.org/"
+    master_packages <- read_package_db(master)
+    path_ts1 <- "bin/windows/contrib/r-release/TIME_r-release"
+    master_ts1 <- readLines(sprintf("%s%s", master, path_ts1))
+    path_ts2 <- "bin/windows/contrib/r-old-release/TIME_r-old-release"
+    master_ts2 <- readLines(sprintf("%s%s", master, path_ts2))
+
+    if(is.null(mirrors)) {
+        mirrors <- as.character(getCRANmirrors()$URL)
+    }
+
+    results <- lapply(mirrors,
+                      function(m) {
+                          if(verbose)
+                              message(sprintf("Checking %s", m))
+                          suppressWarnings(tryCatch(check_mirror(m),
+                                                    error = identity))
+                      })
+    names(results) <- mirrors
+
+    results
+}
