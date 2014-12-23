@@ -4355,6 +4355,18 @@ It is an error (and make little sense, although has been seen) to call
 these functions for integer arguments.
 
 @item
+The GNU compilers have a large number of non-portable extensions.  For
+example, @code{INFINITY} (which is in C99 but not C++98), for which @R{}
+provides the portable @code{R_PosInf} (and @code{R_NegInf} for
+@code{-INFINITY}).  And @code{NAN} is just one NaN value: in @R{} code
+@code{NA_REAL} is usually what is intended, but @code{R_NaN} is also
+available.
+
+Some (but not all) extensions are listed at
+@uref{https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html} and
+@uref{https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Extensions.html}.
+
+@item
 Including C headers in C++ code is not portable.  Including the C
 header @file{math.h} in C++ code often causes conflicts with
 @file{cmath} which may be included by other headers.  This is
