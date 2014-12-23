@@ -595,16 +595,22 @@ fn <- function(fmt = "%s") {}
 f <- tempfile(fileext = ".Rd")
 prompt(fn, filename = f)
 rd <- tools::parse_Rd(f)
-## Gave syntax errors because the percent sign in Usage 
+## Gave syntax errors because the percent sign in Usage
 ## was taken as the start of a comment.
 
-## PR#15707: missing argument did not propagate through '...'
-## missing() was unable to handle recursive promises
-check <- function(x,y,z) {
-  c(missing(x), missing(y), missing(z))
-}
+
+## missing() did not propagate through '...', PR#15707
+check <- function(x,y,z) c(missing(x), missing(y), missing(z))
 check1 <- function(...) check(...)
 check2 <- function(...) check1(...)
 stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
+## missing() was unable to handle recursive promises
+
+## power.t.test() failure for very large n (etc): PR#15792
+(ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
+(ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))
+stopifnot(all.equal(ptt$n, 192297000, tol = 1e-5),
+          all.equal(ppt$n,  10451937, tol = 1e-7))
+## call to uniroot() did not allow n > 1e7
 
 proc.time()
