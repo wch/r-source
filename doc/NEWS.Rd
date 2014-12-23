@@ -42,7 +42,7 @@
       \item The included version of PCRE has been updated to 8.36.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now checks the packages used in
@@ -58,7 +58,7 @@
       be removed in \R 3.2.0.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item (Windows.) \command{Rscript.exe} was missing a
@@ -114,13 +114,17 @@
       \item Loading packages incorrectly defining an S4 generic followed
       by a function of the same name caused an erroneous cyclic
       namespace dependency error.
-      
+
       \item Declared vignette encodings are now always passed to the
       vignette engine.
 
       \item Port Thomas Kalibera's fix from R-devel that restores the
       loadMethod fast path, effectively doubling the speed of S4
       dispatch.
+
+      \item \code{power.t.test()} and \code{power.prop.test()} now make
+      use of the \code{extendInt} option of \code{uniroot()} and hence
+      work in more extreme cases.  (\PR{15792})
     }
   }
 }
@@ -1156,7 +1160,7 @@
       the control characters.  (Reported by Hadley Wickham.)
 
       \item \code{getGraphicsEvent()} caused 100\% usage of one CPU in
-      Windows. (PR#15500)
+      Windows. (\PR{15500})
 
       \item \code{nls()} with no \code{start} argument may now work
       inside another function (scoping issue).
