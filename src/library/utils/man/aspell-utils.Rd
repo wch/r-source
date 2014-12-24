@@ -79,8 +79,8 @@ aspell_write_personal_dictionary_file(x, out, language = "en",
   specified using a package defaults file which should go as
   \file{defaults.R} into the \file{.aspell} subdirectory of \code{dir},
   and provides defaults via assignments of suitable named lists, e.g.,
-  \preformatted{  vignettes <- list(control = "--add-tex-command='mycmd op'")}
-  for vignettes (when using Aspell) and similarly assigning to
+  \preformatted{vignettes <- list(control = "--add-tex-command='mycmd op'")} for
+  vignettes (when using Aspell) and similarly assigning to
   \code{Rd_files}, \code{R_files} and \code{C_files} for Rd files, R
   files and C level message defaults.
 

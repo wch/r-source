@@ -87,6 +87,12 @@ aspell(files, filter, control = list(), encoding = "unknown",
   A data frame inheriting from \code{aspell} (which has a useful print
   method) with the information about possibly mis-spelled words.
 }
+\references{
+  Kurt Hornik and Duncan Murdoch (2011),
+  Watch your spelling!
+  \emph{The R Journal} \bold{3}(2), 22--28.
+  \url{http://journal.R-project.org/archive/2011-2/RJournal_2011-2_Hornik+Murdoch.pdf}.
+}
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
 
@@ -99,7 +105,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
 ## To check all Rd files in a directory, (additonally) skipping the
 ## \references sections.
 files <- Sys.glob("*.Rd")
-aspell(files, filter = list("Rd", drop = "\\references"))
+aspell(files, filter = list("Rd", drop = "\\\\references"))
 
 ## To check all Sweave files
 files <- Sys.glob(c("*.Rnw", "*.Snw", "*.rnw", "*.snw"))
