@@ -4628,11 +4628,10 @@ setRlibs <-
             }
         }
         messageLog(Log, "DONE")
-        if ((Log$errors > 0L) || (Log$warnings > 0L) || (Log$notes > 0L)) {
-            message(""); summaryLog(Log)
-	    if (Log$errors > 0L)
-		do_exit(1L)
-        }
+        message("")
+        summaryLog(Log)
+        if (Log$errors > 0L)
+            do_exit(1L)
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
                                             "FALSE"))) {

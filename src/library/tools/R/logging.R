@@ -106,29 +106,22 @@ function(Log, text = "")
 summaryLog <-
 function(Log)
 {
-    if((Log$errors > 0L) || (Log$warnings > 0L) || (Log$notes > 0L)) {
-        if(Log$errors > 1L)
-            printLog(Log,
-                     sprintf("WARNING: There were %d errors.\n",
-                             Log$errors))
-        else if(Log$errors == 1L)
-            printLog(Log,
-                     sprintf("WARNING: There was 1 error.\n"))
-
-        if(Log$warnings > 1L)
-            printLog(Log,
-                     sprintf("WARNING: There were %d warnings.\n",
-                             Log$warnings))
-        else if(Log$warnings == 1L)
-            printLog(Log,
-                     sprintf("WARNING: There was 1 warning.\n"))
-        if(Log$notes > 1L)
-            printLog(Log,
-                     sprintf("NOTE: There were %d notes.\n",
-                             Log$notes))
-        else if(Log$notes == 1L)
-            printLog(Log,
-                     sprintf("NOTE: There was 1 note.\n"))
+    saveRDS(Log, "~/tmp/Log.rds")
+    counts <- c(ERROR = Log$errors,
+                WARNING = Log$warnings,
+                NOTE = Log$notes)
+    counts <- counts[counts > 0L]
+    if(!length(counts))
+        printLog(Log,
+                 "Status: OK\n")
+    else {
+        printLog(Log,
+                 sprintf("Status: %s\n",
+                         paste(sprintf("%d %s%s",
+                                       counts,
+                                       names(counts),
+                                       ifelse(counts > 1L, "s", "")),
+                               collapse = ", ")))
         cat(sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
     }
 }
