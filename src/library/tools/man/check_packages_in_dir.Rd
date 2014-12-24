@@ -1,6 +1,6 @@
 % File src/library/tools/man/check_packages_in_dir.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2013-2013 R Core Team
+% Copyright 2013-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{check_packages_in_dir}
@@ -8,6 +8,7 @@
 \alias{summarize_check_packages_in_dir_depends}
 \alias{summarize_check_packages_in_dir_results}
 \alias{summarize_check_packages_in_dir_timings}
+\alias{check_packages_in_dir_changes}
 \title{Check Source Packages and Their Reverse Dependencies}
 \description{
   Check source packages in a given directory, optionally with their
@@ -32,6 +33,9 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
                                         which = c("Depends",
                                                   "Imports",
                                                   "LinkingTo"))
+
+check_packages_in_dir_changes(dir, old,
+                              outputs = FALSE, sources = FALSE)
 }
 \arguments{
   \item{dir}{a character string giving the path to the directory with
@@ -71,6 +75,13 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
     checks with non-ok results, or summarize check example timings (if
     available).}
   \item{which}{see \code{\link{package_dependencies}}.}
+  \item{old}{a character string giving the path to the directory of a
+    previous \code{check_packages_in_dir} run.}
+  \item{outputs}{a logical indicating whether to analyze changes in
+    the outputs of the checks performed, or only (default) the status of
+    the checks.}
+  \item{sources}{a logical indicating whether to also investigate the
+    changes in the source files checked (default: \code{FALSE}).}
 }
 \details{
   \code{check_packages_in_dir} allows to conveniently check source
@@ -104,6 +115,13 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
   \code{check_packages_in_dir} returns an object inheriting from class
   \code{"check_packages_in_dir"} which has \code{\link{print}} and
   \code{\link{summary}} methods.
+
+  \code{check_packages_in_dir_changes} allows to analyze the effect of
+  changing (some of) the sources.  With \code{dir} and \code{old} the
+  paths to the directories with the new and old sources, respectively,
+  and the corresponding check results, possible changes in the check
+  results can conveniently be analyzed as controlled via options
+  \code{outputs} and \code{sources}.
 }
 \note{
   This functionality is still experimental: interfaces may change in

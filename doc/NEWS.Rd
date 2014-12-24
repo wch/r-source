@@ -185,6 +185,10 @@
       library search path.
 
       \item A new \code{plot.raster()} method has been added.
+
+      \item New \code{check_packages_in_dir_changes()} function in
+      package \pkg{tools} for conveniently analyzing how changing
+      sources impacts the check results of their reverse dependencies.
     }
   }
 

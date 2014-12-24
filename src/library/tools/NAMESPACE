@@ -28,7 +28,8 @@ export("Adobe_glyphs", "HTMLheader", "Rd2HTML", "Rd2ex", "Rd2latex",
 export("check_packages_in_dir",
        "summarize_check_packages_in_dir_depends",
        "summarize_check_packages_in_dir_results",
-       "summarize_check_packages_in_dir_timings")
+       "summarize_check_packages_in_dir_timings",
+       "check_packages_in_dir_changes")
 
 export(".print.via.format")
 
