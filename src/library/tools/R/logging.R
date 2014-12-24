@@ -106,7 +106,6 @@ function(Log, text = "")
 summaryLog <-
 function(Log)
 {
-    saveRDS(Log, "~/tmp/Log.rds")
     counts <- c(ERROR = Log$errors,
                 WARNING = Log$warnings,
                 NOTE = Log$notes)
