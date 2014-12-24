@@ -8,7 +8,7 @@ Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
 "Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","Paulo J. Ribeiro Jr <paulojus # est.ufpr.br>",1,br
-"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",0,br
+"Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
 "Brazil (SP 1)",Brazil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando # vps.fmvz.usp.br>",1,br
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","aafgarci # esalq.usp.br",1,br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca
@@ -36,7 +36,7 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"Universite Paris 1 Pantheon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr
 "France (Strasbourg)",France,Strasbourg,http://cran.cardse.net/,"Cardse llc.","Sergey Kutserey <s.kutserey # gmail.com>",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
-"Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn","stefan # drees.name",0,de
+"Germany (Bonn)",Germany,Bonn,http://cran.r-mirror.de/,"Stefan Drees, Bonn","stefan # drees.name",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
 "Germany (Frankfurt)",Germany,Frankfurt,http://cran.sciserv.eu/,"Michael Marz (private)","marz.michael # openres.net",1,de
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de
@@ -51,7 +51,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
-"Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",0,jp
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba","mokada # md.tsukuba.ac.jp",1,jp
 "Korea (Seoul 1)",Korea,Seoul,http://cran.nexr.com/,"NexR Corporation, Seoul","mining # nexr.com",1,kr
@@ -64,7 +63,7 @@ Lebanon,Lebanon,Byblos,http://rmirror.lau.edu.lb/,"Lebanese American University,
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no
-Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Edward Santos <edward.p.santos # upd.edu.ph>, ops # pregi.net",0,ph
+Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Edward Santos <edward.p.santos # upd.edu.ph>, ops # pregi.net",1,ph
 Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",1,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
@@ -76,7 +75,7 @@ Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb # stat.umu.se>",1,se
 Switzerland,Switzerland,Zuerich,http://stat.ethz.ch/CRAN/,"ETH Zuerich","Martin.Maechler # R-project.org",1,ch
-"Taiwan (Chungli)",Taiwan,Chungli,http://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",0,tw
+"Taiwan (Chungli)",Taiwan,Chungli,http://ftp.yzu.edu.tw/CRAN/,"Department of Computer Science and Engineering, Yuan Ze University","Peter Dave Hello <hsu # peterdavehello.org>",1,tw
 "Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung","hcchang # cs.pu.edu.tw",1,tw
 "Taiwan (Taipei)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan # infor.org>",1,tw
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
@@ -92,7 +91,7 @@ Turkey,Turkey,Denizli,http://cran.pau.edu.tr/,"Pamukkale University, Denizli","U
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (KS)",USA,Lawrence,http://rweb.quant.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us
 "USA (MD)",USA,Bethesda,http://watson.nci.nih.gov/cran_mirror/,"National Cancer Institute, Bethesda, MD","Sean Davis <sdavis2 # mail.nih.gov>",1,us
-"USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",0,us
+"USA (MI)",USA,Houghton,http://cran.mtu.edu/,"Michigan Technological University, Houghton, MI","Robert Froese <froese # mtu.edu>",1,us
 "USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO","admartin # wustl.edu",1,us
 "USA (OH)",USA,Cleveland,http://cran.case.edu/,"Case Western Reserve University, Cleveland, OH","""Alberto H. Santana"" <ahs4 # case.edu>",1,us
 "USA (OR)",USA,Corvallis,http://ftp.osuosl.org/pub/cran/,"Oregon State University","support # Osuosl.org",1,us
