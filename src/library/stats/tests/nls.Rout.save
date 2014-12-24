@@ -1,5 +1,5 @@
 
-R version 3.1.2 Patched (2014-12-10 r67150) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2014-12-23 r67210) -- "Pumpkin Helmet"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -697,4 +697,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.234   0.018   1.242 
+  1.238   0.021   1.249 
