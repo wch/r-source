@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2014-12-21 r67196) -- "Unsuffered Consequences"
+R Under development (unstable) (2014-12-23 r67210) -- "Unsuffered Consequences"
 Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1883,7 +1883,7 @@ wool         1    451   450.7   3.339 0.07361 .
 tension      2   2034  1017.1   7.537 0.00138 **
 Residuals   50   6748   135.0                   
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > plot.design(       Form, data = warpbreaks, col = 2)  # same as above
 > 
 > ## More than one y :
@@ -2061,7 +2061,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1df5a88>
+<bytecode: 0x1d826a8>
 <environment: namespace:graphics>
 > 
 > 
@@ -2931,7 +2931,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3701110>
+<bytecode: 0x3162ce0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3011,7 +3011,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.708 0.024 3.735 0 0 
+Time elapsed:  1.886 0.033 1.918 0 0 
 > grDevices::dev.off()
 null device 
           1 
