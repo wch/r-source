@@ -287,30 +287,34 @@ check_CRAN_mirrors <-
 function(mirrors = NULL, verbose = FALSE)
 {
     read_package_db <- function(baseurl) {
-        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", baseurl),
-                     "rb"))
-        on.exit(close(con))
-        readLines(con)
+        path <- sprintf("%ssrc/contrib/PACKAGES.gz", baseurl)
+        db <- tryCatch({
+            con <- gzcon(url(path, "rb"))
+            on.exit(close(con))
+            readLines(con)
+        },
+                       error = identity)
+        if(inherits(db, "error"))
+            stop(sprintf("Reading %s failed with message: %s",
+                         path, conditionMessage(db)))
+        db
+    }
+
+    read_timestamp <- function(baseurl, path) {
+        path <- sprintf("%s%s", baseurl, path)
+        ts <- tryCatch(readLines(path),
+                       error = identity)
+        if(inherits(ts, "error"))
+            stop(sprintf("Reading %s failed with message: %s",
+                         path, conditionMessage(ts)))
+        ts
     }
 
     check_mirror <- function(mirror) {
-        mirror_packages <- tryCatch(read_package_db(mirror),
-                                    error = identity)
-        if(inherits(mirror_packages, "error"))
-            stop(sprintf("Reading %ssrc/contrib/PACKAGES.gz failed with message: %s",
-                         mirror, conditionMessage(mirror_packages)))
-        mirror_ts1 <- tryCatch(readLines(sprintf("%s%s", mirror,
-                                                 path_ts1)),
-                               error = identity)
-        if(inherits(mirror_ts1, "error"))
-            stop(sprintf("Reading %s%s failed with message: %s",
-                         mirror, path_ts1, conditionMessage(mirror_ts1)))
-        mirror_ts2 <- tryCatch(readLines(sprintf("%s%s", mirror,
-                                                 path_ts2)),
-                               error = identity)
-        if(inherits(mirror_ts2, "error"))
-            stop(sprintf("Reading %s%s failed with message: %s",
-                         mirror, path_ts2, conditionMessage(mirror_ts2)))
+        mirror_packages <- read_package_db(mirror)
+        mirror_ts1 <- read_timestamp(mirror, path_ts1)
+        mirror_ts2 <- read_timestamp(mirror, path_ts2)
+        mirror_ts3 <- read_timestamp(mirror, path_ts3)
 
         list("PACKAGES" =
              c("Delta_master_mirror" =
@@ -323,28 +327,36 @@ function(mirrors = NULL, verbose = FALSE)
                        length(setdiff(mirror_packages,
                                       master_packages)),
                        length(mirror_packages))),
-             "TIME_r-release" =
+             "TIME" =
              difftime(as.POSIXct(as.numeric(master_ts1),
                                  origin = "1970-01-01"),
                       as.POSIXct(as.numeric(mirror_ts1),
                                  origin = "1970-01-01")),
-             "TIME_r-old-release" =
+             "TIME_r-release" =
              difftime(as.POSIXct(as.numeric(master_ts2),
                                  origin = "1970-01-01"),
                       as.POSIXct(as.numeric(mirror_ts2),
+                                 origin = "1970-01-01")),
+             "TIME_r-old-release" =
+             difftime(as.POSIXct(as.numeric(master_ts3),
+                                 origin = "1970-01-01"),
+                      as.POSIXct(as.numeric(mirror_ts3),
                                  origin = "1970-01-01"))
              )
     }
 
     master <- "http://CRAN.R-project.org/"
+    path_ts1 <- "TIME"
+    path_ts2 <- "bin/windows/contrib/r-release/TIME_r-release"
+    path_ts3 <- "bin/windows/contrib/r-old-release/TIME_r-old-release"
+    
     master_packages <- read_package_db(master)
-    path_ts1 <- "bin/windows/contrib/r-release/TIME_r-release"
-    master_ts1 <- readLines(sprintf("%s%s", master, path_ts1))
-    path_ts2 <- "bin/windows/contrib/r-old-release/TIME_r-old-release"
-    master_ts2 <- readLines(sprintf("%s%s", master, path_ts2))
+    master_ts1 <- read_timestamp(master, path_ts1)
+    master_ts2 <- read_timestamp(master, path_ts2)
+    master_ts3 <- read_timestamp(master, path_ts3)
 
     if(is.null(mirrors)) {
-        mirrors <- as.character(getCRANmirrors()$URL)
+        mirrors <- as.character(getCRANmirrors(all = TRUE)$URL)
     }
 
     results <- lapply(mirrors,
