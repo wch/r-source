@@ -1337,7 +1337,7 @@ proposal for a unified `front-end' package @CRANpkg{DBI}
 @CRANpkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
 @uref{http://www.sqlite.org}),  @CRANpkg{RJDBC} (which uses Java and can
 connect to any DBMS that has a JDBC driver) and @CRANpkg{RpgSQL} (a
-specialist interface to PostgreSQL built on top of @CRANpkg{RJBDC}).
+specialist interface to PostgreSQL built on top of @CRANpkg{RJDBC}).
 
 The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
 @acronym{CRAN} ca 2000), a first-generation interface to PostgreSQL.
