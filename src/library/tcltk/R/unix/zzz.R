@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/unix/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@
         ## for Rcmdr.
         r_arch <- .Platform$r_arch
         DLL <- file.path(libname, pkgname, "libs", r_arch, "tcltk.so")
-        out <- system2("otool", c("-L", shQuote(DLL)), stdout = TRUE)
+        out <- system2("/usr/bin/otool", c("-L", shQuote(DLL)), stdout = TRUE)
         ind <- grep("libtk[.0-9]+[.]dylib", out)
         if(length(ind)) {
             this <- sub(" .*", "", sub("^\t", "", out[ind]))
