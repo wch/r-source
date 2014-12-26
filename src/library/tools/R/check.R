@@ -4037,6 +4037,7 @@ setRlibs <-
         opts <- c(opts, "--install=no")
         do_install_arg <- FALSE
     }
+    opts0 <- opts # other options are added later.
 
     if (install == "fake") {
         ## If we fake installation, then we cannot *run* any code.
@@ -4336,6 +4337,7 @@ setRlibs <-
         .unpack.time <- Sys.time()
 
         ## report options used
+        opts <- opts0
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
         if (!do_tests && !spec_install) opts <- c(opts, "--no-tests")
