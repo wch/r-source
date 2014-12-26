@@ -53,9 +53,9 @@ sessionInfo <- function(package = NULL)
                        ver <- readLines("/System/Library/CoreServices/SystemVersion.plist")
                        ind <- grep("ProductUserVisibleVersion", ver)
                        ver <- ver[ind + 1L]
-                       ver <- sub(".*<string>10[.]", "", ver)
+                       ver <- sub(".*<string>", "", ver)
                        ver <- sub("</string>$", "", ver)
-                       ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][1L]
+                       ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
                        sprintf("OS X %s (%s)", ver,
                                switch(ver1,
                                       "6" = "Snow Leopard",
