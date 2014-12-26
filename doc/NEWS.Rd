@@ -273,7 +273,7 @@
       guaranteed to have sufficient alignment for \code{long double}
       pointers.
 
-      \item \code{isPairList} now returns \code{TRUE} for DOTSXP.
+      \item \code{isPairList()} now returns \code{TRUE} for DOTSXP.
     }
   }
 
@@ -354,6 +354,10 @@
       \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
       which uses the basic C function \code{strcmp} and so collates
       strings byte-by-byte in numerical order.
+      
+      \item \code{sessionInfo()} tries to report the OS version in use
+      (not just that compiled under, and including details of Linux
+      distributions).
     }
   }
 

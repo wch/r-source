@@ -1593,7 +1593,7 @@ At the `Installation Type' stage, note the option to `Customize'.  This
 currently shows three components.  Everyone will need the `R Framework'
 component: the `R GUI' and `Tcl/Tk' components are optional (the latter
 being needed to use package @pkg{tcltk}, and requires an X sub-system to
-be installed: @pxref{OS X}).
+be installed: @pxref{OS X}.)
 
 This is an Apple Installer package. If you encounter any problem during
 the installation, please check the Installer log by clicking on the

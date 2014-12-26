@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -31,6 +31,8 @@ sessionInfo(package = NULL)
   \item{platform}{a character string describing the platform.  For recent
     versions where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
+  \item{running}{a character string describing the OS and version which
+    it is running under (as distinct from compiled under).}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
@@ -45,6 +47,9 @@ sessionInfo(package = NULL)
   \emph{current} version installed at the location the package was
   loaded from: it can be wrong if another process has been changing
   packages during the session.
+
+  How OSes identify themselves and their versions can be arcane: where
+  possible \code{running} uses a human-readable form.
 }
 \seealso{\code{\link{R.version}}
 }
