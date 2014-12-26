@@ -32,8 +32,7 @@ sessionInfo(package = NULL)
     versions where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{running}{a character string describing the OS and version which
-    it is running under (as distinct from compiled under).  Where
-    possible this identifies Linux distributions.}
+    it is running under (as distinct from compiled under).}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
@@ -50,9 +49,7 @@ sessionInfo(package = NULL)
   packages during the session.
 
   How OSes identify themselves and their versions can be arcane: where
-  possible \code{running} uses a human-readable form.  (This is not
-  completely possible for OS X, where \code{apple-darwin14.0.0} is the kernel
-  version of either version 10.10 or 10.10.1.)
+  possible \code{running} uses a human-readable form.
 }
 \seealso{\code{\link{R.version}}
 }

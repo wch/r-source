@@ -28,32 +28,41 @@ sessionInfo <- function(package = NULL)
     ## Now try to figure out the OS we are running under
     if (.Platform$OS.type == "windows") {
         z$running <- win.version()
-    } else if (nzchar(Sys.which('uname'))) {
+    } else if (nzchar(Sys.which('uname'))) { ## we could try /usr/bin/uname
         uname <- system("uname -a", intern = TRUE)
         os <- sub(" .*", "", uname)
         z$running <-
             switch(os,
                    "Linux" = if(file.exists("/etc/os-release")) {
+    ## http://www.freedesktop.org/software/systemd/man/os-release.html
                        tmp <- readLines("/etc/os-release")
                        t2 <- if (any(grepl("^PRETTY_NAME=", tmp)))
                            sub("^PRETTY_NAME=", "",
                                grep("^PRETTY_NAME=", tmp, value = TRUE)[1L])
                        else if (any(grepl("^NAME", tmp)))
+                           ## could check for VERSION or VERSION_ID
                            sub("^NAME=", "",
                                grep("^NAME=", tmp, value = TRUE)[1L])
                        else "Linux (unknown distro)"
                        sub('"(.*)"', "\\1", t2)
+                   } else if(file.exists("/etc/system-release")) {
+                       ## RHEL-like
+                       readLines("/etc/system-release")
                    },
                    "Darwin" = {
-                       ver <- system('uname -r', intern = TRUE)
-                       ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][1L]
-                       sprintf("apple-darwin%s (%s)", ver,
+                       ver <- readLines("/System/Library/CoreServices/SystemVersion.plist")
+                       ind <- grep("ProductUserVisibleVersion", ver)
+                       ver <- ver[ind + 1L]
+                       ver <- sub(".*<string>", "", ver)
+                       ver <- sub("</string>$", "", ver)
+                       ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]][2L]
+                       sprintf("OS X %s (%s)", ver,
                                switch(ver1,
-                                      "10" = "Snow Leopard",
-                                      "11" = "Lion",
-                                      "12" = "Mountain Lion",
-                                      "13" = "Mavericks",
-                                      "14" = "Yosemite",
+                                      "6" = "Snow Leopard",
+                                      "7" = "Lion",
+                                      "8" = "Mountain Lion",
+                                      "9" = "Mavericks",
+                                      "10" = "Yosemite",
                                       "unknown"))
                    },
                    "SunOS" = {

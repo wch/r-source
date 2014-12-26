@@ -41,24 +41,27 @@
         ## installed, and check libX11 is present since this is a
         ## common cause of problems with CRAN binary installs reported
         ## for Rcmdr.
-        r_arch <- .Platform$r_arch
-        DLL <- file.path(libname, pkgname, "libs", r_arch, "tcltk.so")
-        out <- system2("/usr/bin/otool", c("-L", shQuote(DLL)), stdout = TRUE)
-        ind <- grep("libtk[.0-9]+[.]dylib", out)
-        if(length(ind)) {
-            this <- sub(" .*", "", sub("^\t", "", out[ind]))
-##            message("tcltk DLL is linked to ", shQuote(this))
-            if(!file.exists(this))
-                stop("Tcl/Tk libraries are missing: install the Tcl/Tk component from the R installer",
-                     domain = NA)
-        }
-        ind <- grep("libX11[.][0-9]+[.]dylib", out)
-        if(length(ind)) {
-            this <- sub(" .*", "", sub("^\t", "", out[ind]))
-##            message("tcltk DLL is linked to ", shQuote(this))
-            if(!file.exists(this))
-                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org",
-                     domain = NA)
+        if (file.exists("/usr/bin/otool")) {
+            ## This is part of the OS nowadays.
+            r_arch <- .Platform$r_arch
+            DLL <- file.path(libname, pkgname, "libs", r_arch, "tcltk.so")
+            out <- system2("/usr/bin/otool", c("-L", shQuote(DLL)), stdout = TRUE)
+            ind <- grep("libtk[.0-9]+[.]dylib", out)
+            if(length(ind)) {
+                this <- sub(" .*", "", sub("^\t", "", out[ind]))
+                ##  message("tcltk DLL is linked to ", shQuote(this))
+                if(!file.exists(this))
+                    stop("Tcl/Tk libraries are missing: install the Tcl/Tk component from the R installer",
+                         domain = NA)
+            }
+            ind <- grep("libX11[.][0-9]+[.]dylib", out)
+            if(length(ind)) {
+                this <- sub(" .*", "", sub("^\t", "", out[ind]))
+                ##  message("tcltk DLL is linked to ", shQuote(this))
+                if(!file.exists(this))
+                    stop("X11 library is missing: install XQuartz from xquartz.macosforge.org",
+                         domain = NA)
+            }
         }
 
         library.dynam("tcltk", pkgname, libname, local = FALSE)
