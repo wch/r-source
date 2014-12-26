@@ -445,6 +445,10 @@
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
       work in more extreme cases.  (\PR{15792})
+      
+      \item If a package was updated and attached while already loaded,
+      it could end up with parts from one version and parts from the
+      other.  (\PR{16120})
     }
   }
 }

@@ -286,6 +286,17 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## has a namespace, then the namespace loading mechanism
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
+                if (package %in% loadedNamespaces()) {
+                    # Already loaded.  Does the version match?
+                    newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
+                    oldversion <- as.numeric_version(getNamespaceVersion(package))
+                    if (newversion != oldversion) {
+                    	# No, so try to unload the previous one
+                    	res <- try(unloadNamespace(package))
+                    	if (inherits(res, "try-error"))
+                    	    stop(dQuote(package), " version ", oldversion, " cannot be unloaded.")
+                    }
+                }
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
                     env <- attachNamespace(ns, pos = pos, deps)
