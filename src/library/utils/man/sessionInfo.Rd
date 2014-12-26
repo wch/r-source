@@ -9,7 +9,7 @@
 \alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{
-  Print version information about \R and attached or loaded packages.
+  Print version information about \R, the OS and attached or loaded packages.
 }
 \usage{
 sessionInfo(package = NULL)
@@ -28,8 +28,8 @@ sessionInfo(package = NULL)
   An object of class \code{"sessionInfo"}, which has a \code{print}
   method. This is a list with components
   \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
-  \item{platform}{a character string describing the platform.  For recent
-    versions where sub-architectures are in use this is of the form
+  \item{platform}{a character string describing the platform.  Where
+    sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{running}{a character string describing the OS and version which
     it is running under (as distinct from compiled under).}
