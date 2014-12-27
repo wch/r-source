@@ -253,6 +253,9 @@
 
       \item \command{R CMD check --as-cran} checks a \file{README.md}
       file can be processed: this needs \command{pandoc} installed.
+      
+      \item \command{R CMD build} adds a \samp{NeedsConfirmation} field
+      if one is not already present in the DESCRIPTION file.
     }
   }
 
