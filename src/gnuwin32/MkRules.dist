@@ -3,11 +3,16 @@
 ## This is only used when building R itself but it does customize
 ## etc/*/Makeconf using LOCAL_SOFT, BINPREF[64], IMPLIB and R_ARCH
 
+## Customize by copying to MkRules.local and uncommenting and editing 
+## some of the definitions there.  
+## 
+
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
 # on CRAN can be found at http://www.stats.ox.ac.uk/pub/Rtools/libs.html
 # It can be interrogated by 'R CMD config LOCAL_SOFT'
-LOCAL_SOFT =
+# Use 'make rsync-extsoft' to populate the default directory.
+# LOCAL_SOFT = $(R_HOME)/extsoft
 
 ## ============== configuration macros for building R ===================
 
@@ -15,14 +20,15 @@ LOCAL_SOFT =
 # libpng, libjpeg, libtiff.
 # A suitable version can be found at
 # http://www.stats.ox.ac.uk/pub/Rtools/libs.html
-# EXT_LIBS =
+# or use 'make rsync-extsoft' to populate the default directory.
+# EXT_LIBS = $(LOCAL_SOFT)
 
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
-G_FLAG = -gdwarf-2
+# G_FLAG = -gdwarf-2
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
-USE_ATLAS = NO
-ATLAS_PATH = /R/ATLAS/lib/WinNT_P4SSE2
+# USE_ATLAS = NO
+# ATLAS_PATH = /R/ATLAS/lib/WinNT_P4SSE2
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
@@ -31,10 +37,10 @@ ATLAS_PATH = /R/ATLAS/lib/WinNT_P4SSE2
 # USE_SVNVERSION = YES
 
 # With the recommended toolchain, set this to 32 or 64
-MULTI =
+# MULTI =
 # If the toolchain's bin directory is not in your path, set this to the path
 # (including the trailing /, and use / not \).
-TOOL_PATH =
+# TOOL_PATH =
 # for other toolchains leave these empty and set the more detailed options below
 
 
@@ -43,21 +49,21 @@ TOOL_PATH =
 # This can also be used to give the full path to the compiler, 
 # including a trailing / .
 # prefix for 32-bit: path or i686-w64-mingw32-
-BINPREF =
+# BINPREF =
 # prefix for 64-bit: path or x86_64-w64-mingw32-
-BINPREF64 = x86_64-w64-mingw32-
+# BINPREF64 = x86_64-w64-mingw32-
 
 # Others use a -m64 or -m32 option to select architectures
-M_ARCH =
+# M_ARCH =
 # and for as (--32 or --64)
-AS_ARCH =
+# AS_ARCH =
 # and for windres (-F pe-i386 or pe-x86-64)
-RC_ARCH =
+# RC_ARCH =
 # and for dlltool ("-m i386 --as-flags --32" vs "-m i386:x86-64 --as-flags --64")
-DT_ARCH =
+# DT_ARCH =
 
 # 32- or 64-bit Windows?
-WIN = 32
+# WIN = 32
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
@@ -72,8 +78,8 @@ WIN = 32
 # set to use ICU
 # USE_ICU = YES
 # path to parent of ICU headers
-ICU_PATH = /path/to/ICU
-ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
+# ICU_PATH = /path/to/ICU
+# ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
 # For the cairographics devices
 # Optionally use a static build of cairographics from
@@ -81,53 +87,53 @@ ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 # and set CAIRO_HOME to the parent of the win32/win64 directories
 #
 # If CAIRO_HOME is not set the devices are not built.
-CAIRO_HOME =
+# CAIRO_HOME =
 
 # set this to YES to build static HTML help
-BUILD_HTML = NO
+# BUILD_HTML = NO
 
 # unset this if you are *not* using MiKTeX
-MIKTEX = TRUE
+# MIKTEX = TRUE
 
 # for texinfo < 5.0
-MAKEINFO = makeinfo
+# MAKEINFO = makeinfo
 # for texinfo >= 5.0.  Might also need -I/path/to/modules
 # MAKEINFO = /path/to/perl /path/to/texi2any
 
 # additional optimization flags (use -mtune=native for a private build)
-EOPTS = -mtune=core2
+# EOPTS = -mtune=core2
 
 # define to -fopenmp if the toolchain has OpenMP support
-OPENMP = -fopenmp
+# OPENMP = -fopenmp
 
 # define to -pthread if the toolchain has pthreads support
-PTHREAD = -pthread
+# PTHREAD = -pthread
 
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.[34].x was installed. Spaces allowed.
-ISDIR = C:/packages/Inno
+# ISDIR = C:/packages/Inno
 
 # optional location where qpdf was installed (in $(QPDF)/bin). Spaces allowed.
-QPDF =
+# QPDF =
 
 # home of 32-bit files for combined installer on 64-bit build
-HOME32 =
+# HOME32 =
 
 # Full paths of extra DLLs that need to be shipped
 # e.g
 # DLLs32 = c:/R/bin/pthreadGC2-w32.dll
 # DLLs64 = c:/R/bin64/pthreadGC2-w64.dll
-DLLs32 =
-DLLs64 =
+# DLLs32 =
+# DLLs64 =
 
 ## ====== configuration macros for building MSI installer ===========
 
 # location where WiX 3.x executables were installed. Spaces allowed.
 # The MSI uses '/bin': other packagings may not
-WIX3DIR = C:/packages/WiX3.5/bin
+# WIX3DIR = C:/packages/WiX3.5/bin
 
 # set to 1 for a non-elevated per-user installer
-WIX_PERSONAL = 0
+# WIX_PERSONAL = 0
 
 ## =============== end of user-customizable parts  ===================

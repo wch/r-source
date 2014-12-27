@@ -1063,9 +1063,14 @@ try to select a @samp{C} locale; Windows may not honour this).
 
 @strong{NB:} The build process is currently being changed to require
 external binary distributions of third-party software.  Their location
-must be set using macro @code{EXT_LIBS} in
-@file{src/gnuwin32/MkRules.local}: a suitable distribution can be
-obtained from
+is set using macro @code{EXT_LIBS} with default setting
+@file{$(LOCAL_SOFT)}; the $(LOCAL_SOFT) macro defaults to
+@file{$(R_HOME)/extsoft}.  This directory can be populated using
+@command{make rsync-extsoft}. The location can be overridden by
+setting @code{EXT_LIBS} to a different path in
+@file{src/gnuwin32/MkRules.local}. A suitable collection of files can
+also be obtained from 
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/extsoft} or
 @uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/libs.html}.
 
 @menu
@@ -2053,7 +2058,8 @@ Unix-alike.  This can be set in @file{src/gnuwin/MkRules.local} when
 a file such as @file{etc/i386/Makevars.site}, which does not exist by
 default.}  @file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an
 installed version of @R{}.  The version used by @acronym{CRAN} can be
-downloaded from @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html}.
+installed as described in @xref{Building from source}.
+
 
 @node OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection OS X

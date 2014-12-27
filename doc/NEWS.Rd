@@ -217,10 +217,6 @@
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
        \code{pcre} (or similar names) are installed.
 
-       \item (Windows.) Installation using external binary distributions
-       of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
-       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
-       and the build instructions have been revised.
      }
   }
 
@@ -279,7 +275,24 @@
       \item \code{isPairList()} now returns \code{TRUE} for DOTSXP.
     }
   }
-
+  
+  \subsection{WINDOWS BUILD CHANGES}{
+    A number of changes to the Windows build system are in development.
+    The following are currently in place.
+    \itemize{
+      \item Installation using external binary distributions
+      of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
+      \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
+      and the build instructions have been revised.      
+      
+      \item The \file{MkRules.local} file is now optional, with defaults
+      described in \file{MkRules.dist}.
+      
+      \item A new \command{make} target \code{rsync-extsoft} has been
+      added to obtain copies of the external libraries from \acronym{CRAN}.
+    }
+  }
+  
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item  (Windows) The use of macro \code{ZLIB_LIBS} in file

@@ -115,7 +115,7 @@ Rscript.o: ../../unix/Rscript.c ../../include/Rversion.h
 
 Rscript.exe: Rscript.o rsico.o 
 
-## Not currently used (2.13.0)
+## Used only in writing etc/.../Makeconf
 Rpwd:
 	$(MAKE) -C ../../include -f Makefile.win version
 	$(MAKE) Rpwd.exe

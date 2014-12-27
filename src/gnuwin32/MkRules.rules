@@ -1,5 +1,41 @@
 #-*- Makefile -*-
 
+## Defaults for user settings.  See MkRules.dist for descriptions.
+
+LOCAL_SOFT ?= $(R_HOME)/extsoft
+EXT_LIBS ?= $(LOCAL_SOFT)
+G_FLAG ?= -gdwarf-2
+USE_ATLAS ?= NO
+ATLAS_PATH ?= /R/ATLAS/lib/WinNT_P4SSE2
+MULTI ?=
+TOOL_PATH ?=
+BINPREF ?=
+BINPREF64 ?= x86_64-w64-mingw32-
+M_ARCH ?=
+AS_ARCH ?=
+RC_ARCH ?=
+DT_ARCH ?=
+WIN ?= 32
+ICU_PATH ?= /path/to/ICU
+ICU_LIBS ?= -lsicuin -lsicuuc -lsicudt -lstdc++
+CAIRO_HOME ?=
+BUILD_HTML ?= NO
+MIKTEX ?= TRUE
+MAKEINFO ?= makeinfo
+EOPTS ?= -mtune=core2
+OPENMP ?= -fopenmp
+PTHREAD ?= -pthread
+ISDIR ?= C:/packages/Inno
+QPDF ?=
+HOME32 ?=
+DLLs32 ?=
+DLLs64 ?=
+WIX3DIR ?= C:/packages/WiX3.5/bin
+WIX_PERSONAL ?= 0
+
+## =============== end of user setting defaults  ===================
+
+
 ifeq "$(MULTI)" "64"
 WIN = 64
 M_ARCH = -m64
