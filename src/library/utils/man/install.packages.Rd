@@ -123,7 +123,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     current, otherwise try source}.  (This will only choose the binary
     package if its version number is no older than the source version.
     In interactive use it will ask before attempting to install source
-    packages.)
+    packages which may contain compiled code.)
   }
   \item{configure.args}{
     (Used only for source installs.) A character vector or a named list.

@@ -579,8 +579,9 @@ package contains code which to be compiled, otherwise @code{"no"} (when
 the package could be installed from source on any platform without
 additional tools).  This is used by @code{install.packages(type =
 "both")} in @R{} >= 2.15.2 on platforms where binary packages are the
-norm: it is normally set by the repository assuming compilation is
-required if and only if the package has a @file{src} directory.
+norm: it is normally set by @command{R CMD build} or the repository
+assuming compilation is required if and only if the package has a
+@file{src} directory.
 
 @c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
@@ -7790,9 +7791,6 @@ For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
 (which has 3 parts).
-
-This option may not compile OpenMP code.
-
 
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access

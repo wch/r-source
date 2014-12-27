@@ -319,7 +319,7 @@ install.packages <-
     }
 
 
-# for testing .Platform$pkgType <- "mac.binary.leopard"
+# for testing .Platform$pkgType <- "mac.binary"
     ## Look at type == "both"
     if (type == "both") {
         ## NB it is only safe to use binary packages with a Mac OS X
@@ -382,7 +382,7 @@ install.packages <-
             if(length(s2)) {
                 msg <-
                     ngettext(length(s2),
-                             "Package which are only available in source form, and may need compilation of C/C++/Fortran",
+                             "Package which is only available in source form, and may need compilation of C/C++/Fortran",
                              "Packages which are only available in source form, and may need compilation of C/C++/Fortran")
                 msg <- c(paste0(msg, ": "), sQuote(s2))
                 msg <- strwrap(paste(msg, collapse = " "), exdent = 2)
