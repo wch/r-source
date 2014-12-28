@@ -2180,7 +2180,7 @@ setRlibs <-
                     warningLog(Log, "Found the following file(s) containing GNU extensions:")
                     printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                     wrapLog("Portable Makefiles do not use GNU extensions",
-                            "such as +=, -=, $(shell), $(wildcard),",
+                            "such as +=, :=, $(shell), $(wildcard),",
                             "ifeq ... endif.",
                             "See section 'Writing portable packages'",
                             "in the 'Writing R Extensions' manual.\n")
