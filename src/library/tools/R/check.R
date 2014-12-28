@@ -2160,16 +2160,24 @@ setRlibs <-
             for(f in file.path("src", makevars)) {
                 contents <- readLines(f, warn = FALSE)
                 contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
+                ## Things like $(SUBDIRS:=.a)
+                contents <- grep("[$][(].+:=.+[)]", contents,
+                                 value = TRUE, invert = TRUE)
                 if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq)", contents)))
                     bad_files <- c(bad_files, f)
             }
             SysReq <- desc["SystemRequirements"]
             if (length(bad_files)) {
-                if(!is.na(SysReq) && grepl("GNU make", SysReq)) {
+                if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
                     noteLog(Log, "GNU make is a SystemRequirements.")
                 } else {
                     warningLog(Log, "Found the following file(s) containing GNU extensions:")
                     printLog0(Log, .format_lines_with_indent(bad_files), "\n")
+                    wrapLog("Portable Makevars do not use GNU extensions",
+                            "such as +=, -=, $(shell), $(wildcard),",
+                            "ifeq ... endif.",
+                            "See section 'Writing portable packages'",
+                            "in the 'Writing R Extensions' manual.\n")
                 }
             } else resultLog(Log, "OK")
         }
