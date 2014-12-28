@@ -252,6 +252,9 @@
       
       \item \command{R CMD build} adds a \samp{NeedsCompilation} field
       if one is not already present in the DESCRIPTION file.
+      
+      \item \command{R CMD check} checks for the undeclared use of GNU
+      extensions in \file{src/Makevars}.
     }
   }
 
