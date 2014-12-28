@@ -2036,7 +2036,7 @@
       \code{readRDS()}) in earlier versions of \R will no longer show
       the original sources (including comments).
 
-      \item New items \href{UserManuals.html}{User Manuals} and
+      \item New items \samp{User Manuals} and
       \href{http://developer.r-project.org/TechDocs}{Technical Papers}
       have been added to the HTML help main page.  These link to
       vignettes in the base and recommended packages and to a
