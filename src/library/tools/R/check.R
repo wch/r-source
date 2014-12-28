@@ -2133,7 +2133,7 @@ setRlibs <-
             contents <- readChar(f, file.size(f), useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
-            if (!grepl("\n$", contents, fixed = TRUE, useBytes = TRUE))
+            if (!grepl("\n$", contents, useBytes = TRUE))
                 noEOL <- c(noEOL, f)
         }
         if (length(bad_files)) {
