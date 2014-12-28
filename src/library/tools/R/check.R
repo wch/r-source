@@ -304,7 +304,7 @@ setRlibs <-
 
         check_data() # 'data' dir and sysdata.rda
 
-        if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir()
+        if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir(desc)
 
         if(do_install &&
            dir.exists("src") &&
@@ -2093,7 +2093,7 @@ setRlibs <-
         }
     }
 
-    check_src_dir <- function()
+    check_src_dir <- function(desc)
     {
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
@@ -2135,7 +2135,7 @@ setRlibs <-
                 bad_files <- c(bad_files, f)
         }
         if (length(bad_files)) {
-            warningLog(Log, "Found the following Makefiles with CR or CRLF line endings:")
+            warningLog(Log, "Found the following Makefile(s) with CR or CRLF line endings:")
             printLog0(Log, .format_lines_with_indent(bad_files), "\n")
             printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
         } else resultLog(Log, "OK")
@@ -2151,6 +2151,26 @@ setRlibs <-
                 if(any(grepl("^(Non-portable flags|Variables overriding)", out)))
                    warningLog(Log) else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
+        }
+        ## Check GNUisms in src/Makevars[.in]
+        if (length(makevars)) {
+            checkingLog(Log, "GNU extensions in Makevars[.in]")
+            bad_files <- character()
+            for(f in file.path("src", makevars)) {
+                contents <- readLines(f, warn = FALSE)
+                contents <- grep("^ .*#", contents, value = TRUE, invert = TRUE)
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq)", contents)))
+                    bad_files <- c(bad_files, f)
+            }
+            SysReq <- desc["SystemRequirements"]
+            if (length(bad_files)) {
+                if(!is.na(SysReq) && grepl("GNU make", SysReq)) {
+                    noteLog(Log, "GNU make is a SystemRequirements.")
+                } else {
+                    warningLog(Log, "Found the following file(s) containing GNU extensions:")
+                    printLog0(Log, .format_lines_with_indent(bad_files), "\n")
+                }
             } else resultLog(Log, "OK")
         }
 
