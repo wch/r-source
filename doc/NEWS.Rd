@@ -254,7 +254,7 @@
       if one is not already present in the DESCRIPTION file.
       
       \item \command{R CMD check} checks for the undeclared use of GNU
-      extensions in \file{src/Makevars}.
+      extensions in files \file{src/Makevars} and \file{src/Makefile}.
     }
   }
 

@@ -2153,11 +2153,15 @@ setRlibs <-
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
-        ## Check GNUisms in src/Makevars[.in]
-        if (length(makevars)) {
-            checkingLog(Log, "for GNU extensions in Makevars[.in]")
+        ## Check GNUisms in src/Make{vars,file}[.in]
+        umakes <- Sys.glob(file.path(pkgdir, "src",
+                                     c("Makevars.in", "Makevars",
+                                       "Makefile.in", "Makefile")))
+        if (length(umakes)) {
+            checkingLog(Log, "for GNU extensions in Makefiles")
             bad_files <- character()
-            for(f in file.path("src", makevars)) {
+            umakes <- file.path("src", basename(umakes))
+            for(f in umakes) {
                 contents <- readLines(f, warn = FALSE)
                 contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
                 ## Things like $(SUBDIRS:=.a)
@@ -2173,7 +2177,7 @@ setRlibs <-
                 } else {
                     warningLog(Log, "Found the following file(s) containing GNU extensions:")
                     printLog0(Log, .format_lines_with_indent(bad_files), "\n")
-                    wrapLog("Portable Makevars do not use GNU extensions",
+                    wrapLog("Portable Makefiles do not use GNU extensions",
                             "such as +=, -=, $(shell), $(wildcard),",
                             "ifeq ... endif.",
                             "See section 'Writing portable packages'",
