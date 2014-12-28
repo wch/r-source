@@ -2160,14 +2160,10 @@ setRlibs <-
             } else resultLog(Log, "OK")
         }
         ## Check GNUisms in src/Make{vars,file}[.in]
-        umakes <-
-            dir("src",
-                pattern = "^(Makevars|Makevars.in|Makefile|Makefile.in)$",
-                full.names = TRUE, recursive = TRUE)
-        if (length(umakes)) {
+        if (length(all_files)) {
             checkingLog(Log, "for GNU extensions in Makefiles")
             bad_files <- character()
-            for(f in umakes) {
+            for(f in all_files) {
                 contents <- readLines(f, warn = FALSE)
                 contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
                 ## Things like $(SUBDIRS:=.a)

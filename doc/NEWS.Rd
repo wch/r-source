@@ -252,10 +252,6 @@
       
       \item \command{R CMD build} adds a \samp{NeedsCompilation} field
       if one is not already present in the DESCRIPTION file.
-      
-      \item \command{R CMD check} checks for the undeclared use of GNU
-      extensions in Makefiles under \file{src}, and for such files with
-      a missing final linefeed.
     }
   }
 
@@ -397,6 +393,10 @@
       \code{\\donttest} sections of the examples are specified in the
       \file{DESCRIPTION} file.
       (These are needed to run the examples interactively.)
+      
+      \item \command{R CMD check} checks for the undeclared use of GNU
+      extensions in Makefiles under \file{src}, and for such files with
+      a missing final linefeed.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
