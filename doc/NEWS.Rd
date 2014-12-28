@@ -254,8 +254,8 @@
       if one is not already present in the DESCRIPTION file.
       
       \item \command{R CMD check} checks for the undeclared use of GNU
-      extensions in files \file{src/Makevars} and \file{src/Makefile},
-      and for files with a missing final linefeed.
+      extensions in Makefiles under \file{src}, and for such files with
+      a missing final linefeed.
     }
   }
 

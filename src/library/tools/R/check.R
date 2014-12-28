@@ -2160,13 +2160,13 @@ setRlibs <-
             } else resultLog(Log, "OK")
         }
         ## Check GNUisms in src/Make{vars,file}[.in]
-        umakes <- Sys.glob(file.path(pkgdir, "src",
-                                     c("Makevars.in", "Makevars",
-                                       "Makefile.in", "Makefile")))
+        umakes <-
+            dir("src",
+                pattern = "^(Makevars|Makevars.in|Makefile|Makefile.in)$",
+                full.names = TRUE, recursive = TRUE)
         if (length(umakes)) {
             checkingLog(Log, "for GNU extensions in Makefiles")
             bad_files <- character()
-            umakes <- file.path("src", basename(umakes))
             for(f in umakes) {
                 contents <- readLines(f, warn = FALSE)
                 contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
