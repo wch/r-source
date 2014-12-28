@@ -305,7 +305,7 @@ setRlibs <-
 
         check_data() # 'data' dir and sysdata.rda
 
-        if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir()
+        if (!is_base_pkg && dir.exists("src") && !extra_arch) check_src_dir(desc)
 
         if(do_install &&
            dir.exists("src") &&
@@ -2063,7 +2063,7 @@ setRlibs <-
         }
     }
 
-    check_src_dir <- function()
+    check_src_dir <- function(desc)
     {
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
@@ -2092,7 +2092,7 @@ setRlibs <-
 
         ## Check src/Make* for LF line endings, as Sun make does not accept CRLF
         checkingLog(Log, "line endings in Makefiles")
-        bad_files <- character()
+        bad_files <- noEOL<- character()
         ## .win files are not checked, as CR/CRLF work there
         all_files <-
             dir("src",
@@ -2103,11 +2103,17 @@ setRlibs <-
             contents <- readChar(f, file.info(f)$size, useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                 bad_files <- c(bad_files, f)
+            if (!grepl("\n$", contents, useBytes = TRUE))
+                noEOL <- c(noEOL, f)
         }
         if (length(bad_files)) {
-            warningLog(Log, "Found the following Makefiles with CR or CRLF line endings:")
+            warningLog(Log, "Found the following Makefile(s) with CR or CRLF line endings:")
             printLog0(Log, .format_lines_with_indent(bad_files), "\n")
             printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
+        } else if (length(noEOL)) {
+            noteLog(Log, "Found the following Makefile(s) without a final LF:")
+            printLog0(Log, .format_lines_with_indent(noEOL), "\n")
+            printLog(Log, "Some 'make' programs ignore lines not ending in LF.\n")
         } else resultLog(Log, "OK")
 
         ## Check src/Makevars[.in] compilation flags.
@@ -2121,6 +2127,34 @@ setRlibs <-
                 if(any(grepl("^(Non-portable flags|Variables overriding)", out)))
                    warningLog(Log) else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
+        }
+        ## Check GNUisms in src/Make{vars,file}[.in]
+        if (length(all_files)) {
+            checkingLog(Log, "for GNU extensions in Makefiles")
+            bad_files <- character()
+            for(f in all_files) {
+                contents <- readLines(f, warn = FALSE)
+                contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
+                ## Things like $(SUBDIRS:=.a)
+                contents <- grep("[$][(].+:=.+[)]", contents,
+                                 value = TRUE, invert = TRUE)
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq)", contents)))
+                    bad_files <- c(bad_files, f)
+            }
+            SysReq <- desc["SystemRequirements"]
+            if (length(bad_files)) {
+                if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
+                    noteLog(Log, "GNU make is a SystemRequirements.")
+                } else {
+                    warningLog(Log, "Found the following file(s) containing GNU extensions:")
+                    printLog0(Log, .format_lines_with_indent(bad_files), "\n")
+                    wrapLog("Portable Makefiles do not use GNU extensions",
+                            "such as +=, :=, $(shell), $(wildcard),",
+                            "ifeq ... endif.",
+                            "See section 'Writing portable packages'",
+                            "in the 'Writing R Extensions' manual.\n")
+                }
             } else resultLog(Log, "OK")
         }
 
