@@ -31,6 +31,8 @@ available.packages(contriburl =
   \item{type}{
     character string, indicate which type of packages: see
     \code{\link{install.packages}}.
+  
+    If \code{type = "both"} this will use the source repository.
   }
   \item{fields}{
     a character vector giving the fields to extract from

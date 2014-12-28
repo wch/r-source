@@ -21,6 +21,9 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{\link{install.packages}}.
   }
 }
+\details{
+  If \code{type = "both"} this will use the source repository.
+}
 \value{
   A character vector of the same length as \code{repos}.
 }

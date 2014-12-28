@@ -374,6 +374,10 @@
       \item \code{sessionInfo()} tries to report the OS version in use
       (not just that compiled under, and including details of Linux
       distributions).
+      
+      \item \code{model.frame()} (used by \code{lm()} and many other 
+      modelling functions) now warns when it drops contrasts
+      from factors.  (Wish of \PR{16119})
     }
   }
 
