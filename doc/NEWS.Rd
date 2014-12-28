@@ -477,6 +477,9 @@
       \item If a package was updated and attached when its namespace was
       already loaded, it could end up with parts from one version and
       parts from the other.  (\PR{16120})
+      
+      \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
+      to miscalculated string length (\PR{16121}). 
     }
   }
 }
