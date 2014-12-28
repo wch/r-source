@@ -2155,11 +2155,11 @@ setRlibs <-
         }
         ## Check GNUisms in src/Makevars[.in]
         if (length(makevars)) {
-            checkingLog(Log, "GNU extensions in Makevars[.in]")
+            checkingLog(Log, "for GNU extensions in Makevars[.in]")
             bad_files <- character()
             for(f in file.path("src", makevars)) {
                 contents <- readLines(f, warn = FALSE)
-                contents <- grep("^ .*#", contents, value = TRUE, invert = TRUE)
+                contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
                 if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq)", contents)))
                     bad_files <- c(bad_files, f)
             }
