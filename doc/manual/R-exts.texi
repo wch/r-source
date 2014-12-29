@@ -217,7 +217,7 @@ use less (virtual) memory.
 and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
 packages to @acronym{CRAN}: current instructions are linked from
-@uref{http://CRAN.R-project.org/banner.shtml#submitting}.
+@uref{http://CRAN.R-project.org/@/banner.shtml#submitting}.
 
 
 @menu
@@ -604,7 +604,7 @@ the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
 Computing Machinery, @uref{http://www.acm.org/class/}; the former refers
 to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
 Literature Classification System,
-@uref{http://www.aeaweb.org/journal/jel_class_system.html}), or
+@uref{http://www.aeaweb.org/@/journal/@/jel_class_system.html}), or
 @samp{Classification/MSC} or @samp{Classification/MSC-2010} (the
 Mathematics Subject Classification of the American Mathematical Society,
 @uref{http://www.ams.org/msc/}; the former refers to the 2000 version).
@@ -1416,7 +1416,7 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 
 @noindent
 then download the sources from
-@uref{http://sourceforge.net/projects/tcllib/files/BWidget/} and
+@uref{http://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
 at the command line run
 
 @example
@@ -2303,7 +2303,7 @@ Fortran 95 with non-standard extensions.  The Solaris @command{f95}
 compiler `accepts some Fortran 2003 features'.  Note that the compiler
 used for OS X <= 10.8 is @command{gfortran 4.2.3} which has limited
 Fortran 2003 support
-(@uref{http://gcc.gnu.org/onlinedocs/gcc-4.2.3/gfortran/}).
+(@uref{http://gcc.gnu.org/@/onlinedocs/@/gcc-4.2.3/@/gfortran/}).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others. (Module
@@ -2407,7 +2407,7 @@ compiler@footnote{OS X 10.7 and later have @command{clang++} but for
 the GNU version of C++98 and GNU extensions (which include TR1).  The
 default compiler on Windows is GCC 4.6.x and supports the
 @option{-std=c++0x} flag and some C++11 features (see
-@uref{http://gcc.gnu.org/gcc-4.6/cxx0x_status.html}).  On these
+@uref{http://gcc.gnu.org/@/gcc-4.6/@/cxx0x_status.html}).  On these
 platforms, it is necessary to select a different compiler for C++11,
 @emph{via} personal or site @file{Makevars} files.
 
@@ -3895,14 +3895,17 @@ actions are needed).
 If your package has a @file{Makevars} or @file{Makefile} file, make sure
 that you use only portable make features.  Such files should be
 LF-terminated (including the final line of the file) and not make use of
-GNU extensions.  Commonly misused GNU extensions are conditional
-inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
-@code{$@{wildcard ...@}}, and the use of @code{+=}@footnote{This was
-apparently introduced in SunOS 4, and is available elsewhere
-@emph{provided} it is surrounded by spaces.} and @code{:=}.  Also, the
-use of @code{$<} other than in implicit rules is a GNU extension, as is
-the @code{$^} macro.  Unfortunately makefiles which use GNU extensions
-often run on other platforms but do not have the intended results.
+GNU extensions.  (The POSIX specification is available at
+@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
+anything not documented there should be regarded as an extension to be
+avoided.)  Commonly misused GNU extensions are conditional inclusions
+(@code{ifeq} and the like), @code{$@{shell ...@}} and @code{$@{wildcard
+...@}}, and the use of @code{+=}@footnote{This was apparently introduced
+in SunOS 4, and is available elsewhere @emph{provided} it is surrounded
+by spaces.}  and @code{:=}.  Also, the use of @code{$<} other than in
+implicit rules is a GNU extension, as is the @code{$^} macro.
+Unfortunately makefiles which use GNU extensions often run on other
+platforms but do not have the intended results.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
@@ -3913,9 +3916,11 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
 BSD make formerly in FreeBSD and OS X, AT&T make as implemented on
-Solaris, @command{pmake} in FreeBSD.} to be used with @R{}.
+Solaris, @command{pmake} in FreeBSD, `Distributed Make' (@code{dmake}),
+part of Solaris Studio and available in other versions.} to be used with
+@R{}.
 
-If you really must assume GNU make, declare it in the @file{DESCRIPTION}
+If you really must require GNU make, declare it in the @file{DESCRIPTION}
 file by
 
 @example
@@ -3930,19 +3935,20 @@ Bash extensions also need to be avoided in shell scripts, including
 expressions in Makefiles (which are passed to the shell for processing).
 Some @R{} platforms use strict@footnote{For example, @command{test}
 options @option{-a} and @option{-e} are not portable, and not supported
-in the AT&T Bourne shell used on Solaris. Even though they are in the
-POSIX standard.} Bourne shells, and Windows and some Unix-alike OSes use
-@command{ash} (@uref{http://en.wikipedia.org/wiki/Almquist_shell}), a
-rather minimal shell with few builtins.  Beware of assuming that all the
-POSIX command-line utilities are available, especially on Windows where
-only a minimal set is provided for use with @R{}.
+in the AT&T Bourne shell used on Solaris, even though they are in the
+POSIX standard.} Bourne shells: the @R{} toolset on Windows and some
+Unix-alike OSes use @command{ash}
+(@uref{http://en.wikipedia.org/@/wiki/@/Almquist_shell}), a rather
+minimal shell with few builtins.  Beware of assuming that all the POSIX
+command-line utilities are available, especially on Windows where only a
+minimal set is provided for use with @R{}.
 @ifset UseExternalXrefs
 (@xref{The command line tools, , The command line tools,
 R-admin, R Installation and Administration}.)
 @end ifset
 One particular issue is the use of @command{echo}, for which two
 behaviours are allowed
-(@uref{http://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html})
+(@uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/echo.html})
 and both occur as defaults on @R{} platforms: portable applications
 should not use @option{-n} (as the first argument) nor escape sequences.
 
@@ -4178,7 +4184,7 @@ MiKTeX does not use PDF object compression and so @command{qpdf} can
 reduce considerably the files it outputs: MiKTeX can be overridden by
 code in the preamble of an Sweave or @LaTeX{} file --- see how this is
 done for the @R{} reference manual at
-@uref{https://svn.r-project.org/R/trunk/doc/manual/refman.top}.
+@uref{https://svn.r-project.org/@/R/@/trunk/@/doc/@/manual/@/refman.top}.
 
 Other tools can reduce the size of PDFs containing bitmap images at
 excessively high resolution.  These are often best re-generated (for
