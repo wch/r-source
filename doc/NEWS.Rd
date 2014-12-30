@@ -479,7 +479,7 @@
       parts from the other.  (\PR{16120})
       
       \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
-      to miscalculated string length (\PR{16121}). 
+      to miscalculated string length.  (\PR{16121}) 
     }
   }
 }
@@ -524,8 +524,8 @@
       collation locale in use (if any).
 
       \item \code{utils::URLencode()} was updated to use unreserved and
-      reserved characters from RFC 3986,
-      \url{http://tools.ietf.org/html/rfc3986}, instead of RFC 1738.
+      reserved characters from RFC 3986
+      (\url{http://tools.ietf.org/html/rfc3986}) instead of RFC 1738.
 
       \item \code{unique(warnings())} and \code{c(warnings())} are now
       supported.
@@ -534,6 +534,11 @@
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
       \env{R_BIOC_VERSION}.)
+      
+      \item Omegahat is no longer listed as providing Windows binary
+      packages, e.g. by \code{setRepositories()}.  It has no binary
+      packages available for \R 3.1.x and those for earlier versions
+      were 32-bit only.
     }
   }
 
@@ -556,9 +561,9 @@
       \item LaTeX package \pkg{upquote} is no longer required for \R's
       use of \pkg{inconsolata}.
 
-      \item (Windows only) If both 32 and 64 bit versions of \R are
+      \item (Windows only) If both 32- and 64-bit versions of \R are
       installed, the \file{bin/R.exe} and \file{bin/Rscript.exe} executables
-      now run 64 bit \R.  (To run 32 bit \R, overwrite these files
+      now run 64-bit \R.  (To run 32-bit \R, overwrite these files
       with copies of \file{bin/i386/Rfe.exe}.)
      }
   }
