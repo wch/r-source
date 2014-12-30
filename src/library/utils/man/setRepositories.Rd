@@ -44,6 +44,7 @@ setRepositories(graphics = getOption("menu.graphics"),
   (e.g., only source packages or not OS X binary packages).
   Further, for binary packages some repositories (notably R-Forge) only
   offer packages for the current or recent versions of \R.
+  (Type \code{"both"} is equivalent to \code{"source"}.)
 
   Repository \samp{CRAN} is treated specially: the value is taken from
   the current setting of \code{getOption("repos")} if this has an

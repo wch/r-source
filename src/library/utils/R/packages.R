@@ -820,7 +820,7 @@ setRepositories <-
         p <- file.path(R.home("etc"), "repositories")
     a <- tools:::.read_repositories(p)
     pkgType <- getOption("pkgType")
-    if (pkgType == "both") pkgType <- .Platform$pkgType
+    if (pkgType == "both") pkgType <- "source" #.Platform$pkgType
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]
     a <- a[thisType, 1L:3L]

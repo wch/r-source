@@ -368,7 +368,7 @@ install.packages <-
             if(interactive() && any(later & hasSrc)) {
                 msg <-
                     ngettext(sum(later & hasSrc),
-                             "Do you want to install from sources the package which need compilation?",
+                             "Do you want to install from sources the package which needs compilation?",
                              "Do you want to install from sources the packages which need compilation?")
                 message(msg, domain = NA)
                 res <- readline("y/n: ")
