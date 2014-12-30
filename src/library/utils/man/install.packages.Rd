@@ -62,8 +62,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{"http://cran.us.r-project.org"}.  For more details on
     supported URL schemes see \code{\link{url}}.
 
-    Can be \code{NULL} to install from local files, directories or URLs:
-    this will be inferred by extension from \code{pkgs} if of length one.
+    Can be \code{NULL} to install from local files, directories or URLs
+    unless \code{type == "both"}: this will be inferred by extension
+    from \code{pkgs} if of length one.
   }
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
@@ -125,7 +126,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     current, otherwise try source}.  (This will only choose the binary
     package if its version number is no older than the source version.
     In interactive use it will ask before attempting to install source
-    packages.)
+    packages which may contain compiled code.)
   }
   \item{configure.args}{
     (Used only for source installs.) A character vector or a named list.
