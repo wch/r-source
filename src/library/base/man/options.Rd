@@ -562,16 +562,16 @@ getOption(x, default = NULL)
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
-      Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.  Some OS X builds use \code{"mac.binary"} and
-      \code{"mac.binary.mavericks"}
+      Possible values are \code{"win.binary"} (the default),
+      \code{"source"} and \code{"both"}.  Some OS X builds use
+      \code{"mac.binary"} and \code{"mac.binary.mavericks"}.
 #endif
 #ifdef unix
-      Possible values are \code{"source"} (the default except under the
-      CRAN OS X build), \code{"mac.binary."} and
-      \code{"mac.binary.mavericks"}.  Windows uses  \code{"win.binary"}.
-      (\code{"mac.binary.leopard"} and \code{"mac.binary.universal"} are
-      no longer in use.)
+      Possible values are \code{"source"} (the default except under a
+      CRAN OS X build), \code{"mac.binary."},
+      \code{"mac.binary.mavericks"} and \code{"both"}.  Windows uses
+      \code{"win.binary"}. (\code{"mac.binary.leopard"} and
+      \code{"mac.binary.universal"} are no longer in use.)
 #endif
     }
 
