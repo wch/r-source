@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -16,6 +16,22 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: -1,232,-1,-1,-1,-1,-1,-1,-1,-1\n"
+
+# tools/R/admin.R: 724
+# stop(gettextf("compiling TeX file %s failed with message:\n%s",
+#                  sQuote(output), conditionMessage(e)),
+#                  domain = NA, call. = FALSE)
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"kompilowanie pliku TeX %s nie powiodło się zwracając komunikat:\n"
+"%s"
+
+# tools/R/checktools.R: 270
+# message(sprintf("checking %s ...", pfile))
+#, fuzzy
+msgid "Checking %s"
+msgstr "sprawdzanie %s ..."
 
 # tools/R/Vignettes.R: 358
 # stop("argument 'package' must be of length 1")

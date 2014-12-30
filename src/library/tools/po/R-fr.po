@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "vérification de %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "l'argument 'package' doit être de longueur 1"

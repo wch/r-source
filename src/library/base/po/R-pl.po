@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1712,6 +1712,18 @@ msgstr "%s nie jest poprawnie zainstalowanym pakietem"
 # warning(gettextf("%s not found on search path, using pos = 2", sQuote(pos)), domain = NA)
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s nie zostało znalezione w ścieżce wyszukiwania, używanie 'pos = 2'"
+
+msgid "version"
+msgstr ""
+
+# src/library/base/R/attach.R: 183
+# warning(gettextf("%s namespace cannot be unloaded:\n  ",
+#                                       sQuote(pkgname)),
+#                              conditionMessage(e),
+#                              call. = FALSE, domain = NA)
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr "przestrzeń nazw %s pakietu nie może zostać zwolniona:"
 
 # src/library/base/R/library.R: 302
 # stop(gettextf("package or namespace load failed for %s",

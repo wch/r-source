@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-11 10:24-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -770,6 +770,13 @@ msgstr "%s не является правильным установленным пакетом"
 
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s не найден в пути поиска, использую pos = 2"
+
+msgid "version"
+msgstr ""
+
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr "%s пространство имен нельзя выгрузить:"
 
 msgid "package or namespace load failed for %s"
 msgstr "не удалась загрузка пакета или пространства имен для %s"

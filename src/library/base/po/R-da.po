@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -762,6 +762,13 @@ msgstr "%s er ikke en gyldig installeret pakke"
 
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s ikke fundet på søgesti, bruger pos = 2"
+
+msgid "version"
+msgstr ""
+
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr "%s navnerum kan ikke deaktiveres:"
 
 msgid "package or namespace load failed for %s"
 msgstr "indlæsning af pakke eller navnerum fejlede for %s"

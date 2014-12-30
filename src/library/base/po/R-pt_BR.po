@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -835,6 +835,13 @@ msgstr "'%s' não é um pacote válido instalado"
 #, fuzzy
 msgid "%s not found on search path, using pos = 2"
 msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
+
+msgid "version"
+msgstr ""
+
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr "espaço de nomes não pode ser descarregado"
 
 #, fuzzy
 msgid "package or namespace load failed for %s"

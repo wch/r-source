@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -741,6 +741,12 @@ msgid "%s is not a valid installed package"
 msgstr ""
 
 msgid "%s not found on search path, using pos = 2"
+msgstr ""
+
+msgid "version"
+msgstr ""
+
+msgid "cannot be unloaded."
 msgstr ""
 
 msgid "package or namespace load failed for %s"

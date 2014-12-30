@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09+0100\n"
+"POT-Creation-Date: 2014-12-30 15:52+0000\n"
 "PO-Revision-Date: 2011-11-29 09:10+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "ingen direkte eller arvet metode for funktion '%s' for dette kald"
 
-#: methods_list_dispatch.c:513 methods_list_dispatch.c:1047
+#: methods_list_dispatch.c:513 methods_list_dispatch.c:1050
 msgid "invalid object (non-function) used as method"
 msgstr "ugyldig objekt (ikkefunktion) brugt som metode"
 
@@ -126,7 +126,7 @@ msgstr ""
 "skal være et R-miljø; fik et objekt af klasse »%s«"
 
 #: methods_list_dispatch.c:603 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:1000
+#: methods_list_dispatch.c:1003
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -160,32 +160,32 @@ msgstr ""
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "fejl under evaluering af en 'primitive' next-metode: %s"
 
-#: methods_list_dispatch.c:802
+#: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr "'%s' skal være en enkelt streng (fik en tegnvektor med længden %d)"
 
-#: methods_list_dispatch.c:806
+#: methods_list_dispatch.c:809
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' skal være en udfyldt streng; fik en tom streng"
 
-#: methods_list_dispatch.c:810
+#: methods_list_dispatch.c:813
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' skal være en enkel streng (fik et objekt af klasse »%s«)"
 
-#: methods_list_dispatch.c:881
+#: methods_list_dispatch.c:884
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr "Klasse skal enten være et tegn-streng navn eller en klassedefinition"
 
-#: methods_list_dispatch.c:960
+#: methods_list_dispatch.c:963
 #, fuzzy, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Kunne ikke indhente den generiske for primitive »%s«"
 
-#: methods_list_dispatch.c:966
+#: methods_list_dispatch.c:969
 #, fuzzy, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

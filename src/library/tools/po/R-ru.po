@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"компиляция TeX файла %s не удалась с сообщением:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "проверяю %s..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"

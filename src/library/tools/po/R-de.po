@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -15,6 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"TeX Durchlauf für Datei %s fehlgeschlagen mit Nachricht:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "überprüfe %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "Argument 'package' muss Länge 1 haben"

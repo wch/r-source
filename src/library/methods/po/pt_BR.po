@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-10-08 08:09+0100\n"
+"POT-Creation-Date: 2014-12-30 15:52+0000\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -72,7 +72,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "nenhum método direto ou obtido por herança para a função '%s' nessa chamada"
 
-#: methods_list_dispatch.c:513 methods_list_dispatch.c:1047
+#: methods_list_dispatch.c:513 methods_list_dispatch.c:1050
 msgid "invalid object (non-function) used as method"
 msgstr "objeto inválido (não-função) usado como método"
 
@@ -131,7 +131,7 @@ msgstr ""
 "o dispachamento deve ser um ambiente R; foi obtido um objeto de classe \"%s\""
 
 #: methods_list_dispatch.c:603 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:1000
+#: methods_list_dispatch.c:1003
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -167,35 +167,35 @@ msgstr ""
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "erro na avaliação de um próximo método 'primitive': %s"
 
-#: methods_list_dispatch.c:802
+#: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' deve ser uma única string (foi especificado um vetor de caracteres de "
 "comprimento %d)"
 
-#: methods_list_dispatch.c:806
+#: methods_list_dispatch.c:809
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' deve ser uma string não-vazia; foi obtida uma string vazia"
 
-#: methods_list_dispatch.c:810
+#: methods_list_dispatch.c:813
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' deve ser uma string única (foi obtido um objeto da classe \"%s\")"
 
-#: methods_list_dispatch.c:881
+#: methods_list_dispatch.c:884
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "Class deve ser ou um nome cadeia de caracteres ou uma definição de classe"
 
-#: methods_list_dispatch.c:960
+#: methods_list_dispatch.c:963
 #, fuzzy, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Falha ao obter a genérica primitiva '%s"
 
-#: methods_list_dispatch.c:966
+#: methods_list_dispatch.c:969
 #, fuzzy, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

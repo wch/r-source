@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.4\n"
+
+#, fuzzy
+msgid "Reading %s failed with message: %s"
+msgstr ""
+"TeX 파일 %s를 컴파일하는데 실패했습니다:\n"
+"%s"
+
+#, fuzzy
+msgid "Checking %s"
+msgstr "%s를 확인합니다 ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "인자 'package'는 반드시 길이가 1 이어야 합니다"

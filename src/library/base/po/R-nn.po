@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57\n"
+"POT-Creation-Date: 2014-12-30 15:52\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -803,6 +803,13 @@ msgstr "«%s» er ikkje ein gyldig installert pakke"
 
 msgid "%s not found on search path, using pos = 2"
 msgstr "fann ikkje «%s» i søkjestigen – brukar «pos = 2»"
+
+msgid "version"
+msgstr ""
+
+#, fuzzy
+msgid "cannot be unloaded."
+msgstr "namnerom kan ikkje lastast ut:"
 
 #, fuzzy
 msgid "package or namespace load failed for %s"
