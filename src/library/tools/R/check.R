@@ -2123,8 +2123,6 @@ setRlibs <-
         }
 
         ## Check src/Make* for LF line endings, as Sun make does not accept CRLF
-        checkingLog(Log, "line endings in Makefiles")
-        bad_files <- noEOL<- character()
         ## .win files are not checked, as CR/CRLF work there
         all_files <-
             dir("src",
@@ -2135,24 +2133,27 @@ setRlibs <-
                            full.names = TRUE, recursive = TRUE))
         all_files <- unique(sort(all_files))
         all_files <- sub("^[.]/", "", all_files)
-        for(f in all_files) {
-            if (!file.exists(f)) next
-            contents <- readChar(f, file.size(f), useBytes = TRUE)
-            if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
-                bad_files <- c(bad_files, f)
-            if (!grepl("\n$", contents, useBytes = TRUE))
-                noEOL <- c(noEOL, f)
+        if(length(all_files)) {
+            checkingLog(Log, "line endings in Makefiles")
+            bad_files <- noEOL<- character()
+            for(f in all_files) {
+                if (!file.exists(f)) next
+                contents <- readChar(f, file.size(f), useBytes = TRUE)
+                if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
+                    bad_files <- c(bad_files, f)
+                if (!grepl("\n$", contents, useBytes = TRUE))
+                    noEOL <- c(noEOL, f)
+            }
+            if (length(bad_files)) {
+                warningLog(Log, "Found the following Makefile(s) with CR or CRLF line endings:")
+                printLog0(Log, .format_lines_with_indent(bad_files), "\n")
+                printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
+            } else if (length(noEOL)) {
+                noteLog(Log, "Found the following Makefile(s) without a final LF:")
+                printLog0(Log, .format_lines_with_indent(noEOL), "\n")
+                printLog(Log, "Some 'make' programs ignore lines not ending in LF.\n")
+            } else resultLog(Log, "OK")
         }
-        if (length(bad_files)) {
-            warningLog(Log, "Found the following Makefile(s) with CR or CRLF line endings:")
-            printLog0(Log, .format_lines_with_indent(bad_files), "\n")
-            printLog(Log, "Some Unix 'make' programs require LF line endings.\n")
-        } else if (length(noEOL)) {
-            noteLog(Log, "Found the following Makefile(s) without a final LF:")
-            printLog0(Log, .format_lines_with_indent(noEOL), "\n")
-            printLog(Log, "Some 'make' programs ignore lines not ending in LF.\n")
-        } else resultLog(Log, "OK")
-
         ## Check src/Makevars[.in] compilation flags.
         if (length(makevars)) {
             checkingLog(Log, "compilation flags in Makevars")
