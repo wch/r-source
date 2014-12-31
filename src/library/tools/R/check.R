@@ -2065,6 +2065,8 @@ setRlibs <-
 
     check_src_dir <- function(desc)
     {
+        file.size <- function(...) file.info(...)$size
+
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
         ## Does ISO C really require LF line endings?  (Reference?)
