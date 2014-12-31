@@ -2131,8 +2131,8 @@ setRlibs <-
         all_files <- c(all_files,
                        dir(".", pattern = "^Makefile$",
                            full.names = TRUE, recursive = TRUE))
-        all_files <- unique(sort(all_files))
         all_files <- sub("^[.]/", "", all_files)
+        all_files <- unique(sort(all_files))
         if(length(all_files)) {
             checkingLog(Log, "line endings in Makefiles")
             bad_files <- noEOL<- character()
