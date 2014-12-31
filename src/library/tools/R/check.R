@@ -2129,9 +2129,11 @@ setRlibs <-
                 pattern = "^(Makevars|Makevars.in|Makefile|Makefile.in)$",
                 full.names = TRUE, recursive = TRUE)
         all_files <- c(all_files,
-                       dir(".", pattern = "^Makefile",
+                       dir(".", pattern = "^Makefile$",
                            full.names = TRUE, recursive = TRUE))
-        for(f in unique(sort(all_files))) {
+        all_files <- unique(sort(all_files))
+        all_files <- sub("^[.]/", "", all_files)
+        for(f in all_files) {
             if (!file.exists(f)) next
             contents <- readChar(f, file.size(f), useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
@@ -2172,7 +2174,7 @@ setRlibs <-
                 ## Things like $(SUBDIRS:=.a)
                 contents <- grep("[$][(].+:=.+[)]", contents,
                                  value = TRUE, invert = TRUE)
-                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq)", contents)))
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq|^ifdef|^ifndef|^endif)", contents)))
                     bad_files <- c(bad_files, f)
             }
             SysReq <- desc["SystemRequirements"]
