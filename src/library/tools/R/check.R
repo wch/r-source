@@ -2128,7 +2128,10 @@ setRlibs <-
             dir("src",
                 pattern = "^(Makevars|Makevars.in|Makefile|Makefile.in)$",
                 full.names = TRUE, recursive = TRUE)
-        for(f in all_files) {
+        all_files <- c(all_files,
+                       dir(".", pattern = "^Makefile",
+                           full.names = TRUE, recursive = TRUE))
+        for(f in unique(sort(all_files))) {
             if (!file.exists(f)) next
             contents <- readChar(f, file.size(f), useBytes = TRUE)
             if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
