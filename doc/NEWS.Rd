@@ -300,6 +300,10 @@
       time) now requires an external \file{libz.a} to be available (it is
       part of the \sQuote{goodies} used to compile Windows binary
       packages).  It would be simpler to use \code{-lz} instead.
+      
+      \item The default for option \code{pkgType} on platforms using
+      binary packages is now \code{"both"}, so source packages will be
+      tried if binary versions are not available or not current.
     }
   }
 

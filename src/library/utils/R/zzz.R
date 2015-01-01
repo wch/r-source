@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 	list(help.try.all.packages = FALSE,
 	     help.search.types = c("vignette", "demo", "help"),
              citation.bibtex.max = 1, internet.info = 2,
-	     pkgType = .Platform$pkgType,
+	     pkgType = if(.Platform$pkgType != "source") "both" else "source",
 	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
 	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),

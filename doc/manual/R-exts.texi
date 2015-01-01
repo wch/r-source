@@ -343,18 +343,20 @@ in the following format:
 @smallexample
 Package: pkgname
 Version: 0.5-1
-Date: 2004-01-01
+Date: 2015-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
 		     email = "Joe.Developer@@some.domain.net"),
 	      person("Pat", "Developer", role = "aut"),
 	      person("A.", "User", role = "ctb",
 		     email = "A.User@@whereever.net"))
-Author: Joe Developer and Pat Developer, with contributions from A. User
+Author: Joe Developer [aut, cre],
+  Pat Developer [aut],
+  A. User [ctb]
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
-Depends: R (>= 1.8.0), nlme
+Depends: R (>= 3.1.0), nlme
 Suggests: MASS
-Description: A short (one paragraph) description of what
+Description: A (one paragraph) description of what
   the package does and why it may be useful.
 License: GPL (>= 2)
 URL: http://www.r-project.org, http://www.another.url
@@ -407,9 +409,11 @@ The mandatory @samp{License} field is discussed in the next subsection.
 
 
 @c DESCRIPTION field Description
-The mandatory @samp{Description} field should give a comprehensive
-description of what the package does.  One can use several (complete)
-sentences, but only one paragraph.
+The mandatory @samp{Description} field should give a
+@emph{comprehensive} description of what the package does.  One can use
+several (complete) sentences, but only one paragraph. It should be
+intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
+package to all @acronym{CRAN} users).
 
 @c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a short description of the
@@ -446,15 +450,17 @@ Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
 ``authors'' (in particular specifying their precise @emph{roles}), via
-suitable @R{} code.  The roles can include @samp{"aut"} (author) for
-full authors, @samp{"cre"} (creator) for the package maintainer, and
-@samp{"ctb"} (contributor) for other contributors, @samp{"cph"}
-(copyright holder), among others.  See @code{?person} for more
-information.  Note that no role is assumed by default.  Auto-generated
-package citation information takes advantage of this specification. The
-@samp{Author} and @samp{Maintainer} fields are auto-generated from it if
-needed when building@footnote{at least if this is done in a locale which
-matches the package encoding.} or installing.
+suitable @R{} code. It should be either a call to @code{person} or a
+series of calls (one per ``author'') concatenated by @code{c()}): see the
+example @file{DESCRIPTION} file above.  The roles can include
+@samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the
+package maintainer, and @samp{"ctb"} (contributor) for other
+contributors, @samp{"cph"} (copyright holder), among others.  See
+@code{?person} for more information.  Note that no role is assumed by
+default.  Auto-generated package citation information takes advantage of
+this specification. The @samp{Author} and @samp{Maintainer} fields are
+auto-generated from it if needed when building@footnote{at least if this
+is done in a locale which matches the package encoding.} or installing.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright

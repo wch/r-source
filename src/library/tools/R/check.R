@@ -2177,7 +2177,7 @@ setRlibs <-
                 ## Things like $(SUBDIRS:=.a)
                 contents <- grep("[$][(].+:=.+[)]", contents,
                                  value = TRUE, invert = TRUE)
-                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|^ifeq|^ifneq|^ifdef|^ifndef|^endif)", contents)))
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]echo|^ifeq|^ifneq|^ifdef|^ifndef|^endif)", contents)))
                     bad_files <- c(bad_files, f)
             }
             SysReq <- desc["SystemRequirements"]
