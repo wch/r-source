@@ -2809,12 +2809,13 @@ source control systems@footnote{called @file{CVS} or @file{.svn} or
 @file{.arch-ids} or @file{.bzr} or @file{.git} (but not files called
 @file{.git}) or @file{.hg}.} or from @command{eclipse}@footnote{called
 @file{.metadata}.}, directories with names ending @file{.Rcheck} or
-@file{Old} or @file{old} and files @file{GNUMakefile},
-@file{Read-and-delete-me} or with base names starting with @samp{.#}, or
-starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
-@samp{.swp}, are excluded by default.  In addition, those files in the
-@file{R}, @file{demo} and @file{man} directories which are flagged by
-@command{R CMD check} as having invalid names will be excluded.
+@file{Old} or @file{old} and files @file{GNUMakefile}@footnote{which is
+an error: GNU make uses @file{GNUmakefile}.}, @file{Read-and-delete-me}
+or with base names starting with @samp{.#}, or starting and ending with
+@samp{#}, or ending in @samp{~}, @samp{.bak} or @samp{.swp}, are
+excluded by default.  In addition, those files in the @file{R},
+@file{demo} and @file{man} directories which are flagged by @command{R
+CMD check} as having invalid names will be excluded.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -3926,6 +3927,12 @@ file by
 @example
 SystemRequirements: GNU make
 @end example
+
+@noindent
+If you only need GNU make for parts of the package which are rarely
+needed (for example to create bibliography files under
+@file{vignettes}), use a file called @file{GNUmakefile} rather than
+@file{Makefile} as GNU make (only) will use the former.
 
 Since the only viable make for Windows is GNU make, it is permissible to
 use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
