@@ -1985,11 +1985,10 @@ What @code{install.packages} does by default is different on Unix-alikes
 available @emph{source} packages on @acronym{CRAN} (or other
 repository/ies), downloads the latest version of the package sources,
 and installs them (via @code{R CMD INSTALL}).  On Windows it looks (by
-default) first at the list of @emph{binary} versions of packages available for
-your version of @R{} and downloads the latest versions (if any).  If no
-binary version is available or the source version is newer, it will
-install the source version of packages without compiled C/C++/Fortran
-code, and offer to do so for those with.
+default) at the list of @emph{binary} versions of packages available for
+your version of @R{} and downloads the latest versions (if any),
+although optionally it will also download and install a source package
+by setting the @code{type} argument.
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file (or the URL of such a file) by setting
@@ -2003,9 +2002,9 @@ containing either or both architectures (32- and 64-bit).
 A few of the binary packages need other software to be installed on your
 system: see for example
 @uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.1/@/@@ReadMe}.
-Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
-@CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
-directory of a bundled distribution from
+For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo},
+@CRANpkg{RGtk2}, @CRANpkg{cairoDevice} and those that depend on them)
+need the @file{bin} directory of a bundled distribution from
 @uref{http://www.gtk.org/@/download/@/win32.php} or
 @uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
 work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
@@ -2074,13 +2073,6 @@ binary packages from a suitable repository.  These OS X binary package
 files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
 for installation of either binary or source packages, from
 @acronym{CRAN} or local files.
-
-On builds using binary packages, the default is type @code{both}: this
-looks first at the list of binary packages available for your version of
-@R{} and installs the latest versions (if any).  If no binary version is
-available or the source version is newer, it will install the source
-version of packages without compiled C/C++/Fortran code, and offer to do
-so for those with.
 
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.

@@ -291,19 +291,6 @@ install.packages <-
             repos <- NULL
             message("inferring 'repos = NULL' from 'pkgs'")
         }
-        if (type == "both" && missing(repos)) {
-            type2 <- .Platform$pkgType
-            if (type2 %in% "win.binary" && length(grep("[.]zip$", pkgs))) {
-                repos <- NULL
-                type <- type2
-                message("inferring 'repos = NULL' from 'pkgs'")
-            } else if (substr(type2, 1L, 10L) == "mac.binary"
-                       && length(grep("[.]tgz$", pkgs))) {
-                repos <- NULL
-                type <- type2
-                message("inferring 'repos = NULL' from 'pkgs'")
-            }
-        }
     }
 
     if(is.null(repos) & missing(contriburl)) {
