@@ -3070,8 +3070,9 @@ Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
 
 @cindex Subversion
-If you want to build from the R Subversion repository you need both
-@command{makeinfo} and @command{pdflatex}.
+If you want to build from the @R{} Subversion repository then
+@command{makeinfo} is highly recommended as it is used to create files
+in the tarball but not under Subversion.
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time

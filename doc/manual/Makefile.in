@@ -415,25 +415,35 @@ distdir: $(DISTFILES)
 	@$(TEXI2HTML) --no-headers --number-sections \
 	  $(srcdir)/R-admin.texi -I$(srcdir) \
 	  -o $(distdir)/../html/R-admin.html
-#	front-matter files
-#	@$(TEXI2TEXT) $(srcdir)/resources.texi -o $(distdir)/../../RESOURCES
-#	@$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o $(distdir)/../../FAQ
-#	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi \
-#	  -o $(distdir)/../html/resources.html
 
 front-matter: ${top_builddir}/doc/RESOURCES ${top_builddir}/doc/FAQ
 
 ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
-	@$(ECHO) "creating RESOURCES"
-	@$(TEXI2TEXT) $(srcdir)/resources.texi -o $@
+	if test -z "$(MAKEINFO)"; then \
+	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "file $@ will be missing"; \
+	else \
+	  $(ECHO) "creating RESOURCES"; \
+	  $(TEXI2TEXT) $(srcdir)/resources.texi -o $@; \
+	fi
 
 ${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi
-	@$(ECHO) "creating FAQ"
-	@$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o $@
+	@if test -z "$(MAKEINFO)"; then \
+	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "file $@ will be missing"; \
+	else \
+	  $(ECHO) "creating FAQ"; \
+	  $(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o $@; \
+	fi
 
 html-non-svn: ../html/resources.html
 
 ../html/resources.html: $(srcdir)/resources.texi
-	@$(ECHO) "creating doc/html/resources.html"
-	@$(MAKEINFO) --html --no-split --no-headers \
-	  --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@
+	@if test -z "$(MAKEINFO)"; then \
+	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
+	  $(ECHO) "file $@ will be missing"; \
+	else \
+	  $(ECHO) "creating doc/html/resources.html;" \
+	  $(MAKEINFO) --html --no-split --no-headers \
+	    --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@; \
+	fi
