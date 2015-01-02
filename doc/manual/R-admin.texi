@@ -720,8 +720,8 @@ make install-pdf
 @noindent
 Once again, it is optional to specify @code{prefix}, @code{libdir} or
 @code{rhome} (the PDF manuals are installed under the @R{} home
-directory).  (@command{make install-info} needs Perl installed if there
-is no command @command{install-info} on the system.)
+directory).  (@command{make install-info} needs @command{Perl} installed
+if there is no command @command{install-info} on the system.)
 
 More precise control is possible.  For info, the setting used is that of
 @code{infodir} (default @file{@var{prefix}/info}, set by configure
@@ -3030,13 +3030,22 @@ versions of the manuals you will also need file @file{texinfo.tex}
 installed (which is part of the @acronym{GNU} @pkg{texinfo} distribution
 but is often made part of the @TeX{} package in re-distributions) as
 well as @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a
-shell script.  Some versions, e.g.@: that from @pkg{texinfo} 4.13a and
-5.2, need to be run under @command{bash} rather than a Bourne shell as
+shell script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a and
+5.2) need to be run under @command{bash} rather than a Bourne shell as
 on, say, Solaris.}  Further, the versions of @command{texi2dvi} and
 @file{texinfo.tex} need to be compatible: we have seen problems with
 older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
-@pkg{texinfo} 4.13.  It is possible to use @pkg{texinfo} version 5.x,
-preferably 5.2 or later.
+@pkg{texinfo} 4.13.  It is recommended to use @pkg{texinfo} version 5.x,
+preferably 5.2 or later (these versions require @command{Perl}).
+
+@emph{Note to OS X users:} The system version of @command{makeinfo} is
+4.8 from 2004.  Using 5.2 is recommended and can be installed from the
+@pkg{texinfo} sources, into @file{/usr/local/bin}.  To ensure that
+version is used, set
+@example
+MAKEINFO=/usr/local/bin/makeinfo
+@end example
+in @file{config.site} when configuring @R{}.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -4704,6 +4713,13 @@ take this up to about 1GB).  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
 @TeX{} packages.
 
+One OS X quirk is that the default path has @file{/usr/local/bin} after
+@file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
+that if you install tools from the sources they will by default be
+installed under @file{/usr/local} and not supersede the system
+versions.  This applies particularly to @command{makeinfo} where the
+system version dates from 2004 and a modern version is preferred.
+
 @menu
 * Snow Leopard::                
 * Lion::                        
@@ -5346,7 +5362,7 @@ acknowledged).
 
 It helps to describe the WU build environment first.  A small part of
 the software needed to build R and/or install packages is available
-directly from the AIX Installation DVDs, e.g., Java 6, X11, and Perl.
+directly from the AIX Installation DVDs, e.g., Java 6 and  X11.
 Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
 Applications''
@@ -5585,8 +5601,7 @@ The command line tools (in @file{Rtools*.exe})
 The MinGW-w64 32/64-bit toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
-no compiled code, none of these are needed.  Perl is no longer needed to
-build @R{} nor to install nor develop source packages.
+no compiled code, none of these are needed.
 
 A complete build of @R{} including PDF manuals, and producing the
 installer will also need the following:
