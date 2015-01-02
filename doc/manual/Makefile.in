@@ -443,7 +443,7 @@ html-non-svn: ../html/resources.html
 	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing"; \
 	else \
-	  $(ECHO) "creating doc/html/resources.html;" \
+	  $(ECHO) "creating doc/html/resources.html"; \
 	  $(MAKEINFO) --html --no-split --no-headers \
 	    --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@; \
 	fi
