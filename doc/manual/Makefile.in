@@ -419,7 +419,7 @@ distdir: $(DISTFILES)
 front-matter: ${top_builddir}/doc/RESOURCES ${top_builddir}/doc/FAQ
 
 ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
-	if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(MAKEINFO)"; then \
 	  $(ECHO) "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing"; \
 	else \
