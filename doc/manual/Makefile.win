@@ -199,6 +199,7 @@ distclean: clean
 	@-rm -f *.pdf *.info* *.html
 maintainer-clean: distclean
 
+ifneq "$(MAKEINFO)" "missing"
 ../FAQ: R-FAQ.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../RESOURCES: resources.texi
@@ -206,6 +207,14 @@ maintainer-clean: distclean
 ../html/resources.html: resources.texi
 	@$(MAKEINFO) --html --no-split --no-headers \
 	  --css-include=$(top_srcdir)/doc/html/R.css -o $@ $<
+else
+../FAQ: R-FAQ.texi
+	@$(ECHO) "makeinfo is not available"
+../RESOURCES: resources.texi
+	@$(ECHO) "makeinfo is not available"
+../html/resources.html: resources.texi
+	@$(ECHO) "makeinfo is not available"
+endif
 
 ## Run from src/gnuwin32/fixed/Makefile
 svnonly: ../FAQ ../RESOURCES ../html/resources.html

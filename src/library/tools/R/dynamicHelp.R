@@ -457,6 +457,18 @@ httpd <- function(path, query, ...)
         ## remake as needed
         utils::make.packages.html(temp = TRUE)
         list(file = file.path(tempdir(), ".R", path))
+    } else if(path == "/doc/html/rw-FAQ.html") {
+        file <- file.path(R.home("doc"), sub("^/doc", "", path))
+        if(file.exists(file))
+            list(file = file, "content-type" = mime_type(path))
+        else {
+            url <- "http://cran.r-project.org/bin/windows/base/rw-FAQ.html"
+	    return(list(payload = paste0('Redirect to <a href="', url, '">"',
+                                         url, '"</a>'),
+	    		"content-type" = 'text/html',
+	    		header = paste0('Location: ', url),
+	    		"status code" = 302L)) # temporary redirect
+         }
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use updated version, e.g. of packages.html
