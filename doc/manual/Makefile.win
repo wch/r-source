@@ -30,7 +30,6 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 ## Now set in MkRules
-## MAKEINFO = makeinfo
 PDFLATEX = pdflatex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
@@ -60,25 +59,12 @@ texiincludes = version.texi $(srcdir)/R-defs.texi
 
 all: pdf
 
+ifneq "$(MAKEINFO)" "missing"
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
 	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
-
-.texi.info:
-	LC_ALL=C $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
-
-ifeq ($(strip $(TEXI2DVI)),)
-.texi.pdf:
-	$(PDFTEX) $<
-	$(TEXINDEX) $*.cp $*.fn $*.vr
-	$(PDFTEX) $<
-	$(PDFTEX) $<
-else
-.texi.pdf:
-	$(TEXI2DVI) --pdf --texinfo="@set UseExternalXrefs " $<
-endif
 
 R-admin.html: $(srcdir)/R-admin.texi
 	@$(ECHO) "creating doc/manual/$@"
@@ -91,6 +77,33 @@ R-FAQ.html: R-FAQ.texi
 	@LC_ALL=C $(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
+
+.texi.info:
+	LC_ALL=C $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+else
+.texi.html:
+	@$(ECHO) "makeinfo is not available"
+
+R-admin.html: $(srcdir)/R-admin.texi
+	@$(ECHO) "makeinfo is not available"
+
+R-FAQ.html: R-FAQ.texi
+	@$(ECHO) "makeinfo is not available"
+
+.texi.info:
+	@$(ECHO) "makeinfo is not available"
+endif
+
+ifeq ($(strip $(TEXI2DVI)),)
+.texi.pdf:
+	$(PDFTEX) $<
+	$(TEXINDEX) $*.cp $*.fn $*.vr
+	$(PDFTEX) $<
+	$(PDFTEX) $<
+else
+.texi.pdf:
+	$(TEXI2DVI) --pdf --texinfo="@set UseExternalXrefs " $<
+endif
 
 
 html: $(OBJECTS_HTML)
@@ -197,22 +210,29 @@ maintainer-clean: distclean
 ## Run from src/gnuwin32/fixed/Makefile
 svnonly: ../FAQ ../RESOURCES ../html/resources.html
 
-## formerly in src/gnuwin32/Makefile.docs
 RVER = $(shell cut -d' ' -f1 $(top_srcdir)/VERSION | sed -n 1p)
 RPREFIX = $(shell ../../bin$(R_ARCH)/Rscript ../../src/gnuwin32/fixed/rwver.R)
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 FAQ: rw-FAQ ../html/rw-FAQ.html
 
+ifneq "$(MAKEINFO)" "missing"
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@echo "making rw-FAQ.html"
 	@$(SED) $(SEDVER) $< | \
-	  makeinfo --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ 
+	  $(MAKEINFO) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ 
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
 	@$(SED) $(SEDVER) $< | \
-	  makeinfo --no-headers --number-sections -o $@
+	  $(MAKEINFO) --no-headers --number-sections -o $@
+else
+../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
+	@$(ECHO) "makeinfo is not available"
+
+rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
+	@$(ECHO) "makeinfo is not available"
+endif
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
 	@$(SED) $(SEDVER) $< > tmp.texi

@@ -450,15 +450,16 @@ Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
 ``authors'' (in particular specifying their precise @emph{roles}), via
-suitable @R{} code. It should be either a call to @code{person} or a
-series of calls (one per ``author'') concatenated by @code{c()}): see the
-example @file{DESCRIPTION} file above.  The roles can include
-@samp{"aut"} (author) for full authors, @samp{"cre"} (creator) for the
-package maintainer, and @samp{"ctb"} (contributor) for other
-contributors, @samp{"cph"} (copyright holder), among others.  See
-@code{?person} for more information.  Note that no role is assumed by
-default.  Auto-generated package citation information takes advantage of
-this specification. The @samp{Author} and @samp{Maintainer} fields are
+suitable @R{} code. It should create an object of class @code{"person'},
+by either a call to @code{person} or a series of calls (one per
+``author'') concatenated by @code{c()}): see the example
+@file{DESCRIPTION} file above.  The roles can include @samp{"aut"}
+(author) for full authors, @samp{"cre"} (creator) for the package
+maintainer, and @samp{"ctb"} (contributor) for other contributors,
+@samp{"cph"} (copyright holder), among others.  See @code{?person} for
+more information.  Note that no role is assumed by default.
+Auto-generated package citation information takes advantage of this
+specification. The @samp{Author} and @samp{Maintainer} fields are
 auto-generated from it if needed when building@footnote{at least if this
 is done in a locale which matches the package encoding.} or installing.
 
