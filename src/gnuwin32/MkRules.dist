@@ -28,7 +28,7 @@
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
 # USE_ATLAS = NO
-# ATLAS_PATH = /R/ATLAS/lib/WinNT_P4SSE2
+# ATLAS_PATH =
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
@@ -78,7 +78,7 @@
 # set to use ICU
 # USE_ICU = YES
 # path to parent of ICU headers
-# ICU_PATH = /path/to/ICU
+# ICU_PATH =
 # ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
 # For the cairographics devices
@@ -95,10 +95,12 @@
 # unset this if you are *not* using MiKTeX
 # MIKTEX = TRUE
 
-# for texinfo < 5.0
+# for texinfo < 5.0 (default)
 # MAKEINFO = makeinfo
 # for texinfo >= 5.0.  Might also need -I/path/to/modules
 # MAKEINFO = /path/to/perl /path/to/texi2any
+# if you do not have makeinfo,
+# MAKEINFO = missing
 
 # additional optimization flags (use -mtune=native for a private build)
 # EOPTS = -mtune=core2

@@ -285,11 +285,11 @@
       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
       and the build instructions have been revised.      
       
-      \item The \file{MkRules.local} file is now optional, with defaults
-      described in \file{MkRules.dist}.
-      
       \item A new \command{make} target \code{rsync-extsoft} has been
       added to obtain copies of the external libraries from \acronym{CRAN}.
+      
+      \item It is possible to build without \command{makeinfo}: see the
+      comments in file \file{MkRules.dist}.
     }
   }
   
