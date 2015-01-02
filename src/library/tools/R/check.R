@@ -3354,8 +3354,9 @@ setRlibs <-
                              ": warning: .* is used uninitialized",
                              ": warning: .* set but not used",
                              ": warning: unused",
-                             ": warning: assignment makes pointer", # gcc
-                             ": warning: .* pointer conversion", # clang
+                             ": warning: .* makes pointer from integer", # gcc
+                             ": warning: .* pointer.* conversion", # clang
+                             ": warning: improper pointer", # Solaris
                              ## clang warning about invalid returns.
                              "warning: void function",
                              "warning: control reaches end of non-void function",
