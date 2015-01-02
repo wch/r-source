@@ -526,7 +526,7 @@ The default can be overridden by setting the environment variable
 @enindex R_RD4PDF
 @env{R_RD4PDF}.  (On Unix-alikes, this will be picked up at install time
 and stored in @file{etc/Renviron}, but can still be overridden when the
-manuals are built, using @command{make -e}.)  The usual @footnote{on a
+manuals are built, using @command{make -e}.)  The usual@footnote{on a
 Unix-alike, @samp{inconsolata} is omitted if not found by
 @command{configure}.}  default value for @env{R_RD4PDF} is
 @samp{times,inconsolata,hyper}: omit @samp{hyper} if you do not want
@@ -1639,7 +1639,7 @@ location of the personal library directory (under @file{~/Library/R},
 e.g. @file{~/Library/R/3.1/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
-%% https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
+@c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
 It has been reported that running @Rapp{} under Yosemite may fail if no
 preferences are stored, so if it fails when launched for the very first
 time, try it again (the first attempt will store some preferences).
@@ -2214,7 +2214,7 @@ with a source tarball.
 
 The base and recommended packages are byte-compiled by default.  Other
 packages can be byte-compiled on installation by using @command{R CMD
-INSTALL}with option @option{--byte-compile} or by
+INSTALL} with option @option{--byte-compile} or by
 @code{install.packages(type = "source", INSTALL_opts =
 "--byte-compile")}.
 
@@ -2320,7 +2320,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 @item 
 @code{"mac.binary.mavericks"}: located at
 @file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
-@var{3.1.z} to be run under OS X 10.9 (Mavericks) and later, containing
+@var{3.y.z} to be run under OS X 10.9 (Mavericks) and later, containing
 @file{.tgz} files.
 
 @item 
@@ -2679,8 +2679,8 @@ third (around 1Gb).
 
 @item
 Only 64-bit builds support `long vectors', those with @math{2^{31}} or
-more elements (each of which needs at least 8GB of storage, 16GB for a
-numeric vector).
+more elements (each of which needs 16GB of storage for a numeric
+vector).
 
 @item
 Most 32-bit OSes by default limit file sizes to 2GB (and this may also
@@ -3493,7 +3493,7 @@ See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use it.
 
 OpenBLAS (@uref{http://xianyi.github.com/OpenBLAS/}) is a descendant
-project with support for some current CPUs (e.g.@: Intel Sandy Bridge).
+project with support for some later CPUs (e.g.@: Intel Sandy Bridge).
 Once installed it can be used by something like
 
 @example
