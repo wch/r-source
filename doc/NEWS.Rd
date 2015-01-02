@@ -480,6 +480,10 @@
       
       \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
       to miscalculated string length.  (\PR{16121}) 
+      
+      \item Unix-alike builds without a suitable \command{makeinfo} were
+      documented to link the missing HTML manuals to CRAN, but did not.
+      
     }
   }
 }
