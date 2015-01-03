@@ -1,6 +1,6 @@
 % File src/library/base/man/Syntax.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 % = is treated specially in the parser: see PR#14595
@@ -62,6 +62,23 @@
   \code{\link{Quotes}}, \code{\link{Reserved}}.
 
   The \sQuote{R Language Definition} manual.
+}
+\examples{
+## Logical AND ("&&") has higher precedence than OR ("||"):
+TRUE || TRUE && FALSE   # is the same as
+TRUE || (TRUE && FALSE) # and different from
+(TRUE || TRUE) && FALSE
+
+## Special operators have higher precedence than "!" (logical NOT).
+## You can use this for \%in\% :
+! 1:10 \%in\% c(2, 3, 5, 7) # same as !(1:10 \%in\% c(2, 3, 5, 7))
+## but we strongly advise to use the "!( ... )" form in this case!
+
+
+## '=' has lower precedence than '<-' ... so you should not mix them
+##     (and '<-' is considered better style anyway):
+## Consequently, this gives an error
+try( x <- y = 5 ) #->  Error in (x <- y) = 5 : ....
 }
 \keyword{documentation}
 \keyword{programming}
