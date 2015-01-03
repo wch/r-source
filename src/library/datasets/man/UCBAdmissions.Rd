@@ -38,11 +38,8 @@
   \emph{more} to departments with higher rejection rates).
 
   This data set can also be used for illustrating methods for graphical
-  display of categorical data, such as the general-purpose mosaic plot
-  or the fourfold display for 2-by-2-by-\eqn{k} tables.  See the
-  home page of Michael Friendly
-  (\url{http://www.math.yorku.ca/SCS/friendly.html}) for further
-  information.
+  display of categorical data, such as the general-purpose \link{mosaicplot}
+  or the \link{fourfoldplot} for 2-by-2-by-\eqn{k} tables.
 }
 \references{
   Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975)
