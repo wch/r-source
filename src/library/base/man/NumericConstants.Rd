@@ -1,6 +1,6 @@
 % File src/library/base/man/NumericConstants.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NumericConstants}
@@ -67,14 +67,40 @@
   effect can be expected to be the same on all platforms implementing
   full IEC 600559 arithmetic (the most likely area of difference being
   the handling of numbers less than \code{\link{.Machine}$double.xmin}).
-  The same code is used by \code{\link{scan}}.  } \seealso{
+  The same code is used by \code{\link{scan}}.
+}
+\seealso{
   \code{\link{Syntax}}.
-
+  For complex numbers, see \code{\link{complex}}.
   \code{\link{Quotes}} for the parsing of character constants,
+  \code{\link{Reserved}} for the \dQuote{reserved words} in \R{}.
 }
 \examples{
+## You can create numbers using fixed or scientific formatting.
 2.1
+2.1e10
+-2.1E-10
+
+## The resulting objects have class numeric and type double.
+class(2.1)
+typeof(2.1)
+
+## This holds even if what you typed looked like an integer.
+class(2)
 typeof(2)
+
+## If you actually wanted integers, use an "L" suffix.
+class(2L)
+typeof(2L)
+
+## These are equal but not identical
+2 == 2L
+identical(2, 2L)
+
+## You can write numbers between 0 and 1 without a leading "0"
+## (but typically this makes code harder to read)
+.1234
+
 sqrt(1i) # remember elementary math?
 utils::str(0xA0)
 identical(1L, as.integer(1))
