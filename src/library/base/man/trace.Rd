@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright (C) 1995-2014 R Core Team
+% Copyright (C) 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -242,15 +242,23 @@ returnValue(default = NULL)
   constructing general expressions.
 }
 \examples{
-require(graphics)
+require(stats)
 
 ##  Very simple use
 trace(sum)
-hist(stats::rnorm(100)) # shows about 3-4 calls to sum()
+hist(rnorm(100)) # shows about 3-4 calls to sum()
 untrace(sum)
 
-if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
+## Show how pt() is called from inside power.t.test():
+if(FALSE)
+  trace(pt) ## would show ~20 calls, but we want to see more:
+trace(pt, tracer = quote(cat(sprintf("tracing pt(*, ncp = %.15g)\n", ncp))),
+      print = FALSE) # <- not showing typical extra
+power.t.test(20, 1, power=0.8, sd=NULL)  ##--> showing the ncp root finding:
+untrace(pt)
 
+%% methods is loaded when needed
+%% if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 f <- function(x, y) {
     y <- pmax(y, 0.001)
     if (x > 0) x ^ y else stop("x must be positive")
@@ -283,6 +291,7 @@ trace("f", quote(browser(skipCalls = 4)), at = list(c(3,4)))
 
 trace("as.matrix", recover)
 
+
 ## turn off the tracing
 
 untrace(c("f", "as.matrix"))
@@ -296,7 +305,7 @@ untrace(c("f", "as.matrix"))
 
 trace(lm, exit = recover, where = nlme)
 }
-}
+%%}% only if 'methods'
 }
 \keyword{programming}
 \keyword{debugging}
