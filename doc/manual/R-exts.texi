@@ -2392,7 +2392,7 @@ details of these and related macros, see file @file{config.site} in
 the @R{} sources.}, or in a personal or site @file{Makevars} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration}.
+R-admin, R Installation and Administration}.
 @end ifset
 If C++11 support is not available then these macros are both
 empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
@@ -3977,7 +3977,7 @@ accordingly, one can achieve this @emph{via} personal @file{Makevars}
 files.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration},
+R-admin, R Installation and Administration},
 @end ifset
 
 Although there is a 2011 version of the C++ standard, even partial
