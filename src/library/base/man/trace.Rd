@@ -252,7 +252,7 @@ untrace(sum)
 ## Show how pt() is called from inside power.t.test():
 if(FALSE)
   trace(pt) ## would show ~20 calls, but we want to see more:
-trace(pt, tracer = quote(cat(sprintf("tracing pt(*, ncp = %.15g)\n", ncp))),
+trace(pt, tracer = quote(cat(sprintf("tracing pt(*, ncp = \%.15g)\n", ncp))),
       print = FALSE) # <- not showing typical extra
 power.t.test(20, 1, power=0.8, sd=NULL)  ##--> showing the ncp root finding:
 untrace(pt)
