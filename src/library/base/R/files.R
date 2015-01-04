@@ -163,9 +163,9 @@ file.info <- function(..., extra_cols = TRUE)
     res
 }
 ## wrappers introduced in R 3.2.0
-file.mode <- function(...) file.info(..., extra_cols = TRUE)$mode
-file.mtime <- function(...) file.info(..., extra_cols = TRUE)$mtime
-file.size <- function(...) file.info(..., extra_cols = TRUE)$size
+file.mode <- function(...) file.info(..., extra_cols = FALSE)$mode
+file.mtime <- function(...) file.info(..., extra_cols = FALSE)$mtime
+file.size <- function(...) file.info(..., extra_cols = FALSE)$size
 
 
 file.access <- function(names, mode = 0)
@@ -174,11 +174,6 @@ file.access <- function(names, mode = 0)
     names(res) <- names
     res
 }
-
-## dir.exists <- function(paths) {
-##     isdir <- file.info(paths, extra_cols = FALSE)$isdir
-##     !is.na(isdir) & isdir
-## }
 
 dir.exists <- function(paths) .Internal(dir.exists(paths))
 
