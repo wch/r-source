@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2014
-@set FAQ_DATE @value{FAQ_YEAR}-10-26
+@set FAQ_YEAR 2015
+@set FAQ_DATE @value{FAQ_YEAR}-01-04
 @set REL_YEAR 2014
 @set REL_MAJOR 3
 @set REL_MINOR 1
@@ -75,9 +75,9 @@ Kurt Hornik                      @*
 @ifhtml
 @html
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version @value{FAQ_VERSION}</h2>
-<address>Kurt Hornik</address>
-<p><p><hr><p>
+<h3 style="text-align: center;">Version @value{FAQ_VERSION}</h3>
+<h3 style="text-align: center;">Kurt Hornik</h3>
+<hr>
 @end html
 @end ifhtml
 
