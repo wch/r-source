@@ -3064,9 +3064,13 @@ preferably 5.2 or later (these versions require @command{Perl}).
 @emph{Note to OS X users:} The system version of @command{makeinfo} is
 4.8 from 2004.  Using 5.2 is recommended and can be installed from the
 @pkg{texinfo} sources, into @file{/usr/local/bin}.  To ensure that
-version is used, set
+version is used, set either
 @example
 MAKEINFO=/usr/local/bin/makeinfo
+@end example
+or
+@example
+MAKEINFO=texi2any
 @end example
 in @file{config.site} when configuring @R{}.
 

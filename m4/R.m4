@@ -216,7 +216,7 @@ AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
                 [r_cv_prog_makeinfo_v4],
 [makeinfo_version=`${MAKEINFO} --version | \
-  grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
+  grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`
 makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
 makeinfo_version_min=`echo ${makeinfo_version} | \
   cut -f2 -d. | tr -dc '0123456789.' `
