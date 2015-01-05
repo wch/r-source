@@ -406,6 +406,9 @@
       \item \command{R CMD check} checks for the undeclared use of GNU
       extensions in makefiles, and for makefiles with a missing final
       linefeed.
+
+      \command{R CMD build} will correct line endings in all Makefiles,
+      not just those in the \file{src} directory.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{

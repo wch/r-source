@@ -560,7 +560,14 @@ get_exclude_patterns <- function()
                            paste0("^",c("Makefile", "Makefile.in", "Makefile.win",
                                        "Makevars", "Makevars.in", "Makevars.win"),
                                  "$"), Log)
-    }
+        ## Other Makefiles
+        makes <- dir(pkgname, pattern = "^Makefile$",
+                     full.names = TRUE, recursive = TRUE)
+        for (ff in makes) {
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+        }
+   }
 
     find_empty_dirs <- function(d)
     {

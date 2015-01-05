@@ -3902,8 +3902,11 @@ actions are needed).
 @item
 If your package has a @file{Makevars} or @file{Makefile} file, make sure
 that you use only portable make features.  Such files should be
-LF-terminated (including the final line of the file) and not make use of
-GNU extensions.  (The POSIX specification is available at
+LF-terminated@footnote{Solaris @command{make} does not accept
+CRLF-terminated Makefiles; Solaris warns about and some other
+@command{make}s ignore incomplete final lines.} (including the final
+line of the file) and not make use of GNU extensions.  (The POSIX
+specification is available at
 @uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
 anything not documented there should be regarded as an extension to be
 avoided.)  Commonly misused GNU extensions are conditional inclusions
