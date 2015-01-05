@@ -389,6 +389,10 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.36.
+      
+      \item \command{configure} accepts \samp{MAKEINFO=texi2any} as
+      another way to ensure \pkg{texinfo} 5.x is used when both 5.x and
+      4.x are installed.
     }
   }
 
