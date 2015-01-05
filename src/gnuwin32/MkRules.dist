@@ -95,10 +95,10 @@
 # unset this if you are *not* using MiKTeX
 # MIKTEX = TRUE
 
-# for texinfo < 5.0 (default)
+# for texinfo 4.13 (default)
 # MAKEINFO = makeinfo
-# for texinfo >= 5.0.  Might also need -I/path/to/modules
-# MAKEINFO = /path/to/perl /path/to/texi2any
+# for texinfo >= 5.0. If the texinfo files are installed at /packages/texinfo,
+# MAKEINFO = /path/to/perl -I/packages/texinfo /packages/texinfo/texi2any
 # if you do not have makeinfo,
 # MAKEINFO = missing
 
