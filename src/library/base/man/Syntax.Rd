@@ -77,8 +77,9 @@ TRUE || (TRUE && FALSE) # and different from
 
 ## '=' has lower precedence than '<-' ... so you should not mix them
 ##     (and '<-' is considered better style anyway):
-## Consequently, this gives an error
-try( x <- y = 5 ) #->  Error in (x <- y) = 5 : ....
+\donttest{## Consequently, this gives a ("non-catchable") error
+ x <- y = 5  #->  Error in (x <- y) = 5 : ....
+}
 }
 \keyword{documentation}
 \keyword{programming}
