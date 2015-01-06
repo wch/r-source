@@ -63,7 +63,7 @@
       (These are needed to run the examples interactively.)
       
       \item \command{R CMD check} checks for the undeclared use of GNU
-      extensions in makefiles, and for makefiles with a missing final
+      extensions in Makefiles, and for Makefiles with a missing final
       linefeed.
 
       \command{R CMD build} will correct line endings in all Makefiles,
