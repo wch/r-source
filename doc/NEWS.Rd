@@ -217,6 +217,9 @@
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
        \code{pcre} (or similar names) are installed.
 
+       \item \command{configure} requires the \command{texi2any} script
+       from \pkg{texinfo} 5.1 or later, in place of the \command{makeinfo}
+       program.
      }
   }
 

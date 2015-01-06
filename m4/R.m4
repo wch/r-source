@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2014 R Core Team
+### Copyright (C) 1998-2015 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -183,7 +183,7 @@ AC_SUBST(R_RD4PDF)
 ## R_PROG_MAKEINFO
 ## ---------------
 AC_DEFUN([R_PROG_MAKEINFO],
-[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
+[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} texi2any])
 if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
   AC_PATH_PROGS(INSTALL_INFO,
@@ -196,7 +196,7 @@ if test -n "${MAKEINFO}"; then
   fi
   AC_SUBST(INSTALL_INFO)
 fi
-if test "${r_cv_prog_makeinfo_v4}" != yes; then
+if test "${r_cv_prog_texi2any_v5}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
   MAKEINFO=""
@@ -207,29 +207,27 @@ fi
 
 ## _R_PROG_MAKEINFO_VERSION
 ## ------------------------
-## Building the R Texinfo manuals requires Makeinfo v4.7 or better.
-## Set shell variable r_cv_prog_makeinfo_v4 to 'yes' if a recent
+## Building the R Texinfo manuals requires texinfo v5.1 or later.
+## Set shell variable r_cv_prog_texi2any_v5 to 'yes' if a recent
 ## enough Makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
-[AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
-                [r_cv_prog_makeinfo_v4],
-[makeinfo_version=`${MAKEINFO} --version | \
-  grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
-makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
-makeinfo_version_min=`echo ${makeinfo_version} | \
+[AC_CACHE_CHECK([whether texi2any version is at least 5.1],
+                [r_cv_prog_texi2any_v5],
+[texi2any_version=`${MAKEINFO} --version | \
+  grep "^texi2any" | sed 's/[[^)]]*) \(.*\)/\1/'`
+texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
+texi2any_version_min=`echo ${texi2any_version} | \
   cut -f2 -d. | tr -dc '0123456789.' `
-if test -z "${makeinfo_version_maj}" \
-     || test -z "${makeinfo_version_min}"; then
-  r_cv_prog_makeinfo_v4=no
-elif test ${makeinfo_version_maj} -ge 5; then
-  r_cv_prog_makeinfo_v4=yes
-elif test ${makeinfo_version_maj} -lt 4 \
-     || test ${makeinfo_version_min} -lt 7; then
-  r_cv_prog_makeinfo_v4=no
+if test -z "${texi2any_version_maj}" \
+     || test -z "${texi2any_version_min}"; then
+  r_cv_prog_texi2any_v5=no
+elif test ${texi2any_version_maj} -lt 5 \
+     || test ${texi2any_version_min} -lt 1; then
+  r_cv_prog_texi2any_v5=no
 else
-  r_cv_prog_makeinfo_v4=yes
+  r_cv_prog_texi2any_v5=yes
 fi])
 ])# _R_PROG_MAKEINFO_VERSION
 

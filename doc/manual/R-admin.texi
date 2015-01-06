@@ -451,11 +451,14 @@ make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).
 @end example
 
 You will not be able to build any of these unless you have
-@command{makeinfo} version 4.7 or later installed, and for PDF you must
+@command{texi2any} version 5.1 or later installed, and for PDF you must
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
-re-distributions).
+re-distributions).  For historical reasons, the path to
+@command{texi2any} can be set by macro @samp{MAKEINFO} in
+@file{config.site} (@command{makeinfo} is nowadays a link to
+@command{texi2any}).
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
@@ -1361,14 +1364,15 @@ in your path).
 See the @ref{Making the manuals} section in the Unix-alike section for setting
 options such as the paper size and the fonts used.
 
-Version 4.x of @command{makeinfo} from Rtools is assumed by default.  If
-you have version 5.x of @pkg{texinfo}, @command{makeinfo} has been
-replaced by a @command{Perl} script @command{texi2any}: file
-@file{MkRules.dist} contains alternative macros to allow that to be used
-(edit the copy @file{MkRules.local}).  (A package of @pkg{texinfo} 5.x
-for use on Windows is available at
+Version 4.13 of @command{makeinfo} from Rtools is assumed by default.
+In version 5.x of @pkg{texinfo}, @command{makeinfo} has been replaced by
+a @command{Perl} script @command{texi2any}: the comments in file
+@file{MkRules.dist} contains alternative settings to allow that to be
+used (edit the copy @file{MkRules.local}).  A package of @pkg{texinfo}
+5.x for use on Windows is available at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
-install @command{Perl}.)
+install @command{Perl}.  Its use is recommended as the manuals are
+rendered by @command{texi2any} on non-Windows systems.
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
@@ -3024,7 +3028,7 @@ looking in @file{/usr/xpg4/bin} which is used on some commercial
 Unixes).
 
 You will not be able to build most of the manuals unless you have
-@command{makeinfo} version 4.7 or later installed, and if not most of
+@command{texi2any} version 5.1 or later installed, and if not most of
 the @HTML{} manuals will be linked to a version on @acronym{CRAN}. To
 make PDF versions of the manuals you will also need file
 @file{texinfo.tex} installed (which is part of the @acronym{GNU}
@@ -3035,18 +3039,7 @@ script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a and 5.2)
 need to be run under @command{bash} rather than a Bourne shell as on,
 say, Solaris.}  Further, the versions of @command{texi2dvi} and
 @file{texinfo.tex} need to be compatible: we have seen problems with
-older @TeX{} distributions (TeXLive 2007 and MiKTeX 2.8) used with
-@pkg{texinfo} 4.13.  It is recommended to use @pkg{texinfo} version 5.x,
-preferably 5.2 or later (these versions require @command{Perl}).
-
-@emph{Note to OS X users:} The system version of @command{makeinfo} is
-4.8 from 2004.  Using 5.2 is recommended and can be installed from the
-@pkg{texinfo} sources, into @file{/usr/local/bin}.  To ensure that
-version is used, set
-@example
-MAKEINFO=/usr/local/bin/makeinfo
-@end example
-in @file{config.site} when configuring @R{}.
+older @TeX{} distributions.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -3072,7 +3065,7 @@ Debian/Ubuntu like @pkg{texlive-fonts-extra}.
 
 @cindex Subversion
 If you want to build from the @R{} Subversion repository then
-@command{makeinfo} is highly recommended as it is used to create files
+@command{texi2any} is highly recommended as it is used to create files
 in the tarball but not under Subversion.
 
 @enindex PATH
@@ -4719,8 +4712,7 @@ One OS X quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
 that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
-versions.  This applies particularly to @command{makeinfo} where the
-system version dates from 2004 and a modern version is preferred.
+versions.
 
 @menu
 * Snow Leopard::                
@@ -5025,10 +5017,9 @@ The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.  A version of the preferred @acronym{GNU} @command{tar} is (if
-installed) in @file{/usr/sfw/bin}, as sometimes are tools like
-@command{makeinfo}.  It may be necessary to avoid the tools in
-@file{/usr/ucb}: POSIX-compliant versions of some tools can be found in
-@file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
+installed) in @file{/usr/sfw/bin}.  It may be necessary to avoid the
+tools in @file{/usr/ucb}: POSIX-compliant versions of some tools can be
+found in @file{/usr/xpg4/bin} and @file{/usr/xpg6/bin}.
 
 A large selection of Open Source software can be installed from
 @uref{http://www.opencsw.org}, by default installed under
