@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2012  The R Core Team.
+ *  Copyright (C) 1999-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2504,48 +2504,74 @@ SEXP attribute_hidden do_search(SEXP call, SEXP op, SEXP args, SEXP env)
   functions.  [ ls(envir, all.names, sorted) ]
 
 */
+#define NONEMPTY_(_FRAME_) \
+    CHAR(PRINTNAME(TAG(_FRAME_)))[0] != '.' && CAR(_FRAME_) != R_UnboundValue
 
 static int FrameSize(SEXP frame, int all)
 {
     int count = 0;
-    while (frame != R_NilValue) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-				      CAR(frame) != R_UnboundValue)
+    if (all) {
+	while (frame != R_NilValue) {
 	    count += 1;
-	frame = CDR(frame);
+	    frame = CDR(frame);
+	}
+    } else {
+	while (frame != R_NilValue) {
+	    if (NONEMPTY_(frame))
+		count += 1;
+	    frame = CDR(frame);
+	}
     }
     return count;
 }
 
 static void FrameNames(SEXP frame, int all, SEXP names, int *indx)
 {
-    while (frame != R_NilValue) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-				      CAR(frame) != R_UnboundValue) {
+    if (all) {
+	while (frame != R_NilValue) {
 	    SET_STRING_ELT(names, *indx, PRINTNAME(TAG(frame)));
 	    (*indx)++;
+	    frame = CDR(frame);
 	}
-	frame = CDR(frame);
+    } else {
+	while (frame != R_NilValue) {
+	    if (NONEMPTY_(frame)) {
+		SET_STRING_ELT(names, *indx, PRINTNAME(TAG(frame)));
+		(*indx)++;
+	    }
+	    frame = CDR(frame);
+	}
     }
 }
 
 static void FrameValues(SEXP frame, int all, SEXP values, int *indx)
 {
-    while (frame != R_NilValue) {
-	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
-				      CAR(frame) != R_UnboundValue) {
-	    SEXP value = CAR(frame);
-	    if (TYPEOF(value) == PROMSXP) {
-		PROTECT(value);
-		value = eval(value, R_GlobalEnv);
-		UNPROTECT(1);
-	    }
-	    SET_VECTOR_ELT(values, *indx, lazy_duplicate(value));
-	    (*indx)++;
+    if (all) {
+	while (frame != R_NilValue) {
+#         define DO_FrameValues						\
+	    SEXP value = CAR(frame);					\
+	    if (TYPEOF(value) == PROMSXP) {				\
+		PROTECT(value);						\
+		value = eval(value, R_GlobalEnv);			\
+		UNPROTECT(1);						\
+	    }								\
+	    SET_VECTOR_ELT(values, *indx, lazy_duplicate(value));	\
+	    (*indx)++
+
+	    DO_FrameValues;
+	    frame = CDR(frame);
 	}
-	frame = CDR(frame);
+    } else {
+	while (frame != R_NilValue) {
+	    if (NONEMPTY_(frame)) {
+		DO_FrameValues;
+	    }
+	    frame = CDR(frame);
+	}
     }
 }
+#undef DO_FrameValues
+#undef NONEMPTY_
 
 static int HashTableSize(SEXP table, int all)
 {

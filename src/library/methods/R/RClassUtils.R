@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RClassUtils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1782,7 +1782,9 @@ substituteFunctionArgs <-
 ..requirePackage <- function(package, mustFind = TRUE) {
     value <- package
     if(nzchar(package)) {
-        if(package %in% loadedNamespaces())
+        ## lookup as lightning fast as possible:
+	if (.Internal(exists(package, .Internal(getNamespaceRegistry()),
+			     "any", FALSE)))
             value <- getNamespace(package)
         else {
             if(identical(package, ".GlobalEnv"))

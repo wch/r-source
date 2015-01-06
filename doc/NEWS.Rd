@@ -189,6 +189,9 @@
       \item New \code{check_packages_in_dir_changes()} function in
       package \pkg{tools} for conveniently analyzing how changing
       sources impacts the check results of their reverse dependencies.
+
+      \item Speedup from Peter Hagerty for \code{ls()} and \pkg{methods}'s
+      \code{.requirePackage()} speeding up S4 dispatch. (\PR{16133})
     }
   }
 
@@ -252,10 +255,10 @@
 
       \item \command{R CMD check --as-cran} checks a \file{README.md}
       file can be processed: this needs \command{pandoc} installed.
-      
+
       \item \command{R CMD build} adds a \samp{NeedsCompilation} field
       if one is not already present in the DESCRIPTION file.
-  
+
       \item \command{R CMD check} notes uses of \code{library()} and
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
@@ -283,7 +286,7 @@
       \item \code{isPairList()} now returns \code{TRUE} for DOTSXP.
     }
   }
-  
+
   \subsection{WINDOWS BUILD CHANGES}{
     A number of changes to the Windows build system are in development.
     The following are currently in place.
@@ -291,16 +294,16 @@
       \item Installation using external binary distributions
       of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
-      and the build instructions have been revised.      
-      
+      and the build instructions have been revised.
+
       \item A new \command{make} target \code{rsync-extsoft} has been
       added to obtain copies of the external libraries from \acronym{CRAN}.
-      
+
       \item It is possible to build without \command{makeinfo}: see the
       comments in file \file{MkRules.dist}.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item  (Windows) The use of macro \code{ZLIB_LIBS} in file
@@ -378,12 +381,12 @@
       \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
       which uses the basic C function \code{strcmp} and so collates
       strings byte-by-byte in numerical order.
-      
+
       \item \code{sessionInfo()} tries to report the OS version in use
       (not just that compiled under, and including details of Linux
       distributions).
-      
-      \item \code{model.frame()} (used by \code{lm()} and many other 
+
+      \item \code{model.frame()} (used by \code{lm()} and many other
       modelling functions) now warns when it drops contrasts
       from factors.  (Wish of \PR{16119})
     }
@@ -392,7 +395,7 @@
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.36.
-      
+
       \item \command{configure} accepts \samp{MAKEINFO=texi2any} as
       another way to ensure \pkg{texinfo} 5.x is used when both 5.x and
       4.x are installed.
@@ -405,7 +408,7 @@
       \code{\\donttest} sections of the examples are specified in the
       \file{DESCRIPTION} file.
       (These are needed to run the examples interactively.)
-      
+
       \item \command{R CMD check} checks for the undeclared use of GNU
       extensions in Makefiles, and for Makefiles with a missing final
       linefeed.
@@ -488,17 +491,17 @@
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
       work in more extreme cases.  (\PR{15792})
-      
+
       \item If a package was updated and attached when its namespace was
       already loaded, it could end up with parts from one version and
       parts from the other.  (\PR{16120})
-      
+
       \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
-      to miscalculated string length.  (\PR{16121}) 
-      
+      to miscalculated string length.  (\PR{16121})
+
       \item Unix-alike builds without a suitable \command{makeinfo} were
       documented to link the missing HTML manuals to CRAN, but did not.
-      
+
     }
   }
 }
@@ -553,7 +556,7 @@
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
       \env{R_BIOC_VERSION}.)
-      
+
       \item Omegahat is no longer listed as providing Windows binary
       packages, e.g. by \code{setRepositories()}.  It has no binary
       packages available for \R 3.1.x and those for earlier versions
