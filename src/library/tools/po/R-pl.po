@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-01-06 09:24\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -924,6 +924,18 @@ msgid ""
 msgstr ""
 "wywołanie 'library' lub 'require' do pakietu %s, który był już dołączony "
 "przez 'Depends'."
+
+# tools/R/QC.R: 5379
+# gettext("'library' or 'require' calls not declared from:")
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "wywołania 'library' lub 'require' nie są zadeklarowane z:"
+
+# tools/R/QC.R: 5379
+# gettext("'library' or 'require' calls not declared from:")
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "wywołania 'library' lub 'require' nie są zadeklarowane z:"
 
 # tools/R/QC.R: 5399
 # gettext("Namespaces in Imports field not imported from:")

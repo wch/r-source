@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-01-06 09:24\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -404,6 +404,14 @@ msgstr "не объявлены вызовы 'library' или 'require' из:"
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr "не объявлен вызов 'library' или 'require' из %s"
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-01-06 09:24\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -401,6 +401,14 @@ msgid ""
 msgstr ""
 "Aufruf von 'library' oder 'require'  für %s, ist aber bereits mit Depends "
 "geladen."
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr "Namensräume im Imports Feld nicht importiert aus:"

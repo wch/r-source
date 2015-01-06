@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-01-06 09:24\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -376,6 +376,12 @@ msgstr ""
 
 msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
+msgstr ""
+
+msgid "'library' or 'require' calls in package code:"
+msgstr ""
+
+msgid "'library' or 'require' call to %s in package code."
 msgstr ""
 
 msgid "Namespaces in Imports field not imported from:"

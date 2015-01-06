@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-01-06 09:24\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -414,6 +414,14 @@ msgid ""
 "'library' or 'require' call to %s which was already attached by Depends."
 msgstr ""
 "Depends에 의하여 이미 부착된 %s로의 'library' 또는 'require' 호출입니다."
+
+#, fuzzy
+msgid "'library' or 'require' calls in package code:"
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
+
+#, fuzzy
+msgid "'library' or 'require' call to %s in package code."
+msgstr "다음으로부터 선언되지 않은 'library' 또는 'require' 호출입니다:"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
