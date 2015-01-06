@@ -1,6 +1,6 @@
 
-R version 3.1.2 Patched (2014-12-23 r67210) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.1.2 Patched (2015-01-06 r67334) -- "Pumpkin Helmet"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3750,7 +3750,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  8.104 0.138 8.247 0 0 
+Time elapsed:  8.252 0.142 8.4 0 0 
 > grDevices::dev.off()
 null device 
           1 
