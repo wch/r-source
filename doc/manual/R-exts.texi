@@ -7775,12 +7775,20 @@ is available as a separate option in some versions of @command{clang}
 @noindent
 for C++ code (in @code{CXX} and @code{CXX1X}).
 
-A smaller selection is available for GCC, for 4.9.x defaulting to
+A smaller selection is currently released for GCC, for 4.9.x defaulting
+to
 @example
--fsanitize=bounds,float-cast-overflow,integer-divide-by-zero,null,
+-fsanitize=integer-divide-by-zero,null,
 return,shift,signed-integer-overflow,unreachable,vla-bound
 @end example
 
+See
+@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
+manual for your version of GCC).  GCC 5.0.0 (under development) adds
+@example
+-fsanitize=alignment,bounds,float-cast-overflow,object-size,
+nonnull-attribute,returns-nonnull-attribute,bool,enum
+@end example
 @noindent
 with
 @example
@@ -7789,10 +7797,7 @@ with
 
 @noindent
 as a separate option not enabled by @code{-fsanitize=undefined} (and not
-desirable for @R{} uses).  See
-@uref{https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html} (or the
-manual for your version of GCC).  GCC 5.0.0 (under development) can
-detect alignment errors.
+desirable for @R{} uses).
 
 Other useful flags include
 @example
