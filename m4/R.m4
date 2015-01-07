@@ -216,7 +216,7 @@ AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [AC_CACHE_CHECK([whether texi2any version is at least 5.1],
                 [r_cv_prog_texi2any_v5],
 [texi2any_version=`${MAKEINFO} --version | \
-  grep "^texi2any" | sed 's/[[^)]]*) \(.*\)/\1/'`
+  grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`
 texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
 texi2any_version_min=`echo ${texi2any_version} | \
   cut -f2 -d. | tr -dc '0123456789.' `

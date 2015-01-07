@@ -261,3 +261,8 @@
 ## Additional libraries to link the internet module against.
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
+
+## Script from texinfo 5.1 or later.
+## Can be texi2any (the default) or makeinfo or a full path to either
+## MAKEINFO=
+
