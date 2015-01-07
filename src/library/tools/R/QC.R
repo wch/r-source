@@ -4104,6 +4104,12 @@ function(package, dir, lib.loc = NULL)
     unknown <- unknown[!obsolete]
     if (length(unknown)) {
         repos <- .get_standard_repository_URLs()
+        ## Also allow for additionally specified repositories.
+        aurls <- pkgInfo[["DESCRIPTION"]]["Additional_repositories"]
+        if(!is.na(aurls)) {
+            repos <- c(repos,
+                       unique(unlist(strsplit(aurls, ",[[:space:]]*"))))
+        }
         known <-
             try(suppressWarnings(utils::available.packages(utils::contrib.url(repos, "source"),
                filters = c("R_version", "duplicates"))[, "Package"]))
