@@ -272,27 +272,36 @@ SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
     mtable = findVarInFrame(genericEnv, R_allmtable);
     if(mtable == R_UnboundValue || TYPEOF(mtable) != ENVSXP)
 	return R_NilValue;
+    PROTECT(mtable);
     object = findVarInFrame(genericEnv, R_siglength);
-    if(object == R_UnboundValue)
+    if(object == R_UnboundValue) {
+	UNPROTECT(1); /* mtable */
 	return R_NilValue;
+    }
     switch(TYPEOF(object)) {
     case REALSXP:
 	if(LENGTH(object) > 0)
 	    nsig = (int) REAL(object)[0];
-	else
+	else {
+	    UNPROTECT(1); /* mtable */
 	    return R_NilValue;
+	}
 	break;
     case INTSXP:
 	if(LENGTH(object) > 0)
 	    nsig = (int) INTEGER(object)[0];
-	else
+	else {
+	    UNPROTECT(1); /* mtable */
 	    return R_NilValue;
+	}
 	break;
     default:
+	UNPROTECT(1); /* mtable */
 	return R_NilValue;
     }
     buf[0] = '\0'; ptr = buf;
     nargs = 0;
+    nprotect = 1; /* mtable */
     while(!isNull(args) && nargs < nsig) {
 	object = CAR(args); args = CDR(args);
 	if(TYPEOF(object) == PROMSXP) {

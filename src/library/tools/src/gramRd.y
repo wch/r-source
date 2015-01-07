@@ -1188,7 +1188,10 @@ static SEXP UserMacroLookup(const char *s)
 {
     SEXP rec = findVar(install(s), parseState.xxMacroList);
     if (rec == R_UnboundValue) error(_("Unable to find macro %s"), s);
-    return getAttrib(rec, install("definition"));
+    PROTECT(rec);
+    SEXP res = getAttrib(rec, install("definition"));
+    UNPROTECT(1);
+    return res;
 }
 
 static void yyerror(const char *s)

@@ -550,8 +550,10 @@ static SEXP read_child_ci(child_info_t *ci)
 	PROTECT(rv);
 	{
 	    SEXP pa = allocVector(INTSXP, 1);
+	    PROTECT(pa);
 	    INTEGER(pa)[0] = ci->pid;
 	    setAttrib(rv, install("pid"), pa);
+	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
 	return rv;

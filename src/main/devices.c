@@ -156,6 +156,7 @@ pGEDevDesc GEcurrentDevice(void)
 		*/
 		SEXP ns = findVarInFrame(R_NamespaceRegistry,
 					 install("grDevices"));
+		PROTECT(ns);
 		if(ns != R_UnboundValue &&
 		   findVar(devName, ns) != R_UnboundValue) {
 		    PROTECT(defdev = lang1(devName));
@@ -163,6 +164,7 @@ pGEDevDesc GEcurrentDevice(void)
 		    UNPROTECT(1);
 		} else
 		    error(_("no active or default device"));
+		UNPROTECT(1);
 	    }
 	} else if(TYPEOF(defdev) == CLOSXP) {
 	    PROTECT(defdev = lang1(defdev));

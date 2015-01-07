@@ -164,16 +164,16 @@ KalmanLike(SEXP sy, SEXP mod, SEXP sUP, SEXP op, SEXP update)
 	}
     }
 
-    SEXP res = allocVector(REALSXP, 2);
+    SEXP res = PROTECT(allocVector(REALSXP, 2));
     REAL(res)[0] = ssq/nu; REAL(res)[1] = sumlog/nu;
     if(lop) {
 	SET_VECTOR_ELT(ans, 0, res);
 	if(asLogical(update)) setAttrib(ans, install("mod"), mod);
-	UNPROTECT(2);
+	UNPROTECT(3);
 	return ans;
     } else {
 	if(asLogical(update)) setAttrib(res, install("mod"), mod);
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return res;
     }
 }

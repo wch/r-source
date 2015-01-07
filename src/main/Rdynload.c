@@ -1424,16 +1424,19 @@ static SEXP get_package_CEntry_table(const char *package)
 void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr)
 {
     SEXP penv = get_package_CEntry_table(package);
+    PROTECT(penv);
     SEXP eptr = R_MakeExternalPtrFn(fptr, R_NilValue, R_NilValue);
     PROTECT(eptr);
     defineVar(install(name), eptr, penv);
-    UNPROTECT(1);
+    UNPROTECT(2);
 }
 
 DL_FUNC R_GetCCallable(const char *package, const char *name)
 {
     SEXP penv = get_package_CEntry_table(package);
+    PROTECT(penv);
     SEXP eptr = findVarInFrame(penv, install(name));
+    UNPROTECT(1);
     if (eptr == R_UnboundValue)
 	error(_("function '%s' not provided by package '%s'"), name, package);
     else if (TYPEOF(eptr) != EXTPTRSXP)

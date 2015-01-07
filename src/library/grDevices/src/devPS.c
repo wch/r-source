@@ -2553,6 +2553,7 @@ static void PSFileHeader(FILE *fp,
     if(prolog == R_UnboundValue) {
 	/* if no object is visible, look in the graphics namespace */
 	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices")));
+	PROTECT(graphicsNS);
 	prolog = findVar(install(".ps.prolog"), graphicsNS);
 	/* under lazy loading this will be a promise on first use */
 	if(TYPEOF(prolog) == PROMSXP) {
@@ -2560,6 +2561,7 @@ static void PSFileHeader(FILE *fp,
 	    prolog = eval(prolog, graphicsNS);
 	    UNPROTECT(1);
 	}
+	UNPROTECT(1);
     }
     if(!isString(prolog))
 	error(_("object '.ps.prolog' is not a character vector"));
@@ -2569,6 +2571,7 @@ static void PSFileHeader(FILE *fp,
     fprintf(fp, "%% end   .ps.prolog\n");
     if (streql(pd->colormodel, "srgb+gray") || streql(pd->colormodel, "srgb")) {
 	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices")));
+	PROTECT(graphicsNS);
 	prolog = findVar(install(".ps.prolog.srgb"), graphicsNS);
 	/* under lazy loading this will be a promise on first use */
 	if(TYPEOF(prolog) == PROMSXP) {
@@ -2576,6 +2579,7 @@ static void PSFileHeader(FILE *fp,
 	    prolog = eval(prolog, graphicsNS);
 	    UNPROTECT(1);
 	}
+	UNPROTECT(1);
 	for (i = 0; i < length(prolog); i++)
 	    fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
     }

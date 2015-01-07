@@ -1783,11 +1783,11 @@ SEXP attribute_hidden do_getRestart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/**** need to pre-allocate */
 	SEXP name, entry;
 	PROTECT(name = mkString("abort"));
-	entry = allocVector(VECSXP, 2);
+	PROTECT(entry = allocVector(VECSXP, 2));
 	SET_VECTOR_ELT(entry, 0, name);
 	SET_VECTOR_ELT(entry, 1, R_NilValue);
 	setAttrib(entry, R_ClassSymbol, mkString("restart"));
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return entry;
     }
     else return R_NilValue;
