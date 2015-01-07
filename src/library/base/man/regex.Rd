@@ -1,6 +1,6 @@
 % File src/library/base/man/regex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{regex}
@@ -40,7 +40,8 @@
   mode of \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.  They use an implementation of the
   POSIX 1003.2 standard: that allows some scope for interpretation and
-  the interpretations here are those currently used by \R.
+  the interpretations here are those currently used by \R.  The
+  implementation supports some extensions to the standard.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller
@@ -134,9 +135,10 @@
 
   The period \samp{.} matches any single character.  The symbol
   \samp{\\w} matches a \sQuote{word} character (a synonym for
-  \samp{[[:alnum:]_]}) and \samp{\\W} is its negation.  Symbols
-  \samp{\\d}, \samp{\\s}, \samp{\\D} and \samp{\\S} denote the digit and
-  space classes and their negations.
+  \samp{[[:alnum:]_]}, an extension) and \samp{\\W} is its negation
+  (\samp{[^[:alnum:]_]}).  Symbols \samp{\\d}, \samp{\\s}, \samp{\\D}
+  and \samp{\\S} denote the digit and space classes and their negations
+  (these are all extensions).
 
   The caret \samp{^} and the dollar sign \samp{$} are metacharacters
   that respectively match the empty string at the beginning and end of a
@@ -145,7 +147,7 @@
   empty string at either edge of a word, and \samp{\\B} matches the
   empty string provided it is not at an edge of a word.  (The
   interpretation of \sQuote{word} depends on the locale and
-  implementation.)
+  implementation: these are all extensions.)
 
   A regular expression may be followed by one of several repetition
   quantifiers:
@@ -198,13 +200,13 @@
   The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
   \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
   to the PCRE library that implements regular expression pattern
-  matching using the same syntax and semantics as Perl 5.10,
+  matching using the same syntax and semantics as Perl 5.x,
   with just a few differences.
 
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 8.12 as described here.
+  from the sources within \R, the PCRE version is 8.36 as described here.
 
   Perl regular expressions can be computed byte-by-byte or
   (UTF-8) character-by-character: the latter is used in all multibyte
@@ -319,9 +321,8 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2, the
-  TRE documentation and the POSIX standard, and the \code{pcrepattern}
-  man page from PCRE 8.0.
+  This help page is based on the TRE documentation and the POSIX
+  standard, and the \code{pcrepattern} man page from PCRE 8.36.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
@@ -332,10 +333,10 @@
   \url{http://laurikari.net/tre/documentation/regex-syntax/}).
 
   The POSIX 1003.2 standard at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09}
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}
 
-  The \code{pcrepattern} can be found as part of
-  \url{http://www.pcre.org/pcre.txt}, and details of Perl's own
+  The \code{pcrepattern} \command{man} page (found as part of
+  \url{http://www.pcre.org/pcre.txt}), and details of Perl's own
   implementation at \url{http://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}
