@@ -45,14 +45,14 @@ available.packages(contriburl =
   }
 }
 \details{
-  The list is either copied from a local mirror (specified by a
+  The list of packages is either copied from a local mirror (specified by a
   \samp{file://} URI) or downloaded.  If downloaded, the list is cached
   for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
 \preformatted{repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds}
 
-  By default, the report includes only packages whose version and OS
-  requirements are met by the running version of \R, and only gives
+  By default, the return value includes only packages whose version and
+  OS requirements are met by the running version of \R, and only gives
   information on the latest versions of packages.
 
   Argument \code{filters} can be used to select which of the packages on the
@@ -65,7 +65,7 @@ available.packages(contriburl =
   The built-in filters are
   \describe{
     \item{\code{"R_version"}}{Exclude packages whose \R version
-      requirements are not met}
+      requirements are not met.}
     \item{\code{"OS_type"}}{Exclude packages whose OS requirement is
       incompatible with this version of \R: that is exclude
       Windows-only packages on a Unix-alike platform
@@ -90,7 +90,7 @@ available.packages(contriburl =
     }
     \item{\code{"license/restricts_use"}}{Include only packages for
       which installation can proceed solely based on packages which are
-      guaranteed not to restrict use.
+      known not to restrict use.
     }
     \item{\code{"CRAN"}}{Use CRAN versions in preference to versions
       from other repositories (even if these have a higher version
@@ -99,13 +99,13 @@ available.packages(contriburl =
       \code{add = TRUE}.
     }
   }
-  If all the filters are from this set they can be specified as a
+  If all the filters are from this set, then they can be specified as a
   character vector; otherwise \code{filters} should be a list with
   elements which are character strings, user-defined functions or
   \code{add = TRUE} (see below).
 
   User-defined filters are functions which take a single argument, a
-  matrix of the form returned by by \code{available.packages}, and
+  matrix of the form returned by \code{available.packages}, and
   return a matrix consisting of a subset of the rows of the argument.
 
   The special \sQuote{filter} \code{add = TRUE} appends the other
