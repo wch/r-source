@@ -190,8 +190,9 @@
       package \pkg{tools} for conveniently analyzing how changing
       sources impacts the check results of their reverse dependencies.
 
-      \item Speedup from Peter Hagerty for \code{ls()} and \pkg{methods}'s
-      \code{.requirePackage()} speeding up S4 dispatch. (\PR{16133})
+      \item Speed-up from Peter Hagerty for \code{ls()} and
+      \code{methods:::.requirePackage()} speeding up S4 dispatch.
+      (\PR{16133})
     }
   }
 
