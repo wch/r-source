@@ -82,16 +82,16 @@ R-FAQ.html: R-FAQ.texi
 	LC_ALL=C $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 else
 .texi.html:
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 
 R-admin.html: $(srcdir)/R-admin.texi
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 
 R-FAQ.html: R-FAQ.texi
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 
 .texi.info:
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 endif
 
 ifeq ($(strip $(TEXI2DVI)),)
@@ -209,11 +209,11 @@ ifneq "$(MAKEINFO)" "missing"
 	  --css-include=$(top_srcdir)/doc/html/R.css -o $@ $<
 else
 ../FAQ: R-FAQ.texi
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 ../RESOURCES: resources.texi
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 ../html/resources.html: resources.texi
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 endif
 
 ## Run from src/gnuwin32/fixed/Makefile
@@ -237,10 +237,10 @@ rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	  $(MAKEINFO) --no-headers --number-sections -o $@
 else
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
-	@$(ECHO) "makeinfo is not available"
+	@$(ECHO) "texi2any is not available"
 endif
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION

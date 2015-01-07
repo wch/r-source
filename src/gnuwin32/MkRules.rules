@@ -21,7 +21,7 @@ ICU_LIBS ?= -lsicuin -lsicuuc -lsicudt -lstdc++
 CAIRO_HOME ?=
 BUILD_HTML ?= NO
 MIKTEX ?= TRUE
-MAKEINFO ?= makeinfo
+TEXI2ANY ?= missing
 EOPTS ?= -mtune=core2
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
@@ -97,6 +97,7 @@ F77=$(BINPREF)gfortran$(GCC4_SUFF) $(M_ARCH)
 FLIBS=-lgfortran
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)
+MAKEINFO = $(TEXI2ANY)
 MKDIR=mkdir
 NM=$(BINPREF)nm
 RANLIB=$(BINPREF)ranlib

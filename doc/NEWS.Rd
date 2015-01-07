@@ -299,8 +299,12 @@
       \item A new \command{make} target \code{rsync-extsoft} has been
       added to obtain copies of the external libraries from \acronym{CRAN}.
 
-      \item It is possible to build without \command{makeinfo}: see the
-      comments in file \file{MkRules.dist}.
+      \item Building the manuals now requires \command{texi2any} from
+      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
+      include the manuals, but by default builds from source will not, and
+      they will be accessed from \acronym{CRAN}. See the comments in
+      \file{src/gnuwin32/MkRules.dist} for how to specify the location
+      of \command{texi2any}.      
     }
   }
 
