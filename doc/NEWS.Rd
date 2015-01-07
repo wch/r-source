@@ -203,7 +203,7 @@
 
       \item It is possible to request the use of system
       \command{valgrind} headers \emph{via} \command{configure} option
-      \option{--with-system-valgrind-headers}: note the possible
+      \option{--with-system-valgrind-headers}: note the possible future
       incompatibility of such headers discussed in the 'R Installation
       and Administration' manual. (Wish of \PR{16068}.)
 
@@ -221,8 +221,9 @@
        \code{pcre} (or similar names) are installed.
 
        \item \command{configure} requires the \command{texi2any} script
-       from \pkg{texinfo} 5.1 or later, in place of the \command{makeinfo}
-       program.
+       from \pkg{texinfo} 5.1 or later, replacing the \command{makeinfo}
+       program.  (\command{makeinfo} is a link to the Perl script
+       \command{texi2any} in \pkg{texinfo} 5.x.)
      }
   }
 
