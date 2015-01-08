@@ -591,10 +591,12 @@ getOption(x, default = NULL)
       Omegahat, R-Forge, Rforge.net \dots)
       using \code{\link{setRepositories}}.
     }
-    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
+    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{
+      see \code{\link{Sweave}}.
+    }
 
-    \item{\code{unzip}:}{a character string, the path of the command
-      used for unzipping help files, or \code{"internal"}.
+    \item{\code{unzip}:}{a character string used by \code{\link{unzip}}:
+      the path of the external program \command{unzip} or \code{"internal"}.
 #ifdef unix
       Defaults to the value of \env{R_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
