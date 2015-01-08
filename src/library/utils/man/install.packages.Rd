@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -118,15 +118,20 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     but not installed on other platforms.
 
     The default is the appropriate binary type on Windows and on the
-    CRAN binary OS X distributions, otherwise \code{"source"}.
+    CRAN binary OS X distributions, otherwise \code{"source"}.  Where
+    there is binary type, it can also be selected as \code{"binary"}.
 
     For the platforms where binary packages are the default, an
     alternative is \code{"both"} which means \sQuote{try binary if
     available and current, otherwise try source}.  (This will only
-    choose the binary version of a package if its version number is no
+    prefer the binary version of a package if its version number is no
     older than the source version.  In interactive use it will ask
     before attempting to install source packages which may contain
     compiled code.)
+
+    \code{type = "both"} will be silently changed to the appropriate
+    binary type if either \code{contriburl} or \code{available} is
+    specified.
   }
   \item{configure.args}{
     (Used only for source installs.) A character vector or a named list.

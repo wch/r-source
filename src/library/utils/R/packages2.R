@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -125,6 +125,12 @@ install.packages <-
              keep_outputs = FALSE,
              ...)
 {
+    type2 <- .Platform$pkgType
+    if (type == "binary") {
+        if (type2 == "source")
+            stop("type 'binary' is not supported on this platform")
+        else type <- type2
+    }
     if (is.logical(clean) && clean)
         clean <- "--clean"
     if(is.logical(dependencies) && is.na(dependencies))
@@ -322,15 +328,16 @@ install.packages <-
 
 # for testing .Platform$pkgType <- "mac.binary"
     ## Look at type == "both"
+    ## NB it is only safe to use binary packages with a Mac OS X
+    ## build that uses the same R foundation layout as CRAN since
+    ## paths in DSOs are hard-coded.
     if (type == "both") {
-        ## NB it is only safe to use binary packages with a Mac OS X
-        ## build that uses the same R foundation layout as CRAN since
-        ## paths in DSOs are hard-coded.
-        type2 <- .Platform$pkgType
         if (type2 == "source")
             stop("type == \"both\" can only be used on Windows or a CRAN build for Mac OS X")
-        if(!missing(contriburl) || !is.null(available))
-            stop("type == \"both\" cannot be used if 'available' or 'contriburl' is specified")
+        if (!missing(contriburl) || !is.null(available)) type <- type2
+    }
+
+    if (type == "both") {
         if(is.null(repos))
             stop("type == \"both\" cannot be used with 'repos = NULL'")
         type <- "source"

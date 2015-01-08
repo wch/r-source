@@ -573,6 +573,10 @@ getOption(x, default = NULL)
       \code{"win.binary"}. (\code{"mac.binary.leopard"} and
       \code{"mac.binary.universal"} are no longer in use.)
 #endif
+      Value \code{"binary"} is a synonym for the native binary type (if
+      there is one), and \code{"both"} is used by
+      \code{\link{install.packages}} to choose between source and binary
+      installs.
     }
 
     \item{\code{repos}:}{URLs of the repositories for use by

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -725,6 +725,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 {
     ## Not entirely clear this is optimal
     if(type == "both") type <- "source"
+    if(type == "binary") type <- .Platform$pkgType
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
         cat(gettext("--- Please select a CRAN mirror for use in this session ---"),
@@ -821,6 +822,7 @@ setRepositories <-
     a <- tools:::.read_repositories(p)
     pkgType <- getOption("pkgType")
     if (pkgType == "both") pkgType <- "source" #.Platform$pkgType
+    if (pkgType == "binary") pkgType <- .Platform$pkgType
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]
     a <- a[thisType, 1L:3L]

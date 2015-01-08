@@ -395,6 +395,10 @@
       \item \code{model.frame()} (used by \code{lm()} and many other
       modelling functions) now warns when it drops contrasts
       from factors.  (Wish of \PR{16119})
+      
+      \item \code{install.packages()} and friends now accept the value
+      \code{type = "binary"} as a synonym for the native binary type on
+      the platform (if it has one).
     }
   }
 
