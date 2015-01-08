@@ -399,6 +399,10 @@
       \item \code{install.packages()} and friends now accept the value
       \code{type = "binary"} as a synonym for the native binary type on
       the platform (if it has one).
+    
+      \item Single source or binary files can be supplied for
+      \code{install.packages(type = "both")} and the approporiate type
+      and \code{repos = NULL} will be inferred.
     }
   }
 

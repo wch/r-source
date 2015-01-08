@@ -289,13 +289,27 @@ install.packages <-
 
     ## check if we should infer repos = NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
-        if((type == "source" &&
-            any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) ||
+        if((type == "source" && any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) ||
            (type %in% "win.binary" && length(grep("[.]zip$", pkgs))) ||
-           (substr(type, 1L, 10L) == "mac.binary"
-            && length(grep("[.]tgz$", pkgs)))) {
+           (substr(type, 1L, 10L) == "mac.binary" && grepl("[.]tgz$", pkgs))) {
             repos <- NULL
             message("inferring 'repos = NULL' from 'pkgs'")
+        }
+        if (type == "both") {
+            if (type2 %in% "win.binary" && grepl("[.]zip$", pkgs)) {
+                repos <- NULL
+                type <- type2
+                message("inferring 'repos = NULL' from 'pkgs'")
+            } else if (substr(type2, 1L, 10L) == "mac.binary"
+                       && grepl("[.]tgz$", pkgs)) {
+                repos <- NULL
+                type <- type2
+                message("inferring 'repos = NULL' from 'pkgs'")
+            } else if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
+                repos <- NULL
+                type <- "source"
+                message("inferring 'repos = NULL' from 'pkgs'")
+           }
         }
     }
 
