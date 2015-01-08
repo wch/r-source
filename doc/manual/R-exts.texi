@@ -474,8 +474,9 @@ The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
-The @samp{Depends}, @samp{Imports}, @samp{Suggests}, @samp{Enhances} and
-@samp{LinkingTo} fields are discussed in a later subsection.
+The @samp{Depends}, @samp{Imports}, @samp{Suggests}, @samp{Enhances},
+@samp{LinkingTo} and @samp{Additional_repositories} fields are discussed
+in a later subsection.
 
 @c DESCRIPTION field SystemRequirements
 Dependencies external to the @R{} system should be listed in the
@@ -925,7 +926,7 @@ by @command{R CMD check}.)
 only exceptionally.  Such calls are never needed for packages listed in
 @samp{Depends} as they will already be on the search path.  It used to
 be common practice to use @code{require} calls for packages listed in
-@samp{suggests} in functions which used their functionality, but
+@samp{Suggests} in functions which used their functionality, but
 nowadays it is better to access such functionality @emph{via} @code{::}
 calls.
 
@@ -947,11 +948,18 @@ Specifying a package in @samp{LinkingTo} suffices if these are C++
 headers containing source code or static linking is done at
 installation: the packages do not need to be (and usually should not be)
 listed in the @samp{Depends} or @samp{Imports} fields.  This includes
-CRAN packages @CRANpkg{BH} and almost all users of
+CRAN package @CRANpkg{BH} and almost all users of
 @CRANpkg{RcppArmadillo} and @CRANpkg{RcppEigen}.
 
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
+
+@c DESCRIPTION field Addiitonal_repositories
+The @samp{Addiitonal_repositories} field is a comma-separated list of
+repository URLs where the packages named in the other fields may be
+found.  It is currently used by @command{R CMD check} to check that the
+packages can be found, at least as source packages (which can be
+installed on any platform).
 
 @menu
 * Suggested packages::          
