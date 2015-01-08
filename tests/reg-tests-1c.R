@@ -425,4 +425,13 @@ rd <- tools::parse_Rd(f)
 ## Gave syntax errors because the percent sign in Usage 
 ## was taken as the start of a comment.
 
+
+## save(*, ascii=TRUE):  PR#16137
+x0 <- x <- c(1, NA, NaN)
+save(x, file=(sf <- tempfile()), ascii = TRUE)
+load(sf)
+stopifnot(identical(x0, x))
+## x had 'NA' instead of 'NaN'
+
+
 proc.time()
