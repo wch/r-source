@@ -61,8 +61,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     supported URL schemes see \code{\link{url}}.
 
     Can be \code{NULL} to install from local files, directories or URLs:
-    this will be inferred by extension from \code{pkgs} if of length
-    one. (Not supported for \code{type = "both"}.
+    this will be inferred by extension from \code{pkgs} if of length one.
   }
   \item{contriburl}{
     URL(s) of the contrib sections of the repositories.  Use this
