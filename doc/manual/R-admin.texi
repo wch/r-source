@@ -2067,9 +2067,11 @@ installed as described in @xref{Building from source}.
 @subsection OS X
 
 On OS X @code{install.packages} works as it does on other Unix-alike
-systems, but there is an additional type @code{mac.binary} (the default
-in the @acronym{CRAN} distribution but not when compiling from source:
-@code{mac.binary.mavericks} for a Mavericks build) which can be
+systems, but there are additional types starting with @code{mac.binary}
+(available for and the default in the @acronym{CRAN} distribution but
+not when compiling from source: @code{mac.binary.mavericks} for a
+`Mavericks' build and @code{mac.binary} for a `Snow Leopard' build with
+@code{"default'} a synonym for the apppriate variant) which can be
 passed to @code{install.packages} in order to download and install
 binary packages from a suitable repository.  These OS X binary package
 files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
@@ -2315,15 +2317,14 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"mac.binary"}: located at
-@file{bin/macosx/contrib/@var{3.y}} for @R{} versions
-@var{3.y.z} and containing @file{.tgz} files.
+@code{"mac.binary"}: located at @file{bin/macosx/contrib/@var{3.y}} for
+the CRAN build for `Snow Leopard' (and later) for @R{} versions @var{3.y.z},
+containing @file{.tgz} files.
 
 @item 
 @code{"mac.binary.mavericks"}: located at
-@file{bin/macosx/mavericks/contrib/@var{3.y}} for @R{} versions
-@var{3.y.z} to be run under OS X 10.9 (Mavericks) and later, containing
-@file{.tgz} files.
+@file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN build for
+`Mavericks' (and later) for @R{} versions @var{3.y.z}, containing @file{.tgz} files.
 
 @item 
 @code{"mac.binary.leopard"}: located at
