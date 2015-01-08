@@ -2004,9 +2004,9 @@ containing either or both architectures (32- and 64-bit).
 A few of the binary packages need other software to be installed on your
 system: see for example
 @uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.1/@/@@ReadMe}.
-For 64-bit builds, packages using Gtk+ (@CRANpkg{Cairo},
-@CRANpkg{RGtk2}, @CRANpkg{cairoDevice} and those that depend on them)
-need the @file{bin} directory of a bundled distribution from
+Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
+@CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of a bundled distribution from
 @uref{http://www.gtk.org/@/download/@/win32.php} or
 @uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
 work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
