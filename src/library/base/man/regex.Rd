@@ -32,8 +32,8 @@
   (\emph{do remember that backslashes need to be doubled when entering \R
     character strings}, e.g.\sspace{}from the keyboard).
 
-  Do not assume that long regular expressions will be accepted: the
-  POSIX standard only requires up to 256 \emph{bytes}.
+  Long regular expressions may or may not be accepted: the POSIX
+  standard only requires up to 256 \emph{bytes}.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed in the default
@@ -52,9 +52,9 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.  The metacharacters in EREs are \samp{. \\
-  | ( ) [ \{ ^ $ * + ?}, but note that whether these have a special
-  meaning depends on the context.
+  a backslash.  The metacharacters in extended regular expressions are
+  \samp{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
+  special meaning depends on the context.
 
   Escaping non-metacharacters with a backslash is
   implementation-dependent.  The current implementation interprets
@@ -71,11 +71,11 @@
   \samp{[^abc]} matches anything except the characters \samp{a},
   \samp{b} or \samp{c}.  A range of characters may be specified by
   giving the first and last characters, separated by a hyphen.  (Because
-  their interpretation is locale- and implementation-dependent, they are
-  best avoided.)  The only portable way to specify all ASCII letters is
-  to list them all as the character class\cr
-  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr
-  (The current implementation uses numerical order of the encoding.)
+  their interpretation is locale- and implementation-dependent,
+  character ranges are best avoided.)  The only portable way to specify
+  all ASCII letters is to list them all as the character class\cr
+  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.\cr (The
+  current implementation uses numerical order of the encoding.)
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
