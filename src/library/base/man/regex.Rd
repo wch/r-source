@@ -336,7 +336,7 @@
   \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}
 
   The \code{pcrepattern} \command{man} page (found as part of
-  \url{http://www.pcre.org/pcre.txt}), and details of Perl's own
+  \url{http://www.pcre.org/original/pcre.txt}), and details of Perl's own
   implementation at \url{http://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}
