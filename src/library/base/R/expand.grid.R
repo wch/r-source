@@ -1,7 +1,7 @@
 #  File src/library/base/R/expand.grid.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 	nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1L
-    d <- sapply(args, length)
+    d <- vapply(args, length, 1)
     if(KEEP.OUT.ATTRS) {
 	dn <- vector("list", nargs)
 	names(dn) <- nmc

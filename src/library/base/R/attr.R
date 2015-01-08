@@ -1,7 +1,7 @@
 #  File src/library/base/R/attr.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
         ## Be careful to set dim before dimnames.
 	if(h.dim && L == prod(d1)) attr(obj, "dim") <- dm <- d1
 	if(h.dmn && !is.null(dm)) {
-            ddn <- sapply(dn1, length)
+            ddn <- vapply(dn1, length, 1, USE.NAMES=FALSE)
             if( all((dm == ddn)[ddn > 0]) ) attr(obj, "dimnames") <- dn1
         }
         ## don't set if it has 'dim' now

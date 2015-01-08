@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -537,7 +537,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## check for generic functions corresponding to exported methods
             addGenerics <- expMethods[is.na(match(expMethods, exports))]
             if(length(addGenerics)) {
-                nowhere <- sapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns))
+                nowhere <- vapply(addGenerics, function(what) !exists(what, mode = "function", envir = ns),
+                                  NA, USE.NAMES=FALSE)
                 if(any(nowhere)) {
                     warning(gettextf("no function found corresponding to methods exports from %s for: %s",
                                      sQuote(package),
@@ -547,10 +548,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                 }
                 if(length(addGenerics)) {
                     ## skip primitives
-                    addGenerics <- addGenerics[sapply(addGenerics, function(what) ! is.primitive(get(what, mode = "function", envir = ns)))]
+                    addGenerics <- addGenerics[vapply(addGenerics, function(what)
+                        !is.primitive(get(what, mode = "function", envir = ns)), NA)]
                     ## the rest must be generic functions, implicit or local
                     ## or have been cached via a DEPENDS package
-                    ok <- sapply(addGenerics, methods:::.findsGeneric, ns)
+		    ok <- vapply(addGenerics, methods:::.findsGeneric, 1L, ns)
                     if(!all(ok)) {
                         bad <- sort(unique(addGenerics[!ok]))
                         msg <-

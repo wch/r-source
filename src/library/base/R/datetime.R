@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -412,7 +412,7 @@ c.POSIXlt <- function(..., recursive = FALSE)
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz = "")
 {
-    if(min(sapply(list(year, month, day, hour, min, sec), length)) == 0L)
+    if(min(vapply(list(year, month, day, hour, min, sec), length, 1, USE.NAMES=FALSE)) == 0L)
         .POSIXct(numeric(), tz = tz)
     else {
         x <- paste(year, month, day, hour, min, sec, sep = "-")
