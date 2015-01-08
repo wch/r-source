@@ -606,11 +606,21 @@ check2 <- function(...) check1(...)
 stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
 ## missing() was unable to handle recursive promises
 
+
 ## power.t.test() failure for very large n (etc): PR#15792
 (ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
 (ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))
 stopifnot(all.equal(ptt$n, 192297000, tol = 1e-5),
           all.equal(ppt$n,  10451937, tol = 1e-7))
 ## call to uniroot() did not allow n > 1e7
+
+
+## save(*, ascii=TRUE):  PR#16137
+x0 <- x <- c(1, NA, NaN)
+save(x, file=(sf <- tempfile()), ascii = TRUE)
+load(sf)
+stopifnot(identical(x0, x))
+## x had 'NA' instead of 'NaN'
+
 
 proc.time()

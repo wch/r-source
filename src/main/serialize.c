@@ -232,8 +232,10 @@ static void OutReal(R_outpstream_t stream, double d)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	if (! R_FINITE(d)) {
-	    if (ISNAN(d))
+	    if (ISNA(d))
 		Rsnprintf(buf, sizeof(buf), "NA\n");
+	    else if (ISNAN(d))
+		Rsnprintf(buf, sizeof(buf), "NaN\n");
 	    else if (d < 0)
 		Rsnprintf(buf, sizeof(buf), "-Inf\n");
 	    else
@@ -246,8 +248,10 @@ static void OutReal(R_outpstream_t stream, double d)
 	break;
     case R_pstream_asciihex_format:
 	if (! R_FINITE(d)) {
-	    if (ISNAN(d))
+	    if (ISNA(d))
 		Rsnprintf(buf, sizeof(buf), "NA\n");
+	    else if (ISNAN(d))
+		Rsnprintf(buf, sizeof(buf), "NaN\n");
 	    else if (d < 0)
 		Rsnprintf(buf, sizeof(buf), "-Inf\n");
 	    else
@@ -398,6 +402,8 @@ static double InReal(R_inpstream_t stream)
 	if(sscanf(word, "%s", buf) != 1) error(_("read error"));
 	if (strcmp(buf, "NA") == 0)
 	    return NA_REAL;
+	else if (strcmp(buf, "NaN") == 0)
+	    return R_NaN;
 	else if (strcmp(buf, "Inf") == 0)
 	    return R_PosInf;
 	else if (strcmp(buf, "-Inf") == 0)

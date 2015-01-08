@@ -306,7 +306,7 @@
       include the manuals, but by default builds from source will not, and
       they will be accessed from \acronym{CRAN}. See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
-      of \command{texi2any}.      
+      of \command{texi2any}.
     }
   }
 
@@ -516,6 +516,8 @@
       \item Unix-alike builds without a suitable \command{makeinfo} were
       documented to link the missing HTML manuals to CRAN, but did not.
 
+      \item \code{save(*, ascii=TRUE)} and \code{load()} now correctly
+      deal with \code{NaN}'s.  (\PR{16137})
     }
   }
 }
