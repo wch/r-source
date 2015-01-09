@@ -248,7 +248,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   For a 32/64-bit installation of \R on Windows, a small minority of
   packages with compiled code need either \code{INSTALL_opts =
   "--force-biarch"} or \code{INSTALL_opts = "--merge-multiarch"} for a
-  source installation.  (It is safe to always set the latter when
+  source installationdf -.  (It is safe to always set the latter when
   installing from a repository or tarballs, although it will be a little
   slower.)
 
@@ -256,24 +256,14 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   the install if it detects that the package is already installed and is
   currently in use.  In some circumstances (e.g., multiple instances of
   \R running at the same time and sharing a library) it will not detect a
-  problem, but the installation may fail.
+  problem, but the installation may fail as Windows locks files in use.
 #endif
 #ifdef unix
   Otherwise, on OS X you otherwise need to have installed the
   \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
-  and Administration Manual} and have them in your path (which would not
-  normally be the case under the \code{R.app} GUI).
+    and Administration Manual}) and if needed by the package a Fortran
+  compiler, and have them in your path.
 #endif
-  
-#ifdef windows
-  When installing a binary package, \code{install.packages} on Windows
-  will abort the install if it detects that the package is already
-  installed and is currently in use.  In some circumstances (e.g.,
-  multiple instances of \R running at the same time and sharing a
-  library) it will not detect a problem, but the installation may fail
-  as Windows locks files in use.
-#endif
-  
 }
 
 \section{Locking}{
