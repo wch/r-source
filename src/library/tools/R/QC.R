@@ -6782,6 +6782,55 @@ function(dir)
         if(length(dotjava)) out$dotjava <- dotjava
     }
 
+    ## Check CITATION file for CRAN needs.
+    ## For publishing on CRAN, we need to be able to process package
+    ## CITATION files without having the package installed, which we
+    ## cannot perfectly emulate when checking.
+    ## Hence, if the package is not installed, check directly;
+    ## otherwise, check for offending calls likely to cause trouble.
+    if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
+        if(system.file(package = meta["Package"]) != "") {
+            ccalls <- .find_calls_in_file(cfile, recursive = TRUE)
+            cnames <-
+                intersect(unique(.call_names(ccalls)),
+                          c("packageDescription", "library", "require"))
+            if(length(cnames))
+                out$citation_calls <- cnames
+        } else {
+            pdmeta <- as.list(meta)
+            ## citation(auto = meta) needs:
+            class(pdmeta) <- "packageDescription"
+            cinfo <-
+                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
+                                                                    pdmeta),
+                                            error = identity))$value
+            if(inherits(cinfo, "error"))
+                out$citation_error <- conditionMessage(cinfo)
+        }
+    }
+
+    ## Check Authors@R.
+    if(!is.na(aar <- meta["Authors@R"]) &&
+       ## DESCRIPTION is fully checked lateron, so be careful.
+       !inherits(aar <- tryCatch(parse(text = aar), error = identity),
+                 "error")) {
+        bad <- ((length(aar) != 1L) || !is.call(aar <- aar[[1L]]))
+        if(!bad) {
+            cname <- as.character(aar[[1L]])
+            bad <-
+                ((cname != "person") &&
+                 ((cname != "c") ||
+                  !all(vapply(aar[-1L],
+                              function(e) {
+                                  (is.call(e) &&
+                                       (as.character(e[[1L]]) == "person"))
+                              },
+                              FALSE))))
+        }
+        if(bad)
+            out$authors_at_R_calls <- aar
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -6998,6 +7047,9 @@ function(x, ...)
 		"Uses the non-portable package:",
                 paste(sQuote(y), collapse = ", "))
       },
+      if(length(y <- x$authors_at_R_calls)) {
+          c("Authors@R field should be a call to person(), or combine such calls.")
+      },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
               c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
@@ -7023,6 +7075,15 @@ function(x, ...)
       },
       if(length(y <- x$javafiles)) {
           "Package has FOSS license, installs .class/.jar but has no 'java' directory."
+      },
+      if(length(y <- x$citation_calls)) {
+          c("Package CITATION file contains call(s) to:",
+            strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$citation_error)) {
+          c("Reading CITATION file fails with",
+            paste(" ", y),
+            "when package is not installed.")
       }
       )
 }
