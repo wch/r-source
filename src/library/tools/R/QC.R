@@ -3306,7 +3306,7 @@ function(x, ...)
                      ""))
 
     if(any(as.integer(sapply(x, length)) > 0L))
-        writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+        writeLines(c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
                      ""))
 
     invisible(x)
@@ -3526,7 +3526,7 @@ function(x, ...)
             .pretty_format(x$fields_with_non_ASCII_values))
       },
       if(any(as.integer(sapply(x, length)) > 0L)) {
-          c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+          c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
             "")
       })
 }
@@ -4148,7 +4148,7 @@ function(x, ...)
               "")
         }
         c(unlist(lapply(seq_along(xx), .fmt)),
-          strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual.")),
+          strwrap(gettextf("See section 'Cross-references' in the 'Writing R Extensions' manual.")),
           "")
     } else {
         character()
@@ -5498,7 +5498,8 @@ function(x, ...)
           }
       },
       if(length(xx <- x$bad_practice)) {
-          msg <- "  Please use :: or requireNamespace() instead: see 'Suggested Packages'."
+          msg <-
+              "  Please use :: or requireNamespace() instead.\n  See section 'Suggested packages' in the 'Writing R Extensions' manual."
           if(length(xx) > 1L) {
               c(gettext("'library' or 'require' calls in package code:"),
                 .pretty_format(sort(xx)), msg)

@@ -955,10 +955,8 @@ setRlibs <-
             }
         }
         if (any)
-            wrapLog("See the information on INDEX files and package",
-                    "subdirectories in the chapter 'Creating R packages'",
-                    "of the 'Writing R Extensions' manual.\n")
-        else  resultLog(Log, "OK")
+            wrapLog("See sections 'The INDEX file' and 'Package subdirectories' in the 'Writing R Extensions' manual.\n")
+        else resultLog(Log, "OK")
     }
 
     check_subdirectories <- function(haveR, subdirs)
@@ -1308,7 +1306,7 @@ setRlibs <-
                     if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    wrapLog(msg_DESCRIPTION)
+                    ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             } else {
                 ## this needs to read the package code, and will fail on
@@ -1321,7 +1319,7 @@ setRlibs <-
                     if(any(grepl("not declared from", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    wrapLog(msg_DESCRIPTION)
+                    ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             }
         }
@@ -1340,7 +1338,7 @@ setRlibs <-
             warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("See section 'Generic functions and methods'",
-                    "of the 'Writing R Extensions' manual.\n")
+                    "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
@@ -1405,7 +1403,7 @@ setRlibs <-
                 else if(any(grepl("with DUP:", out)))
                     wrapLog("DUP is no longer supported and will be ignored.")
                 else
-                    wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
+                    wrapLog("See chapter 'System and foreign language interfaces' in the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
         }
     }
@@ -1567,8 +1565,7 @@ setRlibs <-
     check_Rd_files <- function(haveR)
     {
         msg_writing_Rd <-
-            c("See the chapter 'Writing R documentation files'",
-              "in the 'Writing R Extensions' manual.\n")
+            c("See chapter 'Writing R documentation files' in the 'Writing R Extensions' manual.\n")
 
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
@@ -3743,7 +3740,7 @@ setRlibs <-
                                    "\n", as.character(e), "\n")
                          msg_NAMESPACE <-
                              c("See section 'Package namespaces'",
-                               " of the 'Writing R Extensions' manual.\n")
+                               " in the 'Writing R Extensions' manual.\n")
                          wrapLog(msg_NAMESPACE)
                          summaryLog(Log)
                          do_exit(1L)
@@ -4383,9 +4380,8 @@ setRlibs <-
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
     env0 <- if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''"
 
-    msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
-                         " in the chapter 'Creating R packages'",
-                         " of the 'Writing R Extensions' manual.\n")
+    msg_DESCRIPTION <-
+        c("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.\n")
 
     if (!length(pkgs)) {
         message("Error: no packages were specified")
