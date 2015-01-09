@@ -376,10 +376,15 @@ function(x,
          collapse =
          list(given = " ", family = " ", email = ", ",
               role = ", ", comment = ", "),
-         ...
+         ...,
+         style = c("text", "R")
          )
 {
     if(!length(x)) return(character())
+
+    style <- match.arg(style)
+
+    if(style == "R") return(.format_person_as_R_code(x))
 
     args <- c("given", "family", "email", "role", "comment")
     include <- sapply(include, match.arg, args)
