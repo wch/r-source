@@ -81,7 +81,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
   the leftmost and longest match applies), see, e.g.,
   \url{http://en.wikipedia.org/wiki/Approximate_string_matching}.  This
   distance is computed for \code{partial = TRUE} using \samp{tre} by
-  Ville Laurikari (\url{http://http://laurikari.net/tre/}) and
+  Ville Laurikari (\url{http://laurikari.net/tre/}) and
   corresponds to the distance used by \code{\link{agrep}}.  In this
   case, the given cost values are coerced to integer.
 
