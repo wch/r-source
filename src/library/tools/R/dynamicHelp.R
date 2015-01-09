@@ -66,32 +66,45 @@ httpd <- function(path, query, ...)
         res <- if(identical(names(query), "category"))
             help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
         else {
-            fields = c("alias", "concept", "title")
+            fields <- types <- character()
             args <- list(pattern = ".")
             for (i in seq_along(query))
             	switch(names(query)[i],
-            		pattern = args$pattern <- query[i],
-            		title = if (!bool(query[i])) fields <- setdiff(fields, "title"),
-            		keyword = if (bool(query[i])) fields <- union(fields, "keyword"),
-            		alias = if (!bool(query[i])) fields <- setdiff(fields, "alias"),
-            		concept = if (!bool(query[i])) fields <- setdiff(fields, "concept"),
-            		name = if (bool(query[i])) fields <- union(fields, "name"),
-            		agrep = {
-            		    args$agrep <- as.logical(query[i])
-            		    if (is.na(args$agrep))
-            		    	args$agrep <- as.numeric(query[i])
-            		    if (is.na(args$agrep))
-            		     	args$agrep <- query[i]
-            		},
-            		ignore.case = args$ignore.case <- bool(query[i]),
-            		types = args$types <- strsplit(query[i], ";")[[1L]],
-            		package = args$package <- strsplit(query[i], ";")[[1L]],
-            		lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
-            		warning("Unrecognized search field: ", names(query)[i],
-                                domain = NA)
+                       pattern = args$pattern <- query[i],
+                       fields.alias =
+                           if(bool(query[i]))
+                               fields <- c(fields, "alias"),
+                       fields.title =
+                           if(bool(query[i]))
+                               fields <- c(fields, "title"),
+                       fields.concept =
+                           if(bool(query[i]))
+                               fields <- c(fields, "concept"),
+                       fields.keyword =
+                           if(bool(query[i]))
+                               fields <- c(fields, "keyword"),
+                       ignore.case =
+                           args$ignore.case <- bool(query[i]),
+                       agrep = 
+                           args$agrep <- bool(query[i]),
+                       types.help =
+                           if(bool(query[i]))
+                               types <- c(types, "help"),
+                       types.vignette =
+                           if(bool(query[i]))
+                               types <- c(types, "vignette"),
+                       types.demo =
+                           if(bool(query[i]))
+                               types <- c(types, "demo"),
+                       ## Not sure how to get these ...
+                       package = args$package <- strsplit(query[i], ";")[[1L]],
+                       lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
+                       warning("Unrecognized search field: ", names(query)[i],
+                               domain = NA)
                        )
             args$fields <- fields
             args$use_UTF8 <- TRUE
+            args$types <- types
             do.call(help.search, args)
         }
         types <- res$types

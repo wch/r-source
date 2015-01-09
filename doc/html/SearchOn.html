@@ -29,14 +29,27 @@ Search button or hit
 
 <form name="f" action="Search" method = "get">
 <input type="text" name="pattern" size="20" maxlength="256" value="">
-<input name="title" type="checkbox" checked value="1"> Help page titles
-<input name="keyword" type="checkbox" checked value="1"> Keywords
-<input name="alias" type="checkbox" checked value="1"> Object names
-<input name="concept" type="checkbox" value="1"> Concepts
+<p>
+Fields:
+<input name="fields.alias" type="checkbox" checked value="1">Topics
+<input name="fields.title" type="checkbox" checked value="1">Titles
+<input name="fields.concept" type="checkbox" checked value="1">Concepts
+<input name="fields.keyword" type="checkbox" value="1">Keywords
+</p>
+<p>
+Options:
+<input name="ignore.case" type="checkbox" checked value="1">Ignore case
+<input name="agrep" type="checkbox" value="1"> Fuzzy match
+</p>
+<p>
+Types:
+<input name="types.help" type="checkbox" checked value="1">Help pages
+<input name="types.vignette" type="checkbox" checked value="1">Vignettes
+<input name="types.demo" type="checkbox" checked value="1">Demos
+</p>
 <br>
 <input value="Search" type="submit">
 <input value="Reset" type="reset">
-<input name="exact" type="checkbox" value="1"> Exact match
 </form>
 
 <hr width="100%">
