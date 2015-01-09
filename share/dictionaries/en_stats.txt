@@ -3,6 +3,7 @@ accessor
 accessors
 ACF
 Affymetrix
+agglomerative
 AIC
 Akaike
 Akaike's
@@ -40,7 +41,6 @@ biplots
 bitwise
 Bivariate
 bivariate
-bivariate
 biweight
 boolean
 boxplot
@@ -67,6 +67,7 @@ cophenetic
 correlation
 covariables
 covariance
+covariances
 Covariate
 covariate
 Covariates
@@ -104,6 +105,7 @@ deviances
 DIC
 dichotomized
 differenced
+differentiable
 dimnames
 discretization
 discretize
@@ -181,6 +183,7 @@ informations
 inline
 internet
 interquartile
+invariance
 invertibility
 IQR
 IRT
@@ -227,6 +230,7 @@ MCMC
 MDI
 medoids
 metacharacters
+metadata
 microarray
 microarrays
 microsatellite
@@ -263,6 +267,7 @@ Omegahat
 one's
 online
 orthogonalized
+outliers
 overdispersed
 overdispersion
 overfitting
@@ -271,10 +276,13 @@ overplotting
 pairlist
 pairlists
 parallelized
+parameterisation
 parameterization
 parameterizations
 parameterize
 parameterized
+parametrization
+parametrizations
 pathname
 patient's
 PCA
@@ -289,6 +297,7 @@ plugin
 PNG
 pointsize
 pointwise
+polytomous
 POSIX
 PostScript
 precalculated
@@ -339,6 +348,7 @@ semiparametric
 shapefile
 sib
 significand
+skewness
 Smirnov
 smoothers
 SNP
