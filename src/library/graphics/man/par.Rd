@@ -1,6 +1,6 @@
 % File src/library/graphics/man/par.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{par}
@@ -97,7 +97,7 @@
 \usage{
 par(\dots, no.readonly = FALSE)
 
-\special{<highlevel plot> (\dots, <tag> = <value>)}
+\special{<highlevel plot> (..., <tag> = <value>)}
 }
 
 \arguments{
