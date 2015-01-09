@@ -3742,6 +3742,7 @@ static SEXP readOneString(Rconnection con)
     for(pos = 0; pos < 10000; pos++) {
 	p = buf + pos;
 	m = (int) con->read(p, sizeof(char), 1, con);
+	if (m < 0) error("error reading from the connection");
 	if(!m) {
 	    if(pos > 0)
 		warning(_("incomplete string at end of file has been discarded"));
@@ -3876,6 +3877,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while(n0) {
 		size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
 		m0 = con->read(pp, size, n1, con);
+		if (m0 < 0) error("error reading from the connection");
 		m += m0;
 		if (m0 < n1) break;
 		n0 -= n1;
@@ -3956,8 +3958,9 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!signd && (mode != 1 || size > 2))
 	    warning(_("'signed = FALSE' is only valid for integers of sizes 1 and 2"));
 	if(size == sizedef) {
-	    if(isRaw) m = rawRead(p, size, n, bytes, nbytes, &np);
-	    else {
+	    if(isRaw) {
+		m = rawRead(p, size, n, bytes, nbytes, &np);
+	    } else {
 		/* Do this in blocks to avoid large buffers in the connection */
 		char *pp = p;
 		R_xlen_t m0, n0 = n;
@@ -3965,6 +3968,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		while(n0) {
 		    size_t n1 = (n0 < BLOCK) ? n0 : BLOCK;
 		    m0 = con->read(pp, size, n1, con);
+		    if (m0 < 0) error("error reading from the connection");
 		    m += m0;
 		    if (m0 < n1) break;
 		    n0 -= n1;
@@ -3980,6 +3984,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: (int) con->read(buf, size, 1, con);
+		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
@@ -4012,6 +4017,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		for(i = 0, m = 0; i < n; i++) {
 		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np)
 			: (int) con->read(buf, size, 1, con);
+		    if (s < 0) error("error reading from the connection");
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
