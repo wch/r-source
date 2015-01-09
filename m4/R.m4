@@ -3056,6 +3056,9 @@ caddr_t hello() {
               [r_cv_zlib_mmap=yes])])
 ])# _R_ZLIB_MMAP
 
+## Notes on PCRE2 support (in the future).
+## The header is pcre2.h, and the 8-bit lib is libpcre2-8.
+## There is a pcre2-config script, and a pkgconfig file.
 ## R_PCRE
 ## ------
 ## If selected, try finding system pcre library and headers.

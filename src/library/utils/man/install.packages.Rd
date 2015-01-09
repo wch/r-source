@@ -109,28 +109,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     In all of these, \code{"LinkingTo"} is omitted for binary packages.
   }
   \item{type}{character, indicating the type of package to download and
-    install.
-
-    Possible values are (currently) \code{"source"},
-    \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
-    \code{"win.binary"}: the binary types can be listed and downloaded
-    but not installed on other platforms.
-
-    The default is the appropriate binary type on Windows and on the
-    CRAN binary OS X distributions, otherwise \code{"source"}.  Where
-    there is binary type, it can also be selected as \code{"binary"}.
-
-    For the platforms where binary packages are the default, an
-    alternative is \code{"both"} which means \sQuote{try binary if
-    available and current, otherwise try source}.  (This will only
-    prefer the binary version of a package if its version number is no
-    older than the source version.  In interactive use it will ask
-    before attempting to install source packages which may contain
-    compiled code.)
-
-    \code{type = "both"} will be silently changed to the appropriate
-    binary type if either \code{contriburl} or \code{available} is
-    specified.
+    install.  Will be \code{"source"} except on Windows and some OS X
+    builds: see the section on \sQuote{Binary packages} for those.
   }
   \item{configure.args}{
     (Used only for source installs.) A character vector or a named list.
@@ -200,15 +180,6 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
 }
 \details{
-  \R packages are primarily distributed as \emph{source} packages, but
-  \emph{binary} packages (a packaging up of the installed package) are
-  also supported, and the type most commonly used on Windows and by
-  the CRAN distributions for OS X.  This function can install either
-  type where supported, either by downloading a file from a repository
-  or from a local file.  The default type is given by
-  \code{\link{getOption}("pkgType")}: this defaults to \code{"source"}
-  apart from under Windows or a CRAN binary distribution for OS X.
-
   This is the main function to install packages.  It takes a vector of
   names and a destination library, downloads the packages from the
   repositories and installs them.  (If the library is omitted it
@@ -222,15 +193,54 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \sQuote{Note} section.
 #endif
 
-  For source packages from a repository an attempt is made to
-  install the packages in an order that respects their dependencies.
-  This does assume that all the entries in \code{lib} are on the default
-  library path for installs (set by \env{R_LIBS}).
-#ifdef windows
+  For from a repository an attempt is made to install the packages in an
+  order that respects their dependencies.  This does assume that all the
+  entries in \code{lib} are on the default library path for installs
+  (set by \env{R_LIBS}).
 
-  Using packages with \code{type = "source"} always works on Windows
-  provided the package contains no C/C++/Fortran code that needs
-  compilation.  Otherwise you will need to have installed the Rtools
+  You are advised to run \code{update.packages} before
+  \code{install.packages} to ensure that any already installed
+  dependencies have their latest versions.
+}
+\value{
+  Invisible \code{NULL}.
+}
+\section{Binary packages}{
+  This section applies only to platforms where binary packages are
+  available: Windows and CRAN builds for OS X.
+  
+  \R packages are primarily distributed as \emph{source} packages, but
+  \emph{binary} packages (a packaging up of the installed package) are
+  also supported, and the type most commonly used on Windows and by the
+  CRAN builds for OS X.  This function can install either type where
+  supported, either by downloading a file from a repository or from a
+  local file.
+
+  Possible values of \code{type} are (currently) \code{"source"},
+  \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
+  \code{"win.binary"}: the default is the appropriate binary type where
+  supported, which can also be selected as \code{"binary"}.
+
+  For a binary install from a repository, the function checks for the
+  availability of a source package on the same repository, and reports
+  if the source package has a later version, or is available but no
+  binary version is.  This check can be suppressed by using
+\preformatted{    options(install.packages.check.source = "no")}
+  and should be if there is a partial repository containing only binary
+  files.
+  
+  An alternative is \code{"both"} which means \sQuote{use binary if
+    available and current, otherwise try source}.  In interactive use it
+  will ask before attempting to install source packages which may
+  contain compiled code: if declined and an older binary is available
+  that will be installed.  \code{type = "both"} will be silently changed
+  to \code{"binary"} if either \code{contriburl} or \code{available} is
+  specified.
+  
+  Using packages with \code{type = "source"} always works provided the
+  package contains no C/C++/Fortran code that needs compilation.
+#ifdef windows
+  Otherwise you will need to have installed the Rtools
   collection as described in the \sQuote{R for Windows FAQ} \emph{and}
   you must have the \env{PATH} environment variable set up as required
   by Rtools.
@@ -241,22 +251,24 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \R running at the same time and sharing a library) it will not detect a
   problem, but the installation may fail.
 #endif
-
-  You are advised to run \code{update.packages} before
-  \code{install.packages} to ensure that any already installed
-  dependencies have their latest versions.
-
-  For binary installs, the function also checks for the availability of
-  a source package on the same repository, and reports if the source
-  package has a later version, or is available but no binary version
-  is.  This check can be suppressed by
-\preformatted{    options(install.packages.check.source = "no")}
-  and should be if there is a partial repository containing only binary
-  files.
+#ifdef unix
+  Otherwise, on OS X you otherwise need to have installed the
+  \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
+  and Administration Manual} and have them in your path (which would not
+  normally be the case under the \code{R.app} GUI).
+#endif
+  
+#ifdef windows
+  When installing a binary package, \code{install.packages} on Windows
+  will abort the install if it detects that the package is already
+  installed and is currently in use.  In some circumstances (e.g.,
+  multiple instances of \R running at the same time and sharing a
+  library) it will not detect a problem, but the installation may fail
+  as Windows locks files in use.
+#endif
+  
 }
-\value{
-  Invisible \code{NULL}.
-}
+
 \section{Locking}{
   There are various options for locking: these differ between source and
   binary installs.
