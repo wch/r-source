@@ -21,7 +21,7 @@ checkMD5sums(package, dir)
   The file \file{MD5} which is created is in a format which can be
   checked by \command{md5sum -c MD5} if a suitable command-line version
   of \command{md5sum} is available.  (For Windows, one is supplied in
-  the bundle at \url{http://www.murdoch-sutherland.com/Rtools}.)
+  the bundle at \url{http://CRAN.R-project.org/bin/windows/Rtools}.)
 
   If \code{dir} is missing, an installed package of name \code{package}
   is searched for.
