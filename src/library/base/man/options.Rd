@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
@@ -548,6 +548,11 @@ getOption(x, default = NULL)
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
 
+    \item{\code{install.packages.check.source}:}{Used by
+      \code{\link{install.packages}} on platforms which support binary
+      packages.  Possible values \code{"yes"} and \code{"no"}, with
+      unset being equivalent to \code{"yes"}.}
+    
     \item{\code{mailer}:}{default emailing method used by
       \code{\link{create.post}} and hence \code{\link{bug.report}} and
       \code{\link{help.request}}.}
@@ -573,7 +578,7 @@ getOption(x, default = NULL)
       no longer in use.)
 #endif
       Value \code{"binary"} is a synonym for the native binary type (if
-      there is one), and \code{"both"} is used by
+      there is one); \code{"both"} is used by
       \code{\link{install.packages}} to choose between source and binary
       installs.
     }
