@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -294,8 +294,7 @@ doPrimitiveMethod <-
     cat("called doPrimitiveMethod\n\n")
     ## Store a local version of function 'name' back where the current version was
     ## called.  Restore the previous state there on exit, either removing or re-assigning.
-    if(exists(name, envir=ev, inherits=FALSE)) {
-        prev <- get(name, envir=ev)
+    if(!is.null(prev <- get0(name, envir=ev, inherits=FALSE))) {
         on.exit(assign(name, prev, envir = ev))
     }
     else
@@ -454,9 +453,9 @@ getGeneric <-
     value <- if(missing(where))
 	.getGeneric(f, , package) else
     .getGeneric(f, where, package)
-    if(is.null(value) && exists(f, envir = baseenv(), inherits = FALSE)) {
+    if(is.null(value) && !is.null(baseDef <-
+        get0(f, envir = baseenv(), inherits = FALSE))) {
         ## check for primitives
-        baseDef <- get(f, envir = baseenv())
         if(is.primitive(baseDef)) {
             value <- genericForPrimitive(f)
             if(!is.function(value) && mustFind)
@@ -507,8 +506,8 @@ getGeneric <-
         value <- .Call(C_R_getGeneric, f, FALSE, as.environment(where), package)
         ## cache public generics (usually these will have been cached already
         ## and we get to this code for non-exported generics)
-        if(!is.null(value) && exists(f, .GlobalEnv) &&
-           identical(get(f, .GlobalEnv), value))
+        if(!is.null(value) && !is.null(vv <- get0(f, .GlobalEnv)) &&
+           identical(vv, value))
             .cacheGeneric(f, value)
     }
     ##     if(is.null(value) && nzchar(package) && !identical(package, "base")) {
@@ -535,9 +534,8 @@ getGeneric <-
 .cacheGenericTable <- function(name, def, table)
 {
     fdef <- def
-    if(exists(name, envir = table, inherits = FALSE)) {
+    if(!is.null(prev <- get0(name, envir = table, inherits = FALSE))) {
         newpkg <- def@package
-        prev <- get(name, envir = table)
         if(is.function(prev)) {
             if(identical(prev, def))
                 return(fdef)

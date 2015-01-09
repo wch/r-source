@@ -573,11 +573,10 @@
 )
 
 .InitSpecialTypesAndClasses <- function(where) {
-    if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
+    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }
-    else S3table <- get(".S3MethodsClasses", envir = where)
     specialClasses <- .indirectAbnormalClasses
     specialTypes <- .AbnormalTypes # only part matching classes used
     for(i in seq_along(specialClasses)) {

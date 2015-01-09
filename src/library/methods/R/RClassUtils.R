@@ -1294,7 +1294,9 @@ requireMethods <-
         method <- getMethod(f, optional = TRUE)
         if(!is.function(method))
             method <- getGeneric(f, where = where)
-        body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE, if(exists(".Method")).Method else NULL), domain=NA), list(FF=f, MESSAGE=message))
+	body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE,
+								 if(exists(".Method")).Method),
+					domain=NA), list(FF=f, MESSAGE=message))
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method, where = where)
     }
@@ -1791,8 +1793,8 @@ substituteFunctionArgs <-
                 return(.GlobalEnv)
             if(identical(package, "methods"))
                 return(topenv(parent.frame())) # booting methods
-            if(exists(package, envir = .PackageEnvironments, inherits = FALSE))
-                return(get(package, envir = .PackageEnvironments)) #cached, but only if no namespace
+            if(!is.null(pkg <- get0(package, envir = .PackageEnvironments, inherits = FALSE)))
+                return(pkg) #cached, but only if no namespace
         }
     }
     if(is.environment(value))
@@ -1800,8 +1802,8 @@ substituteFunctionArgs <-
     topEnv <- options()$topLevelEnvironment
     if(is.null(topEnv))
         topEnv <- .GlobalEnv
-    if(exists(".packageName", topEnv, inherits=TRUE) &&
-       .identC(package, get(".packageName", topEnv)))
+    if(!is.null(pkgN <- get0(".packageName", topEnv, inherits=TRUE)) &&
+       .identC(package, pkgN))
         return(topEnv) # kludge for source'ing package code
     if(nzchar(package) && require(package, character.only = TRUE)) {}
     else {
@@ -2020,12 +2022,11 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 }
 
 .uncacheClass <- function(name, def) {
-    if(exists(name, envir = .classTable, inherits = FALSE)) {
+    if(!is.null(prev <- get0(name, envir = .classTable, inherits = FALSE))) {
         if(is(def, "classRepresentation")) # paranoia: should only be called this way
             newpkg <- def@package
         else
             newpkg <- ""
-        prev <- get(name, envir = .classTable)
         if(is(prev, "classRepresentation") &&
            identical(prev@package, newpkg) )
             return(remove(list = name, envir = .classTable))
@@ -2220,8 +2221,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     evv <- findClass(class, .GlobalEnv) # what about hidden classes?  how to find them?
     mname <- classMetaName(class)
     for(where in evv) {
-        if(exists(mname, envir = where, inherits = FALSE)) {
-            cdef <- get(mname, envir = where)
+        if(!is.null(cdef <- get0(mname, envir = where, inherits = FALSE))) {
             newdef <- .deleteSuperClass(cdef, superclass)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
@@ -2371,12 +2371,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
 
 .checkGeneric <- function(what, where) {
   .checkFun <-  function(x) {
-      maybe <- (if(exists(x, where)) {
-        f <- get(x, where)
-        is.function(f)
-      }
-      else
-        FALSE)
+      maybe <- if(!is.null(f <- get0(x, where))) is.function(f) else FALSE
       if(maybe)
         maybe <- is(f, "genericFunction") ||
               (length(grep("UseMethod", deparse(f))) > 0) ||

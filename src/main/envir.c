@@ -1907,11 +1907,10 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
   argument.  It needs the environment of the calling function as a
   default.
 
-      get(x, envir, mode, inherits)
-      exists(x, envir, mode, inherits)
-
+      exists (x, envir, mode, inherits)
+      get    (x, envir, mode, inherits)
+      get0   (x, envir, mode, inherits, value_if_not_exists)
 */
-
 
 SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1952,10 +1951,10 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
 
     if (isString(CADDR(args))) {
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)), "function")) /* ASCII */
+	if (!strcmp(CHAR(STRING_ELT(CADDR(args), 0)), "function")) /* ASCII */
 	    gmode = FUNSXP;
 	else
-	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
+	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
     } else {
 	error(_("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
@@ -1967,36 +1966,45 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Search for the object */
     rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
+    if (rval == R_MissingArg)
+	error(_("argument \"%s\" is missing, with no default"),
+	      CHAR(PRINTNAME(t1)));
 
-    if (PRIMVAL(op)) { /* have get(.) */
-	if (rval == R_MissingArg)
-	    error(_("argument \"%s\" is missing, with no default"),
-		  CHAR(PRINTNAME(t1)));
+    switch (PRIMVAL(op) ) {
+    case 0: // exists(.) :
+	return ScalarLogical(rval != R_UnboundValue);
+	break;
+
+    case 1: // have get(.)
 	if (rval == R_UnboundValue) {
 	    if (gmode == ANYSXP)
 		error(_("object '%s' not found"), EncodeChar(PRINTNAME(t1)));
 	    else
 		error(_("object '%s' of mode '%s' was not found"),
 		      CHAR(PRINTNAME(t1)),
-		      CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
+		      CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
 	}
 
-	/* We need to evaluate if it is a promise */
-	if (TYPEOF(rval) == PROMSXP)
-	    rval = eval(rval, genv);
+#     define GET_VALUE(rval)				\
+	/* We need to evaluate if it is a promise */	\
+	if (TYPEOF(rval) == PROMSXP)			\
+	    rval = eval(rval, genv);			\
+							\
+	if (!ISNULL(rval) && NAMED(rval) == 0)		\
+	    SET_NAMED(rval, 1)
 
-	if (!ISNULL(rval) && NAMED(rval) == 0)
-	    SET_NAMED(rval, 1);
-	return rval;
-    }
-    else { /* exists(.) */
+	GET_VALUE(rval);
+	break;
+
+    case 2: // get0(.)
 	if (rval == R_UnboundValue)
-	    ginherits = 0;
-	else
-	    ginherits = 1;
-	return ScalarLogical(ginherits);
+	    return CAD4R(args);// i.e.  value_if_not_exists
+	GET_VALUE(rval);
+	break;
     }
+    return rval;
 }
+#undef GET_VALUE
 
 static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
 		  SEXP ifnotfound, int inherits, SEXP enclos)
@@ -2080,10 +2088,10 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for(int i = 0; i < nvals; i++) {
 	SEXPTYPE gmode;
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)), "function"))
+	if (!strcmp(CHAR(STRING_ELT(CADDR(args), i % nmode)), "function"))
 	    gmode = FUNSXP;
 	else {
-	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode)));
+	    gmode = str2type(CHAR(STRING_ELT(CADDR(args), i % nmode)));
 	    if(gmode == (SEXPTYPE) (-1))
 		error(_("invalid '%s' argument"), "mode");
 	}

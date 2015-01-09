@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,10 +58,8 @@
   signature <- generic@signature
   if(!exists(".SigLength", envir = fenv, inherits = FALSE))
      .setupMethodsTables(generic)
-  if(add)
-      allTable <- NULL # .AllMTable but only if required
-  else
-      allTable <- get(".AllMTable", envir = fenv)
+  allTable <- if(!add) get(".AllMTable", envir = fenv) ## else NULL
+                                        # .AllMTable but only if required
   n <- get(".SigLength", envir = fenv)
   anySig <- rep("ANY", n) # assert doesn't need to be a real signature
   anyLabel <- .sigLabel(anySig)
@@ -766,8 +764,7 @@
     label <- .sigLabel(signature)
 ##     allMethods <- objects(table, all.names=TRUE)
 ##     if(match(label, allMethods, nomatch = 0L))
-    if(exists(label, envir = table, inherits = FALSE)) {
-        value <- get(label, envir = table) ## else NULL
+    if(!is.null(value <- get0(label, envir = table, inherits = FALSE))) {
         if(is.environment(value)) {
             pkgs <- objects(value, all.names = TRUE)
             if(length(pkgs) == 1)
@@ -979,14 +976,15 @@
 .updateMethodsInTable <- function(generic, where, attach) {
   fenv <- environment(generic)
   reset <- identical(attach, "reset")
-  if(!exists(".MTable", envir = fenv, inherits = FALSE))
-    .setupMethodsTables(generic)
-  mtable <- get(".MTable", envir = fenv)
+  if(is.null(mtable <- get0(".MTable", envir = fenv, inherits = FALSE))) {
+      .setupMethodsTables(generic)
+      mtable <- get(".MTable", envir = fenv)
+  }
   if(!reset) {
     env <- as.environment(where)
     tname <- .TableMetaName(generic@generic, generic@package)
-    if(exists(tname, envir = env, inherits = FALSE)) {
-      .mergeMethodsTable(generic, mtable, get(tname, envir = env), attach)
+    if(!is.null(tt <- get0(tname, envir = env, inherits = FALSE))) {
+      .mergeMethodsTable(generic, mtable, tt, attach)
     }
     ## else used to warn, but the generic may be implicitly required
     ## by class inheritance, without any explicit methods in this package
@@ -1010,10 +1008,9 @@
 .resetInheritedMethods <- function(fenv, mtable) {
     allObjects <- character()
     direct <- objects(mtable, all.names=TRUE)
-    if(exists(".AllMTable", envir = fenv, inherits = FALSE)) {
+    if(!is.null(allTable <- get0(".AllMTable", envir = fenv, inherits = FALSE))) {
         ## remove all inherited methods.  Note that code (e.g. setMethod) that asigns
         ## a new method to mtable is responsible for copying it to allTable as well.
-        allTable <- get(".AllMTable", envir = fenv)
         allObjects <- objects(allTable, all.names=TRUE)
         remove(list= allObjects[is.na(match(allObjects, direct))], envir = allTable)
     }
@@ -1207,9 +1204,11 @@ useMTable <- function(onOff = NA)
               domain = NA)
     else {
       ev <- environment(fdef)
-      if(!exists(".SigLength", envir = ev, inherits = FALSE))
-        .setupMethodsTables(fdef)
-      sigs[i] <- get(".SigLength", envir = ev)
+      if(is.null(sigl <- get0(".SigLength", envir = ev, inherits = FALSE))) {
+	  .setupMethodsTables(fdef)
+	  sigl <- get(".SigLength", envir = ev)
+      }
+      sigs[i] <- sigl
     }
   }
   n <- max(sigs)
@@ -1289,10 +1288,9 @@ outerLabels <- function(labels, new) {
     ## TODO:  nSig should be a slot in the table
   tname <- .TableMetaName(fdef@generic, fdef@package)
   where <- as.environment(where)
-  if(exists(tname, envir =where, inherits = FALSE)) {
-     table <- get(tname, envir = where)
-     if(length(signature) > nSig)
-       .resetTable(table, length(signature), fdef@signature[seq_along(signature)])
+  if(!is.null(table <- get0(tname, envir =where, inherits = FALSE))) {
+    if(length(signature) > nSig)
+      .resetTable(table, length(signature), fdef@signature[seq_along(signature)])
   }
   else {
     table <- new.env(TRUE, environment(fdef))

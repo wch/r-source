@@ -193,6 +193,9 @@
       \item Speed-up from Peter Haverty for \code{ls()} and
       \code{methods:::.requirePackage()} speeding up package loading.
       (\PR{16133})
+
+      \item New (somewhat experimental) \code{get0()} function, combining
+      \code{exists()} and \code{get()} in one call.
     }
   }
 
@@ -395,11 +398,11 @@
       \item \code{model.frame()} (used by \code{lm()} and many other
       modelling functions) now warns when it drops contrasts
       from factors.  (Wish of \PR{16119})
-      
+
       \item \code{install.packages()} and friends now accept the value
       \code{type = "binary"} as a synonym for the native binary type on
       the platform (if it has one).
-    
+
       \item Single source or binary files can be supplied for
       \code{install.packages(type = "both")} and the approporiate type
       and \code{repos = NULL} will be inferred.

@@ -1,7 +1,7 @@
 #  File src/library/methods/R/oldClass.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,11 +60,10 @@ setOldClass <- function(Classes, prototype = NULL,
     ## to convert S4 objects in S3 method dispatch.
     ## TODO:  should provide an optional argument to setOldClass()
     ## to prevednt this conversion if it's not needed
-    if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {
+    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }
-    else S3table <- get(".S3MethodsClasses", envir = where)
     dataPartClass <- NULL
     for(cl in rev(Classes)) {
        S3Class <- c(cl, S3Class)

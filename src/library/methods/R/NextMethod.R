@@ -1,7 +1,7 @@
 #  File src/library/methods/R/NextMethod.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,11 +38,9 @@ callNextMethod <- function(...) {
     }
     ## set up the nextMethod object, load it
     ## into the calling environment, and cache it
-    if(exists(".Method", envir = methodEnv, inherits = FALSE)) {
+    if(!is.null(method <- get0(".Method", envir = methodEnv, inherits = FALSE))) {
         ## call to standardGeneric(f)
-        method <- get(".Method", envir = methodEnv, inherits = FALSE)
-        if(exists(".nextMethod", envir = callEnv, inherits = FALSE))
-            nextMethod <- get(".nextMethod", envir = callEnv)
+        if(!is.null(nextMethod <- get0(".nextMethod", envir = callEnv, inherits = FALSE))) {}
         f <- get(".Generic", envir = methodEnv)
     }
     else if(identical(mcall[[1L]], dotNextMethod)) {

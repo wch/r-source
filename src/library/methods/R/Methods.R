@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1411,9 +1411,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 .getImplicitGeneric <- function(name, where, pkg = "")
 {
     value <- .getImplicitGenericFromCache(name, where, pkg)
-    if(is.null(value) && exists(.ImplicitGenericsMetaName, where, inherits = FALSE)) {
-        tbl <-  get(.ImplicitGenericsMetaName, where)
-        value <- .getGenericFromCacheTable(name, where, pkg, tbl)
+    if(is.null(value) && !is.null(tbl <-
+		get0(.ImplicitGenericsMetaName, where, inherits = FALSE))) {
+       value <- .getGenericFromCacheTable(name, where, pkg, tbl)
     }
     value
 }
@@ -1491,10 +1491,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 }
 
 .getImplicitGroup <- function(name, where) {
-    if(exists(.ImplicitGroupMetaName, where, inherits = FALSE)) {
-        tbl <- get(.ImplicitGroupMetaName, where)
-        if(exists(name, envir = tbl, inherits = FALSE))
-            return(get(name, envir = tbl))
+    if(!is.null(tbl <- get0(.ImplicitGroupMetaName, where, inherits = FALSE))) {
+	if(!is.null(r <- get0(name, envir = tbl, inherits = FALSE)))
+	    return(r)
     }
     list()
 }
@@ -1536,9 +1535,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
           stop(gettextf("only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)", inherited), domain = NA)
         where <- as.environment(where)
         what <- .TableMetaName(f, fdef@package)
-        if(exists(what, envir = where, inherits = FALSE))
-          table <- get(what, envir = where)
-        else
+        if(is.null(table <- get0(what, envir = where, inherits = FALSE)))
           return(object)
     }
     objNames <- objects(table, all.names = TRUE)
