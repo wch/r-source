@@ -193,10 +193,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \sQuote{Note} section.
 #endif
 
-  For from a repository an attempt is made to install the packages in an
-  order that respects their dependencies.  This does assume that all the
-  entries in \code{lib} are on the default library path for installs
-  (set by \env{R_LIBS}).
+  For installs from a repository an attempt is made to install the
+  packages in an order that respects their dependencies.  This does
+  assume that all the entries in \code{lib} are on the default library
+  path for installs (set by environment variable \env{R_LIBS}).
 
   You are advised to run \code{update.packages} before
   \code{install.packages} to ensure that any already installed
@@ -212,9 +212,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \R packages are primarily distributed as \emph{source} packages, but
   \emph{binary} packages (a packaging up of the installed package) are
   also supported, and the type most commonly used on Windows and by the
-  CRAN builds for OS X.  This function can install either type where
-  supported, either by downloading a file from a repository or from a
-  local file.
+  CRAN builds for OS X.  This function can install either type, either by
+  downloading a file from a repository or from a local file.
 
   Possible values of \code{type} are (currently) \code{"source"},
   \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
@@ -233,9 +232,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     available and current, otherwise try source}.  In interactive use it
   will ask before attempting to install source packages which may
   contain compiled code: if declined and an older binary is available
-  that will be installed.  \code{type = "both"} will be silently changed
-  to \code{"binary"} if either \code{contriburl} or \code{available} is
-  specified.
+  that will be installed (this could conceivably go wrong, as the
+  dependency checking was done for the current version).
+  \code{type = "both"} will be silently changed to \code{"binary"} if
+  either \code{contriburl} or \code{available} is specified.
   
   Using packages with \code{type = "source"} always works provided the
   package contains no C/C++/Fortran code that needs compilation.
@@ -244,6 +244,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   collection as described in the \sQuote{R for Windows FAQ} \emph{and}
   you must have the \env{PATH} environment variable set up as required
   by Rtools.
+
+  For a 32/64-bit installation of \R on Windows, a small minority of
+  packages with compiled code need either \code{INSTALL_opts =
+  "--force-biarch"} or \code{INSTALL_opts = "--merge-multiarch"} for a
+  source installation.  (It is safe to always set the latter when
+  installing from a repository or tarballs, although it will be a little
+  slower.)
 
   When installing a binary package, \code{install.packages} will abort
   the install if it detects that the package is already installed and is
@@ -339,10 +346,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   on the library directories specified, but Windows reports unreliably.
   If there is only one library directory (the default), \R tries to
   find out by creating a test directory, but even this need not be the
-  whole story.  Under Windows Vista and later you may have permission to
-  write in a library directory but lack permission to write binary files
-  (such as \file{.dll} files) there.  See the \sQuote{R for Windows FAQ}
-  for workarounds.
+  whole story: you may have permission to write in a library directory
+  but lack permission to write binary files (such as \file{.dll} files)
+  there.  See the \sQuote{R for Windows FAQ} for workarounds.
 }
 #endif
 \seealso{
