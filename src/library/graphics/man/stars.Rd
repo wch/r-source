@@ -1,6 +1,6 @@
 % File src/library/graphics/man/stars.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stars}
@@ -121,9 +121,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 }
 \note{
   This code started life as spatial star plots by David A. Andrews.
-  See \url{http://www.udallas.edu:8080/~andrews/software/software.html}.
+%  See \url{http://www.udallas.edu:8080/~andrews/software/software.html}.
 
-  Prior to 1.4.1, scaling only shifted the maximum to 1, although
+  Prior to \R 1.4.1, scaling only shifted the maximum to 1, although
   documented as here.
 }
 \examples{

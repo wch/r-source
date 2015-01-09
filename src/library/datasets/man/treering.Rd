@@ -1,6 +1,6 @@
 % File src/library/datasets/man/treering.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{treering}
@@ -31,8 +31,7 @@ treering
   series \file{CA535.DAT}
 }
 \references{
-  For background on Bristlecone pines and Methuselah Walk, see
-  \url{http://www.sonic.net/bristlecone/}; for some photos see
+  For some photos of Methuselah Walk see
   \url{http://www.ltrr.arizona.edu/~hallman/sitephotos/meth.html}
 }
 \keyword{datasets}
