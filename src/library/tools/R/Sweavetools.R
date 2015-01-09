@@ -30,10 +30,14 @@ function(ifile, encoding = "unknown")
     TEXT <- 1L
     CODE <- 0L
 
-    recs <- rbind( data.frame(line = grep(syntax$doc, lines),
-                              type = TEXT),
-                   data.frame(line = grep(syntax$code, lines),
-                              type = CODE))
+    dpos <- grep(syntax$doc, lines)
+    cpos <- grep(syntax$code, lines)
+
+    recs <- rbind(data.frame(line = dpos,
+                             type = rep.int(TEXT, length(dpos))),
+                  data.frame(line = cpos,
+                             type = rep.int(CODE, length(cpos)))
+                  )
     recs <- recs[order(recs$line),]
     last <- 0L
     state <- TEXT
