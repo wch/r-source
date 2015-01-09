@@ -590,6 +590,7 @@ function(dir,
     files <- vinfo$docs
     if(!length(files)) return(aspell(character()))
 
+    ## We need the package encoding to read the defaults file ...
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
@@ -616,22 +617,25 @@ function(dir,
 
     program <- aspell_find_program(program)
 
-    files <- split(files, vinfo$engine)
-
+    fgroups <- split(files, vinfo$engines)
+    egroups <- split(vinfo$encodings, vinfo$engines)
+    
     do.call(rbind,
-            Map(function(files, engine) {
+            Map(function(fgroup, egroup, engine) {
                 engine <- tools::vignetteEngine(engine)
-                aspell(files,
+                aspell(fgroup,
                        filter = engine$aspell$filter,
                        control =
                        c(engine$aspell$control,
                          aspell_control_package_vignettes[[names(program)]],
                          control),
+                       encoding = egroup,
                        program = program,
                        dictionaries = dictionaries)
             },
-                files,
-                names(files)
+                fgroups,
+                egroups,
+                names(fgroups)
                 )
             )
 }
