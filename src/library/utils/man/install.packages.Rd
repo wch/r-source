@@ -248,7 +248,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   For a 32/64-bit installation of \R on Windows, a small minority of
   packages with compiled code need either \code{INSTALL_opts =
   "--force-biarch"} or \code{INSTALL_opts = "--merge-multiarch"} for a
-  source installationdf -.  (It is safe to always set the latter when
+  source installation.  (It is safe to always set the latter when
   installing from a repository or tarballs, although it will be a little
   slower.)
 
