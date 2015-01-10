@@ -82,7 +82,6 @@ principal authors of the packages mentioned are
 
 @quotation
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
-@item @pkg{CORBA} @tab Duncan Temple Lang
 @item @CRANpkg{DBI} @tab David A. James
 @item @CRANpkg{dataframes2xls} @tab Guido van Steen
 @item @CRANpkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
@@ -1191,8 +1190,8 @@ There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
-@uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
-Linux/Unix/OS X.
+@uref{http://msdn.microsoft.com/@/en-us/@/library/@/ms710252%28v=vs.85%29.aspx})
+but is also implemented on Linux/Unix/OS X.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
@@ -1748,7 +1747,7 @@ handle binary files.
 Packages @CRANpkg{hdf5}, @CRANpkg{h5r}, Bioconductor's @pkg{rhdf5},
 @CRANpkg{RNetCDF}, @CRANpkg{ncdf} and @CRANpkg{ncdf4} on @acronym{CRAN} provide
 interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data Format, see
-@uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data files
+@uref{http://www.hdfgroup.org/HDF5/}) and to UCAR's netCDF data files
 (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
@@ -1779,8 +1778,8 @@ equivalents Visual dBase, Visual Objects and Visual FoxPro (see
 @uref{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
-character, logical and numeric fields, and other types in later versions
-(see @uref{http://clicketyclick.dk/docs/data_types.html}).
+character, logical and numeric fields, and other types in later versions.
+@c (see @uref{http://clicketyclick.dk/docs/data_types.html}).
 
 @findex read.dbf
 @findex write.dbf
@@ -2241,43 +2240,6 @@ directly from a URL, either by explicitly using @code{url} to open a
 connection, or implicitly using it by giving a URL as the @code{file}
 argument.
 
-@node CORBA interface,  , Using download.file, Network interfaces
-@section @acronym{CORBA} interface
-@cindex CORBA
-
-@acronym{CORBA} (Common Object Request Broker Architecture) is similar
-to @acronym{DCOM}, allowing applications to call methods, or operations,
-in server objects running in other applications, potentially programmed
-in different languages and running on different machines.  There is a
-@pkg{CORBA} package available from the Omegahat project (at
-@uref{http://www.omegahat.org/RSCORBA/}), currently for Unix but a
-Windows version looks to be possible.
-
-This package allows @R{} commands to be used to locate available
-@acronym{CORBA} servers, query the methods they provide, and dynamically
-invoke methods on these objects.  @R{} values given as arguments in
-these calls are exported in the call and made available to that
-operation invocation.  Primitive data types (vectors and lists) are
-exported by default, while more complex objects are exported by
-reference.  Examples of using this include communicating with the
-Gnumeric (@uref{http://www.gnumeric.org}) spreadsheet, and also
-interacting with the data visualization system
-@uref{http://www.ggobi.org, ggobi}.
-
-One can also create @acronym{CORBA} servers within @R{}, allowing other
-applications to call these methods.  For example, one might offer access
-to a particular dataset or to some of @R{}'s modelling software.  This
-is done dynamically by combining @R{} data objects and functions.  This
-allows one to explicitly export data and functionality from @R{}.
-
-One can also use the @pkg{CORBA} package to achieve distributed,
-parallel computing in @R{}.  One @R{} session acts as a manager and
-dispatches tasks to different servers running in other @R{} worker
-sessions.  This uses the ability to invoke asynchronous or background
-CORBA calls in @R{}.  More information is available from the Omegahat
-project at @uref{http://www.omegahat.org/RSCORBA/}.
-
-
 
 @node Reading Excel spreadsheets, References, Network interfaces, Top
 @chapter Reading Excel spreadsheets
@@ -2389,7 +2351,7 @@ K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
 Addison-Wesley.
-Also downloadable at @uref{http://www.postgresql.org/docs/awbook.html}.
+Also available at @uref{http://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
 B.@: D.@: Ripley (2001) Connections. \@emph{R News}, @strong{1/1}, 16--7.

@@ -612,7 +612,7 @@ the fields @samp{Classification/ACM} or @samp{Classification/ACM-2012}
 Computing Machinery, @uref{http://www.acm.org/class/}; the former refers
 to the 1998 version), @samp{Classification/JEL} (the Journal of Economic
 Literature Classification System,
-@uref{http://www.aeaweb.org/@/journal/@/jel_class_system.html}), or
+@uref{https://www.aeaweb.org/@/econlit/@/jelCodes.php}, or
 @samp{Classification/MSC} or @samp{Classification/MSC-2010} (the
 Mathematics Subject Classification of the American Mathematical Society,
 @uref{http://www.ams.org/msc/}; the former refers to the 2000 version).
