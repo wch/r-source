@@ -343,18 +343,20 @@ in the following format:
 @smallexample
 Package: pkgname
 Version: 0.5-1
-Date: 2004-01-01
+Date: 2015-01-01
 Title: My First Collection of Functions
 Authors@@R: c(person("Joe", "Developer", role = c("aut", "cre"),
 		     email = "Joe.Developer@@some.domain.net"),
 	      person("Pat", "Developer", role = "aut"),
 	      person("A.", "User", role = "ctb",
 		     email = "A.User@@whereever.net"))
-Author: Joe Developer and Pat Developer, with contributions from A. User
+Author: Joe Developer [aut, cre],
+  Pat Developer [aut],
+  A. User [ctb]
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
-Depends: R (>= 1.8.0), nlme
+Depends: R (>= 3.1.0), nlme
 Suggests: MASS
-Description: A short (one paragraph) description of what
+Description: A (one paragraph) description of what
   the package does and why it may be useful.
 License: GPL (>= 2)
 URL: http://www.r-project.org, http://www.another.url
@@ -407,9 +409,11 @@ The mandatory @samp{License} field is discussed in the next subsection.
 
 
 @c DESCRIPTION field Description
-The mandatory @samp{Description} field should give a comprehensive
-description of what the package does.  One can use several (complete)
-sentences, but only one paragraph.
+The mandatory @samp{Description} field should give a
+@emph{comprehensive} description of what the package does.  One can use
+several (complete) sentences, but only one paragraph. It should be
+intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
+package to all @acronym{CRAN} users).
 
 @c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a short description of the
@@ -446,15 +450,18 @@ Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
 ``authors'' (in particular specifying their precise @emph{roles}), via
-suitable @R{} code.  The roles can include @samp{"aut"} (author) for
-full authors, @samp{"cre"} (creator) for the package maintainer, and
-@samp{"ctb"} (contributor) for other contributors, @samp{"cph"}
-(copyright holder), among others.  See @code{?person} for more
-information.  Note that no role is assumed by default.  Auto-generated
-package citation information takes advantage of this specification. The
-@samp{Author} and @samp{Maintainer} fields are auto-generated from it if
-needed when building@footnote{at least if this is done in a locale which
-matches the package encoding.} or installing.
+suitable @R{} code. It should create an object of class @code{"person'},
+by either a call to @code{person} or a series of calls (one per
+``author'') concatenated by @code{c()}): see the example
+@file{DESCRIPTION} file above.  The roles can include @samp{"aut"}
+(author) for full authors, @samp{"cre"} (creator) for the package
+maintainer, and @samp{"ctb"} (contributor) for other contributors,
+@samp{"cph"} (copyright holder), among others.  See @code{?person} for
+more information.  Note that no role is assumed by default.
+Auto-generated package citation information takes advantage of this
+specification. The @samp{Author} and @samp{Maintainer} fields are
+auto-generated from it if needed when building@footnote{at least if this
+is done in a locale which matches the package encoding.} or installing.
 
 @findex COPYRIGHTS
 @c DESCRIPTION field Copyright
@@ -580,8 +587,9 @@ package contains code which to be compiled, otherwise @code{"no"} (when
 the package could be installed from source on any platform without
 additional tools).  This is used by @code{install.packages(type =
 "both")} in @R{} >= 2.15.2 on platforms where binary packages are the
-norm: it is normally set by the repository assuming compilation is
-required if and only if the package has a @file{src} directory.
+norm: it is normally set by @command{R CMD build} or the repository
+assuming compilation is required if and only if the package has a
+@file{src} directory.
 
 @c DESCRIPTION field OS_type
 The @samp{OS_type} field specifies the OS(es) for which the
@@ -2381,7 +2389,7 @@ details of these and related macros, see file @file{config.site} in
 the @R{} sources.}, or in a personal or site @file{Makevars} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration}.
+R-admin, R Installation and Administration}.
 @end ifset
 If C++11 support is not available then these macros are both
 empty. Otherwise, @samp{CXX1X} defaults to the same value as the C++
@@ -3958,7 +3966,7 @@ accordingly, one can achieve this @emph{via} personal @file{Makevars}
 files.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation, , Customizing package compilation,
- R-admin,  R Installation and Administration},
+R-admin, R Installation and Administration},
 @end ifset
 
 Although there is a 2011 version of the C++ standard, even partial
@@ -7781,9 +7789,6 @@ For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html}
 (which has 3 parts).
-
-This option may not compile OpenMP code.
-
 
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
