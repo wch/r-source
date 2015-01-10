@@ -609,7 +609,7 @@ the fields @samp{Classification/ACM} (using the Computing
 Classification System of the Association for Computing Machinery,
 @uref{http://www.acm.org/class/}), @samp{Classification/JEL} (the
 Journal of Economic Literature Classification System,
-@uref{http://www.aeaweb.org/@/journal/@/jel_class_system.html}), or
+@uref{https://www.aeaweb.org/@/econlit/@/jelCodes.php}, or
 @samp{Classification/MSC} (the Mathematics Subject Classification of the
 American Mathematical Society, @uref{http://www.ams.org/msc/}).  The
 subject classifications should be comma-separated lists of the
