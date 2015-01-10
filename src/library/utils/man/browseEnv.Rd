@@ -47,7 +47,7 @@ browseEnv(envir = .GlobalEnv, pattern,
 
   It can be generalized.  See sources for details.
   Most probably, this should rather work through using the \file{tkWidget}
-  package (from \url{www.Bioconductor.org}).
+  package (from \url{http://www.bioconductor.org}).
 }
 \seealso{
   \code{\link{str}}, \code{\link{ls}}.
