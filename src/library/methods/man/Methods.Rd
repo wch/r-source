@@ -620,7 +620,7 @@ removeMethod("Math", "data.frame"); rm(Math.data.frame, MathFun, logIris)
 
  Chambers, John M.(2009)
  \emph{Developments in Class Inheritance and Method Selection}
- \url{http://stat.stanford.edu/~jmc4/classInheritance.pdf}.
+ \url{http://statweb.stanford.edu/~jmc4/classInheritance.pdf}.
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
