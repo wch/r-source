@@ -1778,8 +1778,11 @@ equivalents Visual dBase, Visual Objects and Visual FoxPro (see
 @uref{http://www.e-bachmann.dk/docs/xbase.htm}).  A dBase file contains
 a header and then a series of fields and so is most similar to an @R{}
 data frame.  The data itself is stored in text format, and can include
-character, logical and numeric fields, and other types in later versions.
-@c (see @uref{http://clicketyclick.dk/docs/data_types.html}).
+character, logical and numeric fields, and other types in later versions
+(see for example
+@uref{http://www.digitalpreservation.gov/formats/fdd/fdd000325.shtml}
+and
+@uref{http://www.clicketyclick.dk/databases/xbase/format/index.html}).
 
 @findex read.dbf
 @findex write.dbf
@@ -2204,6 +2207,7 @@ by re-assigning them once read).
 @menu
 * Reading from sockets::        
 * Using download.file::         
+* CORBA interface::             
 @end menu
 
 Some limited facilities are available to exchange data at a lower level
