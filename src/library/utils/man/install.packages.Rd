@@ -217,8 +217,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   Possible values of \code{type} are (currently) \code{"source"},
   \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
-  \code{"win.binary"}: the default is the appropriate binary type where
-  supported, which can also be selected as \code{"binary"}.
+  \code{"win.binary"}: the appropriate binary type where
+  supported can also be selected as \code{"binary"}.
 
   For a binary install from a repository, the function checks for the
   availability of a source package on the same repository, and reports
@@ -228,12 +228,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   and should be if there is a partial repository containing only binary
   files.
   
-  An alternative is \code{"both"} which means \sQuote{use binary if
-    available and current, otherwise try source}.  In interactive use it
-  will ask before attempting to install source packages which may
-  contain compiled code: if declined and an older binary is available
-  that will be installed (this could conceivably go wrong, as the
-  dependency checking was done for the current version).
+  An alternative (and the current default) is \code{"both"} which means
+  \sQuote{use binary if available and current, otherwise try
+    source}. The action if there are source packages which are preferred
+  but may contain code which needs to be compiled is controlled by
+  \code{\link{getOption}("install.packages.compile.from.source")}.
   \code{type = "both"} will be silently changed to \code{"binary"} if
   either \code{contriburl} or \code{available} is specified.
   

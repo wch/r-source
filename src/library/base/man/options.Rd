@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -549,6 +549,22 @@ getOption(x, default = NULL)
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
 
+    \item{\code{install.packages.check.source}:}{Used by
+      \code{\link{install.packages}} on platforms which support binary
+      packages.  Possible values \code{"yes"} and \code{"no"}, with
+      unset being equivalent to \code{"yes"}.}
+
+    \item{\code{install.packages.compile.from.source}:}{Used by
+      \code{\link{install.packages}(type = "both")} on platforms which
+      support binary packages.  Possible values are \code{"never"},
+      \code{"interactive"} (which means ask in interactive use and
+      \code{"never"} in batch use) and \code{"always"}.  The default is
+      taken from environment variable
+      \env{R_COMPILE_AND_INSTALL_PACKAGES}, with default
+      \code{"interactive"} if unset.  However, \code{install.packages}
+      uses \code{"never"} unless a \command{make} program is found,
+      consulting the environment variable \env{MAKE}.}
+    
     \item{\code{mailer}:}{default emailing method used by
       \code{\link{create.post}} and hence \code{\link{bug.report}} and
       \code{\link{help.request}}.}
@@ -562,19 +578,20 @@ getOption(x, default = NULL)
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows
-      Possible values are \code{"win.binary"} (the default),
-      \code{"source"} and \code{"both"}.  Some OS X builds use
+      Possible values are \code{"win.binary"}, \code{"source"} and
+      \code{"both"} (the default).  Some OS X builds use
       \code{"mac.binary"} and \code{"mac.binary.mavericks"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under a
       CRAN OS X build), \code{"mac.binary."},
-      \code{"mac.binary.mavericks"} and \code{"both"}.  Windows uses
+      \code{"mac.binary.mavericks"} and \code{"both"} (the default for
+      CRAN OS X builds).  Windows uses
       \code{"win.binary"}. (\code{"mac.binary.leopard"} and
       \code{"mac.binary.universal"} are no longer in use.)
 #endif
       Value \code{"binary"} is a synonym for the native binary type (if
-      there is one), and \code{"both"} is used by
+      there is one); \code{"both"} is used by
       \code{\link{install.packages}} to choose between source and binary
       installs.
     }

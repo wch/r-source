@@ -26,7 +26,9 @@
 	list(help.try.all.packages = FALSE,
 	     help.search.types = c("vignette", "demo", "help"),
              citation.bibtex.max = 1L, internet.info = 2L,
-	     pkgType = .Platform$pkgType,
+	     pkgType = if(.Platform$pkgType != "source") "both" else "source",
+             install.packages.compile.from.source =
+               Sys.getenv("R_COMPILE_AND_INSTALL_PACKAGES", "interactive"),
 	     str = list(strict.width = "no", digits.d = 3L, vec.len = 4L),
 	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),
