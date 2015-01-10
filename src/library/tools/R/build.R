@@ -557,9 +557,10 @@ get_exclude_patterns <- function()
     }
     fix_nonLF_in_make_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname,
-                           paste0("^",c("Makefile", "Makefile.in", "Makefile.win",
+                           paste0("^(",
+                                  paste(c("Makefile", "Makefile.in", "Makefile.win",
                                        "Makevars", "Makevars.in", "Makevars.win"),
-                                 "$"), Log)
+                                        collapse = "|"), ")$"), Log)
         ## Other Makefiles
         makes <- dir(pkgname, pattern = "^Makefile$",
                      full.names = TRUE, recursive = TRUE)
