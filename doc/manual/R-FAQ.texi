@@ -620,7 +620,7 @@ Books on R by R Core Team members include
 @quotation
 John M. Chambers (2008), ``Software for Data Analysis: Programming with
 R''.  Springer, New York, ISBN 978-0-387-75935-7,
-@url{http://stat.stanford.edu/~jmc4/Rbook/}.
+@url{http://statweb.stanford.edu/~jmc4/Rbook/}.
 
 Peter Dalgaard (2008), ``Introductory Statistics with R'', 2nd edition.
 Springer, ISBN 978-0-387-79053-4,
@@ -782,19 +782,19 @@ Daily mirrors are available at @acronym{URL}s including
 @quotation
 @multitable @columnfractions .45 .40
 @item @url{http://cran.at.R-project.org/}
-@tab (WU Wien, Austria)
+@tab (Wirtschaftsuniversit@"at Wien, Austria)
 @item @url{http://cran.au.R-project.org/}
-@tab (PlanetMirror, Australia)
+@tab (University of Melbourne, Australia)
 @item @url{http://cran.br.R-project.org/}
 @tab (Universidade Federal do Paran@'a, Brazil)
 @item @url{http://cran.ch.R-project.org/}
 @tab (ETH Z@"urich, Switzerland)
 @item @url{http://cran.dk.R-project.org/}
-@tab (SunSITE, Denmark)
+@tab (dotsrc.org, Aalborg, Denmark)
 @item @url{http://cran.es.R-project.org/}
 @tab (Spanish National Research Network, Madrid, Spain)
-@item @url{http://cran.fr.R-project.org/}
-@tab (INRA, Toulouse, France)
+@c @item @url{http://cran.fr.R-project.org/}
+@c @tab (INRA, Toulouse, France)
 @c @item @url{http://cran.hu.R-project.org/}
 @c @tab (Semmelweis U, Hungary)
 @item @url{http://cran.pt.R-project.org/}
@@ -803,8 +803,8 @@ Daily mirrors are available at @acronym{URL}s including
 @tab (U of Bristol, United Kingdom)
 @c @item @url{http://cran.us.R-project.org/}
 @c @tab (pair Networks, USA)
-@item @url{http://cran.za.R-project.org/}
-@tab (Rhodes U, South Africa)
+@c @item @url{http://cran.za.R-project.org/}
+@c @tab (Rhodes U, South Africa)
 @end multitable
 @end quotation
 
@@ -982,13 +982,9 @@ There is a huge amount of user-contributed code for S, available at the
 @node What is S-PLUS?, What are the differences between R and S?, What is S?, R and S
 @section What is @sc{S-Plus}?
 
-@SPLUS{} is a value-added version of S sold by
-@url{http://www.insightful.com, Insightful Corporation}, which in 2008
-was acquired by @url{http://www.tibco.com/, TIBCO Software Inc}.  See
-the @url{http://www.insightful.com/products/splus/, Insightful @SPLUS{}
-page} and the
-@url{http://spotfire.tibco.com/Products/S-Plus-Overview.aspx, , TIBCO
-Spotfire S+ Products page} for further information.
+@SPLUS{} is a value-added version of S currently sold by
+@url{http://www.tibco.com/, TIBCO Software Inc} as `TIBCO Spotfire S+'.
+See @url{http://en.wikipedia.org/wiki/S-PLUS} for more information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
 @section What are the differences between R and S?
@@ -1535,11 +1531,12 @@ REvolution R}, an enterprise-class statistical analysis system based on
 R, suitable for deployment in professional, commercial and regulated
 environments.
 
-@url{http://www.random-technologies-llc.com/, Random Technologies}
-offers @url{http://random-technologies-llc.com/products/RStat/rstat,
-RStat}, an enterprise-strength statistical computing environment which
-combines R with enterprise-level validation, documentation, software
-support, and consulting services, as well as related R-based products.
+@c Now archived at <http://archive.today/WrgxY>
+@c @url{http://www.random-technologies-llc.com/, Random Technologies}
+@c offers @url{http://random-technologies-llc.com/products/RStat/rstat,
+@c RStat}, an enterprise-strength statistical computing environment which
+@c combines R with enterprise-level validation, documentation, software
+@c support, and consulting services, as well as related R-based products.
 
 See also
 @url{http://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
@@ -1568,7 +1565,7 @@ Rweb works, was published in the Journal of Statistical Software
 intends to make the first steps in statistical programming with R
 (especially with time series) as easy as possible.  There is no need for
 a local installation since the only requirement for the user is a
-JavaScript capable browser.  See @url{http://osvisions.com/r-online/}
+JavaScript capable browser.  See @url{http://www.osvisions.com/r_online/}
 for more information.
 
 @strong{Rcgi} is a CGI WWW interface to R by @email{mjr@@dsl.pipex.com,
@@ -1585,10 +1582,12 @@ Currently, a modified version of @strong{Rcgi} by
 (bitmap) graphics and one without) as well as the original code are
 available from @url{http://www.ms.uky.edu/~statweb/}.
 
-CGI-based web access to R is also provided at
-@url{http://hermes.sdu.dk/cgi-bin/go/}.  There are many additional
-examples of web interfaces to R which basically allow to submit R code
-to a remote server, see for example the collection of links available from
+@c No longer works ...
+@c CGI-based web access to R is also provided at
+@c @url{http://hermes.sdu.dk/cgi-bin/go/}.
+There are many additional examples of web interfaces to R which
+basically allow to submit R code to a remote server, see for example the
+collection of links available from
 @url{http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/StatCompCourse}.
 
 @url{http://www.warwick.ac.uk/go/dfirth, David Firth} has written
@@ -1604,11 +1603,13 @@ Forms Using R'' was published in the Journal of Statistical Software
 maintained by @email{duncan@@wald.ucdavis.edu, Duncan Temple Lang} and
 has a web page at @url{http://www.omegahat.org/CGIwithR/}.
 
-@url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
-by Tom Short, provides a sophisticated environment which combines some
-of the features of the previous approaches with quite a bit of
-JavaScript, allowing for a @acronym{GUI}-like behavior (with sortable
-tables, clickable graphics, editable output), etc.
+@c See <https://code.google.com/p/rpad/>
+@c Link to web page <http://www.rpad.org/> no longer works.
+@c @url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
+@c by Tom Short, provides a sophisticated environment which combines some
+@c of the features of the previous approaches with quite a bit of
+@c JavaScript, allowing for a @acronym{GUI}-like behavior (with sortable
+@c tables, clickable graphics, editable output), etc.
 
 Jeff Horner is working on the R/Apache Integration Project which embeds
 the R interpreter inside Apache 2 (and beyond).  A tutorial and
@@ -1621,11 +1622,13 @@ allows other programs to use facilities of R.  Clients are available from
 the web site for Java and C++ (and could be written for other languages
 that support TCP/IP sockets).
 
-@url{http://openstatserver.org/index.html, OpenStatServer} is being
-developed by a team lead by Greg Warnes; it aims ``to provide clean access
-to computational modules defined in a variety of computational
-environments (R, SAS, Matlab, etc) via a single well-defined client
-interface'' and to turn computational services into web services.
+@c See <http://sourceforge.net/projects/openstatserver/>:
+@c Link to web site <http://openstatserver.org/> no longer works.
+@c @url{http://openstatserver.org/index.html, OpenStatServer} is being
+@c developed by a team lead by Greg Warnes; it aims ``to provide clean access
+@c to computational modules defined in a variety of computational
+@c environments (R, SAS, Matlab, etc) via a single well-defined client
+@c interface'' and to turn computational services into web services.
 
 Two projects use PHP to provide a web interface to R.
 @url{http://steve-chen.net/R_PHP/, R_PHP_Online} by Steve Chen (though
@@ -2777,7 +2780,7 @@ Ghostscript you can use @code{bitmap()}, which produces a PostScript or
 PDF file then converts it to any bitmap format supported by Ghostscript.
 On some installations this produces ugly output, on others it is
 perfectly satisfactory.  Many systems now come with Xvfb from
-@url{http://www.x.org/Downloads.html, X.Org} (possibly as an optional
+@url{http://www.x.org/, X.Org} (possibly as an optional
 install), which is an X11 server that does not require a screen; and
 there is the @CRANpkg{GDD} package from @CRAN{}, which produces PNG,
 JPEG and GIF bitmaps without X11.
