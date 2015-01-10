@@ -2207,7 +2207,6 @@ by re-assigning them once read).
 @menu
 * Reading from sockets::        
 * Using download.file::         
-* CORBA interface::             
 @end menu
 
 Some limited facilities are available to exchange data at a lower level
