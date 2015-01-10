@@ -91,7 +91,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   Kurt Hornik and Duncan Murdoch (2011),
   Watch your spelling!
   \emph{The R Journal} \bold{3}(2), 22--28.
-  \url{http://journal.R-project.org/archive/2011-2/RJournal_2011-2_Hornik+Murdoch.pdf}.
+  \url{http://journal.r-project.org/archive/2011-2/RJournal_2011-2_Hornik+Murdoch.pdf}.
 }
 \seealso{
   \link{aspell-utils} for utilities for spell checking packages.
