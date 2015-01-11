@@ -529,6 +529,9 @@
 
       \item \code{save(*, ascii=TRUE)} and \code{load()} now correctly
       deal with \code{NaN}'s.  (\PR{16137})
+
+      \item \code{split.Date} retains fractional representations while
+      avoiding incomplete class propagation.
     }
   }
 }
