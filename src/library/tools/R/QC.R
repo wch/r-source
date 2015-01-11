@@ -6783,12 +6783,19 @@ function(dir)
     }
 
     ## Check CITATION file for CRAN needs.
-    ## For publishing on CRAN, we need to be able to process package
-    ## CITATION files without having the package installed, which we
-    ## cannot perfectly emulate when checking.
-    ## Hence, if the package is not installed, check directly;
-    ## otherwise, check for offending calls likely to cause trouble.
-    if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
+    .check_citation_for_CRAN <- function(cfile, meta) {
+        ## For publishing on CRAN, we need to be able to process package
+        ## CITATION files without having the package installed
+        ## (actually, using only the base and recommended packages),
+        ## which we cannot perfectly emulate when checking.
+        ## The best we can easily do is reduce the library search path
+        ## to the system and site library.  If the package is not
+        ## installed there, check directly; otherwise, check for
+        ## offending calls likely to cause trouble.
+        libpaths <- .libPaths()
+        .libPaths(character())
+        on.exit(.libPaths(libpaths))
+        out <- list()
         if(system.file(package = meta["Package"]) != "") {
             ccalls <- .find_calls_in_file(cfile, recursive = TRUE)
             cnames <-
@@ -6797,16 +6804,22 @@ function(dir)
             if(length(cnames))
                 out$citation_calls <- cnames
         } else {
-            pdmeta <- as.list(meta)
-            ## citation(auto = meta) needs:
-            class(pdmeta) <- "packageDescription"
             cinfo <-
                 .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
-                                                                    pdmeta),
+                                                                    meta),
                                             error = identity))$value
             if(inherits(cinfo, "error"))
                 out$citation_error <- conditionMessage(cinfo)
         }
+        out
+    }
+    if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
+        cinfo <- .check_citation_for_CRAN(cfile, meta)
+        if(length(cinfo))
+            out[names(cinfo)] <- cinfo
+        ## Simply
+        ##   out <- c(out, cinfo)
+        ## strips the class attribute from out ...
     }
 
     ## Check Authors@R.
