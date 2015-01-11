@@ -416,7 +416,7 @@ void warningcall_immediate(SEXP call, const char *format, ...)
 
     immediateWarning = 1;
     va_start(ap, format);
-    vwarningcall_dflt(call, format, ap);
+    vsignalWarning(call, format, ap);
     va_end(ap);
     immediateWarning = 0;
 }
