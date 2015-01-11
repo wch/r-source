@@ -470,8 +470,9 @@ is.numeric.Date <- function(x) FALSE
 split.Date <-
 function(x, f, drop = FALSE, ...)
 {
-    y <- split.default(as.integer(x), f, drop = drop)
-    for(i in seq_along(y)) class(y[[i]]) <- "Date"
+    oclass <- class(x)
+    y <- split.default(unclass(x), f, drop = drop)
+    for(i in seq_along(y)) class(y[[i]]) <- oclass
     y
 }
 
