@@ -297,7 +297,7 @@ function(x, m, invert = FALSE)
 ## respectively, and n0 and/or nk can be empty.
 ## (regexec() can give overlapping matches, in which case extracting
 ## inverted matches or replacing cannot work.)
-## For list match data, k can be any non-negative integer. 
+## For list match data, k can be any non-negative integer.
 ## Extraction and replacement straightforwardly work on the m or n
 ## sequences, depending on whether invert is FALSE or TRUE.
 ## For vector match data from regexpr(), k can be 0 or 1.
@@ -401,3 +401,5 @@ function(x, m, invert = FALSE, value)
 
     y
 }
+
+pcre_config <- function() .Internal(pcre_config())
