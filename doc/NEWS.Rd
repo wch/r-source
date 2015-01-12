@@ -417,6 +417,11 @@
       \item Single source or binary files can be supplied for
       \code{install.packages(type = "both")} and the approporiate type
       and \code{repos = NULL} will be inferred.
+      
+      \item New function \code{pcre_config()} to report on some of the
+      configuration options of the version of PCRE in use.  In
+      particular, this reports if regular expressions using
+      \samp{\p{xx}} are supported.
     }
   }
 

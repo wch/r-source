@@ -860,6 +860,7 @@
  do_parse
  do_paste
  do_pathexpand
+ do_pcre_config
  do_pipe
  do_pmatch
  do_pmin
