@@ -180,6 +180,8 @@
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
             "      --dsym            (OS X only) generate dSYM directory",
+            "      --built-timestamp=STAMP",
+            "                   set timestamp for Built: entry in DESCRIPTION",
             "\nand on Windows only",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
@@ -652,7 +654,7 @@
 		    Sys.chmod(file.path(instdir, f), fmode)
                 }
 
-            res <- try(.install_package_description('.', instdir))
+            res <- try(.install_package_description('.', instdir, built_stamp))
             if (inherits(res, "try-error"))
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
             if (!file.exists(namespace <- file.path(instdir, "NAMESPACE")) ) {
@@ -1274,6 +1276,7 @@
     resave_data <- FALSE
     compact_docs <- FALSE
     keep.source <- getOption("keep.source.pkgs")
+    built_stamp <- character()
 
     install_libs <- TRUE
     install_R <- TRUE
@@ -1401,6 +1404,8 @@
             byte_compile <- FALSE
         } else if (a == "--dsym") {
             dsym <- TRUE
+        } else if (substr(a, 1, 18) == "--built-timestamp=") {
+            built_stamp <- substr(a, 19, 1000)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a), domain = NA)
         } else pkgs <- c(pkgs, a)

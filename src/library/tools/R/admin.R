@@ -21,7 +21,7 @@
 
 ## called from basepkg.mk and .install_packages
 .install_package_description <-
-function(dir, outDir)
+function(dir, outDir, builtStamp=character())
 {
     ## Function for taking the DESCRIPTION package meta-information,
     ## checking/validating it, and installing it with the 'Built:'
@@ -66,8 +66,9 @@ function(dir, outDir)
 	       "; ",
 	       if(dir.exists(file.path(dir, "src"))) OStype else "",
 	       "; ",
+               ## Some build systems want to supply a package-build timestamp for reproducibility
 	       ## Prefer date in ISO 8601 format, UTC.
-	       format(Sys.time(), tz = "UTC", usetz = TRUE),
+	       if (length(builtStamp)==0) format(Sys.time(), tz = "UTC", usetz = TRUE) else builtStamp,
 	       ## Sys.time(),
 	       "; ",
 	       .OStype())

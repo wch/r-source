@@ -228,6 +228,9 @@
        from \pkg{texinfo} 5.1 or later, replacing the \command{makeinfo}
        program.  (\command{makeinfo} is a link to the Perl script
        \command{texi2any} in \pkg{texinfo} 5.x.)
+
+       \item \command{R CMD INSTALL} gets option \code{--built-timestamp=STAMP}
+       allowing 100\% reproducible package building, thanks to Dirk Eddelbuettel.
      }
   }
 
@@ -320,11 +323,11 @@
       time) now requires an external \file{libz.a} to be available (it is
       part of the \sQuote{goodies} used to compile Windows binary
       packages).  It would be simpler to use \code{-lz} instead.
-      
+
       \item The default for option \code{pkgType} on platforms using
       binary packages is now \code{"both"}, so source packages will be
       tried if binary versions are not available or not up to date.
-      
+
       There are options for what \code{install.packages(type = "both")}
       will do if compilation of a source package is desirable: see
       \code{?options} (under \pkg{utils}).
