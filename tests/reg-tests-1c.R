@@ -623,4 +623,12 @@ stopifnot(identical(x0, x))
 ## x had 'NA' instead of 'NaN'
 
 
+## eigen(*, symmetric = <default>) with asymmetric dimnames,  PR#16151
+m <- matrix(c(83,41), 5, 4,
+	    dimnames=list(paste0("R",1:5), paste0("C",1:4)))[-5,] + 3*diag(4)
+stopifnot( all.equal(eigen(m, only.values=TRUE) $ values,
+		     c(251, 87, 3, 3), tol=1e-14) )
+## failed, using symmetric=FALSE and complex because of the asymmetric dimnames()
+
+
 proc.time()

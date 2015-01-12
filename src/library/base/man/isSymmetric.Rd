@@ -1,6 +1,6 @@
 % File src/library/base/man/isSymmetric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isSymmetric}
@@ -31,8 +31,8 @@ isSymmetric(object, \dots)
   \code{\link{all.equal}}.  It might not be appropriate in all
   situations.
 
-  Note that a matrix is only symmetric if its \code{rownames} and
-  \code{colnames} are identical.
+  Note that a matrix \code{m} is only symmetric if its \code{rownames} and
+  \code{colnames} are identical.  Consider using \code{\link{unname}(m)}.
 }
 \seealso{\code{\link{eigen}} which calls \code{isSymmetric} when its
   \code{symmetric} argument is missing.

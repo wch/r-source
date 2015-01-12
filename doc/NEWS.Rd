@@ -371,6 +371,9 @@
 
       \item Fix \code{missing()} when arguments are propagated through
       \code{\dots}; see \PR{15707}.
+
+      \item \code{eigen(m)} now defaults to \code{symmetric=TRUE} even when
+      the dimnames are asymmetric if the matrix is otherwise symmetric;  \PR{16151}.
     }
   }
 }
@@ -417,7 +420,7 @@
       \item Single source or binary files can be supplied for
       \code{install.packages(type = "both")} and the approporiate type
       and \code{repos = NULL} will be inferred.
-      
+
       \item New function \code{pcre_config()} to report on some of the
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
