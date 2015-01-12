@@ -3059,49 +3059,29 @@ caddr_t hello() {
 ## Notes on PCRE2 support (in the future).
 ## The header is pcre2.h, and the 8-bit lib is libpcre2-8.
 ## There is a pcre2-config script, and a pkgconfig file.
-
-## R_PCRE2
+## R_PCRE
 ## ------
-AC_DEFUN([R_PCRE2],
-[if test "x${use_pcre2}" = xyes; then
-  AC_CHECK_LIB(pcre2-8, pcre2_compile, [have_pcre2=yes], [have_pcre2=no])
-  if test "${have_pcre2}" = yes; then
-    AC_CHECK_HEADERS(pcre2.h)
-    if test "${ac_cv_header_pcre2_h}" = no; then
-      have_pcre2=no
+## If selected, try finding system pcre library and headers.
+## RedHat put the headers in /usr/include/pcre.
+## There are known problems < 8.10.
+AC_DEFUN([R_PCRE],
+[if test "x${use_system_pcre}" = xyes; then
+  AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
+  if test "${have_pcre}" = yes; then
+    AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
+    if test "${ac_cv_header_pcre_h}" = no \
+	&& test "${ac_cv_header_pcre_pcre_h}" = no; then
+      have_pcre=no
     fi
   fi
 else
-  have_pcre2=no
+  have_pcre=no
 fi
-AM_CONDITIONAL(BUILD_PCRE2, [test "x${have_pcre2}" = xyes])
-])# R_PCRE2
-
-
-## R_PCRE
-## ------
-## If selected, try finding system PCRE library and headers.
-## RedHat at one time put the headers in /usr/include/pcre.
-## There are known problems < 8.10.
-AC_DEFUN([R_PCRE],
-[if test "${have_pcre2}" != xyes; then
-  if test "x${use_system_pcre}" = xyes; then
-    AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
-    if test "${have_pcre}" = yes; then
-      AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
-      if test "${ac_cv_header_pcre_h}" = no \
-	  && test "${ac_cv_header_pcre_pcre_h}" = no; then
-        have_pcre=no
-      fi
-    fi
-  else
-    have_pcre=no
-  fi
-  if test "x${have_pcre}" = xyes; then
-  r_save_LIBS="${LIBS}"
-  LIBS="-lpcre ${LIBS}"
-  AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
-  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+if test "x${have_pcre}" = xyes; then
+r_save_LIBS="${LIBS}"
+LIBS="-lpcre ${LIBS}"
+AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
 #else
@@ -3127,20 +3107,16 @@ int main() {
 #endif
 }
 ]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
-  fi
-  if test "x${r_cv_have_pcre810}" != xyes; then
-    have_pcre=no
-    LIBS="${r_save_LIBS}"
-  fi
-  AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-  if test "x${r_cv_have_pcre810}" = xyes; then
-    AC_MSG_RESULT([no])
-  else
-    AC_MSG_RESULT([yes])
-  fi
+fi
+if test "x${r_cv_have_pcre810}" != xyes; then
+  have_pcre=no
+  LIBS="${r_save_LIBS}"
+fi
+AC_MSG_CHECKING([whether PCRE support needs to be compiled])
+if test "x${r_cv_have_pcre810}" = xyes; then
+  AC_MSG_RESULT([no])
 else
-## fake for below
-r_cv_have_pcre810=yes
+  AC_MSG_RESULT([yes])
 fi
 AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre810}" != xyes])
 ])# R_PCRE

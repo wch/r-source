@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2015 R Core Team
+### Copyright (C) 1998-2014 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -423,10 +423,6 @@ AC_ARG_WITH([system-pcre],
 [AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@yes@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
 [use_system_pcre=yes])
-AC_ARG_WITH([pcre2],
-[AS_HELP_STRING([--with-pcre2],[use system PCRE2 library (if available) @<:@no@:>@])],
-[R_ARG_USE_SYSTEM(pcre2)],
-[use_pcre2=yes])
 AC_ARG_WITH([system-tre],
 [AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(tre)],
@@ -2303,7 +2299,6 @@ R_BZLIB
 R_LZMA
 
 ## PCRE headers and libraries.
-R_PCRE2
 R_PCRE
 
 ## tre headers and libraries.
@@ -2845,9 +2840,6 @@ if test "${have_lzma}" = yes; then
 fi
 if test "${have_pcre}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [PCRE], [, ])
-fi
-if test "${have_pcre2}" = yes; then
-  R_SH_VAR_ADD(r_external_libs, [PCRE2], [, ])
 fi
 if test "${have_tre}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [tre], [, ])
