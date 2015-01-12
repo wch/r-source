@@ -49,7 +49,7 @@ extSoftVersion()
 
   \code{\link{tclVersion}} for the version of Tcl/Tk.
   
-  \code{\link{pcre_config()} for PCRE configuration options.
+  \code{\link{pcre_config}} for PCRE configuration options.
 }
 \examples{
 extSoftVersion()
