@@ -254,7 +254,7 @@ FUNTAB R_FunTab[] =
 {"match",	do_match,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"pmatch",	do_pmatch,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"charmatch",	do_charmatch,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"match.call",	do_matchcall,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"match.call",	do_matchcall,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"crossprod",	do_matprod,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 

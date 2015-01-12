@@ -196,6 +196,12 @@
 
       \item New (somewhat experimental) \code{get0()} function, combining
       \code{exists()} and \code{get()} in one call.
+
+      \item \code{match.call()} gains an \code{envir} argument for
+      specifying the environment from which to retrieve
+      the \code{\dots}} in the call, if any; this environment was wrong
+      (or at least undesirable) when the \code{definition} argument was
+      a function.
     }
   }
 
