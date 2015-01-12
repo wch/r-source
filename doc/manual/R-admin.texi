@@ -1221,14 +1221,6 @@ anti-virus checking such as the on-access scanning of Sophos can slow
 the build down several-fold.
 
 @item
-By default Doug Lea's @code{malloc} in the file
-@file{@var{R_HOME}/src/gnuwin32/malloc.c} is used for R's internal
-memory allocations.  You can opt out of this by setting
-@code{LEA_MALLOC=NO} in @file{MkRules.dist}, in which case the @code{malloc}
-in @file{msvcrt.dll} is used.  This does impose a considerable
-performance penalty and has not been tested recently.
-
-@item
 You can run a parallel make by e.g.
 
 @example
@@ -1380,7 +1372,9 @@ replaced by a @command{Perl} script @command{texi2any}: file
 (copy it to @file{MkRules.local} before editing).  (A package of
 @pkg{texinfo} 5.x for use on Windows is available at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
-install @command{Perl}.)
+install @command{Perl}@footnote{Suitable distributions include
+Strawberry Perl, @uref{http://strawberryperl.com/} and ActivePerl,
+@uref{http://www.activestate.com/activeperl}.}
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
@@ -2002,7 +1996,7 @@ default) at the list of @emph{binary} versions of packages available for
 your version of @R{} and downloads the latest versions (if any).  Also
 available are types @code{source} and @code{both}: the latter looks
 first at binary packages but if no binary version is available or the
-source version is newer, it will install the source version of packages
+source version is newer, it will install the source versions of packages
 without compiled C/C++/Fortran code, and offer to do so for those with.
 
 
