@@ -3078,7 +3078,9 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-AC_CACHE_CHECK([if PCRE version >= 8.10 and < 10.0], [r_cv_have_pcre810],
+r_save_LIBS="${LIBS}"
+LIBS="-lpcre ${LIBS}"
+AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3092,7 +3094,11 @@ int main() {
 #if PCRE_MAJOR > 8
   exit(1);
 #elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
-  exit(0);
+{
+    int ans;
+    int res = pcre_config(PCRE_CONFIG_UTF8, &and)
+    if (res || ans != 1) exit(1) else exit(0);
+}
 #else
   exit(1);
 #endif
@@ -3102,8 +3108,8 @@ int main() {
 }
 ]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
 fi
-if test "x${r_cv_have_pcre810}" = xyes; then
-  LIBS="-lpcre ${LIBS}"
+if test "x${r_cv_have_pcre810}" != xyes; then
+  LIBS="${r_save_LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
 if test "x${r_cv_have_pcre810}" = xyes; then

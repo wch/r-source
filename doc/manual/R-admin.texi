@@ -3157,13 +3157,13 @@ later),, @code{libbz2} (version 1.0.6 or later: called
 by some Linux distributions) and PCRE (version 8.10 or later, preferably
 8.32 or later@footnote{and not PCRE2, which started at version
 10.0. PCRE must be built with UTF-8 support (not the default) and
-support for Unicode properties is assumed by some @R{} packages.
-Neither are tested by @command{configure}, but can be checked at
-run-time by calling @code{pcre_config()}. JIT support is desirable.}):
-will be used, otherwise versions in the @R{} sources will be compiled
-in.  The external versions can be avoided by configure options
-@option{--without-system-zlib}, @option{--without-system-bzlib} and or
-@option{--without-system-pcre}.
+support for Unicode properties is assumed by some @R{} packages.  Only
+the first is tested by @command{configure}, but both can be checked at
+run-time by calling @code{pcre_config()}. JIT support is desirable for
+the best performance.}): will be used, otherwise versions in the @R{}
+sources will be compiled in.  The external versions can be avoided by
+configure options @option{--without-system-zlib},
+@option{--without-system-bzlib} and or @option{--without-system-pcre}.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository

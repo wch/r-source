@@ -34319,8 +34319,10 @@ else
   have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.10 and < 10.0" >&5
-$as_echo_n "checking if PCRE version >= 8.10 and < 10.0... " >&6; }
+r_save_LIBS="${LIBS}"
+LIBS="-lpcre ${LIBS}"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if PCRE version >= 8.10, < 10.0 and has UTF-8 support" >&5
+$as_echo_n "checking if PCRE version >= 8.10, < 10.0 and has UTF-8 support... " >&6; }
 if ${r_cv_have_pcre810+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -34342,7 +34344,11 @@ int main() {
 #if PCRE_MAJOR > 8
   exit(1);
 #elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
-  exit(0);
+{
+    int ans;
+    int res = pcre_config(PCRE_CONFIG_UTF8, &and)
+    if (res || ans != 1) exit(1) else exit(0);
+}
 #else
   exit(1);
 #endif
@@ -34365,8 +34371,8 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_pcre810" >&5
 $as_echo "$r_cv_have_pcre810" >&6; }
 fi
-if test "x${r_cv_have_pcre810}" = xyes; then
-  LIBS="-lpcre ${LIBS}"
+if test "x${r_cv_have_pcre810}" != xyes; then
+  LIBS="${r_save_LIBS}"
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support needs to be compiled" >&5
 $as_echo_n "checking whether PCRE support needs to be compiled... " >&6; }
@@ -36315,11 +36321,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36318: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36324: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36322: \$? = $ac_status" >&5
+   echo "$as_me:36328: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36414,11 +36420,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36417: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36423: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36421: \$? = $ac_status" >&5
+   echo "$as_me:36427: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36466,11 +36472,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36469: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36475: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36473: \$? = $ac_status" >&5
+   echo "$as_me:36479: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
