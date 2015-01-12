@@ -3096,8 +3096,8 @@ int main() {
 #elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
 {
     int ans;
-    int res = pcre_config(PCRE_CONFIG_UTF8, &ans)
-    if (res || ans != 1) exit(1) else exit(0);
+    int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
+    if (res || ans != 1) exit(1); else exit(0);
 }
 #else
   exit(1);
@@ -3109,6 +3109,7 @@ int main() {
 ]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
 fi
 if test "x${r_cv_have_pcre810}" != xyes; then
+  have_pcre=no
   LIBS="${r_save_LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
