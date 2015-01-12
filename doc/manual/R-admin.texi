@@ -1367,17 +1367,20 @@ options such as the paper size and the fonts used.
 By default it is assumed that @pkg{texinfo} is not installed, and the
 manuals will not be built.  The comments in file @file{MkRules.dist}
 describe settings to build them.  (Copy that file to
-@file{MkRules.local} and edit it.)  The @pkg{texinfo} 5.x package
-for use on Windows is available at
+@file{MkRules.local} and edit it.)  The @pkg{texinfo} 5.x package for
+use on Windows is available at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}: you will also need to
-install @command{Perl}.  
+install @command{Perl}@footnote{Suitable distributions include
+Strawberry Perl, @uref{http://strawberryperl.com/} and ActivePerl,
+@uref{http://www.activestate.com/activeperl}.}
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
 @subsection Building the Inno Setup installer
 
 You need to have the files for a complete R build, including bitmap and
-Tcl/Tk support and the manuals, as well as the recommended packages and
-Inno Setup (@pxref{The Inno Setup installer}).
+Tcl/Tk support and the manuals (which requires @pkg{texinfo} installed),
+as well as the recommended packages and Inno Setup (@pxref{The Inno
+Setup installer}).
 
 Once everything is set up
 
