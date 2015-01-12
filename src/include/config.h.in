@@ -554,6 +554,9 @@
 /* Define to 1 if you have pangocairo. */
 #undef HAVE_PANGOCAIRO
 
+/* Define to 1 if you have the <pcre2.h> header file. */
+#undef HAVE_PCRE2_H
+
 /* Define to 1 if you have the <pcre.h> header file. */
 #undef HAVE_PCRE_H
 
