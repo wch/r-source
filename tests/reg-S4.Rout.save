@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-01-06 r67334) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-01-13 r67444) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -965,4 +965,20 @@ Error in .helpForCall(topicExpr, parent.frame()) :
 Error in .helpForCall(topicExpr, parent.frame()) : 
   no documentation for function 'f' and signature 'x = "numeric"'
 > ## different failures in R < 3.1.0.
+> 
+> 
+> ## identical() did not look at S4 bit:
+> a <- 1:5
+> b <- setClass("B", "integer")(a)
+> stopifnot(is.character(all.equal(a, b)))
+> attributes(a) <- attributes(b)
+> if(!isS4(a)) { # still (unfortunately)
++     message("'a' is not S4 yet")
++     if(identical(a,b)) stop("identical() not looking at S4 bit")
++     ## set S4 bit manually:
++     a <- asS4(a)
++ }
+'a' is not S4 yet
+> stopifnot(identical(a, b), isS4(a))
+> ## failed in R <= 3.1.1
 > 
