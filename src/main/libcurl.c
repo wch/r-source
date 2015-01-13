@@ -30,6 +30,7 @@
 
 SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
 #ifdef HAVE_CURL_CURL_H
     curl_version_info_data *d = curl_version_info(CURLVERSION_NOW);
@@ -51,4 +52,71 @@ SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     UNPROTECT(1);
     return ans;
+}
+
+static char headers[100][2048];
+static int used;
+
+static size_t 
+rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp) 
+{
+    char *d = (char*)buffer;
+    size_t result = size * nmemb, res = result > 2048 ? 2048 : result;
+    if(used > 100) return result;
+    strncpy(headers[used], d, res);
+    headers[used][res] = '\0';
+    used++;
+    return result;      
+}
+
+static size_t 
+rcvData(void *buffer, size_t size, size_t nmemb, void *userp) 
+{
+    return size *nmemb;      
+}
+
+
+SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+#ifndef HAVE_CURL_CURL_H
+    error("curlGetHeaders is not supported on this platform");
+    return R_NilValue;
+#else
+    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+       error("invalid %s argument", "url");
+    const char *url = translateChar(STRING_ELT(CAR(args), 0));
+    used = 0;
+    int redirect = asLogical(CADDR(args));
+    if(redirect == NA_LOGICAL)
+       error("invalid %s argument", "redirect");
+
+    CURL *hnd = curl_easy_init();
+    curl_easy_setopt(hnd, CURLOPT_URL, url);
+    curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
+    curl_easy_setopt(hnd, CURLOPT_HEADER, 1L);
+    curl_easy_setopt(hnd, CURLOPT_HEADERFUNCTION, &rcvHeaders);
+    curl_easy_setopt(hnd, CURLOPT_WRITEHEADER, &headers);
+    curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvData); // unused
+    const char *ua = translateChar(STRING_ELT(CADR(args), 0));
+    curl_easy_setopt(hnd, CURLOPT_USERAGENT, ua);
+    if(redirect) curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+    char errbuf[CURL_ERROR_SIZE];
+    curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
+    CURLcode ret = curl_easy_perform(hnd);
+    if (ret != CURLE_OK)
+	error("libcurl error code %d\n\t%s\n", ret, errbuf);
+    long http_code = 0;
+    curl_easy_getinfo (hnd, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_easy_cleanup(hnd);
+
+    SEXP ans = PROTECT(allocVector(STRSXP, used));
+    for (int i = 0; i < used; i++)
+	SET_STRING_ELT(ans, i, mkChar(headers[i]));
+    setAttrib(ans, install("status"), ScalarInteger((int)http_code));
+    UNPROTECT(1);
+    return ans;
+#endif
 }

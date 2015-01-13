@@ -209,8 +209,11 @@
 	\item \code{capabilities("libcurl")} reports if this is
 	available.
 
-	\item \code{curlVersion()} reports the version in use, and
+	\item \code{libcurlVersion()} reports the version in use, and
 	other details.
+
+	\item \code{curGetHeaders()} retrieves the headers for
+	\code{http://}, \code{ftp://} and \code{https://} URLs.
       }
 
     }

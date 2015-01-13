@@ -286,7 +286,10 @@ icuGetCollate <- function(type = c("actual", "valid")) {
 
 extSoftVersion <- function() .Internal(eSoftVersion())
 
-curlVersion <- function() .Internal(curlVersion())
+libcurlVersion <- function() .Internal(curlVersion())
+
+curlGetHeaders <- function(url, redirect = TRUE)
+    .Internal(curlGetHeaders(url, getOption("HTTPUserAgent"), redirect))
 
 
 ## base has no S4 generics
