@@ -22,7 +22,8 @@ curlGetHeaders(url, redirect = TRUE)
 
 \value{
   A character vector with integer attribute \code{"status"} (the
-  last-received status code).
+  last-received status code).  If redirection occurs this will include
+  the headers for all the URLs visited.
 
   It reports what \command{curl -I -L} or \command{curl -I} would report.
 }
@@ -30,3 +31,7 @@ curlGetHeaders(url, redirect = TRUE)
 \seealso{
   \code{\link{capabilities}("libcurl")} to see if this is supported.
 }
+
+\examples{\donttest{## needs Internet access
+curlGetHeaders("http://bugs.r-project.org")   ## this redirects
+}}
