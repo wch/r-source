@@ -9,23 +9,29 @@
   Retrieve Headers from URLs
 }
 \description{
-  Retrieve the headers for a URL for a supported prococol such as
+  Retrieve the headers for a URL for a supported protocol such as
   \code{http://}, \code{ftp://} and \code{https://}.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE)
 }
+
 \arguments{
   \item{url}{character string specifying the URL.}
   \item{redirect}{logical: should redirections be followed?}
 }
 
+\details{
+  This  reports what \command{curl -I -L} or \command{curl -I} would
+  report.
+
+  It uses \code{\link{getOption}("timeout")} for the connection
+  timeout: that defaults to 60 seconds.
+}
 \value{
   A character vector with integer attribute \code{"status"} (the
   last-received status code).  If redirection occurs this will include
   the headers for all the URLs visited.
-
-  It reports what \command{curl -I -L} or \command{curl -I} would report.
 }
 
 \seealso{
