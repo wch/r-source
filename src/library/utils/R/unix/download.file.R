@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ download.file <-
     method <- if (missing(method))
 	getOption("download.file.method", default = "auto")
     else
-        match.arg(method, c("auto", "internal", "wget", "curl", "lynx"))
+        match.arg(method, c("auto", "internal", "libcurl", "wget", "curl", "lynx"))
 
     if(method == "auto") {
         if(capabilities("http/ftp"))
@@ -43,7 +43,12 @@ download.file <-
         status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
         ## needed for Mac GUI from download.packages etc
         if(!quiet) flush.console()
-    } else if(method == "wget") {
+     } else if(method == "libcurl") {
+        status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK,
+                                         getOption("HTTPUserAgent")))
+        ## needed for Mac GUI from download.packages etc
+        if(!quiet) flush.console()
+   } else if(method == "wget") {
         if(quiet) extra <- c(extra, "--quiet")
         if(!cacheOK) extra <- c(extra, "--cache=off")
         status <- system(paste("wget",

@@ -108,6 +108,7 @@ SEXP do_copyDFattr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_crc64(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Cstack_info(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cum(SEXP, SEXP, SEXP, SEXP);
+SEXP do_curlDownload(SEXP, SEXP, SEXP, SEXP);
 SEXP do_curlGetHeaders(SEXP, SEXP, SEXP, SEXP);
 SEXP do_curlVersion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_D2POSIXlt(SEXP, SEXP, SEXP, SEXP);

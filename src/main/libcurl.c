@@ -23,6 +23,8 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <Fileio.h>
+#include <errno.h>
 
 #ifdef HAVE_CURL_CURL_H
 # include <curl/curl.h>
@@ -118,5 +120,75 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     setAttrib(ans, install("status"), ScalarInteger((int)http_code));
     UNPROTECT(1);
     return ans;
+#endif
+}
+
+/* download(url, destfile, quiet, mode, headers, cacheOK, ua) */
+
+SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+#ifndef HAVE_CURL_CURL_H
+    error("curlDownload is not supported on this platform");
+    return R_NilValue;
+#else
+    SEXP scmd, sfile, smode;
+    const char *url, *file, *mode;
+    int quiet, cacheOK;
+    struct curl_slist *slist1 = NULL;
+    FILE *out;
+
+    scmd = CAR(args); args = CDR(args);
+    if(!isString(scmd) || length(scmd) < 1)
+	error(_("invalid '%s' argument"), "url");
+    if(length(scmd) > 1)
+	warning(_("only first element of 'url' argument used"));
+    url = CHAR(STRING_ELT(scmd, 0));
+    sfile = CAR(args); args = CDR(args);
+    if(!isString(sfile) || length(sfile) < 1)
+	error(_("invalid '%s' argument"), "destfile");
+    if(length(sfile) > 1)
+	warning(_("only first element of 'destfile' argument used"));
+    file = translateChar(STRING_ELT(sfile, 0));
+    quiet = asLogical(CAR(args)); args = CDR(args);
+    if(quiet == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "quiet");
+    smode =  CAR(args); args = CDR(args);
+    if(!isString(smode) || length(smode) != 1)
+	error(_("invalid '%s' argument"), "mode");
+    mode = CHAR(STRING_ELT(smode, 0));
+    cacheOK = asLogical(CAR(args));
+    if(cacheOK == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "cacheOK");
+
+    CURL *hnd = curl_easy_init();
+    curl_easy_setopt(hnd, CURLOPT_URL, url);
+    if(!quiet) curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
+    const char *ua = translateChar(STRING_ELT(CADR(args), 0));
+    curl_easy_setopt(hnd, CURLOPT_USERAGENT, ua);
+    curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
+    curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
+    if (!cacheOK) {
+	slist1 = curl_slist_append(slist1, "Pragma: no-cache");
+	curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
+    }
+    curl_easy_setopt(hnd, CURLOPT_HEADER, 0L);
+    out = R_fopen(R_ExpandFileName(file), mode);
+    if(!out)
+	error(_("cannot open destfile '%s', reason '%s'"),
+	      file, strerror(errno));
+    curl_easy_setopt(hnd, CURLOPT_WRITEDATA, out);
+
+    if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+    R_Busy(1);
+    CURLcode ret = curl_easy_perform(hnd);
+    R_Busy(0);
+    if (ret != CURLE_OK) 
+	error("\nlibcurl error:\n\t%s\n", curl_easy_strerror(ret));
+    curl_easy_cleanup(hnd);
+    if (!cacheOK) curl_slist_free_all(slist1);
+    fclose(out);
+    return ScalarInteger(0);
 #endif
 }

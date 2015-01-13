@@ -212,8 +212,11 @@
 	\item \code{libcurlVersion()} reports the version in use, and
 	other details.
 
-	\item \code{curGetHeaders()} retrieves the headers for
+	\item \code{curlGetHeaders()} retrieves the headers for
 	\code{http://}, \code{ftp://} and \code{https://} URLs.
+
+	\item \code{download.file()} has a new method \code{"libcurl"}
+	(prelimary version).
       }
 
     }
