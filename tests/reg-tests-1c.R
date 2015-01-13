@@ -631,4 +631,11 @@ stopifnot( all.equal(eigen(m, only.values=TRUE) $ values,
 ## failed, using symmetric=FALSE and complex because of the asymmetric dimnames()
 
 
+## match.call() re-matching '...'
+test <- function(x, ...) test2(x, 2, ...)
+test2 <- function(x, ...) match.call(test2, sys.call())
+stopifnot(identical(test(1, 3), quote(test2(x=x, 2, 3))))
+## wrongly gave test2(x=x, 2, 2, 3) in R <= 3.1.2
+
+
 proc.time()

@@ -2938,14 +2938,3 @@ setNames(TRUE, make_long_name(1000))  # value printed as TRU
 setNames(TRUE, make_long_name(1002))  # value printed as T
 setNames(TRUE, make_long_name(1003))  # value not printed
 ##
-
-test <- function(x, ...) {
-  test2(x, 2, ...)
-}
-
-test2 <- function(x, ...) {
-  call <- sys.call()
-  match.call(test2, call)
-}
-
-stopifnot(identical(test(1, 3), quote(test2(x=x, 2, 3))))
