@@ -71,6 +71,9 @@ LIBEXTRAS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
 ifdef USE_ICU
 LIBEXTRAS += -L"$(ICU_PATH)"/lib$(R_ARCH) $(ICU_LIBS)
 endif
+ifdef USE_LIBCURL
+LIBEXTRAS += -L"$(CURL_PATH)"/lib$(R_ARCH) $(CURL_LIBS)
+endif
 
 dllversion-RESFLAGS = -I../include
 CSOURCES = \

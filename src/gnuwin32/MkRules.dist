@@ -81,6 +81,15 @@
 # ICU_PATH =
 # ICU_LIBS = -lsicuin -lsicuuc -lsicudt -lstdc++
 
+# set to use libcurl
+# USE_LIBCURL = YES
+# path to parent of libcurl headers
+# CURL_PATH =
+# libs: for 32-bit
+# CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm -lidn
+# libs: for 64-bit
+# CURL_LIBS = -lcurl -lrtmp -lssl -lssh2 -lcrypto -lgdi32 -lcrypt32 -lz -lws2_32 -lgdi32 -lcrypt32 -lwldap32 -lwinmm
+
 # For the cairographics devices
 # Optionally use a static build of cairographics from
 #   http://www.rforge.net/Cairo/files/cairo-current-win.tar.gz

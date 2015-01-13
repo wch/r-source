@@ -73,6 +73,12 @@ platform-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
 util-CPPFLAGS += -DUSE_ICU -I"$(ICU_PATH)"/include
 endif
 
+ifdef USE_LIBCURL
+libcurl-CPPFLAGS += -DHAVE_CURL_CURL_H -DCURL_STATICLIB -I"$(CURL_PATH)"/include
+platform-CPPFLAGS += -DHAVE_CURL_CURL_H -DCURL_STATICLIB -I"$(CURL_PATH)"/include
+endif
+
+
 libmain.a: $(OBJS)
 
 # Dependencies
