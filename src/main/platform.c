@@ -3071,6 +3071,20 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* platform-specific */
+extern void Rsleep(double timeint);
+
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    double time = asReal(CAR(args));
+    if (ISNAN(time) || time < 0.)
+	errorcall(call, _("invalid '%s' value"), "time");
+    Rsleep(time);
+    return R_NilValue;
+}
+
+
 /* Formerly src/appl/machar.c:
  * void machar()  -- computes ALL `machine constants' at once.
  * -------------  -- compare with ../nmath/i1mach.c & ../nmath/d1mach.c

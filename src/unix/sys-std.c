@@ -1279,18 +1279,9 @@ void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+void attribute_hidden Rsleep(double timeint)
 {
-    int Timeout;
-    double tm, timeint, start, elapsed;
-
-    checkArity(op, args);
-    timeint = asReal(CAR(args));
-    if (ISNAN(timeint) || timeint < 0)
-	errorcall(call, _("invalid '%s' value"), "time");
-    tm = timeint * 1e6;
-
-    start = currentTime();
+    double tm = timeint * 1e6, start = currentTime(), elapsed;
     for (;;) {
 	fd_set *what;
 	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
@@ -1299,9 +1290,8 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_wait_usec > 0) wt = R_wait_usec;
 	if (Rg_wait_usec > 0 && (wt < 0 || wt > Rg_wait_usec))
 	    wt = Rg_wait_usec;
-	Timeout = (int) (wt > 0 ? R_MIN(tm, wt) : tm);
+	int Timeout = (int) (wt > 0 ? R_MIN(tm, wt) : tm);
 	what = R_checkActivity(Timeout, 1);
-
 	/* For polling, elapsed time limit ... */
 	R_CheckUserInterrupt();
 	/* Time up? */
@@ -1317,6 +1307,4 @@ SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	tm = 1e6*(timeint - elapsed);
     }
-
-    return R_NilValue;
 }

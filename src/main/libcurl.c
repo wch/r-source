@@ -127,6 +127,8 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+extern void Rsleep(double timeint);
+
 /* download(url, destfile, quiet, mode, headers, cacheOK, ua) */
 
 SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -169,17 +171,17 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* This comes mainly from curl --libcurl on the call used by
        download.file(method = "curl").
-
-       It blocks, and will be changed to use curl_multi_perform shortly.
-
-       A less elegant solution would be to use a writedata callback
-       and call R_CheckUserInterrupts or similar from there.
+       Also http://curl.haxx.se/libcurl/c/multi-single.html.
 
        It would be a good idea to use a custom progress callback, and
        it is said that in future libcurl may not have one at all.
     */
 
     CURL *hnd = curl_easy_init();
+    CURLM *multi_handle = curl_multi_init();
+    curl_multi_add_handle(multi_handle, hnd);
+    int still_running, repeats = 0;
+ 
     curl_easy_setopt(hnd, CURLOPT_URL, url);
     if(!quiet) curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
     const char *ua = translateChar(STRING_ELT(CADR(args), 0));
@@ -198,21 +200,52 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
     }
     curl_easy_setopt(hnd, CURLOPT_HEADER, 0L);
+
     out = R_fopen(R_ExpandFileName(file), mode);
     if(!out)
-	error(_("cannot open destfile '%s', reason '%s'"),
+	error(_("cannot open destfile '%s', reason '%s'"), 
 	      file, strerror(errno));
     curl_easy_setopt(hnd, CURLOPT_WRITEDATA, out);
 
     if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+
     R_Busy(1);
-    CURLcode ret = curl_easy_perform(hnd);
+    curl_multi_perform(multi_handle, &still_running);
+    do {
+	int numfds; // This needs curl >= 7.28.0
+ 	CURLMcode mc = curl_multi_wait(multi_handle, NULL, 0, 100, &numfds); 
+	if(mc != CURLM_OK)
+	    error("curl_multi_wait() failed, code %d", mc);
+	if(!numfds) {
+	    /* 'numfds' being zero means either a timeout or no file
+	       descriptors to wait for. Try timeout on first
+	       occurrence, then assume no file descriptors and no file
+	       descriptors to wait for means 'sleep for 100 milliseconds'.
+	    */ 
+	    if(repeats++ > 0) Rsleep(0.1);
+	} else repeats = 0;
+	curl_multi_perform(multi_handle, &still_running);
+    } while(still_running);
     R_Busy(0);
-    if (ret != CURLE_OK) 
-	error("\nlibcurl error:\n\t%s\n", curl_easy_strerror(ret));
-    curl_easy_cleanup(hnd);
-    if (!cacheOK) curl_slist_free_all(slist1);
+
+    for(int n = 1; n > 0;) {
+	CURLMsg *msg = curl_multi_info_read(multi_handle, &n);
+	if(msg) {
+	    CURLcode ret = msg->data.result;
+	    if (ret != CURLE_OK) {
+		if(!quiet) REprintf("\n"); // clear progress display
+		error("  %s\n", curl_easy_strerror(ret));
+	    }
+	}
+    }
+
     fclose(out);
+
+    curl_multi_remove_handle(multi_handle, hnd);
+    curl_easy_cleanup(hnd);
+    curl_multi_cleanup(multi_handle);
+    if (!cacheOK) curl_slist_free_all(slist1);
+
     return ScalarInteger(0);
 #endif
 }

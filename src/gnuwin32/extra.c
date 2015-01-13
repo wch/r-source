@@ -254,25 +254,19 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+void Rsleep(double timeint)
 {
+    int ntime = 1000*timeint + 0.5;
     DWORD mtime;
-    int ntime;
-    double time;
-
-    checkArity(op, args);
-    time = asReal(CAR(args));
-    if (ISNAN(time) || time < 0)
-	errorcall(call, _("invalid '%s' value"), "time");
-    ntime = 1000*(time) + 0.5;
     while (ntime > 0) {
 	mtime = min(500, ntime);
 	ntime -= mtime;
 	Sleep(mtime);
 	R_ProcessEvents();
     }
-    return R_NilValue;
+
 }
+
 
 #define MALLINFO_FIELD_TYPE size_t
 struct mallinfo {

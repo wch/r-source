@@ -26,7 +26,8 @@ curlGetHeaders(url, redirect = TRUE)
   report.
 
   It uses \code{\link{getOption}("timeout")} for the connection
-  timeout: that defaults to 60 seconds.
+  timeout: that defaults to 60 seconds.  As this cannot be interrupted
+  you may want to consider a shorter value.
 }
 \value{
   A character vector with integer attribute \code{"status"} (the
