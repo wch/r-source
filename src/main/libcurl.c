@@ -95,6 +95,10 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
+#ifdef Win32
+    // pro tem turn off certificate verification: location is too tricky
+    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, FALSE);
+#endif
     curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
     curl_easy_setopt(hnd, CURLOPT_HEADER, 1L);
@@ -183,6 +187,9 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     int still_running, repeats = 0;
  
     curl_easy_setopt(hnd, CURLOPT_URL, url);
+#ifdef Win32
+    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, FALSE);
+#endif
     if(!quiet) curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
     const char *ua = translateChar(STRING_ELT(CADR(args), 0));
     curl_easy_setopt(hnd, CURLOPT_USERAGENT, ua);
