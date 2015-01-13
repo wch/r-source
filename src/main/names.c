@@ -957,7 +957,8 @@ FUNTAB R_FunTab[] =
 {"bcprofstart",	do_bcprofstart,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"bcprofstop",	do_bcprofstop,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"eSoftVersion", do_eSoftVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"eSoftVersion",do_eSoftVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"curlVersion", do_curlVersion, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };

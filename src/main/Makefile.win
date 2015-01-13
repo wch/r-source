@@ -20,7 +20,7 @@ CSOURCES=\
 	format.c \
 	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
-	lapack.c list.c localecharset.c logic.c \
+	lapack.c libcurl.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c mkdtemp.c \
 	names.c \
 	objects.c options.c \

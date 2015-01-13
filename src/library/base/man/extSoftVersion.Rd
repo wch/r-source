@@ -43,6 +43,8 @@ extSoftVersion()
   2.18"} or \code{"win_iconv"} (which has no version number).
 }
 \seealso{
+  \code{\link{curlVersion}} for the version of \code{libCurl}.
+  
   \code{\link{La_version}} for the version of LAPACK in use.
 
   \code{\link{grSoftVersion}} for third-party graphics software.

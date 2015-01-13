@@ -1,6 +1,6 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
@@ -30,74 +30,76 @@ capabilities(what = NULL)
 #endif
 \value{
   A named logical vector.  Current components are
-    \item{jpeg}{is the \code{\link{jpeg}} function operational?}
-    \item{png}{is the \code{\link{png}} function operational?}
-    \item{tiff}{is the \code{\link{tiff}} function operational?}
-    \item{tcltk}{is the \pkg{tcltk} package operational?
+  \item{jpeg}{is the \code{\link{jpeg}} function operational?}
+  \item{png}{is the \code{\link{png}} function operational?}
+  \item{tiff}{is the \code{\link{tiff}} function operational?}
+  \item{tcltk}{is the \pkg{tcltk} package operational?
 #ifdef unix
-      Note that to make use of Tk you will almost always need to check
-      that \code{"X11"} is also available.
+    Note that to make use of Tk you will almost always need to check
+    that \code{"X11"} is also available.
 #endif
-    }
+  }
 #ifdef unix
-    \item{X11}{Are the \code{\link{X11}} graphics device and the
-      X11-based data editor available?  This loads the X11 module if not
-      already loaded, and checks that the default display can be
-      contacted unless a \code{X11} device has already been used.}
+  \item{X11}{Are the \code{\link{X11}} graphics device and the
+    X11-based data editor available?  This loads the X11 module if not
+    already loaded, and checks that the default display can be
+    contacted unless a \code{X11} device has already been used.}
 
-    \item{aqua}{Is the \code{\link{quartz}} function operational?
-      Only on some OS X builds, including \acronym{CRAN} binary
-      distributions of \R.
+  \item{aqua}{Is the \code{\link{quartz}} function operational?
+    Only on some OS X builds, including \acronym{CRAN} binary
+    distributions of \R.
 
-      Note that this is distinct from \code{.Platform$GUI == "AQUA"},
-      which is true only when using the Mac \code{R.app} GUI console.}
+    Note that this is distinct from \code{.Platform$GUI == "AQUA"},
+    which is true only when using the Mac \code{R.app} GUI console.}
 #endif
 #ifdef windows
-    \item{X11}{always \code{FALSE} on Windows.}
-    \item{aqua}{\code{FALSE} except on OS X.}
+  \item{X11}{always \code{FALSE} on Windows.}
+  \item{aqua}{\code{FALSE} except on OS X.}
 #endif
-    \item{http/ftp}{Are \code{\link{url}} and the internal method for
-      \code{\link{download.file}} available?}
-    \item{sockets}{Are \code{\link{make.socket}} and related functions
-      available?}
-    \item{libxml}{is there support for integrating \code{libxml} with
-      the \R event loop?}
-    \item{fifo}{are FIFO \link{connections} supported?}
-    \item{cledit}{is command-line editing available in the current \R
-      session?  This is false in non-interactive sessions.
+  \item{http/ftp}{Are \code{\link{url}} and the internal method for
+    \code{\link{download.file}} available?}
+  \item{sockets}{Are \code{\link{make.socket}} and related functions
+    available?}
+  \item{libxml}{is there support for integrating \code{libxml} with
+    the \R event loop?}
+  \item{fifo}{are FIFO \link{connections} supported?}
+  \item{cledit}{is command-line editing available in the current \R
+    session?  This is false in non-interactive sessions.
 #ifdef unix
-      It will be true for the command-line interface if \code{readline}
-      support has been compiled in and \option{--no-readline} was
-      \emph{not} used when \R was invoked.  (If \option{--interactive}
-      was used, command-line editing will not actually be available.)
+    It will be true for the command-line interface if \code{readline}
+    support has been compiled in and \option{--no-readline} was
+    \emph{not} used when \R was invoked.  (If \option{--interactive}
+    was used, command-line editing will not actually be available.)
 #endif
-      }
-    \item{iconv}{is internationalization conversion via
-      \code{\link{iconv}} supported?  Always true in current \R.}
-    \item{NLS}{is there Natural Language Support (for message translations)?}
-    \item{profmem}{is there support for memory profiling?  See
-      \code{\link{tracemem}}.}
-    \item{cairo}{is there support for the \code{\link{svg}},
-      \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
-      for \code{type = "cairo"} in the
+  }
+  \item{iconv}{is internationalization conversion via
+    \code{\link{iconv}} supported?  Always true in current \R.}
+  \item{NLS}{is there Natural Language Support (for message translations)?}
+  \item{profmem}{is there support for memory profiling?  See
+    \code{\link{tracemem}}.}
+  \item{cairo}{is there support for the \code{\link{svg}},
+    \code{\link{cairo_pdf}} and \code{\link{cairo_ps}} devices, and
+    for \code{type = "cairo"} in the
 #ifdef unix
-      \code{\link{X11}},
+    \code{\link{X11}},
 #endif
-      \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
-      and \code{\link{tiff}} devices?}
-    \item{ICU}{is ICU available for collation?  See the help on
-      \link{Comparison} and \code{\link{icuSetCollate}}: it is never
-      used for a C locale.}
-    
-    \item{long.double}{does this build use a \code{C} \code{long double}
-      type which is longer than \code{double}?  Some platforms do not
-      have such a type, and on others its use can be suppressed by the
-      configure option \option{--disable-long-double}.
+    \code{\link{bmp}}, \code{\link{jpeg}}, \code{\link{png}},
+    and \code{\link{tiff}} devices?}
 
-      Although not guaranteed, it is a reasonable assumption that if
-      present long doubles will have at least as much range and accuracy
-      as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
-    }
+  \item{ICU}{is ICU available for collation?  See the help on
+    \link{Comparison} and \code{\link{icuSetCollate}}: it is never
+    used for a C locale.}
+    
+  \item{long.double}{does this build use a \code{C} \code{long double}
+    type which is longer than \code{double}?  Some platforms do not
+    have such a type, and on others its use can be suppressed by the
+    configure option \option{--disable-long-double}.
+    
+    Although not guaranteed, it is a reasonable assumption that if
+    present long doubles will have at least as much range and accuracy
+    as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
+  }
+  \item{libcurl}{is \code{libcurl} available in this build?}
 }
 \seealso{\code{\link{.Platform}}}
 

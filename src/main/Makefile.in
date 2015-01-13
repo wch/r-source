@@ -24,7 +24,7 @@ SOURCES_C = \
 	format.c \
 	gevents.c gram.c gram-ex.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
-	lapack.c list.c localecharset.c logic.c \
+	lapack.c libcurl.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c \
 	names.c \
 	objects.c options.c \
@@ -101,7 +101,7 @@ EXTRA_STATIC_LIBS = \
   $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL) $(R_TZONE)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
-EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)
+EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(CURL_LIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)
 
 R_binary = R.bin
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)

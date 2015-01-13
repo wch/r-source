@@ -17,6 +17,8 @@ CC = @CC@
 CFLAGS = @CFLAGS@ @LTO@
 CPICFLAGS = @CPICFLAGS@
 CPPFLAGS = @CPPFLAGS@
+CURL_CPPFLAGS = @CURL_CPPFLAGS@
+CURL_LIBS = @CURL_LIBS@
 DEFS = @DEFS@ @R_DEFS@
 DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)" --exclude="*~"
 DYLIB_EXT = @DYLIB_EXT@

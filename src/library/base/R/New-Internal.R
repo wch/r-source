@@ -286,5 +286,8 @@ icuGetCollate <- function(type = c("actual", "valid")) {
 
 extSoftVersion <- function() .Internal(eSoftVersion())
 
+curlVersion <- function() .Internal(curlVersion())
+
+
 ## base has no S4 generics
 .noGenerics <- TRUE

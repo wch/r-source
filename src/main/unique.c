@@ -1262,7 +1262,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP formals, actuals, rlist;
     SEXP funcall, f, b, rval, sysp, t1, t2, tail;
-    RCNTXT *cptr;
+//    RCNTXT *cptr;
     int expdots;
 
     checkArity(op,args);

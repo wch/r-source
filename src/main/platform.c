@@ -1964,8 +1964,8 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    PROTECT(ans = allocVector(LGLSXP, 17));
-    PROTECT(ansnames = allocVector(STRSXP, 17));
+    PROTECT(ans = allocVector(LGLSXP, 18));
+    PROTECT(ansnames = allocVector(STRSXP, 18));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -2116,6 +2116,14 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("long.double"));
     LOGICAL(ans)[i++] = sizeof(LDOUBLE) > sizeof(double);
+
+    SET_STRING_ELT(ansnames, i, mkChar("libcurl"));
+#ifdef HAVE_CURL_CURL_H
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);

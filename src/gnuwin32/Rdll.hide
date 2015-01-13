@@ -642,6 +642,7 @@
  do_copyDFattr
  do_crc64
  do_cum
+ do_curlVersion
  do_date
  do_debug
  do_delayed

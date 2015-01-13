@@ -199,9 +199,20 @@
 
       \item \code{match.call()} gains an \code{envir} argument for
       specifying the environment from which to retrieve
-      the \code{\dots}} in the call, if any; this environment was wrong
+      the \code{\dots} in the call, if any; this environment was wrong
       (or at least undesirable) when the \code{definition} argument was
       a function.
+            
+      \item Work on progress on optional use of \code{libcurl} for
+      Internet access:
+      \itemize{
+	\item \code{capabilities("libcurl")} reports if this is
+	available.
+
+	\item \code{curlVersion()} reports the version in use, and
+	other details.
+      }
+
     }
   }
 
