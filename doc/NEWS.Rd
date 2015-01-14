@@ -1,4 +1,4 @@
-% -*- coding: utf-8 -*-
+f% -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/logo.jpg}}\if{latex}{\figure{logo.jpg}{options: width=0.5in}}}
 
 \name{NEWS}
@@ -216,7 +216,7 @@
 	\code{http://}, \code{ftp://} and \code{https://} URLs.
 
 	\item \code{download.file()} has a new method \code{"libcurl"}
-	(prelimary version).
+	(preliminary version).
       }
 
     }
