@@ -1183,60 +1183,49 @@ isGroup <-
     is(fdef, "groupGenericFunction")
   }
 
-callGeneric <- function(...)
-{
-    frame <- sys.parent()
-    envir <- parent.frame()
-    call <- sys.call(frame)
-
-    ## localArgs == is the evaluation in a method that adds special arguments
-    ## to the generic.  If so, look back for the call to generic.  Also expand  "..."
-    localArgs <- FALSE
-    ## the  lines below this comment do what the previous version
-    ## did in the expression fdef <- sys.function(frame)
-    if(exists(".Generic", envir = envir, inherits = FALSE))
-	fdef <- get(get(".Generic", envir = envir), envir = envir)
-    else { # in a local method (special arguments), or	an error
-        localArgs <- identical(as.character(call[[1L]]), ".local")
-	if(localArgs)
-	    call <- sys.call(sys.parent(2))
-	if (is.name(call[[1L]]))
-	    fdef <- get(as.character(call[[1L]]), envir = envir)
-	else fdef <- call[[1L]]
-    }
-
-    if(is.primitive(fdef)) {
-        fdef <- getGeneric(fdef)
-    }
-    {
-        env <- environment(fdef)
-        if(!exists(".Generic", env, inherits = FALSE))
-            stop("'callGeneric' must be called from a generic function or method")
-        f <- get(".Generic", env, inherits = FALSE)
-        fname <- as.name(f)
-        if(nargs() == 0) {
-            call[[1L]] <- as.name(fname) # in case called from .local
-            ## if ... appears as an arg name, must be a nested callGeneric()
-            ##  or callNextMethod?  If so, leave alone so "..." will be evaluated
-            if("..." %in% names(call)) {  }
-            else {
-                ## expand the ... if this is  a locally modified argument list.
-                ## This is a somewhat ambiguous case and may not do what the
-                ## user expects.  Not clear there is a single solution.  Should we warn?
-                call <- match.call(fdef, call, expand.dots = localArgs)
-                anames <- names(call)
-                matched <- !is.na(match(anames, names(formals(fdef))))
-                for(i in seq_along(anames))
-                  if(matched[[i]])
-                    call[[i]] <- as.name(anames[[i]])
-            }
+getGenericFromCall <- function(call, envir) {
+    generic <- envir$.Generic
+    if(is.null(generic)) {
+        fdef <- if (is.name(call[[1L]]))
+            get(as.character(call[[1L]]), envir = envir)
+        else call[[1L]]
+        if (is.primitive(fdef)) {
+            fdef <- getGeneric(fdef, mustFind=TRUE)
         }
-        else {
-            call <- sys.call() # just use the arguments to callGeneric()
-            call[[1]] <- fname
-        }
+        generic <- environment(fdef)$.Generic
     }
-    eval(call, sys.frame(sys.parent()))
+    generic
+}
+
+callGeneric <- function(...) {
+    call <- sys.call(sys.parent(1L))
+    .local <- identical(call[[1L]], quote(.local))
+    if (.local) {
+        methodCtx <- sys.parent(2L)
+        callerCtx <- sys.parent(3L)
+    } else {
+        methodCtx <- sys.parent(1L)
+        callerCtx <- sys.parent(2L)
+    }
+    methodCall <- sys.call(methodCtx)
+    methodFrame <- sys.frame(methodCtx)
+    genericName <- getGenericFromCall(methodCall, methodFrame)
+    if (is.null(genericName)) {
+        stop("callGeneric() must be called from within a method body")
+    }
+    if (nargs() == 0L) {
+        callerFrame <- sys.frame(callerCtx)
+        methodDef <- sys.function(sys.parent(1L))
+        call <- match.call(methodDef,
+                           methodCall,
+                           expand.dots=FALSE,
+                           envir=callerFrame)
+        call[-1L] <- lapply(names(call[-1L]), as.name)
+    } else {
+        call <- sys.call()
+    }
+    call[[1L]] <- as.name(genericName)
+    eval(call, parent.frame())
 }
 
 ## This uses 'where' to record the methods namespace: default may not be that

@@ -396,7 +396,11 @@ f% -*- coding: utf-8 -*-
       \code{\dots}; see \PR{15707}.
 
       \item \code{eigen(m)} now defaults to \code{symmetric=TRUE} even when
-      the dimnames are asymmetric if the matrix is otherwise symmetric;  \PR{16151}.
+      the dimnames are asymmetric if the matrix is otherwise symmetric;
+      \PR{16151}.
+
+      \item Fix issues with forwarding \code{\dots}} through
+      \code{callGeneric} and \code{callNextMethod}; see \PR{16141}.
     }
   }
 }

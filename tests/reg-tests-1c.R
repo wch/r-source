@@ -637,5 +637,15 @@ test2 <- function(x, ...) match.call(test2, sys.call())
 stopifnot(identical(test(1, 3), quote(test2(x=x, 2, 3))))
 ## wrongly gave test2(x=x, 2, 2, 3) in R <= 3.1.2
 
+## callGeneric not forwarding dots in call (PR#16141)
+setGeneric("foo", function(x, ...) standardGeneric("foo"))
+setMethod("foo", "character",
+          function(x, capitalize=FALSE) if (capitalize) toupper(x) else x)
+setMethod("foo", "factor",
+          function(x, capitalize=FALSE) { x <- as.character(x);  callGeneric() })
+toto1 <- function(x, ...) foo(x, ...)
+stopifnot(identical(toto1(factor("a"), capitalize=TRUE), "A"))
+## wrongly did not capitalize in R <= 3.1.2
+
 
 proc.time()

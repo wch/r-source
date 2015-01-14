@@ -28,12 +28,14 @@ callNextMethod <- function(...) {
     if(is(maybeMethod, "MethodDefinition")) {
         callEnv <- methodEnv <- parent.frame(1)
         mcall <- sys.call(parent)
+        dotsenv <- parent.frame(2)
         i <- 1
     }
     else {
         callEnv <- parent.frame(1)
         methodEnv <- parent.frame(2)
         mcall <- sys.call(sys.parent(2))
+        dotsenv <- parent.frame(3)
         i <- 2
     }
     ## set up the nextMethod object, load it
@@ -124,7 +126,8 @@ callNextMethod <- function(...) {
            }
         }
         else
-            call <- match.call(maybeMethod, mcall, expand.dots = FALSE)
+            call <- match.call(maybeMethod, mcall, expand.dots = FALSE,
+                               envir = dotsenv)
         .Call(C_R_nextMethodCall, call, callEnv)
     }
 }
