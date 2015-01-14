@@ -663,25 +663,14 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
     SEXP e, val, args, argsp, this_sym, op;
     int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
-    Rboolean prim_case, dotsDone;
+    Rboolean prim_case;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
     if(op == R_UnboundValue)
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
-    /* If "..." is an argument, need to pass it down to next method;
-     * (this was motivated by issues with match.call; are these still
-     * valid in rev. 2.12 ? )*/
-    dotsDone = (findVarInFrame3(ev, R_DotsSymbol, TRUE) == R_UnboundValue);
     {PROTECT(e = duplicate(matched_call)); nprotect++;}
-    if(!dotsDone) {
-	SEXP ee = e, dots;
-	PROTECT(dots = allocVector(LANGSXP, 1)); nprotect++;
-	SETCAR(dots, R_DotsSymbol);
-	for(ee = e; CDR(ee) != R_NilValue; ee = CDR(ee));
-	SETCDR(ee, dots); /* append ... symbol, with NULL CDR() */
-    }
     prim_case = isPrimitive(op);
     if(prim_case) {
 	/* retain call to primitive function, suppress method
@@ -699,8 +688,6 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	this_sym = TAG(args);
 	if(this_sym == R_DotsSymbol) {
 	    /* skip this; will have been appended */
-	    if(dotsDone)
-		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
 	    SETCDR(argsp, CDR(args));
 	}
 	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
