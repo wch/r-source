@@ -34580,8 +34580,6 @@ fi
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
 $as_echo "$r_cv_have_curl728" >&6; }
-CPPFLAGS="${r_save_CPPFLAGS}"
-LIBS="${r_save_LIBS}"
 if test "x${r_cv_have_curl728}" != xyes; then
   ac_cv_have_curl_curl_h=0
   CURL_CPPFLAGS=
@@ -34600,6 +34598,8 @@ fi
 done
 
 fi
+CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
 
 
 

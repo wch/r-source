@@ -2339,8 +2339,6 @@ int main()
 #endif
 }
 ]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
-CPPFLAGS="${r_save_CPPFLAGS}"
-LIBS="${r_save_LIBS}"
 if test "x${r_cv_have_curl728}" != xyes; then
   ac_cv_have_curl_curl_h=0
   CURL_CPPFLAGS=
@@ -2348,6 +2346,8 @@ if test "x${r_cv_have_curl728}" != xyes; then
 else
   AC_CHECK_HEADERS(curl/curl.h)
 fi
+CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
 AC_SUBST(CURL_CPPFLAGS)
 AC_SUBST(CURL_LIBS)
 
