@@ -88,12 +88,12 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
-#ifdef Win32
     const char *capath = getenv("CURL_CA_PATH");
     if (capath && capath[0])
-	curl_easy_setopt(curl, CURLOPT_CAPATH, capath);
+	curl_easy_setopt(hnd, CURLOPT_CAPATH, capath);
+#ifdef Win32
     else
-	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
 #endif
     curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
@@ -133,7 +133,7 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
 #ifndef HAVE_CURL_CURL_H
-    error("curlDownload is not supported on this platform");
+    error("download.file(method = \"libcurl\") is not supported on this platform");
     return R_NilValue;
 #else
     SEXP scmd, sfile, smode;
@@ -186,7 +186,7 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd, CURLOPT_CAPATH, capath);
 #ifdef Win32
     else
-	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
 #endif
     if(!quiet) curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
     const char *ua = CHAR(STRING_ELT(GetOption1(install("HTTPUserAgent")),0));
