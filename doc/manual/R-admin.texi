@@ -1082,6 +1082,7 @@ also be obtained from
 * Building the core files::     
 * Building the cairo devices files::  
 * Using ICU for collation::     
+* Support for libcurl::         
 * Checking the build::          
 * Building the manuals::        
 * Building the Inno Setup installer::  
@@ -1270,7 +1271,7 @@ the macro @samp{CAIRO_HOME} in @file{MkRules.local}.  (Note that this
 tarball unpacks with a top-level directory @file{src/}:
 @samp{CAIRO_HOME} needs to include that directory in its path.)
 
-@node Using ICU for collation, Checking the build, Building the cairo devices files, Building from source
+@node Using ICU for collation, Support for libcurl, Building the cairo devices files, Building from source
 @subsection Using ICU for collation
 
 It is recommended to build @R{} to support ICU (International Components
@@ -1296,7 +1297,22 @@ Unlike on a Unix-alike, it is normally necessary to call
 @code{icuSetCollate} to set a locale before ICU is actually used for
 collation, or set the environment variable @env{R_ICU_LOCALE}.
 
-@node Checking the build, Building the manuals, Using ICU for collation, Building from source
+@node Support for libcurl, Checking the build, Using ICU for collation, Building from source
+@subsection Support for libcurl
+
+@code{libcurl} version 7.28.0 or later can be used to support
+@code{curlGetHeaders} and the @code{"libcurl"} method of
+@code{download.file}.
+
+A suitable distribution can be found @emph{via}
+@uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
+location should be specified in file @file{MkRules.local}.
+
+For secure use of e.g.@: @samp{https://} URLs Windows users need to
+specify the path to @emph{CA root certificates}: see
+@code{download.file}.
+
+@node Checking the build, Building the manuals, Support for libcurl, Building from source
 @subsection Checking the build
 
 You can test a build by running
@@ -3163,18 +3179,18 @@ run-time by calling @code{pcre_config()}. JIT support is desirable for
 the best performance.}): will be used, otherwise versions in the @R{}
 sources will be compiled in.  The external versions can be avoided by
 configure options @option{--without-system-zlib},
-@option{--without-system-bzlib} and or @option{--without-system-pcre}.
+@option{--without-system-bzlib} and @option{--without-system-pcre}.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository
 at @url{https://github.com/laurikari/tre/}, but at the time of writing
 the resulting build will not pass its checks.).
 
-@code{liblzma} from @code{xz-utils} version 5.0.3 or later will be used
-if installed: the version in the @R{} sources can be selected instead by
-configuring with @option{--without-system-xz}.  Systems differ in what
-they call the package including this: e.g.@: on Fedora the library is in
-@samp{xz-libs} and the headers in @samp{xz-devel}.
+Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later will
+be used if installed: the version in the @R{} sources can be selected
+instead by configuring with @option{--without-system-xz}.  Systems
+differ in what they call the package including this: e.g.@: on Fedora
+the library is in @samp{xz-libs} and the headers in @samp{xz-devel}.
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
@@ -3201,6 +3217,11 @@ Linux distributions, Solaris, FreeBSD and AIX, usually as @code{libicu}
 or @code{icu4c}.  It will be used by default where available (including
 on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
+
+If @code{libcurl} version 7.28.0 or later is available (including its
+development version), it will be linked in to support
+@code{curlGetHeaders} and the @code{"libcurl"} method of
+@code{download.file}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
