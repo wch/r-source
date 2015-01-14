@@ -3956,6 +3956,16 @@ function(package, lib.loc = NULL)
 format.check_code_usage_in_package <-
 function(x, ...)
 {
+    ## <FIXME>
+    ## Temporarily try to remove
+    ##   ... used in a situation where it does not exist
+    ## notes caused by c67440
+    if(length(x)) {
+        ind <- grepl("... used in a situation where it does not exist",
+                     x, fixed = TRUE)
+        if(any(ind)) x <- x[!ind]
+    }
+    ## </FIXME>
     if(length(x)) {
         ## There seems no easy we can gather usage diagnostics by type,
         ## so try to rearrange to some extent when formatting.
