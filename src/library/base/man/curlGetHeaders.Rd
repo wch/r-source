@@ -28,6 +28,9 @@ curlGetHeaders(url, redirect = TRUE)
   It uses \code{\link{getOption}("timeout")} for the connection
   timeout: that defaults to 60 seconds.  As this cannot be interrupted
   you may want to consider a shorter value.
+
+  For possible issues with secure URLs (especially on Windows) see
+  \code{\link{download.file}}.
 }
 \value{
   A character vector with integer attribute \code{"status"} (the
