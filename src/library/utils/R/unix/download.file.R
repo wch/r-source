@@ -44,8 +44,7 @@ download.file <-
         ## needed for Mac GUI from download.packages etc
         if(!quiet) flush.console()
      } else if(method == "libcurl") {
-        status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK,
-                                         getOption("HTTPUserAgent")))
+        status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
         ## needed for Mac GUI from download.packages etc
         if(!quiet) flush.console()
    } else if(method == "wget") {

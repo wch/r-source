@@ -43,8 +43,7 @@ download.file <-
     if(method == "internal")
         status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
     else if(method == "libcurl")
-        status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK,
-                                         getOption("HTTPUserAgent")))
+        status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {
         if(quiet) extra <- c(extra, "--quiet")
         if(!cacheOK) extra <- c(extra, "--cache=off")

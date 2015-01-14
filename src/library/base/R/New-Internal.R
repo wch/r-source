@@ -289,7 +289,7 @@ extSoftVersion <- function() .Internal(eSoftVersion())
 libcurlVersion <- function() .Internal(curlVersion())
 
 curlGetHeaders <- function(url, redirect = TRUE)
-    .Internal(curlGetHeaders(url, getOption("HTTPUserAgent"), redirect))
+    .Internal(curlGetHeaders(url, redirect))
 
 
 ## base has no S4 generics
