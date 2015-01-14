@@ -2311,15 +2311,43 @@ if test -n "${CURL_CONFIG}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
   ## This in particular may be wrong for a static library,
-  ## and OpenCSW has copied the static answer over the dynamic one.
+  ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
     CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"
 CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
-AC_CHECK_HEADERS(curl/curl.h)
+r_save_LIBS="${LIBS}"
+LIBS="${CURL_LIBS} ${LIBS}"
+AC_CACHE_CHECK([if libcurl version >= 7.28.0], [r_cv_have_curl728],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <curl/curl.h>
+int main() 
+{
+#ifdef LIBCURL_VERSION_MAJOR
+#if LIBCURL_VERSION_MAJOR > 7
+  exit(1);
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+  exit(0);
+#else
+  exit(1);
+#endif
+#else
+  exit(1);
+#endif
+}
+]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
 CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
+if test "x${r_cv_have_curl728}" != xyes; then
+  ac_cv_have_curl_curl_h=0
+  CURL_CPPFLAGS=
+  CURL_LIBS=
+else
+  AC_CHECK_HEADERS(curl/curl.h)
+fi
 AC_SUBST(CURL_CPPFLAGS)
 AC_SUBST(CURL_LIBS)
 

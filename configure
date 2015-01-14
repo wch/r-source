@@ -34530,14 +34530,64 @@ if test -n "${CURL_CONFIG}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
   ## This in particular may be wrong for a static library,
-  ## and OpenCSW has copied the static answer over the dynamic one.
+  ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
     CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"
 CPPFLAGS="${CURL_CPPFLAGS} ${CPPFLAGS}"
-for ac_header in curl/curl.h
+r_save_LIBS="${LIBS}"
+LIBS="${CURL_LIBS} ${LIBS}"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl version >= 7.28.0" >&5
+$as_echo_n "checking if libcurl version >= 7.28.0... " >&6; }
+if ${r_cv_have_curl728+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  r_cv_have_curl728=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <curl/curl.h>
+int main()
+{
+#ifdef LIBCURL_VERSION_MAJOR
+#if LIBCURL_VERSION_MAJOR > 7
+  exit(1);
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+  exit(0);
+#else
+  exit(1);
+#endif
+#else
+  exit(1);
+#endif
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_have_curl728=yes
+else
+  r_cv_have_curl728=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
+$as_echo "$r_cv_have_curl728" >&6; }
+CPPFLAGS="${r_save_CPPFLAGS}"
+LIBS="${r_save_LIBS}"
+if test "x${r_cv_have_curl728}" != xyes; then
+  ac_cv_have_curl_curl_h=0
+  CURL_CPPFLAGS=
+  CURL_LIBS=
+else
+  for ac_header in curl/curl.h
 do :
   ac_fn_c_check_header_mongrel "$LINENO" "curl/curl.h" "ac_cv_header_curl_curl_h" "$ac_includes_default"
 if test "x$ac_cv_header_curl_curl_h" = xyes; then :
@@ -34549,7 +34599,7 @@ fi
 
 done
 
-CPPFLAGS="${r_save_CPPFLAGS}"
+fi
 
 
 
@@ -36394,11 +36444,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36397: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36447: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36401: \$? = $ac_status" >&5
+   echo "$as_me:36451: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36493,11 +36543,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36496: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36546: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36500: \$? = $ac_status" >&5
+   echo "$as_me:36550: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36545,11 +36595,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36548: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36598: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36552: \$? = $ac_status" >&5
+   echo "$as_me:36602: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
