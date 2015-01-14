@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-06 09:24\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -637,9 +637,9 @@ msgstr ""
 # gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")
 # tools/R/QC.R: 3470
 # gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "Zobacz informację o plikach DESCRIPTION w sekcji  'Creating R packages' "
 "podręcznika 'Writing R Extensions'."
@@ -754,9 +754,8 @@ msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
 
 # tools/R/QC.R: 4077
 # gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual.")
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 "Zobacz informację w sekcji 'Cross-references' podręcznika 'Writing R "
 "Extensions'."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-06 09:24\n"
+"POT-Creation-Date: 2015-01-14 11:38\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -237,9 +237,9 @@ msgid ""
 "already be known to R."
 msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
+#, fuzzy
 msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
+"See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
 "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
@@ -304,9 +304,8 @@ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
 
-msgid ""
-"See the information in section 'Cross-references' of the 'Writing R "
-"Extensions' manual."
+#, fuzzy
+msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "请参考'如何写R附加软件'说明书中'交叉引用'这一段。"
 
 msgid "File %s:"

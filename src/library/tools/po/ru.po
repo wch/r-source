@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:03+0000\n"
+"POT-Creation-Date: 2015-01-14 11:39+0000\n"
 "PO-Revision-Date: 2013-03-19 22:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -59,12 +59,12 @@ msgstr ""
 "самое большее одна звездочка '*' поддерживается в каждом описании "
 "преобразования"
 
-#: gramLatex.c:2376 gramRd.c:3893
+#: gramLatex.c:2376 gramRd.c:3896
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
-#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
+#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
 #, c-format
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
@@ -108,32 +108,32 @@ msgstr "макро вложены слишком глубоко: бесконечная рекурсия?"
 msgid "Unable to find macro %s"
 msgstr "Не могу найти макро %s"
 
-#: gramRd.c:3953
+#: gramRd.c:3956
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Неожиданный конец ввода (в %c закавыченная строка открыта на %s:%d:%d)"
 
-#: gramRd.c:4395
+#: gramRd.c:4398
 msgid "cannot open the connection"
 msgstr "не могу открыть соединение"
 
-#: gramRd.c:4402
+#: gramRd.c:4405
 msgid "cannot read from this connection"
 msgstr "не могу прочесть из этого соединения"
 
-#: gramRd.c:4410
+#: gramRd.c:4413
 msgid "invalid Rd file"
 msgstr "неправильный Rd-файл"
 
-#: gramRd.c:4429
+#: gramRd.c:4432
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' поддерживает только deparsing-символы"
 
-#: gramRd.c:4432
+#: gramRd.c:4435
 msgid "bad state"
 msgstr "плохое состояние"
 
-#: gramRd.c:4445
+#: gramRd.c:4448
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "плохой текстовый режим %d в 'deparseRd'"

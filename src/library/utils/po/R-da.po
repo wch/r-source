@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:53\n"
+"POT-Creation-Date: 2015-01-14 11:39\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -640,6 +640,9 @@ msgid ""
 "skipping dependencies"
 msgstr ""
 
+msgid "type 'binary' is not supported on this platform"
+msgstr ""
+
 msgid "no packages were specified"
 msgstr ""
 
@@ -660,10 +663,6 @@ msgstr ""
 
 msgid ""
 "type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
-msgstr ""
-
-msgid ""
-"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
 msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"

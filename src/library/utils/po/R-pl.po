@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:53\n"
+"POT-Creation-Date: 2015-01-14 11:39\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1219,6 +1219,12 @@ msgstr ""
 "Nie wiadomo, do którego elementu 'lib' zainstalować zależności\n"
 "pomijanie zależności"
 
+# utils/R/databrowser.R: 185
+# stop("only 'html = TRUE' is supported on this platform")
+#, fuzzy
+msgid "type 'binary' is not supported on this platform"
+msgstr "jedynie 'html = TRUE' jest wspierane na tej platformie"
+
 # utils/R/packages2.R: 198
 # stop("no packages were specified")
 # utils/R/packages2.R: 205
@@ -1284,14 +1290,6 @@ msgid ""
 msgstr ""
 "'type == \"both\"' może być użyte jedynie w systemie Windows lub kompilacji "
 "CRAN dla systemów Mac OS X"
-
-# utils/R/packages2.R: 305
-# stop("type == \"both\" cannot be used if 'available' or 'contriburl' is specified")
-msgid ""
-"type == \"both\" cannot be used if 'available' or 'contriburl' is specified"
-msgstr ""
-"'type == \"both\"' nie może być użyte jeśli 'available' lub 'contriburl' są "
-"określone"
 
 # utils/R/packages2.R: 307
 # stop("type == \"both\" cannot be used with 'repos = NULL'")
@@ -2518,6 +2516,15 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "pakiet %s jest w użyciu i nie zostanie zainstalowany"
 msgstr[1] "pakiety %s są w użyciu i nie zostaną zainstalowane"
 msgstr[2] "pakiety %s są w użyciu i nie zostaną zainstalowane"
+
+# utils/R/packages2.R: 305
+# stop("type == \"both\" cannot be used if 'available' or 'contriburl' is specified")
+#~ msgid ""
+#~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "
+#~ "specified"
+#~ msgstr ""
+#~ "'type == \"both\"' nie może być użyte jeśli 'available' lub 'contriburl' "
+#~ "są określone"
 
 # utils/R/unix/download.file.R: 63
 # warning("method 'lynx' is untested and deprecated as from R 3.1.0")

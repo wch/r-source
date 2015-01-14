@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52+0000\n"
+"POT-Creation-Date: 2015-01-14 11:38+0000\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -43,12 +43,12 @@ msgstr ""
 "nenhum slot \"allMethods\" encontrado no objeto de classe \"%s\", usado como "
 "lista de métodos para a função '%s'"
 
-#: methods_list_dispatch.c:434
+#: methods_list_dispatch.c:443
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "nenhuma definição genérica de função encontrada para '%s'"
 
-#: methods_list_dispatch.c:437
+#: methods_list_dispatch.c:446
 #, fuzzy, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
@@ -56,7 +56,7 @@ msgstr ""
 "Nenhuma definição genérica de função encontrada para '%s' no ambiente "
 "especificado"
 
-#: methods_list_dispatch.c:472
+#: methods_list_dispatch.c:481
 #, c-format
 msgid ""
 "invalid generic function object for method selection for function '%s': "
@@ -66,22 +66,22 @@ msgstr ""
 "uma função ou primitiva era esperada, mas foi especificado um objeto de "
 "classe \"%s\""
 
-#: methods_list_dispatch.c:487
+#: methods_list_dispatch.c:496
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "nenhum método direto ou obtido por herança para a função '%s' nessa chamada"
 
-#: methods_list_dispatch.c:513 methods_list_dispatch.c:1050
+#: methods_list_dispatch.c:522 methods_list_dispatch.c:1059
 msgid "invalid object (non-function) used as method"
 msgstr "objeto inválido (não-função) usado como método"
 
-#: methods_list_dispatch.c:534
+#: methods_list_dispatch.c:543
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "não foi possível encontrar o símbolo '%s' no escopo da chamada"
 
-#: methods_list_dispatch.c:542
+#: methods_list_dispatch.c:551
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -90,11 +90,11 @@ msgstr ""
 "símbolo inválido na verificação de argumento faltante no dispacho de método: "
 "um nome era esperado, mas foi especificado um objeto de classe \"%s\""
 
-#: methods_list_dispatch.c:545
+#: methods_list_dispatch.c:554
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL foi extinto"
 
-#: methods_list_dispatch.c:549
+#: methods_list_dispatch.c:558
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
@@ -103,7 +103,7 @@ msgstr ""
 "ambiente inválido na verificação de argumento faltante, '%s',  no "
 "despachamento dos métodos: foi especificado um objeto de classe \"%s\""
 
-#: methods_list_dispatch.c:575
+#: methods_list_dispatch.c:584
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -112,7 +112,7 @@ msgstr ""
 "objeto de classe \"%s\" usado como lista de métodos para a função '%s' (sem "
 "slot 'argument')"
 
-#: methods_list_dispatch.c:586
+#: methods_list_dispatch.c:595
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
@@ -121,7 +121,7 @@ msgstr ""
 "(na seleção de um método para a função '%s') '...' e variáveis relacionadas "
 "não podem ser usadas no despachamento dos métodos"
 
-#: methods_list_dispatch.c:589
+#: methods_list_dispatch.c:598
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -130,8 +130,8 @@ msgstr ""
 "(na seleção de um método para a função '%s') o argumento 'environment' para "
 "o dispachamento deve ser um ambiente R; foi obtido um objeto de classe \"%s\""
 
-#: methods_list_dispatch.c:603 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:1003
+#: methods_list_dispatch.c:612 methods_list_dispatch.c:624
+#: methods_list_dispatch.c:1012
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -140,21 +140,21 @@ msgstr ""
 "erro na avaliação do argumento '%s' na seleção do método para a função '%s': "
 "'%s'"
 
-#: methods_list_dispatch.c:623
+#: methods_list_dispatch.c:632
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 "nenhum método correspondente encontrado para a função '%s' (argumento '%s', "
 "com classe \"%s\")"
 
-#: methods_list_dispatch.c:630
+#: methods_list_dispatch.c:639
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr ""
 "uso recursivo da função '%s' na seleção do método, sem um método padrão"
 
-#: methods_list_dispatch.c:694
+#: methods_list_dispatch.c:703
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
@@ -162,40 +162,40 @@ msgstr ""
 "no processamento de 'callNextMethod', encontrado um '...' na chamada "
 "correspondente, mas nenhum argumento '...' foi encontrado"
 
-#: methods_list_dispatch.c:707
+#: methods_list_dispatch.c:716
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "erro na avaliação de um próximo método 'primitive': %s"
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:814
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' deve ser uma única string (foi especificado um vetor de caracteres de "
 "comprimento %d)"
 
-#: methods_list_dispatch.c:809
+#: methods_list_dispatch.c:818
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' deve ser uma string não-vazia; foi obtida uma string vazia"
 
-#: methods_list_dispatch.c:813
+#: methods_list_dispatch.c:822
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' deve ser uma string única (foi obtido um objeto da classe \"%s\")"
 
-#: methods_list_dispatch.c:884
+#: methods_list_dispatch.c:893
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "Class deve ser ou um nome cadeia de caracteres ou uma definição de classe"
 
-#: methods_list_dispatch.c:963
+#: methods_list_dispatch.c:972
 #, fuzzy, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Falha ao obter a genérica primitiva '%s"
 
-#: methods_list_dispatch.c:969
+#: methods_list_dispatch.c:978
 #, fuzzy, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

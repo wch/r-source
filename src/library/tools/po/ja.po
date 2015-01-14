@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:03+0000\n"
+"POT-Creation-Date: 2015-01-14 11:39+0000\n"
 "PO-Revision-Date: 2014-03-26 13:56+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -54,12 +54,12 @@ msgstr " 識別不能なフォーマット指定 '%s' です "
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr " 各変換指定に許されるアステリスク '*' は多くても一つです "
 
-#: gramLatex.c:2376 gramRd.c:3893
+#: gramLatex.c:2376 gramRd.c:3896
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr " %d 行にある長い文字列のためのバッファを確保できませんでした "
 
-#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
+#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
 #, c-format
 msgid "invalid '%s' value"
 msgstr " 不正な '%s' 値です "
@@ -103,32 +103,32 @@ msgstr " マクロが過剰に入れ子になっています: 無限な再帰？
 msgid "Unable to find macro %s"
 msgstr " マクロ %s を見つけることができません "
 
-#: gramRd.c:3953
+#: gramRd.c:3956
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr " 予想外の入力の停止 (%c 引用文字列中の %s:%d:%d で開かれた) "
 
-#: gramRd.c:4395
+#: gramRd.c:4398
 msgid "cannot open the connection"
 msgstr " コネクションを開くことができません "
 
-#: gramRd.c:4402
+#: gramRd.c:4405
 msgid "cannot read from this connection"
 msgstr " このコネクションからは読み取りができません "
 
-#: gramRd.c:4410
+#: gramRd.c:4413
 msgid "invalid Rd file"
 msgstr " 不正な Rd ファイルです "
 
-#: gramRd.c:4429
+#: gramRd.c:4432
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr " 'deparseRd' は文字要素のディパースだけをサポートしています "
 
-#: gramRd.c:4432
+#: gramRd.c:4435
 msgid "bad state"
 msgstr " 不都合な状態 "
 
-#: gramRd.c:4445
+#: gramRd.c:4448
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr " 'deparseRd' 中に不都合なテキストモード %d "

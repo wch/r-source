@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:03+0000\n"
+"POT-Creation-Date: 2015-01-14 11:39+0000\n"
 "PO-Revision-Date: 2013-03-19 20:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -56,13 +56,13 @@ msgstr ""
 "une seule astérisque '*' est supportée au maximum dans chaque spécification "
 "de conversion "
 
-#: gramLatex.c:2376 gramRd.c:3893
+#: gramLatex.c:2376 gramRd.c:3896
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 "impossibilité d'allouer une zone tampon pour une chaîne longue à la ligne %d"
 
-#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
+#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
@@ -111,34 +111,34 @@ msgstr "macros imbriquées trop profondément : récursion infinie ?"
 msgid "Unable to find macro %s"
 msgstr "Macro %s introuvable"
 
-#: gramRd.c:3953
+#: gramRd.c:3956
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 "Fin d'entrée inattendue (dans la chaîne entre guillements %c ouvertes à %s:"
 "%d:%d)"
 
-#: gramRd.c:4395
+#: gramRd.c:4398
 msgid "cannot open the connection"
 msgstr "impossible d'ouvrir la connexion"
 
-#: gramRd.c:4402
+#: gramRd.c:4405
 msgid "cannot read from this connection"
 msgstr "impossible de lire depuis cette connexion"
 
-#: gramRd.c:4410
+#: gramRd.c:4413
 msgid "invalid Rd file"
 msgstr "fichier Rd incorrect"
 
-#: gramRd.c:4429
+#: gramRd.c:4432
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' ne peut décoder que des éléments textuels"
 
-#: gramRd.c:4432
+#: gramRd.c:4435
 msgid "bad state"
 msgstr "état incorrect"
 
-#: gramRd.c:4445
+#: gramRd.c:4448
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "mode de texte %d erroné dans 'deparseRd'"

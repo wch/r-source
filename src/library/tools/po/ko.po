@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:03+0000\n"
+"POT-Creation-Date: 2015-01-14 11:39+0000\n"
 "PO-Revision-Date: 2014-03-26 21:20-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -56,12 +56,12 @@ msgstr "알 수 없는 포맷 지정 '%s'입니다"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.c:2376 gramRd.c:3893
+#: gramLatex.c:2376 gramRd.c:3896
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "라인 %d에 있는 긴 문자열에 대한 버퍼를 할당할 수 없습니다"
 
-#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
+#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s' 값입니다"
@@ -105,32 +105,32 @@ msgstr "매크로들이 너무 깊게 중첩되어 있습니다:  무한 반복�
 msgid "Unable to find macro %s"
 msgstr "매크로 %s를 찾을 수 없습니다"
 
-#: gramRd.c:3953
+#: gramRd.c:3956
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "입력을 끝을 알 수 없습니다 (in %c quoted string opened at %s:%d:%d)"
 
-#: gramRd.c:4395
+#: gramRd.c:4398
 msgid "cannot open the connection"
 msgstr "커넥션을 열 수 없습니다"
 
-#: gramRd.c:4402
+#: gramRd.c:4405
 msgid "cannot read from this connection"
 msgstr "이 커넥션으로부터 읽을 수 없습니다"
 
-#: gramRd.c:4410
+#: gramRd.c:4413
 msgid "invalid Rd file"
 msgstr "유효한 Rd 파일이 아닙니다"
 
-#: gramRd.c:4429
+#: gramRd.c:4432
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 
-#: gramRd.c:4432
+#: gramRd.c:4435
 msgid "bad state"
 msgstr "잘못된 상태입니다"
 
-#: gramRd.c:4445
+#: gramRd.c:4448
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"

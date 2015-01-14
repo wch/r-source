@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:03+0000\n"
+"POT-Creation-Date: 2015-01-14 11:39+0000\n"
 "PO-Revision-Date: 2013-03-11 11:27+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -53,12 +53,12 @@ msgstr "nicht erkannte Formatspezifikation '%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "höchstens ein Stern '*' in jeder Konversionsspezifikation unterstützt"
 
-#: gramLatex.c:2376 gramRd.c:3893
+#: gramLatex.c:2376 gramRd.c:3896
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "kann keinen Buffer für lange Zeichenkette in Zeile %d allokieren"
 
-#: gramLatex.c:2613 gramRd.c:4382 gramRd.c:4388
+#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
 #, c-format
 msgid "invalid '%s' value"
 msgstr "unzulässiger '%s' Wert"
@@ -102,32 +102,32 @@ msgstr "Makros zu tief verschachtelt: unendliche Rekursion?"
 msgid "Unable to find macro %s"
 msgstr "Kann Makro %s nicht finden"
 
-#: gramRd.c:3953
+#: gramRd.c:3956
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Unerwartetes Ende der Eingabe (in %c Zeichenkette bei %s:%d:%d)"
 
-#: gramRd.c:4395
+#: gramRd.c:4398
 msgid "cannot open the connection"
 msgstr "kann Verbindung nicht öffnen"
 
-#: gramRd.c:4402
+#: gramRd.c:4405
 msgid "cannot read from this connection"
 msgstr "kann aus dieser Verbindung nicht lesen"
 
-#: gramRd.c:4410
+#: gramRd.c:4413
 msgid "invalid Rd file"
 msgstr "ungültige Rd Datei"
 
-#: gramRd.c:4429
+#: gramRd.c:4432
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' unterstützt nur das Deparsing von Zeichenkettenelementen"
 
-#: gramRd.c:4432
+#: gramRd.c:4435
 msgid "bad state"
 msgstr "schlechter Zustand"
 
-#: gramRd.c:4445
+#: gramRd.c:4448
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "schlechter Textmode %d in 'deparseRd'"

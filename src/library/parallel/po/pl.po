@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-19 10:57+0000\n"
+"POT-Creation-Date: 2015-01-14 11:38+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -62,7 +62,7 @@ msgstr ""
 # error(_("write error, closing pipe to the master"))
 # parallel/src/fork.c: 667
 # error(_("write error, closing pipe to the master"))
-#: fork.c:386 fork.c:393 fork.c:715
+#: fork.c:386 fork.c:393 fork.c:717
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
@@ -89,26 +89,26 @@ msgstr "błąd zapisu"
 # warning(_("error '%s' in select"), strerror(errno))
 # parallel/src/fork.c: 561
 # warning(_("error '%s' in select"), strerror(errno))
-#: fork.c:487 fork.c:609
+#: fork.c:487 fork.c:611
 #, c-format
 msgid "error '%s' in select"
 msgstr "błąd '%s' przy wyborze"
 
 # parallel/src/fork.c: 649
 # error(_("'mckill' failed"))
-#: fork.c:697
+#: fork.c:699
 msgid "'mckill' failed"
 msgstr "'mckill' nie powiodło się"
 
 # parallel/src/fork.c: 659
 # error(_("'mcexit' can only be used in a child process"))
-#: fork.c:707
+#: fork.c:709
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
 # parallel/src/fork.c: 680
 # error(_("'mcexit' failed"))
-#: fork.c:728
+#: fork.c:730
 msgid "'mcexit' failed"
 msgstr "'mcexit' nie powiodło się"
 
@@ -116,19 +116,19 @@ msgstr "'mcexit' nie powiodło się"
 # error(_("invalid CPU affinity specification"))
 # parallel/src/fork.c: 719
 # error(_("invalid CPU affinity specification"))
-#: fork.c:757 fork.c:766
+#: fork.c:759 fork.c:768
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
 # parallel/src/fork.c: 730
 # error(_("requested CPU set is too large for this system"))
-#: fork.c:777
+#: fork.c:779
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
 # parallel/src/fork.c: 753
 # error(_("retrieving CPU affinity set failed"))
-#: fork.c:800
+#: fork.c:802
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"
 
