@@ -399,7 +399,7 @@ f% -*- coding: utf-8 -*-
       the dimnames are asymmetric if the matrix is otherwise symmetric;
       \PR{16151}.
 
-      \item Fix issues with forwarding \code{\dots}} through
+      \item Fix issues with forwarding \code{\dots} through
       \code{callGeneric} and \code{callNextMethod}; see \PR{16141}.
     }
   }
