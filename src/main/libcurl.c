@@ -88,9 +88,9 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
-    const char *capath = getenv("CURL_CA_PATH");
+    const char *capath = getenv("CURL_CA_BUNDLE");
     if (capath && capath[0])
-	curl_easy_setopt(hnd, CURLOPT_CAPATH, capath);
+	curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
 #ifdef Win32
     else
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -181,9 +181,9 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     int still_running, repeats = 0;
  
     curl_easy_setopt(hnd, CURLOPT_URL, url);
-    const char *capath = getenv("CURL_CA_PATH");
+    const char *capath = getenv("CURL_CA_BUNDLE");
     if (capath && capath[0])
-	curl_easy_setopt(hnd, CURLOPT_CAPATH, capath);
+	curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
 #ifdef Win32
     else
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
