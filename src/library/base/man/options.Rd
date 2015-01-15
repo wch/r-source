@@ -546,8 +546,13 @@ getOption(x, default = NULL)
       the character string \code{"pkgloack"}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
-      printed on URL downloads etc.  Default is 2, for failure causes.
-      Set to 1 or 0 to get more information.}
+      printed on URL downloads etc, using the \code{"internal"} method.
+      Default is 2, for failure causes.  Set to 1 or 0 to get more
+      detailed information.
+  
+      For methods based on \code{libcurl} a value less than 2 (the
+      default) selects verbose output.
+    }
 
     \item{\code{install.packages.check.source}:}{Used by
       \code{\link{install.packages}} on platforms which support binary

@@ -163,16 +163,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   This applies to the internal code only.
 
   Proxies can be specified via environment variables.
-  Setting \env{"no_proxy"} to \code{"*"} stops any proxy being tried.
-  Otherwise the setting of \env{"http_proxy"} or \env{"ftp_proxy"}
+  Setting \env{no_proxy} to \code{*} stops any proxy being tried.
+  Otherwise the setting of \env{http_proxy} or \env{ftp_proxy}
   (or failing that, the all upper-case version) is consulted and if
   non-empty used as a proxy site.  For FTP transfers, the username
-  and password on the proxy can be specified by \env{"ftp_proxy_user"}
-  and \env{"ftp_proxy_password"}.  The form of \env{"http_proxy"}
-  should be \code{"http://proxy.dom.com/"} or
-  \code{"http://proxy.dom.com:8080/"} where the port defaults to
+  and password on the proxy can be specified by \env{ftp_proxy_user}
+  and \env{ftp_proxy_password}.  The form of \env{http_proxy}
+  should be \code{http://proxy.dom.com/} or
+  \code{http://proxy.dom.com:8080/} where the port defaults to
   \code{80} and the trailing slash may be omitted. For
-  \env{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
+  \env{ftp_proxy} use the form \code{ftp://proxy.dom.com:3128/}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be
   altered later by calling \code{\link{Sys.setenv}}.
@@ -180,16 +180,22 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Usernames and passwords can be set for HTTP proxy transfers via
   environment variable \env{http_proxy_user} in the form
   \code{user:passwd}.  Alternatively, \env{http_proxy} can be of the
-  form \code{"http://user:pass@proxy.dom.com:8080/"} for compatibility
+  form \code{http://user:pass@proxy.dom.com:8080/} for compatibility
   with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
   supported.
 #ifdef windows
-  Under Windows, if \env{http_proxy_user} is set to \code{"ask"} then
+  Under Windows, if \env{http_proxy_user} is set to \code{ask} then
   a dialog box will come up for the user to enter the username and
   password.  \bold{NB:} you will be given only one opportunity to enter this,
   but if proxy authentication is required and fails there will be one
   further prompt per download.
 #endif
+
+  Much the same scheme is supported by \code{method = "libcurl"}, including
+  \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
+  two a contents of \code{[user:password@]machine[:port]} where the
+  parts in brackets are optional.  See
+  \uref{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs usually

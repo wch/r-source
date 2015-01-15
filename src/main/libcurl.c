@@ -28,15 +28,14 @@
 
 #ifdef HAVE_CURL_CURL_H
 # include <curl/curl.h>
-#endif
-
 /*
   This need libcurl >= 7.28.0 (Oct 2012) for curl_multi_wait.
   There is a configure test but it is not used on Windows and system
   software can change.
 */
-#if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
-#error libcurl 7.28.0 or later is required.
+# if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 28)
+# error libcurl 7.28.0 or later is required.
+# endif
 #endif
 
 SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -65,6 +64,8 @@ SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+
+#ifdef HAVE_CURL_CURL_H
 // extract some common code
 static void curlCommon(CURL *hnd, int redirect)
 {
@@ -85,6 +86,11 @@ static void curlCommon(CURL *hnd, int redirect)
 	curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
 	curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 20L);
     }
+    int verbosity = asInteger(GetOption1(install("internet.info")));
+    if(verbosity < 2) curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
+
+    // enable the cookie engine, keep cookies in memory
+    curl_easy_setopt(hnd, CURLOPT_COOKIEFILE, "");
 }
 
 static char headers[500][2048];
@@ -101,6 +107,7 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     used++;
     return result;      
 }
+#endif
 
 SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -145,7 +152,7 @@ SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 extern void Rsleep(double timeint);
 
-/* download(url, destfile, quiet, mode, headers, cacheOK, ua) */
+/* download(url, destfile, quiet, mode, headers, cacheOK) */
 
 SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

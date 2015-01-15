@@ -46,6 +46,8 @@ curlGetHeaders(url, redirect = TRUE)
   \code{\link{capabilities}("libcurl")} to see if this is supported.
 }
 
-\examples{\donttest{## needs Internet access
-curlGetHeaders("http://bugs.r-project.org")   ## this redirects
+\examples{\donttest{## needs Internet access, results vary
+curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
+curlGetHeaders("https://httpbin.org/status/404")  ## returns status
+curlGetHeaders("ftp://cran.r-project.org")
 }}
