@@ -25,6 +25,10 @@ curlGetHeaders(url, redirect = TRUE)
   This  reports what \command{curl -I -L} or \command{curl -I} would
   report.
 
+  Only 500 header lines will be reported: there is a limit of 20
+  redirections so this should suffice (and even 20 would indicate
+  problems).
+
   It uses \code{\link{getOption}("timeout")} for the connection
   timeout: that defaults to 60 seconds.  As this cannot be interrupted
   you may want to consider a shorter value.
