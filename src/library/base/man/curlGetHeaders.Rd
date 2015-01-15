@@ -10,7 +10,7 @@
 }
 \description{
   Retrieve the headers for a URL for a supported protocol such as
-  \code{http://}, \code{ftp://} and \code{https://}.
+  \code{http://}, \code{ftp://} and \code{https://}.  An optional function.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE)

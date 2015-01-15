@@ -24,10 +24,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \item{destfile}{A character string with the name where the downloaded
     file is saved.  Tilde-expansion is performed.}
 
-  \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"libcurl"}, \code{"wget"}
-    and \code{"curl"}, and there is a value \code{"auto"}: see
-    \sQuote{Details} and \sQuote{Note}.
+  \item{method}{Method to be used for downloading files.  Current
+    download methods are \code{"internal"}, \code{"libcurl"},
+    \code{"wget"} and \code{"curl"}, and there is a value \code{"auto"}:
+    see \sQuote{Details} and \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
@@ -195,7 +195,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
   two a contents of \code{[user:password@]machine[:port]} where the
   parts in brackets are optional.  See
-  \uref{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
+  \url{http://curl.haxx.se/libcurl/c/libcurl-tutorial.html} for details.
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs usually
