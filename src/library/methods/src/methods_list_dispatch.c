@@ -686,11 +686,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     appears) in which case ... was appended. */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
-	if(this_sym == R_DotsSymbol) {
-	    /* skip this; will have been appended */
-	    SETCDR(argsp, CDR(args));
-	}
-	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
+        if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
 	argsp = args; args = CDR(args);
     }
