@@ -22,8 +22,9 @@ curlGetHeaders(url, redirect = TRUE)
 }
 
 \details{
-  This  reports what \command{curl -I -L} or \command{curl -I} would
-  report.
+  This reports what \command{curl -I -L} or \command{curl -I} would
+  report.  For a \code{ftp://} URL the \sQuote{headers} are a record of
+  the conversation between client and server before data transfer.
 
   Only 500 header lines will be reported: there is a limit of 20
   redirections so this should suffice (and even 20 would indicate
@@ -32,6 +33,9 @@ curlGetHeaders(url, redirect = TRUE)
   It uses \code{\link{getOption}("timeout")} for the connection
   timeout: that defaults to 60 seconds.  As this cannot be interrupted
   you may want to consider a shorter value.
+
+  To see all the details of the interaction with the server(s) set
+  \code{\link{options}(internet.info = 1)}.
 
   For possible issues with secure URLs (especially on Windows) see
   \code{\link{download.file}}.
