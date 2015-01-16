@@ -350,6 +350,7 @@ install.packages <-
         if (!missing(contriburl) || !is.null(available)) type <- type2
     }
 
+    getDeps <- TRUE
     if (type == "both") {
         if(is.null(repos))
             stop("type == \"both\" cannot be used with 'repos = NULL'")
@@ -361,6 +362,7 @@ install.packages <-
             available.packages(contriburl = contriburl, method = method,
                                fields = "NeedsCompilation")
         pkgs <- getDependencies(pkgs, dependencies, available, lib)
+        getDeps <- FALSE
         ## Now see what we can get as binary packages.
         av2 <- available.packages(contriburl = contrib.url(repos, type2),
                                   method = method)
@@ -450,6 +452,7 @@ install.packages <-
                         paste(sQuote(pkgs), collapse=", ")),
                 "\n", domain = NA)
 	flush.console()
+        ## end of "both"
     } else if (getOption("install.packages.check.source", "yes") %in% "yes"
                && (type %in% "win.binary" || substr(type, 1L, 10L) == "mac.binary")) {
         if (missing(contriburl) && is.null(available) && !is.null(repos)) {
@@ -649,7 +652,8 @@ install.packages <-
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-    pkgs <- getDependencies(pkgs, dependencies, available, lib)
+    if(getDeps)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
