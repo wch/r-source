@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -465,18 +465,18 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 
 #define DUPLICATED_INIT						\
     HashData data;						\
-    HashTableSetup(x, &data, nmax);			       	\
+    HashTableSetup(x, &data, nmax);				\
     if(TYPEOF(x) == STRSXP) {					\
 	data.useUTF8 = FALSE; data.useCache = TRUE;		\
-	for(i = 0; i < n; i++) {			\
+	for(i = 0; i < n; i++) {				\
 	    if(IS_BYTES(STRING_ELT(x, i))) {			\
 		data.useUTF8 = FALSE; break;			\
-	    }                                                   \
-    	    if(ENC_KNOWN(STRING_ELT(x, i))) {                   \
-		data.useUTF8 = TRUE;                            \
 	    }							\
-	    if(!IS_CACHED(STRING_ELT(x, i))) {                  \
-		data.useCache = FALSE; break;                   \
+	    if(ENC_KNOWN(STRING_ELT(x, i))) {			\
+		data.useUTF8 = TRUE;				\
+	    }							\
+	    if(!IS_CACHED(STRING_ELT(x, i))) {			\
+		data.useCache = FALSE; break;			\
 	    }							\
 	}							\
     }
@@ -631,14 +631,14 @@ R_xlen_t any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 		if(isDup) {				\
 		    UNPROTECT(2);			\
 		    return ++i;				\
- 	        }					\
+		}					\
 		/* else continue */			\
 	    }
 	    IS_DUPLICATED_CHECK;
 	}
     else {
 	for (i = 0; i < n; i++) {
-            IS_DUPLICATED_CHECK;
+	    IS_DUPLICATED_CHECK;
 	}
     }
 
@@ -650,9 +650,9 @@ R_xlen_t any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 #undef DUPLICATED_INIT
 
 
-/* .Internal(duplicated(x))       [op=0]
-  .Internal(unique(x))	          [op=1]
-   .Internal(anyDuplicated(x))    [op=2]
+/* .Internal(duplicated(x))	  [op=0]
+  .Internal(unique(x))		  [op=1]
+   .Internal(anyDuplicated(x))	  [op=2]
 */
 SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -812,7 +812,7 @@ static SEXP match_transform(SEXP s, SEXP env)
     if(OBJECT(s)) {
 	if(inherits(s, "factor")) return asCharacterFactor(s);
 	else if(inherits(s, "POSIXlt")) { /* and maybe more classes in the future:
-					   * Call R's (generic)  as.character(s) : */
+					   * Call R's (generic)	 as.character(s) : */
 	    SEXP call, r;
 	    PROTECT(call = lang2(install("as.character"), s));
 	    r = eval(call, env);
@@ -842,9 +842,9 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     }
 
     int nprot = 0;
-    PROTECT(x     = match_transform(ix,     env)); nprot++;
+    PROTECT(x	  = match_transform(ix,	    env)); nprot++;
     PROTECT(table = match_transform(itable, env)); nprot++;
-    /* or should we use PROTECT_WITH_INDEX  and  REPROTECT below ? */
+    /* or should we use PROTECT_WITH_INDEX and REPROTECT below ? */
 
     /* Coerce to a common type; type == NILSXP is ok here.
      * Note that above we coerce factors and "POSIXlt", only to character.
@@ -852,7 +852,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
      * (given that we have "Vector" or NULL) */
     if(TYPEOF(x) >= STRSXP || TYPEOF(table) >= STRSXP) type = STRSXP;
     else type = TYPEOF(x) < TYPEOF(table) ? TYPEOF(table) : TYPEOF(x);
-    PROTECT(x     = coerceVector(x,     type)); nprot++;
+    PROTECT(x	  = coerceVector(x,	type)); nprot++;
     PROTECT(table = coerceVector(table, type)); nprot++;
     if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
     data.nomatch = nmatch;
@@ -860,9 +860,9 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     if(type == STRSXP) {
 	Rboolean useBytes = FALSE;
 	Rboolean useUTF8 = FALSE;
-        Rboolean useCache = TRUE;
+	Rboolean useCache = TRUE;
 	for(R_xlen_t i = 0; i < length(x); i++) {
-            SEXP s = STRING_ELT(x, i);
+	    SEXP s = STRING_ELT(x, i);
 	    if(IS_BYTES(s)) {
 		useBytes = TRUE;
 		useUTF8 = FALSE;
@@ -871,14 +871,14 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	    if(ENC_KNOWN(s)) {
 		useUTF8 = TRUE;
 	    }
-            if(!IS_CACHED(s)) {
+	    if(!IS_CACHED(s)) {
 		useCache = FALSE;
 		break;
 	    }
-        }
+	}
 	if(!useBytes || useCache) {
 	    for(int i = 0; i < length(table); i++) {
-                SEXP s = STRING_ELT(table, i);
+		SEXP s = STRING_ELT(table, i);
 		if(IS_BYTES(s)) {
 		    useBytes = TRUE;
 		    useUTF8 = FALSE;
@@ -891,10 +891,10 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 		    useCache = FALSE;
 		    break;
 		}
-            }
-        }
+	    }
+	}
 	data.useUTF8 = useUTF8;
-        data.useCache = useCache;
+	data.useCache = useCache;
     }
     PROTECT(data.HashTable); nprot++;
     DoHashing(table, &data);
@@ -940,12 +940,12 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Partial Matching of Strings */
 /* Fully S Compatible version. */
 
-/* Hmm, this was not all S compatible!  The desired behaviour is:
+/* Hmm, this was not all S compatible!	The desired behaviour is:
  * First do exact matches, and mark elements as used as they are matched
  *   unless dup_ok is true.
  * Then do partial matching, from left to right, using up the table
  *   unless dup_ok is true.  Multiple partial matches are ignored.
- * Empty strings are unmatched                        BDR 2000/2/16
+ * Empty strings are unmatched			      BDR 2000/2/16
  */
 
 SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1029,34 +1029,34 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t nexact = 0;
     /* Compromise when hashing used changed in 3.2.0 (PR#15697) */
     if (n_input <= 100 || n_target <= 100) {
-        for (R_xlen_t i = 0; i < n_input; i++) {
-            const char *ss = in[i];
-            if (strlen(ss) == 0) continue;
-            for (int j = 0; j < n_target; j++) {
-                if (no_dups && used[j]) continue;
-                if (strcmp(ss, tar[j]) == 0) {
-                    ians[i] = j + 1;
-                    if (no_dups) used[j] = 1;
-                    nexact++;
-                    break;
-                }
-            }
-        }
+	for (R_xlen_t i = 0; i < n_input; i++) {
+	    const char *ss = in[i];
+	    if (strlen(ss) == 0) continue;
+	    for (int j = 0; j < n_target; j++) {
+		if (no_dups && used[j]) continue;
+		if (strcmp(ss, tar[j]) == 0) {
+		    ians[i] = j + 1;
+		    if (no_dups) used[j] = 1;
+		    nexact++;
+		    break;
+		}
+	    }
+	}
     } else {
-        HashData data;
-        HashTableSetup(target, &data, NA_INTEGER);
-        data.useUTF8 = useUTF8;
-        data.nomatch = 0;
-        DoHashing(target, &data);
-        for (R_xlen_t i = 0; i < n_input; i++) {
-            if (strlen(in[i]) == 0) /* don't look up "" */
-                continue;
-            int j = Lookup(target, input, i, &data);
-            if ((j == 0) || (no_dups && used[j - 1])) continue;
-            if (no_dups) used[j - 1] = 1;
-            ians[i] = j;
-            nexact++;
-        }
+	HashData data;
+	HashTableSetup(target, &data, NA_INTEGER);
+	data.useUTF8 = useUTF8;
+	data.nomatch = 0;
+	DoHashing(target, &data);
+	for (R_xlen_t i = 0; i < n_input; i++) {
+	    if (strlen(in[i]) == 0) /* don't look up "" */
+		continue;
+	    int j = Lookup(target, input, i, &data);
+	    if ((j == 0) || (no_dups && used[j - 1])) continue;
+	    if (no_dups) used[j - 1] = 1;
+	    ians[i] = j;
+	    nexact++;
+	}
     }
 
     if(nexact < n_input) {
@@ -1239,8 +1239,8 @@ static SEXP subDots(SEXP rho)
 	return dots;
 
     if (!isPairList(dots))
-        error(_("... is not a pairlist"));
-    
+	error(_("... is not a pairlist"));
+
     len = length(dots);
     PROTECT(rval=allocList(len));
     for(a = dots, b = rval, i = 1; i <= len; a = CDR(a), b = CDR(b), i++) {
@@ -1274,14 +1274,14 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (TYPEOF(funcall) != LANGSXP)
 	error(_("invalid '%s' argument"), "call");
-    
+
     b = CAR(args);
     if (TYPEOF(b) != CLOSXP)
-        error(_("invalid '%s' argument"), "definition");
+	error(_("invalid '%s' argument"), "definition");
 
     sysp = CAR(CDDDR(args));
     if (!isEnvironment(sysp))
-        error(_("'envir' must be an environment"));
+	error(_("'envir' must be an environment"));
 
     /* Do we expand ... ? */
 
@@ -1301,14 +1301,14 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     t2 = R_MissingArg;
     for (t1=actuals ; t1!=R_NilValue ; t1 = CDR(t1) ) {
 	if (CAR(t1) == R_DotsSymbol) {
-		t2 = subDots(sysp);
-		break;
+	    t2 = subDots(sysp);
+	    break;
 	}
     }
     /* now to splice t2 into the correct spot in actuals */
     if (t2 != R_MissingArg ) {	/* so we did something above */
 	if( CAR(actuals) == R_DotsSymbol ) {
-            UNPROTECT(1);
+	    UNPROTECT(1);
 	    actuals = listAppend(t2, CDR(actuals));
 	    PROTECT(actuals);
 	}
@@ -1324,7 +1324,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     } else { /* get rid of it */
 	if( CAR(actuals) == R_DotsSymbol ) {
-            UNPROTECT(1);
+	    UNPROTECT(1);
 	    actuals = CDR(actuals);
 	    PROTECT(actuals);
 	}
@@ -1594,7 +1594,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* This is going to be slow so use expensive allocation
 	       that will be recovered if interrupted. */
-	    cnts = (int *) R_alloc((size_t) n,  sizeof(int));
+	    cnts = (int *) R_alloc((size_t) n,	sizeof(int));
 	}
 	for(i = 0; i < n; i++) cnts[i] = 1;
 	data.nomatch = 0;
