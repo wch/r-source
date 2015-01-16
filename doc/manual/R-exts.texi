@@ -4094,7 +4094,9 @@ into @R{}).  In the case in point, entry point @code{gzgets} was
 sometimes resolved against the old version compiled into the package,
 sometimes against the copy compiled into @R{} and sometimes against the
 system dynamic library.  The only safe solution is to rename the entry
-points in the copy in the package.
+points in the copy in the package.  We have even seen problems with
+entry point name @code{myprintf}, which is a system entry
+point@footnote{in @file{libselinux}.} on some Linux systems.
 
 @item
 Conflicts between symbols in DLLs are handled in very platform-specific
