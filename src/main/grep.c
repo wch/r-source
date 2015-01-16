@@ -2766,7 +2766,7 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef PCRE_CONFIG_JIT
     // Paul Murrell reports 8.12 does not have this
     // man pcrejit says it was added in 8.20.
-    // 8.12 is the earliest acceptable version and does have the others.
+    // 8.10 is the earliest acceptable version and does have the others.
     pcre_config(PCRE_CONFIG_JIT, &res);
 #else
     res = NA_LOGICAL;
