@@ -1279,7 +1279,7 @@ void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-void attribute_hidden Rsleep(double timeint)
+void Rsleep(double timeint)
 {
     double tm = timeint * 1e6, start = currentTime(), elapsed;
     for (;;) {

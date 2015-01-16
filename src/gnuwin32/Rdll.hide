@@ -421,7 +421,6 @@
  Rm_free
  Rm_malloc
  Rm_realloc
- Rsleep
  Rsockselect
  Rstrlen
  Rstrwid

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,9 @@ static void  in_R_HTTPClose(void *ctx);
 static void *in_R_FTPOpen(const char *url);
 static int   in_R_FTPRead(void *ctx, char *dest, int len);
 static void  in_R_FTPClose(void *ctx);
+SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 
 #include <Rmodules/Rinternet.h>
@@ -1091,6 +1094,10 @@ R_init_internet(DllInfo *info)
 
     tmp->HTTPDCreate = in_R_HTTPDCreate;
     tmp->HTTPDStop = in_R_HTTPDStop;
+
+    tmp->curlVersion = in_do_curlVersion;
+    tmp->curlGetHeaders = in_do_curlGetHeaders;
+    tmp->curlDownload = in_do_curlDownload;
 
     R_setInternetRoutines(tmp);
 }

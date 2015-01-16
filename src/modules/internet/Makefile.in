@@ -11,7 +11,7 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-SOURCES = Rhttpd.c Rsock.c internet.c nanoftp.c nanohttp.c sock.c sockconn.c
+SOURCES = Rhttpd.c Rsock.c internet.c libcurl.c nanoftp.c nanohttp.c sock.c sockconn.c
 HEADERS = sock.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
@@ -22,9 +22,10 @@ DISTFILES = \
 	dllversion.rc
 
 internet_la = internet$(SHLIB_EXT)
-internet_la_LIBADD = $(LIBR1) @INTERNET_LIBS@ @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
+internet_la_LIBADD = $(CURL_LIBS) $(LIBR1) @INTERNET_LIBS@ @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
-ALL_CFLAGS = $(ALL_CFLAGS_LO) @C_VISIBILITY@
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CURL_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CFLAGS = $(ALL_CFLAGS_LO)  @C_VISIBILITY@
 
 all: R
 

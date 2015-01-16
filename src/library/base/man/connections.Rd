@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -15,6 +15,7 @@
 \alias{bzfile}
 \alias{xzfile}
 \alias{url}
+\alias{curl}
 \alias{socketConnection}
 \alias{open}
 \alias{open.connection}
@@ -41,8 +42,8 @@
 file(description = "", open = "", blocking = TRUE,
      encoding = getOption("encoding"), raw = FALSE)
 
-url(description, open = "", blocking = TRUE,
-    encoding = getOption("encoding"))
+url(description, open = "", blocking = TRUE, encoding = getOption("encoding"),
+    method = c("internal", "libcurl"))
 
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
@@ -53,8 +54,7 @@ bzfile(description, open = "", encoding = getOption("encoding"),
 xzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 
-unz(description, filename, open = "",
-    encoding = getOption("encoding"))
+unz(description, filename, open = "", encoding = getOption("encoding"))
 
 pipe(description, open = "", encoding = getOption("encoding"))
 

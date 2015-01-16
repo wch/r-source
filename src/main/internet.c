@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12   The R Core Team.
+ *  Copyright (C) 2001-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ static R_InternetRoutines routines, *ptr = &routines;
 
 
 /*
-SEXP Rdownload(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP Rdownload(SEXP args);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode, int timeout);
 
@@ -337,3 +337,42 @@ int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 	return 0;
     }
 }
+
+SEXP attribute_hidden do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if(!initialized) internet_Init();
+    if(initialized > 0)
+	return (*ptr->curlVersion)(call, op, args, rho);
+    else {
+	error(_("internet routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+SEXP attribute_hidden do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if(!initialized) internet_Init();
+    if(initialized > 0)
+	return (*ptr->curlGetHeaders)(call, op, args, rho);
+    else {
+	error(_("internet routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    if(!initialized) internet_Init();
+    if(initialized > 0)
+	return (*ptr->curlDownload)(call, op, args, rho);
+    else {
+	error(_("internet routines cannot be loaded"));
+	return R_NilValue;
+    }
+}
+
+#if 0
+Rconnection R_newCurlUrl(const char *description, const char * const mode)
+{
+}
+#endif

@@ -1,27 +1,33 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-MODULE=internet
+MODULE = internet
 all: makeMakedeps ../../../modules$(R_ARCH)/internet.dll ../../../modules$(R_ARCH)/internet2.dll
 
-CSOURCES=internet.c nanoftp.c nanohttp.c sockconn.c Rsock.c sock.c Rhttpd.c
+CSOURCES = internet.c libcurl.c nanoftp.c nanohttp.c sockconn.c Rsock.c sock.c Rhttpd.c
 
-CPPFLAGS=-I../../include -I../../extra/graphapp -DHAVE_CONFIG_H
+CPPFLAGS = -I../../include -I../../extra/graphapp -DHAVE_CONFIG_H
 
-WSOCK=-lws2_32
+EXTRA_LIBS = -lws2_32
+
+ifdef USE_LIBCURL
+libcurl-CPPFLAGS += -DHAVE_CURL_CURL_H -DCURL_STATICLIB -I"$(CURL_PATH)"/include
+EXTRA_LIBS += -L"$(CURL_PATH)"/lib$(R_ARCH) $(CURL_LIBS)
+endif
+
 
 ../../../modules$(R_ARCH)/internet.dll: internet.o nanoftp.o nanohttp.o sockconn.o Rhttpd.o Rsock.o sock.o dllversion.o
 	@$(MKDIR) -p ../../../modules$(R_ARCH)
 	@$(ECHO) "EXPORTS" > internet.def
 	@$(ECHO) " R_init_internet" >> internet.def
-	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR -lRgraphapp $(WSOCK)
+	$(DLL) -shared  -o $@ $^ internet.def -L../../../$(IMPDIR) -lR -lRgraphapp $(EXTRA_LIBS)
 	@$(RM) internet.def
 
 ../../../modules$(R_ARCH)/internet2.dll: internet2.o sockconn.o Rhttpd.o Rsock.o sock.o dllversion.o
 	@$(MKDIR) -p ../../../modules$(R_ARCH)
 	@$(ECHO) "EXPORTS" > internet2.def
 	@$(ECHO) " R_init_internet2" >> internet2.def
-	$(DLL) -shared  -o $@ $^ internet2.def -L../../../$(IMPDIR) -lR -lRgraphapp -lwininet $(WSOCK) 
+	$(DLL) -shared  -o $@ $^ internet2.def -L../../../$(IMPDIR) -lR -lRgraphapp -lwininet $(EXTRA_LIBS) 
 	@$(RM) internet2.def
 
 internet2.o: internet.c
