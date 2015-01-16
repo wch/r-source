@@ -2763,7 +2763,15 @@ SEXP attribute_hidden do_pcre_config(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nm, 1, mkChar("Unicode properties"));
     pcre_config(PCRE_CONFIG_UNICODE_PROPERTIES, &res); lans[1] = res;
     SET_STRING_ELT(nm, 2, mkChar("JIT"));
-    pcre_config(PCRE_CONFIG_JIT, &res); lans[2] = res;
+#ifdef PCRE_CONFIG_JIT
+    // Paul Murrell reports 8.12 does not have this
+    // man pcrejit says it was added in 8.20.
+    // 8.12 is the earliest acceptable version and does have the others.
+    pcre_config(PCRE_CONFIG_JIT, &res);
+#else
+    res = NA_LOGICAL;
+#endif
+    lans[2] = res;
     UNPROTECT(1);
     return ans;
 }
