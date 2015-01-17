@@ -371,8 +371,9 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-#if 0
 Rconnection R_newCurlUrl(const char *description, const char * const mode)
 {
+    error("method not yet supported");
+    return 0; /* -Wall */
 }
-#endif
+

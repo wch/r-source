@@ -4949,12 +4949,15 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* op = 0: url(description, open, blocking, encoding)
    op = 1: file(description, open, blocking, encoding)
 */
+extern
+Rconnection R_newCurlUrl(const char *description, const char * const mode);
+
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *class2 = "url";
     const char *url, *open;
-    int ncon, block, raw = 0;
+    int ncon, block, raw = 0, meth = 0;
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
@@ -5008,6 +5011,11 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "raw");
     }
 
+    if(PRIMVAL(op) == 0) {
+	const char *cmeth = CHAR(asChar(CAD4R(args)));
+	meth = strcmp(cmeth, "internal");
+    }
+
     ncon = NextConnection();
     if(strncmp(url, "file://", 7) == 0) {
 	int nh = 7;
@@ -5023,8 +5031,12 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	       strncmp(url, "https://", 8) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0 ||
 	       strncmp(url, "ftps://", 7) == 0) {
-       con = R_newurl(url, strlen(open) ? open : "r");
-       ((Rurlconn)con->private)->type = type;
+	if(meth) {
+	    con = R_newCurlUrl(url, strlen(open) ? open : "r");
+	} else {
+	    con = R_newurl(url, strlen(open) ? open : "r");
+	    ((Rurlconn)con->private)->type = type;
+	}
 #endif
     } else {
 	if(PRIMVAL(op) == 1) { /* call to file() */
