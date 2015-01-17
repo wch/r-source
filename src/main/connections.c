@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -4969,7 +4969,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("only first element of 'description' argument used"));
     url = CHAR(STRING_ELT(scmd, 0)); /* ASCII */
 #ifdef Win32
-    if(PRIMVAL(op) && !IS_ASCII(STRING_ELT(scmd, 0)) ) {
+    if(PRIMVAL(op) == 1 && !IS_ASCII(STRING_ELT(scmd, 0)) ) {
 	ienc = CE_UTF8;
 	url = translateCharUTF8(STRING_ELT(scmd, 0));
     } else {
@@ -4982,10 +4982,13 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	url = translateChar(STRING_ELT(scmd, 0));
 #endif
+
 #ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
     else if (strncmp(url, "https://", 8) == 0) type = HTTPSsh;
+    // ftps:// is 'in principle' at present.
+    else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
 #endif
 
     sopen = CADR(args);
@@ -4999,7 +5002,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    if(PRIMVAL(op)) {
+    if(PRIMVAL(op) == 1) {
 	raw = asLogical(CAD4R(args));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
@@ -5018,12 +5021,13 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "https://", 8) == 0 ||
-	       strncmp(url, "ftp://", 6) == 0) {
+	       strncmp(url, "ftp://", 6) == 0 ||
+	       strncmp(url, "ftps://", 7) == 0) {
        con = R_newurl(url, strlen(open) ? open : "r");
        ((Rurlconn)con->private)->type = type;
 #endif
     } else {
-	if(PRIMVAL(op)) { /* call to file() */
+	if(PRIMVAL(op) == 1) { /* call to file() */
 	    if(strlen(url) == 0) {
 		if(!strlen(open)) open ="w+";
 		if(strcmp(open, "w+") != 0 && strcmp(open, "w+b") != 0) {

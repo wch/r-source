@@ -75,10 +75,10 @@ static Rboolean url_open(Rconnection con)
     }
 
     switch(type) {
+    case HTTPsh:
 #ifdef USE_WININET
     case HTTPSsh:
 #endif
-    case HTTPsh:
     {
 	SEXP sheaders, agentFun;
 	const char *headers;
@@ -135,7 +135,6 @@ static void url_close(Rconnection con)
     UrlScheme type = ((Rurlconn)(con->private))->type;
     switch(type) {
     case HTTPSsh:
-    case HTTPsh:
 	in_R_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     case FTPsh:
@@ -153,8 +152,8 @@ static int url_fgetc_internal(Rconnection con)
     size_t n = 0; /* -Wall */
 
     switch(type) {
-    case HTTPSsh:
     case HTTPsh:
+    case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
 	break;
     case FTPsh:
@@ -172,8 +171,8 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     size_t n = 0; /* -Wall */
 
     switch(type) {
-    case HTTPSsh:
     case HTTPsh:
+    case HTTPSsh:
 	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     case FTPsh:

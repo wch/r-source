@@ -91,6 +91,7 @@ isIncomplete(con)
     e.g.\sspace{}character devices.  This suppresses the check for a compressed
     file when opening for text-mode reading, and asserts that the
     \sQuote{file} may not be seekable.}
+  \item{method}{character string: for future use.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal available.  For
     \code{xzfile} can also be negative: see the \sQuote{Compression}
