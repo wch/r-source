@@ -564,7 +564,7 @@
       parts from the other.  (\PR{16120})
 
       \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
-      to miscalculated string length.  (\PR{16121})
+      to a typo.  (\PR{16121})
 
       \item Unix-alike builds without a suitable \command{makeinfo} were
       documented to link the missing HTML manuals to CRAN, but did not.
@@ -572,8 +572,12 @@
       \item \code{save(*, ascii=TRUE)} and \code{load()} now correctly
       deal with \code{NaN}'s.  (\PR{16137})
 
-      \item \code{split.Date} retains fractional representations while
+      \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
+      
+      \item \file{R_ext/Lapack.h} had not been updated for changes to
+      the argument lists of the (largely internal) functions
+      \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
     }
   }
 }
