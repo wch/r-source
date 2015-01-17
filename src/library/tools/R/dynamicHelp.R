@@ -403,7 +403,7 @@ httpd <- function(path, query, ...)
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
 
-    	url <- paste0("http://127.0.0.1:", httpdPort,
+    	url <- paste0("http://127.0.0.1:", httpdPort(),
                       "/doc/html/Search?package=",
                       pkg, "&agrep=FALSE&types=demo")
     	return(list(payload = paste0('Redirect to <a href="', url,
@@ -518,26 +518,31 @@ httpd <- function(path, query, ...)
 }
 
 ## 0 = untried, < 0 = failed to start,  > 0 = actual port
-httpdPort <- 0L
+httpdPort <- local({
+    port <- 0L
+    function(new) {
+        if(!missing(new))
+            port <<- new
+        else
+            port
+    }
+})
 
 startDynamicHelp <- function(start=TRUE)
 {
-    env <- environment(startDynamicHelp)
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
-        unlockBinding("httpdPort", env)
-        httpdPort <<- -1L
-        lockBinding("httpdPort", env)
+        httpdPort(-1L)
         warning("httpd server disabled by R_DISABLE_HTTPD", immediate. = TRUE)
         utils::flush.console()
-        return(httpdPort)
+        return(invisible(httpdPort()))
     }
-    if (start && httpdPort) {
-        if(httpdPort > 0) stop("server already running")
+    port <- httpdPort()
+    if (start && port) {
+        if(port > 0L) stop("server already running")
         else stop("server could not be started on an earlier attempt")
     }
-    if(!start && httpdPort <= 0L)
+    if(!start && (port <= 0L))
         stop("no running server to stop")
-    unlockBinding("httpdPort", env)
     if (start) {
         message("starting httpd help server ...", appendLF = FALSE)
         utils::flush.console()
@@ -558,7 +563,7 @@ startDynamicHelp <- function(start=TRUE)
 	    status <- .Call(startHTTPD, "127.0.0.1", ports[i])
 	    if (status == 0L) {
                 OK <- TRUE
-                httpdPort <<- ports[i]
+                httpdPort(ports[i])
                 break
             }
             if (status != -2L) break
@@ -571,15 +576,14 @@ startDynamicHelp <- function(start=TRUE)
         } else {
             warning("failed to start the httpd server", immediate. = TRUE)
             utils::flush.console()
-            httpdPort <<- -1L
+            httpdPort(-1L)
         }
     } else {
         ## Not really tested
         .Call(stopHTTPD)
-    	httpdPort <<- 0L
+    	httpdPort(0L)
     }
-    lockBinding("httpdPort", env)
-    invisible(httpdPort)
+    invisible(httpdPort())
 }
 
 ## environment holding potential custom httpd handlers
