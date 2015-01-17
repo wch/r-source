@@ -5030,7 +5030,7 @@ function(dir)
         ## (This may fail for conditionalized code not meant for R
         ## [e.g., argument 'where'].)
         mc <- tryCatch(match.call(base::assign, e), error = identity)
-        if(inherits(mc, "error") || mc$x == ".Random.seed")
+        if(inherits(mc, "error") || identical(mc$x, ".Random.seed"))
             return(FALSE)
         if(!is.null(env <- mc$envir) &&
            identical(tryCatch(eval(env),
