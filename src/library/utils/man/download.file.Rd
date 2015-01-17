@@ -208,7 +208,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Windows certificates are not verified.  To turn verification on, set
   environment variable \env{CURL_CA_BUNDLE} to the path to a certificate
   bundle file, usually named \file{ca-bundle.crt} or
-  \file{curl-ca-bundle.crt}.
+  \file{curl-ca-bundle.crt}.  (This is normally done for a binary
+  installation of \R, which installs \file{etc/curl-ca-bundle.crt}.)
 }
 \value{
   An (invisible) integer code, \code{0} for success and non-zero for
