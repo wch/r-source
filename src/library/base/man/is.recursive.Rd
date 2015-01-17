@@ -1,10 +1,11 @@
 % File src/library/base/man/is.recursive.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.recursive}
 \alias{is.atomic}
+\alias{atomic}
 \alias{is.recursive}
 \title{Is an Object Atomic or Recursive?}
 \usage{
