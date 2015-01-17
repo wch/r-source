@@ -62,6 +62,9 @@ imagedir:
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc$(R_ARCH)
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
+	if test -f "$(R_HOME)/etc/curl-ca-bundle.crt"; then \
+	  $(CP) -p "$(R_HOME)/etc/curl-ca-bundle.crt" $(RPREFIX)/etc; \
+	fi
 	$(CP) -p $(R_HOME)/etc$(R_ARCH)/Makeconf $(RPREFIX)/etc$(R_ARCH)
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc

@@ -141,6 +141,11 @@ COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 fixfiles: Rpwd.exe
 	@$(MKDIR) -p ../../$(BINDIR)
 	@$(MK) -C ./fixed
+ifdef USE_LIBCURL
+	@if test -f "$(CURL_PATH)/etc/curl-ca-bundle.crt"; then \
+	  $(CP) -p "$(CURL_PATH)/etc/curl-ca-bundle.crt" ../../etc; \
+	fi
+endif
 
 fixed/fixdesc:
 	@sh fixed/GETDESC $(R_PKGS_BASE) translations
