@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -5012,6 +5012,20 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	raw = asLogical(CAD4R(args));
 	if(raw == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "raw");
+    }
+
+    if(PRIMVAL(op) == 0) {
+	if (strncmp(url, "ftps://", 7) == 0)
+	    error("ftps:// URLs are not supported by method = \"internal\"");
+#ifdef Win32
+# ifndef USE_WININET
+	if (strncmp(url, "https://", 8) == 0)
+	    error("for https:// URLs use setInternet2(TRUE)");
+# endif
+#else
+	if (strncmp(url, "https://", 8) == 0)
+	    error("https:// URLs are not supported by method = \"internal\"");
+#endif
     }
 
     ncon = NextConnection();

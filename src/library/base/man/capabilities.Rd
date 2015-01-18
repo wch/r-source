@@ -105,7 +105,7 @@ capabilities(what = NULL)
 capabilities()
 
 if(!capabilities("http/ftp"))
-   warning("internal download.file() is not available")
+   warning("internal download.file() method is not available")
 
 ## See also the examples for 'connections'.
 }

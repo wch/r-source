@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014   The R Core Team.
+ *  Copyright (C) 2000-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,10 +72,10 @@ static Rboolean url_open(Rconnection con)
     }
 
     switch(type) {
+    case HTTPsh:
 #ifdef USE_WININET
     case HTTPSsh:
 #endif
-    case HTTPsh:
     {
 	SEXP sheaders, agentFun;
 	const char *headers;
@@ -111,6 +111,13 @@ static Rboolean url_open(Rconnection con)
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
+
+#if defined Win32 && !defined USE_WININET
+    case HTTPSsh:
+	warning(_("for https:// URLs use setInternet2(TRUE)"));
+	return FALSE;
+#endif
+
     default:
 	warning(_("unsupported URL scheme"));
 	return FALSE;
