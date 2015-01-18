@@ -28,8 +28,8 @@ libcurlVersion()
   \code{\link{extSoftVersion}} for versions of other third-party
   software.
 
-  \code{\link{curlGetHeaders}} and \code{\link{download.file}} for
-  functions which use \code{libcurl}.
+  \code{\link{curlGetHeaders}}, \code{\link{download.file}} and
+  \code{\link{url}}for functions which (optionally) use \code{libcurl}.
 }
 \examples{
 libcurlVersion()
