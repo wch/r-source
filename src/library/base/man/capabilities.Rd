@@ -99,7 +99,10 @@ capabilities(what = NULL)
     present long doubles will have at least as much range and accuracy
     as the ISO/IEC 60559 80-bit \sQuote{extended precision} format.
   }
-  \item{libcurl}{is \code{libcurl} available in this build?}
+
+  \item{libcurl}{is \code{libcurl} available in this build?  Used by
+    function \code{\link{curlGetHeaders}} and optionally by
+    \code{\link{download.file}}.}
 }
 \seealso{\code{\link{.Platform}}}
 

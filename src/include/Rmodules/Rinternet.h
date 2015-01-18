@@ -59,6 +59,7 @@ typedef struct {
     R_CurlRoutine curlVersion;
     R_CurlRoutine curlGetHeaders;
     R_CurlRoutine curlDownload;
+    R_NewUrlRoutine   newcurlurl;
 } R_InternetRoutines;
 
 R_InternetRoutines *R_setInternetRoutines(R_InternetRoutines *routines);

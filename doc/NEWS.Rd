@@ -213,16 +213,17 @@
 	other details.
 
 	\item \code{curlGetHeaders()} retrieves the headers for
-	\code{http://}, \code{https://} and \code{ftp://} URLs: analysis
-	of these headers can provide insights into the `existence' of a
-	URL (it might for example be permanently redirected) and will be
-	so used in \command{R CMD check}.
+	\code{http://}, \code{https://}, \code{ftp://} and
+	\code{ftps://} URLs: analysis of these headers can provide
+	insights into the `existence' of a URL (it might for example be
+	permanently redirected) and will be so used in \command{R CMD
+	check}.
 
 	\item \code{download.file()} has a new built-in method
-	\code{"libcurl"} which will handle \code{https://} URLs and
-	follow redirections.
+	\code{"libcurl"} which will handle \code{https://} and
+	\code{ftps://} URLs, follow redirections, and allows
+	simultaneous downloads of multiple URLs.
       }
-
     }
   }
 

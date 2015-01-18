@@ -371,9 +371,16 @@ SEXP attribute_hidden do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-Rconnection R_newCurlUrl(const char *description, const char * const mode)
+Rconnection attribute_hidden
+R_newCurlUrl(const char *description, const char * const mode)
 {
-    error("method not yet supported");
-    return 0; /* -Wall */
+    if(!initialized) internet_Init();
+    if(initialized > 0)
+	return (*ptr->newcurlurl)(description, mode);
+    else {
+	error(_("internet routines cannot be loaded"));
+	return (Rconnection)0;
+    }
+    return (Rconnection)0; /* -Wall */
 }
 

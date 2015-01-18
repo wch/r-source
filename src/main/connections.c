@@ -4949,6 +4949,8 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* op = 0: url(description, open, blocking, encoding)
    op = 1: file(description, open, blocking, encoding)
 */
+
+// in internet module
 extern
 Rconnection R_newCurlUrl(const char *description, const char * const mode);
 
@@ -5014,6 +5016,19 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(PRIMVAL(op) == 0) {
 	const char *cmeth = CHAR(asChar(CAD4R(args)));
 	meth = strcmp(cmeth, "internal");
+	if(!meth) {
+	    if (strncmp(url, "ftps://", 7) == 0)
+		error("ftps:// URLs are not supported by method = \"internal\"");
+#ifdef Win32
+# ifndef USE_WININET
+	    if (strncmp(url, "https://", 8) == 0)
+		error("for https:// URLs use setInternet2(TRUE)");
+# endif
+#else
+	    if (strncmp(url, "https://", 8) == 0)
+		error("https:// URLs are not supported by method = \"internal\"");
+#endif
+	}
     }
 
     ncon = NextConnection();
@@ -5032,7 +5047,11 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	       strncmp(url, "ftp://", 6) == 0 ||
 	       strncmp(url, "ftps://", 7) == 0) {
 	if(meth) {
+#ifdef HAVE_CURL_CURL_H
 	    con = R_newCurlUrl(url, strlen(open) ? open : "r");
+#else
+	    error("url(method = \"libcurl\") is not supported on this platform");
+#endif
 	} else {
 	    con = R_newurl(url, strlen(open) ? open : "r");
 	    ((Rurlconn)con->private)->type = type;

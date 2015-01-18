@@ -71,8 +71,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Support for method \code{"libcurl"} is optional: use
   \code{\link{capabilities}("libcurl")} to see if it is supported on
   your build.  It provides (non-blocking) access to \samp{https://} and
-  \samp{ftps://} URLs.  If \code{quiet = FALSE} there is a progress bar
-  similar to the \command{curl} command-line tool.
+  \samp{ftps://} URLs.  There is support for simultaneous downloads, so
+  \code{url} and \code{destfile} can be character vectors of the same
+  length greater than one.  For a single URL and \code{quiet = FALSE}
+  there is a progress bar similar to the \command{curl} command-line
+  tool.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be

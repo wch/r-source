@@ -41,6 +41,7 @@ static void  in_R_FTPClose(void *ctx);
 SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
+Rconnection in_newCurlUrl(const char *description, const char * const mode);
 
 
 #include <Rmodules/Rinternet.h>
@@ -1103,6 +1104,7 @@ R_init_internet(DllInfo *info)
     tmp->curlVersion = in_do_curlVersion;
     tmp->curlGetHeaders = in_do_curlGetHeaders;
     tmp->curlDownload = in_do_curlDownload;
+    tmp->newcurlurl =  in_newCurlUrl;
 
     R_setInternetRoutines(tmp);
 }

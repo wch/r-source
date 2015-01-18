@@ -171,15 +171,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     scmd = CAR(args); args = CDR(args);
     if(!isString(scmd) || length(scmd) < 1)
 	error(_("invalid '%s' argument"), "url");
-    if(length(scmd) > 1)
-	warning(_("only first element of 'url' argument used"));
-    url = CHAR(STRING_ELT(scmd, 0));
+    int nurls = length(scmd);
     sfile = CAR(args); args = CDR(args);
     if(!isString(sfile) || length(sfile) < 1)
 	error(_("invalid '%s' argument"), "destfile");
-    if(length(sfile) > 1)
-	warning(_("only first element of 'destfile' argument used"));
-    file = translateChar(STRING_ELT(sfile, 0));
+    if(length(sfile) != length(scmd))
+	error("lengths of 'url' and 'destfile' must match");
     quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "quiet");
@@ -199,45 +196,53 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
        it is said that in future libcurl may not have one at all.
     */
 
-    CURL *hnd = curl_easy_init();
-    CURLM *multi_handle = curl_multi_init();
-    curl_multi_add_handle(multi_handle, hnd);
-    int still_running, repeats = 0;
- 
-    curl_easy_setopt(hnd, CURLOPT_URL, url);
-    curl_easy_setopt(hnd, CURLOPT_HEADER, 0L);
-    if(!quiet) curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
-    /* Users will normally expect to follow redirections, although 
-       that is not the default in either curl or libcurl. */
-    curlCommon(hnd, 1);
-    curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
-
-    /* This allows the negotiation of compressed HTTP transfers,
-       but it is not clear it is always a good idea.
-
-    curl_easy_setopt(hnd, CURLOPT_ACCEPT_ENCODING, "gzip, deflate");
-    */
-
     if (!cacheOK) {
 	/* This _is_ the right way to do this: see §14.9 of
 	   http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html */
 	slist1 = curl_slist_append(slist1, "Pragma: no-cache");
-	curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
     }
 
-    out = R_fopen(R_ExpandFileName(file), mode);
-    if(!out)
-	error(_("cannot open destfile '%s', reason '%s'"), 
-	      file, strerror(errno));
-    curl_easy_setopt(hnd, CURLOPT_WRITEDATA, out);
+    CURLM *mhnd = curl_multi_init();
+    int still_running, repeats = 0;
+    CURL **hnd[nurls];
 
-    if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+    for(int i = 0; i < nurls; i++) {
+	hnd[i] = curl_easy_init();
+	curl_multi_add_handle(mhnd, hnd[i]);
+ 
+	url = CHAR(STRING_ELT(scmd, i));
+	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
+	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
+	if(!quiet && nurls <= 1) 
+	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
+	/* Users will normally expect to follow redirections, although 
+	   that is not the default in either curl or libcurl. */
+	curlCommon(hnd[i], 1);
+	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
+	if (!cacheOK) curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
+
+	/* This allows the negotiation of compressed HTTP transfers,
+	   but it is not clear it is always a good idea.
+
+	   curl_easy_setopt(hnd[i], CURLOPT_ACCEPT_ENCODING, "gzip, deflate");
+	*/
+
+
+	file = translateChar(STRING_ELT(sfile, i));
+	out = R_fopen(R_ExpandFileName(file), mode);
+	if(!out)
+	    error(_("cannot open destfile '%s', reason '%s'"), 
+		  file, strerror(errno));
+	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out);
+
+	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+    }
 
     R_Busy(1);
-    curl_multi_perform(multi_handle, &still_running);
+    curl_multi_perform(mhnd, &still_running);
     do {
 	int numfds; // This needs curl >= 7.28.0
- 	CURLMcode mc = curl_multi_wait(multi_handle, NULL, 0, 100, &numfds); 
+ 	CURLMcode mc = curl_multi_wait(mhnd, NULL, 0, 100, &numfds); 
 	if(mc != CURLM_OK)
 	    error("curl_multi_wait() failed, code %d", mc);
 	if(!numfds) {
@@ -248,12 +253,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    */ 
 	    if(repeats++ > 0) Rsleep(0.1);
 	} else repeats = 0;
-	curl_multi_perform(multi_handle, &still_running);
+	curl_multi_perform(mhnd, &still_running);
     } while(still_running);
     R_Busy(0);
 
     for(int n = 1; n > 0;) {
-	CURLMsg *msg = curl_multi_info_read(multi_handle, &n);
+	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
 	if(msg) {
 	    CURLcode ret = msg->data.result;
 	    if (ret != CURLE_OK) {
@@ -265,11 +270,27 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     fclose(out);
 
-    curl_multi_remove_handle(multi_handle, hnd);
-    curl_easy_cleanup(hnd);
-    curl_multi_cleanup(multi_handle);
+    for(int i = 0; i < nurls; i++) {
+	curl_multi_remove_handle(mhnd, hnd[i]);
+	curl_easy_cleanup(hnd[i]);
+    }
+    curl_multi_cleanup(mhnd);
     if (!cacheOK) curl_slist_free_all(slist1);
 
     return ScalarInteger(0);
 #endif
+}
+
+/* -------------------------- connections part ------------------------*/
+
+#include <Rconnections.h>
+
+Rconnection in_newCurlUrl(const char *description, const char * const mode)
+{
+#ifdef HAVE_CURL_CURL_H
+    error("not yet implemented");
+#else
+    error("url(method = \"libcurl\") is not supported on this platform");
+#endif
+    return (Rconnection)0; /* -Wall */
 }

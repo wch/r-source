@@ -15,7 +15,6 @@
 \alias{bzfile}
 \alias{xzfile}
 \alias{url}
-\alias{curl}
 \alias{socketConnection}
 \alias{open}
 \alias{open.connection}

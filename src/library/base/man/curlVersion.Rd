@@ -25,7 +25,11 @@ libcurlVersion()
   \item{protocols}{A character vector of the names of supported protocols.}
 }
 \seealso{
-  \code{\link{extSoftVersion}} for versions of other third-party software.
+  \code{\link{extSoftVersion}} for versions of other third-party
+  software.
+
+  \code{\link{curlGetHeaders}}, \code{\link{curlVersion}} and
+  \code{\link{download.file}} for functions which use \code{libcurl}.
 }
 \examples{
 libcurlVersion()

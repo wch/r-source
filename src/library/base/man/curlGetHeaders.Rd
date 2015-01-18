@@ -10,7 +10,8 @@
 }
 \description{
   Retrieve the headers for a URL for a supported protocol such as
-  \code{http://}, \code{ftp://} and \code{https://}.  An optional function.
+  \code{http://}, \code{ftp://}, \code{https://} and \code{ftps://}.
+  An optional function not supported on all platforms.
 }
 \usage{
 curlGetHeaders(url, redirect = TRUE)
@@ -50,8 +51,12 @@ curlGetHeaders(url, redirect = TRUE)
   \code{\link{capabilities}("libcurl")} to see if this is supported.
 }
 
+% http://forum.rebex.net/questions/1343/open-ftps-and-sftp-servers-for-testing-our-code-and-connectivity
 \examples{\donttest{## needs Internet access, results vary
 curlGetHeaders("http://bugs.r-project.org")   ## this redirects to https://
 curlGetHeaders("https://httpbin.org/status/404")  ## returns status
 curlGetHeaders("ftp://cran.r-project.org")
+}
+\dontrun{ ## a not-always-available site:
+curlGetHeaders('ftps://test.rebex.net/readme.txt')
 }}
