@@ -395,6 +395,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
 
+	    // PCRE docs say this is not needed, but it is on Windows
 	    if (!tables) tables = pcre_maketables();
 	    re_pcre = pcre_compile(split, options,
 				   &errorptr, &erroffset, tables);
@@ -858,6 +859,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	const char *errorptr;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
+	// PCRE docs say this is not needed, but it is on Windows
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
@@ -1611,6 +1613,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	const char *errorptr;
 	if (use_UTF8) cflags |= PCRE_UTF8;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
+	// PCRE docs say this is not needed, but it is on Windows
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
@@ -2408,6 +2411,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	const char *errorptr;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
+	// PCRE docs say this is not needed, but it is on Windows
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
