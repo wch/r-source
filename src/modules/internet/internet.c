@@ -142,6 +142,7 @@ static void url_close(Rconnection con)
 {
     UrlScheme type = ((Rurlconn)(con->private))->type;
     switch(type) {
+    case HTTPsh:
     case HTTPSsh:
 	in_R_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
