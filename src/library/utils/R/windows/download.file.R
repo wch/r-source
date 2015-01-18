@@ -45,6 +45,10 @@ download.file <-
     else if(method == "libcurl")
         status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {
+        if(length(url) != 1L || typeof(url) != "character")
+            stop("'url' must be a length-one character vector");
+        if(length(destfile) != 1L || typeof(url) != "character")
+            stop("'destfile' must be a length-one character vector");
         if(quiet) extra <- c(extra, "--quiet")
         if(!cacheOK) extra <- c(extra, "--cache=off")
         status <- system(paste("wget",
@@ -52,6 +56,10 @@ download.file <-
                                shQuote(url),
                                "-O", shQuote(path.expand(destfile))))
     } else if(method == "curl") {
+        if(length(url) != 1L || typeof(url) != "character")
+            stop("'url' must be a length-one character vector");
+        if(length(destfile) != 1L || typeof(url) != "character")
+            stop("'destfile' must be a length-one character vector");
         if(quiet) extra <- c(extra, "-s -S")
         if(!cacheOK) extra <- c(extra, "-H 'Pragma: no-cache'")
         status <- system(paste("curl",
