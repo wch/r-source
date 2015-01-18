@@ -229,6 +229,7 @@
  R_max_num_math_threads
  R_mktime
  R_moduleCdynload
+ R_newCurlUrl
  R_newsock
  R_newunz
  R_newurl
