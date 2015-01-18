@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-17 10:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -326,7 +326,8 @@ msgstr "La fonction %s est déjà un groupe générique ; Pas de changement"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "La fonction %s est un groupe générique ; Ne l'appelez pas directement"
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr ""
 "'callGeneric' doit être appelé depuis une fonction générique ou une méthode"
 

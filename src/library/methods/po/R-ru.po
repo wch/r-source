@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-11 10:30-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -305,7 +305,8 @@ msgstr "Функция %s уже в группе общие; без изменений"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "Функция %s является общегрупповой; не вызывайте ее напрямую"
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
 
 msgid "expected a non-empty character string for argument name"

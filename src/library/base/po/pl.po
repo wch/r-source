@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38+0000\n"
+"POT-Creation-Date: 2015-01-18 09:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -984,9 +984,9 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/connections.c:4673 src/main/connections.c:4677
 #: src/main/connections.c:4805 src/main/connections.c:4807
 #: src/main/connections.c:4809 src/main/connections.c:4837
-#: src/main/connections.c:4967 src/main/connections.c:4993
-#: src/main/connections.c:4997 src/main/connections.c:5001
-#: src/main/connections.c:5005 src/main/context.c:611 src/main/context.c:620
+#: src/main/connections.c:4972 src/main/connections.c:5001
+#: src/main/connections.c:5005 src/main/connections.c:5009
+#: src/main/connections.c:5013 src/main/context.c:611 src/main/context.c:620
 #: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
 #: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
 #: src/main/datetime.c:1029 src/main/datetime.c:1234 src/main/debug.c:241
@@ -1050,13 +1050,15 @@ msgstr "problem z wyświetleniem pliku '%ls'"
 #: src/main/util.c:2241 src/main/util.c:2245 src/main/util.c:2247
 #: src/modules/X11/devX11.c:3239 src/modules/X11/devX11.c:3242
 #: src/modules/X11/devX11.c:3245 src/modules/X11/devX11.c:3269
-#: src/modules/internet/internet.c:285 src/modules/internet/internet.c:291
-#: src/modules/internet/internet.c:297 src/modules/internet/internet.c:300
-#: src/modules/internet/internet.c:304 src/modules/lapack/Lapack.c:155
-#: src/modules/lapack/Lapack.c:261 src/modules/lapack/Lapack.c:709
-#: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:880
-#: src/modules/lapack/Lapack.c:1215 src/unix/sys-std.c:1217
-#: src/unix/sys-std.c:1240
+#: src/modules/internet/internet.c:301 src/modules/internet/internet.c:307
+#: src/modules/internet/internet.c:313 src/modules/internet/internet.c:316
+#: src/modules/internet/internet.c:320 src/modules/internet/libcurl.c:173
+#: src/modules/internet/libcurl.c:177 src/modules/internet/libcurl.c:182
+#: src/modules/internet/libcurl.c:185 src/modules/internet/libcurl.c:189
+#: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1215
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -3319,7 +3321,7 @@ msgstr "'parent' nie jest środowiskiem"
 #: src/main/connections.c:4072 src/main/connections.c:4106
 #: src/main/connections.c:4484 src/main/connections.c:4554
 #: src/main/connections.c:4763 src/main/connections.c:4767
-#: src/main/connections.c:5127 src/main/deparse.c:362 src/main/deparse.c:450
+#: src/main/connections.c:5163 src/main/deparse.c:362 src/main/deparse.c:450
 #: src/main/serialize.c:2041
 msgid "cannot write to this connection"
 msgstr "nie można zapisywać w tym połączeniu"
@@ -4166,8 +4168,8 @@ msgstr "nie można otworzyć kolejki fifo '%s'"
 #: src/main/connections.c:1526 src/main/connections.c:1536
 #: src/main/connections.c:1655 src/main/connections.c:1715
 #: src/main/connections.c:2242 src/main/connections.c:2259
-#: src/main/connections.c:2568 src/main/connections.c:5308
-#: src/main/connections.c:5372
+#: src/main/connections.c:2568 src/main/connections.c:5344
+#: src/main/connections.c:5408
 msgid "too large a block specified"
 msgstr "określono zbyt duży blok"
 
@@ -4227,7 +4229,7 @@ msgstr "przydział połączenia fifo nie powiódł się"
 # warning(_("only first element of 'description' argument used"))
 #: src/main/connections.c:1212 src/main/connections.c:1371
 #: src/main/connections.c:1993 src/main/connections.c:3209
-#: src/main/connections.c:4969
+#: src/main/connections.c:4974
 msgid "only first element of 'description' argument used"
 msgstr "tylko pierwszy element argumentu 'description' został użyty"
 
@@ -4302,7 +4304,7 @@ msgstr ""
 #: src/main/connections.c:3565 src/main/connections.c:3681
 #: src/main/connections.c:3843 src/main/connections.c:4099
 #: src/main/connections.c:4427 src/main/connections.c:4547
-#: src/main/connections.c:4759 src/main/connections.c:5108 src/main/dcf.c:94
+#: src/main/connections.c:4759 src/main/connections.c:5144 src/main/dcf.c:94
 #: src/main/deparse.c:354 src/main/deparse.c:442 src/main/saveload.c:2267
 #: src/main/saveload.c:2348 src/main/scan.c:933 src/main/serialize.c:2212
 #: src/main/serialize.c:2263 src/main/source.c:270
@@ -4425,7 +4427,7 @@ msgstr "przydział połączenia bzfile nie powiódł się"
 # warning(_("cannot initialize lzma decoder, error %d"), ret)
 # src/main/connections.c: 5961
 # error(_("cannot initialize lzma decoder, error %d"), ret)
-#: src/main/connections.c:1799 src/main/connections.c:5965
+#: src/main/connections.c:1799 src/main/connections.c:6001
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "nie można zainicjować dekodera lzma, błąd %d"
@@ -4687,7 +4689,7 @@ msgstr "gniazda nie są dostępne w tym systemie"
 #: src/main/connections.c:3318 src/main/connections.c:3365
 #: src/main/connections.c:3390 src/main/connections.c:3413
 #: src/main/connections.c:3425 src/main/connections.c:3541
-#: src/main/connections.c:3666 src/main/connections.c:5411
+#: src/main/connections.c:3666 src/main/connections.c:5447
 msgid "'con' is not a connection"
 msgstr "'con' nie jest połączeniem"
 
@@ -4737,8 +4739,8 @@ msgstr "nie można zamknąć połączenia sink 'message'"
 # error(_("connection is not open"))
 # src/main/connections.c: 5131
 # error(_("connection is not open"))
-#: src/main/connections.c:3392 src/main/connections.c:5126
-#: src/main/connections.c:5134 src/main/serialize.c:2031
+#: src/main/connections.c:3392 src/main/connections.c:5162
+#: src/main/connections.c:5170 src/main/serialize.c:2031
 #: src/main/serialize.c:2039
 msgid "connection is not open"
 msgstr "połączenie nie jest otwarte"
@@ -4783,7 +4785,7 @@ msgstr "linia jest dłuższa niż rozmiar bufora"
 # error(_("cannot read from this connection"))
 #: src/main/connections.c:3572 src/main/connections.c:3574
 #: src/main/connections.c:3851 src/main/connections.c:4410
-#: src/main/connections.c:4435 src/main/connections.c:5135 src/main/dcf.c:101
+#: src/main/connections.c:4435 src/main/connections.c:5171 src/main/dcf.c:101
 #: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:2033
 #: src/main/source.c:277
 msgid "cannot read from this connection"
@@ -5036,86 +5038,82 @@ msgstr "brak połączenia %d"
 
 # src/main/connections.c: 5029
 # warning(_("file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"))
-#: src/main/connections.c:5031
+#: src/main/connections.c:5067
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "'file(\"\")' wspiera tylko 'open = \"w+\"' oraz 'open = \"w+b\"': używanie "
 "pierwszego"
 
-# src/modules/internet/internet.c: 115
-# warning(_("unsupported URL scheme"))
-# src/modules/internet/internet.c: 569
-# error(_("unsupported URL scheme"))
-# src/main/connections.c: 5083
-# error(_("unsupported URL scheme"))
-#: src/main/connections.c:5085 src/modules/internet/internet.c:116
-#: src/modules/internet/internet.c:580
-msgid "unsupported URL scheme"
-msgstr "niewspierany schemat adresu URL"
+# src/main/util.c: 1889
+# warning(_("ICU is not supported on this build"))
+#: src/main/connections.c:5121 src/modules/internet/internet.c:127
+#, fuzzy
+msgid "URL scheme unsupported by this method"
+msgstr "ICU nie jest wspierany w tej kompilacji"
 
 # src/main/connections.c: 5173
 # warning(_("file stream does not have gzip magic number"))
-#: src/main/connections.c:5176
+#: src/main/connections.c:5212
 msgid "file stream does not have gzip magic number"
 msgstr "strumień plikowy nie posiada magicznej liczby gzip"
 
 # src/main/connections.c: 5184
 # warning(_("file stream does not have valid gzip header"))
-#: src/main/connections.c:5187
+#: src/main/connections.c:5223
 msgid "file stream does not have valid gzip header"
 msgstr "strumień plikowy nie posiada poprawnego nagłówka gzip"
 
 # src/main/connections.c: 5249
 # error(_("writing error whilst flushing 'gzcon' connection"))
-#: src/main/connections.c:5252
+#: src/main/connections.c:5288
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "błąd zapisu podczas czyszczenia połączenia gzcon"
 
-#: src/main/connections.c:5354
+#: src/main/connections.c:5390
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "błąd crc %x %x\n"
 
 # src/main/connections.c: 5378
 # warning(_("write error on 'gzcon' connection"))
-#: src/main/connections.c:5381
+#: src/main/connections.c:5417
 msgid "write error on 'gzcon' connection"
 msgstr "błąd zapisu w połączeniu gzcon"
 
 # src/main/connections.c: 5412
 # error(_("'level' must be one of 0 ... 9"))
-#: src/main/connections.c:5415
+#: src/main/connections.c:5451
 msgid "'level' must be one of 0 ... 9"
 msgstr "argument 'level' musi być liczbą z zakresu 0 ... 9"
 
 # src/main/connections.c: 5415
 # error(_("'allowNonCompression' must be TRUE or FALSE"))
-#: src/main/connections.c:5418
+#: src/main/connections.c:5454
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "argument 'allowNonCompression' musi być TRUE lub FALSE"
 
 # src/main/connections.c: 5418
 # warning(_("this is already a 'gzcon' connection"))
-#: src/main/connections.c:5421
+#: src/main/connections.c:5457
 msgid "this is already a 'gzcon' connection"
 msgstr "to już jest połączenie gzcon"
 
 # src/main/connections.c: 5424
 # error(_("can only use read- or write- binary connections"))
-#: src/main/connections.c:5427
+#: src/main/connections.c:5463
 msgid "can only use read- or write- binary connections"
 msgstr "można użyć tylko odczytywalnych lub zapisywalnych połączeń binarnych"
 
 # src/main/connections.c: 5427
 # warning(_("using a text-mode 'file' connection may not work correctly"))
-#: src/main/connections.c:5430
+#: src/main/connections.c:5466
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "użycie trybu tekstowego połączenia 'file' może nie działać poprawnie"
 
 # src/main/connections.c: 5430
 # error(_("cannot create a 'gzcon' connection from a writable textConnection; maybe use rawConnection"))
-#: src/main/connections.c:5433
+#: src/main/connections.c:5469
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -5131,32 +5129,32 @@ msgstr ""
 # error(_("allocation of 'gzcon' connection failed"))
 # src/main/connections.c: 5458
 # error(_("allocation of 'gzcon' connection failed"))
-#: src/main/connections.c:5436 src/main/connections.c:5440
-#: src/main/connections.c:5447 src/main/connections.c:5461
+#: src/main/connections.c:5472 src/main/connections.c:5476
+#: src/main/connections.c:5483 src/main/connections.c:5497
 msgid "allocation of 'gzcon' connection failed"
 msgstr "przydział połączenia gzcon nie powiódł się"
 
 # src/main/connections.c: 5644
 # error(_("not a list of sockets"))
-#: src/main/connections.c:5648
+#: src/main/connections.c:5684
 msgid "not a list of sockets"
 msgstr "argument 'socklist' nie jest listą gniazd"
 
 # src/main/connections.c: 5649
 # error(_("bad write indicators"))
-#: src/main/connections.c:5653
+#: src/main/connections.c:5689
 msgid "bad write indicators"
 msgstr "błędne wskaźniki zapisu"
 
 # src/main/connections.c: 5660
 # error(_("not a socket connection"))
-#: src/main/connections.c:5664
+#: src/main/connections.c:5700
 msgid "not a socket connection"
 msgstr "to nie jest połączenie socket"
 
 # src/main/connections.c: 5905
 # warning(_("unknown compression, assuming none"))
-#: src/main/connections.c:5909
+#: src/main/connections.c:5945
 msgid "unknown compression, assuming none"
 msgstr "nieznana kompresja, zakładam brak"
 
@@ -5166,8 +5164,8 @@ msgstr "nieznana kompresja, zakładam brak"
 # error(_("allocation of %s connection failed"), class_name)
 # src/main/connections.c: 6033
 # error(_("allocation of %s connection failed"), class_name)
-#: src/main/connections.c:6027 src/main/connections.c:6031
-#: src/main/connections.c:6037
+#: src/main/connections.c:6063 src/main/connections.c:6067
+#: src/main/connections.c:6073
 #, c-format
 msgid "allocation of %s connection failed"
 msgstr "przydział połączenia %s nie powiódł się"
@@ -8064,7 +8062,8 @@ msgstr "procedury internetowe nie są dostępne w module"
 #: src/main/internet.c:99 src/main/internet.c:137 src/main/internet.c:150
 #: src/main/internet.c:161 src/main/internet.c:172 src/main/internet.c:183
 #: src/main/internet.c:192 src/main/internet.c:203 src/main/internet.c:214
-#: src/main/internet.c:223 src/main/internet.c:233
+#: src/main/internet.c:223 src/main/internet.c:233 src/main/internet.c:347
+#: src/main/internet.c:358 src/main/internet.c:369 src/main/internet.c:381
 msgid "internet routines cannot be loaded"
 msgstr "procedury internetowe nie mogą zostać załadowane"
 
@@ -10185,8 +10184,8 @@ msgstr "pojawił się błąd odczytu danych liczby zespolonej w xdr"
 # src/main/serialize.c: 2568
 # error(_("write failed"))
 #: src/main/saveload.c:1783 src/main/serialize.c:1993
-#: src/main/serialize.c:2609 src/modules/internet/internet.c:352
-#: src/modules/internet/internet.c:414 src/modules/internet/internet.c:524
+#: src/main/serialize.c:2609 src/modules/internet/internet.c:368
+#: src/modules/internet/internet.c:430 src/modules/internet/internet.c:540
 msgid "write failed"
 msgstr "zapis nie powiódł się"
 
@@ -12693,6 +12692,10 @@ msgstr "nie można odczytać zawartości schowka (kod błędu %d)"
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "nie można przydzielić pamięci dla struktury 'X11Routines'"
 
+#: src/modules/internet/internet.c:122
+msgid "for https:// URLs use setInternet2(TRUE)"
+msgstr ""
+
 # src/modules/internet/internet.c: 188
 # error(_("allocation of url connection failed"))
 # src/modules/internet/internet.c: 192
@@ -12701,34 +12704,34 @@ msgstr "nie można przydzielić pamięci dla struktury 'X11Routines'"
 # error(_("allocation of url connection failed"))
 # src/modules/internet/internet.c: 210
 # error(_("allocation of url connection failed"))
-#: src/modules/internet/internet.c:189 src/modules/internet/internet.c:193
-#: src/modules/internet/internet.c:199 src/modules/internet/internet.c:211
+#: src/modules/internet/internet.c:205 src/modules/internet/internet.c:209
+#: src/modules/internet/internet.c:215 src/modules/internet/internet.c:227
 msgid "allocation of url connection failed"
 msgstr "przydział połączenia url nie powiódł się"
 
 # src/modules/internet/internet.c: 286
 # warning(_("only first element of 'url' argument used"))
-#: src/modules/internet/internet.c:287
+#: src/modules/internet/internet.c:303
 msgid "only first element of 'url' argument used"
 msgstr "tylko pierwszy element argumentu 'url' został użyty"
 
 # src/modules/internet/internet.c: 292
 # warning(_("only first element of 'destfile' argument used"))
-#: src/modules/internet/internet.c:293
+#: src/modules/internet/internet.c:309
 msgid "only first element of 'destfile' argument used"
 msgstr "tylko pierwszy element argumentu 'destfile' został użyty"
 
 # src/modules/internet/internet.c: 317
 # (_("Download progress"), rect(0, 0, 540, 100),
 # 			       Titlebar | Centered)
-#: src/modules/internet/internet.c:318
+#: src/modules/internet/internet.c:334
 msgid "Download progress"
 msgstr "Postęp pobierania"
 
 # src/modules/internet/internet.c: 339
 # error(_("cannot open URL '%s', reason '%s'"),
 # 		  url, strerror(errno))
-#: src/modules/internet/internet.c:340
+#: src/modules/internet/internet.c:356
 #, c-format
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "nie można otworzyć URL '%s', powód '%s'"
@@ -12742,18 +12745,19 @@ msgstr "nie można otworzyć URL '%s', powód '%s'"
 # src/modules/internet/internet.c: 474
 # error(_("cannot open destfile '%s', reason '%s'"),
 # 		  file, strerror(errno))
-#: src/modules/internet/internet.c:347 src/modules/internet/internet.c:376
-#: src/modules/internet/internet.c:483
+#: src/modules/internet/internet.c:363 src/modules/internet/internet.c:392
+#: src/modules/internet/internet.c:499 src/modules/internet/libcurl.c:234
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "nie można otworzyć docelowego pliku '%s', powód '%s'"
 
-#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:488
+#: src/modules/internet/internet.c:397 src/modules/internet/internet.c:504
+#: src/modules/internet/libcurl.c:238
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "próbowanie adresu URL '%s'\n"
 
-#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:495
+#: src/modules/internet/internet.c:404 src/modules/internet/internet.c:511
 msgid "opened URL\n"
 msgstr "otwarty adres URL\n"
 
@@ -12763,7 +12767,7 @@ msgstr "otwarty adres URL\n"
 # src/modules/internet/internet.c: 560
 # warning(_("downloaded length %d != reported length %d"),
 # 			nbytes, total)
-#: src/modules/internet/internet.c:461 src/modules/internet/internet.c:571
+#: src/modules/internet/internet.c:477 src/modules/internet/internet.c:587
 #, fuzzy, c-format
 msgid "downloaded length %0.f != reported length %0.f"
 msgstr "pobrana długość %d != zgłoszona długość %d"
@@ -12776,17 +12780,27 @@ msgstr "pobrana długość %d != zgłoszona długość %d"
 # error(_("cannot open URL '%s'"), url)
 # src/modules/internet/internet.c: 565
 # error(_("cannot open URL '%s'"), url)
-#: src/modules/internet/internet.c:466 src/modules/internet/internet.c:576
+#: src/modules/internet/internet.c:482 src/modules/internet/internet.c:592
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "nie można otworzyć adresu URL '%s'"
+
+# src/modules/internet/internet.c: 115
+# warning(_("unsupported URL scheme"))
+# src/modules/internet/internet.c: 569
+# error(_("unsupported URL scheme"))
+# src/main/connections.c: 5083
+# error(_("unsupported URL scheme"))
+#: src/modules/internet/internet.c:596
+msgid "unsupported URL scheme"
+msgstr "niewspierany schemat adresu URL"
 
 # src/modules/internet/internet.c: 593
 # warning(_("cannot open: HTTP status was '%d %s'"), rc,
 # 		    RxmlNanoHTTPStatusMsg(ctxt))
 # src/modules/internet/internet.c: 828
 # warning(_("cannot open: HTTP status was '%d %s'"), status, buf)
-#: src/modules/internet/internet.c:604 src/modules/internet/internet.c:841
+#: src/modules/internet/internet.c:620 src/modules/internet/internet.c:857
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "nie można otworzyć: uzyskany status HTTP to '%d %s'"
@@ -12795,7 +12809,7 @@ msgstr "nie można otworzyć: uzyskany status HTTP to '%d %s'"
 # warning(_("InternetOpenUrl timed out"))
 # src/modules/internet/internet.c: 935
 # warning(_("InternetOpenUrl timed out"))
-#: src/modules/internet/internet.c:785 src/modules/internet/internet.c:949
+#: src/modules/internet/internet.c:801 src/modules/internet/internet.c:965
 msgid "InternetOpenUrl timed out"
 msgstr "przekroczono czas oczekiwania na połączenie z 'InternetOpenUrl'"
 
@@ -12807,17 +12821,823 @@ msgstr "przekroczono czas oczekiwania na połączenie z 'InternetOpenUrl'"
 # warning(_("InternetOpenUrl failed: '%s'"), buf)
 # src/modules/internet/internet.c: 966
 # warning(_("InternetOpenUrl failed: '%s'"), buf)
-#: src/modules/internet/internet.c:812 src/modules/internet/internet.c:826
-#: src/modules/internet/internet.c:971 src/modules/internet/internet.c:980
+#: src/modules/internet/internet.c:828 src/modules/internet/internet.c:842
+#: src/modules/internet/internet.c:987 src/modules/internet/internet.c:996
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "'InternetOpenUrl' nie powiódł się: '%s'"
 
 # src/modules/internet/internet.c: 870
 # warning(_("Internet read timed out"))
-#: src/modules/internet/internet.c:884
+#: src/modules/internet/internet.c:900
 msgid "Internet read timed out"
 msgstr "przekroczono czas odczytu z sieci Internet"
+
+# src/library/utils/src/utils.c: 105
+# warning(_("nsl() is not supported on this platform"))
+# src/main/platform.c: 2087
+# warning(_("nsl() is not supported on this platform"))
+#: src/modules/internet/libcurl.c:116
+#, fuzzy
+msgid "curlGetHeaders is not supported on this platform"
+msgstr "'nsl()' nie jest obsługiwany na tej platformie"
+
+# src/modules/internet/internet.c: 284
+# error(_("invalid '%s' argument"), "url")
+# src/modules/internet/internet.c: 290
+# error(_("invalid '%s' argument"), "destfile")
+# src/modules/internet/internet.c: 296
+# error(_("invalid '%s' argument"), "quiet")
+# src/modules/internet/internet.c: 299
+# error(_("invalid '%s' argument"), "mode")
+# src/modules/internet/internet.c: 303
+# error(_("invalid '%s' argument"), "cacheOK")
+# src/modules/lapack/Lapack.c: 155
+# error(_("invalid '%s' argument"), "only.values")
+# src/modules/lapack/Lapack.c: 261
+# error(_("invalid '%s' argument"), "only.values")
+# src/modules/lapack/Lapack.c: 709
+# error(_("invalid '%s' argument"), "trans")
+# src/modules/lapack/Lapack.c: 817
+# error(_("invalid '%s' argument"), "only.values")
+# src/modules/lapack/Lapack.c: 879
+# error(_("invalid '%s' argument"), "only.values")
+# src/modules/lapack/Lapack.c: 1213
+# error(_("invalid '%s' argument"), "trans")
+# src/modules/X11/devX11.c: 3241
+# error(_("invalid '%s' argument"), "filename")
+# src/modules/X11/devX11.c: 3244
+# error(_("invalid '%s' argument"), "type")
+# src/modules/X11/devX11.c: 3247
+# error(_("invalid '%s' argument"), "device")
+# src/modules/X11/devX11.c: 3271
+# error(_("invalid '%s' argument"), "type")
+# src/unix/sys-std.c: 1217
+#  _("invalid '%s' argument")
+# src/unix/sys-std.c: 1240
+#  _("invalid '%s' argument")
+# src/gnuwin32/extra.c: 116
+#  _("invalid '%s' argument")
+# src/gnuwin32/extra.c: 159
+# error(_("invalid '%s' argument"), "file")
+# src/gnuwin32/extra.c: 349
+#  _("invalid '%s' argument")
+# src/gnuwin32/extra.c: 577
+# error(_("invalid '%s' argument"), "which")
+# src/gnuwin32/extra.c: 602
+# error(_("invalid '%s' argument"), "which")
+# src/library/tools/src/install.c: 112
+# error(_("invalid '%s' argument"), "dir")
+# src/library/tools/src/install.c: 133
+# error(_("invalid '%s' argument"), "file1")
+# src/library/tools/src/install.c: 135
+# error(_("invalid '%s' argument"), "file2")
+# src/library/graphics/src/stem.c: 158
+# error(_("invalid '%s' argument"), "x")
+# src/library/graphics/src/stem.c: 159
+# error(_("invalid '%s' argument"), "width")
+# src/library/graphics/src/stem.c: 161
+# error(_("invalid '%s' argument"), "scale")
+# src/library/graphics/src/stem.c: 162
+# error(_("invalid '%s' argument"), "atom")
+# src/library/graphics/src/stem.c: 208
+# error(_("invalid '%s' argument"), "right")
+# src/library/graphics/src/stem.c: 209
+# error(_("invalid '%s' argument"), "include.lowest")
+# src/library/graphics/src/plot3d.c: 1085
+# error(_("invalid '%s' argument"), "x")
+# src/library/graphics/src/plot3d.c: 1089
+# error(_("invalid '%s' argument"), "y")
+# src/library/graphics/src/plot3d.c: 1094
+# error(_("invalid '%s' argument"), "z")
+# src/library/graphics/src/plot3d.c: 1098
+# error(_("invalid '%s' argument"), "xlim")
+# src/library/graphics/src/plot3d.c: 1102
+# error(_("invalid '%s' argument"), "ylim")
+# src/library/graphics/src/plot3d.c: 1106
+# error(_("invalid '%s' argument"), "zlim")
+# src/library/graphics/src/plot.c: 2927
+# error(_("invalid '%s' argument"), "which")
+# src/library/graphics/src/plot.c: 4024
+# error("invalid '%s' argument", "x1")
+# src/library/graphics/src/plot.c: 4027
+# error("invalid '%s' argument", "x2")
+# src/library/graphics/src/plot.c: 4030
+# error("invalid '%s' argument", "y1")
+# src/library/graphics/src/plot.c: 4033
+# error("invalid '%s' argument", "y2")
+# src/library/graphics/src/plot.c: 4053
+# error(_("invalid '%s' argument"), "x")
+# src/library/graphics/src/plot.c: 4057
+# error(_("invalid '%s' argument"), "from")
+# src/library/graphics/src/plot.c: 4060
+# error(_("invalid '%s' argument"), "to")
+# src/library/graphics/src/plot.c: 4080
+# error(_("invalid '%s' argument"), "x")
+# src/library/graphics/src/plot.c: 4084
+# error(_("invalid '%s' argument"), "from")
+# src/library/graphics/src/plot.c: 4087
+# error(_("invalid '%s' argument"), "to")
+# src/library/grDevices/src/stubs.c: 99
+# error(_("invalid '%s' argument"), "ask")
+# src/library/grDevices/src/cairo/cairoBM.c: 480
+# error(_("invalid '%s' argument"), "filename")
+# src/library/grDevices/src/cairo/cairoBM.c: 485
+# error(_("invalid '%s' argument"), "type")
+# src/library/grDevices/src/cairo/cairoBM.c: 489
+# error(_("invalid '%s' argument"), "width")
+# src/library/grDevices/src/cairo/cairoBM.c: 493
+# error(_("invalid '%s' argument"), "height")
+# src/library/grDevices/src/cairo/cairoBM.c: 497
+# error(_("invalid '%s' argument"), "pointsize")
+# src/library/grDevices/src/cairo/cairoBM.c: 508
+# error(_("invalid '%s' argument"), "antialias")
+# src/library/grDevices/src/cairo/cairoBM.c: 512
+# error(_("invalid '%s' argument"), "quality")
+# src/library/grDevices/src/cairo/cairoBM.c: 515
+# error(_("invalid '%s' argument"), "family")
+# src/library/stats/src/optim.c: 197
+# error(_("invalid '%s' argument"), "method")
+# src/library/stats/src/model.c: 369
+# error(_("invalid '%s' argument"), "terms")
+# src/library/stats/src/model.c: 377
+# error(_("invalid '%s' argument"), "terms")
+# src/library/stats/src/massdist.c: 41
+# error("invalid '%s' argument", "n")
+# src/library/utils/src/io.c: 328
+# error(_("invalid '%s' argument"), "comment.char")
+# src/library/utils/src/io.c: 332
+# error(_("invalid '%s' argument"), "comment.char")
+# src/library/utils/src/io.c: 342
+# error(_("invalid '%s' argument"), "sep")
+# src/library/utils/src/io.c: 571
+# error(_("invalid '%s' argument"), "na.strings")
+# src/library/utils/src/io.c: 752
+# error(_("invalid '%s' argument"), "choices")
+# src/library/utils/src/io.c: 805
+# error(_("invalid '%s' argument"), "nlines")
+# src/library/utils/src/io.c: 817
+# error(_("invalid '%s' argument"), "comment.char")
+# src/library/utils/src/io.c: 821
+# error(_("invalid '%s' argument"), "comment.char")
+# src/library/utils/src/io.c: 827
+# error(_("invalid '%s' argument"), "sep")
+# src/library/utils/src/io.c: 828
+# error(_("invalid '%s' argument"), "skipNul")
+# src/library/utils/src/io.c: 1052
+# error(_("invalid '%s' argument"), "nr")
+# src/library/utils/src/io.c: 1053
+# error(_("invalid '%s' argument"), "nc")
+# src/library/utils/src/io.c: 1055
+# error(_("invalid '%s' argument"), "rnames")
+# src/library/utils/src/io.c: 1056
+# error(_("invalid '%s' argument"), "sep")
+# src/library/utils/src/io.c: 1057
+# error(_("invalid '%s' argument"), "eol")
+# src/library/utils/src/io.c: 1058
+# error(_("invalid '%s' argument"), "na")
+# src/library/utils/src/io.c: 1059
+# error(_("invalid '%s' argument"), "dec")
+# src/library/utils/src/io.c: 1060
+# error(_("invalid '%s' argument"), "qmethod")
+# src/library/utils/src/windows/dialogs.c: 170
+# error(_("invalid '%s' argument"), "message")
+# src/library/utils/src/windows/dialogs.c: 195
+# error(_("invalid '%s' argument"), "message")
+# src/library/utils/src/windows/dialogs.c: 198
+# error(_("invalid '%s' argument"), "default")
+# src/library/utils/src/windows/dialogs.c: 242
+# error(_("invalid '%s' argument"), "menuname")
+# src/library/utils/src/windows/dialogs.c: 279
+# error(_("invalid '%s' argument"), "menuname")
+# src/library/utils/src/windows/dialogs.c: 290
+# error(_("invalid '%s' argument"), "itemname")
+# src/library/utils/src/windows/dialogs.c: 314
+# error(_("invalid '%s' argument"), "menuname")
+# src/library/utils/src/windows/dialogs.c: 322
+# error(_("invalid '%s' argument"), "itemname")
+# src/library/utils/src/windows/widgets.c: 78
+# error(_("invalid '%s' argument"), "choices")
+# src/library/utils/src/windows/widgets.c: 81
+# error(_("invalid '%s' argument"), "preselect")
+# src/library/utils/src/windows/widgets.c: 86
+# error(_("invalid '%s' argument"), "preselect")
+# src/library/utils/src/windows/util.c: 111
+# error(_("invalid '%s' argument"), "path")
+# src/library/utils/src/stubs.c: 48
+#  _("invalid '%s' argument")
+# src/library/utils/src/stubs.c: 68
+#  _("invalid '%s' argument")
+# src/main/objects.c: 1581
+# error("invalid '%s' argument", "flag")
+# src/main/objects.c: 1583
+# error("invalid '%s' argument", "complete")
+# src/main/dotcode.c: 478
+# error(_("invalid '%s' argument"), "symbol")
+# src/main/dotcode.c: 482
+# error(_("invalid '%s' argument"), "PACKAGE")
+# src/main/dotcode.c: 487
+# error(_("invalid '%s' argument"), "type")
+# src/main/paste.c: 96
+# error(_("invalid '%s' argument"), "collapse")
+# src/main/paste.c: 395
+# error(_("invalid '%s' argument"), "trim")
+# src/main/paste.c: 402
+# error(_("invalid '%s' argument"), "digits")
+# src/main/paste.c: 409
+# error(_("invalid '%s' argument"), "nsmall")
+# src/main/paste.c: 414
+# error(_("invalid '%s' argument"), "width")
+# src/main/paste.c: 419
+# error(_("invalid '%s' argument"), "justify")
+# src/main/paste.c: 424
+# error(_("invalid '%s' argument"), "na.encode")
+# src/main/paste.c: 427
+# error(_("invalid '%s' argument"), "scientific")
+# src/main/paste.c: 435
+# error(_("invalid '%s' argument"), "scientific")
+# src/main/paste.c: 601
+# error(_("invalid '%s' argument"), "digits")
+# src/main/paste.c: 606
+# error(_("invalid '%s' argument"), "nsmall")
+# src/main/attrib.c: 196
+# error(_("invalid '%s' argument"), "type")
+# src/main/saveload.c: 1950
+# error(_("invalid '%s' argument"), "version")
+# src/main/saveload.c: 1953
+# error(_("invalid '%s' argument"), "environment")
+# src/main/saveload.c: 1956
+# error(_("invalid '%s' argument"), "eval.promises")
+# src/main/saveload.c: 2072
+# error(_("invalid '%s' argument"), "envir")
+# src/main/saveload.c: 2252
+# error(_("invalid '%s' argument"), "version")
+# src/main/saveload.c: 2257
+# error(_("invalid '%s' argument"), "environment")
+# src/main/saveload.c: 2260
+# error(_("invalid '%s' argument"), "eval.promises")
+# src/main/saveload.c: 2366
+# error(_("invalid '%s' argument"), "envir")
+# src/main/array.c: 87
+# error(_("invalid '%s' argument"), "byrow")
+# src/main/array.c: 1137
+# error(_("invalid '%s' argument"), "perm")
+# src/main/array.c: 1263
+# error(_("invalid '%s' argument"), "n")
+# src/main/array.c: 1265
+# error(_("invalid '%s' argument"), "p")
+# src/main/array.c: 1266
+# error(_("invalid '%s' argument"), "na.rm")
+# src/main/array.c: 1592
+# error(_("invalid '%s' argument"), "k")
+# src/main/array.c: 1594
+# error(_("invalid '%s' argument"), "upper.tri")
+# src/main/array.c: 1596
+# error(_("invalid '%s' argument"), "transpose")
+# src/main/memory.c: 3736
+# error(_("invalid '%s' argument"), "filename")
+# src/main/unique.c: 966
+# error(_("invalid '%s' argument"), "duplicates.ok")
+# src/main/unique.c: 1289
+# error(_("invalid '%s' argument"), "call")
+# src/main/unique.c: 1349
+# error(_("invalid '%s' argument"), "definition")
+# src/main/unique.c: 1356
+# error(_("invalid '%s' argument"), "expand.dots")
+# src/main/unique.c: 1750
+# error(_("invalid '%s' argument"), "size")
+# src/main/grep.c: 767
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/grep.c: 772
+# error(_("invalid '%s' argument"), "text")
+# src/main/grep.c: 1061
+# error(_("invalid '%s' argument"), "offset")
+# src/main/grep.c: 1063
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/grep.c: 1065
+# error(_("invalid '%s' argument"), "text")
+# src/main/grep.c: 1510
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/grep.c: 1514
+# error(_("invalid '%s' argument"), "replacement")
+# src/main/grep.c: 1519
+# error(_("invalid '%s' argument"), "text")
+# src/main/grep.c: 2323
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/grep.c: 2328
+# error(_("invalid '%s' argument"), "text")
+# src/main/grep.c: 2621
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/grep.c: 2626
+# error(_("invalid '%s' argument"), "text")
+# src/main/random.c: 478
+# error(_("invalid '%s' argument"), "replace")
+# src/main/random.c: 482
+# error(_("invalid '%s' argument"), "replace")
+# src/main/random.c: 489
+# error(_("invalid '%s' argument"), "size")
+# src/main/random.c: 517
+# error(_("invalid '%s' argument"), "size")
+# src/main/platform.c: 306
+# error(_("invalid '%s' argument"), "headers")
+# src/main/platform.c: 308
+# error(_("invalid '%s' argument"), "title")
+# src/main/platform.c: 310
+# error(_("invalid '%s' argument"), "pager")
+# src/main/platform.c: 326
+# error(_("invalid '%s' argument"), "headers")
+# src/main/platform.c: 337
+# error(_("invalid '%s' argument"), "pager")
+# src/main/platform.c: 390
+# error(_("invalid '%s' argument"), "file1")
+# src/main/platform.c: 392
+# error(_("invalid '%s' argument"), "file2")
+# src/main/platform.c: 705
+# error(_("invalid '%s' argument"), "from")
+# src/main/platform.c: 707
+# error(_("invalid '%s' argument"), "to")
+# src/main/platform.c: 1064
+# error(_("invalid '%s' argument"), "path")
+# src/main/platform.c: 1070
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/platform.c: 1073
+# error(_("invalid '%s' argument"), "all.files")
+# src/main/platform.c: 1076
+# error(_("invalid '%s' argument"), "full.names")
+# src/main/platform.c: 1079
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 1082
+# error(_("invalid '%s' argument"), "ignore.case")
+# src/main/platform.c: 1085
+# error(_("invalid '%s' argument"), "include.dirs")
+# src/main/platform.c: 1088
+# error(_("invalid '%s' argument"), "no..")
+# src/main/platform.c: 1185
+# error(_("invalid '%s' argument"), "directory")
+# src/main/platform.c: 1188
+# error(_("invalid '%s' argument"), "full.names")
+# src/main/platform.c: 1191
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 1229
+# error(_("invalid '%s' argument"), "file")
+# src/main/platform.c: 1286
+# error(_("invalid '%s' argument"), "names")
+# src/main/platform.c: 1289
+# error(_("invalid '%s' argument"), "mode")
+# src/main/platform.c: 1498
+# error(_("invalid '%s' argument"), "x")
+# src/main/platform.c: 1501
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 1504
+# error(_("invalid '%s' argument"), "force")
+# src/main/platform.c: 1540
+# error(_("invalid '%s' argument"), "x")
+# src/main/platform.c: 1543
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 1546
+# error(_("invalid '%s' argument"), "force")
+# src/main/platform.c: 1629
+# error(_("invalid '%s' argument"), "dir")
+# src/main/platform.c: 1645
+# error(_("invalid '%s' argument"), "category")
+# src/main/platform.c: 1684
+# error(_("invalid '%s' argument"), "category")
+# src/main/platform.c: 1686
+# error(_("invalid '%s' argument"), "locale")
+# src/main/platform.c: 1757
+# error(_("invalid '%s' argument"), "category")
+# src/main/platform.c: 1841
+# error(_("invalid '%s' argument"), "path")
+# src/main/platform.c: 2116
+# error(_("invalid '%s' argument"), "path")
+# src/main/platform.c: 2176
+# error(_("invalid '%s' argument"), "path")
+# src/main/platform.c: 2353
+# error(_("invalid '%s' argument"), "from")
+# src/main/platform.c: 2356
+# error(_("invalid '%s' argument"), "to")
+# src/main/platform.c: 2359
+# error(_("invalid '%s' argument"), "over")
+# src/main/platform.c: 2362
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 2365
+# error(_("invalid '%s' argument"), "copy.mode")
+# src/main/platform.c: 2368
+# error(_("invalid '%s' argument"), "copy.dates")
+# src/main/platform.c: 2568
+# error(_("invalid '%s' argument"), "from")
+# src/main/platform.c: 2571
+# error(_("invalid '%s' argument"), "to")
+# src/main/platform.c: 2574
+# error(_("invalid '%s' argument"), "over")
+# src/main/platform.c: 2577
+# error(_("invalid '%s' argument"), "recursive")
+# src/main/platform.c: 2580
+# error(_("invalid '%s' argument"), "copy.mode")
+# src/main/platform.c: 2583
+# error(_("invalid '%s' argument"), "copy.dates")
+# src/main/platform.c: 2657
+# error(_("invalid '%s' argument"), "paths")
+# src/main/platform.c: 2665
+# error(_("invalid '%s' argument"), "use_umask")
+# src/main/platform.c: 2701
+# error(_("invalid '%s' argument"), "paths")
+# src/main/platform.c: 2751
+# error(_("invalid '%s' argument"), "paths")
+# src/main/debug.c: 228
+#  _("invalid '%s' argument")
+# src/main/print.c: 242
+# error(_("invalid '%s' argument"), "digits")
+# src/main/print.c: 248
+# error(_("invalid '%s' argument"), "quote")
+# src/main/print.c: 270
+# error(_("invalid '%s' argument"), "right")
+# src/main/print.c: 276
+# error(_("invalid '%s' argument"), "max")
+# src/main/print.c: 283
+# error(_("invalid '%s' argument"), "useSource")
+# src/main/apply.c: 293
+# error(_("invalid '%s' argument"), "f")
+# src/main/apply.c: 295
+# error(_("invalid '%s' argument"), "classes")
+# src/main/apply.c: 298
+# error(_("invalid '%s' argument"), "how")
+# src/main/envir.c: 1618
+# error(_("invalid '%s' argument"), "envir")
+# src/main/envir.c: 1621
+# error(_("invalid '%s' argument"), "inherits")
+# src/main/envir.c: 1742
+# error(_("invalid '%s' argument"), "envir")
+# src/main/envir.c: 1747
+# error(_("invalid '%s' argument"), "inherits")
+# src/main/envir.c: 1813
+# error(_("invalid '%s' argument"), "envir")
+# src/main/envir.c: 1829
+# error(_("invalid '%s' argument"), "mode")
+# src/main/envir.c: 1835
+# error(_("invalid '%s' argument"), "inherits")
+# src/main/envir.c: 1932
+# error(_("invalid '%s' argument"), "mode")
+# src/main/envir.c: 1940
+# error(_("invalid '%s' argument"), "ifnotfound")
+# src/main/envir.c: 1947
+# error(_("invalid '%s' argument"), "inherits")
+# src/main/envir.c: 1958
+# error(_("invalid '%s' argument"), "mode")
+# src/main/envir.c: 2172
+# error(_("invalid '%s' argument"), "name")
+# src/main/envir.c: 2293
+# error(_("invalid '%s' argument"), "pos")
+# src/main/envir.c: 2552
+# error(_("invalid '%s' argument"), "envir")
+# src/main/envir.c: 2762
+#  _("invalid '%s' argument")
+# src/main/envir.c: 2776
+#  _("invalid '%s' argument")
+# src/main/envir.c: 2783
+#  _("invalid '%s' argument")
+# src/main/envir.c: 2799
+#  _("invalid '%s' argument")
+# src/main/envir.c: 3367
+# error(_("invalid '%s' argument"), "names")
+# src/main/builtin.c: 88
+#  _("invalid '%s' argument")
+# src/main/builtin.c: 97
+#  _("invalid '%s' argument")
+# src/main/builtin.c: 116
+# error(_("invalid '%s' argument"), "eval.env")
+# src/main/builtin.c: 118
+# error(_("invalid '%s' argument"), "assign.env")
+# src/main/builtin.c: 147
+#  _("invalid '%s' argument")
+# src/main/builtin.c: 534
+# error(_("invalid '%s' argument"), "fill")
+# src/main/builtin.c: 550
+# error(_("invalid '%s' argument"), "labels")
+# src/main/builtin.c: 739
+# error(_("invalid '%s' argument"), "length")
+# src/main/builtin.c: 741
+# error(_("invalid '%s' argument"), "length")
+# src/main/builtin.c: 743
+# error(_("invalid '%s' argument"), "mode")
+# src/main/datetime.c: 775
+# error(_("invalid '%s' argument"), "x")
+# src/main/datetime.c: 865
+# error(_("invalid '%s' argument"), "x")
+# src/main/datetime.c: 867
+# error(_("invalid '%s' argument"), "format")
+# src/main/datetime.c: 871
+# error(_("invalid '%s' argument"), "usetz")
+# src/main/datetime.c: 1026
+# error(_("invalid '%s' argument"), "x")
+# src/main/datetime.c: 1028
+# error(_("invalid '%s' argument"), "x")
+# src/main/datetime.c: 1232
+# error(_("invalid '%s' argument"), "x")
+# src/main/scan.c: 684
+# error(_("invalid '%s' argument"), "what")
+# src/main/scan.c: 853
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/scan.c: 867
+# error(_("invalid '%s' argument"), "strip.white")
+# src/main/scan.c: 871
+# error(_("invalid '%s' argument"), "na.strings")
+# src/main/scan.c: 873
+# error(_("invalid '%s' argument"), "comment.char")
+# src/main/scan.c: 884
+# error(_("invalid '%s' argument"), "sep")
+# src/main/scan.c: 911
+# error(_("invalid '%s' argument"), "comment.char")
+# src/main/scan.c: 914
+# error(_("invalid '%s' argument"), "allowEscapes")
+# src/main/scan.c: 917
+# error(_("invalid '%s' argument"), "skipNul")
+# src/main/scan.c: 972
+# error(_("invalid '%s' argument"), "what")
+# src/main/deparse.c: 397
+# error(_("invalid '%s' argument"), "envir")
+# src/main/character.c: 139
+# error(_("invalid '%s' argument"), "type")
+# src/main/character.c: 142
+# error(_("invalid '%s' argument"), "type")
+# src/main/character.c: 203
+# error(_("invalid '%s' argument"), "type")
+# src/main/character.c: 1037
+# error(_("invalid '%s' argument"), "old")
+# src/main/character.c: 1041
+# error(_("invalid '%s' argument"), "new")
+# src/main/character.c: 1044
+# error("invalid '%s' argument", "x")
+# src/main/character.c: 1276
+# error(_("invalid '%s' argument"), "width")
+# src/main/character.c: 1280
+# error(_("invalid '%s' argument"), "width")
+# src/main/character.c: 1341
+# error(_("invalid '%s' argument"), "base")
+# src/main/character.c: 1344
+# error(_("invalid '%s' argument"), "base")
+# src/main/context.c: 596
+# error(_("invalid '%s' argument"), "n")
+# src/main/context.c: 605
+# error(_("invalid '%s' argument"), "which")
+# src/main/context.c: 609
+# error(_("invalid '%s' argument"), "which")
+# src/main/agrep.c: 131
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/agrep.c: 135
+# error(_("invalid '%s' argument"), "x")
+# src/main/agrep.c: 775
+# error(_("invalid '%s' argument"), "pattern")
+# src/main/agrep.c: 780
+# error(_("invalid '%s' argument"), "text")
+# src/main/connections.c: 1217
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 1223
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 1226
+# error(_("invalid '%s' argument"), "block")
+# src/main/connections.c: 1230
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 1375
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 1391
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 1396
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 1996
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 2002
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 2006
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 2010
+# error(_("invalid '%s' argument"), "compress")
+# src/main/connections.c: 2015
+# error(_("invalid '%s' argument"), "compress")
+# src/main/connections.c: 2665
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 2670
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 2673
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 2676
+# error(_("invalid '%s' argument"), "raw")
+# src/main/connections.c: 3057
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 3062
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 3068
+# error(_("invalid '%s' argument"), "environment")
+# src/main/connections.c: 3071
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 3075
+# error(_("invalid '%s' argument"), "text")
+# src/main/connections.c: 3090
+# error(_("invalid '%s' argument"), "text")
+# src/main/connections.c: 3140
+# error(_("invalid '%s' argument"), "host")
+# src/main/connections.c: 3145
+# error(_("invalid '%s' argument"), "port")
+# src/main/connections.c: 3149
+# error(_("invalid '%s' argument"), "server")
+# src/main/connections.c: 3153
+# error(_("invalid '%s' argument"), "blocking")
+# src/main/connections.c: 3157
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 3163
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 3210
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 3216
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 3220
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 3270
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 3273
+# error(_("invalid '%s' argument"), "blocking")
+# src/main/connections.c: 3547
+# error(_("invalid '%s' argument"), "n")
+# src/main/connections.c: 3550
+# error(_("invalid '%s' argument"), "ok")
+# src/main/connections.c: 3553
+# error(_("invalid '%s' argument"), "warn")
+# src/main/connections.c: 3559
+# error(_("invalid '%s' argument"), "skipNul")
+# src/main/connections.c: 3666
+# error(_("invalid '%s' argument"), "text")
+# src/main/connections.c: 3672
+# error(_("invalid '%s' argument"), "sep")
+# src/main/connections.c: 3675
+# error(_("invalid '%s' argument"), "useBytes")
+# src/main/connections.c: 3826
+# error(_("invalid '%s' argument"), "what")
+# src/main/connections.c: 3829
+# error(_("invalid '%s' argument"), "n")
+# src/main/connections.c: 3833
+# error(_("invalid '%s' argument"), "signed")
+# src/main/connections.c: 3836
+# error(_("invalid '%s' argument"), "swap")
+# src/main/connections.c: 3956
+# error(_("invalid '%s' argument"), "what")
+# src/main/connections.c: 4074
+# error(_("invalid '%s' argument"), "swap")
+# src/main/connections.c: 4077
+# error(_("invalid '%s' argument"), "useBytes")
+# src/main/connections.c: 4414
+# error(_("invalid '%s' argument"), "useBytes")
+# src/main/connections.c: 4439
+# error(_("invalid '%s' argument"), "nchars")
+# src/main/connections.c: 4474
+# error(_("invalid '%s' argument"), "object")
+# src/main/connections.c: 4489
+# error(_("invalid '%s' argument"), "useBytes")
+# src/main/connections.c: 4497
+# error(_("invalid '%s' argument"), "sep")
+# src/main/connections.c: 4523
+# error(_("invalid '%s' argument"), "nchars")
+# src/main/connections.c: 4669
+# error(_("invalid '%s' argument"), "data")
+# src/main/connections.c: 4673
+# error(_("invalid '%s' argument"), "newLine")
+# src/main/connections.c: 4801
+# error(_("invalid '%s' argument"), "closeOnExit")
+# src/main/connections.c: 4803
+# error(_("invalid '%s' argument"), "type")
+# src/main/connections.c: 4805
+# error(_("invalid '%s' argument"), "split")
+# src/main/connections.c: 4833
+# error(_("invalid '%s' argument"), "type")
+# src/main/connections.c: 4965
+# error(_("invalid '%s' argument"), "description")
+# src/main/connections.c: 4991
+# error(_("invalid '%s' argument"), "open")
+# src/main/connections.c: 4995
+# error(_("invalid '%s' argument"), "block")
+# src/main/connections.c: 4999
+# error(_("invalid '%s' argument"), "encoding")
+# src/main/connections.c: 5003
+# error(_("invalid '%s' argument"), "raw")
+# src/main/errors.c: 1030
+# error(_("invalid '%s' argument"), "n")
+# src/main/eval.c: 397
+# error(_("invalid '%s' argument"), "filename")
+# src/main/eval.c: 406
+# error(_("invalid '%s' argument"), "numfiles")
+# src/main/eval.c: 409
+# error(_("invalid '%s' argument"), "bufsize")
+# src/main/util.c: 577
+# error(_("invalid '%s' argument"), "xinds")
+# src/main/util.c: 580
+# error(_("invalid '%s' argument"), "yinds")
+# src/main/util.c: 1821
+# error(_("invalid '%s' argument"), this)
+# src/main/util.c: 1990
+# error(_("invalid '%s' argument"), "breaks")
+# src/main/util.c: 1991
+# error(_("invalid '%s' argument"), "right")
+# src/main/util.c: 1992
+# error(_("invalid '%s' argument"), "include.lowest")
+# src/main/util.c: 2009
+# error(_("invalid '%s' argument"), "nbin")
+# src/main/util.c: 2033
+# error(_("invalid '%s' argument"), "vec")
+# src/main/util.c: 2037
+# error(_("invalid '%s' argument"), "rightmost.closed")
+# src/main/util.c: 2039
+# error(_("invalid '%s' argument"), "all.inside")
+# src/main/util.c: 2064
+# error(_("invalid '%s' argument"), "l")
+# src/main/util.c: 2066
+# error(_("invalid '%s' argument"), "u")
+# src/main/util.c: 2068
+# error(_("invalid '%s' argument"), "n")
+# src/main/util.c: 2071
+# error(_("invalid '%s' argument"), "min.n")
+# src/main/util.c: 2074
+# error(_("invalid '%s' argument"), "shrink.sml")
+# src/main/util.c: 2078
+# error(_("invalid '%s' argument"), "high.u.bias")
+# src/main/util.c: 2080
+# error(_("invalid '%s' argument"), "u5.bias")
+# src/main/sort.c: 175
+#  _("invalid '%s' argument")
+# src/main/seq.c: 618
+#  _("invalid '%s' argument")
+# src/main/seq.c: 623
+#  _("invalid '%s' argument")
+# src/main/seq.c: 631
+#  _("invalid '%s' argument")
+# src/main/seq.c: 662
+#  _("invalid '%s' argument")
+# src/main/seq.c: 666
+#  _("invalid '%s' argument")
+# src/main/seq.c: 672
+#  _("invalid '%s' argument")
+# src/main/seq.c: 680
+#  _("invalid '%s' argument")
+# src/main/dounzip.c: 322
+# error(_("invalid '%s' argument"), "files")
+# src/main/dounzip.c: 329
+# error(_("invalid '%s' argument"), "exdir")
+# src/main/dounzip.c: 339
+# error(_("invalid '%s' argument"), "list")
+# src/main/dounzip.c: 344
+# error(_("invalid '%s' argument"), "overwrite")
+# src/main/dounzip.c: 348
+# error(_("invalid '%s' argument"), "junkpaths")
+# src/main/dounzip.c: 352
+# error(_("invalid '%s' argument"), "setTime")
+# src/main/sysutils.c: 585
+# error(_("invalid '%s' argument"), "from")
+# src/main/sysutils.c: 589
+# error(_("invalid '%s' argument"), "to")
+# src/main/sysutils.c: 593
+# error(_("invalid '%s' argument"), "sub")
+# src/main/sysutils.c: 599
+# error(_("invalid '%s' argument"), "mark")
+# src/main/sysutils.c: 603
+# error(_("invalid '%s' argument"), "toRaw")
+# src/main/sysutils.c: 1831
+# error(_("invalid '%s' argument"), "paths")
+# src/main/sysutils.c: 1835
+# error(_("invalid '%s' argument"), "dirmark")
+#: src/modules/internet/libcurl.c:125
+#, fuzzy, c-format
+msgid "invalid %s argument"
+msgstr "niepoprawny argument '%s'"
+
+#: src/modules/internet/libcurl.c:139
+#, c-format
+msgid ""
+"libcurl error code %d\n"
+"\t%s\n"
+msgstr ""
+
+# src/library/utils/src/utils.c: 105
+# warning(_("nsl() is not supported on this platform"))
+# src/main/platform.c: 2087
+# warning(_("nsl() is not supported on this platform"))
+#: src/modules/internet/libcurl.c:162
+#, fuzzy
+msgid "download.file(method = \"libcurl\") is not supported on this platform"
+msgstr "'nsl()' nie jest obsługiwany na tej platformie"
+
+# src/main/envir.c: 3369
+# error(_("length of import and export names must match"))
+#: src/modules/internet/libcurl.c:179
+#, fuzzy
+msgid "lengths of 'url' and 'destfile' must match"
+msgstr "długości nazw importu oraz eksportu muszą się zgadzać"
+
+# src/library/utils/src/utils.c: 105
+# warning(_("nsl() is not supported on this platform"))
+# src/main/platform.c: 2087
+# warning(_("nsl() is not supported on this platform"))
+#: src/modules/internet/libcurl.c:293
+#, fuzzy
+msgid "url(method = \"libcurl\") is not supported on this platform"
+msgstr "'nsl()' nie jest obsługiwany na tej platformie"
 
 # src/modules/internet/nanoftp.c: 288
 #  _("RxmlNanoFTPScanURL: overlong (invalid?) URL")

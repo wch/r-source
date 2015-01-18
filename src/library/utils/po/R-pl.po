@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2074,6 +2074,20 @@ msgstr "argument 'ccaddress' musi być długości 1"
 # stop("no download method found")
 msgid "no download method found"
 msgstr "nie znaleziono metody pobierania"
+
+# utils/R/widgets.R: 25
+# stop("'title' must be NULL or a length-1 character vector")
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr ""
+"argument 'title' musi być wartością NULL lub wektorem tekstowym o długości 1"
+
+# utils/R/widgets.R: 25
+# stop("'title' must be NULL or a length-1 character vector")
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr ""
+"argument 'title' musi być wartością NULL lub wektorem tekstowym o długości 1"
 
 # utils/R/unix/download.file.R: 70
 # warning("download had nonzero exit status")

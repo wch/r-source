@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -314,7 +314,8 @@ msgstr " 関数 %s は既にグループ総称的です; 変更しません "
 msgid "Function %s is a group generic; do not call it directly"
 msgstr " 関数 %s はグループ総称的です；直接呼び出さないで下さい "
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されなくてはなりません "
 
 msgid "expected a non-empty character string for argument name"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-27 13:32-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -312,7 +312,8 @@ msgstr "함수 %s는 이미 그룹제네릭입니다; 변경하지 않습니다"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "함수 %s는 그룹제네릭입니다; 직접적으로 호출할 수 없습니다"
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric'은 반드시 제네릭 함수 또는 메소드로부터 호출되어야 합니다"
 
 msgid "expected a non-empty character string for argument name"

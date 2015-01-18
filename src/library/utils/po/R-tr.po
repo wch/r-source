@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1006,6 +1006,12 @@ msgid "'ccaddress' must be of length 1"
 msgstr ""
 
 msgid "no download method found"
+msgstr ""
+
+msgid "'url' must be a length-one character vector"
+msgstr ""
+
+msgid "'destfile' must be a length-one character vector"
 msgstr ""
 
 msgid "download had nonzero exit status"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1081,6 +1081,14 @@ msgstr "'ccaddress' должен быть длиной 1"
 
 msgid "no download method found"
 msgstr "не найдено метода скачивания"
+
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr "'title' должны быть NULL или текстовым вектором единичной длины"
+
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr "'title' должны быть NULL или текстовым вектором единичной длины"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"

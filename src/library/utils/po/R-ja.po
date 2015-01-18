@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-26 14:24+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1088,6 +1088,14 @@ msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 
 msgid "no download method found"
 msgstr " ダウンロードの方法が見付かりません "
+
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr " 'title' は NULL か長さ 1 の文字ベクトルでなければなりません "
+
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr " 'title' は NULL か長さ 1 の文字ベクトルでなければなりません "
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "

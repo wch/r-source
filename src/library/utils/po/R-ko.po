@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -1079,6 +1079,14 @@ msgstr "'ccaddress'는 반드시 길이가 1이어야 합니다"
 
 msgid "no download method found"
 msgstr "다운로드 메소드를 찾을 수 없습니다"
+
+#, fuzzy
+msgid "'url' must be a length-one character vector"
+msgstr "'title'은 반드시 NULL 또는 길이가 1인 문자형 벡터이어야 합니다"
+
+#, fuzzy
+msgid "'destfile' must be a length-one character vector"
+msgstr "'title'은 반드시 NULL 또는 길이가 1인 문자형 벡터이어야 합니다"
 
 msgid "download had nonzero exit status"
 msgstr "다운로드가 0 이 아닌 종료상태를 가졌습니다"

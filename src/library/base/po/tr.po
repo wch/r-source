@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38+0000\n"
+"POT-Creation-Date: 2015-01-18 09:58+0000\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -173,9 +173,9 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/connections.c:4673 src/main/connections.c:4677
 #: src/main/connections.c:4805 src/main/connections.c:4807
 #: src/main/connections.c:4809 src/main/connections.c:4837
-#: src/main/connections.c:4967 src/main/connections.c:4993
-#: src/main/connections.c:4997 src/main/connections.c:5001
-#: src/main/connections.c:5005 src/main/context.c:611 src/main/context.c:620
+#: src/main/connections.c:4972 src/main/connections.c:5001
+#: src/main/connections.c:5005 src/main/connections.c:5009
+#: src/main/connections.c:5013 src/main/context.c:611 src/main/context.c:620
 #: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
 #: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
 #: src/main/datetime.c:1029 src/main/datetime.c:1234 src/main/debug.c:241
@@ -239,13 +239,15 @@ msgstr "'%ls' gösterilirken hata"
 #: src/main/util.c:2241 src/main/util.c:2245 src/main/util.c:2247
 #: src/modules/X11/devX11.c:3239 src/modules/X11/devX11.c:3242
 #: src/modules/X11/devX11.c:3245 src/modules/X11/devX11.c:3269
-#: src/modules/internet/internet.c:285 src/modules/internet/internet.c:291
-#: src/modules/internet/internet.c:297 src/modules/internet/internet.c:300
-#: src/modules/internet/internet.c:304 src/modules/lapack/Lapack.c:155
-#: src/modules/lapack/Lapack.c:261 src/modules/lapack/Lapack.c:709
-#: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:880
-#: src/modules/lapack/Lapack.c:1215 src/unix/sys-std.c:1217
-#: src/unix/sys-std.c:1240
+#: src/modules/internet/internet.c:301 src/modules/internet/internet.c:307
+#: src/modules/internet/internet.c:313 src/modules/internet/internet.c:316
+#: src/modules/internet/internet.c:320 src/modules/internet/libcurl.c:173
+#: src/modules/internet/libcurl.c:177 src/modules/internet/libcurl.c:182
+#: src/modules/internet/libcurl.c:185 src/modules/internet/libcurl.c:189
+#: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
+#: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
+#: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1215
+#: src/unix/sys-std.c:1217 src/unix/sys-std.c:1240
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "hatalı '%s' argümanı"
@@ -1370,7 +1372,7 @@ msgstr "'parent' bir ortam değil"
 #: src/main/connections.c:4072 src/main/connections.c:4106
 #: src/main/connections.c:4484 src/main/connections.c:4554
 #: src/main/connections.c:4763 src/main/connections.c:4767
-#: src/main/connections.c:5127 src/main/deparse.c:362 src/main/deparse.c:450
+#: src/main/connections.c:5163 src/main/deparse.c:362 src/main/deparse.c:450
 #: src/main/serialize.c:2041
 msgid "cannot write to this connection"
 msgstr "bu bağlantıya yazılamıyor"
@@ -1830,8 +1832,8 @@ msgstr "fifo '%s' açılamadı"
 #: src/main/connections.c:1526 src/main/connections.c:1536
 #: src/main/connections.c:1655 src/main/connections.c:1715
 #: src/main/connections.c:2242 src/main/connections.c:2259
-#: src/main/connections.c:2568 src/main/connections.c:5308
-#: src/main/connections.c:5372
+#: src/main/connections.c:2568 src/main/connections.c:5344
+#: src/main/connections.c:5408
 msgid "too large a block specified"
 msgstr "çok geniş bir alan seçildi"
 
@@ -1862,7 +1864,7 @@ msgstr "fifo bağlantısı yer ayırması başarısız"
 
 #: src/main/connections.c:1212 src/main/connections.c:1371
 #: src/main/connections.c:1993 src/main/connections.c:3209
-#: src/main/connections.c:4969
+#: src/main/connections.c:4974
 msgid "only first element of 'description' argument used"
 msgstr "'description' argümanın sadece ilk öğesi kullanıldı"
 
@@ -1878,7 +1880,7 @@ msgstr ""
 #: src/main/connections.c:3565 src/main/connections.c:3681
 #: src/main/connections.c:3843 src/main/connections.c:4099
 #: src/main/connections.c:4427 src/main/connections.c:4547
-#: src/main/connections.c:4759 src/main/connections.c:5108 src/main/dcf.c:94
+#: src/main/connections.c:4759 src/main/connections.c:5144 src/main/dcf.c:94
 #: src/main/deparse.c:354 src/main/deparse.c:442 src/main/saveload.c:2267
 #: src/main/saveload.c:2348 src/main/scan.c:933 src/main/serialize.c:2212
 #: src/main/serialize.c:2263 src/main/source.c:270
@@ -1948,7 +1950,7 @@ msgstr "'%s' dosyası bzip2 ile sıkıştırılmamış gibi gözüküyor"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile bağlanıtısı yer ayırması başarısız"
 
-#: src/main/connections.c:1799 src/main/connections.c:5965
+#: src/main/connections.c:1799 src/main/connections.c:6001
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "lzma çözücüsü başlatılamadı, hata %d"
@@ -2087,7 +2089,7 @@ msgstr "soketler bu sistemde mevcut değil"
 #: src/main/connections.c:3318 src/main/connections.c:3365
 #: src/main/connections.c:3390 src/main/connections.c:3413
 #: src/main/connections.c:3425 src/main/connections.c:3541
-#: src/main/connections.c:3666 src/main/connections.c:5411
+#: src/main/connections.c:3666 src/main/connections.c:5447
 msgid "'con' is not a connection"
 msgstr "'con' bir bağlantı değil"
 
@@ -2117,8 +2119,8 @@ msgstr "sink çıktı bağlantısı kapatılamaz"
 msgid "cannot close 'message' sink connection"
 msgstr "sink bağlantısı mesajları kapatılamaz"
 
-#: src/main/connections.c:3392 src/main/connections.c:5126
-#: src/main/connections.c:5134 src/main/serialize.c:2031
+#: src/main/connections.c:3392 src/main/connections.c:5162
+#: src/main/connections.c:5170 src/main/serialize.c:2031
 #: src/main/serialize.c:2039
 msgid "connection is not open"
 msgstr "bağlantı açık değil"
@@ -2130,7 +2132,7 @@ msgstr "Dize önbellek boyutundan uzun"
 
 #: src/main/connections.c:3572 src/main/connections.c:3574
 #: src/main/connections.c:3851 src/main/connections.c:4410
-#: src/main/connections.c:4435 src/main/connections.c:5135 src/main/dcf.c:101
+#: src/main/connections.c:4435 src/main/connections.c:5171 src/main/dcf.c:101
 #: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:2033
 #: src/main/source.c:277
 msgid "cannot read from this connection"
@@ -2279,61 +2281,61 @@ msgstr "bağlantı yok %d"
 msgid "there is no connection %d"
 msgstr "bağlantı yok %d"
 
-#: src/main/connections.c:5031
+#: src/main/connections.c:5067
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") sadece open = \"w+\" ve open = \"w+b\" destekler: ilki "
 "kullanılıyor"
 
-#: src/main/connections.c:5085 src/modules/internet/internet.c:116
-#: src/modules/internet/internet.c:580
-msgid "unsupported URL scheme"
-msgstr "desteklenmeyen URL şeması"
+#: src/main/connections.c:5121 src/modules/internet/internet.c:127
+#, fuzzy
+msgid "URL scheme unsupported by this method"
+msgstr "bu derlemede ICU desteklenmiyor"
 
-#: src/main/connections.c:5176
+#: src/main/connections.c:5212
 msgid "file stream does not have gzip magic number"
 msgstr "dosya akışı gzip magic numarasına sahip değil"
 
-#: src/main/connections.c:5187
+#: src/main/connections.c:5223
 msgid "file stream does not have valid gzip header"
 msgstr "dosya akışı geçerli gzip başlığı içermiyor"
 
-#: src/main/connections.c:5252
+#: src/main/connections.c:5288
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' bağlantısını temizlerken yazma hatası"
 
-#: src/main/connections.c:5354
+#: src/main/connections.c:5390
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc hatası %x %x\n"
 
-#: src/main/connections.c:5381
+#: src/main/connections.c:5417
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' bağlantısında yazma hatası"
 
-#: src/main/connections.c:5415
+#: src/main/connections.c:5451
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' 0 ... 9'dan biri olmalı"
 
-#: src/main/connections.c:5418
+#: src/main/connections.c:5454
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' TRUE veya FALSE olmalı"
 
-#: src/main/connections.c:5421
+#: src/main/connections.c:5457
 #, fuzzy
 msgid "this is already a 'gzcon' connection"
 msgstr "bir zaten bir gzcon bağlantısı"
 
-#: src/main/connections.c:5427
+#: src/main/connections.c:5463
 msgid "can only use read- or write- binary connections"
 msgstr "ikili bağlantılarda sadece read- veya write- işlemi yapılabilir"
 
-#: src/main/connections.c:5430
+#: src/main/connections.c:5466
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bir metin modu 'file' bağlantısı düzgün olarak çalışmayabilir"
 
-#: src/main/connections.c:5433
+#: src/main/connections.c:5469
 #, fuzzy
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
@@ -2342,29 +2344,29 @@ msgstr ""
 "yazılabilir textConnection'dan bir gzcon bağlantısı oluşturulamaz; "
 "rawConnection deneyin"
 
-#: src/main/connections.c:5436 src/main/connections.c:5440
-#: src/main/connections.c:5447 src/main/connections.c:5461
+#: src/main/connections.c:5472 src/main/connections.c:5476
+#: src/main/connections.c:5483 src/main/connections.c:5497
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' bağlantısı ayırması başarısız"
 
-#: src/main/connections.c:5648
+#: src/main/connections.c:5684
 msgid "not a list of sockets"
 msgstr "bir soket listesi değil"
 
-#: src/main/connections.c:5653
+#: src/main/connections.c:5689
 msgid "bad write indicators"
 msgstr "hatalı yazma göstericileri"
 
-#: src/main/connections.c:5664
+#: src/main/connections.c:5700
 msgid "not a socket connection"
 msgstr "bir soket bağlantısı değil"
 
-#: src/main/connections.c:5909
+#: src/main/connections.c:5945
 msgid "unknown compression, assuming none"
 msgstr "bilinmeyen sıkıştırma, sıkıştırma olmadığı varsayılıyor"
 
-#: src/main/connections.c:6027 src/main/connections.c:6031
-#: src/main/connections.c:6037
+#: src/main/connections.c:6063 src/main/connections.c:6067
+#: src/main/connections.c:6073
 #, fuzzy, c-format
 msgid "allocation of %s connection failed"
 msgstr "ham bağlantı yer ayırması başarısız"
@@ -4021,7 +4023,8 @@ msgstr "internet rutinlerine bu modülden erişilemez"
 #: src/main/internet.c:99 src/main/internet.c:137 src/main/internet.c:150
 #: src/main/internet.c:161 src/main/internet.c:172 src/main/internet.c:183
 #: src/main/internet.c:192 src/main/internet.c:203 src/main/internet.c:214
-#: src/main/internet.c:223 src/main/internet.c:233
+#: src/main/internet.c:223 src/main/internet.c:233 src/main/internet.c:347
+#: src/main/internet.c:358 src/main/internet.c:369 src/main/internet.c:381
 msgid "internet routines cannot be loaded"
 msgstr "internet rutinleri yüklenemez"
 
@@ -5258,8 +5261,8 @@ msgid "an xdr complex data read error occurred"
 msgstr "bir xdr karışık sayı verisi okuma hatası oluştu"
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1993
-#: src/main/serialize.c:2609 src/modules/internet/internet.c:352
-#: src/modules/internet/internet.c:414 src/modules/internet/internet.c:524
+#: src/main/serialize.c:2609 src/modules/internet/internet.c:368
+#: src/modules/internet/internet.c:430 src/modules/internet/internet.c:540
 msgid "write failed"
 msgstr "yazma başarısız"
 
@@ -6725,71 +6728,112 @@ msgstr "pano okunamadı (hata kodu %d)"
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines yapısı için bellek ayrılamadı"
 
-#: src/modules/internet/internet.c:189 src/modules/internet/internet.c:193
-#: src/modules/internet/internet.c:199 src/modules/internet/internet.c:211
+#: src/modules/internet/internet.c:122
+msgid "for https:// URLs use setInternet2(TRUE)"
+msgstr ""
+
+#: src/modules/internet/internet.c:205 src/modules/internet/internet.c:209
+#: src/modules/internet/internet.c:215 src/modules/internet/internet.c:227
 msgid "allocation of url connection failed"
 msgstr "url bağlantısı yerleştirmesinde hata"
 
-#: src/modules/internet/internet.c:287
+#: src/modules/internet/internet.c:303
 msgid "only first element of 'url' argument used"
 msgstr "'url' argümanının sadece ilk öğesi kullanıldı"
 
-#: src/modules/internet/internet.c:293
+#: src/modules/internet/internet.c:309
 msgid "only first element of 'destfile' argument used"
 msgstr "'destfile' argümanının sadece ilk öğesi kullanıldı"
 
-#: src/modules/internet/internet.c:318
+#: src/modules/internet/internet.c:334
 msgid "Download progress"
 msgstr "İndirme durumu"
 
-#: src/modules/internet/internet.c:340
+#: src/modules/internet/internet.c:356
 #, c-format
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "'%s' adresi açılamıyor, sebep:'%s'"
 
-#: src/modules/internet/internet.c:347 src/modules/internet/internet.c:376
-#: src/modules/internet/internet.c:483
+#: src/modules/internet/internet.c:363 src/modules/internet/internet.c:392
+#: src/modules/internet/internet.c:499 src/modules/internet/libcurl.c:234
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "hedefdosya '%s' açılamıyor, sebep: '%s'"
 
-#: src/modules/internet/internet.c:381 src/modules/internet/internet.c:488
+#: src/modules/internet/internet.c:397 src/modules/internet/internet.c:504
+#: src/modules/internet/libcurl.c:238
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "URL '%s' deneniyor\n"
 
-#: src/modules/internet/internet.c:388 src/modules/internet/internet.c:495
+#: src/modules/internet/internet.c:404 src/modules/internet/internet.c:511
 msgid "opened URL\n"
 msgstr "URL açıldı\n"
 
-#: src/modules/internet/internet.c:461 src/modules/internet/internet.c:571
+#: src/modules/internet/internet.c:477 src/modules/internet/internet.c:587
 #, fuzzy, c-format
 msgid "downloaded length %0.f != reported length %0.f"
 msgstr "indirme uzunluğu %d belirtilen uzunluk %d'e eşit değil"
 
-#: src/modules/internet/internet.c:466 src/modules/internet/internet.c:576
+#: src/modules/internet/internet.c:482 src/modules/internet/internet.c:592
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "URL '%s' açılamıyor"
 
-#: src/modules/internet/internet.c:604 src/modules/internet/internet.c:841
+#: src/modules/internet/internet.c:596
+msgid "unsupported URL scheme"
+msgstr "desteklenmeyen URL şeması"
+
+#: src/modules/internet/internet.c:620 src/modules/internet/internet.c:857
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "açılamadı: HTTP durumu '%d %s'"
 
-#: src/modules/internet/internet.c:785 src/modules/internet/internet.c:949
+#: src/modules/internet/internet.c:801 src/modules/internet/internet.c:965
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl zamanaşımına uğradı"
 
-#: src/modules/internet/internet.c:812 src/modules/internet/internet.c:826
-#: src/modules/internet/internet.c:971 src/modules/internet/internet.c:980
+#: src/modules/internet/internet.c:828 src/modules/internet/internet.c:842
+#: src/modules/internet/internet.c:987 src/modules/internet/internet.c:996
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl başarısız: '%s'"
 
-#: src/modules/internet/internet.c:884
+#: src/modules/internet/internet.c:900
 msgid "Internet read timed out"
 msgstr "İnternetten okuma zaman aşımına uğradı"
+
+#: src/modules/internet/libcurl.c:116
+#, fuzzy
+msgid "curlGetHeaders is not supported on this platform"
+msgstr "nsl() bu platformda desteklenmiyor"
+
+#: src/modules/internet/libcurl.c:125
+#, fuzzy, c-format
+msgid "invalid %s argument"
+msgstr "hatalı '%s' argümanı"
+
+#: src/modules/internet/libcurl.c:139
+#, c-format
+msgid ""
+"libcurl error code %d\n"
+"\t%s\n"
+msgstr ""
+
+#: src/modules/internet/libcurl.c:162
+#, fuzzy
+msgid "download.file(method = \"libcurl\") is not supported on this platform"
+msgstr "nsl() bu platformda desteklenmiyor"
+
+#: src/modules/internet/libcurl.c:179
+#, fuzzy
+msgid "lengths of 'url' and 'destfile' must match"
+msgstr "içe ve dışa aktarma isimleri uzunlukları eşit olmalıdır"
+
+#: src/modules/internet/libcurl.c:293
+#, fuzzy
+msgid "url(method = \"libcurl\") is not supported on this platform"
+msgstr "nsl() bu platformda desteklenmiyor"
 
 #: src/modules/internet/nanoftp.c:290 src/modules/internet/nanoftp.c:303
 #: src/modules/internet/nanoftp.c:314 src/modules/internet/nanoftp.c:348

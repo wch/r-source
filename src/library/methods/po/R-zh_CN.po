@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -265,7 +265,8 @@ msgstr "函数%s已经是群体泛型函数了；没有变动"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "函数%s是群体泛型函数；不能直接調用"
 
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric'只能由泛型函数或方法来調用"
 
 msgid "expected a non-empty character string for argument name"

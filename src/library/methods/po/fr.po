@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38+0000\n"
+"POT-Creation-Date: 2015-01-18 09:58+0000\n"
 "PO-Revision-Date: 2013-03-18 22:05+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -73,7 +73,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "pas de méthode directe ou héritée pour la fonction '%s' dans cet appel"
 
-#: methods_list_dispatch.c:522 methods_list_dispatch.c:1059
+#: methods_list_dispatch.c:522 methods_list_dispatch.c:1042
 msgid "invalid object (non-function) used as method"
 msgstr ""
 "objet incorrect (autre chose qu'une fonction) utilisé dans cette méthode"
@@ -136,7 +136,7 @@ msgstr ""
 "de classe \"%s\" est renvoyé"
 
 #: methods_list_dispatch.c:612 methods_list_dispatch.c:624
-#: methods_list_dispatch.c:1012
+#: methods_list_dispatch.c:995
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -160,53 +160,45 @@ msgstr ""
 "utilisation récursive de la fonction '%s' dans la sélection de méthode, avec "
 "aucune méthode définie par défaut"
 
-#: methods_list_dispatch.c:703
-msgid ""
-"in processing 'callNextMethod', found a '...' in the matched call, but no "
-"corresponding '...' argument"
-msgstr ""
-"lors du calcul de 'callNextMethod', un '...' est trouvé dans l'appel "
-"correspondant, mais aucun '...' n'est trouvé dans l'argument en question"
-
-#: methods_list_dispatch.c:716
+#: methods_list_dispatch.c:699
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr ""
 "erreur lors de l'évaluation d'une 'primitive' comme méthode suivante : %s"
 
-#: methods_list_dispatch.c:814
+#: methods_list_dispatch.c:797
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' doit être une chaîne de caractères unique (un vecteur de caractères de "
 "longueur %d est renvoyé)"
 
-#: methods_list_dispatch.c:818
+#: methods_list_dispatch.c:801
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr ""
 "'%s' doit être une chaîne de caractères non vide ; Une chaîne de caractères "
 "vide est renvoyée"
 
-#: methods_list_dispatch.c:822
+#: methods_list_dispatch.c:805
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 "'%s' doit être une chaîne de caractères unique (un objet de classe \"%s\" "
 "est renvoyé)"
 
-#: methods_list_dispatch.c:893
+#: methods_list_dispatch.c:876
 msgid "class should be either a character-string name or a class definition"
 msgstr ""
 "class doit être soit un nom sous forme de chaîne de caractères, soit une "
 "définition de classe"
 
-#: methods_list_dispatch.c:972
+#: methods_list_dispatch.c:955
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Impossible de trouver la fonction générique pour la primitive \"%s\""
 
-#: methods_list_dispatch.c:978
+#: methods_list_dispatch.c:961
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "
@@ -214,6 +206,13 @@ msgid ""
 msgstr ""
 "une fonction générique ou une primitive était attendue pour le dispatching, "
 "un objet de classe \"%s\" est renvoyé à la place"
+
+#~ msgid ""
+#~ "in processing 'callNextMethod', found a '...' in the matched call, but no "
+#~ "corresponding '...' argument"
+#~ msgstr ""
+#~ "lors du calcul de 'callNextMethod', un '...' est trouvé dans l'appel "
+#~ "correspondant, mais aucun '...' n'est trouvé dans l'argument en question"
 
 #~ msgid ""
 #~ "S language method selection got an error when called from internal "

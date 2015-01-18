@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-04 22:02\n"
+"POT-Creation-Date: 2015-01-18 09:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -524,7 +524,8 @@ msgstr "Funkcja %s jest w grupie ogólnej; nie wywołuj jej bezpośrednio"
 
 # methods/R/Methods.R: 1218
 # stop("'callGeneric' must be called from a generic function or method")
-msgid "'callGeneric' must be called from a generic function or method"
+#, fuzzy
+msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric' musi być wywołana z ogólnej funkcji lub metody"
 
 # methods/R/addedFunctions.R: 45
