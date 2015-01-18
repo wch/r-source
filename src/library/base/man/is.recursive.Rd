@@ -5,7 +5,6 @@
 
 \name{is.recursive}
 \alias{is.atomic}
-\alias{atomic}
 \alias{is.recursive}
 \title{Is an Object Atomic or Recursive?}
 \usage{
@@ -23,7 +22,7 @@ is.recursive(x)
   \item{x}{object to be tested.}
 }
 \details{
-  \code{is.atomic} is true for the atomic types
+  \code{is.atomic} is true for the \link{atomic} types
   (\code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
 
