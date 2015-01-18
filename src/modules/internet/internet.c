@@ -116,6 +116,13 @@ static Rboolean url_open(Rconnection con)
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
+
+#if defined Win32 && !defined USE_WININET
+    case HTTPSsh:
+	warning(_("for https:// URLs use setInternet2(TRUE)"));
+	return FALSE;
+#endif
+
     default:
 	warning(_("URL scheme unsupported by this method"));
 	return FALSE;
@@ -586,12 +593,7 @@ static SEXP in_do_download(SEXP args)
 #endif
 
     } else
-#ifdef Win32
-	if(strncmp(url, "https://", 8) == 0)
-	    error(_("for https:// URLs use setInternet2(TRUE)"));
-	else
-#endif
-	    error(_("unsupported URL scheme"));
+	error(_("unsupported URL scheme"));
 
     UNPROTECT(1);
     return ScalarInteger(status);
