@@ -195,8 +195,6 @@ double	attribute_hidden lfastchoose(double, double);
 
 double  attribute_hidden bd0(double, double);
 
-double	attribute_hidden dbinom_raw(double, double, double, double, int);
-double	attribute_hidden dpois_raw (double, double, int);
 double  attribute_hidden pnchisq_raw(double, double, double, double, double,
 				     int, Rboolean, Rboolean);
 double  attribute_hidden pgamma_raw(double, double, int, int);

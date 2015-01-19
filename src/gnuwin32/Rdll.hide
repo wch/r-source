@@ -552,7 +552,6 @@
  cpuLimit2
  cpuLimitValue
  csroot_
- dbinom_raw
  dblep0_
  deleditordata
  do_AT
@@ -1011,6 +1010,7 @@
  do_textconvalue
  do_tilde
  do_tolower
+ do_topenv
  do_trace
  do_traceOnOff
  do_traceback
@@ -1054,7 +1054,6 @@
  do_xtfrm
  dos_wglob
  dos_wglobfree
- dpois_raw
  drawconsole
  dt_invalidate_locale
  editorchecksave

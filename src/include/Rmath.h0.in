@@ -218,7 +218,7 @@ double  Rlog1p(double);
 #define choose		Rf_choose
 #define dbeta		Rf_dbeta
 #define dbinom		Rf_dbinom
-#define dbinom_mu	Rf_dbinom_mu
+#define dbinom_raw	Rf_dbinom_raw
 #define dcauchy		Rf_dcauchy
 #define dchisq		Rf_dchisq
 #define dexp		Rf_dexp
@@ -236,6 +236,7 @@ double  Rlog1p(double);
 #define dnf		Rf_dnf
 #define dnorm4		Rf_dnorm4
 #define dnt		Rf_dnt
+#define dpois_raw	Rf_dpois_raw
 #define dpois		Rf_dpois
 #define dpsifn		Rf_dpsifn
 #define dsignrank	Rf_dsignrank
@@ -443,6 +444,7 @@ double	rt(double);
 
 	/* Binomial Distribution */
 
+double  dbinom_raw(double x, double n, double p, double q, int give_log);
 double	dbinom(double, double, double, int);
 double	pbinom(double, double, double, int, int);
 double	qbinom(double, double, double, int, int);
@@ -494,6 +496,7 @@ double	rnbinom_mu(double, double);
 
 	/* Poisson Distribution */
 
+double	dpois_raw (double, double, int);
 double	dpois(double, double, int);
 double	ppois(double, double, int, int);
 double	qpois(double, double, int, int);
