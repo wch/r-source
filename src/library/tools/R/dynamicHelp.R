@@ -528,7 +528,7 @@ httpdPort <- local({
     }
 })
 
-startDynamicHelp <- function(start=TRUE)
+startDynamicHelp <- function(start = TRUE)
 {
     if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
         httpdPort(-1L)
@@ -536,7 +536,12 @@ startDynamicHelp <- function(start=TRUE)
         utils::flush.console()
         return(invisible(httpdPort()))
     }
+
     port <- httpdPort()
+    if (is.na(start)) {
+        if(port <= 0L) return(startDynamicHelp(TRUE))
+        return(invisible(port))
+    }
     if (start && port) {
         if(port > 0L) stop("server already running")
         else stop("server could not be started on an earlier attempt")
