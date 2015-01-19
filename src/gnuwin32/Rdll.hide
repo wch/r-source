@@ -739,6 +739,7 @@
  do_geterrmessage
  do_getfmts
  do_getlocale
+ do_getOption
  do_gettext
  do_getwd
  do_glob

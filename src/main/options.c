@@ -328,6 +328,16 @@ void attribute_hidden InitOptions(void)
 }
 
 
+SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (!isString(x) || LENGTH(x) != 1)
+	error(_("'%s' must be a character string"), "x");
+    return duplicate(GetOption1(install(CHAR(STRING_ELT(x, 0)))));
+}
+
+
 /* This needs to manage R_Visible */
 SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

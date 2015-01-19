@@ -194,6 +194,7 @@ SEXP do_geterrmessage(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getGraphicsEvent(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getGraphicsEventEnv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getlocale(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getOption(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getRegisteredRoutines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getSymbolInfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getRestart(SEXP, SEXP, SEXP, SEXP);
