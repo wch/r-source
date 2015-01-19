@@ -309,7 +309,7 @@ getOption(x, default = NULL)
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}
 
-    \iter{\code{url.method}:}{character string: the default method for
+    \item{\code{url.method}:}{character string: the default method for
       \code{\link{url}}.  Normally unset, which is equivalent to
       \code{"internal"}.}
 
