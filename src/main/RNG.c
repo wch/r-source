@@ -671,7 +671,10 @@ static double MT_genrand(void)
 */
 
 
+/* This define may give a warning in clang, but is needed to comply
+   with the prohibition on changing the code. */
 #define long Int32
+
 #define ran_arr_buf       R_KT_ran_arr_buf
 #define ran_arr_cycle     R_KT_ran_arr_cycle
 #define ran_arr_ptr       R_KT_ran_arr_ptr
