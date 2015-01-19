@@ -331,7 +331,7 @@ static SEXP in_do_download(SEXP args)
     else
 	headers = CHAR(STRING_ELT(sheaders, 0));
 #ifdef Win32
-    if (!quiet && !pbar.wprog) {
+    if (!quiet && R_Interactive && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			       Titlebar | Centered);
 	setbackground(pbar.wprog, dialog_bg());
@@ -413,7 +413,7 @@ static SEXP in_do_download(SEXP args)
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    if(!quiet) {
+	    if(!quiet && R_Interactive) {
 		settext(pbar.l_url, buf);
 		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
@@ -431,7 +431,7 @@ static SEXP in_do_download(SEXP args)
 		if(res != len) error(_("write failed"));
 		nbytes += len;
 #ifdef Win32
-		if(!quiet) {
+		if(!quiet && R_Interactive) {
 		    if(nbytes > guess) {
 			guess *= 2;
 			if (guess > 1e9) factor = guess/1e6;
@@ -469,7 +469,7 @@ static SEXP in_do_download(SEXP args)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    if(!quiet) {
+	    if(!quiet && R_Interactive) {
 		endcontext(&(pbar.cntxt));
 		doneprogressbar(&pbar);
 	    }
@@ -520,7 +520,7 @@ static SEXP in_do_download(SEXP args)
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    if(!quiet) {
+	    if(!quiet && R_Interactive) {
 		settext(pbar.l_url, buf);
 		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
@@ -541,7 +541,7 @@ static SEXP in_do_download(SEXP args)
 		if(res != len) error(_("write failed"));
 		nbytes += len;
 #ifdef Win32
-		if(!quiet) {
+		if(!quiet && R_Interactive) {
 		    if(nbytes > guess) {
 			guess *= 2;
 			if (guess > 1e9) factor = guess/1e6;
@@ -579,7 +579,7 @@ static SEXP in_do_download(SEXP args)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    if(!quiet) {
+	    if(!quiet && R_Interactive) {
 		endcontext(&(pbar.cntxt));
 		doneprogressbar(&pbar);
 	    }

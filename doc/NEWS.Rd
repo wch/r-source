@@ -229,6 +229,9 @@
 
 	\item \code{url()} has a new method \code{"libcurl"} (unfinished).
       }
+
+      \item Internet download progress bars are now only shown in
+      interactive sessions.
     }
   }
 
