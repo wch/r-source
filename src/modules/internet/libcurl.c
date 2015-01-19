@@ -54,9 +54,9 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	      mkString(((d->age >= 3) && d->libssh_version) ? d->libssh_version : ""));
     const char * const *p;
     int n, i;
-    for(p = d->protocols, n = 0; *p; p++, n++) ;
+    for (p = d->protocols, n = 0; *p; p++, n++) ;
     SEXP protocols = PROTECT(allocVector(STRSXP, n));
-    for(p = d->protocols, i = 0; i < n; i++, p++)
+    for (p = d->protocols, i = 0; i < n; i++, p++)
 	SET_STRING_ELT(protocols, i, mkChar(*p));
     setAttrib(ans, install("protocols"), protocols);
     UNPROTECT(1);
@@ -85,12 +85,12 @@ static void curlCommon(CURL *hnd, int redirect)
     long timeout = timeout0 = NA_INTEGER ? 0 : 1000L * timeout0;
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);
     curl_easy_setopt(hnd, CURLOPT_TIMEOUT_MS, timeout);
-    if(redirect) {
+    if (redirect) {
 	curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
 	curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 20L);
     }
     int verbosity = asInteger(GetOption1(install("internet.info")));
-    if(verbosity < 2) curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
+    if (verbosity < 2) curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
 
     // enable the cookie engine, keep cookies in memory
     curl_easy_setopt(hnd, CURLOPT_COOKIEFILE, "");
@@ -104,7 +104,7 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
 {
     char *d = (char*)buffer;
     size_t result = size * nmemb, res = result > 2048 ? 2048 : result;
-    if(used >= 500) return result;
+    if (used >= 500) return result;
     strncpy(headers[used], d, res);
     headers[used][res] = '\0';
     used++;
@@ -121,12 +121,12 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     error(_("curlGetHeaders is not supported on this platform"));
     return R_NilValue;
 #else
-    if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
+    if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
        error("invalid %s argument", "url");
     const char *url = translateChar(STRING_ELT(CAR(args), 0));
     used = 0;
     int redirect = asLogical(CADR(args));
-    if(redirect == NA_LOGICAL)
+    if (redirect == NA_LOGICAL)
 	error(_("invalid %s argument"), "redirect");
 
     CURL *hnd = curl_easy_init();
@@ -154,9 +154,16 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 #endif
 }
+
+#ifdef HAVE_CURL_CURL_H
+static double total;
+
 #ifdef Win32
+// ------- Windows progress bar -----------
 #include <ga.h>
 
+/* We could share this window with internet.c, then re-positioning
+   would apply to both */
 typedef struct {
     window wprog;
     progressbar pb;
@@ -172,7 +179,6 @@ static void doneprogressbar(void *data)
     winprogressbar *pbar = data;
     hide(pbar->wprog);
 }
-static double total;
 
 static
 int progress(void *clientp, double dltotal, double dlnow,
@@ -180,14 +186,14 @@ int progress(void *clientp, double dltotal, double dlnow,
 {
     static int factor = 1;
     // we only use downloads.  dltotal may be zero.
-    if(dltotal > 0.) {
-	if(total == 0.) {
+    if (dltotal > 0.) {
+	if (total == 0.) {
 	    total = dltotal;
-	    if(total > 1024.0*1024.0)
+	    if (total > 1024.0*1024.0)
 		// might be longer than long, and is on 64-bit windows
 		REprintf("Content length %0.0f bytes (%0.1f MB)\n",
 			 total, total/1024.0/1024.0);
-	    else if(total > 10240)
+	    else if (total > 10240)
 		REprintf("Content length %d bytes (%d KB)\n",
 			 (int)total, (int)(total/1024));
 	    else
@@ -207,20 +213,19 @@ int progress(void *clientp, double dltotal, double dlnow,
 		pbar.pc = pc;
 	    }
 	}
-
     }
     return 0;
 }
 
 #else
-static double total, nbytes;
+// ------- Unix-alike progress bar -----------
+
 static int ndashes;
 static void putdashes(int *pold, int new)
 {
-    int i, old = *pold;
+    for (int i = *pold; i < new; i++)  REprintf("=");
+    if (R_Consolefile) fflush(R_Consolefile);
     *pold = new;
-    for(i = old; i < new; i++)  REprintf("=");
-    if(R_Consolefile) fflush(R_Consolefile);
 }
 
 static
@@ -228,19 +233,23 @@ int progress(void *clientp, double dltotal, double dlnow,
 	     double ultotal, double ulnow)
 {
     // we only use downloads.  dltotal may be zero.
-    if(dltotal > 0.) {
-	if(total == 0.) {
+    if (dltotal > 0.) {
+	if (total == 0.) {
 	    total = dltotal;
-	    if(total > 1024.0*1024.0)
+	    char *type = NULL;
+	    CURL *hnd = (CURL *) clientp;
+	    curl_easy_getinfo(hnd, CURLINFO_CONTENT_TYPE, &type);
+	    REprintf("Content type '%s'", type ? type : "unknown");
+	    if (total > 1024.0*1024.0)
 		// might be longer than long, and is on 64-bit windows
-		REprintf("Content length %0.0f bytes (%0.1f MB)\n",
+		REprintf(" length %0.0f bytes (%0.1f MB)\n",
 			 total, total/1024.0/1024.0);
-	    else if(total > 10240)
-		REprintf("Content length %d bytes (%d KB)\n",
+	    else if (total > 10240)
+		REprintf(" length %d bytes (%d KB)\n",
 			 (int)total, (int)(total/1024));
 	    else
-		REprintf("Content length %d bytes\n", (int)total);
-	    if(R_Consolefile) fflush(R_Consolefile);
+		REprintf(" length %d bytes\n", (int)total);
+	    if (R_Consolefile) fflush(R_Consolefile);
 	}
 	putdashes(&ndashes, (int)(50*dlnow/total));
     }
@@ -249,6 +258,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 #endif
 
 extern void Rsleep(double timeint);
+#endif
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
 
@@ -266,23 +276,23 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     struct curl_slist *slist1 = NULL;
 
     scmd = CAR(args); args = CDR(args);
-    if(!isString(scmd) || length(scmd) < 1)
+    if (!isString(scmd) || length(scmd) < 1)
 	error(_("invalid '%s' argument"), "url");
     int nurls = length(scmd);
     sfile = CAR(args); args = CDR(args);
-    if(!isString(sfile) || length(sfile) < 1)
+    if (!isString(sfile) || length(sfile) < 1)
 	error(_("invalid '%s' argument"), "destfile");
-    if(length(sfile) != length(scmd))
+    if (length(sfile) != length(scmd))
 	error(_("lengths of 'url' and 'destfile' must match"));
     quiet = asLogical(CAR(args)); args = CDR(args);
-    if(quiet == NA_LOGICAL)
+    if (quiet == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "quiet");
     smode =  CAR(args); args = CDR(args);
-    if(!isString(smode) || length(smode) != 1)
+    if (!isString(smode) || length(smode) != 1)
 	error(_("invalid '%s' argument"), "mode");
     mode = CHAR(STRING_ELT(smode, 0));
     cacheOK = asLogical(CAR(args));
-    if(cacheOK == NA_LOGICAL)
+    if (cacheOK == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "cacheOK");
 
     /* This comes mainly from curl --libcurl on the call used by
@@ -308,10 +318,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	url = CHAR(STRING_ELT(scmd, i));
 	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
-	curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
-	if(R_Interactive && !quiet && nurls <= 1) {
-	    // curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
-	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
+
+	total = 0.;
+	if (R_Interactive && !quiet && nurls <= 1) {
+	    // It would in principle be possible to have
+	    // multiple progress bars on Windows.
+	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
 #ifdef Win32
 	    if (!pbar.wprog) {
 		pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
@@ -331,10 +343,13 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    pbar.cntxt.cend = &doneprogressbar;
 	    pbar.cntxt.cenddata = &pbar;
 #else
-	    nbytes = total = 0; ndashes = 0;
+	    ndashes = 0;
 #endif
+	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
-	}
+	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSDATA, hnd[i]);
+	} else curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
+
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
 	curlCommon(hnd[i], 1);
@@ -349,12 +364,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	file = translateChar(STRING_ELT(sfile, i));
 	out[i] = R_fopen(R_ExpandFileName(file), mode);
-	if(!out[i])
+	if (!out[i])
 	    error(_("cannot open destfile '%s', reason '%s'"),
 		  file, strerror(errno));
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
 
-	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+	if (!quiet) REprintf(_("trying URL '%s'\n"), url);
     }
 
     R_Busy(1);
@@ -363,41 +378,57 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     do {
 	int numfds;
 	CURLMcode mc = curl_multi_wait(mhnd, NULL, 0, 100, &numfds);
-	if(mc != CURLM_OK)  // internal, do not translate
+	if (mc != CURLM_OK)  // internal, do not translate
 	    error("curl_multi_wait() failed, code %d", mc);
-	if(!numfds) {
+	if (!numfds) {
 	    /* 'numfds' being zero means either a timeout or no file
 	       descriptors to wait for. Try timeout on first
 	       occurrence, then assume no file descriptors to wait for
 	       means 'sleep for 100 milliseconds'.
 	    */
-	    if(repeats++ > 0) Rsleep(0.1); // do not block R process
+	    if (repeats++ > 0) Rsleep(0.1); // do not block R process
 	} else repeats = 0;
 	curl_multi_perform(mhnd, &still_running);
     } while(still_running);
     R_Busy(0);
 #ifdef Win32
-    if(!quiet) {
+    if (!quiet) {
 	endcontext(&(pbar.cntxt));
 	doneprogressbar(&pbar);
     }
 #else
-    if(R_Consolefile && total > 0.) fflush(R_Consolefile);
+    if (total > 0.) REprintf("\n");
+    if (R_Consolefile) fflush(R_Consolefile);
 #endif
+    if (nurls == 1) {
+	double cl, dl;
+	curl_easy_getinfo(hnd[0], CURLINFO_SIZE_DOWNLOAD, &dl);
+	if (!quiet) {
+	    if (dl > 1024*1024)
+		REprintf("downloaded %0.1f MB\n\n", (double)dl/1024/1024);
+	    else if (dl > 10240)
+		REprintf("downloaded %d KB\n\n", (int) dl/1024);
+	    else
+		REprintf("downloaded %d bytes\n\n", (int) dl);
+	}
+	curl_easy_getinfo(hnd[0], CURLINFO_CONTENT_LENGTH_DOWNLOAD, &cl);
+	if (cl >= 0 && dl != cl)
+	    warning(_("downloaded length %0.f != reported length %0.f"), dl, cl);
+    }
+
     // report all the pending messages.
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
-	if(msg) {
+	if (msg) {
 	    CURLcode ret = msg->data.result;
 	    if (ret != CURLE_OK) {
-		if(!quiet) REprintf("\n"); // clear progress display
+		if (!quiet) REprintf("\n"); // clear progress display
 		error("  %s\n", curl_easy_strerror(ret));
 	    }
 	}
     }
 
-
-    for(int i = 0; i < nurls; i++) {
+    for (int i = 0; i < nurls; i++) {
 	fclose(out[i]);
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
@@ -429,6 +460,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
+#ifdef HAVE_CURL_CURL_H
 typedef struct Curlconn {
     char *buf, *current; // base of buffer, last read address
     size_t bufsize, filled;  // buffer size, amount which has been filled
@@ -436,7 +468,6 @@ typedef struct Curlconn {
     int sr; // 'still running' count
     CURLM *mh; CURL *hnd;
 } *RCurlconn;
-
 
 static size_t rcvData(void *ptr, size_t size, size_t nitems, void *ctx)
 {
@@ -567,6 +598,7 @@ static int Curl_fgetc_internal(Rconnection con)
     size_t n = Curl_read(&c, 1, 1, con);
     return (n == 1) ? c : R_EOF;
 }
+#endif
 
 Rconnection in_newCurlUrl(const char *description, const char * const mode)
 {
