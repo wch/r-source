@@ -1,4 +1,4 @@
-% -*- Mode: Noweb; noweb-code-mode: R-mode -*-
+% -*- mode: ess-noweb; ess-noweb-code-mode: R-mode -*-
 
 \documentclass[11pt]{article}
 \usepackage{hyperref}
@@ -577,7 +577,7 @@ checkCall <- function(def, call, signal = warning) {
     if (typeof(def) != "closure" || any.dots(call))
         NA
     else {
-        old <-options()$show.error.messages
+        old <- getOption("show.error.messages")
         if (is.null(old)) old <- TRUE
         options(show.error.messages=FALSE)
         msg <- try({match.call(def, call); NULL})
@@ -3574,8 +3574,8 @@ is called with a character selector.
 <<collect information on named alternatives>>=
 ## collect information on named alternatives and check for
 ## multiple default cases.
-if (! is.null(nm)) {
-    haveNames <- TRUE
+haveNames <- !is.null(nm)
+if (haveNames) {
     ndflt <- sum(nm == "")
     if (ndflt > 1) {
         notifyMultipleSwitchDefaults(ndflt, cntxt)
@@ -3584,13 +3584,9 @@ if (! is.null(nm)) {
         cmpSpecial(e, cb, cntxt)
         return(TRUE)
     }
-    if (ndflt > 0)
-        haveCharDflt <- TRUE
-    else
-        haveCharDflt <- FALSE
+    haveCharDflt <- (ndflt > 0)
 }
 else {
-    haveNames <- FALSE
     haveCharDflt <- FALSE
 }
 @ %def
@@ -4660,7 +4656,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
     nforms <- length(forms)
     if (nforms > 0) {
         expr.needed <- 1000
-        expr.old <- options()$expressions
+        expr.old <- getOption("expressions")
         if (expr.old < expr.needed) {
             options(expressions = expr.needed)
             on.exit(options(expressions = expr.old))
@@ -4733,7 +4729,7 @@ Two additional functions that are currently not exported or used are
 <<[[cmpframe]] function>>=
 cmpframe <- function(inpos, file) {
     expr.needed <- 1000
-    expr.old <- options()$expressions
+    expr.old <- getOption("expressions")
     if (expr.old < expr.needed)
        options(expressions = expr.needed)
     on.exit(options(expressions = expr.old))
