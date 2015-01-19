@@ -202,7 +202,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs usually
   try to verify their certificates. This is usually done using the CA
-  root certifcates installed by the OS (although we have seen instances
+  root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated).
 
   This is an issue for \code{method = "libcurl"} on Windows, where the

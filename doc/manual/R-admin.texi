@@ -2093,7 +2093,7 @@ systems, but there are additional types starting with @code{mac.binary}
 (available for the @acronym{CRAN} distribution but not when compiling
 from source: @code{mac.binary.mavericks} for a `Mavericks' build and
 @code{mac.binary} for a `Snow Leopard' build with @code{"default"} a
-synonym for the apppriate variant) which can be passed to
+synonym for the appropriate variant) which can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository.  These OS X binary package files have the
 extension @samp{.tgz}.  The @Rapp{} GUI provides menus for installation

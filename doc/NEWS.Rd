@@ -456,7 +456,7 @@
       the platform (if it has one).
 
       \item Single source or binary files can be supplied for
-      \code{install.packages(type = "both")} and the approporiate type
+      \code{install.packages(type = "both")} and the appropriate type
       and \code{repos = NULL} will be inferred.
 
       \item New function \code{pcre_config()} to report on some of the
