@@ -79,7 +79,6 @@
  R_DevicesSymbol
  R_DisableNLinBrowser
  R_DotEnvSymbol
- R_DoubleColonSymbol
  R_ErrorCon
  R_EvalDepth
  R_ExactSymbol
@@ -169,7 +168,6 @@
  R_TmpvalSymbol
  R_Toplevel
  R_ToplevelContext
- R_TripleColonSymbol
  R_UTF8fixslash
  R_UseNamesSymbol
  R_VSize
