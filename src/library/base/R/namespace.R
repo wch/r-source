@@ -683,20 +683,21 @@ loadingNamespaceInfo <- function() {
 
 topenv <- function(envir = parent.frame(),
                    matchThisEnv = getOption("topLevelEnvironment")) {
-    while (! identical(envir, emptyenv())) {
-        nm <- attributes(envir)[["names", exact = TRUE]]
-        if ((is.character(nm) && length(grep("^package:" , nm))) ||
-	    ## matchThisEnv is used in sys.source
-            identical(envir, matchThisEnv) ||
-            identical(envir, .GlobalEnv) ||
-            identical(envir, baseenv()) ||
-            .Internal(isNamespaceEnv(envir)) ||
-	    ## packages except base and those with a separate namespace have .packageName
-            exists(".packageName", envir = envir, inherits = FALSE))
-            return(envir)
-        else envir <- parent.env(envir)
-    }
-    return(.GlobalEnv)
+    ## while (! identical(envir, emptyenv())) {
+    ##     nm <- attributes(envir)[["names", exact = TRUE]]
+    ##     if ((is.character(nm) && length(grep("^package:" , nm))) ||
+    ##         ## matchThisEnv is used in sys.source
+    ##         identical(envir, matchThisEnv) ||
+    ##         identical(envir, .GlobalEnv) ||
+    ##         identical(envir, baseenv()) ||
+    ##         .Internal(isNamespaceEnv(envir)) ||
+    ##         ## packages except base and those with a separate namespace have .packageName
+    ##         exists(".packageName", envir = envir, inherits = FALSE))
+    ##         return(envir)
+    ##     else envir <- parent.env(envir)
+    ## }
+    ## return(.GlobalEnv)
+    .Internal(topenv(envir, matchThisEnv))
 }
 
 unloadNamespace <- function(ns)

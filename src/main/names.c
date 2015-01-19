@@ -742,6 +742,7 @@ FUNTAB R_FunTab[] =
 {"new.env",	do_newenv,	0,	11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"parent.env",  do_parentenv,   0,	11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"parent.env<-",do_parentenvgets, 0,	11,     2,      {PP_FUNCALL, PREC_LEFT,	1}},
+{"topenv",	do_topenv,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"l10n_info",	do_l10n_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"Cstack_info", do_Cstack_info,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 
@@ -1089,7 +1090,10 @@ static void SymbolShortcuts(void)
     R_TripleColonSymbol = install(":::");
     R_ConnIdSymbol = install("conn_id");
     R_DevicesSymbol = install(".Devices");
-    R_baseSymbol = install("base");
+    R_baseSymbol = // <- back compatible, "deprecated"
+    R_BaseSymbol = install("base");
+    R_SpecSymbol = install("spec");
+    R_NamespaceEnvSymbol = install(".__NAMESPACE__.");
 
     R_dot_Generic = install(".Generic");
     R_dot_Method = install(".Method");
@@ -1100,6 +1104,7 @@ static void SymbolShortcuts(void)
     R_dot_Class = install(".Class");
     R_dot_GenericCallEnv = install(".GenericCallEnv");
     R_dot_GenericDefEnv = install(".GenericDefEnv");
+    R_dot_packageName = install(".packageName");
 }
 
 

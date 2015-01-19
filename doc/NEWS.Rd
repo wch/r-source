@@ -202,7 +202,10 @@
       the \code{\dots} in the call, if any; this environment was wrong
       (or at least undesirable) when the \code{definition} argument was
       a function.
-            
+
+      \item \code{topenv()} has been made \code{.Internal()} for
+      speedup, based on Peter Haverty's proposal in \PR{16140}.
+
       \item Work in progress on optional use of \code{libcurl} (version
       7.28.0 or later) for Internet access (including on Windows):
       \itemize{
@@ -223,7 +226,7 @@
 	\code{"libcurl"} which should handle \code{https://} and
 	\code{ftps://} URLs, follow redirections, and allows
 	simultaneous downloads of multiple URLs.
-	
+
 	\item \code{url()} has a new method \code{"libcurl"} (unfinished).
       }
     }
@@ -578,11 +581,11 @@
 
       \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
-      
+
       \item \file{R_ext/Lapack.h} had not been updated for changes to
       the argument lists of the (largely internal) functions
       \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
-      
+
       \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
       layout changes of \R 3.1.0.
     }

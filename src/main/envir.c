@@ -680,7 +680,7 @@ void attribute_hidden InitGlobalEnv()
     R_PreserveObject(R_BaseNamespaceName);
     R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
     R_PreserveObject(R_NamespaceRegistry);
-    defineVar(R_baseSymbol, R_BaseNamespace, R_NamespaceRegistry);
+    defineVar(R_BaseSymbol, R_BaseNamespace, R_NamespaceRegistry);
     /**** needed to properly initialize the base namespace */
 }
 
@@ -3914,3 +3914,34 @@ void do_write_cache()
     }
 }
 #endif /* DEBUG_SHOW_CHARSXP_CACHE */
+
+// topenv
+
+SEXP topenv(SEXP target, SEXP envir) {
+    SEXP env = envir;
+    while (env != R_EmptyEnv) {
+	if (env == target || env == R_GlobalEnv || env == R_BaseNamespace ||
+	    R_IsPackageEnv(env) || R_IsNamespaceEnv(env) ||
+	    existsVarInFrame(env, R_dot_packageName)) {
+	    return env;
+	} else {
+	    env = ENCLOS(env);
+	}
+    }
+    return R_GlobalEnv;
+}
+
+/** topenv():
+ *
+ * .Internal(topenv(envir, matchThisEnv))
+ *
+ * @return
+ */
+SEXP attribute_hidden do_topenv(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    checkArity(op, args);
+    SEXP envir = CAR(args);
+    SEXP target = CADR(args); // = matchThisEnv
+    if (TYPEOF(envir) != ENVSXP) envir = rho; // target = parent.frame()
+    if (target != R_NilValue && TYPEOF(target) != ENVSXP)  target = R_NilValue;
+    return topenv(target, envir);
+}
