@@ -45,12 +45,12 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_CURL_CURL_H
     curl_version_info_data *d = curl_version_info(CURLVERSION_NOW);
     SET_STRING_ELT(ans, 0, mkChar(d->version));
-    setAttrib(ans, install("ssl_version"), 
+    setAttrib(ans, install("ssl_version"),
 	      mkString(d->ssl_version ? d->ssl_version : "none"));
-    setAttrib(ans, install("libssh_version"), 
+    setAttrib(ans, install("libssh_version"),
 	      mkString(((d->age >= 3) && d->libssh_version) ? d->libssh_version : ""));
     const char * const *p;
-    int n, i; 
+    int n, i;
     for(p = d->protocols, n = 0; *p; p++, n++) ;
     SEXP protocols = PROTECT(allocVector(STRSXP, n));
     for(p = d->protocols, i = 0; i < n; i++, p++)
@@ -96,8 +96,8 @@ static void curlCommon(CURL *hnd, int redirect)
 static char headers[500][2048];
 static int used;
 
-static size_t 
-rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp) 
+static size_t
+rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
 {
     char *d = (char*)buffer;
     size_t result = size * nmemb, res = result > 2048 ? 2048 : result;
@@ -105,11 +105,12 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     strncpy(headers[used], d, res);
     headers[used][res] = '\0';
     used++;
-    return result;      
+    return result;
 }
 #endif
 
-SEXP attribute_hidden 
+
+SEXP attribute_hidden
 in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -151,11 +152,55 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
+
+static double total, nbytes;
+static int ndashes;
+static void putdashes(int *pold, int new)
+{
+    int i, old = *pold;
+    *pold = new;
+    for(i = old; i < new; i++)  REprintf("=");
+#ifdef Win32
+    R_FlushConsole();
+#else
+    if(R_Consolefile) fflush(R_Consolefile);
+#endif
+}
+
+
+static
+int progress(void *clientp, double dltotal, double dlnow,
+	     double ultotal, double ulnow)
+{
+    // we only use downloads.  dltotal may be zero.
+    if(dltotal > 0.) {
+	if(total == 0.) {
+	    total = dltotal;
+	    if(total > 1024.0*1024.0)
+		// might be longer than long, and is on 64-bit windows
+		REprintf("Content length %0.0f bytes (%0.1f MB)\n",
+			 total, total/1024.0/1024.0);
+	    else if(total > 10240)
+		REprintf("Content length %d bytes (%d KB)\n",
+			 (int)total, (int)(total/1024));
+	    else
+		REprintf("Content length %d bytes\n", (int)total);
+#ifdef Win32
+	    R_FlushConsole();
+#else
+	    if(R_Consolefile) fflush(R_Consolefile);
+#endif
+	}
+	putdashes(&ndashes, (int)(50*dlnow/total));
+    }
+    return 0;
+}
+
 extern void Rsleep(double timeint);
 
 /* download(url, destfile, quiet, mode, headers, cacheOK) */
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -191,9 +236,6 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* This comes mainly from curl --libcurl on the call used by
        download.file(method = "curl").
        Also http://curl.haxx.se/libcurl/c/multi-single.html.
-
-       It would be a good idea to use a custom progress callback, and
-       it is said that in future libcurl may not have one at all.
     */
 
     if (!cacheOK) {
@@ -210,13 +252,18 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(int i = 0; i < nurls; i++) {
 	hnd[i] = curl_easy_init();
 	curl_multi_add_handle(mhnd, hnd[i]);
- 
+
 	url = CHAR(STRING_ELT(scmd, i));
 	curl_easy_setopt(hnd[i], CURLOPT_URL, url);
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
-	if(!quiet && nurls <= 1) 
-	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
-	/* Users will normally expect to follow redirections, although 
+	curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
+	if(R_Interactive && !quiet && nurls <= 1) {
+	    // curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
+	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
+	    nbytes = total = 0; ndashes = 0;
+	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
+	}
+	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
 	curlCommon(hnd[i], 1);
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
@@ -231,7 +278,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	file = translateChar(STRING_ELT(sfile, i));
 	out[i] = R_fopen(R_ExpandFileName(file), mode);
 	if(!out[i])
-	    error(_("cannot open destfile '%s', reason '%s'"), 
+	    error(_("cannot open destfile '%s', reason '%s'"),
 		  file, strerror(errno));
 	curl_easy_setopt(hnd[i], CURLOPT_WRITEDATA, out[i]);
 
@@ -243,7 +290,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     curl_multi_perform(mhnd, &still_running);
     do {
 	int numfds;
- 	CURLMcode mc = curl_multi_wait(mhnd, NULL, 0, 100, &numfds); 
+	CURLMcode mc = curl_multi_wait(mhnd, NULL, 0, 100, &numfds);
 	if(mc != CURLM_OK)  // internal, do not translate
 	    error("curl_multi_wait() failed, code %d", mc);
 	if(!numfds) {
@@ -251,13 +298,20 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	       descriptors to wait for. Try timeout on first
 	       occurrence, then assume no file descriptors to wait for
 	       means 'sleep for 100 milliseconds'.
-	    */ 
+	    */
 	    if(repeats++ > 0) Rsleep(0.1); // do not block R process
 	} else repeats = 0;
 	curl_multi_perform(mhnd, &still_running);
     } while(still_running);
     R_Busy(0);
-
+    if (total > 0.) {
+	REprintf("\n");
+#ifdef Win32
+	R_FlushConsole();
+#else
+	if(R_Consolefile) fflush(R_Consolefile);
+#endif
+    }
     // report all the pending messages.
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
@@ -312,7 +366,7 @@ typedef struct Curlconn {
 } *RCurlconn;
 
 
-static size_t rcvData(void *ptr, size_t size, size_t nitems, void *ctx) 
+static size_t rcvData(void *ptr, size_t size, size_t nitems, void *ctx)
 {
     RCurlconn ctxt = (RCurlconn) ctx;
 
@@ -348,13 +402,13 @@ static size_t consumeData(void *ptr, size_t max, RCurlconn ctxt)
     return size;
 }
 
-void fetchData(RCurlconn ctxt) 
+void fetchData(RCurlconn ctxt)
 {
     int repeats = 0;
     do {
 	int numfds;
-	CURLMcode mc = curl_multi_wait(ctxt->mh, NULL, 0, 100, &numfds); 
-	if (mc != CURLM_OK) 
+	CURLMcode mc = curl_multi_wait(ctxt->mh, NULL, 0, 100, &numfds);
+	if (mc != CURLM_OK)
 	    error("curl_multi_wait() failed, code %d", mc);
 	if (!numfds) {
 	    if (repeats++ > 0) Rsleep(0.1);
@@ -407,7 +461,7 @@ static Rboolean Curl_open(Rconnection con)
     ctxt->mh = curl_multi_init();
     curl_multi_add_handle(ctxt->mh, ctxt->hnd);
 
-    ctxt->current = ctxt->buf; ctxt->filled = 0; ctxt->available = FALSE; 
+    ctxt->current = ctxt->buf; ctxt->filled = 0; ctxt->available = FALSE;
 
     // Establish the connection: not clear if we should do this now.
     ctxt->sr = 1;

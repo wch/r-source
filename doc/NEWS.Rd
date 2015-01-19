@@ -390,24 +390,25 @@
       \item \code{all.equal()} gains methods for \code{environment}s and
       \code{refClass}es.
 
-      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods to
-      avoid corruption of S4 class information by the S3 methods.
+      \item \code{[<-} and \code{[[<-} gain S4 \code{data.frame} methods
+      to avoid corruption of S4 class information by the S3 methods.
 
       \item \code{callNextMethod()} should now work within a \code{.local}
       call when \code{\dots} is absent from \code{formals(.local)}.
 
-      \item \code{dput(pairlist(x))} generates a call to the \code{pairlist}
-      constructor, instead of the \code{list} constructor.
+      \item \code{dput(pairlist(x))} generates a call to the
+      \code{pairlist} constructor instead of the \code{list}
+      constructor.
 
       \item Fix \code{missing()} when arguments are propagated through
-      \code{\dots}; see \PR{15707}.
+      \code{\dots}. (\PR{15707})
 
-      \item \code{eigen(m)} now defaults to \code{symmetric=TRUE} even when
-      the dimnames are asymmetric if the matrix is otherwise symmetric;
-      \PR{16151}.
+      \item \code{eigen(m)} now defaults to \code{symmetric = TRUE} even
+      when the dimnames are asymmetric if the matrix is otherwise
+      symmetric.  (\PR{16151})
 
       \item Fix issues with forwarding \code{\dots} through
-      \code{callGeneric} and \code{callNextMethod}; see \PR{16141}.
+      \code{callGeneric()} and \code{callNextMethod()}.  (\PR{16141})
     }
   }
 }

@@ -74,8 +74,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \samp{ftps://} URLs.  There is support for simultaneous downloads, so
   \code{url} and \code{destfile} can be character vectors of the same
   length greater than one.  For a single URL and \code{quiet = FALSE}
-  there is a progress bar similar to the \command{curl} command-line
-  tool.
+  there a progress bar is shown in interactive use.
   
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
