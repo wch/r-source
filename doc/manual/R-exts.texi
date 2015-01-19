@@ -11841,8 +11841,8 @@ double dbinom_raw(double x, double n, double p, double q, int give_log)
 double dpois_raw (double x, double lambda, int give_log)
 @end group
 @end example
-Note that @code{dbinom_raw()} gets both @eqn{p} and @eqn{q = 1-p} which
-may be advantageous when one of them is close to @eqn{1}.
+Note that @code{dbinom_raw()} gets both @eqn{p, p} and @eqn{q = 1-p, q = 1-p} which
+may be advantageous when one of them is close to @eqn{1, 1}.
 
 
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
