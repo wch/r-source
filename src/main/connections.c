@@ -5014,19 +5014,17 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "raw");
     }
 
-    if(PRIMVAL(op) == 0) {
-	if (strncmp(url, "ftps://", 7) == 0)
-	    error("ftps:// URLs are not supported by method = \"internal\"");
+    if (strncmp(url, "ftps://", 7) == 0)
+	error("ftps:// URLs are not supported");
 #ifdef Win32
 # ifndef USE_WININET
-	if (strncmp(url, "https://", 8) == 0)
-	    error("for https:// URLs use setInternet2(TRUE)");
+    if (strncmp(url, "https://", 8) == 0)
+	error("for https:// URLs use setInternet2(TRUE)");
 # endif
 #else
-	if (strncmp(url, "https://", 8) == 0)
-	    error("https:// URLs are not supported by method = \"internal\"");
+    if (strncmp(url, "https://", 8) == 0)
+	error("https:// URLs are not supported");
 #endif
-    }
 
     ncon = NextConnection();
     if(strncmp(url, "file://", 7) == 0) {
