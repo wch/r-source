@@ -40,4 +40,5 @@ stopifnot(identical(.GlobalEnv, topenv(.GlobalEnv)),
           identical(topenv(environment(ls)), asNamespace("base")),
           identical(topenv(environment(lm)), asNamespace("stats")))
 }
+}
 \keyword{programming}
