@@ -21,6 +21,9 @@
 # include <config.h>
 #endif
 
+#ifdef Win32
+# define R_USE_SIGNALS 1
+#endif
 #include <Defn.h>
 #include <Internal.h>
 #include <Fileio.h>
@@ -151,8 +154,65 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 #endif
 }
+#ifdef Win32
+#include <ga.h>
 
+typedef struct {
+    window wprog;
+    progressbar pb;
+    label l_url;
+    RCNTXT cntxt;
+    int pc;
+} winprogressbar;
 
+static winprogressbar pbar = {NULL, NULL, NULL};
+
+static void doneprogressbar(void *data)
+{
+    winprogressbar *pbar = data;
+    hide(pbar->wprog);
+}
+static double total;
+
+static
+int progress(void *clientp, double dltotal, double dlnow,
+	     double ultotal, double ulnow)
+{
+    static int factor = 1;
+    // we only use downloads.  dltotal may be zero.
+    if(dltotal > 0.) {
+	if(total == 0.) {
+	    total = dltotal;
+	    if(total > 1024.0*1024.0)
+		// might be longer than long, and is on 64-bit windows
+		REprintf("Content length %0.0f bytes (%0.1f MB)\n",
+			 total, total/1024.0/1024.0);
+	    else if(total > 10240)
+		REprintf("Content length %d bytes (%d KB)\n",
+			 (int)total, (int)(total/1024));
+	    else
+		REprintf("Content length %d bytes\n", (int)total);
+	    R_FlushConsole();
+	    if (total > 1e9) factor = total/1e6; else factor = 1;
+	    setprogressbarrange(pbar.pb, 0, total/factor);
+	    show(pbar.wprog);
+	}
+	setprogressbar(pbar.pb, dlnow/factor);
+	if (total > 0) {
+	    static char pbuf[30];
+	    int pc = 0.499 + 100.0*dlnow/total;
+	    if (pc > pbar.pc) {
+		snprintf(pbuf, 30, "%d%% downloaded", pc);
+		settext(pbar.wprog, pbuf);
+		pbar.pc = pc;
+	    }
+	}
+
+    }
+    return 0;
+}
+
+#else
 static double total, nbytes;
 static int ndashes;
 static void putdashes(int *pold, int new)
@@ -160,13 +220,8 @@ static void putdashes(int *pold, int new)
     int i, old = *pold;
     *pold = new;
     for(i = old; i < new; i++)  REprintf("=");
-#ifdef Win32
-    R_FlushConsole();
-#else
     if(R_Consolefile) fflush(R_Consolefile);
-#endif
 }
-
 
 static
 int progress(void *clientp, double dltotal, double dlnow,
@@ -185,16 +240,13 @@ int progress(void *clientp, double dltotal, double dlnow,
 			 (int)total, (int)(total/1024));
 	    else
 		REprintf("Content length %d bytes\n", (int)total);
-#ifdef Win32
-	    R_FlushConsole();
-#else
 	    if(R_Consolefile) fflush(R_Consolefile);
-#endif
 	}
 	putdashes(&ndashes, (int)(50*dlnow/total));
     }
     return 0;
 }
+#endif
 
 extern void Rsleep(double timeint);
 
@@ -260,7 +312,27 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(R_Interactive && !quiet && nurls <= 1) {
 	    // curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 1L);
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
+#ifdef Win32
+	    if (!pbar.wprog) {
+		pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
+				       Titlebar | Centered);
+		setbackground(pbar.wprog, dialog_bg());
+		pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
+		pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, 1024, 1024, 1);
+		pbar.pc = 0;
+	    }
+	    
+	    settext(pbar.l_url, url);
+	    setprogressbar(pbar.pb, 0);
+	    settext(pbar.wprog, "Download progress");
+	    show(pbar.wprog);
+	    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
+			 R_NilValue, R_NilValue, R_NilValue);
+	    pbar.cntxt.cend = &doneprogressbar;
+	    pbar.cntxt.cenddata = &pbar;
+#else
 	    nbytes = total = 0; ndashes = 0;
+#endif
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
 	}
 	/* Users will normally expect to follow redirections, although
@@ -304,14 +376,14 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_multi_perform(mhnd, &still_running);
     } while(still_running);
     R_Busy(0);
-    if (total > 0.) {
-	REprintf("\n");
 #ifdef Win32
-	R_FlushConsole();
-#else
-	if(R_Consolefile) fflush(R_Consolefile);
-#endif
+    if(!quiet) {
+	endcontext(&(pbar.cntxt));
+	doneprogressbar(&pbar);
     }
+#else
+    if(R_Consolefile && total > 0.) fflush(R_Consolefile);
+#endif
     // report all the pending messages.
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
