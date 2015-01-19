@@ -11826,6 +11826,11 @@ similarly for the signed rank functions.
 (If remapping is suppressed, the Normal distribution names are
 @code{Rf_dnorm4}, @code{Rf_pnorm5} and @code{Rf_qnorm5}.)
 
+For the negative binomial distribution (@samp{nbinom}), in addition to the
+@code{(size, prob)} parametrization, the alternative @code{(size, mu)}
+parametrization is provided as well by functions @samp{[dpqr]nbinom_mu()},
+see @kbd{?NegBinomial} in @R{}.
+
 @node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
 
