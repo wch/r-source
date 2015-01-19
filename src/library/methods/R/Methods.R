@@ -694,7 +694,7 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
     value <- where[found]
     ## to conform to the API, try to return a numeric or character vector
     ## if possible
-    what <- sapply(value, class)
+    what <- vapply(value, class, "", USE.NAMES=FALSE)
     if(identical(what, "numeric") || identical(what, "character"))
         unlist(value)
     else
@@ -716,9 +716,9 @@ getMethod <-
     }
     if(missing(fdef)) {
         if(missing(where))
-          fdef <-  getGeneric(f, FALSE)
+          fdef <- getGeneric(f, FALSE)
         else {
-            fdef <-  getGeneric(f, FALSE, where = where)
+            fdef <- getGeneric(f, FALSE, where = where)
             if(is.null(fdef))
               fdef <- getGeneric(f, FALSE)
         }
@@ -749,51 +749,8 @@ getMethod <-
     else if(is.null(mlist)) return(mlist)
 
     ## the rest of the code will be executed only if a methods list object is supplied
-    ## as an argument.  Should be deleted from 2.8.0
-    message("Warning: using defunct methods list search", domain = NA)
-    i <- 1
-    argNames <- fdef@signature
-    signature <- matchSignature(signature, fdef)
-    Classes <- signature # a copy just for possible error message
-    while(length(signature) && is(mlist, "MethodsList")) {
-        if(!identical(argNames[[i]], as.character(mlist@argument)))
-            stop(sprintf("apparent inconsistency in the methods for function %s; argument %s in the signature corresponds to %s in the methods list object",
-                          sQuote(.genericName(f)),
-                          sQuote(argNames[[i]]),
-                          sQuote(as.character(mlist@argument))),
-                 domain = NA)
-        Class <- signature[[1L]]
-        signature <- signature[-1L]
-        methods <- slot(mlist, "methods")
-        mlist <- elNamed(methods, Class)# may be function, MethodsList or NULL
-        i <- i + 1
-    }
-    if(length(signature) == 0L) {
-        ## process the implicit remaining "ANY" elements
-        if(is(mlist, "MethodsList"))
-            mlist <- finalDefaultMethod(mlist)
-        if(is(mlist, "function"))
-            return(mlist) # the only successful outcome
-    }
-    if(optional)
-        mlist                           ## may be NULL or a MethodsList object
-    else {
-        ## for friendliness, look for (but don't return!) an S3 method
-        if(length(Classes) == 1L && exists(paste(.genericName(f), Classes, sep="."), where))
-            stop(sprintf("no S4 method for function %s and signature %s; consider getS3method() if you wanted the S3 method",
-                         sQuote(.genericName(f)), Classes),
-                 domain = NA)
-        if(length(Classes)) {
-            length(argNames) <- length(Classes)
-            Classes <- paste(argNames," = \"", unlist(Classes),
-                             "\"", sep = "", collapse = ", ")
-        }
-        else
-            Classes <- "\"ANY\""
-        stop(sprintf("no method defined in methods list object for function %s and signature %s",
-                     sQuote(.genericName(f)), Classes),
-             domain = NA)
-    }
+    ## as an argument.  Should be deleted from 2.8.0 --> Error from 3.2.0
+    stop("defunct methods list search", domain = NA)
 }
 
 dumpMethod <-
@@ -1556,7 +1513,7 @@ findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
         sigs <- lapply(methods, function(x)
                        if(is.primitive(x)) anySig else as.character(x@defined))
     }
-    lens <- unique(sapply(sigs, length))
+    lens <- unique(vapply(sigs, length, 1, USE.NAMES=FALSE))
     if(length(lens) == 0)
         return(matrix(character(), 0, length(methods@arguments)))
     if(length(lens) > 1L) {

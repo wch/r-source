@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -604,7 +604,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
   signatures <- object@classes
   args <- object@arguments
   if(!is.null(classes) && length(signatures)>0) {
-    keep <- !sapply(signatures, function(x, y)all(is.na(match(x, y))), classes)
+    keep <- !vapply(signatures, function(x, y) all(is.na(match(x, y))), NA, classes)
     methods <- methods[keep]
     signatures <- signatures[keep]
     args <- args[keep]

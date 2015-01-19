@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ utils::globalVariables(".addBasicGeneric")
 
     ## Then add all the primitives that are not already there.
     ff <- ls("package:base", all.names=TRUE)
-    prims <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
+    prims <- ff[vapply(ff, function(x) is.primitive(get(x, "package:base")), NA)]
     new_prims <- prims[!prims %in% names(funs)]
     add <- rep(list(FALSE), length(new_prims))
     names(add) <- new_prims

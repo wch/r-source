@@ -1,7 +1,7 @@
 #  File src/library/methods/R/SClasses.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -395,7 +395,7 @@ removeClass <-  function(Class, where = topenv(parent.frame())) {
     classDef <- getClassDef(Class, where=classWhere)
     if(length(classDef@subclasses)) {
       subclasses <- names(classDef@subclasses)
-      found <- sapply(subclasses, isClass, where = where)
+      found <- vapply(subclasses, isClass, NA, where = where, USE.NAMES=TRUE)
       for(what in subclasses[found])
           .removeSuperClass(what, Class)
     }
@@ -733,13 +733,10 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
     else {
         pkg <- packageSlot(Class)
         if(is.null(pkg))
-          pkg <- ""
+	    pkg <- ""
         classDef <- getClassDef(Class, where, pkg)
     }
-    if(missing(where) && nzchar(pkg))
-            where <- .requirePackage(pkg)
-    else
-        where <- as.environment(where)
+    where <- if(missing(where) && nzchar(pkg)) .requirePackage(pkg) else as.environment(where)
     what <- classMetaName(Class)
     where <- .findAll(what, where)
     if(length(where) > 1L && nzchar(pkg)) {
@@ -889,7 +886,7 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
 multipleClasses <- function(details = FALSE) {
     ctable <- .classTable
     cnames <- objects(ctable, all.names = TRUE)
-    dups <- sapply(cnames, function(x) is.list(get(x, envir = ctable)))
+    dups <- vapply(cnames, function(x) is.list(get(x, envir = ctable)), NA)
     if(details) {
         value <- lapply(cnames[dups], function(x) get(x, envir = ctable))
         names(value) <- cnames[dups]
