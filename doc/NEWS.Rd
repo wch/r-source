@@ -581,6 +581,9 @@
       \item \file{R_ext/Lapack.h} had not been updated for changes to
       the argument lists of the (largely internal) functions
       \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
+      
+      \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
+      layout changes of \R 3.1.0.
     }
   }
 }

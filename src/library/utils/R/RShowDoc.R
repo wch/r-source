@@ -1,7 +1,7 @@
 #  File src/library/utils/R/RShowDoc.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
+RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
 {
     paste. <- function(x, ext) paste(x, ext, sep=".")
     pdf_viewer <- function(path) {
@@ -100,7 +100,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
             }
         }
         ## This is in UTF-8 and has a BOM on the first line
-        path <- file.path(R.home(), what)
+        path <- file.path(R.home("doc"), what)
         tf <- tempfile()
         tmp <- readLines(path)
         tmp[1] <- ""
