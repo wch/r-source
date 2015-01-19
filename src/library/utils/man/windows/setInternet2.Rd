@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/setInternet2.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setInternet2}
@@ -9,23 +9,23 @@
 \alias{R_WIN_INTERNET2}
 
 \title{
-Set or disable the use of Internet Explorer for Internet access.
+Set or disable the use of Windows internal functions for Internet access.
 }
 \description{
   With the \option{--internet2} startup option, or \emph{via}
   environment variable \env{R_WIN_INTERNET2} or by calling this
   function, R will make use of the \file{internet2.dll} library for
-  Internet access, which makes use of Internet Explorer functions.  This
-  allows specification of proxies, etc., in the \dQuote{Internet
-    Options} applet in \dQuote{Control Panel}.
+  Internet access, which makes use of the OS functions underlying
+  Internet Explorer.  This allows specification of proxies, etc., in the
+  \dQuote{Internet Options} applet in \dQuote{Control Panel}.  Unlike
+  the standard internal functions it will follow HTTP redirections.
 }
 \usage{
 setInternet2(use = TRUE)
 }
 \arguments{
   \item{use}{Whether to use \file{internet2.dll}.  If \code{NA}, just
-  return the current setting.
-}
+  return the current setting.}
 }
 \value{
 The previous setting is returned, invisibly if \code{use} is not \code{NA}.
@@ -36,7 +36,8 @@ The previous setting is returned, invisibly if \code{use} is not \code{NA}.
   making any calls that access the Internet
   (e.g., \code{\link{download.file}}).  If one of the DLLs has already
   been loaded, this function will switch to the other one without
-  unloading the first one, so there is a potential resource leak.
+  unloading the first one, so there is a potential resource leak and
+  damage to open \code{\link{url}} connections.
 }
 \note{
   This is only available on Windows.

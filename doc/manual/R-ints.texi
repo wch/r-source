@@ -1789,7 +1789,7 @@ and @code{libtiff} libraries.
 
 @item @file{internet2.dll}
 (Windows only.)  An alternative version of the internet access routines,
-compiled against Internet Explorer internals (and so loads
+compiled against the OS's internal functions (and so loads
 @file{wininet.dll} and @file{wsock32.dll}).
 @end table
 

@@ -225,7 +225,7 @@ isIncomplete(con)
 #ifdef windows
   \code{\link{setInternet2}(TRUE)}
 #endif
-  was used (to make use of Internet Explorer internals), and then only
+  was used (to make use of Windows internal functions), and then only
   if the certificate is considered to be valid.  With that option only,
   the \samp{http://user:pass@site} notation for sites requiring
   authentication is also accepted.
