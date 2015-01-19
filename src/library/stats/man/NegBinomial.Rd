@@ -46,7 +46,7 @@ rnbinom(n, size, prob, mu)
 
   This represents the number of failures which occur in a sequence of
   Bernoulli trials before a target number of successes is reached.
-  The mean is \eqn{n(1-p)/p} and variance \eqn{n(1-p)/p^2}.
+  The mean is \eqn{\mu = n(1-p)/p} and variance \eqn{n(1-p)/p^2}.
 
   A negative binomial distribution can also arise as a mixture of
   Poisson distributions with mean distributed as a gamma distribution
@@ -55,7 +55,7 @@ rnbinom(n, size, prob, mu)
   values of \code{size}.)
 
   An alternative parametrization (often used in ecology) is by the
-  \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion
+  \emph{mean} \code{mu} (see above), and \code{size}, the \emph{dispersion
   parameter}, where \code{prob} = \code{size/(size+mu)}.  The variance
   is \code{mu + mu^2/size} in this parametrization.
 
