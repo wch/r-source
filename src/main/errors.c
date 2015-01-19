@@ -1043,9 +1043,9 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if(n == NA_INTEGER || n < 0) error(_("invalid '%s' argument"), "n");
     if(!isString(msg1) || LENGTH(msg1) != 1)
-	error(_("'msg1' must be a character string"));
+	error(_("'%s' must be a character string"), "msg1");
     if(!isString(msg2) || LENGTH(msg2) != 1)
-	error(_("'msg2' must be a character string"));
+	error(_("'%s' must be a character string"), "msg2");
 
 #ifdef ENABLE_NLS
     if(isNull(sdom)) {

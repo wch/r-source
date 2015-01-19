@@ -1124,7 +1124,7 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
     const char *code_string;
     const void *vmax = vmaxget();
     if(!isValidString(code_vec))
-	error(_("argument 'code' must be a character string"));
+	error(_("argument '%s' must be a character string"), "code");
     code_string = translateChar(asChar(code_vec));
     /* with a NULL op, turns all primitive matching off or on (used to avoid possible infinite
      recursion in methods computations*/

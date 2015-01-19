@@ -123,7 +123,7 @@ SEXP attribute_hidden do_intToBits(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x;
     R_xlen_t i, j = 0;
     unsigned int tmp;
-    
+
     PROTECT(x = coerceVector(CAR(args), INTSXP));
     if (!isInteger(x))
 	error(_("argument 'x' must be an integer vector"));
@@ -147,7 +147,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(x) != RAWSXP && TYPEOF(x) != LGLSXP && TYPEOF(x) != INTSXP)
 	error(_("argument 'x' must be raw, integer or logical"));
     if (!isString(stype)  || LENGTH(stype) != 1)
-	error(_("argument 'type' must be a character string"));
+	error(_("argument '%s' must be a character string"), "type");
     useRaw = strcmp(CHAR(STRING_ELT(stype, 0)), "integer");
     fac = useRaw ? 8 : 32;
     if (len% fac)

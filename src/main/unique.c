@@ -1574,7 +1574,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(names);
     sep = CADR(args);
     if(!isString(sep) || LENGTH(sep) != 1)
-	error(_("'sep' must be a character string"));
+	error(_("'%s' must be a character string"), "sep");
     csep = translateChar(STRING_ELT(sep, 0));
     PROTECT(ans = allocVector(STRSXP, n));
     vmax = vmaxget();

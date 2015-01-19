@@ -308,7 +308,7 @@ SEXP attribute_hidden do_readEnviron(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     SEXP x = CAR(args);
     if (length(x) != 1 || !isString(x))
-	errorcall(call, _("argument 'x' must be a character string"));
+	errorcall(call, _("argument '%s' must be a character string"), "x");
     const char *fn = R_ExpandFileName(translateChar(STRING_ELT(x, 0)));
     int res = process_Renviron(fn);
     if (!res)
