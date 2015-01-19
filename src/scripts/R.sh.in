@@ -6,7 +6,7 @@ if test "${R_HOME_DIR}" = "@prefix@/@LIBnn@/R"; then
    case "@R_OS@" in
    linux*)
      run_arch=`uname -m`
-     case "$run_arch" in 
+     case "$run_arch" in
         x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
           libnn=lib64
           libnn_fallback=lib
@@ -56,7 +56,7 @@ Options:
   -h, --help            Print short help message and exit
   --version             Print version info and exit
   --encoding=ENC        Specify encoding to be used for stdin
-  --encoding ENC        
+  --encoding ENC
   RHOME			Print path to R home directory and exit
   --save                Do save workspace at the end of the session
   --no-save             Don't save it
@@ -71,6 +71,8 @@ Options:
 			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
   --max-ppsize=N        Set max size of protect stack to N
+  --min-nsize=N         Set min number of fixed size obj's (\"cons cells\") to N
+  --min-vsize=N         Set vector heap minimum to N bytes; '4M' = 4 MegaB
   -q, --quiet           Don't print startup message
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible
@@ -140,7 +142,7 @@ while test -n "${1}"; do
       . "${R_HOME}/etc${R_ARCH}/ldpaths"
       exec sh "${R_HOME}/bin/Rcmd" @OSF_SH_BUG@ ;;
     -g|--gui)
-      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	gui="${2}"
         args="${args} ${1} ${2}"
 	shift
@@ -153,7 +155,7 @@ while test -n "${1}"; do
       args="${args} ${1}"
       ;;
     -d|--debugger)
-      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	debugger="${2}"; shift
       else
 	error "option '${1}' requires an argument"
@@ -188,7 +190,7 @@ while test -n "${1}"; do
       fi
       ;;
     -e)
-      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
       else
 	error "option '${1}' requires a non-empty argument"
@@ -196,7 +198,7 @@ while test -n "${1}"; do
       args="${args} -e $a"
       ;;
     -f)
-      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
+      if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
 	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
       else
 	error "option '${1}' requires a filename argument"
