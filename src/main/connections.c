@@ -4992,7 +4992,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
     else if (strncmp(url, "https://", 8) == 0) type = HTTPSsh;
-    // ftps:// is 'in principle' at present.
+    // ftps:// is available via most libcurl.
     else if (strncmp(url, "ftps://", 7) == 0) type = FTPSsh;
 #endif
 
@@ -5016,19 +5016,28 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(PRIMVAL(op) == 0) {
 	const char *cmeth = CHAR(asChar(CAD4R(args)));
 	meth = strcmp(cmeth, "internal");
-	if(!meth) {
-	    if (strncmp(url, "ftps://", 7) == 0)
-		error("ftps:// URLs are not supported by method = \"internal\"");
+    }
+
+    if(!meth) {
+	if (strncmp(url, "ftps://", 7) == 0)
+#ifdef HAVE_CURL_CURL_H
+	error("ftps:// URLs are not supported by the default method:\n   consider url(method = \"libcurl\")");
+#else
+	error("ftps:// URLs are not supported");
+#endif
 #ifdef Win32
 # ifndef USE_WININET
-	    if (strncmp(url, "https://", 8) == 0)
-		error("for https:// URLs use setInternet2(TRUE)");
+	if (strncmp(url, "https://", 8) == 0)
+	    error("for https:// URLs use setInternet2(TRUE)");
 # endif
 #else
-	    if (strncmp(url, "https://", 8) == 0)
-		error("https:// URLs are not supported by method = \"internal\"");
+	if (strncmp(url, "https://", 8) == 0)
+# ifdef HAVE_CURL_CURL_H
+	    error("https:// URLs are not supported by the default method:\n  consider url(method = \"libcurl\")");
+# else
+	error("https:// URLs are not supported");
+# endif
 #endif
-	}
     }
 
     ncon = NextConnection();

@@ -309,6 +309,10 @@ getOption(x, default = NULL)
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}
 
+    \iter{\code{url.method}:}{character string: the default method for
+      \code{\link{url}}.  Normally unset, which is equivalent to
+      \code{"internal"}.}
+
     \item{\code{useFancyQuotes}:}{controls the use of
       directional quotes in \code{\link{sQuote}}, \code{dQuote} and in
       rendering text help (see \code{\link{Rd2txt}} in package

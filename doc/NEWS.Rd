@@ -220,9 +220,11 @@
 	check}.
 
 	\item \code{download.file()} has a new built-in method
-	\code{"libcurl"} which will handle \code{https://} and
+	\code{"libcurl"} which should handle \code{https://} and
 	\code{ftps://} URLs, follow redirections, and allows
 	simultaneous downloads of multiple URLs.
+	
+	\item \code{url()} has a new method \code{"libcurl"} (unfinished).
       }
     }
   }

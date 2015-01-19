@@ -86,9 +86,13 @@ fifo <- function(description, open = "", blocking = FALSE,
     .Internal(fifo(description, open, blocking, encoding))
 
 url <- function(description, open = "", blocking = TRUE,
-                encoding = getOption("encoding"),
-                method = c("internal", "libcurl"))
-    .Internal(url(description, open, blocking, encoding, match.arg(method)))
+                encoding = getOption("encoding"), method)
+{
+    if(missing(method))
+        method <- getOption("url.method", "internal")
+    method <- match.arg(method, c("internal", "libcurl"))
+    .Internal(url(description, open, blocking, encoding, method))
+}
 
 gzfile <- function(description, open = "",
                    encoding = getOption("encoding"), compression = 6)
