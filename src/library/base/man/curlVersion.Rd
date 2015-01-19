@@ -29,7 +29,7 @@ libcurlVersion()
   software.
 
   \code{\link{curlGetHeaders}}, \code{\link{download.file}} and
-  \code{\link{url}}for functions which (optionally) use \code{libcurl}.
+  \code{\link{url}} for functions which (optionally) use \code{libcurl}.
 }
 \examples{
 libcurlVersion()
