@@ -91,7 +91,8 @@ isIncomplete(con)
     file when opening for text-mode reading, and asserts that the
     \sQuote{file} may not be seekable.}
   \item{method}{character string, partially matched to
-    \code{c("internal", "libcurl")}: see \sQuote{Details}.}
+    \code{c("default", "internal", "wininet", "libcurl")}:
+    see \sQuote{Details}.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal available.  For
     \code{xzfile} can also be negative: see the \sQuote{Compression}
@@ -131,7 +132,12 @@ isIncomplete(con)
   \sQuote{out of the box} default (and that available since connections
   were introduced): \code{method = "libcurl"} is optionally supported as
   from \R 3.2.0.  The default can be changed \emph{via}
-  \code{\link{options}(url.method = )}.
+  \code{\link{options}(url.method = )}.  \code{method = "wininet"} is
+  only available on Windows.
+#ifdef windows
+  (See \code{\link{setInternet2}}, which chooses whether \code{"default"}
+  means \code{"internal"} or \code{"wininet"}.)
+#endif
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and

@@ -40,7 +40,8 @@ setInternet2(use = TRUE)
 Duncan Murdoch
 }
 \seealso{
-\code{\link{download.file}}, \code{\link{url}}
+  \code{\link{download.file}}, \code{\link{url}}: the method can be
+  selected for each \code{url} connection via its \code{method} argument.
 }
 \examples{
 setInternet2(NA)

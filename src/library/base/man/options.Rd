@@ -311,7 +311,7 @@ getOption(x, default = NULL)
 
     \item{\code{url.method}:}{character string: the default method for
       \code{\link{url}}.  Normally unset, which is equivalent to
-      \code{"internal"}.}
+      \code{"default"}, which is \code{"internal"} except on Windows.}
 
     \item{\code{useFancyQuotes}:}{controls the use of
       directional quotes in \code{\link{sQuote}}, \code{dQuote} and in

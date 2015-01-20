@@ -237,11 +237,14 @@
       interactive sessions.
 
       \item (Windows.) The DLLs \file{internet.dll} and
-      \file{internet2.dll} have been merged.  (The Windows internet
-      functions are still selected by \option{--internet2} and
-      \code{setInternet2()}.)  In this version it is safe to switch
-      (repeatedly) between the internal and Windows internet functions
-      within an \R session.
+      \file{internet2.dll} have been merged.  In this version it is safe
+      to switch (repeatedly) between the internal and Windows internet
+      functions within an \R session.
+
+      The Windows internet functions are still selected by flag
+      \option{--internet2} or \code{setInternet2()}.  This can be
+      overridden for each \code{url()} connection \emph{via} its new
+      \code{method} argument.
     }
   }
 

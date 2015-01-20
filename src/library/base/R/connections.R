@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -89,8 +89,8 @@ url <- function(description, open = "", blocking = TRUE,
                 encoding = getOption("encoding"), method)
 {
     if(missing(method))
-        method <- getOption("url.method", "internal")
-    method <- match.arg(method, c("internal", "libcurl"))
+        method <- getOption("url.method", "default")
+    method <- match.arg(method, c("default", "internal", "libcurl", "wininet"))
     .Internal(url(description, open, blocking, encoding, method))
 }
 
