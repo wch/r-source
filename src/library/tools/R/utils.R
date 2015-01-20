@@ -989,7 +989,8 @@ function()
     unique(c(.get_standard_repository_db_fields(),
              ## Extract from R-exts via
              ## .get_DESCRIPTION_fields_in_R_exts():
-             c("Author",
+             c("Additional_repositories",
+               "Author",
                "Authors@R",
                "Biarch",
                "BugReports",
@@ -1036,8 +1037,6 @@ function()
                "Version",
                "VignetteBuilder",
                "ZipData"),
-             ## Should be documented in R-exts eventually:
-             c("Additional_repositories"),
              ## Others: adjust as needed.
              c("Repository",
                "Path",
@@ -1048,6 +1047,8 @@ function()
                "RcmdrModels",
                "RcppModules",
                "Roxygen",
+               "Acknowledgements",
+               "Acknowledgments", # USA/Canadian usage.
                "biocViews")
              ))
 }
