@@ -35,7 +35,7 @@ test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-dt = datetime2.R
 test-src-demo = demos.R demos2.R
-test-src-internet = internet.R
+test-src-internet = internet.R libcurl.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
