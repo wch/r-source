@@ -4959,7 +4959,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP scmd, sopen, ans, class, enc;
     char *class2 = "url";
     const char *url, *open;
-    int ncon, block, raw = 0, meth = 0, urlmeth = UseInternet2;
+    int ncon, block, raw = 0, meth = 0;
+#ifdef Win32
+    urlmeth = UseInternet2;
+#endif
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
@@ -5022,7 +5025,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    error(_("method = \"wininet\" is only supported on Windows"));
 #endif    
-	} else if (streql(cmeth, "internal")) urlmeth = 0;
+	} 
+#ifdef Win32
+	else if (streql(cmeth, "internal")) urlmeth = 0;
+#endif
     }
 
     if(!meth) {
