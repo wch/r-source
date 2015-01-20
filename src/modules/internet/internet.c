@@ -118,28 +118,21 @@ static Rboolean url_open(Rconnection con)
     switch(type) {
 #ifdef Win32
     case HTTPSsh:
-	if(!UseInternet2) {
 	    warning(_("for2 https:// URLs use setInternet2(TRUE)"));
 	    return FALSE;
-	}
 #endif
     case HTTPsh:
     {
 	SEXP sheaders, agentFun;
 	const char *headers;
 	SEXP s_makeUserAgent = install("makeUserAgent");
-#ifdef Win32
-	if(UseInternet2)
-	    agentFun = PROTECT(lang2(s_makeUserAgent, ScalarLogical(0)));
-	else
-#endif
-	    agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
+	agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
 	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
 	if(TYPEOF(sheaders) == NILSXP)
 	    headers = NULL;
 	else
 	    headers = CHAR(STRING_ELT(sheaders, 0));
-	ctxt = Ri_HTTPOpen(url, headers, 0);
+	ctxt = in_R_HTTPOpen(url, headers, 0);
 	UNPROTECT(2);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -151,7 +144,7 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
-	ctxt = Ri_FTPOpen(url);
+	ctxt = in_R_FTPOpen(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
@@ -182,10 +175,10 @@ static void url_close(Rconnection con)
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	Ri_HTTPClose(((Rurlconn)(con->private))->ctxt);
+	in_R_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     case FTPsh:
-	Ri_FTPClose(((Rurlconn)(con->private))->ctxt);
+	in_R_FTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     default:
 	break;
@@ -203,10 +196,10 @@ static int url_fgetc_internal(Rconnection con)
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	n = Ri_HTTPRead(ctxt, (char *)&c, 1);
+	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
 	break;
     case FTPsh:
-	n = Ri_FTPRead(ctxt, (char *)&c, 1);
+	n = in_R_FTPRead(ctxt, (char *)&c, 1);
 	break;
     default:
 	break;
@@ -224,10 +217,10 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	n = Ri_HTTPRead(ctxt, ptr, (int)(size*nitems));
+	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     case FTPsh:
-	n = Ri_FTPRead(ctxt, ptr, (int)(size*nitems));
+	n = in_R_FTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     default:
 	break;
@@ -235,6 +228,121 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     return n/size;
 }
 
+#ifdef Win32
+static Rboolean url_open2(Rconnection con)
+{
+    void *ctxt;
+    char *url = con->description;
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+
+    if(con->mode[0] != 'r') {
+	REprintf("can only open URLs for reading");
+	return FALSE;
+    }
+
+    switch(type) {
+    case HTTPSsh:
+    case HTTPsh:
+    {
+	SEXP sheaders, agentFun;
+	const char *headers;
+	SEXP s_makeUserAgent = install("makeUserAgent");
+	agentFun = PROTECT(lang2(s_makeUserAgent, ScalarLogical(0)));
+	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+	if(TYPEOF(sheaders) == NILSXP)
+	    headers = NULL;
+	else
+	    headers = CHAR(STRING_ELT(sheaders, 0));
+	ctxt = in_R_HTTPOpen2(url, headers, 0);
+	UNPROTECT(2);
+	if(ctxt == NULL) {
+	  /* if we call error() we get a connection leak*/
+	  /* so do_url has to raise the error*/
+	  /* error("cannot open URL '%s'", url); */
+	    return FALSE;
+	}
+	((Rurlconn)(con->private))->ctxt = ctxt;
+    }
+	break;
+    case FTPsh:
+	ctxt = in_R_FTPOpen2(url);
+	if(ctxt == NULL) {
+	  /* if we call error() we get a connection leak*/
+	  /* so do_url has to raise the error*/
+	  /* error("cannot open URL '%s'", url); */
+	    return FALSE;
+	}
+	((Rurlconn)(con->private))->ctxt = ctxt;
+	break;
+
+    default:
+	warning(_("URL scheme unsupported by this method"));
+	return FALSE;
+    }
+
+    con->isopen = TRUE;
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
+    con->save = -1000;
+    set_iconv(con);
+    return TRUE;
+}
+
+static void url_close2(Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    switch(type) {
+    case HTTPsh:
+    case HTTPSsh:
+    case FTPsh:
+	in_R_HTTPClose2(((Rurlconn)(con->private))->ctxt);
+	break;
+    default:
+	break;
+    }
+    con->isopen = FALSE;
+}
+
+static int url_fgetc_internal2(Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    void * ctxt = ((Rurlconn)(con->private))->ctxt;
+    unsigned char c;
+    size_t n = 0; /* -Wall */
+
+    switch(type) {
+    case HTTPsh:
+    case HTTPSsh:
+    case FTPsh:
+	n = in_R_HTTPRead2(ctxt, (char *)&c, 1);
+	break;
+    default:
+	break;
+    }
+    return (n == 1) ? c : R_EOF;
+}
+
+static size_t url_read2(void *ptr, size_t size, size_t nitems,
+			Rconnection con)
+{
+    UrlScheme type = ((Rurlconn)(con->private))->type;
+    void * ctxt = ((Rurlconn)(con->private))->ctxt;
+    size_t n = 0; /* -Wall */
+
+    switch(type) {
+    case HTTPsh:
+    case HTTPSsh:
+    case FTPsh:
+	n = in_R_HTTPRead2(ctxt, ptr, (int)(size*nitems));
+	break;
+    default:
+	break;
+    }
+    return n/size;
+}
+#endif
 
 static Rconnection in_R_newurl(const char *description, const char * const mode)
 {
@@ -255,11 +363,21 @@ static Rconnection in_R_newurl(const char *description, const char * const mode)
     }
     init_con(new, description, CE_NATIVE, mode);
     new->canwrite = FALSE;
-    new->open = &url_open;
-    new->close = &url_close;
-    new->fgetc_internal = &url_fgetc_internal;
+#ifdef Win32
+    if (UseInternet2) {
+	new->open = &url_open2;
+	new->read = &url_read2;
+	new->close = &url_close2;
+	new->fgetc_internal = &url_fgetc_internal2;
+    } else
+#endif
+    {
+	new->open = &url_open;
+	new->read = &url_read;
+	new->close = &url_close;
+	new->fgetc_internal = &url_fgetc_internal;
+    }
     new->fgetc = &dummy_fgetc;
-    new->read = &url_read;
     new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
