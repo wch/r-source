@@ -537,9 +537,9 @@ printhsearchInternal  <- function(x, ...)
     types <- x$types
     if (help_type == "html") {
         browser <- getOption("browser")
-	if (tools:::httpdPort() == 0L) tools::startDynamicHelp()
-	if (tools:::httpdPort() > 0L) {
-	    url <- paste0("http://127.0.0.1:", tools:::httpdPort(),
+        port <- tools::startDynamicHelp(NA)
+	if (port > 0L) {
+	    url <- paste0("http://127.0.0.1:", port,
                       "/doc/html/Search?pattern=", tools:::escapeAmpersand(x$pattern),
                       # Only encode non-default values
                       if (!("title" %in% x$fields)) "&title=0",

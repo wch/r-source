@@ -46,7 +46,7 @@ print.browseVignettes <- function(x, ...)
     oneLink <- function(s) {
         if (length(s) == 0L) return(character(0L))
         title <- s[, "Title"]
-        if (tools:::httpdPort() > 0L)
+        if (port > 0L)
             prefix <- sprintf("/library/%s/doc", pkg)
         else
             prefix <- sprintf("file://%s/doc", s[, "Dir"])
@@ -66,12 +66,11 @@ print.browseVignettes <- function(x, ...)
                        ""))
     }
 
-    if (tools:::httpdPort() == 0L)
-        tools::startDynamicHelp()
+    port <- tools::startDynamicHelp(NA)
 
     file <- tempfile("Rvig.", fileext=".html")
     sink(file)
-    if (tools:::httpdPort() > 0L)
+    if (port > 0L)
     	css_file <- "/doc/html/R.css"
     else
     	css_file <- file.path(R.home("doc"), "html", "R.css")
@@ -101,8 +100,8 @@ print.browseVignettes <- function(x, ...)
     ## the first two don't work on Windows with browser=NULL.
     ## browseURL(URLencode(sprintf("file://%s", file)))
     ## browseURL(URLencode(file))
-    if (tools:::httpdPort() > 0L)
-	browseURL(sprintf("http://127.0.0.1:%d/session/%s", tools:::httpdPort(), basename(file)))
+    if (port > 0L)
+	browseURL(sprintf("http://127.0.0.1:%d/session/%s", port, basename(file)))
     else
     	browseURL(sprintf("file://%s", file))
     ## browseURL(file)

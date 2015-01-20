@@ -18,7 +18,7 @@ startDynamicHelp(start = TRUE)
 }
 \arguments{
   \item{start}{logical: whether to start or shut down the dynamic help
-    system.}
+    system.  If \code{NA}, the server is started if not already running.}
 }
 \details{
   This function starts the internal HTTP server, which runs on the

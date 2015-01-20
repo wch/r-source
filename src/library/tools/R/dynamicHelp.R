@@ -591,5 +591,10 @@ startDynamicHelp <- function(start = TRUE)
     invisible(httpdPort())
 }
 
+dynamicHelpURL <-
+function(path, port = httpdPort())
+    paste0("http://127.0.0.1:", port, path)
+
 ## environment holding potential custom httpd handlers
 .httpd.handlers.env <- new.env()
+
