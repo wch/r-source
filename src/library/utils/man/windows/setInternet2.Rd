@@ -36,8 +36,8 @@ The previous setting is returned, invisibly if \code{use} is not \code{NA}.
   making any calls that access the Internet
   (e.g., \code{\link{download.file}}).  If one of the DLLs has already
   been loaded, this function will switch to the other one without
-  unloading the first one, so there is a potential resource leak and
-  damage to open \code{\link{url}} connections.
+  unloading the first one, so there is a (modest) resource leak and
+  potentially damage to open \code{\link{url}} connections.
 }
 \note{
   This is only available on Windows.
