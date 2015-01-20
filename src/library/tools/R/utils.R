@@ -1786,11 +1786,11 @@ function(expr)
 ### ** .unpacked_source_repository_apply
 
 .unpacked_source_repository_apply <-
-function(dir, fun, ..., verbose = FALSE)
+function(dir, fun, ..., pattern = "*", verbose = FALSE)
 {
     dir <- file_path_as_absolute(dir)
 
-    dfiles <- Sys.glob(file.path(dir, "*", "DESCRIPTION"))
+    dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
 
     results <-
         lapply(dirname(dfiles),
