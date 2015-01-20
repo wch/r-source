@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-18 09:58+0000\n"
+"POT-Creation-Date: 2015-01-20 10:37+0000\n"
 "PO-Revision-Date: 2014-03-11 10:26-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -189,10 +189,10 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/envir.c:2966 src/main/envir.c:2980 src/main/envir.c:2987
 #: src/main/envir.c:3003 src/main/envir.c:3577 src/main/errors.c:1044
 #: src/main/eval.c:396 src/main/eval.c:405 src/main/eval.c:408
-#: src/main/grep.c:774 src/main/grep.c:779 src/main/grep.c:1070
-#: src/main/grep.c:1072 src/main/grep.c:1074 src/main/grep.c:1518
-#: src/main/grep.c:1522 src/main/grep.c:1527 src/main/grep.c:2331
-#: src/main/grep.c:2336 src/main/grep.c:2632 src/main/grep.c:2637
+#: src/main/grep.c:780 src/main/grep.c:785 src/main/grep.c:1079
+#: src/main/grep.c:1081 src/main/grep.c:1083 src/main/grep.c:1528
+#: src/main/grep.c:1532 src/main/grep.c:1537 src/main/grep.c:2345
+#: src/main/grep.c:2350 src/main/grep.c:2649 src/main/grep.c:2654
 #: src/main/memory.c:3796 src/main/paste.c:96 src/main/paste.c:392
 #: src/main/paste.c:399 src/main/paste.c:406 src/main/paste.c:411
 #: src/main/paste.c:416 src/main/paste.c:421 src/main/paste.c:424
@@ -238,11 +238,11 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/util.c:2241 src/main/util.c:2245 src/main/util.c:2247
 #: src/modules/X11/devX11.c:3239 src/modules/X11/devX11.c:3242
 #: src/modules/X11/devX11.c:3245 src/modules/X11/devX11.c:3269
-#: src/modules/internet/internet.c:301 src/modules/internet/internet.c:307
-#: src/modules/internet/internet.c:313 src/modules/internet/internet.c:316
-#: src/modules/internet/internet.c:320 src/modules/internet/libcurl.c:173
-#: src/modules/internet/libcurl.c:177 src/modules/internet/libcurl.c:182
-#: src/modules/internet/libcurl.c:185 src/modules/internet/libcurl.c:189
+#: src/modules/internet/internet.c:458 src/modules/internet/internet.c:464
+#: src/modules/internet/internet.c:470 src/modules/internet/internet.c:473
+#: src/modules/internet/internet.c:477 src/modules/internet/libcurl.c:280
+#: src/modules/internet/libcurl.c:284 src/modules/internet/libcurl.c:289
+#: src/modules/internet/libcurl.c:292 src/modules/internet/libcurl.c:296
 #: src/modules/lapack/Lapack.c:155 src/modules/lapack/Lapack.c:261
 #: src/modules/lapack/Lapack.c:709 src/modules/lapack/Lapack.c:818
 #: src/modules/lapack/Lapack.c:880 src/modules/lapack/Lapack.c:1215
@@ -675,8 +675,9 @@ msgstr "вход таблицы должен быть внешним указа�
 msgid "problem in setting variable '%s' in Renviron"
 msgstr "проблема установки переманной '%s' в Renviron"
 
-#: src/main/Renviron.c:311
-msgid "argument 'x' must be a character string"
+#: src/main/Renviron.c:311 src/main/objects.c:1127 src/main/raw.c:150
+#, fuzzy, c-format
+msgid "argument '%s' must be a character string"
 msgstr "аргумент 'x' должен быть текстовой строкой"
 
 #: src/main/Renviron.c:315
@@ -706,8 +707,8 @@ msgid "invalid multibyte format string"
 msgstr "неправильная многобайтная строка"
 
 #: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1041
-#: src/main/character.c:1045 src/main/grep.c:776 src/main/grep.c:1520
-#: src/main/grep.c:1524 src/main/grep.c:2333 src/main/grep.c:2634
+#: src/main/character.c:1045 src/main/grep.c:782 src/main/grep.c:1530
+#: src/main/grep.c:1534 src/main/grep.c:2347 src/main/grep.c:2651
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr "длина аргумента '%s' > 1, будет использован только первый элемент"
@@ -716,8 +717,8 @@ msgstr "длина аргумента '%s' > 1, будет использова�
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
 
-#: src/main/agrep.c:201 src/main/agrep.c:829 src/main/grep.c:847
-#: src/main/grep.c:2391 src/main/grep.c:2673
+#: src/main/agrep.c:201 src/main/agrep.c:829 src/main/grep.c:853
+#: src/main/grep.c:2405 src/main/grep.c:2690
 msgid "regular expression is invalid in this locale"
 msgstr "неправильное регулярное выражение для этой локали"
 
@@ -726,18 +727,18 @@ msgstr "неправильное регулярное выражение для 
 msgid "regcomp error:  '%s'"
 msgstr "ошибка regcomp: '%s'"
 
-#: src/main/agrep.c:239 src/main/agrep.c:874 src/main/grep.c:232
-#: src/main/grep.c:322 src/main/grep.c:430 src/main/grep.c:586
-#: src/main/grep.c:899 src/main/grep.c:2491 src/main/grep.c:2560
-#: src/main/grep.c:2710
+#: src/main/agrep.c:239 src/main/agrep.c:874 src/main/grep.c:233
+#: src/main/grep.c:323 src/main/grep.c:434 src/main/grep.c:590
+#: src/main/grep.c:907 src/main/grep.c:2507 src/main/grep.c:2576
+#: src/main/grep.c:2727
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "неправильная входная строка %d для этой локали"
 
-#: src/main/agrep.c:526 src/main/agrep.c:766 src/main/grep.c:158
-#: src/main/grep.c:767 src/main/grep.c:769 src/main/grep.c:1056
-#: src/main/grep.c:1064 src/main/grep.c:1511 src/main/grep.c:1513
-#: src/main/grep.c:2323 src/main/grep.c:2325 src/main/grep.c:2622
+#: src/main/agrep.c:526 src/main/agrep.c:766 src/main/grep.c:159
+#: src/main/grep.c:773 src/main/grep.c:775 src/main/grep.c:1065
+#: src/main/grep.c:1073 src/main/grep.c:1521 src/main/grep.c:1523
+#: src/main/grep.c:2337 src/main/grep.c:2339 src/main/grep.c:2639
 #, c-format
 msgid "argument '%s' will be ignored"
 msgstr "аргумент '%s' будет проигнорирован"
@@ -752,7 +753,7 @@ msgstr "неправильная входная строка x[%d] для это
 msgid "input string y[%d] is invalid in this locale"
 msgstr "неправильная входная строка y[%d] для этой локали"
 
-#: src/main/agrep.c:835 src/main/grep.c:2679
+#: src/main/agrep.c:835 src/main/grep.c:2696
 #, c-format
 msgid "regcomp error: '%s'"
 msgstr "ошибка regcomp: '%s'"
@@ -1278,8 +1279,8 @@ msgstr "повторный формальный аргумент 'use.names'"
 msgid "argument not a list"
 msgstr "аргумент не является списком"
 
-#: src/main/bind.c:1038 src/main/names.c:1260 src/main/names.c:1265
-#: src/main/names.c:1270 src/main/names.c:1275
+#: src/main/bind.c:1038 src/main/names.c:1266 src/main/names.c:1271
+#: src/main/names.c:1276 src/main/names.c:1281
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "слишком длинное имя класса в '%s'"
@@ -1358,7 +1359,7 @@ msgstr "'parent' не является окружением"
 #: src/main/connections.c:4072 src/main/connections.c:4106
 #: src/main/connections.c:4484 src/main/connections.c:4554
 #: src/main/connections.c:4763 src/main/connections.c:4767
-#: src/main/connections.c:5163 src/main/deparse.c:362 src/main/deparse.c:450
+#: src/main/connections.c:5170 src/main/deparse.c:362 src/main/deparse.c:450
 #: src/main/serialize.c:2041
 msgid "cannot write to this connection"
 msgstr "не могу записать в это соединение"
@@ -1386,7 +1387,7 @@ msgstr "вектор: не могу сделать вектор типа '%s'."
 msgid "cannot set length of non-vector"
 msgstr "установить длину для не-вектора"
 
-#: src/main/builtin.c:898 src/main/builtin.c:908 src/main/options.c:641
+#: src/main/builtin.c:898 src/main/builtin.c:908 src/main/options.c:651
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
@@ -1469,7 +1470,7 @@ msgstr "'abbreviate' использована с не-ASCII символами"
 msgid "non-character names"
 msgstr "не-текстовые имена"
 
-#: src/main/character.c:698 src/main/grep.c:162
+#: src/main/character.c:698 src/main/grep.c:163
 msgid "non-character argument"
 msgstr "не-текстовый аргумент"
 
@@ -1819,8 +1820,8 @@ msgstr "не могу открыть fifo-канал '%s'"
 #: src/main/connections.c:1526 src/main/connections.c:1536
 #: src/main/connections.c:1655 src/main/connections.c:1715
 #: src/main/connections.c:2242 src/main/connections.c:2259
-#: src/main/connections.c:2568 src/main/connections.c:5344
-#: src/main/connections.c:5408
+#: src/main/connections.c:2568 src/main/connections.c:5351
+#: src/main/connections.c:5415
 msgid "too large a block specified"
 msgstr "определен слишком большой блок"
 
@@ -1868,7 +1869,7 @@ msgstr ""
 #: src/main/connections.c:3565 src/main/connections.c:3681
 #: src/main/connections.c:3843 src/main/connections.c:4099
 #: src/main/connections.c:4427 src/main/connections.c:4547
-#: src/main/connections.c:4759 src/main/connections.c:5144 src/main/dcf.c:94
+#: src/main/connections.c:4759 src/main/connections.c:5151 src/main/dcf.c:94
 #: src/main/deparse.c:354 src/main/deparse.c:442 src/main/saveload.c:2267
 #: src/main/saveload.c:2348 src/main/scan.c:933 src/main/serialize.c:2212
 #: src/main/serialize.c:2263 src/main/source.c:270
@@ -1937,7 +1938,7 @@ msgstr "файл '%s', по-видимому, сжат не bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "выделение bzfile-соединения не удалось"
 
-#: src/main/connections.c:1799 src/main/connections.c:6001
+#: src/main/connections.c:1799 src/main/connections.c:6008
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "не могу включить декодер lzma, ошибка %d"
@@ -2074,7 +2075,7 @@ msgstr "для этой системы сокеты недоступны"
 #: src/main/connections.c:3318 src/main/connections.c:3365
 #: src/main/connections.c:3390 src/main/connections.c:3413
 #: src/main/connections.c:3425 src/main/connections.c:3541
-#: src/main/connections.c:3666 src/main/connections.c:5447
+#: src/main/connections.c:3666 src/main/connections.c:5454
 msgid "'con' is not a connection"
 msgstr "'con' не является соединением"
 
@@ -2102,8 +2103,8 @@ msgstr "не могу закрыть выходное sink-соединение"
 msgid "cannot close 'message' sink connection"
 msgstr "не могу закрыть sink-соединение для сообщений"
 
-#: src/main/connections.c:3392 src/main/connections.c:5162
-#: src/main/connections.c:5170 src/main/serialize.c:2031
+#: src/main/connections.c:3392 src/main/connections.c:5169
+#: src/main/connections.c:5177 src/main/serialize.c:2031
 #: src/main/serialize.c:2039
 msgid "connection is not open"
 msgstr "соединение не открыто"
@@ -2114,7 +2115,7 @@ msgstr "строка длиннее буфера"
 
 #: src/main/connections.c:3572 src/main/connections.c:3574
 #: src/main/connections.c:3851 src/main/connections.c:4410
-#: src/main/connections.c:4435 src/main/connections.c:5171 src/main/dcf.c:101
+#: src/main/connections.c:4435 src/main/connections.c:5178 src/main/dcf.c:101
 #: src/main/scan.c:936 src/main/scan.c:940 src/main/serialize.c:2033
 #: src/main/source.c:277
 msgid "cannot read from this connection"
@@ -2258,61 +2259,62 @@ msgstr "соединение NA не существует"
 msgid "there is no connection %d"
 msgstr "соединение %d не существует"
 
-#: src/main/connections.c:5067
+#: src/main/connections.c:5074
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "файл(\"\") поддерживает только open = \"w+\" and open = \"w+b\": использую "
 "второе"
 
-#: src/main/connections.c:5121 src/modules/internet/internet.c:127
+#: src/main/connections.c:5128 src/modules/internet/internet.c:158
+#: src/modules/internet/internet.c:279
 #, fuzzy
 msgid "URL scheme unsupported by this method"
 msgstr "ICU не поддерживается в этой сборке"
 
-#: src/main/connections.c:5212
+#: src/main/connections.c:5219
 msgid "file stream does not have gzip magic number"
 msgstr "файловый поток не имеет магического числа gzip"
 
-#: src/main/connections.c:5223
+#: src/main/connections.c:5230
 msgid "file stream does not have valid gzip header"
 msgstr "файловый поток не имеет правильного заголовка gzip"
 
-#: src/main/connections.c:5288
+#: src/main/connections.c:5295
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "ошибка записи во время gzcon-соединения"
 
-#: src/main/connections.c:5390
+#: src/main/connections.c:5397
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "ошибка crc %x %x\n"
 
-#: src/main/connections.c:5417
+#: src/main/connections.c:5424
 msgid "write error on 'gzcon' connection"
 msgstr "ошибка записи в gzcon-соединение"
 
-#: src/main/connections.c:5451
+#: src/main/connections.c:5458
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' должен быть один из 0 ... 9"
 
-#: src/main/connections.c:5454
+#: src/main/connections.c:5461
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' должно быть TRUE или FALSE"
 
-#: src/main/connections.c:5457
+#: src/main/connections.c:5464
 msgid "this is already a 'gzcon' connection"
 msgstr "это уже 'gzcon'-соединение"
 
-#: src/main/connections.c:5463
+#: src/main/connections.c:5470
 msgid "can only use read- or write- binary connections"
 msgstr "могу только использовать read- или write- бинарные соединения"
 
-#: src/main/connections.c:5466
+#: src/main/connections.c:5473
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "использование текстового соединения 'file' может не работать как положено"
 
-#: src/main/connections.c:5469
+#: src/main/connections.c:5476
 msgid ""
 "cannot create a 'gzcon' connection from a writable textConnection; maybe use "
 "rawConnection"
@@ -2320,29 +2322,29 @@ msgstr ""
 "не могу создать соединение 'gzcon' из textConnection, открытого для записи; "
 "возможно, поможет rawConnection"
 
-#: src/main/connections.c:5472 src/main/connections.c:5476
-#: src/main/connections.c:5483 src/main/connections.c:5497
+#: src/main/connections.c:5479 src/main/connections.c:5483
+#: src/main/connections.c:5490 src/main/connections.c:5504
 msgid "allocation of 'gzcon' connection failed"
 msgstr "выделить gzcon-соединение не удалось"
 
-#: src/main/connections.c:5684
+#: src/main/connections.c:5691
 msgid "not a list of sockets"
 msgstr "не является списком сокетов"
 
-#: src/main/connections.c:5689
+#: src/main/connections.c:5696
 msgid "bad write indicators"
 msgstr "плохие индикаторы записи"
 
-#: src/main/connections.c:5700
+#: src/main/connections.c:5707
 msgid "not a socket connection"
 msgstr "не сокет-соединение"
 
-#: src/main/connections.c:5945
+#: src/main/connections.c:5952
 msgid "unknown compression, assuming none"
 msgstr "неизвестный архиватор, предполагаю, что архивации не было"
 
-#: src/main/connections.c:6063 src/main/connections.c:6067
-#: src/main/connections.c:6073
+#: src/main/connections.c:6070 src/main/connections.c:6074
+#: src/main/connections.c:6080
 #, c-format
 msgid "allocation of %s connection failed"
 msgstr "размещение %s соединения не удалось"
@@ -3299,13 +3301,11 @@ msgstr "неправильный параметр \"error\"\n"
 msgid "Execution halted\n"
 msgstr "Выполнение остановлено\n"
 
-#: src/main/errors.c:1046
-msgid "'msg1' must be a character string"
-msgstr "'msg1' должен быть текстовой строкой"
-
-#: src/main/errors.c:1048
-msgid "'msg2' must be a character string"
-msgstr "'msg2' должен быть текстовой строкой"
+#: src/main/errors.c:1046 src/main/errors.c:1048 src/main/options.c:336
+#: src/main/unique.c:1577
+#, fuzzy, c-format
+msgid "'%s' must be a character string"
+msgstr "'sep' должен быть текстовой строкой"
 
 #: src/main/errors.c:1145
 msgid " [invalid string in stop(.)]"
@@ -3589,7 +3589,7 @@ msgstr "несоответствие версии байтового кода"
 msgid "invalid sequence argument in for loop"
 msgstr "неправильная последовательность аргументов в цикле 'for'"
 
-#: src/main/eval.c:5271 src/main/names.c:1299
+#: src/main/eval.c:5271 src/main/names.c:1305
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "нет .Internal функции '%s'"
@@ -3877,24 +3877,24 @@ msgstr "неправильное регулярное выражение '%s', �
 msgid "invalid regular expression, reason '%s'"
 msgstr "неправильное регулярное выражение, причина '%s'"
 
-#: src/main/grep.c:224 src/main/grep.c:314 src/main/grep.c:422
-#: src/main/grep.c:892 src/main/grep.c:2483
+#: src/main/grep.c:225 src/main/grep.c:315 src/main/grep.c:426
+#: src/main/grep.c:900 src/main/grep.c:2499
 #, c-format
 msgid "input string %d is invalid UTF-8"
 msgstr "входная строка %d -- это неправильный UTF-8"
 
-#: src/main/grep.c:291 src/main/grep.c:390
+#: src/main/grep.c:292 src/main/grep.c:391
 #, c-format
 msgid "'split' string %d is invalid UTF-8"
 msgstr "строка 'split' %d -- это неправильный UTF-8"
 
-#: src/main/grep.c:295 src/main/grep.c:394 src/main/grep.c:567
+#: src/main/grep.c:296 src/main/grep.c:395 src/main/grep.c:571
 #, c-format
 msgid "'split' string %d is invalid in this locale"
 msgstr "строка 'split' %d для этой локали неправильная"
 
-#: src/main/grep.c:400 src/main/grep.c:859 src/main/grep.c:1609
-#: src/main/grep.c:2403
+#: src/main/grep.c:404 src/main/grep.c:867 src/main/grep.c:1621
+#: src/main/grep.c:2419
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -3905,13 +3905,13 @@ msgstr ""
 "\t'%s'\n"
 "\tв '%s'\n"
 
-#: src/main/grep.c:402
+#: src/main/grep.c:406
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr "неправильный образец разделения '%s'"
 
-#: src/main/grep.c:406 src/main/grep.c:865 src/main/grep.c:1616
-#: src/main/grep.c:2410
+#: src/main/grep.c:410 src/main/grep.c:873 src/main/grep.c:1628
+#: src/main/grep.c:2426
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
@@ -3920,47 +3920,47 @@ msgstr ""
 "Ошибка анализа паттерна PCRE\n"
 "\t'%s'\n"
 
-#: src/main/grep.c:843 src/main/grep.c:2387
+#: src/main/grep.c:849 src/main/grep.c:2401
 msgid "regular expression is invalid UTF-8"
 msgstr "регулярное выражение -- это неправильный UTF-8"
 
-#: src/main/grep.c:861 src/main/grep.c:1611 src/main/grep.c:2405
+#: src/main/grep.c:869 src/main/grep.c:1623 src/main/grep.c:2421
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "неправильное регулярное выражение '%s'"
 
-#: src/main/grep.c:1273
+#: src/main/grep.c:1282
 msgid "pattern matches an empty string infinitely, returning first match only"
 msgstr ""
 "образец позволяет сопоставить пустую строку негораниченное число раз, только "
 "первое совпадение возвращено"
 
-#: src/main/grep.c:1585
+#: src/main/grep.c:1595
 msgid "'pattern' is invalid UTF-8"
 msgstr "'pattern' -- это неправильный UTF-8"
 
-#: src/main/grep.c:1587
+#: src/main/grep.c:1597
 msgid "'replacement' is invalid UTF-8"
 msgstr "'replacement' -- это неправильный UTF-8"
 
-#: src/main/grep.c:1591
+#: src/main/grep.c:1601
 msgid "'pattern' is invalid in this locale"
 msgstr "неправильный 'pattern' для этой локали"
 
-#: src/main/grep.c:1594
+#: src/main/grep.c:1604
 msgid "'replacement' is invalid in this locale"
 msgstr "неправильный 'replacement' для этой локали"
 
-#: src/main/grep.c:1599
+#: src/main/grep.c:1609
 msgid "zero-length pattern"
 msgstr "нулевой образец"
 
-#: src/main/grep.c:1741 src/main/grep.c:1757 src/main/grep.c:1805
-#: src/main/grep.c:1821 src/main/grep.c:1868 src/main/grep.c:1884
+#: src/main/grep.c:1753 src/main/grep.c:1769 src/main/grep.c:1817
+#: src/main/grep.c:1833 src/main/grep.c:1880 src/main/grep.c:1896
 msgid "result string is too long"
 msgstr "строка результата слишком длинна"
 
-#: src/main/grep.c:2420
+#: src/main/grep.c:2436
 #, c-format
 msgid "'pcre_fullinfo' returned '%d' "
 msgstr "'pcre_fullinfo' вернул '%d' "
@@ -3969,31 +3969,31 @@ msgstr "'pcre_fullinfo' вернул '%d' "
 msgid "ignoring non-pairlist attributes"
 msgstr "пропускаю non-pairlist атрибуты"
 
-#: src/main/internet.c:88
+#: src/main/internet.c:83
 msgid "internet routines cannot be accessed in module"
 msgstr "средства Интернет не доступны из модуля"
 
-#: src/main/internet.c:99 src/main/internet.c:137 src/main/internet.c:150
-#: src/main/internet.c:161 src/main/internet.c:172 src/main/internet.c:183
-#: src/main/internet.c:192 src/main/internet.c:203 src/main/internet.c:214
-#: src/main/internet.c:223 src/main/internet.c:233 src/main/internet.c:347
-#: src/main/internet.c:358 src/main/internet.c:369 src/main/internet.c:381
+#: src/main/internet.c:94 src/main/internet.c:131 src/main/internet.c:144
+#: src/main/internet.c:155 src/main/internet.c:166 src/main/internet.c:177
+#: src/main/internet.c:186 src/main/internet.c:197 src/main/internet.c:208
+#: src/main/internet.c:217 src/main/internet.c:227 src/main/internet.c:341
+#: src/main/internet.c:352 src/main/internet.c:363 src/main/internet.c:375
 msgid "internet routines cannot be loaded"
 msgstr "средства Интернет не могут быть загружены"
 
-#: src/main/internet.c:114 src/main/memory.c:3487 src/main/memory.c:3497
+#: src/main/internet.c:109 src/main/memory.c:3487 src/main/memory.c:3497
 #: src/main/memory.c:3509 src/main/memory.c:3523 src/main/memory.c:3538
 #: src/main/memory.c:3556
 msgid "bad value"
 msgstr "неправильное значение"
 
-#: src/main/internet.c:120
+#: src/main/internet.c:115
 msgid "internet routines were already initialized"
 msgstr "средства Интернет уже включены"
 
-#: src/main/internet.c:247 src/main/internet.c:261 src/main/internet.c:277
-#: src/main/internet.c:289 src/main/internet.c:303 src/main/internet.c:323
-#: src/main/internet.c:336
+#: src/main/internet.c:241 src/main/internet.c:255 src/main/internet.c:271
+#: src/main/internet.c:283 src/main/internet.c:297 src/main/internet.c:317
+#: src/main/internet.c:330
 msgid "socket routines cannot be loaded"
 msgstr "средства сокетов не могут быть загружены"
 
@@ -4296,24 +4296,24 @@ msgstr "Rprofmem: не могу открыть выходной файл '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr "длинные вектора еще не поддерживаются: %s:%d"
 
-#: src/main/names.c:1013
+#: src/main/names.c:1015
 msgid "string argument required"
 msgstr "нужен текстовый аргумент"
 
-#: src/main/names.c:1016
+#: src/main/names.c:1018
 msgid "no such primitive function"
 msgstr "нет такой примитивной функции"
 
-#: src/main/names.c:1201 src/main/names.c:1231
+#: src/main/names.c:1207 src/main/names.c:1237
 msgid "attempt to use zero-length variable name"
 msgstr "попытка использовать имя переменной нулевой длины"
 
-#: src/main/names.c:1203 src/main/names.c:1233
+#: src/main/names.c:1209 src/main/names.c:1239
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "имена переменных ограничены %d байтами"
 
-#: src/main/names.c:1294 src/main/names.c:1297
+#: src/main/names.c:1300 src/main/names.c:1303
 msgid "invalid .Internal() argument"
 msgstr "неправильный .Internal() аргумент"
 
@@ -4453,10 +4453,6 @@ msgid ""
 "function"
 msgstr "вызов для 'standardGeneric' (\"%s\") не из тела данной общей функции"
 
-#: src/main/objects.c:1127
-msgid "argument 'code' must be a character string"
-msgstr "аргумент 'code' должен быть текстовой строкой"
-
 #: src/main/objects.c:1194
 #, c-format
 msgid ""
@@ -4548,39 +4544,39 @@ msgstr "неправильное 'deparse.cutoff', использовал 60"
 msgid "invalid value for \"device.ask.default\", using FALSE"
 msgstr "неправильное значение для \"device.ask.default\", использую FALSE"
 
-#: src/main/options.c:402
+#: src/main/options.c:412
 msgid "list argument has no valid names"
 msgstr "у аргумента списка нет правильных имен"
 
-#: src/main/options.c:431
+#: src/main/options.c:441
 #, c-format
 msgid "invalid 'width' parameter, allowed %d...%d"
 msgstr "неправильный параметр 'width', разрешается %d...%d"
 
-#: src/main/options.c:442
+#: src/main/options.c:452
 #, c-format
 msgid "invalid 'digits' parameter, allowed %d...%d"
 msgstr "неправильный параметр 'digits', разрешается %d...%d"
 
-#: src/main/options.c:449
+#: src/main/options.c:459
 #, c-format
 msgid "'expressions' parameter invalid, allowed %d...%d"
 msgstr "неправильный параметр 'expressions', разрешается %d...%d"
 
-#: src/main/options.c:456 src/main/options.c:464 src/main/options.c:470
-#: src/main/options.c:478 src/main/options.c:485 src/main/options.c:490
-#: src/main/options.c:497 src/main/options.c:503 src/main/options.c:509
-#: src/main/options.c:514 src/main/options.c:519 src/main/options.c:528
-#: src/main/options.c:534 src/main/options.c:540 src/main/options.c:550
-#: src/main/options.c:560 src/main/options.c:566 src/main/options.c:574
-#: src/main/options.c:581 src/main/options.c:588 src/main/options.c:595
-#: src/main/options.c:602 src/main/options.c:610 src/main/options.c:619
-#: src/main/options.c:622 src/main/options.c:628
+#: src/main/options.c:466 src/main/options.c:474 src/main/options.c:480
+#: src/main/options.c:488 src/main/options.c:495 src/main/options.c:500
+#: src/main/options.c:507 src/main/options.c:513 src/main/options.c:519
+#: src/main/options.c:524 src/main/options.c:529 src/main/options.c:538
+#: src/main/options.c:544 src/main/options.c:550 src/main/options.c:560
+#: src/main/options.c:570 src/main/options.c:576 src/main/options.c:584
+#: src/main/options.c:591 src/main/options.c:598 src/main/options.c:605
+#: src/main/options.c:612 src/main/options.c:620 src/main/options.c:629
+#: src/main/options.c:632 src/main/options.c:638
 #, c-format
 msgid "invalid value for '%s'"
 msgstr "неправильное значение '%s'"
 
-#: src/main/options.c:615 src/main/options.c:644
+#: src/main/options.c:625 src/main/options.c:654
 msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"par.ask.default\" заменен на \"device.ask.default\""
 
@@ -5001,10 +4997,6 @@ msgstr "аргумент 'x' должен быть целочисленным в
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "аргумент 'x' должен быть простым, целочисленным или логическим"
 
-#: src/main/raw.c:150
-msgid "argument 'type' must be a character string"
-msgstr "аргумент 'type' должен быть текстовой строкой"
-
 #: src/main/raw.c:154
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
@@ -5192,8 +5184,8 @@ msgid "an xdr complex data read error occurred"
 msgstr "произошла ошибка чтения комплексных xdr-данных"
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1993
-#: src/main/serialize.c:2609 src/modules/internet/internet.c:368
-#: src/modules/internet/internet.c:430 src/modules/internet/internet.c:540
+#: src/main/serialize.c:2609 src/modules/internet/internet.c:525
+#: src/modules/internet/internet.c:587 src/modules/internet/internet.c:697
 msgid "write failed"
 msgstr "запись не удалась"
 
@@ -6216,10 +6208,6 @@ msgstr "это не может произойти"
 msgid "'names' must be a character vector"
 msgstr "'names' должны быть текстовым вектором"
 
-#: src/main/unique.c:1577
-msgid "'sep' must be a character string"
-msgstr "'sep' должен быть текстовой строкой"
-
 #: src/main/util.c:87 src/main/util.c:105
 msgid "object is not a matrix"
 msgstr "объект не является матрицей"
@@ -6650,109 +6638,105 @@ msgstr "буфер обмена нельзя прочесть (код ошибк
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "не могу разместить память для структуры 'X11Routines'"
 
-#: src/modules/internet/internet.c:122
-msgid "for https:// URLs use setInternet2(TRUE)"
+#: src/modules/internet/internet.c:121
+msgid "for2 https:// URLs use setInternet2(TRUE)"
 msgstr ""
 
-#: src/modules/internet/internet.c:205 src/modules/internet/internet.c:209
-#: src/modules/internet/internet.c:215 src/modules/internet/internet.c:227
+#: src/modules/internet/internet.c:352 src/modules/internet/internet.c:356
+#: src/modules/internet/internet.c:362 src/modules/internet/internet.c:384
+#: src/modules/internet/libcurl.c:609 src/modules/internet/libcurl.c:613
+#: src/modules/internet/libcurl.c:619 src/modules/internet/libcurl.c:631
+#: src/modules/internet/libcurl.c:639
 msgid "allocation of url connection failed"
 msgstr "выделение url-соединения не удалось"
 
-#: src/modules/internet/internet.c:303
+#: src/modules/internet/internet.c:460
 msgid "only first element of 'url' argument used"
 msgstr "использован только первый элемент аргумента 'url'"
 
-#: src/modules/internet/internet.c:309
+#: src/modules/internet/internet.c:466
 msgid "only first element of 'destfile' argument used"
 msgstr "использован только первый элемент аргумента 'destfile'"
 
-#: src/modules/internet/internet.c:334
+#: src/modules/internet/internet.c:491 src/modules/internet/libcurl.c:329
 msgid "Download progress"
 msgstr "Процент загрузки"
 
-#: src/modules/internet/internet.c:356
+#: src/modules/internet/internet.c:513
 #, c-format
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "не могу открыть URL '%s' по причине '%s'"
 
-#: src/modules/internet/internet.c:363 src/modules/internet/internet.c:392
-#: src/modules/internet/internet.c:499 src/modules/internet/libcurl.c:234
+#: src/modules/internet/internet.c:520 src/modules/internet/internet.c:549
+#: src/modules/internet/internet.c:656 src/modules/internet/libcurl.c:368
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "не могу открыть файл назначения '%s' по причине '%s'"
 
-#: src/modules/internet/internet.c:397 src/modules/internet/internet.c:504
-#: src/modules/internet/libcurl.c:238
+#: src/modules/internet/internet.c:554 src/modules/internet/internet.c:661
+#: src/modules/internet/libcurl.c:372
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "пробую URL '%s'\n"
 
-#: src/modules/internet/internet.c:404 src/modules/internet/internet.c:511
+#: src/modules/internet/internet.c:561 src/modules/internet/internet.c:668
 msgid "opened URL\n"
 msgstr "открытие URL\n"
 
-#: src/modules/internet/internet.c:477 src/modules/internet/internet.c:587
+#: src/modules/internet/internet.c:634 src/modules/internet/internet.c:744
+#: src/modules/internet/libcurl.c:417
 #, fuzzy, c-format
 msgid "downloaded length %0.f != reported length %0.f"
 msgstr "загруженный размер %d != сообщенному размеру %d"
 
-#: src/modules/internet/internet.c:482 src/modules/internet/internet.c:592
+#: src/modules/internet/internet.c:639 src/modules/internet/internet.c:749
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "не могу открыть URL '%s'"
 
-#: src/modules/internet/internet.c:596
+#: src/modules/internet/internet.c:753
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
-#: src/modules/internet/internet.c:620 src/modules/internet/internet.c:857
+#: src/modules/internet/internet.c:777 src/modules/internet/internet.c:942
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "не могу открыть: статус HTTP был '%d %s'"
 
-#: src/modules/internet/internet.c:801 src/modules/internet/internet.c:965
-msgid "InternetOpenUrl timed out"
-msgstr "тайм-аут 'InternetOpenUrl'"
-
-#: src/modules/internet/internet.c:828 src/modules/internet/internet.c:842
-#: src/modules/internet/internet.c:987 src/modules/internet/internet.c:996
+#: src/modules/internet/internet.c:913 src/modules/internet/internet.c:927
+#: src/modules/internet/internet.c:1014 src/modules/internet/internet.c:1023
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "'InternetOpenUrl' не удалось: '%s'"
 
-#: src/modules/internet/internet.c:900
-msgid "Internet read timed out"
-msgstr "тайм-аут чтения из Internet"
-
-#: src/modules/internet/libcurl.c:116
+#: src/modules/internet/libcurl.c:121
 #, fuzzy
 msgid "curlGetHeaders is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/modules/internet/libcurl.c:125
+#: src/modules/internet/libcurl.c:130
 #, fuzzy, c-format
 msgid "invalid %s argument"
 msgstr "неправильный аргумент '%s'"
 
-#: src/modules/internet/libcurl.c:139
+#: src/modules/internet/libcurl.c:144
 #, c-format
 msgid ""
 "libcurl error code %d\n"
 "\t%s\n"
 msgstr ""
 
-#: src/modules/internet/libcurl.c:162
+#: src/modules/internet/libcurl.c:270
 #, fuzzy
 msgid "download.file(method = \"libcurl\") is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/modules/internet/libcurl.c:179
+#: src/modules/internet/libcurl.c:286
 #, fuzzy
 msgid "lengths of 'url' and 'destfile' must match"
 msgstr "длины экспортируемых и импортируемых имен должны совпадать"
 
-#: src/modules/internet/libcurl.c:293
+#: src/modules/internet/libcurl.c:643
 #, fuzzy
 msgid "url(method = \"libcurl\") is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
@@ -7355,6 +7339,24 @@ msgstr "создать временный файл для '-e' не удалос
 #: src/unix/system.c:467
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: Только редактирование первого файла из списка"
+
+#~ msgid "'msg1' must be a character string"
+#~ msgstr "'msg1' должен быть текстовой строкой"
+
+#~ msgid "'msg2' must be a character string"
+#~ msgstr "'msg2' должен быть текстовой строкой"
+
+#~ msgid "argument 'code' must be a character string"
+#~ msgstr "аргумент 'code' должен быть текстовой строкой"
+
+#~ msgid "argument 'type' must be a character string"
+#~ msgstr "аргумент 'type' должен быть текстовой строкой"
+
+#~ msgid "InternetOpenUrl timed out"
+#~ msgstr "тайм-аут 'InternetOpenUrl'"
+
+#~ msgid "Internet read timed out"
+#~ msgstr "тайм-аут чтения из Internet"
 
 #~ msgid "unable to find a closure from within which 'match.call' was called"
 #~ msgstr "не могу найти вложение из которого вызвано 'match.call'"

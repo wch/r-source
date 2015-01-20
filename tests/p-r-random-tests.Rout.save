@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-01-18 r67513) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-01-20 r67554) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.257 0.002 1.259 0 0 
+Time elapsed:  1.165 0.006 1.172 0 0 
 > 
 > 
