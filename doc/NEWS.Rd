@@ -230,7 +230,7 @@
 	\code{ftps://} URLs, follow redirections, and allows
 	simultaneous downloads of multiple URLs.
 
-	\item \code{url()} has a new method \code{"libcurl"} (unfinished).
+	\item \code{url()} has a new method \code{"libcurl"}.
       }
 
       \item Internet download progress bars are now only shown in
@@ -240,8 +240,8 @@
       \file{internet2.dll} have been merged.  (The Windows internet
       functions are still selected by \option{--internet2} and
       \code{setInternet2()}.)  In this version it is safe to switch
-      between the internal and Windows internet functions within an \R
-      session.
+      (repeatedly) between the internal and Windows internet functions
+      within an \R session.
     }
   }
 

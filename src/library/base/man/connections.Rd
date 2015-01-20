@@ -234,6 +234,10 @@ isIncomplete(con)
   exactly which schemes is platform-dependent (see
   \code{\link{libcurlVersion}}, but most platforms will support
   \samp{https://} and \samp{ftps://}.
+
+  The default internal method does not follow re-directed HTTP URLs:
+  both \code{url(method = "libcurl")} and the use of Windows internal
+  functions do.
   
   Function \code{\link{download.file}} and contributed package
   \CRANpkg{RCurl} provide more comprehensive facilities to download

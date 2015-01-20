@@ -43,7 +43,8 @@ static void  in_R_FTPClose(void *ctx);
 SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
-Rconnection in_newCurlUrl(const char *description, const char * const mode);
+Rconnection 
+in_newCurlUrl(const char *description, const char * const mode, int type);
 
 #ifdef Win32
 
@@ -344,7 +345,8 @@ static size_t url_read2(void *ptr, size_t size, size_t nitems,
 }
 #endif
 
-static Rconnection in_R_newurl(const char *description, const char * const mode)
+static Rconnection 
+in_R_newurl(const char *description, const char * const mode, int type)
 {
     Rconnection new;
 
@@ -364,7 +366,7 @@ static Rconnection in_R_newurl(const char *description, const char * const mode)
     init_con(new, description, CE_NATIVE, mode);
     new->canwrite = FALSE;
 #ifdef Win32
-    if (UseInternet2) {
+    if (type) {
 	new->open = &url_open2;
 	new->read = &url_read2;
 	new->close = &url_close2;

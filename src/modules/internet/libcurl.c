@@ -602,7 +602,10 @@ static int Curl_fgetc_internal(Rconnection con)
 }
 #endif
 
-Rconnection in_newCurlUrl(const char *description, const char * const mode)
+
+// 'type' is unused.
+Rconnection 
+in_newCurlUrl(const char *description, const char * const mode, int type)
 {
 #ifdef HAVE_CURL_CURL_H
     Rconnection new = (Rconnection) malloc(sizeof(struct Rconn));

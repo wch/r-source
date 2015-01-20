@@ -4950,9 +4950,9 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
    op = 1: file(description, open, blocking, encoding)
 */
 
-// in internet module
-extern
-Rconnection R_newCurlUrl(const char *description, const char * const mode);
+// in internet module: 'type' is unused
+extern Rconnection 
+R_newCurlUrl(const char *description, const char * const mode, int type);
 
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -5056,12 +5056,16 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	       strncmp(url, "ftps://", 7) == 0) {
 	if(meth) {
 #ifdef HAVE_CURL_CURL_H
-	    con = R_newCurlUrl(url, strlen(open) ? open : "r");
+	    con = R_newCurlUrl(url, strlen(open) ? open : "r", 0);
 #else
 	    error("url(method = \"libcurl\") is not supported on this platform");
 #endif
 	} else {
-	    con = R_newurl(url, strlen(open) ? open : "r");
+#ifdef Win32
+	    con = R_newurl(url, strlen(open) ? open : "r", UseInternet2);
+#else
+	    con = R_newurl(url, strlen(open) ? open : "r", 0);
+#endif
 	    ((Rurlconn)con->private)->type = type;
 	}
 #endif
