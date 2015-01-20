@@ -356,6 +356,24 @@ SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return( ENCLOS(arg) );
 }
 
+static Rboolean R_IsImportsEnv(SEXP env)
+{
+    if (isNull(env) || !isEnvironment(env))
+        return FALSE;
+    if (ENCLOS(env) != R_BaseNamespace)
+        return FALSE;
+    SEXP name = getAttrib(env, R_NameSymbol);
+    if (!isString(name) || length(name) != 1)
+        return FALSE;
+
+    const char *imports_prefix = "imports:";
+    const char *name_string = CHAR(STRING_ELT(name, 0));
+    if (!strncmp(name_string, imports_prefix, strlen(imports_prefix)))
+        return TRUE;
+    else
+        return FALSE;
+}
+
 SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, parent;
@@ -371,6 +389,10 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("argument is not an environment"));
     if( env == R_EmptyEnv )
 	error(_("can not set parent of the empty environment"));
+    if (R_EnvironmentIsLocked(env) && R_IsNamespaceEnv(env))
+	error(_("can not set the parent environment of a namespace"));
+    if (R_EnvironmentIsLocked(env) && R_IsImportsEnv(env))
+	error(_("can not set the parent environment of package imports"));
     parent = CADR(args);
     if (isNull(parent)) {
 	error(_("use of NULL environment is defunct"));

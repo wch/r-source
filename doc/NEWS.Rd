@@ -245,6 +245,10 @@
       \option{--internet2} or \code{setInternet2()}.  This can be
       overridden for each \code{url()} connection \emph{via} its new
       \code{method} argument.
+
+      \item \code{parent.env<-} can no longer modify the parent of a
+      locked namespace or namespace imports environment. Contributed by
+      Karl Millar.
     }
   }
 
