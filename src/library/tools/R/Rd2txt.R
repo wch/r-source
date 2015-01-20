@@ -599,18 +599,28 @@ Rd2txt <-
                        writeQ(block, tag, quote="\\sQuote")
                    else writeContent(block,tag)
                },
-               "\\email"=  put("<email: ",
-                               gsub("\n", "", paste(as.character(block), collapse="")),
-                               ">"),
-               "\\url"= put("<URL: ",
-                              gsub("\n", "", paste(as.character(block), collapse="")),
-                              ">") ,
-               "\\href"= {
+               "\\email" = {
+                   put("<email: ",
+                       .strip_whitespace(gsub("\n", "",
+                                              paste(as.character(block),
+                                                    collapse=""))),
+                       ">")
+               },
+               "\\url" = {
+                   put("<URL: ",
+                       .strip_whitespace(gsub("\n", "",
+                                              paste(as.character(block),
+                                                    collapse=""))),
+                       ">")
+               },
+               "\\href" = {
                    opts <- Rd2txt_options()
                    writeContent(block[[2L]], tag)
                    if (opts$showURLs)
   			put(" (URL: ",
-  			    gsub("\n", "", paste(as.character(block[[1L]]), collapse="")),
+  			    .strip_whitespace(gsub("\n", "",
+                                                   paste(as.character(block[[1L]]),
+                                                         collapse=""))),
   			    ")")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),

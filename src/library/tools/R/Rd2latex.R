@@ -212,7 +212,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             tag <- "\\Rhref"
         }
     	of0(tag, "{",
-            gsub("\n", "", paste(as.character(url), collapse="")),
+            .strip_whitespace(gsub("\n", "",
+                                   paste(as.character(url), collapse=""))),
             "}")
         if (tag == "\\Rhref") {
             of1("{")
@@ -362,7 +363,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\option" =,
                "\\samp" = writeWrapped(block, tag),
                ## really verbatim
-                "\\url"=,
+               "\\url"=,
                "\\href"= writeURL(block, tag),
                ## R-like
                "\\code"= {
