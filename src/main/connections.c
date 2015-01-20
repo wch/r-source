@@ -4961,7 +4961,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *url, *open;
     int ncon, block, raw = 0, meth = 0;
 #ifdef Win32
-    urlmeth = UseInternet2;
+    int urlmeth = UseInternet2;
 #endif
     cetype_t ienc = CE_NATIVE;
     Rconnection con = NULL;
