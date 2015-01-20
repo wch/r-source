@@ -14,33 +14,27 @@ Set or disable the use of Windows internal functions for Internet access.
 \description{
   With the \option{--internet2} startup option, or \emph{via}
   environment variable \env{R_WIN_INTERNET2} or by calling this
-  function, R will make use of the \file{internet2.dll} library for
-  Internet access, which makes use of the OS functions underlying
+  function, R will make use of the Windows functions underlying
   Internet Explorer.  This allows specification of proxies, etc., in the
   \dQuote{Internet Options} applet in \dQuote{Control Panel}.  Unlike
-  the standard internal functions it will follow HTTP redirections.
+  the standard internal functions it will allow the use of
+  \samp{https://} URLs and follow HTTP redirections.
 }
 \usage{
 setInternet2(use = TRUE)
 }
 \arguments{
-  \item{use}{Whether to use \file{internet2.dll}.  If \code{NA}, just
-  return the current setting.}
+  \item{use}{lgical: whether to use the Windows internet functions.  If
+    \code{NA}, just return the current setting.}
 }
 \value{
-The previous setting is returned, invisibly if \code{use} is not \code{NA}.
-}
-\details{
-  R does not load either \file{internet.dll} or \file{internet2.dll}
-  until needed, so it is certainly safe to call this function before
-  making any calls that access the Internet
-  (e.g., \code{\link{download.file}}).  If one of the DLLs has already
-  been loaded, this function will switch to the other one without
-  unloading the first one, so there is a (modest) resource leak and
-  potentially damage to open \code{\link{url}} connections.
+  The previous setting is returned, invisibly if \code{use} is not \code{NA}.
 }
 \note{
   This is only available on Windows.
+
+  Prior to \R 3.2.0 this loaded a new DLL: nowadays both versions of
+  the functions are contained in \file{internet.dll}.
 }
 \author{
 Duncan Murdoch

@@ -445,7 +445,6 @@
  UNSET_SPECIAL_SYMBOL
  UTF8in
  UTF8out
- UseInternet2
  WinCheckUTF8
  WinUTF8out
  WrongArgCount

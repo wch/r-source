@@ -544,11 +544,11 @@ for example @code{update.packages()} and the menu items on the Packages menu.
 We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
 
-(a) Use the alternative @file{internet2.dll} by starting R with the flag
-@option{--internet2} (@pxref{How do I install R for Windows?}) or
-calling @code{setInternet2(TRUE)}, or setting the environment variable
-@env{R_WIN_INTERNET2} to a non-empty value.  These cause R to use the
-OS's internal funtions as used by Internet Explorer, which may already
+(a) Use the Windows internet functions by starting R with the flag
+@option{--internet2} (@pxref{How do I install R for Windows?})  or
+calling @code{setInternet2(TRUE)} or setting the environment variable
+@env{R_WIN_INTERNET2} to a non-empty value when starting R.  These cause
+R to use the OS's functions used by Internet Explorer, which may already
 be configured for use with proxies.  Note that this does @emph{not} work
 with proxies that need authentication.
 

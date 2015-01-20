@@ -23,6 +23,7 @@
 #include <config.h>
 #endif
 
+// for contexts
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Fileio.h>
@@ -38,11 +39,54 @@ static void  in_R_HTTPClose(void *ctx);
 static void *in_R_FTPOpen(const char *url);
 static int   in_R_FTPRead(void *ctx, char *dest, int len);
 static void  in_R_FTPClose(void *ctx);
+
 SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho);
 Rconnection in_newCurlUrl(const char *description, const char * const mode);
 
+#ifdef Win32
+
+static void *in_R_HTTPOpen2(const char *url, const char *headers, const int cacheOK);
+static int   in_R_HTTPRead2(void *ctx, char *dest, int len);
+static void  in_R_HTTPClose2(void *ctx);
+static void *in_R_FTPOpen2(const char *url);
+
+static void *Ri_HTTPOpen(const char *url, const char *headers, const int cacheOK)
+{
+    return UseInternet2 ? in_R_HTTPOpen2(url, headers, cacheOK) :
+	in_R_HTTPOpen(url, headers, cacheOK);
+}
+static int Ri_HTTPRead(void *ctx, char *dest, int len)
+{
+    return UseInternet2 ? in_R_HTTPRead2(ctx, dest, len) :
+	in_R_HTTPRead(ctx, dest, len);
+}
+static void  Ri_HTTPClose(void *ctx) {
+    if(UseInternet2) in_R_HTTPClose2(ctx); else in_R_HTTPClose(ctx);
+}
+
+static void *Ri_FTPOpen(const char *url)
+{
+    return UseInternet2 ? in_R_FTPOpen2(url) : in_R_FTPOpen(url);
+}
+static int Ri_FTPRead(void *ctx, char *dest, int len)
+{
+    return UseInternet2 ? in_R_HTTPRead2(ctx, dest, len) :
+	in_R_FTPRead(ctx, dest, len);
+}
+static void Ri_FTPClose(void *ctx)
+{
+    if(UseInternet2) in_R_HTTPClose2(ctx); else in_R_FTPClose(ctx);
+}
+#else
+#define Ri_HTTPOpen in_R_HTTPOpen
+#define Ri_HTTPRead in_R_HTTPRead
+#define Ri_HTTPClose in_R_HTTPClose
+#define Ri_FTPOpen in_R_FTPOpen
+#define Ri_FTPRead in_R_FTPRead
+#define Ri_FTPClose in_R_FTPClose
+#endif
 
 #include <Rmodules/Rinternet.h>
 
@@ -58,11 +102,7 @@ Rconnection in_newCurlUrl(const char *description, const char * const mode);
 
 /* ------------------- internet access functions  --------------------- */
 
-#if defined(USE_WININET_ASYNC) && !defined(USE_WININET)
-#define USE_WININET 2
-#endif
-
-static Rboolean IDquiet=TRUE;
+static Rboolean IDquiet = TRUE;
 
 static Rboolean url_open(Rconnection con)
 {
@@ -76,26 +116,30 @@ static Rboolean url_open(Rconnection con)
     }
 
     switch(type) {
-    case HTTPsh:
-#ifdef USE_WININET
+#ifdef Win32
     case HTTPSsh:
+	if(!UseInternet2) {
+	    warning(_("for2 https:// URLs use setInternet2(TRUE)"));
+	    return FALSE;
+	}
 #endif
+    case HTTPsh:
     {
 	SEXP sheaders, agentFun;
 	const char *headers;
 	SEXP s_makeUserAgent = install("makeUserAgent");
-#ifdef USE_WININET
-	PROTECT(agentFun = lang2(s_makeUserAgent, ScalarLogical(0)));
-#else
-	PROTECT(agentFun = lang1(s_makeUserAgent));
+#ifdef Win32
+	if(UseInternet2)
+	    agentFun = PROTECT(lang2(s_makeUserAgent, ScalarLogical(0)));
+	else
 #endif
-	PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
-
+	    agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
+	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
 	if(TYPEOF(sheaders) == NILSXP)
 	    headers = NULL;
 	else
 	    headers = CHAR(STRING_ELT(sheaders, 0));
-	ctxt = in_R_HTTPOpen(url, headers, 0);
+	ctxt = Ri_HTTPOpen(url, headers, 0);
 	UNPROTECT(2);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
@@ -107,7 +151,7 @@ static Rboolean url_open(Rconnection con)
     }
 	break;
     case FTPsh:
-	ctxt = in_R_FTPOpen(url);
+	ctxt = Ri_FTPOpen(url);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
@@ -116,12 +160,6 @@ static Rboolean url_open(Rconnection con)
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
-
-#if defined Win32 && !defined USE_WININET
-    case HTTPSsh:
-	warning(_("for https:// URLs use setInternet2(TRUE)"));
-	return FALSE;
-#endif
 
     default:
 	warning(_("URL scheme unsupported by this method"));
@@ -144,10 +182,10 @@ static void url_close(Rconnection con)
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	in_R_HTTPClose(((Rurlconn)(con->private))->ctxt);
+	Ri_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     case FTPsh:
-	in_R_FTPClose(((Rurlconn)(con->private))->ctxt);
+	Ri_FTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     default:
 	break;
@@ -165,10 +203,10 @@ static int url_fgetc_internal(Rconnection con)
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	n = in_R_HTTPRead(ctxt, (char *)&c, 1);
+	n = Ri_HTTPRead(ctxt, (char *)&c, 1);
 	break;
     case FTPsh:
-	n = in_R_FTPRead(ctxt, (char *)&c, 1);
+	n = Ri_FTPRead(ctxt, (char *)&c, 1);
 	break;
     default:
 	break;
@@ -186,10 +224,10 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
     switch(type) {
     case HTTPsh:
     case HTTPSsh:
-	n = in_R_HTTPRead(ctxt, ptr, (int)(size*nitems));
+	n = Ri_HTTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     case FTPsh:
-	n = in_R_FTPRead(ctxt, ptr, (int)(size*nitems));
+	n = Ri_FTPRead(ctxt, ptr, (int)(size*nitems));
 	break;
     default:
 	break;
@@ -372,8 +410,8 @@ static SEXP in_do_download(SEXP args)
 
 #ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0
-#ifdef USE_WININET
-	       || strncmp(url, "https://", 8) == 0
+#ifdef Win32
+	       || ((strncmp(url, "https://", 8) == 0) && UseInternet2)
 #endif
 	) {
 
@@ -399,7 +437,7 @@ static SEXP in_do_download(SEXP args)
 #ifdef Win32
 	R_FlushConsole();
 #endif
-	ctxt = in_R_HTTPOpen(url, headers, cacheOK);
+	ctxt = Ri_HTTPOpen(url, headers, cacheOK);
 	if(ctxt == NULL) status = 1;
 	else {
 	    if(!quiet) REprintf(_("opened URL\n"), url);
@@ -426,7 +464,7 @@ static SEXP in_do_download(SEXP args)
 		pbar.pc = 0;
 	    }
 #endif
-	    while ((len = in_R_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
+	    while ((len = Ri_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		size_t res = fwrite(buf, 1, len, out);
 		if(res != len) error(_("write failed"));
 		nbytes += len;
@@ -454,7 +492,7 @@ static SEXP in_do_download(SEXP args)
 		}
 #endif
 	    }
-	    in_R_HTTPClose(ctxt);
+	    Ri_HTTPClose(ctxt);
 	    if(!quiet) {
 #ifndef Win32
 		if(R_Interactive) REprintf("\n");
@@ -506,7 +544,7 @@ static SEXP in_do_download(SEXP args)
 #ifdef Win32
 	R_FlushConsole();
 #endif
-	ctxt = in_R_FTPOpen(url);
+	ctxt = Ri_FTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
 	    if(!quiet) REprintf(_("opened URL\n"), url);
@@ -536,7 +574,7 @@ static SEXP in_do_download(SEXP args)
 	    }
 
 #endif
-	    while ((len = in_R_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
+	    while ((len = Ri_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		size_t res = fwrite(buf, 1, len, out);
 		if(res != len) error(_("write failed"));
 		nbytes += len;
@@ -564,7 +602,7 @@ static SEXP in_do_download(SEXP args)
 		}
 #endif
 	    }
-	    in_R_FTPClose(ctxt);
+	    Ri_FTPClose(ctxt);
 	    if(!quiet) {
 #ifndef Win32
 		if(R_Interactive) REprintf("\n");
@@ -601,7 +639,7 @@ static SEXP in_do_download(SEXP args)
 }
 
 
-#if defined(SUPPORT_LIBXML) && !defined(USE_WININET)
+#if defined(SUPPORT_LIBXML)
 
 void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 {
@@ -710,7 +748,7 @@ static void in_R_FTPClose(void *ctx)
 #endif /* SUPPORT_LIBXML */
 
 
-#ifdef USE_WININET
+#ifdef Win32
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
@@ -722,99 +760,27 @@ typedef struct wictxt {
     HINTERNET session;
 } wIctxt, *WIctxt;
 
-#ifdef USE_WININET_ASYNC
-static int timeout;
-
-static int callback_status;
-static LPINTERNET_ASYNC_RESULT callback_res;
-
-static void CALLBACK
-InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
-		 LPVOID lpvStatusInformation,
-		 DWORD dwStatusInformationLength)
-{
-    callback_status = Status;
-    /* printf("callback with context %ld, code %ld\n", context, Status); */
-    if(Status == INTERNET_STATUS_REQUEST_COMPLETE) {
-	callback_res = (LPINTERNET_ASYNC_RESULT) lpvStatusInformation;
-    }
-}
-#endif /* USE_WININET_ASYNC */
-
-static void *in_R_HTTPOpen(const char *url, const char *headers,
-			   const int cacheOK)
+static void *in_R_HTTPOpen2(const char *url, const char *headers,
+			    const int cacheOK)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
     char buf[101], *p;
 
-/*	BOOL res = InternetAttemptConnect(0);
-
-	if (res != ERROR_SUCCESS) {
-	warning("no Internet connection available");
-	return NULL;
-	}*/
-
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
     wictxt->length = -1;
     wictxt->type = NULL;
     wictxt->hand =
-	InternetOpen(headers, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
-#ifdef USE_WININET_ASYNC
-		     INTERNET_FLAG_ASYNC
-#else
-		     0
-#endif
-		     );
+	InternetOpen(headers, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
     if(!wictxt->hand) {
 	free(wictxt);
 	/* error("cannot open Internet connection"); */
 	return NULL;
     }
 
-#ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption1(install("timeout")));
-    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    InternetSetStatusCallback(wictxt->hand,
-			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-/*    if(!IDquiet) {
-	REprintf("using Asynchronous WinInet calls, timeout %d secs\n",
-		timeout);
-	R_FlushConsole();
-	}*/
-
-    callback_status = 0;
-    InternetOpenUrl(wictxt->hand, url,
-		    NULL, 0,
-	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
-		    17);
-
-    {
-	DWORD t1 = GetTickCount();
-	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
-	      && GetTickCount() < t1 + 1000*timeout) {
-	    R_ProcessEvents();
-	    Sleep(100);
-	}
-	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
-	    InternetCloseHandle(wictxt->hand);
-	    free(wictxt);
-	    warning(_("InternetOpenUrl timed out"));
-	    return NULL;
-	}
-    }
-
-    wictxt->session = (HINTERNET) callback_res->dwResult;
-#else
-    /* if(!IDquiet) {
-	REprintf("using Synchronous WinInet calls\n");
-	R_FlushConsole();
-    } */
-    wictxt->session = InternetOpenUrl(wictxt->hand, url,
-				      NULL, 0,
+    wictxt->session = InternetOpenUrl(wictxt->hand, url, NULL, 0,
 	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 				      0);
-#endif /* USE_WININET_ASYNC */
     if(!wictxt->session) {
 	DWORD err1 = GetLastError(), err2, blen = 101;
 	InternetCloseHandle(wictxt->hand);
@@ -884,31 +850,17 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
     return (void *)wictxt;
 }
 
-static int in_R_HTTPRead(void *ctx, char *dest, int len)
+static int in_R_HTTPRead2(void *ctx, char *dest, int len)
 {
     DWORD nread;
 
     InternetReadFile(((WIctxt)ctx)->session, dest, len, &nread);
-#ifdef USE_WININET_ASYNC
-    {
-	DWORD t1 = GetTickCount();
-	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
-	      && GetTickCount() < t1 + 1000*timeout) {
-	    R_ProcessEvents();
-	    Sleep(100);
-	}
-	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
-	    warning(_("Internet read timed out"));
-	    nread = 0;
-	}
-    }
-#endif
     R_ProcessEvents();
     return (int) nread;
 }
 
 
-static void in_R_HTTPClose(void *ctx)
+static void in_R_HTTPClose2(void *ctx)
 {
     InternetCloseHandle(((WIctxt)ctx)->session);
     InternetCloseHandle(((WIctxt)ctx)->hand);
@@ -916,7 +868,7 @@ static void in_R_HTTPClose(void *ctx)
     free(ctx);
 }
 
-static void *in_R_FTPOpen(const char *url)
+static void *in_R_FTPOpen2(const char *url)
 {
     WIctxt  wictxt;
 
@@ -925,57 +877,13 @@ static void *in_R_FTPOpen(const char *url)
     wictxt->type = NULL;
 
     wictxt->hand =
-	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
-#ifdef USE_WININET_ASYNC
-		     INTERNET_FLAG_ASYNC
-#else
-		     0
-#endif
-		     );
+	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
     if(!wictxt->hand) {
 	free(wictxt);
 	return NULL;
     }
 
-#ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption1(install("timeout")));
-    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    InternetSetStatusCallback(wictxt->hand,
-			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    if(!IDquiet) {
-	REprintf("using Asynchronous WinInet calls, timeout %d secs\n",
-		timeout);
-	R_FlushConsole();
-    }
-
-    callback_status = 0;
-    InternetOpenUrl(wictxt->hand, url,
-		    NULL, 0,
-	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
-		    17);
-    {
-	DWORD t1 = GetTickCount();
-	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
-	      && GetTickCount() < t1 + 1000*timeout) {
-	    R_ProcessEvents();
-	    Sleep(100);
-	}
-	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
-	    InternetCloseHandle(wictxt->hand);
-	    free(wictxt);
-	    warning(_("InternetOpenUrl timed out"));
-	    return NULL;
-	}
-    }
-
-    wictxt->session = (HINTERNET) callback_res->dwResult;
-#else
-    if(!IDquiet) {
-	REprintf("using Synchronous WinInet calls\n");
-	R_FlushConsole();
-    }
-    wictxt->session = InternetOpenUrl(wictxt->hand, url,
-				      NULL, 0,
+    wictxt->session = InternetOpenUrl(wictxt->hand, url, NULL, 0,
 	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 				      0);
     if(!wictxt->session) {
@@ -998,21 +906,10 @@ static void *in_R_FTPOpen(const char *url)
 	    return NULL;
 	}
     }
-#endif /* USE_WININET_ASYNC */
     R_ProcessEvents();
     return (void *)wictxt;
 }
-
-static int in_R_FTPRead(void *ctx, char *dest, int len)
-{
-    return R_HTTPRead(ctx, dest, len);
-}
-
-static void in_R_FTPClose(void *ctx)
-{
-    R_HTTPClose(ctx);
-}
-#endif
+#endif // Win32
 
 #ifndef HAVE_INTERNET
 static void *in_R_HTTPOpen(const char *url, const char *headers,
@@ -1076,11 +973,7 @@ void
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
 __attribute__ ((visibility ("default")))
 #endif
-#ifdef USE_WININET
-R_init_internet2(DllInfo *info)
-#else
 R_init_internet(DllInfo *info)
-#endif
 {
     R_InternetRoutines *tmp;
     tmp = R_Calloc(1, R_InternetRoutines);

@@ -808,6 +808,10 @@ LibExtern SEXP R_TrueValue INI_as(NULL);
 LibExtern SEXP R_FalseValue INI_as(NULL);
 LibExtern SEXP R_LogicalNAValue INI_as(NULL);
 
+#ifdef Win32
+LibExtern Rboolean UseInternet2;
+#endif
+
 #ifdef __MAIN__
 # undef extern
 # undef extern0
@@ -1282,7 +1286,6 @@ void InitDynload(void);
 void R_CleanTempDir(void);
 
 #ifdef Win32
-Rboolean UseInternet2;
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);

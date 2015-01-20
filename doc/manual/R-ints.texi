@@ -1765,32 +1765,25 @@ chosen to be loaded `on demand' rather than linked as dynamic libraries
 or incorporated into the main executable/dynamic library.
 
 For the remaining modules the motivation has been the amount of (often
-optional) code they will bring in via libraries to which they are
+optional) code they will bring in @emph{via} libraries to which they are
 linked.
 
 @table @asis
 
 @item @code{internet}
 The internal HTTP and FTP clients and socket support, which link to
-system-specific support libraries.
+system-specific support libraries.  This may load @code{libcurl} and on
+Windows will load @file{wininet.dll} and @file{ws2_32.dll}.
 
 @item @code{lapack}
 The code which makes use of the LAPACK library, and is linked to
 @file{libRlapack} or an external LAPACK library.
-
-@item @code{vfonts}
-The Hershey font databases and the code to draw with them.
 
 @item @code{X11}
 (Unix-alikes only.)  The @code{X11()}, @code{jpeg()}, @code{png()} and
 @code{tiff()} devices. These are optional, and links to some or all of
 the @code{X11}, @code{pango}, @code{cairo}, @code{jpeg}, @code{libpng}
 and @code{libtiff} libraries.
-
-@item @file{internet2.dll}
-(Windows only.)  An alternative version of the internet access routines,
-compiled against the OS's internal functions (and so loads
-@file{wininet.dll} and @file{wsock32.dll}).
 @end table
 
 @node Visibility, Lazy loading, Modules, R Internal Structures

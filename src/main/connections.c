@@ -5026,10 +5026,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("ftps:// URLs are not supported");
 #endif
 #ifdef Win32
-# ifndef USE_WININET
-	if (strncmp(url, "https://", 8) == 0)
+	if (!UseInternet2 && strncmp(url, "https://", 8) == 0)
 	    error("for https:// URLs use setInternet2(TRUE)");
-# endif
 #else
 	if (strncmp(url, "https://", 8) == 0)
 # ifdef HAVE_CURL_CURL_H
