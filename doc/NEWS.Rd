@@ -209,7 +209,7 @@
       \item \code{getOption()} no longer calls \code{options()} in the main
       case.
 
-      \item Work in progress on optional use of \code{libcurl} (version
+      \item Provisions for the optional use of \code{libcurl} (version
       7.28.0 or later) for Internet access (including on Windows):
       \itemize{
 	\item \code{capabilities("libcurl")} reports if this is
@@ -237,8 +237,8 @@
 	(which happens implicitly in functions such as \code{read.table}.)
 
 	\item When \code{file()} or \code{url()} is invoked with a
-	\code{https://} or \code{ftps://} URL which the current default
-	method cannot handle, a suitable method is selected if one is
+	\code{https://} or \code{ftps://} URL which the current method
+	cannot handle, a suitable method is selected if one is
 	available.
       }
 

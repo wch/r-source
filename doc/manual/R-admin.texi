@@ -1301,16 +1301,16 @@ collation, or set the environment variable @env{R_ICU_LOCALE}.
 @subsection Support for libcurl
 
 @code{libcurl} version 7.28.0 or later can be used to support
-@code{curlGetHeaders} and the @code{"libcurl"} method of
-@code{download.file}.
+@code{curlGetHeaders} and the @code{"libcurl"} methods of
+@code{download.file} and @code{url}.
 
 A suitable distribution can be found @emph{via}
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/libs.html} and its unpacked
 location should be specified in file @file{MkRules.local}.
 
-For secure use of e.g.@: @samp{https://} URLs Windows users need to
-specify the path to @emph{CA root certificates}: see
-@code{download.file}.
+For secure use of e.g.@: @samp{https://} URLs Windows users may need to
+specify the path to up-to-date @emph{CA root certificates}: see
+@code{?download.file}.
 
 @node Checking the build, Building the manuals, Support for libcurl, Building from source
 @subsection Checking the build
@@ -2969,10 +2969,10 @@ Unix-like platforms, or which will be used by @R{} if found by
 @command{configure}.
 
 Remember that some package management systems (such as @acronym{RPM} and
-deb) make a distinction between the user version of a package and the
-development version.  The latter usually has the same name but with the
-extension @samp{-devel} or @samp{-dev}: you need both versions
-installed.
+Debian/Ubuntu's) make a distinction between the user version of a
+package and the development version.  The latter usually has the same
+name but with the extension @samp{-devel} or @samp{-dev}: you need both
+versions installed.
 
 @menu
 * Essential programs and libraries::  
@@ -3219,9 +3219,10 @@ on OS X >= 10.4): should a very old or broken version of ICU be found
 this can be suppressed by @option{--without-ICU}.
 
 If @code{libcurl} version 7.28.0 or later is available (including its
-development version), it will be linked in to support
-@code{curlGetHeaders} and the @code{"libcurl"} method of
-@code{download.file}.
+development files), it will be linked in to support
+@code{curlGetHeaders} and the @code{"libcurl"} methods of
+@code{download.file} and @code{url}.  This is recommended as it gives
+access to @samp{https://} and @samp{ftps://} URLs.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
