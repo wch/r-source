@@ -1,7 +1,7 @@
 #  File src/library/utils/R/aspell.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
 #
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
-
 
 aspell <-
 function(files, filter, control = list(), encoding = "unknown",
@@ -239,33 +238,44 @@ function(files, filter, control = list(), encoding = "unknown",
     db
 }
 
-print.aspell <-
+format.aspell <- 
 function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
 {
-    ## A very simple printer ...
-    if(!(nr <- nrow(x))) return(invisible(x))
+    if(!(nr <- nrow(x))) return(character())
 
-    if (sort)
-    	x <- x[order(x$Original, x$File, x$Line, x$Column), ]
+    if(sort)
+        x <- x[order(x$Original, x$File, x$Line, x$Column), ]
 
-    if (verbose)
-    	out <-
-    	    sprintf("%sWord: %s (%s:%d:%d)\n%s",
-    	            c("", rep.int("\n", nr - 1L)),
-    	            x$Original, x$File, x$Line, x$Column,
-    	            formatDL(rep.int("Suggestions", nr),
-    	                     sapply(x$Suggestions, paste, collapse = " "),
-    	                     style = "list"))
-    else {
-        s <- split(sprintf("%s:%d:%d", x$File, x$Line, x$Column),
-                   x$Original)
+    from <- split(sprintf("%s:%d:%d", x$File, x$Line, x$Column),
+                  x$Original)
+
+    if(verbose) {
+        unlist(Map(function(w, f, s) {
+            sprintf("Word: %s\nFrom: %s\n%s",
+                    w,
+                    paste0(c("", rep.int("      ", length(f) - 1L)),
+                           f, collapse = "\n"),
+                    paste(strwrap(paste("Suggestions:",
+                                        paste(s[[1L]], collapse = " ")),
+                                  exdent = 6L, indent = 0L),
+                          collapse = "\n"))
+        },
+                   names(from),
+                   from,
+                   split(x$Suggestions, x$Original)))
+    } else {
         sep <- sprintf("\n%s",
                        paste(rep.int(" ", indent), collapse = ""))
-        out <- paste(names(s),
-                     sapply(s, paste, collapse = sep),
-                     sep = sep, collapse = "\n\n")
+        paste(names(from),
+              sapply(from, paste, collapse = sep),
+              sep = sep)
     }
-    writeLines(out)
+}
+
+print.aspell <-
+function(x, ...)
+{
+    writeLines(paste(format(x, ...), collapse = "\n\n"))
     invisible(x)
 }
 
