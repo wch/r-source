@@ -6844,6 +6844,13 @@ function(dir)
             out$authors_at_R_calls <- aar
     }
 
+    ## Check URLs.
+    ## Be defensive about building the package URL db.
+    bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
+                    error = identity)
+    if(inherits(bad, "error") || NROW(bad))
+        out$bad_urls <- bad
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -7097,6 +7104,14 @@ function(x, ...)
           c("Reading CITATION file fails with",
             paste(" ", y),
             "when package is not installed.")
+      },
+      if(length(y <- x$bad_urls)) {
+          if(inherits(y, "error"))
+              c("Checking URLs failed with message:",
+                conditionMessage(y))
+          else
+              c("Found the following (possibly) invalid URLs:",
+                paste(" ", gsub("\n", "\n    ", format(y))))
       }
       )
 }
