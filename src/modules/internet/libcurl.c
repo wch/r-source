@@ -69,7 +69,6 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #ifdef HAVE_CURL_CURL_H
-// extract some common code
 static void curlCommon(CURL *hnd, int redirect)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
@@ -79,8 +78,12 @@ static void curlCommon(CURL *hnd, int redirect)
     else
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
 #endif
-    const char *ua = CHAR(STRING_ELT(GetOption1(install("HTTPUserAgent")),0));
-    curl_easy_setopt(hnd, CURLOPT_USERAGENT, ua);
+    // for consistency, but all that does is look up an option.
+    SEXP agentFun = PROTECT(lang2(install("makeUserAgent"), ScalarLogical(0)));
+    SEXP sua = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+    if(TYPEOF(sua) != NILSXP)
+	curl_easy_setopt(hnd, CURLOPT_USERAGENT, CHAR(STRING_ELT(sua, 0)));
+    UNPROTECT(2);
     int timeout0 = asInteger(GetOption1(install("timeout")));
     long timeout = timeout0 = NA_INTEGER ? 0 : 1000L * timeout0;
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);
@@ -106,9 +109,16 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     size_t result = size * nmemb, res = result > 2048 ? 2048 : result;
     if (used >= 500) return result;
     strncpy(headers[used], d, res);
+    // 'Do not assume that the header line is zero terminated!'
     headers[used][res] = '\0';
     used++;
     return result;
+}
+static size_t
+rcvBody(void *buffer, size_t size, size_t nmemb, void *userp)
+{
+    // needed to discard spurious ftp 'body' otherwise written to stdout
+    return size * nmemb;
 }
 #endif
 
@@ -135,6 +145,9 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     curl_easy_setopt(hnd, CURLOPT_NOBODY, 1L);
     curl_easy_setopt(hnd, CURLOPT_HEADERFUNCTION, &rcvHeaders);
     curl_easy_setopt(hnd, CURLOPT_WRITEHEADER, &headers);
+    /* libcurl (at least 7.40.0) does not respect CURLOPT_NOBODY
+       for some ftp header info (Content-Length and Accept-ranges). */
+    curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
     curlCommon(hnd, redirect);
 
     char errbuf[CURL_ERROR_SIZE];
