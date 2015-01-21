@@ -63,5 +63,5 @@ curlGetHeaders("https://httpbin.org/status/404")  ## returns status
 curlGetHeaders("ftp://cran.r-project.org")
 }
 \dontrun{ ## a not-always-available site:
-curlGetHeaders('ftps://test.rebex.net/readme.txt')
+curlGetHeaders("ftps://test.rebex.net/readme.txt")
 }}

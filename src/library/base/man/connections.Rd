@@ -132,8 +132,9 @@ isIncomplete(con)
   \sQuote{out of the box} default (and that available since connections
   were introduced): \code{method = "libcurl"} is optionally supported as
   from \R 3.2.0.  The default can be changed \emph{via}
-  \code{\link{options}(url.method = )}.  \code{method = "wininet"} is
-  only available on Windows.
+  \code{\link{options}(url.method = )} (including for when URLs are
+  passed to \code{file}).  \code{method = "wininet"} is only available on
+  Windows.
 #ifdef windows
   (See \code{\link{setInternet2}}, which chooses whether \code{"default"}
   means \code{"internal"} or \code{"wininet"}.)

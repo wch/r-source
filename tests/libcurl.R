@@ -25,6 +25,8 @@ unlink(tf)
 
 ## test url connections on http
 str(readLines(zz <- url("http://cran.r-project.org/", method = "libcurl")))
+zz
+stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
 
 ## https URL
@@ -48,3 +50,12 @@ tail(read.table(url("ftp://ftp.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
                     method = "libcurl")))
 
 showConnections(all = TRUE)
+
+## check option works
+options(url.method = "libcurl")
+zz <- url("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat",
+          method = "libcurl")
+stopifnot(identical(summary(zz)$class, "url-libcurl"))
+close(zz)
+head(readLines("https://httpbin.org", warn = FALSE))
+

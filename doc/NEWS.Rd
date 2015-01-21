@@ -216,7 +216,8 @@
 	available.
 
 	\item \code{libcurlVersion()} reports the version in use, and
-	other details.
+	other details of the \code{"libcurl"} build including which URL
+	schemes it supports.
 
 	\item \code{curlGetHeaders()} retrieves the headers for
 	\code{http://}, \code{https://}, \code{ftp://} and
@@ -225,12 +226,20 @@
 	permanently redirected) and will be so used in \command{R CMD
 	check}.
 
-	\item \code{download.file()} has a new built-in method
-	\code{"libcurl"} which should handle \code{https://} and
-	\code{ftps://} URLs, follow redirections, and allows
-	simultaneous downloads of multiple URLs.
+	\item \code{download.file()} has a new optional method
+	\code{"libcurl"} which will handle more URL schemes, follow
+	redirections, and allows simultaneous downloads of multiple
+	URLs.
 
-	\item \code{url()} has a new method \code{"libcurl"}.
+	\item \code{url()} has a new method \code{"libcurl"}.  The
+	default method is controlled by a new option \code{url.method},
+	and applies also to the opening of URLs \emph{via} \code{file()}
+	(which happens implicitly in functions such as \code{read.table}.)
+
+	\item When \code{file()} or \code{url()} is invoked with a
+	\code{https://} or \code{ftps://} URL which the current default
+	method cannot handle, a suitable method is selected if one is
+	available.
       }
 
       \item Internet download progress bars are now only shown in
