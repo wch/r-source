@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -71,9 +71,9 @@ function(topic, package = NULL, lib.loc = NULL,
 
     help_type <- if(!length(help_type)) "text"
     else match.arg(tolower(help_type), types)
-    
+
     paths <- index.search(topic,
-                          find.package(if (is.null(package)) loadedNamespaces() else package, 
+                          find.package(if (is.null(package)) loadedNamespaces() else package,
 			               lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
@@ -151,7 +151,7 @@ print.help_files_with_topic <- function(x, ...)
         }
     } else {
         if(length(paths) > 1L) {
-            if (type == "html" && port > 0L) { # Redo the search if dynamic help is running 
+            if (type == "html" && port > 0L) { # Redo the search if dynamic help is running
 		browseURL(paste0("http://127.0.0.1:", port,
                                  "/library/NULL/help/", topic), browser)
 		return(invisible(x))

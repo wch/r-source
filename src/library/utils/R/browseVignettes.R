@@ -1,7 +1,7 @@
 #  File src/library/utils/R/browseVignettes.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 {
-   
+
     vinfo <- tools:::getVignetteInfo(package, lib.loc, all)
     pkgs <- unique(vinfo[, "Package"])
     db <- lapply(pkgs, function(p) vinfo[vinfo[,"Package"] == p,,drop=FALSE])

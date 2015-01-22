@@ -1,6 +1,6 @@
 % File src/library/methods/man/testInheritedMethods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-12 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{testInheritedMethods}
