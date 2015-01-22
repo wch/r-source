@@ -6797,7 +6797,8 @@ function(dir)
         on.exit(.libPaths(libpaths))
         out <- list()
         if(system.file(package = meta["Package"]) != "") {
-            ccalls <- .find_calls_in_file(cfile, recursive = TRUE)
+            ccalls <- .find_calls_in_file(cfile, encoding = meta["Encoding"],
+                                          recursive = TRUE)
             cnames <-
                 intersect(unique(.call_names(ccalls)),
                           c("packageDescription", "library", "require"))
