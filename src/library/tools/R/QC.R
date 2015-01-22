@@ -6854,11 +6854,13 @@ function(dir)
     }
 
     ## Check URLs.
-    ## Be defensive about building the package URL db.
-    bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
-                    error = identity)
-    if(inherits(bad, "error") || NROW(bad))
-        out$bad_urls <- bad
+    if(capabilities("libcurl")) {
+        ## Be defensive about building the package URL db.
+        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir)),
+                        error = identity)
+        if(inherits(bad, "error") || NROW(bad))
+            out$bad_urls <- bad
+    }
 
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
