@@ -69,15 +69,20 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #ifdef HAVE_CURL_CURL_H
-static void curlCommon(CURL *hnd, int redirect)
+static void curlCommon(CURL *hnd, int redirect, int verify)
 {
     const char *capath = getenv("CURL_CA_BUNDLE");
-    if (capath && capath[0])
-	curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
+    if (verify) {
+	if (capath && capath[0])
+	    curl_easy_setopt(hnd, CURLOPT_CAINFO, capath);
 #ifdef Win32
-    else
-	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
+	else
+	    curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
 #endif
+    } else {
+	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYHOST, 0L);
+	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
+    }
     // for consistency, but all that does is look up an option.
     SEXP agentFun = PROTECT(lang2(install("makeUserAgent"), ScalarLogical(0)));
     SEXP sua = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
@@ -138,6 +143,9 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     int redirect = asLogical(CADR(args));
     if (redirect == NA_LOGICAL)
 	error(_("invalid %s argument"), "redirect");
+    int verify = asLogical(CADDR(args));
+    if (verify == NA_LOGICAL)
+	error(_("invalid %s argument"), "verify");
 
     CURL *hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_URL, url);
@@ -148,7 +156,7 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* libcurl (at least 7.40.0) does not respect CURLOPT_NOBODY
        for some ftp header info (Content-Length and Accept-ranges). */
     curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, &rcvBody);
-    curlCommon(hnd, redirect);
+    curlCommon(hnd, redirect, verify);
 
     char errbuf[CURL_ERROR_SIZE];
     curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
@@ -365,7 +373,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* Users will normally expect to follow redirections, although
 	   that is not the default in either curl or libcurl. */
-	curlCommon(hnd[i], 1);
+	curlCommon(hnd[i], 1, 1);
 	curl_easy_setopt(hnd[i], CURLOPT_TCP_KEEPALIVE, 1L);
 	if (!cacheOK) curl_easy_setopt(hnd[i], CURLOPT_HTTPHEADER, slist1);
 
@@ -570,7 +578,7 @@ static Rboolean Curl_open(Rconnection con)
 
     ctxt->hnd = curl_easy_init();
     curl_easy_setopt(ctxt->hnd, CURLOPT_URL, url);
-    curlCommon(ctxt->hnd, 1);
+    curlCommon(ctxt->hnd, 1, 1);
     curl_easy_setopt(ctxt->hnd, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(ctxt->hnd, CURLOPT_TCP_KEEPALIVE, 1L);
 

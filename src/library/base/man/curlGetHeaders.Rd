@@ -14,12 +14,14 @@
   An optional function not supported on all platforms.
 }
 \usage{
-curlGetHeaders(url, redirect = TRUE)
+curlGetHeaders(url, redirect = TRUE, verify = TRUE)
 }
 
 \arguments{
   \item{url}{character string specifying the URL.}
   \item{redirect}{logical: should redirections be followed?}
+  \item{verify}{logical: should certificates be verified as valid
+    and applying to that host?}
 }
 
 \details{
@@ -40,6 +42,11 @@ curlGetHeaders(url, redirect = TRUE)
 
   For possible issues with secure URLs (especially on Windows) see
   \code{\link{download.file}}.
+
+  There is a security risk in not verifying certificates, but as only
+  the headers are captured it is slight.  Usually looking at the URL in
+  a browser will reveal what the problem is (and it may well be
+  machine-specific).
 }
 \value{
   A character vector with integer attribute \code{"status"} (the
