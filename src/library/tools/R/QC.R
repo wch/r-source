@@ -2450,6 +2450,7 @@ function(package, dir, lib.loc = NULL)
     ## package.
     bad_methods <- list()
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
+    methods_not_registered <- character()
     for(g in all_S3_generics) {
         if(!exists(g, envir = code_env)) next
         ## Find all methods in functions_in_code for S3 generic g.
@@ -2468,6 +2469,9 @@ function(package, dir, lib.loc = NULL)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
+            if(length(delta <- setdiff(methods, ns_S3_methods)))
+                methods_not_registered <-
+                    c(methods_not_registered, delta)
         }
 
         for(m in methods)
@@ -2478,6 +2482,10 @@ function(package, dir, lib.loc = NULL)
             } else c(bad_methods, checkArgs(g, m))
     }
 
+    if(length(methods_not_registered))
+        attr(bad_methods, "methods_not_registered") <-
+            methods_not_registered
+    
     class(bad_methods) <- "checkS3methods"
     bad_methods
 }
