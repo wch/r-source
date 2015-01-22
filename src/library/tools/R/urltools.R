@@ -37,6 +37,7 @@ function()
     db
 }
 
+## Ideally this would be in sysdata.rda.
 ## For now, re-create using
 ##   dput(get_IANA_URI_scheme_db()$URI_Scheme)
 ## if necessary ...
@@ -185,10 +186,29 @@ function(packages, lib.loc = NULL)
               list(make.row.names = FALSE)))
 }
 
-## See <http://en.wikipedia.org/wiki/List_of_HTTP_status_codes>
+get_IANA_HTTP_status_code_db <-
+function()
+{
+    ## See
+    ## <http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
+    baseurl <- "http://www.iana.org/assignments/http-status-codes/"
+    db <- read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
+                   stringsAsFactors = FALSE)
+    ## Drop "Unassigned".
+    db[db$Description != "Unassigned", ]
+}
+
+## Ideally this would be in sysdata.rda.
+## For now, use something based on
+##   IANA_HTTP_status_code_db <- get_IANA_HTTP_status_code_db()
+##   writeLines(sprintf("      \"%s\" = \"%s\",",
+##                      IANA_HTTP_status_code_db$Value,
+##                      IANA_HTTP_status_code_db$Description))
+## See <http://en.wikipedia.org/wiki/List_of_HTTP_status_codes>.
 table_of_HTTP_status_codes <-
     c("100" = "Continue",
       "101" = "Switching Protocols",
+      "102" = "Processing",
       "200" = "OK",
       "201" = "Created",
       "202" = "Accepted",
@@ -196,6 +216,9 @@ table_of_HTTP_status_codes <-
       "204" = "No Content",
       "205" = "Reset Content",
       "206" = "Partial Content",
+      "207" = "Multi-Status",
+      "208" = "Already Reported",
+      "226" = "IM Used",
       "300" = "Multiple Choices",
       "301" = "Moved Permanently",
       "302" = "Found",
@@ -204,6 +227,7 @@ table_of_HTTP_status_codes <-
       "305" = "Use Proxy",
       "306" = "(Unused)",
       "307" = "Temporary Redirect",
+      "308" = "Permanent Redirect",
       "400" = "Bad Request",
       "401" = "Unauthorized",
       "402" = "Payment Required",
@@ -217,27 +241,66 @@ table_of_HTTP_status_codes <-
       "410" = "Gone",
       "411" = "Length Required",
       "412" = "Precondition Failed",
-      "413" = "Request Entity Too Large",
-      "414" = "Request-URI Too Long",
+      "413" = "Payload Too Large",
+      "414" = "URI Too Long",
       "415" = "Unsupported Media Type",
-      "416" = "Requested Range Not Satisfiable",
+      "416" = "Range Not Satisfiable",
       "417" = "Expectation Failed",
+      "422" = "Unprocessable Entity",
+      "423" = "Locked",
+      "424" = "Failed Dependency",
+      "426" = "Upgrade Required",
+      "428" = "Precondition Required",
+      "429" = "Too Many Requests",
+      "431" = "Request Header Fields Too Large",
       "500" = "Internal Server Error",
       "501" = "Not Implemented",
       "502" = "Bad Gateway",
       "503" = "Service Unavailable",
       "504" = "Gateway Timeout",
-      "505" = "HTTP Version Not Supported"
-      )
+      "505" = "HTTP Version Not Supported",
+      "506" = "Variant Also Negotiates",
+      "507" = "Insufficient Storage",
+      "508" = "Loop Detected",
+      "510" = "Not Extended",
+      "511" = "Network Authentication Required")
 
-## See <http://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>.
+## See <http://en.wikipedia.org/wiki/List_of_FTP_server_return_codes>
+## and <http://tools.ietf.org/html/rfc959>,
+## Section 4.2.2 "Numeric Order List of Reply Codes",
+## and <https://tools.ietf.org/html/rfc2228>,
+## Section 5 "New FTP Replies".
+## Only need those >= 400.
 table_of_FTP_server_return_codes <-
     c("421" = "Service not available, closing control connection.",
       "425" = "Can't open data connection.",
       "426" = "Connection closed; transfer aborted.",
       "430" = "Invalid username or password",
+      "431" = "Need some unavailable resource to process security.",
       "434" = "Requested host unavailable.",
-      "450" = "Requested file action not taken.")
+      "450" = "Requested file action not taken.",
+      "451" = "Requested action aborted: local error in processing.",
+      "452" = "Requested action not taken.  Insufficient storage space in system.",
+      "500" = "Syntax error, command unrecognized.",
+      "501" = "Syntax error in parameters or arguments.",
+      "502" = "Command not implemented.",
+      "503" = "Bad sequence of commands.",
+      "504" = "Command not implemented for that parameter.",
+      "530" = "Not logged in.",
+      "532" = "Need account for storing files.",
+      "533" = "Command protection level denied for policy reasons.",
+      "534" = "Request denied for policy reasons.",
+      "535" = "Failed security check (hash, sequence, etc).",
+      "536" = "Requested PROT level not supported by mechanism.",
+      "537" = "Command protection level not supported by security mechanism.",
+      "550" = "Requested action not taken.  File unavailable",
+      "551" = "Requested action aborted: page type unknown.",
+      "552" = "Requested file action aborted.  Exceeded storage allocation (for current directory or dataset).",
+      "553" = "Requested action not taken.  File name not allowed.",
+      "631" = "Integrity protected reply.",
+      "632" = "Confidentiality and integrity protected reply.",
+      "633" = "Confidentiality protected reply."
+      )
 
 check_url_db <-
 function(db, verbose = FALSE)
