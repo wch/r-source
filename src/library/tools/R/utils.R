@@ -164,8 +164,9 @@ function(x)
     asc <- iconv(x, "latin1", "ASCII")
     ind <- is.na(asc) | asc != x
     if(any(ind))
-        cat(paste0(which(ind), ": ", iconv(x[ind], "latin1", "ASCII", sub = "byte")),
-            sep = "\n")
+        message(paste0(which(ind), ": ",
+                       iconv(x[ind], "latin1", "ASCII", sub = "byte"),
+                       collapse = "\n"))
     invisible(x[ind])
 }
 
@@ -1633,7 +1634,7 @@ function(file, envir, enc = NA)
     exprs <- parse(n = -1L, file = con)
     if(!length(exprs))
         return(invisible())
-    for(e in exprs) {
+    for(e in Filter(length, exprs)) {
         if(e[[1L]] == assignmentSymbolLM || e[[1L]] == assignmentSymbolEq)
             eval(e, envir)
     }
