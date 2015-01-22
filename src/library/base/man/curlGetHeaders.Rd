@@ -39,7 +39,10 @@ curlGetHeaders(url, redirect = TRUE, verify = TRUE)
 
   To see all the details of the interaction with the server(s) set
   \code{\link{options}(internet.info = 1)}.
-
+  
+  HTTP[S] servers are allowed to refuse requests to read the headers and
+  some do: this will result in a \code{status} of \code{405}.
+  
   For possible issues with secure URLs (especially on Windows) see
   \code{\link{download.file}}.
 
