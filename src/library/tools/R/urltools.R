@@ -41,33 +41,33 @@ function()
 ##   dput(get_IANA_URI_scheme_db()$URI_Scheme)
 ## if necessary ...
 IANA_URI_schemes <-
-c("aaa", "aaas", "about", "acap", "acct", "cap", "cid", "coap", 
-"coaps", "crid", "data", "dav", "dict", "dns", "file", "ftp", 
-"geo", "go", "gopher", "h323", "http", "https", "iax", "icap", 
-"im", "imap", "info", "ipp", "ipps", "iris", "iris.beep", "iris.xpc", 
-"iris.xpcs", "iris.lwz", "jabber", "ldap", "mailto", "mid", "msrp", 
-"msrps", "mtqp", "mupdate", "news", "nfs", "ni", "nih", "nntp", 
-"opaquelocktoken", "pop", "pres", "reload", "rtsp", "rtsps", 
-"rtspu", "service", "session", "shttp", "sieve", "sip", "sips", 
-"sms", "snmp", "soap.beep", "soap.beeps", "stun", "stuns", "tag", 
-"tel", "telnet", "tftp", "thismessage", "tn3270", "tip", "turn", 
-"turns", "tv", "urn", "vemmi", "ws", "wss", "xcon", "xcon-userid", 
-"xmlrpc.beep", "xmlrpc.beeps", "xmpp", "z39.50r", "z39.50s", 
-"acr", "adiumxtra", "afp", "afs", "aim", "apt", "attachment", 
-"aw", "barion", "beshare", "bitcoin", "bolo", "callto", "chrome", 
-"chrome-extension", "com-eventbrite-attendee", "content", "cvs", 
-"dlna-playsingle", "dlna-playcontainer", "dtn", "dvb", "ed2k", 
-"facetime", "feed", "feedready", "finger", "fish", "gg", "git", 
-"gizmoproject", "gtalk", "ham", "hcp", "icon", "ipn", "irc", 
-"irc6", "ircs", "itms", "jar", "jms", "keyparc", "lastfm", "ldaps", 
-"magnet", "maps", "market", "message", "mms", "ms-help", "ms-settings-power", 
-"msnim", "mumble", "mvn", "notes", "oid", "palm", "paparazzi", 
-"pkcs11", "platform", "proxy", "psyc", "query", "res", "resource", 
-"rmi", "rsync", "rtmfp", "rtmp", "secondlife", "sftp", "sgn", 
-"skype", "smb", "smtp", "soldat", "spotify", "ssh", "steam", 
-"submit", "svn", "teamspeak", "teliaeid", "things", "udp", "unreal", 
-"ut2004", "ventrilo", "view-source", "webcal", "wtai", "wyciwyg", 
-"xfire", "xri", "ymsgr", "fax", "mailserver", "modem", "pack", 
+c("aaa", "aaas", "about", "acap", "acct", "cap", "cid", "coap",
+"coaps", "crid", "data", "dav", "dict", "dns", "file", "ftp",
+"geo", "go", "gopher", "h323", "http", "https", "iax", "icap",
+"im", "imap", "info", "ipp", "ipps", "iris", "iris.beep", "iris.xpc",
+"iris.xpcs", "iris.lwz", "jabber", "ldap", "mailto", "mid", "msrp",
+"msrps", "mtqp", "mupdate", "news", "nfs", "ni", "nih", "nntp",
+"opaquelocktoken", "pop", "pres", "reload", "rtsp", "rtsps",
+"rtspu", "service", "session", "shttp", "sieve", "sip", "sips",
+"sms", "snmp", "soap.beep", "soap.beeps", "stun", "stuns", "tag",
+"tel", "telnet", "tftp", "thismessage", "tn3270", "tip", "turn",
+"turns", "tv", "urn", "vemmi", "ws", "wss", "xcon", "xcon-userid",
+"xmlrpc.beep", "xmlrpc.beeps", "xmpp", "z39.50r", "z39.50s",
+"acr", "adiumxtra", "afp", "afs", "aim", "apt", "attachment",
+"aw", "barion", "beshare", "bitcoin", "bolo", "callto", "chrome",
+"chrome-extension", "com-eventbrite-attendee", "content", "cvs",
+"dlna-playsingle", "dlna-playcontainer", "dtn", "dvb", "ed2k",
+"facetime", "feed", "feedready", "finger", "fish", "gg", "git",
+"gizmoproject", "gtalk", "ham", "hcp", "icon", "ipn", "irc",
+"irc6", "ircs", "itms", "jar", "jms", "keyparc", "lastfm", "ldaps",
+"magnet", "maps", "market", "message", "mms", "ms-help", "ms-settings-power",
+"msnim", "mumble", "mvn", "notes", "oid", "palm", "paparazzi",
+"pkcs11", "platform", "proxy", "psyc", "query", "res", "resource",
+"rmi", "rsync", "rtmfp", "rtmp", "secondlife", "sftp", "sgn",
+"skype", "smb", "smtp", "soldat", "spotify", "ssh", "steam",
+"submit", "svn", "teamspeak", "teliaeid", "things", "udp", "unreal",
+"ut2004", "ventrilo", "view-source", "webcal", "wtai", "wyciwyg",
+"xfire", "xri", "ymsgr", "fax", "mailserver", "modem", "pack",
 "prospero", "snews", "videotex", "wais", "z39.50")
 
 parse_URL_reference <-
@@ -135,7 +135,7 @@ function(meta)
                       ),
                use.names = FALSE)
     }
-    
+
     urls <- character()
     fields <- c("URL", "BugReports")
     for(v in meta[fields]) {
@@ -153,12 +153,12 @@ function(meta)
     url_db(urls, rep.int("DESCRIPTION", length(urls)))
 }
 
-url_db_from_package_sources <- 
+url_db_from_package_sources <-
 function(dir, add = FALSE) {
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
     db <- rbind(url_db_from_package_metadata(meta),
                 url_db_from_package_Rd_db(Rd_db(dir = dir)))
-    if(add) 
+    if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
 }
@@ -238,7 +238,7 @@ table_of_FTP_server_return_codes <-
       "430" = "Invalid username or password",
       "434" = "Requested host unavailable.",
       "450" = "Requested file action not taken.")
-      
+
 check_url_db <-
 function(db, verbose = FALSE)
 {
@@ -256,7 +256,7 @@ function(db, verbose = FALSE)
     .fetch <- function(u) {
         if(verbose) message(sprintf("processing %s", u))
         tryCatch(curlGetHeaders(u), error = identity)
-    }    
+    }
 
     .check_ftp <- function(u) {
         h <- .fetch(u)
@@ -331,7 +331,10 @@ function(db, verbose = FALSE)
     if(length(pos)) {
         results <- do.call(rbind, lapply(urls[pos], .check_http))
         status <- as.numeric(results[, 1L])
-        ind <- status != 200L
+        ## 405 is HTTP not allowing HEAD requests
+        ## also skip 500, 503, 504 as likely to be temporary issues
+        ## but would need to confine to HTTP requests.
+        ind <- !(status %in% c (200L, 405L))
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
@@ -341,7 +344,7 @@ function(db, verbose = FALSE)
             bad <- rbind(bad, .gather(urls[pos], parents[pos], s, m))
         }
     }
-    
+
     bad
 
 }
