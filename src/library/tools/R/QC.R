@@ -1161,7 +1161,7 @@ function(package, lib.loc = NULL)
         ## as these will not render correctly.
         if(nice) {
             ind <- rep.int(lens == 1L, lens)
-            add[ind] <- tools:::.strip_whitespace(add[ind])
+            add[ind] <- .strip_whitespace(add[ind])
         }
         nms <- c(nms, add)
         regmatches(s, m) <- ""
@@ -2450,7 +2450,8 @@ function(package, dir, lib.loc = NULL)
     ## package.
     bad_methods <- list()
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
-    methods_not_registered <- character()
+    methods_not_registered_but_exported <- character()
+    methods_not_registered_not_exported <- character()
     for(g in all_S3_generics) {
         if(!exists(g, envir = code_env)) next
         ## Find all methods in functions_in_code for S3 generic g.
@@ -2469,9 +2470,14 @@ function(package, dir, lib.loc = NULL)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
-            if(length(delta <- setdiff(methods, ns_S3_methods)))
-                methods_not_registered <-
-                    c(methods_not_registered, delta)
+            if(length(delta <- setdiff(methods, ns_S3_methods))) {
+                methods_not_registered_but_exported <-
+                    c(methods_not_registered_but_exported,
+                      intersect(delta, objects_in_code))
+                methods_not_registered_not_exported <-
+                    c(methods_not_registered_not_exported,
+                      setdiff(delta, objects_in_code))
+            }
         }
 
         for(m in methods)
@@ -2482,9 +2488,12 @@ function(package, dir, lib.loc = NULL)
             } else c(bad_methods, checkArgs(g, m))
     }
 
-    if(length(methods_not_registered))
-        attr(bad_methods, "methods_not_registered") <-
-            methods_not_registered
+    if(length(methods_not_registered_but_exported))
+        attr(bad_methods, "methods_not_registered_but_exported") <-
+            methods_not_registered_but_exported
+    if(length(methods_not_registered_not_exported))
+        attr(bad_methods, "methods_not_registered_not_exported") <-
+            methods_not_registered_not_exported
 
     class(bad_methods) <- "checkS3methods"
     bad_methods
@@ -2504,7 +2513,18 @@ function(x, ...)
           "")
     }
 
-    as.character(unlist(lapply(x, .fmt)))
+    report_S3_methods_not_registered <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_",
+                                         FALSE))
+
+    c(as.character(unlist(lapply(x, .fmt))),
+      if(report_S3_methods_not_registered &&
+         length(methods <- attr(x, "methods_not_registered_but_exported"))) {
+          c("Found the following apparent S3 methods exported but not registered in NAMESPACE:",
+            strwrap(paste(methods, collapse = " "),
+                    exdent = 2L, indent = 2L))
+      }
+      )
 }
 
 ### * checkReplaceFuns
@@ -6862,6 +6882,38 @@ function(dir)
             out$bad_urls <- bad
     } else out$no_url_checks <- TRUE
 
+    ## Are there non-ASCII characters in the R source code without a
+    ## package encoding in DESCRIPTION?
+    ## Note that checking always runs .check_package_ASCII_code() which
+    ## however ignores comments.  Ideally, the checks would be merged,
+    ## with the comment checking suitably conditionalized.
+    ## Note also that this does not catch the cases where non-ASCII
+    ## content in R source code cannot be re-encoded using a given
+    ## package encoding.  Ideally, this would be checked for as well.
+    if(is.na(meta["Encoding"]) &&
+       dir.exists(code_dir <- file.path(dir, "R"))) {
+        ## A variation on showNonASCII():
+        find_non_ASCII_lines <- function(f) {
+            x <- readLines(f, warn = FALSE)
+            asc <- iconv(x, "latin1", "ASCII")
+            ind <- is.na(asc) | asc != x
+            if(any(ind)) {
+                paste0(which(ind),
+                       ": ",
+                       iconv(x[ind], "latin1", "ASCII", sub = "byte"))
+            } else character()
+        }
+        OS_subdirs <- c("unix", "windows")
+        code_files <- list_files_with_type(file.path(dir, "R"),
+                                           "code",
+                                           OS_subdirs = OS_subdirs)
+        lines <- lapply(code_files, find_non_ASCII_lines)
+        names(lines) <- .file_path_relative_to_dir(code_files, dir)
+        lines <- Filter(length, lines)
+        if(length(lines))
+            out$R_files_non_ASCII <- lines
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -7126,6 +7178,12 @@ function(x, ...)
       },
       if(length(y <- x$no_url_checks) && y) {
           c("Checking URLs requires 'libcurl' support in the R build")
+      },
+      if(length(y <- x$R_files_non_ASCII)) {
+          c("No package encoding and non-ASCII characters in the following R files:",
+            paste0("  ", names(y), "\n    ",
+                   sapply(y, paste, collapse = "\n    "),
+                   collapse = "\n"))
       }
       )
 }

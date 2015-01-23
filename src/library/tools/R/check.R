@@ -1333,10 +1333,16 @@ setRlibs <-
                       sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
         out <- R_runR2(Rcmd)
         if (length(out)) {
-            warningLog(Log)
+            only_about_methods_not_registered <-
+               grepl("^Found the following apparent S3 methods", out[1L])
+            if(only_about_methods_not_registered)
+                noteLog(Log)
+            else
+                warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            wrapLog("See section 'Generic functions and methods'",
-                    "in the 'Writing R Extensions' manual.\n")
+            if(!only_about_methods_not_registered)
+                wrapLog("See section 'Generic functions and methods'",
+                        "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
@@ -4318,6 +4324,7 @@ setRlibs <-
         prev <- Sys.getenv("_R_CHECK_SCREEN_DEVICE_", NA)
         if(is.na(prev)) Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
         Sys.setenv("_R_CHECK_CODE_USAGE_VIA_NAMESPACES_" = "TRUE")
+        Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
