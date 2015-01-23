@@ -37,6 +37,7 @@ function()
     db
 }
 
+if(FALSE) {
 ## Ideally this would be in sysdata.rda.
 ## For now, re-create using
 ##   dput(get_IANA_URI_scheme_db()$URI_Scheme)
@@ -70,6 +71,7 @@ c("aaa", "aaas", "about", "acap", "acct", "cap", "cid", "coap",
 "ut2004", "ventrilo", "view-source", "webcal", "wtai", "wyciwyg",
 "xfire", "xri", "ymsgr", "fax", "mailserver", "modem", "pack",
 "prospero", "snews", "videotex", "wais", "z39.50")
+}
 
 parse_URL_reference <-
 function(x)

@@ -146,6 +146,12 @@ mksrc-win2:
 	  (cd src && $(MAKE) -f Makefile.win EXT_LIBS="$(EXT_LIBS)") || exit 1; \
 	fi
 
+sysdata: $(srcdir)/R/sysdata.rda
+	@(cat $(srcdir)/R/makeLazyLoad.R; \
+	  @$(ECHO) "sysdata2LazyLoadDB(\"$(srcdir)/R/sysdata.rda\",\"$(top_builddir)/library/$(pkg)/R\")") | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
+
+
 ## install man/figures: currently only used for graphics
 mkfigs:
 	@if test -d  $(srcdir)/man/figures; then \
