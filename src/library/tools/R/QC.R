@@ -2485,7 +2485,7 @@ function(package, dir, lib.loc = NULL)
     if(length(methods_not_registered))
         attr(bad_methods, "methods_not_registered") <-
             methods_not_registered
-    
+
     class(bad_methods) <- "checkS3methods"
     bad_methods
 }
@@ -6860,7 +6860,7 @@ function(dir)
                         error = identity)
         if(inherits(bad, "error") || NROW(bad))
             out$bad_urls <- bad
-    }
+    } else out$no_url_checks <- TRUE
 
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
@@ -7123,6 +7123,9 @@ function(x, ...)
           else
               c("Found the following (possibly) invalid URLs:",
                 paste(" ", gsub("\n", "\n    ", format(y))))
+      },
+      if(length(y <- x$no_url_checks) && y) {
+          c("Checking URLs requires 'libcurl' support in the R build")
       }
       )
 }
