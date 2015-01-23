@@ -148,7 +148,7 @@ mksrc-win2:
 
 sysdata: $(srcdir)/R/sysdata.rda
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
-	  @$(ECHO) "sysdata2LazyLoadDB(\"$(srcdir)/R/sysdata.rda\",\"$(top_builddir)/library/$(pkg)/R\")") | \
+	  $(ECHO) "sysdata2LazyLoadDB(\"$(srcdir)/R/sysdata.rda\",\"$(top_builddir)/library/$(pkg)/R\")") | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 
 
