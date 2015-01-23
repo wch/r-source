@@ -2540,6 +2540,7 @@ setRlibs <-
             ## any arch will do here
             status <- R_runR(cmd, R_opts2, "LC_ALL=C",
                              stdout = Rout, stderr = Rout)
+            exfile <- paste0(pkgname, "-Ex.R")
             if (status) {
                 errorLog(Log,
                          paste("Running massageExamples to create",
@@ -2551,7 +2552,6 @@ setRlibs <-
 		maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
-            exfile <- paste0(pkgname, "-Ex.R")
             if (file.exists(exfile)) {
                 enc <- if (!is.na(e <- desc["Encoding"])) {
                     paste("--encoding", e, sep="=")
