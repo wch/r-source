@@ -155,7 +155,7 @@ makeJSS <- function()
 	extraInfo <- function(paper) {
 	    result <- paste(c(fmtDOI(paper$doi), fmtNote(paper$note),
 		  fmtEprint(paper$eprint), fmtUrl(paper$url)), collapse=", ")
-	    if (result != "") result
+	    if (nzchar(result)) result
 	}
 
 	bookVolume <- function(book) {
@@ -166,7 +166,7 @@ makeJSS <- function()
 		result <- paste(result, "number", collapse(book$number))
 	    if (length(book$series))
 		result <- paste(result, "series", collapse(book$series))
-	    if (result != "") result
+	    if (nzchar(result)) result
 	}
 
 	bookPublisher <- function(book) {

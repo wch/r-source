@@ -2056,7 +2056,7 @@ function(package, dir, file, lib.loc = NULL,
                     wrong_pkg <<- c(wrong_pkg, e)
                     bad_pkg <<- c(bad_pkg, this)
                 }
-                parg <- if(!is.null(parg) && (parg != "")) "OK"
+                parg <- if(!is.null(parg) && (nzchar(parg))) "OK"
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
@@ -2520,7 +2520,7 @@ function(x, ...)
     c(as.character(unlist(lapply(x, .fmt))),
       if(report_S3_methods_not_registered &&
          length(methods <- attr(x, "methods_not_registered_but_exported"))) {
-          c("Found the following apparent S3 methods exported but not registered in NAMESPACE:",
+          c("Found the following apparent S3 methods exported but not registered:",
             strwrap(paste(methods, collapse = " "),
                     exdent = 2L, indent = 2L))
       }
@@ -6824,7 +6824,7 @@ function(dir)
         .libPaths(character())
         on.exit(.libPaths(libpaths))
         out <- list()
-        if(system.file(package = meta["Package"]) != "") {
+        if(nzchar(system.file(package = meta["Package"]))) {
             ccalls <- .find_calls_in_file(cfile, encoding = meta["Encoding"],
                                           recursive = TRUE)
             cnames <-
@@ -7504,7 +7504,7 @@ function(x)
 {
     y <- as.character(x)
     if(!is.null(nx <- names(x))) {
-        ind <- which(nx != "")
+        ind <- which(nzchar(nx))
         y[ind] <- nx[ind]
     }
     y

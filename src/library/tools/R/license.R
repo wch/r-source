@@ -104,7 +104,7 @@ function(ldb)
     pos <- which(lab == "")
     abbrevs <- ldb$Abbrev[pos]
     versions <- ldb$Version[pos]
-    lab[pos] <- ifelse(abbrevs != "", abbrevs, ldb$Name[pos])
+    lab[pos] <- ifelse(nzchar(abbrevs), abbrevs, ldb$Name[pos])
     ind <- nzchar(versions)
     pos <- pos[ind]
     lab[pos] <- sprintf("%s version %s", lab[pos], versions[ind])
@@ -795,7 +795,7 @@ function(x)
         entries <- ldb[pos, ]
         ## Now determine the entries satisfying the version spec.
         v <- sub("[[:space:]]*\\((.*)\\)[[:space:]]*", "\\1", v)
-        if(v != "") {
+        if(nzchar(v)) {
             constraints <-
                 unlist(strsplit(v, "[[:space:]]*,[[:space:]]*"))
             entries <-

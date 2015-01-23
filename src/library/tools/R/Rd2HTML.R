@@ -181,7 +181,7 @@ Rd2HTML <-
             package <- package[1L]
         } else {
             dir <- dirname(package)
-            if((dir != "") &&
+            if(nzchar(dir) &&
                file_test("-f", dfile <- file.path(package,
                                                   "DESCRIPTION"))) {
                 version <- .read_description(dfile)["Version"]
@@ -812,10 +812,10 @@ Rd2HTML <-
 	for (i in seq_along(sections)[-(1:2)])
 	    writeSection(Rd[[i]], sections[i])
 
-	if(version != "")
+	if(nzchar(version))
 	    version <- paste0('Package <em>',package,'</em> version ',version,' ')
 	of0('\n')
-	if (version != "")
+	if(nzchar(version))
 	    of0('<hr /><div style="text-align: center;">[', version,
 		if (!no_links) '<a href="00Index.html">Index</a>',
 		']</div>')
