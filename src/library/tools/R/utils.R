@@ -1635,7 +1635,9 @@ function(file, envir, enc = NA)
     if(!length(exprs))
         return(invisible())
     for(e in Filter(length, exprs)) {
-        if(e[[1L]] == assignmentSymbolLM || e[[1L]] == assignmentSymbolEq)
+        if(is.call(e) &&
+           (e[[1L]] == assignmentSymbolLM ||
+            e[[1L]] == assignmentSymbolEq))
             eval(e, envir)
     }
     invisible()
