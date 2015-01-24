@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -688,18 +688,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     out <- character()
 
     for(pkg in package) {
-        paths <- character()
-        for(lib in lib.loc) {
-            dirs <- list.files(lib,
-                               pattern = paste0("^", pkg, "$"),
-                               full.names = TRUE)
-            ## Note that we cannot use tools::file_test() here, as
-            ## cyclic namespace dependencies are not supported.  Argh.
-            paths <- c(paths,
-                       dirs[dir.exists(dirs) &
-                            file.exists(file.path(dirs,
-                                                  "DESCRIPTION"))])
-        }
+	paths <- file.path(lib.loc, pkg)
+	paths <- paths[ file.exists(file.path(paths, "DESCRIPTION")) ]
         if(use_loaded && pkg %in% loadedNamespaces()) {
             dir <- if (pkg == "base") system.file()
             else getNamespaceInfo(pkg, "path")
