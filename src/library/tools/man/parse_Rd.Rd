@@ -1,6 +1,6 @@
 % File src/library/tools/man/parse_Rd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-14 R Core Team
+% Copyright 2008-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse_Rd}

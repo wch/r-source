@@ -1,6 +1,6 @@
 % File src/library/tools/man/checkRdaFiles.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2012-2013 R Core Team
+% Copyright 2012-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkPoFiles}
