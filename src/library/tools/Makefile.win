@@ -21,6 +21,7 @@ all:
 	@if ! test $(top_builddir)/library/$(pkg)/R/$(pkg) -nt all.R; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
 	fi
+	@$(MAKE) sysdata
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
 
