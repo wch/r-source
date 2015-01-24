@@ -147,7 +147,7 @@ mksrc-win2:
 	fi
 
 sysdata: $(srcdir)/R/sysdata.rda
-	@$(ECHO) "installing sysdata.rda"
+	@$(ECHO) "installing 'sysdata.rda'"
 	@$(ECHO) "tools:::sysdata2LazyLoadDB(\"$(srcdir)/R/sysdata.rda\",\"$(top_builddir)/library/$(pkg)/R\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 
