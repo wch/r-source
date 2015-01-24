@@ -1,6 +1,7 @@
 #  File src/library/splines/R/splineClasses.R
 #  Part of the R package, http://www.R-project.org
 #  Copyright (C) 1998 Douglas M. Bates and William N. Venables.
+#  Copyright (C) 2000-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

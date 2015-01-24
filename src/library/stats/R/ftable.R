@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ftable.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -414,7 +414,7 @@ function(x, sep = "_", ...)
 
     make_dimnames <- function(vars) {
         structure(list(do.call(paste,
-                               c(rev(expand.grid(rev(vars))), 
+                               c(rev(expand.grid(rev(vars))),
                                  list(sep=sep)))),
                   names = paste(collapse=sep, names(vars)))
     }
@@ -424,4 +424,4 @@ function(x, sep = "_", ...)
                            make_dimnames(attr(x, "col.vars"))),
               row.vars = NULL,
               col.vars = NULL)
-}    
+}

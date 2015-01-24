@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2013 The R Core Team
+# Changes Copyright (C) 1998-2014 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
