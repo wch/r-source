@@ -231,14 +231,16 @@
 	redirections, and allows simultaneous downloads of multiple
 	URLs.
 
-	\item \code{url()} has a new method \code{"libcurl"}.  The
-	default method is controlled by a new option \code{url.method},
-	and applies also to the opening of URLs \emph{via} \code{file()}
-	(which happens implicitly in functions such as \code{read.table}.)
+	\item \code{url()} has a new method \code{"libcurl"} which
+	handles more URL schemes and follows redirections.  The default
+	method is controlled by a new option \code{url.method}, which
+	applies also to the opening of URLs \emph{via} \code{file()}
+	(which happens implicitly in functions such as
+	\code{read.table}.)
 
 	\item When \code{file()} or \code{url()} is invoked with a
 	\code{https://} or \code{ftps://} URL which the current method
-	cannot handle, a suitable method is selected if one is
+	cannot handle, it switches to a suitable method if one is
 	available.
       }
 
@@ -252,11 +254,11 @@
 
       The Windows internet functions are still selected by flag
       \option{--internet2} or \code{setInternet2()}.  This can be
-      overridden for each \code{url()} connection \emph{via} its new
+      overridden for an \code{url()} connection \emph{via} its new
       \code{method} argument.
 
       \item \code{parent.env<-} can no longer modify the parent of a
-      locked namespace or namespace imports environment. Contributed by
+      locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
     }
   }
@@ -291,8 +293,9 @@
        program.  (\command{makeinfo} is a link to the Perl script
        \command{texi2any} in \pkg{texinfo} 5.x.)
 
-       \item \command{R CMD INSTALL} gets option \code{--built-timestamp=STAMP}
-       allowing 100\% reproducible package building, thanks to Dirk Eddelbuettel.
+       \item \command{R CMD INSTALL} gains an  option
+       \option{--built-timestamp=STAMP} allowing 100\% reproducible
+       package building, thanks to Dirk Eddelbuettel.
      }
   }
 
@@ -333,12 +336,18 @@
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
       good practice.
+      
+      \item \command{R CMD check --as-cran} checks existence and
+      accessibility of URLs in the \file{DESCRIPTION} file and in the
+      help files.
 
       \item \command{R CMD check --as-cran} reports non-ASCII characters
       in R source files in case there is no package encoding.
 
       \item \command{R CMD check --as-cran} reports (apparent) S3
-      methods exported but not registered.
+      methods exported but not registered.  (This can also be selected
+      by an environment variable: see the \sQuote{R Internals} manual.)
+      
     }
   }
 
