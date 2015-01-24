@@ -181,7 +181,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 			 2L + pmax(xEx, 0L)
 		     } else {# format == "fg"
 			 pmax(xEx, digits, digits + (-xEx) + 1L) +
-			     ifelse(flag != "", nchar(flag, "b"), 0L) + 1L
+			     ifelse(nzchar(flag), nchar(flag, "b"), 0L) + 1L
 		     }
 	     } else # format == "g" or "e":
 	     rep.int(digits + 8L, n)
@@ -200,7 +200,7 @@ formatC <- function (x, digits = NULL, width = NULL,
                            i.strlen))
     if (some.special) r[!Ok] <- format.char(rQ, width = width, flag = flag)
 
-    if(big.mark != "" || small.mark != "" || decimal.mark != "." ||
+    if(nzchar(big.mark) || nzchar(small.mark) || nzchar(decimal.mark) ||
        !is.null(zero.print) || drop0trailing)
 	r <- prettyNum(r, big.mark = big.mark, big.interval = big.interval,
 		       small.mark = small.mark, small.interval = small.interval,

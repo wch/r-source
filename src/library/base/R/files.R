@@ -46,7 +46,7 @@ file.show <-
     ## avoid re-encoding files to the current encoding.
     if(l10n_info()[["UTF-8"]] && encoding == "UTF-8") encoding <- ""
     if(l10n_info()[["Latin-1"]] && encoding == "latin1") encoding <- ""
-    if(!is.na(encoding) && encoding != "") {
+    if(!is.na(encoding) && nzchar(encoding)) {
         for(i in seq_along(files)) {
             f <- files[i]
             tf <- tempfile()

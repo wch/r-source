@@ -1291,7 +1291,7 @@ function(x)
     footer <- attr(x, "footer")
     x <- sapply(x, .format_person_for_plain_author_spec)
     ## Drop persons with irrelevant roles.
-    x <- x[x != ""]
+    x <- x[nzchar(x)]
     ## And format.
     if(!length(x)) return("")
     ## We need to ensure that the first line has no indentation, whereas

@@ -195,7 +195,7 @@ function(x, file = "", append = FALSE,
         }
     }
     out <- t(out)
-    is_not_empty <- c(out != "")
+    is_not_empty <- nzchar(out)
     eor <- character(sum(is_not_empty))
     if(length(eor)) {
         ## Newline for end of record.

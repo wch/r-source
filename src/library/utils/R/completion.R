@@ -215,7 +215,7 @@ rc.options <- function(...)
     nm <- names(new)
     if (is.null(nm)) return(old[unlist(new)])
 
-    isNamed <- nm != ""
+    isNamed <- nzchar(nm)
     if (any(!isNamed)) nm[!isNamed] <- unlist(new[!isNamed])
 
     ## so now everything has non-"" names, but only the isNamed ones
@@ -698,7 +698,7 @@ inFunction <-
         else ## guess function name
         {
             possible <- suppressWarnings(strsplit(prefix, breakRE, perl = TRUE))[[1L]]
-            possible <- possible[possible != ""]
+            possible <- possible[nzchar(possible)]
             if (length(possible)) return(tail.default(possible, 1))
             else return(character())
         }

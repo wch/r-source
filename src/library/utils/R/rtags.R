@@ -180,7 +180,7 @@ rtags <-
              ofile = "", append = FALSE,
              verbose = getOption("verbose"))
 {
-    if (ofile != "" && !append) {
+    if (nzchar(ofile) && !append) {
         if (!file.create(ofile, showWarnings = FALSE))
             stop(gettextf("Could not create file %s, aborting", ofile),
                  domain = NA)

@@ -369,7 +369,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                         txt$File)),
                           paste(txt$Title,
                                 paste0(rep.int("(source", NROW(txt)),
-                                       ifelse(txt$PDF != "",
+                                       ifelse(nzchar(txt$PDF),
                                               ", pdf",
                                               ""),
                                        ")")))
@@ -397,7 +397,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## 'package.rds' but we have not checked.
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
-                title <- if(file != "") {
+                title <- if(nzchar(file)) {
                     txt <- readRDS(file)
                     if(is.list(txt)) txt <- txt$DESCRIPTION
                     ## we may need to re-encode here.

@@ -464,7 +464,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## file was created before the names were added to the
             ## dynlibs vector.
             if(!is.null(names(nsInfo$dynlibs))
-               && names(nsInfo$dynlibs)[i] != "")
+               && nzchar(names(nsInfo$dynlibs)[i]))
                 assign(names(nsInfo$dynlibs)[i], dlls[[lib]], envir = env)
             setNamespaceInfo(env, "DLLs", dlls)
         }
@@ -1192,7 +1192,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                        structure(c(dynlibs, dyl),
                                  names = c(names(dynlibs),
                                  ifelse(!is.null(names(e)) &&
-                                        names(e)[2L] != "", names(e)[2L], "" )))
+                                        nzchar(names(e)[2L]), names(e)[2L], "" )))
                    if (length(e) > 2L) {
                        ## Author has specified some mappings for the symbols
 
@@ -1234,7 +1234,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                            ## Take .fixes and treat it as a call,
                            ## e.g. c("pre", "post") or a regular name
                            ## as the prefix.
-                           if(symNames[idx] != "") {
+                           if(nzchar(symNames[idx])) {
                                e <- parse(text = symNames[idx],
                                           keep.source = FALSE,
                                           srcfile = NULL)[[1L]]

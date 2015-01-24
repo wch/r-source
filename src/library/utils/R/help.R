@@ -85,7 +85,7 @@ function(topic, package = NULL, lib.loc = NULL,
             packages <- packages[is.na(match(packages, .packages()))]
             paths <- c(paths, index.search(topic, file.path(lib, packages)))
         }
-        paths <- paths[paths != ""]
+        paths <- paths[nzchar(paths)]
         tried_all_packages <- TRUE
     }
 

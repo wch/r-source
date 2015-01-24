@@ -24,7 +24,7 @@ modifyList <- function(x, val, keep.null = FALSE)
     xnames <- names(x)
     vnames <- names(val)
     ## Will not update unnamed components.  FIXME: What if names are repeated? Warn?
-    vnames <- vnames[vnames != ""]
+    vnames <- vnames[nzchar(vnames)]
     if (keep.null) {
         for (v in vnames) {
             x[v] <-

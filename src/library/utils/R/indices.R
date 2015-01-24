@@ -73,7 +73,7 @@ packageDescription <-
         desc <- as.list(dcf[1,])
     } else file <- ""
 
-    if(file != "") {
+    if(nzchar(file)) {
         ## read the Encoding field if any
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {
