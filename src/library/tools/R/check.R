@@ -1333,19 +1333,29 @@ setRlibs <-
                       sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
         out <- R_runR2(Rcmd)
         if (length(out)) {
-            only_about_methods_not_registered <-
-               grepl("^Found the following apparent S3 methods", out[1L])
-            if(only_about_methods_not_registered)
-                noteLog(Log)
-            else
+            pos <- grep("^Found the following apparent S3 methods", out)
+            if(!length(pos)) {
+                out1 <- out
+                out2 <- character()
+            } else {
+                pos <- pos[1L]
+                out1 <- out[seq_len(pos - 1L)]
+                out2 <- out[seq.int(pos, length(out))]
+            }
+            if(length(out1)) {
                 warningLog(Log)
-            printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            if(!only_about_methods_not_registered)
+                printLog0(Log, paste(c(out1, ""), collapse = "\n"))
                 wrapLog("See section 'Generic functions and methods'",
                         "in the 'Writing R Extensions' manual.\n")
-            if(any(grepl("^Found the following apparent S3 methods", out)))
+            } else
+                noteLog(Log)
+            if(length(out2)) {
+                printLog0(Log,
+                          paste(c(if(length(out1)) "", out2, ""),
+                                collapse = "\n"))
                 wrapLog("See section 'Registering S3 methods'",
                         "in the 'Writing R Extensions' manual.\n")
+            }
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
