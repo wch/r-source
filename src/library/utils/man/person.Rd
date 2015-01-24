@@ -110,7 +110,10 @@ person(given = NULL, family = NULL, middle = NULL,
   use no family name.  To smooth the transition to the new scheme,
   arguments \code{first}, \code{middle} and \code{last} are still
   supported, but their use is deprecated and they must not be given in
-  combination with the corresponding new style arguments.
+  combination with the corresponding new style arguments.  For persons
+  which are not natural persons (e.g., institutions, companies, etc.) it
+  is appropriate to use \code{given} (but not \code{family}) for the
+  name, e.g., \code{person("R Core Team", role = "aut")}.
 
   The new scheme also adds the possibility of specifying \emph{roles}
   based on a subset of the MARC Value List for Relators and Roles
