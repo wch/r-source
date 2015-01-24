@@ -7173,7 +7173,7 @@ function(x, ...)
               c("Checking URLs failed with message:",
                 conditionMessage(y))
           else
-              c("Found the following (possibly) invalid URLs:",
+              c(if (length(y) > 1L) "Found the following (possibly) invalid URLs:" else "Found the following (possibly) invalid URL:",
                 paste(" ", gsub("\n", "\n    ", format(y))))
       },
       if(length(y <- x$no_url_checks) && y) {
