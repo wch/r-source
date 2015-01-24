@@ -1,7 +1,7 @@
 #  File src/library/stats/R/logLik.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2001-12 The R Core Team
+#  Copyright (C) 2001-2014 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

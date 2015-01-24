@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 # Copyright (C) 2006  Deepayan Sarkar
-#               2006-2013  The R Core Team
+#               2006-2014  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
