@@ -209,8 +209,8 @@
       \item \code{getOption()} no longer calls \code{options()} in the main
       case.
 
-      \item Provisions for the optional use of \code{libcurl} (version
-      7.28.0 or later) for Internet access (including on Windows):
+      \item Optional use of \code{libcurl} (version 7.28.0 from Oct 2012
+      or later) for Internet access (including on Windows):
       \itemize{
 	\item \code{capabilities("libcurl")} reports if this is
 	available.
@@ -223,8 +223,8 @@
 	\code{http://}, \code{https://}, \code{ftp://} and
 	\code{ftps://} URLs: analysis of these headers can provide
 	insights into the `existence' of a URL (it might for example be
-	permanently redirected) and will be so used in \command{R CMD
-	check}.
+	permanently redirected) and is so used in \command{R CMD
+	  check --as-cran}.
 
 	\item \code{download.file()} has a new optional method
 	\code{"libcurl"} which will handle more URL schemes, follow
