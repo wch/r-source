@@ -318,27 +318,45 @@ function(db, verbose = FALSE)
 
     .fetch <- function(u) {
         if(verbose) message(sprintf("processing %s", u))
-        tryCatch(curlGetHeaders(u), error = identity)
+        h <- tryCatch(curlGetHeaders(u), error = identity)
+        if(inherits(h, "error")) {
+            msg <- conditionMessage(h)
+            if (grepl("libcurl error code (51|60)", msg)) {
+                h2 <- tryCatch(curlGetHeaders(u, verify = FALSE),
+                               error = identity)
+                attr(h, "no-verify") <- h2
+            }
+        }
+        h
     }
 
     .check_ftp <- function(u) {
         h <- .fetch(u)
-        if(inherits(h, "error"))
-            c("-1", sub("[[:space:]]*$", "", conditionMessage(h)))
-        else {
+        if(inherits(h, "error")) {
+            s <- "-1"
+            msg <- sub("[[:space:]]*$", "", conditionMessage(h))
+        } else {
             s <- as.character(attr(h, "status"))
-            c(s, table_of_FTP_server_return_codes[s])
+            msg <- table_of_FTP_server_return_codes[s]
         }
+        c(s, msg)
     }
 
     .check_http <- function(u) {
         h <- .fetch(u)
-        if(inherits(h, "error"))
-            c("-1", sub("[[:space:]]*$", "", conditionMessage(h)))
-        else {
+        if(inherits(h, "error")) {
+            s <- "-1"
+            msg <- sub("[[:space:]]*$", "", conditionMessage(h))
+            if (!is.null(v <- attr(h, "no-verify"))) {
+                s2 <- as.character(attr(v, "status"))
+                msg <- paste0(msg, "\n\t(Status without verification: ",
+                              table_of_HTTP_status_codes[s2], ")")
+            }
+        } else {
             s <- as.character(attr(h, "status"))
-            c(s, table_of_HTTP_status_codes[s])
+            msg <- table_of_HTTP_status_codes[s]
         }
+        c(s, msg)
     }
 
     bad <- .gather()
@@ -395,8 +413,7 @@ function(db, verbose = FALSE)
         results <- do.call(rbind, lapply(urls[pos], .check_http))
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
-        ## also skip 500, 503, 504 as likely to be temporary issues
-        ## but would need to confine to HTTP requests.
+        ## maybe also skip 500, 503, 504 as likely to be temporary issues
         ind <- !(status %in% c (200L, 405L))
         if(any(ind)) {
             pos <- pos[ind]
