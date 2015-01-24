@@ -1320,10 +1320,12 @@ should be ``self-sufficient'' and not make use of extra functionality
 provided by the package, so that the data file can also be used without
 having to load the package or its namespace.
 
-Images (extensions @file{.RData} or @file{.rda}) can contain references
-to the namespaces of packages that were used to create them.  Preferably
-there should be no such references in data files, and in any case they
-should only be to packages listed in the @code{Depends} and
+Images (extensions @file{.RData}@footnote{People who have trouble with
+case are advised to use @file{.rda} as a common error is to refer to
+@file{abc.RData} as @file{abc.Rdata}!} or @file{.rda}) can contain
+references to the namespaces of packages that were used to create them.
+Preferably there should be no such references in data files, and in any
+case they should only be to packages listed in the @code{Depends} and
 @code{Imports} fields, as otherwise it may be impossible to install the
 package.  To check for such references, load all the images into a
 vanilla @R{} session, and look at the output of
