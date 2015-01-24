@@ -1343,6 +1343,9 @@ setRlibs <-
             if(!only_about_methods_not_registered)
                 wrapLog("See section 'Generic functions and methods'",
                         "in the 'Writing R Extensions' manual.\n")
+            if(any(grepl("^Found the following apparent S3 methods", out)))
+                wrapLog("See section 'Registering S3 methods'",
+                        "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
