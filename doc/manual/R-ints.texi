@@ -4072,7 +4072,12 @@ Default: true (and true for CRAN submission checks).
 
 @item _R_CHECK_EXIT_ON_FIRST_ERROR_
 If set to a true value, the check will exit on the first error.
-Default:  false.
+Default: false.
+
+@item _R_CHECK_S3_METHODS_NOT_REGISTERED_
+If set to a true value, report (apparent) S3 methods exported but not
+registered.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like

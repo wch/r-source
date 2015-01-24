@@ -333,6 +333,12 @@
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
       good practice.
+
+      \item \command{R CMD check --as-cran} reports non-ASCII characters
+      in R source files in case there is no package encoding.
+
+      \item \command{R CMD check --as-cran} reports (apparent) S3
+      methods exported but not registered.
     }
   }
 
