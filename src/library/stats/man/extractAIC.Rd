@@ -1,6 +1,6 @@
 % File src/library/stats/man/extractAIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2014 R Core Team
 % Distributed under GPL 2 or later
 
 %-- This page by Martin Maechler,  improvements welcome!

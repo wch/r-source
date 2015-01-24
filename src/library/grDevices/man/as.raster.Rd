@@ -1,6 +1,6 @@
 % File src/library/grid/man/as.raster.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 200920131 R Core Team
+% Copyright 2009-2014 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.raster}
