@@ -120,21 +120,54 @@ function(meta)
     url_db(urls, rep.int("DESCRIPTION", length(urls)))
 }
 
+url_db_from_package_citation <-
+function(dir, meta, installed = FALSE)
+{
+    urls <- character()
+    path <- if(installed) "CITATION" else file.path("inst", "CITATION")
+    cfile <- file.path(dir, path)
+    if(file.exists(cfile)) {
+        cinfo <- .read_citation_quietly(cfile, meta)
+        if(!inherits(cinfo, "error"))
+            urls <- unique(unlist(cinfo$url, use.names = FALSE))
+    }
+    url_db(urls, rep.int(path, length(urls)))
+}
+
+url_db_from_package_news <-
+function(dir, installed = FALSE)
+{
+    urls <- character()
+    path <- if(installed) "NEWS.Rd" else file.path("inst", "NEWS.Rd")
+    nfile <- file.path(dir, path)
+    if(file.exists(nfile)) {
+        macros <- loadRdMacros(file.path(R.home("share"),
+                                         "Rd", "macros", "system.Rd"))
+        urls <- .Rd_get_urls(prepare_Rd(tools::parse_Rd(nfile,
+                                                        macros = macros),
+                                        stages = "install"))
+    }
+    url_db(urls, rep.int(path, length(urls)))
+}
+    
 url_db_from_package_sources <-
 function(dir, add = FALSE) {
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
+    cfile <- file.path(dir, "inst", "CITATION")
     db <- rbind(url_db_from_package_metadata(meta),
-                url_db_from_package_Rd_db(Rd_db(dir = dir)))
+                url_db_from_package_Rd_db(Rd_db(dir = dir)),
+                url_db_from_package_citation(dir, meta),
+                url_db_from_package_news(dir))
+                
     if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
 }
 
 url_db_from_installed_packages <-
-function(packages, lib.loc = NULL)
+function(packages, lib.loc = NULL, verbose = FALSE)
 {
     if(!length(packages)) return()
-    verbose <- interactive()
     one <- function(p) {
         if(verbose)
             message(sprintf("processing %s", p))
@@ -142,8 +175,12 @@ function(packages, lib.loc = NULL)
         if(dir == "") return()
         meta <- .read_description(file.path(dir, "DESCRIPTION"))
         rddb <- Rd_db(p, lib.loc = dirname(dir))
+        cfile <- file.path(dir, "CITATION")
         db <- rbind(url_db_from_package_metadata(meta),
-                    url_db_from_package_Rd_db(rddb))
+                    url_db_from_package_Rd_db(rddb),
+                    url_db_from_package_citation(dir, meta,
+                                                 installed = TRUE),
+                    url_db_from_package_news(dir, installed = TRUE))
         db$Parent <- file.path(p, db$Parent)
         db
     }
