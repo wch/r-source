@@ -6,6 +6,9 @@ if(!capabilities()["libcurl"]) {
     q()
 }
 
+## fails some of the time
+if(.Platform$OS.type == "windows") q()
+
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
