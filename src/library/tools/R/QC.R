@@ -6131,9 +6131,7 @@ function(cfile, dir = NULL)
 
     if(!is.null(dir)) {
         meta <- utils::packageDescription(basename(dir), dirname(dir))
-        db <- tryCatch(suppressMessages(utils::readCitationFile(cfile,
-                                                                meta)),
-                       error = identity)
+        db <- .read_citation_quietly(cfile, meta)
         if(inherits(db, "error")) {
             msg <- conditionMessage(db)
             call <- conditionCall(db)
