@@ -7,14 +7,14 @@ ECHO = echo
 include ../../src/gnuwin32/MkRules
 
 ifeq "$(MIKTEX)" "TRUE"
-R_TEXOPTS=--include-directory=../../share/texmf/tex/latex
-TEXI2DVI=texi2dvi
+R_TEXOPTS = --include-directory=../../share/texmf/tex/latex
+TEXI2DVI = texi2dvi
 else
-R_TEXOPTS=
-TEXI2DVI=
+R_TEXOPTS =
+TEXI2DVI =
 endif
 
-R_EXE=../../$(BINDIR)/Rterm
+R_EXE = ../../$(BINDIR)/Rterm
 
 include ../../share/make/vars.mk
 
