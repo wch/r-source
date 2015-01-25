@@ -1,12 +1,12 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS=-O3 -Wall -pedantic $(EOPTS)
+CFLAGS = -O3 -Wall -pedantic $(EOPTS)
 ifdef DEBUG
- CFLAGS+=$(G_FLAG)
- DLLFLAGS=
+ CFLAGS += $(G_FLAG)
+ DLLFLAGS =
 else
- DLLFLAGS=-s
+ DLLFLAGS = -s
 endif
 
 .PHONY: cpy test
@@ -61,7 +61,7 @@ distclean: clean
 	@$(RM) *.a Rmath.dll test*.exe check.log
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
-CPPFLAGS=-I.. -I../../include $(DEFS)
+CPPFLAGS = -I.. -I../../include $(DEFS)
 
 SOURCES_NMATH = \
 	mlutils.c \

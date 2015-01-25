@@ -1,8 +1,8 @@
 #-*- Makefile -*-
 include ../gnuwin32/MkRules
-R_HOME=../..
+R_HOME = ../..
 
-VER=$(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
+VER = $(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
 
 ## keep these in step with ./Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rembedded.h Rinternals.h

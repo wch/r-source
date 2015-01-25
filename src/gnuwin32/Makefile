@@ -55,18 +55,18 @@ MkRules: MkRules.rules
 	@cat MkRules.rules > MkRules
 endif
 
-CFLAGS=-O3 -Wall -pedantic $(EOPTS)
-FFLAGS=-O3 $(EOPTS)
+CFLAGS = -O3 -Wall -pedantic $(EOPTS)
+FFLAGS = -O3 $(EOPTS)
 ifdef DEBUG
- CFLAGS+=$(G_FLAG)
- FFLAGS+=$(G_FLAG)
- DLLFLAGS=
+ CFLAGS += $(G_FLAG)
+ FFLAGS += $(G_FLAG)
+ DLLFLAGS =
 else
- DLLFLAGS=-s
+ DLLFLAGS = -s
 endif
 
 
-R-DLLFLAGS=-mwindows
+R-DLLFLAGS = -mwindows
 LIBEXTRAS = -L"$(EXT_LIBS)"/lib$(R_ARCH) -lpcre -lz -lbz2 -llzma
 ifdef USE_ICU
 LIBEXTRAS += -L"$(ICU_PATH)"/lib$(R_ARCH) $(ICU_LIBS)
@@ -241,7 +241,7 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 #                          ===== cleaning ======
 
 ## used in installer/Makefile
-PKGDIR=../library
+PKGDIR = ../library
 pkgclean-%:
 	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
 
@@ -411,7 +411,7 @@ distribution:
 ## ============= End of maintainer targets ========================
 
 # Dependencies: malloc.c doesn't have any
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

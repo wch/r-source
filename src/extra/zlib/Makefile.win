@@ -7,7 +7,7 @@ SOURCES = adler32.c compress.c crc32.c deflate.c infback.c \
   inffast.c inflate.c inftrees.c trees.c uncompr.c zutil.c
 OBJECTS = $(SOURCES:.c=.o)
 
-CPPFLAGS=-I../../include -DHAVE_CONFIG_H
+CPPFLAGS = -I../../include -DHAVE_CONFIG_H
 
 # libz.a: $(OBJECTS)
 
@@ -36,7 +36,7 @@ distclean: clean
 	@$(RM) libz.a Rzlib.dll libRzlib.dll.a
 
 # Dependencies
-DEPS=$(SOURCES:.c=.d)
+DEPS = $(SOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

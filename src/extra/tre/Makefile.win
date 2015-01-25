@@ -1,9 +1,9 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-DEFS=-DHAVE_CONFIG_H
+DEFS = -DHAVE_CONFIG_H
 
-CPPFLAGS=-I../../include -I. $(DEFS)
+CPPFLAGS = -I../../include -I. $(DEFS)
 
 ## done this way for parallel make
 all:
@@ -24,7 +24,7 @@ distclean: clean
 	@$(RM) libtre.a
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

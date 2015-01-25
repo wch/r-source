@@ -4,11 +4,11 @@ include ../../gnuwin32/MkRules
 
 all: makeMakedeps libbz2.a
 
-CPPFLAGS=-I../../include
+CPPFLAGS = -I../../include
 
-CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
+CSOURCES =  blocksort.c huffman.c crctable.c randtable.c compress.c \
           decompress.c bzlib.c
-OBJS=$(CSOURCES:.c=.o)
+OBJS = $(CSOURCES:.c=.o)
 
 libbz2.a: $(OBJS)
 
@@ -18,7 +18,7 @@ distclean: clean
 	@$(RM) libbz2.a
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

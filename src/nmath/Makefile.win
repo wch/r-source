@@ -4,8 +4,8 @@ include ../gnuwin32/MkRules
 all: makeMakedeps libnmath.a
 
 ## there are headers and include files in this directory
-CPPFLAGS=-I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
-CSOURCES= \
+CPPFLAGS = -I. -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+CSOURCES = \
 	mlutils.c \
 	d1mach.c i1mach.c \
 	fmax2.c fmin2.c fprec.c fround.c ftrunc.c \
@@ -40,12 +40,12 @@ CSOURCES= \
 	ptukey.c qtukey.c \
 	toms708.c wilcox.c \
 	signrank.c
-OBJS=$(CSOURCES:.c=.o)
+OBJS = $(CSOURCES:.c=.o)
 
 libnmath.a: $(OBJS)
 
 # Dependencies
-DEPS=$(CSOURCES:.c=.d)
+DEPS = $(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

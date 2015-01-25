@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CPPFLAGS =-I../../include -I. -Iapi -DLZMA_API_STATIC -DHAVE_CONFIG_H -DWIN32
+CPPFLAGS = -I../../include -I. -Iapi -DLZMA_API_STATIC -DHAVE_CONFIG_H -DWIN32
 
 SOURCES = \
  alone_decoder.c alone_encoder.c arm.c armthumb.c auto_decoder.c \
