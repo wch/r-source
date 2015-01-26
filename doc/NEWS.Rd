@@ -314,7 +314,7 @@
       \code{tools::toHTML()} methods is now
       \sQuote{\acronym{XHTML} 1.0 Strict}.
 
-      \item The \pkg{compiler} package has a new utility function
+      \item The \pkg{compiler} package's utility function
       \code{setCompilerOptions()} now returns the old values
       invisibly. The initial optimization level can also be set with the
       environment variable \env{R_COMPILER_OPTIMIZE}.
@@ -337,16 +337,17 @@
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
       good practice.
       
-      \item \command{R CMD check --as-cran} checks existence and
-      accessibility of URLs in the \file{DESCRIPTION} file and in the
-      help files.
+      \item \command{R CMD check --as-cran} checks the existence and
+      accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
+      and \file{NEWS.Rd} files and in the help files.
 
       \item \command{R CMD check --as-cran} reports non-ASCII characters
-      in R source files in case there is no package encoding.
+      in R source files in case there is no declared package encoding.
 
       \item \command{R CMD check --as-cran} reports (apparent) S3
-      methods exported but not registered.  (This can also be selected
-      by an environment variable: see the \sQuote{R Internals} manual.)
+      methods exported but not registered.  (This check can also be
+      selected by an environment variable: see the \sQuote{R Internals}
+      manual.)
       
     }
   }
