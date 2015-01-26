@@ -235,6 +235,7 @@ int progress(void *clientp, double dltotal, double dlnow,
 	    }
 	}
     }
+    R_ProcessEvents();
     return 0;
 }
 
@@ -341,17 +342,23 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
 
 	total = 0.;
-	if (R_Interactive && !quiet && nurls <= 1) {
+	if (
+#ifndef Win32
+	    R_Interactive &&  // flaky on Windows without progress bars
+#endif
+	    !quiet && nurls <= 1) {
 	    // It would in principle be possible to have
 	    // multiple progress bars on Windows.
 	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
 #ifdef Win32
 	    if (!pbar.wprog) {
-		pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
+		pbar.wprog = newwindow(_("Download progress"),
+				       rect(0, 0, 540, 100),
 				       Titlebar | Centered);
 		setbackground(pbar.wprog, dialog_bg());
 		pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
-		pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, 1024, 1024, 1);
+		pbar.pb = newprogressbar(rect(20, 50, 500, 20),
+					 0, 1024, 1024, 1);
 		pbar.pc = 0;
 	    }
 	    

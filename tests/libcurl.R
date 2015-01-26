@@ -7,7 +7,7 @@ if(!capabilities()["libcurl"]) {
 }
 
 ## fails some of the time
-if(.Platform$OS.type == "windows") q()
+#if(.Platform$OS.type == "windows") q()
 
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
@@ -33,7 +33,8 @@ stopifnot(identical(summary(zz)$class, "url-libcurl"))
 close(zz)
 
 ## https URL
-head(readLines(zz <- url("https://httpbin.org", method = "libcurl")))
+head(readLines(zz <- url("https://httpbin.org", method = "libcurl"),
+               warn = FALSE))
 close(zz)
 
 ## redirection (to a https:// URL)
