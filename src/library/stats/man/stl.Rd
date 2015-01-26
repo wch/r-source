@@ -1,6 +1,6 @@
 % File src/library/stats/man/stl.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stl}
@@ -29,7 +29,7 @@ stl(x, s.window, s.degree = 0,
     greater than one.}
   \item{s.window}{either the character string \code{"periodic"} or the span (in
     lags) of the loess window for seasonal extraction, which should
-    be odd.  This has no default.}
+    be odd and at least 7, according to Cleveland et al.  This has no default.}
   \item{s.degree}{degree of locally-fitted polynomial in seasonal
     extraction.  Should be zero or one.}
   \item{t.window}{the span (in lags) of the loess window for trend
@@ -108,7 +108,7 @@ stl(x, s.window, s.degree = 0,
 require(graphics)
 
 plot(stl(nottem, "per"))
-plot(stl(nottem, s.window = 4, t.window = 50, t.jump = 1))
+plot(stl(nottem, s.window = 7, t.window = 50, t.jump = 1))
 
 plot(stllc <- stl(log(co2), s.window = 21))
 summary(stllc)
