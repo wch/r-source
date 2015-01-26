@@ -2450,6 +2450,11 @@ function(package, dir, lib.loc = NULL)
     ## package.
     bad_methods <- list()
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
+    ## some packages export S4 generics derived from other packages ....
+    methods_stop_list <- c(methods_stop_list, "all.equal",
+        "all.names", "all.vars", "fitted.values", "qr.Q", "qr.R",
+        "qr.X", "qr.coef", "qr.fitted", "qr.qty", "qr.qy", "qr.resid",
+        "qr.solve", "rep.int", "seq.int", "sort.int", "sort.list", "t.test")
     methods_not_registered_but_exported <- character()
     methods_not_registered_not_exported <- character()
     for(g in all_S3_generics) {
