@@ -15588,7 +15588,7 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 > require(graphics)
 > 
 > plot(stl(nottem, "per"))
-> plot(stl(nottem, s.window = 4, t.window = 50, t.jump = 1))
+> plot(stl(nottem, s.window = 7, t.window = 50, t.jump = 1))
 > 
 > plot(stllc <- stl(log(co2), s.window = 21))
 > summary(stllc)
