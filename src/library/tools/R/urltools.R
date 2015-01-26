@@ -297,7 +297,7 @@ function(db, verbose = FALSE)
         if (any(grepl("301 Moved Permanently", h))) {
             ind <- grep("^[Ll]ocation: ", h)
             if (length(ind))
-                newLoc <- sub("^location: ([^\r]*)\r\n", "\\1", h[max(ind)])
+                newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
         }
         c(s, msg, newLoc)
     }
