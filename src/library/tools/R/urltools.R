@@ -294,8 +294,8 @@ function(db, verbose = FALSE)
             msg <- table_of_HTTP_status_codes[s]
         }
         ## Look for redirected URLs
-        if (any(grepl("301 Moved Permanently", h))) {
-            ind <- grep("^[Ll]ocation: ", h)
+        if (any(grepl("301 Moved Permanently", h, useBytes = TRUE))) {
+            ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)
             if (length(ind))
                 newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
         }
