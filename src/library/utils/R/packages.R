@@ -385,9 +385,14 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         ## do this a library at a time, to handle dependencies correctly.
         libs <- unique(instlib)
         for(l in libs)
-            install.packages(update[instlib == l , "Package"], l,
-                             contriburl = contriburl, method = method,
-                             available = available, ..., type = type)
+            if (type == 'both')
+                install.packages(update[instlib == l , "Package"], l,
+                                 repos = repos, method = method,
+                                 ..., type = type)
+            else
+                install.packages(update[instlib == l , "Package"], l,
+                                 contriburl = contriburl, method = method,
+                                 available = available, ..., type = type)
     }
 }
 
