@@ -149,7 +149,7 @@ function(dir, installed = FALSE)
     }
     url_db(urls, rep.int(path, length(urls)))
 }
-    
+
 url_db_from_package_sources <-
 function(dir, add = FALSE) {
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
@@ -158,7 +158,7 @@ function(dir, add = FALSE) {
                 url_db_from_package_Rd_db(Rd_db(dir = dir)),
                 url_db_from_package_citation(dir, meta),
                 url_db_from_package_news(dir))
-                
+
     if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
@@ -275,11 +275,12 @@ function(db, verbose = FALSE)
             s <- as.character(attr(h, "status"))
             msg <- table_of_FTP_server_return_codes[s]
         }
-        c(s, msg)
+        c(s, msg, "")
     }
 
     .check_http <- function(u) {
         h <- .fetch(u)
+        newLoc <- ""
         if(inherits(h, "error")) {
             s <- "-1"
             msg <- sub("[[:space:]]*$", "", conditionMessage(h))
@@ -292,7 +293,13 @@ function(db, verbose = FALSE)
             s <- as.character(attr(h, "status"))
             msg <- table_of_HTTP_status_codes[s]
         }
-        c(s, msg)
+        ## Look for redirected URLs
+        if (any(grepl("301 Moved Permanently", h))) {
+            ind <- grep("^[Ll]ocation: ", h)
+            if (length(ind))
+                newLoc <- sub("^location: ([^\r]*)\r\n", "\\1", h[max(ind)])
+        }
+        c(s, msg, newLoc)
     }
 
     bad <- .gather()
@@ -349,14 +356,18 @@ function(db, verbose = FALSE)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- !(status %in% c (200L, 405L))
+        ind <- !(status %in% c(200L, 405L))
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            bad <- rbind(bad, .gather(urls[pos], parents[pos], s, m))
+            url <- urls[pos]; newLoc <- results[ind, 3]
+            ind2 <- nzchar(newLoc)
+            url[ind2] <-
+                paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
+            bad <- rbind(bad, .gather(url, parents[pos], s, m))
         }
     }
 
