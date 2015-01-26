@@ -451,8 +451,8 @@ getGeneric <-
             stop("argument 'f' must be a string, generic function, or primitive: got an ordinary function")
     }
     value <- if(missing(where))
-	.getGeneric(f, , package) else
-    .getGeneric(f, where, package)
+		  .getGeneric(f,      , package)
+	     else .getGeneric(f, where, package)
     if(is.null(value) && !is.null(baseDef <-
         get0(f, envir = baseenv(), inherits = FALSE))) {
         ## check for primitives
@@ -470,9 +470,7 @@ getGeneric <-
     else {
         if(nzchar(package) && is.na(match(package, c("methods", "base")))) {
             value <- tryCatch({
-                ## try to load package namespace
-                if (!package %in% loadedNamespaces())
-                    loadNamespace(package)
+                ## load package namespace or error
                 ev <- getNamespace(package)
                 .getGeneric(f, ev, package)
             }, error = function(e) NULL)

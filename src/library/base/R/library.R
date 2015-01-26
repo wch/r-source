@@ -286,7 +286,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## has a namespace, then the namespace loading mechanism
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
-                if (package %in% loadedNamespaces()) {
+		if (isLoadedNamespace(package)) {
                     # Already loaded.  Does the version match?
                     newversion <- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
                     oldversion <- as.numeric_version(getNamespaceVersion(package))
@@ -690,9 +690,9 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     for(pkg in package) {
 	paths <- file.path(lib.loc, pkg)
 	paths <- paths[ file.exists(file.path(paths, "DESCRIPTION")) ]
-        if(use_loaded && pkg %in% loadedNamespaces()) {
-            dir <- if (pkg == "base") system.file()
-            else getNamespaceInfo(pkg, "path")
+	if(use_loaded && isLoadedNamespace(pkg)) {
+	    dir <- if (pkg == "base") system.file()
+		   else getNamespaceInfo(pkg, "path")
             paths <- c(dir, paths)
         }
         ## trapdoor for tools:::setRlibs

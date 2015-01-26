@@ -260,6 +260,8 @@
       \item \code{parent.env<-} can no longer modify the parent of a
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
+
+      \item New \code{isLoadedNamespace()} for readability and speed.
     }
   }
 
@@ -336,7 +338,7 @@
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
       good practice.
-      
+
       \item \command{R CMD check --as-cran} checks the existence and
       accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
       and \file{NEWS.Rd} files and in the help files.
@@ -348,7 +350,7 @@
       methods exported but not registered.  (This check can also be
       selected by an environment variable: see the \sQuote{R Internals}
       manual.)
-      
+
     }
   }
 

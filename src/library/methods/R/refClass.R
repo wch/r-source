@@ -1,7 +1,7 @@
 #  File src/library/methods/R/refClass.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -549,9 +549,9 @@ getRefSuperClasses <- function(classes, classDefs) {
     ## as load actions.  Use the topenv() if that seems like
     ## the namespace in preparation, or the namespace if available
     env <- topenv(parent.frame()); declare <- TRUE
-    if(exists(".packageName", envir = env) &&
-       get(".packageName", envir = env) == def@package) {}
-    else if(def@package %in% loadedNamespaces())
+    if(!is.null(pkg <- get0(".packageName", envir = env)) && pkg == def@package)
+	{}
+    else if(isLoadedNamespace(def@package))
         env <- asNamespace(def@package)
     else
         declare <- FALSE

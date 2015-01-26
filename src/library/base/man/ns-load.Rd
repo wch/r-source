@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -11,6 +11,7 @@
 \alias{requireNamespace}
 \alias{loadedNamespaces}
 \alias{unloadNamespace}
+\alias{isLoadedNamespace}
 
 \description{
   Functions to load and unload name spaces.
@@ -23,6 +24,7 @@ loadNamespace(package, lib.loc = NULL,
 requireNamespace(package, ..., quietly = FALSE)
 loadedNamespaces()
 unloadNamespace(ns)
+isLoadedNamespace(name)
 }
 \arguments{
   \item{ns}{string or name space object.}
@@ -38,6 +40,8 @@ unloadNamespace(ns)
   \item{versionCheck}{\code{NULL} or a version specification (a list
     with components \code{op} and \code{version})).}
   \item{quietly}{logical: should progress and error messages be suppressed?}
+  \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
+    of a package, e.g., \code{"stats"}.}
   \item{\dots}{further arguments to be passed to \code{loadNamespace}.}
 }
 \details{
@@ -69,6 +73,9 @@ unloadNamespace(ns)
   \code{loadedNamespaces} returns a character vector of the names of
   the loaded name spaces.
 
+  \code{isLoadedNamespace(pkg)} is equivalent to but more efficient than
+  \code{pkg \%in\% loadedNamespaces()}.
+
   \code{unloadNamespace} can be used to attempt to force a name space to
   be unloaded.  If the name space is attached, it is first
   \code{\link{detach}}ed, thereby running a \code{\link{.onDetach}} or
@@ -91,10 +98,22 @@ unloadNamespace(ns)
   \code{requireNamespace} returns \code{TRUE} if it succeeds or
   \code{FALSE}.
 
-  \code{loadedNamespaces} returns a character vector.
+  \code{loadedNamespaces} returns a \code{\link{character}} vector.
 
   \code{unloadNamespace} returns \code{NULL}, invisibly.
 }
+\seealso{ \code{\link{getNamespace}}
+}
+\author{Luke Tierney and R-core}
+\examples{
+ (lns <- loadedNamespaces())
+ statL <- isLoadedNamespace("stats")% checks work also when it is *not* loaded
+ stopifnot( identical(statL, "stats" \%in\% lns) )
+
+ ## The string "foo" and the symbol 'foo can be used interchangably here:
+ stopifnot( identical(isLoadedNamespace(  "foo"   ), FALSE),
+            identical(isLoadedNamespace(quote(foo)), FALSE),
+            identical(isLoadedNamespace(quote(stats)), statL))
+}
 \keyword{data}
 \keyword{utilities}
-\author{Luke Tierney and R-core}

@@ -3533,12 +3533,21 @@ SEXP attribute_hidden do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val;
     checkArity(op, args);
-    name = checkNSname(call, CAR(args));
+    name = checkNSname(call, coerceVector(CAR(args), SYMSXP));
     val = findVarInFrame(R_NamespaceRegistry, name);
-    if (val == R_UnboundValue)
-	return R_NilValue;
-    else
-	return val;
+
+    switch(PRIMVAL(op)) {
+    case 0: // get..()
+	if (val == R_UnboundValue)
+	    return R_NilValue;
+	else
+	    return val;
+    case 1: // is..()
+	return ScalarLogical(val == R_UnboundValue ? FALSE : TRUE);
+
+    default: error(_("unknown op"));
+    }
+    return R_NilValue; // -Wall
 }
 
 SEXP attribute_hidden do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)

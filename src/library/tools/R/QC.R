@@ -3943,7 +3943,7 @@ function(package, lib.loc = NULL)
 	pname <- paste("package", pack, sep = ":")
 	if (!pname %in% search())
 	    stop("package must be loaded", domain = NA)
-	checkMethodUsageEnv(if (pack %in% loadedNamespaces())
+	checkMethodUsageEnv(if (isLoadedNamespace(pack))
 			    getNamespace(pack) else as.environment(pname), ...)
     }
 

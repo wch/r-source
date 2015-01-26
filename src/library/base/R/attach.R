@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -175,7 +175,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
     }
     .Internal(detach(pos))
 
-    if(pkgname %in% loadedNamespaces()) {
+    if(isLoadedNamespace(pkgname)) {
         ## the lazyload DB is flushed when the namespace is unloaded
         if(unload) {
             tryCatch(unloadNamespace(pkgname),
