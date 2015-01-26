@@ -31,7 +31,7 @@ packageDescription <-
 	if(is.null(lib.loc)) {
 	    if(pkg == "base")
 		file.path(.Library, "base")
-	    else if(isLoadedNamespace(pkg))
+	    else if(isNamespaceLoaded(pkg))
 		getNamespaceInfo(pkg, "path")
 	    else if((envname <- paste0("package:", pkg)) %in% search()) {
 		attr(as.environment(envname), "path")

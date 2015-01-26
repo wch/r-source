@@ -551,7 +551,7 @@ getRefSuperClasses <- function(classes, classDefs) {
     env <- topenv(parent.frame()); declare <- TRUE
     if(!is.null(pkg <- get0(".packageName", envir = env)) && pkg == def@package)
 	{}
-    else if(isLoadedNamespace(def@package))
+    else if(isNamespaceLoaded(def@package))
         env <- asNamespace(def@package)
     else
         declare <- FALSE

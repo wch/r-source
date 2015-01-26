@@ -46,7 +46,7 @@ getNamespace <- function(name) {
 loadedNamespaces <- function()
     ls(.Internal(getNamespaceRegistry()), all.names = TRUE)
 
-isLoadedNamespace <- function(name) .Internal(isRegisteredNamespace(name))
+isNamespaceLoaded <- function(name) .Internal(isRegisteredNamespace(name))
 
 getNamespaceName <- function(ns) {
     ns <- asNamespace(ns)

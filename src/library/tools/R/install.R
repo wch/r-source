@@ -1106,7 +1106,7 @@
                 parse_description_field(desc, "KeepSource",
                                         default = keep.source)
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
-	    if (isLoadedNamespace(pkg_name))
+	    if (isNamespaceLoaded(pkg_name))
 		unloadNamespace(pkg_name)
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))

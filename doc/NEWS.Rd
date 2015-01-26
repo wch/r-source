@@ -261,7 +261,7 @@
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
 
-      \item New \code{isLoadedNamespace()} for readability and speed.
+      \item New \code{isNamespaceLoaded()} for readability and speed.
     }
   }
 

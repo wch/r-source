@@ -175,7 +175,7 @@ detach <- function(name, pos = 2L, unload = FALSE, character.only = FALSE,
     }
     .Internal(detach(pos))
 
-    if(isLoadedNamespace(pkgname)) {
+    if(isNamespaceLoaded(pkgname)) {
         ## the lazyload DB is flushed when the namespace is unloaded
         if(unload) {
             tryCatch(unloadNamespace(pkgname),

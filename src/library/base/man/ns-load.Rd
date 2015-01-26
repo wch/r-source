@@ -11,7 +11,7 @@
 \alias{requireNamespace}
 \alias{loadedNamespaces}
 \alias{unloadNamespace}
-\alias{isLoadedNamespace}
+\alias{isNamespaceLoaded}
 
 \description{
   Functions to load and unload name spaces.
@@ -24,7 +24,7 @@ loadNamespace(package, lib.loc = NULL,
 requireNamespace(package, ..., quietly = FALSE)
 loadedNamespaces()
 unloadNamespace(ns)
-isLoadedNamespace(name)
+isNamespaceLoaded(name)
 }
 \arguments{
   \item{ns}{string or name space object.}
@@ -73,7 +73,7 @@ isLoadedNamespace(name)
   \code{loadedNamespaces} returns a character vector of the names of
   the loaded name spaces.
 
-  \code{isLoadedNamespace(pkg)} is equivalent to but more efficient than
+  \code{isNamespaceLoaded(pkg)} is equivalent to but more efficient than
   \code{pkg \%in\% loadedNamespaces()}.
 
   \code{unloadNamespace} can be used to attempt to force a name space to
@@ -107,13 +107,13 @@ isLoadedNamespace(name)
 \author{Luke Tierney and R-core}
 \examples{
  (lns <- loadedNamespaces())
- statL <- isLoadedNamespace("stats")% checks work also when it is *not* loaded
+ statL <- isNamespaceLoaded("stats")% checks work also when it is *not* loaded
  stopifnot( identical(statL, "stats" \%in\% lns) )
 
  ## The string "foo" and the symbol 'foo can be used interchangably here:
- stopifnot( identical(isLoadedNamespace(  "foo"   ), FALSE),
-            identical(isLoadedNamespace(quote(foo)), FALSE),
-            identical(isLoadedNamespace(quote(stats)), statL))
+ stopifnot( identical(isNamespaceLoaded(  "foo"   ), FALSE),
+            identical(isNamespaceLoaded(quote(foo)), FALSE),
+            identical(isNamespaceLoaded(quote(stats)), statL))
 }
 \keyword{data}
 \keyword{utilities}
