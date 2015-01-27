@@ -110,7 +110,7 @@ isNamespaceLoaded(name)
  statL <- isNamespaceLoaded("stats")% checks work also when it is *not* loaded
  stopifnot( identical(statL, "stats" \%in\% lns) )
 
- ## The string "foo" and the symbol 'foo can be used interchangably here:
+ ## The string "foo" and the symbol 'foo' can be used interchangably here:
  stopifnot( identical(isNamespaceLoaded(  "foo"   ), FALSE),
             identical(isNamespaceLoaded(quote(foo)), FALSE),
             identical(isNamespaceLoaded(quote(stats)), statL))
