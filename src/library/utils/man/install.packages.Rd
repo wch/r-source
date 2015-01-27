@@ -69,16 +69,18 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     URL(s) of the contrib sections of the repositories.  Use this
     argument if your repository mirror is incomplete, e.g., because
     you burned only the \file{contrib} section on a CD, or only have
-    binary packages.  Overrides argument \code{repos}.  Can also be
-    \code{NULL} to install from local files.
+    binary packages.  Overrides argument \code{repos}.
+    Incompatible with \code{type = "both"}.
   }
   \item{method}{
-    download method, see \code{\link{download.file}}.
+    download method, see \code{\link{download.file}}.  Unused if
+    a non-\code{NULL} \code{available} is supplied.
   }
   \item{available}{
     a matrix as returned by \code{\link{available.packages}}
     listing packages available at the repositories, or \code{NULL} when
     the function makes an internal call to \code{available.packages}.
+    Incompatible with \code{type = "both"}.
   }
   \item{destdir}{
     directory where downloaded packages are stored.  If it is
@@ -329,10 +331,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   on the library directories specified, but Windows reports unreliably.
   If there is only one library directory (the default), \R tries to
   find out by creating a test directory, but even this need not be the
-  whole story.  Under Windows Vista and later you may have permission to
-  write in a library directory but lack permission to write binary files
-  (such as \file{.dll} files) there.  See the \sQuote{R for Windows FAQ}
-  for workarounds.
+  whole story: you may have permission to write in a library directory
+  but lack permission to write binary files (such as \file{.dll} files)
+  there.  See the \sQuote{R for Windows FAQ} for workarounds.
 }
 #endif
 \seealso{

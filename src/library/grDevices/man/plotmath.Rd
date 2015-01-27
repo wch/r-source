@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \newcommand{\sspace}{\ifelse{latex}{\out{~}}{ }}
@@ -160,8 +160,15 @@
     \code{group("(",list(a, b),"]")} \tab specify left and right delimiters \cr
     \code{bgroup("(",atop(x,y),")")} \tab use scalable delimiters \cr
     \code{group(lceil, x, rceil)} \tab special delimiters \cr
+    \code{group(lfloor, x, rfloor)} \tab special delimiters \cr
   }
-
+  
+  The supported \sQuote{scalable delimiters} are \code{| ( [ \{},
+  \code{lceil}, \code{lfloor} and their right-hand versions.
+  \code{"."} is equivalent to \code{""}: the corresponding delimiter
+  will be omitted. Delimiter \code{||} is supported but has the same
+  effect as \code{|}.
+  
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
