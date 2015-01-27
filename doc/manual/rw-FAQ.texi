@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{3.0.0} or later).  It is biased towards users of 64-bit Windows.
+(@samp{3.1.0} or later).  It is biased towards users of 64-bit Windows.
 
 
 @newchap{}
@@ -134,8 +134,8 @@ There are also links on that page to the @samp{r-patched} and
 @samp{r-devel} snapshots.  These are frequently updated builds of
 development versions of R.  The @samp{r-patched} build includes bug
 fixes to the current release, and @samp{r-devel} contains these as well
-as changes that will eventually make it into the next @samp{x.y.0}
-release.
+as changes that are planned to eventually make it into the next
+@samp{x.y.0} release.
 
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
@@ -152,7 +152,7 @@ mainly 64-bit Windows 7 and Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A installation takes
-75--110MB of disk space (up to 155MB if ICU was included in the build)
+75--110MB of disk space (up to 150MB if ICU was included in the build)
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -178,6 +178,8 @@ will have a shortcut to @file{Rgui.exe} on your desktop and/or somewhere
 on the Start menu file tree, and perhaps also in the Quick Launch part
 of the taskbar (Vista and earlier).  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
+(If your account was not the one used for installation, you may need to
+copy the shortcut before editing it.)
 
 On some systems you will have two shortcuts, one for 32-bit with a label
 starting @code{R i386} and one for 64-bit starting @code{R x64}
@@ -255,7 +257,10 @@ You may if you prefer run R from the command line of any shell you use,
 for example a `Command Prompt' or a port of a Unix shell such as
 @command{tcsh} or @command{bash}. (The command line can be anything you
 would put in the Target field of a shortcut, and the starting directory
-will be the current working directory of the shell.)
+will be the current working directory of the shell.  Note that the R
+executables are not by default added to the @env{PATH}.)  People running
+from a terminal usually prefer to run @command{Rterm.exe} and not
+@command{Rgui.exe}.
 
 @node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
 @section Can I run R from a CD or USB drive?
@@ -274,10 +279,10 @@ without creating a shortcut starting in a writable folder.
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
-Normally you can do this from the @samp{Programs and Features} group in the
-Control Panel.  If it does not appear there, run @file{unins000.exe} in
-the top-level installation directory.  On recent versions of Windows you
-may well be asked to confirm that you wish to run a program from an
+Normally you can do this from the @samp{Programs and Features} group in
+the Control Panel.  If it does not appear there, run @file{unins000.exe}
+in the top-level installation directory.  On recent versions of Windows
+you may be asked to confirm that you wish to run a program from an
 `unknown' or `unidentified' publisher.
 
 Uninstalling R only removes files from the initial installation, not
@@ -457,7 +462,7 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: under recent versions of Windows, go to `User
+is system-specific: under recent versions of Windows, go to `User
 Accounts' in the Control Panel, and select your account and then `Change
 my environment variables'.
 @end enumerate
@@ -531,10 +536,9 @@ neither sets up nor removes the file associations.
 @node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
-Directly, no.  See CRAN packages @code{rscproxy} and @code{rcom} as well
-as @code{RDCOMServer}, @code{RDCOMClient}, @code{RDCOMEvents} and
-@code{SWinTypeLibs} from @uref{http://www.omegahat.org/}.
-
+Directly, no.  See packages such as @code{RDCOMClient} from
+@uref{http://www.omegahat.org/} and the non-Free project at
+@uref{http://www.statconn.com/}.
 
 @node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
 @section The Internet download functions fail.
@@ -760,11 +764,11 @@ use fonts which render them correctly.
 The font used can affect whether quotes are rendered correctly.  The
 default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
-tried.  @code{Lucida Console} has elegant glyphs for directional quotes
-(but seems rather light unless ClearType is in use): @code{Consolas} is
-another font which we often select when ClearType is in use.
-Non-TrueType fonts such as @code{Courier} and @code{FixedSys} lack
-directional double quotes on all the systems we tried.
+tried.  @code{Lucida Console} which has elegant glyphs for directional
+quotes (but seems rather light unless ClearType is in use):
+@code{Consolas} is another font which we often select when ClearType is
+in use.  Non-TrueType fonts such as @code{Courier} and @code{FixedSys}
+lack directional double quotes on the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
@@ -786,7 +790,7 @@ accessed by pressing AltGr (the right Alt key) plus some other key.
 This is @code{]} in Canadian (multilingual), German and Scandinavian
 layouts, @code{1} in Eastern Europe, @code{[} in Portuguese, @code{4} or
 @code{5} in Spanish, @code{/} in Francophone Belgian, and so on.  For
-some keyboards the uses of AltGr are at
+some keyboards the uses of AltGr are shown at
 @url{http://office.microsoft.com/@/en-us/@/word/@/HP052590631033.aspx}:
 you can explore those for your keyboard via the `On-Screen Keyboard'
 (under Ease of access on Windows 7).
@@ -876,7 +880,7 @@ edit the @env{PATH}.
 The element you want to add to the path is something like
 
 @example
-c:\Program Files\R\R-3.0.0\bin\x64
+c:\Program Files\R\R-3.1.0\bin\x64
 @end example
 
 @noindent
@@ -1102,11 +1106,11 @@ You can install binary packages either from a repository such as
 CRAN or from a local @code{.zip} file by using @code{install.packages}:
 see its help page.  There are menu items on the @code{Packages} menu to
 provide a point-and-click interface to package installation.  The
-packages for each minor (2.x.? or 3.x.?) version will be stored in a separate area,
-so for R 3.0.? the files are in @file{bin/windows/contrib/3.0}.
+packages for each minor (3.x.?) version will be stored in a separate area,
+so for R 3.1.? the files are in @file{bin/windows/contrib/3.1}.
 
 Note that the binary versions on CRAN are unsupported: see
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.0/@/ReadMe},
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe},
 which also gives the locations of a few other binary packages.
 
 If there is no binary package or that is not up-to-date or you prefer
@@ -1199,12 +1203,12 @@ prepared for R 2.10.0 or later, and packages containing compiled code
 for R 2.12.0 or later.
 
 You can tell the version the package was compiled for by looking at the
-@samp{Built:} line in its @file{DESCRIPTION} file 
+@samp{Built:} line in its @file{DESCRIPTION} file.
 
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found.  See
-@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.0/@/ReadMe} for a
+@uref{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/3.1/@/ReadMe} for a
 listing of some of these packages (notably @code{RGtk2},
 @code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
 of the packages connecting to databases).
@@ -1327,13 +1331,12 @@ documented at @url{http://win-builder.r-project.org}.  If the package is
 not yours, please remember to change the maintainer address so the
 results go to you and not the author(s)!
 
-However, if a CRAN package is not available in binary form or only
-available for 32-bit R, this usually means that there is a problem
-with some dependent package or external software (often mentioned in the
-@file{@@ReadMe} file in the binary repository directory).  You can email
-@email{R-windows@@r-project.org} expressing a wish for such a package to
-be ported---the maintainers will take such wishes into account when
-prioritizing work on binary packages.
+However, if a CRAN package is not available in binary form, this usually
+means that there is a problem with some dependent package or external
+software (often mentioned in the @file{@@ReadMe} file in the binary
+repository directory).  You can email @email{R-windows@@r-project.org}
+expressing a wish for such a package to be ported---the maintainers will
+take such wishes into account when prioritizing work on binary packages.
 
 In many cases installing packages from the sources is not at all
 difficult (especially if the package contains no compiled code), so
@@ -1356,10 +1359,10 @@ The latest version of the package might require a later version of R
 than the one you are using.  You can check on the package's HTML page on
 CRAN, and update your R if needed.
 
-Your R might be too old.  Binary packages for the 2.x series were built
-(if possible) whilst 2.(x+1) is current, and once 3.0.0 is released,
-binary packages for 2.14.x will be frozen.  You can always try
-installing from the sources.
+Your R might be too old.  Binary packages for the 3.x series are built
+(if possible) whilst 3.(x+1) is current, but building stops once 3.(x+2)
+reaches alpha (pre-release, about a month before release).  You can
+always try installing from the sources.
 
 @node No binary packages appear to be available for my version of R, How do I build my package for both 32- and 64-bit R?, Package xxx is out of date for Windows, Packages
 @section No binary packages appear to be available for my version of R
@@ -1395,10 +1398,10 @@ other with option @option{--merge-multiarch}, but the package source
 must be a tarball (and as before, running on a 64-bit version of Windows
 with both versions of R installed).
 
-Finally, as from R 2.15.0, a package without a @code{src/Makefile.win}
-file and no or empty or architecture-independent @code{configure.win}
-file can be installed for both architectures from 32-bit Windows if the
-64-bit components were selected when R was installed and option
+Finally, a package without a @code{src/Makefile.win} file and no or
+empty or architecture-independent @code{configure.win} file can be
+installed for both architectures from 32-bit Windows if the 64-bit
+components were selected when R was installed and option
 @option{--compile-both} is given.  Obviously, only the 32-bit
 installation can be tested.
 
@@ -1493,6 +1496,9 @@ On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it was a 21" monitor and 400mm x 300mm!
 
+This is less common with LCD screens but not unkown, particularly if
+they are not running at their native resolution.
+
 @node How do I move focus to a graphics window or the console?, What does TAB completion do?, Circles appear as ovals on screen, Windows Features
 @section How do I move focus to a graphics window or the console?
 
@@ -1580,7 +1586,7 @@ function @code{setwd}: see its help page.
 @section Can I load workspaces saved under Unix/GNU-Linux or Mac OS X?
 
 Yes.  All ports of R use the same format for saved workspaces, so they
-are interchangeable (for the same 2.x.? version of R, at least).
+are interchangeable (for the same 3.x.? version of R, at least).
 
 Note though that character data in a workspace will be in a particular
 encoding that is not recorded in the workspace, so workspaces containing
@@ -1589,8 +1595,7 @@ the same OS.  Since R marks character data when it knows it to be in
 UTF-8 or Latin-1 (including its Windows superset, CP1252), strings in
 those encodings are likely to be transferred correctly: fortunately this
 covers most of the common cases (OS X normally uses UTF-8, and Linux
-users are likely to use UTF-8 or perhaps Latin-1 (which used to be used
-for English)).
+users are likely to use UTF-8 or perhaps Latin-1).
 
 It is possible to save references to package namespaces when saving the
 workspace: if that happens the package will need to be installed on the
@@ -1792,13 +1797,6 @@ program under a debugger and sending it a signal to interrupt it and
 drop control back to the debugger does not work with a MinGW version of
 @command{gdb}.  It does often work with the @code{cygwin} version.
 
-@item
-Other debuggers than @command{gdb} can be used.  We have successfully
-used the @command{insight} front-end to @command{gdb} (see
-@uref{http://sources.redhat.com/@/insight/}: there is a MinGW port on
-their site), and Borland's debugger with a DLL compiled in a Borland
-compiler.
-
 @end itemize
 
 See
@@ -1832,23 +1830,12 @@ link /dll /out:X.dll /export:X_main X.obj X_main.obj
 @end example
 
 @noindent
-or (Borland C++, which also requires extension @code{.cpp})
-
-@example
-bcc32 -u- -WDE X.cpp X_main.cpp
-@end example
-
-@noindent
 and call the entry point(s) in @code{X_R}, such as @code{X_main}.
 Construction of static variables will occur when the DLL is loaded, and
 destruction when the DLL is unloaded, usually when R terminates.
 
 Note that you will not see the messages from this example in the GUI
 console: see the next section.
-
-This example used to be in package @file{cxx_0.0-x.tar.gz} in the
-@file{src/contrib/Devel} section on CRAN, and could be compiled as a
-package in the usual way on Windows.
 
 
 @node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
@@ -1887,7 +1874,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2015-01-21    
+@set LASTEDIT 2015-01-27    
 @ifhtml
 @html
 <hr WIDTH="100%">
