@@ -261,7 +261,7 @@
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
 
-      \item New \code{isNamespaceLoaded()} for readability and speed.
+      \item New function \code{isLoadedNamespace()} for readability and speed.
     }
   }
 
@@ -411,6 +411,9 @@
       There are options for what \code{install.packages(type = "both")}
       will do if compilation of a source package is desirable: see
       \code{?options} (under \pkg{utils}).
+
+      If you intend not to accept updates as source packages, you should
+      use \code{update.packages(type = "binary")}.
     }
   }
 
