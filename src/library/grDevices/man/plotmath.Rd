@@ -164,7 +164,8 @@
   The supported \sQuote{scalable delimiters} are \code{| ( [ \{},
   \code{lceil}, \code{lfloor} and their right-hand versions.
   \code{"."} is equivalent to \code{""}: the corresponding delimiter
-  will be omitted.
+  will be omitted. Delimiter \code{||} is supported but has the same
+  effect as \code{|}.
   
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
