@@ -1447,8 +1447,9 @@ function(file, encoding = NA)
             ## Previous use of con <- file(file, encoding = encoding)
             ## was intolerant so do what .install_package_code_files()
             ## does.
-            lines <- iconv(readLines(file, warn = FALSE),
-                           from = encoding, to = "", sub = "byte")
+            lines <- c(paste0("#line 1 \"", file, "\""),
+                       iconv(readLines(file, warn = FALSE),
+                             from = encoding, to = "", sub = "byte"))
             parse(text = lines)
         } else parse(file)
     })

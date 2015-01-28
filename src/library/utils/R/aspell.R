@@ -743,8 +743,9 @@ function(file, encoding = "unknown")
     ## The message strings considered are the string constants subject to
     ## translation in gettext-family calls (see below for details).
 
-    exprs <- suppressWarnings(parse(file = file, encoding = encoding,
-                                    keep.source = TRUE))
+    exprs <-
+        suppressWarnings(tools:::.parse_code_file(file = file,
+                                                  encoding = encoding))
     if(!length(exprs)) return(NULL)
 
     pd <- getParseData(exprs)
