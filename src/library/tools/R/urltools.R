@@ -299,6 +299,9 @@ function(db, verbose = FALSE)
             if (length(ind))
                 newLoc <- sub("^[Ll]ocation: ([^\r]*)\r\n", "\\1", h[max(ind)])
         }
+        ## A mis-configured site
+        if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
+            s <- "405"
         c(s, msg, newLoc)
     }
 

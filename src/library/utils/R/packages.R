@@ -328,6 +328,10 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
 
+
+    if(type == "both" && (!missing(contriburl) || !is.null(available))) {
+        stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
+    }
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
@@ -457,6 +461,9 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          ..., type = getOption("pkgType"))
 {
     ask  # just a check that it is valid before we start work
+    if(type == "both" && (!missing(contriburl) || !is.null(available))) {
+        stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
+    }
     if(is.null(lib.loc)) lib.loc <- .libPaths()
     if(!is.matrix(instPkgs))
         stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
@@ -487,9 +494,13 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         else message("no new packages are available")
     }
     if(length(update)) {
-        install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
-                         method = method, available = available,
-                         type = type, ...)
+        if(type == "both")
+            install.packages(update, lib = lib.loc[1L], method = method,
+                             type = type, ...)
+        else
+            install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
+                             method = method, available = available,
+                             type = type, ...)
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1L])
         updated <- update[update %in% dirs]
