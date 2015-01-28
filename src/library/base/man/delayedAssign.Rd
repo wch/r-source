@@ -1,6 +1,6 @@
 % File src/library/base/man/delayedAssign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{delayedAssign}
@@ -9,10 +9,10 @@
 \alias{promises}
 \title{Delay Evaluation}
 \description{
-\code{delayedAssign} creates a \emph{promise} to evaluate the given
-expression if its value is requested.  This provides direct access
-to the \emph{lazy evaluation} mechanism used by \R for the evaluation
-of (interpreted) functions.
+  \code{delayedAssign} creates a \emph{promise} to evaluate the given
+  expression if its value is requested.  This provides direct access
+  to the \emph{lazy evaluation} mechanism used by \R for the evaluation
+  of (interpreted) functions.
 }
 \usage{
 delayedAssign(x, value, eval.env = parent.frame(1),
@@ -42,14 +42,15 @@ delayedAssign(x, value, eval.env = parent.frame(1),
   not be evaluated again.
 }
 \seealso{
-\code{\link{substitute}}, to see the expression associated with a promise.
+  \code{\link{substitute}}, to see the expression associated with a
+  promise, if \code{assign.env} is not the \code{\link{.GlobalEnv}}.
 }
 \examples{
 msg <- "old"
 delayedAssign("x", msg)
+substitute(x) # shows only 'x', as it is in the global env.
 msg <- "new!"
-x #- new!
-substitute(x) #- x (was 'msg' ?)
+x # new!
 
 delayedAssign("x", {
     for(i in 1:3)
@@ -60,9 +61,25 @@ delayedAssign("x", {
 x^2 #- yippee
 x^2 #- simple number
 
-e <- (function(x, y = 1, z) environment())(1+2, "y", {cat(" HO! "); pi+2})
-(le <- as.list(e)) # evaluates the promises
+ne <- new.env()
+delayedAssign("x", pi + 2, assign.env = ne)
+## See the promise {without "forcing" (i.e. evaluating) it}:
+substitute(x, ne) #  'pi + 2'
+\dontshow{stopifnot(identical(substitute(x,ne), quote(pi + 2)))}
 
+### Promises in an environment [for advanced users]:  ---------------------
+
+e <- (function(x, y = 1, z) environment())(cos, "y", {cat(" HO!\n"); pi+2})
+## How can we look at all promises in an env (w/o forcing them)?
+gete <- function(e_)
+   lapply(lapply(ls(e_), as.name),
+          function(n) eval(substitute(substitute(X, e_), list(X=n))))
+
+(exps <- gete(e))
+sapply(exps, typeof)
+
+(le <- as.list(e)) # evaluates ("force"s) the promises
+stopifnot(identical(unname(le), lapply(exps, eval))) # and another "Ho!"
 }
 \keyword{programming}
 \keyword{data}
