@@ -2,7 +2,7 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-GIT := `if [ -d "$(top_builddir)/.git" ]; then echo "git"; fi`
+GIT = `if [ -d "$(top_builddir)/.git" ]; then echo "git"; fi`
 
 VER = $(shell sed -e 's/\([^ ]*\).*/\1/' ../../VERSION)
 

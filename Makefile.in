@@ -9,7 +9,7 @@ top_builddir = .
 
 include $(top_builddir)/Makeconf
 
-GIT := `if [ -d "$(top_builddir)/.git" ]; then echo "git"; fi`
+GIT = `if [ -d "$(top_builddir)/.git" ]; then echo "git"; fi`
 
 distdir = $(PACKAGE)-$(VERSION)
 INSTFILES = COPYING
