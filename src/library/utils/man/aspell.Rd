@@ -68,7 +68,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   character vector with the respective field names).  By default,
   \samp{Title} and \samp{Description} fields are kept.
 
-  The print method has for the objects returned by \code{aspell} has an
+  The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
   possibly mis-spelled words.  The default is 2; Emacs users may find it
   useful to use an indentation of 0 and visit output in grep-mode.  It

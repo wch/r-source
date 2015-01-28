@@ -87,11 +87,13 @@ srcref(srcfile, lloc)
   \code{srcfile}.
 
   The \code{srcref} function produces an object of class
-  \code{srcref}, which describes a range of characters in a \code{
-    srcfile}.  The \code{lloc} value gives the following values:
+  \code{srcref}, which describes a range of characters in a
+  \code{srcfile}.
+  The \code{lloc} value gives the following values:
 \preformatted{c(first_line, first_byte, last_line, last_byte, first_column,
   last_column, first_parsed, last_parsed)
-}. Bytes (elements 2, 4) and
+}
+  Bytes (elements 2, 4) and
   columns (elements 5, 6) may be different due to multibyte
   characters.  If only four values are given, the columns and bytes
   are assumed to match.  Lines (elements 1, 3) and parsed lines (
@@ -111,8 +113,8 @@ srcref(srcfile, lloc)
   method will read the associated source file to obtain the text
   corresponding to the reference.  The exact behaviour depends on the
   class of the source file.  If the source file inherits from
-  class \code{"srcfilecopy"}, the lines are taken from the saved copy
-  using the "parsed" line counts.  If not, an attempt
+  class \code{srcfilecopy}, the lines are taken from the saved copy
+  using the \dQuote{parsed} line counts.  If not, an attempt
   is made to read the file, and the original line numbers of the
   \code{srcref} record (i.e., elements 1 and 3) are used.  If an error
   occurs (e.g., the file no longer exists), text like
