@@ -1,7 +1,7 @@
 #  File src/library/utils/R/objects.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ function(fname, envir)
 	## maybe an S3 generic was turned into the S4 default
 	## Try to find it, otherwise warn :
 	fMethsEnv <- methods::getMethodsForDispatch(f)
-	r <- lapply(grep("^ANY\\b", ls(envir = fMethsEnv), value=TRUE),
+	r <- lapply(grep("^ANY\\b", names(fMethsEnv), value=TRUE),
 		    get, envir = fMethsEnv)
 	if(any(ddm <- unlist(lapply(r, class)) == "derivedDefaultMethod"))
 	    f <- r[ddm][[1]]@.Data
@@ -178,7 +178,8 @@ function(generic.function, class)
         ## the corresponding generic, so we don't check again.
         ## Note that the generic will not necessarily be visible,
         ## as the package may not be loaded.
-        S3reg <- unlist(lapply(loadedNamespaces(), function(i) ls(get(".__S3MethodsTable__.", envir = asNamespace(i)), pattern = name)))
+        S3reg <- unlist(lapply(loadedNamespaces(), function(i)
+	    ls(get(".__S3MethodsTable__.", envir = asNamespace(i)), pattern = name)))
         ## now methods like print.summary.aov will be picked up,
         ## so we do look for such mismatches.
         if(length(S3reg))

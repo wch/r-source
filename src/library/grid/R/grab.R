@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grab.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ rootVP <- function(pvp) {
 # List the children of the current vp (as a vpList)
 current.vpList <- function() {
   cpvp <- grid.Call(L_currentViewport)
-  if (length(ls(cpvp$children, all.names=TRUE)) == 0)
+  if (length(names(cpvp$children)) == 0)
     NULL
   else
     vpListFromNode(cpvp)
@@ -45,7 +45,7 @@ vpExists <- function(vp) {
 }
 
 vpExists.viewport <- function(vp) {
-  vp$name %in% ls(.Call(L_currentViewport)$children)
+  vp$name %in% names(.Call(L_currentViewport)$children)
 }
 
 vpExists.vpStack <- function(vp) {

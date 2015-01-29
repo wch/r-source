@@ -1,7 +1,7 @@
 #  File src/library/grid/R/grid.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ pushViewport <- function(..., recording=TRUE) {
 
 # Helper functions called from C
 no.children <- function(children) {
-  length(ls(children, all.names=TRUE)) == 0
+  length(names(children)) == 0
 }
 
 child.exists <- function(name, children) {
@@ -113,7 +113,7 @@ child.exists <- function(name, children) {
 }
 
 child.list <- function(children) {
-  ls(children, all.names=TRUE)
+  ls(children, all.names=TRUE) # sorted (needed ?)
 }
 
 pathMatch <- function(path, pathsofar, strict) {
@@ -287,7 +287,7 @@ current.parent <- function(n=1) {
 }
 
 vpListFromNode <- function(node) {
-  childnames <- ls(node$children, all.names=TRUE)
+  childnames <- names(node$children)
   n <- length(childnames)
   children <- vector("list", n)
   index <- 1
@@ -300,7 +300,7 @@ vpListFromNode <- function(node) {
 
 vpTreeFromNode <- function(node) {
   # If no children then just return viewport
-  if (length(ls(node$children, all.names=TRUE)) == 0)
+  if (length(names(node$children)) == 0)
     vpFromPushedvp(node)
   # Otherwise return vpTree
   else

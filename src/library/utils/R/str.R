@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -224,7 +224,7 @@ str.default <-
                 n.of(length(a), "field"), "\n", sep = "")
 	    strSub(a, no.list=TRUE, give.length=give.length,
 		   nest.lev = nest.lev + 1)
-	    meths <- ls(cld@refMethods, all.names = TRUE)
+	    meths <- names(cld@refMethods)
 	    oMeths <- meths[is.na(match(meths, methods:::envRefMethodNames))]
 	    cat(indent.str, "and ", n.of(length(meths), "method"), sep = "")
 	    sNms <- names(cld@slots)
@@ -232,7 +232,7 @@ str.default <-
 		cat(", of which", lo, ngettext(lo, "is", "are"), " possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
 		    cat(":",
-			strwrap(paste(oMeths, collapse=", "),
+			strwrap(paste(sort(oMeths), collapse=", "),
 				indent = 2, exdent = 2,
 				prefix = indent.str, width=width),# exdent = nind),
 			sep = "\n")

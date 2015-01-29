@@ -97,7 +97,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what)),
        !exists(".conflicts.OK", envir = value, inherits = FALSE)) {
         checkConflicts(value)
     }
-    if( length(ls(envir = value, all.names = TRUE)) && .isMethodsDispatchOn() )
+    if (length(names(value)) && .isMethodsDispatchOn() )
         methods:::cacheMetaData(value, TRUE)
     invisible(value)
 }

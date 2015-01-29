@@ -155,7 +155,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     else outfile <- file
 
     on.exit(file.remove(outfile))
-    save(list = ls(envir = .GlobalEnv, all.names = TRUE), file = outfile,
+    save(list = names(.GlobalEnv), file = outfile,
          version = version, ascii = ascii, compress = compress,
          envir = .GlobalEnv, precheck = FALSE)
     if (safe)

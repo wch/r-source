@@ -1,7 +1,7 @@
 #  File src/library/methods/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -87,15 +87,13 @@
     cat(" done\n")
 
     assign("envRefMethodNames",
-	   ls(getClassDef("envRefClass")@refMethods, all.names = TRUE),
-	   envir = where)
+	   names(getClassDef("envRefClass")@refMethods), envir = where)
     assign(".onLoad", ..onLoad, envir = where)
     rm(...onLoad, ..onLoad, envir = where)
     dbbase <- file.path(libname, pkgname, "R", pkgname)
     ns <- asNamespace(pkgname)
-    vars <- ls(envir = ns, all.names = TRUE)
     ## we need to exclude the registration vars
-    vars <- grep("^C_", vars, invert = TRUE, value = TRUE)
+    vars <- grep("^C_", names(ns), invert = TRUE, value = TRUE)
     tools:::makeLazyLoadDB(ns, dbbase, variables = vars)
 }
 
