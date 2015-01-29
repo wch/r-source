@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1096,6 +1096,18 @@ msgid "'x' must be a single character string"
 msgstr ""
 
 msgid "test '%s' is not available"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
 msgstr ""
 
 msgid "argument 'x' must be a character vector"

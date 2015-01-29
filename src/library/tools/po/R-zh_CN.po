@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1161,6 +1161,18 @@ msgstr "'x'必需是单字符串"
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
+msgid ":"
+msgstr "："
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "参数'x'必需是字符矢量"
 
@@ -1365,9 +1377,6 @@ msgstr[0] ""
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr "。目录里有这些文件"
-
-#~ msgid ":"
-#~ msgstr "："
 
 #~ msgid "Located more than one"
 #~ msgstr "找到一个以上的"

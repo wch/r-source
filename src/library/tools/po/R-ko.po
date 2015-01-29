@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -1188,6 +1188,18 @@ msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
 
 msgid "test '%s' is not available"
 msgstr "테스트 '%s'는 사용가능하지 않습니다"
+
+msgid ":"
+msgstr ""
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"

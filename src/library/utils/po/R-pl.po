@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-18 09:58\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1087,6 +1087,11 @@ msgstr "nie można dostać się do indeksu dla repozytorium %s"
 # stop("invalid 'filters' argument.")
 msgid "invalid 'filters' argument."
 msgstr "niepoprawny argument 'filters'"
+
+msgid ""
+"specifying 'contriburl' or 'available' requires a single type, not type = "
+"\"both\""
+msgstr ""
 
 # utils/R/packages.R: 351
 # warning(sprintf("package '%s' in library '%s' will not be updated",

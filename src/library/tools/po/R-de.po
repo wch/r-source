@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1192,6 +1192,18 @@ msgstr "'x' muss eine Zeichenkette sein"
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
 
+msgid ":"
+msgstr ":"
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
 
@@ -1434,9 +1446,6 @@ msgstr[1] "%d der Pakettests fehlgeschlagen"
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr ". Die folgende Datei exisitiert im Verzeichnis"
-
-#~ msgid ":"
-#~ msgstr ":"
 
 #~ msgid "Located more than one"
 #~ msgstr "mehr als eine gefunden"

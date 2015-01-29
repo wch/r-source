@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1224,6 +1224,18 @@ msgstr " 'x' は 1 つの文字でなければなりません "
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
 
+msgid ":"
+msgstr " ： "
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
@@ -1439,9 +1451,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr " . ディレクトリには以下のファイルがあります "
-
-#~ msgid ":"
-#~ msgstr " ： "
 
 #~ msgid "Located more than one"
 #~ msgstr " 1個以上が見つかりました "

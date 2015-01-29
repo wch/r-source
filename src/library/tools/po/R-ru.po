@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:38\n"
+"POT-Creation-Date: 2015-01-29 09:33\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1196,6 +1196,18 @@ msgstr "аргумент 'x' должен быть текстовой строкой"
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
 
+msgid ":"
+msgstr ":"
+
+msgid "latin1"
+msgstr ""
+
+msgid "ASCII"
+msgstr ""
+
+msgid "byte"
+msgstr ""
+
 msgid "argument 'x' must be a character vector"
 msgstr "аргумент 'x' должен быть текстовым вектором"
 
@@ -1457,9 +1469,6 @@ msgstr[2] ""
 
 #~ msgid ". The following files exists in directory"
 #~ msgstr ". Следующие файлы есть в папке"
-
-#~ msgid ":"
-#~ msgstr ":"
 
 #~ msgid "Located more than one"
 #~ msgstr "Нашел больше одного"
