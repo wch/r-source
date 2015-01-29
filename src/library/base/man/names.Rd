@@ -1,6 +1,6 @@
 % File src/library/base/man/names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{names}
@@ -35,6 +35,13 @@ names(x) <- value
   generic replacement function.  The default methods get and set
   the \code{"names"} attribute of a vector (including a list) or
   pairlist.
+
+  For an \code{\link{environment}} \code{env}, \code{names(env)} gives
+  the names of the corresponding list, i.e.,
+  \code{names(as.list(env, all.names=TRUE))} which are also the same as
+  \code{\link{ls}(env, all.names=TRUE, sorted=FALSE)}.  If the
+  environment is used as a hash table, \code{names(env)} are its
+  \dQuote{keys}.
 
   If \code{value} is shorter than \code{x}, it is extended by character
   \code{NA}s to the length of \code{x}.
@@ -92,5 +99,11 @@ names(z)
 ## assign just one name
 names(z)[2] <- "b"
 z
+
+\dontshow{## "show" the equivalence claimed above:
+  for(e in c(baseenv(), globalenv()))
+  stopifnot(identical(names(e), ls(e, all.names=TRUE, sorted=FALSE)),
+            identical(names(e), names(as.list(e, all.names=TRUE))))
+}
 }
 \keyword{attribute}

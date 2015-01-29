@@ -261,6 +261,11 @@
       Karl Millar.
 
       \item New function \code{isLoadedNamespace()} for readability and speed.
+
+      \item \code{names(env)} now returns all the object names of an
+      \code{environment} \code{env}, equivalently to \code{ls(env,
+	all.names=TRUE, sorted=FALSE)} and also to the names of the
+      corresponding list, \code{names(as.list(env, all.names=TRUE))}.
     }
   }
 

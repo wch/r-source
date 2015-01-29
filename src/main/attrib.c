@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -964,7 +964,9 @@ SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
     if (isVector(ans) || isList(ans) || isLanguage(ans) ||
 	IS_S4_OBJECT(ans))
 	ans = getAttrib(ans, R_NamesSymbol);
-    else ans =  R_NilValue;
+    else if (isEnvironment(ans))
+	ans = R_lsInternal3(ans, TRUE, FALSE);
+    else ans = R_NilValue;
     UNPROTECT(1);
     return ans;
 }
