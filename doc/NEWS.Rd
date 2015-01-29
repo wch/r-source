@@ -254,6 +254,8 @@
       overridden for an \code{url()} connection \emph{via} its new
       \code{method} argument.
 
+      \code{download.file()} has new method \code{"wininet"}.
+
       \item \code{parent.env<-} can no longer modify the parent of a
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.

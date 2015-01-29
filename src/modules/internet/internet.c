@@ -47,39 +47,31 @@ Rconnection
 in_newCurlUrl(const char *description, const char * const mode, int type);
 
 #ifdef Win32
-
+static int meth;
 static void *in_R_HTTPOpen2(const char *url, const char *headers, const int cacheOK);
 static int   in_R_HTTPRead2(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose2(void *ctx);
 static void *in_R_FTPOpen2(const char *url);
 
-static void *Ri_HTTPOpen(const char *url, const char *headers, const int cacheOK)
-{
-    return UseInternet2 ? in_R_HTTPOpen2(url, headers, cacheOK) :
-	in_R_HTTPOpen(url, headers, cacheOK);
-}
-static int Ri_HTTPRead(void *ctx, char *dest, int len)
-{
-    return UseInternet2 ? in_R_HTTPRead2(ctx, dest, len) :
-	in_R_HTTPRead(ctx, dest, len);
-}
-static void  Ri_HTTPClose(void *ctx) {
-    if(UseInternet2) in_R_HTTPClose2(ctx); else in_R_HTTPClose(ctx);
-}
+#define Ri_HTTPOpen(url, headers, cacheOK) \
+    (meth ? in_R_HTTPOpen2(url, headers, cacheOK) : \
+	in_R_HTTPOpen(url, headers, cacheOK));
 
-static void *Ri_FTPOpen(const char *url)
-{
-    return UseInternet2 ? in_R_FTPOpen2(url) : in_R_FTPOpen(url);
-}
-static int Ri_FTPRead(void *ctx, char *dest, int len)
-{
-    return UseInternet2 ? in_R_HTTPRead2(ctx, dest, len) :
-	in_R_FTPRead(ctx, dest, len);
-}
-static void Ri_FTPClose(void *ctx)
-{
-    if(UseInternet2) in_R_HTTPClose2(ctx); else in_R_FTPClose(ctx);
-}
+#define Ri_HTTPRead(ctx, dest, len) \
+    (meth ? in_R_HTTPRead2(ctx, dest, len) : in_R_HTTPRead(ctx, dest, len))
+
+#define Ri_HTTPClose(ctx) \
+    if(meth) in_R_HTTPClose2(ctx); else in_R_HTTPClose(ctx);
+
+#define Ri_FTPOpen(url) \
+    (meth ? in_R_FTPOpen2(url) : in_R_FTPOpen(url));
+
+#define Ri_FTPRead(ctx, dest, len) \
+    (meth ? in_R_HTTPRead2(ctx, dest, len) : in_R_FTPRead(ctx, dest, len))
+
+#define Ri_FTPClose(ctx) \
+    if(meth) in_R_HTTPClose2(ctx); else in_R_FTPClose(ctx);
+
 #else
 #define Ri_HTTPOpen in_R_HTTPOpen
 #define Ri_HTTPRead in_R_HTTPRead
@@ -478,12 +470,19 @@ static SEXP in_do_download(SEXP args)
     cacheOK = asLogical(CAR(args));
     if(cacheOK == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "cacheOK");
-#ifdef USE_WININET
-    PROTECT(agentFun = lang2(install("makeUserAgent"), ScalarLogical(0)));
+#ifdef Win32
+    meth = asLogical(CADR(args));
+    if(meth == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "method");
+    if(meth == 0) meth = UseInternet2;
+    if(meth)
+	PROTECT(agentFun = lang2(install("makeUserAgent"), ScalarLogical(0)));
+    else
+	PROTECT(agentFun = lang1(install("makeUserAgent")));
 #else
     PROTECT(agentFun = lang1(install("makeUserAgent")));
 #endif
-    PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
+    sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
     UNPROTECT(1);
     if(TYPEOF(sheaders) == NILSXP)
 	headers = NULL;
@@ -532,7 +531,7 @@ static SEXP in_do_download(SEXP args)
 #ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0
 #ifdef Win32
-	       || ((strncmp(url, "https://", 8) == 0) && UseInternet2)
+	       || ((strncmp(url, "https://", 8) == 0) && meth)
 #endif
 	) {
 

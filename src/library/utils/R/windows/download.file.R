@@ -24,9 +24,10 @@ download.file <-
     method <- if (missing(method))
 	getOption("download.file.method", default = "auto")
     else
-        match.arg(method, c("auto", "internal", "libcurl", "wget", "curl", "lynx"))
+        match.arg(method, c("auto", "internal", "wininet", "libcurl",
+                            "wget", "curl", "lynx"))
 
-    if(missing(mode) & length(grep("\\.(gz|bz2|xz|tgz|zip|rda|RData)$", url))) mode <- "wb"
+    if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rda|RData)$", url))) mode <- "wb"
     if(method == "auto") {
         if(capabilities("http/ftp"))
             method <- "internal"
@@ -40,8 +41,10 @@ download.file <-
         else
             stop("no download method found")
     }
-    if(method == "internal")
-        status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
+    if(method %in% c("internal", "wininet")) {
+        status <- .External(C_download, url, destfile, quiet, mode, cacheOK,
+                            method == "wininet")
+    }
     else if(method == "libcurl")
         status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {

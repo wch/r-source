@@ -25,9 +25,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     file is saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Current
-    download methods are \code{"internal"}, \code{"libcurl"},
-    \code{"wget"} and \code{"curl"}, and there is a value \code{"auto"}:
-    see \sQuote{Details} and \sQuote{Note}.
+    download methods are \code{"internal"}, \code{"wininet"} (Windows
+    only) \code{"libcurl"}, \code{"wget"} and \code{"curl"}, and there
+    is a value \code{"auto"}: see \sQuote{Details} and \sQuote{Note}.
 
     The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.
