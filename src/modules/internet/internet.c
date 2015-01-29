@@ -607,7 +607,7 @@ static SEXP in_do_download(SEXP args)
 		    }
 		}
 #else
-		if(!quiet && R_Interactive) {
+		if(!quiet) {
 		    if(guess <= 0) putdots(&ndots, nbytes/1024);
 		    else putdashes(&ndashes, (int)(50*nbytes/guess));
 		}
@@ -616,7 +616,7 @@ static SEXP in_do_download(SEXP args)
 	    Ri_HTTPClose(ctxt);
 	    if(!quiet) {
 #ifndef Win32
-		if(R_Interactive) REprintf("\n");
+		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
 		    REprintf("downloaded %0.1f MB\n\n",
@@ -717,7 +717,7 @@ static SEXP in_do_download(SEXP args)
 		    }
 		}
 #else
-		if(!quiet && R_Interactive) {
+		if(!quiet) {
 		    if(guess <= 0) putdots(&ndots, nbytes/1024);
 		    else putdashes(&ndashes, (int)(50*nbytes/guess));
 		}
@@ -726,7 +726,7 @@ static SEXP in_do_download(SEXP args)
 	    Ri_FTPClose(ctxt);
 	    if(!quiet) {
 #ifndef Win32
-		if(R_Interactive) REprintf("\n");
+		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
 		    REprintf("downloaded %0.1f MB\n\n",
