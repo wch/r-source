@@ -47,7 +47,6 @@ Rconnection
 in_newCurlUrl(const char *description, const char * const mode, int type);
 
 #ifdef Win32
-static int meth;
 static void *in_R_HTTPOpen2(const char *url, const char *headers, const int cacheOK);
 static int   in_R_HTTPRead2(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose2(void *ctx);
@@ -440,8 +439,8 @@ static void doneprogressbar(void *data)
 #define IBUFSIZE 4096
 static SEXP in_do_download(SEXP args)
 {
-    SEXP scmd, sfile, smode, sheaders, agentFun;
-    const char *url, *file, *mode, *headers;
+    SEXP scmd, sfile, smode;
+    const char *url, *file, *mode;
     int quiet, status = 0, cacheOK;
 #ifdef Win32
     char pbuf[30];
@@ -471,24 +470,10 @@ static SEXP in_do_download(SEXP args)
     if(cacheOK == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "cacheOK");
 #ifdef Win32
-    meth = asLogical(CADR(args));
+    int meth = asLogical(CADR(args));
     if(meth == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "method");
     if(meth == 0) meth = UseInternet2;
-    if(meth)
-	PROTECT(agentFun = lang2(install("makeUserAgent"), ScalarLogical(0)));
-    else
-	PROTECT(agentFun = lang1(install("makeUserAgent")));
-#else
-    PROTECT(agentFun = lang1(install("makeUserAgent")));
-#endif
-    sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
-    UNPROTECT(1);
-    if(TYPEOF(sheaders) == NILSXP)
-	headers = NULL;
-    else
-	headers = CHAR(STRING_ELT(sheaders, 0));
-#ifdef Win32
     if (!quiet && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			       Titlebar | Centered);
@@ -554,10 +539,21 @@ static SEXP in_do_download(SEXP args)
 
 	R_Busy(1);
 	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
+	SEXP agentFun, sheaders;
 #ifdef Win32
 	R_FlushConsole();
+	if(meth)
+	    agentFun = PROTECT(lang2(install("makeUserAgent"), ScalarLogical(0)));
+	else
+	    agentFun = PROTECT(lang1(install("makeUserAgent")));
+#else
+	agentFun = PROTECT(lang1(install("makeUserAgent")));
 #endif
+	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+	const char *headers = (TYPEOF(sheaders) == NILSXP) ?
+	    NULL : CHAR(STRING_ELT(sheaders, 0));
 	ctxt = Ri_HTTPOpen(url, headers, cacheOK);
+	UNPROTECT(2);
 	if(ctxt == NULL) status = 1;
 	else {
 	    if(!quiet) REprintf(_("opened URL\n"), url);
@@ -754,7 +750,6 @@ static SEXP in_do_download(SEXP args)
     } else
 	error(_("unsupported URL scheme"));
 
-    UNPROTECT(1);
     return ScalarInteger(status);
 }
 
