@@ -46,11 +46,12 @@ getDependencies <-
     p0 <- unique(pkgs)
     miss <-  !p0 %in% row.names(available)
     if(sum(miss)) {
+        msg <- paste0(if(binary) "as a binary package ", "for ",
+                      sub(" *\\(.*","", R.version.string))
 	warning(sprintf(ngettext(sum(miss),
-				 "package %s is not available (for %s)",
-				 "packages %s are not available (for %s)"),
-			paste(sQuote(p0[miss]), collapse=", "),
-			sub(" *\\(.*","", R.version.string)),
+				 "package %s is not available (%s)",
+				 "packages %s are not available (%s)"),
+			paste(sQuote(p0[miss]), collapse = ", "), msg),
                 domain = NA, call. = FALSE)
         if (sum(miss) == 1L &&
             !is.na(w <- match(tolower(p0[miss]),
@@ -129,6 +130,8 @@ install.packages <-
         if (type2 == "source")
             stop("type 'binary' is not supported on this platform")
         else type <- type2
+        if(!missing(contriburl) || !is.null(available))
+           stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
     }
     if (is.logical(clean) && clean)
         clean <- "--clean"
@@ -312,7 +315,7 @@ install.packages <-
         }
     }
 
-    if(is.null(repos) & missing(contriburl)) {
+    if(is.null(repos) && missing(contriburl)) {
         tmpd <- destdir
         nonlocalrepos <- any(web <- grepl("^(http|https|ftp)://", pkgs))
         if(is.null(destdir) && nonlocalrepos) {
@@ -520,7 +523,7 @@ install.packages <-
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
         if(substr(type, 1L, 10L) == "mac.binary") {
-            if(!length(grep("darwin", R.version$platform)))
+            if(!grepl("darwin", R.version$platform))
                 stop("cannot install MacOS X binary packages on this platform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
