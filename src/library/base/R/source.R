@@ -55,7 +55,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         } else enc <- encoding
         if(length(enc) > 1L) {
             encoding <- NA
-            owarn <- options("warn"); options(warn = 2)
+	    owarn <- options(warn = 2)
             for(e in enc) {
                 if(is.na(e)) next
                 zz <- file(file, encoding = e)
