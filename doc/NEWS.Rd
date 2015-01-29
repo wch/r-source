@@ -244,9 +244,6 @@
 	available.
       }
 
-      \item Internet download progress bars are now only shown in
-      interactive sessions.
-
       \item (Windows.) The DLLs \file{internet.dll} and
       \file{internet2.dll} have been merged.  In this version it is safe
       to switch (repeatedly) between the internal and Windows internet

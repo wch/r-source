@@ -342,11 +342,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_easy_setopt(hnd[i], CURLOPT_HEADER, 0L);
 
 	total = 0.;
-	if (
-#ifndef Win32
-	    R_Interactive &&  // flaky on Windows without progress bars
-#endif
-	    !quiet && nurls <= 1) {
+	if (!quiet && nurls <= 1) {
 	    // It would in principle be possible to have
 	    // multiple progress bars on Windows.
 	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
