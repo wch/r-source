@@ -266,6 +266,11 @@
       \code{environment} \code{env}, equivalently to \code{ls(env,
 	all.names=TRUE, sorted=FALSE)} and also to the names of the
       corresponding list, \code{names(as.list(env, all.names=TRUE))}.
+
+      \item The memory manager now grows the heap more aggressively. This
+      reduces the number of garbage collections, in particular while
+      data or code are loaded, at the expense of slightly increasing the
+      memory footprint.
     }
   }
 

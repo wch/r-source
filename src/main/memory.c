@@ -341,9 +341,9 @@ static int R_NGrowIncrMin = 50000, R_NShrinkIncrMin = 0;
 static double R_VGrowIncrFrac = 0.0, R_VShrinkIncrFrac = 0.2;
 static int R_VGrowIncrMin = 100000, R_VShrinkIncrMin = 0;
 #else
-static double R_NGrowIncrFrac = 0.05, R_NShrinkIncrFrac = 0.2;
+static double R_NGrowIncrFrac = 0.2, R_NShrinkIncrFrac = 0.2;
 static int R_NGrowIncrMin = 40000, R_NShrinkIncrMin = 0;
-static double R_VGrowIncrFrac = 0.05, R_VShrinkIncrFrac = 0.2;
+static double R_VGrowIncrFrac = 0.2, R_VShrinkIncrFrac = 0.2;
 static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
 #endif
 
@@ -362,8 +362,8 @@ static void init_gc_grow_settings()
 	case 1: /* default */
 	    break;
 	case 2: /* somewhat aggressive */
-	    R_NGrowIncrFrac = 0.2;
-	    R_VGrowIncrFrac = 0.2;
+	    R_NGrowIncrFrac = 0.3;
+	    R_VGrowIncrFrac = 0.3;
 	    break;
 	case 3: /* more aggressive */
 	    R_NGrowIncrFrac = 0.4;
