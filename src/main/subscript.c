@@ -36,6 +36,11 @@
 
 #include <Defn.h>
 
+#include <R_ext/Itermacros.h>
+
+/* interval at which to check interrupts, a guess (~subsecond on current hw) */
+#define NINTERRUPT 10000000
+
 /* We might get a call with R_NilValue from subassignment code */
 #define ECALL(call, yy) if(call == R_NilValue) error(yy); else errorcall(call, yy);
 
@@ -488,7 +493,7 @@ static SEXP nullSubscript(R_xlen_t n)
 static SEXP 
 logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 {
-    R_xlen_t count, i, nmax;
+    R_xlen_t count, i, nmax, i1, i2;
     int canstretch;
     SEXP indx;
     canstretch = *stretch > 0;
@@ -501,32 +506,83 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 #ifdef LONG_VECTOR_SUPPORT
     if (nmax > R_SHORT_LEN_MAX) {
 	count = 0;
-	for (R_xlen_t i = 0; i < nmax; i++)
-	    if (LOGICAL(s)[i%ns]) count++;
+	/* we only need to scan s once even if we recycle,
+	   just remember the total count as well as
+	   the count for the last incomplete chunk (if any) */
+	i1 = (ns < nmax) ? (nmax % ns) : 0;
+	if (i1 > 0) { /* last recycling chunk is incomple -
+			 we have to get the truncated count as well */
+	    R_xlen_t rem = 0;
+	    for (i = 0; i < ns; i++) {
+		if (i == i1) rem = count;
+		if (LOGICAL(s)[i]) count++;
+	    }
+	    count = count * (nmax / ns) + rem;
+	} else { /* nested recycling, total is sufficient */
+	    for (i = 0; i < ns; i++)
+		if (LOGICAL(s)[i]) count++;
+	    count *= nmax / ns;
+	}
 	indx = allocVector(REALSXP, count);
 	count = 0;
-	for (i = 0; i < nmax; i++)
-	    if (LOGICAL(s)[i%ns]) {
-		if (LOGICAL(s)[i%ns] == NA_LOGICAL)
-		    REAL(indx)[count++] = NA_REAL;
-		else
-		    REAL(indx)[count++] = (double)(i + 1);
-	    }
+	if (ns == nmax) { /* no recycling - use fast single-index code */
+	    R_ITERATE_CHECK(NINTERRUPT, nmax, i,		\
+		if (LOGICAL(s)[i]) {		                \
+		    if (LOGICAL(s)[i] == NA_LOGICAL)		\
+			REAL(indx)[count++] = NA_REAL;		\
+		    else					\
+			REAL(indx)[count++] = (double)(i + 1);	\
+		});
+	} else /* otherwise iter-macro */
+	    MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2,	\
+		    if (LOGICAL(s)[i1]) {				\
+			if (LOGICAL(s)[i1] == NA_LOGICAL)		\
+			    REAL(indx)[count++] = NA_REAL;		\
+			else						\
+			    REAL(indx)[count++] = (int)(i + 1);		\
+		    });							\
+
 	return indx;
     }
 #endif
     count = 0;
-    for (i = 0; i < nmax; i++)
-	if (LOGICAL(s)[i%ns]) count++;
+    /* we only need to scan s once even if we recycle,
+       just remember the total count as well as
+       the count for the last incomplete chunk (if any) */
+    i1 = (ns < nmax) ? (nmax % ns) : 0;
+    if (i1 > 0) { /* last recycling chunk is incomple -
+		     we have to get the truncated count as well */
+	R_xlen_t rem = 0;
+	for (i = 0; i < ns; i++) {
+	    if (i == i1) rem = count;
+	    if (LOGICAL(s)[i]) count++;
+	}
+	count = count * (nmax / ns) + rem;
+    } else {
+	for (i = 0; i < ns; i++)
+	    if (LOGICAL(s)[i]) count++;
+	count *= nmax / ns;
+    }
     indx = allocVector(INTSXP, count);
     count = 0;
-    for (i = 0; i < nmax; i++)
-	if (LOGICAL(s)[i%ns]) {
-	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
-		INTEGER(indx)[count++] = NA_INTEGER;
-	    else
-		INTEGER(indx)[count++] = (int)(i + 1);
-	}
+    if (ns == nmax) { /* no recycling - use fast single-index code */
+	R_ITERATE_CHECK(NINTERRUPT, nmax, i,                    \
+	    if (LOGICAL(s)[i]) {                                \
+		if (LOGICAL(s)[i] == NA_LOGICAL)	        \
+		    INTEGER(indx)[count++] = NA_INTEGER;        \
+		else                                            \
+		    INTEGER(indx)[count++] = (int)(i + 1);      \
+	    });
+    } else /* otherwise iter-macro */
+	MOD_ITERATE_CHECK(NINTERRUPT, nmax, ns, nmax, i, i1, i2, {	\
+		if (LOGICAL(s)[i1]) {			        \
+		    if (LOGICAL(s)[i1] == NA_LOGICAL)		\
+			INTEGER(indx)[count++] = NA_INTEGER;	\
+		    else					\
+			INTEGER(indx)[count++] = (int)(i + 1);	\
+		}						\
+	    });
+
     return indx;
 }
 
