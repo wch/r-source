@@ -1308,6 +1308,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
          S3methods = unique(S3methods[seq_len(nS3), , drop = FALSE]) )
 } ## end{parseNamespaceFile}
 
+## unused
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
         regs <- getNamespaceInfo(ns, "S3methods")
@@ -1361,6 +1362,7 @@ registerS3methods <- function(info, package, env)
 	home <- home                # force evaluation
 	delayedAssign(x, get(method, envir = home), assign.env = envir)
     }
+    overwrite <- matrix(NA_character_, 0, 2)
     .registerS3method <- function(genname, class, method, nm, envir)
     {
         ## S3 generics should either be imported explicitly or be in
@@ -1384,6 +1386,10 @@ registerS3methods <- function(info, package, env)
 	    table <- new.env(hash = TRUE, parent = baseenv())
 	    assign(".__S3MethodsTable__.", table, envir = defenv)
 	}
+        if(!is.null(e <- table[[nm]])) {
+            current <- environmentName(environment(e))
+            overwrite <<- rbind(overwrite, c(as.vector(nm), current))
+        }
 	assignWrapped(nm, method, home = envir, envir = table)
     }
 
@@ -1429,6 +1435,22 @@ registerS3methods <- function(info, package, env)
     fin <- Info[!l2, , drop = FALSE]
     for(i in seq_len(nrow(fin)))
         .registerS3method(fin[i, 1], fin[i, 2], fin[i, 3], fin[i, 4], env)
+    if(package != "MASS" && ## MASS is providing methods for stubs in stats
+       nrow(overwrite) &&
+       nzchar(Sys.getenv("_R_CHECK_OVERWRITE_S3_METHODS_"))) {
+
+        std <- as.vector(unlist(tools:::.get_standard_package_names()))
+        overwrite <- overwrite[overwrite[, 2L] %in% std, , drop = FALSE]
+       if(nr <- nrow(overwrite)) {
+           msg <- ngettext(nr,
+                           "Registered S3 method in base/recommended package overwritten when loading '%s':",
+                           "Registered S3 methods in base/recommended package(s) overwritten when loading '%s':")
+           warning(sprintf(msg, package),
+                   domain = NA, immediate. = TRUE, call. = FALSE)
+           colnames(overwrite) <- c("method", "package")
+           print(overwrite)
+       }
+    }
 
     setNamespaceInfo(env, "S3methods",
                      rbind(info, getNamespaceInfo(env, "S3methods")))
