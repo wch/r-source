@@ -3574,8 +3574,8 @@ is called with a character selector.
 <<collect information on named alternatives>>=
 ## collect information on named alternatives and check for
 ## multiple default cases.
-haveNames <- !is.null(nm)
-if (haveNames) {
+if (! is.null(nm)) {
+    haveNames <- TRUE
     ndflt <- sum(nm == "")
     if (ndflt > 1) {
         notifyMultipleSwitchDefaults(ndflt, cntxt)
@@ -3584,9 +3584,13 @@ if (haveNames) {
         cmpSpecial(e, cb, cntxt)
         return(TRUE)
     }
-    haveCharDflt <- (ndflt > 0)
+    if (ndflt > 0)
+        haveCharDflt <- TRUE
+    else
+        haveCharDflt <- FALSE
 }
 else {
+    haveNames <- FALSE
     haveCharDflt <- FALSE
 }
 @ %def
