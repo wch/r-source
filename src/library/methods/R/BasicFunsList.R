@@ -122,13 +122,11 @@ list(
 
 ## temporary versions while primitives are still handled by a global table
 
-genericForPrimitive <- function(f, where = topenv(parent.frame()), mustFind = TRUE) {
-#    if(.matchBasic(f, .ExcludePrimitiveGenerics, FALSE))
-#        stop(gettextf("methods may not be defined for primitive function %s in this version of R", sQuote(f)), domain = NA)
-    env <- .findBasicFuns(where)
-    funs <- get(".BasicFunsList", envir = env)
-    ans <- elNamed(funs, f)
-    ## this element may not exist (yet, during loading), dom't test null
+genericForPrimitive <- function(f, where = topenv(parent.frame()),
+                                mustFind = TRUE)
+{
+    ans <- .BasicFunsList[[f]]
+    ## this element may not exist (yet, during loading), don't test null
     if(mustFind && identical(ans, FALSE))
         stop(gettextf("methods may not be defined for primitive function %s in this version of R",
                       sQuote(f)),
