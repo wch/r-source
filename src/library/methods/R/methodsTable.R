@@ -764,7 +764,7 @@
     label <- .sigLabel(signature)
 ##     allMethods <- objects(table, all.names=TRUE)
 ##     if(match(label, allMethods, nomatch = 0L))
-    if(!is.null(value <- get0(label, envir = table, inherits = FALSE))) {
+    if(!is.null(value <- table[[label]])) {
         if(is.environment(value)) {
             pkgs <- objects(value, all.names = TRUE)
             if(length(pkgs) == 1)
@@ -976,14 +976,14 @@
 .updateMethodsInTable <- function(generic, where, attach) {
   fenv <- environment(generic)
   reset <- identical(attach, "reset")
-  if(is.null(mtable <- get0(".MTable", envir = fenv, inherits = FALSE))) {
+  if(is.null(mtable <- fenv$.MTable)) {
       .setupMethodsTables(generic)
       mtable <- get(".MTable", envir = fenv)
   }
   if(!reset) {
     env <- as.environment(where)
     tname <- .TableMetaName(generic@generic, generic@package)
-    if(!is.null(tt <- get0(tname, envir = env, inherits = FALSE))) {
+    if(!is.null(tt <- env[[tname]])) {
       .mergeMethodsTable(generic, mtable, tt, attach)
     }
     ## else used to warn, but the generic may be implicitly required
@@ -1008,7 +1008,7 @@
 .resetInheritedMethods <- function(fenv, mtable) {
     allObjects <- character()
     direct <- objects(mtable, all.names=TRUE)
-    if(!is.null(allTable <- get0(".AllMTable", envir = fenv, inherits = FALSE))) {
+    if(!is.null(allTable <- fenv$.AllMTable)) {
         ## remove all inherited methods.  Note that code (e.g. setMethod) that asigns
         ## a new method to mtable is responsible for copying it to allTable as well.
         allObjects <- objects(allTable, all.names=TRUE)
@@ -1204,7 +1204,7 @@ useMTable <- function(onOff = NA)
               domain = NA)
     else {
       ev <- environment(fdef)
-      if(is.null(sigl <- get0(".SigLength", envir = ev, inherits = FALSE))) {
+      if(is.null(sigl <- ev$.SigLength)) {
 	  .setupMethodsTables(fdef)
 	  sigl <- get(".SigLength", envir = ev)
       }
@@ -1288,7 +1288,7 @@ outerLabels <- function(labels, new) {
     ## TODO:  nSig should be a slot in the table
   tname <- .TableMetaName(fdef@generic, fdef@package)
   where <- as.environment(where)
-  if(!is.null(table <- get0(tname, envir =where, inherits = FALSE))) {
+  if(!is.null(table <- where[[tname]])) {
     if(length(signature) > nSig)
       .resetTable(table, length(signature), fdef@signature[seq_along(signature)])
   }

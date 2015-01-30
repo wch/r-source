@@ -573,7 +573,7 @@
 )
 
 .InitSpecialTypesAndClasses <- function(where) {
-    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
+    if(is.null(S3table <- where$.S3MethodsClasses)) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }

@@ -60,7 +60,7 @@ setOldClass <- function(Classes, prototype = NULL,
     ## to convert S4 objects in S3 method dispatch.
     ## TODO:  should provide an optional argument to setOldClass()
     ## to prevednt this conversion if it's not needed
-    if(is.null(S3table <- get0(".S3MethodsClasses", envir = where, inherits = FALSE))) {
+    if(is.null(S3table <- where$.S3MethodsClasses)) {
       S3table <- new.env()
       assign(".S3MethodsClasses", S3table, envir = where)
     }

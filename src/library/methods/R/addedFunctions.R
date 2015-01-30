@@ -51,7 +51,7 @@ getFunction <- function(name, generic = TRUE, mustFind = TRUE,
     lastEnv <- if(isNamespace(where)) function(where) isBaseNamespace(where) else
     function(where) identical(where, baseenv())
     repeat {
-        if(!is.null(f <- get0(name, envir = where, mode = "function", inherits = FALSE)))
+      if(!is.null(f <- get0(name, envir = where, mode = "function", inherits = FALSE)))
             found <- generic || !is(f, "genericFunction")
         if(found || lastEnv(where))
             break
@@ -116,7 +116,7 @@ findFunction <-
     ok <- logical(length(allWhere))
     for(i in seq_along(allWhere)) {
 	wherei <- allWhere[[i]]
-	if(!is.null(fdef <- get0(f, wherei, inherits = FALSE))) {
+	if(!is.null(fdef <- wherei[[f]])) {
 	    ok[i] <- is.function(fdef) && (generic || is.primitive(fdef) || !isGeneric(f, wherei, fdef))
 	}## else ok[i] <- FALSE
     }

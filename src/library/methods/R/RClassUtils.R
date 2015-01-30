@@ -1793,7 +1793,7 @@ substituteFunctionArgs <-
                 return(.GlobalEnv)
             if(identical(package, "methods"))
                 return(topenv(parent.frame())) # booting methods
-            if(!is.null(pkg <- get0(package, envir = .PackageEnvironments, inherits = FALSE)))
+            if(!is.null(pkg <- .PackageEnvironments[[package]]))
                 return(pkg) #cached, but only if no namespace
         }
     }
@@ -2022,7 +2022,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 }
 
 .uncacheClass <- function(name, def) {
-    if(!is.null(prev <- get0(name, envir = .classTable, inherits = FALSE))) {
+  if(!is.null(prev <- .classTable[[name]])) {
         if(is(def, "classRepresentation")) # paranoia: should only be called this way
             newpkg <- def@package
         else
@@ -2221,7 +2221,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     evv <- findClass(class, .GlobalEnv) # what about hidden classes?  how to find them?
     mname <- classMetaName(class)
     for(where in evv) {
-        if(!is.null(cdef <- get0(mname, envir = where, inherits = FALSE))) {
+        if(!is.null(cdef <- where[[mname]])) {
             newdef <- .deleteSuperClass(cdef, superclass)
             if(!is.null(newdef)) {
               assignClassDef(class, newdef,  where, TRUE)
