@@ -1,5 +1,4 @@
 #  Automatically generated from ../noweb/compiler.nw.
-#  ~~~~~~~~~~~~~~~~~~~~~~~      ====================
 #
 #  File src/library/compiler/R/cmp.R
 #  Part of the R package, http://www.R-project.org
@@ -2740,7 +2739,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
     nforms <- length(forms)
     if (nforms > 0) {
         expr.needed <- 1000
-        expr.old <- options()$expressions
+        expr.old <- getOption("expressions")
         if (expr.old < expr.needed) {
             options(expressions = expr.needed)
             on.exit(options(expressions = expr.old))
