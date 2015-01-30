@@ -471,6 +471,8 @@
 
       \item Fix issues with forwarding \code{\dots} through
       \code{callGeneric()} and \code{callNextMethod()}.  (\PR{16141})
+
+      \item \code{callGeneric()} now works after a \code{callNextMethod()}.
     }
   }
 }

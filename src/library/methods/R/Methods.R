@@ -634,7 +634,7 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
       if(is(f, "genericFunction"))
          { fdef <- f; f <- f@generic}
       else if(is.primitive(f))
-        { f <- .primname(f); fdef <- genericForPrimitive(f)}
+        { f <- .primname(f); fdef <- genericForPrimitive(f, mustFind=FALSE)}
       else
         stop("function supplied as argument 'f' must be a generic")
     }
@@ -1140,11 +1140,11 @@ isGroup <-
     is(fdef, "groupGenericFunction")
   }
 
-getGenericFromCall <- function(call, envir) {
-    generic <- envir$.Generic
+getGenericFromCall <- function(call, methodEnv) {
+    generic <- methodEnv$.Generic
     if(is.null(generic)) {
         fdef <- if (is.name(call[[1L]]))
-            get(as.character(call[[1L]]), envir = envir)
+            get(as.character(call[[1L]]), envir = methodEnv)
         else call[[1L]]
         if (is.primitive(fdef)) {
             fdef <- getGeneric(fdef, mustFind=TRUE)
@@ -1154,24 +1154,26 @@ getGenericFromCall <- function(call, envir) {
     generic
 }
 
+fromNextMethod <- function(call) {
+  identical(call[[1L]], quote(.nextMethod))
+}
+
 callGeneric <- function(...) {
     call <- sys.call(sys.parent(1L))
     .local <- identical(call[[1L]], quote(.local))
-    if (.local) {
-        methodCtx <- sys.parent(2L)
-        callerCtx <- sys.parent(3L)
-    } else {
-        methodCtx <- sys.parent(1L)
-        callerCtx <- sys.parent(2L)
+    methodCtxInd <- 1L + if (.local) 1L else 0L
+    callerCtxInd <- methodCtxInd + 1L
+    methodCall <- sys.call(sys.parent(methodCtxInd))
+    if (fromNextMethod(methodCall)) {
+        methodCtxInd <- methodCtxInd + 1L
     }
-    methodCall <- sys.call(methodCtx)
-    methodFrame <- sys.frame(methodCtx)
+    methodFrame <- parent.frame(methodCtxInd)
     genericName <- getGenericFromCall(methodCall, methodFrame)
     if (is.null(genericName)) {
         stop("callGeneric() must be called from within a method body")
     }
     if (nargs() == 0L) {
-        callerFrame <- sys.frame(callerCtx)
+        callerFrame <- sys.frame(sys.parent(callerCtxInd))
         methodDef <- sys.function(sys.parent(1L))
         call <- match.call(methodDef,
                            methodCall,
@@ -1358,7 +1360,7 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 {
     value <- .getImplicitGenericFromCache(name, where, pkg)
     if(is.null(value) && !is.null(tbl <-
-		get0(.ImplicitGenericsMetaName, where, inherits = FALSE))) {
+		where[[.ImplicitGenericsMetaName]])) {
        value <- .getGenericFromCacheTable(name, where, pkg, tbl)
     }
     value
@@ -1437,8 +1439,8 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 }
 
 .getImplicitGroup <- function(name, where) {
-    if(!is.null(tbl <- get0(.ImplicitGroupMetaName, where, inherits = FALSE))) {
-	if(!is.null(r <- get0(name, envir = tbl, inherits = FALSE)))
+    if(!is.null(tbl <- where[[.ImplicitGroupMetaName]])) {
+	if(!is.null(r <- tbl[[name]]))
 	    return(r)
     }
     list()
@@ -1481,7 +1483,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
           stop(gettextf("only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)", inherited), domain = NA)
         where <- as.environment(where)
         what <- .TableMetaName(f, fdef@package)
-        if(is.null(table <- get0(what, envir = where, inherits = FALSE)))
+        if(is.null(table <- where[[what]]))
           return(object)
     }
     objNames <- objects(table, all.names = TRUE)
