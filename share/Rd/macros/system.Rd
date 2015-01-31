@@ -42,3 +42,6 @@
 % To include various indices about an installed package
 
 \newcommand{\packageIndices}{\Sexpr[results=rd,stage=build]{tools:::Rd_package_indices("#1")}}
+
+% To indicate a DOI.
+\newcommand{\doi}{doi:\sspace\href{http://doi.org/#1}{#1}}
