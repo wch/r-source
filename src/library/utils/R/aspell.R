@@ -745,7 +745,8 @@ function(file, encoding = "unknown")
 
     exprs <-
         suppressWarnings(tools:::.parse_code_file(file = file,
-                                                  encoding = encoding))
+                                                  encoding = encoding,
+                                                  keep.source = TRUE))
     if(!length(exprs)) return(NULL)
 
     pd <- getParseData(exprs)

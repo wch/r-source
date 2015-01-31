@@ -1438,7 +1438,7 @@ function(packages = NULL, FUN, ...)
 ### .parse_code_file
 
 .parse_code_file <-
-function(file, encoding = NA)
+function(file, encoding = NA, keep.source = getOption("keep.source"))
 {
     if(!file.size(file)) return()
     suppressWarnings({
@@ -1451,8 +1451,11 @@ function(file, encoding = NA)
             ## directive though as this will confuse getParseData().
             lines <- iconv(readLines(file, warn = FALSE),
                            from = encoding, to = "", sub = "byte")
-            parse(text = lines, srcfile = srcfile(file))
-        } else parse(file)
+            parse(text = lines, srcfile = srcfile(file),
+                  keep.source = keep.source)
+        } else
+            parse(file,
+                  keep.source = keep.source)
     })
 }
 
