@@ -66,7 +66,7 @@ assign(".External.graphics", function(.NAME, ..., PACKAGE) NULL,
        envir = .ArgsEnv)
 assign(".Internal", function(call) NULL, envir = .ArgsEnv)
 assign(".Primitive", function(name) NULL, envir = .ArgsEnv)
-assign(".isMethodsDispatchOn", function(x, onOff = NULL) NULL, envir = .ArgsEnv)
+assign(".isMethodsDispatchOn", function(onOff = NULL) NULL, envir = .ArgsEnv)
 assign(".primTrace", function(obj) NULL, envir = .ArgsEnv)
 assign(".primUntrace", function(obj) NULL, envir = .ArgsEnv)
 assign(".subset", function(x, ...) NULL, envir = .ArgsEnv)
