@@ -1437,18 +1437,18 @@ registerS3methods <- function(info, package, env)
         .registerS3method(fin[i, 1], fin[i, 2], fin[i, 3], fin[i, 4], env)
     if(package != "MASS" && ## MASS is providing methods for stubs in stats
        nrow(overwrite) &&
-       nzchar(Sys.getenv("_R_CHECK_OVERWRITE_S3_METHODS_"))) {
-
+       Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_")
+          %in% c(package, "all")) {
         std <- as.vector(unlist(tools:::.get_standard_package_names()))
         overwrite <- overwrite[overwrite[, 2L] %in% std, , drop = FALSE]
        if(nr <- nrow(overwrite)) {
            msg <- ngettext(nr,
-                           "Registered S3 method in base/recommended package overwritten when loading '%s':",
-                           "Registered S3 methods in base/recommended package(s) overwritten when loading '%s':")
-           warning(sprintf(msg, package),
-                   domain = NA, immediate. = TRUE, call. = FALSE)
+                           "Registered S3 method in a standard package overwritten by '%s':",
+                           "Registered S3 methods in standard package(s) overwritten by '%s':",
+                           domain = NA)
+           message(sprintf(msg, package))
            colnames(overwrite) <- c("method", "package")
-           print(overwrite)
+           print(as.data.frame(overwrite), row.names = FALSE, right = FALSE)
        }
     }
 

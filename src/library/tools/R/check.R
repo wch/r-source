@@ -2411,6 +2411,25 @@ setRlibs <-
                         "see the messages for details.\n")
             } else resultLog(Log, "OK")
         }
+        check_S3reg <-
+            Sys.getenv("_R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_", "NA")
+        check_S3reg <- if(check_S3reg == "NA") check_incoming else {
+            config_val_to_logical(check_S3reg)
+        }
+        if(!extra_arch && !is_base_pkg && check_S3reg) {
+            checkingLog(Log, "use of S3 registration")
+            Rcmd <- sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
+                            pkgname, libdir)
+            opts <- if(nzchar(arch)) R_opts4 else R_opts2
+            env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
+            out <- R_runR(Rcmd, opts, env, arch = arch)
+            if (any(grepl("^Registered S3 method.*overwritten", out))) {
+                out <- grep("^<environment: namespace:", out,
+                            invert = TRUE, value = TRUE)
+                warningLog(Log)
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
+        }
     }
 
     run_examples <- function()

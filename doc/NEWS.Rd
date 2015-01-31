@@ -356,10 +356,15 @@
       in R source files in case there is no declared package encoding.
 
       \item \command{R CMD check --as-cran} reports (apparent) S3
-      methods exported but not registered.  (This check can also be
-      selected by an environment variable: see the \sQuote{R Internals}
-      manual.)
+      methods exported but not registered.
 
+      It reports overwriting registered S3 methods in base/recommended
+      packages.  (Such methods are replaced in the affected package for
+      the rest of the session, even if the replacing namespace is
+      unloaded.)
+
+      These checks can also be selected by environment variables: see
+      the \sQuote{R Internals} manual.
     }
   }
 
