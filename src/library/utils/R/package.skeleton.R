@@ -65,7 +65,7 @@ package.skeleton <-
         warning("cannot turn off locale-specific chars via LC_CTYPE",
                 domain = NA)
 
-    have <- unlist(lapply(list, exists, envir = environment))
+    have <- vapply(list, exists, NA, envir = environment)
     if(any(!have))
         warning(sprintf(ngettext(sum(!have),
                                  "object '%s' not found",
