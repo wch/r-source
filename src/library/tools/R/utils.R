@@ -1443,14 +1443,15 @@ function(file, encoding = NA)
     if(!file.size(file)) return()
     suppressWarnings({
         if(!is.na(encoding) &&
+           (encoding != "unknown") &&
            !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
             ## Previous use of con <- file(file, encoding = encoding)
-            ## was intolerant so do what .install_package_code_files()
-            ## does.
-            lines <- c(paste0("#line 1 \"", file, "\""),
-                       iconv(readLines(file, warn = FALSE),
-                             from = encoding, to = "", sub = "byte"))
-            parse(text = lines)
+            ## was intolerant so do something similar to what
+            ## .install_package_code_files() does.  Do not use a #line
+            ## directive though as this will confuse getParseData().
+            lines <- iconv(readLines(file, warn = FALSE),
+                           from = encoding, to = "", sub = "byte")
+            parse(text = lines, srcfile = srcfile(file))
         } else parse(file)
     })
 }
