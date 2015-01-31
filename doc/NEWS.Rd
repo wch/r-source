@@ -271,6 +271,9 @@
       reduces the number of garbage collections, in particular while
       data or code are loaded, at the expense of slightly increasing the
       memory footprint.
+
+      \item New function \code{trimws()} for removing leading/trailing
+      whitespace.
     }
   }
 
