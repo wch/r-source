@@ -443,14 +443,14 @@ Rd2HTML <-
                ## cwhmisc has an empty \\email
                "\\email" = if (length(block)) {
                    url <- paste(as.character(block), collapse="")
-                   url <- .strip_whitespace(gsub("\n", "", url))
+                   url <- trimws(gsub("\n", "", url))
                    enterPara(doParas)
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
                ## watch out for empty URLs (TeachingDemos has one)
                "\\url" = if(length(block)) {
                    url <- paste(as.character(block), collapse="")
-                   url <- .strip_whitespace(gsub("\n", "", url))
+                   url <- trimws(gsub("\n", "", url))
                    enterPara(doParas)
                    of0('<a href="', urlify(url), '">',
                        htmlify(url), '</a>')
@@ -458,7 +458,7 @@ Rd2HTML <-
                "\\href" = {
                	   if(length(block[[1L]])) {
                	   	url <- paste(as.character(block[[1L]]), collapse="")
-               	   	url <- .strip_whitespace(gsub("\n", "", url))
+               	   	url <- trimws(gsub("\n", "", url))
 		        enterPara(doParas)
                	   	of0('<a href="', urlify(url), '">')
                	   	closing <- "</a>"

@@ -1723,6 +1723,10 @@ function(x)
     } else list(name = x1)
 }
 
+## <FIXME>
+## We now have base::trimws(), so this is no longer needed.
+## Remove eventually.
+
 ### ** .strip_whitespace
 
 ## <NOTE>
@@ -1741,6 +1745,8 @@ function(x)
     x <- sub("[[:space:]]+$", "", x)
     x
 }
+
+## </FIXME>
 
 ### ** .system_with_capture
 

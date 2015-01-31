@@ -212,8 +212,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             tag <- "\\Rhref"
         }
     	of0(tag, "{",
-            .strip_whitespace(gsub("\n", "",
-                                   paste(as.character(url), collapse=""))),
+            trimws(gsub("\n", "",
+                        paste(as.character(url), collapse=""))),
             "}")
         if (tag == "\\Rhref") {
             of1("{")

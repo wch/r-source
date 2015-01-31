@@ -996,7 +996,7 @@ function(package, lib.loc = NULL)
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
-        .strip_whitespace(txt)
+        trimws(txt)
     }
 
     .inheritedSlotNames <- function(ext) {
@@ -1161,7 +1161,7 @@ function(package, lib.loc = NULL)
         ## as these will not render correctly.
         if(nice) {
             ind <- rep.int(lens == 1L, lens)
-            add[ind] <- .strip_whitespace(add[ind])
+            add[ind] <- trimws(add[ind])
         }
         nms <- c(nms, add)
         regmatches(s, m) <- ""
@@ -3215,7 +3215,7 @@ function(dfile, strict = FALSE)
     val <- db[match(c("Depends", "Suggests", "Imports", "Enhances"),
                     names(db), nomatch = 0L)]
     if(length(val)) {
-        depends <- .strip_whitespace(unlist(strsplit(val, ",")))
+        depends <- trimws(unlist(strsplit(val, ",")))
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
             paste0("^[[:space:]]*",
@@ -3251,7 +3251,7 @@ function(dfile, strict = FALSE)
                      bad_dep_version = bad_dep_version)
     }
     if(strict && !is.na(val <- db["VignetteBuilder"])) {
-        depends <- .strip_whitespace(unlist(strsplit(val, ",")))
+        depends <- trimws(unlist(strsplit(val, ",")))
         if(length(depends) < 1L || !all(grepl("^[[:alnum:].]*$", depends)))
             out$bad_vignettebuilder <- TRUE
     }
@@ -8004,20 +8004,20 @@ function(x)
     s <- .Rd_get_section(x, "title")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(.strip_whitespace(s) == "~~function to do ... ~~")
+        if(trimws(s) == "~~function to do ... ~~")
             out <- rbind(out, c("\\title", s))
     }
     s <- .Rd_get_section(x, "description")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(.strip_whitespace(s) ==
+        if(trimws(s) ==
            "~~ A concise (1-5 lines) description of what the function does. ~~")
             out <- rbind(out, c("\\description", s))
     }
     s <- .Rd_get_section(x, "details")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(.strip_whitespace(s) ==
+        if(trimws(s) ==
            "~~ If necessary, more details than the description above ~~")
             out <- rbind(out, c("\\details", s))
     }
@@ -8026,14 +8026,14 @@ function(x)
     s <- .Rd_get_section(x, "author")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(.strip_whitespace(s) == "~~who you are~~")
+        if(trimws(s) == "~~who you are~~")
             out <- rbind(out, c("\\author", s))
     }
     ## /data/rsync/PKGS/mimR/man/mim-class.Rd:\note{ ~~further notes~~ }
     s <- .Rd_get_section(x, "note")
     if(length(s)) {
         s <- .Rd_deparse(s, tag = FALSE)
-        if(.strip_whitespace(s) == "~~further notes~~")
+        if(trimws(s) == "~~further notes~~")
             out <- rbind(out, c("\\note", s))
     }
 
@@ -8041,7 +8041,7 @@ function(x)
     if(length(tab)) {
         ## /data/rsync/PKGS/Rmpfr/man/mpfrArray.Rd:
         ##   \item{precBits}{ ~~Describe \code{precBits} here~~ }
-        descriptions <- .strip_whitespace(tab[, 2L])
+        descriptions <- trimws(tab[, 2L])
         ind <- (descriptions ==
                 sprintf("~~Describe \\code{%s} here~~", tab[, 1L]))
         if(any(ind))
@@ -8056,7 +8056,7 @@ function(x)
     ## include these in production check code ...
     tab <- .Rd_get_methods_description_table(x)
     if(length(tab)) {
-        descriptions <- .strip_whitespace(tab[, 2L])
+        descriptions <- trimws(tab[, 2L])
         ## /data/rsync/PKGS/coin/man/initialize-methods.Rd
         ind <- descriptions == "~~describe this method here"
         if(any(ind))

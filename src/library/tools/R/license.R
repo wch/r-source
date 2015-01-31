@@ -482,7 +482,7 @@ function(x)
              restricts_use = restricts_use)
 
 
-    x <- .strip_whitespace(x)
+    x <- trimws(x)
     if(is.na(x) || (x == "")) {
         ## Not really a lot to check ...
         ## (Note that non-standardizable license specs are dropped by
@@ -498,8 +498,7 @@ function(x)
     restricts_use <- NA
 
     ## Try splitting into the individual components.
-    components <-
-        .strip_whitespace(unlist(strsplit(x, "|", fixed = TRUE)))
+    components <- trimws(unlist(strsplit(x, "|", fixed = TRUE)))
 
     ## Now analyze the individual components.
     ok <- grepl(R_license_db_vars()$re_component, components)

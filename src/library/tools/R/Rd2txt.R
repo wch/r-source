@@ -601,16 +601,16 @@ Rd2txt <-
                },
                "\\email" = {
                    put("<email: ",
-                       .strip_whitespace(gsub("\n", "",
-                                              paste(as.character(block),
-                                                    collapse=""))),
+                       trimws(gsub("\n", "",
+                                   paste(as.character(block),
+                                         collapse=""))),
                        ">")
                },
                "\\url" = {
                    put("<URL: ",
-                       .strip_whitespace(gsub("\n", "",
-                                              paste(as.character(block),
-                                                    collapse=""))),
+                       trimws(gsub("\n", "",
+                                   paste(as.character(block),
+                                         collapse=""))),
                        ">")
                },
                "\\href" = {
@@ -618,9 +618,9 @@ Rd2txt <-
                    writeContent(block[[2L]], tag)
                    if (opts$showURLs)
   			put(" (URL: ",
-  			    .strip_whitespace(gsub("\n", "",
-                                                   paste(as.character(block[[1L]]),
-                                                         collapse=""))),
+  			    trimws(gsub("\n", "",
+                                        paste(as.character(block[[1L]]),
+                                              collapse=""))),
   			    ")")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),

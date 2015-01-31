@@ -62,7 +62,7 @@ function(x)
             urls <<-
                 c(urls,
                   if(length(e))
-                      .strip_whitespace(as.character(e[[1L]]))
+                      trimws(as.character(e[[1L]]))
                   else "")
             ## There could be \url{} ...
         }

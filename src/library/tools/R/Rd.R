@@ -502,7 +502,7 @@ function(x, kind)
     if(!length(x))
         character()
     else
-        unique(.strip_whitespace(sapply(x, as.character)))
+        unique(trimws(sapply(x, as.character)))
 }
 
 ### * .Rd_get_section
@@ -572,7 +572,7 @@ function(x)
     txt <- unlist(strsplit(txt, ", *"))
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\_", "_", txt)
-    .strip_whitespace(txt)
+    trimws(txt)
 }
 
 ### * .Rd_get_argument_table
@@ -666,7 +666,7 @@ function(x)
     ## The name should really be plain text, so as.character() should be
     ## fine as well ...
     if(length(x))
-        .strip_whitespace(.Rd_deparse(x, tag = FALSE))
+        trimws(.Rd_deparse(x, tag = FALSE))
     else
         character()
 }
@@ -796,7 +796,7 @@ function(x)
     x <- gsub("\\\\&", "&", x)
     x <- gsub("---", "--", x)
     ## Also remove leading and trailing whitespace.
-    .strip_whitespace(x)
+    trimws(x)
 }
 
 
@@ -874,7 +874,7 @@ loadPkgRdMacros <- function(pkgdir, macros) {
     	others <- .read_description(file.path(pkgdir, "DESCRIPTION.in"))["RdMacros"]
 
     if (!is.na(others)) {
-    	others <- .strip_whitespace(unlist(strsplit(others, ",")))
+    	others <- trimws(unlist(strsplit(others, ",")))
     	
     	for (p in others) {
     	    if (dir.exists(system.file("help/macros", package = p))) 
