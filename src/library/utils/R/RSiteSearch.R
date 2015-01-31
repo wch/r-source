@@ -47,7 +47,8 @@ RSiteSearch <- function(string,
     ## we know this is a http:// URL, so encoding should be safe.
     ## it seems that firefox on Mac OS needs it for {...}
     ## OTOH, Namazu does not decode in, say, sort=date:late.
-    qstring <- paste(URLencode(string), mpp, format, sortby, restr, sep = "&")
+    qstring <- paste(URLencode(string, reserved = TRUE),
+                     mpp, format, sortby, restr, sep = "&")
     browseURL(qstring)
     cat(gettextf("A search query has been submitted to %s",
                  "http://search.r-project.org"), "\n", sep = "")
