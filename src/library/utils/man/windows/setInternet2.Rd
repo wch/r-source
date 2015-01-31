@@ -24,7 +24,7 @@ Set or disable the use of Windows internal functions for Internet access.
 setInternet2(use = TRUE)
 }
 \arguments{
-  \item{use}{lgical: whether to use the Windows internet functions.  If
+  \item{use}{logical: whether to use the Windows internet functions.  If
     \code{NA}, just return the current setting.}
 }
 \value{

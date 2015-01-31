@@ -1496,7 +1496,7 @@ On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it was a 21" monitor and 400mm x 300mm!
 
-This is less common with LCD screens but not unkown, particularly if
+This is less common with LCD screens but not unknown, particularly if
 they are not running at their native resolution.
 
 @node How do I move focus to a graphics window or the console?, What does TAB completion do?, Circles appear as ovals on screen, Windows Features
