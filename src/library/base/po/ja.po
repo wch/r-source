@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33+0000\n"
+"POT-Creation-Date: 2015-01-31 13:18+0000\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -1126,125 +1126,125 @@ msgstr " 'names' 引数に互換性がありません "
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr " 'names' 属性として設定するには不正な型 (%s) です "
 
-#: src/main/attrib.c:1020
+#: src/main/attrib.c:1022
 msgid "'dimnames' applied to non-array"
 msgstr " 'dimnames' が配列以外に適用されました "
 
-#: src/main/attrib.c:1025
+#: src/main/attrib.c:1027
 msgid "'dimnames' must be a list"
 msgstr " 'dimnames' はリストでなくてはなりません "
 
-#: src/main/attrib.c:1028 src/main/attrib.c:1056
+#: src/main/attrib.c:1030 src/main/attrib.c:1058
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 " 'dimnames' の長さ [%d] は 'dims' の長さ [%d] と同じでなくてはなりません "
 
-#: src/main/attrib.c:1062
+#: src/main/attrib.c:1064
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr " 'dimnames' の型 (%s) が不正です (ベクトルでなければなりません) "
 
-#: src/main/attrib.c:1065
+#: src/main/attrib.c:1067
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr " 'dimnames' の長さ [%d] が配列の大きさと違っています "
 
-#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1139 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1926
 #: src/main/envir.c:2056 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1683
 msgid "invalid first argument"
 msgstr " 一番目の引数が不正です "
 
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1142
 msgid "invalid second argument"
 msgstr " 二番目の引数が不正です "
 
-#: src/main/attrib.c:1148
+#: src/main/attrib.c:1150
 msgid "length-0 dimension vector is invalid"
 msgstr " 長さ 0 の次元のベクトルは無効です "
 
-#: src/main/attrib.c:1153
+#: src/main/attrib.c:1155
 msgid "the dims contain missing values"
 msgstr " dims 変数は欠損値を含みます "
 
-#: src/main/attrib.c:1155
+#: src/main/attrib.c:1157
 msgid "the dims contain negative values"
 msgstr " dims 変数は負の値を含みます "
 
-#: src/main/attrib.c:1160
+#: src/main/attrib.c:1162
 msgid "dims do not match the length of object"
 msgstr " dims はオブジェクトの長さに整合しません "
 
-#: src/main/attrib.c:1162
+#: src/main/attrib.c:1164
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr " dims [product %d] はオブジェクト [%d] の長さに整合しません "
 
-#: src/main/attrib.c:1264
+#: src/main/attrib.c:1266
 msgid "attributes must be a list or NULL"
 msgstr " 属性はリストもしくは NULL でなければなりません "
 
-#: src/main/attrib.c:1269
+#: src/main/attrib.c:1271
 msgid "attributes must be named"
 msgstr " 属性は名前が付けられていなければなりません "
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1275
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr " 全ての属性は名前を持っていなければなりません [%d が持っていません] "
 
-#: src/main/attrib.c:1373
+#: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
 msgstr " 'which' は文字列モードでなくてはなりません "
 
-#: src/main/attrib.c:1375
+#: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
 msgstr " 性格に一つの属性 'which' が与えらなければなりません "
 
-#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:245
+#: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
 #: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr " '%s' の '%s' への部分的マッチ "
 
-#: src/main/attrib.c:1495
+#: src/main/attrib.c:1497
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr " スロット名に対する不正な型 '%s' です "
 
-#: src/main/attrib.c:1531
+#: src/main/attrib.c:1533
 msgid "'name' must be non-null character string"
 msgstr " 'name' は NULL でない文字列でなければなりません "
 
-#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
+#: src/main/attrib.c:1657 src/main/attrib.c:1728 src/main/attrib.c:1765
 msgid "invalid type or length for slot name"
 msgstr " スロット名の型または長さが不正です "
 
-#: src/main/attrib.c:1689
+#: src/main/attrib.c:1691
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 " 型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません "
 
-#: src/main/attrib.c:1700
+#: src/main/attrib.c:1702
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 " 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん "
 
-#: src/main/attrib.c:1717
+#: src/main/attrib.c:1719
 msgid "attempt to set slot on NULL object"
 msgstr " NULL オブジェクトに対して スロットを設定しようとしました "
 
-#: src/main/attrib.c:1758
+#: src/main/attrib.c:1760
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr ""
 " 'methods' パッケージなしにフォーマルクラス (formal class) は使用できません "
 
-#: src/main/attrib.c:1770
+#: src/main/attrib.c:1772
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1253,7 +1253,7 @@ msgstr ""
 " スロット \"%s\"を、スロットを持たない基本クラス (\"%s\") のオブジェクトから"
 "得ようとしました "
 
-#: src/main/attrib.c:1774
+#: src/main/attrib.c:1776
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "

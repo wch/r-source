@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33+0000\n"
+"POT-Creation-Date: 2015-01-31 13:18+0000\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1144,123 +1144,123 @@ msgstr "argumento 'names' incompatível"
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "tipo inválido (%s) para especificar atributo 'names'"
 
-#: src/main/attrib.c:1020
+#: src/main/attrib.c:1022
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' aplicado a um objeto diferente de array"
 
-#: src/main/attrib.c:1025
+#: src/main/attrib.c:1027
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' deve ser uma lista"
 
-#: src/main/attrib.c:1028 src/main/attrib.c:1056
+#: src/main/attrib.c:1030 src/main/attrib.c:1058
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "comprimento de 'dimnames' [%d] deve ser o mesmo de 'dims' [%d]"
 
-#: src/main/attrib.c:1062
+#: src/main/attrib.c:1064
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "tipo inválido (%s) para 'dimnames' (deve ser um vetor)"
 
-#: src/main/attrib.c:1065
+#: src/main/attrib.c:1067
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "comprimento de 'dimnames' [%d] não é igual ao tamanho do array"
 
-#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1139 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1926
 #: src/main/envir.c:2056 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1683
 msgid "invalid first argument"
 msgstr "primeiro argumento inválido"
 
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1142
 msgid "invalid second argument"
 msgstr "segundo argumento inválido"
 
-#: src/main/attrib.c:1148
+#: src/main/attrib.c:1150
 msgid "length-0 dimension vector is invalid"
 msgstr "vetor de dimensões de comprimento 0 é inválido"
 
-#: src/main/attrib.c:1153
+#: src/main/attrib.c:1155
 msgid "the dims contain missing values"
 msgstr "as dimensões contem valores faltantes"
 
-#: src/main/attrib.c:1155
+#: src/main/attrib.c:1157
 msgid "the dims contain negative values"
 msgstr "as dimensões contem valores negativos"
 
-#: src/main/attrib.c:1160
+#: src/main/attrib.c:1162
 #, fuzzy
 msgid "dims do not match the length of object"
 msgstr "dims [produto %d] não corresponde ao comprimento do objeto [%d]"
 
-#: src/main/attrib.c:1162
+#: src/main/attrib.c:1164
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [produto %d] não corresponde ao comprimento do objeto [%d]"
 
-#: src/main/attrib.c:1264
+#: src/main/attrib.c:1266
 msgid "attributes must be a list or NULL"
 msgstr "atributos devem ser uma lista ou NULL"
 
-#: src/main/attrib.c:1269
+#: src/main/attrib.c:1271
 msgid "attributes must be named"
 msgstr "os atributos devem ter nome"
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1275
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "todos os atributos devem ter nome [%d não tem]"
 
-#: src/main/attrib.c:1373
+#: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
 msgstr "atributo 'which' deve ser de modo caractere"
 
-#: src/main/attrib.c:1375
+#: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
 msgstr "exatamente 1 atributo 'which' deve ser especificado"
 
-#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:245
+#: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
 #: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "correspondência parcial de '%s' para '%s'"
 
-#: src/main/attrib.c:1495
+#: src/main/attrib.c:1497
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "tipo ou compriento inválido para nome de slot"
 
-#: src/main/attrib.c:1531
+#: src/main/attrib.c:1533
 msgid "'name' must be non-null character string"
 msgstr "'name' deve ser uma cadeia de caracteres não nula"
 
-#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
+#: src/main/attrib.c:1657 src/main/attrib.c:1728 src/main/attrib.c:1765
 msgid "invalid type or length for slot name"
 msgstr "tipo ou compriento inválido para nome de slot"
 
-#: src/main/attrib.c:1689
+#: src/main/attrib.c:1691
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 "não é possível conseguir um slot (\"%s\") para um objeto do tipo \"%s\""
 
-#: src/main/attrib.c:1700
+#: src/main/attrib.c:1702
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "nenhum slot de nome \"%s\" para esse objeto de classe \"%s\""
 
-#: src/main/attrib.c:1717
+#: src/main/attrib.c:1719
 msgid "attempt to set slot on NULL object"
 msgstr "tentativa de especificar um slot em um objeto NULL"
 
-#: src/main/attrib.c:1758
+#: src/main/attrib.c:1760
 #, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "classes formais não podem ser utilizadas sem o pacote methods"
 
-#: src/main/attrib.c:1770
+#: src/main/attrib.c:1772
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1269,7 +1269,7 @@ msgstr ""
 "tentativa de obter um slot \"%s\" de um objeto de uma classe básica (\"%s\") "
 "sem slots"
 
-#: src/main/attrib.c:1774
+#: src/main/attrib.c:1776
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "

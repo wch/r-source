@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-18 09:58\n"
+"POT-Creation-Date: 2015-01-31 13:18\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -941,6 +941,9 @@ msgstr ""
 msgid "bad object found as method (class %s)"
 msgstr "znaleziono błędny obiekt jako metodę (klasa %s)"
 
+msgid "No next method available"
+msgstr ""
+
 # methods/R/RClassUtils.R: 147
 # stop(gettextf("in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s",
 #                               dQuote(className),
@@ -1390,22 +1393,6 @@ msgstr ""
 # stop("no suitable arguments to dispatch methods in this function")
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "brak odpowiednich argumentów do rozdzielenia metod w tej funkcji"
-
-# methods/R/RMethodUtils.R: 209
-# stop(gettextf("special function %s is not permitted to have methods",
-#                           sQuote(f)),
-#                  domain = NA)
-msgid "special function %s is not permitted to have methods"
-msgstr "specjalna funkcja %s nie ma prawa posiadać metod"
-
-# methods/R/RMethodUtils.R: 213
-# warning(gettextf("special function %s has no known argument list; will assume '(x, ...)'",
-#                              sQuote(f)),
-#                     domain = NA)
-msgid "special function %s has no known argument list; will assume '(x, ...)'"
-msgstr ""
-"specjalna funkcja %s nie ma znanej listy argumentów; zostanie założone "
-"'(x, ...)'"
 
 # methods/R/RMethodUtils.R: 220
 # message(gettextf("making a generic for special function %s",
@@ -3484,6 +3471,23 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
+
+# methods/R/RMethodUtils.R: 209
+# stop(gettextf("special function %s is not permitted to have methods",
+#                           sQuote(f)),
+#                  domain = NA)
+#~ msgid "special function %s is not permitted to have methods"
+#~ msgstr "specjalna funkcja %s nie ma prawa posiadać metod"
+
+# methods/R/RMethodUtils.R: 213
+# warning(gettextf("special function %s has no known argument list; will assume '(x, ...)'",
+#                              sQuote(f)),
+#                     domain = NA)
+#~ msgid ""
+#~ "special function %s has no known argument list; will assume '(x, ...)'"
+#~ msgstr ""
+#~ "specjalna funkcja %s nie ma znanej listy argumentów; zostanie założone "
+#~ "'(x, ...)'"
 
 # methods/R/Methods.R: 1210
 # stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")

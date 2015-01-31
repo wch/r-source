@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-18 09:58\n"
+"POT-Creation-Date: 2015-01-31 13:18\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,6 +470,9 @@ msgstr ""
 msgid "bad object found as method (class %s)"
 msgstr ""
 
+msgid "No next method available"
+msgstr ""
+
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
 "data part specifies class %s"
@@ -662,12 +665,6 @@ msgid ""
 msgstr ""
 
 msgid "no suitable arguments to dispatch methods in this function"
-msgstr ""
-
-msgid "special function %s is not permitted to have methods"
-msgstr ""
-
-msgid "special function %s has no known argument list; will assume '(x, ...)'"
 msgstr ""
 
 msgid "making a generic for special function %s"

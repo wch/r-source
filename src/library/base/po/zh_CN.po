@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33+0000\n"
+"POT-Creation-Date: 2015-01-31 13:18+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -1108,127 +1108,127 @@ msgstr "非兼容'names'参数"
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "设'names'属性时种类(%s)出错"
 
-#: src/main/attrib.c:1020
+#: src/main/attrib.c:1022
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames'只能用于陈列"
 
-#: src/main/attrib.c:1025
+#: src/main/attrib.c:1027
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'必需是串列"
 
-#: src/main/attrib.c:1028 src/main/attrib.c:1056
+#: src/main/attrib.c:1030 src/main/attrib.c:1058
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'的长度[%d]必需同'dims'的长度[%d]相等"
 
-#: src/main/attrib.c:1062
+#: src/main/attrib.c:1064
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "设'dimnames'时的种类(%s)不对(必需为矢量)"
 
-#: src/main/attrib.c:1065
+#: src/main/attrib.c:1067
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'的长度[%d]必需与陈列范围相等"
 
-#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1139 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1926
 #: src/main/envir.c:2056 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1683
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1142
 msgid "invalid second argument"
 msgstr "第二个参数不对"
 
-#: src/main/attrib.c:1148
+#: src/main/attrib.c:1150
 msgid "length-0 dimension vector is invalid"
 msgstr "不能有零长度的大小矢量"
 
-#: src/main/attrib.c:1153
+#: src/main/attrib.c:1155
 msgid "the dims contain missing values"
 msgstr "dims不能包含缺少值"
 
-#: src/main/attrib.c:1155
+#: src/main/attrib.c:1157
 msgid "the dims contain negative values"
 msgstr "dims不能包含负值级"
 
-#: src/main/attrib.c:1160
+#: src/main/attrib.c:1162
 msgid "dims do not match the length of object"
 msgstr "dims与对象长度不匹配"
 
-#: src/main/attrib.c:1162
+#: src/main/attrib.c:1164
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]与对象长度[%d]不匹配"
 
-#: src/main/attrib.c:1264
+#: src/main/attrib.c:1266
 msgid "attributes must be a list or NULL"
 msgstr "属性必需是串列或NULL值"
 
-#: src/main/attrib.c:1269
+#: src/main/attrib.c:1271
 msgid "attributes must be named"
 msgstr "属性必需取名"
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1275
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的属性都必需有名字[%d没有]"
 
-#: src/main/attrib.c:1373
+#: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
 msgstr "'which'属性的状态必需是字符"
 
-#: src/main/attrib.c:1375
+#: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
 msgstr "只能给一个'which'属性"
 
-#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:245
+#: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
 #: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'部分匹配到'%s'"
 
-#: src/main/attrib.c:1495
+#: src/main/attrib.c:1497
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "槽名字的类别'%s'不对"
 
-#: src/main/attrib.c:1531
+#: src/main/attrib.c:1533
 msgid "'name' must be non-null character string"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
+#: src/main/attrib.c:1657 src/main/attrib.c:1728 src/main/attrib.c:1765
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
-#: src/main/attrib.c:1689
+#: src/main/attrib.c:1691
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "类别\"%2$s\"的对象中没有\"%1$s\"这样一个槽"
 
-#: src/main/attrib.c:1700
+#: src/main/attrib.c:1702
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别对象中"
 
-#: src/main/attrib.c:1717
+#: src/main/attrib.c:1719
 msgid "attempt to set slot on NULL object"
 msgstr "不能为NULL目标对象设属性"
 
-#: src/main/attrib.c:1758
+#: src/main/attrib.c:1760
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "一定要有'methods'程序包才能用正式类别"
 
-#: src/main/attrib.c:1770
+#: src/main/attrib.c:1772
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1774
+#: src/main/attrib.c:1776
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "

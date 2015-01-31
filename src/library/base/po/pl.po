@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33+0000\n"
+"POT-Creation-Date: 2015-01-31 13:18+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2793,13 +2793,13 @@ msgstr "niepoprawny typ (%s) do ustawienia atrybutu 'names'"
 
 # src/main/attrib.c: 938
 # error(_("'dimnames' applied to non-array"))
-#: src/main/attrib.c:1020
+#: src/main/attrib.c:1022
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames()' zastosowane do nie-tablicy"
 
 # src/main/attrib.c: 943
 # error(_("'dimnames' must be a list"))
-#: src/main/attrib.c:1025
+#: src/main/attrib.c:1027
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' musi być listą"
 
@@ -2809,7 +2809,7 @@ msgstr "'dimnames' musi być listą"
 # src/main/attrib.c: 974
 # error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 # 	      length(val), k)
-#: src/main/attrib.c:1028 src/main/attrib.c:1056
+#: src/main/attrib.c:1030 src/main/attrib.c:1058
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "długość 'dimnames' [%d] musi zgadzać się z tą dla 'dims' [%d]"
@@ -2817,7 +2817,7 @@ msgstr "długość 'dimnames' [%d] musi zgadzać się z tą dla 'dims' [%d]"
 # src/main/attrib.c: 980
 # error(_("invalid type (%s) for 'dimnames' (must be a vector)"),
 # 		      type2char(TYPEOF(_this)))
-#: src/main/attrib.c:1062
+#: src/main/attrib.c:1064
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "niepoprawny typ (%s) dla 'dimnames' (musi być wektor)"
@@ -2825,7 +2825,7 @@ msgstr "niepoprawny typ (%s) dla 'dimnames' (musi być wektor)"
 # src/main/attrib.c: 983
 # error(_("length of 'dimnames' [%d] not equal to array extent"),
 # 		      i+1)
-#: src/main/attrib.c:1065
+#: src/main/attrib.c:1067
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "długość 'dimnames' [%d] nie jest równa stopniowi tablicy"
@@ -2864,7 +2864,7 @@ msgstr "długość 'dimnames' [%d] nie jest równa stopniowi tablicy"
 # error(_("invalid first argument"))
 # src/main/builtin.c: 112
 # error(_("invalid first argument"))
-#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1139 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1926
 #: src/main/envir.c:2056 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1683
@@ -2875,69 +2875,69 @@ msgstr "niepoprawny pierwszy argument"
 # error(_("invalid second argument"))
 # src/main/attrib.c: 1058
 # error(_("invalid second argument"))
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1142
 msgid "invalid second argument"
 msgstr "niepoprawny drugi argument"
 
 # src/main/attrib.c: 1066
 # error(_("length-0 dimension vector is invalid"))
-#: src/main/attrib.c:1148
+#: src/main/attrib.c:1150
 msgid "length-0 dimension vector is invalid"
 msgstr "wektor wymiaru zerowej długości jest niepoprawny"
 
 # src/main/attrib.c: 1071
 # error(_("the dims contain missing values"))
-#: src/main/attrib.c:1153
+#: src/main/attrib.c:1155
 msgid "the dims contain missing values"
 msgstr "wymiary zawierają brakujące wartości"
 
 # src/main/attrib.c: 1073
 # error(_("the dims contain negative values"))
-#: src/main/attrib.c:1155
+#: src/main/attrib.c:1157
 msgid "the dims contain negative values"
 msgstr "wymiary zawierają ujemne wartości"
 
 # src/main/attrib.c: 1078
 # error(_("dims do not match the length of object"), total, len)
-#: src/main/attrib.c:1160
+#: src/main/attrib.c:1162
 msgid "dims do not match the length of object"
 msgstr "wymiary nie zgadzają się z długością obiektu"
 
 # src/main/attrib.c: 1080
 # error(_("dims [product %d] do not match the length of object [%d]"), total, len)
-#: src/main/attrib.c:1162
+#: src/main/attrib.c:1164
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "wymiary [produkt %d] nie odpowiadają długości obiektu [%d]"
 
 # src/main/attrib.c: 1182
 # error(_("attributes must be a list or NULL"))
-#: src/main/attrib.c:1264
+#: src/main/attrib.c:1266
 msgid "attributes must be a list or NULL"
 msgstr "atrybuty muszą być listą lub wartością NULL"
 
 # src/main/attrib.c: 1187
 # error(_("attributes must be named"))
-#: src/main/attrib.c:1269
+#: src/main/attrib.c:1271
 msgid "attributes must be named"
 msgstr "atrybuty muszą być nazwane"
 
 # src/main/attrib.c: 1191
 # error(_("all attributes must have names [%d does not]"), i+1)
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1275
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "wszystkie atrybuty muszą mieć nazwę [atrybut nr %d takiej nie ma]"
 
 # src/main/attrib.c: 1290
 #  _("'which' must be of mode character")
-#: src/main/attrib.c:1373
+#: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
 msgstr "atrybut 'which' musi być trybu tekstowego"
 
 # src/main/attrib.c: 1292
 #  _("exactly one attribute 'which' must be given")
-#: src/main/attrib.c:1375
+#: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
 msgstr "dokładnie jeden atrybut 'which' musi zostać podany"
 
@@ -2960,7 +2960,7 @@ msgstr "dokładnie jeden atrybut 'which' musi zostać podany"
 # warningcall(call,
 # 						_("partial match of '%s' to '%s'"),
 # 						ss, cur_name)
-#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:245
+#: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
 #: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
@@ -2969,14 +2969,14 @@ msgstr "częściowa zgodność między '%s' a '%s'"
 # src/main/attrib.c: 1411
 # error(_("invalid type '%s' for slot name"), 
 # 		  type2char(TYPEOF(nlist)))
-#: src/main/attrib.c:1495
+#: src/main/attrib.c:1497
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "niepoprawny typ '%s' dla nazwy gniazda"
 
 # src/main/attrib.c: 1449
 # error(_("'name' must be non-null character string"))
-#: src/main/attrib.c:1531
+#: src/main/attrib.c:1533
 msgid "'name' must be non-null character string"
 msgstr "'name' musi być niepustym łańcuchem tekstowym"
 
@@ -2986,7 +2986,7 @@ msgstr "'name' musi być niepustym łańcuchem tekstowym"
 # error(_("invalid type or length for slot name"))
 # src/main/attrib.c: 1681
 # error(_("invalid type or length for slot name"))
-#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
+#: src/main/attrib.c:1657 src/main/attrib.c:1728 src/main/attrib.c:1765
 msgid "invalid type or length for slot name"
 msgstr "niepoprawny typ lub długość dla nazwy gniazda"
 
@@ -2994,7 +2994,7 @@ msgstr "niepoprawny typ lub długość dla nazwy gniazda"
 # error(_("cannot get a slot (\"%s\") from an object of type \"%s\""),
 # 			  translateChar(asChar(input)),
 # 			  CHAR(type2str(TYPEOF(obj))))
-#: src/main/attrib.c:1689
+#: src/main/attrib.c:1691
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "nie można pobrać gniazda (\"%s\") z obiektu o typie \"%s\""
@@ -3003,20 +3003,20 @@ msgstr "nie można pobrać gniazda (\"%s\") z obiektu o typie \"%s\""
 # error(_("no slot of name \"%s\" for this object of class \"%s\""),
 # 		  translateChar(asChar(input)),
 # 		  translateChar(asChar(classString)))
-#: src/main/attrib.c:1700
+#: src/main/attrib.c:1702
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "brak gniazda o nazwie \"%s\" dla tego obiektu klasy \"%s\""
 
 # src/main/attrib.c: 1635
 # error(_("attempt to set slot on NULL object"))
-#: src/main/attrib.c:1717
+#: src/main/attrib.c:1719
 msgid "attempt to set slot on NULL object"
 msgstr "próba ustawienia gniazda na obiekt NULL"
 
 # src/main/attrib.c: 1676
 # error(_("formal classes cannot be used without the 'methods' package"))
-#: src/main/attrib.c:1758
+#: src/main/attrib.c:1760
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "formalne klasy nie mogą być używane bez pakietu 'methods'"
 
@@ -3024,7 +3024,7 @@ msgstr "formalne klasy nie mogą być używane bez pakietu 'methods'"
 # error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
 # 		  CHAR(PRINTNAME(nlist)),
 # 		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)))
-#: src/main/attrib.c:1770
+#: src/main/attrib.c:1772
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -3036,7 +3036,7 @@ msgstr ""
 # error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
 # 		  CHAR(PRINTNAME(nlist)),
 # 		  translateChar(STRING_ELT(klass, 0)))
-#: src/main/attrib.c:1774
+#: src/main/attrib.c:1776
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "

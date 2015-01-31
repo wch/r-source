@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33+0000\n"
+"POT-Creation-Date: 2015-01-31 13:18+0000\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -1124,124 +1124,124 @@ msgstr "'names' 인자는 함께 사용될 수 없습니다"
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "%s는 'names' 속성을 지정하는데 유효한 타입이 아닙니다"
 
-#: src/main/attrib.c:1020
+#: src/main/attrib.c:1022
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames'가 배열이 아닌 객체에 적용되었습니다"
 
-#: src/main/attrib.c:1025
+#: src/main/attrib.c:1027
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'은 반드시 리스트이어야 합니다"
 
-#: src/main/attrib.c:1028 src/main/attrib.c:1056
+#: src/main/attrib.c:1030 src/main/attrib.c:1058
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'의 길이 [%d]는 반드시 'dims'의 길이 [%d]와 같아야 합니다"
 
-#: src/main/attrib.c:1062
+#: src/main/attrib.c:1064
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 "%s는 'dimnames'에 유효한 유형이 아닙니다 (이는 반드시 벡터이어야 합니다)"
 
-#: src/main/attrib.c:1065
+#: src/main/attrib.c:1067
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames'의 길이 [%d]가 배열의 크기와 같지 않습니다"
 
-#: src/main/attrib.c:1137 src/main/builtin.c:75 src/main/builtin.c:112
+#: src/main/attrib.c:1139 src/main/builtin.c:75 src/main/builtin.c:112
 #: src/main/envir.c:1738 src/main/envir.c:1866 src/main/envir.c:1926
 #: src/main/envir.c:2056 src/main/paste.c:74 src/main/paste.c:293
 #: src/main/random.c:476 src/main/random.c:505 src/main/unique.c:1683
 msgid "invalid first argument"
 msgstr "첫번째 인자가 유효하지 않습니다"
 
-#: src/main/attrib.c:1140
+#: src/main/attrib.c:1142
 msgid "invalid second argument"
 msgstr "두번째 인자가 유효하지 않습니다"
 
-#: src/main/attrib.c:1148
+#: src/main/attrib.c:1150
 msgid "length-0 dimension vector is invalid"
 msgstr "차원벡터의 길이가 0인 것은 유효하지 않습니다"
 
-#: src/main/attrib.c:1153
+#: src/main/attrib.c:1155
 msgid "the dims contain missing values"
 msgstr "dims에 누락된 값들이 있습니다"
 
-#: src/main/attrib.c:1155
+#: src/main/attrib.c:1157
 msgid "the dims contain negative values"
 msgstr "dims에 음수값들이 포함되어 있습니다"
 
-#: src/main/attrib.c:1160
+#: src/main/attrib.c:1162
 msgid "dims do not match the length of object"
 msgstr "dims가 객체의 길이와 일치하지 않습니다"
 
-#: src/main/attrib.c:1162
+#: src/main/attrib.c:1164
 #, c-format
 msgid "dims [product %d] do not match the length of object [%d]"
 msgstr "dims [product %d]가 객체 [%d]의 길이와 일치하지 않습니다"
 
-#: src/main/attrib.c:1264
+#: src/main/attrib.c:1266
 msgid "attributes must be a list or NULL"
 msgstr "속성들은 반드시 리스트 또는 NULL이어야 합니다"
 
-#: src/main/attrib.c:1269
+#: src/main/attrib.c:1271
 msgid "attributes must be named"
 msgstr "속성들은 반드시 이름이 주어져야 합니다"
 
-#: src/main/attrib.c:1273
+#: src/main/attrib.c:1275
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 "모든 속성들은 반드시 이름을 가지고 있어야 합니다 [그러나 %d는 그렇지 않습니"
 "다]"
 
-#: src/main/attrib.c:1373
+#: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
 msgstr "'which'는 반드시 문자형 모드이어야 합니다"
 
-#: src/main/attrib.c:1375
+#: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
 msgstr "오로지 한개의 속성만이 'which'에 주어질 수 있습니다"
 
-#: src/main/attrib.c:1433 src/main/attrib.c:1456 src/main/subscript.c:245
+#: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
 #: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'는 '%s'에 부분적으로만 일치합니다"
 
-#: src/main/attrib.c:1495
+#: src/main/attrib.c:1497
 #, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "'%s'는 슬롯이름에 유효한 타입이 아닙니다"
 
-#: src/main/attrib.c:1531
+#: src/main/attrib.c:1533
 msgid "'name' must be non-null character string"
 msgstr "'name'은 반드시 NULL이 아닌 문자열이어야 합니다"
 
-#: src/main/attrib.c:1655 src/main/attrib.c:1726 src/main/attrib.c:1763
+#: src/main/attrib.c:1657 src/main/attrib.c:1728 src/main/attrib.c:1765
 msgid "invalid type or length for slot name"
 msgstr "슬롯이름의 유형 또는 길이가 잘못되었습니다"
 
-#: src/main/attrib.c:1689
+#: src/main/attrib.c:1691
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "유형 \"%2$s\"를 가지는 객체로부터 슬롯 (\"%1$s\")를 얻을 수 없습니다"
 
-#: src/main/attrib.c:1700
+#: src/main/attrib.c:1702
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "클래스 \"%2$s\"를 가지는 이 객체에는 \"%1$s\" 이름을 가진 슬롯이 없습니다"
 
-#: src/main/attrib.c:1717
+#: src/main/attrib.c:1719
 msgid "attempt to set slot on NULL object"
 msgstr "NULL 객체에 슬롯을 지정하려고 했습니다"
 
-#: src/main/attrib.c:1758
+#: src/main/attrib.c:1760
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "'methods' 패키지없이 formal classes를 사용할 수 없습니다"
 
-#: src/main/attrib.c:1770
+#: src/main/attrib.c:1772
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1249,7 +1249,7 @@ msgid ""
 msgstr ""
 "슬롯이 없는 기본 클래스 (\"%2$s\")로부터 슬롯 \"%1$s\"를 가져오려 했습니다"
 
-#: src/main/attrib.c:1774
+#: src/main/attrib.c:1776
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "

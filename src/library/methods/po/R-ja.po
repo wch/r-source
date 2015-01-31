@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-18 09:58\n"
+"POT-Creation-Date: 2015-01-31 13:18\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -557,6 +557,9 @@ msgstr ""
 msgid "bad object found as method (class %s)"
 msgstr " 間違ったオブジェクトがメソッド (クラス %s) として見付かりました "
 
+msgid "No next method available"
+msgstr ""
+
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
 "data part specifies class %s"
@@ -799,12 +802,6 @@ msgstr ""
 
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr " この関数中にはメソッドを割り当てるための適切な引数がありません "
-
-msgid "special function %s is not permitted to have methods"
-msgstr " 特殊関数 %s はメソッドを持つことが出来ません "
-
-msgid "special function %s has no known argument list; will assume '(x, ...)'"
-msgstr " 特殊関数 %s は引数リストを持っていません; '(x, ...)' と仮定します "
 
 msgid "making a generic for special function %s"
 msgstr " 特殊関数 %s のジェネリックを作ります "
@@ -1899,6 +1896,13 @@ msgid_plural ""
 "no definition of class %s in the specified position, %s, definitions on : %s"
 msgstr[0] ""
 " クラス %s の定義は指定された位置 %s にありません、以下に関する定義です: %s "
+
+#~ msgid "special function %s is not permitted to have methods"
+#~ msgstr " 特殊関数 %s はメソッドを持つことが出来ません "
+
+#~ msgid ""
+#~ "special function %s has no known argument list; will assume '(x, ...)'"
+#~ msgstr " 特殊関数 %s は引数リストを持っていません; '(x, ...)' と仮定します "
 
 #~ msgid ""
 #~ "'callGeneric' with a primitive needs explicit arguments (no formal args "
