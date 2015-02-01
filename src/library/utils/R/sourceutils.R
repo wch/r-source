@@ -155,7 +155,7 @@ getParseText <- function(parseData, id) {
     d <- parseData[as.character(id),]
     text <- d$text
     if (is.null(text)) {
-    	text <- character(nrow(text))
+    	text <- character(nrow(d))
     	blank <- seq_along(text)
     } else
     	blank <- which(!nzchar(text))
