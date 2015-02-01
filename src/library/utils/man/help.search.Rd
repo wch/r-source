@@ -115,10 +115,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
 
   Vignettes are searched as follows.  The \code{"name"} and
   \code{"alias"} are both the base of the vignette filename, and the
-  \code{"concept"} entries are taken from the \code{\\VignetteKeywords}
+  \code{"concept"} entries are taken from the \code{\\VignetteKeyword}
   entries.  Vignettes are not classified using the help system
   \code{"keyword"} classifications.  Demos are handled
-  similarly to vignettes, without the  \code{"concept"} search.
+  similarly to vignettes, without the \code{"concept"} search.
 }
 
 \value{
