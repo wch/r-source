@@ -133,11 +133,3 @@ genericForPrimitive <- function(f, where = topenv(parent.frame()),
              domain = NA)
     ans
 }
-
-.findBasicFuns <- function(where) {
-    allWhere <- .findAll(".BasicFunsList", where = where)
-    if(length(allWhere) == 0)
-        .methodsNamespace
-    else
-        as.environment(allWhere[[1L]])
-}
