@@ -1,6 +1,6 @@
 % File src/library/base/man/eigen.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eigen}
@@ -67,8 +67,8 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   fuzz), where \eqn{\Lambda =}{Lmbd =}\code{diag(lam)}.
 }
 \source{
-  By default \code{eigen} uses the LAPACK routines \code{DSYEVR},
-  \code{DGEEV}, \code{ZHEEV} and \code{ZGEEV} whereas
+  \code{eigen} uses the LAPACK routines \code{DSYEVR}, \code{DGEEV},
+  \code{ZHEEV} and \code{ZGEEV}.
 
   LAPACK is from \url{http://www.netlib.org/lapack} and its guide is listed
   in the references.
