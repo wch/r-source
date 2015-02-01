@@ -117,7 +117,7 @@ sunflowerplot(x, \dots)
 \seealso{\code{\link{density}}, \code{\link{xyTable}}
 }
 \examples{
-require(stats)
+require(stats) # for rnorm
 require(grDevices)
 
 ## 'number' is computed automatically:
