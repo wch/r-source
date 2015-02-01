@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-01-31 r67683) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-01-31 r67686) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1772,7 +1772,7 @@ armed.forces
 > 
 > ### ** Examples
 > 
-> require(stats)
+> require(stats) # for lowess, rpois, rnorm
 > plot(cars)
 > lines(lowess(cars))
 > 
@@ -2800,7 +2800,7 @@ $`11.33`
 > 
 > ### ** Examples
 > 
-> require(stats)
+> require(stats) # for rnorm
 > require(grDevices)
 > 
 > ## 'number' is computed automatically:
