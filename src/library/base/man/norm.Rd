@@ -1,6 +1,6 @@
 % File src/library/base/man/norm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2010--2014 R Core Team
+% Copyright 2010--2015 R Core Team
 % Copyright 2010--2012 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -8,7 +8,7 @@
 \alias{norm}
 \title{Compute the Norm of a Matrix}
 \description{
-  Computes a matrix norm of \code{x} using Lapack.  The norm can be
+  Computes a matrix norm of \code{x} using LAPACK.  The norm can be
   the one (\code{"O"}) norm, the infinity (\code{"I"}) norm, the
   Frobenius (\code{"F"}) norm, the maximum modulus (\code{"M"}) among
   elements of a matrix, or the \dQuote{spectral} or \code{"2"}-norm, as
