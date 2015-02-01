@@ -986,7 +986,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 /* This is a special .Internal */
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, t, obj, method, classmethod, rho, ans;
+    SEXP a, t, obj, method, rho, ans;
     const char *generic;
     int mode, deparse_level;
     Rboolean compatible = TRUE, anyS4 = FALSE;
