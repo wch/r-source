@@ -46,11 +46,13 @@ function(y, groups, blocks, ...)
     }
 
     k <- nlevels(groups)
-    y <- matrix(unlist(split(y, blocks)), ncol = k, byrow = TRUE)
+    ## <FIXME split.matrix>
+    y <- matrix(unlist(split(c(y), blocks)), ncol = k, byrow = TRUE)
     y <- y[complete.cases(y), ]
     n <- nrow(y)
     r <- t(apply(y, 1L, rank))
-    TIES <- tapply(r, row(r), table)
+    ## <FIXME split.matrix>    
+    TIES <- tapply(c(r), row(r), table)
     STATISTIC <- ((12 * sum((colSums(r) - n * (k + 1) / 2)^2)) /
                   (n * k * (k + 1)
                    - (sum(unlist(lapply(TIES, function (u) {u^3 - u}))) /

@@ -891,7 +891,8 @@ data.frame <-
                                       "replacement has %d items, need %d"),
                              m, n*p), domain = NA)
             value <- matrix(value, n, p)  ## will recycle
-            value <- split(value, col(value))
+            ## <FIXME split.matrix>
+            value <- split(c(value), col(value))
         }
 	dimv <- c(n, p)
     } else { # a list

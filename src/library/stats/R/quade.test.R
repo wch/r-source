@@ -41,7 +41,8 @@ function(y, groups, blocks, ...)
     }
     k <- nlevels(groups)
     b <- nlevels(blocks)
-    y <- matrix(unlist(split(y, blocks)), ncol = k, byrow = TRUE)
+    ## <FIXME split.matrix>
+    y <- matrix(unlist(split(c(y), blocks)), ncol = k, byrow = TRUE)
     y <- y[complete.cases(y), ]
 #    n <- nrow(y)
     r <- t(apply(y, 1L, rank))

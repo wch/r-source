@@ -77,15 +77,16 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 
 boxplot.matrix <- function(x, use.cols = TRUE, ...)
 {
-  ## Purpose: Boxplot for each column or row [use.cols= TRUE / FALSE] of a matrix
-  ## -------------------------------------------------------------------------
-  ## Arguments: x: a numeric matrix; use.cols: logical, columns (T) or rows (F)
-  groups <- if(use.cols) split(x, rep.int(1L:ncol(x),
-                                          rep.int(nrow(x), ncol(x))))
-  else split(x, seq(nrow(x)))
-  ## Make use of col/row names if present
-  if (length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
-  invisible(boxplot(groups, ...))
+    ## Purpose: Boxplot for each column or row [use.cols= TRUE / FALSE] of a matrix
+    ## -------------------------------------------------------------------------
+    ## Arguments: x: a numeric matrix; use.cols: logical, columns (T) or rows (F)
+    ## <FIXME split.matrix>
+    groups <- if(use.cols) {
+        split(c(x), rep.int(1L:ncol(x), rep.int(nrow(x), ncol(x))))
+    } else split(c(x), seq(nrow(x)))
+    ## Make use of col/row names if present
+    if (length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
+    invisible(boxplot(groups, ...))
 }
 
 boxplot.formula <-

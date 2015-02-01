@@ -421,6 +421,7 @@ format.check_so_symbols <-
 function(x, ...)
 {
     if(!length(x)) return(character())
+    ## <FIXME split.matrix>
     entries <- split.data.frame(x, x[, "osname"])
     objects <- vector("list", length(entries))
     names(objects) <- names(entries)
