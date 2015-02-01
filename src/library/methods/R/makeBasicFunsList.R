@@ -39,7 +39,7 @@ utils::globalVariables(".addBasicGeneric")
 
     ## Next, add the remaining primitive generics
     prims <- names(.GenericArgsEnv)
-    new_prims <- prims[!prims %in% names(funs)]
+    new_prims <- setdiff(prims, names(funs))
     for(nm in new_prims) {
         f <- get(nm, envir = .GenericArgsEnv)
         body(f) <- substitute(standardGeneric(ff), list(ff=val))
@@ -47,9 +47,9 @@ utils::globalVariables(".addBasicGeneric")
     }
 
     ## Then add all the primitives that are not already there.
-    ff <- names(BE <- baseenv())
-    prims <- ff[vapply(ff, function(x) is.primitive(BE[[x]]), NA)]
-    new_prims <- prims[!prims %in% names(funs)]
+    ff <- as.list(baseenv(), all.names=TRUE)
+    prims <- ff[vapply(ff, is.primitive, logical(1L))]
+    new_prims <- setdiff(names(prims), names(funs))
     add <- rep(list(FALSE), length(new_prims))
     names(add) <- new_prims
     funs <- c(funs, add)

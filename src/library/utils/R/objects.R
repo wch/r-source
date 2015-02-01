@@ -31,9 +31,9 @@ function(fname, envir)
 	## maybe an S3 generic was turned into the S4 default
 	## Try to find it, otherwise warn :
 	fMethsEnv <- methods::getMethodsForDispatch(f)
-	r <- lapply(grep("^ANY\\b", names(fMethsEnv), value=TRUE),
-		    get, envir = fMethsEnv)
-	if(any(ddm <- unlist(lapply(r, class)) == "derivedDefaultMethod"))
+        meths <- as.list(fMethsEnv, all.names=TRUE)
+        r <- meths[grep("^ANY\\b", names(meths))]
+	if(any(ddm <- vapply(r, is, logical(1L), "derivedDefaultMethod")))
 	    f <- r[ddm][[1]]@.Data
 	else
 	    warning(gettextf(

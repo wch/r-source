@@ -287,20 +287,12 @@ current.parent <- function(n=1) {
 }
 
 vpListFromNode <- function(node) {
-  childnames <- names(node$children)
-  n <- length(childnames)
-  children <- vector("list", n)
-  index <- 1
-  for (i in childnames) {
-    children[[index]] <- vpTreeFromNode(get(i, envir=node$children))
-    index <- index + 1
-  }
-  vpListFromList(children)
+  vpListFromList(as.list(node$children, all.names=TRUE))
 }
 
 vpTreeFromNode <- function(node) {
   # If no children then just return viewport
-  if (length(names(node$children)) == 0)
+  if (no.children(node$children))
     vpFromPushedvp(node)
   # Otherwise return vpTree
   else

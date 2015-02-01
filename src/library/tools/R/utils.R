@@ -1296,9 +1296,8 @@ function(parent = parent.frame(), fixup = FALSE)
 {
     ## Create an environment with pseudo-definitions for the S3 primitive
     ## generics
-    env <- new.env(hash = TRUE, parent = parent)
-    for(f in names(base::.GenericArgsEnv))
-        assign(f, get(f, envir=base::.GenericArgsEnv), envir = env)
+    env <- list2env(as.list(base::.GenericArgsEnv, all.names=TRUE),
+                    hash=TRUE, parent=parent)
     if(fixup) {
         ## now fixup the operators
         for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
@@ -1318,10 +1317,8 @@ function(parent = parent.frame())
 {
     ## Create an environment with pseudo-definitions
     ## for the S3 primitive non-generics
-    env <- new.env(hash = TRUE, parent = parent)
-    for(f in names(base::.ArgsEnv))
-        assign(f, get(f, envir=base::.ArgsEnv), envir = env)
-    env
+    list2env(as.list(base::.ArgsEnv, all.names=TRUE),
+             hash=TRUE, parent=parent)
 }
 
 ### ** .make_S3_methods_stop_list

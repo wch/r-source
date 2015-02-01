@@ -29,7 +29,7 @@ rootVP <- function(pvp) {
 # List the children of the current vp (as a vpList)
 current.vpList <- function() {
   cpvp <- grid.Call(L_currentViewport)
-  if (length(names(cpvp$children)) == 0)
+  if (no.children(cpvp$children))
     NULL
   else
     vpListFromNode(cpvp)
@@ -45,7 +45,7 @@ vpExists <- function(vp) {
 }
 
 vpExists.viewport <- function(vp) {
-  vp$name %in% names(.Call(L_currentViewport)$children)
+  exists(vp$name, .Call(L_currentViewport)$children)
 }
 
 vpExists.vpStack <- function(vp) {
@@ -53,7 +53,7 @@ vpExists.vpStack <- function(vp) {
 }
 
 vpExists.vpList <- function(vp) {
-  any(sapply(vp, vpExists, simplify=TRUE))
+  any(vapply(vp, vpExists, logical(1L), simplify=TRUE))
 }
 
 vpExists.vpTree <- function(vp) {
