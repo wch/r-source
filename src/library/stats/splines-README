@@ -18,8 +18,8 @@ smooth.spline()  [R]
                 |--> interv()               "
                 |--> bsplvd()               "
                 |    \--> bsplvb()          "
-                |--> dpbfa()            ../../../appl/dpbfa.f  {Linpack}
-                \--> dpbsl()            ../../../appl/dpbsl.f
+                |--> dpbfa()            ../../appl/dpbfa.f  {LINPACK}
+                \--> dpbsl()            ../../appl/dpbsl.f
 
 
 predict.smooth.spline()  [R]

@@ -38,7 +38,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
   \item{triangular}{logical.  If true, the matrix used is just the lower
     triangular part of \code{z}.}
   \item{LINPACK}{logical.  If true and \code{z} is not complex, the
-    Linpack routine \code{dtrco()} is called; otherwise the relevant
+    LINPACK routine \code{dtrco()} is called; otherwise the relevant
     LAPACK routine is.}
   \item{\dots}{further arguments passed to or from other methods;
     for \code{kappa.*()}, notably \code{LINPACK} when \code{norm} is not
