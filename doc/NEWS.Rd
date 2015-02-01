@@ -274,6 +274,13 @@
 
       \item New function \code{trimws()} for removing leading/trailing
       whitespace.
+
+      \item \code{cbind} and \code{rbind} now consider S4 inheritance
+      during S3 dispatch.
+
+      \item \code{cbind} and \code{rbind} will delegate recursively to
+      \code{methods::cbind2} (\code{methods::rbind2}) when at least one
+      argument is an S4 object and S3 dispatch fails (due to ambiguity).
     }
   }
 

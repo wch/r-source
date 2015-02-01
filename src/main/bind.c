@@ -986,13 +986,13 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 /* This is a special .Internal */
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, t, obj, classlist, classname, method, classmethod, rho;
+    SEXP a, t, obj, method, classmethod, rho, ans;
     const char *generic;
     int mode, deparse_level;
-    Rboolean compatible = TRUE;
+    Rboolean compatible = TRUE, anyS4 = FALSE;
     struct BindData data;
     char buf[512];
-    const char *s, *klass;
+    const char *klass;
 
     /* since R 2.2.0: first argument "deparse.level" */
     deparse_level = asInteger(eval(CAR(args), env));
@@ -1026,19 +1026,23 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
     klass = "";
     method = R_NilValue;
-    for (a = args; a != R_NilValue && compatible; a = CDR(a)) {
+    for (a = args; a != R_NilValue; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
-	if (isObject(obj)) {
+        if (isS4(obj)) {
+            anyS4 = TRUE;
+        }
+	if (isObject(obj) && compatible) {
 	    int i;
-	    classlist = getAttrib(obj, R_ClassSymbol);
+	    SEXP classlist;
+            PROTECT(classlist = R_data_class2(obj));
 	    for (i = 0; i < length(classlist); i++) {
-		classname = STRING_ELT(classlist, i);
-		s = translateChar(classname);
+		SEXP classname = STRING_ELT(classlist, i);
+		const char *s = translateChar(classname);
 		if(strlen(generic) + strlen(s) + 2 > 512)
 		    error(_("class name too long in '%s'"), generic);
 		sprintf(buf, "%s.%s", generic, s);
-		classmethod = R_LookupMethod(install(buf), env, env,
-					     R_BaseNamespace);
+		SEXP classmethod = R_LookupMethod(install(buf), env, env,
+                                                  R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
 		    if (klass[0] == '\0') {
 			/* There is no previous class */
@@ -1053,23 +1057,26 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* default method. */
 			if (strcmp(klass, s)) {
 			    method = R_NilValue;
-			    /* need to end both loops */
 			    compatible = FALSE;
 			}
 		    }
 		    break; /* go to next parameter */
 		}
 	    }
+            UNPROTECT(1);
 	}
 	UNPROTECT(1);
     }
+    if (method == R_NilValue && anyS4) {
+        method = findFun(install(generic), R_MethodsNamespace);
+    }
     if (method != R_NilValue) {
 	PROTECT(method);
-	args = applyClosure(call, method, args, env, R_NilValue);
+	ans = applyClosure(call, method, args, env, R_NilValue);
 	UNPROTECT(2);
-	return args;
+	return ans;
     }
-
+    
     /* Dispatch based on class membership has failed. */
     /* The default code for rbind/cbind.default follows */
     /* First, extract the evaluated arguments. */
