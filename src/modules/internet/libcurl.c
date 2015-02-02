@@ -179,6 +179,14 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_CURL_CURL_H
 static double total;
 
+static int ndashes;
+static void putdashes(int *pold, int new)
+{
+    for (int i = *pold; i < new; i++)  REprintf("=");
+    if (R_Consolefile) fflush(R_Consolefile);
+    *pold = new;
+}
+
 #ifdef Win32
 // ------- Windows progress bar -----------
 #include <ga.h>
@@ -210,9 +218,12 @@ int progress(void *clientp, double dltotal, double dlnow,
     if (dltotal > 0.) {
 	if (total == 0.) {
 	    total = dltotal;
+	    char *type = NULL;
+	    CURL *hnd = (CURL *) clientp;
+	    curl_easy_getinfo(hnd, CURLINFO_CONTENT_TYPE, &type);
 	    if (total > 1024.0*1024.0)
 		// might be longer than long, and is on 64-bit windows
-		REprintf("Content length %0.0f bytes (%0.1f MB)\n",
+		REprintf(" length %0.0f bytes (%0.1f MB)\n",
 			 total, total/1024.0/1024.0);
 	    else if (total > 10240)
 		REprintf("Content length %d bytes (%d KB)\n",
@@ -220,20 +231,24 @@ int progress(void *clientp, double dltotal, double dlnow,
 	    else
 		REprintf("Content length %d bytes\n", (int)total);
 	    R_FlushConsole();
-	    if (total > 1e9) factor = total/1e6; else factor = 1;
-	    setprogressbarrange(pbar.pb, 0, total/factor);
-	    show(pbar.wprog);
-	}
-	setprogressbar(pbar.pb, dlnow/factor);
-	if (total > 0) {
-	    static char pbuf[30];
-	    int pc = 0.499 + 100.0*dlnow/total;
-	    if (pc > pbar.pc) {
-		snprintf(pbuf, 30, "%d%% downloaded", pc);
-		settext(pbar.wprog, pbuf);
-		pbar.pc = pc;
+	    if(R_Interactive) {
+		if (total > 1e9) factor = total/1e6; else factor = 1;
+		setprogressbarrange(pbar.pb, 0, total/factor);
+		show(pbar.wprog);
 	    }
 	}
+	if (R_Interactive) {
+	    setprogressbar(pbar.pb, dlnow/factor);
+	    if (total > 0) {
+		static char pbuf[30];
+		int pc = 0.499 + 100.0*dlnow/total;
+		if (pc > pbar.pc) {
+		    snprintf(pbuf, 30, "%d%% downloaded", pc);
+		    settext(pbar.wprog, pbuf);
+		    pbar.pc = pc;
+		}
+	    }
+	} else putdashes(&ndashes, (int)(50*dlnow/total));
     }
     R_ProcessEvents();
     return 0;
@@ -241,14 +256,6 @@ int progress(void *clientp, double dltotal, double dlnow,
 
 #else
 // ------- Unix-alike progress bar -----------
-
-static int ndashes;
-static void putdashes(int *pold, int new)
-{
-    for (int i = *pold; i < new; i++)  REprintf("=");
-    if (R_Consolefile) fflush(R_Consolefile);
-    *pold = new;
-}
 
 static
 int progress(void *clientp, double dltotal, double dlnow,
@@ -346,28 +353,30 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    // It would in principle be possible to have
 	    // multiple progress bars on Windows.
 	    curl_easy_setopt(hnd[i], CURLOPT_NOPROGRESS, 0L);
-#ifdef Win32
-	    if (!pbar.wprog) {
-		pbar.wprog = newwindow(_("Download progress"),
-				       rect(0, 0, 540, 100),
-				       Titlebar | Centered);
-		setbackground(pbar.wprog, dialog_bg());
-		pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
-		pbar.pb = newprogressbar(rect(20, 50, 500, 20),
-					 0, 1024, 1024, 1);
-		pbar.pc = 0;
-	    }
-	    
-	    settext(pbar.l_url, url);
-	    setprogressbar(pbar.pb, 0);
-	    settext(pbar.wprog, "Download progress");
-	    show(pbar.wprog);
-	    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
-			 R_NilValue, R_NilValue, R_NilValue);
-	    pbar.cntxt.cend = &doneprogressbar;
-	    pbar.cntxt.cenddata = &pbar;
-#else
 	    ndashes = 0;
+#ifdef Win32
+	    if (R_Interactive) {
+		if (!pbar.wprog) {
+		    pbar.wprog = newwindow(_("Download progress"),
+					   rect(0, 0, 540, 100),
+					   Titlebar | Centered);
+		    setbackground(pbar.wprog, dialog_bg());
+		    pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), 
+					  AlignCenter);
+		    pbar.pb = newprogressbar(rect(20, 50, 500, 20),
+					     0, 1024, 1024, 1);
+		    pbar.pc = 0;
+		}
+	    
+		settext(pbar.l_url, url);
+		setprogressbar(pbar.pb, 0);
+		settext(pbar.wprog, "Download progress");
+		show(pbar.wprog);
+		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
+			     R_NilValue, R_NilValue, R_NilValue);
+		pbar.cntxt.cend = &doneprogressbar;
+		pbar.cntxt.cenddata = &pbar;
+	    }
 #endif
 	    // For libcurl >= 7.32.0 use CURLOPT_XFERINFOFUNCTION
 	    curl_easy_setopt(hnd[i], CURLOPT_PROGRESSFUNCTION, progress);
@@ -417,9 +426,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     } while(still_running);
     R_Busy(0);
 #ifdef Win32
-    if (!quiet) {
+    if (R_Interactive && !quiet) {
 	endcontext(&(pbar.cntxt));
 	doneprogressbar(&pbar);
+    } else if (total > 0.) {
+	REprintf("\n");
+	R_FlushConsole();
     }
 #else
     if (total > 0.) REprintf("\n");
