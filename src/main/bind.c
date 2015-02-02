@@ -1067,7 +1067,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
     }
-    if (method == R_NilValue && anyS4) {
+    if (!compatible && anyS4) {
         method = findFun(install(generic), R_MethodsNamespace);
     }
     if (method != R_NilValue) {
