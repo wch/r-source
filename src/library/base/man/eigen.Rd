@@ -41,6 +41,10 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   algebraic solution with repeated real eigenvalues, the computed
   solution may be of a similar matrix with complex conjugate pairs of
   eigenvalues.
+  
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code (most often \code{1}): these can
+  only be interpreted by detailed study of the FORTRAN code.
 }
 \value{
   The spectral decomposition of \code{x} is returned as components of a
