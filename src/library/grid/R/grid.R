@@ -287,7 +287,7 @@ current.parent <- function(n=1) {
 }
 
 vpListFromNode <- function(node) {
-  vpListFromList(as.list(node$children, all.names=TRUE))
+  vpListFromList(eapply(node$children, vpTreeFromNode, all.names=TRUE))
 }
 
 vpTreeFromNode <- function(node) {
