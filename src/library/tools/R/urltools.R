@@ -52,7 +52,7 @@ function(x)
     y
 }
 
-.Rd_get_urls <-
+.get_urls_from_Rd <-
 function(x)
 {
     urls <- character()
@@ -72,10 +72,24 @@ function(x)
     unique(urls)
 }
 
+.get_urls_from_HTML_file <-
+function(f)
+{
+    hrefs <- character()
+    XML::htmlParse(f,
+                   handlers =
+                       list(a = function(node) {
+                           hrefs <<- c(hrefs, XML::xmlAttrs(node, "href"))
+                       })
+                   )
+    unname(hrefs[!grepl("^#", hrefs)])
+}
+
 url_db <-
 function(urls, parents)
 {
-    db <- data.frame(URL = urls, Parent = parents,
+    db <- data.frame(URL = as.character(urls),
+                     Parent = as.character(parents),
                      stringsAsFactors = FALSE)
     class(db) <- c("url_db", "data.frame")
     db
@@ -84,7 +98,7 @@ function(urls, parents)
 url_db_from_package_Rd_db <-
 function(db)
 {
-    urls <- Filter(length, lapply(db, .Rd_get_urls))
+    urls <- Filter(length, lapply(db, .get_urls_from_Rd))
     url_db(unlist(urls, use.names = FALSE),
            rep.int(file.path("man", names(urls)),
                    sapply(urls, length)))
@@ -143,11 +157,50 @@ function(dir, installed = FALSE)
     if(file.exists(nfile)) {
         macros <- loadRdMacros(file.path(R.home("share"),
                                          "Rd", "macros", "system.Rd"))
-        urls <- .Rd_get_urls(prepare_Rd(tools::parse_Rd(nfile,
-                                                        macros = macros),
-                                        stages = "install"))
+        urls <- .get_urls_from_Rd(prepare_Rd(tools::parse_Rd(nfile,
+                                                             macros = macros),
+                                             stages = "install"))
     }
     url_db(urls, rep.int(path, length(urls)))
+}
+
+url_db_from_package_HTML_files <-
+function(dir, installed = FALSE)
+{
+    urls <- parents <- character()
+    path <- if(installed) "doc" else file.path("inst", "doc")
+    files <- Sys.glob(file.path(dir, path, "*.html"))
+    if(installed && file.exists(rfile <- file.path(dir, "README.html")))
+        files <- c(files, rfile)
+    if(length(files)) {
+        urls <- lapply(files, .get_urls_from_HTML_file)
+        names(urls) <- files
+        urls <- Filter(length, urls)
+        if(length(urls)) {
+            parents <- rep.int(.file_path_relative_to_dir(names(urls),
+                                                          dir),
+                               sapply(urls, length))
+            urls <- unlist(urls, use.names = FALSE)
+        }
+    }
+    url_db(urls, parents)
+}
+
+url_db_from_package_README_md <-
+function(dir)    
+{
+    urls <- character()
+    if(file.exists(rfile <- file.path(dir, "README.md")) &&
+       nzchar(Sys.which("pandoc"))) {
+        tfile <- tempfile("README", fileext=".html")
+        on.exit(unlink(tfile))
+        out <- .pandoc_README_md_for_CRAN(rfile, tfile)
+        if(!out$status) {
+            urls <- .get_urls_from_HTML_file(tfile)
+        }
+    }
+    url_db(urls, rep.int("README.md", length(urls)))
+
 }
 
 url_db_from_package_sources <-
@@ -158,7 +211,11 @@ function(dir, add = FALSE) {
                 url_db_from_package_Rd_db(Rd_db(dir = dir)),
                 url_db_from_package_citation(dir, meta),
                 url_db_from_package_news(dir))
-
+    if(requireNamespace("XML", quietly = TRUE)) {
+        db <- rbind(db,
+                    url_db_from_package_HTML_files(dir),
+                    url_db_from_package_README_md(dir))
+    }
     if(add)
         db$Parent <- file.path(basename(dir), db$Parent)
     db
@@ -181,6 +238,11 @@ function(packages, lib.loc = NULL, verbose = FALSE)
                     url_db_from_package_citation(dir, meta,
                                                  installed = TRUE),
                     url_db_from_package_news(dir, installed = TRUE))
+        if(requireNamespace("XML", quietly = TRUE)) {
+            db <- rbind(db,
+                        url_db_from_package_HTML_files(dir,
+                                                       installed = TRUE))
+        }
         db$Parent <- file.path(p, db$Parent)
         db
     }

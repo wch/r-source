@@ -1432,7 +1432,19 @@ function(packages = NULL, FUN, ...)
     out
 }
 
-### .parse_code_file
+### ** .pandoc_README_md_for_CRAN
+
+.pandoc_README_md_for_CRAN <-
+function(ifile, ofile)
+{
+    .system_with_capture("pandoc",
+                         paste(shQuote(ifile), "-s",
+                               "--email-obfuscation=references",
+                               "--css=../../CRAN_web.css",
+                               "-o", shQuote(ofile)))
+}
+
+### ** .parse_code_file
 
 .parse_code_file <-
 function(file, encoding = NA, keep.source = getOption("keep.source"))
