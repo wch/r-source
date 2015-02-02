@@ -110,7 +110,7 @@ static Rboolean url_open(Rconnection con)
     switch(type) {
 #ifdef Win32
     case HTTPSsh:
-	    warning(_("for2 https:// URLs use setInternet2(TRUE)"));
+	    warning(_("for https:// URLs use setInternet2(TRUE)"));
 	    return FALSE;
 #endif
     case HTTPsh:
@@ -384,7 +384,6 @@ in_R_newurl(const char *description, const char * const mode, int type)
 
 
 
-#ifndef Win32
 static void putdots(DLsize_t *pold, DLsize_t new)
 {
     DLsize_t i, old = *pold;
@@ -404,7 +403,6 @@ static void putdashes(int *pold, int new)
     for(i = old; i < new; i++)  REprintf("=");
     if(R_Consolefile) fflush(R_Consolefile);
 }
-#endif
 
 /* note, ALL the possible structures have the first two elements */
 typedef struct {
@@ -474,7 +472,7 @@ static SEXP in_do_download(SEXP args)
     if(meth == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "method");
     if(meth == 0) meth = UseInternet2;
-    if (!quiet && !pbar.wprog) {
+    if (R_Interactive && !quiet && !pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			       Titlebar | Centered);
 	setbackground(pbar.wprog, dialog_bg());
@@ -524,10 +522,9 @@ static SEXP in_do_download(SEXP args)
 	void *ctxt;
 	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
-#ifndef Win32
 	int ndashes = 0;
 	DLsize_t ndots = 0;
-#else
+#ifdef Win32
 	int factor = 1;
 #endif
 
@@ -559,58 +556,63 @@ static SEXP in_do_download(SEXP args)
 	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
-	    if (guess <= 0) guess = 100 * 1024;
-	    if (guess > 1e9) factor = guess/1e6;
-	    R_FlushConsole();
-	    strcpy(buf, "URL: ");
-	    if(strlen(url) > 60) {
-		strcat(buf, "... ");
-		strcat(buf, url + (strlen(url) - 60));
-	    } else strcat(buf, url);
-	    if(!quiet) {
-		settext(pbar.l_url, buf);
-		setprogressbarrange(pbar.pb, 0, guess/factor);
-		setprogressbar(pbar.pb, 0);
-		settext(pbar.wprog, "Download progress");
-		show(pbar.wprog);
-		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
-			     R_NilValue, R_NilValue, R_NilValue);
-		pbar.cntxt.cend = &doneprogressbar;
-		pbar.cntxt.cenddata = &pbar;
-		pbar.pc = 0;
+	    if(R_Interactive) {
+		if (guess <= 0) guess = 100 * 1024;
+		if (guess > 1e9) factor = guess/1e6;
+		R_FlushConsole();
+		strcpy(buf, "URL: ");
+		if(strlen(url) > 60) {
+		    strcat(buf, "... ");
+		    strcat(buf, url + (strlen(url) - 60));
+		} else strcat(buf, url);
+		if(!quiet) {
+		    settext(pbar.l_url, buf);
+		    setprogressbarrange(pbar.pb, 0, guess/factor);
+		    setprogressbar(pbar.pb, 0);
+		    settext(pbar.wprog, "Download progress");
+		    show(pbar.wprog);
+		    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
+				 R_NilValue, R_NilValue, R_NilValue);
+		    pbar.cntxt.cend = &doneprogressbar;
+		    pbar.cntxt.cenddata = &pbar;
+		    pbar.pc = 0;
+		}
 	    }
 #endif
 	    while ((len = Ri_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		size_t res = fwrite(buf, 1, len, out);
 		if(res != len) error(_("write failed"));
 		nbytes += len;
+		if(!quiet) {
 #ifdef Win32
-		if(!quiet) {
-		    if(nbytes > guess) {
-			guess *= 2;
-			if (guess > 1e9) factor = guess/1e6;
-			setprogressbarrange(pbar.pb, 0, guess/factor);
-		    }
-		    setprogressbar(pbar.pb, nbytes/factor);
-		    if (total > 0) {
-			pc = 0.499 + 100.0*nbytes/total;
-			if (pc > pbar.pc) {
-			    snprintf(pbuf, 30, "%d%% downloaded", pc);
-			    settext(pbar.wprog, pbuf);
-			    pbar.pc = pc;
+		    if(R_Interactive) {
+			if(nbytes > guess) {
+			    guess *= 2;
+			    if (guess > 1e9) factor = guess/1e6;
+			    setprogressbarrange(pbar.pb, 0, guess/factor);
 			}
+			setprogressbar(pbar.pb, nbytes/factor);
+			if (total > 0) {
+			    pc = 0.499 + 100.0*nbytes/total;
+			    if (pc > pbar.pc) {
+				snprintf(pbuf, 30, "%d%% downloaded", pc);
+				settext(pbar.wprog, pbuf);
+				pbar.pc = pc;
+			    }
+			}
+		    } else
+#endif
+		    {
+			if(guess <= 0) putdots(&ndots, nbytes/1024);
+			else putdashes(&ndashes, (int)(50*nbytes/guess));
 		    }
 		}
-#else
-		if(!quiet) {
-		    if(guess <= 0) putdots(&ndots, nbytes/1024);
-		    else putdashes(&ndashes, (int)(50*nbytes/guess));
-		}
-#endif
 	    }
 	    Ri_HTTPClose(ctxt);
 	    if(!quiet) {
-#ifndef Win32
+#ifdef Win32
+		if(!R_Interactive) REprintf("\n");
+#else
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
@@ -623,7 +625,7 @@ static SEXP in_do_download(SEXP args)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    if(!quiet) {
+	    if(R_Interactive && !quiet) {
 		endcontext(&(pbar.cntxt));
 		doneprogressbar(&pbar);
 	    }
@@ -642,10 +644,9 @@ static SEXP in_do_download(SEXP args)
 	void *ctxt;
 	DLsize_t len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
-#ifndef Win32
 	int ndashes = 0;
 	DLsize_t ndots = 0;
-#else
+#ifdef Win32
 	int factor = 1;
 #endif
 
@@ -666,21 +667,21 @@ static SEXP in_do_download(SEXP args)
 	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
-	    if (guess <= 0) guess = 100 * 1024;
-	    if (guess > 1e9) factor = guess/1e6;
-	    R_FlushConsole();
-	    strcpy(buf, "URL: ");
-	    if(strlen(url) > 60) {
-		strcat(buf, "... ");
-		strcat(buf, url + (strlen(url) - 60));
-	    } else strcat(buf, url);
-	    if(!quiet) {
+	    if(R_Interactive && !quiet) {
+		if (guess <= 0) guess = 100 * 1024;
+		if (guess > 1e9) factor = guess/1e6;
+		R_FlushConsole();
+		strcpy(buf, "URL: ");
+		if(strlen(url) > 60) {
+		    strcat(buf, "... ");
+		    strcat(buf, url + (strlen(url) - 60));
+		} else strcat(buf, url);
 		settext(pbar.l_url, buf);
 		setprogressbarrange(pbar.pb, 0, guess/factor);
 		setprogressbar(pbar.pb, 0);
 		settext(pbar.wprog, "Download progress");
 		show(pbar.wprog);
-
+		
 		/* set up a context which will close progressbar on error. */
 		begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
 			     R_NilValue, R_NilValue, R_NilValue);
@@ -688,39 +689,41 @@ static SEXP in_do_download(SEXP args)
 		pbar.cntxt.cenddata = &pbar;
 		pbar.pc = 0;
 	    }
-
 #endif
 	    while ((len = Ri_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		size_t res = fwrite(buf, 1, len, out);
 		if(res != len) error(_("write failed"));
 		nbytes += len;
-#ifdef Win32
 		if(!quiet) {
-		    if(nbytes > guess) {
-			guess *= 2;
-			if (guess > 1e9) factor = guess/1e6;
-			setprogressbarrange(pbar.pb, 0, guess/factor);
-		    }
-		    setprogressbar(pbar.pb, nbytes/factor);
-		    if (total > 0) {
-			pc = 0.499 + 100.0*nbytes/total;
+#ifdef Win32
+		    if(R_Interactive) {
+			if(nbytes > guess) {
+			    guess *= 2;
+			    if (guess > 1e9) factor = guess/1e6;
+			    setprogressbarrange(pbar.pb, 0, guess/factor);
+			}
+			setprogressbar(pbar.pb, nbytes/factor);
+			if (total > 0) {
+			    pc = 0.499 + 100.0*nbytes/total;
 			if (pc > pbar.pc) {
 			    snprintf(pbuf, 30, "%d%% downloaded", pc);
 			    settext(pbar.wprog, pbuf);
 			    pbar.pc = pc;
 			}
+			}
+		    } else
+#endif
+		    {
+			if(guess <= 0) putdots(&ndots, nbytes/1024);
+			else putdashes(&ndashes, (int)(50*nbytes/guess));
 		    }
 		}
-#else
-		if(!quiet) {
-		    if(guess <= 0) putdots(&ndots, nbytes/1024);
-		    else putdashes(&ndashes, (int)(50*nbytes/guess));
-		}
-#endif
 	    }
 	    Ri_FTPClose(ctxt);
 	    if(!quiet) {
-#ifndef Win32
+#ifdef Win32
+		if(!R_Interactive) REprintf("\n");
+#else
 		REprintf("\n");
 #endif
 		if(nbytes > 1024*1024)
@@ -733,7 +736,7 @@ static SEXP in_do_download(SEXP args)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    if(!quiet) {
+	    if(R_Interactive && !quiet) {
 		endcontext(&(pbar.cntxt));
 		doneprogressbar(&pbar);
 	    }

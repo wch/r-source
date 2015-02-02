@@ -120,9 +120,9 @@
       \item \code{ls()} (aka \code{objects()}) and
       \code{as.list.environment()} gain a new argument \code{sorted}.
 
-      \item The \code{"source"} attribute (which has not been added
-      to functions by \R
-      since before \R version 2.14.0) is no longer treated as special.
+      \item The \code{"source"} attribute (which has not been added to
+      functions by \R since before \R version 2.14.0) is no longer
+      treated as special.
 
       \item An experimental function \code{returnValue()} has been added
       to give \code{on.exit()} code access to a function's return
@@ -281,6 +281,9 @@
       \item \code{cbind} and \code{rbind} will delegate recursively to
       \code{methods::cbind2} (\code{methods::rbind2}) when at least one
       argument is an S4 object and S3 dispatch fails (due to ambiguity).
+      
+      \item (Windows.)  \code{download.file(quiet = FALSE)} now uses
+      text rather than Windows progress bars in non-interactive use.
     }
   }
 
