@@ -74,6 +74,10 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 
   \code{.kappa_tri} is an internal function called by \code{kappa.qr} and
   \code{kappa.default}.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \value{
   The condition number, \eqn{kappa}, or an approximation if

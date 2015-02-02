@@ -44,6 +44,10 @@ norm(x, type = c("O", "I", "F", "M", "2"))
 
   Note that the 1-, Inf- and \code{"M"} norm is faster to calculate than
   the Frobenius one.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \value{
   The matrix norm, a non-negative number.

@@ -1,6 +1,6 @@
 % File src/library/base/man/solve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{solve}
@@ -30,8 +30,7 @@ solve(a, b, \dots)
 }
 \details{
   \code{a} or \code{b} can be complex, but this uses double complex
-  arithmetic which might not be available on all platforms and LAPACK
-  will always be used.
+  arithmetic which might not be available on all platforms.
 
   The row and column names of the result are taken from the column names
   of \code{a} and of \code{b} respectively.  If \code{b} is missing the
@@ -42,6 +41,10 @@ solve(a, b, \dots)
   For back-compatibility \code{a} can be a (real) QR decomposition,
   although \code{\link{qr.solve}} should be called in that case.
   \code{\link{qr.solve}} can handle non-square systems.
+
+  Unsuccessful results from the underlying LAPACK code will result in an
+  error giving a positive error code: these can only be interpreted by
+  detailed study of the FORTRAN code.
 }
 \source{
   The default method is an interface to the LAPACK routines \code{DGESV}
