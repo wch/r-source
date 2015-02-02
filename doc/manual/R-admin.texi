@@ -248,6 +248,9 @@ distributions and for OS X (formerly Mac OS).  See the @acronym{FAQ} for
 current details.  These are installed in platform-specific ways, so for
 the rest of this chapter we consider only building from the sources.
 
+Cross-building is not possible: installing @R{} builds a minimal version
+of @R{} and then runs many @R{} scripts to complete the build.
+
 @menu
 * Simple compilation::          
 * Help options::                
@@ -3855,6 +3858,9 @@ code in @R{} will be compatible with future @command{valgrind} headers.
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
 
+The @file{configure} script has other generic options added by
+@command{autoconf} and which are not supported for @R{}: in particular
+building for one architecture on a different host is not possible.
 
 @node Internationalization support, Configuration variables, Configuration options, Configuration on a Unix-alike
 @section Internationalization support
