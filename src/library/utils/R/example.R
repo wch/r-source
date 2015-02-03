@@ -1,7 +1,7 @@
 #  File src/library/utils/R/example.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ function(topic, package = NULL, lib.loc = NULL,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          ask = getOption("example.ask"),
 	 prompt.prefix = abbreviate(topic, 6),
-	 run.dontrun = FALSE, run.dontcheck = interactive())
+	 run.dontrun = FALSE, run.donttest = interactive())
 {
     if (!character.only) {
         topic <- substitute(topic)
@@ -41,7 +41,7 @@ function(topic, package = NULL, lib.loc = NULL,
     lib <- dirname(packagePath)
     tf <- tempfile("Rex")
     tools::Rd2ex(.getHelpFile(file), tf, commentDontrun = !run.dontrun,
-		 commentDonttest = !run.dontcheck)
+		 commentDonttest = !run.donttest)
     if (!file.exists(tf)) {
 	if(give.lines) return(character())
         warning(gettextf("%s has a help file but no examples", sQuote(topic)),

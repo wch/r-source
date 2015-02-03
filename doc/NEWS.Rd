@@ -149,7 +149,7 @@
       \item A new somewhat experimental function \code{debuggingState()}
       has been added, allowing to temporarily turn off debugging.
 
-      \item \code{example()} gets new optional argument \code{run.dontcheck}
+      \item \code{example()} gets new optional argument \code{run.donttest}
       and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
       with a default such that \code{example(..)} in help examples will
       run \code{\\donttest} code only if used interactively.

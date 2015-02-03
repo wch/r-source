@@ -1,6 +1,6 @@
 % File src/library/utils/man/example.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{example}
@@ -9,7 +9,7 @@
 \description{
   Run all the \R code from the \bold{Examples} part of \R's online help
   topic \code{topic} with possible exceptions \code{dontrun},
-  \code{dontshow}, and \code{dontcheck}, see \sQuote{Details} below.
+  \code{dontshow}, and \code{donttest}, see \sQuote{Details} below.
 }
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
@@ -17,7 +17,7 @@ example(topic, package = NULL, lib.loc = NULL,
         echo = TRUE, verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
         prompt.prefix = abbreviate(topic, 6),
-        run.dontrun = FALSE, run.dontcheck = interactive())
+        run.dontrun = FALSE, run.donttest = interactive())
 }
 \arguments{
   \item{topic}{name or literal character string: the online
@@ -56,7 +56,7 @@ example(topic, package = NULL, lib.loc = NULL,
     \code{echo = TRUE}.}
   \item{run.dontrun}{logical indicating that \verb{\dontrun}
     should be ignored.}
-  \item{run.dontcheck}{logical indicating that \verb{\dontcheck}
+  \item{run.donttest}{logical indicating that \verb{\donttest}
     should be ignored.}
 }
 \value{
@@ -87,10 +87,10 @@ example(topic, package = NULL, lib.loc = NULL,
       pages, but will be run both by the package checking tools,
       and the \code{example()} function.  This was previously
       \code{testonly}, and that form is still accepted.}
-    \item{\code{dontcheck}}{encloses code that typically should be run,
-      but not during package checking.  The default \code{run.dontcheck
+    \item{\code{donttest}}{encloses code that typically should be run,
+      but not during package checking.  The default \code{run.donttest
 	= \link{interactive}()} leads \code{example()} use in other help
-      page examples to skip \verb{\dontcheck} sections appropriately.}
+      page examples to skip \verb{\donttest} sections appropriately.}
   }
 }
 \author{Martin Maechler and others}

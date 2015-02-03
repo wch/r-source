@@ -12,7 +12,7 @@ if(!capabilities()["libcurl"]) {
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
-example(curlGetHeaders, run.dontcheck = TRUE)
+example(curlGetHeaders, run.donttest = TRUE)
 
 tf <- tempfile()
 download.file("http://cran.r-project.org/", tf,  method = "libcurl")
