@@ -35,7 +35,8 @@ test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-dt = datetime2.R
 test-src-demo = demos.R demos2.R
-test-src-internet = internet.R libcurl.R
+test-src-internet = internet.R
+test-src-internet2 = internet2.R libcurl.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
@@ -59,6 +60,7 @@ test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 test-out-dt = $(test-src-dt:.R=.Rout)
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
+test-out-internet2 = $(test-src-internet2:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
@@ -71,8 +73,8 @@ test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
-	$(test-out-segfault) $(test-out-isas) \
-	$(test-out-primitive) utf8-regex.Rout
+	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
+	$(test-out-primitive) $(test-out-dt) utf8-regex.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
@@ -156,7 +158,7 @@ test-all-basics:
 	done
 
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
-    Segfault Standalone Packages
+    Internet2 Segfault Standalone Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -236,6 +238,10 @@ test-Demo:
 test-IsAs:
 	@$(ECHO) "running tests of consistency of as/is.*"
 	@$(MK) $(test-out-isas) RVAL_IF_DIFF=1
+
+test-Internet2:
+	@$(ECHO) "running more Internet and socket tests"
+	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=1
 
 test-Primitive:
 	@$(ECHO) "running tests of primitives"
@@ -434,7 +440,7 @@ INSTFILES = README \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-dt) datetime2.Rout.save \
 	$(test-src-demo) demos.Rout.save \
-	$(test-src-internet) internet.Rout.save \
+	$(test-src-internet) $(test-src-internet2) internet.Rout.save \
 	$(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \

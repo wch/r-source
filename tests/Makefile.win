@@ -52,7 +52,7 @@ internet.Rout2:
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@$(RM) -f internet.Rout internet.Rout2
-	@$(ECHO) "running tests of Internet and socket functions"
+	@$(ECHO) "running tests of Internet functions"
 	@$(ECHO) "  expect some differences"
 	-@$(MK) $(test-out-internet) RVAL_IF_DIFF=0 || \
 	  $(ECHO) " testing standard internet connectivity failed"
