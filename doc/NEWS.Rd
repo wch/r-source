@@ -56,7 +56,7 @@
       directories.
 
       \item \code{dput()} and friends gain new controls
-      \samp{"hexNumeric"} and \samp{"digits17"} which output double and
+      \samp{hexNumeric} and \samp{digits17} which output double and
       complex quantities as, respectively, binary fractions (exactly,
       see \code{sprintf("\%a")}) and as decimals with up to 17
       significant digits.
@@ -152,7 +152,7 @@
       \item \code{example()} gets new optional argument \code{run.dontcheck}
       and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
       with a default such that \code{example(..)} in help examples will
-      run \code{\\dontcheck} code only if used interactively.
+      run \code{\\donttest} code only if used interactively.
 
       \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
@@ -210,7 +210,7 @@
       case.
 
       \item Optional use of \code{libcurl} (version 7.28.0 from Oct 2012
-      or later) for Internet access (including on Windows):
+      or later) for Internet access:
       \itemize{
 	\item \code{capabilities("libcurl")} reports if this is
 	available.
@@ -264,8 +264,8 @@
 
       \item \code{names(env)} now returns all the object names of an
       \code{environment} \code{env}, equivalently to \code{ls(env,
-	all.names=TRUE, sorted=FALSE)} and also to the names of the
-      corresponding list, \code{names(as.list(env, all.names=TRUE))}.
+	all.names = TRUE, sorted = FALSE)} and also to the names of the
+      corresponding list, \code{names(as.list(env, all.names = TRUE))}.
 
       \item The memory manager now grows the heap more aggressively. This
       reduces the number of garbage collections, in particular while
@@ -275,12 +275,13 @@
       \item New function \code{trimws()} for removing leading/trailing
       whitespace.
 
-      \item \code{cbind} and \code{rbind} now consider S4 inheritance
+      \item \code{cbind()} and \code{rbind()} now consider S4 inheritance
       during S3 dispatch.
 
-      \item \code{cbind} and \code{rbind} will delegate recursively to
-      \code{methods::cbind2} (\code{methods::rbind2}) when at least one
-      argument is an S4 object and S3 dispatch fails (due to ambiguity).
+      \item \code{cbind()} and \code{rbind()} will delegate recursively
+      to \code{methods::cbind2} (\code{methods::rbind2}) when at least
+      one argument is an S4 object and S3 dispatch fails (due to
+      ambiguity).
       
       \item (Windows.)  \code{download.file(quiet = FALSE)} now uses
       text rather than Windows progress bars in non-interactive use.
