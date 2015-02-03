@@ -121,7 +121,8 @@ httpd <- function(path, query, ...)
             vigfile0 <- ""
             vigDB <- NULL
             for (type in types) {
-		if(NROW(temp <- res[res[,"Type"] == type,,drop=FALSE]) > 0)
+		if(NROW(temp <- res[res[,"Type"] == type, , drop=FALSE]) > 0) {
+                    temp <- temp[!duplicated(temp[, "ID"]), , drop = FALSE]
 		    switch(type,
 		    vignette = {
 			out <- c(out, paste0("<h3>", gettext("Vignettes:"), "</h3>"), "<dl>")
@@ -152,6 +153,7 @@ httpd <- function(path, query, ...)
 			out <- c(out, paste0("<h3>", gettext("Help pages:"), "</h3>"))
 			out <- c(out, makeHelpTable(temp))
 		    })
+                }
 	    }
         }
         out <- c(out, "<hr/>\n</body></html>")

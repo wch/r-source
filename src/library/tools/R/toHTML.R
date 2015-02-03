@@ -160,7 +160,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	      '<col style="width: 50%;" />',
 	      '<col style="width:  8%;" />',
 	      '<col style="width:  8%;" />',
-	      '<col style="width:  8%;" />')
+             '<col style="width:  8%;" />')
     for (i in seq_len(nrow(vignettes))) {
 	Outfile <- vignettes[i, "PDF"]
 	topic <- file_path_sans_ext(Outfile)
@@ -222,9 +222,9 @@ makeDemoTable <- function(demos, depth=2) {
 
 makeHelpTable <- function(help, depth=2) {
     out <- c('<table width="100%">',
-	      '<col style="width: 22%;" />',
-	      '<col style="width:  2%;" />',
-	      '<col style="width: 74%;" />')
+             '<col style="width: 22%;" />',
+             '<col style="width:  2%;" />',
+             '<col style="width: 74%;" />')
     pkg <- help[,"Package"]
     root <- paste0(paste(rep.int("../", depth), collapse=""),
                    "library/", pkg, "/html/")
