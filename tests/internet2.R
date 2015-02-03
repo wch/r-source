@@ -55,5 +55,6 @@ if(nzchar(Sys.getenv("http_proxy")) || nzchar(Sys.getenv("HTTP_PROXY"))) {
     cat("http proxy is set, so skip test of http over sockets\n")
 } else {
     f <- httpget("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
-    stopifnot(dim(f) == c(100L, 6L))
+    str(f)
+    stopifnot(length(f) == 100L)
 }
