@@ -72,7 +72,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) \
-	$(test-out-primitive) utf8-regex.Rout
+	$(test-out-primitive) $(test-out-dt) utf8-regex.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
