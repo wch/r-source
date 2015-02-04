@@ -845,7 +845,7 @@ insertSource <- function(source, package = "",
         return(NULL)
     }
     curTable <- getMethodsForDispatch(fdef)
-    allObjects <- names(table)
+    allObjects <- sort(names(table))
     if(length(allObjects) > 0) {
         methodsInserted <- as.character(Filter(function(this) {
             def <- get(this, envir = table)
@@ -882,7 +882,7 @@ insertSource <- function(source, package = "",
         ## we don't know the package for the generic (which may not
         ## be active), so we search for the string w/o package
         table <- .TableMetaName(what, "")
-        allObjects <- names(env)
+        allObjects <- sort(names(env))
         i <- grep(table, allObjects, fixed = TRUE)
         if(length(i) == 1)
             table <- env[[allObjects[[i]]]]

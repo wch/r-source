@@ -1482,7 +1482,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
         if(is.null(table <- where[[what]]))
           return(object)
     }
-    objNames <- names(table)
+    objNames <- sort(names(table))
     if(length(classes)) {
         classesPattern <- paste0("#", classes, "#", collapse = "|")
         which <- grep(classesPattern, paste0("#",objNames,"#"))

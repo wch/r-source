@@ -516,7 +516,7 @@ getRefSuperClasses <- function(classes, classDefs) {
 .GeneratorMethods <- list(methods =  function(...) {
     methodsEnv <- def@refMethods
     if(nargs() == 0)
-        return(names(methodsEnv))
+        return(sort(names(methodsEnv)))
     if(methods:::.classDefIsLocked(def))
         stop(gettextf("the definition of class %s in package %s is locked, methods may not be redefined",
                       dQuote(def@className),

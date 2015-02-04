@@ -752,7 +752,7 @@ getGenerics <- function(where, searchForm = FALSE)
     if(missing(where)) {
         ## all the packages cached ==? all packages with methods
         ## globally visible.  Assertion based on cacheMetaData + setMethod
-        fdefs <- as.list(.genericTable)
+        fdefs <- as.list(.genericTable, all.names=TRUE, sorted=TRUE)
         fnames <- mapply(function(nm, obj) {
             if (is.list(obj)) names(obj) else nm
         }, names(fdefs), fdefs, SIMPLIFY=FALSE)
@@ -761,7 +761,7 @@ getGenerics <- function(where, searchForm = FALSE)
     }
     else {
         if(is.environment(where)) where <- list(where)
-        these <- unlist(lapply(where, names), use.names=FALSE)
+        these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
@@ -775,7 +775,7 @@ getGenerics <- function(where, searchForm = FALSE)
 {
     if(missing(where)) where <- .envSearch(topenv(parent.frame()))
     else if(is.environment(where)) where <- list(where)
-    these <- unlist(lapply(where, names), use.names=FALSE)
+    these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
     these <- allThese <- unique(these)
     these <- these[substr(these, 1L, 6L) == ".__T__"]
     if(length(these) == 0L)

@@ -618,7 +618,7 @@
 
 .checkDuplicateMethodClasses <- function(classDefs, env, label){
     supers <- strsplit(label, "#", TRUE)[[1]]
-    plabels <- strsplit(names(env), "#", TRUE)
+    plabels <- strsplit(sort(names(env)), "#", TRUE)
     hasSubclass <- vapply(plabels, .hasThisSubclass, logical(1L),
                           classDefs=classDefs, supers=supers)
     mget(plabels[hasSubclass], env)
@@ -1028,7 +1028,7 @@
     p <- packageSlot(f)
     if(is.null(p)) p <- "base"
     deflt <- new("signature", generic, "ANY")
-    labels <- names(table)
+    labels <- sort(names(table))
     if(!is.null(classes) && length(labels) > 0L) {
 	sigL <- strsplit(labels, split = "#")
 	keep <- !vapply(sigL, function(x, y) all(is.na(match(x, y))), NA, y=classes)
@@ -1115,7 +1115,7 @@ useMTable <- function(onOff = NA)
                     dQuote(class(gen))),
            domain = NA)
     table <- .getMethodsTable(gen)
-    allMethods <- names(table)
+    allMethods <- sort(names(table))
     ## TODO:  possible for .SigLength to differ between group &
     ## members.  Requires expanding labels to max. length
     newFound <- rep(FALSE, length(found))
@@ -1399,7 +1399,7 @@ listFromMethods <- function(generic, where, table) {
     else
         table <- new.env()
     value <- new("MethodsList", argument = as.name(generic@signature[[1]]))
-    allNames <- names(table)
+    allNames <- sort(names(table))
     if(length(allNames) == 0L)
       return(value)
     argNames <- generic@signature

@@ -337,7 +337,7 @@ function(package, dir, lib.loc = NULL,
             .load_package_quietly(package, lib.loc)
         code_env <- .package_env(package)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
 
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
@@ -346,7 +346,7 @@ function(package, dir, lib.loc = NULL,
             S3Table <- get(".__S3MethodsTable__.", envir = ns_env)
             functions_in_S3Table <- ls(S3Table, all.names = TRUE)
             objects_in_ns <-
-                setdiff(names(ns_env),
+                setdiff(sort(names(ns_env)),
                         c(".__NAMESPACE__.", ".__S3MethodsTable__."))
             objects_in_code_or_namespace <-
                 unique(c(objects_in_code, objects_in_ns))
@@ -386,7 +386,7 @@ function(package, dir, lib.loc = NULL,
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
         objects_in_code_or_namespace <- objects_in_code
 
         ## Does the package have a NAMESPACE file?  Note that when
@@ -430,7 +430,7 @@ function(package, dir, lib.loc = NULL,
     ## As from R 2.5.0 we do for most generics.
     if(is_base) {
         objects_in_base <-
-            names(baseenv())
+            sort(names(baseenv()))
         objects_in_code <-
             c(objects_in_code,
               Filter(.is_primitive_in_base, objects_in_base),
@@ -1556,7 +1556,7 @@ function(package, dir, lib.loc = NULL)
             .load_package_quietly(package, lib.loc)
         code_env <- .package_env(package)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
 
         ## Does the package have a namespace?
         ## These days all packages have namespaces, but some are
@@ -1600,7 +1600,7 @@ function(package, dir, lib.loc = NULL)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
 
         ## Do the package sources have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
@@ -2329,7 +2329,7 @@ function(package, dir, lib.loc = NULL)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
 
         ## Does the package have a NAMESPACE file?
         if(file.exists(file.path(dir, "NAMESPACE"))) {
@@ -2604,7 +2604,7 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
-    objects_in_code <- names(code_env)
+    objects_in_code <- sort(names(code_env))
     replace_funs <- character()
 
     if(has_namespace) {
@@ -5904,7 +5904,7 @@ function(package, dir, lib.loc = NULL)
     bad_examples <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- names(env)
+        objects_in_env <- sort(names(env))
         x <- lapply(as.list(env, all.names=TRUE),
                     function(v) {
                         if (typeof(v) == "closure")
@@ -6024,7 +6024,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
     bad_closures <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- as.list(env, all.names = TRUE)
+        objects_in_env <- as.list(env, all.names = TRUE, sorted=TRUE)
         x <- lapply(objects_in_env,
                     function(v) {
                         if (typeof(v) == "closure")
@@ -6285,7 +6285,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
     found <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- as.list(env, all.names = TRUE)
+        objects_in_env <- as.list(env, all.names = TRUE, sorted=TRUE)
         x <- lapply(objects_in_env,
                     function(v) {
                         if (typeof(v) == "closure")
@@ -7680,7 +7680,7 @@ function(f, env)
     ## This will return a listOfMethods object: turn this into a simple
     ## list of methods named by hash-collapsed signatures.
     tab <- get(methods:::.TableMetaName(f, attr(f, "package")), envir = env)
-    mlist <- as.list(tab, all.names = TRUE)
+    mlist <- as.list(tab, all.names = TRUE, sorted=TRUE)
     ## </FIXME>
 
     ## First, derived default methods (signature w/ "ANY").
