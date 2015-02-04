@@ -43,6 +43,8 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
 
 export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 
+export("hsearch_db", "hsearch_db_concepts", "hsearch_db_keywords")
+
 S3method("[", getAnywhere)
 S3method("[", roman)
 S3method(as.character, person)
@@ -72,8 +74,9 @@ S3method(print, changedFiles)
 S3method(print, fileSnapshot)
 S3method(print, findLineNumResult)
 S3method(print, getAnywhere)
-S3method(print, hsearch)
 S3method(print, "help_files_with_topic")
+S3method(print, hsearch)
+S3method(print, "hsearch_db")
 S3method(print, Latex)
 S3method(print, "ls_str")
 S3method(print, MethodsFunction)

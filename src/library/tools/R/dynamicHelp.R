@@ -96,7 +96,7 @@ httpd <- function(path, query, ...)
                        types.demo =
                            if(bool(query[i]))
                                types <- c(types, "demo"),
-                       ## Not sure how to get these ...
+                       ## Possibly passed from utils:::printhsearchInternal().
                        package = args$package <- strsplit(query[i], ";")[[1L]],
                        lib.loc = args$lib.loc <- strsplit(query[i], ";")[[1L]],
                        warning("Unrecognized search field: ", names(query)[i],

@@ -80,7 +80,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
-  \item{use_UTF8}{logical: should be results be given in UTF-8 encoding?
+  \item{use_UTF8}{logical: should results be given in UTF-8 encoding?
     Also changes the meaning of regexps in \code{agrep} to be Perl regexps.}
   \item{types}{a character vector listing the types of documentation
     to search.  The entries must be abbreviations of \code{"vignette"}
@@ -93,7 +93,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   serialized as \file{hsearch.rds} in the \file{Meta} directory
   (provided the package has any help pages).  Vignettes are also
   indexed in the \file{Meta/vignette.rds} file.  These files are used to
-  create the help search database.
+  create the help search database via \code{\link{hsearch_db}}.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
@@ -134,6 +134,10 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   The internal format of the class is undocumented and subject to change.
 }
 \seealso{
+  \code{\link{hsearch_db}} for more information on the help search
+  database employed, and for utilities to inspect available concepts and
+  keywords.
+  
   \code{\link{help}};
   \code{\link{help.start}} for starting the hypertext (currently HTML)
   version of \R's online documentation, which offers a similar search
