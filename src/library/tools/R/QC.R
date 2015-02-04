@@ -2289,7 +2289,7 @@ function(package, dir, lib.loc = NULL)
             .load_package_quietly(package, lib.loc)
         code_env <- .package_env(package)
 
-        objects_in_code <- names(code_env)
+        objects_in_code <- sort(names(code_env))
 
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
