@@ -649,22 +649,18 @@ getGeneric <-
 {
     value <- fdef
     ev <- environment(fdef)
-    environment(value) <- newEv <- new.env(TRUE, parent.env(ev))
-    for(what in objects(ev, all.names=TRUE)) {
-        obj <- get(what, envir = ev)
+    objs <- lapply(as.list(ev, all.names=TRUE), function(obj) {
         if(is.environment(obj))
             obj <- .copyEnv(obj)
-        assign(what, obj, envir = newEv)
-    }
+        obj
+    })
+    environment(value) <- list2env(objs, hash=TRUE, parent=parent.env(ev))
     value
 }
 
 .copyEnv <- function(env)
 {
-    value <- new.env(TRUE, parent.env(env))
-    for(what in objects(env, all.names = TRUE))
-        assign(what, get(what, envir = env), envir = value)
-    value
+    list2env(as.list(env, all.names=TRUE), hash=TRUE, parent=parent.env(env))
 }
 
 getGroup <-
@@ -756,21 +752,16 @@ getGenerics <- function(where, searchForm = FALSE)
     if(missing(where)) {
         ## all the packages cached ==? all packages with methods
         ## globally visible.  Assertion based on cacheMetaData + setMethod
-        fnames <- as.list(objects(.genericTable, all.names=TRUE))
-        packages <- vector("list", length(fnames))
-        for(i in seq_along(fnames)) {
-            obj <- get(fnames[[i]], envir = .genericTable)
-            if(is.list(obj))
-                fnames[[i]] <-  names(obj)
-            packages[[i]] <- .packageForGeneric(obj)
-        }
+        fdefs <- as.list(.genericTable)
+        fnames <- mapply(function(nm, obj) {
+            if (is.list(obj)) names(obj) else nm
+        }, names(fdefs), fdefs, SIMPLIFY=FALSE)
+        packages <- lapply(fdefs, .packageForGeneric)
         new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
     }
     else {
         if(is.environment(where)) where <- list(where)
-        these <- character()
-        for(i in where)
-            these <- c(these, objects(i, all.names=TRUE))
+        these <- unlist(lapply(where, names), use.names=FALSE)
         metaNameUndo(unique(these), prefix = "T", searchForm = searchForm)
     }
 }
@@ -784,8 +775,7 @@ getGenerics <- function(where, searchForm = FALSE)
 {
     if(missing(where)) where <- .envSearch(topenv(parent.frame()))
     else if(is.environment(where)) where <- list(where)
-    these <- character()
-    for(i in where) these <- c(these, objects(i, all.names=TRUE))
+    these <- unlist(lapply(where, names), use.names=FALSE)
     these <- allThese <- unique(these)
     these <- these[substr(these, 1L, 6L) == ".__T__"]
     if(length(these) == 0L)
@@ -1593,8 +1583,8 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     .pasteC <- function(names) paste0('"', names, '"', collapse = ", ")
     found <- character()
     distances <- numeric()
-    methods <- objects(mtable, all.names = TRUE)
-    direct <- match(classes, methods, 0L) > 0L
+    methods <- names(mtable)
+    direct <- classes %in% methods
     if(all(direct)) {
         if(length(classes) > 1L) {
             warning(gettextf("multiple direct matches: %s; using the first of these", .pasteC(classes)), domain = NA)
@@ -1602,7 +1592,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
         }
         else if(length(classes) == 0L)
             return( if(is.na(match("ANY", methods))) NULL else get("ANY", envir = mtable))
-        return(get(classes,envir = mtable))
+        return(mtable[[classes]])
     }
     if(is.null(allmtable))
         return(NULL)
@@ -1621,9 +1611,9 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
         extendsi <- defi@contains
         namesi <- c(classi, names(extendsi))
         if(i == 1)
-            namesi <- namesi[match(namesi, methods, 0L) > 0L]
+            namesi <- namesi[namesi %in% methods]
         else { # only the superclass methods matching all arguments are kept
-            namesi <- namesi[match(namesi, found, 0L) > 0L]
+            namesi <- namesi[namesi %in% found]
             found <- namesi
             if(length(found) == 0L) break # no possible non-default match
         }

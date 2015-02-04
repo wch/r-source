@@ -615,7 +615,7 @@ utils::globalVariables("fdef")
     paste(c(f,signature), collapse="#")
 
 .guessPackageName <- function(env) {
-    allObjects <- objects(env, all.names = TRUE)
+    allObjects <- names(env)
     allObjects <- allObjects[is.na(match(allObjects, .functionsOverriden))]
     ## counts of packaages containing objects; objects not found don't count
     possible <- sort(table(unlist(lapply(allObjects, find))), decreasing = TRUE)
@@ -736,7 +736,7 @@ insertSource <- function(source, package = "",
     packageSlot(env) <- package
     ## at this point, envp is the target environment (package or other)
     ## and envns is the corresponding namespace if any, or NULL
-    allObjects <- objects(envir = env, all.names = TRUE)
+    allObjects <- names(env)
     ## Figure out what to trace.
     if(!missing(functions)) {
         notThere <- is.na(match(functions, allObjects))
@@ -845,21 +845,19 @@ insertSource <- function(source, package = "",
         return(NULL)
     }
     curTable <- getMethodsForDispatch(fdef)
-    allObjects <- objects(table, all.names = TRUE)
-    methodsInserted <- character()
+    allObjects <- names(table)
     if(length(allObjects) > 0) {
-        for(this in allObjects) {
+        methodsInserted <- as.character(Filter(function(this) {
             def <- get(this, envir = table)
-            curdef <- (if(exists(this, envir = curTable, inherits = FALSE))
-                get(this, envir = curTable)
-                       else NULL)
+            curdef <- curTable[[this]]
             if(differs(def, curdef)) {
                 suppressMessages(
                    .TraceWithMethods(f, signature = this, where = envwhere,
                               edit = env))
-                methodsInserted <- c(methodsInserted, this)
-            }
-        }
+                TRUE
+            } else
+                FALSE
+        }, allObjects))
         if(length(methodsInserted) > 0)
             message(gettextf("Methods inserted for function %s(): %s",
                   f, paste(methodsInserted, collapse =", ")),
@@ -884,15 +882,15 @@ insertSource <- function(source, package = "",
         ## we don't know the package for the generic (which may not
         ## be active), so we search for the string w/o package
         table <- .TableMetaName(what, "")
-        allObjects <- objects(env, all.names = TRUE)
+        allObjects <- names(env)
         i <- grep(table, allObjects, fixed = TRUE)
         if(length(i) == 1)
-            table <- get(allObjects[[i]], envir = env)
+            table <- env[[allObjects[[i]]]]
         else if(length(i) >1) {
             table <- allObjects[[i[[1]]]]
             warning(gettextf("multiple generics match pattern, using table %s", table)
                 , domain = NA)
-            table <- get(table, envir = env)
+            table <- env[[table]]
         }
         else
             stop(gettextf("does not seem to be a method table for generic %s in tracing environment",

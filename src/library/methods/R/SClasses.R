@@ -884,16 +884,9 @@ names(.indirectAbnormalClasses) <- .AbnormalTypes
   }
 
 multipleClasses <- function(details = FALSE) {
-    ctable <- .classTable
-    cnames <- objects(ctable, all.names = TRUE)
-    dups <- vapply(cnames, function(x) is.list(get(x, envir = ctable)), NA)
-    if(details) {
-        value <- lapply(cnames[dups], function(x) get(x, envir = ctable))
-        names(value) <- cnames[dups]
-        value
-    }
-    else
-        cnames[dups]
+    classes <- as.list(.classTable, all.names=TRUE)
+    dups <- Filter(is.list, classes)
+    if(details) dups else names(dups)
 }
 
 className <- function(class, package) {

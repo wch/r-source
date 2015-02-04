@@ -2389,7 +2389,7 @@ S3forS4Methods <- function(where, checkClasses = character()) {
   if(length(allClasses) == 0)
     return(allClasses)
   pattern <- paste0("([.]",allClasses, "$)", collapse="|")
-  allObjects <- objects(where, all.names = TRUE)
+  allObjects <- names(where)
   allObjects <- allObjects[-grep("^[.][_][_]", allObjects)] # remove meta data
   allObjects <- grep(pattern, allObjects, value = TRUE)
   if(length(allObjects) > 0) {

@@ -887,8 +887,7 @@ function(dir, installed = TRUE, primitive = FALSE)
     unique(c(.get_internal_S3_generics(primitive),
              unlist(lapply(env_list,
                            function(env) {
-                               nms <- objects(envir = env,
-                                              all.names = TRUE)
+                               nms <- names(env)
                                if(".no_S3_generics" %in% nms)
                                    character()
                                else Filter(function(f)

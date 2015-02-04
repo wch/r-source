@@ -223,26 +223,23 @@ setGeneric <-
 
 ## Mimic the search for a function in the standard search() list for packages
 ## with namespace, to be consistent with the evaluator's search for objects
+### Deprecate? Seems like we should search the imports, not the search path
 .standardPackageNamespaces <- new.env()
 .standardPackages <- c("stats", "graphics", "grDevices", "utils", "datasets", "methods")
 .getFromStandardPackages <- function(name) {
-    where <- objects(.standardPackageNamespaces)
-    if(!length(where)) { # initialize the table of namespaces
-        for(pkg in .standardPackages) {
-            ## the tryCatch nonsense is needed because this code gets called
-            ## while installing methods (why?) and throws an error on that namespace
-            ns <- tryCatch(loadNamespace(pkg), error = function(e) new.env())
-            assign(pkg, ns, envir = .standardPackageNamespaces)
-        }
-        where <- .standardPackages
-    }
-    ## search
-    for(pkg in where) {
-        ns <- get(pkg, envir = .standardPackageNamespaces)
-        if(exists(name, envir = ns, inherits = FALSE)) {
-            obj <- get(name, envir = ns)
+    namespaces <- as.list(.standardPackageNamespaces, all.names=TRUE)
+    if(length(namespaces) == 0L) { # initialize the table of namespaces
+        namespaces <- lapply(.standardPackages, function(pkg) {
+            tryCatch(loadNamespace(pkg),
+                     error = function(e) new.env())
+        })
+        names(namespaces) <- .standardPackages
+        list2env(namespaces, .standardPackageNamespaces)
+    } else {
+        for(ns in namespaces) {
+            obj <- ns[[name]]
             if(is.function(obj))
-                return(obj)
+              return(obj)
         }
     }
     return(NULL)
@@ -276,7 +273,7 @@ isGeneric <-
         ## the definition of isGeneric() for a primitive is that methods are defined
         ## (other than the default primitive)
         gen <- genericForPrimitive(f, mustFind = FALSE)
-        return(is.function(gen) && length(objects(.getMethodsTable(gen), all.names=TRUE)) > 1L)
+        return(is.function(gen) && length(names(.getMethodsTable(gen))) > 1L)
     }
     if(!is(fdef, "genericFunction"))
         return(FALSE)
@@ -1335,9 +1332,8 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     if(!is.environment(what))
         stop(gettextf("must provide an environment table; got class %s",
                       dQuote(class(what))), domain = NA)
-    objs <- objects(what, all.names = TRUE)
-    for(f in objs)
-        .cacheImplicitGeneric(f, get(f, envir = what))
+    objs <- as.list(what, all.names = TRUE)
+    mapply(.cacheImplicitGeneric, names(objs), objs)
     NULL
 }
 
@@ -1486,13 +1482,13 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
         if(is.null(table <- where[[what]]))
           return(object)
     }
-    objNames <- objects(table, all.names = TRUE)
+    objNames <- names(table)
     if(length(classes)) {
         classesPattern <- paste0("#", classes, "#", collapse = "|")
         which <- grep(classesPattern, paste0("#",objNames,"#"))
         objNames <- objNames[which]
     }
-    object@.Data <- lapply(objNames, function(x)get(x, envir = table))
+    object@.Data <- mget(objNames, table)
     object@names <- objNames
     object@signatures <- strsplit(objNames, "#", fixed = TRUE)
     object
@@ -1566,7 +1562,7 @@ hasMethods <- function(f, where, package = "")
     what <- .TableMetaName(f, package)
     testEv <- function(ev)
       exists(what, envir = ev, inherits = FALSE) &&
-    length(objects(get(what, envir = ev), all.names = TRUE))
+        length(names(get(what, envir = ev))) > 0L
     if(nowhere) {
         for(i in seq_along(search())) {
             if(testEv(as.environment(i)))
