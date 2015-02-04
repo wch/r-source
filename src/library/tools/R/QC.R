@@ -2526,7 +2526,7 @@ function(x, ...)
       if(report_S3_methods_not_registered &&
          length(methods <- attr(x, "methods_not_registered_but_exported"))) {
           c("Found the following apparent S3 methods exported but not registered:",
-            strwrap(paste(methods, collapse = " "),
+            strwrap(paste(sort(methods), collapse = " "),
                     exdent = 2L, indent = 2L))
       }
       )
