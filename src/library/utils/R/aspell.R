@@ -694,7 +694,7 @@ function(ifile, encoding = "unknown", ignore = character())
             cols <- cumsum(widths)
             widths[i] <- 8 - (cols[i] - 1) %% 8
         }
-        cumsum(c(1, widths))
+        cumsum(widths)
     },
                gregexpr("\t", lines[lines_in_pd], fixed = TRUE),
                nchar(lines[lines_in_pd]))
@@ -706,26 +706,26 @@ function(ifile, encoding = "unknown", ignore = character())
     for(entry in split(pd, seq_len(NROW(pd)))) {
         line1 <- entry$line1
         line2 <- entry$line2
-        col1 <- entry$col1 + 1L
-        col2 <- entry$col2 - 1L
+        col1 <- entry$col1
+        col2 <- entry$col2
         if(line1 == line2) {
             if(length(ptab <- tab[[as.character(line1)]])) {
-                col1 <- which(ptab == col1)
-                col2 <- which(ptab == col2)
+                col1 <- which(ptab == col1) + 1L
+                col2 <- which(ptab == col2) - 1L
             }
             substring(lines[line1], col1, col2) <- entry$text
         } else {
             texts <- unlist(strsplit(entry$text, "\n", fixed = TRUE))
             n <- length(texts)
             if(length(ptab <- tab[[as.character(line1)]])) {
-                col1 <- which(ptab == col1)
+                col1 <- which(ptab == col1) + 1L
             }
             substring(lines[line1], col1) <- texts[1L]
             pos <- seq(from = 2, length.out = n - 2)
             if(length(pos))
                 lines[line1 + pos - 1] <- texts[pos]
             if(length(ptab <- tab[[as.character(line2)]])) {
-                col2 <- which(ptab == col2)
+                col2 <- which(ptab == col2) - 1L
             }
             substring(lines[line2], 1L, col2) <- texts[n]
         }
