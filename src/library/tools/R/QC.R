@@ -3466,10 +3466,34 @@ function(aar, strict = FALSE)
             out$bad_authors_at_R_field_for_maintainer <-
                 conditionMessage(s)
         } else {
-            if(s == "")
-                out$bad_authors_at_R_field_has_no_maintainer <- TRUE
-            else
-                attr(out, "Maintainer") <- s
+            ## R-exts says
+            ##   The mandatory 'Maintainer' field should give a _single_
+            ##   name followed by a _valid_ (RFC 2822) email address in
+            ##   angle brackets.
+            ## Hence complain when Authors@R
+            ## * has more than one person with a cre role
+            ## * has no person with a cre role, "valid" email address
+            ##   and a non-empty name.
+            bad <- FALSE
+            p <- Filter(function(e) {
+                !is.na(match("cre", e$role))
+            },
+                        aar)
+            if(length(p) > 1L) {
+                bad <- TRUE
+                out$bad_authors_at_R_field_too_many_maintainers <-
+                    format(p)
+            }
+            p <- Filter(function(e) {
+                (!is.null(e$given) || !is.null(e$family)) && !is.null(e$email)
+            },
+                        p)
+            if(!length(p)) {
+                bad <- TRUE
+                out$bad_authors_at_R_field_has_no_valid_maintainer <- TRUE                
+            }
+            ## s should now be non-empty iff bad is FALSE.
+            if(!bad) attr(out, "Maintainer") <- s
         }
     }
     out
@@ -3499,8 +3523,13 @@ function(x)
           c(gettext("Cannot extract Maintainer field from Authors@R field:"),
             paste(" ", bad))
       },
-      if(length(x[["bad_authors_at_R_field_has_no_maintainer"]])) {
-          gettext("Authors@R field gives no person with maintainer role and email address.")
+      if(length(bad <-
+                x[["bad_authors_at_R_field_too_many_maintainers"]])) {
+          c(gettext("Authors@R field gives more than one person with maintainer role:"),
+            paste(" ", bad))
+      },
+      if(length(x[["bad_authors_at_R_field_has_no_valid_maintainer"]])) {
+          strwrap(gettext("Authors@R field gives no person with maintainer role, valid email address and non-empty name."))
       }
       )
 }
