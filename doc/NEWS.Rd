@@ -293,6 +293,12 @@
 
       \item New \code{.getNamespaceInfo()} as no-check version of
       \code{getNamespaceInfo()} mostly for internal speedup.
+
+      \item The help search system now takes \samp{\keyword} entries in
+      Rd files which are not standard keywords (as given in
+      \file{KEYWORDS} in the \R documentation directory) as concepts.
+      For standard keyword entries the corresponding descriptions are
+      additionally taken as concepts.
     }
   }
 

@@ -475,6 +475,7 @@ function(package = NULL, lib.loc = NULL,
 		   Aliases  = do.call("rbind", dbMat[, 2]),
 		   Keywords = do.call("rbind", dbMat[, 3]),
 		   Concepts = do.call("rbind", dbMat[, 4]))
+        rownames(db$Base) <- NULL
         ## <FIXME>
         ## Remove eventually ...
         dimnames(db$Aliases) <-
@@ -545,6 +546,31 @@ function(package = NULL, lib.loc = NULL,
 	    }
 	}
 
+        ## Remove keywords which are empty or package.skeleton()
+        ## leftovers.
+        ind <- is.na(match(db$Keywords[, "Keyword"],
+                           c("", "~kwd1", "~kwd2",
+                             "~~ other possible keyword(s) ~~")))
+        db$Keywords <- db$Keywords[ind, , drop = FALSE]
+        ## Remove concepts which are empty.
+        ind <- nzchar(db$Concepts[, "Concept"])
+        db$Concepts <- db$Concepts[ind, , drop = FALSE]
+
+        ## Map non-standard keywords to concepts, and use the
+        ## descriptions of the standard keywords as concepts, with the
+        ## exception of keyword 'internal'.
+        standard <- .get_standard_Rd_keywords_with_descriptions()
+        keywords <- standard$Keywords
+        concepts <- standard$Descriptions
+        pos <- match(db$Keywords[, "Keyword"], keywords)
+        ind <- !is.na(pos) & (keywords[pos] != "internal")
+        db$Concepts <-
+            rbind(db$Concepts,
+                  db$Keywords[is.na(pos), , drop = FALSE],
+                  cbind(concepts[pos[ind]],
+                        db$Keywords[ind, -1L, drop = FALSE]))
+        db$Keywords <- db$Keywords[!is.na(pos), , drop = FALSE]
+
         if(verbose >= 2L) {
             message("saving the database ...", appendLF=FALSE, domain = NA)
             flush.console()
@@ -570,6 +596,19 @@ function(package = NULL, lib.loc = NULL,
     }
 
     db
+}
+
+## Cf. tools:::.get_standard_Rd_keywords().
+.get_standard_Rd_keywords_with_descriptions <-
+function()
+{
+    lines <- readLines(file.path(R.home("doc"), "KEYWORDS.db"))
+    ## Strip top-level entries.
+    lines <- grep("^.*\\|([^:]*):.*", lines, value = TRUE)
+    ## Strip comments.
+    lines <- sub("[[:space:]]*#.*", "", lines)
+    list(Keywords = sub("^.*\\|([^:]*):.*", "\\1", lines),
+         Descriptions = sub(".*:[[:space:]]*", "", lines))
 }
              
 ## this extra indirection allows the Mac GUI to replace this
@@ -719,6 +758,10 @@ function(x, ...)
 hsearch_db_concepts <-
 function(db = hsearch_db())
 {
+    ## <FIXME>
+    ## This should perhaps get an ignore.case = TRUE argument, but which
+    ## case variant would when then retain?
+    ## </FIXME>
     pos <- match(db$Concepts[, "ID"], db$Base[, "ID"])
     entries <- split(as.data.frame(db$Base[pos, ],
                                    stringsAsFactors = FALSE),
@@ -727,7 +770,7 @@ function(db = hsearch_db())
     pnums <- sapply(entries, function(e) length(unique(e$Package)))
     pos <- order(enums, pnums, decreasing = TRUE)
     data.frame(Concept = names(entries)[pos],
-               Freqency = enums[pos],
+               Frequency = enums[pos],
                Packages = pnums[pos],
                stringsAsFactors = FALSE,
                row.names = NULL)
@@ -742,9 +785,13 @@ function(db = hsearch_db())
                      db$Keywords[, "Keyword"])
     enums <- sapply(entries, NROW)
     pnums <- sapply(entries, function(e) length(unique(e$Package)))
+    standard <- .get_standard_Rd_keywords_with_descriptions()
+    concepts <- standard$Descriptions[match(names(entries),
+                                            standard$Keywords)]
     pos <- order(enums, pnums, decreasing = TRUE)
     data.frame(Keyword = names(entries)[pos],
-               Freqency = enums[pos],
+               Concept = concepts[pos],
+               Frequency = enums[pos],
                Packages = pnums[pos],
                stringsAsFactors = FALSE,
                row.names = NULL)

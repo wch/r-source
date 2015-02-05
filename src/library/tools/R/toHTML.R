@@ -233,7 +233,7 @@ makeHelpTable <- function(help, depth=2) {
     links <- paste0('<a href="', root, topic, '.html">',
 		    ifelse(nchar(pkg), paste0(pkg, "::"), ""),
 		    topic, '</a>')
-    lines <- paste0('<tr><td style="text-align: right; vertical-align: top";>', links,
+    lines <- paste0('<tr><td style="text-align: right; vertical-align: top;">', links,
 		    '</td>\n<td></td><td valign="top">', Title,
 		    '</td></tr>')
     c(out, lines, '</table>')

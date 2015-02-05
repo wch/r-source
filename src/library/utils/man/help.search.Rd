@@ -38,8 +38,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     \code{"name"}, \code{"title"}, \code{"alias"}, \code{"concept"}, and
     \code{"keyword"}, corresponding to the help page's (file) name, its
     title, the topics and concepts it provides documentation for, and
-    the keywords it can be classified to.  See below for how vignettes
-    and demos are searched.}
+    the keywords it can be classified to.  See below for details and how
+    vignettes and demos are searched.}
   \item{apropos}{a character string to be matched in the help page
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
@@ -112,6 +112,13 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   As with \code{\link{?}}, in \code{??} the pattern may be prefixed with a
   package name followed by \code{::} or \code{:::} to limit the search
   to that package.
+
+  For help files, \samp{\keyword} entries which are not among the
+  standard keywords as listed in file \file{KEYWORDS} in the \R
+  documentation directory are taken as concepts.  For standard keyword
+  entries different from \samp{internal}, the corresponding descriptions
+  from file \file{KEYWORDS} are additionally taken as concepts.  All
+  \samp{\concept} entries used as concepts.  
 
   Vignettes are searched as follows.  The \code{"name"} and
   \code{"alias"} are both the base of the vignette filename, and the

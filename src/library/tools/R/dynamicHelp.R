@@ -162,6 +162,68 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse="\n"))
     }
 
+    ## <FIXME>
+    ## Move into base eventually
+    reQuote <- function(x) {
+        escape <- function(s) paste0("\\", s)
+        re <- "[.*?+^$\\[]"
+        m <- gregexpr(re, x)
+        regmatches(x, m) <- lapply(regmatches(x, m), escape)
+        x
+    }
+    ## </FIXME>
+
+    .HTML_hsearch_db_concepts <- function() {
+        concepts <- utils::hsearch_db_concepts()
+        s <- concepts$Concept
+        out <-
+            c(tools:::HTMLheader("Help search concepts"),
+              c("",
+                "<table>",
+                "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                paste0("<tr><td>",
+                       "<a href=\"/doc/html/Search?pattern=",
+                       vapply(reQuote(s), URLencode, "", reserved = TRUE),
+                       "&fields.concept=1&agrep=0\">",
+                       shtmlify(substring(s, 1, 80)),
+                       "</a>",
+                       "</td><td style=\"text-align: right\">",
+                       concepts$Frequency,
+                       "</td><td style=\"text-align: right\">",
+                       concepts$Packages,
+                       "</td></tr>"),
+                "</table>",
+                "</body>",
+                "</html>"))
+        list(payload = paste(out, collapse = "\n"))
+    }
+
+    .HTML_hsearch_db_keywords <- function() {
+        keywords <- utils::hsearch_db_keywords()
+        out <-
+            c(tools:::HTMLheader("Help search keywords"),
+              c("",
+                "<table>",
+                "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
+                paste0("<tr><td>",
+                       "<a href=\"/doc/html/Search?category=",
+                       keywords$Keyword,
+                       "\">",
+                       keywords$Keyword,
+                       "</a>",
+                       "</td><td>",
+                       shtmlify(substring(keywords$Concept, 1, 80)),
+                       "</td><td style=\"text-align: right\">",
+                       keywords$Frequency,
+                       "</td><td style=\"text-align: right\">",
+                       keywords$Packages,
+                       "</td></tr>"),
+                "</table>",
+                "</body>",
+                "</html>"))
+        list(payload = paste(out, collapse = "\n"))
+    }
+    
     unfix <- function(file)
     {
         ## we need to re-fix links altered by fixup.package.URLs
@@ -232,6 +294,11 @@ httpd <- function(path, query, ...)
                                 "and", mono("/library"), "are allowed")))
     else if(path == "/doc/html/UserManuals.html")
     	return(.HTMLusermanuals())
+    else if(path == "/doc/html/hsearch_db_concepts.html")
+        return(.HTML_hsearch_db_concepts())
+    else if(path == "/doc/html/hsearch_db_keywords.html")
+        return(.HTML_hsearch_db_keywords())
+
 
     ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
