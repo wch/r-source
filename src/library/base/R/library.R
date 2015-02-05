@@ -692,7 +692,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
 	paths <- paths[ file.exists(file.path(paths, "DESCRIPTION")) ]
 	if(use_loaded && isNamespaceLoaded(pkg)) {
 	    dir <- if (pkg == "base") system.file()
-		   else getNamespaceInfo(pkg, "path")
+		   else .getNamespaceInfo(asNamespace(pkg), "path")
             paths <- c(dir, paths)
         }
         ## trapdoor for tools:::setRlibs

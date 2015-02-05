@@ -282,14 +282,17 @@
       to \code{methods::cbind2} (\code{methods::rbind2}) when at least
       one argument is an S4 object and S3 dispatch fails (due to
       ambiguity).
-      
+
       \item (Windows.)  \code{download.file(quiet = FALSE)} now uses
       text rather than Windows progress bars in non-interactive use.
 
-      \item New function \code{hsearch_db()} in package \pkg{utils} for 
+      \item New function \code{hsearch_db()} in package \pkg{utils} for
       building and retrieving the help search database used by
       \code{help.search()}, along with functions for inspecting the
       concepts and keywords in the help search database.
+
+      \item New \code{.getNamespaceInfo()} as no-check version of
+      \code{getNamespaceInfo()} mostly for internal speedup.
     }
   }
 

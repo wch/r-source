@@ -50,26 +50,26 @@ isNamespaceLoaded <- function(name) .Internal(isRegisteredNamespace(name))
 getNamespaceName <- function(ns) {
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) "base"
-    else getNamespaceInfo(ns, "spec")["name"]
+    else .getNamespaceInfo(ns, "spec")["name"]
 }
 
 getNamespaceVersion <- function(ns) {
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns))
         c(version = paste(R.version$major, R.version$minor, sep = "."))
-    else getNamespaceInfo(ns, "spec")["version"]
+    else .getNamespaceInfo(ns, "spec")["version"]
 }
 
 getNamespaceExports <- function(ns) {
     ns <- asNamespace(ns)
     names(if(isBaseNamespace(ns)) .BaseNamespaceEnv
-          else getNamespaceInfo(ns, "exports"))
+          else .getNamespaceInfo(ns, "exports"))
 }
 
 getNamespaceImports <- function(ns) {
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) NULL
-    else getNamespaceInfo(ns, "imports")
+    else .getNamespaceInfo(ns, "imports")
 }
 
 getNamespaceUsers <- function(ns) {
@@ -88,10 +88,10 @@ getExportedValue <- function(ns, name) {
     if (isBaseNamespace(ns))
 	get(name, envir = ns, inherits = FALSE) # incl. error
     else {
-	if (!is.null(getNamespaceInfo(ns, "exports")[[name]])) {
+	if (!is.null(.getNamespaceInfo(ns, "exports")[[name]])) {
 	    ns[[name]]
 	} else { ##  <pkg> :: <dataset>  for lazydata :
-	    ld <- getNamespaceInfo(ns, "lazydata")
+	    ld <- .getNamespaceInfo(ns, "lazydata")
 	    if (!is.null(obj <- get0(name, envir = ld, inherits = FALSE)))
 		obj
 	    else { ## if there's a lazydata object with value NULL:
@@ -148,7 +148,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
 
     ns <- asNamespace(ns, base.OK = FALSE)
     nsname <- getNamespaceName(ns)
-    nspath <- getNamespaceInfo(ns, "path")
+    nspath <- .getNamespaceInfo(ns, "path")
     attname <- paste("package", nsname, sep = ":")
     if (attname %in% search())
         stop("namespace is already attached")
@@ -159,7 +159,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
     exports <- getNamespaceExports(ns)
     importIntoEnv(env, exports, ns, exports)
     ## always exists, might be empty
-    dimpenv <- getNamespaceInfo(ns, "lazydata")
+    dimpenv <- .getNamespaceInfo(ns, "lazydata")
     dnames <- names(dimpenv)
     .Internal(importIntoEnv(env, dnames, dimpenv, dnames))
     if(length(depends)) assign(".Depends", depends, env)
@@ -268,7 +268,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             lockEnvironment(parent.env(ns), TRUE)
         }
         addNamespaceDynLibs <- function(ns, newlibs) {
-            dynlibs <- getNamespaceInfo(ns, "dynlibs")
+            dynlibs <- .getNamespaceInfo(ns, "dynlibs")
             setNamespaceInfo(ns, "dynlibs", c(dynlibs, newlibs))
         }
 
@@ -451,7 +451,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## load any lazydata into a separate environment
         dbbase <- file.path(pkgpath, "data", "Rdata")
         if(file.exists(paste0(dbbase, ".rdb")))
-            lazyLoad(dbbase, getNamespaceInfo(ns, "lazydata"))
+            lazyLoad(dbbase, .getNamespaceInfo(env, "lazydata"))
 
         ## register any S3 methods
         registerS3methods(nsInfo$S3methods, package, env)
@@ -732,7 +732,7 @@ unloadNamespace <- function(ns)
                       sQuote(getNamespaceName(ns)),
                       paste(sQuote(users), collapse = ", ")),
              domain = NA)
-    nspath <- getNamespaceInfo(ns, "path")
+    nspath <- .getNamespaceInfo(ns, "path")
     hook <- getHook(packageEvent(nsname, "onUnload")) # might be list()
     for(fun in rev(hook)) try(fun(nsname, nspath))
     runHook(".onUnload", ns, nspath)
@@ -749,6 +749,10 @@ isBaseNamespace <- function(ns) identical(ns, .BaseNamespaceEnv)
 
 getNamespaceInfo <- function(ns, which) {
     ns <- asNamespace(ns, base.OK = FALSE)
+    get(which, envir = ns[[".__NAMESPACE__."]])
+}
+
+.getNamespaceInfo <- function(ns, which) {
     ns[[".__NAMESPACE__."]][[which]]
 }
 
@@ -997,7 +1001,7 @@ namespaceExport <- function(ns, vars) {
     ns <- asNamespace(ns, base.OK = FALSE)
     if (length(vars)) {
         addExports <- function(ns, new) {
-            exports <- getNamespaceInfo(ns, "exports")
+            exports <- .getNamespaceInfo(ns, "exports")
             expnames <- names(new)
             intnames <- new
             objs <- names(exports)
@@ -1316,8 +1320,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
 ## unused
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
-        regs <- getNamespaceInfo(ns, "S3methods")
-        regs <- rbind(regs, c(generic, class, method))
+	regs <- rbind(.getNamespaceInfo(ns, "S3methods"),
+		      c(generic, class, method))
         setNamespaceInfo(ns, "S3methods", regs)
     }
     groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
