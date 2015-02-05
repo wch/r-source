@@ -553,7 +553,7 @@ static SEXP in_do_download(SEXP args)
 	UNPROTECT(2);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf(_("opened URL\n"), url);
+//	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if(R_Interactive) {
@@ -664,7 +664,7 @@ static SEXP in_do_download(SEXP args)
 	ctxt = Ri_FTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf(_("opened URL\n"), url);
+//	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if(R_Interactive && !quiet) {
