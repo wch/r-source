@@ -285,6 +285,11 @@
       
       \item (Windows.)  \code{download.file(quiet = FALSE)} now uses
       text rather than Windows progress bars in non-interactive use.
+
+      \item New function \code{hsearch_db()} in package \pkg{utils} for 
+      building and retrieving the help search database used by
+      \code{help.search()}, along with functions for inspecting the
+      concepts and keywords in the help search database.
     }
   }
 
