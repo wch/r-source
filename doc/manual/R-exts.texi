@@ -2009,9 +2009,15 @@ Apple builds will incorporate it.} have no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
 the Windows and the Apple OS X@footnote{using the @code{libgomp} from
-@command{g++} 4.2: using @code{libiomp} versions seems better.}
+@command{g++} 4.2: versions using @code{libiomp} seem better.}
 implementations have substantial overheads and are only beneficial if
-quite substantial tasks are run in parallel.
+quite substantial tasks are run in parallel.  Also, on Windows new
+threads are started with the default@footnote{Windows, not MinGW-w64
+default.} FPU control word, so computations done on OpenMP threads will
+not make use of extended-precision arithmetic which is the default for
+the main process.
+@c mingw64-public, 2015-02-02.  
+@c http://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
 Calling any of the @R{} API from threaded code is `for experts only':
 they will need to read the source code to determine if it is
