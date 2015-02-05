@@ -3490,7 +3490,7 @@ function(aar, strict = FALSE)
                         p)
             if(!length(p)) {
                 bad <- TRUE
-                out$bad_authors_at_R_field_has_no_valid_maintainer <- TRUE                
+                out$bad_authors_at_R_field_has_no_valid_maintainer <- TRUE
             }
             ## s should now be non-empty iff bad is FALSE.
             if(!bad) attr(out, "Maintainer") <- s
@@ -5905,7 +5905,7 @@ function(package, dir, lib.loc = NULL)
 
     find_bad_closures <- function(env) {
         objects_in_env <- sort(names(env))
-        x <- lapply(as.list(env, all.names=TRUE),
+        x <- lapply(as.list(env, all.names = TRUE, sorted = TRUE),
                     function(v) {
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
@@ -6024,7 +6024,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
     bad_closures <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- as.list(env, all.names = TRUE, sorted=TRUE)
+        objects_in_env <- as.list(env, all.names = TRUE, sorted = TRUE)
         x <- lapply(objects_in_env,
                     function(v) {
                         if (typeof(v) == "closure")
@@ -6285,7 +6285,7 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
     found <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- as.list(env, all.names = TRUE, sorted=TRUE)
+        objects_in_env <- as.list(env, all.names = TRUE, sorted = TRUE)
         x <- lapply(objects_in_env,
                     function(v) {
                         if (typeof(v) == "closure")
@@ -7680,7 +7680,7 @@ function(f, env)
     ## This will return a listOfMethods object: turn this into a simple
     ## list of methods named by hash-collapsed signatures.
     tab <- get(methods:::.TableMetaName(f, attr(f, "package")), envir = env)
-    mlist <- as.list(tab, all.names = TRUE, sorted=TRUE)
+    mlist <- as.list(tab, all.names = TRUE, sorted = TRUE)
     ## </FIXME>
 
     ## First, derived default methods (signature w/ "ANY").
