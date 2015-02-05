@@ -88,8 +88,8 @@ getExportedValue <- function(ns, name) {
     if (isBaseNamespace(ns))
 	get(name, envir = ns, inherits = FALSE) # incl. error
     else {
-	if (!is.null(.getNamespaceInfo(ns, "exports")[[name]])) {
-	    ns[[name]]
+	if (!is.null(oNam <- .getNamespaceInfo(ns, "exports")[[name]])) {
+	    get0(oNam, envir = ns)
 	} else { ##  <pkg> :: <dataset>  for lazydata :
 	    ld <- .getNamespaceInfo(ns, "lazydata")
 	    if (!is.null(obj <- get0(name, envir = ld, inherits = FALSE)))
