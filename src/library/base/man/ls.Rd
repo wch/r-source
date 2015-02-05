@@ -31,7 +31,7 @@ objects(name, pos= -1L, envir = as.environment(pos),
     used to convert wildcard patterns to regular expressions.}
   \item{sorted}{logical indicating if the resulting
     \code{\link{character}} should be sorted alphabetically.  Note that
-    this is the part of \code{ls()} which may take most of the time.}
+    this is part of \code{ls()} may take most of the time.}
 }
 \description{
   \code{ls} and \code{objects} return a vector of character strings
@@ -54,8 +54,10 @@ objects(name, pos= -1L, envir = as.environment(pos),
   way to specify an environment, but are primarily there for back
   compatibility.
 
-  Note that the \emph{order} of the resulting strings is locale
-  dependent, see \code{\link{Sys.getlocale}}.
+  Note that the \emph{order} of strings for \code{sorted = TRUE} is
+  locale dependent, see \code{\link{Sys.getlocale}}.  If \code{sorted =
+    FALSE} the order is arbitrary, depending if the environment is
+  hashed, the order of insertion of objects, \dots.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
