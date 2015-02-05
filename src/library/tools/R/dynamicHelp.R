@@ -63,9 +63,11 @@ httpd <- function(path, query, ...)
     .HTMLsearch <- function(query)
     {
     	bool <- function(x) as.logical(as.numeric(x))
-        res <- if(identical(names(query), "category"))
+        res <- if(identical(names(query), "category")) {
             help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
-        else {
+        } else if(identical(names(query), "results")) {
+            utils:::.hsearch_results()
+        } else {
             fields <- types <- character()
             args <- list(pattern = ".")
             for (i in seq_along(query))

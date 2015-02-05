@@ -584,39 +584,39 @@ function(x, ...)
     help_type <- getOption("help_type", default = "text")
     types <- x$types
     if (help_type == "html") {
-        ## <NOTE>
-        ## This invokes the dynamic HTML help system in a way that this
-        ## calls help.search() to give the results to be displayed.
-        ## One could try to avoid the extra call by "somehow" passing
-        ## the (already available) results to the dynamic help system.
-        ## One possibility would be using a dynamic variable, e.g.,
-        ## .hsearch_results(), and teach tools:::httpd(), specifically
-        ## .HTMLsearch() inside it, to handle a payload like
-        ##    /doc/html/Search?results=1
-        ## to fetch the results from .hsearch_results().
-        ## </NOTE>
         browser <- getOption("browser")
         port <- tools::startDynamicHelp(NA)
 	if (port > 0L) {
-	    url <-
-                paste0("http://127.0.0.1:", port,
-                       "/doc/html/Search?pattern=",
-                       tools:::escapeAmpersand(x$pattern),
-                       paste0("&fields.", x$fields, "=1",
-                              collapse = ""),
-                       if (!is.null(x$agrep)) paste0("&agrep=", x$agrep),
-                       if (!x$ignore.case) "&ignore.case=0",
-                       if (!identical(types,
-                                      getOption("help.search.types")))
-                           paste0("&types.", types, "=1",
-                                  collapse = ""),
-                       if (!is.null(x$package))
-                           paste0("&package=",
-                                  paste(x$package, collapse=";")),
-                       if (!identical(x$lib.loc, .libPaths()))
-                           paste0("&lib.loc=",
-                                  paste(x$lib.loc, collapse=";"))
-                       )
+            .hsearch_results(x)
+            url <- paste0("http://127.0.0.1:", port,
+                          "/doc/html/Search?results=1")
+            ## <NOTE>
+            ## Older versions used the following, which invokes the
+            ## dynamic HTML help system in a way that this calls
+            ## help.search() to give the results to be displayed.
+            ## This is now avoided by passing the (already available)
+            ## results to the dynamic help system using the dynamic
+            ## variable .hsearch_results().
+	    ## url <-
+            ##     paste0("http://127.0.0.1:", port,
+            ##            "/doc/html/Search?pattern=",
+            ##            tools:::escapeAmpersand(x$pattern),
+            ##            paste0("&fields.", x$fields, "=1",
+            ##                   collapse = ""),
+            ##            if (!is.null(x$agrep)) paste0("&agrep=", x$agrep),
+            ##            if (!x$ignore.case) "&ignore.case=0",
+            ##            if (!identical(types,
+            ##                           getOption("help.search.types")))
+            ##                paste0("&types.", types, "=1",
+            ##                       collapse = ""),
+            ##            if (!is.null(x$package))
+            ##                paste0("&package=",
+            ##                       paste(x$package, collapse=";")),
+            ##            if (!identical(x$lib.loc, .libPaths()))
+            ##                paste0("&lib.loc=",
+            ##                       paste(x$lib.loc, collapse=";"))
+            ##            )
+            ## </NOTE>
             browseURL(url, browser)
             return(invisible(x))
         }
@@ -705,6 +705,16 @@ function(x, ...)
     file.show(outFile, delete.file = TRUE)
     invisible(x)
 }
+
+.hsearch_results <- local({
+    res <- NULL
+    function(new) {
+	if(!missing(new))
+	    res <<- new
+	else
+	    res
+    }
+})
 
 hsearch_db_concepts <-
 function(db = hsearch_db())
