@@ -1443,11 +1443,11 @@ registerS3methods <- function(info, package, env)
         overwrite <- overwrite[overwrite[, 2L] %in% std, , drop = FALSE]
        if(nr <- nrow(overwrite)) {
            msg <- ngettext(nr,
-                           "Registered S3 method in a standard package overwritten by '%s':",
-                           "Registered S3 methods in standard package(s) overwritten by '%s':",
+                           "Registered S3 method from a standard package overwritten by '%s':",
+                           "Registered S3 methods from standard package(s) overwritten by '%s':",
                            domain = NA)
            message(sprintf(msg, package))
-           colnames(overwrite) <- c("method", "package")
+           colnames(overwrite) <- c("method", "from")
            print(as.data.frame(overwrite), row.names = FALSE, right = FALSE)
        }
     }
