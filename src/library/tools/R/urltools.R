@@ -79,7 +79,7 @@ function(f)
     XML::htmlParse(f,
                    handlers =
                        list(a = function(node) {
-                           hrefs <<- c(hrefs, XML::xmlAttrs(node, "href"))
+                           hrefs <<- c(hrefs, XML::xmlAttrs(node)[["href"]])
                        })
                    )
     unname(hrefs[!grepl("^#", hrefs)])
