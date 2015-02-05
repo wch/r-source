@@ -658,6 +658,12 @@ tools::assertError(stats:: foobar)
 stopifnot(    nrow(datasets:: swiss) == 47)
 tools::assertError(datasets:::swiss)
 ## The ::: versions gave NULL in certain development versions of R
+stopifnot(identical(stats4::show -> s4s,
+		    get("show", asNamespace("stats4") -> ns4)),
+	  s4s@package == "methods",
+	  is.null(ns4[["show"]]) # not directly in stats4 ns
+	  )
+## stats4::show was NULL for 4 hours in R-devel
 
 
 proc.time()
