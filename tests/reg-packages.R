@@ -34,8 +34,6 @@ stopifnot(1 == grep("setClass",
 ## failed for several reasons in R < 2.7.0
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
-dir.exists <- function(x)
-    is.character(x) && file.exists(x) && file.info(path.expand(x))$isdir
 build.pkg <- function(dir) {
     stopifnot(dir.exists(dir))
     patt <- paste(basename(dir), ".*tar\\.gz$", sep="_")
@@ -57,39 +55,6 @@ sm <- findMethods(show, where= as.environment("package:myTst"))
 stopifnot(names(sm@names) == "foo")
 unlink("myTst_*")
 
-## More building & installing packages
-## NB: tests were added here for 2.11.0.
-## NB^2: do not do this in the R sources!
-## and this testdir is not installed.
-pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
-if(file_test("-d", pkgSrcPath)) {
-    ## could use file.copy(recursive = TRUE)
-    system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
-    pkgPath <- file.path(tempdir(), "Pkgs")
-    ## pkgB tests an empty R directory
-    dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
-               showWarnings = FALSE)
-    p.lis <- if("Matrix" %in% row.names(installed.packages()))
-        c("pkgA", "pkgB", "exNSS4")
-    else "exNSS4"
-    for(p. in p.lis) {
-        cat("building package", p., "...\n")
-        r <- build.pkg(file.path(pkgPath, p.))
-        cat("installing package", p., "using file", r, "...\n")
-        ## we could install the tar file ... (see build.pkg()'s definition)
-        install.packages(r, lib = "myLib", repos=NULL, type = "source")
-        stopifnot(require(p.,lib = "myLib", character.only=TRUE))
-        detach(pos = match(p., sub("^package:","", search())))
-    }
-    ## TODO: not just print, but check the "list":
-    res <- installed.packages(lib.loc = "myLib", priority = "NA")
-    print(res)
-    unlink("myLib", recursive = TRUE)
-    unlink(file.path(pkgPath), recursive = TRUE)
-}
-unlink("myTst", recursive=TRUE)
-
-
 ## getPackageName()  for "package:foo":
 require('methods')
 library(tools)
@@ -97,5 +62,56 @@ oo <- options(warn=2)
 detach("package:tools", unload=TRUE)
 options(oo)
 ## gave warning (-> Error) about creating package name
+
+## --- keep this at end --- so we do not need a large if(.) { .. }
+## More building & installing packages
+## NB: tests were added here for 2.11.0.
+## NB^2: do not do this in the R sources!
+## and this testdir is not installed.
+pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
+if(!file_test("-d", pkgSrcPath) && !interactive()) {
+    unlink("myTst", recursive=TRUE)
+    print(proc.time())
+    q("no")
+}
+
+## else w/o clause:
+## could use file.copy(recursive = TRUE)
+system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
+pkgPath <- file.path(tempdir(), "Pkgs")
+## pkgB tests an empty R directory
+dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
+	   showWarnings = FALSE)
+p.lis <- if("Matrix" %in% row.names(installed.packages(.Library)))
+	     c("pkgA", "pkgB", "exNSS4") else "exNSS4"
+for(p. in p.lis) {
+    cat("building package", p., "...\n")
+    r <- build.pkg(file.path(pkgPath, p.))
+    cat("installing package", p., "using file", r, "...\n")
+    ## we could install the tar file ... (see build.pkg()'s definition)
+    install.packages(r, lib = "myLib", repos=NULL, type = "source")
+    stopifnot(require(p.,lib = "myLib", character.only=TRUE))
+    detach(pos = match(p., sub("^package:","", search())))
+}
+(res <- installed.packages(lib.loc = "myLib", priority = "NA"))
+stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
+	  res[,"LibPath"] == "myLib")
+### Specific Tests on our "special" packages: ------------------------------
+
+## Find objects which are NULL via "::" -- not to be expected often
+## we have one in our pkgA
+require(pkgA, lib="myLib")
+data(package = "pkgA") # -> nilData
+stopifnot(is.null( pkgA::  nil),
+	  is.null( pkgA::: nil),
+	  is.null( pkgA::  nilData)) # <-
+## R-devel (pre 3.2.0) wrongly errored for NULL lazy data
+## ::: does not apply to data sets:
+tools::assertError(is.null(pkgA:::nilData))
+
+## clean up
+unlink("myLib", recursive = TRUE)
+unlink(file.path(pkgPath), recursive = TRUE)
+unlink("myTst", recursive = TRUE)
 
 proc.time()
