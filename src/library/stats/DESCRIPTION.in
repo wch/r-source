@@ -4,5 +4,5 @@ Priority: base
 Title: The R Stats Package
 Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
-Description: R statistical functions
+Description: R statistical functions.
 License: Part of R @VERSION@
