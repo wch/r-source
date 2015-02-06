@@ -507,6 +507,13 @@
       \code{callGeneric()} and \code{callNextMethod()}.  (\PR{16141})
 
       \item \code{callGeneric()} now works after a \code{callNextMethod()}.
+
+      \item Subclass information is kept consistent when replacing an
+      ordinary S4 class with an "old class" via the \code{S4Class}
+      argument to \code{setOldClass()}. Thus, for example, a
+      \code{data.frame} is valid for a \code{list} argument in the
+      signature, and a \code{factor} is valid for \code{vector}
+      arguments.
     }
   }
 }
