@@ -254,7 +254,9 @@
       overridden for an \code{url()} connection \emph{via} its new
       \code{method} argument.
 
-      \code{download.file()} has new method \code{"wininet"}.
+      \code{download.file()} has new method \code{"wininet"}, selected
+      as the defaul by \option{--internet2} or \code{setInternet2()}.
+      Argument \code{cacheOK} is now supported for that method.
 
       \item \code{parent.env<-} can no longer modify the parent of a
       locked namespace or namespace imports environment.  Contributed by

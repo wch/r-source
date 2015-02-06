@@ -43,9 +43,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     (See also \sQuote{Details}.)
 #endif
   }
-  \item{cacheOK}{logical.  Is a server-side cached value acceptable?
-    Implemented for the \code{"internal"}, \code{"wget"} and
-    \code{"curl"} methods.}
+  \item{cacheOK}{logical.  Is a server-side cached value acceptable?}
 
   \item{extra}{character vector of additional command-line arguments for
     the \code{"wget"} and \code{"curl"} methods.}
@@ -116,7 +114,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   A progress bar tracks the transfer.  If the file length is known, the
   full width of the bar is the known length.  Otherwise the initial
   width represents 100 Kbytes and is doubled whenever the current width
-  is exceeded.
+  is exceeded.  (In non-interactive use this uses a text version. If the
+  file length is known, an equals sign represents 2\% of the transfer
+  completed: otherwise a dot represents 10Kb.)
+  
 
   If \code{mode} is not supplied and \code{url} ends in one of
   \code{.gz}, \code{.bz2}, \code{.xz}, \code{.tgz}, \code{.zip},
@@ -125,12 +126,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   care is needed that other binary file types are transferred with
   \code{mode = "wb"}.
 
-  There is an alternative method if you have Internet Explorer 4 or
-  later installed.   You can use the command line flag \option{--internet2},
-  or call \code{\link{setInternet2}(TRUE)} and then
-  the \sQuote{Internet Options} of the system are used to choose proxies
-  and so on; these are set in the Control Panel and are those used for
-  Internet Explorer.  That version does not support \code{cacheOK = FALSE}.
+  There is an alternative method \code{"wininet"}. (This selected for
+  \code{method = "internal"} if the command line flag
+  \option{--internet2}, was used or \code{\link{setInternet2}(TRUE)}
+  called.)  Then the \sQuote{Internet Options} of the system are used to
+  choose proxies and so on; these are set in the Control Panel and are
+  those used for Internet Explorer.  That version does not support
+  \code{cacheOK = FALSE}.
 #endif
 #ifdef unix
   A progress bar tracks the transfer.  If the file length is known, an
