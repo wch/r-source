@@ -435,6 +435,68 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(length(x));
 }
 
+static R_xlen_t getElementLength(SEXP x, int i, SEXP call, SEXP rho) {
+    static SEXP length_op = NULL;
+    SEXP x_elt = VECTOR_ELT(x, i);
+    if (isObject(x_elt)) {
+        SEXP args, len;
+        PROTECT(args = list1(x_elt));
+        if (length_op == NULL) {
+            length_op = R_Primitive("length");
+        }
+        if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
+            return TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len);
+        }
+        UNPROTECT(1);
+    }
+    return(xlength(x_elt));
+}
+
+static SEXP do_lengths_long(SEXP x, SEXP call, SEXP rho)
+{
+    SEXP ans;
+    R_xlen_t x_len, i;
+    double *ans_elt;
+    
+    x_len = xlength(x);
+    PROTECT(ans = allocVector(REALSXP, x_len));
+    for (i = 0, ans_elt = REAL(ans); i < x_len; i++, ans_elt++) {
+        *ans_elt = getElementLength(x, i, call, rho);
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x = CAR(args), ans;
+    R_xlen_t x_len, i;
+    int *ans_elt;
+
+    if (!isVectorList(x)) {
+        error(_("'x' must be a list"));
+    }
+    
+    x_len = xlength(x);
+    PROTECT(ans = allocVector(INTSXP, x_len));
+    for (i = 0, ans_elt = INTEGER(ans); i < x_len; i++, ans_elt++) {
+        R_xlen_t x_elt_len = getElementLength(x, i, call, rho);
+#ifdef LONG_VECTOR_SUPPORT
+        if (x_elt_len > INT_MAX) {
+            UNPROTECT(1);
+            ans = do_lengths_long(x, call, rho);
+            break;
+        }
+#endif
+        *ans_elt = x_elt_len;
+    }
+    UNPROTECT(1);
+
+    SEXP names = getAttrib(x, R_NamesSymbol);
+    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+    
+    return ans;
+}
 
 SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

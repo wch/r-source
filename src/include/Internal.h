@@ -239,6 +239,7 @@ SEXP do_lazyLoadDBflush(SEXP, SEXP, SEXP, SEXP);
 SEXP do_lazyLoadDBinsertValue(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_length(SEXP, SEXP, SEXP, SEXP);
 SEXP do_lengthgets(SEXP, SEXP, SEXP, SEXP);
+SEXP do_lengths(SEXP, SEXP, SEXP, SEXP);
 SEXP do_levelsgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listdirs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listfiles(SEXP, SEXP, SEXP, SEXP);

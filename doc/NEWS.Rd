@@ -300,6 +300,9 @@
       \file{KEYWORDS} in the \R documentation directory) as concepts.
       For standard keyword entries the corresponding descriptions are
       additionally taken as concepts.
+
+      \item Add lengths() function for getting the length of every
+      element in a list
     }
   }
 

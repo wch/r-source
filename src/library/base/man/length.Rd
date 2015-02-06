@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -60,8 +60,9 @@ length(x) <- value
   As from \R 3.0.0, lengths can be returned as double in base \R.
 }
 
-\seealso{\code{nchar} for counting the number of characters in
-  character vectors.
+\seealso{\code{nchar} for counting the number of characters in character
+  vectors, \code{\link{lengths}} for getting the length of every element
+  in a list.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
