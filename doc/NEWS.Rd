@@ -34,34 +34,37 @@
       \item \code{icuSetCollate()} now accepts \code{locale = "ASCII"}
       which uses the basic C function \code{strcmp} and so collates
       strings byte-by-byte in numerical order.
-      
+
       \item \code{sessionInfo()} tries to report the OS version in use
       (not just that compiled under, and including details of Linux
       distributions).
-      
-      \item \code{model.frame()} (used by \code{lm()} and many other 
+
+      \item \code{model.frame()} (used by \code{lm()} and many other
       modelling functions) now warns when it drops contrasts
       from factors.  (Wish of \PR{16119})
-      
+
       \item \code{install.packages()} and friends now accept the value
       \code{type = "binary"} as a synonym for the native binary type on
       the platform (if it has one).
-    
+
       \item Single source or binary files can be supplied for
-      \code{install.packages(type = "both")} and the approporiate type
+      \code{install.packages(type = "both")} and the appropriate type
       and \code{repos = NULL} will be inferred.
-      
+
       \item New function \code{pcre_config()} to report on some of the
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
+      
+      (Windows.) \item{download.file(cacheOK = FALSE)} is now supported
+      when \file{internet2.dll} is used.
     }
   }
 
   \subsection{INSTALLATION and INCLUDED SOFTWARE}{
     \itemize{
       \item The included version of PCRE has been updated to 8.36.
-      
+
       \item \command{configure} accepts \samp{MAKEINFO=texi2any} as
       another way to ensure \pkg{texinfo} 5.x is used when both 5.x and
       4.x are installed.
@@ -74,7 +77,7 @@
       \code{\\donttest} sections of the examples are specified in the
       \file{DESCRIPTION} file.
       (These are needed to run the examples interactively.)
-      
+
       \item \command{R CMD check} checks for the undeclared use of GNU
       extensions in Makefiles, and for Makefiles with a missing final
       linefeed.
@@ -157,27 +160,27 @@
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
       work in more extreme cases.  (\PR{15792})
-      
+
       \item If a package was updated and attached when its namespace was
       already loaded, it could end up with parts from one version and
       parts from the other.  (\PR{16120})
-      
+
       \item \code{tools:::.Rdconv()} didn't accept \code{--encoding=} due
       to a typo.  (\PR{16121})
 
       \item Unix-alike builds without a suitable \command{makeinfo} were
       documented to link the missing HTML manuals to CRAN, but did not.
-      
+
       \item \code{save(*, ascii=TRUE)} and \code{load()} now correctly
       deal with \code{NaN}'s.  (\PR{16137})
 
       \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
-      
+
       \item \file{R_ext/Lapack.h} had not been updated for changes to
       the argument lists of the (largely internal) functions
       \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
-      
+
       \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
       layout changes of \R 3.1.0.
     }
@@ -234,7 +237,7 @@
       \code{setRepositories()} now defaults to \code{3.0}. (It can be
       set at runtime \emph{via} environment variable
       \env{R_BIOC_VERSION}.)
-      
+
       \item Omegahat is no longer listed as providing Windows binary
       packages, e.g. by \code{setRepositories()}.  It has no binary
       packages available for \R 3.1.x and those for earlier versions

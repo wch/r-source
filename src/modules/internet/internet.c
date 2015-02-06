@@ -799,10 +799,9 @@ static void *in_R_HTTPOpen(const char *url, const char *headers,
 	REprintf("using Synchronous WinInet calls\n");
 	R_FlushConsole();
 	} */
-    wictxt->session = InternetOpenUrl(wictxt->hand, url,
-				      NULL, 0,
-	INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
-				      0);
+    DWORD flags = INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE;
+    if(!cacheOK) flags |= INTERNET_FLAG_PRAGMA_NOCACHE;
+    wictxt->session = InternetOpenUrl(wictxt->hand, url, NULL, 0, flags, 0);
 #endif /* USE_WININET_ASYNC */
     if(!wictxt->session) {
 	DWORD err1 = GetLastError(), err2, blen = 101;
