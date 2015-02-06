@@ -255,8 +255,7 @@
       \code{method} argument.
 
       \code{download.file()} has new method \code{"wininet"}, selected
-      as the defaul by \option{--internet2} or \code{setInternet2()}.
-      Argument \code{cacheOK} is now supported for that method.
+      as the default by \option{--internet2} or \code{setInternet2()}.
 
       \item \code{parent.env<-} can no longer modify the parent of a
       locked namespace or namespace imports environment.  Contributed by
@@ -559,6 +558,9 @@
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
+      
+      (Windows.) \item{download.file(cacheOK = FALSE)} is now supported
+      when \file{internet2.dll} is used.
     }
   }
 
