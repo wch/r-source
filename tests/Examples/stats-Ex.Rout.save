@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-01-31 r67683) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-06 r67748) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3770,7 +3770,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4ef8288>
+<environment: 0x3b15d20>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4733,7 +4733,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x4435120>
+<bytecode: 0x284a778>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6943,7 +6943,7 @@ Residual Deviance: 135.8 	AIC: NA
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: fft
-> ### Title: Fast Discrete Fourier Transform
+> ### Title: Fast Discrete Fourier Transform (FFT)
 > ### Aliases: fft mvfft
 > ### Keywords: math dplot
 > 
@@ -6954,6 +6954,26 @@ Residual Deviance: 135.8 	AIC: NA
 [1] 10+0i -2+2i -2+0i -2-2i
 > fft(fft(x), inverse = TRUE)/length(x)
 [1] 1+0i 2+0i 3+0i 4+0i
+> 
+> ## Slow Discrete Fourier Transform (DFT) - e.g., for checking the formula
+> fft0 <- function(z, inverse=FALSE) {
++   n <- length(z)
++   if(n == 0) return(z)
++   k <- 0:(n-1)
++   ff <- (if(inverse) 1 else -1) * 2*pi * 1i * k/n
++   vapply(1:n, function(h) sum(z * exp(ff*(h-1))), complex(1))
++ }
+> 
+> relD <- function(x,y) 2* abs(x - y) / abs(x + y)
+> n <- 2^8
+> z <- complex(n, rnorm(n), rnorm(n))
+> ## relative differences in the order of 4*10^{-14} :
+> summary(relD(fft(z), fft0(z)))
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+1.270e-16 1.571e-14 3.265e-14 7.952e-14 7.471e-14 4.203e-12 
+> summary(relD(fft(z, inverse=TRUE), fft0(z, inverse=TRUE)))
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.000e+00 1.371e-14 3.167e-14 5.945e-14 7.099e-14 1.244e-12 
 > 
 > 
 > 
@@ -7245,7 +7265,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x2636ff8>
+<environment: 0x49fa330>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11725,14 +11745,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x3c34ce8>
-<environment: 0x3c26790>
+<bytecode: 0x4d17e30>
+<environment: 0x4d0d308>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x3c34e00>
-<environment: 0x3c26790>
+<bytecode: 0x4d17f48>
+<environment: 0x4d0d308>
 
 > 
 > 
@@ -15550,8 +15570,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3bfb4f8>
-<environment: 0x4564da0>
+<bytecode: 0x4311e70>
+<environment: 0x7ad88b8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17841,7 +17861,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.35 0.113 4.468 0 0 
+Time elapsed:  4.519 0.107 4.628 0 0 
 > grDevices::dev.off()
 null device 
           1 
