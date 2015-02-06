@@ -394,7 +394,9 @@ be omitted if the latter is provided: however if they are not
 @c DESCRIPTION field Package
 The mandatory @samp{Package} field gives the name of the package.  This
 should contain only (@acronym{ASCII}) letters, numbers and dot, have at
-least two characters and start with a letter and not end in a dot.
+least two characters and start with a letter and not end in a dot.  If
+it needs explaining, this should be done in the @samp{Description} field
+(and not the @samp{Title} field).
 
 @c DESCRIPTION field Version
 The mandatory @samp{Version} field gives the version of the package.
@@ -420,7 +422,8 @@ The mandatory @samp{Title} field should give a short description of the
 package.  Some package listings may truncate the title to 65 characters.
 It should use @emph{title case} (that is, use capitals for the principal
 words), not use any markup, not have any continuation lines, and not end
-in a period.
+in a period.  Do not repeat the package name: it is often used prefixed
+by the name.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
