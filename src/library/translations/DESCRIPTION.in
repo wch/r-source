@@ -3,5 +3,5 @@ Version: @VERSION@
 Title: The R Translations Package
 Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Compiled translations of messages
+Description: Compiled translations of messages.
 License: Part of R @VERSION@

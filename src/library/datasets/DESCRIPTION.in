@@ -4,5 +4,5 @@ Priority: base
 Title: The R Datasets Package
 Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Base R datasets
+Description: Base R datasets.
 License: Part of R @VERSION@

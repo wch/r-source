@@ -4,5 +4,5 @@ Priority: base
 Title: The R Compiler Package
 Author: Luke Tierney <luke-tierney@uiowa.edu>
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Byte code compiler for R
+Description: Byte code compiler for R.
 License: Part of R @VERSION@

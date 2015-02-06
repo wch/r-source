@@ -422,8 +422,8 @@ The mandatory @samp{Title} field should give a short description of the
 package.  Some package listings may truncate the title to 65 characters.
 It should use @emph{title case} (that is, use capitals for the principal
 words), not use any markup, not have any continuation lines, and not end
-in a period.  Do not repeat the package name: it is often used prefixed
-by the name.
+in a period (unless part of @ldots{}).  Do not repeat the package name:
+it is often used prefixed by the name.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R

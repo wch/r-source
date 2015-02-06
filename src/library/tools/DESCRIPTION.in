@@ -4,6 +4,6 @@ Priority: base
 Title: Tools for Package Development
 Author: R Core Team
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Tools for package development, administration and documentation
+Description: Tools for package development, administration and documentation.
 License: Part of R @VERSION@
 Suggests: XML

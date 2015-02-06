@@ -4,6 +4,6 @@ Priority: base
 Title: The R Graphics Package
 Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
-Description: R functions for base graphics
+Description: R functions for base graphics.
 Imports: grDevices
 License: Part of R @VERSION@
