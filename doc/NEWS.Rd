@@ -559,8 +559,9 @@
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
       
-      (Windows.) \item{download.file(cacheOK = FALSE)} is now supported
-      when \file{internet2.dll} is used.
+      \item (Windows.) \code{download.file(cacheOK = FALSE)} is now
+      supported when \file{internet2.dll} is used.
+      
     }
   }
 
