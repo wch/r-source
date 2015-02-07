@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-06 r67748) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-07 r67758) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6967,14 +6967,6 @@ Residual Deviance: 135.8 	AIC: NA
 > relD <- function(x,y) 2* abs(x - y) / abs(x + y)
 > n <- 2^8
 > z <- complex(n, rnorm(n), rnorm(n))
-> ## relative differences in the order of 4*10^{-14} :
-> summary(relD(fft(z), fft0(z)))
-     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-1.270e-16 1.571e-14 3.265e-14 7.952e-14 7.471e-14 4.203e-12 
-> summary(relD(fft(z, inverse=TRUE), fft0(z, inverse=TRUE)))
-     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-0.000e+00 1.371e-14 3.167e-14 5.945e-14 7.099e-14 1.244e-12 
-> 
 > 
 > 
 > cleanEx()

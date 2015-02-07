@@ -19,6 +19,7 @@ example(aov, run.donttest = TRUE)
 # signs for promax rotation are arbitrary
 example(factanal, run.donttest = TRUE)
 example(family, run.donttest = TRUE)
+example(fft, run.donttest = TRUE)
 example(glm, run.donttest = ("MASS" %in% base.and.rec))
 example(glm.control, run.donttest = TRUE)
 # from extractAIC

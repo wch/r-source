@@ -87,9 +87,9 @@ fft0 <- function(z, inverse=FALSE) {
 relD <- function(x,y) 2* abs(x - y) / abs(x + y)
 n <- 2^8
 z <- complex(n, rnorm(n), rnorm(n))
-## relative differences in the order of 4*10^{-14} :
+\donttest{## relative differences in the order of 4*10^{-14} :
 summary(relD(fft(z), fft0(z)))
 summary(relD(fft(z, inverse=TRUE), fft0(z, inverse=TRUE)))
-}
+}}
 \keyword{math}
 \keyword{dplot}
