@@ -388,12 +388,12 @@
       and \file{NEWS.Rd} files and in the help files.
 
       \item \command{R CMD check --as-cran} reports non-ASCII characters
-      in R source files in case there is no declared package encoding.
+      in R source files when there is no declared package encoding.
 
       \item \command{R CMD check --as-cran} reports (apparent) S3
       methods exported but not registered.
 
-      It reports overwriting registered S3 methods in base/recommended
+      It reports overwriting registered S3 methods from base/recommended
       packages.  (Such methods are replaced in the affected package for
       the rest of the session, even if the replacing namespace is
       unloaded.)
