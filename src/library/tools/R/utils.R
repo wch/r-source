@@ -1867,6 +1867,41 @@ psnice <- function(pid = Sys.getpid(), value = NA_integer_)
     res <- .Call(ps_priority, pid, value)
     if(is.na(value)) res else invisible(res)
 }
+
+### ** toTitleCase
+
+## original version based on http://daringfireball.net/2008/05/title_case
+toTitleCase <- function(text)
+{
+    alone <- c("2D", "3D", "BayesX", "GoF", "LaTeX", "MonetDB",
+               "OpenBUGS", "TeX", "U.S.", "U.S.A.", "WinBUGS",
+               "jar", "jars", "miRNA", "ncdf", "netCDF", "rgl", "xls", "xlsx")
+    lpat <- "^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v[.]?|via|vs[.]?|from|with)$"
+    titleCase1 <- function(x) {
+        do1 <- function(x)
+            paste0(toupper(substring(x, 1L, 1L)), tolower(substring(x, 2L)))
+        ## split on - and /
+        x <- gsub("([-/])", " \\1 ", x)
+        x <- gsub("\\(", "( ", x)
+        x <- gsub("\\)", " )", x)
+        xx <- strsplit(x, " ")[[1L]]
+        alone <- xx %in% alone
+        havecaps <- grepl("^[[:alpha:]][[:upper:]]+", xx)
+        l <- grepl(lpat, xx, ignore.case = TRUE)
+        l[1L] <- FALSE
+        xx[l] <- tolower(xx[l])
+        keep <- havecaps | l | (nchar(xx) == 1L) | alone
+        xx[!keep] <- sapply(xx[!keep], do1)
+        z <- paste(xx, collapse = " ")
+        z <- gsub("\\( ", "(", z)
+        z <- gsub(" \\)", ")", z)
+        gsub(" ([-/]) ", "\\1", z)
+    }
+    if(typeof(text) != "character")
+        stop("'text' must be a character string")
+    sapply(text, titleCase1, USE.NAMES = FALSE)
+}
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
