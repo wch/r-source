@@ -302,7 +302,10 @@
       additionally taken as concepts.
 
       \item Add lengths() function for getting the length of every
-      element in a list
+      element in a list.
+      
+      \item New function \code{toTitleCase()} in package \pkg{tools},
+      tailored to package titles.
     }
   }
 
@@ -397,6 +400,14 @@
 
       These checks can also be selected by environment variables: see
       the \sQuote{R Internals} manual.
+
+      \item \command{R CMD check} now checks that the \samp{Title} and
+      \samp{Description} fields are correctly terminated.
+
+      \item \command{R CMD check --as-cran} reports if the \code{Title}
+      field does not appear to be in title case (see \sQuote{Writing R
+      Extensions}: there may be false positives, especially from
+      technical words).
     }
   }
 

@@ -3267,7 +3267,7 @@ function(dfile, strict = FALSE)
         out$bad_Title <- TRUE
     ## some people put punctuation inside quotes, some outside.
     if(strict && !is.na(val <- db["Description"])
-       && !grepl("[.!?]['\"]?$", trimws(val)))
+       && !grepl("[.!?]['\")]?$", trimws(val)))
         out$bad_Description <- TRUE
 
     class(out) <- "check_package_description"
@@ -6919,6 +6919,20 @@ function(dir)
             out$authors_at_R_calls <- aar
     }
 
+    ## Check Title field.
+    title <- trimws(as.vector(meta[["Title"]]))
+    title <- gsub("[\n\t]", " ", title)
+    package <- meta["Package"]
+    if (title == package) {
+        out$title_is_name <- TRUE
+    } else {
+        if(grepl(paste0("^", package), title))
+            out$title_includes_name <- TRUE
+        title2 <- toTitleCase(title)
+        if(title != title2)
+            out$title_case <- c(title, title2)
+    }
+
     ## Check URLs.
     if(capabilities("libcurl")) {
         ## Be defensive about building the package URL db.
@@ -7230,8 +7244,17 @@ function(x, ...)
             paste0("  ", names(y), "\n    ",
                    sapply(y, paste, collapse = "\n    "),
                    collapse = "\n"))
+      },
+      if(length(x$title_is_name)) {
+          "Title field is just the package name: provide a real title."
+      },
+      if(length(x$title_includes_name)) {
+          "Title field starts with the package name."
+      },
+      if(length(y <- x$title_case)) {
+          c("Title field should be in title case, current version then in title case:", sQuote(y))
       }
-      )
+     )
 }
 
 ### * .check_Rd_metadata
