@@ -483,7 +483,6 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
         R_xlen_t x_elt_len = getElementLength(x, i, call, rho);
 #ifdef LONG_VECTOR_SUPPORT
         if (x_elt_len > INT_MAX) {
-            UNPROTECT(1);
             ans = do_lengths_long(x, call, rho);
             break;
         }
