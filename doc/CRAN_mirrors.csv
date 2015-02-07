@@ -1,5 +1,6 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode
 0-Cloud,0-Cloud,0-Cloud,http://cran.rstudio.com/,"Rstudio, automatic redirection to servers worldwide","winston # stdout.org",1,us
+Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technology Houari Boumediene","Boukala m c <mboukala # usthb.dz>",1,dz
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Argentina (Mendoza)",Argentina,Mendoza,http://r.mirror.mendoza-conicet.gob.ar/,"CONICET Mendoza","pcastorino # Mendoza-conicet.gob.ar",0,ar
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au
