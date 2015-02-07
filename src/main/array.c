@@ -426,6 +426,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	return(ans);
     }
+    
 
 #ifdef LONG_VECTOR_SUPPORT
     // or use IS_LONG_VEC
@@ -435,7 +436,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ScalarInteger(length(x));
 }
 
-static R_xlen_t getElementLength(SEXP x, int i, SEXP call, SEXP rho) {
+static R_xlen_t getElementLength(SEXP x, R_xlen_t i, SEXP call, SEXP rho) {
     static SEXP length_op = NULL;
     SEXP x_elt = VECTOR_ELT(x, i);
     if (isObject(x_elt)) {
@@ -445,7 +446,8 @@ static R_xlen_t getElementLength(SEXP x, int i, SEXP call, SEXP rho) {
             length_op = R_Primitive("length");
         }
         if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
-            return TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len);
+          return (R_xlen_t)
+            TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len);
         }
         UNPROTECT(1);
     }
@@ -487,7 +489,7 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
             break;
         }
 #endif
-        *ans_elt = x_elt_len;
+        *ans_elt = (int)x_elt_len;
     }
     UNPROTECT(1);
 
