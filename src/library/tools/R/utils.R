@@ -152,6 +152,21 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
     files
 }
 
+### ** reQuote 
+
+## <FIXME>
+## Move into base eventually ...
+reQuote <-
+function(x)
+{
+    escape <- function(s) paste0("\\", s)
+    re <- "[.*?+^$\\[]"
+    m <- gregexpr(re, x)
+    regmatches(x, m) <- lapply(regmatches(x, m), escape)
+    x
+}
+## </FIXME>
+
 ### ** showNonASCII
 
 showNonASCII <-

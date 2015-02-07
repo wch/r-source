@@ -162,17 +162,6 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse="\n"))
     }
 
-    ## <FIXME>
-    ## Move into base eventually
-    reQuote <- function(x) {
-        escape <- function(s) paste0("\\", s)
-        re <- "[.*?+^$\\[]"
-        m <- gregexpr(re, x)
-        regmatches(x, m) <- lapply(regmatches(x, m), escape)
-        x
-    }
-    ## </FIXME>
-
     .HTML_hsearch_db_concepts <- function() {
         concepts <- utils::hsearch_db_concepts()
         s <- concepts$Concept
