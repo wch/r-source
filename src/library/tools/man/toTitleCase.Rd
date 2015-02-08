@@ -24,7 +24,7 @@ toTitleCase(text)
   this implementation knows about conventional mixed-case words such as
   \sQuote{LaTeX} and \sQuote{OpenBUGS} and a few technical terms which
   are not usually capitalized such as \sQuote{jar} and \sQuote{xls}.
-  Howver, unknown technical terms (including names of libraries and
+  However, unknown technical terms (including names of libraries and
   packages) will be capitalized.
 }
 \value{
