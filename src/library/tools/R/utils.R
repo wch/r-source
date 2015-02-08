@@ -152,7 +152,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
     files
 }
 
-### ** reQuote 
+### ** reQuote
 
 ## <FIXME>
 ## Move into base eventually ...
@@ -1886,24 +1886,46 @@ psnice <- function(pid = Sys.getpid(), value = NA_integer_)
 ### ** toTitleCase
 
 ## original version based on http://daringfireball.net/2008/05/title_case
+## but much altered before release.
 toTitleCase <- function(text)
 {
-    alone <- c("2D", "3D", "BayesX", "GoF", "LaTeX", "MonetDB",
-               "OpenBUGS", "TeX", "U.S.", "U.S.A.", "WinBUGS",
-               "jar", "jars", "miRNA", "ncdf", "netCDF", "rgl", "xls", "xlsx")
-    lpat <- "^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v[.]?|via|vs[.]?|from|with)$"
+    ## leave these alone: the internal caps rule would do that
+    ## in some cases.
+    alone <- c("2D", "3D", "AIC", "BayesX", "GoF", "HTML", "LaTeX",
+               "MonetDB", "OpenBUGS", "TeX", "U.S.", "U.S.A.", "WinBUGS",
+               "aka", "et", "al.", "ggplot2", "i.e.", "jar", "jars",
+               "ncdf", "netCDF", "rgl", "rpart", "xls", "xlsx")
+    ## These should be lower case except at the beginning (and after :)
+    lpat <- "^(a|an|and|are|as|at|be|but|by|en|for|if|in|is|nor|not|of|on|or|per|so|the|to|v[.]?|via|vs[.]?|from|than|that|with)$"
+    ## These we don't care about
+    either <- c("all", "above", "after", "along", "also", "among", "any",
+                "both", "can", "few", "into", "it", "less", "log", "many",
+                "may", "more", "some", "their", "then", "this", "under",
+                "until", "using", "von", "when", "where", "which", "will",
+                "yet", "you", "your")
     titleCase1 <- function(x) {
-        do1 <- function(x)
-            paste0(toupper(substring(x, 1L, 1L)), tolower(substring(x, 2L)))
+        ## A quote might be prepended.
+        do1 <- function(x) {
+            x1 <- substring(x, 1L, 1L)
+            if(nchar(x) >= 3L && x1 %in% c("'", '"'))
+                paste0(x1, toupper(substring(x, 2L, 2L)),
+                       tolower(substring(x, 3L)))
+            else paste0(toupper(x1), tolower(substring(x, 2L)))
+        }
         ## split on - and /
         x <- gsub("([-/])", " \\1 ", x)
         x <- gsub("\\(", "( ", x)
         x <- gsub("\\)", " )", x)
         xx <- strsplit(x, " ")[[1L]]
-        alone <- xx %in% alone
-        havecaps <- grepl("^[[:alpha:]][[:upper:]]+", xx)
+        ## for alone we could insist on that exact capitalization
+        alone <- xx %in% c(alone, either)
+        havecaps <- grepl("^[[:alpha:]].*[[:upper:]]+", xx)
         l <- grepl(lpat, xx, ignore.case = TRUE)
         l[1L] <- FALSE
+        ## do not force capitalization after ":"
+        ind <- grep(":$", xx) + 1L
+        ind <- ind[ind <= length(l)]
+        l[ind] <- FALSE
         xx[l] <- tolower(xx[l])
         keep <- havecaps | l | (nchar(xx) == 1L) | alone
         xx[!keep] <- sapply(xx[!keep], do1)
@@ -1913,7 +1935,7 @@ toTitleCase <- function(text)
         gsub(" ([-/]) ", "\\1", z)
     }
     if(typeof(text) != "character")
-        stop("'text' must be a character string")
+        stop("'text' must be a character vector")
     sapply(text, titleCase1, USE.NAMES = FALSE)
 }
 

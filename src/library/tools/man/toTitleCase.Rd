@@ -16,12 +16,16 @@ toTitleCase(text)
   \item{text}{a character vector.}
 }
 \details{
+  This is intended for English text only.
+
   No definition of\sQuote{title case} is universally accepted: all agree
   that \sQuote{principal} words are capitalized and common words like
   \sQuote{for} are not.  Generally words in all capitals are left alone:
   this implementation knows about conventional mixed-case words such as
-  \sQuote{LaTeX} and \sQuote{OpenBUGS} and some technical terms which
+  \sQuote{LaTeX} and \sQuote{OpenBUGS} and a few technical terms which
   are not usually capitalized such as \sQuote{jar} and \sQuote{xls}.
+  Howver, unknown technical terms (including names of libraries and
+  packages) will be capitalized.
 }
 \value{
   A character vector of the same length as \code{text}, without names.
