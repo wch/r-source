@@ -1,4 +1,4 @@
-\input texinfo
+f\input texinfo
 @c %**start of header
 @setfilename R-exts.info
 @settitle Writing R Extensions
@@ -1208,8 +1208,8 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by white
-space. (Note that it is not possible to generate this index file
+line for each demo, giving its name and a description separated by a
+tab or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
 so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
 @R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
