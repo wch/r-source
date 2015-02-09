@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -251,6 +251,13 @@ msgstr ""
 "Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны "
 "быть уже известны R."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -273,7 +280,14 @@ msgstr "В поле Authors@R есть люди без правильных ролей:"
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Не могу вынуть поле Maintainer из поля Authors@R:"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "В поле Authors@R нет никого в роли автора."
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 "В поле Authors@R нет никого в роли разработчика с адресом электронной почты."
 
@@ -310,13 +324,6 @@ msgstr "Непереносимые флаги в переменной '%s':"
 
 msgid "Variables overriding user/site settings:"
 msgstr ""
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-"пакет %s в наличии, но не был установлен под R >= 2.10.0, поэтому xrefs не "
-"могут быть проверены"
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Пропущенная связь или связи с объектом документации '%s':"
@@ -1257,14 +1264,19 @@ msgstr "не могу выполнить код пакета"
 msgid "Call sequence:"
 msgstr "Последовательность вызова:"
 
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "аргумент 'x' должен быть текстовым вектором"
+
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] "Устаревший пакет %s в Rd xrefs"
-msgstr[1] "Устаревшие пакеты %s в Rd xrefs"
-msgstr[2] "Устаревшие пакеты %s в Rd xrefs"
+#, fuzzy
+msgid "Undeclared package used in Rd xrefs:"
+msgid_plural "Undeclared packages used in Rd xrefs:"
+msgstr[0] "Неизвестный пакет %s в Rd xrefs"
+msgstr[1] "Неизвестные пакеты %s в Rd xrefs"
+msgstr[2] "Неизвестные пакеты %s в Rd xrefs"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1439,6 +1451,19 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ "пакет %s в наличии, но не был установлен под R >= 2.10.0, поэтому xrefs "
+#~ "не могут быть проверены"
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] "Устаревший пакет %s в Rd xrefs"
+#~ msgstr[1] "Устаревшие пакеты %s в Rd xrefs"
+#~ msgstr[2] "Устаревшие пакеты %s в Rd xrefs"
+
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr "Нестандартная лицензия:"
@@ -1603,8 +1628,8 @@ msgstr[2] ""
 
 #~ msgid "This name was used for a base package and is remapped by library()."
 #~ msgstr ""
-#~ "Это имя использовано базовым пакетом и связано заново посредством "
-#~ "library()."
+#~ "Это имя использовано базовым пакетом и связано заново посредством library"
+#~ "()."
 
 #~ msgid "package must be loaded"
 #~ msgstr "должен быть загружен пакет"

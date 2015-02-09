@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -300,8 +300,8 @@ msgstr "Введите номер окружения или 0 для выхода"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-"восстановление вызвано неинтерактивно; кадры сброшены, используйте "
-"debugger(), чтобы их просмотреть"
+"восстановление вызвано неинтерактивно; кадры сброшены, используйте debugger"
+"(), чтобы их просмотреть"
 
 msgid "No suitable frames for recover()"
 msgstr "Нет подходящих кадров для recover()"
@@ -444,11 +444,17 @@ msgstr "неправильное указание поля"
 msgid "do not know what to search"
 msgstr "непонятно, что искать"
 
-msgid "incorrect type specification"
-msgstr "неправильное указание типа"
-
 msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' устарел"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr "в базе данных нет информации о пакете %s: надо 'rebuild = TRUE'?"
+
+msgid "incorrect 'agrep' specification"
+msgstr "неправильное указание 'agrep'"
+
+msgid "incorrect type specification"
+msgstr "неправильное указание типа"
 
 msgid "could not find package %s"
 msgstr "не могу найти пакет %s"
@@ -458,12 +464,6 @@ msgstr "пакет %s странным образом имеет пустые данные hsearch"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "удаляю все вхождения с неправильными многобайтными данными"
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr "в базе данных нет информации о пакете %s: надо 'rebuild = TRUE'?"
-
-msgid "incorrect 'agrep' specification"
-msgstr "неправильное указание 'agrep'"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."

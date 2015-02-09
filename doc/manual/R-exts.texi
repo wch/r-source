@@ -4439,7 +4439,9 @@ Some compilers (notably the GCC family) include other system headers in
 their headers which are not required by the standards, and so code may
 compile on such compilers and not on others.  (A prominent example is
 the C++11 header @code{<random>} which is indirectly included by
-@code{<algorithm>} by @command{g++}.)
+@code{<algorithm>} by @command{g++}.  Another frequent issue is the C
+header @code{<time.h>} which is included by other headers on Linux and
+Windows but not OS X nor Solaris.)
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -5828,7 +5830,8 @@ which topics are in which files in an uninstalled package).  The
 packages is to force a reference to a package that might be further down
 the search path.  Because they have been frequently misused, the @HTML{}
 help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
-if it does not find file @file{@var{foo}.html}.
+if it does not find file @file{@var{foo}.html}.  Packages linked to in
+this way should be declared in the @file{DESCRIPTION} file.
 
 @node Mathematics, Figures, Cross-references, Writing R documentation files
 @section Mathematics

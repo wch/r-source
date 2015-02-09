@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -442,11 +442,19 @@ msgstr "항목지정이 잘못되었습니다"
 msgid "do not know what to search"
 msgstr "무엇을 검색해야할지 모릅니다"
 
-msgid "incorrect type specification"
-msgstr "유형지정이 잘못되었습니다"
-
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db'가 누락되었습니다"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+"패키지 %s에 대한 정보가 데이터베이스에 없습니다: 'rebuild = TRUE'가 필요한가"
+"요?"
+
+msgid "incorrect 'agrep' specification"
+msgstr "'agrep' 지정이 잘못되었습니다"
+
+msgid "incorrect type specification"
+msgstr "유형지정이 잘못되었습니다"
 
 msgid "could not find package %s"
 msgstr "패키지 %s를 찾을 수 없었습니다"
@@ -456,14 +464,6 @@ msgstr "패키지 %s는 비어있는 hsearch data를 가집니다 - 이상합니
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "잘못된 멀티바이트 문자데이터를 가진 모든 항목들을 제거합니다"
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-"패키지 %s에 대한 정보가 데이터베이스에 없습니다: 'rebuild = TRUE'가 필요한가"
-"요?"
-
-msgid "incorrect 'agrep' specification"
-msgstr "'agrep' 지정이 잘못되었습니다"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "브라우저 이름이 잘못되었습니다. options(\"browser\")을 확인해보세요."

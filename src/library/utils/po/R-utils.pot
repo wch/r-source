@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -383,10 +383,16 @@ msgstr ""
 msgid "do not know what to search"
 msgstr ""
 
-msgid "incorrect type specification"
+msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "argument 'help.db' is deprecated"
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+
+msgid "incorrect 'agrep' specification"
+msgstr ""
+
+msgid "incorrect type specification"
 msgstr ""
 
 msgid "could not find package %s"
@@ -396,12 +402,6 @@ msgid "package %s has empty hsearch data - strangely"
 msgstr ""
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-
-msgid "incorrect 'agrep' specification"
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."

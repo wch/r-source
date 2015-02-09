@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -425,11 +425,17 @@ msgstr "域设定得不对"
 msgid "do not know what to search"
 msgstr "不知道要搜查什么"
 
-msgid "incorrect type specification"
-msgstr "域设定得不对"
-
 msgid "argument 'help.db' is deprecated"
 msgstr "参数'help.db'已经不再用了"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
+
+msgid "incorrect 'agrep' specification"
+msgstr "'agrep'设定得不对"
+
+msgid "incorrect type specification"
+msgstr "域设定得不对"
 
 msgid "could not find package %s"
 msgstr "找不到程序包%s"
@@ -439,12 +445,6 @@ msgstr "程序包%s的hsearch数据是空的-很奇怪"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr "数据库里没有关于程序包%s的信息：是不是需要设定'rebuild = TRUE'？"
-
-msgid "incorrect 'agrep' specification"
-msgstr "'agrep'设定得不对"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"

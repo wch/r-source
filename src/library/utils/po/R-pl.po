@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -818,15 +818,28 @@ msgstr "niepoprawne określenie pola"
 msgid "do not know what to search"
 msgstr "nie wiadomo czego szukać"
 
-# utils/R/help.search.R: 153
-# stop("incorrect type specification")
-msgid "incorrect type specification"
-msgstr "niepoprawne określenie typu"
-
 # utils/R/help.search.R: 161
 # warning("argument 'help.db' is deprecated")
 msgid "argument 'help.db' is deprecated"
 msgstr "argument 'help.db' jest przestarzały"
+
+# utils/R/help.search.R: 434
+# stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
+# 			  sQuote(package[pos_in_hsearch_db == 0][1L])),
+#                  domain = NA)
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+"brak informacji w bazie danych dla pakietu %s: potrzeba 'rebuild = TRUE'?"
+
+# utils/R/help.search.R: 472
+# stop("incorrect 'agrep' specification")
+msgid "incorrect 'agrep' specification"
+msgstr "niepoprawne określenie 'agrep'"
+
+# utils/R/help.search.R: 153
+# stop("incorrect type specification")
+msgid "incorrect type specification"
+msgstr "niepoprawne określenie typu"
 
 # utils/R/help.search.R: 273
 # stop(gettextf("could not find package %s", sQuote(p)),
@@ -845,19 +858,6 @@ msgstr "pakiet %s ma puste dane 'hsearch' - dziwne"
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 "usuwanie wszystkich wpisów z niepoprawnymi danymi o wielobajtowych znakach"
-
-# utils/R/help.search.R: 434
-# stop(gettextf("no information in the database for package %s: need 'rebuild = TRUE'?",
-# 			  sQuote(package[pos_in_hsearch_db == 0][1L])),
-#                  domain = NA)
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-"brak informacji w bazie danych dla pakietu %s: potrzeba 'rebuild = TRUE'?"
-
-# utils/R/help.search.R: 472
-# stop("incorrect 'agrep' specification")
-msgid "incorrect 'agrep' specification"
-msgstr "niepoprawne określenie 'agrep'"
 
 # utils/R/help.start.R: 28
 # stop("invalid browser name, check options(\"browser\").")

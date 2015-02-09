@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -249,6 +249,13 @@ msgstr ""
 " パッケージが必要とする優先順位 'base' 'recommended' 'defunct-base' は、R が"
 "既に知らなければならない。 "
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -271,7 +278,14 @@ msgstr " Authors@Rフィールドに役割が明示されていない人がい�
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr " Authors@R フィールドから Maintainer フィールドを抽出できません: "
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr " Authors@R フィールドに役割が明示された人がいません "
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr " Authors@R にメインテナの役割と e-mail アドレスを持った人がいません。 "
 
 msgid "Encoding '%s' is not portable"
@@ -308,13 +322,6 @@ msgstr " 変数 '%s' 中に non-portable フラグ: "
 
 msgid "Variables overriding user/site settings:"
 msgstr " ユーザまたはサイトの設定を上書きしている変数です "
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-" パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので "
-"xrefs をチェックできません "
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
@@ -1285,12 +1292,17 @@ msgstr " パッケージコードを読み込めません "
 msgid "Call sequence:"
 msgstr " 呼び出しシーケンス: "
 
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr " 引数 'x' は文字型ベクトルでなければいけません "
+
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
+#, fuzzy
+msgid "Undeclared package used in Rd xrefs:"
+msgid_plural "Undeclared packages used in Rd xrefs:"
+msgstr[0] " Rd xrefs 中に未知のパッケージ %s があります "
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1417,6 +1429,17 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
+
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ " パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので "
+#~ "xrefs をチェックできません "
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"

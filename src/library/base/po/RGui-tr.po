@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-16 08:57+0000\n"
+"POT-Creation-Date: 2015-02-09 08:52+0000\n"
 "PO-Revision-Date: 2011-04-02 18:17+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -234,11 +234,11 @@ msgid "Save script as"
 msgstr "Betiği farklı kaydet"
 
 #: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:429 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Betik aç"
 
-#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:183 src/gnuwin32/pager.c:203
+#: src/gnuwin32/editor.c:502 src/gnuwin32/pager.c:184 src/gnuwin32/pager.c:204
 msgid "No RGui console to paste to"
 msgstr "Yapıştırılacak RGui konsolu yok"
 
@@ -302,7 +302,7 @@ msgid "Cut"
 msgstr "Kes"
 
 #: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:303 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:859
+#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
 #: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Kopyala "
@@ -317,7 +317,7 @@ msgid "Delete"
 msgstr "Sil"
 
 #: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:866
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
 #: src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Tümünü seç"
@@ -326,7 +326,7 @@ msgstr "Tümünü seç"
 msgid "Save script"
 msgstr "Betiği kaydet"
 
-#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:449
+#: src/gnuwin32/editor.c:708 src/gnuwin32/pager.c:450
 #: src/library/grDevices/src/devWindows.c:1613
 msgid "Return focus to Console"
 msgstr "Konsola dön"
@@ -335,22 +335,22 @@ msgstr "Konsola dön"
 msgid "Print script"
 msgstr "Betiği yazdır"
 
-#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:444 src/gnuwin32/rui.c:1104
+#: src/gnuwin32/editor.c:713 src/gnuwin32/pager.c:445 src/gnuwin32/rui.c:1104
 #: src/library/grDevices/src/devWindows.c:1607
 msgid "Print"
 msgstr "Yazdır"
 
-#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:465 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:731 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1791
 #: src/library/grDevices/src/devWindows.c:1645
 msgid "File"
 msgstr "Dosya"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:466 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "Yeni betik"
 
-#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:734 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "Betik aç..."
 
@@ -362,7 +362,7 @@ msgstr "Kaydet"
 msgid "Save as..."
 msgstr "Farklı kaydet ... "
 
-#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1138
+#: src/gnuwin32/editor.c:741 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1138
 #: src/library/grDevices/src/devWindows.c:1708
 msgid "Print..."
 msgstr "Yazdır..."
@@ -371,7 +371,7 @@ msgstr "Yazdır..."
 msgid "Close script"
 msgstr "Betiği kapat"
 
-#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:475 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:746 src/gnuwin32/pager.c:476 src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1797
 msgid "Edit"
 msgstr "Düzenle"
@@ -422,48 +422,48 @@ msgstr "İsimsiz "
 msgid "Select file"
 msgstr "Dosya seç"
 
-#: src/gnuwin32/pager.c:87
+#: src/gnuwin32/pager.c:88
 msgid "Error opening file"
 msgstr "Dosyayı açarken hata"
 
-#: src/gnuwin32/pager.c:94
+#: src/gnuwin32/pager.c:95
 msgid "Insufficient memory to display file in internal pager"
 msgstr "Dosyayı iç sayfalayıcıda göstermek için yetersiz bellek"
 
-#: src/gnuwin32/pager.c:175 src/gnuwin32/pager.c:187 src/gnuwin32/pager.c:207
+#: src/gnuwin32/pager.c:176 src/gnuwin32/pager.c:188 src/gnuwin32/pager.c:208
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "Seçim yok"
 
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:434 src/gnuwin32/pager.c:478
+#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:435 src/gnuwin32/pager.c:479
 msgid "Paste to console"
 msgstr "Konsola yapıştır"
 
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:439 src/gnuwin32/pager.c:480
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:440 src/gnuwin32/pager.c:481
 msgid "Paste commands to console"
 msgstr "Komutları konsola yapıştır"
 
-#: src/gnuwin32/pager.c:308 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:309 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1704
 #: src/library/grDevices/src/devWindows.c:1705
 msgid "Stay on top"
 msgstr "Üstte kal"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/pager.c:473
+#: src/gnuwin32/pager.c:311 src/gnuwin32/pager.c:474
 #: src/library/utils/src/windows/dataentry.c:1706
 #: src/library/utils/src/windows/dataentry.c:1793
 msgid "Close"
 msgstr "Kapat"
 
-#: src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "Dosyaya Kaydet..."
 
-#: src/gnuwin32/pager.c:485 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "Görünüm"
 
-#: src/gnuwin32/pager.c:517
+#: src/gnuwin32/pager.c:518
 msgid "Unable to create pager window"
 msgstr "Sayfalayıcı penceresi oluşturulamadı"
 

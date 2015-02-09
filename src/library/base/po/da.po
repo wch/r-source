@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18+0000\n"
+"POT-Creation-Date: 2015-02-09 08:49+0000\n"
 "PO-Revision-Date: 2014-03-18 21:34+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -130,9 +130,9 @@ msgstr "problem med visning af '%ls'"
 #: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:585 src/main/agrep.c:131
 #: src/main/agrep.c:135 src/main/agrep.c:776 src/main/agrep.c:781
 #: src/main/apply.c:325 src/main/apply.c:327 src/main/apply.c:330
-#: src/main/array.c:87 src/main/array.c:1157 src/main/array.c:1283
-#: src/main/array.c:1285 src/main/array.c:1286 src/main/array.c:1627
-#: src/main/array.c:1629 src/main/array.c:1631 src/main/attrib.c:196
+#: src/main/array.c:87 src/main/array.c:1220 src/main/array.c:1346
+#: src/main/array.c:1348 src/main/array.c:1349 src/main/array.c:1690
+#: src/main/array.c:1692 src/main/array.c:1694 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:148 src/main/builtin.c:557
 #: src/main/builtin.c:573 src/main/builtin.c:762 src/main/builtin.c:764
@@ -236,12 +236,12 @@ msgstr "problem med visning af '%ls'"
 #: src/main/util.c:2241 src/main/util.c:2245 src/main/util.c:2247
 #: src/modules/X11/devX11.c:3239 src/modules/X11/devX11.c:3242
 #: src/modules/X11/devX11.c:3245 src/modules/X11/devX11.c:3269
-#: src/modules/internet/internet.c:452 src/modules/internet/internet.c:458
-#: src/modules/internet/internet.c:464 src/modules/internet/internet.c:467
-#: src/modules/internet/internet.c:471 src/modules/internet/internet.c:475
-#: src/modules/internet/libcurl.c:302 src/modules/internet/libcurl.c:306
-#: src/modules/internet/libcurl.c:311 src/modules/internet/libcurl.c:314
-#: src/modules/internet/libcurl.c:318 src/modules/lapack/Lapack.c:155
+#: src/modules/internet/internet.c:450 src/modules/internet/internet.c:456
+#: src/modules/internet/internet.c:462 src/modules/internet/internet.c:465
+#: src/modules/internet/internet.c:469 src/modules/internet/internet.c:473
+#: src/modules/internet/libcurl.c:309 src/modules/internet/libcurl.c:313
+#: src/modules/internet/libcurl.c:318 src/modules/internet/libcurl.c:321
+#: src/modules/internet/libcurl.c:325 src/modules/lapack/Lapack.c:155
 #: src/modules/lapack/Lapack.c:261 src/modules/lapack/Lapack.c:709
 #: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:880
 #: src/modules/lapack/Lapack.c:1215 src/unix/sys-std.c:1217
@@ -885,7 +885,7 @@ msgstr ""
 msgid "invalid argument 'base' of length 0"
 msgstr ""
 
-#: src/main/array.c:79 src/main/array.c:1461
+#: src/main/array.c:79 src/main/array.c:1524
 #, c-format
 msgid "'data' must be of a vector type, was '%s'"
 msgstr ""
@@ -894,19 +894,19 @@ msgstr ""
 msgid "non-numeric matrix extent"
 msgstr ""
 
-#: src/main/array.c:97 src/main/array.c:1570
+#: src/main/array.c:97 src/main/array.c:1633
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr ""
 
-#: src/main/array.c:99 src/main/array.c:1572
+#: src/main/array.c:99 src/main/array.c:1635
 msgid "invalid 'nrow' value (< 0)"
 msgstr ""
 
-#: src/main/array.c:105 src/main/array.c:1575
+#: src/main/array.c:105 src/main/array.c:1638
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr ""
 
-#: src/main/array.c:107 src/main/array.c:1577
+#: src/main/array.c:107 src/main/array.c:1640
 msgid "invalid 'ncol' value (< 0)"
 msgstr ""
 
@@ -935,7 +935,7 @@ msgstr ""
 msgid "data length exceeds size of matrix"
 msgstr ""
 
-#: src/main/array.c:147 src/main/array.c:1473 src/main/array.c:1584
+#: src/main/array.c:147 src/main/array.c:1536 src/main/array.c:1647
 msgid "too many elements specified"
 msgstr ""
 
@@ -959,62 +959,67 @@ msgstr ""
 msgid "'allocArray': too many elements specified by 'dims'"
 msgstr ""
 
-#: src/main/array.c:448
+#: src/main/array.c:479
+#, fuzzy
+msgid "'x' must be a list"
+msgstr "'args' skal være en liste"
+
+#: src/main/array.c:511
 #, c-format
 msgid "a matrix-like object is required as argument to '%s'"
 msgstr ""
 
-#: src/main/array.c:662
+#: src/main/array.c:725
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr ""
 
-#: src/main/array.c:772 src/main/array.c:776 src/main/array.c:780
+#: src/main/array.c:835 src/main/array.c:839 src/main/array.c:843
 msgid "non-conformable arguments"
 msgstr ""
 
-#: src/main/array.c:1078
+#: src/main/array.c:1141
 msgid "argument is not a matrix"
 msgstr ""
 
-#: src/main/array.c:1113
+#: src/main/array.c:1176
 msgid "invalid first argument, must be an array"
 msgstr ""
 
-#: src/main/array.c:1127
+#: src/main/array.c:1190
 #, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
 msgstr ""
 
-#: src/main/array.c:1132 src/main/array.c:1135
+#: src/main/array.c:1195 src/main/array.c:1198
 msgid "'a' does not have named dimnames"
 msgstr ""
 
-#: src/main/array.c:1142
+#: src/main/array.c:1205
 #, c-format
 msgid "'perm[%d]' does not match a dimension name"
 msgstr ""
 
-#: src/main/array.c:1155
+#: src/main/array.c:1218
 msgid "value out of range in 'perm'"
 msgstr ""
 
-#: src/main/array.c:1237
+#: src/main/array.c:1300
 msgid "'resize' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/array.c:1295
+#: src/main/array.c:1358
 msgid "'x' must be numeric"
 msgstr "'x' skal være numerisk"
 
-#: src/main/array.c:1469
+#: src/main/array.c:1532
 msgid "'dims' cannot be of length 0"
 msgstr "'dims' kan ikke have længden 0"
 
-#: src/main/array.c:1580
+#: src/main/array.c:1643
 msgid "'x' must have positive length"
 msgstr "'x' skal have en positiv længde"
 
-#: src/main/array.c:1640
+#: src/main/array.c:1703
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1254,23 +1259,23 @@ msgstr ""
 msgid "argument not a list"
 msgstr ""
 
-#: src/main/bind.c:1038 src/main/names.c:1267 src/main/names.c:1272
-#: src/main/names.c:1277 src/main/names.c:1282
+#: src/main/bind.c:1042 src/main/names.c:1268 src/main/names.c:1273
+#: src/main/names.c:1278 src/main/names.c:1283
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "klassenavnet er for langt i '%s'"
 
-#: src/main/bind.c:1114
+#: src/main/bind.c:1121
 #, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "kan ikke oprette en matrix fra typen '%s'"
 
-#: src/main/bind.c:1185
+#: src/main/bind.c:1192
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr ""
 
-#: src/main/bind.c:1430
+#: src/main/bind.c:1437
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr ""
@@ -3536,7 +3541,7 @@ msgstr ""
 msgid "invalid sequence argument in for loop"
 msgstr ""
 
-#: src/main/eval.c:5271 src/main/names.c:1306
+#: src/main/eval.c:5271 src/main/names.c:1307
 #, c-format
 msgid "there is no .Internal function '%s'"
 msgstr ""
@@ -4212,24 +4217,24 @@ msgstr ""
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1016
+#: src/main/names.c:1017
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:1019
+#: src/main/names.c:1020
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1208 src/main/names.c:1238
+#: src/main/names.c:1209 src/main/names.c:1239
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1210 src/main/names.c:1240
+#: src/main/names.c:1211 src/main/names.c:1241
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1301 src/main/names.c:1304
+#: src/main/names.c:1302 src/main/names.c:1305
 msgid "invalid .Internal() argument"
 msgstr ""
 
@@ -5084,8 +5089,8 @@ msgid "an xdr complex data read error occurred"
 msgstr ""
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1993
-#: src/main/serialize.c:2609 src/modules/internet/internet.c:512
-#: src/modules/internet/internet.c:585 src/modules/internet/internet.c:695
+#: src/main/serialize.c:2609 src/modules/internet/internet.c:510
+#: src/modules/internet/internet.c:584 src/modules/internet/internet.c:695
 msgid "write failed"
 msgstr ""
 
@@ -6497,72 +6502,68 @@ msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 
 #: src/modules/internet/internet.c:113
-msgid "for2 https:// URLs use setInternet2(TRUE)"
+msgid "for https:// URLs use setInternet2(TRUE)"
 msgstr ""
 
 #: src/modules/internet/internet.c:345 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:354 src/modules/internet/internet.c:378
-#: src/modules/internet/libcurl.c:636 src/modules/internet/libcurl.c:640
-#: src/modules/internet/libcurl.c:646 src/modules/internet/libcurl.c:658
-#: src/modules/internet/libcurl.c:666
+#: src/modules/internet/libcurl.c:648 src/modules/internet/libcurl.c:652
+#: src/modules/internet/libcurl.c:658 src/modules/internet/libcurl.c:670
+#: src/modules/internet/libcurl.c:678
 msgid "allocation of url connection failed"
 msgstr ""
 
-#: src/modules/internet/internet.c:454
+#: src/modules/internet/internet.c:452
 msgid "only first element of 'url' argument used"
 msgstr ""
 
-#: src/modules/internet/internet.c:460
+#: src/modules/internet/internet.c:458
 msgid "only first element of 'destfile' argument used"
 msgstr ""
 
-#: src/modules/internet/internet.c:478 src/modules/internet/libcurl.c:351
+#: src/modules/internet/internet.c:476 src/modules/internet/libcurl.c:360
 msgid "Download progress"
 msgstr ""
 
-#: src/modules/internet/internet.c:500
+#: src/modules/internet/internet.c:498
 #, c-format
 msgid "cannot open URL '%s', reason '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:507 src/modules/internet/internet.c:536
-#: src/modules/internet/internet.c:654 src/modules/internet/libcurl.c:392
+#: src/modules/internet/internet.c:505 src/modules/internet/internet.c:533
+#: src/modules/internet/internet.c:655 src/modules/internet/libcurl.c:401
 #, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:541 src/modules/internet/internet.c:659
-#: src/modules/internet/libcurl.c:396
+#: src/modules/internet/internet.c:538 src/modules/internet/internet.c:660
+#: src/modules/internet/libcurl.c:405
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr ""
 
-#: src/modules/internet/internet.c:559 src/modules/internet/internet.c:666
-msgid "opened URL\n"
-msgstr ""
-
-#: src/modules/internet/internet.c:632 src/modules/internet/internet.c:742
-#: src/modules/internet/libcurl.c:441
+#: src/modules/internet/internet.c:634 src/modules/internet/internet.c:745
+#: src/modules/internet/libcurl.c:453
 #, c-format
 msgid "downloaded length %0.f != reported length %0.f"
 msgstr ""
 
-#: src/modules/internet/internet.c:637 src/modules/internet/internet.c:747
+#: src/modules/internet/internet.c:639 src/modules/internet/internet.c:750
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:751
+#: src/modules/internet/internet.c:754
 msgid "unsupported URL scheme"
 msgstr ""
 
-#: src/modules/internet/internet.c:774 src/modules/internet/internet.c:939
+#: src/modules/internet/internet.c:777 src/modules/internet/internet.c:943
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr ""
 
-#: src/modules/internet/internet.c:910 src/modules/internet/internet.c:924
-#: src/modules/internet/internet.c:1011 src/modules/internet/internet.c:1020
+#: src/modules/internet/internet.c:914 src/modules/internet/internet.c:928
+#: src/modules/internet/internet.c:1015 src/modules/internet/internet.c:1024
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr ""
@@ -6584,17 +6585,17 @@ msgid ""
 "\t%s\n"
 msgstr ""
 
-#: src/modules/internet/libcurl.c:292
+#: src/modules/internet/libcurl.c:299
 #, fuzzy
 msgid "download.file(method = \"libcurl\") is not supported on this platform"
 msgstr "symbolske henvisninger er ikke understøttet på denne platform"
 
-#: src/modules/internet/libcurl.c:308
+#: src/modules/internet/libcurl.c:315
 #, fuzzy
 msgid "lengths of 'url' and 'destfile' must match"
 msgstr "længden på import- og eksportnavne skal matche"
 
-#: src/modules/internet/libcurl.c:670
+#: src/modules/internet/libcurl.c:682
 #, fuzzy
 msgid "url(method = \"libcurl\") is not supported on this platform"
 msgstr "symbolske henvisninger er ikke understøttet på denne platform"

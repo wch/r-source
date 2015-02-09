@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -452,11 +452,19 @@ msgstr "spécification de champ incorrecte"
 msgid "do not know what to search"
 msgstr "je ne sais pas quoi rechercher"
 
-msgid "incorrect type specification"
-msgstr "spécification de type incorrecte"
-
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+"pas d'information dans la base de données pour le package %s : faut-il "
+"'rebuild = TRUE' ?"
+
+msgid "incorrect 'agrep' specification"
+msgstr "spécification 'agrep' incorrecte"
+
+msgid "incorrect type specification"
+msgstr "spécification de type incorrecte"
 
 msgid "could not find package %s"
 msgstr "impossible de trouver le packages %s"
@@ -468,14 +476,6 @@ msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 "suppression de toutes les entrées ayant des données de type caractère multi-"
 "octets incorrectes"
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-"pas d'information dans la base de données pour le package %s : faut-il "
-"'rebuild = TRUE' ?"
-
-msgid "incorrect 'agrep' specification"
-msgstr "spécification 'agrep' incorrecte"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
@@ -1455,8 +1455,8 @@ msgstr[1] ""
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""
-#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) "
-#~ "champ(s) : %s"
+#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
+#~ "(s) : %s"
 
 #~ msgid "'pb' is not from class \"winProgressBar\""
 #~ msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -260,6 +260,13 @@ msgstr ""
 "'base' 또는 'recommended' 또는 'defunct-base'와 같은 우선순위를 가지는 패키지"
 "들은 반드시 R이 인식할 수 있도록 해야합니다."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -282,7 +289,16 @@ msgstr ""
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Maintainer의 항목을 Authors@R 항목으로부터 추출할 수 없습니다:"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr ""
+"Authors@R 항목에서 유지보수의 역할을 담당하고 이메일 주소를 가진 개발자를 찾"
+"을 수 없습니다."
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 "Authors@R 항목에서 유지보수의 역할을 담당하고 이메일 주소를 가진 개발자를 찾"
 "을 수 없습니다."
@@ -319,13 +335,6 @@ msgstr ""
 
 msgid "Variables overriding user/site settings:"
 msgstr ""
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr ""
-"패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 xrefs"
-"를 확인할 수 없습니다"
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "다큐멘테이션 객체 '%s'내에서 빠져있는 링크(들)은 다음과 같습니다:"
@@ -1250,12 +1259,17 @@ msgstr "패키지 코드를 소스할 수 없습니다"
 msgid "Call sequence:"
 msgstr "호출 시퀀스: "
 
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"
+
 msgid "parsing '%s'"
 msgstr "'%s'을 파싱합니다"
 
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] ""
+#, fuzzy
+msgid "Undeclared package used in Rd xrefs:"
+msgid_plural "Undeclared packages used in Rd xrefs:"
+msgstr[0] "Rd xrefs에 알 수 없는 패키지 %s입니다"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1373,6 +1387,13 @@ msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr ""
+#~ "패키지 %s는 존재하지만 버전 2.10.0 이상의 R에 설치되어 있기 않기 때문에 "
+#~ "xrefs를 확인할 수 없습니다"
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"

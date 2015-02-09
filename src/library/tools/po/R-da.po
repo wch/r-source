@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -237,6 +237,13 @@ msgid ""
 "already be known to R."
 msgstr ""
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
@@ -256,7 +263,12 @@ msgstr ""
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr ""
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr ""
+
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr ""
 
 msgid "Encoding '%s' is not portable"
@@ -290,11 +302,6 @@ msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 msgid "Variables overriding user/site settings:"
-msgstr ""
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
 msgstr ""
 
 #, fuzzy
@@ -1173,11 +1180,14 @@ msgstr ""
 msgid "Call sequence:"
 msgstr ""
 
+msgid "'text' must be a character vector"
+msgstr ""
+
 msgid "parsing '%s'"
 msgstr ""
 
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
+msgid "Undeclared package used in Rd xrefs:"
+msgid_plural "Undeclared packages used in Rd xrefs:"
 msgstr[0] ""
 msgstr[1] ""
 

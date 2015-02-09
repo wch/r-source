@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18+0000\n"
+"POT-Creation-Date: 2015-02-09 08:49+0000\n"
 "PO-Revision-Date: 2012-03-16 15:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -131,9 +131,9 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:585 src/main/agrep.c:131
 #: src/main/agrep.c:135 src/main/agrep.c:776 src/main/agrep.c:781
 #: src/main/apply.c:325 src/main/apply.c:327 src/main/apply.c:330
-#: src/main/array.c:87 src/main/array.c:1157 src/main/array.c:1283
-#: src/main/array.c:1285 src/main/array.c:1286 src/main/array.c:1627
-#: src/main/array.c:1629 src/main/array.c:1631 src/main/attrib.c:196
+#: src/main/array.c:87 src/main/array.c:1220 src/main/array.c:1346
+#: src/main/array.c:1348 src/main/array.c:1349 src/main/array.c:1690
+#: src/main/array.c:1692 src/main/array.c:1694 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:148 src/main/builtin.c:557
 #: src/main/builtin.c:573 src/main/builtin.c:762 src/main/builtin.c:764
@@ -237,12 +237,12 @@ msgstr "problemas al mostrar  '%ls'"
 #: src/main/util.c:2241 src/main/util.c:2245 src/main/util.c:2247
 #: src/modules/X11/devX11.c:3239 src/modules/X11/devX11.c:3242
 #: src/modules/X11/devX11.c:3245 src/modules/X11/devX11.c:3269
-#: src/modules/internet/internet.c:452 src/modules/internet/internet.c:458
-#: src/modules/internet/internet.c:464 src/modules/internet/internet.c:467
-#: src/modules/internet/internet.c:471 src/modules/internet/internet.c:475
-#: src/modules/internet/libcurl.c:302 src/modules/internet/libcurl.c:306
-#: src/modules/internet/libcurl.c:311 src/modules/internet/libcurl.c:314
-#: src/modules/internet/libcurl.c:318 src/modules/lapack/Lapack.c:155
+#: src/modules/internet/internet.c:450 src/modules/internet/internet.c:456
+#: src/modules/internet/internet.c:462 src/modules/internet/internet.c:465
+#: src/modules/internet/internet.c:469 src/modules/internet/internet.c:473
+#: src/modules/internet/libcurl.c:309 src/modules/internet/libcurl.c:313
+#: src/modules/internet/libcurl.c:318 src/modules/internet/libcurl.c:321
+#: src/modules/internet/libcurl.c:325 src/modules/lapack/Lapack.c:155
 #: src/modules/lapack/Lapack.c:261 src/modules/lapack/Lapack.c:709
 #: src/modules/lapack/Lapack.c:818 src/modules/lapack/Lapack.c:880
 #: src/modules/lapack/Lapack.c:1215 src/unix/sys-std.c:1217
@@ -923,7 +923,7 @@ msgstr "el argumento \"%s\" está ausente, sin valor por omisión"
 msgid "invalid argument 'base' of length 0"
 msgstr "argumento no válido de base de longitud 0"
 
-#: src/main/array.c:79 src/main/array.c:1461
+#: src/main/array.c:79 src/main/array.c:1524
 #, fuzzy, c-format
 msgid "'data' must be of a vector type, was '%s'"
 msgstr "'path' debe ser un vector de caracteres"
@@ -932,19 +932,19 @@ msgstr "'path' debe ser un vector de caracteres"
 msgid "non-numeric matrix extent"
 msgstr "extensión matricial no numérica"
 
-#: src/main/array.c:97 src/main/array.c:1570
+#: src/main/array.c:97 src/main/array.c:1633
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "valor de 'nrow' no válido (demasiado grande o NA)"
 
-#: src/main/array.c:99 src/main/array.c:1572
+#: src/main/array.c:99 src/main/array.c:1635
 msgid "invalid 'nrow' value (< 0)"
 msgstr "valor 'nrow' no válido (< 0)"
 
-#: src/main/array.c:105 src/main/array.c:1575
+#: src/main/array.c:105 src/main/array.c:1638
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "valor de 'ncol' no válido (demasiado grande o NA)"
 
-#: src/main/array.c:107 src/main/array.c:1577
+#: src/main/array.c:107 src/main/array.c:1640
 msgid "invalid 'ncol' value (< 0)"
 msgstr "valor de 'ncol' no válido (< 0)"
 
@@ -977,7 +977,7 @@ msgstr ""
 msgid "data length exceeds size of matrix"
 msgstr "la longitud de los datos excede el tamaño de la matriz"
 
-#: src/main/array.c:147 src/main/array.c:1473 src/main/array.c:1584
+#: src/main/array.c:147 src/main/array.c:1536 src/main/array.c:1647
 msgid "too many elements specified"
 msgstr "demasiados elementos especificados"
 
@@ -1003,66 +1003,71 @@ msgstr "alloc3Darray: demasiados elementos especificados"
 msgid "'allocArray': too many elements specified by 'dims'"
 msgstr "allocArray: demasiados elementos especificados para 'dims'"
 
-#: src/main/array.c:448
+#: src/main/array.c:479
+#, fuzzy
+msgid "'x' must be a list"
+msgstr "'%s' debe ser una lista"
+
+#: src/main/array.c:511
 #, fuzzy, c-format
 msgid "a matrix-like object is required as argument to '%s'"
 msgstr "se requiere una matriz  como argumento de 'row/col'"
 
-#: src/main/array.c:662
+#: src/main/array.c:725
 #, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr "requiere argumentos numéricos matriz/vector"
 
-#: src/main/array.c:772 src/main/array.c:776 src/main/array.c:780
+#: src/main/array.c:835 src/main/array.c:839 src/main/array.c:843
 msgid "non-conformable arguments"
 msgstr "argumentos no compatibles"
 
-#: src/main/array.c:1078
+#: src/main/array.c:1141
 msgid "argument is not a matrix"
 msgstr "el argumento no es una matriz"
 
-#: src/main/array.c:1113
+#: src/main/array.c:1176
 msgid "invalid first argument, must be an array"
 msgstr "primer argumento no válido: debe ser un arreglo"
 
-#: src/main/array.c:1127
+#: src/main/array.c:1190
 #, fuzzy, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
 msgstr "'perm' tiene longitud errónea"
 
-#: src/main/array.c:1132 src/main/array.c:1135
+#: src/main/array.c:1195 src/main/array.c:1198
 msgid "'a' does not have named dimnames"
 msgstr "'a' no tiene un nombre en dimnames"
 
-#: src/main/array.c:1142
+#: src/main/array.c:1205
 #, fuzzy, c-format
 msgid "'perm[%d]' does not match a dimension name"
 msgstr "perm[%d] no tiene un nombre en dimension"
 
-#: src/main/array.c:1155
+#: src/main/array.c:1218
 msgid "value out of range in 'perm'"
 msgstr "valor fuera de sus límites en 'perm'"
 
-#: src/main/array.c:1237
+#: src/main/array.c:1300
 #, fuzzy
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'decreciente' debe ser TRUE o FALSE"
 
-#: src/main/array.c:1295
+#: src/main/array.c:1358
 msgid "'x' must be numeric"
 msgstr "'x' debe ser numérico"
 
-#: src/main/array.c:1469
+#: src/main/array.c:1532
 #, fuzzy
 msgid "'dims' cannot be of length 0"
 msgstr "'hadj' debe tener longitud 1"
 
-#: src/main/array.c:1580
+#: src/main/array.c:1643
 #, fuzzy
 msgid "'x' must have positive length"
 msgstr "argumento debe tener longitud positiva"
 
-#: src/main/array.c:1640
+#: src/main/array.c:1703
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1314,23 +1319,23 @@ msgstr "argumento formal repetido 'use.names'"
 msgid "argument not a list"
 msgstr "el argumento no es una lista"
 
-#: src/main/bind.c:1038 src/main/names.c:1267 src/main/names.c:1272
-#: src/main/names.c:1277 src/main/names.c:1282
+#: src/main/bind.c:1042 src/main/names.c:1268 src/main/names.c:1273
+#: src/main/names.c:1278 src/main/names.c:1283
 #, c-format
 msgid "class name too long in '%s'"
 msgstr "el nombre de la clase es muy largo en '%s'"
 
-#: src/main/bind.c:1114
+#: src/main/bind.c:1121
 #, fuzzy, c-format
 msgid "cannot create a matrix from type '%s'"
 msgstr "no es posible crear una matriz a partir de estos tipos"
 
-#: src/main/bind.c:1185
+#: src/main/bind.c:1192
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
 msgstr "el número de filas de las matrices debe coincidir (vea arg %d)"
 
-#: src/main/bind.c:1430
+#: src/main/bind.c:1437
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
 msgstr "el número de columnas de las matrices debe coincidir (vea arg %d)"
@@ -3519,8 +3524,8 @@ msgstr "reiniciar evaluación premisa interrumpida"
 msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr ""
-"evaluación anidada demasiado profunda; recursión infinita "
-"options(expressions= )?"
+"evaluación anidada demasiado profunda; recursión infinita options"
+"(expressions= )?"
 
 #: src/main/eval.c:574 src/main/eval.c:4000
 msgid "argument is missing, with no default"
@@ -3692,7 +3697,7 @@ msgstr "versión de bytecode incompatible"
 msgid "invalid sequence argument in for loop"
 msgstr "secuencia inválida de argumentos en el ciclo for"
 
-#: src/main/eval.c:5271 src/main/names.c:1306
+#: src/main/eval.c:5271 src/main/names.c:1307
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "no hay ninguna función interna \"%s\""
@@ -4413,24 +4418,24 @@ msgstr "Rprofmem: no puede abrir el archivo de perfil '%s'"
 msgid "long vectors not supported yet: %s:%d"
 msgstr ""
 
-#: src/main/names.c:1016
+#: src/main/names.c:1017
 msgid "string argument required"
 msgstr "se requiere el argumento del string"
 
-#: src/main/names.c:1019
+#: src/main/names.c:1020
 msgid "no such primitive function"
 msgstr "no existe esta función primitiva"
 
-#: src/main/names.c:1208 src/main/names.c:1238
+#: src/main/names.c:1209 src/main/names.c:1239
 msgid "attempt to use zero-length variable name"
 msgstr "se intenta usar un nombre de varible de longitud cero"
 
-#: src/main/names.c:1210 src/main/names.c:1240
+#: src/main/names.c:1211 src/main/names.c:1241
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "nombres de variables se limitan a %d bytes"
 
-#: src/main/names.c:1301 src/main/names.c:1304
+#: src/main/names.c:1302 src/main/names.c:1305
 msgid "invalid .Internal() argument"
 msgstr "el argumento .Internal() no es válido"
 
@@ -4604,8 +4609,8 @@ msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
 msgstr ""
-"la definición formal de una primitiva genérica debe ser un objeto del "
-"tipo=(got type '%s')"
+"la definición formal de una primitiva genérica debe ser un objeto del tipo="
+"(got type '%s')"
 
 #: src/main/objects.c:1279
 #, fuzzy, c-format
@@ -5365,8 +5370,8 @@ msgid "an xdr complex data read error occurred"
 msgstr " ocurrió un error de lectura de un complejo xdr"
 
 #: src/main/saveload.c:1783 src/main/serialize.c:1993
-#: src/main/serialize.c:2609 src/modules/internet/internet.c:512
-#: src/modules/internet/internet.c:585 src/modules/internet/internet.c:695
+#: src/main/serialize.c:2609 src/modules/internet/internet.c:510
+#: src/modules/internet/internet.c:584 src/modules/internet/internet.c:695
 msgid "write failed"
 msgstr "falló escritura"
 
@@ -6895,72 +6900,68 @@ msgid "cannot allocate memory for X11Routines structure"
 msgstr "no fue posible asignar memoria para estrutura de tipo X11Routines"
 
 #: src/modules/internet/internet.c:113
-msgid "for2 https:// URLs use setInternet2(TRUE)"
+msgid "for https:// URLs use setInternet2(TRUE)"
 msgstr ""
 
 #: src/modules/internet/internet.c:345 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:354 src/modules/internet/internet.c:378
-#: src/modules/internet/libcurl.c:636 src/modules/internet/libcurl.c:640
-#: src/modules/internet/libcurl.c:646 src/modules/internet/libcurl.c:658
-#: src/modules/internet/libcurl.c:666
+#: src/modules/internet/libcurl.c:648 src/modules/internet/libcurl.c:652
+#: src/modules/internet/libcurl.c:658 src/modules/internet/libcurl.c:670
+#: src/modules/internet/libcurl.c:678
 msgid "allocation of url connection failed"
 msgstr "fallo de asignación de la conexión url"
 
-#: src/modules/internet/internet.c:454
+#: src/modules/internet/internet.c:452
 msgid "only first element of 'url' argument used"
 msgstr "solo se utilizó el primer elemento del argumento 'url'"
 
-#: src/modules/internet/internet.c:460
+#: src/modules/internet/internet.c:458
 msgid "only first element of 'destfile' argument used"
 msgstr "solo se utilizó el primer elemento del argumento 'destfile'"
 
-#: src/modules/internet/internet.c:478 src/modules/internet/libcurl.c:351
+#: src/modules/internet/internet.c:476 src/modules/internet/libcurl.c:360
 msgid "Download progress"
 msgstr "Descarga en progreso"
 
-#: src/modules/internet/internet.c:500
+#: src/modules/internet/internet.c:498
 #, fuzzy, c-format
 msgid "cannot open URL '%s', reason '%s'"
 msgstr "no fue posible abrir el archivo '%s', motivo '%s'"
 
-#: src/modules/internet/internet.c:507 src/modules/internet/internet.c:536
-#: src/modules/internet/internet.c:654 src/modules/internet/libcurl.c:392
+#: src/modules/internet/internet.c:505 src/modules/internet/internet.c:533
+#: src/modules/internet/internet.c:655 src/modules/internet/libcurl.c:401
 #, fuzzy, c-format
 msgid "cannot open destfile '%s', reason '%s'"
 msgstr "no fue posible abrir el archivo '%s', motivo '%s'"
 
-#: src/modules/internet/internet.c:541 src/modules/internet/internet.c:659
-#: src/modules/internet/libcurl.c:396
+#: src/modules/internet/internet.c:538 src/modules/internet/internet.c:660
+#: src/modules/internet/libcurl.c:405
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "probando la URL '%s'\n"
 
-#: src/modules/internet/internet.c:559 src/modules/internet/internet.c:666
-msgid "opened URL\n"
-msgstr "URL abierta\n"
-
-#: src/modules/internet/internet.c:632 src/modules/internet/internet.c:742
-#: src/modules/internet/libcurl.c:441
+#: src/modules/internet/internet.c:634 src/modules/internet/internet.c:745
+#: src/modules/internet/libcurl.c:453
 #, fuzzy, c-format
 msgid "downloaded length %0.f != reported length %0.f"
 msgstr "longitud bajada %d != longitud informada %d"
 
-#: src/modules/internet/internet.c:637 src/modules/internet/internet.c:747
+#: src/modules/internet/internet.c:639 src/modules/internet/internet.c:750
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "no fue posible abrir la URL '%s'"
 
-#: src/modules/internet/internet.c:751
+#: src/modules/internet/internet.c:754
 msgid "unsupported URL scheme"
 msgstr "esquema de URL sin soporte"
 
-#: src/modules/internet/internet.c:774 src/modules/internet/internet.c:939
+#: src/modules/internet/internet.c:777 src/modules/internet/internet.c:943
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "no fue posible abrir: el status HTTP fue '%d %s'"
 
-#: src/modules/internet/internet.c:910 src/modules/internet/internet.c:924
-#: src/modules/internet/internet.c:1011 src/modules/internet/internet.c:1020
+#: src/modules/internet/internet.c:914 src/modules/internet/internet.c:928
+#: src/modules/internet/internet.c:1015 src/modules/internet/internet.c:1024
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "fallo en InternetOpenUrl: '%s'"
@@ -6982,17 +6983,17 @@ msgid ""
 "\t%s\n"
 msgstr ""
 
-#: src/modules/internet/libcurl.c:292
+#: src/modules/internet/libcurl.c:299
 #, fuzzy
 msgid "download.file(method = \"libcurl\") is not supported on this platform"
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/modules/internet/libcurl.c:308
+#: src/modules/internet/libcurl.c:315
 #, fuzzy
 msgid "lengths of 'url' and 'destfile' must match"
 msgstr "la longitud de los nombres de importación y exportación debe coincidir"
 
-#: src/modules/internet/libcurl.c:670
+#: src/modules/internet/libcurl.c:682
 #, fuzzy
 msgid "url(method = \"libcurl\") is not supported on this platform"
 msgstr "esta plataforma no soporta nsl()"
@@ -7605,6 +7606,9 @@ msgstr "creación de archivo temporal '-e' falló"
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATENCIÓN: Solamente editando el primero de los archivos de lista"
 
+#~ msgid "opened URL\n"
+#~ msgstr "URL abierta\n"
+
 #~ msgid "internet routines were already initialized"
 #~ msgstr "rutinas de Internet ya está iniciadas"
 
@@ -7982,9 +7986,6 @@ msgstr "ATENCIÓN: Solamente editando el primero de los archivos de lista"
 
 #~ msgid "'%s' must be length 1"
 #~ msgstr "'%s' debe tener longitud 1"
-
-#~ msgid "'%s' must be a list"
-#~ msgstr "'%s' debe ser una lista"
 
 #~ msgid "'%s' element %d is not a window handle"
 #~ msgstr "%s'  elemento %d no es un identificador de ventana"

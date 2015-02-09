@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -237,6 +237,13 @@ msgid ""
 "already be known to R."
 msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
+msgid "Malformed Title field: should not end in a period."
+msgstr ""
+
+msgid ""
+"Malformed Description field: should contain one or more complete sentences."
+msgstr ""
+
 #, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
@@ -258,7 +265,14 @@ msgstr "Authors@R领域里没有有效作用的人"
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "无法从Authors@R 抽取维修人域"
 
-msgid "Authors@R field gives no person with maintainer role and email address."
+#, fuzzy
+msgid "Authors@R field gives more than one person with maintainer role:"
+msgstr "Authors@R域没有提供有作者作用的人"
+
+#, fuzzy
+msgid ""
+"Authors@R field gives no person with maintainer role, valid email address "
+"and non-empty name."
 msgstr "Authors@R域没有提供有维修作用的人和他的email"
 
 msgid "Encoding '%s' is not portable"
@@ -295,11 +309,6 @@ msgstr "变量'%s'里有不可便携的标志:"
 
 msgid "Variables overriding user/site settings:"
 msgstr ""
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
-"checked"
-msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
@@ -1222,12 +1231,17 @@ msgstr "无法读取程辑包源编码"
 msgid "Call sequence:"
 msgstr "调用序列:"
 
+#, fuzzy
+msgid "'text' must be a character vector"
+msgstr "参数'x'必需是字符矢量"
+
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
-msgid "Obsolete package %s in Rd xrefs"
-msgid_plural "Obsolete packages %s in Rd xrefs"
-msgstr[0] "Rd xrefs里程序包%s过时了"
+#, fuzzy
+msgid "Undeclared package used in Rd xrefs:"
+msgid_plural "Undeclared packages used in Rd xrefs:"
+msgstr[0] "Rd xrefs里包含了不知来源的程序包%s"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1346,6 +1360,15 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#~ msgid ""
+#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
+#~ "be checked"
+#~ msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
+
+#~ msgid "Obsolete package %s in Rd xrefs"
+#~ msgid_plural "Obsolete packages %s in Rd xrefs"
+#~ msgstr[0] "Rd xrefs里程序包%s过时了"
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"

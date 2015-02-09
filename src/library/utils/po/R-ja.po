@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-29 09:33\n"
+"POT-Creation-Date: 2015-02-09 08:50\n"
 "PO-Revision-Date: 2014-03-26 14:24+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -292,8 +292,8 @@ msgstr " 環境ナンバーを入力してください。0 を入力すると終
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-" recover が非対話的に呼び出されました; フレームがダンプされました。"
-"debugger() を使用してみて下さい "
+" recover が非対話的に呼び出されました; フレームがダンプされました。debugger"
+"() を使用してみて下さい "
 
 msgid "No suitable frames for recover()"
 msgstr " recover() に対する適当なフレームがありません "
@@ -434,11 +434,19 @@ msgstr " 不正確な欄指定です "
 msgid "do not know what to search"
 msgstr " 何を検索すべきか分かりません "
 
-msgid "incorrect type specification"
-msgstr " 不正確なタイプ指定です "
-
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました "
+
+msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
+msgstr ""
+" パッケージ %s の情報がデータベース中にありません: 'rebuild = TRUE' が必要か"
+"もしれません "
+
+msgid "incorrect 'agrep' specification"
+msgstr " 不正確な 'agrep' 指定 "
+
+msgid "incorrect type specification"
+msgstr " 不正確なタイプ指定です "
 
 msgid "could not find package %s"
 msgstr " パッケージ %s を見付けることが出来ませんでした "
@@ -448,14 +456,6 @@ msgstr " パッケージ %s は空の hsearch データを持っています - �
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr " 不正な多バイト文字データを持つ全ての項目を取り除いています "
-
-msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
-" パッケージ %s の情報がデータベース中にありません: 'rebuild = TRUE' が必要か"
-"もしれません "
-
-msgid "incorrect 'agrep' specification"
-msgstr " 不正確な 'agrep' 指定 "
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい "

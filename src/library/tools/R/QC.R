@@ -4059,10 +4059,12 @@ function(package, dir, lib.loc = NULL)
 
     ## Now find the aliases in packages it depends on
     if(!missing(package)) {
+        this <- package
         pfile <- system.file("Meta", "package.rds", package = package,
                              lib.loc = lib.loc)
         pkgInfo <- readRDS(pfile)
     } else {
+        this <- basename(dir)
         outDir <- file.path(tempdir(), "fake_pkg")
         dir.create(file.path(outDir, "Meta"), FALSE, TRUE)
         .install_package_description(dir, outDir)
@@ -4127,18 +4129,27 @@ function(package, dir, lib.loc = NULL)
         aliases_db <- NULL
     }
 
-    for (pkg in unique(thispkg[have_anchor])) {
+    ## See if there are references to undeclared packages:
+    others <- unique(thispkg[have_anchor])
+    others1 <- setdiff(others, c(this, .get_standard_package_names()$base))
+    deps1 <- c(names(pkgInfo$Depends), names(pkgInfo$Imports),
+               names(pkgInfo$Suggests), names(pkgInfo$Enhances))
+    miss <- setdiff(others1, deps1)
+    if(length(miss)) {
+        msg <- ngettext(length(miss),
+                        "Undeclared package used in Rd xrefs:",
+                        "Undeclared packages used in Rd xrefs:")
+        cat(msg, .pretty_format(sort(miss)), sep = "\n")
+    }
+
+    for (pkg in others) {
         ## we can't do this on the current uninstalled package!
-        if (missing(package) && pkg == basename(dir)) next
+        if (missing(package) && pkg == this) next
         this <- have_anchor & (thispkg %in% pkg)
         top <- system.file(package = pkg, lib.loc = lib.loc)
         if(nzchar(top)) {
             RdDB <- file.path(top, "help", "paths.rds")
-            if(!file.exists(RdDB)) {
-                message(gettextf("package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked", sQuote(pkg)),
-                        domain = NA)
-                next
-            }
+            if(!file.exists(RdDB)) next
             nm <- sub("\\.[Rr]d", "", basename(readRDS(RdDB)))
             good <- thisfile[this] %in% nm
             suspect <- if(any(!good)) {
@@ -4172,15 +4183,6 @@ function(package, dir, lib.loc = NULL)
     }
 
     unknown <- unique(unknown)
-    obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva", "nls", "stepfun", "ts")
-    if (any(obsolete)) {
-        message(sprintf(ngettext(sum(obsolete),
-                                 "Obsolete package %s in Rd xrefs",
-                                 "Obsolete packages %s in Rd xrefs"),
-                        paste(sQuote(unknown[obsolete]), collapse = ", ")),
-                domain = NA)
-    }
-    unknown <- unknown[!obsolete]
     if (length(unknown)) {
         repos <- .get_standard_repository_URLs()
         ## Also allow for additionally specified repositories.
@@ -4192,20 +4194,21 @@ function(package, dir, lib.loc = NULL)
         known <-
             try(suppressWarnings(utils::available.packages(utils::contrib.url(repos, "source"),
                filters = c("R_version", "duplicates"))[, "Package"]))
+        ## no longer need an exception for CRAN-extras,
+        ## as that should be declared as an additional repository.
         miss <- if(inherits(known, "try-error")) TRUE
-        else unknown %in% c(known, c("GLMMGibbs", "survnnet", "yags"))
-        ## from CRANextras
+        else unknown %in% known
         if(any(miss))
             message(sprintf(ngettext(sum(miss),
                                      "Package unavailable to check Rd xrefs: %s",
                                      "Packages unavailable to check Rd xrefs: %s"),
-                             paste(sQuote(unknown[miss]), collapse = ", ")),
+                             paste(sQuote(sort(unknown[miss])), collapse = ", ")),
                     domain = NA)
         if(any(!miss))
             message(sprintf(ngettext(sum(!miss),
                                      "Unknown package %s in Rd xrefs",
                                      "Unknown packages %s in Rd xrefs"),
-                             paste(sQuote(unknown[!miss]), collapse = ", ")),
+                             paste(sQuote(sort(unknown[!miss])), collapse = ", ")),
                     domain = NA)
     }
     ## The bad ones:
@@ -7254,7 +7257,7 @@ function(x, ...)
       if(length(y <- x$title_case)) {
           c("Title field should be in title case, current version then in title case:", sQuote(y))
       }
-     )
+      )
 }
 
 ### * .check_Rd_metadata
