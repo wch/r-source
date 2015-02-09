@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2013-03-18 19:36+0000\n"
+"POT-Creation-Date: 2015-02-09 08:54+0000\n"
 "PO-Revision-Date: 2011-01-28 10:51+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -18,24 +18,24 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
+#: src/gnuwin32/console.c:1169 src/gnuwin32/console.c:1211
 msgid "Not enough memory"
 msgstr "Ikkje nok minne"
 
-#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
+#: src/gnuwin32/console.c:1258 src/gnuwin32/console.c:1262
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Ikkje nok minne: tekst ikkje kopiert til utklippstavla"
 
-#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1298 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Klarte ikkje opna utklippstavla"
 
-#: src/gnuwin32/console.c:1914
+#: src/gnuwin32/console.c:1919
 msgid "Insufficient memory. Please close the console"
 msgstr "Ikkje nok minne. Lukk konsollen."
 
-#: src/gnuwin32/console.c:1969 src/gnuwin32/console.c:2022
+#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -45,24 +45,24 @@ msgstr ""
 "Fann ikkje skrifta «%s-%d-%d».\n"
 "Brukar system-skrifta."
 
-#: src/gnuwin32/console.c:2127
+#: src/gnuwin32/console.c:2133
 msgid "Save selection to"
 msgstr "Lagra utvalet til"
 
-#: src/gnuwin32/console.c:2129
+#: src/gnuwin32/console.c:2135
 msgid "Save console contents to"
 msgstr "Lagra konsollinhaldet til"
 
-#: src/gnuwin32/console.c:2228
+#: src/gnuwin32/console.c:2234
 msgid "Scrolling.\n"
 msgstr "Rulling.\n"
 
-#: src/gnuwin32/console.c:2229
+#: src/gnuwin32/console.c:2235
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr ""
 "  Tastatur: Page Up, Page Down, Ctrl + piltastar, Ctrl + Home, Ctrl + End,\n"
 
-#: src/gnuwin32/console.c:2230
+#: src/gnuwin32/console.c:2236
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -70,74 +70,74 @@ msgstr ""
 "  Mus: Bruk rullefelta.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2231
+#: src/gnuwin32/console.c:2237
 msgid "Editing.\n"
 msgstr "Redigering.\n"
 
-#: src/gnuwin32/console.c:2232
+#: src/gnuwin32/console.c:2238
 msgid "  Moving the cursor: \n"
 msgstr "  Flytting av skrivemerket: \n"
 
-#: src/gnuwin32/console.c:2233
+#: src/gnuwin32/console.c:2239
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     «Pil venstre» eller «Ctrl + B»: flytt eitt teikn bakover;\n"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2240
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     «Pil høgre» eller «Ctrl + F»: flytt eitt teikn framover;\n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2241
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     «Home» eller «Ctrl + A»: gå til starten av linja;\n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2242
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     «End» eller «Ctrl + E»: gå til slutten av linja;\n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2243
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Loggen: «Pil opp» og «Pil ned», eller «Ctrl + P» og «Ctrl + N»\n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2244
 msgid "  Deleting:\n"
 msgstr "  Sletting:\n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2245
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     «Delete» eller «Ctrl + D»: slett gjeldande teikn eller utval;\n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2246
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     «Rettetast»: slett førre teikn;\n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2247
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     «Ctrl + Delete» eller «Ctrl + K»: slett tekst frå gjeldande teikn til "
 "slutten av linja.\n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2248
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     «Ctrl + U»: Slett all teksten frå den gjeldande linja.\n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2249
 msgid "  Copy and paste.\n"
 msgstr "  Kopiering og innliming.\n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr "     Bruk musa (med venstre museknapp inne) for å merkje teksten.\n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2251
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Bruk «Shift + Delete» eller «Ctrl + C» for kopiera utvalet til "
 "utklippstavla, og\n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2252
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -145,29 +145,29 @@ msgstr ""
 "     «Shift + Insert», «Ctrl + V» eller «Ctrl +Y» for å lima inn innhaldet "
 "frå utklippstavla\n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2253
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     til konsollen, «Ctrl + X» først kopiera og så lima inn\n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2254
 msgid "  Misc:\n"
 msgstr "  Ymse:\n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2255
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     «Ctrl + L»: tøm konsollen.\n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2256
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     « Ctrl + O» eller «Insert»: slå på/av overskrivingsmodus (av som "
 "standard).\n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2257
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     «Ctrl +T»: Byt det gjeldande teiknet med det til venstre.\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2258
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -175,7 +175,7 @@ msgstr ""
 "\n"
 "Merk: Konsollen vert berre oppdatert når han treng inndata.\n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2259
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -183,7 +183,7 @@ msgstr ""
 "  Bruk «Ctrl + W» for å slå funksjonen av eller på.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2260
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -191,7 +191,7 @@ msgstr ""
 "Bruk «Escape» for å stoppa skriptkøyringa.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2261
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -199,267 +199,267 @@ msgstr ""
 "Bruk «Tab» for å autofullføra det gjeldande ordet.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2262
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Du kan bruka dei vanlige Windows-snarvegane for å byta til\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2263
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "grafikkeininga («Ctrl + Tab» eller «Ctrl + F6» i MDI, og «Alt + Tab» i SDI)"
 
-#: src/gnuwin32/editor.c:88 src/gnuwin32/editor.c:90
+#: src/gnuwin32/editor.c:92 src/gnuwin32/editor.c:94
 msgid "R Editor"
 msgstr "R-redigering"
 
-#: src/gnuwin32/editor.c:119
+#: src/gnuwin32/editor.c:124
 #, c-format
 msgid "unable to open file %s for reading"
 msgstr "klarte ikkje opna fila «%s» for lesing"
 
-#: src/gnuwin32/editor.c:135
+#: src/gnuwin32/editor.c:140
 #, c-format
 msgid "Could not read from file '%s'"
 msgstr "Klarte ikkje lesa frå fila «%s»"
 
-#: src/gnuwin32/editor.c:166
+#: src/gnuwin32/editor.c:172
 #, c-format
 msgid "Could not save file '%s'"
 msgstr "Klarte ikkje lagra fila «%s»"
 
-#: src/gnuwin32/editor.c:182
+#: src/gnuwin32/editor.c:188
 msgid "Save script as"
 msgstr "Lagra skript som"
 
-#: src/gnuwin32/editor.c:377 src/gnuwin32/editor.c:694
-#: src/gnuwin32/pager.c:431 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:380 src/gnuwin32/editor.c:697
+#: src/gnuwin32/pager.c:432 src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Opna skript"
 
-#: src/gnuwin32/editor.c:500 src/gnuwin32/pager.c:185 src/gnuwin32/pager.c:205
+#: src/gnuwin32/editor.c:503 src/gnuwin32/pager.c:186 src/gnuwin32/pager.c:206
 msgid "No RGui console to paste to"
 msgstr "Manglar RGui-konsoll å lima inn i"
 
-#: src/gnuwin32/editor.c:602
+#: src/gnuwin32/editor.c:605
 msgid "R EDITOR\n"
 msgstr "R-REDIGERING\n"
 
-#: src/gnuwin32/editor.c:604
+#: src/gnuwin32/editor.c:607
 msgid "A standard text editor for editing and running R code.\n"
 msgstr "Standard skrivevindauge for redigering og køyring av R-kode.\n"
 
-#: src/gnuwin32/editor.c:606
+#: src/gnuwin32/editor.c:609
 msgid "RUNNING COMMANDS\n"
 msgstr "KØYRING AV KOMMANDOAR\n"
 
-#: src/gnuwin32/editor.c:607
+#: src/gnuwin32/editor.c:610
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr "For å køyra ei linje eller eit utval R-kode, merk koden, og anten\n"
 
-#: src/gnuwin32/editor.c:608
+#: src/gnuwin32/editor.c:611
 msgid "     Press Ctrl-R\n"
 msgstr "     trykk «Ctrl + R»,\n"
 
-#: src/gnuwin32/editor.c:609
+#: src/gnuwin32/editor.c:612
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr "     vel «Køyr linje eller utval» frå «Rediger»-menyen,\n"
 
-#: src/gnuwin32/editor.c:610
+#: src/gnuwin32/editor.c:613
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     eller trykk «Køyr linje eller utval»-ikonet på verktøylinja.\n"
 
-#: src/gnuwin32/editor.c:611
+#: src/gnuwin32/editor.c:614
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
 "Dette vil kopiera dei merkte kommandoane til konsollen, og så køyra dei.\n"
 
-#: src/gnuwin32/editor.c:612
+#: src/gnuwin32/editor.c:615
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
 msgstr ""
 "Viss det ikkje finst noko utval, vert berre den gjeldande linja køyrd, og\n"
 
-#: src/gnuwin32/editor.c:613
+#: src/gnuwin32/editor.c:616
 msgid "the cursor by one line.\n"
 msgstr "skrivemerket vert flytta til neste linje.\n"
 
-#: src/gnuwin32/editor.c:625 src/gnuwin32/editor.c:702
-#: src/gnuwin32/editor.c:760
+#: src/gnuwin32/editor.c:628 src/gnuwin32/editor.c:705
+#: src/gnuwin32/editor.c:763
 msgid "Run line or selection"
 msgstr "Køyr linje eller utval"
 
-#: src/gnuwin32/editor.c:627 src/gnuwin32/editor.c:745
+#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:748
 msgid "Undo"
 msgstr "Angra"
 
-#: src/gnuwin32/editor.c:629 src/gnuwin32/editor.c:748
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:751
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: src/gnuwin32/editor.c:630 src/gnuwin32/editor.c:750
-#: src/gnuwin32/pager.c:305 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:859
+#: src/gnuwin32/editor.c:633 src/gnuwin32/editor.c:753
+#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:479 src/gnuwin32/rui.c:859
 #: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Kopier"
 
-#: src/gnuwin32/editor.c:631 src/gnuwin32/editor.c:752 src/gnuwin32/rui.c:860
+#: src/gnuwin32/editor.c:634 src/gnuwin32/editor.c:755 src/gnuwin32/rui.c:860
 #: src/gnuwin32/rui.c:1092 src/gnuwin32/rui.c:1145
 msgid "Paste"
 msgstr "Lim inn"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:754
+#: src/gnuwin32/editor.c:635 src/gnuwin32/editor.c:757
 msgid "Delete"
 msgstr "Slett"
 
-#: src/gnuwin32/editor.c:634 src/gnuwin32/editor.c:756
-#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:866
+#: src/gnuwin32/editor.c:637 src/gnuwin32/editor.c:759
+#: src/gnuwin32/pager.c:309 src/gnuwin32/pager.c:485 src/gnuwin32/rui.c:866
 #: src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Merk alt"
 
-#: src/gnuwin32/editor.c:698
+#: src/gnuwin32/editor.c:701
 msgid "Save script"
 msgstr "Lagra skript"
 
-#: src/gnuwin32/editor.c:706 src/gnuwin32/pager.c:451
-#: src/library/grDevices/src/devWindows.c:1594
+#: src/gnuwin32/editor.c:709 src/gnuwin32/pager.c:452
+#: src/library/grDevices/src/devWindows.c:1596
 msgid "Return focus to Console"
 msgstr "Flytt fokuset tilbake til konsollen"
 
-#: src/gnuwin32/editor.c:709
+#: src/gnuwin32/editor.c:712
 msgid "Print script"
 msgstr "Skriv ut skript"
 
-#: src/gnuwin32/editor.c:711 src/gnuwin32/pager.c:446 src/gnuwin32/rui.c:1104
-#: src/library/grDevices/src/devWindows.c:1588
+#: src/gnuwin32/editor.c:714 src/gnuwin32/pager.c:447 src/gnuwin32/rui.c:1104
+#: src/library/grDevices/src/devWindows.c:1590
 msgid "Print"
 msgstr "Skriv ut"
 
-#: src/gnuwin32/editor.c:729 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1122
+#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1122
 #: src/library/utils/src/windows/dataentry.c:1790
-#: src/library/grDevices/src/devWindows.c:1626
+#: src/library/grDevices/src/devWindows.c:1628
 msgid "File"
 msgstr "Fil"
 
-#: src/gnuwin32/editor.c:730 src/gnuwin32/pager.c:468 src/gnuwin32/rui.c:1124
+#: src/gnuwin32/editor.c:733 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1124
 msgid "New script"
 msgstr "Nytt skript"
 
-#: src/gnuwin32/editor.c:732 src/gnuwin32/pager.c:469 src/gnuwin32/rui.c:1125
+#: src/gnuwin32/editor.c:735 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1125
 msgid "Open script..."
 msgstr "Opna skript …"
 
-#: src/gnuwin32/editor.c:734
+#: src/gnuwin32/editor.c:737
 msgid "Save"
 msgstr "Lagra"
 
-#: src/gnuwin32/editor.c:736
+#: src/gnuwin32/editor.c:739
 msgid "Save as..."
 msgstr "Lagra som …"
 
-#: src/gnuwin32/editor.c:739 src/gnuwin32/pager.c:470 src/gnuwin32/rui.c:1138
-#: src/library/grDevices/src/devWindows.c:1689
+#: src/gnuwin32/editor.c:742 src/gnuwin32/pager.c:471 src/gnuwin32/rui.c:1138
+#: src/library/grDevices/src/devWindows.c:1691
 msgid "Print..."
 msgstr "Skriv ut …"
 
-#: src/gnuwin32/editor.c:742
+#: src/gnuwin32/editor.c:745
 msgid "Close script"
 msgstr "Lukk skript"
 
-#: src/gnuwin32/editor.c:744 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:1143
+#: src/gnuwin32/editor.c:747 src/gnuwin32/pager.c:478 src/gnuwin32/rui.c:1143
 #: src/library/utils/src/windows/dataentry.c:1796
 msgid "Edit"
 msgstr "Rediger"
 
-#: src/gnuwin32/editor.c:758 src/gnuwin32/rui.c:1150
+#: src/gnuwin32/editor.c:761 src/gnuwin32/rui.c:1150
 msgid "Clear console"
 msgstr "Tøm konsoll"
 
-#: src/gnuwin32/editor.c:762
+#: src/gnuwin32/editor.c:765
 msgid "Run all"
 msgstr "Køyr alt"
 
-#: src/gnuwin32/editor.c:765
+#: src/gnuwin32/editor.c:768
 msgid "Find..."
 msgstr "Søk etter …"
 
-#: src/gnuwin32/editor.c:767
+#: src/gnuwin32/editor.c:770
 msgid "Replace..."
 msgstr "&Byt ut …"
 
-#: src/gnuwin32/editor.c:770 src/gnuwin32/rui.c:1154
+#: src/gnuwin32/editor.c:773 src/gnuwin32/rui.c:1154
 msgid "GUI preferences..."
 msgstr "GUI-innstillingar …"
 
-#: src/gnuwin32/editor.c:780 src/gnuwin32/rui.c:1186
+#: src/gnuwin32/editor.c:783 src/gnuwin32/rui.c:1186
 #: src/library/utils/src/windows/dataentry.c:1697
 #: src/library/utils/src/windows/dataentry.c:1807
 msgid "Help"
 msgstr "Hjelp"
 
-#: src/gnuwin32/editor.c:781
+#: src/gnuwin32/editor.c:784
 msgid "Editor"
 msgstr "Redigering"
 
-#: src/gnuwin32/editor.c:840
+#: src/gnuwin32/editor.c:843
 msgid "Maximum number of editors reached"
 msgstr "Nådde maksgrensa for talet på skrivevindauge"
 
-#: src/gnuwin32/editor.c:845
+#: src/gnuwin32/editor.c:848
 msgid "Unable to create editor window"
 msgstr "Klarte ikkje laga nytt skrivevindauge"
 
-#: src/gnuwin32/editor.c:853
+#: src/gnuwin32/editor.c:856
 msgid "Untitled"
 msgstr "Namnlaus"
 
-#: src/gnuwin32/extra.c:823 src/gnuwin32/rui.c:1224
+#: src/gnuwin32/extra.c:828 src/gnuwin32/rui.c:1224
 msgid "Select file"
 msgstr "Vel fil"
 
-#: src/gnuwin32/pager.c:89
+#: src/gnuwin32/pager.c:90
 msgid "Error opening file"
 msgstr "Feil ved opning av fil"
 
-#: src/gnuwin32/pager.c:96
+#: src/gnuwin32/pager.c:97
 msgid "Insufficient memory to display file in internal pager"
 msgstr "Ikkje nok minne til å visa fila i intern filvisar"
 
-#: src/gnuwin32/pager.c:177 src/gnuwin32/pager.c:189 src/gnuwin32/pager.c:209
+#: src/gnuwin32/pager.c:178 src/gnuwin32/pager.c:190 src/gnuwin32/pager.c:210
 #: src/gnuwin32/rui.c:237 src/gnuwin32/rui.c:264
 msgid "No selection"
 msgstr "Inkje utval"
 
-#: src/gnuwin32/pager.c:306 src/gnuwin32/pager.c:436 src/gnuwin32/pager.c:480
+#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:437 src/gnuwin32/pager.c:481
 msgid "Paste to console"
 msgstr "Lim inn i konsoll"
 
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:441 src/gnuwin32/pager.c:482
+#: src/gnuwin32/pager.c:308 src/gnuwin32/pager.c:442 src/gnuwin32/pager.c:483
 msgid "Paste commands to console"
 msgstr "Lim inn kommandoar i konsollen"
 
-#: src/gnuwin32/pager.c:310 src/gnuwin32/rui.c:869
+#: src/gnuwin32/pager.c:311 src/gnuwin32/rui.c:869
 #: src/library/utils/src/windows/dataentry.c:1703
-#: src/library/grDevices/src/devWindows.c:1686
+#: src/library/grDevices/src/devWindows.c:1688
 msgid "Stay on top"
 msgstr "Hald øvst"
 
-#: src/gnuwin32/pager.c:312 src/gnuwin32/pager.c:475
+#: src/gnuwin32/pager.c:313 src/gnuwin32/pager.c:476
 #: src/library/utils/src/windows/dataentry.c:1705
 #: src/library/utils/src/windows/dataentry.c:1792
 msgid "Close"
 msgstr "Lukk"
 
-#: src/gnuwin32/pager.c:472 src/gnuwin32/rui.c:1139
+#: src/gnuwin32/pager.c:473 src/gnuwin32/rui.c:1139
 msgid "Save to File..."
 msgstr "Lagra til fil …"
 
-#: src/gnuwin32/pager.c:487 src/gnuwin32/rui.c:1156
+#: src/gnuwin32/pager.c:488 src/gnuwin32/rui.c:1156
 msgid "View"
 msgstr "Vis"
 
-#: src/gnuwin32/pager.c:519
+#: src/gnuwin32/pager.c:520
 msgid "Unable to create pager window"
 msgstr "Klarte ikkje laga nytt lesevindauge"
 
@@ -827,7 +827,7 @@ msgstr "fann ikkje menyen"
 msgid "menu or item does not exist"
 msgstr "menyen eller elementet finst ikkje"
 
-#: src/gnuwin32/system.c:442
+#: src/gnuwin32/system.c:447
 msgid "Save workspace image?"
 msgstr "Vil du lagra arbeidsområdet?"
 
@@ -835,41 +835,41 @@ msgstr "Vil du lagra arbeidsområdet?"
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "Ikkje nok minne: cella vart ikkje kopiert til utklippstavla"
 
-#: src/extra/graphapp/dialogs.c:147 src/extra/graphapp/dialogs.c:164
-#: src/extra/graphapp/dialogs.c:181
+#: src/extra/graphapp/dialogs.c:148 src/extra/graphapp/dialogs.c:165
+#: src/extra/graphapp/dialogs.c:182
 msgid "Question"
 msgstr "Spørsmål"
 
-#: src/extra/graphapp/dialogs.c:202
+#: src/extra/graphapp/dialogs.c:203
 msgid " Change working directory to:"
 msgstr " Byt arbeidsmappa til:"
 
-#: src/extra/graphapp/dialogs.c:205
+#: src/extra/graphapp/dialogs.c:206
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr "Klarte ikkje velja «%s» som arbeidsmappe"
 
-#: src/extra/graphapp/dialogs.c:602 src/extra/graphapp/dialogs.c:620
-#: src/extra/graphapp/dialogs.c:626 src/extra/graphapp/dialogs.c:725
-#: src/extra/graphapp/dialogs.c:739 src/extra/graphapp/dialogs.c:745
+#: src/extra/graphapp/dialogs.c:603 src/extra/graphapp/dialogs.c:621
+#: src/extra/graphapp/dialogs.c:627 src/extra/graphapp/dialogs.c:726
+#: src/extra/graphapp/dialogs.c:740 src/extra/graphapp/dialogs.c:746
 #: src/library/utils/src/windows/widgets.c:125
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/extra/graphapp/dialogs.c:622 src/extra/graphapp/dialogs.c:741
+#: src/extra/graphapp/dialogs.c:623 src/extra/graphapp/dialogs.c:742
 #: src/library/utils/src/windows/widgets.c:124
 msgid "OK"
 msgstr "OK"
 
-#: src/extra/graphapp/dialogs.c:733
+#: src/extra/graphapp/dialogs.c:734
 msgid "User"
 msgstr "Brukar"
 
-#: src/extra/graphapp/dialogs.c:734
+#: src/extra/graphapp/dialogs.c:735
 msgid "Password"
 msgstr "Passord"
 
-#: src/extra/graphapp/dialogs.c:900 src/extra/graphapp/dialogs.c:906
+#: src/extra/graphapp/dialogs.c:901 src/extra/graphapp/dialogs.c:907
 #, c-format
 msgid "\"%s\" not found"
 msgstr "Fann ikkje «%s»"
@@ -892,11 +892,6 @@ msgstr "ugyldige type for verdien"
 #: src/library/utils/src/windows/dataentry.c:281
 msgid "Data Editor"
 msgstr "Dataredigering"
-
-#: src/library/utils/src/windows/dataentry.c:282
-#: src/library/utils/src/windows/dataentry.c:1891
-msgid "invalid device"
-msgstr "ugyldig eining"
 
 #: src/library/utils/src/windows/dataentry.c:331
 msgid "dataentry: internal memory problem"
@@ -1052,7 +1047,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafile"
 
 #: src/library/grDevices/src/devWindows.c:990
-#: src/library/grDevices/src/devWindows.c:3436
+#: src/library/grDevices/src/devWindows.c:3440
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "for lang filadresse: maksgrensa er på 512 byte"
 
@@ -1060,152 +1055,155 @@ msgstr "for lang filadresse: maksgrensa er på 512 byte"
 msgid "No plot to replace!"
 msgstr "Manglar plott å byta ut"
 
-#: src/library/grDevices/src/devWindows.c:1249
+#: src/library/grDevices/src/devWindows.c:1251
 msgid "Variable name"
 msgstr "Variabelnamn"
 
-#: src/library/grDevices/src/devWindows.c:1258
+#: src/library/grDevices/src/devWindows.c:1260
 #, fuzzy
 msgid "Variable doesn't contain any plots!"
 msgstr "Variabelen finst ikkje, eller inneheld ikkje plott"
 
-#: src/library/grDevices/src/devWindows.c:1273
+#: src/library/grDevices/src/devWindows.c:1275
 msgid "Name of variable to save to"
 msgstr "Namn på variabelen å lagra til"
 
-#: src/library/grDevices/src/devWindows.c:1582
+#: src/library/grDevices/src/devWindows.c:1584
 msgid "Copy to the clipboard as a metafile"
 msgstr "Kopier to utklippstavla som metafil"
 
-#: src/library/grDevices/src/devWindows.c:1600
-#: src/library/grDevices/src/devWindows.c:1611
+#: src/library/grDevices/src/devWindows.c:1602
+#: src/library/grDevices/src/devWindows.c:1613
 msgid "Stop locator"
 msgstr "Stopp posisjonslesar"
 
-#: src/library/grDevices/src/devWindows.c:1610
-#: src/library/grDevices/src/devWindows.c:1614
+#: src/library/grDevices/src/devWindows.c:1612
+#: src/library/grDevices/src/devWindows.c:1616
 msgid "Stop"
 msgstr "Stopp"
 
-#: src/library/grDevices/src/devWindows.c:1616
+#: src/library/grDevices/src/devWindows.c:1618
 msgid "Continue"
 msgstr "Hald fram"
 
-#: src/library/grDevices/src/devWindows.c:1620
+#: src/library/grDevices/src/devWindows.c:1622
 msgid "Next"
 msgstr "Neste"
 
-#: src/library/grDevices/src/devWindows.c:1621
+#: src/library/grDevices/src/devWindows.c:1623
 msgid "Next plot"
 msgstr "Neste plott"
 
-#: src/library/grDevices/src/devWindows.c:1627
+#: src/library/grDevices/src/devWindows.c:1629
 msgid "Save as"
 msgstr "Lagra som"
 
-#: src/library/grDevices/src/devWindows.c:1636
 #: src/library/grDevices/src/devWindows.c:1638
 #: src/library/grDevices/src/devWindows.c:1640
+#: src/library/grDevices/src/devWindows.c:1642
 #, c-format
 msgid "%s quality..."
 msgstr "%s-kvalitet …"
 
-#: src/library/grDevices/src/devWindows.c:1642
+#: src/library/grDevices/src/devWindows.c:1644
 msgid "Copy to the clipboard"
 msgstr "Kopier til utklippstavla"
 
-#: src/library/grDevices/src/devWindows.c:1643
+#: src/library/grDevices/src/devWindows.c:1645
 msgid "as a Bitmap\tCTRL+C"
 msgstr "som punktbilete\tCTRL+C"
 
-#: src/library/grDevices/src/devWindows.c:1644
+#: src/library/grDevices/src/devWindows.c:1646
 msgid "as a Metafile\tCTRL+W"
 msgstr "Som metafil\tCTRL+w"
 
-#: src/library/grDevices/src/devWindows.c:1647
+#: src/library/grDevices/src/devWindows.c:1649
 msgid "Print...\tCTRL+P"
 msgstr "Skriv ut …\tCTRL+P"
 
-#: src/library/grDevices/src/devWindows.c:1649
+#: src/library/grDevices/src/devWindows.c:1651
 msgid "close Device"
 msgstr "lukk eining"
 
-#: src/library/grDevices/src/devWindows.c:1650
+#: src/library/grDevices/src/devWindows.c:1652
 msgid "History"
 msgstr "Logg"
 
-#: src/library/grDevices/src/devWindows.c:1651
+#: src/library/grDevices/src/devWindows.c:1653
 msgid "Recording"
 msgstr "Opptak"
 
-#: src/library/grDevices/src/devWindows.c:1654
+#: src/library/grDevices/src/devWindows.c:1656
 msgid "Add\tINS"
 msgstr "Legg til\tINS"
 
-#: src/library/grDevices/src/devWindows.c:1655
+#: src/library/grDevices/src/devWindows.c:1657
 msgid "Replace"
 msgstr "Byt ut"
 
-#: src/library/grDevices/src/devWindows.c:1657
+#: src/library/grDevices/src/devWindows.c:1659
 msgid "Previous\tPgUp"
 msgstr "Førre\tPgUp"
 
-#: src/library/grDevices/src/devWindows.c:1658
+#: src/library/grDevices/src/devWindows.c:1660
 msgid "Next\tPgDown"
 msgstr "Neste\tPgDown"
 
-#: src/library/grDevices/src/devWindows.c:1660
+#: src/library/grDevices/src/devWindows.c:1662
 msgid "Save to variable..."
 msgstr "Lagra til variabel …"
 
-#: src/library/grDevices/src/devWindows.c:1661
+#: src/library/grDevices/src/devWindows.c:1663
 msgid "Get from variable..."
 msgstr "Hent frå variabel …"
 
-#: src/library/grDevices/src/devWindows.c:1663
+#: src/library/grDevices/src/devWindows.c:1665
 msgid "Clear history"
 msgstr "Tøm loggen"
 
-#: src/library/grDevices/src/devWindows.c:1664
+#: src/library/grDevices/src/devWindows.c:1666
 msgid "Resize"
 msgstr "Endra storleik"
 
-#: src/library/grDevices/src/devWindows.c:1665
+#: src/library/grDevices/src/devWindows.c:1667
 msgid "R mode"
 msgstr "R-modus"
 
-#: src/library/grDevices/src/devWindows.c:1667
+#: src/library/grDevices/src/devWindows.c:1669
 msgid "Fit to window"
 msgstr "Tilpassa til vindauget"
 
-#: src/library/grDevices/src/devWindows.c:1669
+#: src/library/grDevices/src/devWindows.c:1671
 msgid "Fixed size"
 msgstr "Fast storleik"
 
-#: src/library/grDevices/src/devWindows.c:1676
+#: src/library/grDevices/src/devWindows.c:1678
 msgid "Copy as metafile"
 msgstr "Kopier som metafil"
 
-#: src/library/grDevices/src/devWindows.c:1678
+#: src/library/grDevices/src/devWindows.c:1680
 msgid "Copy as bitmap"
 msgstr "Kopier som punktbilet"
 
-#: src/library/grDevices/src/devWindows.c:1681
+#: src/library/grDevices/src/devWindows.c:1683
 msgid "Save as metafile..."
 msgstr "Lagra som metafil …"
 
-#: src/library/grDevices/src/devWindows.c:1683
+#: src/library/grDevices/src/devWindows.c:1685
 msgid "Save as postscript..."
 msgstr "Lagra som PostScript …"
 
-#: src/library/grDevices/src/devWindows.c:3136
+#: src/library/grDevices/src/devWindows.c:3138
 msgid "Locator is active"
 msgstr "Posisjonslesar køyrer"
 
-#: src/library/grDevices/src/devWindows.c:3763
+#: src/library/grDevices/src/devWindows.c:3767
 msgid "Waiting to confirm page change..."
 msgstr "Ventar på stadfesting av sideskifte …"
 
-#: src/library/grDevices/src/devWindows.c:3775
+#: src/library/grDevices/src/devWindows.c:3779
 msgid "Click or hit ENTER for next page"
 msgstr "Klikk eller trykk «Enter» for neste side"
+
+#~ msgid "invalid device"
+#~ msgstr "ugyldig eining"
