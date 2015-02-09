@@ -3463,7 +3463,7 @@ function(aar, strict = FALSE)
                         p)
             if(!length(p)) {
                 bad <- TRUE
-                out$bad_authors_at_R_field_has_no_valid_maintainer <- TRUE                
+                out$bad_authors_at_R_field_has_no_valid_maintainer <- TRUE
             }
             ## s should now be non-empty iff bad is FALSE.
             if(!bad) attr(out, "Maintainer") <- s
@@ -4161,13 +4161,13 @@ function(package, dir, lib.loc = NULL)
             message(sprintf(ngettext(sum(miss),
                                      "Package unavailable to check Rd xrefs: %s",
                                      "Packages unavailable to check Rd xrefs: %s"),
-                             paste(sQuote(unknown[miss]), collapse = ", ")),
+                             paste(sQuote(sort(unknown[miss])), collapse = ", ")),
                     domain = NA)
         if(any(!miss))
             message(sprintf(ngettext(sum(!miss),
                                      "Unknown package %s in Rd xrefs",
                                      "Unknown packages %s in Rd xrefs"),
-                             paste(sQuote(unknown[!miss]), collapse = ", ")),
+                             paste(sQuote(sort(unknown[!miss])), collapse = ", ")),
                     domain = NA)
     }
     ## The bad ones:
