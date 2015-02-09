@@ -5832,8 +5832,7 @@ which topics are in which files in an uninstalled package).  The
 packages is to force a reference to a package that might be further down
 the search path.  Because they have been frequently misused, the @HTML{}
 help system looks for topic @code{@var{foo}} in package @pkg{@var{pkg}}
-if it does not find file @file{@var{foo}.html}.  Packages linked to in
-this way should be declared in the @file{DESCRIPTION} file.
+if it does not find file @file{@var{foo}.html}.
 
 @node Mathematics, Figures, Cross-references, Writing R documentation files
 @section Mathematics
@@ -6248,12 +6247,12 @@ will expand to
 when parsed.  See the comments in that file for a discussion of what
 macros are available and what they do.
 
-Packages may also define their
-own common macros; these would be stored in an @file{.Rd} file in 
-@file{man/macros} in the package source and will be installed into 
-@file{help/macros} when the package is installed.  A package may also
-use the macros from a different package by listing the other package
-in the @samp{RdMacros} field in the @file{DESCRIPTION} file.
+Packages may also define their own common macros; these would be stored
+in an @file{.Rd} file in @file{man/macros} in the package source and
+will be installed into @file{help/macros} when the package is installed.
+A package may also use the macros from a different package by listing
+the other package in the @samp{RdMacros} field in the @file{DESCRIPTION}
+file.
 
 
 
@@ -11358,7 +11357,7 @@ just under 16Gb.
 
 The memory returned is only guaranteed to be aligned as required for
 @code{double} pointers: take precautions if casting to a pointer which
-needs more. As from @R{} 3.2.0 there is also
+needs more.  As from @R{} 3.2.0 there is also
 
 @example
 long double *R_allocLD(size_t @var{n})
