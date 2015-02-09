@@ -418,12 +418,14 @@ intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
 package to all @acronym{CRAN} users).
 
 @c DESCRIPTION field Title
-The mandatory @samp{Title} field should give a short description of the
-package.  Some package listings may truncate the title to 65 characters.
-It should use @emph{title case} (that is, use capitals for the principal
-words), not use any markup, not have any continuation lines, and not end
-in a period (unless part of @dots{}).  Do not repeat the package name:
-it is often used prefixed by the name.
+The mandatory @samp{Title} field should give a @emph{short} description
+of the package.  Some package listings may truncate the title to 65
+characters.  It should use @emph{title case} (that is, use capitals for
+the principal words), not use any markup, not have any continuation
+lines, and not end in a period (unless part of @dots{}).  Do not repeat
+the package name: it is often used prefixed by the name.  Refer to other
+packages and external libraries in single quotes, and to book titles
+(and similar) in double quotes.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
@@ -1191,8 +1193,8 @@ if testing is desired use code in the @file{tests} directory to achieve
 this.  The script files must start with a (lower or upper case) letter
 and have one of the extensions @file{.R} or @file{.r}.  If present, the
 @file{demo} subdirectory should also have a @file{00Index} file with one
-line for each demo, giving its name and a description separated by white
-space. (Note that it is not possible to generate this index file
+line for each demo, giving its name and a description separated by a
+tab or at least three spaces. (This index file is not generated
 automatically.)  Note that a demo does not have a specified encoding and
 so should be an @acronym{ASCII} file (@pxref{Encoding issues}).  As from
 @R{} 3.0.0 @code{demo()} will use the package encoding if there is one,
@@ -2737,6 +2739,10 @@ for example using @code{<-} where @code{<<-} was intended.)  This can
 give false positives, most commonly because of non-standard evaluation
 for formulae and because the intention is to return objects in the
 environment of a function for later use.
+
+Complete checking of a package which contains a file @file{README.md}
+needs @command{pandoc} installed: see
+@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -4407,11 +4413,13 @@ compilers in use with @R{} on some platforms.
 
 @item
 Be careful to include the headers which define the functions you use.
-Some compilers (notably the GCC family) include other system headers in
-their headers which are not required by the standards, and so code may
-compile on such compilers and not on others.  (A prominent example is
-the C++11 header @code{<random>} which is indirectly included by
-@code{<algorithm>} by @command{g++}.)
+Some compilers/OSes include other system headers in their headers which
+are not required by the standards, and so code may compile on such
+systems and not on others.  (A prominent example is the C++11 header
+@code{<random>} which is indirectly included by @code{<algorithm>} by
+@command{g++}.  Another frequent issue is the C header @code{<time.h>}
+which is included by other headers on Linux and Windows but not OS X nor
+Solaris.)
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -11921,8 +11929,9 @@ in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes.
 @deftypefunx double logspace_sub (double @var{logx}, double @var{logy})
 Compute the log of a sum or difference from logs of terms, i.e., ``x +
 y'' as @code{log (exp(@var{logx}) + exp(@var{logy}))} and ``x - y'' as
-@code{log (exp(@var{logx}) - exp(@var{logy}))}, without causing
-unnecessary overflows or throwing away too much accuracy.
+@code{log (exp(@var{logx}) - exp(@var{logy}))}, 
+and ``sum_i x[i]'' as @code{log (sum[i = 1:@var{n} exp(@var{logx}[i])] )}
+without causing unnecessary overflows or throwing away too much accuracy.
 @end deftypefun
 
 @deftypefun int imax2 (int @var{x}, int @var{y})
