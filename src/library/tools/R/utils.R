@@ -1890,16 +1890,16 @@ psnice <- function(pid = Sys.getpid(), value = NA_integer_)
 toTitleCase <- function(text)
 {
     ## leave these alone: the internal caps rule would do that
-    ## in some cases.
+    ## in some cases.  We could insist on this exact capitalization.
     alone <- c("2D", "3D", "AIC", "BayesX", "GoF", "HTML", "LaTeX",
                "MonetDB", "OpenBUGS", "TeX", "U.S.", "U.S.A.", "WinBUGS",
                "aka", "et", "al.", "ggplot2", "i.e.", "jar", "jars",
                "ncdf", "netCDF", "rgl", "rpart", "xls", "xlsx")
     ## These should be lower case except at the beginning (and after :)
-    lpat <- "^(a|an|and|are|as|at|be|but|by|en|for|if|in|is|nor|not|of|on|or|per|so|the|to|v[.]?|via|vs[.]?|from|than|that|with)$"
+    lpat <- "^(a|an|and|are|as|at|be|but|by|en|for|if|in|is|nor|not|of|on|or|per|so|the|to|v[.]?|via|vs[.]?|from|into|than|that|with)$"
     ## These we don't care about
     either <- c("all", "above", "after", "along", "also", "among", "any",
-                "both", "can", "few", "into", "it", "less", "log", "many",
+                "both", "can", "few", "it", "less", "log", "many",
                 "may", "more", "some", "their", "then", "this", "under",
                 "until", "using", "von", "when", "where", "which", "will",
                 "yet", "you", "your")
