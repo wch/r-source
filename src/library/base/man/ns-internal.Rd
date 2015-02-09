@@ -78,17 +78,21 @@ loadingNamespaceInfo()
   \item{name}{symbol: name of namespace}
 }
 \description{
-  Internal namespace support functions.  Not intended to be called directly.
+  Internal namespace support functions.  Not intended to be called
+  directly, and only visible because of the special nature of the
+  \pkg{base} namespace.
 }
 \details{
   \code{packageHasNamespace} does not indicate if the package has a
-  namespace, rather if it has a \file{NAMESPACE} file, which \code{base}
-  and many older packages do not.  But then you are not intended to be
-  using it \dots.
+  namespace (all now do), rather if it has a \file{NAMESPACE} file,
+  which \pkg{base} and some legacy packages do not.  But then you are
+  not intended to be using it \dots.
 }
 
 \keyword{internal}
-\author{Luke Tierney}
+\author{
+  Luke Tierney and other members of the R Core Team.
+}
 \examples{
 ## Only for for the daring ones, trying to get into the bowels :
 
