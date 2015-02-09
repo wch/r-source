@@ -1,4 +1,4 @@
-f\input texinfo
+\input texinfo
 @c %**start of header
 @setfilename R-exts.info
 @settitle Writing R Extensions
