@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-11   The R Core Team.
+ *  Copyright (C) 2003-2015   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -254,4 +254,41 @@ SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 str
     UNPROTECT(1);
     free(buffer);
     return result;
+}
+
+SEXP splitString(SEXP string, SEXP delims)
+{
+    if(!isString(string) || length(string) != 1)
+	error("first arg must be a single character string");
+    if(!isString(delims) || length(delims) != 1)
+	error("first arg must be a single character string");
+    const char *in = CHAR(STRING_ELT(string, 0)),
+	*del = CHAR(STRING_ELT(delims, 0));
+    int nc = (int) strlen(in), used = 0;
+
+    // Used for short strings, so OK to over-allocate wildly
+    SEXP out = PROTECT(allocVector(STRSXP, nc));
+    const char *p;
+    char tmp[nc], *this = tmp;
+    memset(tmp, 0, nc);
+    int nthis = 0;
+    for(p = in; *p ; p++) {
+	if(strchr(del, *p)) {
+	    // put out current string (if any)
+	    if(nthis) SET_STRING_ELT(out, used++, mkCharLen(tmp, nthis));
+	    // put out delimiter
+	    SET_STRING_ELT(out, used++, mkCharLen(p, 1));
+	    // restart
+	    this = tmp; nthis = 0;
+	    memset(tmp, 0, nc);
+	} else {
+	    *this++ = *p;
+	    nthis++;
+	}
+    }
+    if(nthis) SET_STRING_ELT(out, used++, mkCharLen(tmp, nthis));
+
+    SEXP ans = lengthgets(out, used);
+    UNPROTECT(1);
+    return ans;
 }

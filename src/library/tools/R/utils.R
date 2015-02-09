@@ -1912,28 +1912,21 @@ toTitleCase <- function(text)
                        tolower(substring(x, 3L)))
             else paste0(toupper(x1), tolower(substring(x, 2L)))
         }
-        ## split on - and /
-        x <- gsub("([-/])", " \\1 ", x)
-        x <- gsub("\\(", "( ", x)
-        x <- gsub("\\)", " )", x)
-        xx <- strsplit(x, " ")[[1L]]
-        ## for alone we could insist on that exact capitalization
+        xx <- .Call(splitString, x, ' -/"()')
+        ## for 'alone' we could insist on that exact capitalization
         alone <- xx %in% c(alone, either)
         alone <- alone | grepl("^'.*'$", xx)
         havecaps <- grepl("^[[:alpha:]].*[[:upper:]]+", xx)
         l <- grepl(lpat, xx, ignore.case = TRUE)
         l[1L] <- FALSE
-        ## do not force capitalization after ":"
-        ind <- grep(":$", xx) + 1L
-        ind <- ind[ind <= length(l)]
-        l[ind] <- FALSE
+        ## do not remove capitalization immediately after ": " or "- "
+        ind <- grep("[-:]$", xx); ind <- ind[ind + 2L <= length(l)]
+        ind <- ind[(xx[ind + 1L] == " ") & grepl("^['[:alnum:]]", xx[ind + 2L])]
+        l[ind + 2L] <- FALSE
         xx[l] <- tolower(xx[l])
         keep <- havecaps | l | (nchar(xx) == 1L) | alone
         xx[!keep] <- sapply(xx[!keep], do1)
-        z <- paste(xx, collapse = " ")
-        z <- gsub("\\( ", "(", z)
-        z <- gsub(" \\)", ")", z)
-        gsub(" ([-/]) ", "\\1", z)
+        paste(xx, collapse = "")
     }
     if(typeof(text) != "character")
         stop("'text' must be a character vector")
