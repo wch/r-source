@@ -1919,6 +1919,7 @@ toTitleCase <- function(text)
         xx <- strsplit(x, " ")[[1L]]
         ## for alone we could insist on that exact capitalization
         alone <- xx %in% c(alone, either)
+        alone <- alone | grepl("^'.*'$", xx)
         havecaps <- grepl("^[[:alpha:]].*[[:upper:]]+", xx)
         l <- grepl(lpat, xx, ignore.case = TRUE)
         l[1L] <- FALSE

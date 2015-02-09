@@ -20,12 +20,15 @@ toTitleCase(text)
 
   No definition of\sQuote{title case} is universally accepted: all agree
   that \sQuote{principal} words are capitalized and common words like
-  \sQuote{for} are not.  Generally words in all capitals are left alone:
-  this implementation knows about conventional mixed-case words such as
-  \sQuote{LaTeX} and \sQuote{OpenBUGS} and a few technical terms which
-  are not usually capitalized such as \sQuote{jar} and \sQuote{xls}.
-  However, unknown technical terms (including names of libraries and
-  packages) will be capitalized.
+  \sQuote{for} are not, but not which words fall into each category.
+
+  Generally words in all capitals are left alone: this implementation
+  knows about conventional mixed-case words such as \sQuote{LaTeX} and
+  \sQuote{OpenBUGS} and a few technical terms which are not usually
+  capitalized such as \sQuote{jar} and \sQuote{xls}.  However, unknown
+  technical terms will be capitalized unless they are single words
+  enclosed in single quotes: names of packages and libraries should be
+  quoted in titles.
 }
 \value{
   A character vector of the same length as \code{text}, without names.
