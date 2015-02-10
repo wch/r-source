@@ -1658,7 +1658,7 @@ setRlibs <-
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
-                if (any(grepl("^Missing link", out)))
+                if (!all(grepl("Package[s]? unavailable to check", out)))
                     warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
