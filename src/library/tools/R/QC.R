@@ -6933,6 +6933,17 @@ function(dir)
             out$title_case <- c(title, title2)
     }
 
+    ## Check Description field.
+    descr <- trimws(as.vector(meta[["Description"]]))
+    descr <- gsub("[\n\t]", " ", descr)
+    package <- meta["Package"]
+    if(grepl(paste0("^['\"]?", package), descr))
+        out$descr_bad_start <- TRUE
+    if(grepl("^(The|This) package", descr))
+        out$descr_bad_start <- TRUE
+    if(!isTRUE(out$descr_bad_start) && !grepl("^['\"]?[[:upper:]]", descr))
+       out$descr_bad_initial <- TRUE
+
     ## Check URLs.
     if(capabilities("libcurl")) {
         ## Be defensive about building the package URL db.
@@ -7246,13 +7257,19 @@ function(x, ...)
                    collapse = "\n"))
       },
       if(length(x$title_is_name)) {
-          "Title field is just the package name: provide a real title."
+          "The Title field is just the package name: provide a real title."
       },
       if(length(x$title_includes_name)) {
-          "Title field starts with the package name."
+          "The Title field starts with the package name."
       },
       if(length(y <- x$title_case)) {
-          c("Title field should be in title case, current version then in title case:", sQuote(y))
+          c("The Title field should be in title case, current version then in title case:", sQuote(y))
+      },
+      if(length(x$descr_bad_initial)) {
+          "The Description field should start with a capital letter."
+      },
+      if(length(x$descr_bad_start)) {
+          "The Description field should not start with the package name,\n  'This package' or 'The package'."
       }
      )
 }
