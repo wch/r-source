@@ -559,12 +559,14 @@ getOption(x, default = NULL)
     }
 
     \item{\code{install.packages.check.source}:}{Used by
-      \code{\link{install.packages}} on platforms which support binary
+      \code{\link{install.packages}} (and indirectly
+      \code{\link{update.packages}}) on platforms which support binary
       packages.  Possible values \code{"yes"} and \code{"no"}, with
       unset being equivalent to \code{"yes"}.}
 
     \item{\code{install.packages.compile.from.source}:}{Used by
-      \code{\link{install.packages}(type = "both")} on platforms which
+      \code{\link{install.packages}(type = "both")} (and indirectly
+      \code{\link{update.packages}}) on platforms which
       support binary packages.  Possible values are \code{"never"},
       \code{"interactive"} (which means ask in interactive use and
       \code{"never"} in batch use) and \code{"always"}.  The default is

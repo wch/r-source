@@ -55,13 +55,13 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     Unused if a non-\code{NULL} \code{available} is supplied.} 
   \item{instlib}{character string giving the library directory where to
     install the packages.}
-  \item{ask}{logical indicating whether to ask user before packages are
+  \item{ask}{logical indicating whether to ask the user before packages are
     actually downloaded and installed, or the character string
     \code{"graphics"}, which brings up a widget to allow the
     user to (de-)select from the list of packages which could
     be updated or added.  The latter value only works on
     systems with a GUI version of \code{\link{select.list}},
-    and is otherwise equivalent to \code{ask = TRUE}.
+    and is otherwise equivalent to \code{ask = TRUE}. 
   }
   \item{available}{
     an object as returned by \code{\link{available.packages}}
@@ -145,6 +145,9 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{available.packages}}, \code{\link{download.packages}},
   \code{\link{installed.packages}}, \code{\link{contrib.url}}.
 
+  The options listed for \code{install.packages} under
+  \code{\link{options}}.
+  
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 

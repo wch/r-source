@@ -466,8 +466,9 @@
       tried if binary versions are not available or not up to date.
 
       There are options for what \code{install.packages(type = "both")}
-      will do if compilation of a source package is desirable: see
-      \code{?options} (under \pkg{utils}).
+      (possibly called \emph{via} \code{update.packages()}) will do if
+      compilation of a source package is desirable: see \code{?options}
+      (under \pkg{utils}).
 
       If you intend not to accept updates as source packages, you should
       use \code{update.packages(type = "binary")}.
