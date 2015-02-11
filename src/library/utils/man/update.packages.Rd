@@ -61,7 +61,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     user to (de-)select from the list of packages which could
     be updated or added.  The latter value only works on
     systems with a GUI version of \code{\link{select.list}},
-    and is otherwise equivalent to \code{ask = TRUE}. 
+    and is otherwise equivalent to \code{ask = TRUE}.
   }
   \item{available}{
     an object as returned by \code{\link{available.packages}}

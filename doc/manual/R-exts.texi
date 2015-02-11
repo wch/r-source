@@ -409,14 +409,6 @@ were @samp{0.1-0}.  It is @strong{not} a decimal number, so for example
 
 The mandatory @samp{License} field is discussed in the next subsection.
 
-
-@c DESCRIPTION field Description
-The mandatory @samp{Description} field should give a
-@emph{comprehensive} description of what the package does.  One can use
-several (complete) sentences, but only one paragraph. It should be
-intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
-package to all @acronym{CRAN} users).
-
 @c DESCRIPTION field Title
 The mandatory @samp{Title} field should give a @emph{short} description
 of the package.  Some package listings may truncate the title to 65
@@ -427,6 +419,13 @@ period (unless part of @dots{}).  Do not repeat the package name: it is
 often used prefixed by the name.  Refer to other packages and external
 libraries in single quotes, and to book titles (and similar) in double
 quotes.
+
+@c DESCRIPTION field Description
+The mandatory @samp{Description} field should give a
+@emph{comprehensive} description of what the package does.  One can use
+several (complete) sentences, but only one paragraph. It should be
+intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
+package to all @acronym{CRAN} users).
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R
