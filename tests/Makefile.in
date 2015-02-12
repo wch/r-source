@@ -98,6 +98,8 @@ distclean: clean
 	done
 	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
 	-@rm -rf *.Rcheck RecPackages
+	-@rm -f *.fail
+
 maintainer-clean: distclean
 
 R install install-strip uninstall TAGS info dvi:

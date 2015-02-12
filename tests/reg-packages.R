@@ -99,15 +99,17 @@ stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
 ### Specific Tests on our "special" packages: ------------------------------
 
 ## Find objects which are NULL via "::" -- not to be expected often
-## we have one in our pkgA
-require(pkgA, lib="myLib")
-data(package = "pkgA") # -> nilData
-stopifnot(is.null( pkgA::  nil),
-	  is.null( pkgA::: nil),
-	  is.null( pkgA::  nilData)) # <-
-## R-devel (pre 3.2.0) wrongly errored for NULL lazy data
-## ::: does not apply to data sets:
-tools::assertError(is.null(pkgA:::nilData))
+## we have one in our pkgA, but only if Matrix is present
+if(dir.exists(file.path("myLib", "pkgA"))) {
+  require(pkgA, lib="myLib")
+  data(package = "pkgA") # -> nilData
+  stopifnot(is.null( pkgA::  nil),
+	    is.null( pkgA::: nil),
+	    is.null( pkgA::  nilData)) # <-
+  ## R-devel (pre 3.2.0) wrongly errored for NULL lazy data
+  ## ::: does not apply to data sets:
+  tools::assertError(is.null(pkgA:::nilData))
+}
 
 ## clean up
 unlink("myLib", recursive = TRUE)

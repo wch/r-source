@@ -85,7 +85,7 @@ clean:
 distclean: clean
 	@$(MK) -C Examples $@
 	@rm -rf *.Rcheck RecPackages
-
+	-@rm -f *.fail
 
 install-tests:
 	@for f in $(INSTFILES); do \
