@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -13,7 +13,7 @@
 \concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{
-  Take a sequence of vector, matrix or data frames arguments and combine
+  Take a sequence of vector, matrix or data-frame arguments and combine
   by \emph{c}olumns or \emph{r}ows, respectively.  These are generic
   functions with methods for other \R classes.
 }
@@ -70,6 +70,11 @@ rbind(\dots, deparse.level = 1)
   \code{NULL}) are ignored unless the result would have zero rows
   (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
+  
+  Matrices are restricted to less than \eqn{2^{31}}{2^31} rows and
+  columns even on 64-bit systems.  So input vectors have the same length
+  restriction: as from \R 3.2.0 input matrices with more elements (but
+  meeting the row and column restrictions) are allowed.
 }
 \section{Data frame methods}{
   The \code{cbind} data frame method is just a wrapper for

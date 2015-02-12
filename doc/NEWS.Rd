@@ -306,6 +306,10 @@
       
       \item New function \code{toTitleCase()} in package \pkg{tools},
       tailored to package titles.
+      
+      \item The matrix methods of \code{cbind()} and \code{rbind()}
+      allow matrices as inputs which have 2^31 or more elements.
+      (For \code{cbind()}, wish of \PR{16198}.)
     }
   }
 

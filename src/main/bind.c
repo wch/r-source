@@ -1157,7 +1157,6 @@ static void SetColNames(SEXP dimnames, SEXP x)
 static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		  int deparse_level)
 {
-    int i, j, k, idx;
     Rboolean have_rnames = FALSE, have_cnames = FALSE, warned = FALSE;
     int nnames, mnames;
     int rows, cols, mrows, lenmin = 0;
@@ -1214,7 +1213,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		    mnames = mrows;
 	    }
 	} else {
-	    k = length(u);
+	    int k = length(u);
 	    if (!warned && k > 0 && (k > rows || rows % k)) {
 		warned = TRUE;
 		warning("number of rows of result is not a multiple of vector length (arg %d)", na + 1);
@@ -1239,9 +1238,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, STRSXP);
-		k = LENGTH(u);
-		idx = (!isMatrix(u)) ? rows : k;
-		for (i = 0; i < idx; i++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (!isMatrix(u)) ? rows : k;
+		for (R_xlen_t i = 0; i < idx; i++)
 		    SET_STRING_ELT(result, n++, STRING_ELT(u, i % k));
 	    }
 	}
@@ -1264,17 +1263,17 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		case VECSXP:
 		case LISTSXP:
 		    PROTECT(u = coerceVector(u, mode));
-		    k = LENGTH(u);
+		    R_xlen_t k = XLENGTH(u);
 		    if (k > 0) {
-			idx = (!umatrix) ? rows : k;
-			for (i = 0; i < idx; i++)
+			R_xlen_t idx = (!umatrix) ? rows : k;
+			for (R_xlen_t i = 0; i < idx; i++)
 			    SET_VECTOR_ELT(result, n++,
 					   lazy_duplicate(VECTOR_ELT(u, i % k)));
 		    }
 		    UNPROTECT(1);
 		    break;
 		default:
-		    for (i = 0; i < rows; i++)
+		    for (int i = 0; i < rows; i++)
 			SET_VECTOR_ELT(result, n++, lazy_duplicate(u));
 		}
 	    }
@@ -1285,9 +1284,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, CPLXSXP);
-		k = LENGTH(u);
-		idx = (!isMatrix(u)) ? rows : k;
-		for (i = 0; i < idx; i++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (!isMatrix(u)) ? rows : k;
+		for (R_xlen_t i = 0; i < idx; i++)
 		    COMPLEX(result)[n++] = COMPLEX(u)[i % k];
 	    }
 	}
@@ -1297,9 +1296,9 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, RAWSXP);
-		k = LENGTH(u);
-		idx = (!isMatrix(u)) ? rows : k;
-		for (i = 0; i < idx; i++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (!isMatrix(u)) ? rows : k;
+		for (R_xlen_t i = 0; i < idx; i++)
 		    RAW(result)[n++] = RAW(u)[i % k];
 	    }
 	}
@@ -1308,20 +1307,20 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
-		k = LENGTH(u);
-		idx = (!isMatrix(u)) ? rows : k;
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (!isMatrix(u)) ? rows : k;
 		if (TYPEOF(u) <= INTSXP) { /* INT or LGL */
 		    if (mode <= INTSXP) {
-			for (i = 0; i < idx; i++)
+			for (R_xlen_t i = 0; i < idx; i++)
 			    INTEGER(result)[n++] = INTEGER(u)[i % k];
 		    }
 		    else {
-			for (i = 0; i < idx; i++)
+			for (R_xlen_t i = 0; i < idx; i++)
 			    REAL(result)[n++] = (INTEGER(u)[i % k]) == NA_INTEGER ? NA_REAL : INTEGER(u)[i % k];
 		    }
 		}
 		else if (TYPEOF(u) == REALSXP) {
-		    for (i = 0; i < idx; i++)
+		    for (R_xlen_t i = 0; i < idx; i++)
 			REAL(result)[n++] = REAL(u)[i % k];
 		}
 		else { /* RAWSXP */
@@ -1330,10 +1329,10 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		       raw losslessly but not vice versa. So due to the way this was
 		       defined the raw -> logical conversion is bound to be lossy .. */
 		    if (mode == LGLSXP)
-			for (i = 0; i < idx; i++)
+			for (R_xlen_t i = 0; i < idx; i++)
 			    LOGICAL(result)[n++] = RAW(u)[i % k] ? TRUE : FALSE;
 		    else
-			for (i = 0; i < idx; i++)
+			for (R_xlen_t i = 0; i < idx; i++)
 			    INTEGER(result)[n++] = (unsigned char) RAW(u)[i % k];
 		}
 	    }
@@ -1348,7 +1347,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    nam = SET_VECTOR_ELT(dn, 1, allocVector(STRSXP, cols));
 	else
 	    nam = R_NilValue;	/* -Wall */
-	j = 0;
+	int j = 0;
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u)) {
@@ -1363,11 +1362,11 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		/* but if tnam is non-null, have_cnames = TRUE: see above */
 		tnam = GetColNames(v);
 		if (tnam != R_NilValue) {
-		    for (i = 0; i < length(tnam); i++)
+		    for (int i = 0; i < length(tnam); i++)
 			SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 		}
 		else if (have_cnames) {
-		    for (i = 0; i < ncols(u); i++)
+		    for (int i = 0; i < ncols(u); i++)
 			SET_STRING_ELT(nam, j++, R_BlankString);
 		}
 	    } else if (length(u) >= lenmin) {
@@ -1402,7 +1401,6 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		  int deparse_level)
 {
-    int i, j, k, idx;
     Rboolean have_rnames = FALSE, have_cnames = FALSE, warned = FALSE;
     int nnames, mnames;
     int rows, cols, mcols, lenmin = 0;
@@ -1461,7 +1459,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    }
 	}
 	else {
-	    k = length(u);
+	    int k = length(u);
 	    if (!warned && k>0 && (k > cols || cols % k)) {
 		warned = TRUE;
 		warning("number of columns of result is not a multiple of vector length (arg %d)", na + 1);
@@ -1487,10 +1485,10 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, STRSXP);
-		k = LENGTH(u);
-		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
-		for (i = 0; i < idx; i++)
-		    for (j = 0; j < cols; j++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		for (R_xlen_t i = 0; i < idx; i++)
+		    for (int j = 0; j < cols; j++)
 		      SET_STRING_ELT(result, i + n + (j * rows),
 				     STRING_ELT(u, (i + j * idx) % k));
 		n += idx;
@@ -1503,10 +1501,10 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
  	    int umatrix = isMatrix(u), urows = umatrix ? nrows(u) : 1; /* coercing to VECSXP will lose these. PR#15468 */
 	    if (umatrix || length(u) >= lenmin) {
 		PROTECT(u = coerceVector(u, mode));
-		k = LENGTH(u);
-		idx = umatrix ? urows : (k > 0);
-		for (i = 0; i < idx; i++)
-		    for (j = 0; j < cols; j++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = umatrix ? urows : (k > 0);
+		for (R_xlen_t i = 0; i < idx; i++)
+		    for (int j = 0; j < cols; j++)
 		      SET_VECTOR_ELT(result, i + n + (j * rows),
 				     lazy_duplicate(VECTOR_ELT(u, (i + j * idx) % k)));
 		n += idx;
@@ -1519,10 +1517,10 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, RAWSXP);
-		k = LENGTH(u);
-		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
-		for (i = 0; i < idx; i++)
-		    for (j = 0; j < cols; j++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		for (R_xlen_t i = 0; i < idx; i++)
+		    for (int j = 0; j < cols; j++)
 			RAW(result)[i + n + (j * rows)]
 			    = RAW(u)[(i + j * idx) % k];
 		n += idx;
@@ -1534,10 +1532,10 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u) || length(u) >= lenmin) {
 		u = coerceVector(u, CPLXSXP);
-		k = LENGTH(u);
-		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
-		for (i = 0; i < idx; i++)
-		    for (j = 0; j < cols; j++)
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		for (R_xlen_t i = 0; i < idx; i++)
+		    for (int j = 0; j < cols; j++)
 			COMPLEX(result)[i + n + (j * rows)]
 			    = COMPLEX(u)[(i + j * idx) % k];
 		n += idx;
@@ -1548,41 +1546,41 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t)); /* type of u can be any of: RAW, LGL, INT, REAL */
 	    if (isMatrix(u) || length(u) >= lenmin) {
-		k = LENGTH(u);
-		idx = (isMatrix(u)) ? nrows(u) : (k > 0);
+		R_xlen_t k = XLENGTH(u);
+		R_xlen_t idx = (isMatrix(u)) ? nrows(u) : (k > 0);
 		if (TYPEOF(u) <= INTSXP) {
 		    if (mode <= INTSXP) {
-			for (i = 0; i < idx; i++)
-			    for (j = 0; j < cols; j++)
+			for (R_xlen_t i = 0; i < idx; i++)
+			    for (int j = 0; j < cols; j++)
 				INTEGER(result)[i + n + (j * rows)]
 				    = INTEGER(u)[(i + j * idx) % k];
 			n += idx;
 		    }
 		    else {
-			for (i = 0; i < idx; i++)
-			    for (j = 0; j < cols; j++)
+			for (R_xlen_t i = 0; i < idx; i++)
+			    for (int j = 0; j < cols; j++)
 				REAL(result)[i + n + (j * rows)]
 				    = (INTEGER(u)[(i + j * idx) % k]) == NA_INTEGER ? NA_REAL : INTEGER(u)[(i + j * idx) % k];
 			n += idx;
 		    }
 		}
 		else if (TYPEOF(u) == REALSXP) {
-		    for (i = 0; i < idx; i++)
-			for (j = 0; j < cols; j++)
+		    for (R_xlen_t i = 0; i < idx; i++)
+			for (int j = 0; j < cols; j++)
 			    REAL(result)[i + n + (j * rows)]
 				= REAL(u)[(i + j * idx) % k];
 		    n += idx;
 		}
 		else { /* RAWSXP */
 		    if (mode == LGLSXP) {
-			for (i = 0; i < idx; i++)
-			    for (j = 0; j < cols; j++)
+			for (R_xlen_t i = 0; i < idx; i++)
+			    for (int j = 0; j < cols; j++)
 				LOGICAL(result)[i + n + (j * rows)]
 				    = RAW(u)[(i + j * idx) % k] ? TRUE : FALSE;
 		    }
 		    else
-			for (i = 0; i < idx; i++)
-			    for (j = 0; j < cols; j++)
+			for (R_xlen_t i = 0; i < idx; i++)
+			    for (int j = 0; j < cols; j++)
 				INTEGER(result)[i + n + (j * rows)]
 				    = (unsigned char) RAW(u)[(i + j * idx) % k];
 		}
@@ -1598,7 +1596,7 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    nam = SET_VECTOR_ELT(dn, 0, allocVector(STRSXP, rows));
 	else
 	    nam = R_NilValue;	/* -Wall */
-	j = 0;
+	int j = 0;
 	for (t = args; t != R_NilValue; t = CDR(t)) {
 	    u = PRVALUE(CAR(t));
 	    if (isMatrix(u)) {
@@ -1614,11 +1612,11 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 		tnam = GetRowNames(v);
 		if (have_rnames) {
 		    if (tnam != R_NilValue) {
-			for (i = 0; i < length(tnam); i++)
+			for (int i = 0; i < length(tnam); i++)
 			    SET_STRING_ELT(nam, j++, STRING_ELT(tnam, i));
 		    }
 		    else {
-			for (i = 0; i < nrows(u); i++)
+			for (int i = 0; i < nrows(u); i++)
 				SET_STRING_ELT(nam, j++, R_BlankString);
 		    }
 		}
