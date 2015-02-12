@@ -238,10 +238,10 @@ function(files, filter, control = list(), encoding = "unknown",
     db
 }
 
-format.aspell <- 
+format.aspell <-
 function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
 {
-    if(!(nr <- nrow(x))) return(character())
+    if(!nrow(x)) return(character())
 
     if(sort)
         x <- x[order(x$Original, x$File, x$Line, x$Column), ]
@@ -629,7 +629,7 @@ function(dir,
 
     fgroups <- split(files, vinfo$engines)
     egroups <- split(vinfo$encodings, vinfo$engines)
-    
+
     do.call(rbind,
             Map(function(fgroup, egroup, engine) {
                 engine <- tools::vignetteEngine(engine)

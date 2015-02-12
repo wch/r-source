@@ -195,7 +195,7 @@ function(dir, installed = FALSE)
 }
 
 url_db_from_package_README_md <-
-function(dir)    
+function(dir)
 {
     urls <- character()
     if(file.exists(rfile <- file.path(dir, "README.md")) &&
@@ -214,7 +214,6 @@ function(dir)
 url_db_from_package_sources <-
 function(dir, add = FALSE) {
     meta <- .read_description(file.path(dir, "DESCRIPTION"))
-    cfile <- file.path(dir, "inst", "CITATION")
     db <- rbind(url_db_from_package_metadata(meta),
                 url_db_from_package_Rd_db(Rd_db(dir = dir)),
                 url_db_from_package_citation(dir, meta),
@@ -240,7 +239,6 @@ function(packages, lib.loc = NULL, verbose = FALSE)
         if(dir == "") return()
         meta <- .read_description(file.path(dir, "DESCRIPTION"))
         rddb <- Rd_db(p, lib.loc = dirname(dir))
-        cfile <- file.path(dir, "CITATION")
         db <- rbind(url_db_from_package_metadata(meta),
                     url_db_from_package_Rd_db(rddb),
                     url_db_from_package_citation(dir, meta,

@@ -189,8 +189,7 @@ findPackageEnv <- function(info)
     if(info %in% search()) return(as.environment(info))
     message(gettextf("Attempting to load the environment %s", sQuote(info)),
             domain = NA)
-    pkg <- substr(info, 9L, 1000L)
-    if(require(pkg, character.only=TRUE, quietly = TRUE))
+    if(require(substr(info, 9L, 1000L), character.only = TRUE, quietly = TRUE))
         return(as.environment(info))
     message("Specified environment not found: using '.GlobalEnv' instead")
     .GlobalEnv
