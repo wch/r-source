@@ -713,6 +713,9 @@
 
       \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
       layout changes of \R 3.1.0.
+
+      \item The \code[xtfrm()} method for class \code{"Surv"} has been
+      corrected and its description expanded.
     }
   }
 }

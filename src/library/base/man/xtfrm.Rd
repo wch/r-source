@@ -1,6 +1,6 @@
 % File src/library/base/man/xtfrm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-10 R Core Team
+% Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xtfrm}
@@ -33,7 +33,9 @@ xtfrm(x)
 
   The \code{\link{factor}} method extracts the codes.  The
   \code{\link[survival]{Surv}} method sorts first on times and then on
-  status code(s).
+  status code(s), finally on \code{timme2} if present.  Note that with
+  the conventional status codes this sorts individuals still alive before
+  deaths.
 
   The default method will unclass the object if
   \code{\link{is.numeric}(x)} is true but otherwise make use of
