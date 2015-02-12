@@ -1502,6 +1502,8 @@ Ops.data.frame <- function(e1, e2 = NULL)
     value <- list()
     rn <- NULL
     ## set up call as op(left, right)
+    ## These are used, despite
+    ## _R_CHECK_CODETOOLS_PROFILE_="suppressLocalUnused=FALSE"
     FUN <- get(.Generic, envir = parent.frame(), mode = "function")
     f <- if (unary) quote(FUN(left)) else quote(FUN(left, right))
     lscalar <- rscalar <- FALSE
