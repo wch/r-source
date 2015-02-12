@@ -1,7 +1,7 @@
 #  File src/library/methods/R/ClassExtensions.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -198,7 +198,7 @@ makeExtends <- function(Class, to,
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(isXS3Class(classDef2)) {
-            allNames <- names(slots)
+##            allNames <- names(slots)
             body(coerce, envir = packageEnv) <-
                 substitute({
                     if(strict) S3Part(from, S3Class = S3CLASS)

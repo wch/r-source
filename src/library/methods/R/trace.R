@@ -1,7 +1,7 @@
 #  File src/library/methods/R/trace.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -619,7 +619,7 @@ utils::globalVariables("fdef")
     allObjects <- allObjects[is.na(match(allObjects, .functionsOverriden))]
     ## counts of packaages containing objects; objects not found don't count
     possible <- sort(table(unlist(lapply(allObjects, find))), decreasing = TRUE)
-    message <- ""
+##    message <- ""
     if(length(possible) == 0)
         stop("none of the objects in the source code could be found:  need to attach or specify the package")
     else if(length(possible) > 1L) {
@@ -646,11 +646,11 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
         packageIsVisible <- pstring %in% search()
         if(packageIsVisible) {
             envp <- as.environment(pstring)
-            envns <- tryCatch(asNamespace(package), error = function(cond) NULL)
+##            envns <- tryCatch(asNamespace(package), error = function(cond) NULL)
         }
         else {
             envp <- tryCatch(asNamespace(package), error = function(cond) NULL)
-            envns <- envp
+##            envns <- envp
         }
         if(is.null(envp))
             stop(gettextf("package %s is not attached and no namespace found for it",
@@ -686,8 +686,8 @@ insertSource <- function(source, package = "",
         allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects) | ".cacheOnAssign" == allObjects)]
     allMethodTables <- function()
         allObjects[grepl(MPattern, allObjects)]
-    allClassDefs <- function()
-        allObjects[grepl(CPattern, allObjects)]
+##    allClassDefs <- function()
+##        allObjects[grepl(CPattern, allObjects)]
     differs <- function(f1, f2)
         !(identical(body(f1), body(f2)) && identical(args(f1), args(f2)))
     if(is.environment(source) && !nzchar(package)) {

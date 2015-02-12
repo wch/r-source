@@ -382,7 +382,7 @@ finalDefaultMethod <-
         if(is.function(method) #somewhat liberal, but catches both methods and primitives
            || is.null(method))
           break
-        value <- NULL
+##        value <- NULL
         if(is(method, "MethodsList"))
             method <-  elNamed(slot(method, "methods"), "ANY")
         else
@@ -751,8 +751,8 @@ linearizeMlist <-
         methods <- mlist@methods
         allMethods <- mlist@allMethods
         if(inherited && length(allMethods) >= length(methods)) {
-            anames <- names(allMethods)
-            inh <- is.na(match(anames, names(methods)))
+##            anames <- names(allMethods)
+##            inh <- is.na(match(anames, names(methods)))
             methods <- allMethods
         }
         preC <- function(y, x)c(x,y) # used with lapply below

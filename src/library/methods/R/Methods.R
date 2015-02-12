@@ -298,14 +298,12 @@ removeGeneric <-
   ##
     function(f, where = topenv(parent.frame()))
 {
-    ev <- fdef <- NULL
+    fdef <- NULL
     allEv <- findFunction(f, where = where)
     for(maybeEv in allEv) {
         fdef <- get(f, maybeEv)
-        if(is(fdef, "genericFunction")) {
-            ev <- maybeEv
+        if(is(fdef, "genericFunction"))
             break
-        }
     }
     found <- is(fdef, "genericFunction")
     if(found) {

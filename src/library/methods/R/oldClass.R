@@ -303,7 +303,7 @@ S3Class <- function(object) {
 ## name are added, other than the className slot and the super/sub class names
 ## in the contains, subclasses slots respectively.
 .renameClassDef <- function(def, className) {
-    oldName <- def@className
+##    oldName <- def@className
     validObject(def) # to catch any non-SClassExtension objects
     def@className <- className
     comp <- def@contains

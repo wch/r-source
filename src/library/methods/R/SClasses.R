@@ -605,7 +605,7 @@ resetClass <- function(Class, classDef, where) {
                 stop(gettextf("argument 'classDef' must be a string or a class representation; got an object of class %s",
                               dQuote(class(classDef))),
                      domain = NA)
-            package <- getPackageName(where)
+#            package <- getPackageName(where)
         }
         if(classDef@sealed)
             warning(gettextf("class %s is sealed; 'resetClass' will have no effect",
@@ -696,7 +696,7 @@ initialize <- function(.Object, ...) {
             for(i in seq_along(snames)) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
-                slotClassDef <- getClassDef(slotClass, package=ClassDef@package)
+                slotClassDef <- getClassDef(slotClass, package = ClassDef@package)
                 slotVal <- el(elements, i)
                 ## perform non-strict coercion, but leave the error messages for
                 ## values not conforming to the slot definitions to validObject(),

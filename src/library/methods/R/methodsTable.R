@@ -52,14 +52,14 @@
 ## action on attach, detach to merge methods tables
 .mergeMethodsTable <- function(generic, table, newtable, add = TRUE) {
   fenv <- environment(generic)
-  signature <- generic@signature
+##  signature <- generic@signature
   if(!exists(".SigLength", envir = fenv, inherits = FALSE))
      .setupMethodsTables(generic)
   allTable <- if(!add) get(".AllMTable", envir = fenv) ## else NULL
                                         # .AllMTable but only if required
   n <- get(".SigLength", envir = fenv)
   anySig <- rep("ANY", n) # assert doesn't need to be a real signature
-  anyLabel <- .sigLabel(anySig)
+##  anyLabel <- .sigLabel(anySig)
   newMethods <- names(newtable)
   for(what in newMethods) {
     obj <- get(what, envir = newtable)
@@ -134,7 +134,7 @@
         obj@target <- sig
     }
     else if(is.environment(obj)) {
-        xtrPkg <- rep("methods", nadd)
+##        xtrPkg <- rep("methods", nadd)
         for(what in names(obj)) {
             objw <- get(what, envir = obj)
             if(is(objw, "MethodDefinition")) {
@@ -571,7 +571,7 @@
         if(length(select) > 1L) {
             if(verbose) cat(" .fI> found", length(select)," best methods\n")
 
-            target <- .sigLabel(classes)
+##            target <- .sigLabel(classes)
             condAction <- getOption("ambiguousMethodSelection")
             if(is.null(condAction))
               condAction <- .ambiguousMethodMessage
@@ -698,7 +698,7 @@
 {
     fdef <- getGeneric(f)
     env <- environment(fdef)
-    target <- method@target
+##    target <- method@target
     n <- get(".SigLength", envir = env)
     defined <- method@defined
     m <- length(defined)
@@ -1019,10 +1019,10 @@
     cf <- function(...) cat(file = printTo, sep = "", ...)
     sigString <- function(sig)
 	paste0(names(sig), "=\"", as.character(sig), "\"", collapse = ", ")
-    qs <- function(what) paste0('"', what, '"', collapse = ", ")
+##    qs <- function(what) paste0('"', what, '"', collapse = ", ")
     doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
     env <- environment(generic)
-    signature <- generic@signature
+##    signature <- generic@signature
     table <- get(if(inherited) ".AllMTable" else ".MTable", envir = env)
     f <- generic@generic
     p <- packageSlot(f)

@@ -96,7 +96,7 @@
         stop("no suitable arguments to dispatch methods in this function")
     attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
     value@signature <- signature
-    name <- signature[[1L]]
+##    name <- signature[[1L]]
     if(is.null(fdefault))
         {} # pre 2.11.0: methods <- MethodsList(name)
     else {
@@ -776,7 +776,7 @@ getGenerics <- function(where, searchForm = FALSE)
     if(missing(where)) where <- .envSearch(topenv(parent.frame()))
     else if(is.environment(where)) where <- list(where)
     these <- unlist(lapply(where, objects, all.names=TRUE), use.names=FALSE)
-    these <- allThese <- unique(these)
+    these <- unique(these)
     these <- these[substr(these, 1L, 6L) == ".__T__"]
     if(length(these) == 0L)
         return(character())

@@ -670,7 +670,7 @@ class method modifies a field.
     n <- length(argls <- formals(x))
     noDeflt <- if(n > 0) vapply(argls, function(x) !is.name(x) || nzchar(as.character(x)), NA)
     if (n) {
-        arg.names <- arg.n <- names(argls)
+        arg.names <- names(argls)
     }
     Call <- paste0("$", name, "(")
     for (i in seq_len(n)) {
@@ -845,7 +845,7 @@ refClassInformation <- function(Class, contains, fields, refMethods, where) {
                  domain = NA)
     }
     ## assemble inherited information
-    fc <- fp <- cm <- list(); fr <- character()
+    fc <- fp <- cm <- list() #; fr <- character()
     ## assign in reverse order so nearer superclass overrides
     for(cl in rev(superClassDefs[isRefSuperClass])) {
         fcl <- cl@fieldClasses
@@ -922,7 +922,7 @@ setRefClass <- function(Class, fields = character(),
                         where = topenv(parent.frame()),
                         ...) {
     fields <- inferProperties(fields, "field")
-    theseMethods <- names(methods) # non-inherited, for processing later
+##    theseMethods <- names(methods) # non-inherited, for processing later
     ## collect the method and field definitions
     info <- refClassInformation(Class, contains, fields, methods, where)
     ## make codetools happy:
