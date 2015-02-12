@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-12 r67800) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-12 r67806) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -19,19 +19,22 @@ Type 'q()' to quit R.
 > 
 > library(parallel)
 > 
-> library(boot)
-> run1 <- function(...) {
-+    library(boot)
-+    cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
-+    cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
-+    boot(cd4, corr, R = 500, sim = "parametric",
-+         ran.gen = cd4.rg, mle = cd4.mle)
+> if(require(boot)) {
++     run1 <- function(...) {
++         library(boot)
++         cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
++         cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
++         boot(cd4, corr, R = 500, sim = "parametric",
++              ran.gen = cd4.rg, mle = cd4.mle)
++     }
++     cl <- makeCluster(mc <- 2)
++     clusterSetRNGStream(cl, 123)
++     cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1))
++     print(boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
++                   conf = 0.9, h = atanh, hinv = tanh))
++     stopCluster(cl)
 + }
-> cl <- makeCluster(mc <- 2)
-> clusterSetRNGStream(cl, 123)
-> cd4.boot <- do.call(c, parLapply(cl, seq_len(mc), run1))
-> boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
-+         conf = 0.9, h = atanh, hinv = tanh)
+Loading required package: boot
 BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 Based on 1000 bootstrap replicates
 
@@ -43,9 +46,8 @@ Intervals :
 Level      Normal              Basic              Percentile     
 90%   ( 0.4705,  0.8589 )   ( 0.4620,  0.8597 )   ( 0.4900,  0.8689 )  
 Calculations on Transformed Scale;  Intervals on Original Scale
-> stopCluster(cl)
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.148   0.023   0.603 
+  0.174   0.026   0.621 

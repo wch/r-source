@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-12 r67800) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-12 r67806) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3770,7 +3770,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x3db7eb8>
+<environment: 0x3deffd8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4733,7 +4733,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x332c618>
+<bytecode: 0x3364678>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7257,7 +7257,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x1a315f0>
+<environment: 0x1a695f0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11737,14 +11737,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x385eb88>
-<environment: 0x384f4d8>
+<bytecode: 0x3897b68>
+<environment: 0x38884b8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x385eca0>
-<environment: 0x384f4d8>
+<bytecode: 0x3897c80>
+<environment: 0x38884b8>
 
 > 
 > 
@@ -15562,8 +15562,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x2bfbe50>
-<environment: 0x602ef70>
+<bytecode: 0x2c33e88>
+<environment: 0x610f700>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17853,7 +17853,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.522 0.113 4.639 0 0 
+Time elapsed:  4.434 0.117 4.552 0 0 
 > grDevices::dev.off()
 null device 
           1 
