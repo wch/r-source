@@ -211,15 +211,17 @@ install.packages <-
 	} else
 	    stop("no packages were specified")
 
-        ## This will only offer the specified type.
-	if(is.null(available))
-	    available <- available.packages(contriburl = contriburl,
-					    method = method)
-	if(NROW(available)) {
+        ## This will only offer the specified type.  If type = "both"
+        ## do not want 'available' set for "source".
+	if(is.null(available)) {
+	    av <- available.packages(contriburl = contriburl, method = method)
+            if(type != "both") available <- av
+        } else av <- available
+	if(NROW(av)) {
             ## avoid duplicate entries in menus, since the latest available
             ## will be picked up
             ## sort in the locale, as R <= 2.10.1 did so
-	    pkgs <- select.list(sort(unique(rownames(available))),
+	    pkgs <- select.list(sort(unique(rownames(av))),
                                 multiple = TRUE,
                                 title = "Packages", graphics = TRUE)
 	}
