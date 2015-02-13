@@ -4183,6 +4183,9 @@ function (object, ...)
 @}
 @end example
 
+A function named @code{@var{gen}.@var{cl}} will be invoked by the
+generic @code{@var{gen}} for class @code{@var{cl}}, so do not name
+functions in this style unless they are intended to be methods.
 
 The reader is referred to the @emph{R Language Definition} for a more
 complete discussion of this mechanism.
