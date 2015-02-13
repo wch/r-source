@@ -3191,11 +3191,12 @@ at @url{https://github.com/laurikari/tre/}, but at the time of writing
 the resulting build will not pass its checks.).
 
 @c 5.0.3 was released on 2011-05-21
-Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later will
-be used if installed: the version in the @R{} sources can be selected
-instead by configuring with @option{--without-system-xz}.  Systems
-differ in what they call the package including this: e.g.@: on Fedora
-the library is in @samp{xz-libs} and the headers in @samp{xz-devel}.
+Library @code{liblzma} from @code{xz-utils} version 5.0.3 or later
+(including 5.2.x) will be used if installed: the version in the @R{}
+sources can be selected instead by configuring with
+@option{--without-system-xz}.  Systems differ in what they call the
+package including this: e.g.@: on Fedora the library is in
+@samp{xz-libs} and the headers in @samp{xz-devel}.
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may

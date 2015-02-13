@@ -12747,6 +12747,11 @@ with examples of the problems caused by not adhering to them.
 This chapter only covers the `informal' class system copied from S3,
 and not with the S4 (formal) methods of package @pkg{methods}.
 
+First, a @emph{caveat}: a function named @code{@var{gen}.@var{cl}} will
+be invoked by the generic @code{@var{gen}} for class @code{@var{cl}}, so
+do not name functions in this style unless they are intended to be
+methods.
+
 The key function for methods is @code{NextMethod}, which dispatches the
 next method.  It is quite typical for a method function to make a few
 changes to its arguments, dispatch to the next method, receive the
@@ -12763,13 +12768,9 @@ t.data.frame <- function(x)
 @end example
 
 @noindent
-Also consider @code{predict.glm}: it happens that in @R{} for historical
-reasons it calls @code{predict.lm} directly, but in principle (and in S
-originally and currently) it could use @code{NextMethod}.
-(@code{NextMethod} seems under-used in the @R{} sources.  Do be aware
-that there are S/R differences in this area, and the example above works
-because there is a @emph{next} method, the default method, not that a
-new method is selected when the class is changed.)
+Note that the example above works because there is a @emph{next} method,
+the default method, not that a new method is selected when the class is
+changed.
 
 @emph{Any} method a programmer writes may be invoked from another method
 by @code{NextMethod}, @emph{with the arguments appropriate to the
