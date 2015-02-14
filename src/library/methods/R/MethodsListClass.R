@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsListClass.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -261,17 +261,17 @@
 	       where = envir)
     ## and its default methods:
     setMethod("cbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y) .__H__.cbind(deparse.level = 0, x, y) )
+	      function(x,y, ...) .__H__.cbind(deparse.level = 0, x, y) )
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
-	      function(x,y) .__H__.cbind(deparse.level = 0, x) )
+	      function(x,y, ...) .__H__.cbind(deparse.level = 0, x) )
 
     setGeneric("rbind2", function(x, y, ...) standardGeneric("rbind2"),
 	       where = envir)
     ## and its default methods:
     setMethod("rbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y) .__H__.rbind(deparse.level = 0, x, y) )
+	      function(x,y, ...) .__H__.rbind(deparse.level = 0, x, y) )
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
-	      function(x,y) .__H__.rbind(deparse.level = 0, x) )
+	      function(x,y, ...) .__H__.rbind(deparse.level = 0, x) )
 
     setGeneric("kronecker", where = envir)# <- unneeded?
 
