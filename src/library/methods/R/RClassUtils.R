@@ -1528,10 +1528,9 @@ setDataPart <- function(object, value, check = TRUE) {
         ## construct the composite coerce method, taking into account the strict=
         ## argument.
         f <- toExt@coerce
-        fR <- toExt@replace
-            toExpr <- body(f)
-            fBy <- byExt@coerce
-            byExpr <- body(fBy)
+	toExpr <- body(f)
+	fBy <- byExt@coerce
+	byExpr <- body(fBy)
         ## if both are simple extensions, so is the composition
         if(byExt@simple && toExt@simple) {
             expr <- (if(byExt@dataPart)
