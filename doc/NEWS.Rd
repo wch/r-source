@@ -137,7 +137,7 @@
       \item An experimental utility \code{dynGet()} useful for detecting
       cycles, aka infinite recursions.
 
-      \item The byte code compiler and interpreter now include new
+      \item The byte-code compiler and interpreter include new
       instructions that allow many scalar subsetting and assignment and
       scalar arithmetic operations to be handled more efficiently. This
       can result in significant performance improvements in scalar
@@ -149,10 +149,11 @@
       \item A new somewhat experimental function \code{debuggingState()}
       has been added, allowing to temporarily turn off debugging.
 
-      \item \code{example()} gets new optional argument \code{run.donttest}
-      and \code{tools::Rd2ex()} a corresponding \code{commentDonttest},
-      with a default such that \code{example(..)} in help examples will
-      run \code{\\donttest} code only if used interactively.
+      \item \code{example()} gets a new optional argument
+      \code{run.donttest} and \code{tools::Rd2ex()} a corresponding
+      \code{commentDonttest}, with a default such that
+      \code{example(..)} in help examples will run \code{\\donttest}
+      code only if used interactively (a change in behaviour).
 
       \item \code{rbind.data.frame()} gains an optional argument
       \code{make.row.names}, for potential speedup.
@@ -184,7 +185,8 @@
       dependency version is masking a sufficient one later on the
       library search path.
 
-      \item A new \code{plot.raster()} method has been added.
+      \item A new \code{plot()} method for class \code{"raster"} has
+      been added.
 
       \item New \code{check_packages_in_dir_changes()} function in
       package \pkg{tools} for conveniently analyzing how changing
@@ -264,9 +266,12 @@
       \item New function \code{isLoadedNamespace()} for readability and speed.
 
       \item \code{names(env)} now returns all the object names of an
-      \code{environment} \code{env}, equivalently to \code{ls(env,
-	all.names = TRUE, sorted = FALSE)} and also to the names of the
-      corresponding list, \code{names(as.list(env, all.names = TRUE))}.
+      \code{environment} \code{env}, equivalently to
+      \code{ls(env, all.names = TRUE, sorted = FALSE)} and also to
+      the names of the corresponding list,
+      \code{names(as.list(env, all.names = TRUE))}.
+      Note that although \code{names()} returns a character vector, the
+      names have no particular ordering.
 
       \item The memory manager now grows the heap more aggressively. This
       reduces the number of garbage collections, in particular while
@@ -292,8 +297,8 @@
       \code{help.search()}, along with functions for inspecting the
       concepts and keywords in the help search database.
 
-      \item New \code{.getNamespaceInfo()} as no-check version of
-      \code{getNamespaceInfo()} mostly for internal speedup.
+      \item New function \code{.getNamespaceInfo()}, a no-check version
+      of \code{getNamespaceInfo()} mostly for internal speedups.
 
       \item The help search system now takes \samp{\keyword} entries in
       Rd files which are not standard keywords (as given in
@@ -301,15 +306,15 @@
       For standard keyword entries the corresponding descriptions are
       additionally taken as concepts.
 
-      \item Add lengths() function for getting the length of every
-      element in a list.
+      \item Add \code{lengths()} function for getting the lengths of all
+      elements in a list.
       
       \item New function \code{toTitleCase()} in package \pkg{tools},
       tailored to package titles.
       
       \item The matrix methods of \code{cbind()} and \code{rbind()}
-      allow matrices as inputs which have 2^31 or more elements.
-      (For \code{cbind()}, wish of \PR{16198}.)
+      allow matrices as inputs which have \eqn{2^{31}}{2^31} or more
+      elements.  (For \code{cbind()}, wish of \PR{16198}.)
     }
   }
 
@@ -380,7 +385,7 @@
       file can be processed: this needs \command{pandoc} installed.
 
       \item \command{R CMD build} adds a \samp{NeedsCompilation} field
-      if one is not already present in the DESCRIPTION file.
+      if one is not already present in the \file{DESCRIPTION} file.
 
       \item \command{R CMD check} notes uses of \code{library()} and
       \code{require()} in package code: see the section
@@ -410,8 +415,8 @@
 
       \item \command{R CMD check --as-cran} reports if the \code{Title}
       field does not appear to be in title case (see \sQuote{Writing R
-      Extensions}: there may be false positives, especially from
-      technical words).
+      Extensions}: there may be false positives, but note that
+      technical words should be single-quoted and will then be accepted).
     }
   }
 
@@ -483,9 +488,9 @@
     \itemize{
       \item \code{download.file(method = "lynx")} is defunct.
 
-      \item Use of the included versions of \code{zlib}, \code{bzip2},
-      \code{xz} and PCRE is deprecated: these are essentially frozen and
-      will eventually be removed.
+      \item Building \R using the included versions of \code{zlib},
+      \code{bzip2}, \code{xz} and PCRE is deprecated: these are
+      essentially frozen and will eventually be removed.
 
       \item The \command{configure} option
       \option{--with-valgrind-instrumentation=3} has been withdrawn, as
@@ -516,7 +521,7 @@
       constructor.
 
       \item Fix \code{missing()} when arguments are propagated through
-      \code{\dots}. (\PR{15707})
+      \code{\dots} . (\PR{15707})
 
       \item \code{eigen(m)} now defaults to \code{symmetric = TRUE} even
       when the dimnames are asymmetric if the matrix is otherwise
@@ -528,11 +533,12 @@
       \item \code{callGeneric()} now works after a \code{callNextMethod()}.
 
       \item Subclass information is kept consistent when replacing an
-      ordinary S4 class with an "old class" via the \code{S4Class}
-      argument to \code{setOldClass()}. Thus, for example, a
-      \code{data.frame} is valid for a \code{list} argument in the
-      signature, and a \code{factor} is valid for \code{vector}
+      ordinary S4 class with an \dQuote{old class} \emph{via} the
+      \code{S4Class} argument to \code{setOldClass()}. Thus, for
+      example, a \code{data.frame} is valid for a \code{list} argument
+      in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
+      
     }
   }
 }
