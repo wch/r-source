@@ -1,5 +1,5 @@
 
-R version 3.1.2 Patched (2015-02-12 r67796) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2015-02-15 r67826) -- "Pumpkin Helmet"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.201   0.019   0.210 
+  0.234   0.024   0.247 
