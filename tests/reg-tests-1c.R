@@ -535,9 +535,9 @@ gctorture(FALSE)
 ## gave an error because the test got released when the warning was generated.
 
 
-## hist(x, breaks=*) with too large bins, PR#15988
+## hist(x, breaks =) with too large bins, PR#15988
 set.seed(5); x <- runif(99)
-Hist <- function(x, b) hist(x, breaks=b, plot=FALSE)$counts
+Hist <- function(x, b) hist(x, breaks = b, plot = FALSE)$counts
 for(k in 1:5) {
     b0 <- seq_len(k-1)/k
     H.ok <- Hist(x, c(-10, b0, 10))
@@ -549,9 +549,9 @@ for(k in 1:5) {
 
 
 ## bw.SJ() and similar with NA,Inf values, PR#16024
-try(bw.SJ (c(NA,2,3)))
-try(bw.bcv(c(-Inf,2,3)))
-try(bw.ucv(c(1,NaN,3,4)))
+try(bw.SJ (c(NA, 2, 3)))
+try(bw.bcv(c(-Inf, 2, 3)))
+try(bw.ucv(c(1, NaN, 3, 4)))
 ## seg.faulted  in  3.0.0 <= R <= 3.1.1
 
 
@@ -641,11 +641,11 @@ stopifnot(identical(test(1, 3), quote(test2(x=x, 2, 3))))
 ## callGeneric not forwarding dots in call (PR#16141)
 setGeneric("foo", function(x, ...) standardGeneric("foo"))
 setMethod("foo", "character",
-          function(x, capitalize=FALSE) if (capitalize) toupper(x) else x)
+          function(x, capitalize = FALSE) if (capitalize) toupper(x) else x)
 setMethod("foo", "factor",
-          function(x, capitalize=FALSE) { x <- as.character(x);  callGeneric() })
+          function(x, capitalize = FALSE) { x <- as.character(x);  callGeneric() })
 toto1 <- function(x, ...) foo(x, ...)
-stopifnot(identical(toto1(factor("a"), capitalize=TRUE), "A"))
+stopifnot(identical(toto1(factor("a"), capitalize = TRUE), "A"))
 ## wrongly did not capitalize in R <= 3.1.2
 
 
@@ -664,6 +664,11 @@ stopifnot(identical(stats4::show -> s4s,
 	  is.null(ns4[["show"]]) # not directly in stats4 ns
 	  )
 ## stats4::show was NULL for 4 hours in R-devel
+
+
+## PR#16205
+stopifnot(length(glob2rx(character())) == 0L)
+## was "^$" in R < 3.1.3
 
 
 proc.time()
