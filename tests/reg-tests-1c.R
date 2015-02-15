@@ -17,7 +17,7 @@ stopifnot(z == c(101, 204, 309, 104, 210, 318))
 ## https://stat.ethz.ch/pipermail/r-devel/2013-January/065700.html
 x <- 1:6
 y <- split(x, 1:2)
-class(x) <- "A"
+class(x) <- "ABC" ## class(x) <- "A" creates an invalid object
 yy <- split(x, 1:2)
 stopifnot(identical(y, yy))
 ## were different in R < 3.0.0
@@ -349,6 +349,59 @@ hw <- hclust(dist(sqrt(1:5)), method=c(M = "ward"))
 ## failed for 2 days in R-devel/-alpha
 
 
+## PR#15758
+my_env <- new.env(); my_env$one <- 1L
+save(one, file = tempfile(), envir = my_env)
+## failed in R < 3.1.1.
+
+
+## Conversion to numeric in boundary case
+ch <- "0x1.ffa0000000001p-1"
+rr <- type.convert(ch, numerals = "allow.loss")
+rX <- type.convert(ch, numerals = "no.loss")
+stopifnot(is.numeric(rr), identical(rr, rX),
+          all.equal(rr, 0.999267578125),
+	  all.equal(type.convert(ch,	      numerals = "warn"),
+		    type.convert("0x1.ffap-1",numerals = "warn"), tol = 5e-15))
+## type.convert(ch) was not numeric in R 3.1.0
+##
+ch <- "1234567890123456789"
+rr <- type.convert(ch, numerals = "allow.loss")
+rX <- type.convert(ch, numerals = "no.loss")
+rx <- type.convert(ch, numerals = "no.loss", as.is = TRUE)
+tools::assertWarning(r. <- type.convert(ch, numerals = "warn.loss"))
+stopifnot(is.numeric(rr), identical(rr, r.), all.equal(rr, 1.234567890e18),
+	  is.factor(rX),  identical(rx, ch))
+
+
+## PR#15764: integer overflow could happen without a warning or giving NA
+tools::assertWarning(ii <- 1980000020L + 222000000L)
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- (-1980000020L) + (-222000000L))
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- (-1980000020L) - 222000000L)
+stopifnot(is.na(ii))
+tools::assertWarning(ii <- 1980000020L - (-222000000L))
+stopifnot(is.na(ii))
+## first two failed for some version of clang in R < 3.1.1
+
+
+## PR#15735: formulae with exactly 32 variables
+myFormula <- as.formula(paste(c("y ~ x0", paste0("x", 1:30)), collapse = "+"))
+ans <- update(myFormula, . ~ . - w1)
+stopifnot(identical(ans, myFormula))
+
+updateArgument <-
+    as.formula(paste(c(". ~ . ", paste0("w", 1:30)), collapse = " - "))
+ans2 <- update(myFormula, updateArgument)
+stopifnot(identical(ans2, myFormula))
+
+
+## PR#15753
+0x110p-5L
+stopifnot(.Last.value == 8.5)
+## was 272 with a garbled message in R 3.0.0 - 3.1.0.
+
 
 ## numericDeriv failed to duplicate variables in
 ## the expression before modifying them.  PR#15849
@@ -417,13 +470,33 @@ stopifnot(x == 0, y == 0)
 ##
 
 
+## drop.terms() dropped some attributes, PR#16029
+test <- model.frame(Employed ~ Year + poly(GNP,3) + Population, data=longley)
+mterm <- terms(test)
+mterm2 <- drop.terms(mterm, 3)
+predvars <- attr(mterm2, "predvars")
+dataClasses <- attr(mterm2, "dataClasses")
+factors <- attr(mterm2, "factors")
+stopifnot(is.language(predvars), length(predvars) == length(dataClasses)+1,
+          all(names(dataClasses) == rownames(factors)))
+## Previously dropped predvars and dataClasses
+
+
 ## prompt() did not escape percent signs properly
 fn <- function(fmt = "%s") {}
 f <- tempfile(fileext = ".Rd")
 prompt(fn, filename = f)
 rd <- tools::parse_Rd(f)
-## Gave syntax errors because the percent sign in Usage 
+## Gave syntax errors because the percent sign in Usage
 ## was taken as the start of a comment.
+
+
+## power.t.test() failure for very large n (etc): PR#15792
+(ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
+(ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))
+stopifnot(all.equal(ptt$n, 192297000, tol = 1e-5),
+          all.equal(ppt$n,  10451937, tol = 1e-7))
+## call to uniroot() did not allow n > 1e7
 
 
 ## save(*, ascii=TRUE):  PR#16137
@@ -432,6 +505,11 @@ save(x, file=(sf <- tempfile()), ascii = TRUE)
 load(sf)
 stopifnot(identical(x0, x))
 ## x had 'NA' instead of 'NaN'
+
+
+## PR#16205
+stopifnot(length(glob2rx(character())) == 0L)
+## was "^$" in R < 3.1.3
 
 
 proc.time()
