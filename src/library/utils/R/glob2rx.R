@@ -1,7 +1,7 @@
 #  File src/library/utils/R/glob2rx.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
 
 glob2rx <- function(pattern, trim.head = FALSE, trim.tail = TRUE)
 {
+    ## special case, since paste ignores 0-length inputs (PR#16205)
+    if(!length(pattern)) return(character())
+
     ## Purpose: Change 'ls' aka 'wildcard' aka 'globbing' _pattern_ to
     ##	      Regular Expression (as in grep, perl, emacs, ...)
     ## -------------------------------------------------------------------------
