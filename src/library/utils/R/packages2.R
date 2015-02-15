@@ -57,7 +57,7 @@ getDependencies <-
             !is.na(w <- match(tolower(p0[miss]),
                               tolower(row.names(available))))) {
             warning(sprintf("Perhaps you meant %s ?",
-                            sQuote( row.names(available)[w])),
+                            sQuote(row.names(available)[w])),
                     call. = FALSE, domain = NA)
         }
         flush.console()
@@ -211,15 +211,17 @@ install.packages <-
 	} else
 	    stop("no packages were specified")
 
-        ## This will only offer the specified type.
-	if(is.null(available))
-	    available <- available.packages(contriburl = contriburl,
-					    method = method)
-	if(NROW(available)) {
+        ## This will only offer the specified type.  If type = "both"
+        ## do not want 'available' set for "source".
+	if(is.null(available)) {
+	    av <- available.packages(contriburl = contriburl, method = method)
+            if(type != "both") available <- av
+        } else av <- available
+	if(NROW(av)) {
             ## avoid duplicate entries in menus, since the latest available
             ## will be picked up
             ## sort in the locale, as R <= 2.10.1 did so
-	    pkgs <- select.list(sort(unique(rownames(available))),
+	    pkgs <- select.list(sort(unique(rownames(av))),
                                 multiple = TRUE,
                                 title = "Packages", graphics = TRUE)
 	}
@@ -236,7 +238,7 @@ install.packages <-
     }
 
     ## check for writability by user
-    ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
+    ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0L)
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
                               "'lib' element %s is not a writable directory",
@@ -359,7 +361,7 @@ install.packages <-
             stop("type == \"both\" cannot be used with 'repos = NULL'")
         type <- "source"
         contriburl <- contrib.url(repos, "source")
-        # The line above may have changed the repos option, so..
+        ## The line above may have changed the repos option, so ...
         if (missing(repos)) repos <- getOption("repos")
         available <-
             available.packages(contriburl = contriburl, method = method,
@@ -465,7 +467,6 @@ install.packages <-
                 ## so a package might only be available as source,
                 ## or it might be later in source.
                 ## FIXME: might only want to check on the same repository,
-                ## allowing for CRANextras.
                 na <- srcpkgs[!srcpkgs %in% bins]
                 if (length(na)) {
                     msg <-
@@ -743,10 +744,9 @@ install.packages <-
             setwd(cwd); on.exit()
             unlink(tmpd, recursive = TRUE)
         } else {
+            outfiles <- paste0(update[, 1L], ".out")
             for(i in seq_len(nrow(update))) {
-                outfile <- if(keep_outputs) {
-                    paste0(update[i, 1L], ".out")
-                } else output
+                outfile <- if(keep_outputs) outfiles[i] else output
                 args <- c(args0,
                           get_install_opts(update[i, 3L]),
                           "-l", shQuote(update[i, 2L]),
@@ -767,8 +767,10 @@ install.packages <-
                             domain = NA)
                 }
             }
-            if(keep_outputs && (outdir != getwd()))
-                file.copy(paste0(update[, 1L], ".out"), outdir)
+            if(keep_outputs && (outdir != getwd())) {
+                file.copy(outfiles, outdir)
+                file.remove(outfiles)
+            }
         }
         if(!quiet && nonlocalrepos && !is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded source packages are in\n\t%s",
