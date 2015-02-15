@@ -7795,7 +7795,7 @@ In addition,
 is available as a separate option in some versions of @command{clang}
 (not enabled by @option{-fsanitize=undefined}).
 
-@command{clang} 3.5 needs
+@command{clang} 3.5 and later seem to need
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
@@ -7816,7 +7816,7 @@ See
 manual for your version of GCC).  GCC 5.0.0 (under development) adds
 @example
 -fsanitize=alignment,bounds,float-cast-overflow,object-size,
-nonnull-attribute,returns-nonnull-attribute,bool,enum
+nonnull-attribute,returns-nonnull-attribute,bool,enum,vptr
 @end example
 @noindent
 with
@@ -7826,7 +7826,9 @@ with
 
 @noindent
 as a separate option not enabled by @code{-fsanitize=undefined} (and not
-desirable for @R{} uses).
+desirable for @R{} uses).  At the time of writing the @code{object-size}
+and @code{vptr} checks produced many warnings on GCC's own C++ headers,
+so should be disabled.
 
 Other useful flags include
 @example
