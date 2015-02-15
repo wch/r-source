@@ -124,15 +124,18 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   (\url{http://zlib.net/pigz/}) or \command{pbzip2}
   (\url{http://compression.ca/pbzip2/}) \emph{via} a \code{\link{pipe}}
   connection. For example, using 8 threads,
-\preformatted{
-    con <- pipe("pigz -p8 > fname.gz", "wb")
-    save(myObj, file = con)
-    close(con)
+\preformatted{    con <- pipe("pigz -p8 > fname.gz", "wb")
+    save(myObj, file = con); close(con)
 
     con <- pipe("bzip2 -p8 -9 > fname.bz2", "wb")
-    save(myObj, file = con)
-    close(con)
+    save(myObj, file = con); close(con)
+
+    con <- pipe("xz -T8 -6 -e > fname.xz", "wb")
+    save(myObj, file = con); close(con)
 }
+  where the last requires \command{xz} 5.1.1 or later (and parallel
+  compression is only effective for large objects: at level 6 it will
+  compress in serialized chunks of 12MB).
 }
 
 \note{
