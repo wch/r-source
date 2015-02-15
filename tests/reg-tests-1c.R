@@ -403,21 +403,6 @@ stopifnot(.Last.value == 8.5)
 ## was 272 with a garbled message in R 3.0.0 - 3.1.0.
 
 
-## Bugs reported by Radford Neal
-x <- pairlist(list(1,2))
-x[[c(1,2)]] <- NULL   # wrongly gave an error, referring to misuse
-                      # of the internal SET_VECTOR_ELT procedure
-stopifnot(identical(x, pairlist(list(1))))
-
-a <- pairlist(10,20,30,40,50,60)
-dim(a) <- c(2,3)
-dimnames(a) <- list(c("a","b"),c("x","y","z"))
-# print(a)              # doesn't print names, not fixed
-a[["a","x"]] <- 0
-stopifnot(a[["a","x"]] == 0)
-## First gave a spurious error, second caused a seg.fault
-
-
 ## numericDeriv failed to duplicate variables in
 ## the expression before modifying them.  PR#15849
 x <- 10; y <- 10
@@ -450,45 +435,6 @@ stopifnot(length(gg$objs) == 1)
 ## was 4 and printed "4 differing objects matching ‘C_pbinom’ ..." in R <= 3.1.1
 
 
-## Radford (R-devel, June 24, 2014); M.Maechler
-m <- matrix(1:2, 1,2); v <- 1:3
-stopifnot(identical(crossprod(2, v), t(2) %*% v),
-	  identical(crossprod(m, v), t(m) %*% v),
-	  identical(5 %*% v, 5 %*% t(v)),
-          identical(tcrossprod(m, 1:2), m %*% 1:2) )
-## gave error "non-conformable arguments" in R <= 3.2.0
-
-
-## list <--> environment
-L0 <- list()
-stopifnot(identical(L0, as.list(as.environment(L0))))
-## as.env..() did not work, and as.list(..) gave non-NULL names in R <= 3.1.1
-
-## all.equal() for environments and refClass()es
-RR <- setRefClass("Ex", fields = list(nr = "numeric"))
-m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(nr = pi); m4 <- RR$new(nr=3.14159)
-ee <- emptyenv(); e2 <- new.env()
-stopifnot(all.equal(ee,ee), identical(ee,ee), !identical(ee,e2), all.equal(ee,e2),
-	  identical(m3,m3), !identical(m1,m2),
-	  all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4)),
-	  all.equal(m3,m4, tol=1e-6), grepl("relative difference", all.equal(m3,m4)),
-	  TRUE)
-## did not work in R <= 3.1.1
-e3 <- new.env()
-e3$p <- "p"; e2$p <- "p"; ae.p <- all.equal(e2,e3)
-e3$q <- "q";              ae.q <- all.equal(e2,e3)
-e2$q <- "Q";              ae.Q <- all.equal(e2,e3)
-stopifnot(ae.p, grepl("^Length", ae.q), grepl("string mismatch", ae.Q))
-e2$q <- "q"; e2$r <- pi; e3$r <- 3.14159265
-stopifnot(all.equal(e2,e3),
-	  grepl("relative difference", all.equal(e2,e3, tol=1e-10)))
-g <- globalenv() # so it now contains itself
-l <- list(e = g)
-stopifnot(all.equal(g,g),
-	  all.equal(l,l))
-## these ran into infinite recursion error.
-
-
 ## 0-length consistency of options(), PR#15979
 stopifnot(identical(options(list()), options(NULL)))
 ## options(list()) failed in R <= 3.1.1
@@ -511,47 +457,10 @@ stopifnot(hcab$order == c(2, 4, 1, 3, 7, 5, 6),
 ## was wrong in R <= 3.1.1
 
 
-## envRefClass prototypes are a bit special -- broke all.equal() for baseenv()
-rc <- getClass("refClass")
-rp <- rc@prototype
-str(rp) ## failed
-rp ## show() failed ..
-(ner <- new("envRefClass")) # show() failed
-stopifnot(all.equal(rp,rp), all.equal(ner,ner))
-be <- baseenv()
-system.time(stopifnot(all.equal(be,be)))## <- takes a few sec's
-stopifnot(
-    grepl("not identical.*character", print(all.equal(rp, ner))),
-    grepl("not identical.*character", print(all.equal(ner, rp))))
-system.time(stopifnot(all.equal(globalenv(), globalenv())))
-## Much of the above failed in  R <= 3.2.0
-
-
-## while did not protect its argument, which caused an error
-## under gctorture, PR#15990
-gctorture()
-suppressWarnings(while(c(FALSE, TRUE)) 1)
-gctorture(FALSE)
-## gave an error because the test got released when the warning was generated.
-
-
-## hist(x, breaks =) with too large bins, PR#15988
-set.seed(5); x <- runif(99)
-Hist <- function(x, b) hist(x, breaks = b, plot = FALSE)$counts
-for(k in 1:5) {
-    b0 <- seq_len(k-1)/k
-    H.ok <- Hist(x, c(-10, b0, 10))
-    for(In in c(1000, 1e9, Inf))
-	stopifnot(identical(Hist(x, c(-In, b0, In)), H.ok),
-		  identical(Hist(x, c( 0,  b0, In)), H.ok))
-}
-## "wrong" results for k in {2,3,4} in R <= 3.1.1
-
-
 ## bw.SJ() and similar with NA,Inf values, PR#16024
-try(bw.SJ (c(NA, 2, 3)))
-try(bw.bcv(c(-Inf, 2, 3)))
-try(bw.ucv(c(1, NaN, 3, 4)))
+try(bw.SJ (c(NA,2,3)))
+try(bw.bcv(c(-Inf,2,3)))
+try(bw.ucv(c(1,NaN,3,4)))
 ## seg.faulted  in  3.0.0 <= R <= 3.1.1
 
 
@@ -599,14 +508,6 @@ rd <- tools::parse_Rd(f)
 ## was taken as the start of a comment.
 
 
-## missing() did not propagate through '...', PR#15707
-check <- function(x,y,z) c(missing(x), missing(y), missing(z))
-check1 <- function(...) check(...)
-check2 <- function(...) check1(...)
-stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
-## missing() was unable to handle recursive promises
-
-
 ## power.t.test() failure for very large n (etc): PR#15792
 (ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
 (ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))
@@ -623,13 +524,117 @@ stopifnot(identical(x0, x))
 ## x had 'NA' instead of 'NaN'
 
 
+## PR#16205
+stopifnot(length(glob2rx(character())) == 0L)
+## was "^$" in R < 3.1.3
+
+
+### Bugs fixed in R 3.2.0
+
+## Bugs reported by Radford Neal
+x <- pairlist(list(1, 2))
+x[[c(1, 2)]] <- NULL   # wrongly gave an error, referring to misuse
+                       # of the internal SET_VECTOR_ELT procedure
+stopifnot(identical(x, pairlist(list(1))))
+
+a <- pairlist(10, 20, 30, 40, 50, 60)
+dim(a) <- c(2, 3)
+dimnames(a) <- list(c("a", "b"), c("x", "y", "z"))
+# print(a)              # doesn't print names, not fixed
+a[["a", "x"]] <- 0
+stopifnot(a[["a", "x"]] == 0)
+## First gave a spurious error, second caused a seg.fault
+
+
+## Radford (R-devel, June 24, 2014); M.Maechler
+m <- matrix(1:2, 1,2); v <- 1:3
+stopifnot(identical(crossprod(2, v), t(2) %*% v),
+	  identical(crossprod(m, v), t(m) %*% v),
+	  identical(5 %*% v, 5 %*% t(v)),
+          identical(tcrossprod(m, 1:2), m %*% 1:2) )
+## gave error "non-conformable arguments" in R <= 3.2.0
+
+
+## list <--> environment
+L0 <- list()
+stopifnot(identical(L0, as.list(as.environment(L0))))
+## as.env..() did not work, and as.list(..) gave non-NULL names in R 3.1.x
+
+## all.equal() for environments and refClass()es
+RR <- setRefClass("Ex", fields = list(nr = "numeric"))
+m1 <- RR$new(); m2 <- RR$new(); m3 <- RR$new(nr = pi); m4 <- RR$new(nr=3.14159)
+ee <- emptyenv(); e2 <- new.env()
+stopifnot(all.equal(ee,ee), identical(ee,ee), !identical(ee,e2), all.equal(ee,e2),
+	  identical(m3,m3), !identical(m1,m2),
+	  all.equal(m1,m2), !isTRUE(all.equal(m1,m3)), !isTRUE(all.equal(m1,m4)),
+	  all.equal(m3,m4, tol=1e-6), grepl("relative difference", all.equal(m3,m4)),
+	  TRUE)
+## did not work in R 3.1.x
+e3 <- new.env()
+e3$p <- "p"; e2$p <- "p"; ae.p <- all.equal(e2,e3)
+e3$q <- "q";              ae.q <- all.equal(e2,e3)
+e2$q <- "Q";              ae.Q <- all.equal(e2,e3)
+stopifnot(ae.p, grepl("^Length", ae.q), grepl("string mismatch", ae.Q))
+e2$q <- "q"; e2$r <- pi; e3$r <- 3.14159265
+stopifnot(all.equal(e2, e3),
+	  grepl("relative difference", all.equal(e2, e3, tol=1e-10)))
+g <- globalenv() # so it now contains itself
+l <- list(e = g)
+stopifnot(all.equal(g, g),
+	  all.equal(l, l))
+## these ran into infinite recursion error.
+
+
+## missing() did not propagate through '...', PR#15707
+check <- function(x,y,z) c(missing(x), missing(y), missing(z))
+check1 <- function(...) check(...)
+check2 <- function(...) check1(...)
+stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
+## missing() was unable to handle recursive promises
+
+
+## envRefClass prototypes are a bit special -- broke all.equal() for baseenv()
+rc <- getClass("refClass")
+rp <- rc@prototype
+str(rp) ## failed
+rp ## show() failed ..
+(ner <- new("envRefClass")) # show() failed
+stopifnot(all.equal(rp,rp), all.equal(ner,ner))
+be <- baseenv()
+system.time(stopifnot(all.equal(be,be)))## <- takes a few sec's
+stopifnot(
+    grepl("not identical.*character", print(all.equal(rp, ner))),
+    grepl("not identical.*character", print(all.equal(ner, rp))))
+system.time(stopifnot(all.equal(globalenv(), globalenv())))
+## Much of the above failed in  R <= 3.2.0
+
+
+## while did not protect its argument, which caused an error
+## under gctorture, PR#15990
+gctorture()
+suppressWarnings(while(c(FALSE, TRUE)) 1)
+gctorture(FALSE)
+## gave an error because the test got released when the warning was generated.
+
+
+## hist(x, breaks =) with too large bins, PR#15988
+set.seed(5); x <- runif(99)
+Hist <- function(x, b) hist(x, breaks = b, plot = FALSE)$counts
+for(k in 1:5) {
+    b0 <- seq_len(k-1)/k
+    H.ok <- Hist(x, c(-10, b0, 10))
+    for(In in c(1000, 1e9, Inf))
+	stopifnot(identical(Hist(x, c(-In, b0, In)), H.ok),
+		  identical(Hist(x, c( 0,  b0, In)), H.ok))
+}
+## "wrong" results for k in {2,3,4} in R 3.1.x
+
 ## eigen(*, symmetric = <default>) with asymmetric dimnames,  PR#16151
 m <- matrix(c(83,41), 5, 4,
 	    dimnames=list(paste0("R",1:5), paste0("C",1:4)))[-5,] + 3*diag(4)
 stopifnot( all.equal(eigen(m, only.values=TRUE) $ values,
 		     c(251, 87, 3, 3), tol=1e-14) )
 ## failed, using symmetric=FALSE and complex because of the asymmetric dimnames()
-
 
 ## match.call() re-matching '...'
 test <- function(x, ...) test2(x, 2, ...)
@@ -664,11 +669,6 @@ stopifnot(identical(stats4::show -> s4s,
 	  is.null(ns4[["show"]]) # not directly in stats4 ns
 	  )
 ## stats4::show was NULL for 4 hours in R-devel
-
-
-## PR#16205
-stopifnot(length(glob2rx(character())) == 0L)
-## was "^$" in R < 3.1.3
 
 
 proc.time()
