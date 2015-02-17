@@ -1104,8 +1104,10 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined"))
     ## include tests for value
     fbody <- body(fdef)
     body(fdef, envir = environment(fdef)) <-
-        substitute(.valueClassTest(EXPR, VALUECLASS, FNAME),
-                   list(EXPR = fbody, VALUECLASS = valueClass, FNAME = name))
+        substitute({
+            ans <- EXPR
+            .valueClassTest(ans, VALUECLASS, FNAME)
+        }, list(EXPR = fbody, VALUECLASS = valueClass, FNAME = name))
     fdef
 }
 
