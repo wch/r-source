@@ -3529,13 +3529,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 
 #include "arithmetic.h"
 
-/* The curren (as of r66652) Windows toolchain compiles explicit sqrt
+/* The current (as of r67808) Windows toolchain compiles explicit sqrt
    calls in a way that returns a different NaN than NA_real_ when
-   called with N__real_. Not sure this is a bug in the Windows
+   called with NA_real_. Not sure this is a bug in the Windows
    toolchain or in our expectations, but these defines attempt to work
    around this. */
-#if defined(_WIN32) && !defined(_WIN64) && defined(__GNUC__) && \
-    __GNUC__ <= 3 || (__GNUC__ == 4 && __GNUC_MINOR__ < 7)
+#if (defined(_WIN32) || defined(_WIN64)) && defined(__GNUC__) && \
+    __GNUC__ <= 4
 # define R_sqrt(x) (ISNAN(x) ? x : sqrt(x))
 #else
 # define R_sqrt sqrt

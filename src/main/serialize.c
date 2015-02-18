@@ -33,6 +33,9 @@
 #include <errno.h>
 #include <ctype.h>		/* for isspace */
 #include <stdarg.h>
+#ifdef Win32
+#include <trioremap.h>
+#endif
 
 /* From time to time changes in R, such as the addition of a new SXP,
  * may require changes in the save file format.  Here are some
@@ -190,7 +193,7 @@ static int Rsnprintf(char *buf, int size, const char *format, ...)
     int val;
     va_list(ap);
     va_start(ap, format);
-    /* On Windows this uses the non-C99 MSVCRT.dll version, which is OK */
+    /* On Windows this no longer uses the non-C99 MSVCRT.dll version */
     val = vsnprintf(buf, size, format, ap);
     buf[size-1] = '\0';
     va_end(ap);

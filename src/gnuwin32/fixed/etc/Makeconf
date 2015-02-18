@@ -28,6 +28,7 @@ RC_ARCH =
 # Used by packages tcltk and tkrplot
 TCL_HOME = $(R_HOME)/Tcl
 LOCAL_SOFT =
+NM_FILTER =
 
 ifneq ($(strip $(LOCAL_SOFT)),)
 LOCAL_CPPFLAGS = -I"$(LOCAL_SOFT)/include"

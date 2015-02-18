@@ -60,6 +60,7 @@ R_ARCH = /x64
 arch_DEFS = -DR_ARCH='"x64"'
 BINPREF = $(BINPREF64)
 SYMPAT = 's/^.* [BCDRT] / /p'
+NM_FILTER ?= | $(SED) -e '/.refptr./d'
 else
 R_ARCH = /i386
 arch_DEFS = -DR_ARCH='"i386"'

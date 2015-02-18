@@ -37,6 +37,8 @@
 
 #include <Startup.h> /* for CharacterMode and RGui */
 
+#include <trioremap.h>
+
 static char RunError[501] = "";
 
 /* This might be given a command line (whole = 0) or just the

@@ -86,9 +86,7 @@
 #undef ERROR			/* for compilation on Windows */
 
 #ifdef Win32
-int trio_vsnprintf(char *buffer, size_t bufferSize, const char *format,
-		   va_list args);
-# define vsnprintf trio_vsnprintf
+#include <trioremap.h>
 #endif
 
 int attribute_hidden R_OutputCon; /* used in printutils.c */

@@ -65,13 +65,16 @@
 # 32- or 64-bit Windows?
 # WIN = 32
 
+# The gcc 4.9.2 64 bit toolchain is set up for the 'medium code' model and needs
+# to remove the .refptr entries from the exports list; this is the default
+# when WIN = 64, with blank for WIN = 32:
+# NM_FILTER = | $(SED) -e '/.refptr./d'
+
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
 # Has been needed for some versions of MinGW-w64
 # USE_IMPLIBS = YES
 
-# some toolchains set up for the 'medium code' model need
-# NM_FILTER = | $(SED) -e '/.refptr./d'
 ### END more detailed options
 
 
