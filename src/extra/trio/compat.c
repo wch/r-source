@@ -1,5 +1,4 @@
 /* Compatibility wrapper for R */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -62,7 +61,8 @@ int vfprintf(FILE *file, const char *format, va_list args)
     return trio_vfprintf(file, format, args);
 }
 
-#ifndef Win32
+/* The test below excludes both 32 and 64 bit Windows */
+#ifndef _WIN32 
 /* These are needed as MinGW's stdio.h has inline snprintf and vnsprintf.
    Include the trioremap.h header file to get the replacements */
 int snprintf(char *buffer, size_t max, const char *format, ...)
