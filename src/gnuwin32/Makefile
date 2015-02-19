@@ -183,6 +183,7 @@ R.exp: $(OBJS) $(MAINLIBS) $(EXTRALIBS)
 
 Rdll: makeMakedeps libRblas.dll.a ../../$(BINDIR)/R.dll
 
+## FIXME:  the compiler DLLs shouldn't be necessary, or should be found automatically
 ../../$(BINDIR)/R.dll: FORCE
 	@$(MK) fixfiles
 	@$(MK) -C ../include -f Makefile.win
@@ -190,6 +191,8 @@ Rdll: makeMakedeps libRblas.dll.a ../../$(BINDIR)/R.dll
 	@$(MK) makeMakedeps
 	@$(MK) R.dll
 	@$(MKDIR) -p ../../$(BINDIR)
+	$(CP) libgcc_s_sjlj-1.dll libgfortran-3.dll libwinpthread-1.dll libquadmath-0.dll \
+	../../$(BINDIR)
 	$(CP) R.dll ../../$(BINDIR)
 
 FORCE:
