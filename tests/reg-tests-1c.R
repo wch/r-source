@@ -670,5 +670,12 @@ stopifnot(identical(stats4::show -> s4s,
 	  )
 ## stats4::show was NULL for 4 hours in R-devel
 
+## mode<- did too much evaluation (PR#16215)
+x <- y <- quote(-2^2)
+x <- as.list(x)
+mode(y) <- "list"
+stopifnot(identical(x, y))
+## y ended up containing -4, not -2^2 
+
 
 proc.time()

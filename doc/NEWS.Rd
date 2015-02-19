@@ -459,6 +459,9 @@
       they will be accessed from \acronym{CRAN}. See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
+            
+      \item (Windows) Code changes have been made to allow R to be
+      compiled with a new toolchain based on GCC 4.9.2.   
     }
   }
 
@@ -722,6 +725,9 @@
 
       \item The \code{xtfrm()} method for class \code{"Surv"} has been
       corrected and its description expanded.
+      
+      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before 
+      changing its mode. (\PR{16215})
     }
   }
 }

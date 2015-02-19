@@ -35,11 +35,11 @@ mode <- function(x) {
 {
     if (storage.mode(x) == value) return(x)
     if(is.factor(x)) stop("invalid to change the storage mode of a factor")
-    mde <- paste0("as.",value)
     atr <- attributes(x)
     isSingle <- !is.null(attr(x, "Csingle"))
     setSingle <- value == "single"
-    x <- eval(call(mde,x), parent.frame())
+    mde <- get(paste0("as.",value), mode = "function", envir = parent.frame())
+    x <- mde(x)
     attributes(x) <- atr
     ## this avoids one copy
     if(setSingle != isSingle)
