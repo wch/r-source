@@ -1,7 +1,7 @@
 #  File src/library/base/R/mode.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,11 +35,11 @@ mode <- function(x) {
 {
     if (storage.mode(x) == value) return(x)
     if(is.factor(x)) stop("invalid to change the storage mode of a factor")
-    mde <- paste0("as.",value)
     atr <- attributes(x)
     isSingle <- !is.null(attr(x, "Csingle"))
     setSingle <- value == "single"
-    x <- eval(call(mde,x), parent.frame())
+    mde <- get(paste0("as.",value), mode = "function", envir = parent.frame())
+    x <- mde(x)
     attributes(x) <- atr
     ## this avoids one copy
     if(setSingle != isSingle)

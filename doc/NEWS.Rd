@@ -187,6 +187,9 @@
 
       \item The \code{xtfrm()} method for class \code{"Surv"} has been
       corrected and its description expanded.
+      
+      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before 
+      changing its mode. (\PR{16215})
     }
   }
 }
