@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
- *  Copyright (C) 2002--2005  The R Foundation
+ *  Copyright (C) 1997--2015  The R Core Team
+ *  Copyright (C) 2002--2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -987,23 +987,24 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, t, obj, method, rho, ans;
-    const char *generic;
     int mode, deparse_level;
     Rboolean compatible = TRUE, anyS4 = FALSE;
     struct BindData data;
     char buf[512];
-    const char *klass;
 
     /* since R 2.2.0: first argument "deparse.level" */
     deparse_level = asInteger(eval(CAR(args), env));
-    args = CDR(args);
+    Rboolean tryS4 = deparse_level >= 0;
+    /* NB: negative deparse_level should otherwise be equivalent to deparse_level == 0,
+     * --  as cbind(), rbind() below only check for '== 1' and '== 2'
+     * {FIXME: methods should do same} */
 
     /* Lazy evaluation and method dispatch based on argument types are
      * fundamentally incompatible notions.  The results here are
      * ghastly.
      *
      * We build promises to evaluate the arguments and then force the
-     * promises so that if we despatch to a closure below, the closure
+     * promises so that if we dispatch to a closure below, the closure
      * is still in a position to use "substitute" to get the actual
      * expressions which generated the argument (for naming purposes).
      *
@@ -1023,21 +1024,16 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(args = promiseArgs(args, env));
 
-    generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
-    klass = "";
+    const char *generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
+    const char *klass = "";
     method = R_NilValue;
-    for (a = args; a != R_NilValue; a = CDR(a)) {
+    for (a = CDR(args); a != R_NilValue; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
-        if (isS4(obj)) {
-            anyS4 = TRUE;
-        }
-	if (isObject(obj) && compatible) {
-	    int i;
-	    SEXP classlist;
-            PROTECT(classlist = R_data_class2(obj));
-	    for (i = 0; i < length(classlist); i++) {
-		SEXP classname = STRING_ELT(classlist, i);
-		const char *s = translateChar(classname);
+        if (tryS4 && !anyS4 && isS4(obj)) anyS4 = TRUE;
+	if (compatible && isObject(obj)) {
+	    SEXP classlist = PROTECT(R_data_class2(obj));
+	    for (int i = 0; i < length(classlist); i++) {
+		const char *s = translateChar(STRING_ELT(classlist, i));
 		if(strlen(generic) + strlen(s) + 2 > 512)
 		    error(_("class name too long in '%s'"), generic);
 		sprintf(buf, "%s.%s", generic, s);
@@ -1067,20 +1063,25 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
     }
-    if (!compatible && anyS4) {
+
+    tryS4 = anyS4 && (!compatible || method == R_NilValue);
+    if (tryS4) {
+	// keep 'deparse.level' as first arg and *name* it:
+	SET_TAG(args, install("deparse.level"));
+	// and use methods:::cbind / rbind
         method = findFun(install(generic), R_MethodsNamespace);
-    }
-    if (method != R_NilValue) {
+    } else
+	args = CDR(args); // keeping deparse.level for S4 dispatch
+    if (method != R_NilValue) { // found an S3 or S4 method
 	PROTECT(method);
 	ans = applyClosure(call, method, args, env, R_NilValue);
 	UNPROTECT(2);
 	return ans;
     }
-    
+
     /* Dispatch based on class membership has failed. */
     /* The default code for rbind/cbind.default follows */
     /* First, extract the evaluated arguments. */
-
     rho = env;
     data.ans_flags = 0;
     data.ans_length = 0;

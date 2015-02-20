@@ -282,7 +282,7 @@
       whitespace.
 
       \item \code{cbind()} and \code{rbind()} now consider S4 inheritance
-      during S3 dispatch.
+      during S3 dispatch and also obey \code{deparse.level}.
 
       \item \code{cbind()} and \code{rbind()} will delegate recursively
       to \code{methods::cbind2} (\code{methods::rbind2}) when at least
@@ -308,10 +308,10 @@
 
       \item Add \code{lengths()} function for getting the lengths of all
       elements in a list.
-      
+
       \item New function \code{toTitleCase()} in package \pkg{tools},
       tailored to package titles.
-      
+
       \item The matrix methods of \code{cbind()} and \code{rbind()}
       allow matrices as inputs which have \eqn{2^{31}}{2^31} or more
       elements.  (For \code{cbind()}, wish of \PR{16198}.)
@@ -544,7 +544,7 @@
       example, a \code{data.frame} is valid for a \code{list} argument
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
-      
+
     }
   }
 }
@@ -596,10 +596,10 @@
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
-      
+
       \item (Windows.) \code{download.file(cacheOK = FALSE)} is now
       supported when \file{internet2.dll} is used.
-      
+
     }
   }
 

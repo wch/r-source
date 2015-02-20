@@ -18,7 +18,7 @@
 \title{Combine two Objects by Columns or Rows}
 \description{
   Combine two matrix-like \R objects by columns (\code{cbind2})
-  or rows (\code{rbind2}). These are (S4) generic functions with default
+  or rows (\code{rbind2}).  These are (S4) generic functions with default
   methods.
 }
 \details{
@@ -32,15 +32,15 @@
   }
   The methods on \code{cbind2} and \code{rbind2} effectively define the
   type promotion policy when combining a heterogeneous set of
-  arguments. The homogeneous case, where all objects derive from some S4
+  arguments.  The homogeneous case, where all objects derive from some S4
   class, can be handled via S4 dispatch on the \code{\dots} argument via
   an externally defined S4 \code{cbind} (\code{rbind}) generic.
 
   Since (for legacy reasons) S3 dispatch is attempted first, it is
   generally a good idea to additionally define an S3 method on
-  \code{cbind} (\code{rbind}) for the S4 class. The S3 method will be
+  \code{cbind} (\code{rbind}) for the S4 class.  The S3 method will be
   invoked when the arguments include objects of the S4 class, along with
-  parameters of types for which no S3 method exists. Also, in case there
+  arguments of classes for which no S3 method exists.  Also, in case there
   is an argument that selects a different S3 method (like the one for
   \code{data.frame}), this S3 method serves to introduce an ambiguity in
   dispatch that triggers the recursive fallback to \code{cbind2}
@@ -69,7 +69,11 @@ rbind2(x, y, ...)
 %% The R code is currently in ../R/MethodsListClass.R + ../R/cbind-rbind.R
 \value{
   A matrix (or matrix like object) combining the columns (or rows) of
-  \code{x} and \code{y}.
+  \code{x} and \code{y}.  Note that methods must construct
+  \code{\link{colnames}} and \code{\link{rownames}} from the
+  corresponding column and row names of \code{x} and \code{y} (but not
+  from deparsing argument names such as in \code{\link{cbind}(...,
+    deparse.level = d)} for \eqn{d \ge 1}{d >= 1}).
 }
 \seealso{\code{\link{cbind}}, \code{\link{rbind}};
   further, \code{\link[Matrix]{cBind}}, \code{\link[Matrix]{rBind}} in
@@ -80,7 +84,24 @@ cbind2(1:3, 4)
 m <- matrix(3:8, 2,3, dimnames=list(c("a","b"), LETTERS[1:3]))
 cbind2(1:2, m) # keeps dimnames from m
 
-\dontshow{
+## rbind() and cbind() now make use of rbind2()/cbind2() methods
+setClass("Num", contains="numeric")
+setMethod("cbind2", c("Num", "missing"),
+          function(x,y, ...) { cat("Num-miss--meth\n"); as.matrix(x)})
+setMethod("cbind2", c("Num","ANY"), function(x,y, ...) {
+    cat("Num-A.--method\n") ; cbind(getDataPart(x), y, ...) })
+setMethod("cbind2", c("ANY","Num"), function(x,y, ...) {
+    cat("A.-Num--method\n") ; cbind(x, getDataPart(y), ...) })
+
+a <- new("Num", 1:3)
+trace("cbind2")
+cbind(a)
+cbind(a, four=4, 7:9)# calling cbind2() twice
+
+cbind(m,a, ch=c("D","E"), a*3)
+cbind(1,a, m) # ok with a warning
+untrace("cbind2")
+\dontshow{%% FIXME -- do deprecate  bind_activation() !
 ### Note: Use the following activation if you want cbind() to work
 ### ----  on S4 objects -- be careful otherwise!
 
@@ -99,7 +120,7 @@ cbind(m, a=1, b=3)
 
 ## turn off the `special cbind()' :
 methods:::bind_activation(FALSE)
-}
+}%dont
 }
 \keyword{array}
 \keyword{manip}

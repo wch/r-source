@@ -1,7 +1,7 @@
 #  File src/library/methods/R/cbind.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@
 ### NOTE: We rely on
 ### o	dim(.) working reliably for all arguments of [cr]bind2()
 ### o	All [cr]bind2() methods are assumed to
-###	       1) correctly set (row/col)names
-###	       2) correctly set (col/row)names for *matrix*(like) arguments
+###	correctly *use* (row/col)names of their matrix arguments
+###     but cannot look at arguments for deparsing them
+###  => all (row/col)names setting depending on deparse.level must be done *here
 
 ### Note that this
 ### 1) is namespace-hidden usually,
@@ -33,31 +34,38 @@
 
 cbind <- function(..., deparse.level = 1)
 {
-    na <- nargs() - !missing(deparse.level)
+    has.dl <- !missing(deparse.level)
     deparse.level <- as.integer(deparse.level)
+    if(identical(deparse.level, -1L)) deparse.level <- 0L # our hack
     stopifnot(0 <= deparse.level, deparse.level <= 2)
 
     argl <- list(...)
     ## remove trailing 'NULL's:
-    while(na > 0 && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1 }
+    na <- nargs() - has.dl
+    while(na > 0L && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1L }
     if(na == 0) return(NULL)
+    symarg <- as.list(substitute(list(...)))[-1L] # symbolic argument (names)
+    nmsym <- names(symarg)
+    ## Give *names* depending on deparse.level {for non-matrix}:
+    nm <- c( ## 0:
+	function(i) NULL,
+	## 1:
+	function(i) if(is.symbol(s <- symarg[[i]])) deparse(s) else NULL,
+	## 2:
+	function(i) deparse(symarg[[i]])[[1L]])[[ 1L + deparse.level ]]
+    Nms <- function(i) { if(!is.null(s <- nmsym[i]) && nzchar(s)) s else nm(i) }
     if(na == 1) {
-	if(isS4(..1)) return(cbind2(..1))
+	if(isS4(..1)) {
+	    r <- cbind2(..1)
+	    if(length(dim(r)) == 2L)
+		colnames(r) <- Nms(1)
+	    return(r)
+	}
 	else return(.__H__.cbind(..., deparse.level = deparse.level))
     }
 
     ## else :  na >= 2
 
-    if(deparse.level) {
-	symarg <- as.list(sys.call()[-1L])[1L:na] # the unevaluated arguments
-	## For default 'deparse.level = 1', cbind(a, b) has to give *names*!
-	Nms <- function(i) { # possibly 'deparsed' names of argument  i
-	    if(is.null(r <- names(symarg[i])) || r == "") {
-		if(is.symbol(r <- symarg[[i]]) || deparse.level == 2)
-		    deparse(r)		# else NULL
-	    } else r
-	}
-    }
     if(na == 2) {
 	r <- ..2
 	fix.na <- FALSE
@@ -67,17 +75,17 @@ cbind <- function(..., deparse.level = 1)
 	## only when the last two argument have *no* dim attribute:
 	nrs <- unname(lapply(argl, nrow)) # of length na
 	iV <- vapply(nrs, is.null, NA)# is 'vector'
-	fix.na <- identical(nrs[(na-1):na], list(NULL,NULL))
+	fix.na <- identical(nrs[(na-1L):na], list(NULL,NULL))
 	if(fix.na) {
 	    ## "fix" last argument, using 1-column `matrix' of proper nrow():
-	    nr <- max(if(all(iV)) sapply(argl, length) else unlist(nrs[!iV]))
+	    nr <- max(if(all(iV)) vapply(argl, length, 1) else unlist(nrs[!iV]))
 	    argl[[na]] <- cbind(rep(argl[[na]], length.out = nr),
 				deparse.level = 0)
 	    ## and since it's a 'matrix' now, cbind() below may not name it
 	}
 	## need to pass argl, the evaluated arg list to do.call();
 	## OTOH, these may have lost their original 'symbols'
-	if(deparse.level) {
+	## if(deparse.level) {
 	    if(fix.na)
 		fix.na <- !is.null(Nna <- Nms(na))
 	    if(!is.null(nmi <- names(argl))) iV <- iV & (nmi == "")
@@ -88,14 +96,14 @@ cbind <- function(..., deparse.level = 1)
 		for(i in ii[iV[ii]])
 		    if (!is.null(nmi <- Nms(i))) names(argl)[i] <- nmi
 	    }
-	}
+	## }
 	r <- do.call(cbind, c(argl[-1L], list(deparse.level=deparse.level)))
     }
 
     d2 <- dim(r)
     r <- cbind2(..1, r)
-    if(deparse.level == 0)
-	return(r)
+    ## if(deparse.level == 0)
+    ##     return(r)
     ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2L
     ism2 <- !is.null(d2)	     && length(d2) == 2L && !fix.na
     if(ism1 && ism2) ## two matrices
@@ -105,8 +113,8 @@ cbind <- function(..., deparse.level = 1)
     ##	       when one was not a matrix [needs some diligence!]
     Ncol <- function(x) {
 	d <- dim(x); if(length(d) == 2L) d[2L] else as.integer(length(x) > 0L) }
-    nn1 <- !is.null(N1 <- if((l1 <- Ncol(..1)) && !ism1) Nms(1)) # else NULL
-    nn2 <- !is.null(N2 <- if(na == 2 && Ncol(..2) && !ism2) Nms(2))
+    nn1 <- !is.null(N1 <- if(    (l1 <- Ncol(..1)) && !ism1) Nms(1)) # else NULL
+    nn2 <- !is.null(N2 <- if(na == 2 && Ncol(..2)  && !ism2) Nms(2))
     if(nn1 || nn2 || fix.na) {
 	if(is.null(colnames(r)))
 	    colnames(r) <- rep.int("", ncol(r))

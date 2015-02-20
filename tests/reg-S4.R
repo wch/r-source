@@ -686,3 +686,93 @@ if(!isS4(a)) { # still (unfortunately)
 }
 stopifnot(identical(a, b), isS4(a))
 ## failed in R <= 3.1.1
+
+
+### cbind(), rbind() now work both via rbind2(), cbind2() and rbind.
+##__ 1) __
+setClass("A", representation(a = "matrix"))
+setMethod("initialize", signature(.Object = "A"),
+    function(.Object, y) {
+      .Object@a <- y
+      .Object
+    })
+setMethod("rbind2", signature(x = "A", y = "matrix"),
+    function(x, y, ...) {
+      cat("rbind2(<A>, <matrix>) : ")
+      x@a <- rbind(x@a, y)
+      cat(" x@a done\n")
+      x
+    })
+setMethod("dim", "A", function(x) dim(x@a))
+mat1 <- matrix(1:9, nrow = 3)
+obj1 <- new("A", 10*mat1)
+om1 <- rbind(obj1, mat1)## now does work {it does need a working "dim" method!}
+stopifnot(identical(om1, rbind2(obj1, mat1)))
+rm(obj1,om1); removeClass("A")
+##
+##
+###__ 2) --- Matrix --- via cbind2(), rbind2()
+if(require("Matrix")) {
+ m1 <- m2 <- m <- matrix(1:12, 3,4)
+ dimnames(m2) <- list(LETTERS[1:3],
+                      letters[1:4])
+ dimnames(m1) <- list(NULL,letters[1:4])
+ M  <- Matrix(m)
+ M1 <- Matrix(m1)
+ M2 <- Matrix(m2)
+ ## Now, with a new ideal cbind(), rbind():
+ print(cbind(M, M1))
+ stopifnot(identical(cbind (M, M1),
+                     cbind2(M, M1)))
+ rm(M,M1,M2)
+ detach("package:Matrix", unload=TRUE)
+}##{Matrix}
+##
+##
+###__ 3) --- package 'its' like
+setClass("its",representation("matrix", dates="POSIXt"))
+m <- outer(1:3, setNames(1:5,LETTERS[1:5]))
+im <- new("its", m, dates=as.POSIXct(Sys.Date()))
+stopifnot(identical(m, im@.Data))
+ii  <- rbind(im, im-1)
+i.i <- cbind(im, im-7)
+stopifnot(identical(ii , rbind(m, m-1)),
+          identical(i.i, cbind(m, m-7)))
+rm(im, ii, i.i)
+removeClass("its")
+##
+##
+###__ 4) --- pkg 'mondate' like --
+setClass("mondate",
+         slots = c(timeunits = "character"), contains = "numeric")
+three <- 3
+m1 <- new("mondate", 1:4, timeunits = "hrs")
+m2 <- new("mondate", 7:8, timeunits = "min")
+stopifnot(identical(colnames(cbind(m1+1, deparse.level=2)), "m1 + 1"),
+          is.null  (colnames(cbind(m1+1, deparse.level=0))),
+          is.null  (colnames(cbind(m1+1, deparse.level=1))),
+          identical(colnames(cbind(m1)), "m1"),
+          colnames(cbind(m1  , M2 = 2, deparse.level=0)) == c(""  , "M2"),
+          colnames(cbind(m1  , M2 = 2))                  == c("m1", "M2"),
+          colnames(cbind(m1  , M2 = 2, deparse.level=2)) == c("m1", "M2"),
+          colnames(cbind(m1+1, M2 = 2, deparse.level=2)) == c("m1 + 1", "M2"),
+          colnames(cbind(m1+1, M2 = 2, deparse.level=1)) == c("",       "M2"))
+cbind(m1, three, m2)
+cbind(m1, three, m2,   deparse.level = 0) # none
+cbind(m1, three, m2+3, deparse.level = 1) # "m1" "three"
+cbind(m1, three, m2+3, deparse.level = 2) -> m3
+m3 #    ....  and "m2 + 3"
+stopifnot(identical(t(m3), rbind(m1, three, m2+3, deparse.level = 2)),
+          identical(cbind(m1, m2) -> m12,
+                    cbind(m1=m1@.Data, m2=m2@.Data)),
+          identical(rbind(m1, m2), t(m12)),
+          identical(cbind(m1, m2, T=T, deparse.level=0),
+                    cbind(m1@.Data, m2@.Data, T=T) -> mm),
+          identical(colnames(mm), c("", "", "T")),
+          identical(cbind(m1, m2, deparse.level=0),
+                    cbind(m1@.Data, m2@.Data)))
+rm(m1,m2)
+removeClass("mondate")
+##
+
+

@@ -261,17 +261,17 @@
 	       where = envir)
     ## and its default methods:
     setMethod("cbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y, ...) .__H__.cbind(deparse.level = 0, x, y) )
+	      function(x,y, ...) .Internal(cbind(-1L, x, y)))
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
-	      function(x,y, ...) .__H__.cbind(deparse.level = 0, x) )
+	      function(x,y, ...) .Internal(cbind(-1L, x)))
 
     setGeneric("rbind2", function(x, y, ...) standardGeneric("rbind2"),
 	       where = envir)
     ## and its default methods:
     setMethod("rbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y, ...) .__H__.rbind(deparse.level = 0, x, y) )
+	      function(x,y, ...) .Internal(rbind(-1L, x, y)))
     setMethod("rbind2", signature(x = "ANY", y = "missing"),
-	      function(x,y, ...) .__H__.rbind(deparse.level = 0, x) )
+	      function(x,y, ...) .Internal(rbind(-1L, x)))
 
     setGeneric("kronecker", where = envir)# <- unneeded?
 

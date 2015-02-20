@@ -1,7 +1,7 @@
 #  File src/library/methods/R/rbind.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,31 +23,38 @@
 
 rbind <- function(..., deparse.level = 1)
 {
-    na <- nargs() - !missing(deparse.level)
+    has.dl <- !missing(deparse.level)
     deparse.level <- as.integer(deparse.level)
+    if(identical(deparse.level, -1L)) deparse.level <- 0L # our hack
     stopifnot(0 <= deparse.level, deparse.level <= 2)
 
     argl <- list(...)
     ## remove trailing 'NULL's:
-    while(na > 0 && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1 }
+    na <- nargs() - has.dl
+    while(na > 0L && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1L }
     if(na == 0) return(NULL)
+    symarg <- as.list(substitute(list(...)))[-1L] # symbolic argument (names)
+    nmsym <- names(symarg)
+    ## Give *names* depending on deparse.level {for non-matrix}:
+    nm <- c( ## 0:
+	function(i) NULL,
+	## 1:
+	function(i) if(is.symbol(s <- symarg[[i]])) deparse(s) else NULL,
+	## 2:
+	function(i) deparse(symarg[[i]])[[1L]])[[ 1L + deparse.level ]]
+    Nms <- function(i) { if(!is.null(s <- nmsym[i]) && nzchar(s)) s else nm(i) }
     if(na == 1) {
-	if(isS4(..1)) return(rbind2(..1))
+	if(isS4(..1)) {
+	    r <- rbind2(..1)
+	    if(length(dim(r)) == 2L)
+		rownames(r) <- Nms(1)
+	    return(r)
+	}
 	else return(.__H__.rbind(..., deparse.level = deparse.level))
     }
 
     ## else :  na >= 2
 
-    if(deparse.level) {
-	symarg <- as.list(sys.call()[-1L])[1L:na] # the unevaluated arguments
-	## For default 'deparse.level = 1', rbind(a, b) has to give *names*!
-	Nms <- function(i) { # possibly 'deparsed' names of argument  i
-	    if(is.null(r <- names(symarg[i])) || r == "") {
-		if(is.symbol(r <- symarg[[i]]) || deparse.level == 2)
-		    deparse(r)		# else NULL
-	    } else r
-	}
-    }
     if(na == 2) {
 	r <- ..2
 	fix.na <- FALSE
@@ -57,7 +64,7 @@ rbind <- function(..., deparse.level = 1)
 	## only when the last two argument have *no* dim attribute:
 	nrs <- unname(lapply(argl, ncol)) # of length na
 	iV <- vapply(nrs, is.null, NA)# is 'vector'
-	fix.na <- identical(nrs[(na-1):na], list(NULL,NULL))
+	fix.na <- identical(nrs[(na-1L):na], list(NULL,NULL))
 	if(fix.na) {
 	    ## "fix" last argument, using 1-row `matrix' of proper ncol():
 	    nr <- max(if(all(iV)) vapply(argl, length, 1) else unlist(nrs[!iV]))
@@ -67,7 +74,7 @@ rbind <- function(..., deparse.level = 1)
 	}
 	## need to pass argl, the evaluated arg list to do.call();
 	## OTOH, these may have lost their original 'symbols'
-	if(deparse.level) {
+	## if(deparse.level) {
 	    if(fix.na)
 		fix.na <- !is.null(Nna <- Nms(na))
 	    if(!is.null(nmi <- names(argl))) iV <- iV & (nmi == "")
@@ -78,12 +85,12 @@ rbind <- function(..., deparse.level = 1)
 		for(i in ii[iV[ii]])
 		    if (!is.null(nmi <- Nms(i))) names(argl)[i] <- nmi
 	    }
-	}
+	## }
 	r <- do.call(rbind, c(argl[-1L], list(deparse.level=deparse.level)))
     }
 
     d2 <- dim(r)
-    r <- rbind2(..1, r)
+    r <- rbind2(..1, r) ## FIXME: add colnames depending on deparse.level
     if(deparse.level == 0)
 	return(r)
     ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2L
