@@ -315,6 +315,9 @@
       \item The matrix methods of \code{cbind()} and \code{rbind()}
       allow matrices as inputs which have \eqn{2^{31}}{2^31} or more
       elements.  (For \code{cbind()}, wish of \PR{16198}.)
+      
+      \item The default method of \code{image()} has an explicit check
+      for a numeric or logical matrix (which was always required).
     }
   }
 
@@ -456,11 +459,11 @@
       \item Building the manuals now requires \command{texi2any} from
       \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
       include the manuals, but by default builds from source will not, and
-      they will be accessed from \acronym{CRAN}. See the comments in
+      they will be accessed from \acronym{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
             
-      \item (Windows) Code changes have been made to allow R to be
+      \item (Windows) Code changes have been made to allow \R to be
       compiled with a new toolchain based on GCC 4.9.2.   
     }
   }

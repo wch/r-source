@@ -22,7 +22,7 @@ image(x, \dots)
     its components \code{x$x} and \code{x$y} are used for \code{x}
     and \code{y}, respectively. If the list has component \code{z} this
     is used for \code{z}.}
-  \item{z}{a numeric matrix containing the values to be plotted
+  \item{z}{a numeric or logical matrix containing the values to be plotted
     (\code{NA}s are allowed).  Note that \code{x} can be used instead
     of \code{z} for convenience.}
   \item{zlim}{the minimum and maximum \code{z} values for which colors
