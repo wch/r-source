@@ -191,8 +191,10 @@ Rdll: makeMakedeps libRblas.dll.a ../../$(BINDIR)/R.dll
 	@$(MK) makeMakedeps
 	@$(MK) R.dll
 	@$(MKDIR) -p ../../$(BINDIR)
+ifdef COPY_RUNTIME_DLLS
 	$(CP) libgcc_s_sjlj-1.dll libgfortran-3.dll libwinpthread-1.dll libquadmath-0.dll \
 	../../$(BINDIR)
+endif
 	$(CP) R.dll ../../$(BINDIR)
 
 FORCE:

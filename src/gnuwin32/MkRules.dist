@@ -139,6 +139,9 @@
 # DLLs32 =
 # DLLs64 =
 
+# Define this to 1 if using the gcc 4.9.2 toolchain with dynamic linking
+# COPY_RUNTIME_DLLS =
+
 ## ====== configuration macros for building MSI installer ===========
 
 # location where WiX 3.x executables were installed. Spaces allowed.
