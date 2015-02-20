@@ -46,7 +46,7 @@ rbind(\dots, deparse.level = 1)
   time series objects.  See the section on \sQuote{Dispatch} for how
   the method to be used is selected.  If some of the arguments are of an
   S4 class, i.e., \code{\link{isS4}(.)} is true, S4 methods are sought
-  also, and the hidden \code{\link[methods]{cbind}} / \code{\link[methods]{rbind}}
+  also, and the hidden \code{cbind} / \code{rbind} functions
   from package \pkg{methods} maybe called, which in turn build on
   \code{\link{cbind2}} or \code{\link{rbind2}}, respectively.  In that
   case, \code{deparse.level} is obeyed, similarly to the default method.
