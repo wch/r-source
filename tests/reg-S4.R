@@ -736,7 +736,9 @@ im <- new("its", m, dates=as.POSIXct(Sys.Date()))
 stopifnot(identical(m, im@.Data))
 ii  <- rbind(im, im-1)
 i.i <- cbind(im, im-7)
-stopifnot(identical(ii , rbind(m, m-1)),
+stopifnot(identical(m, rbind(im)),
+          identical(m, cbind(im)),
+          identical(ii , rbind(m, m-1)),
           identical(i.i, cbind(m, m-7)))
 rm(im, ii, i.i)
 removeClass("its")

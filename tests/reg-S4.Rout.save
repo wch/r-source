@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-18 r67837) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-20 r67852) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1029,13 +1029,6 @@ rbind2(<A>, <matrix>) :  x@a done
 +  detach("package:Matrix", unload=TRUE)
 + }##{Matrix}
 Loading required package: Matrix
-
-Attaching package: 'Matrix'
-
-The following object is masked _by_ '.GlobalEnv':
-
-    cBind
-
 3 x 8 Matrix of class "dgeMatrix"
               a b c  d
 [1,] 1 4 7 10 1 4 7 10
@@ -1046,13 +1039,6 @@ The following object is masked _by_ '.GlobalEnv':
 > ###__ 3) --- package 'its' like
 > setClass("its",representation("matrix", dates="POSIXt"))
 Loading required package: Matrix
-
-Attaching package: 'Matrix'
-
-The following object is masked _by_ '.GlobalEnv':
-
-    cBind
-
 Warning message:
 In superClassDepth(ClassDef, simpleOnly = simpleOnly) :
   class "matrix" extends an undefined class, "mMatrix"
@@ -1061,7 +1047,9 @@ In superClassDepth(ClassDef, simpleOnly = simpleOnly) :
 > stopifnot(identical(m, im@.Data))
 > ii  <- rbind(im, im-1)
 > i.i <- cbind(im, im-7)
-> stopifnot(identical(ii , rbind(m, m-1)),
+> stopifnot(identical(m, rbind(im)),
++           identical(m, cbind(im)),
++           identical(ii , rbind(m, m-1)),
 +           identical(i.i, cbind(m, m-7)))
 > rm(im, ii, i.i)
 > removeClass("its")

@@ -46,7 +46,7 @@ rbind <- function(..., deparse.level = 1)
     if(na == 1) {
 	if(isS4(..1)) {
 	    r <- rbind2(..1)
-	    if(length(dim(r)) == 2L)
+	    if(length(dim(..1)) < 2L && length(dim(r)) == 2L)
 		rownames(r) <- Nms(1)
 	    return(r)
 	}
