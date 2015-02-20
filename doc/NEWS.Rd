@@ -684,6 +684,10 @@
 
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
+      
+      \emph{Inter alia} that fix gives the documented behaviour for
+      \code{substr(x, 1, 2) <- ""} (subsequently reported as
+      \PR{16214}).
 
       \item Loading packages incorrectly defining an S4 generic followed
       by a function of the same name caused an erroneous cyclic
