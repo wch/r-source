@@ -14,8 +14,9 @@
   (or \code{\link{data}} in some cases).
 
   \code{save.image()} is just a short-cut for \sQuote{save my current
-    workspace}, i.e., \code{save(list = ls(all = TRUE), file =
-    ".RData")}.  It is also what happens with \code{\link{q}("yes")}.
+    workspace}, i.e., \code{save(list = ls(all.names = TRUE), file =
+    ".RData", envir = .GlobalEnv)}.
+  It is also what happens with \code{\link{q}("yes")}.
 }
 \usage{
 save(\dots, list = character(),
