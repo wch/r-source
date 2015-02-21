@@ -377,6 +377,9 @@
       invisibly. The initial optimization level can also be set with the
       environment variable \env{R_COMPILER_OPTIMIZE}.
 
+      \item \command{R CMD build} adds a \samp{NeedsCompilation} field
+      if one is not already present in the \file{DESCRIPTION} file.
+
       \item \command{R CMD check} gains option \option{--test-dir} to
       specify an alternative set of tests to run.
 
@@ -384,11 +387,11 @@
       testing after many types of errors, and will output a summary
       count of errors at the end if any have occurred.
 
+      \item \command{R CMD check} now checks that the \samp{Title} and
+      \samp{Description} fields are correctly terminated.
+      
       \item \command{R CMD check --as-cran} checks a \file{README.md}
       file can be processed: this needs \command{pandoc} installed.
-
-      \item \command{R CMD build} adds a \samp{NeedsCompilation} field
-      if one is not already present in the \file{DESCRIPTION} file.
 
       \item \command{R CMD check --as-cran} checks the existence and
       accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
@@ -407,9 +410,6 @@
 
       These checks can also be selected by environment variables: see
       the \sQuote{R Internals} manual.
-
-      \item \command{R CMD check} now checks that the \samp{Title} and
-      \samp{Description} fields are correctly terminated.
 
       \item \command{R CMD check --as-cran} reports if the \code{Title}
       field does not appear to be in title case (see \sQuote{Writing R
