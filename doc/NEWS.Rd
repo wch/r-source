@@ -390,11 +390,6 @@
       \item \command{R CMD build} adds a \samp{NeedsCompilation} field
       if one is not already present in the \file{DESCRIPTION} file.
 
-      \item \command{R CMD check} notes uses of \code{library()} and
-      \code{require()} in package code: see the section
-      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
-      good practice.
-
       \item \command{R CMD check --as-cran} checks the existence and
       accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
       and \file{NEWS.Rd} files and in the help files.
@@ -626,6 +621,11 @@
 
       \command{R CMD build} will correct line endings in all Makefiles,
       not just those in the \file{src} directory.
+      
+      \item \command{R CMD check} notes uses of \code{library()} and
+      \code{require()} in package code: see the section
+      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
+      good practice.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -723,9 +723,9 @@
       \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
 
-      \item \file{R_ext/Lapack.h} had not been updated for changes to
-      the argument lists of the (largely internal) functions
-      \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
+      \item \file{R_ext/Lapack.h} had not been updated for changes made
+      by LAPACK to the argument lists of its (largely internal)
+      functions \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
 
       \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
       layout changes of \R 3.1.0.
