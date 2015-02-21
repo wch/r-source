@@ -700,8 +700,8 @@
       vignette engine.
 
       \item Port Tomas Kalibera's fix from R-devel that restores the
-      loadMethod fast path, effectively doubling the speed of S4
-      dispatch.
+      \code{loadMethod()} fast path, effectively doubling the speed of
+      S4 dispatch.
 
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
