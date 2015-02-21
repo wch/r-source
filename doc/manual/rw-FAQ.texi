@@ -1339,7 +1339,7 @@ expressing a wish for such a package to be ported---the maintainers will
 take such wishes into account when prioritizing work on binary packages.
 
 In many cases installing packages from the sources is not at all
-difficult (especially if the package contains no compiled code), so
+difficult (it is simple if the package contains no compiled code), so
 please attempt that for yourself before requesting help from the busy
 volunteers.
 
