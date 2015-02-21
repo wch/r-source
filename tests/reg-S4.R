@@ -191,11 +191,10 @@ assertError(TRUE & b)
 
 
 ## methods' hidden cbind() / rbind:
-cBind <- methods:::cbind
 setClass("myMat", representation(x = "numeric"))
 setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
 m <- new("myMat", x = c(1, pi))
-stopifnot(identical(m, cBind(m)))
+stopifnot(identical(m, methods:::cbind(m)), identical(m, cbind(m)))
 
 
 ## explicit print or show on a basic class with an S4 bit
