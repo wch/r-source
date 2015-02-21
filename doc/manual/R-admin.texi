@@ -2094,13 +2094,13 @@ installed as described in @xref{Building from source}.
 On OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types starting with @code{mac.binary}
 (available for the @acronym{CRAN} distribution but not when compiling
-from source: @code{mac.binary.mavericks} for a `Mavericks' build and
-@code{mac.binary} for a `Snow Leopard' build with @code{"default"} a
-synonym for the appropriate variant) which can be passed to
-@code{install.packages} in order to download and install binary packages
-from a suitable repository.  These OS X binary package files have the
-extension @samp{.tgz}.  The @Rapp{} GUI provides menus for installation
-of either binary or source packages, from @acronym{CRAN} or local files.
+from source: @code{mac.binary.mavericks} for a `Mavericks' build with
+@code{"default"} a synonym for the appropriate variant) which can be
+passed to @code{install.packages} in order to download and install
+binary packages from a suitable repository.  These OS X binary package
+files have the extension @samp{.tgz}.  The @Rapp{} GUI provides menus
+for installation of either binary or source packages, from
+@acronym{CRAN} or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -4410,7 +4410,7 @@ see in the @command{configure} summary
 
 @example
   Interfaces supported:      X11, tcltk
-  External libraries:        readline, zlib, bzlib, lzma, PCRE
+  External libraries:        readline, zlib, bzlib, lzma, PCRE, curl
   Additional capabilities:   PNG, JPEG, TIFF, NLS, cairo, ICU
 @end example
 
