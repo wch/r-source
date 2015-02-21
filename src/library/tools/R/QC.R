@@ -2059,7 +2059,7 @@ function(package, dir, file, lib.loc = NULL,
                     wrong_pkg <<- c(wrong_pkg, e)
                     bad_pkg <<- c(bad_pkg, this)
                 }
-                parg <- if(!is.null(parg) && (parg != "")) "OK"
+                parg <- if(!is.null(parg) && (nzchar(parg))) "OK"
                 else if(identical(parg, "")) {
                     empty_exprs <<- c(empty_exprs, e)
                     "EMPTY"
@@ -3309,7 +3309,7 @@ function(x, ...)
                      ""))
 
     if(any(as.integer(sapply(x, length)) > 0L))
-        writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+        writeLines(c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
                      ""))
 
     invisible(x)
@@ -3561,7 +3561,7 @@ function(x, ...)
             .pretty_format(x$fields_with_non_ASCII_values))
       },
       if(any(as.integer(sapply(x, length)) > 0L)) {
-          c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+          c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
             "")
       })
 }
@@ -4189,7 +4189,7 @@ function(x, ...)
               "")
         }
         c(unlist(lapply(seq_along(xx), .fmt)),
-          strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual.")),
+          strwrap(gettextf("See section 'Cross-references' in the 'Writing R Extensions' manual.")),
           "")
     } else {
         character()
@@ -5234,12 +5234,13 @@ function(package, dir, lib.loc = NULL)
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos", "dep_name")
 
-    bad_exprs <- bad_deps <- bad_imps <- character()
+    bad_exprs <- bad_deps <- bad_imps <- bad_prac <- character()
     bad_imports <- all_imports <- imp2 <- imp2f <- imp3 <- imp3f <- character()
     uses_methods <- FALSE
     find_bad_exprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
             Call <- deparse(e[[1L]])[1L]
+            if(Call %in% c("clusterEvalQ", "parallel::clusterEvalQ")) return()
             if((Call %in%
                 c("library", "require", "loadNamespace", "requireNamespace"))
                && (length(e) >= 2L)) {
@@ -5274,6 +5275,9 @@ function(package, dir, lib.loc = NULL)
                                 bad_exprs <<- c(bad_exprs, pkg)
                             if(pkg %in% depends)
                                 bad_deps <<- c(bad_deps, pkg)
+                           ## assume calls to itself are to clusterEvalQ etc
+                           else if (pkg != package)
+                               bad_prac <<- c(bad_prac, pkg)
                         }
                     }
                 }
@@ -5472,6 +5476,7 @@ function(package, dir, lib.loc = NULL)
         }
     } else imp32 <- imp3f <- imp3ff <- unknown <- character()
     res <- list(others = unique(bad_exprs),
+                bad_practice = unique(bad_prac),
                 imports = unique(bad_imports),
                 imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
@@ -5533,6 +5538,18 @@ function(x, ...)
                          sQuote(xx)), msg)
           }
       },
+      if(length(xx <- x$bad_practice)) {
+          msg <-
+              "  Please use :: or requireNamespace() instead.\n  See section 'Suggested packages' in the 'Writing R Extensions' manual."
+          if(length(xx) > 1L) {
+              c(gettext("'library' or 'require' calls in package code:"),
+                .pretty_format(sort(xx)), msg)
+          } else {
+              c(gettextf("'library' or 'require' call to %s in package code.",
+                         sQuote(xx)), msg)
+          }
+      },
+
       if(length(xx <- x$unused_imports)) {
           msg <- "  All declared Imports should be used."
           if(length(xx) > 1L) {
@@ -6778,6 +6795,28 @@ function(dir)
         if(length(dotjava)) out$dotjava <- dotjava
     }
 
+   ## Check Authors@R.
+    if(!is.na(aar <- meta["Authors@R"]) &&
+       ## DESCRIPTION is fully checked later on, so be careful.
+       !inherits(aar <- tryCatch(parse(text = aar), error = identity),
+                 "error")) {
+        bad <- ((length(aar) != 1L) || !is.call(aar <- aar[[1L]]))
+        if(!bad) {
+            cname <- as.character(aar[[1L]])
+            bad <-
+                ((cname != "person") &&
+                 ((cname != "c") ||
+                  !all(vapply(aar[-1L],
+                              function(e) {
+                                  (is.call(e) &&
+                                       (as.character(e[[1L]]) == "person"))
+                              },
+                              FALSE))))
+        }
+        if(bad)
+            out$authors_at_R_calls <- aar
+    }
+
     ## Is this an update for a package already on CRAN?
     db <- db[(packages == package) &
              (db[, "Repository"] == CRAN) &
@@ -6991,6 +7030,9 @@ function(x, ...)
 		"Uses the non-portable packages:" else
 		"Uses the non-portable package:",
                 paste(sQuote(y), collapse = ", "))
+      },
+      if(length(y <- x$authors_at_R_calls)) {
+          c("Authors@R field should be a call to person(), or combine such calls.")
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
@@ -7343,7 +7385,7 @@ function(x)
 {
     y <- as.character(x)
     if(!is.null(nx <- names(x))) {
-        ind <- which(nx != "")
+        ind <- which(nzchar(nx))
         y[ind] <- nx[ind]
     }
     y

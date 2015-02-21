@@ -55,10 +55,10 @@
       configuration options of the version of PCRE in use.  In
       particular, this reports if regular expressions using
       \samp{\p{xx}} are supported.
-      
+
       \item (Windows.) \code{download.file(cacheOK = FALSE)} is now
       supported when \file{internet2.dll} is used.
-      
+
     }
   }
 
@@ -85,6 +85,11 @@
 
       \command{R CMD build} will correct line endings in all Makefiles,
       not just those in the \file{src} directory.
+      
+      \item \command{R CMD check} notes uses of \code{library()} and
+      \code{require()} in package code: see the section
+      \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
+      good practice.
     }
   }
   \subsection{DEPRECATED AND DEFUNCT}{
@@ -159,8 +164,8 @@
       vignette engine.
 
       \item Port Tomas Kalibera's fix from R-devel that restores the
-      loadMethod fast path, effectively doubling the speed of S4
-      dispatch.
+      \code{loadMethod()} fast path, effectively doubling the speed of
+      S4 dispatch.
 
       \item \code{power.t.test()} and \code{power.prop.test()} now make
       use of the \code{extendInt} option of \code{uniroot()} and hence
@@ -182,9 +187,9 @@
       \item \code{split.Date()} retains fractional representations while
       avoiding incomplete class propagation.
 
-      \item \file{R_ext/Lapack.h} had not been updated for changes to
-      the argument lists of the (largely internal) functions
-      \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
+      \item \file{R_ext/Lapack.h} had not been updated for changes made
+      by LAPACK to the argument lists of its (largely internal)
+      functions \code{dlaed2} and \code{dlaed3}.  (\PR{16157})
 
       \item \code{RShowDoc("NEWS", "txt")} had not been updated for the
       layout changes of \R 3.1.0.

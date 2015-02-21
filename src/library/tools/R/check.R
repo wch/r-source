@@ -922,10 +922,8 @@ setRlibs <-
             }
         }
         if (any)
-            wrapLog("See the information on INDEX files and package",
-                    "subdirectories in the chapter 'Creating R packages'",
-                    "of the 'Writing R Extensions' manual.\n")
-        else  resultLog(Log, "OK")
+            wrapLog("See sections 'The INDEX file' and 'Package subdirectories' in the 'Writing R Extensions' manual.\n")
+        else resultLog(Log, "OK")
     }
 
     check_subdirectories <- function(haveR, subdirs)
@@ -1275,7 +1273,7 @@ setRlibs <-
                     if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    wrapLog(msg_DESCRIPTION)
+                    ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             } else {
                 ## this needs to read the package code, and will fail on
@@ -1288,7 +1286,7 @@ setRlibs <-
                     if(any(grepl("not declared from", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    wrapLog(msg_DESCRIPTION)
+                    ## wrapLog(msg_DESCRIPTION)
                 } else resultLog(Log, "OK")
             }
         }
@@ -1307,7 +1305,7 @@ setRlibs <-
             warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("See section 'Generic functions and methods'",
-                    "of the 'Writing R Extensions' manual.\n")
+                    "in the 'Writing R Extensions' manual.\n")
         } else resultLog(Log, "OK")
 
         ## Check whether replacement functions have their final argument
@@ -1373,7 +1371,7 @@ setRlibs <-
                     wrapLog("DUP = FALSE is deprecated and will be",
                             "disabled in future versions of R.")
                 else
-                    wrapLog("See the chapter 'System and foreign language interfaces' of the 'Writing R Extensions' manual.\n")
+                    wrapLog("See chapter 'System and foreign language interfaces' in the 'Writing R Extensions' manual.\n")
             } else resultLog(Log, "OK")
         }
     }
@@ -1535,8 +1533,7 @@ setRlibs <-
     check_Rd_files <- function(haveR)
     {
         msg_writing_Rd <-
-            c("See the chapter 'Writing R documentation files'",
-              "in the 'Writing R Extensions' manual.\n")
+            c("See chapter 'Writing R documentation files' in the 'Writing R Extensions' manual.\n")
 
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
@@ -3586,7 +3583,7 @@ setRlibs <-
             encoding <- desc["Encoding"]
         } else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
             errorLog(Log,
-                     "File DESCRIPTION does not exist but there is a case-insenstiive match.")
+                     "File DESCRIPTION does not exist but there is a case-insensitive match.")
             do_exit(1L)
         } else {
             resultLog(Log, "NO")
@@ -3625,12 +3622,24 @@ setRlibs <-
         res <- .check_package_CRAN_incoming(pkgdir)
         if(length(res)) {
             out <- format(res)
-            if(length(res$bad_package)) {
+            if((length(out) == 1L) &&
+               grepl("^Maintainer: ", out)) {
+                ## Special-case when there is only the maintainer
+                ## address to note (if at all).
+                maintainer <- res$Maintainer
+                if(nzchar(maintainer) &&
+                   identical(maintainer,
+                             Sys.getenv("_R_CHECK_MAINTAINER_ADDRESS_"))) {
+                    resultLog(Log, "OK")
+                    out <- character()
+                }
+                else resultLog(Log, "Note_to_CRAN_maintainers")
+            } else if(length(res$bad_package)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 do_exit(1L)
             } else if(length(res$bad_version) ||
-                      identical(res$foss_with_BuildVigettes, TRUE) ||
+                      identical(res$foss_with_BuildVignettes, TRUE) ||
                       res$empty_Maintainer_name ||
                       res$Maintainer_needs_quotes)
                 warningLog(Log)
@@ -3676,7 +3685,7 @@ setRlibs <-
                                    "\n", as.character(e), "\n")
                          msg_NAMESPACE <-
                              c("See section 'Package namespaces'",
-                               " of the 'Writing R Extensions' manual.\n")
+                               " in the 'Writing R Extensions' manual.\n")
                          wrapLog(msg_NAMESPACE)
                          do_exit(1L)
                      })
@@ -4155,6 +4164,11 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
+    ## Howver, we cannot use this if we did not install the recommended packages
+    if(R_check_use_codetools) {
+        tmp <- tryCatch(find.package('codetools'), error = identity)
+        if(inherits(tmp, "error")) R_check_use_codetools <- FALSE
+    }
     R_check_executables <-
         config_val_to_logical(Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE"))
     R_check_executables_exclusions <-
@@ -4292,9 +4306,8 @@ setRlibs <-
     R_opts4 <- "--no-site-file --no-init-file --no-save --no-restore --slave"
     env0 <- if(WINDOWS) "R_ENVIRON_USER='no_such_file'" else "R_ENVIRON_USER=''"
 
-    msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
-                         " in the chapter 'Creating R packages'",
-                         " of the 'Writing R Extensions' manual.\n")
+    msg_DESCRIPTION <-
+        c("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.\n")
 
     if (!length(pkgs)) {
         message("Error: no packages were specified")
