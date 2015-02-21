@@ -6899,7 +6899,7 @@ function(dir)
 
     ## Check Authors@R.
     if(!is.na(aar <- meta["Authors@R"]) &&
-       ## DESCRIPTION is fully checked lateron, so be careful.
+       ## DESCRIPTION is fully checked later on, so be careful.
        !inherits(aar <- tryCatch(parse(text = aar), error = identity),
                  "error")) {
         bad <- ((length(aar) != 1L) || !is.call(aar <- aar[[1L]]))
@@ -6939,7 +6939,7 @@ function(dir)
     package <- meta["Package"]
     if(grepl(paste0("^['\"]?", package), descr))
         out$descr_bad_start <- TRUE
-    if(grepl("^(The|This|A) package", descr))
+    if(grepl("^(The|This|A|In this|In the) package", descr))
         out$descr_bad_start <- TRUE
     if(!isTRUE(out$descr_bad_start) && !grepl("^['\"]?[[:upper:]]", descr))
        out$descr_bad_initial <- TRUE
@@ -7269,7 +7269,7 @@ function(x, ...)
           "The Description field should start with a capital letter."
       },
       if(length(x$descr_bad_start)) {
-          "The Description field should not start with the package name,\n  'This package', 'The package' or 'A package'."
+          "The Description field should not start with the package name,\n  'This package' or similar."
       }
      )
 }
