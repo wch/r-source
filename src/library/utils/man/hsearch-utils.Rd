@@ -30,7 +30,7 @@ hsearch_db_keywords(db = hsearch_db())
   \item{types}{a character vector listing the types of documentation
     to search.
     See \code{\link{help.search}} for details.}
-  \item{verbose}{a locical controlling the verbosity of building the
+  \item{verbose}{a logical controlling the verbosity of building the
     help search database.
     See \code{\link{help.search}} for details.}
   \item{rebuild}{a logical indicating whether the help search database
