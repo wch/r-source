@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2014 The R Core Team
+#  Copyright (C) 2014-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -283,6 +283,11 @@ function()
     read_CRAN_object(CRAN_baseurl_for_src_area(),
                      "src/contrib/Meta/current.rds")
 
+CRAN_rdxrefs_db <-
+function()    
+    read_CRAN_object(CRAN_baseurl_for_src_area(),
+                     "src/contrib/Meta/rdxrefs.rds")
+
 check_CRAN_mirrors <-
 function(mirrors = NULL, verbose = FALSE)
 {
@@ -369,4 +374,86 @@ function(mirrors = NULL, verbose = FALSE)
     names(results) <- mirrors
 
     results
+}
+
+CRAN_Rd_xref_db_with_expansions <-
+function()
+{
+    db <- CRAN_rdxrefs_db()
+    ## Flatten:
+    db <- cbind(do.call(rbind, db),
+                rep.int(names(db), sapply(db, NROW)))
+    colnames(db) <- c(colnames(db)[1L : 2L], "S_File", "S_Package")
+    unique(cbind(db, .expand_anchored_Rd_xrefs(db)))
+}
+
+CRAN_Rd_xref_available_target_ids <-
+function()
+{
+    targets <- lapply(CRAN_aliases_db(), .Rd_available_xref_targets)
+    .Rd_object_id(rep.int(names(targets), sapply(targets, length)),
+                  unlist(targets, use.names = FALSE))
+}
+
+CRAN_Rd_xref_reverse_depends <-
+function(packages, db = NULL, details = FALSE)
+{
+    if(is.null(db))
+        db <- CRAN_Rd_xref_db_with_expansions()
+    y <- split.data.frame(db, db[, "T_Package"])[packages]
+    if(!details)
+        y <- lapply(y, function(e) unique(e[, "S_Package"]))
+    y
+}
+
+CRAN_Rd_xref_problems <-
+function()
+{
+    y <- list()
+
+    db <- CRAN_Rd_xref_db_with_expansions()
+    db <- db[nzchar(db[, "T_Package"]), , drop = FALSE]
+    ## Add ids:
+    db <- cbind(db,
+                T_ID = .Rd_object_id(db[, "T_Package"], db[, "T_File"]))
+
+    ## Do we have Rd xrefs to current CRAN packages which no longer work?
+    current <- rownames(CRAN_current_db())
+    db1 <- db[!is.na(match(db[, "T_Package"], current)), , drop = FALSE]
+    y$broken_xrefs_to_current_CRAN_packages <-
+        db1[is.na(match(db1[, "T_ID"],
+                        CRAN_Rd_xref_available_target_ids())), ,
+            drop = FALSE]
+
+    ## Do we have Rd xrefs "likely" to archived CRAN packages?
+    ## This is a bit tricky because packages could have been archived on
+    ## CRAN but still be available from somewhere else.  The code below
+    ## catches availability in standard repositories, but not in
+    ## additional repositories.
+    archived <- setdiff(names(CRAN_archive_db()),
+                        c(rownames(available.packages(filters = list())),
+                          unlist(.get_standard_package_names(),
+                                 use.names = FALSE)))
+    y$xrefs_likely_to_archived_CRAN_packages <-
+        db[!is.na(match(db[, "T_Package"], archived)), , drop = FALSE]
+
+    y
+}    
+
+.Rd_available_xref_targets <-
+function(aliases)
+{
+    ## Argument aliases as obtained from Rd_aliases(), or directly by
+    ## calling
+    ##   lapply(rddb, .Rd_get_metadata, "alias")
+    ## on an Rd db.
+    unique(c(unlist(aliases, use.names = FALSE),
+             sub("\\.[Rr]d", "", basename(names(aliases)))))
+}
+
+.Rd_object_id <-
+function(package, nora)
+{
+    ## Name OR Alias: nora.
+    sprintf("%s::%s", package, nora)
 }
