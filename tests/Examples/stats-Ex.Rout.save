@@ -7667,6 +7667,40 @@ NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
 > 
+> if(length(find.package("MASS", quiet = TRUE))) {
++ ## an example with offsets from Venables & Ripley (2002, p.189)
++ utils::data(anorexia, package = "MASS")
++ 
++ anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
++                 family = gaussian, data = anorexia)
++ summary(anorex.1)
++ }
+
+Call:
+glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian, 
+    data = anorexia)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-14.1083   -4.2773   -0.5484    5.4838   15.2922  
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  49.7711    13.3910   3.717 0.000410 ***
+Prewt        -0.5655     0.1612  -3.509 0.000803 ***
+TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
+TreatFT       4.5631     2.1333   2.139 0.036035 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for gaussian family taken to be 48.69504)
+
+    Null deviance: 4525.4  on 71  degrees of freedom
+Residual deviance: 3311.3  on 68  degrees of freedom
+AIC: 489.97
+
+Number of Fisher Scoring iterations: 2
+
 > 
 > # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
 > clotting <- data.frame(

@@ -339,7 +339,8 @@ glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
 anova(glm.D93)
 \donttest{summary(glm.D93)}
 
-\donttest{## an example with offsets from Venables & Ripley (2002, p.189)
+if(length(find.package("MASS", quiet = TRUE))) {
+## an example with offsets from Venables & Ripley (2002, p.189)
 utils::data(anorexia, package = "MASS")
 
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
