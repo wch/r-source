@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2014  The R Core Team
+ *  Copyright (C) 1998--2015  The R Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -55,7 +55,9 @@
 double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 {
     int swap_tail, i_pb, i_inn;
+#ifdef DEBUG_qbeta
     Rboolean warned = FALSE;
+#endif
     double a, la, adj, logbeta, g, h, pp, p_, prev, qq, r, s, t, tx, w, y, wprev;
     double acu;
     volatile double xinbta;
@@ -233,7 +235,9 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	wprev = w;
     }
     /*-- NOT converged: Iteration count --*/
+#ifdef DEBUG_qbeta
     warned = TRUE;
+#endif
     ML_ERROR(ME_PRECISION, "qbeta");
 
 L_converged:
