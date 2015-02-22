@@ -711,22 +711,8 @@ rm(obj1,om1); removeClass("A")
 ##
 ##
 ###__ 2) --- Matrix --- via cbind2(), rbind2()
-if(require("Matrix")) {
- m1 <- m2 <- m <- matrix(1:12, 3,4)
- dimnames(m2) <- list(LETTERS[1:3],
-                      letters[1:4])
- dimnames(m1) <- list(NULL,letters[1:4])
- M  <- Matrix(m)
- M1 <- Matrix(m1)
- M2 <- Matrix(m2)
- ## Now, with a new ideal cbind(), rbind():
- print(cbind(M, M1))
- stopifnot(identical(cbind (M, M1),
-                     cbind2(M, M1)))
- rm(M,M1,M2)
- detach("package:Matrix", unload=TRUE)
-}##{Matrix}
-##
+## this has its output checked strictly, so test depending on Matrix
+## has been moved to reg-tests-3.R
 ##
 ###__ 3) --- package 'its' like
 setClass("its",representation("matrix", dates="POSIXt"))

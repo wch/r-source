@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-20 r67845) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-21 r67865) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -812,4 +812,26 @@ Complete :
 X2 0           1  0 
 
 > ## the error was in lm.(w)fit
+> 
+> if(require("Matrix")) {
++  m1 <- m2 <- m <- matrix(1:12, 3,4)
++  dimnames(m2) <- list(LETTERS[1:3],
++                       letters[1:4])
++  dimnames(m1) <- list(NULL,letters[1:4])
++  M  <- Matrix(m)
++  M1 <- Matrix(m1)
++  M2 <- Matrix(m2)
++  ## Now, with a new ideal cbind(), rbind():
++  print(cbind(M, M1))
++  stopifnot(identical(cbind (M, M1),
++                      cbind2(M, M1)))
++  rm(M,M1,M2)
++  detach("package:Matrix", unload=TRUE)
++ }##{Matrix}
+Loading required package: Matrix
+3 x 8 Matrix of class "dgeMatrix"
+              a b c  d
+[1,] 1 4 7 10 1 4 7 10
+[2,] 2 5 8 11 2 5 8 11
+[3,] 3 6 9 12 3 6 9 12
 > 
