@@ -3803,7 +3803,7 @@ Default: @samp{default} (which checks only tarballs, and checks in the
 If true, make use of the @CRANpkg{codetools} package, which provides a
 detailed analysis of visibility of objects (but may give false
 positives).
-Default: true.
+Default: true (if recommended packages are installed).
 @item _R_CHECK_USE_INSTALL_LOG_
 If true, record the output from installing a package as part of its
 check to a log file (@file{00install.out} by default), even when running
