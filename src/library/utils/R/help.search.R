@@ -16,7 +16,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.hsearch_db <- local({
+.hsearch_db <-
+local({
     hdb <- NULL
     function(new) {
 	if(!missing(new))
@@ -26,36 +27,38 @@
     }
 })
 
-merge.vignette.index <- function(hDB, path, pkg) {
-    ## Vignettes in the hsearch index started in R2.14.0
+merge_vignette_index <-
+function(hDB, path, pkg)
+{
+    ## Vignettes in the hsearch index started in R 2.14.0
     ## Most packages don't have them, so the following should not be
     ## too inefficient
     if(file.exists(v_file <- file.path(path, "Meta", "vignette.rds"))
        && !is.null(vDB <- readRDS(v_file))
        && nrow(vDB)) {
 	## Make it look like an hDB base matrix and append it
-	base <- matrix("", nrow=nrow(vDB), ncol=8)
-	colnames(base) <- colnames(hDB[[1]])
-	base[,"Package"] <- pkg
-	base[,"LibPath"] <- path
-	id <- as.character(1:nrow(vDB) + NROW(hDB[[1]]))
-	base[,"ID"] <- id
-	base[,"name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
-	base[,"topic"] <- base[,"name"]
-	base[,"title"] <- vDB$Title
-	base[,"Type"] <- "vignette"
+	base <- matrix("", nrow = nrow(vDB), ncol = 8L)
+	colnames(base) <- colnames(hDB[[1L]])
+	base[, "Package"] <- pkg
+	base[, "LibPath"] <- path
+	id <- as.character(1:nrow(vDB) + NROW(hDB[[1L]]))
+	base[, "ID"] <- id
+	base[, "Name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
+	base[, "Topic"] <- base[, "Name"]
+	base[, "Title"] <- vDB$Title
+	base[, "Type"] <- "vignette"
 	hDB[[1L]] <- rbind(hDB[[1L]], base)
-	aliases <- matrix("", nrow=nrow(vDB), ncol=3)
-	colnames(aliases) <- colnames(hDB[[2]])
-	aliases[,"Aliases"] <- base[,"name"]
-	aliases[,"ID"] <- id
-	aliases[,"Package"] <- pkg
+	aliases <- matrix("", nrow = nrow(vDB), ncol = 3L)
+	colnames(aliases) <- colnames(hDB[[2L]])
+	aliases[, "Alias"] <- base[, "Name"]
+	aliases[, "ID"] <- id
+	aliases[, "Package"] <- pkg
 	hDB[[2L]] <- rbind(hDB[[2L]], aliases)
 	nkeywords <- sum(sapply(vDB$Keywords, length))
 	if (nkeywords) {
-	    keywords <- matrix("", nrow=nkeywords, ncol=3)
-	    colnames(keywords) <- colnames(hDB[[4]])
-	    keywords[,"Concepts"] <- unlist(vDB$Keywords)
+	    keywords <- matrix("", nrow = nkeywords, ncol = 3L)
+	    colnames(keywords) <- colnames(hDB[[4L]])
+	    keywords[,"Concept"] <- unlist(vDB$Keywords)
 	    keywords[,"ID"] <- unlist(lapply(1:nrow(vDB),
 		   function(i) rep(id[i], length(vDB$Keywords[[i]]))))
 	    keywords[,"Package"] <- pkg
@@ -65,28 +68,30 @@ merge.vignette.index <- function(hDB, path, pkg) {
     hDB
 }
 
-merge.demo.index <- function(hDB, path, pkg) {
-    ## Demos in the hsearch index started in R2.14.0
+merge_demo_index <-
+function(hDB, path, pkg)
+{
+    ## Demos in the hsearch index started in R 2.14.0
     if(file.exists(d_file <- file.path(path, "Meta", "demo.rds"))
        && !is.null(dDB <- readRDS(d_file))
        && nrow(dDB)) {
 	## Make it look like an hDB base matrix and append it
-	base <- matrix("", nrow=nrow(dDB), ncol=8)
+	base <- matrix("", nrow = nrow(dDB), ncol = 8L)
 	colnames(base) <- colnames(hDB[[1]])
-	base[,"Package"] <- pkg
-	base[,"LibPath"] <- path
-	id <- as.character(1:nrow(dDB) + NROW(hDB[[1]]))
-	base[,"ID"] <- id
-	base[,"name"] <- dDB[,1]
-	base[,"topic"] <- base[,"name"]
-	base[,"title"] <- dDB[,2]
-	base[,"Type"] <- "demo"
+	base[, "Package"] <- pkg
+	base[, "LibPath"] <- path
+	id <- as.character(1:nrow(dDB) + NROW(hDB[[1L]]))
+	base[, "ID"] <- id
+	base[, "Name"] <- dDB[, 1L]
+	base[, "Topic"] <- base[, "Name"]
+	base[, "Title"] <- dDB[, 2L]
+	base[, "Type"] <- "demo"
 	hDB[[1L]] <- rbind(hDB[[1L]], base)
-	aliases <- matrix("", nrow=nrow(dDB), ncol=3)
-	colnames(aliases) <- colnames(hDB[[2]])
-	aliases[,"Aliases"] <- base[,"name"]
-	aliases[,"ID"] <- id
-	aliases[,"Package"] <- pkg
+	aliases <- matrix("", nrow = nrow(dDB), ncol = 3L)
+	colnames(aliases) <- colnames(hDB[[2L]])
+	aliases[, "Alias"] <- base[, "Name"]
+	aliases[, "ID"] <- id
+	aliases[, "Package"] <- pkg
 	hDB[[2L]] <- rbind(hDB[[2L]], aliases)
     }
     hDB
@@ -186,7 +191,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     }
 
     ## Subset to the requested help types
-    db$Base <- db$Base[db$Base[,"Type"] %in% types,,drop=FALSE]
+    db$Base <- db$Base[db$Base[,"Type"] %in% types, , drop=FALSE]
 
     ## <FIXME>
     ## No need continuing if there are no objects in the data base.
@@ -233,46 +238,54 @@ function(pattern, fields = c("alias", "concept", "title"),
     search_db_field <- function(field) {
 	switch(field,
 	       alias = {
-		   aliases <- db$Aliases[, "Alias"]
+		   aliases <- db$Aliases$Alias
                    matched <- search_fun(aliases)
-                   search_db_results(match(db$Aliases[matched, "ID"],
-                                           dbBase[, "ID"]),
+                   search_db_results(match(db$Aliases$ID[matched],
+                                           dbBase$ID),
                                      rep.int(field, length(matched)),
                                      aliases[matched])
 	       },
 	       concept = {
-		   concepts <- db$Concepts[, "Concept"]
+		   concepts <- db$Concepts$Concept
                    matched <- search_fun(concepts)
-                   search_db_results(match(db$Concepts[matched, "ID"],
-                                           dbBase[, "ID"]),
+                   search_db_results(match(db$Concepts$ID[matched],
+                                           dbBase$ID),
                                      rep.int(field, length(matched)),
                                      concepts[matched])
 	       },
 	       keyword = {
-		   keywords <- db$Keywords[, "Keyword"]
+		   keywords <- db$Keywords$Keyword
                    matched <- search_fun(keywords)
-                   search_db_results(match(db$Keywords[matched, "ID"],
-                                           dbBase[, "ID"]),
+                   search_db_results(match(db$Keywords$ID[matched],
+                                           dbBase$ID),
                                      rep.int(field, length(matched)),
                                      keywords[matched])
 	       },
-               {
-                   matched <- search_fun(db$Base[, field])
+               ## Alternatively, generically use field mapped to title
+               ## case.
+               name = {
+                   matched <- search_fun(dbBase$Name)
                    search_db_results(matched,
-                                     rep.int(field, length(matched)),
-                                     dbBase[matched, field])
-               })
+                                     rep.int("Name", length(matched)),
+                                     dbBase$Name[matched])
+               },
+               title = {
+                   matched <- search_fun(dbBase$Title)
+                   search_db_results(matched,
+                                     rep.int("Title", length(matched)),
+                                     dbBase$Title[matched])
+               }
+               )
     }
 
     matches <- NULL
     for(f in fields)
         matches <- rbind(matches, search_db_field(f))
     matches <- matches[order(matches$Position), ]
-    db <- cbind(as.data.frame(dbBase[matches$Position,
-                                     c("topic", "title","name",
-                                       "ID", "Package", "LibPath", "Type"),
-                                     drop = FALSE],
-                              stringsAsFactors = FALSE),
+    db <- cbind(dbBase[matches$Position,
+                       c("Topic", "Title", "Name", "ID",
+                         "Package", "LibPath", "Type"),
+                       drop = FALSE],
                 matches[c("Field", "Entry")])
     if(verbose>= 2L) {
         n_of_objects_matched <- length(unique(db[, "ID"]))
@@ -432,15 +445,23 @@ function(package = NULL, lib.loc = NULL,
 		    ## Fill up possibly missing information.
 		    if(is.na(match("Encoding", colnames(hDB[[1L]]))))
 			hDB[[1L]] <- cbind(hDB[[1L]], Encoding = "")
+                    ## <FIXME>
+                    ## Transition fro old-style to new-style colnames.
+                    ## Remove eventually.
+                    for(i in seq_along(hDB)) {
+                        colnames(hDB[[i]]) <-
+                            tools:::hsearch_index_colnames[[i]]
+                    }
+                    ## </FIXME>
 		    nh <- NROW(hDB[[1L]])
 		    hDB[[1L]] <- cbind(hDB[[1L]],
 		                       Type = rep("help", nh))
 		    if (nh)
 		    	hDB[[1L]][, "LibPath"] <- path
 		    if ("vignette" %in% types)
-		    	hDB <- merge.vignette.index(hDB, path, p)
+		    	hDB <- merge_vignette_index(hDB, path, p)
 		    if ("demo" %in% types)
-		    	hDB <- merge.demo.index(hDB, path, p)
+		    	hDB <- merge_demo_index(hDB, path, p)
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
@@ -478,16 +499,15 @@ function(package = NULL, lib.loc = NULL,
         rownames(db$Base) <- NULL
         ## <FIXME>
         ## Remove eventually ...
-        dimnames(db$Aliases) <-
-            list(NULL, c("Alias", "ID", "Package"))
-        dimnames(db$Keywords) <-
-            list(NULL, c("Keyword", "ID", "Package"))
-	if(is.null(db$Concepts))
-	    db$Concepts <- matrix(character(), ncol = 3L)
-        dimnames(db$Concepts) <-
-            list(NULL, c("Concept", "ID", "Package"))
+	if(is.null(db$Concepts)) {
+	    db$Concepts <-
+                matrix(character(), ncol = 3L,
+                       dimnames =
+                           list(NULL,
+                                tools:::hsearch_index_colnames$Concepts))
+        }
         ## </FIXME>
-        
+
         ## Make the IDs globally unique by prefixing them with the
 	## number of the package in the global index.
 	for(i in which(sapply(db, NROW) > 0L)) {
@@ -500,7 +520,7 @@ function(package = NULL, lib.loc = NULL,
 	## And maybe re-encode ...
 	if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
 	    if(verbose >= 2L) {
-                message("reencoding ...", appendLF=FALSE, domain = NA)
+                message("reencoding ...", appendLF = FALSE, domain = NA)
                 flush.console()
             }
 	    encoding <- db$Base[, "Encoding"]
@@ -571,8 +591,13 @@ function(package = NULL, lib.loc = NULL,
                         db$Keywords[ind, -1L, drop = FALSE]))
         db$Keywords <- db$Keywords[!is.na(pos), , drop = FALSE]
 
+        ## Doing this earlier will not work: in particular, re-encoding
+        ## is written for character matrices.
+        db <- lapply(db, as.data.frame,
+                     stringsAsFactors = FALSE, row.names = NULL)
+
         if(verbose >= 2L) {
-            message("saving the database ...", appendLF=FALSE, domain = NA)
+            message("saving the database ...", appendLF = FALSE, domain = NA)
             flush.console()
         }
         attr(db, "LibPaths") <- lib.loc
@@ -611,7 +636,7 @@ function()
          Descriptions = sub(".*:[[:space:]]*", "", lines))
 }
              
-## this extra indirection allows the Mac GUI to replace this
+## This extra indirection allows the Mac GUI to replace this
 ## yet call the printhsearchInternal function.
 print.hsearch <-
 function(x, ...)
@@ -661,17 +686,23 @@ function(x, ...)
         }
     }
     hfields <- paste(x$fields, collapse = " or ")
-    vfieldnames <- c(alias = "name", concept="keyword", keyword=NA,
-                     name="name", title="title")
+    vfieldnames <-
+        c(alias = "name", concept = "keyword", keyword = NA,
+          name = "name", title = "title")
     vfieldnames <- vfieldnames[x$fields]
-    vfields <- paste(unique(vfieldnames[!is.na(vfieldnames)]), collapse = " or ")
-    dfieldnames <- c(alias = "name", concept=NA, keyword=NA,
-                     name = "name", title = "title")
+    vfields <- paste(unique(vfieldnames[!is.na(vfieldnames)]),
+                     collapse = " or ")
+    dfieldnames <-
+        c(alias = "name", concept = NA, keyword = NA,
+          name = "name", title = "title")
     dfieldnames <- dfieldnames[x$fields]
-    dfields <- paste(unique(dfieldnames[!is.na(dfieldnames)]), collapse = " or ")
-    fields_used <- list(help = hfields, vignette = vfields, demo = dfields)
+    dfields <- paste(unique(dfieldnames[!is.na(dfieldnames)]),
+                     collapse = " or ")
+    fields_used <-
+        list(help = hfields, vignette = vfields, demo = dfields)
     matchtype <- switch(x$type, fuzzy = "fuzzy", "regular expression")
-    typenames <- c(vignette = "Vignettes", help = "Help files", demo="Demos")
+    typenames <-
+        c(vignette = "Vignettes", help = "Help files", demo = "Demos")
     fields_for_match_details <-
         list(help = c("alias", "concept", "keyword"),
              vignette = c("concept"),
@@ -717,11 +748,11 @@ function(x, ...)
             chunks <- split.data.frame(dbtemp,
                                        paste0(dbtemp[, "Package"],
                                               "::",
-                                              dbtemp[ , "topic"]))
+                                              dbtemp[ , "Topic"]))
             nms <- names(chunks)
             for(i in seq_along(nms)) {
                 chunk <- chunks[[i]]
-                writeLines(formatDL(nms[i], chunk[1L, "title"]),
+                writeLines(formatDL(nms[i], chunk[1L, "Title"]),
                            outConn)
                 matches <- Filter(length,
                                   split(chunk[, "Entry"],
@@ -745,7 +776,8 @@ function(x, ...)
     invisible(x)
 }
 
-.hsearch_results <- local({
+.hsearch_results <-
+local({
     res <- NULL
     function(new) {
 	if(!missing(new))
@@ -758,10 +790,9 @@ function(x, ...)
 hsearch_db_concepts <-
 function(db = hsearch_db())
 {
-    ## <FIXME>
-    ## This should perhaps get an ignore.case = TRUE argument, but which
-    ## case variant would when then retain?
-    ## </FIXME>
+    ## <NOTE>
+    ## This should perhaps get an ignore.case = TRUE argument.
+    ## </NOTE>
     pos <- match(db$Concepts[, "ID"], db$Base[, "ID"])
     entries <- split(as.data.frame(db$Base[pos, ],
                                    stringsAsFactors = FALSE),

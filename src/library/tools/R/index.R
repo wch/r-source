@@ -228,18 +228,20 @@ function(contents, packageName, defaultEncoding = NULL)
     else
         dbBase <- matrix(character(), ncol = 7L)
 
-    colnames(dbBase) <-
-        c("Package", "LibPath", "ID", "name", "title", "topic",
-          "Encoding")
-    colnames(dbAliases) <-
-        c("Aliases", "ID", "Package")
-    colnames(dbKeywords) <-
-        c("Keywords", "ID", "Package")
-    colnames(dbConcepts) <-
-        c("Concepts", "ID", "Package")
+    colnames(dbBase) <- hsearch_index_colnames$Base
+    colnames(dbAliases) <- hsearch_index_colnames$Aliases
+    colnames(dbKeywords) <- hsearch_index_colnames$Keywords
+    colnames(dbConcepts) <- hsearch_index_colnames$Concepts
 
     list(dbBase, dbAliases, dbKeywords, dbConcepts)
 }
+
+hsearch_index_colnames <-
+    list(Base = c("Package", "LibPath", "ID", "Name", "Title", "Topic",
+         "Encoding"),
+         Aliases = c("Alias", "ID", "Package"),
+         Keywords = c("Keyword", "ID", "Package"),
+         Concepts = c("Concept", "ID", "Package"))
 
 ### * .build_links_index
 

@@ -129,11 +129,11 @@ httpd <- function(path, query, ...)
 		    vignette = {
 			out <- c(out, paste0("<h3>", gettext("Vignettes:"), "</h3>"), "<dl>")
 			n <- NROW(temp)
-			vignettes <- matrix("", n, 5)
-			colnames(vignettes) <- c("Package", "File",
-			                         "Title", "PDF","R")
+			vignettes <- matrix("", n, 5L)
+			colnames(vignettes) <-
+                            c("Package", "File", "Title", "PDF", "R")
 			for (i in seq_len(NROW(temp))) {
-			    topic <- temp[i, "topic"]
+			    topic <- temp[i, "Topic"]
 			    pkg <- temp[i, "Package"]
 			    vigfile <- file.path(temp[i, "LibPath"], "Meta", "vignette.rds")
 			    if (!identical(vigfile, vigfile0)) {
