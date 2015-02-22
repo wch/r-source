@@ -153,6 +153,10 @@ function(files, filter, control = list(), encoding = "unknown",
             do.call(filter, c(list(file, encoding = enc), filter_args))
         }
 
+        ## Allow filters to pass additional control arguments, in case
+        ## these need to be inferred from the file contents.
+        control <- c(control, attr(lines, "control"))
+
         ## Need to escape all lines with carets to ensure Aspell handles
         ## them as data: the Aspell docs say
         ##   It is recommended that programmatic interfaces prefix every
