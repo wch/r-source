@@ -1,5 +1,5 @@
 
-R version 3.1.2 Patched (2015-02-20 r67845) -- "Pumpkin Helmet"
+R version 3.1.2 Patched (2015-02-22 r67871) -- "Pumpkin Helmet"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -187,7 +187,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x2dc09f0>
+<environment: 0x1ef1990>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -955,7 +955,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.24 0.009 0.248 0 0 
+Time elapsed:  0.301 0.009 0.31 0 0 
 > grDevices::dev.off()
 null device 
           1 
