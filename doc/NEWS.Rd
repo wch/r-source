@@ -85,7 +85,7 @@
 
       \command{R CMD build} will correct line endings in all Makefiles,
       not just those in the \file{src} directory.
-      
+
       \item \command{R CMD check} notes uses of \code{library()} and
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
@@ -151,7 +151,7 @@
 
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
-      
+
       \emph{Inter alia} that fix gives the documented behaviour for
       \code{substr(x, 1, 2) <- ""} (subsequently reported as
       \PR{16214}).
@@ -196,9 +196,13 @@
 
       \item The \code{xtfrm()} method for class \code{"Surv"} has been
       corrected and its description expanded.
-      
-      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before 
+
+      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before
       changing its mode. (\PR{16215})
+
+      \item \code{besselJ(1, 2^64)} and \code{besselY(..)} now signal a
+      warning, returning \code{NaN} instead of typically
+      segfaulting. (Issue 3 of \PR{15554})
     }
   }
 }

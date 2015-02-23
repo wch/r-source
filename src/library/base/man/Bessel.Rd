@@ -1,6 +1,6 @@
 % File src/library/base/man/Bessel.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Bessel}
@@ -48,6 +48,11 @@ besselY(x, nu)
   For \eqn{\nu < 0}{nu < 0}, formulae 9.1.2 and 9.6.2 from Abramowitz &
   Stegun  are applied (which is probably suboptimal), except for
   \code{besselK} which is symmetric in \code{nu}.
+
+  The current algorithms will give warnings about accuracy loss for
+  large arguments.  In some cases, these warnings are exagerated, and
+  the precision is perfect.  For large \code{nu}, say in the order of
+  millions, the current algorithms are rarely useful.
 }
 \source{
   The C code is a translation of Fortran routines from
