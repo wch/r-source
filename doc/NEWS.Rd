@@ -315,7 +315,7 @@
       \item The matrix methods of \code{cbind()} and \code{rbind()}
       allow matrices as inputs which have \eqn{2^{31}}{2^31} or more
       elements.  (For \code{cbind()}, wish of \PR{16198}.)
-      
+
       \item The default method of \code{image()} has an explicit check
       for a numeric or logical matrix (which was always required).
     }
@@ -389,7 +389,7 @@
 
       \item \command{R CMD check} now checks that the \samp{Title} and
       \samp{Description} fields are correctly terminated.
-      
+
       \item \command{R CMD check --as-cran} checks a \file{README.md}
       file can be processed: this needs \command{pandoc} installed.
 
@@ -457,9 +457,9 @@
       they will be accessed from \acronym{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
-            
+
       \item (Windows) Code changes have been made to allow \R to be
-      compiled with a new toolchain based on GCC 4.9.2.   
+      compiled with a new toolchain based on GCC 4.9.2.
     }
   }
 
@@ -621,7 +621,7 @@
 
       \command{R CMD build} will correct line endings in all Makefiles,
       not just those in the \file{src} directory.
-      
+
       \item \command{R CMD check} notes uses of \code{library()} and
       \code{require()} in package code: see the section
       \sQuote{Suggested packages} of \sQuote{Writing R Extensions} for
@@ -687,7 +687,7 @@
 
       \item Rare over-runs detected by AddressSanitizer in
       \code{substr()} and its replacement version have been avoided.
-      
+
       \emph{Inter alia} that fix gives the documented behaviour for
       \code{substr(x, 1, 2) <- ""} (subsequently reported as
       \PR{16214}).
@@ -732,9 +732,13 @@
 
       \item The \code{xtfrm()} method for class \code{"Surv"} has been
       corrected and its description expanded.
-      
-      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before 
+
+      \item \code{mode(x) <- y} would incorrectly evaluate \code{x} before
       changing its mode. (\PR{16215})
+
+      \item \code{besselJ(1, 2^64)} and \code{besselY(..)} now signal a
+      warning, returning \code{NaN} instead of typically
+      segfaulting. (Issue 3 of \PR{15554})
     }
   }
 }

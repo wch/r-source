@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2014 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2015 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@
 static void J_bessel(double *x, double *alpha, int *nb,
 		     double *b, int *ncalc);
 
+// unused now from R
 double bessel_j(double x, double alpha)
 {
     int nb, ncalc;
@@ -59,6 +60,10 @@ double bessel_j(double x, double alpha)
 	return(bessel_j(x, -alpha) * cospi(alpha) +
 	       ((alpha == na) ? 0 :
 	       bessel_y(x, -alpha) * sinpi(alpha)));
+    }
+    else if (alpha > 1e7) {
+	MATHLIB_WARNING("besselJ(x, nu): nu=%g too large for bessel_j() algorithm", alpha);
+	return ML_NAN;
     }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
@@ -87,8 +92,8 @@ double bessel_j(double x, double alpha)
     return x;
 }
 
-/* modified version of bessel_j that accepts a work array instead of
-   allocating one. */
+/* Called from R: modified version of bessel_j(), accepting a work array
+ * instead of allocating one. */
 double bessel_j_ex(double x, double alpha, double *bj)
 {
     int nb, ncalc;
@@ -110,8 +115,12 @@ double bessel_j_ex(double x, double alpha, double *bj)
 	       ((alpha == na) ? 0 :
 		bessel_y_ex(x, -alpha, bj) * sinpi(alpha)));
     }
+    else if (alpha > 1e7) {
+	MATHLIB_WARNING("besselJ(x, nu): nu=%g too large for bessel_j() algorithm", alpha);
+	return ML_NAN;
+    }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
-    alpha -= (double)(nb-1);
+    alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
