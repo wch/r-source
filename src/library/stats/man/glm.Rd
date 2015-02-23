@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -38,9 +38,10 @@ glm.fit(x, y, weights = rep(1, nobs),
     under \sQuote{Details}.}
 
   \item{family}{a description of the error distribution and link
-    function to be used in the model. This can be a character string
-    naming a family function, a family function or the result of a call
-    to a family function.  (See \code{\link{family}} for details of
+    function to be used in the model.  For \code{glm} this can be a
+    character string naming a family function, a family function or the
+    result of a call to a family function.  For \code{glm.fit} only the
+    third option is supported.  (See \code{\link{family}} for details of
     family functions.)}
 
   \item{data}{an optional data frame, list or environment (or object
@@ -154,8 +155,8 @@ glm.fit(x, y, weights = rep(1, nobs),
 
 
   \code{glm.fit} is the workhorse function: it is not normally called
-  directly but can be more efficient where the response vector and
-  design matrix have already been calculated.
+  directly but can be more efficient where the response vector, design
+  matrix and family have already been calculated.
 
   If more than one of \code{etastart}, \code{start} and \code{mustart}
   is specified, the first in the list will be used.  It is often
