@@ -688,5 +688,11 @@ besselY(1, c(2^(60:70), Inf))
 ## seg.faulted in R <= 3.1.2
 
 
+## besselJ()/besselY() with  nu = k + 1/2; k in {-1,-2,..}
+besselJ(1, -1750.5) ## Inf, with only one warning...
+stopifnot(is.finite(besselY(1, .5 - (1500 + 0:10))))
+## last gave NaNs; both: more warnings in R <= 3.1.x
+
+
 
 proc.time()
