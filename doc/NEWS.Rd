@@ -542,6 +542,9 @@
       example, a \code{data.frame} is valid for a \code{list} argument
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
+      \item \code{qbeta()}, the inversion of \code{pbeta()}, is much more
+      sophisticated, also in border cases, still not ending in too many
+      iterations.
     }
   }
 }
