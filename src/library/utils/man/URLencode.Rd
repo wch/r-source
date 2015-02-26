@@ -1,6 +1,6 @@
 % File src/library/utils/man/URLencode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{URLencode}
@@ -23,7 +23,7 @@ URLdecode(URL)
   Characters in a URL other than the English alphanumeric characters and
   \samp{- _ . ~} should be encoded as \code{\%}
   plus a two-digit hexadecimal representation, and any single-byte
-  character can be so encoded. (Multi-byte characters are encoded as
+  character can be so encoded. (Multi-byte characters are encoded
   byte-by-byte.)
 
   In addition, \samp{! $ & ' ( ) * + , ; = : / ? @ # [ ]} are reserved
@@ -31,6 +31,9 @@ URLdecode(URL)
   which is scheme specific.  The default in \code{URLencode} is to leave
   them alone, which is appropriate for \samp{file://} URLs, but probably
   not for \samp{http://} ones.
+
+  \code{URLencode} will encode further the \code{\%} characters in an
+  already-encoded URL. 
 }
 \value{
   A character string.

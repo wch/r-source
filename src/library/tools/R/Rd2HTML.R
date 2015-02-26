@@ -1,7 +1,6 @@
-
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -447,6 +446,8 @@ Rd2HTML <-
                	   if(length(block[[1L]])) {
                	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- gsub("\n", "", url)
+                        ## unescape any escaped % in encoded URLs
+                        url <- gsub("[\\]%", "%", url)
 		        enterPara(doParas)
                	   	of0('<a href="', escapeAmpersand(url), '">')
                	   	closing <- "</a>"

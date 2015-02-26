@@ -203,6 +203,10 @@
       \item \code{besselJ(1, 2^64)} and \code{besselY(..)} now signal a
       warning, returning \code{NaN} instead of typically
       segfaulting. (Issue 3 of \PR{15554})
+
+      \item HTML conversion of \samp{\href} markup in \file{.Rd} files
+      did not remove the backslash from \samp{\\\%} and so gave an
+      invalid URL.
     }
   }
 }
