@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-02-23 r67881) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-02-26 r67899) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -31,7 +31,6 @@ Loading required package: MASS
 +   detach("package:survival")  # survival (conflicts)
 + }
 Loading required package: survival
-Loading required package: splines
 Call:
 coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
     strata(stratum), data = infert, method = "exact")
