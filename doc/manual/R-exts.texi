@@ -5683,17 +5683,16 @@ a hyperlink in @HTML{} and PDF conversion.  Displayed using
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled verbatim, and rendered as a hyperlink in
 @HTML{} and PDF conversion.  Displayed using @code{typewriter} font if
-possible.  Note that RFC3986-encoded URLs (e.g.@: using
-@samp{\%28VS.85\%29} in place of @samp{(VS.85)}) may not work correctly in
-earlier versions of @R{} and are best avoided---use @code{URLdecode()} to
-decode them.
+possible.
 
 @item \href@{@var{uniform_resource_locator}@}@{@var{text}@}
 @findex \href
-Indicate a hyperlink to the World Wide Web. The first argument is handled
-verbatim, and is used as the @acronym{URL} in the hyperlink, with the
-second argument of @LaTeX{}-like text displayed to the user.  (See also the
-comments on @code{\url}.)
+Indicate a hyperlink to the World Wide Web. The first argument is
+handled verbatim, and is used as the @acronym{URL} in the hyperlink,
+with the second argument of @LaTeX{}-like text displayed to the user.
+Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
+place of @samp{(VS.85)}) may not work correctly in earlier versions of
+@R{} and are best avoided---use @code{URLdecode()} to decode them.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var

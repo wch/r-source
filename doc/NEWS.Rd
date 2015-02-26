@@ -540,6 +540,9 @@
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
 
+      \item HTML conversion of \samp{\href} markup in \file{.Rd} files
+      did not remove the backslash from \samp{\\\%} and so gave an
+      invalid URL.
     }
   }
 }
