@@ -318,6 +318,9 @@
 
       \item The default method of \code{image()} has an explicit check
       for a numeric or logical matrix (which was always required).
+      
+      \item \code{URLencode()} will not by default encode further URLs
+      which appear to be already encoded.
     }
   }
 

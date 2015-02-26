@@ -11,13 +11,15 @@
   Functions to encode or decode characters in URLs.
 }
 \usage{
-URLencode(URL, reserved = FALSE)
+URLencode(URL, reserved = FALSE, repeated = FALSE)
 URLdecode(URL)
 }
 \arguments{
-  \item{URL}{A character string.}
-  \item{reserved}{should reserved characters be encoded?  See
-    \sQuote{Details}.}
+  \item{URL}{a character string.}
+  \item{reserved}{logical: should \sQuote{reserved} characters be
+    encoded? See \sQuote{Details}.}
+  \item{repeated}{logical: should apparently already-encoded URLs be
+    encoded again?}
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
@@ -32,8 +34,8 @@ URLdecode(URL)
   them alone, which is appropriate for \samp{file://} URLs, but probably
   not for \samp{http://} ones.
 
-  \code{URLencode} will encode further the \code{\%} characters in an
-  already-encoded URL. 
+  An \sQuote{apparently already-encoded URL} is one containing
+  \code{\%xx} for two hexadecimal digits.
 }
 \value{
   A character string.
@@ -46,6 +48,8 @@ URLdecode(URL)
 URLdecode(y)
 (y <- URLencode("a url with spaces and / and @", reserved = TRUE))
 URLdecode(y)
-URLdecode("ab\%20cd")
+
+URLdecode(z <- "ab\%20cd")
+c(URLencode(z), URLencode(z, repeated = TRUE)) # first is usually wanted
 }
 \keyword{utilities}

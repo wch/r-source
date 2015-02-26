@@ -16,8 +16,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-URLencode <- function(URL, reserved = FALSE)
+URLencode <- function(URL, reserved = FALSE, repeated = FALSE)
 {
+    if(!repeated && grepl("%[[:xdigit:]]{2}", URL, useBytes = TRUE))
+        return(URL)
     ## It is unsafe to use ranges here as collation is locale-dependent.
     ## We want to do this on characters and not on bytes.
     OK <- paste0("[^",
