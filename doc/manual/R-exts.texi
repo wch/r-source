@@ -5014,12 +5014,15 @@ The general syntax of @file{Rd} files is summarized below.  For a detailed
 technical discussion of current @file{Rd} syntax, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
-@file{Rd} files consists of three types of text input.  The most common
+@file{Rd} files consist of four types of text input.  The most common
 is @LaTeX{}-like, with the backslash used as a prefix on markup
 (e.g. @code{\alias}), and braces used to indicate arguments
 (e.g. @code{@{load@}}).  The least common type of text is `verbatim'
-text, where no markup is processed (but escapes may be needed). The
-third type is @R{}-like, intended for @R{} code, but allowing some
+text, where no markup other than the comment marker (@code{%}) is 
+processed.  There is also a rare variant of `verbatim' text 
+(used in @code{\eqn}, @code{\deqn}, @code{\figure},
+and @code{\newcommand}) where comment markers need not be escaped.
+The final type is @R{}-like, intended for @R{} code, but allowing some
 embedded macros.  Quoted strings within @R{}-like text are handled
 specially: regular character escapes such as @code{\n} may be entered
 as-is.  Only markup starting with @code{\l} (e.g.  @code{\link}) or
@@ -5031,12 +5034,14 @@ file initially uses @LaTeX{}-like syntax, and this is also used in the
 @code{\description} section, but the @code{\usage} section uses
 @R{}-like syntax, and the @code{\alias} macro uses `verbatim' syntax.
 Comments run from a percent symbol @code{%} to the end of the line in
-all types of text (as on the first line of the @code{load} example).
+all types of text except the rare `verbatim' variant
+(as on the first line of the @code{load} example).
 
 Because backslashes, braces and percent symbols have special meaning, to
 enter them into text sometimes requires escapes using a backslash.  In
 general balanced braces do not need to be escaped, but percent symbols
-always do.  For the complete list of macros and rules for escapes, see
+always do, except in the `verbatim' variant.
+For the complete list of macros and rules for escapes, see
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
 
 @menu

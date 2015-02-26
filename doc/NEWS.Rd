@@ -747,7 +747,8 @@
 
       \item HTML conversion of \samp{\href} markup in \file{.Rd} files
       did not remove the backslash from \samp{\\\%} and so gave an
-      invalid URL.
+      invalid URL.  In a related change, the \samp{\\} escape is now
+      required in such URLs.
     }
   }
 }
