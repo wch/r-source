@@ -5017,19 +5017,19 @@ technical discussion of current @file{Rd} syntax, see
 @file{Rd} files consists of three types of text input.  The most common
 is @LaTeX{}-like, with the backslash used as a prefix on markup
 (e.g. @code{\alias}), and braces used to indicate arguments
-(e.g. @code{@{load@}}).  The least common type of text is verbatim text,
-where no markup is processed. The third type is @R{}-like, intended for
-@R{} code, but allowing some embedded macros.  Quoted strings within
-@R{}-like text are handled specially: regular character escapes such as
-@code{\n} may be entered as-is.  Only markup starting with @code{\l}
-(e.g.  @code{\link}) or @code{\v} (e.g. @code{\var}) will be recognized
-within quoted strings.  The rarely used vertical tab @code{\v} must be
-entered as @code{\\v}.
+(e.g. @code{@{load@}}).  The least common type of text is `verbatim'
+text, where no markup is processed (but escapes may be needed). The
+third type is @R{}-like, intended for @R{} code, but allowing some
+embedded macros.  Quoted strings within @R{}-like text are handled
+specially: regular character escapes such as @code{\n} may be entered
+as-is.  Only markup starting with @code{\l} (e.g.  @code{\link}) or
+@code{\v} (e.g. @code{\var}) will be recognized within quoted strings.
+The rarely used vertical tab @code{\v} must be entered as @code{\\v}.
 
 Each macro defines the input type for its argument.  For example, the
 file initially uses @LaTeX{}-like syntax, and this is also used in the
 @code{\description} section, but the @code{\usage} section uses
-@R{}-like syntax, and the @code{\alias} macro uses verbatim syntax.
+@R{}-like syntax, and the @code{\alias} macro uses `verbatim' syntax.
 Comments run from a percent symbol @code{%} to the end of the line in
 all types of text (as on the first line of the @code{load} example).
 
@@ -5320,7 +5320,7 @@ for extra commands for testing that should not be shown to users, but
 will be run by @code{example()}.  (Previously this was called
 @code{\testonly}, and that is still accepted.)
 
-Text inside @code{\dontrun@{@}} is verbatim, but the other parts
+Text inside @code{\dontrun@{@}} is `verbatim', but the other parts
 of the @code{\examples} section are @R{}-like text.
 
 For example,
@@ -5339,7 +5339,7 @@ special facilities (such as Internet access or write permission to
 specific directories).  Text included in @code{\dontrun} is indicated by
 comments in the processed help files: it need not be valid @R{} code but
 the escapes must still be used for @code{%}, @code{\} and unpaired
-braces as in other verbatim text.
+braces as in other `verbatim' text.
 
 Example code must be capable of being run by @code{example}, which uses
 @code{source}.  This means that it should not access @file{stdin},
@@ -5604,7 +5604,7 @@ possible; @code{\strong} is regarded as stronger (more emphatic).
 
 @item \bold@{@var{text}@}
 @findex \bold
-Set @var{text} in @b{bold} font if possible.
+Set @var{text} in @b{bold} font where possible.
 
 @item \sQuote@{@var{text}@}
 @findex \sQuote
@@ -5618,7 +5618,7 @@ Each of the above commands takes @LaTeX{}-like input, so other macros
 may be used within @var{text}.
 
 The following logical markup commands are available for indicating
-specific kinds of text.  Except as noted, these take verbatim text
+specific kinds of text.  Except as noted, these take `verbatim' text
 input, and so other macros may not be used within them.  Some characters
 will need to be escaped (@pxref{Insertions}).
 
@@ -5628,13 +5628,13 @@ will need to be escaped (@pxref{Insertions}).
 Indicate text that is a literal example of a piece of an @R{} program,
 e.g., a fragment of @R{} code or the name of an @R{} object.  Text is
 entered in @R{}-like syntax, and displayed using @code{typewriter} font
-if possible.  Macros @code{\var} and @code{\link} are interpreted within
+where possible.  Macros @code{\var} and @code{\link} are interpreted within
 @var{text}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program.  Text
-is displayed using @code{typewriter} font if possible.  Formatting,
+is displayed using @code{typewriter} font where possible.  Formatting,
 e.g.@: line breaks, is preserved.  (Note that this includes a line break
 after the initial @{, so typically text should start on the same line as
 the command.)
@@ -5647,13 +5647,13 @@ nested within other markup macros other than @code{\dQuote} and
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
 possible, so users can distinguish the characters they are supposed to
-type from computer output.  Text is entered verbatim.
+type from computer output.  Text is entered `verbatim'.
 
 @item \samp@{@var{text}@}
 @findex \samp
 Indicate text that is a literal example of a sequence of characters,
-entered verbatim.  No wrapping or reformatting will occur.  Displayed
-using @code{typewriter} font if possible.
+entered `verbatim'.  No wrapping or reformatting will occur.  Displayed
+using @code{typewriter} font where possible.
 
 
 @item \verb@{@var{text}@}
@@ -5670,29 +5670,32 @@ Indicate the name of an @R{} package.  @LaTeX{}-like.
 @item \file@{@var{file_name}@}
 @findex \file
 Indicate the name of a file.  Text is @LaTeX{}-like, so backslash needs
-to be escaped.  Displayed using a distinct font if possible.
+to be escaped.  Displayed using a distinct font where possible.
 
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.  @LaTeX{}-like, will be rendered as
 a hyperlink in @HTML{} and PDF conversion.  Displayed using
-@code{typewriter} font if possible.
+@code{typewriter} font where possible.
 
 @item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
-Web.  The argument is handled verbatim, and rendered as a hyperlink in
-@HTML{} and PDF conversion.  Displayed using @code{typewriter} font if
-possible.
+Web.  The argument is handled as `verbatim' text (with percent and braces
+escaped by backslash), and rendered as a hyperlink in @HTML{} and PDF
+conversion.  Displayed using @code{typewriter} font where possible.
 
 @item \href@{@var{uniform_resource_locator}@}@{@var{text}@}
 @findex \href
 Indicate a hyperlink to the World Wide Web. The first argument is
-handled verbatim, and is used as the @acronym{URL} in the hyperlink,
-with the second argument of @LaTeX{}-like text displayed to the user.
+handled as `verbatim' text (with percent and braces escaped by
+backslash) and is used as the @acronym{URL} in the hyperlink, with
+the second argument of @LaTeX{}-like text displayed to the user.
+
 Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
-place of @samp{(VS.85)}) may not work correctly in earlier versions of
-@R{} and are best avoided---use @code{URLdecode()} to decode them.
+place of @samp{(VS.85)}) may not work correctly in versions of @R{}
+before 3.1.3 and are best avoided---use @code{URLdecode()} to decode
+them.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
@@ -5702,16 +5705,16 @@ rendered differently only in @HTML{} conversions, and @LaTeX{} conversion
 outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
-Indicate an environment variable. Verbatim.
-Displayed using @code{typewriter} font if possible
+Indicate an environment variable. `Verbatim'.
+Displayed using @code{typewriter} font where possible
 @item \option@{@var{option}@}
 @findex \option
-Indicate a command-line option.  Verbatim.
-Displayed using @code{typewriter} font if possible.
+Indicate a command-line option.  `Verbatim'.
+Displayed using @code{typewriter} font where possible.
 @item \command@{@var{command_name}@}
 @findex \command
 Indicate the name of a command. @LaTeX{}-like, so @code{\var} is
-interpreted.  Displayed using @code{typewriter} font if possible.
+interpreted.  Displayed using @code{typewriter} font where possible.
 @item \dfn@{@var{term}@}
 @findex \dfn
 Indicate the introductory or defining use of a term. @LaTeX{}-like.
@@ -5852,7 +5855,7 @@ online help.  To this end, the two commands
 is used for ``inline'' formulae (corresponding to @TeX{}'s
 @code{$@dots{}$}), @code{\deqn} gives ``displayed equations'' (as in
 @LaTeX{}'s @code{displaymath} environment, or @TeX{}'s
-@code{$$@dots{}$$}).  Both arguments are treated as verbatim text.
+@code{$$@dots{}$$}).  Both arguments are treated as `verbatim' text.
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
@@ -6277,7 +6280,7 @@ files themselves is now UTF-8.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in @file{Rd} files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
-@samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside verbatim
+@samp{|}, @samp{@@}, @samp{~}, and @samp{*} outside `verbatim'
 environments (since they may disappear in fonts designed to render
 text).  (Function @code{showNonASCIIfile} in package @pkg{tools} can help
 in finding non-@acronym{ASCII} bytes in the files.)
