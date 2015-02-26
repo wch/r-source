@@ -1921,10 +1921,11 @@ toTitleCase <- function(text)
     ## These should be lower case except at the beginning (and after :)
     lpat <- "^(a|an|and|are|as|at|be|but|by|en|for|if|in|is|nor|not|of|on|or|per|so|the|to|v[.]?|via|vs[.]?|from|into|than|that|with)$"
     ## These we don't care about
-    either <- c("all", "above", "after", "along", "also", "among", "any",
-                "both", "can", "few", "it", "less", "log", "many",
-                "may", "more", "some", "their", "then", "this", "under",
-                "until", "using", "von", "when", "where", "which", "will",
+    either <- c("all", "above", "after", "along", "also", "among",
+                "any", "both", "can", "few", "it", "less", "log",
+                "many", "may", "more", "over", "some", "their",
+                "then", "this", "under", "until", "using", "von",
+                "when", "where", "which", "will", "without",
                 "yet", "you", "your")
     titleCase1 <- function(x) {
         ## A quote might be prepended.
@@ -1946,6 +1947,9 @@ toTitleCase <- function(text)
         ind <- grep("[-:]$", xx); ind <- ind[ind + 2L <= length(l)]
         ind <- ind[(xx[ind + 1L] == " ") & grepl("^['[:alnum:]]", xx[ind + 2L])]
         l[ind + 2L] <- FALSE
+        ## Also after " (e.g. "A Book Title")
+        ind <- which(xx == '"'); ind <- ind[ind + 1L <= length(l)]
+        l[ind + 1L] <- FALSE
         xx[l] <- tolower(xx[l])
         keep <- havecaps | l | (nchar(xx) == 1L) | alone
         xx[!keep] <- sapply(xx[!keep], do1)
