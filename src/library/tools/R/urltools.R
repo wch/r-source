@@ -68,7 +68,9 @@ function(x)
               lapply(e, recurse)
     }
     lapply(x, recurse)
-    unique(trimws(urls))
+    res <- unique(trimws(urls))
+    ## most instances have escaped %, so remove any \ from %
+    gsub("[\\]%", "%", res)
 }
 
 .get_urls_from_HTML_file <-
