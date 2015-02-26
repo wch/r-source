@@ -539,10 +539,6 @@
       example, a \code{data.frame} is valid for a \code{list} argument
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
-
-      \item HTML conversion of \samp{\href} markup in \file{.Rd} files
-      did not remove the backslash from \samp{\\\%} and so gave an
-      invalid URL.
     }
   }
 }
@@ -742,6 +738,10 @@
       \item \code{besselJ(1, 2^64)} and \code{besselY(..)} now signal a
       warning, returning \code{NaN} instead of typically
       segfaulting. (Issue 3 of \PR{15554})
+
+      \item HTML conversion of \samp{\href} markup in \file{.Rd} files
+      did not remove the backslash from \samp{\\\%} and so gave an
+      invalid URL.
     }
   }
 }

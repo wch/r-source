@@ -31,6 +31,9 @@ URLdecode(URL)
   which is scheme specific.  The default in \code{URLencode} is to leave
   them alone, which is appropriate for \samp{file://} URLs, but probably
   not for \samp{http://} ones.
+
+  \code{URLencode} will encode further the \code{\%} characters in an
+  already-encoded URL. 
 }
 \value{
   A character string.

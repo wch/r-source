@@ -124,19 +124,25 @@ urlify <- function(x) {
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.1>
     ##   <http://www.w3.org/TR/html4/appendix/notes.html#h-B.2.2>
     ##   RFC 3986 <http://tools.ietf.org/html/rfc3986>
-    chars <- unlist(strsplit(x, ""))
-    hex <- vapply(chars,
-                  function(x)
-                  paste0("%", toupper(as.character(charToRaw(x))),
-                         collapse = ""),
-                  "")
-    todo <- paste0("[^",
-                   "][!$&'()*+,;=:/?@#",
-                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                   "abcdefghijklmnopqrstuvwxyz0123456789._~-",
-                   "]")
-    mixed <- ifelse(grepl(todo, chars), hex, chars)
-    gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
+
+    ## We do not want to mess with already-encoded URLs
+    if(grepl("%[[:xdigit:]]{2}", x, useBytes = TRUE)) {
+        gsub("&", "&amp;", x, fixed = TRUE)
+    } else {
+        chars <- unlist(strsplit(x, ""))
+        hex <- vapply(chars,
+                      function(x)
+                      paste0("%", toupper(as.character(charToRaw(x))),
+                             collapse = ""),
+                      "")
+        todo <- paste0("[^",
+                       "][!$&'()*+,;=:/?@ #",
+                       "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                       "abcdefghijklmnopqrstuvwxyz0123456789._~-",
+                       "]")
+        mixed <- ifelse(grepl(todo, chars), hex, chars)
+        gsub("&", "&amp;", paste(mixed, collapse = ""), fixed = TRUE)
+    }
 }
 ## (Equivalently, could use escapeAmpersand(utils::URLencode(x)).)
 
@@ -443,7 +449,7 @@ Rd2HTML <-
                ## cwhmisc has an empty \\email
                "\\email" = if (length(block)) {
                    url <- paste(as.character(block), collapse="")
-                   url <- trimws(gsub("\n", "", url))
+                   url <- gsub("\n", "", url)
                    enterPara(doParas)
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
@@ -459,6 +465,8 @@ Rd2HTML <-
                	   if(length(block[[1L]])) {
                	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- trimws(gsub("\n", "", url))
+                        ## unescape any escaped % in encoded URLs
+                        url <- gsub("[\\]%", "%", url)
 		        enterPara(doParas)
                	   	of0('<a href="', urlify(url), '">')
                	   	closing <- "</a>"
