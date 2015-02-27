@@ -1,7 +1,7 @@
 #  File src/library/stats/R/arima.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2002-2014 The R Core Team
+#  Copyright (C) 2002-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -170,8 +170,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
     if (method == "CSS" || method == "CSS-ML") {
         ncond <- order[2L] + seasonal$order[2L] * seasonal$period
         ncond1 <- order[1L] + seasonal$period * seasonal$order[1L]
-        ncond <- if (!missing(n.cond)) ncond + max(n.cond, ncond1)
-        else ncond + ncond1
+	ncond <- ncond + if(!missing(n.cond)) max(n.cond, ncond1) else ncond1
     } else ncond <- 0
 
     if (is.null(fixed)) fixed <- rep(NA_real_, narma + ncxreg)
@@ -364,7 +363,8 @@ arima <- function(x, order = c(0L, 0L, 0L),
     structure(list(coef = coef, sigma2 = sigma2, var.coef = var, mask = mask,
 		   loglik = -0.5 * value, aic = aic, arma = arma,
 		   residuals = resid, call = match.call(), series = series,
-		   code = res$convergence, n.cond = ncond, model = mod),
+		   code = res$convergence, n.cond = ncond, nobs = n.used,
+		   model = mod),
 	      class = "Arima")
 }
 
@@ -494,7 +494,7 @@ vcov.Arima <- function (object, ...) object$var.coef
 
 logLik.Arima <- function (object, ...) {
     res <- if(is.na(object$aic)) NA
-    else structure(object$loglik, df=sum(object$mask) + 1)
+    else structure(object$loglik, df = sum(object$mask) + 1, nobs = object$nobs)
     class(res) <- "logLik"
     res
 }

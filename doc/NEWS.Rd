@@ -318,9 +318,15 @@
 
       \item The default method of \code{image()} has an explicit check
       for a numeric or logical matrix (which was always required).
-      
+
       \item \code{URLencode()} will not by default encode further URLs
       which appear to be already encoded.
+
+      \item \code{BIC(mod)} and \code{BIC(mod, mod2)} now give non-NA
+      numbers for \code{arima()} fitted models, as \code{nobs(mod)} now
+      gives the number of \dQuote{used} observations for such models --
+      somewhat experimentally.% and hence not yet on ../src/library/stats/man/arima.Rd
+      This fixes \PR{16198}, quite differently than proposed there.
     }
   }
 

@@ -694,5 +694,23 @@ stopifnot(is.finite(besselY(1, .5 - (1500 + 0:10))))
 ## last gave NaNs; both: more warnings in R <= 3.1.x
 
 
+## BIC() for arima(), also with NA's
+lho <- lh; lho[c(3,7,13,17)] <- NA
+alh300 <- arima(lh,  order = c(3,0,0))
+alh311 <- arima(lh,  order = c(3,1,1))
+ao300  <- arima(lho, order = c(3,0,0))
+ao301  <- arima(lho, order = c(3,0,1))
+## AIC/BIC for *different* data rarely makes sense ... want warning:
+tools::assertWarning(AA <- AIC(alh300,alh311, ao300,ao301))
+tools::assertWarning(BB <- BIC(alh300,alh311, ao300,ao301))
+fmLst <- list(alh300,alh311, ao300,ao301)
+## nobs() did not "work" in R < 3.2.0:
+stopifnot(sapply(fmLst, nobs) == c(48,47, 44,44))
+lls <- lapply(fmLst, logLik)
+str(lapply(lls, unclass))# -> 'df' and 'nobs'
+## 'manual BIC' via generalized AIC:
+stopifnot(all.equal(BB[,"BIC"],
+                    sapply(fmLst, function(fm) AIC(fm, k = log(nobs(fm))))))
+## BIC() was NA unnecessarily in  R < 3.2.0; nobs() was not available eiher
 
 proc.time()
