@@ -61,7 +61,7 @@ BIC.default <- function(object, ...)
 {
     ll   <- if(isNamespaceLoaded("stats4")) stats4:::logLik else logLik
     Nobs <- if(isNamespaceLoaded("stats4")) stats4:::nobs   else nobs
-    if(!missing(...)) {
+    if(!missing(...)) {# several objects: produce data.frame
         lls <- lapply(list(object, ...), ll)
         vals <- sapply(lls, function(el) {
             no <- attr(el, "nobs")
@@ -76,16 +76,15 @@ BIC.default <- function(object, ...)
         unknown <- is.na(val$nobs)
         if(any(unknown))
             val$nobs[unknown] <-
-                sapply(list(object, ...)[unknown],
-                       function(x, f) tryCatch(f(x), error = function(e) NA_real_),
-                       f = Nobs)
+		sapply(list(object, ...)[unknown],
+		       function(x) tryCatch(Nobs(x), error = function(e) NA_real_))
         val <- data.frame(df = val$df, BIC = -2*val$ll + log(val$nobs)*val$df)
         row.names(val) <- as.character(match.call()[-1L])
         val
     } else {
         lls <- ll(object)
         nos <- attr(lls, "nobs")
-        if (is.null(nos))
+	if (is.null(nos)) ## helps if has nobs() method, but logLik() gives no "nobs":
             nos <- tryCatch(Nobs(object), error = function(e) NA_real_)
         -2 * as.numeric(lls) + log(nos) * attr(lls, "df")
     }
