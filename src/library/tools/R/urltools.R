@@ -58,19 +58,19 @@ function(x)
     urls <- character()
     recurse <- function(e) {
         tag <- attr(e, "Rd_tag")
+        ## Rd2HTML and Rd2latex remove whitespace and \n from URLs.
         if(identical(tag, "\\url")) {
             urls <<-
-                c(urls, .Rd_deparse(e, tag = FALSE))
+                c(urls, trimws(gsub("\n", "", .Rd_deparse(e, tag = FALSE))))
         } else if(identical(tag, "\\href")) {
             urls <<-
-                c(urls, .Rd_deparse(e[[1L]], tag = FALSE))
+                c(urls, trimws(gsub("\n", "",
+                                    .Rd_deparse(e[[1L]], tag = FALSE))))
         } else if(is.list(e))
               lapply(e, recurse)
     }
     lapply(x, recurse)
-    res <- unique(trimws(urls))
-    ## most instances have escaped %, so remove any \ from %
-    gsub("[\\]%", "%", res)
+    unique(trimws(urls))
 }
 
 .get_urls_from_HTML_file <-
