@@ -4534,6 +4534,7 @@ setRlibs <-
         if (!do_codoc) opts <- c(opts, "--no-codoc")
         if (!do_examples && !spec_install) opts <- c(opts, "--no-examples")
         if (!do_tests && !spec_install) opts <- c(opts, "--no-tests")
+        if (!do_manual && !spec_install) opts <- c(opts, "--no-manual")
         if (!do_vignettes && !spec_install) opts <- c(opts, "--no-vignettes")
         if (!do_build_vignettes && !spec_install)
             opts <- c(opts, "--no-build-vignettes")
