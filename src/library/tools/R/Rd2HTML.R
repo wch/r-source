@@ -453,20 +453,20 @@ Rd2HTML <-
                    enterPara(doParas)
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
-               ## watch out for empty URLs (TeachingDemos has one)
+               ## watch out for empty URLs (TeachingDemos had one)
                "\\url" = if(length(block)) {
-                   url <- paste(as.character(block), collapse="")
-                   url <- trimws(gsub("\n", "", url))
+                   url <- paste(as.character(block), collapse = "")
+                   url <- trimws(gsub("\n", "", url,
+                                      fixed = TRUE, useBytes = TRUE))
                    enterPara(doParas)
                    of0('<a href="', urlify(url), '">',
                        htmlify(url), '</a>')
                },
                "\\href" = {
                	   if(length(block[[1L]])) {
-               	   	url <- paste(as.character(block[[1L]]), collapse="")
-               	   	url <- trimws(gsub("\n", "", url))
-                        ## unescape any escaped % in encoded URLs
-                        ## url <- gsub("[\\]%", "%", url)
+               	   	url <- paste(as.character(block[[1L]]), collapse = "")
+               	   	url <- trimws(gsub("\n", "", url,
+                                           fixed = TRUE, useBytes = TRUE))
 		        enterPara(doParas)
                	   	of0('<a href="', urlify(url), '">')
                	   	closing <- "</a>"

@@ -61,11 +61,13 @@ function(x)
         ## Rd2HTML and Rd2latex remove whitespace and \n from URLs.
         if(identical(tag, "\\url")) {
             urls <<-
-                c(urls, trimws(gsub("\n", "", .Rd_deparse(e, tag = FALSE))))
+                c(urls, trimws(gsub("\n", "", .Rd_deparse(e, tag = FALSE),
+                                    fixed = TRUE, useBytes = TRUE)))
         } else if(identical(tag, "\\href")) {
             urls <<-
                 c(urls, trimws(gsub("\n", "",
-                                    .Rd_deparse(e[[1L]], tag = FALSE))))
+                                    .Rd_deparse(e[[1L]], tag = FALSE),
+                                    fixed = TRUE, useBytes = TRUE)))
         } else if(is.list(e))
               lapply(e, recurse)
     }
