@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39+0000\n"
+"POT-Creation-Date: 2015-03-01 13:20+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -77,7 +77,7 @@ msgstr ""
 # error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
 # tools/src/gramRd.c: 4164
 # error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
-#: gramLatex.c:2376 gramRd.c:3896
+#: gramLatex.c:2376 gramRd.y:1328
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
@@ -94,7 +94,7 @@ msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 # error(_("invalid '%s' value"), "verbose")
 # tools/src/gramRd.c: 4658
 # error(_("invalid '%s' value"), "warningCalls")
-#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
+#: gramLatex.c:2613 gramRd.y:1817 gramRd.y:1823
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawny wartość '%s'"
@@ -111,7 +111,7 @@ msgstr "niepoprawny wartość '%s'"
 # tools/src/gramRd.c: 2812
 # warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
 #     	    					            parseState.xxBasename, (yylsp[(2) - (2)]).first_line, (yylsp[(2) - (2)]).first_column)
-#: gramRd.c:2531 gramRd.c:2534
+#: gramRd.y:303 gramRd.y:306
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "błędne oznakowanie (dodatkowa spacja?) w %s:%d:%d"
@@ -120,7 +120,7 @@ msgstr "błędne oznakowanie (dodatkowa spacja?) w %s:%d:%d"
 #  _("Macro '%s' previously defined.")
 # tools/src/gramRd.c: 3398
 #  _("Macro '%s' previously defined.")
-#: gramRd.c:3113
+#: gramRd.y:545
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Makro '%s' zostało już poprzednio zdefiniowane."
@@ -129,7 +129,7 @@ msgstr "Makro '%s' zostało już poprzednio zdefiniowane."
 #  _("At most 4 arguments are allowed for user defined macros.")
 # tools/src/gramRd.c: 3407
 #  _("At most 4 arguments are allowed for user defined macros.")
-#: gramRd.c:3123
+#: gramRd.y:555
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
@@ -140,7 +140,7 @@ msgstr ""
 # error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)))
 # tools/src/gramRd.c: 3441
 # error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)))
-#: gramRd.c:3157
+#: gramRd.y:589
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Brak makra zdefiniowanego dla '%s'"
@@ -159,7 +159,7 @@ msgstr "Brak makra zdefiniowanego dla '%s'"
 # warningcall(R_NilValue,
 # 			_("newline within quoted string at %s:%d"), 
 # 			parseState.xxBasename, parseState.xxNewlineInString)
-#: gramRd.c:3311 gramRd.c:3315
+#: gramRd.y:743 gramRd.y:747
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nowa linia wewnątrz cytowanego łańcucha w %s:%d"
@@ -168,7 +168,7 @@ msgstr "nowa linia wewnątrz cytowanego łańcucha w %s:%d"
 # error(_("unable to allocate buffer for long macro at line %d"), parseState.xxlineno)
 # tools/src/gramRd.c: 3616
 # error(_("unable to allocate buffer for long macro at line %d"), parseState.xxlineno)
-#: gramRd.c:3334
+#: gramRd.y:766
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nie można przydzielić bufora dla długiego makra w linii %d"
@@ -177,7 +177,7 @@ msgstr "nie można przydzielić bufora dla długiego makra w linii %d"
 # error(_("macros nested too deeply: infinite recursion?"))
 # tools/src/gramRd.c: 3646
 # error(_("macros nested too deeply: infinite recursion?"))
-#: gramRd.c:3364
+#: gramRd.y:796
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makra są zagnieżdżone zbyt głęboko: nieskończona rekurencja?"
 
@@ -185,7 +185,7 @@ msgstr "makra są zagnieżdżone zbyt głęboko: nieskończona rekurencja?"
 # error(_("Unable to find macro %s"), s)
 # tools/src/gramRd.c: 4029
 # error(_("Unable to find macro %s"), s)
-#: gramRd.c:3758
+#: gramRd.y:1190
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nie można znaleźć makra %s"
@@ -196,7 +196,7 @@ msgstr "Nie można znaleźć makra %s"
 # tools/src/gramRd.c: 4224
 # error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
 #  			parseState.xxinRString, parseState.xxBasename, parseState.xxQuoteLine, parseState.xxQuoteCol)
-#: gramRd.c:3956
+#: gramRd.y:1388
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
@@ -207,7 +207,7 @@ msgstr ""
 # error(_("cannot open the connection"))
 # tools/src/gramRd.c: 4663
 # error(_("cannot open the connection"))
-#: gramRd.c:4398
+#: gramRd.y:1830
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -215,7 +215,7 @@ msgstr "nie można otworzyć połączenia"
 # error(_("cannot read from this connection"))
 # tools/src/gramRd.c: 4670
 # error(_("cannot read from this connection"))
-#: gramRd.c:4405
+#: gramRd.y:1837
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
@@ -223,7 +223,7 @@ msgstr "nie można czytać z tego połączenia"
 # error(_("invalid Rd file"))
 # tools/src/gramRd.c: 4678
 # error(_("invalid Rd file"))
-#: gramRd.c:4413
+#: gramRd.y:1845
 msgid "invalid Rd file"
 msgstr "niepoprawny plik Rd"
 
@@ -231,7 +231,7 @@ msgstr "niepoprawny plik Rd"
 # error(_("'deparseRd' only supports deparsing character elements"))
 # tools/src/gramRd.c: 4697
 # error(_("'deparseRd' only supports deparsing character elements"))
-#: gramRd.c:4432
+#: gramRd.y:1864
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 "'deparseRd' wspiera tylko konwertowanie wyrażenia na łańcuch tekstowy dla "
@@ -241,7 +241,7 @@ msgstr ""
 # error(_("bad state"))
 # tools/src/gramRd.c: 4700
 # error(_("bad state"))
-#: gramRd.c:4435
+#: gramRd.y:1867
 msgid "bad state"
 msgstr "błędny stan"
 
@@ -249,7 +249,7 @@ msgstr "błędny stan"
 # error(_("bad text mode %d in 'deparseRd'"), parseState.xxmode)
 # tools/src/gramRd.c: 4713
 # error(_("bad text mode %d in 'deparseRd'"), parseState.xxmode)
-#: gramRd.c:4448
+#: gramRd.y:1880
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "błędny tryb %d tekstu w 'deparseRd'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-05-26 08:40\n"
+"POT-Creation-Date: 2015-03-01 13:19\n"
 "PO-Revision-Date: 2014-03-22 05:27+0200 \n"
 "Last-Translator: sakamotoki  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -233,6 +233,10 @@ msgstr " 'x' と 'y' の値は有限値であり欠損は許されません "
 
 msgid "'z' must be a matrix"
 msgstr " 'z' は行列でなければなりません "
+
+#, fuzzy
+msgid "'z' must be numeric or logical"
+msgstr " 'x' は数値でなければなりません "
 
 msgid "invalid z limits"
 msgstr " 無効な z の限界です "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-14 11:39+0000\n"
+"POT-Creation-Date: 2015-03-01 13:20+0000\n"
 "PO-Revision-Date: 2013-03-19 22:36-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -59,81 +59,81 @@ msgstr ""
 "самое большее одна звездочка '*' поддерживается в каждом описании "
 "преобразования"
 
-#: gramLatex.c:2376 gramRd.c:3896
+#: gramLatex.c:2376 gramRd.y:1328
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
-#: gramLatex.c:2613 gramRd.c:4385 gramRd.c:4391
+#: gramLatex.c:2613 gramRd.y:1817 gramRd.y:1823
 #, c-format
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
 
-#: gramRd.c:2531 gramRd.c:2534
+#: gramRd.y:303 gramRd.y:306
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "плохая разметка (лишний пробел?) на %s:%d:%d"
 
-#: gramRd.c:3113
+#: gramRd.y:545
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Макро '%s' уже определен."
 
-#: gramRd.c:3123
+#: gramRd.y:555
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Максимум 4 аргумента разрешены для пользовательских макросов."
 
-#: gramRd.c:3157
+#: gramRd.y:589
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Нет определения макроса для '%s'."
 
-#: gramRd.c:3311 gramRd.c:3315
+#: gramRd.y:743 gramRd.y:747
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "новая строка внутри закавыченной подстроки на %s:%d"
 
-#: gramRd.c:3334
+#: gramRd.y:766
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "не могу разместить буфер для длинного макро на строке %d"
 
-#: gramRd.c:3364
+#: gramRd.y:796
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "макро вложены слишком глубоко: бесконечная рекурсия?"
 
-#: gramRd.c:3758
+#: gramRd.y:1190
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Не могу найти макро %s"
 
-#: gramRd.c:3956
+#: gramRd.y:1388
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Неожиданный конец ввода (в %c закавыченная строка открыта на %s:%d:%d)"
 
-#: gramRd.c:4398
+#: gramRd.y:1830
 msgid "cannot open the connection"
 msgstr "не могу открыть соединение"
 
-#: gramRd.c:4405
+#: gramRd.y:1837
 msgid "cannot read from this connection"
 msgstr "не могу прочесть из этого соединения"
 
-#: gramRd.c:4413
+#: gramRd.y:1845
 msgid "invalid Rd file"
 msgstr "неправильный Rd-файл"
 
-#: gramRd.c:4432
+#: gramRd.y:1864
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' поддерживает только deparsing-символы"
 
-#: gramRd.c:4435
+#: gramRd.y:1867
 msgid "bad state"
 msgstr "плохое состояние"
 
-#: gramRd.c:4448
+#: gramRd.y:1880
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "плохой текстовый режим %d в 'deparseRd'"

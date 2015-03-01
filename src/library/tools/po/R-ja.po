@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
 "PO-Revision-Date: 2014-03-26 14:20+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -322,6 +322,13 @@ msgstr " 変数 '%s' 中に non-portable フラグ: "
 
 msgid "Variables overriding user/site settings:"
 msgstr " ユーザまたはサイトの設定を上書きしている変数です "
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
+"checked"
+msgstr ""
+" パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので "
+"xrefs をチェックできません "
 
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
@@ -1299,10 +1306,9 @@ msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
-#, fuzzy
-msgid "Undeclared package used in Rd xrefs:"
-msgid_plural "Undeclared packages used in Rd xrefs:"
-msgstr[0] " Rd xrefs 中に未知のパッケージ %s があります "
+msgid "Obsolete package %s in Rd xrefs"
+msgid_plural "Obsolete packages %s in Rd xrefs"
+msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1430,16 +1436,10 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
-#~ msgid ""
-#~ "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot "
-#~ "be checked"
-#~ msgstr ""
-#~ " パッケージ %s は存在しますが、R >= 2.10.0 でインストールされていないので "
-#~ "xrefs をチェックできません "
-
-#~ msgid "Obsolete package %s in Rd xrefs"
-#~ msgid_plural "Obsolete packages %s in Rd xrefs"
-#~ msgstr[0] " もう使われていないパッケージ %s が Rd xrefs 中にあります "
+#, fuzzy
+#~ msgid "Undeclared package used in Rd xrefs:"
+#~ msgid_plural "Undeclared packages used in Rd xrefs:"
+#~ msgstr[0] " Rd xrefs 中に未知のパッケージ %s があります "
 
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
