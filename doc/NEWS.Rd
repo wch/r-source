@@ -606,6 +606,8 @@
       \item (Windows.) \code{download.file(cacheOK = FALSE)} is now
       supported when \file{internet2.dll} is used.
 
+      \item \code{browseURL()} has been updated to work with Firefox
+      36.0 which has dropped support for the \option{-remote} interface.
     }
   }
 
