@@ -1,5 +1,5 @@
 
-R version 3.1.2 Patched (2015-02-26 r67899) -- "Pumpkin Helmet"
+R version 3.1.3 RC (2015-03-01 r67921) -- "Smooth Sidewalk"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1365,5 +1365,5 @@ Warning messages:
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  0.781 0.006 0.787 0 0 
+Time elapsed:  0.805 0.009 0.815 0 0 
 > 
