@@ -88,7 +88,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                "gnome-moz-remote" =, "open" = quotedUrl,
                "galeon" = paste("-x", quotedUrl),
                "kfmclient" = paste("openURL", quotedUrl),
-               "mozilla" =, "opera" =, "firefox" = {
+               "mozilla" =, "opera" = {
                    paste0("-remote \"openURL(",
                          ## Quote ',' and ')' ...
                          gsub("([,)$])", "%\\1", url), ")\"")
