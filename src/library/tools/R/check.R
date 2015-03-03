@@ -83,7 +83,7 @@ setRlibs <-
 
     if(test_recommended) {
         ## Now add dummies for recommended packages (removed later if declared)
-        recommended <-  .get_standard_package_names()$recommended
+        recommended <- .get_standard_package_names()$recommended
         ## grDevices has :: to KernSmooth
         ## stats has ::: to Matrix, Matrix depends on lattice
         ## which gives false positives in MASS and Rcpp
@@ -99,7 +99,9 @@ setRlibs <-
         for(pkg in recommended) {
             if(pkg == thispkg) next
             dir.create(pd <- file.path(tmplib, pkg))
-            file.copy(file.path(.Library, pkg, "DESCRIPTION"), pd)
+            ## some people remove recommended packages ....
+            f <- file.path(.Library, pkg, "DESCRIPTION")
+            if(file.exists(f)) file.copy(f, pd)
             ## to make sure find.package throws an error:
             close(file(file.path(pd, "dummy_for_check"), "w"))
         }
