@@ -331,6 +331,13 @@
       \item The \code{print()} method for \code{"pairwise.htest"}
       objects now obeys \code{getOption("digits")}, yielding more digits
       than by default when the option is correspondingly larger.
+
+      \item Code completion for namespaces now recognizes all loaded
+      namespaces, rather than only the ones that are also attached.
+
+      \item The code completion mechanism can now be replaced by a
+      user-specified completer function, for (temporary) situations
+      where the usual code completion is inappropriate.
     }
   }
 
