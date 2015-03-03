@@ -1133,7 +1133,7 @@ fileCompletions <- function(token)
         {
             comps <- paste0(prefix, comps)
         }
-        comps <- c(comps, fargComps)
+        comps <- c(fargComps, comps)
         .CompletionEnv[["comps"]] <- comps
     }
 }
