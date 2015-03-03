@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -175,6 +175,10 @@ arima(x, order = c(0L, 0L, 0L),
 
   \item{n.cond}{the number of initial observations not used in the fitting.}
 
+  \item{nobs}{the number of \dQuote{used} observations for the fitting,
+    can also be extracted via \code{\link{nobs}()} and is used by
+    \code{\link{BIC}}.}
+
   \item{model}{A list representing the Kalman Filter used in the
     fitting.  See \code{\link{KalmanLike}}.}
 }
@@ -238,9 +242,15 @@ arima(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron) - 1920)
 ## graphs in example(acf) suggest order 1 or 3
 require(graphics)
 (fit1 <- arima(presidents, c(1, 0, 0)))
+nobs(fit1)
 tsdiag(fit1)
 (fit3 <- arima(presidents, c(3, 0, 0)))  # smaller AIC
 tsdiag(fit3)
+BIC(fit1, fit3)
+## compare a whole set of models; BIC() would choose the smallest
+AIC(fit1, arima(presidents, c(2,0,0)),
+          arima(presidents, c(2,0,1)), # <- chosen (barely) by AIC
+    fit3, arima(presidents, c(3,0,1)))
 
 ## An example of ARIMA forecasting:
 predict(fit3, 3)

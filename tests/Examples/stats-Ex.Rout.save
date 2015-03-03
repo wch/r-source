@@ -3540,6 +3540,8 @@ Coefficients:
 s.e.  0.0555     4.6434
 
 sigma^2 estimated as 85.47:  log likelihood = -416.89,  aic = 839.78
+> nobs(fit1)
+[1] 114
 > tsdiag(fit1)
 > (fit3 <- arima(presidents, c(3, 0, 0)))  # smaller AIC
 
@@ -3553,6 +3555,20 @@ s.e.  0.0936  0.1140   0.0946     4.2845
 
 sigma^2 estimated as 81.12:  log likelihood = -414.08,  aic = 838.16
 > tsdiag(fit3)
+> BIC(fit1, fit3)
+     df      BIC
+fit1  3 847.9931
+fit3  5 851.8449
+> ## compare a whole set of models; BIC() would choose the smallest
+> AIC(fit1, arima(presidents, c(2,0,0)),
++           arima(presidents, c(2,0,1)), # <- chosen (barely) by AIC
++     fit3, arima(presidents, c(3,0,1)))
+                              df      AIC
+fit1                           3 839.7845
+arima(presidents, c(2, 0, 0))  4 840.0458
+arima(presidents, c(2, 0, 1))  5 838.1272
+fit3                           5 838.1639
+arima(presidents, c(3, 0, 1))  6 838.8124
 > 
 > ## An example of ARIMA forecasting:
 > predict(fit3, 3)

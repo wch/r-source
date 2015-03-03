@@ -325,7 +325,7 @@
       \item \code{BIC(mod)} and \code{BIC(mod, mod2)} now give non-NA
       numbers for \code{arima()} fitted models, as \code{nobs(mod)} now
       gives the number of \dQuote{used} observations for such models --
-      somewhat experimentally.% and hence not yet on ../src/library/stats/man/arima.Rd
+      somewhat experimentally.
       This fixes \PR{16198}, quite differently than proposed there.
 
       \item The \code{print()} method for \code{"pairwise.htest"}
