@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-03-01 r67919) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-03-03 r67930) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -6702,7 +6702,7 @@ common odds ratio
 	Mantel-Haenszel chi-squared test with continuity correction
 
 data:  Nitrous
-Mantel-Haenszel X-squared = 0.7143, df = 1, p-value = 0.199
+Mantel-Haenszel X-squared = 0.71432, df = 1, p-value = 0.199
 alternative hypothesis: true common odds ratio is less than 1
 95 percent confidence interval:
  0.000000 1.260053

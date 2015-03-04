@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-03-01 r67919) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-03-03 r67931) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3894,14 +3894,14 @@ Warning in bw.bcv(x) : minimum occurred at one end of the range
 	Bartlett test of homogeneity of variances
 
 data:  InsectSprays$count and InsectSprays$spray
-Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
+Bartlett's K-squared = 25.96, df = 5, p-value = 9.085e-05
 
 > bartlett.test(count ~ spray, data = InsectSprays)
 
 	Bartlett test of homogeneity of variances
 
 data:  count by spray
-Bartlett's K-squared = 25.9598, df = 5, p-value = 9.085e-05
+Bartlett's K-squared = 25.96, df = 5, p-value = 9.085e-05
 
 > 
 > 
@@ -4043,14 +4043,14 @@ probability of success
 	Box-Pierce test
 
 data:  x
-X-squared = 0.0013, df = 1, p-value = 0.9709
+X-squared = 0.0013332, df = 1, p-value = 0.9709
 
 > Box.test (x, lag = 1, type = "Ljung")
 
 	Box-Ljung test
 
 data:  x
-X-squared = 0.0014, df = 1, p-value = 0.9704
+X-squared = 0.0013736, df = 1, p-value = 0.9704
 
 > 
 > 
@@ -4153,7 +4153,7 @@ I(x^3) -0.73        0.93 -0.99
 	Pearson's Chi-squared test
 
 data:  M
-X-squared = 30.0701, df = 2, p-value = 2.954e-07
+X-squared = 30.07, df = 2, p-value = 2.954e-07
 
 > Xsq$observed   # observed counts (same as M)
       party
@@ -7215,14 +7215,14 @@ alternative hypothesis: two.sided
 	Fligner-Killeen test of homogeneity of variances
 
 data:  InsectSprays$count and InsectSprays$spray
-Fligner-Killeen:med chi-squared = 14.4828, df = 5, p-value = 0.01282
+Fligner-Killeen:med chi-squared = 14.483, df = 5, p-value = 0.01282
 
 > fligner.test(count ~ spray, data = InsectSprays)
 
 	Fligner-Killeen test of homogeneity of variances
 
 data:  count by spray
-Fligner-Killeen:med chi-squared = 14.4828, df = 5, p-value = 0.01282
+Fligner-Killeen:med chi-squared = 14.483, df = 5, p-value = 0.01282
 
 > ## Compare this to bartlett.test()
 > 
@@ -7356,7 +7356,7 @@ circumference ~ A/(1 + exp((B - age)/C))
 	Friedman rank sum test
 
 data:  RoundingTimes
-Friedman chi-squared = 11.1429, df = 2, p-value = 0.003805
+Friedman chi-squared = 11.143, df = 2, p-value = 0.003805
 
 > ## => strong evidence against the null that the methods are equivalent
 > ##    with respect to speed
@@ -7378,14 +7378,14 @@ Friedman chi-squared = 11.1429, df = 2, p-value = 0.003805
 	Friedman rank sum test
 
 data:  wb$x, wb$w and wb$t
-Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
+Friedman chi-squared = 0.33333, df = 1, p-value = 0.5637
 
 > friedman.test(x ~ w | t, data = wb)
 
 	Friedman rank sum test
 
 data:  x and w and t
-Friedman chi-squared = 0.3333, df = 1, p-value = 0.5637
+Friedman chi-squared = 0.33333, df = 1, p-value = 0.5637
 
 > 
 > 
@@ -8419,7 +8419,7 @@ Available components:
 	Kruskal-Wallis rank sum test
 
 data:  list(x, y, z)
-Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
+Kruskal-Wallis chi-squared = 0.77143, df = 2, p-value = 0.68
 
 > ## Equivalently,
 > x <- c(x, y, z)
@@ -8432,7 +8432,7 @@ Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 	Kruskal-Wallis rank sum test
 
 data:  x and g
-Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
+Kruskal-Wallis chi-squared = 0.77143, df = 2, p-value = 0.68
 
 > 
 > ## Formula interface.
@@ -8443,7 +8443,7 @@ Kruskal-Wallis chi-squared = 0.7714, df = 2, p-value = 0.68
 	Kruskal-Wallis rank sum test
 
 data:  Ozone by Month
-Kruskal-Wallis chi-squared = 29.2666, df = 4, p-value = 6.901e-06
+Kruskal-Wallis chi-squared = 29.267, df = 4, p-value = 6.901e-06
 
 > 
 > 
@@ -8480,7 +8480,7 @@ alternative hypothesis: two-sided
 	One-sample Kolmogorov-Smirnov test
 
 data:  x + 2
-D = 0.4096, p-value = 4.227e-08
+D = 0.40962, p-value = 4.227e-08
 alternative hypothesis: two-sided
 
 > ks.test(x+2, "pgamma", 3, 2, exact = FALSE)
@@ -8488,7 +8488,7 @@ alternative hypothesis: two-sided
 	One-sample Kolmogorov-Smirnov test
 
 data:  x + 2
-D = 0.4096, p-value = 1.033e-07
+D = 0.40962, p-value = 1.033e-07
 alternative hypothesis: two-sided
 
 > ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
@@ -8496,7 +8496,7 @@ alternative hypothesis: two-sided
 	One-sample Kolmogorov-Smirnov test
 
 data:  x + 2
-D^+ = 0.04, p-value = 0.8302
+D^+ = 0.039998, p-value = 0.8302
 alternative hypothesis: the CDF of x lies above the null hypothesis
 
 > 
@@ -9469,7 +9469,7 @@ Male   <5000                          1   1   2   1
 	Cochran-Mantel-Haenszel test
 
 data:  Satisfaction
-Cochran-Mantel-Haenszel M^2 = 10.2001, df = 9, p-value = 0.3345
+Cochran-Mantel-Haenszel M^2 = 10.2, df = 9, p-value = 0.3345
 
 > ## See Table 7.12 in Agresti (2002), p. 297.
 > 
@@ -9550,7 +9550,7 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 
 
 data:  SSD matrix from lm(formula = reacttime ~ 1)
-W = 0.0311, p-value = 0.04765
+W = 0.031084, p-value = 0.04765
 
 > 
 > ### tests using intra-subject 3x2 design
@@ -9564,7 +9564,7 @@ W = 0.0311, p-value = 0.04765
 
 
 data:  SSD matrix from lm(formula = reacttime ~ 1)
-W = 0.8938, p-value = 0.6381
+W = 0.89378, p-value = 0.6381
 
 > mauchly.test(mlmfit, M = ~ deg + noise, X = ~ noise, idata = idata)
 
@@ -9577,7 +9577,7 @@ W = 0.8938, p-value = 0.6381
 
 
 data:  SSD matrix from lm(formula = reacttime ~ 1)
-W = 0.9601, p-value = 0.8497
+W = 0.96011, p-value = 0.8497
 
 > 
 > 
@@ -9614,7 +9614,7 @@ W = 0.9601, p-value = 0.8497
 	McNemar's Chi-squared test with continuity correction
 
 data:  Performance
-McNemar's chi-squared = 16.8178, df = 1, p-value = 4.115e-05
+McNemar's chi-squared = 16.818, df = 1, p-value = 4.115e-05
 
 > ## => significant change (in fact, drop) in approval ratings
 > 
@@ -11605,7 +11605,7 @@ event rate
 	Comparison of Poisson rates
 
 data:  c(11, 6 + 8 + 7) time base: c(800, 1083 + 1050 + 878)
-count1 = 11, expected count1 = 6.717, p-value = 0.07967
+count1 = 11, expected count1 = 6.7174, p-value = 0.07967
 alternative hypothesis: true rate ratio is not equal to 1
 95 percent confidence interval:
  0.8584264 4.2772659
@@ -11987,7 +11987,7 @@ NOTE: n is number in *each* group
 	Phillips-Perron Unit Root Test
 
 data:  x
-Dickey-Fuller = -33.0567, Truncation lag parameter = 7, p-value = 0.01
+Dickey-Fuller = -33.057, Truncation lag parameter = 7, p-value = 0.01
 
 > y <- cumsum(x) # has unit root
 > PP.test(y)
@@ -13037,6 +13037,61 @@ Standard deviations:
 > 
 > 
 > cleanEx()
+> nameEx("print.power.htest")
+> ### * print.power.htest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.power.htest
+> ### Title: Print Methods for Hypothesis Tests and Power Calculation Objects
+> ### Aliases: print.htest print.power.htest
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> (ptt <- power.t.test(n = 20, delta = 1))
+
+     Two-sample t test power calculation 
+
+              n = 20
+          delta = 1
+             sd = 1
+      sig.level = 0.05
+          power = 0.8689528
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+> print(ptt, digits =  4) # using less digits than default
+
+     Two-sample t test power calculation 
+
+              n = 20
+          delta = 1
+             sd = 1
+      sig.level = 0.05
+          power = 0.869
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+> print(ptt, digits = 12) # using more  "       "     "
+
+     Two-sample t test power calculation 
+
+              n = 20
+          delta = 1
+             sd = 1
+      sig.level = 0.05
+          power = 0.868952801692
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+> 
+> 
+> 
+> cleanEx()
 > nameEx("print.ts")
 > ### * print.ts
 > 
@@ -13498,7 +13553,7 @@ sample estimates:
 	correction
 
 data:  smokers out of patients
-X-squared = 12.6004, df = 3, p-value = 0.005585
+X-squared = 12.6, df = 3, p-value = 0.005585
 alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2    prop 3    prop 4 
@@ -13528,7 +13583,7 @@ sample estimates:
 	correction
 
 data:  smokers out of patients
-X-squared = 12.6004, df = 3, p-value = 0.005585
+X-squared = 12.6, df = 3, p-value = 0.005585
 alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2    prop 3    prop 4 
@@ -13548,7 +13603,7 @@ X-squared = 8.2249, df = 1, p-value = 0.004132
 
 data:  smokers out of patients ,
  using scores: 0 0 0 1
-X-squared = 12.1731, df = 1, p-value = 0.0004848
+X-squared = 12.173, df = 1, p-value = 0.0004848
 
 > 
 > 
@@ -14910,7 +14965,7 @@ W = 0.9956, p-value = 0.9876
 	Shapiro-Wilk normality test
 
 data:  runif(100, min = 2, max = 4)
-W = 0.9309, p-value = 5.616e-05
+W = 0.93092, p-value = 5.616e-05
 
 > 
 > 

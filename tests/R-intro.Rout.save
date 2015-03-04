@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-03-01 r67919) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-03-03 r67931) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -547,7 +547,7 @@ incomef   act nsw nt qld sa tas vic wa
 	Shapiro-Wilk normality test
 
 data:  long
-W = 0.9793, p-value = 0.01052
+W = 0.979, p-value = 0.011
 
 > 
 > ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long)))
@@ -555,7 +555,7 @@ W = 0.9793, p-value = 0.01052
 	One-sample Kolmogorov-Smirnov test
 
 data:  long
-D = 0.0661, p-value = 0.4284
+D = 0.0661, p-value = 0.43
 alternative hypothesis: two-sided
 
 Warning message:
@@ -584,7 +584,7 @@ In ks.test(long, "pnorm", mean = mean(long), sd = sqrt(var(long))) :
 	Welch Two Sample t-test
 
 data:  A and B
-t = 3.2499, df = 12.027, p-value = 0.006939
+t = 3.25, df = 12, p-value = 0.0069
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
  0.013855 0.070183
@@ -598,7 +598,7 @@ mean of x mean of y
 	F test to compare two variances
 
 data:  A and B
-F = 0.5837, num df = 12, denom df = 7, p-value = 0.3938
+F = 0.584, num df = 12, denom df = 7, p-value = 0.39
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
  0.12511 2.10527
@@ -612,7 +612,7 @@ ratio of variances
 	Two Sample t-test
 
 data:  A and B
-t = 3.4722, df = 19, p-value = 0.002551
+t = 3.47, df = 19, p-value = 0.0026
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
  0.016691 0.067348
@@ -626,7 +626,7 @@ mean of x mean of y
 	Wilcoxon rank sum test with continuity correction
 
 data:  A and B
-W = 89, p-value = 0.007497
+W = 89, p-value = 0.0075
 alternative hypothesis: true location shift is not equal to 0
 
 Warning message:

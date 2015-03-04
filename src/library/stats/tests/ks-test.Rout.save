@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-03-01 r67919) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-03-03 r67931) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -53,7 +53,7 @@ In ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
 	One-sample Kolmogorov-Smirnov test
 
 data:  ds2
-D = 0.0194, p-value = 0.8452
+D = 0.019416, p-value = 0.8452
 alternative hypothesis: two-sided
 
 > ks.test(ds2, "pnorm", exact = TRUE)
@@ -61,7 +61,7 @@ alternative hypothesis: two-sided
 	One-sample Kolmogorov-Smirnov test
 
 data:  ds2
-D = 0.0194, p-value = 0.8379
+D = 0.019416, p-value = 0.8379
 alternative hypothesis: two-sided
 
 > ## next two are still close
@@ -70,7 +70,7 @@ alternative hypothesis: two-sided
 	One-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 2)
-D = 0.0192, p-value = 0.856
+D = 0.019169, p-value = 0.856
 alternative hypothesis: two-sided
 
 Warning message:
@@ -81,7 +81,7 @@ In ks.test(round(ds2, 2), "pnorm") :
 	One-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 2)
-D = 0.0192, p-value = 0.8489
+D = 0.019169, p-value = 0.8489
 alternative hypothesis: two-sided
 
 Warning message:
@@ -93,7 +93,7 @@ In ks.test(round(ds2, 2), "pnorm", exact = TRUE) :
 	One-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 1)
-D = 0.0367, p-value = 0.1344
+D = 0.03674, p-value = 0.1344
 alternative hypothesis: two-sided
 
 Warning message:
@@ -104,7 +104,7 @@ In ks.test(round(ds2, 1), "pnorm") :
 	One-sample Kolmogorov-Smirnov test
 
 data:  round(ds2, 1)
-D = 0.0367, p-value = 0.1311
+D = 0.03674, p-value = 0.1311
 alternative hypothesis: two-sided
 
 Warning message:
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.111   0.010   0.112 
+  0.128   0.027   0.194 

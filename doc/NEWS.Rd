@@ -328,9 +328,12 @@
       somewhat experimentally.
       This fixes \PR{16198}, quite differently than proposed there.
 
-      \item The \code{print()} method for \code{"pairwise.htest"}
-      objects now obeys \code{getOption("digits")}, yielding more digits
-      than by default when the option is correspondingly larger.
+      \item The \code{print()} methods for \code{"htest"},
+      \code{"pairwise.htest"} and \code{"power.htest"} objects now have
+      a \code{digits} argument defaulting to (a function of)
+      \code{getOption("digits")}, and influencing all printed numbers
+      coherently.  Unavoidably, this changes the display of such test
+      results in sdome cases.
 
       \item Code completion for namespaces now recognizes all loaded
       namespaces, rather than only the ones that are also attached.
