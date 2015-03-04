@@ -333,7 +333,7 @@
       a \code{digits} argument defaulting to (a function of)
       \code{getOption("digits")}, and influencing all printed numbers
       coherently.  Unavoidably, this changes the display of such test
-      results in sdome cases.
+      results in some cases.
 
       \item Code completion for namespaces now recognizes all loaded
       namespaces, rather than only the ones that are also attached.
