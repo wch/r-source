@@ -10,19 +10,21 @@ and do `make install' (or the equivalent).
 for people changing the code: this runs things like the demos and
 no-segfault which might be broken by code changes, and checks on the
 documentation (effectively R CMD check on each of the base packages).
-This needs recommended packages installed.
+This needs recommended packages installed to be done in full.
 
     make check-all
 
-runs all the checks, those in check-devel plus tests of the recommended
-packages.
+runs all the checks, those in check-devel plus tests of the
+recommended packages.
 
 Note that for complete testing you will need a number of other
 packages installed and available, so if you have a CRAN installation,
 set R_LIBS (perhaps in ~/.R/check.Renviron) to include it before
 running these tests.  For example, some of the tests on 'nlme' depend
 on 'Hmisc', and there are a number of cross references from help pages
-to CRAN packages.
+to CRAN packages.  (One of the checks for recommended package
+'survival' will fail unless its suggested package 'cmprsk' is
+available.)
 
 If a check fails there will almost always be a .Rout.fail file with
 the problematic output, so looking at the tail of that file should

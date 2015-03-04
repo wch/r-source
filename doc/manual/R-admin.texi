@@ -336,7 +336,9 @@ make check-all
 @noindent
 see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
-need the recommended packages to be installed.
+need the recommended packages to be installed to be done in full, and
+one of the checks for recommended package @pkg{survival} will fail
+unless its suggested package @pkg{cmprsk} is available.
 
 If the command @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
