@@ -569,7 +569,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.1.2 patched}{
+\section{\Rlogo CHANGES IN R 3.1.3}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The internal method of \code{download.file()} can now handle
