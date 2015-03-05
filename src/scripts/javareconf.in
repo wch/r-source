@@ -327,7 +327,7 @@ wd=${PWD}
 cd "${tempdir}"
 
 echo
-echo "trying to compile and link a JNI progam "
+echo "trying to compile and link a JNI program "
 echo "detected JNI cpp flags    : ${JAVA_CPPFLAGS}"
 echo "detected JNI linker flags : ${JAVA_LIBS}"
 
