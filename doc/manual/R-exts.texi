@@ -5361,14 +5361,14 @@ line) to mark code that should be run by @code{example()} but not by
 @option{--run-donttest} can be used).  This should be needed only
 occasionally but can be used for code which might fail in circumstances
 that are hard to test for, for example in some locales.  (Use
-e.g. @code{capabilities()} to test for features needed in the examples
-wherever possible, and you can also use @code{try()} or
-@code{tryCatch()}.  Use @code{interactive()} to condition examples which
-need someone to interact with.)  Note that code included in
-@code{\donttest} must be correct @R{} code, and any packages used should
-be declared in the @file{DESCRIPTION} file.  It is good practice to
-include a comment in the @code{\donttest} section explaining why it is
-needed.
+e.g. @code{capabilities()} or @code{nzchar(Sys.which("someprogram"))} to
+test for features needed in the examples wherever possible, and you can
+also use @code{try()} or @code{tryCatch()}.  Use @code{interactive()} to
+condition examples which need someone to interact with.)  Note that code
+included in @code{\donttest} must be correct @R{} code, and any packages
+used should be declared in the @file{DESCRIPTION} file.  It is good
+practice to include a comment in the @code{\donttest} section explaining
+why it is needed.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
