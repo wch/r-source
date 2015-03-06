@@ -3263,7 +3263,7 @@ function(dfile, strict = FALSE)
 
     ## Minimal check (so far) of Title and Description.
     if(strict && !is.na(val <- db["Title"])
-       && grepl("[.]$", val) && !grepl(" [.][.][.]", trimws(val)))
+       && grepl("[.]$", val) && !grepl(" [.][.][.]|et al[.]", trimws(val)))
         out$bad_Title <- TRUE
     ## some people put punctuation inside quotes, some outside.
     if(strict && !is.na(val <- db["Description"])
