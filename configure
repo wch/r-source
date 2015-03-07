@@ -34543,9 +34543,12 @@ if test -n "${CURL_CONFIG}"; then
   ## This in particular may be wrong for a static library,
   ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
-    if test `${CURL_CONFIG} --built-shared` = yes; then
+    ## documented for >= 7.17, but not present in 7.20.0
+    bshared=`${CURL_CONFIG} --built-shared`
+    if test "x$bshared" = xyes; then
       CURL_LIBS=`${CURL_CONFIG} --libs`
     else
+      ## added in 7.17.0
       CURL_LIBS=`${CURL_CONFIG} --static-libs`
     fi
   fi
@@ -36452,11 +36455,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36455: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36458: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36459: \$? = $ac_status" >&5
+   echo "$as_me:36462: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36551,11 +36554,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36554: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36557: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36558: \$? = $ac_status" >&5
+   echo "$as_me:36561: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36603,11 +36606,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36606: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36609: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36610: \$? = $ac_status" >&5
+   echo "$as_me:36613: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

@@ -2324,7 +2324,9 @@ if test -n "${CURL_CONFIG}"; then
   ## This in particular may be wrong for a static library,
   ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
-    if test `${CURL_CONFIG} --built-shared` = yes; then
+    ## documented for >= 7.17, but not present in 7.20.0
+    bshared=`${CURL_CONFIG} --built-shared`
+    if test "x$bshared" = xyes; then
       CURL_LIBS=`${CURL_CONFIG} --libs`
     else
       ## added in 7.17.0
