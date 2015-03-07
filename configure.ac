@@ -2315,23 +2315,19 @@ R_PCRE
 R_TRE
 
 ## libcurl
+## curl-config might not match the installed libcurl,
+## so we allow the user to set CURL_CPPFLAGS, CURL_LIBS
+## and check the version directly rather than by curl-config --checkfor
 AC_PATH_PROG(CURL_CONFIG, curl-config)
 if test -n "${CURL_CONFIG}"; then
   echo `${CURL_CONFIG} --version`
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
-  ## This in particular may be wrong for a static library,
-  ## and OpenCSW has in the past copied the static answer over the dynamic one.
+  ## This should be correct for a static-only build, user will
+  ## need to override to specify static linking (see config.site)
   if test -z "${CURL_LIBS}"; then
-    ## documented for >= 7.17, but not present in 7.20.0
-    bshared=`${CURL_CONFIG} --built-shared`
-    if test "x$bshared" = xyes; then
-      CURL_LIBS=`${CURL_CONFIG} --libs`
-    else
-      ## added in 7.17.0
-      CURL_LIBS=`${CURL_CONFIG} --static-libs`
-    fi
+    CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"

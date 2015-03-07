@@ -34495,6 +34495,9 @@ fi
 
 
 ## libcurl
+## curl-config might not match the installed libcurl,
+## so we allow the user to set CURL_CPPFLAGS, CURL_LIBS
+## and check the version directly rather than by curl-config --checkfor
 # Extract the first word of "curl-config", so it can be a program name with args.
 set dummy curl-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -34540,17 +34543,10 @@ if test -n "${CURL_CONFIG}"; then
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
-  ## This in particular may be wrong for a static library,
-  ## and OpenCSW has in the past copied the static answer over the dynamic one.
+  ## This should be correct for a static-only build, user will
+  ## need to override to specify static linking (see config.site)
   if test -z "${CURL_LIBS}"; then
-    ## documented for >= 7.17, but not present in 7.20.0
-    bshared=`${CURL_CONFIG} --built-shared`
-    if test "x$bshared" = xyes; then
-      CURL_LIBS=`${CURL_CONFIG} --libs`
-    else
-      ## added in 7.17.0
-      CURL_LIBS=`${CURL_CONFIG} --static-libs`
-    fi
+    CURL_LIBS=`${CURL_CONFIG} --libs`
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"
@@ -36455,11 +36451,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36458: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36454: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36462: \$? = $ac_status" >&5
+   echo "$as_me:36458: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36554,11 +36550,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36557: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36553: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36561: \$? = $ac_status" >&5
+   echo "$as_me:36557: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36606,11 +36602,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36609: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36605: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36613: \$? = $ac_status" >&5
+   echo "$as_me:36609: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
