@@ -3229,7 +3229,11 @@ If @code{libcurl} version 7.28.0 or later is available (including its
 development files), it will be linked in to support
 @code{curlGetHeaders} and the @code{"libcurl"} methods of
 @code{download.file} and @code{url}.  This is recommended as it gives
-access to @samp{https://} and @samp{ftps://} URLs.
+access to @samp{https://} and @samp{ftps://} URLs.  Information on
+@code{libcurl} is found from the @command{curl-config} script: if that
+is missing or needs to be overridden@footnote{for example to specify
+static linking with a build which has both shared and static libraries.}
+there are macros described in file @file{config.site}.
 
 The @code{bitmap} and @code{dev2bitmap} devices and function
 @code{embedFonts()} use ghostscript
@@ -4611,20 +4615,18 @@ installed.  For Mountain Lion and later, see
 @uref{http://xquartz.macosforge.org/}.  (Note that XQuartz will likely
 need to be re-installed after an OS upgrade.)
 
-In principle @R{} can be built for 10.4.x, 10.5.x and for PowerPC Macs
-but this has not been tested recently: 10.6 (Snow Leopard) is the
-earliest version currently tested.  32-bit Intel builds of @R{} 3.0.0
-were tested: they would be needed for Snow Leopard running on very old
-machines with Core Solo or Core Duo CPUs.  The instructions here are for
-@cputype{x86_64} builds.
+The instructions here are for @cputype{x86_64} builds on 10.6 (Snow
+Leopard) or later.  In principle @R{} can be built for 10.4.x, 10.5.x
+and for PowerPC or 32-bit Intel Macs but these has not been tested
+recently.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
-would only be used for the data editor/viewer.  (This needs an
-Objective-C compiler@footnote{These days that is defined by Apple's
-implementation of @code{clang}, so it is strongly recommended to use
-that.} which can compile the code for @code{quartz()}.)
+would only be used for the command-line-@R{} data editor/viewer.  (This
+needs an Objective-C compiler@footnote{These days that is defined by
+Apple's implementation of @code{clang}, so it is strongly recommended to
+use that.} which can compile the source code of @code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4633,14 +4635,14 @@ library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
 `Command-line Tools for Xcode' used to be part of the Apple Developer
-Tools (`Xcode') but nowadays need to be installed separately.  They can
-be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
-will need to register there: that allows you to download older versions
-available for your OS) or some versions of Xcode (from the App Store or
-from @uref{http://developer.apple.com/devcenter/mac/}) you can install
-the command-line tools from within Xcode, from the @samp{Downloads} pane
-in the @samp{Preferences}.  For Mavericks and later, see the specific
-sub-section below.
+Tools (`Xcode') but nowadays need to be installed separately. For
+Mavericks and later, see the specific sub-section below.  For Mountain
+Lion or earlier then can be downloaded from
+@uref{http://developer.apple.com/devcenter/mac/} (you will need to
+register there: that allows you to download older versions available for
+your OS) or from within some versions of Xcode you can install the
+command-line tools from the @samp{Downloads} pane in the
+@samp{Preferences}.
 
 Various compilers can be used.  The current @acronym{CRAN} `Snow
 Leopard' distribution of @R{} is built using
@@ -4703,14 +4705,16 @@ builds of @command{clang} currently have little or no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
-most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
-(and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
-and useful for many packages: it will also be used if present when
-configuring the @code{X11()} device.
+most likely want at least @code{pcre}, @code{xz}, @code{jpeg},
+@code{libpng} and @code{readline} (and perhaps @code{tiff}).
+@code{pkg-config} is not provided by Apple and useful for many packages:
+it will also be used if present when configuring the @code{X11()}
+device.
 
 Recent versions of OS X ship with @code{zlib} version 1.2.8 and
 @code{bzlib} version 1.0.6, sufficient for the default
-@command{configure} checks.
+@command{configure} checks.  Mavericks has a recent enough version of
+@code{libcurl}: Snow Leopard does not.
 
 @cindex BLAS library
 @cindex LAPACK library
