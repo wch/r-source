@@ -263,10 +263,10 @@
 ## INTERNET_LIBS=
 
 ## Script from texinfo 5.1 or later.
-## Can be texi2any (the default) or makeinfo or a full path to either
+## Can be texi2any (the default) or makeinfo or a full path to either.
 ## MAKEINFO=
 
-## Use these to override curl-config if needed, which it sometimes is
-## for static libs (try curl-config --static-libs)
+## Use these to override curl-config if needed
+## Used as from R 3.2.0.
 ## CURL_CPPFLAGS=
 ## CURL_LIBS=
