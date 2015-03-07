@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2014 R Core Team
+### Copyright (C) 1998-2015 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -2026,8 +2026,18 @@ fi
 R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION
-R_MKTIME_ERRNO
-R_FUNC_MKTIME
+
+if test x${use_internal_tzcode} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_tzcode=yes;
+     ;; 
+esac
+fi
+if test "${use_internal_tzcode}" != yes; then
+  R_MKTIME_ERRNO
+  R_FUNC_MKTIME
+fi
 
 R_C99_COMPLEX
 
@@ -2307,13 +2317,19 @@ R_TRE
 ## libcurl
 AC_PATH_PROG(CURL_CONFIG, curl-config)
 if test -n "${CURL_CONFIG}"; then
+  echo `${CURL_CONFIG} --version`
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
   ## This in particular may be wrong for a static library,
   ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
-    CURL_LIBS=`${CURL_CONFIG} --libs`
+    if test `${CURL_CONFIG} --built-shared` = yes; then
+      CURL_LIBS=`${CURL_CONFIG} --libs`
+    else
+      ## added in 7.17.0
+      CURL_LIBS=`${CURL_CONFIG} --static-libs`
+    fi
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"
@@ -2384,13 +2400,6 @@ fi
 
 AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
-if test x${use_internal_tzcode} = xdefault; then
-case "${host_os}" in
-   darwin*)
-     use_internal_tzcode=yes;
-     ;; 
-esac
-fi
 
 if test "x${use_internal_tzcode}" = xyes; then
   AC_DEFINE(USE_INTERNAL_MKTIME, 1, [Define to use internal time-zone code])

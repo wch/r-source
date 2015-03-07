@@ -29285,7 +29285,16 @@ $as_echo "#define HAVE_WORKING_SIGACTION 1" >>confdefs.h
 
   fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether mktime sets errno" >&5
+
+if test x${use_internal_tzcode} = xdefault; then
+case "${host_os}" in
+   darwin*)
+     use_internal_tzcode=yes;
+     ;;
+esac
+fi
+if test "${use_internal_tzcode}" != yes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether mktime sets errno" >&5
 $as_echo_n "checking whether mktime sets errno... " >&6; }
 if ${r_cv_mktime_errno+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -29332,7 +29341,7 @@ $as_echo "#define MKTIME_SETS_ERRNO /**/" >>confdefs.h
 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly outside 1902-2037" >&5
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether mktime works correctly outside 1902-2037" >&5
 $as_echo_n "checking whether mktime works correctly outside 1902-2037... " >&6; }
 if ${r_cv_working_mktime+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -29388,6 +29397,7 @@ $as_echo "#define HAVE_WORKING_64BIT_MKTIME 1" >>confdefs.h
 
 fi
 
+fi
 
 ac_fn_c_check_header_mongrel "$LINENO" "complex.h" "ac_cv_header_complex_h" "$ac_includes_default"
 if test "x$ac_cv_header_complex_h" = xyes; then :
@@ -34526,13 +34536,18 @@ fi
 
 
 if test -n "${CURL_CONFIG}"; then
+  echo `${CURL_CONFIG} --version`
   if test -z "${CURL_CPPFLAGS}"; then
     CURL_CPPFLAGS=`${CURL_CONFIG} --cflags`
   fi
   ## This in particular may be wrong for a static library,
   ## and OpenCSW has in the past copied the static answer over the dynamic one.
   if test -z "${CURL_LIBS}"; then
-    CURL_LIBS=`${CURL_CONFIG} --libs`
+    if test `${CURL_CONFIG} --built-shared` = yes; then
+      CURL_LIBS=`${CURL_CONFIG} --libs`
+    else
+      CURL_LIBS=`${CURL_CONFIG} --static-libs`
+    fi
   fi
 fi
 r_save_CPPFLAGS="${CPPLAGS}"
@@ -35196,13 +35211,6 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-if test x${use_internal_tzcode} = xdefault; then
-case "${host_os}" in
-   darwin*)
-     use_internal_tzcode=yes;
-     ;;
-esac
-fi
 
 if test "x${use_internal_tzcode}" = xyes; then
 
@@ -36444,11 +36452,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36447: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36455: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:36451: \$? = $ac_status" >&5
+   echo "$as_me:36459: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -36543,11 +36551,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36546: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36554: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36550: \$? = $ac_status" >&5
+   echo "$as_me:36558: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -36595,11 +36603,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:36598: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:36606: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:36602: \$? = $ac_status" >&5
+   echo "$as_me:36610: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
