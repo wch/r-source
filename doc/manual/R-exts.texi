@@ -425,9 +425,9 @@ The mandatory @samp{Description} field should give a
 @emph{comprehensive} description of what the package does.  One can use
 several (complete) sentences, but only one paragraph. It should be
 intelligible to all the intended readership (e.g.@: for a @acronym{CRAN}
-package to all @acronym{CRAN} users).  This field should also be used
-for explaining the package name if necessary.
-
+package to all @acronym{CRAN} users).  It is good practice not to start
+with the package name, `This package' or similar.  This field should
+also be used for explaining the package name if necessary.
 
 @c DESCRIPTION field Author
 @c DESCRIPTION field Authors@R

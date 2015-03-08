@@ -6944,6 +6944,14 @@ function(dir)
     if(!isTRUE(out$descr_bad_start) && !grepl("^['\"]?[[:upper:]]", descr))
        out$descr_bad_initial <- TRUE
 
+    ## Check Date
+    date <- trimws(as.vector(meta[["Date"]]))
+    if(!is.na(date)) {
+        dd <- strptime(date, "%Y-%m-%d", tz = "GMT")
+        if (is.na(dd)) out$bad_date <- TRUE
+        else if (as.Date(dd) < Sys.Date() - 31) out$old_date <- TRUE
+    }
+
     ## Check URLs.
     if(capabilities("libcurl")) {
         ## Be defensive about building the package URL db.
@@ -7270,6 +7278,12 @@ function(x, ...)
       },
       if(length(x$descr_bad_start)) {
           "The Description field should not start with the package name,\n  'This package' or similar."
+      },
+      if(length(x$bad_date)) {
+          "The Date field is not in ISO 8601 yyyy-mm-dd format."
+      },
+      if(length(x$old_date)) {
+          "The Date field is over a month old."
       }
      )
 }
