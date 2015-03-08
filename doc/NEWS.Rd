@@ -367,12 +367,12 @@
 
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
-       \code{pcre} (or similar names) are installed.
+       \pkg{pcre} (or similar names) are installed.
 
-       \item \command{configure} requires the \command{texi2any} script
-       from \pkg{texinfo} 5.1 or later, replacing the \command{makeinfo}
-       program.  (\command{makeinfo} is a link to the Perl script
-       \command{texi2any} in \pkg{texinfo} 5.x.)
+       \item \command{configure} by default looks for the
+       \command{texi2any} script from \pkg{texinfo} 5.1 or later, rather
+       than the \command{makeinfo} program.  (\command{makeinfo} is a
+       link to the Perl script \command{texi2any} in \pkg{texinfo} 5.x.)
 
        \item \command{R CMD INSTALL} gains an  option
        \option{--built-timestamp=STAMP} allowing 100\% reproducible
@@ -421,7 +421,8 @@
       and \file{NEWS.Rd} files and in the help files.
 
       \item \command{R CMD check --as-cran} reports non-ASCII characters
-      in R source files when there is no declared package encoding.
+      in R source files when there is no package encoding declared in
+      the \file{DESCRIPTION} file.
 
       \item \command{R CMD check --as-cran} reports (apparent) S3
       methods exported but not registered.
@@ -513,8 +514,8 @@
       \item \code{download.file(method = "lynx")} is defunct.
 
       \item Building \R using the included versions of \code{zlib},
-      \code{bzip2}, \code{xz} and PCRE is deprecated: these are
-      essentially frozen and will eventually be removed.
+      \code{bzip2}, \code{xz} and PCRE is deprecated: these are frozen
+      (bar essential bug-fixes) and will be removed for \R 3.3.0.
 
       \item The \command{configure} option
       \option{--with-valgrind-instrumentation=3} has been withdrawn, as
@@ -562,9 +563,10 @@
       example, a \code{data.frame} is valid for a \code{list} argument
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
-      \item \code{qbeta()}, the inversion of \code{pbeta()}, is much more
-      sophisticated, also in border cases, still not ending in too many
-      iterations.
+      
+      \item In \code{qbeta()} the inversion of \code{pbeta()} is much
+      more sophisticated.  This works better in border cases, still
+      using too many iterations.
     }
   }
 }
