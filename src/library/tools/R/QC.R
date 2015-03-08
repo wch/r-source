@@ -6937,7 +6937,7 @@ function(dir)
     descr <- trimws(as.vector(meta[["Description"]]))
     descr <- gsub("[\n\t]", " ", descr)
     package <- meta["Package"]
-    if(grepl(paste0("^['\"]?", package), descr))
+    if(grepl(paste0("^['\"]?", package, ignore.case = TRUE), descr))
         out$descr_bad_start <- TRUE
     if(grepl("^(The|This|A|In this|In the) package", descr))
         out$descr_bad_start <- TRUE
