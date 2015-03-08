@@ -40,9 +40,9 @@
 
 ## The command which runs the C compiler.
 ## If unspecified, a search is made for gcc and cc (in that order).
-## To override this choice, specify the name of the command which runs
-## the compiler here, for example 'c99'.
-## It is also convenient to set the architecture here, e.g. 'gcc -m32'.
+## To override this choice, specify the name or path of the command
+## which runs the compiler, for example 'c99'.
+## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
 ## CC=
 
 ## Debugging and optimization options for the C compiler.
@@ -107,7 +107,7 @@
 
 ## The flags which are necessary for loading main program which will
 ## load DLLs at runtime.  HP-UX and Linux-elf are examples of platforms
-## which use this.  These platforms are already taken care of by
+## which use this.  Those platforms are already taken care of by
 ## configure, and anything set here will be in addition unless MAIN_LD
 ## is given.
 ## For example, one can set flags for profiling here.
@@ -205,7 +205,7 @@
 ## Default setting for the R_BROWSER env variable
 ## If unset configure searches in turn for (currently)
 ## firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open
-## and uses the full path.
+## and uses the full path of the first it finds.
 ## R_BROWSER=
 
 ## BLAS and LAPACK settings
@@ -219,12 +219,12 @@
 ## it is not used if the BLAS already contains LAPACK.
 ## LAPACK_LIBS=
 
-## Make name.
+## Make name or path
 ## Set this if you want to use a make by another name.
 ## For example, if your GNU make is called 'gmake', use 'MAKE=gmake'.
 ## MAKE=
 
-## Tar name
+## Tar name or path
 ## Set this to prefer a tar which has the capability to automagically
 ## read compressed archives.  The default is to choose 'gtar' or
 ## 'gnutar'(normally GNU tar) then 'tar'.
@@ -270,5 +270,6 @@
 ## Used as from R 3.2.0.
 ## CURL_CPPFLAGS=
 ## CURL_LIBS=
-## To force a static link (if available) use 
+## To force a static link use the line below: this is only needed
+## if both shared and static libcurl libraries were built.
 ## CURL_LIBS=`curl-config --static-libs`
