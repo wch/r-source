@@ -174,7 +174,7 @@ $(MAIN_LIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
 ../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/pcre/libtre.a\
-  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/xv/liblzma.a \
+  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/xz/liblzma.a \
   ../extra/intl/libintl.a:
 	(cd $(@D); $(MAKE))
 
