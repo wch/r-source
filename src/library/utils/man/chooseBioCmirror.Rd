@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseBioCmirror.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2013 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chooseBioCmirror}
@@ -25,9 +25,9 @@ chooseBioCmirror(graphics = getOption("menu.graphics"), ind = NULL)
   This sets the option \code{"BioC_mirror"}: it needs to be used before
   a call to \code{\link{setRepositories}}.
 
-  In addition to the Bioconductor master site (in Seattle, USA), there
-  currently are mirrors in Bethesda (USA), Dortmund (Germany), Bergen
-  (Norway) and Cambridge (UK).
+  The \sQuote{Bioconductor (World-wide)} mirror provides reliable
+  world-wide access; other mirrors may provide faster access on a
+  geographically local scale.
 }
 \value{
   None: this function is invoked for its

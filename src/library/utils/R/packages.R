@@ -811,12 +811,13 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"), ind = NULL)
 {
     if(is.null(ind) && !interactive())
         stop("cannot choose a BioC mirror non-interactively")
-    m <- c("Seattle (USA)"="http://www.bioconductor.org"
+    m <- c("Bioconductor (World-wide)"="http://bioconductor.org"
 	   , "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror"
 	   , "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de"
 	   , "Anhui (China)"="http://mirrors.ustc.edu.cn/bioc/"
 	   , "Cambridge (UK)"="http://mirrors.ebi.ac.uk/bioconductor/"
 	   , "Riken, Kobe (Japan)" = "http://bioconductor.jp/"
+	   , "Tokyo (Japan)" = "http://bioc.ism.ac.jp/"
 	   , "Canberra (Australia)" = "http://mirror.aarnet.edu.au/pub/bioconductor/"
 	   , "Sao Paulo (Brazil)" = "http://bioconductor.fmrp.usp.br/"
 	   )

@@ -33,7 +33,7 @@ setRepositories(graphics = getOption("menu.graphics"),
   A Bioconductor mirror can be selected by setting
   \code{\link{options}("BioC_mirror")}, e.g.\sspace{}via
   \code{\link{chooseBioCmirror}} the default value is
-  \samp{"http://www.bioconductor.org"}.
+  \samp{"http://bioconductor.org"}.
 
   The items that are preselected are those that are currently in
   \code{options("repos")} plus those marked as default in the
