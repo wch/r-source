@@ -6920,7 +6920,7 @@ function(dir)
     }
 
     ## Check Title field.
-    title <- trimws(as.vector(meta[["Title"]]))
+    title <- trimws(as.vector(meta["Title"]))
     title <- gsub("[\n\t]", " ", title)
     package <- meta["Package"]
     if (title == package) {
@@ -6934,7 +6934,7 @@ function(dir)
     }
 
     ## Check Description field.
-    descr <- trimws(as.vector(meta[["Description"]]))
+    descr <- trimws(as.vector(meta["Description"]))
     descr <- gsub("[\n\t]", " ", descr)
     package <- meta["Package"]
     if(grepl(paste0("^['\"]?", package, ignore.case = TRUE), descr))
@@ -6945,7 +6945,7 @@ function(dir)
        out$descr_bad_initial <- TRUE
 
     ## Check Date
-    date <- trimws(as.vector(meta[["Date"]]))
+    date <- trimws(as.vector(meta["Date"]))
     if(!is.na(date)) {
         dd <- strptime(date, "%Y-%m-%d", tz = "GMT")
         if (is.na(dd)) out$bad_date <- TRUE
