@@ -306,7 +306,7 @@
       For standard keyword entries the corresponding descriptions are
       additionally taken as concepts.
 
-      \item Add \code{lengths()} function for getting the lengths of all
+      \item New \code{lengths()} function for getting the lengths of all
       elements in a list.
 
       \item New function \code{toTitleCase()} in package \pkg{tools},
@@ -563,7 +563,7 @@
       example, a \code{data.frame} is valid for a \code{list} argument
       in the signature, and a \code{factor} is valid for \code{vector}
       arguments.
-      
+
       \item In \code{qbeta()} the inversion of \code{pbeta()} is much
       more sophisticated.  This works better in border cases, still
       using too many iterations.

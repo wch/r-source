@@ -16,6 +16,5 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-lengths <- function(x) {
-    .Internal(lengths(x))
-}
+lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
+
