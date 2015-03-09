@@ -20,19 +20,19 @@ R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bi
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R3 = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
-RDCONV = $(top_builddir)/bin/R CMD Rdconv
+RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
 MK = $(MAKE)
 
 all-basic-tests = BasePackages Specific Reg Internet
-## not Docs Standalone
-all-devel-tests = IsAs Random Demo Primitive Regexp Segfault
+## not Docs Standalone Packages
+all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 Segfault
 
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
-	@$(ECHO) "running tests of Internet and socket functions"
+	@$(ECHO) "running tests of Internet functions"
 	@$(ECHO) "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
 ## </NOTE>

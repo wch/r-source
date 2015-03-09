@@ -312,10 +312,9 @@ make check
 
 @noindent
 Failures are not necessarily problems as they might be caused by missing
-functionality,@footnote{for example, if you configured @R{} with
-@option{--without-recommended}.} but you should look carefully at any
-reported discrepancies.  (Some non-fatal errors are expected in locales
-that do not support Latin-1, in particular in true @code{C} locales and
+functionality, but you should look carefully at any reported
+discrepancies.  (Some non-fatal errors are expected in locales that do
+not support Latin-1, in particular in true @code{C} locales and
 non-UTF-8 non-Western-European locales.)  A failure in
 @file{tests/ok-errors.R} may indicate inadequate resource limits
 (@pxref{Running R}).
@@ -336,7 +335,7 @@ make check-all
 @noindent
 see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
-need the recommended packages to be installed.
+are only run completely if the recommended packages are installed.
 
 If the command @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -428,9 +427,10 @@ There is a set of manuals that can be built from the sources,
 @table @samp
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(over 3300 pages).
+(around 3500 pages).
 @item refman
-Printed versions of the help pages for selected base packages (over 1900 pages)
+Printed versions of the help pages for selected base packages (around
+2000 pages)
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -488,7 +488,7 @@ fonts.  We have provided four alternatives:
 and Courier.  This works well both for on-screen viewing and for
 printing.  One disadvantage is that the Usage and Examples sections may
 come out rather wide: this can be overcome by using @emph{in addition}
-either of the options @code{inconsolata}, on a Unix-alike only if found
+either of the options @code{inconsolata} (on a Unix-alike only if found
 by @command{configure}) or @code{beramono}, which replace the Courier
 monospaced font by Inconsolata or Bera Sans mono respectively.  (You
 will need a recent version of the appropriate @LaTeX{} package
@@ -541,9 +541,9 @@ package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 @LaTeX{} package @pkg{inconsolata} installed.
 
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
-@file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example if
+@file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example, if
 you prefer the text and not the page number in the table of contents to
-be hyperlinked, use
+be hyperlinked use
 @example
 \ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=section@}@}@{@}
 @end example
@@ -555,12 +555,11 @@ or
 @end example
 
 @noindent
-to hyperlink both text and page number@footnote{The @code{linktoc} 
-settings require @pkg{hyperref} version 6.78f or newer; with older versions of
-@pkg{hyperref} use @code{linktocpage=false} to hyperlink the text.}.
+to hyperlink both text and page number.
+@c Requires 6.78f from Aug 2008.
 
-Ebook versions in one or both of @file{.epub} and @file{.mobi} formats
-can be made by running in @file{doc/manual} one of
+Ebook versions of most of the manuals in one or both of @file{.epub} and
+@file{.mobi} formats can be made by running in @file{doc/manual} one of
 @example
 make ebooks
 make epub
@@ -631,7 +630,8 @@ the option @option{--prefix}, as in
 @end example
 
 @noindent
-This causes @command{make install} to install the @R{} script to
+where the value should be an absolute path.  This causes @command{make
+install} to install the @R{} script to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  The installation may need
@@ -644,8 +644,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} @command{make} (and current Solaris
-@command{make}, but not some older Unix makes).
+at least with @acronym{GNU} @command{make} and current Solaris
+@command{make} (but not some older Unix makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -799,7 +799,7 @@ If you have two or more such builds you can install them over each other
 (and for 32/64-bit builds on one architecture, one build can be done
 without @samp{r_arch}).  The space savings can be considerable: on
 @cputype{x86_64} Linux a basic install (without debugging symbols) took
-63Mb, and adding a 32-bit build added 6Mb.  If you have installed
+74Mb, and adding a 32-bit build added 6Mb.  If you have installed
 multiple builds you can select which build to run by
 
 @example
@@ -999,13 +999,20 @@ testInstalledPackages(scope = "recommended")
 runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: the basic
 tests write their results in the @file{tests} folder of the @R{} home
-directory and run slightly fewer tests than the first approach: in
-particular they do not test Internet access.
+directory and run fewer tests than the first approach: in particular
+they do not test Internet access---that can be tested by
+@example
+testInstalledBasic("internet")
+@end example
+
+@noindent
+(on Windows those tests are done with the internal and not WinInet
+versions of the code).
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
 Windows users) is in the path.
 
-It is possible to test the installed packages (but not the
+It is possible to test the installed packages (but not their
 package-specific tests) by @code{testInstalledPackages} even if
 @command{make install-tests} was not run.
 
@@ -1774,8 +1781,8 @@ in @ref{Invoking R, , Invoking R, R-intro, An Introduction to R}.
 
 You should ensure that the shell has set adequate resource limits: @R{}
 expects a stack size of at least 8MB and to be able to open at least 256
-file descriptors.  (Any modern OS will have default limits at least as
-large as these, but apparently NetBSD does not.  Use the shell command
+file descriptors.  (Any modern OS should have default limits at least as
+large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)
 
