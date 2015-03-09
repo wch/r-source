@@ -482,8 +482,9 @@
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
 
-      \item (Windows) Code changes have been made to allow \R to be
-      compiled with a new toolchain based on GCC 4.9.2.
+      \item (Windows) The default toolchain for Windows is now based
+      on GCC 4.9.2.  Corresponding code changes and \file{Makefile} changes 
+      have been made; see \file{src/gnuwin32/MkRules.dist} for details.
     }
   }
 
