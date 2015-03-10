@@ -1000,14 +1000,16 @@ runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: the basic
 tests write their results in the @file{tests} folder of the @R{} home
 directory and run fewer tests than the first approach: in particular
-they do not test Internet access---that can be tested by
+they do not test things which need a C compiler nor Internet
+access---that can be tested by
 @example
 testInstalledBasic("internet")
 @end example
 
 @noindent
-(on Windows those tests are done with the internal and not WinInet
-versions of the code).
+(On Windows that runs the tests using whichever of internal or WinInet
+internet functions has been selected for that session: to test both run
+this twice selecting both options using @code{setInternet2}).
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
 Windows users) is in the path.

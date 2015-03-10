@@ -24,6 +24,7 @@ RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
 MK = $(MAKE)
 
 all-basic-tests = BasePackages Specific Reg Internet
+## Keep in line with Makefile.common.
 ## not Docs Standalone Packages
 all-devel-tests = DateTime IsAs Random Demo Primitive Regexp Internet2 Segfault
 

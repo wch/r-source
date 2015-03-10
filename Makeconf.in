@@ -48,6 +48,10 @@ LIBM = @LIBM@
 LIBR0 = @LIBR0@
 LIBR1 = @LIBR1@
 LIBR = @LIBR0@ @LIBR1@
+## These are the libs which the final R.bin/libR is linked against.
+## Many of these used to be optional: ICU libs still are.
+## There may be platform-specific ones, e.g.
+## -lrt -ldl on Linux, -lnsl -lsocket -lrt -lsunmath -ldl -liconv on Solaris.
 LIBS = @LIBS@
 LIBnn = @LIBnn@
 LIBTOOL = @LIBTOOL@

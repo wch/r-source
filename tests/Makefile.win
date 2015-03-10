@@ -39,6 +39,7 @@ all check test-all-basics test-all-devel: Makefile.win Makefile.common
 
 test-system2.exe: test-system2.c
 
+## Not run by any other target
 test-System: test-system2.exe
 	@$(MK) test-system.Rout
 

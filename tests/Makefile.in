@@ -51,6 +51,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 test-system2: $(srcdir)/test-system2.c
 	@$(MAIN_LD) -o $@ $(srcdir)/test-system2.c
 
+## Not run by any other target
 test-System: test-system2
 	-@$(MAKE) test-system.Rout
 

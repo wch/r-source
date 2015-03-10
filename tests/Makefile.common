@@ -2,6 +2,7 @@
 #
 # ${R_HOME}/tests/Makefile.common
 
+## If you add test scripts here, review src/library/tools/R/testing.R
 
 test-src-gct = \
 	eval-etc.R \
@@ -46,9 +47,10 @@ test-src-segfault = no-segfault.R
 test-src-reg-1 = reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-BLAS.R
-## overridden by Makefile.win
+## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
+## overridden in Makefile if recommended packages are not installed.
 test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
@@ -151,12 +153,15 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
 	grep "==[0-9]*==" $@
 
+## The definitions for Internet are in Makefile.{in,win}.
 all-basic-tests = Examples Specific Reg Internet
 test-all-basics:
 	@for name in $(all-basic-tests); do \
 	  $(MK) test-$${name} || exit 1; \
 	done
 
+## if you change this, also edit Makefile.install
+## The definitions for Standalone are in Makefile.{in,win}.
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
     Internet2 Segfault Standalone Packages
 test-all-devel:
