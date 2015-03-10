@@ -1,6 +1,6 @@
 % File src/library/parallel/vignettes/parallel.Rnw
 % Part of the R package, http://www.R-project.org
-% Copyright 2011-3 R Core Team
+% Copyright 2011-2015  R Core Team
 % Distributed under GPL 2 or later
 
 \documentclass[a4paper]{article}
@@ -383,8 +383,8 @@ of two:
   z_n &=& (x_n - y_n) \mod{4294967087}\\
   u_n &=& z_n/4294967088\ \mbox{unless $z_n = 0$}
 \end{eqnarray*}
-The `seed' then consists of $(x_n, x_{n-1}, x_{n-2}, y_n, y_{n-1},
-y_{n-2})$, and the recursion for each of $x_n$ and $y_n$ can have
+The `seed' then consists of $(x_{n-3}, x_{n-2}, x_{n-1}, y_{n-3}, y_{n-2}, y_{n-1})$,
+and the recursion for each of $x_n$ and $y_n$ can have
 pre-computed coefficients for $k$ steps ahead.  For $k = 2^{127}$, the
 seed is advanced by $k$ steps by \R{} call
 \code{.Random.seed <- nextRNGStream(.Random.seed)}.
