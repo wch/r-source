@@ -40,7 +40,7 @@
 # BINPREF and BINPREF64 (below) will be set properly.  Set them by hand
 # for a different toolchain.  Include the trailing /, and use / not \.
 # RTOOLS = C:/Rtools/
-# for other toolchains leave these empty and set the more detailed options below
+# for other toolchains set the more detailed options below
 
 
 ### BEGIN more detailed options

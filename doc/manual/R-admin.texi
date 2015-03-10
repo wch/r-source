@@ -5672,7 +5672,8 @@ It is important to set your @env{PATH} properly.  The installer
 installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
-directories of the tools, the compiler toolchain and @LaTeX{}.  Do not
+directories of the tools and @LaTeX{}. (As of Rtools33, the 
+compilers do not need to be on the @env{PATH}.)  Do not
 use filepaths containing spaces: you can always use the short forms
 (found by @code{dir /x} at the Windows command line).  Network shares
 (with paths starting @code{\\}) are not supported.
@@ -5680,8 +5681,8 @@ use filepaths containing spaces: you can always use the short forms
 For example for a 32-bit build, all on one line,
 
 @example
-PATH=c:\Rtools\bin;c:\Rtools\gcc-4.6.3\bin;c:\MiKTeX\miktex\bin;
-     c:\R\R-3.1\bin\i386;c:\windows;c:\windows\system32
+PATH=c:\Rtools\bin;c:\MiKTeX\miktex\bin;
+     c:\R\R-3.2\bin\i386;c:\windows;c:\windows\system32
 @end example
 
 @noindent

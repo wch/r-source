@@ -14,6 +14,8 @@ endif
 DLLFLAGS+= -static-libgcc
 LINKFLAGS+= -static-libgcc
 
+RTOOLS ?= C:/Rtools/
+
 ## Things which are substituted by fixed/Makefile (and also -O3 -> -O2)
 WIN = 32
 BINPREF =
