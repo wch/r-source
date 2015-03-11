@@ -2592,8 +2592,6 @@ setRlibs <-
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
-                exfile <- file_path_as_absolute(exfile)
-                on.exit(unlink(exfile) , add = TRUE)
                 enc <- if (!is.na(e <- desc["Encoding"])) {
                     paste("--encoding", e, sep="=")
                 } else ""
@@ -2636,7 +2634,6 @@ setRlibs <-
                         printLog(Log, "** found \\donttest examples:",
                                  " check also with --run-donttest\n")
                 }
-                unlink(exfile)
             } else {
                 resultLog(Log, "NONE")
                 no_examples <<- TRUE

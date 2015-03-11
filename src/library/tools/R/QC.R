@@ -5825,8 +5825,8 @@ function(package, dir, lib.loc = NULL)
     if(!is.na(enc) &&
        !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
         ## FIXME: what if conversion fails on e.g. UTF-8 comments
-        con <- file(file, encoding=enc)
-        on.exit(close(con))
+        con <- file(file, encoding = enc)
+        on.exit(close(con), add = TRUE)
     } else con <- file
 
     .check_packages_used_helper(db, con)
