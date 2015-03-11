@@ -1610,17 +1610,16 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file
-@file{R-@value{VERSIONno}-snowleopard.pkg} and install it.  This runs on
-OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
-Yosemite, @dots{}); it is a 64-bit (@cputype{x86_64}) build which should
-run on all Macs from mid-2008 on.  For older Intel Macs and some older
-versions of the OS you can install @R{} from the sources.
+@file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
+X 10.9 and later (Mavericks and Yosemite).
 
-There is a separate installer package,
-@file{R-@value{VERSIONno}-mavericks.pkg}, for use on Mavericks and
-Yosemite: the `Snow Leopard' installer package also works there and may
-have more binary packages available (but there are a few packages using
-C++11 and only available for the Mavericks build).
+There may be a separate installer package,
+@file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
+later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
+it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
+from mid-2008 on.  For older Intel Macs and some older versions of the
+OS you can in principle (it is little tested) install @R{} from the
+sources.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: run `Software Update' from the Apple menu to be sure.
@@ -4614,8 +4613,9 @@ the configure flag @option{--disable-largefile} was needed (since
 
 You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
-with @option{--without-readline}).  That and other binary components are
-available from @uref{http://r.research.att.com/libs}.
+with @option{--without-readline}), and a Fortran compiler.  Those and
+other binary components are available from
+@uref{http://r.research.att.com/libs}.
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): X is part of the standard
@@ -4643,18 +4643,26 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths()}).  Also use
 @option{--disable-R-framework} to install in the standard layout.
 
-`Command-line Tools for Xcode' used to be part of the Apple Developer
-Tools (`Xcode') but nowadays need to be installed separately. For
-Mavericks and later, see the specific sub-section below.  For Mountain
-Lion or earlier then can be downloaded from
-@uref{http://developer.apple.com/devcenter/mac/} (you will need to
-register there: that allows you to download older versions available for
-your OS) or from within some versions of Xcode you can install the
-command-line tools from the @samp{Downloads} pane in the
-@samp{Preferences}.
+Various compilers can be used.  The current @acronym{CRAN} `Mavericks'
+distribution of @R{} is built using
 
-Various compilers can be used.  The current @acronym{CRAN} `Snow
-Leopard' distribution of @R{} is built using
+@example
+CC=clang
+CXX=clang++
+F77=gfortran-4.8
+FC=$F77
+OBJC=clang
+@end example
+
+@noindent
+with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
+compiler from
+@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
+is a tarball which needs to be unpacked in the Terminal by e.g.@:
+@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
+builds of @command{clang} currently have little or no OpenMP support.
+
+The @acronym{CRAN} `Snow Leopard' distribution of @R{} was built using
 
 @itemize
 @item @command{gcc}
@@ -4693,24 +4701,6 @@ build, use @code{-arch i386} for all compiler commands.)
 The OpenMP support in this version of @command{gcc} is problematic, so
 the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
-The current @acronym{CRAN} `Mavericks' distribution of @R{} is built
-using
-
-@example
-CC=clang
-CXX=clang++
-F77=gfortran-4.8
-FC=$F77
-OBJC=clang
-@end example
-
-@noindent
-with @command{clang} and @command{clang++} from Xcode 5, and the Fortran
-compiler from
-@uref{http://r.research.att.com/libs/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
-is a tarball which needs to be unpacked in the Terminal by e.g.@:
-@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
-builds of @command{clang} currently have little or no OpenMP support.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
@@ -4745,10 +4735,10 @@ Looking at the top of
 will show the compilers and configuration options used for the
 @acronym{CRAN} binary package for @R{}: at the time of writing
 @example
---enable-memory-profiling --disable-openmp
+--enable-memory-profiling
 @end example
 @noindent
-was used for `Snow Leopard' and the first two for `Mavericks'.
+was used for `Mavericks'.
 
 Configure option @option{--with-internal-tzcode} is the default, as a
 64-bit @code{time_t} is available but the system implementation of time
@@ -4774,69 +4764,17 @@ installed under @file{/usr/local} and not supersede the system
 versions.
 
 @menu
+* Mavericks and Yosemite::      
+* Lion and Mountain Lion::      
 * Snow Leopard::                
-* Lion::                        
-* Mountain Lion::               
-* Mavericks::                   
-* Yosemite::                    
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Snow Leopard, Lion, OS X, OS X
-@subsection Snow Leopard
-
-A quirk on Snow Leopard is that the X11 libraries are not in the default
-linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
-required in @file{config.site}, or you can use the @command{configure}
-options @option{--x-includes=/usr/X11/include
---x-libraries=/usr/X11/lib} .
-
-The @acronym{CRAN} binaries are built using Xcode 4.2, a version
-available only to subscribing developers.  It is believed that 3.2.6 (the
-last public free version for Snow Leopard) will work.
-
-@node Lion, Mountain Lion, Snow Leopard, OS X
-@subsection Lion
-
-No tweaks are known to be needed on Lion.  See the notes on Mountain
-Lion if XQuartz is in use.
-
-@node Mountain Lion, Mavericks, Lion, OS X
-@subsection Mountain Lion
-
-The X11 system used with Mountain Lion is XQuartz (see above).
-
-To build the graphics devices depending on cairographics the XQuartz
-path for @command{pkg-config} files needs to be known to
-@command{pkg-config} when @command{configure} is run: this usually means
-adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
-
-@example
-export PKG_CONFIG_PATH= \
-  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-or putting
-@example
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-
-@noindent
-in @file{config.site}.
-
-For some pre-compiled software, for example the GTK framework,
-@file{/opt/X11/include} may need to be added to the include paths.
-
-If you install the command-line tools for Xcode 4.6.3 you will get the
-compilers used for the CRAN binary distribution: those for Xcode 5 can
-be installed afterwards.
-
-@node Mavericks, Yosemite, Mountain Lion, OS X
-@subsection Mavericks
+@node Mavericks and Yosemite, Lion and Mountain Lion, OS X, OS X
+@subsection Mavericks and Yosemite
 
 Xcode for Mavericks provides different compilers, headers and libraries from
 earlier versions.  In particular the compilers (even those called
@@ -4877,23 +4815,72 @@ when installing on Mavericks.
 
 See the comments under Mountain Lion about X11 and GTK.
 
-@node Yosemite, Tcl/Tk headers and libraries, Mavericks, OS X
-@subsection Yosemite
-
-See the comments under `Mavericks'.
-
-Note that if you upgrade to Yosemite you should re-install any of
-XQuartz, the `Command-line Tools for Xcode' and Java which you have
-installed.  (Upgrading may partially remove previous versions which can
-be confusing.)
+If you upgrade to Yosemite you should re-install any of XQuartz, the
+`Command-line Tools for Xcode' and Java which you have installed.
+(Upgrading may partially remove previous versions which can be
+confusing.)
 
 There are some problems with the recommended @command{gfortran} builds
 under Yosemite.  They give warnings and @command{gfortran-4.8} is
 reported to be unable to link packages containing Fortran 9x code.  (The
 solution is to use a compiler built under Yosemite.)
 
+@node Lion and Mountain Lion, Snow Leopard, Mavericks and Yosemite, OS X
+@subsection Lion and Mountain Lion
 
-@node Tcl/Tk headers and libraries, Java (OS X), Yosemite, OS X
+`Command-line Tools for Xcode' used to be part of the Apple Developer
+Tools (`Xcode') but nowadays need to be installed separately.  They can
+be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
+will need to register there: that allows you to download older versions
+available for your OS) or from within some versions of Xcode you can
+install the command-line tools from the @samp{Downloads} pane in the
+@samp{Preferences}.
+
+The X11 system used with Mountain Lion is XQuartz (see above): Lion
+included an X11 system.
+
+To build the graphics devices depending on cairographics, the XQuartz
+path for @command{pkg-config} files needs to be known to
+@command{pkg-config} when @command{configure} is run: this usually means
+adding it to the @env{PKG_CONFIG_PATH} environment variable, e.g.
+
+@example
+export PKG_CONFIG_PATH= \
+  /opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+or putting
+@example
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+
+@noindent
+in @file{config.site}.
+
+For some pre-compiled software, for example the GTK framework,
+@file{/opt/X11/include} may need to be added to the include paths.
+
+If you install the command-line tools for Xcode 4.6.3 you will get the
+compilers used for the CRAN binary distribution: those for Xcode 5 can
+be installed afterwards.
+
+
+@node Snow Leopard, Tcl/Tk headers and libraries, Lion and Mountain Lion, OS X
+@subsection Snow Leopard
+
+A quirk on Snow Leopard is that the X11 libraries are not in the default
+linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
+required in @file{config.site}, or you can use the @command{configure}
+options @option{--x-includes=/usr/X11/include
+--x-libraries=/usr/X11/lib} .
+
+The @acronym{CRAN} binaries are built using Xcode 4.2, a version
+available only to subscribing developers.  It is believed that 3.2.6 (the
+last public free version for Snow Leopard) will work.
+
+
+@node Tcl/Tk headers and libraries, Java (OS X), Snow Leopard, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
