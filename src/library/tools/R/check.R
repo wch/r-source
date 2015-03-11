@@ -2591,8 +2591,8 @@ setRlibs <-
 		maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
-            exfile <- file_path_as_absolute(exfile)
             if (file.exists(exfile)) {
+                exfile <- file_path_as_absolute(exfile)
                 on.exit(unlink(exfile) , add = TRUE)
                 enc <- if (!is.na(e <- desc["Encoding"])) {
                     paste("--encoding", e, sep="=")
