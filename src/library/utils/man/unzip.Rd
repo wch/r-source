@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -40,17 +40,17 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
     path to a \command{unzip} program.}
 
   \item{setTimes}{logical.  For the internal method only, should the
-    file time be set based on the times in the zip file?  (NB: this
-    applies to files, not to directories.}
+    file times be set based on the times in the zip file?  (NB: this
+    applies to included files, not to directories.)}
 }
 \note{
   The default internal method is a minimal implementation, principally
   designed for Windows' users to be able to unpack Windows binary
   packages without external software.  It does not (for example) support
   Unicode filenames as introduced in \command{zip 3.0}: for that use
-  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  (It does
-  have support for files of more than 4GB and \command{bzip2}
-  compression.)
+  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  It does
+  have some support for large zip files (but not large files
+  pre-compression contained in a zip file) and \command{bzip2} compression.
 
   If \code{unzip} specifies a program, the format of the dates listed
   with \code{list = TRUE} is unknown (on Windows it can even depend on
