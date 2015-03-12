@@ -122,7 +122,7 @@ if(as.character(tcl("info", "tclversion")) >= "8.5") {
   # list themes
   as.character(tcl("ttk::style", "theme", "names"))
   # select a theme -- here pre-XP windows
-  tcl("ttk::style", "theme use", "winnative")
+  tcl("ttk::style", "theme", "use", "winnative")
 } else {
   # use Tk 8.0 widgets
 }
