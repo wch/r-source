@@ -4652,6 +4652,11 @@ CXX=clang++
 F77=gfortran-4.8
 FC=$F77
 OBJC=clang
+CFLAGS=-Wall -mtune=core2 -g -O2
+CXXFLAGS=-Wall -mtune=core2 -g -O2'
+OBJCFLAGS=-Wall -mtune=core2 -g -O2
+F77FLAGS=-Wall -g -O2
+FCFLAGS=$F77FLAGS
 @end example
 
 @noindent
