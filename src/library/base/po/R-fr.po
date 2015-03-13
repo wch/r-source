@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1178,6 +1178,10 @@ msgstr "impossible d'ajouter aux exportations d'un espace de noms verrouillé"
 
 msgid "undefined exports: %s"
 msgstr "exportations non définies : %s"
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "l'objet %s n'est pas exporté par 'namespace:%s'"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "le package %s n'a aucun fichier 'NAMESPACE'"

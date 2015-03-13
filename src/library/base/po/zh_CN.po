@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:19+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-12 15:00-0700\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -127,9 +127,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:585 src/main/agrep.c:131
 #: src/main/agrep.c:135 src/main/agrep.c:776 src/main/agrep.c:781
 #: src/main/apply.c:325 src/main/apply.c:327 src/main/apply.c:330
-#: src/main/array.c:87 src/main/array.c:1220 src/main/array.c:1346
-#: src/main/array.c:1348 src/main/array.c:1349 src/main/array.c:1690
-#: src/main/array.c:1692 src/main/array.c:1694 src/main/attrib.c:196
+#: src/main/array.c:87 src/main/array.c:1221 src/main/array.c:1347
+#: src/main/array.c:1349 src/main/array.c:1350 src/main/array.c:1691
+#: src/main/array.c:1693 src/main/array.c:1695 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:148 src/main/builtin.c:557
 #: src/main/builtin.c:573 src/main/builtin.c:762 src/main/builtin.c:764
@@ -170,9 +170,9 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/connections.c:4973 src/main/connections.c:5002
 #: src/main/connections.c:5006 src/main/connections.c:5010
 #: src/main/connections.c:5014 src/main/context.c:611 src/main/context.c:620
-#: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
-#: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
-#: src/main/datetime.c:1029 src/main/datetime.c:1234 src/main/debug.c:241
+#: src/main/context.c:624 src/main/datetime.c:777 src/main/datetime.c:867
+#: src/main/datetime.c:869 src/main/datetime.c:873 src/main/datetime.c:1029
+#: src/main/datetime.c:1031 src/main/datetime.c:1236 src/main/debug.c:241
 #: src/main/deparse.c:404 src/main/dotcode.c:496 src/main/dotcode.c:500
 #: src/main/dotcode.c:505 src/main/dounzip.c:323 src/main/dounzip.c:330
 #: src/main/dounzip.c:340 src/main/dounzip.c:345 src/main/dounzip.c:349
@@ -751,20 +751,20 @@ msgstr "regcomp出错：'%s'"
 msgid "'FUN.VALUE' must be a vector"
 msgstr "'FUN.VALUE'必需是矢量"
 
-#: src/main/apply.c:105 src/main/character.c:597 src/main/connections.c:3551
-#: src/main/context.c:657 src/main/context.c:676 src/main/datetime.c:675
-#: src/main/datetime.c:777 src/main/datetime.c:1031 src/main/dotcode.c:222
-#: src/main/errors.c:943 src/main/errors.c:976 src/main/errors.c:1079
-#: src/main/errors.c:1104 src/main/errors.c:1109 src/main/errors.c:1382
-#: src/main/identical.c:66 src/main/identical.c:67 src/main/identical.c:68
-#: src/main/identical.c:69 src/main/identical.c:70 src/main/platform.c:3082
-#: src/main/seq.c:191 src/main/seq.c:347 src/main/seq.c:352 src/main/seq.c:356
-#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
-#: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
-#: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:225
-#: src/main/summary.c:886 src/main/sysutils.c:250 src/main/util.c:1048
-#: src/main/util.c:1053 src/main/util.c:1060 src/main/util.c:1063
-#: src/main/util.c:1996 src/modules/X11/devX11.c:3140
+#: src/main/apply.c:105 src/main/array.c:479 src/main/character.c:597
+#: src/main/connections.c:3551 src/main/context.c:657 src/main/context.c:676
+#: src/main/datetime.c:677 src/main/datetime.c:779 src/main/datetime.c:1033
+#: src/main/dotcode.c:222 src/main/errors.c:943 src/main/errors.c:976
+#: src/main/errors.c:1079 src/main/errors.c:1104 src/main/errors.c:1109
+#: src/main/errors.c:1382 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
+#: src/main/platform.c:3082 src/main/seq.c:191 src/main/seq.c:347
+#: src/main/seq.c:352 src/main/seq.c:356 src/main/seq.c:397 src/main/seq.c:401
+#: src/main/seq.c:405 src/main/sort.c:1224 src/main/sort.c:1307
+#: src/main/sort.c:1311 src/main/sort.c:1318 src/main/sort.c:1393
+#: src/main/source.c:225 src/main/summary.c:886 src/main/sysutils.c:250
+#: src/main/util.c:1048 src/main/util.c:1053 src/main/util.c:1060
+#: src/main/util.c:1063 src/main/util.c:1996 src/modules/X11/devX11.c:3140
 #: src/modules/X11/devX11.c:3167 src/modules/X11/devX11.c:3172
 #: src/modules/X11/devX11.c:3177 src/modules/X11/devX11.c:3187
 #: src/modules/X11/devX11.c:3192 src/modules/X11/devX11.c:3196
@@ -889,7 +889,7 @@ msgstr "缺少参数\"%s\",也没有缺省值"
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'参数"
 
-#: src/main/array.c:79 src/main/array.c:1524
+#: src/main/array.c:79 src/main/array.c:1525
 #, c-format
 msgid "'data' must be of a vector type, was '%s'"
 msgstr "'data'的种类必需为矢量，但现在是'%s'"
@@ -898,19 +898,19 @@ msgstr "'data'的种类必需为矢量，但现在是'%s'"
 msgid "non-numeric matrix extent"
 msgstr "非数值的矩阵范围"
 
-#: src/main/array.c:97 src/main/array.c:1633
+#: src/main/array.c:97 src/main/array.c:1634
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "'nrow'值不对(要么是太大，要么是含NA)"
 
-#: src/main/array.c:99 src/main/array.c:1635
+#: src/main/array.c:99 src/main/array.c:1636
 msgid "invalid 'nrow' value (< 0)"
 msgstr "'nrow'值不对(< 0)"
 
-#: src/main/array.c:105 src/main/array.c:1638
+#: src/main/array.c:105 src/main/array.c:1639
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "'ncol'值不对(要么是太大，要么是含NA)"
 
-#: src/main/array.c:107 src/main/array.c:1640
+#: src/main/array.c:107 src/main/array.c:1641
 msgid "invalid 'ncol' value (< 0)"
 msgstr "'ncol'值不对(< 0)"
 
@@ -939,7 +939,7 @@ msgstr "数据长度[%d]不是矩阵列数[%d]的整倍数"
 msgid "data length exceeds size of matrix"
 msgstr "数据长度超过了矩阵的大小"
 
-#: src/main/array.c:147 src/main/array.c:1536 src/main/array.c:1647
+#: src/main/array.c:147 src/main/array.c:1537 src/main/array.c:1648
 msgid "too many elements specified"
 msgstr "设定了太多的元素"
 
@@ -963,67 +963,67 @@ msgstr "'alloc3Darray': 设定了太多的元素"
 msgid "'allocArray': too many elements specified by 'dims'"
 msgstr "'allocArray': 'dims'设定了太多的元素"
 
-#: src/main/array.c:479
-#, fuzzy
-msgid "'x' must be a list"
+#: src/main/array.c:481
+#, fuzzy, c-format
+msgid "'%s' must be a list"
 msgstr "'%s'必需是串列"
 
-#: src/main/array.c:511
+#: src/main/array.c:512
 #, c-format
 msgid "a matrix-like object is required as argument to '%s'"
 msgstr "'%s'必需用矩阵目标对象作参数"
 
-#: src/main/array.c:725
+#: src/main/array.c:726
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr "需要数值/复数矩阵/矢量参数"
 
-#: src/main/array.c:835 src/main/array.c:839 src/main/array.c:843
+#: src/main/array.c:836 src/main/array.c:840 src/main/array.c:844
 msgid "non-conformable arguments"
 msgstr "非整合参数"
 
-#: src/main/array.c:1141
+#: src/main/array.c:1142
 msgid "argument is not a matrix"
 msgstr "参数不是矩阵"
 
-#: src/main/array.c:1176
+#: src/main/array.c:1177
 msgid "invalid first argument, must be an array"
 msgstr "第一个参数不对, 必需是陈列"
 
-#: src/main/array.c:1190
+#: src/main/array.c:1191
 #, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
 msgstr "'perm'的长度不对 %d (!= %d)"
 
-#: src/main/array.c:1195 src/main/array.c:1198
+#: src/main/array.c:1196 src/main/array.c:1199
 msgid "'a' does not have named dimnames"
 msgstr "'a'必需有带名字的dimnames"
 
-#: src/main/array.c:1205
+#: src/main/array.c:1206
 #, c-format
 msgid "'perm[%d]' does not match a dimension name"
 msgstr "'perm[%d]'和维度名字不相配"
 
-#: src/main/array.c:1218
+#: src/main/array.c:1219
 msgid "value out of range in 'perm'"
 msgstr "'perm'里的值在范围外"
 
-#: src/main/array.c:1300
+#: src/main/array.c:1301
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'resize'的值必需是TRUE或是FALSE"
 
-#: src/main/array.c:1358
+#: src/main/array.c:1359
 msgid "'x' must be numeric"
 msgstr "'x'必需为数值"
 
-#: src/main/array.c:1532
+#: src/main/array.c:1533
 msgid "'dims' cannot be of length 0"
 msgstr "'dims'的长度不能为零"
 
-#: src/main/array.c:1643
+#: src/main/array.c:1644
 msgid "'x' must have positive length"
 msgstr "'x'的长度必需是正数"
 
-#: src/main/array.c:1703
+#: src/main/array.c:1704
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "'backsolve'里出现了奇异矩阵。对角线[%d]里第一个零"
@@ -1190,7 +1190,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "只能给一个'which'属性"
 
 #: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
-#: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
+#: src/main/subscript.c:249 src/main/subset.c:1221 src/main/subset.c:1272
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "'%s'部分匹配到'%s'"
@@ -2388,21 +2388,21 @@ msgstr "'cummin'不适用于复数"
 msgid "unknown cumxxx function"
 msgstr "没有cumxxx这个功能"
 
-#: src/main/datetime.c:548 src/main/datetime.c:556 src/main/datetime.c:570
-#: src/main/datetime.c:575
+#: src/main/datetime.c:550 src/main/datetime.c:558 src/main/datetime.c:572
+#: src/main/datetime.c:577
 msgid "problem with setting timezone"
 msgstr "设定时区时出了问题"
 
-#: src/main/datetime.c:560
+#: src/main/datetime.c:562
 msgid "cannot set timezones on this system"
 msgstr "无法为本系统设时差区"
 
-#: src/main/datetime.c:582 src/main/datetime.c:584
+#: src/main/datetime.c:584 src/main/datetime.c:586
 msgid "problem with unsetting timezone"
 msgstr "取消时区设制时出了问题"
 
-#: src/main/datetime.c:804 src/main/datetime.c:806 src/main/datetime.c:901
-#: src/main/datetime.c:1242 src/main/datetime.c:1244
+#: src/main/datetime.c:806 src/main/datetime.c:808 src/main/datetime.c:903
+#: src/main/datetime.c:1244 src/main/datetime.c:1246
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "非空的\"POSIXlt\"结构里含长度为零的部件"
 
@@ -5706,7 +5706,7 @@ msgstr "矩阵里的下标数目不对"
 msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr "矩阵子集赋值里有不可兼容的种类(从%s到%s)"
 
-#: src/main/subassign.c:1038 src/main/subset.c:928
+#: src/main/subassign.c:1038 src/main/subset.c:945
 msgid "incorrect number of subscripts"
 msgstr "下标数目不对"
 
@@ -5769,7 +5769,7 @@ msgstr "[[ ]] 下标(%d)在界限外"
 #: src/main/subassign.c:1908 src/main/subscript.c:148 src/main/subscript.c:150
 #: src/main/subscript.c:279 src/main/subscript.c:281 src/main/subscript.c:886
 #: src/main/subscript.c:888 src/main/subscript.c:979 src/main/subscript.c:981
-#: src/main/subset.c:1125
+#: src/main/subset.c:1142
 #, c-format
 msgid "invalid subscript type '%s'"
 msgstr "类别为'%s'的下标不对"
@@ -5851,19 +5851,19 @@ msgstr "这一种类不能有矩阵下标"
 msgid "array subscripting not handled for this type"
 msgstr "这一种类不能有阵列下标"
 
-#: src/main/subset.c:827
+#: src/main/subset.c:844
 msgid "incorrect number of dimensions"
 msgstr "量度数目不对"
 
-#: src/main/subset.c:924
+#: src/main/subset.c:941
 msgid "no index specified"
 msgstr "没有索引设定"
 
-#: src/main/subset.c:934
+#: src/main/subset.c:951
 msgid "this S4 class is not subsettable"
 msgstr "S4对象不可以取子集"
 
-#: src/main/subset.c:940
+#: src/main/subset.c:957
 msgid "wrong arguments for subsetting an environment"
 msgstr "取子集环境时的参数不对"
 
@@ -6695,27 +6695,27 @@ msgstr "用HTTP代理主机'%s'"
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
 msgstr "RxmlNanoHTTPScanProxy: URL太长了(或格式不对？)"
 
-#: src/modules/internet/nanohttp.c:1112
+#: src/modules/internet/nanohttp.c:1124
 #, c-format
 msgid "unable to resolve '%s'"
 msgstr "无法解决'%s'."
 
-#: src/modules/internet/nanohttp.c:1145
+#: src/modules/internet/nanohttp.c:1157
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "由通訊埠%2$d接通到'%1$s'."
 
-#: src/modules/internet/nanohttp.c:1150
+#: src/modules/internet/nanohttp.c:1162
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "无法通过通訊埠%2$d连接到'%1$s'."
 
-#: src/modules/internet/nanohttp.c:1454
+#: src/modules/internet/nanohttp.c:1466
 #, c-format
 msgid "redirect to: '%s'"
 msgstr "重新寄送到: '%s'"
 
-#: src/modules/internet/nanohttp.c:1465
+#: src/modules/internet/nanohttp.c:1477
 msgid "too many redirects, aborting ..."
 msgstr "太多重新寄送，中断工作 ..."
 

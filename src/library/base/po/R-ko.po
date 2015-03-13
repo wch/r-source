@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2014-03-27 08:58-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -1121,6 +1121,10 @@ msgstr ""
 
 msgid "undefined exports: %s"
 msgstr ""
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "객체 %s들은 'namespace:%s'에 의해서 내보내어지지 않았습니다"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "패키지 %s는 'NAMESPACE' 파일을 가지고 있지 않습니다"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -2409,6 +2409,17 @@ msgstr "nie można dodać do eksportów zamkniętej przestrzeni nazw"
 # stop(gettextf("undefined exports: %s", undef), domain = NA)
 msgid "undefined exports: %s"
 msgstr "niezdefiniowane eksporty: %s"
+
+# src/library/base/R/namespace.R: 985
+# stop(sprintf(ngettext(length(miss),
+#                                   "object %s is not exported by 'namespace:%s'",
+#                                   "objects %s are not exported by 'namespace:%s'"),
+#                          paste(sQuote(miss), collapse = ", "),
+#                          getNamespaceName(expenv)),
+#                  call. = FALSE, domain = NA)
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "obiekt %s nie jest eksportowany przez 'namespace:%s'"
 
 # src/library/base/R/namespace.R: 1114
 # stop(gettextf("package %s has no 'NAMESPACE' file", sQuote(package)),

@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:19+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-12 15:00-0700\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -138,9 +138,9 @@ msgstr ""
 #: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:585 src/main/agrep.c:131
 #: src/main/agrep.c:135 src/main/agrep.c:776 src/main/agrep.c:781
 #: src/main/apply.c:325 src/main/apply.c:327 src/main/apply.c:330
-#: src/main/array.c:87 src/main/array.c:1220 src/main/array.c:1346
-#: src/main/array.c:1348 src/main/array.c:1349 src/main/array.c:1690
-#: src/main/array.c:1692 src/main/array.c:1694 src/main/attrib.c:196
+#: src/main/array.c:87 src/main/array.c:1221 src/main/array.c:1347
+#: src/main/array.c:1349 src/main/array.c:1350 src/main/array.c:1691
+#: src/main/array.c:1693 src/main/array.c:1695 src/main/attrib.c:196
 #: src/main/builtin.c:88 src/main/builtin.c:97 src/main/builtin.c:116
 #: src/main/builtin.c:118 src/main/builtin.c:148 src/main/builtin.c:557
 #: src/main/builtin.c:573 src/main/builtin.c:762 src/main/builtin.c:764
@@ -181,9 +181,9 @@ msgstr ""
 #: src/main/connections.c:4973 src/main/connections.c:5002
 #: src/main/connections.c:5006 src/main/connections.c:5010
 #: src/main/connections.c:5014 src/main/context.c:611 src/main/context.c:620
-#: src/main/context.c:624 src/main/datetime.c:775 src/main/datetime.c:865
-#: src/main/datetime.c:867 src/main/datetime.c:871 src/main/datetime.c:1027
-#: src/main/datetime.c:1029 src/main/datetime.c:1234 src/main/debug.c:241
+#: src/main/context.c:624 src/main/datetime.c:777 src/main/datetime.c:867
+#: src/main/datetime.c:869 src/main/datetime.c:873 src/main/datetime.c:1029
+#: src/main/datetime.c:1031 src/main/datetime.c:1236 src/main/debug.c:241
 #: src/main/deparse.c:404 src/main/dotcode.c:496 src/main/dotcode.c:500
 #: src/main/dotcode.c:505 src/main/dounzip.c:323 src/main/dounzip.c:330
 #: src/main/dounzip.c:340 src/main/dounzip.c:345 src/main/dounzip.c:349
@@ -793,20 +793,20 @@ msgstr "errore di lettura"
 msgid "'FUN.VALUE' must be a vector"
 msgstr "code deve essere un vettore generico"
 
-#: src/main/apply.c:105 src/main/character.c:597 src/main/connections.c:3551
-#: src/main/context.c:657 src/main/context.c:676 src/main/datetime.c:675
-#: src/main/datetime.c:777 src/main/datetime.c:1031 src/main/dotcode.c:222
-#: src/main/errors.c:943 src/main/errors.c:976 src/main/errors.c:1079
-#: src/main/errors.c:1104 src/main/errors.c:1109 src/main/errors.c:1382
-#: src/main/identical.c:66 src/main/identical.c:67 src/main/identical.c:68
-#: src/main/identical.c:69 src/main/identical.c:70 src/main/platform.c:3082
-#: src/main/seq.c:191 src/main/seq.c:347 src/main/seq.c:352 src/main/seq.c:356
-#: src/main/seq.c:397 src/main/seq.c:401 src/main/seq.c:405
-#: src/main/sort.c:1224 src/main/sort.c:1307 src/main/sort.c:1311
-#: src/main/sort.c:1318 src/main/sort.c:1393 src/main/source.c:225
-#: src/main/summary.c:886 src/main/sysutils.c:250 src/main/util.c:1048
-#: src/main/util.c:1053 src/main/util.c:1060 src/main/util.c:1063
-#: src/main/util.c:1996 src/modules/X11/devX11.c:3140
+#: src/main/apply.c:105 src/main/array.c:479 src/main/character.c:597
+#: src/main/connections.c:3551 src/main/context.c:657 src/main/context.c:676
+#: src/main/datetime.c:677 src/main/datetime.c:779 src/main/datetime.c:1033
+#: src/main/dotcode.c:222 src/main/errors.c:943 src/main/errors.c:976
+#: src/main/errors.c:1079 src/main/errors.c:1104 src/main/errors.c:1109
+#: src/main/errors.c:1382 src/main/identical.c:66 src/main/identical.c:67
+#: src/main/identical.c:68 src/main/identical.c:69 src/main/identical.c:70
+#: src/main/platform.c:3082 src/main/seq.c:191 src/main/seq.c:347
+#: src/main/seq.c:352 src/main/seq.c:356 src/main/seq.c:397 src/main/seq.c:401
+#: src/main/seq.c:405 src/main/sort.c:1224 src/main/sort.c:1307
+#: src/main/sort.c:1311 src/main/sort.c:1318 src/main/sort.c:1393
+#: src/main/source.c:225 src/main/summary.c:886 src/main/sysutils.c:250
+#: src/main/util.c:1048 src/main/util.c:1053 src/main/util.c:1060
+#: src/main/util.c:1063 src/main/util.c:1996 src/modules/X11/devX11.c:3140
 #: src/modules/X11/devX11.c:3167 src/modules/X11/devX11.c:3172
 #: src/modules/X11/devX11.c:3177 src/modules/X11/devX11.c:3187
 #: src/modules/X11/devX11.c:3192 src/modules/X11/devX11.c:3196
@@ -933,7 +933,7 @@ msgstr "l'argomento \"%s\"  non è specificato e non ha un valore predefinito"
 msgid "invalid argument 'base' of length 0"
 msgstr "secondo argomento di lunghezza 0 non valido"
 
-#: src/main/array.c:79 src/main/array.c:1524
+#: src/main/array.c:79 src/main/array.c:1525
 #, fuzzy, c-format
 msgid "'data' must be of a vector type, was '%s'"
 msgstr "'path' deve essere un vettore di tipo character"
@@ -942,22 +942,22 @@ msgstr "'path' deve essere un vettore di tipo character"
 msgid "non-numeric matrix extent"
 msgstr "limite matrice non numerico"
 
-#: src/main/array.c:97 src/main/array.c:1633
+#: src/main/array.c:97 src/main/array.c:1634
 #, fuzzy
 msgid "invalid 'nrow' value (too large or NA)"
 msgstr "matrix: valore di 'nrow' non ammissibile (troppo grande o NA)"
 
-#: src/main/array.c:99 src/main/array.c:1635
+#: src/main/array.c:99 src/main/array.c:1636
 #, fuzzy
 msgid "invalid 'nrow' value (< 0)"
 msgstr "matrix:valore 'nrow' non valido (< 0)"
 
-#: src/main/array.c:105 src/main/array.c:1638
+#: src/main/array.c:105 src/main/array.c:1639
 #, fuzzy
 msgid "invalid 'ncol' value (too large or NA)"
 msgstr "matrix: valore di 'ncol' non ammissibile (troppo grande o NA)"
 
-#: src/main/array.c:107 src/main/array.c:1640
+#: src/main/array.c:107 src/main/array.c:1641
 #, fuzzy
 msgid "invalid 'ncol' value (< 0)"
 msgstr "matrix: valore 'ncol' non valido (< 0)"
@@ -991,7 +991,7 @@ msgstr ""
 msgid "data length exceeds size of matrix"
 msgstr "la lunghezza dei dati supera la dimensione della matrice"
 
-#: src/main/array.c:147 src/main/array.c:1536 src/main/array.c:1647
+#: src/main/array.c:147 src/main/array.c:1537 src/main/array.c:1648
 #, fuzzy
 msgid "too many elements specified"
 msgstr "matrix: troppi elementi specificati"
@@ -1019,71 +1019,71 @@ msgstr "allocMatrix: troppi elementi specificati"
 msgid "'allocArray': too many elements specified by 'dims'"
 msgstr "allocArray: troppi elementi specificati in 'dims'"
 
-#: src/main/array.c:479
-#, fuzzy
-msgid "'x' must be a list"
+#: src/main/array.c:481
+#, fuzzy, c-format
+msgid "'%s' must be a list"
 msgstr "'dimnames' deve essere di tipo list"
 
-#: src/main/array.c:511
+#: src/main/array.c:512
 #, fuzzy, c-format
 msgid "a matrix-like object is required as argument to '%s'"
 msgstr "'row/col' richiedono come argomento un oggetto matrix"
 
-#: src/main/array.c:725
+#: src/main/array.c:726
 #, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
 msgstr "richiesti argomenti numerici per matrix/vector"
 
-#: src/main/array.c:835 src/main/array.c:839 src/main/array.c:843
+#: src/main/array.c:836 src/main/array.c:840 src/main/array.c:844
 msgid "non-conformable arguments"
 msgstr "gli argomenti non sono compatibili"
 
-#: src/main/array.c:1141
+#: src/main/array.c:1142
 msgid "argument is not a matrix"
 msgstr "l'argomento non è di tipo matrix"
 
-#: src/main/array.c:1176
+#: src/main/array.c:1177
 msgid "invalid first argument, must be an array"
 msgstr "primo argomento non valido, deve essere di tipo array"
 
-#: src/main/array.c:1190
+#: src/main/array.c:1191
 #, fuzzy, c-format
 msgid "'perm' is of wrong length %d (!= %d)"
 msgstr "'perm' ha una lunghezza non ammissibile"
 
-#: src/main/array.c:1195 src/main/array.c:1198
+#: src/main/array.c:1196 src/main/array.c:1199
 msgid "'a' does not have named dimnames"
 msgstr ""
 
-#: src/main/array.c:1205
+#: src/main/array.c:1206
 #, c-format
 msgid "'perm[%d]' does not match a dimension name"
 msgstr ""
 
-#: src/main/array.c:1218
+#: src/main/array.c:1219
 msgid "value out of range in 'perm'"
 msgstr "valore fuori limite in 'perm'"
 
-#: src/main/array.c:1300
+#: src/main/array.c:1301
 #, fuzzy
 msgid "'resize' must be TRUE or FALSE"
 msgstr "'decreasing' deve essere TRUE o FALSE"
 
-#: src/main/array.c:1358
+#: src/main/array.c:1359
 msgid "'x' must be numeric"
 msgstr "'x' deve essere di tipo numeric"
 
-#: src/main/array.c:1532
+#: src/main/array.c:1533
 #, fuzzy
 msgid "'dims' cannot be of length 0"
 msgstr "'hadj' deve essere di lunghezza 1"
 
-#: src/main/array.c:1643
+#: src/main/array.c:1644
 #, fuzzy
 msgid "'x' must have positive length"
 msgstr "l'argomento deve avere lunghezza positiva"
 
-#: src/main/array.c:1703
+#: src/main/array.c:1704
 #, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr ""
@@ -1260,7 +1260,7 @@ msgid "exactly one attribute 'which' must be given"
 msgstr "deve essere specificato solo un attributo 'name'"
 
 #: src/main/attrib.c:1435 src/main/attrib.c:1458 src/main/subscript.c:245
-#: src/main/subscript.c:249 src/main/subset.c:1204 src/main/subset.c:1255
+#: src/main/subscript.c:249 src/main/subset.c:1221 src/main/subset.c:1272
 #, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr ""
@@ -2526,23 +2526,23 @@ msgstr "min/max non sono definite per i numeri complessi"
 msgid "unknown cumxxx function"
 msgstr "la funzione cumxxx è ignota"
 
-#: src/main/datetime.c:548 src/main/datetime.c:556 src/main/datetime.c:570
-#: src/main/datetime.c:575
+#: src/main/datetime.c:550 src/main/datetime.c:558 src/main/datetime.c:572
+#: src/main/datetime.c:577
 #, fuzzy
 msgid "problem with setting timezone"
 msgstr "problema nello scrivere sulla connessione"
 
-#: src/main/datetime.c:560
+#: src/main/datetime.c:562
 msgid "cannot set timezones on this system"
 msgstr "non è possibile istanziare timezones su questo sistema"
 
-#: src/main/datetime.c:582 src/main/datetime.c:584
+#: src/main/datetime.c:584 src/main/datetime.c:586
 #, fuzzy
 msgid "problem with unsetting timezone"
 msgstr "è sorto un problema nel lanciare l'editor %s"
 
-#: src/main/datetime.c:804 src/main/datetime.c:806 src/main/datetime.c:901
-#: src/main/datetime.c:1242 src/main/datetime.c:1244
+#: src/main/datetime.c:806 src/main/datetime.c:808 src/main/datetime.c:903
+#: src/main/datetime.c:1244 src/main/datetime.c:1246
 #, fuzzy
 msgid "zero-length component in non-empty \"POSIXlt\" structure"
 msgstr "un componente di lunghezza zero è nella struttura POSIXIt"
@@ -6023,7 +6023,7 @@ msgid "incompatible types (from %s to %s) in matrix subset assignment"
 msgstr ""
 "tipi incompatibili (da %s a %s) in assegnazioni per sottogruppi in matrix"
 
-#: src/main/subassign.c:1038 src/main/subset.c:928
+#: src/main/subassign.c:1038 src/main/subset.c:945
 msgid "incorrect number of subscripts"
 msgstr "numero di indici non corretto"
 
@@ -6088,7 +6088,7 @@ msgstr "[[ ]] indice (%d) fuori limiti"
 #: src/main/subassign.c:1908 src/main/subscript.c:148 src/main/subscript.c:150
 #: src/main/subscript.c:279 src/main/subscript.c:281 src/main/subscript.c:886
 #: src/main/subscript.c:888 src/main/subscript.c:979 src/main/subscript.c:981
-#: src/main/subset.c:1125
+#: src/main/subset.c:1142
 #, fuzzy, c-format
 msgid "invalid subscript type '%s'"
 msgstr "tipo di indice non valido"
@@ -6170,20 +6170,20 @@ msgstr "sottoindicizzazione matrice non valido per questo tipo"
 msgid "array subscripting not handled for this type"
 msgstr "sottoindicizzazione matrice non supportato per questo tipo"
 
-#: src/main/subset.c:827
+#: src/main/subset.c:844
 msgid "incorrect number of dimensions"
 msgstr "numero di dimensioni errato"
 
-#: src/main/subset.c:924
+#: src/main/subset.c:941
 msgid "no index specified"
 msgstr "nessun indice specificato"
 
-#: src/main/subset.c:934
+#: src/main/subset.c:951
 #, fuzzy
 msgid "this S4 class is not subsettable"
 msgstr "questo oggetto non è indicizzabile"
 
-#: src/main/subset.c:940
+#: src/main/subset.c:957
 msgid "wrong arguments for subsetting an environment"
 msgstr "argomenti sbagliati per sottoindicizzare un environment"
 
@@ -7067,27 +7067,27 @@ msgstr "uso proxy HTTP '%s'"
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
 msgstr ""
 
-#: src/modules/internet/nanohttp.c:1112
+#: src/modules/internet/nanohttp.c:1124
 #, fuzzy, c-format
 msgid "unable to resolve '%s'"
 msgstr "impossibile identificare '%s'."
 
-#: src/modules/internet/nanohttp.c:1145
+#: src/modules/internet/nanohttp.c:1157
 #, c-format
 msgid "connected to '%s' on port %d."
 msgstr "connesso a '%s' sulla porta %d."
 
-#: src/modules/internet/nanohttp.c:1150
+#: src/modules/internet/nanohttp.c:1162
 #, c-format
 msgid "unable to connect to '%s' on port %d."
 msgstr "impossibile collegarsi a '%s' sulla porta %d."
 
-#: src/modules/internet/nanohttp.c:1454
+#: src/modules/internet/nanohttp.c:1466
 #, c-format
 msgid "redirect to: '%s'"
 msgstr "reindirizzamento su: '%s'"
 
-#: src/modules/internet/nanohttp.c:1465
+#: src/modules/internet/nanohttp.c:1477
 msgid "too many redirects, aborting ..."
 msgstr "troppi reindirizzamenti, annullo..."
 

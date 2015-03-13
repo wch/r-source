@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-12-30 15:52\n"
+"POT-Creation-Date: 2015-03-02 10:08\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -1233,6 +1233,10 @@ msgstr "não é possível adicionar à exportação de um espaço de nomes selad
 #, fuzzy
 msgid "undefined exports: %s"
 msgstr "exportações não definidas:"
+
+#, fuzzy
+msgid "re-exports %s not exported by %s"
+msgstr "objeto %s não foi exportado por 'namespace:%s'"
 
 #, fuzzy
 msgid "package %s has no 'NAMESPACE' file"
