@@ -6923,7 +6923,7 @@ function(dir)
     title <- trimws(as.vector(meta["Title"]))
     title <- gsub("[\n\t]", " ", title)
     package <- meta["Package"]
-    if (title == package) {
+    if (tolower(title) == tolower(package)) {
         out$title_is_name <- TRUE
     } else {
         if(grepl(paste0("^", package), title, ignore.case = TRUE))
@@ -7243,47 +7243,47 @@ function(x, ...)
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$citation_error)) {
-          c("Reading CITATION file fails with",
+          c("\nReading CITATION file fails with",
             paste(" ", y),
             "when package is not installed.")
       },
       if(length(y <- x$bad_urls)) {
           if(inherits(y, "error"))
-              c("Checking URLs failed with message:",
+              c("\nChecking URLs failed with message:",
                 conditionMessage(y))
           else
               c(if (length(y) > 1L) "Found the following (possibly) invalid URLs:" else "Found the following (possibly) invalid URL:",
                 paste(" ", gsub("\n", "\n    ", format(y))))
       },
       if(length(y <- x$no_url_checks) && y) {
-          c("Checking URLs requires 'libcurl' support in the R build")
+          c("\nChecking URLs requires 'libcurl' support in the R build")
       },
       if(length(y <- x$R_files_non_ASCII)) {
-          c("No package encoding and non-ASCII characters in the following R files:",
+          c("\nNo package encoding and non-ASCII characters in the following R files:",
             paste0("  ", names(y), "\n    ",
                    sapply(y, paste, collapse = "\n    "),
                    collapse = "\n"))
       },
       if(length(x$title_is_name)) {
-          "The Title field is just the package name: provide a real title."
+          "\nThe Title field is just the package name: provide a real title."
       },
       if(length(x$title_includes_name)) {
-          "The Title field starts with the package name."
+          "\nThe Title field starts with the package name."
       },
       if(length(y <- x$title_case)) {
-          c("The Title field should be in title case, current version then in title case:", sQuote(y))
+          c("\nThe Title field should be in title case, current version then in title case:", sQuote(y))
       },
       if(length(x$descr_bad_initial)) {
-          "The Description field should start with a capital letter."
+          "\nThe Description field should start with a capital letter."
       },
       if(length(x$descr_bad_start)) {
-          "The Description field should not start with the package name,\n  'This package' or similar."
+          "\nThe Description field should not start with the package name,\n  'This package' or similar."
       },
       if(length(x$bad_date)) {
-          "The Date field is not in ISO 8601 yyyy-mm-dd format."
+          "\nThe Date field is not in ISO 8601 yyyy-mm-dd format."
       },
       if(length(x$old_date)) {
-          "The Date field is over a month old."
+          "\nThe Date field is over a month old."
       }
      )
 }

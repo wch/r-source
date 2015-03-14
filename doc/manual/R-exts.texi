@@ -2772,7 +2772,9 @@ environment of a function for later use.
 
 Complete checking of a package which contains a file @file{README.md}
 needs @command{pandoc} installed: see
-@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.
+@uref{http://johnmacfarlane.net/@/pandoc/@/installing.html}.  This
+should be reasonably current: @acronym{CRAN} used version 1.12.4.1 to
+process these files at the time of writing
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
