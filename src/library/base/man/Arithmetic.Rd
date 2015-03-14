@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -57,7 +57,7 @@ x \%/\% y
   x \%/\% y )} (up to rounding error) unless \code{y == 0} where the
   result of \code{\%\%} is \code{\link{NA_integer_}} or
   \code{\link{NaN}} (depending on the \code{\link{typeof}} of the
-  arguments).
+  arguments), and for non-\link{finite} arguments.
 
   If either argument is complex the result will be complex, otherwise if
   one or both arguments are numeric, the result will be numeric.  If
@@ -95,7 +95,7 @@ x \%/\% y
 
   \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
   \code{x ^ y} should also give the proper limit result when
-  either argument is infinite (i.e., \code{+- \link{Inf}}).
+  either argument is \link{infinite} (i.e., \code{+- \link{Inf}}).
 
   Objects such as arrays or time-series can be operated on this
   way provided they are conformable.
