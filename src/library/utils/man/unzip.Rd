@@ -49,8 +49,10 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   packages without external software.  It does not (for example) support
   Unicode filenames as introduced in \command{zip 3.0}: for that use
   \code{unzip = "unzip"} with \command{unzip 6.00} or later.  It does
-  have some support for large zip files (but not large files
-  pre-compression contained in a zip file) and \command{bzip2} compression.
+  have some support for \command{bzip2} compression and > 2GB zip files
+  (but not >= 4GB files pre-compression contained in a zip file: like
+  many builds of \command{unzip} it may truncate these, in \R's case
+  with a warning if possible).
 
   If \code{unzip} specifies a program, the format of the dates listed
   with \code{list = TRUE} is unknown (on Windows it can even depend on

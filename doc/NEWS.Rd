@@ -341,6 +341,9 @@
       \item The code completion mechanism can now be replaced by a
       user-specified completer function, for (temporary) situations
       where the usual code completion is inappropriate.
+      
+      \item \code{unzip()} will now warn if it is able to detect truncation
+      when unpacking a file of 4GB or more (related to \PR{16243}).
     }
   }
 
