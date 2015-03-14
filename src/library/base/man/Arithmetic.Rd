@@ -95,7 +95,8 @@ x \%/\% y
 
   \code{1 ^ y} and \code{y ^ 0} are \code{1}, \emph{always}.
   \code{x ^ y} should also give the proper limit result when
-  either argument is \link{infinite} (i.e., \code{+- \link{Inf}}).
+  either (numeric) argument is \link{infinite} (one of \code{Inf} or
+  \code{-Inf}). 
 
   Objects such as arrays or time-series can be operated on this
   way provided they are conformable.
