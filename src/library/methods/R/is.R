@@ -209,7 +209,8 @@ setIs <-
     if(length(whereIs))
       whereIs[[1L]]
     else {
-        warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
+        if(purpose != "subclass")
+            warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
                          .dQ(class), sQuote(classDef@package), purpose,
                          sQuote(getPackageName(where, FALSE))),
                 call. = FALSE, domain = NA)
