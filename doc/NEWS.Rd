@@ -210,6 +210,10 @@
       did not remove the backslash from \samp{\\\%} and so gave an
       invalid URL.  In a related change, the \samp{\\} escape is now
       required in such URLs.
+
+      \item An irrelevant warning message from updating subclass
+      information was silenced (the namespace would not be writable
+      in this case).
     }
   }
 }
