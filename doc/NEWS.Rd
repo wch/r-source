@@ -571,6 +571,9 @@
       \item In \code{qbeta()} the inversion of \code{pbeta()} is much
       more sophisticated.  This works better in border cases, still
       using too many iterations.
+
+      \item Auto-printing no longer duplicates objects when printing is
+      dispatched to a method.
     }
   }
 }
