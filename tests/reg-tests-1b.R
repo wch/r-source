@@ -880,7 +880,7 @@ m1 <- methods(na.omit) ## should give (no warning):
 setClass("bla")
 setMethod("na.omit", "bla", function(object, ...) "na.omit(<bla>)")
 (m2 <- methods(na.omit)) ## should give (no warning):
-stopifnot(identical(m1, m2))
+stopifnot(identical(m1, .S3methods("na.omit")))
 options(op)
 ## gave two warnings, when an S3 generic had turned into an S4 one
 

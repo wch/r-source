@@ -344,6 +344,11 @@
       
       \item \code{unzip()} will now warn if it is able to detect truncation
       when unpacking a file of 4GB or more (related to \PR{16243}).
+
+      \item \code{methods()} reports S4 in addition to S3 methods;
+      output is simplified when the \code{class} argument is
+      used.  \code{.S3methods()} and \code{methods::.S4methods()} report
+      S3 and S4 methods separately.
     }
   }
 

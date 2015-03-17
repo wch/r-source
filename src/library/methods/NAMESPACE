@@ -7,6 +7,7 @@ exportPattern("^\\.__C__")
 exportPattern("^\\.__M__")
 exportPattern("^\\.__T__")
 
+export(.S4methods)
 export(.TraceWithMethods)
 export(.untracedFunction)
 export(.doTracePrint)
