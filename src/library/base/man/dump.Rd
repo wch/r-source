@@ -17,7 +17,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \R session.
 }
 \arguments{
-  \item{list}{character.  The names of one or more \R objects to be dumped.}
+  \item{list}{character vector.  The names of one or more \R objects to be dumped.}
 
   \item{file}{either a character string naming a file or a
     \link{connection}.  \code{""} indicates output to the console.}

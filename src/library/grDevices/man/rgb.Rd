@@ -31,7 +31,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
     \code{red}, \code{blue}, \code{green}, and \code{alpha}
     values are coerced to integers in \code{0:255} and the result is
     computed most efficiently.}
-  \item{names}{character. The names for the resulting vector.}
+  \item{names}{character vector. The names for the resulting vector.}
   \item{maxColorValue}{number giving the maximum of the color values
     range, see above.}
 }

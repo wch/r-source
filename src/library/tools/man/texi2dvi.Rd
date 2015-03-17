@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -21,14 +21,14 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
          texinputs = NULL, index = TRUE)
 }
 \arguments{
-  \item{file}{character.  Name of LaTeX source file.}
+  \item{file}{character string.  Name of LaTeX source file.}
   \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced instead of
     the default dvi file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
   \item{quiet}{logical.  No output unless an error occurs.  Ignored if
     emulation (see the \code{texi2dvi} argument) is used.}
-  \item{texi2dvi}{character (or \code{NULL}).  Script or program used to
+  \item{texi2dvi}{character string (or \code{NULL}).  Script or program used to
     compile a TeX file to dvi or PDF, respectively.
     The default (selected by \code{""} or \code{NULL}) is to look for an
     executable on the path and otherwise emulate the script with

@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -20,7 +20,7 @@ sink.number(type = c("output", "message"))
   \item{append}{logical.  If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
-  \item{type}{character.  Either the output stream or the messages
+  \item{type}{character string.  Either the output stream or the messages
     stream.}
   \item{split}{logical: if \code{TRUE}, output will be sent to the new
     sink and to the current output stream, like the Unix program \code{tee}.}

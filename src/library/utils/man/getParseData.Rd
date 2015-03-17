@@ -54,10 +54,10 @@ getParseText(parseData, id)
   \item{col2}{integer. The column number where the item ends.}
   \item{id}{integer. An identifier associated with this item.}
   \item{parent}{integer. The \code{id} of the parent of this item.}
-  \item{token}{character. The type of the token.}
+  \item{token}{character string. The type of the token.}
   \item{terminal}{logical.  Whether the token is \dQuote{terminal}, i.e.
     a leaf in the parse tree.}
-  \item{text}{character. If \code{includeText} is \code{TRUE}, the
+  \item{text}{character string. If \code{includeText} is \code{TRUE}, the
     text of all tokens; if it is \code{NA} (the default), the text of terminal
     tokens.  If \code{includeText == FALSE}, this column is not included.}
 

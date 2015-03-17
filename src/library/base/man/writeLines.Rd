@@ -1,6 +1,6 @@
 % File src/library/base/man/writeLines.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{writeLines}
@@ -15,8 +15,8 @@ writeLines(text, con = stdout(), sep = "\n", useBytes = FALSE)
 \arguments{
   \item{text}{A character vector}
   \item{con}{A \link{connection} object or a character string.}
-  \item{sep}{character.  A string to be written to the connection after
-    each line of text.}
+  \item{sep}{character string.  A string to be written to the connection
+    after each line of text.}
   \item{useBytes}{logical.  See \sQuote{Details}.}
 }
 \details{

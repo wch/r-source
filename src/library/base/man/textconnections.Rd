@@ -1,6 +1,6 @@
 % File src/library/base/man/textconnections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{textConnection}
@@ -22,13 +22,13 @@ textConnectionValue(con)
     connection the name for the \R character vector to receive the
     output, or \code{NULL} (for none).
   }
-  \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
+  \item{open}{character string.  Either \code{"r"} (or equivalently \code{""})
     for an input connection or \code{"w"} or \code{"a"} for an output
     connection.}
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
-  \item{encoding}{character.  Used only for input connections.  How
+  \item{encoding}{character string.  Used only for input connections.  How
     marked strings in \code{object} should be handled: converted to the
     current locale, used byte-by-byte or translated to UTF-8.}
   \item{con}{An output text connection.}

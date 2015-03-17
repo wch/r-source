@@ -1,6 +1,6 @@
 % File src/library/base/man/seek.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{seek}
@@ -25,9 +25,9 @@ truncate(con, \dots)
   \item{con}{a \link{connection}.}
   \item{where}{numeric.  A file position (relative to the origin
     specified by \code{origin}), or \code{NA}.}
-  \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
+  \item{rw}{character string.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
-  \item{origin}{character.  One of \code{"start"}, \code{"current"},
+  \item{origin}{character string.  One of \code{"start"}, \code{"current"},
     \code{"end"}: see \sQuote{Details}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
