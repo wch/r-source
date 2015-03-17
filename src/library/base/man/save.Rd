@@ -134,9 +134,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     con <- pipe("xz -T8 -6 -e > fname.xz", "wb")
     save(myObj, file = con); close(con)
 }
-  where the last requires \command{xz} 5.1.1 or later (and parallel
-  compression is only effective for large objects: at level 6 it will
-  compress in serialized chunks of 12MB).
+  where the last requires \command{xz} 5.1.1 or later built with support
+  for multiple threads (and parallel compression is only effective for
+  large objects: at level 6 it will compress in serialized chunks of 12MB).
 }
 
 \note{
