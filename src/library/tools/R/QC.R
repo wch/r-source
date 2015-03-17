@@ -7083,45 +7083,45 @@ function(x, ...)
           sprintf("Maintainer: %s", sQuote(paste(x$Maintainer, collapse = " ")))
       else "No maintainer field in DESCRIPTION file",
       if(x$empty_Maintainer_name)
-          'The maintainer field lacks a name',
+          '\nThe maintainer field lacks a name',
       if(x$Maintainer_needs_quotes)
-          'The display-name part of the maintainer field should be enclosed in ""',
+          '\nThe display-name part of the maintainer field should be enclosed in ""',
       if(length(x$new_submission))
           "New submission",
       if(length(y <- x$bad_package))
-          sprintf("Conflicting package names (submitted: %s, existing: %s)",
+          sprintf("\nConflicting package names (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
       if(length(y <- x$repositories))
-          sprintf("Package duplicated from %s", y),
+          sprintf("\nPackage duplicated from %s", y),
       if(length(y <- x$CRAN_archive))
-          "Package was archived on CRAN",
+          "\nPackage was archived on CRAN",
       if(length(y <- x$bad_version))
-          sprintf("Insufficient package version (submitted: %s, existing: %s)",
+          sprintf("\nInsufficient package version (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
       if(length(y <- x$version_with_leading_zeroes))
-          sprintf("Version contains leading zeroes (%s)", y),
+          sprintf("\nVersion contains leading zeroes (%s)", y),
       if(length(y <- x$version_with_jump_in_minor))
-          sprintf("Version jumps in minor (submitted: %s, existing: %s)",
+          sprintf("'\nVersion jumps in minor (submitted: %s, existing: %s)",
                   y[[1L]], y[[2L]]),
       if(length(y <- x$recency))
-          sprintf("Days since last update: %d", y),
+          sprintf("\nDays since last update: %d", y),
       if(length(y <- x$frequency))
-          sprintf("Number of updates in past 6 months: %d", y),
+          sprintf("\nNumber of updates in past 6 months: %d", y),
       if(length(y <- x$new_maintainer))
-          c("New maintainer:",
+          c("\nNew maintainer:",
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old maintainer(s):",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
       if(length(y <- x$bad_license))
-          sprintf("Non-FOSS package license (%s)", y),
+          sprintf("\nNon-FOSS package license (%s)", y),
       if(length(y <- x$new_license))
-          c("Change to non-FOSS package license.",
+          c("\nChange to non-FOSS package license.",
             "New license:",
             strwrap(y[[1L]], indent = 2L, exdent = 4L),
             "Old license:",
             strwrap(y[[2L]], indent = 2L, exdent = 4L)),
       if(length(y <- x$extensions)) {
-          c("Components with restrictions and base license permitting such:",
+          c("\nLicense components with restrictions and base license permitting such:",
             paste(" ", y),
             unlist(lapply(x$pointers,
                           function(e) {
@@ -7131,115 +7131,114 @@ function(x, ...)
       },
       if(NROW(y <- x$spelling)) {
           s <- split(sprintf("%d:%d", y$Line, y$Column), y$Original)
-          c("Possibly mis-spelled words in DESCRIPTION:",
+          c("\nPossibly mis-spelled words in DESCRIPTION:",
             sprintf("  %s (%s)",
                     names(s),
                     lapply(s, paste, collapse = ", ")))
       },
       if(identical(x$foss_with_BuildVignettes, TRUE)) {
-          "FOSS licence with BuildVignettes: false"
+          "\nFOSS licence with BuildVignettes: false"
       },
       if(length(y <- x$fields)) {
-          c("Unknown, possibly mis-spelled, fields in DESCRIPTION:",
+          c("\nUnknown, possibly mis-spelled, fields in DESCRIPTION:",
             sprintf("  %s", paste(sQuote(y), collapse = " ")))
       },
       if(length(y <- x$overrides)) {
-          c("CRAN repository db overrides:", y)
+          c("\nCRAN repository db overrides:", y)
       },
       if(length(y <- x$conflicts)) {
-          sprintf("CRAN repository db conflicts: %s",
-                  sQuote(y))
+          sprintf("\nCRAN repository db conflicts: %s", sQuote(y))
       },
       if(length(y <- x$conflict_in_license_is_FOSS)) {
-          sprintf("Package license conflicts with %s override",
+          sprintf("\nPackage license conflicts with %s override",
                   sQuote(paste("License_is_FOSS:", y)))
       },
       if(length(y <- x$conflict_in_license_restricts_use)) {
-          sprintf("Package license conflicts with %s override",
+          sprintf("\nPackage license conflicts with %s override",
                   sQuote(paste("License_restricts_use:", y)))
       },
       if(length(y <- x$depends_with_restricts_use_TRUE)) {
-          c("Package has a FOSS license but eventually depends on the following",
+          c("\nPackage has a FOSS license but eventually depends on the following",
 	    if(length(y) > 1L)
 	    "packages which restrict use:" else
 	    "package which restricts use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$depends_with_restricts_use_NA)) {
-          c("Package has a FOSS license but eventually depends on the following",
+          c("\nPackage has a FOSS license but eventually depends on the following",
 	    if(length(y) > 1L)
             "packages which may restrict use:" else
 	    "package which may restrict use:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$strong_dependencies_not_in_mainstream_repositories)) {
-          c("Strong dependencies not in mainstream repositories:",
+          c("\nStrong dependencies not in mainstream repositories:",
             strwrap(paste(y, collapse = ", "),
                     indent = 2L, exdent = 4L))
       },
       if(length(y <- x$suggests_or_enhances_not_in_mainstream_repositories)) {
-          c("Suggests or Enhances not in mainstream repositories:",
+          c("\nSuggests or Enhances not in mainstream repositories:",
             strwrap(paste(y, collapse = ", "),
                     indent = 2L, exdent = 4L))
       },
       if(length(y <- x$additional_repositories_analysis_failed_with)) {
-          c("Using Additional_repositories specification failed with:",
+          c("\nUsing Additional_repositories specification failed with:",
             paste(" ", y))
       },
       if(length(y <- x$additional_repositories_analysis_results)) {
-          c("Availability using Additional_repositories specification:",
+          c("\nAvailability using Additional_repositories specification:",
             sprintf("  %s   %s   %s",
                     format(y[, 1L], justify = "left"),
                     format(y[, 2L], justify = "right"),
                     format(y[, 3L], justify = "left")))
       },
       if(length(y <- x$additional_repositories_with_no_packages)) {
-          c("Additional repositories with no packages:",
+          c("\nAdditional repositories with no packages:",
             paste(" ", y))
       },
       if (length(y <- x$uses)) {
           paste(if(length(y) > 1L)
-		"Uses the superseded packages:" else
-		"Uses the superseded package:",
+		"\nUses the superseded packages:" else
+		"\nUses the superseded package:",
                 paste(sQuote(y), collapse = ", "))
       },
       if (length(y <- x$BUGS)) {
           paste(if(length(y) > 1L)
-		"Uses the non-portable packages:" else
-		"Uses the non-portable package:",
+		"\nUses the non-portable packages:" else
+		"\nUses the non-portable package:",
                 paste(sQuote(y), collapse = ", "))
       },
       if(length(y <- x$authors_at_R_calls)) {
-          c("Authors@R field should be a call to person(), or combine such calls.")
+          "\nAuthors@R field should be a call to person(), or combine such calls."
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
-              c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
+              c("\nVignette sources in 'inst/doc' with no 'vignettes' directory:",
                 strwrap(paste(sQuote(y), collapse = ", "),
                         indent = 2L, exdent = 2L),
                 "A 'vignettes' directory is required as from R 3.1.0")
           else
-              c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
+              c("\nVignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(sQuote(y), collapse = ", "),
                         indent = 2L, exdent = 2L))
       },
       if(length(y <- x$missing_vignette_index)) {
-          "Package has a VignetteBuilder field but no prebuilt vignette index."
+          "\nPackage has a VignetteBuilder field but no prebuilt vignette index."
       },
       if(length(y <- x$missing_manual_rdb)) {
-          "Package has help file(s) containing build-stage \\Sexpr{} expresssons but no build/partial.rdb."
+          "\nPackage has help file(s) containing build-stage \\Sexpr{} expresssons but no 'build/partial.rdb' file."
       },
       if(length(y <- x$missing_manual_pdf)) {
-          "Package has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
+          "\nPackage has help file(s) containing install/render-stage \\Sexpr{} expresssons but no prebuilt PDF manual."
       },
       if(length(y <- x$dotjava)) {
-          "Package installs .java files."
+          "\nPackage installs .java files."
       },
       if(length(y <- x$javafiles)) {
-          "Package has FOSS license, installs .class/.jar but has no 'java' directory."
+          "\nPackage has FOSS license, installs .class/.jar but has no 'java' directory."
       },
       if(length(y <- x$citation_calls)) {
-          c("Package CITATION file contains call(s) to:",
+          c("\nPackage CITATION file contains call(s) to:",
             strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
       },
       if(length(y <- x$citation_error)) {
