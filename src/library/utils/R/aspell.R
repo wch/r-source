@@ -279,7 +279,8 @@ function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
 print.aspell <-
 function(x, ...)
 {
-    writeLines(paste(format(x, ...), collapse = "\n\n"))
+    if(nrow(x))
+        writeLines(paste(format(x, ...), collapse = "\n\n"))
     invisible(x)
 }
 
@@ -1047,9 +1048,13 @@ function(ifile, encoding, keep = c("Title", "Description"),
     lines <- readLines(ifile, encoding = encoding, warn = FALSE)
     line_has_tags <- grepl("^[^[:blank:]][^:]*:", lines)
     tags <- sub(":.*", "", lines[line_has_tags])
+    lines[line_has_tags] <-
+        blank_out_regexp_matches(lines[line_has_tags], "^[^:]*:")
     lines <- split(lines, cumsum(line_has_tags))
     ind <- is.na(match(tags, keep))
     lines[ind] <- lapply(lines[ind], function(s) rep.int("", length(s)))
+    ind <- !ind
+    lines[ind] <- lapply(lines[ind], paste0, " ")
     lines <- unlist(lines, use.names = FALSE)
     for(re in ignore[nzchar(ignore)])
         lines <- blank_out_regexp_matches(lines, re)
