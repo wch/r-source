@@ -146,8 +146,8 @@
       \item \code{apply(m, 2, identity)} is now the same as the matrix
       \code{m} when it has \emph{named} row names.
 
-      \item A new somewhat experimental function \code{debuggingState()}
-      has been added, allowing to temporarily turn off debugging.
+      \item A new function \code{debuggingState()} has been added,
+      allowing to temporarily turn off debugging.
 
       \item \code{example()} gets a new optional argument
       \code{run.donttest} and \code{tools::Rd2ex()} a corresponding
@@ -196,8 +196,8 @@
       \code{methods:::.requirePackage()} speeding up package loading.
       (\PR{16133})
 
-      \item New (somewhat experimental) \code{get0()} function, combining
-      \code{exists()} and \code{get()} in one call.
+      \item New \code{get0()} function, combining \code{exists()} and
+      \code{get()} in one call, for efficiency.
 
       \item \code{match.call()} gains an \code{envir} argument for
       specifying the environment from which to retrieve
@@ -324,8 +324,7 @@
 
       \item \code{BIC(mod)} and \code{BIC(mod, mod2)} now give non-NA
       numbers for \code{arima()} fitted models, as \code{nobs(mod)} now
-      gives the number of \dQuote{used} observations for such models --
-      somewhat experimentally.
+      gives the number of \dQuote{used} observations for such models.
       This fixes \PR{16198}, quite differently than proposed there.
 
       \item The \code{print()} methods for \code{"htest"},
@@ -341,7 +340,7 @@
       \item The code completion mechanism can now be replaced by a
       user-specified completer function, for (temporary) situations
       where the usual code completion is inappropriate.
-      
+
       \item \code{unzip()} will now warn if it is able to detect truncation
       when unpacking a file of 4GB or more (related to \PR{16243}).
 
@@ -491,7 +490,7 @@
       of \command{texi2any}.
 
       \item (Windows) The default toolchain for Windows is now based
-      on GCC 4.9.2.  Corresponding code changes and \file{Makefile} changes 
+      on GCC 4.9.2.  Corresponding code changes and \file{Makefile} changes
       have been made; see \file{src/gnuwin32/MkRules.dist} for details.
     }
   }
@@ -574,8 +573,9 @@
       arguments.
 
       \item In \code{qbeta()} the inversion of \code{pbeta()} is much
-      more sophisticated.  This works better in border cases, still
-      using too many iterations.
+      more sophisticated.  This works better in corner cases some of
+      which failed completely previously (\PR{15755}), or were using
+      too many iterations.
 
       \item Auto-printing no longer duplicates objects when printing is
       dispatched to a method.
