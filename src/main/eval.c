@@ -1157,6 +1157,80 @@ static SEXP R_execClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     return (tmp);
 }
 
+SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
+{
+    SEXP fun, tmp;
+    if (TYPEOF(CAR(e)) == SYMSXP)
+	/* This will throw an error if the function is not found */
+	PROTECT(fun = findFun(CAR(e), rho));
+    else
+	PROTECT(fun = eval(CAR(e), rho));
+
+    if (TYPEOF(fun) == SPECIALSXP) {
+	int flag = PRIMPRINT(fun);
+	PROTECT(CDR(e));
+	R_Visible = flag != 1;
+	tmp = PRIMFUN(fun) (e, fun, CDR(e), rho);
+	if (flag < 2) R_Visible = flag != 1;
+	UNPROTECT(1);
+    }
+    else if (TYPEOF(fun) == BUILTINSXP) {
+	int flag = PRIMPRINT(fun);
+	PROTECT(tmp = evalList(CDR(e), rho, e, 0));
+	if (flag < 2) R_Visible = flag != 1;
+	/* We used to insert a context only if profiling,
+	   but helps for tracebacks on .C etc. */
+	if (R_Profiling || (PPINFO(fun).kind == PP_FOREIGN)) {
+	    RCNTXT cntxt;
+	    SEXP oldref = R_Srcref;
+	    begincontext(&cntxt, CTXT_BUILTIN, e,
+			 R_BaseEnv, R_BaseEnv, R_NilValue, R_NilValue);
+	    R_Srcref = NULL;
+	    tmp = PRIMFUN(fun) (e, fun, tmp, rho);
+	    R_Srcref = oldref;
+	    endcontext(&cntxt);
+	} else {
+	    tmp = PRIMFUN(fun) (e, fun, tmp, rho);
+	}
+	if (flag < 2) R_Visible = flag != 1;
+	UNPROTECT(1);
+    }
+    else if (TYPEOF(fun) == CLOSXP) {
+	PROTECT(tmp = promiseArgs(CDR(e), rho));
+	SEXP a;
+	int i;
+	for (a = tmp, i = 0; i < n && a != R_NilValue; a = CDR(a), i++) {
+	    SEXP p = CAR(a);
+	    if (TYPEOF(p) == PROMSXP)
+		eval(p, rho);
+	    else if (p == R_MissingArg)
+		errorcall(e, _("argument %d is empty"), i + 1);
+	    else error("something weird happened");
+	}
+	tmp = applyClosure(e, fun, tmp, rho, R_NilValue);
+	UNPROTECT(1);
+    }
+    else {
+	tmp = R_NilValue; /* -Wall */
+	error(_("attempt to apply non-function"));
+    }
+
+    UNPROTECT(1);
+    return tmp;
+}
+    
+SEXP attribute_hidden do_forceAndCall(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int n = asInteger(eval(CADR(call), rho));
+    SEXP e = CDDR(call);
+
+    /* this would not be needed if CDDR(call) was a LANGSXP */
+    PROTECT(e = LCONS(CAR(e), CDR(e)));
+    SEXP val = R_forceAndCall(e, n, rho);
+    UNPROTECT(1);
+    return val;
+}
+
 /* **** FIXME: Temporary code to execute S4 methods in a way that
    **** preserves lexical scope. */
 

@@ -49,11 +49,11 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
     if(!accumulate) {
         if(right) {
             for(i in rev(ind))
-                init <- f(x[[i]], init)
+                init <- forceAndCall(2, f, x[[i]], init)
         }
         else {
             for(i in ind)
-                init <- f(init, x[[i]])
+                init <- forceAndCall(2, f, init, x[[i]])
         }
         init
     }
@@ -66,13 +66,13 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
             if(right) {
                 out[[len]] <- init
                 for(i in rev(ind)) {
-                    init <- f(x[[i]], init)
+                    init <- forceAndCall(2, f, x[[i]], init)
                     out[[i]] <- init
                 }
             } else {
                 out[[1L]] <- init
                 for(i in ind) {
-                    init <- f(init, x[[i]])
+                    init <- forceAndCall(2, f, init, x[[i]])
                     out[[i]] <- init
                 }
             }
@@ -80,14 +80,14 @@ function(f, x, init, right = FALSE, accumulate = FALSE)
             if(right) {
                 out[[len]] <- init
                 for(i in rev(ind)) {
-                    init <- f(x[[i]], init)
+                    init <- forceAndCall(2, f, x[[i]], init)
                     out[[i]] <- init
                 }
             }
             else {
                 for(i in ind) {
                     out[[i]] <- init
-                    init <- f(init, x[[i]])
+                    init <- forceAndCall(2, f, init, x[[i]])
                 }
                 out[[len]] <- init
             }

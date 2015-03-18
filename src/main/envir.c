@@ -2877,16 +2877,23 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	FrameValues(FRAME(env), all, tmp2, &k2);
 
+    SEXP Xsym = install("X");
+    SEXP isym = install("i");
     PROTECT(ind = allocVector(INTSXP, 1));
     /* tmp :=  `[`(<elist>, i) */
     PROTECT(tmp = LCONS(R_Bracket2Symbol,
-			LCONS(tmp2, LCONS(ind, R_NilValue))));
+			LCONS(Xsym, LCONS(isym, R_NilValue))));
     /* fcall :=  <FUN>( tmp, ... ) */
     PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
+    defineVar(Xsym, tmp2, rho);
+    SET_NAMED(tmp2, 1);
+    defineVar(isym, ind, rho);
+    SET_NAMED(ind, 1);
+
     for(i = 0; i < k2; i++) {
 	INTEGER(ind)[0] = i+1;
-	SEXP tmp = eval(R_fcall, rho);
+	SEXP tmp = R_forceAndCall(R_fcall, 1, rho);
 	if (MAYBE_REFERENCED(tmp))
 	    tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);

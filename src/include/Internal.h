@@ -175,6 +175,7 @@ SEXP do_first_min(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flush(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_for(SEXP, SEXP, SEXP, SEXP);
+SEXP do_forceAndCall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_format(SEXP, SEXP, SEXP, SEXP);
 SEXP do_formatC(SEXP, SEXP, SEXP, SEXP);
 SEXP do_formatinfo(SEXP, SEXP, SEXP, SEXP);

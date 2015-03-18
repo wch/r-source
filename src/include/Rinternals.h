@@ -894,6 +894,9 @@ const char *Rf_reEnc(const char *x, cetype_t ce_in, cetype_t ce_out, int subst);
 #undef LibExtern
 #endif
 
+/* Calling a function with arguments evaluated */
+SEXP R_forceAndCall(SEXP e, int n, SEXP rho);
+
 /* External pointer interface */
 SEXP R_MakeExternalPtr(void *p, SEXP tag, SEXP prot);
 void *R_ExternalPtrAddr(SEXP s);

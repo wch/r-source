@@ -348,6 +348,12 @@
       output is simplified when the \code{class} argument is
       used.  \code{.S3methods()} and \code{methods::.S4methods()} report
       S3 and S4 methods separately.
+
+      \item Higher order functions such as the \code{apply} functions
+      and \code{Reduce} now force arguments to the functions they apply
+      in order to eliminate undesirable interactons between lazy
+      evaluation and variable capture in closures. This resolves
+      \PR{16093}.
     }
   }
 

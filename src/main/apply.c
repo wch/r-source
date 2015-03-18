@@ -49,30 +49,25 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Build call: FUN(XX[[<ind>]], ...) */
 
+    SEXP ind = PROTECT(allocVector(realIndx ? REALSXP : INTSXP, 1));
+    SEXP isym = install("i");
+    defineVar(isym, ind, rho);
+    SET_NAMED(ind, 1);
+
     /* Notice that it is OK to have one arg to LCONS do memory
        allocation and not PROTECT the result (LCONS does memory
        protection of its args internally), but not both of them,
        since the computation of one may destroy the other */
 
-    SEXP ind = PROTECT(allocVector(realIndx ? REALSXP : INTSXP, 1));
-    SEXP tmp;
-    /* The R level code has ensured that XX is a vector.
-       If it is atomic we can speed things up slightly by
-       using the evaluated version.
-    */
-    if(isVectorAtomic(XX))
-	tmp = PROTECT(tmp = LCONS(R_Bracket2Symbol,
-				  LCONS(XX, LCONS(ind, R_NilValue))));
-    else
-	tmp = PROTECT(LCONS(R_Bracket2Symbol,
-			    LCONS(X, LCONS(ind, R_NilValue))));
+    SEXP tmp = PROTECT(LCONS(R_Bracket2Symbol,
+			LCONS(X, LCONS(isym, R_NilValue))));
     SEXP R_fcall = PROTECT(LCONS(FUN,
 				 LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
 
     for(R_xlen_t i = 0; i < n; i++) {
 	if (realIndx) REAL(ind)[0] = (double)(i + 1);
 	else INTEGER(ind)[0] = (int)(i + 1);
-	tmp = eval(R_fcall, rho);
+	tmp = R_forceAndCall(R_fcall, 1, rho);
 	if (MAYBE_REFERENCED(tmp)) tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);
     }
@@ -140,27 +135,27 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP ind, tmp;
 	/* Build call: FUN(XX[[<ind>]], ...) */
 
+	SEXP isym = install("i");
+	PROTECT(ind = allocVector(INTSXP, 1));
+	defineVar(isym, ind, rho);
+	SET_NAMED(ind, 1);
+
 	/* Notice that it is OK to have one arg to LCONS do memory
 	   allocation and not PROTECT the result (LCONS does memory
 	   protection of its args internally), but not both of them,
 	   since the computation of one may destroy the other */
-
-	PROTECT(ind = allocVector(INTSXP, 1));
-	if(isVectorAtomic(XX))
-	    PROTECT(tmp = LCONS(R_Bracket2Symbol,
-				LCONS(XX, LCONS(ind, R_NilValue))));
-	else
-	    PROTECT(tmp = LCONS(R_Bracket2Symbol,
-				LCONS(X, LCONS(ind, R_NilValue))));
+	PROTECT(tmp = LCONS(R_Bracket2Symbol,
+			    LCONS(X, LCONS(isym, R_NilValue))));
 	PROTECT(R_fcall = LCONS(FUN,
 				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
+
 	int common_len_offset = 0;
 	for(i = 0; i < n; i++) {
 	    SEXP val; SEXPTYPE valType;
 	    PROTECT_INDEX indx;
 	    if (realIndx) REAL(ind)[0] = (double)(i + 1);
 	    else INTEGER(ind)[0] = (int)(i + 1);
-	    val = eval(R_fcall, rho);
+	    val = R_forceAndCall(R_fcall, 1, rho);
 	    if (MAYBE_REFERENCED(val))
 		val = lazy_duplicate(val); // Need to duplicate? Copying again anyway
 	    PROTECT_WITH_INDEX(val, &indx);
@@ -274,7 +269,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 		   Rboolean replace, SEXP rho)
 {
-    SEXP ans, names, klass, R_fcall;
+    SEXP ans, names, klass;
     int i, j, n;
     Rboolean matched = FALSE;
 
@@ -302,9 +297,16 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	UNPROTECT(1);
     }
     if(matched) {
-	/* PROTECT(R_fcall = lang2(FUN, X)); */
-	PROTECT(R_fcall = lang3(FUN, X, R_DotsSymbol));
-	ans = eval(R_fcall, rho);
+	/* This stores value to which the function is to be applied in
+	   a variable X in the environment of the rapply closure call
+	   that calls into the rapply .Internal. */
+	SEXP R_fcall; /* could allocate once and preserve for re-use */
+	SEXP Xsym = install("X");
+	defineVar(Xsym, X, rho);
+	INCREMENT_NAMED(X);
+	/* PROTECT(R_fcall = lang2(FUN, Xsym)); */
+	PROTECT(R_fcall = lang3(FUN, Xsym, R_DotsSymbol));
+	ans = R_forceAndCall(R_fcall, 1, rho);
 	if (MAYBE_REFERENCED(ans))
 	    ans = lazy_duplicate(ans);
 	UNPROTECT(1);
