@@ -1,4 +1,4 @@
-% File src/library/base/man/force.Rd
+% File src/library/base/man/forceAndCall.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
@@ -20,16 +20,18 @@ forceAndCall(n, FUN, ...)
 }
 \details{
   \code{forceAndCall} calls the function \code{FUN} with arguments
-  specified in \code{\dots}. If the value of \code{FUN} is a closure
-  then the first \code{n} arguments to the function are evaulated
+  specified in \code{\dots}.  If the value of \code{FUN} is a closure
+  then the first \code{n} arguments to the function are evaluated
   (i.e. their delayed evaluation promises are forced) before executing
-  the function body. If the value of \code{FUN} is a primitive then
+  the function body.  If the value of \code{FUN} is a primitive then
   the call \code{FUN(\dots)} is evaluated in the usual way.
 
-  \code{forceAndCall} is intended to held defining higher order
-  functions line \code{apply} to behave more rasonably when the result
-  returned by the function applied is a closure that captured its
+  \code{forceAndCall} is intended to help defining higher order
+  functions like \code{\link{apply}} to behave more reasonably when the
+  result returned by the function applied is a closure that captured its
   arguments.
-  
+}
+\seealso{
+  \code{\link{force}}, \code{\link{promise}}, \code{\link{closure}}.
 }
 \keyword{programming}
