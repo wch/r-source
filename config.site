@@ -266,6 +266,8 @@
 ## Can be texi2any (the default) or makeinfo or a full path to either.
 ## MAKEINFO=
 
+## Full path to version of curl-config to be used
+## CURL_CONFIG=
 ## Use these to override curl-config if needed.
 ## Used as from R 3.2.0.
 ## CURL_CPPFLAGS=
