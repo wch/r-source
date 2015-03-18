@@ -14,13 +14,16 @@
 }
 \usage{
 methods(generic.function, class)
-.S3methods(generic.function, class)
+.S3methods(generic.function, class, envir=parent.frame())
 }
 \arguments{
   \item{generic.function}{a generic function, or a character string naming a
     generic function.}
   \item{class}{a symbol or character string naming a class: only used if
     \code{generic.function} is not supplied.}
+  \item{envir}{the environment in which to look for the definition of
+    the generic function, when the generic function is passed as a
+    character string.}
 }
 
 \details{

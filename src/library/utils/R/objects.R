@@ -70,7 +70,7 @@ function()
     c(names(.knownS3Generics), tools:::.get_internal_S3_generics())
 
 .S3methods <-
-function(generic.function, class)
+function(generic.function, class, envir=parent.frame())
 {
     rbindSome <- function(df, nms, msg) {
         ## rbind.data.frame() -- dropping rows with duplicated names
@@ -102,14 +102,13 @@ function(generic.function, class)
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
         ## else
-        if(!exists(generic.function, mode = "function",
-                   envir = parent.frame()) &&
+        if(!exists(generic.function, mode = "function", envir = envir) &&
            !any(generic.function == c("Math", "Ops", "Complex", "Summary")))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         warn.not.generic <- FALSE
         if(!any(generic.function == knownGenerics)) {
-            truegf <- findGeneric(generic.function, parent.frame())
+            truegf <- findGeneric(generic.function, envir)
             if(truegf == "")
                 warn.not.generic <- TRUE
             else if(truegf != generic.function) {
@@ -138,8 +137,7 @@ function(generic.function, class)
         defenv <- if(!is.na(w <- .knownS3Generics[generic.function]))
             asNamespace(w)
         else {
-            genfun <- get(generic.function, mode = "function",
-                          envir = parent.frame())
+            genfun <- get(generic.function, mode = "function", envir = envir)
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
                 genfun <- methods::finalDefaultMethod(genfun@default)
             if (typeof(genfun) == "closure") environment(genfun)
@@ -213,7 +211,7 @@ function(generic.function, class)
     if (!missing(class) && !is.character(class))
         class <- paste(deparse(substitute(class)))
 
-    s3 <- .S3methods(generic.function, class)
+    s3 <- .S3methods(generic.function, class, parent.frame())
     s4 <- if (.isMethodsDispatchOn()) {
         methods::.S4methods(generic.function, class)
     } else NULL
