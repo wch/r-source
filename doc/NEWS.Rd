@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN 3.2.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.
