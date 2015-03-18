@@ -113,13 +113,13 @@ methods("Math")           # group generic
 require(graphics)
 methods("axis")           # looks like a generic, but is not
 
-require(Matrix)
-methods(class="Matrix")  # S4 class
-methods("dim")           # S3 and S4 methods
-
-m <- methods("dim")
-attr(m, "info")          # more extensive information
+if(require(Matrix)) {
+print(methods(class = "Matrix"))  # S4 class
+m <- methods("dim")       # S3 and S4 methods
+print(m)
+print(attr(m, "info"))    # more extensive information
 
 ## --> help(showMethods) for related examples
+}
 }
 \keyword{methods}
