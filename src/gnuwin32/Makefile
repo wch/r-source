@@ -258,7 +258,7 @@ clean: cleanwin
 	-$(MK) -C ../modules -f Makefile.win clean
 	-$(MK) -C ../../tests -f Makefile.win clean
 	-$(MK) -C ../library/Recommended -f Makefile.win clean
-	$(RM) -f ../library/methods/all.R
+	$(RM) -f ../library/methods/all.R ../../etc/curl-ca-bundle.crt
 
 distclean: clean
 	@for d in $(EXTRA_DIRS); do \
