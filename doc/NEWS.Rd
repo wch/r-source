@@ -5,7 +5,16 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN 3.2.0}{
+\section{\Rlogo CHANGES IN R-devel}{
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The included versions of \code{zlib}, \code{bzip2},
+      \code{xz} and PCRE have been removed.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.2.0}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{anyNA()} gains a \code{recursive} argument.

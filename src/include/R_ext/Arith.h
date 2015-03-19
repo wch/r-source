@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2007  The R Core Team.
+ *  Copyright (C) 1998--2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,8 +24,16 @@
 #define R_ARITH_H_
 
 /* Only for use where config.h has not already been included */
-#if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
-/* ensure that finite and isnan are declared */
+/* ensure that finite and isnan are declared in glibc */
+#if defined HAVE_FEATURES_H
+# include <features.h>
+# ifdef __GNUC_PREREQ
+#  if __GNUC_PREREQ(2,20) && !defined(_DEFAULT_SOURCE_)
+#   define _DEFAULT_SOURCE 1
+#  endif
+# endif
+#endif
+#if defined(HAVE_GLIBC2) && !defined(_DEFAULT_SOURCE_) && !defined(_BSD_SOURCE)
 # define _BSD_SOURCE 1
 #endif
 

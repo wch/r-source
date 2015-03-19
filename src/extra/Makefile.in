@@ -13,20 +13,15 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = blas bzip2 pcre tre xdr xz zlib @USE_NLS_TRUE@ intl
+SUBDIRS = blas tre xdr @USE_NLS_TRUE@ intl
 SUBDIRS_WITH_NO_BUILD = graphapp trio tzone win_iconv @USE_NLS_FALSE@ intl
 
 RBLAS =@BLAS_SHLIB_TRUE@ make.blas
-LIBBZ2 =@BUILD_BZLIB_TRUE@ make.bzip2
-LIBPCRE =@BUILD_PCRE_TRUE@ make.pcre
-LIBZ =@BUILD_ZLIB_TRUE@ make.zlib
 LIBXDR =@BUILD_XDR_TRUE@ make.xdr
 LIBINTL =@BUILD_LIBINTL_TRUE@ make.intl
 LIBTRE =@BUILD_TRE_TRUE@ make.tre
-LIBTZONE = @BUILD_TZONE_TRUE@make.tzone
-LIBXZ =@BUILD_XZ_TRUE@ make.xz
-EXTRAS = $(RBLAS) $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL) \
-  $(LIBTRE) $(LIBTZONE) $(LIBXZ)
+LIBTZONE =@BUILD_TZONE_TRUE@make.tzone
+EXTRAS = $(RBLAS) $(LIBXDR) $(LIBINTL) $(LIBTRE) $(LIBTZONE)
 
 all: Makefile R
 
@@ -39,23 +34,11 @@ R: Makefile $(EXTRAS)
 make.blas: Makefile
 	@(cd blas; $(MAKE))
 
-make.bzip2: Makefile
-	@(cd bzip2; $(MAKE))
-
-make.pcre: Makefile
-	@(cd pcre; $(MAKE))
-
-make.zlib: Makefile
-	@(cd zlib; $(MAKE))
-
 make.tre: Makefile
 	@(cd tre; $(MAKE))
 
 make.xdr: Makefile
 	@(cd xdr; $(MAKE))
-
-make.xz: Makefile
-	@(cd xz; $(MAKE))
 
 make.intl: Makefile
 	@(cd intl; $(MAKE))

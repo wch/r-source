@@ -411,26 +411,10 @@ AC_ARG_WITH([libtiff],
 [AS_HELP_STRING([--with-libtiff],[use libtiff library (if available) @<:@yes@:>@])],
 [R_ARG_USE(libtiff)],
 [use_libtiff=yes])
-AC_ARG_WITH([system-zlib],
-[AS_HELP_STRING([--with-system-zlib],[use system zlib library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(zlib)],
-[use_system_zlib=yes])
-AC_ARG_WITH([system-bzlib],
-[AS_HELP_STRING([--with-system-bzlib],[use system bzlib library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(bzlib)],
-[use_system_bzlib=yes])
-AC_ARG_WITH([system-pcre],
-[AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(pcre)],
-[use_system_pcre=yes])
 AC_ARG_WITH([system-tre],
 [AS_HELP_STRING([--with-system-tre],[use system tre library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(tre)],
 [use_system_tre=no])
-AC_ARG_WITH([system-xz],
-[AS_HELP_STRING([--with-system-xz],[use system xz (lzma) library (if available) @<:@yes@:>@])],
-[R_ARG_USE_SYSTEM(xz)],
-[use_system_xz=yes])
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
@@ -2746,14 +2730,10 @@ AC_CONFIG_FILES(
   src/appl/Makefile
   src/extra/Makefile
   src/extra/blas/Makefile
-  src/extra/bzip2/Makefile
   src/extra/intl/Makefile
-  src/extra/pcre/Makefile
   src/extra/tre/Makefile
   src/extra/tzone/Makefile
   src/extra/xdr/Makefile
-  src/extra/xz/Makefile
-  src/extra/zlib/Makefile
   src/include/Makefile
   src/include/Rmath.h0
   src/include/R_ext/Makefile

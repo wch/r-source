@@ -2986,27 +2986,22 @@ AC_SUBST(TIRPC_CPPFLAGS)
 ## Try finding zlib library and headers.
 ## We check that both are installed, and that the header >= 1.2.3
 AC_DEFUN([R_ZLIB],
-[if test "x${use_system_zlib}" = xyes; then
-  AC_CHECK_LIB(z, inflateInit2_, [have_zlib=yes], [have_zlib=no])
-  if test "${have_zlib}" = yes; then
-    AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
-  fi
-  if test "${have_zlib}" = yes; then
-    _R_HEADER_ZLIB
-    have_zlib=${r_cv_header_zlib_h}
-  fi
-else
-  have_zlib="no"
-fi
-AC_MSG_CHECKING([whether zlib support needs to be compiled])
+[AC_CHECK_LIB(z, inflateInit2_, [have_zlib=yes], [have_zlib=no])
 if test "${have_zlib}" = yes; then
-  AC_MSG_RESULT([no])
-  LIBS="-lz ${LIBS}"
+  AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
+fi
+if test "${have_zlib}" = yes; then
+  _R_HEADER_ZLIB
+  have_zlib=${r_cv_header_zlib_h}
+fi
+AC_MSG_CHECKING([whether zlib support suffices])
+if test "${have_zlib}" != yes; then
+  AC_MSG_ERROR([zlib library and headers are required])
 else
+  LIBS="-lz ${LIBS}"
   AC_MSG_RESULT([yes])
   _R_ZLIB_MMAP
 fi
-AM_CONDITIONAL(BUILD_ZLIB, [test "x${have_zlib}" = xno])
 AM_CONDITIONAL(USE_MMAP_ZLIB,
 [test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes])
 ])# R_ZLIB
@@ -3065,17 +3060,13 @@ caddr_t hello() {
 ## RedHat put the headers in /usr/include/pcre.
 ## There are known problems < 8.10.
 AC_DEFUN([R_PCRE],
-[if test "x${use_system_pcre}" = xyes; then
-  AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
-  if test "${have_pcre}" = yes; then
-    AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
-    if test "${ac_cv_header_pcre_h}" = no \
-	&& test "${ac_cv_header_pcre_pcre_h}" = no; then
-      have_pcre=no
-    fi
+[AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
+if test "${have_pcre}" = yes; then
+  AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
+  if test "${ac_cv_header_pcre_h}" = no \
+    && test "${ac_cv_header_pcre_pcre_h}" = no; then
+    have_pcre=no
   fi
-else
-  have_pcre=no
 fi
 if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
@@ -3112,13 +3103,12 @@ if test "x${r_cv_have_pcre810}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
 fi
-AC_MSG_CHECKING([whether PCRE support needs to be compiled])
-if test "x${r_cv_have_pcre810}" = xyes; then
-  AC_MSG_RESULT([no])
+AC_MSG_CHECKING([whether PCRE support suffices])
+if test "x${r_cv_have_pcre810}" != xyes; then
+  AC_MSG_ERROR([pcre library and headers are required])
 else
   AC_MSG_RESULT([yes])
 fi
-AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre810}" != xyes])
 ])# R_PCRE
 
 ## R_BZLIB
@@ -3127,13 +3117,9 @@ AM_CONDITIONAL(BUILD_PCRE, [test "x${r_cv_have_pcre810}" != xyes])
 ## We check that both are installed,
 ## and that BZ2_bzlibVersion is in the library.
 AC_DEFUN([R_BZLIB],
-[if test "x${use_system_bzlib}" = xyes; then
-  AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
-  if test "${have_bzlib}" = yes; then
-    AC_CHECK_HEADERS(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
-  fi
-else
-  have_bzlib=no
+[AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
+if test "${have_bzlib}" = yes; then
+  AC_CHECK_HEADERS(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
 fi
 if test "x${have_bzlib}" = xyes; then
 AC_CACHE_CHECK([if bzip2 version >= 1.0.6], [r_cv_have_bzlib],
@@ -3155,14 +3141,13 @@ fi
 if test "x${r_cv_have_bzlib}" = xno; then
   have_bzlib=no
 fi
-AC_MSG_CHECKING([whether bzip2 support needs to be compiled])
+AC_MSG_CHECKING([whether bzip2 support suffices])
 if test "x${have_bzlib}" = xyes; then
   AC_MSG_RESULT([no])
   LIBS="-lbz2 ${LIBS}"
 else
-  AC_MSG_RESULT([yes])
+  AC_MSG_ERROR([bzip2 library and headers are required])
 fi
-AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 ])# R_BZLIB
 
 ## R_TRE
@@ -3190,11 +3175,10 @@ AM_CONDITIONAL(BUILD_TRE, [test x${have_tre} != xyes])
 ## Try finding liblzma library and headers.
 ## We check that both are installed,
 AC_DEFUN([R_LZMA],
-[if test "x${use_system_xz}" = xyes; then
-  AC_CHECK_LIB(lzma, lzma_version_number, [have_lzma=yes], [have_lzma=no])
-  if test "${have_lzma}" = yes; then
-    AC_CHECK_HEADERS(lzma.h, [have_lzma=yes], [have_lzma=no])
-  fi
+[AC_CHECK_LIB(lzma, lzma_version_number, [have_lzma=yes], [have_lzma=no])
+if test "${have_lzma}" = yes; then
+  AC_CHECK_HEADERS(lzma.h, [have_lzma=yes], [have_lzma=no])
+fi
 if test "x${have_lzma}" = xyes; then
 AC_CACHE_CHECK([if lzma version >= 5.0.3], [r_cv_have_lzma],
 [AC_LANG_PUSH(C)
@@ -3221,11 +3205,9 @@ fi
 if test "x${have_lzma}" = xyes; then
   AC_DEFINE(HAVE_LZMA, 1, [Define if your system has lzma >= 5.0.3.])
   LIBS="-llzma ${LIBS}"
-fi
 else
-  have_lzma="no"
+  AC_MSG_ERROR("liblzma library and headers are required")
 fi
-AM_CONDITIONAL(BUILD_XZ, [test x${have_lzma} != xyes])
 ])# R_LZMA
 
 
