@@ -6926,7 +6926,7 @@ function(dir)
     if (tolower(title) == tolower(package)) {
         out$title_is_name <- TRUE
     } else {
-        if(grepl(paste0("^", package, " "), title, ignore.case = TRUE))
+        if(grepl(paste0("^", package, "[ :]"), title, ignore.case = TRUE))
             out$title_includes_name <- TRUE
         title2 <- toTitleCase(title)
         if(title != title2)
