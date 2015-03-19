@@ -3048,6 +3048,17 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @code{setenv}.} are essential, and others@footnote{such as
 @code{realpath}, @code{symlink}.} will be used if available.
 
+@c PCRE 8.10 is from June 2010, 8.32 from May 2013
+Installations of @code{zlib} (version 1.2.5 or later),, @code{libbz2}
+(version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
+@pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions) and PCRE
+(version 8.10 or later, preferably 8.32 or later@footnote{and not PCRE2,
+which started at version 10.0.  PCRE must be built with UTF-8 support
+(not the default) and support for Unicode properties is assumed by some
+@R{} packages.  Only the first is tested by @command{configure}, but
+both can be checked at run-time by calling @code{pcre_config()}. JIT
+support is desirable for the best performance.}) are required.
+
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
@@ -3074,11 +3085,15 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a and 5.2)
-need to be run under @command{bash} rather than a Bourne shell as on,
-say, Solaris.}  Further, the versions of @command{texi2dvi} and
-@file{texinfo.tex} need to be compatible: we have seen problems with
-older @TeX{} distributions.
+script.  Some versions (including that from from @pkg{texinfo} 5.2) need
+to be run under @command{bash} rather than a Bourne shell.}  Further,
+the versions of @command{texi2dvi} and @file{texinfo.tex} need to be
+compatible: we have seen problems with older @TeX{} distributions.
+
+@cindex Subversion
+If you want to build from the @R{} Subversion repository then
+@command{texi2any} is highly recommended as it is used to create files
+in the tarball but not under Subversion.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -3100,12 +3115,6 @@ collections @pkg{collection-latex}, @pkg{collection-fontsrecommended},
 @pkg{collection-latexextra} (assuming they are not installed by
 default): Fedora uses names like @pkg{texlive-collection-fontsextra} and
 Debian/Ubuntu like @pkg{texlive-fonts-extra}.
-
-
-@cindex Subversion
-If you want to build from the @R{} Subversion repository then
-@command{texi2any} is highly recommended as it is used to create files
-in the tarball but not under Subversion.
 
 @enindex PATH
 The essential programs should be in your @env{PATH} at the time
@@ -3176,22 +3185,6 @@ only require a basic build of @code{libtiff} (not even JPEG support is
 needed).  Recent versions allow several other libraries to be linked
 into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
-
-@c PCRE 8.10 is from June 2010, 8.32 from May 2013
-If you have them installed (including the appropriate headers and of
-suitable versions), system versions of @code{zlib} (version 1.2.5 or
-later),, @code{libbz2} (version 1.0.6 or later: called
-@pkg{bzip2-libs}/@pkg{bzip2-devel} or @pkg{libbz2-1.0}/@pkg{libbz2-dev}
-by some Linux distributions) and PCRE (version 8.10 or later, preferably
-8.32 or later@footnote{and not PCRE2, which started at version
-10.0. PCRE must be built with UTF-8 support (not the default) and
-support for Unicode properties is assumed by some @R{} packages.  Only
-the first is tested by @command{configure}, but both can be checked at
-run-time by calling @code{pcre_config()}. JIT support is desirable for
-the best performance.}): will be used, otherwise versions in the @R{}
-sources will be compiled in.  The external versions can be avoided by
-configure options @option{--without-system-zlib},
-@option{--without-system-bzlib} and @option{--without-system-pcre}.
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The current sources are in the @command{git} repository

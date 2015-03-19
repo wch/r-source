@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2013  The R Core Team
+ *  Modifications copyright (C) 2007-2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ use of tm_zone and tm_gmtoff on all platforms.
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
 
+// In theory this should be _DEFAULT_SOURCE in glibc >= 2.20
 #ifdef __GLIBC__
 // to get tm_zone, tm_gmtoff defined
 # define _BSD_SOURCE

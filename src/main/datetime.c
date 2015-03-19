@@ -40,6 +40,7 @@
 #include <Rmath.h> // Rexp10
 
 // some other header, e.g. math.h, might define it
+// In theory this should be _DEFAULT_SOURCE in glibc >= 2.20
 #if defined(__GLIBC__) && !defined(_BSD_SOURCE)
 // to get tm_zone, tm_gmtoff defined
 # define _BSD_SOURCE

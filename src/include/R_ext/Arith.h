@@ -24,7 +24,8 @@
 #define R_ARITH_H_
 
 /* Only for use where config.h has not already been included */
-/* ensure that finite and isnan are declared in glibc */
+/* ensure that finite and isnan are declared in glibc:
+   probably not needed as --std=c99 suffices */
 #if defined HAVE_FEATURES_H
 # include <features.h>
 # ifdef __GNUC_PREREQ
