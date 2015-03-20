@@ -1,6 +1,6 @@
 % File src/library/stats/man/termplot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{termplot}
@@ -117,7 +117,7 @@ termplot(model, partial.resid = TRUE, se = TRUE, main = TRUE)
 termplot(model, partial.resid = TRUE, smooth = panel.smooth, span.smth = 1/4)
 if(!had.splines && rs) detach("package:splines")
 
-if (require(MASS)) {
+if (suppressWarnings(require(MASS, quietly = TRUE))) {
     hills.lm <- lm(log(time) ~ log(climb)+log(dist), data=hills)
     termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
              terms = "log(dist)", main = "Original")
