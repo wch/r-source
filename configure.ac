@@ -2047,8 +2047,9 @@ fi
 AC_CACHE_CHECK([whether 'struct tm' includes tm_gmtoff],
                 [r_cv_have_tm_gmtoff],
 [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
-// glibc needs this defined.
+// glibc needs this defined, second for >= 2.20
 #define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #include <time.h>
 
 int main() {

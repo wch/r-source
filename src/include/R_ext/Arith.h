@@ -23,9 +23,11 @@
 #ifndef R_ARITH_H_
 #define R_ARITH_H_
 
-/* Only for use where config.h has not already been included */
-/* ensure that finite and isnan are declared in glibc:
-   probably not needed as --std=c99 suffices */
+/* 
+   This used to define _BSD_SOURCE to make declarations of finite and
+   isnan visible in glibc.  But that was deprecated in glibc 2.20, and
+   --std=c99 suffices nowadays.
+*/
 #if defined HAVE_FEATURES_H
 # include <features.h>
 # ifdef __GNUC_PREREQ

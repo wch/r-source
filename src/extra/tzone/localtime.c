@@ -38,10 +38,18 @@ use of tm_zone and tm_gmtoff on all platforms.
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
 
-// In theory this should be _DEFAULT_SOURCE in glibc >= 2.20
-#ifdef __GLIBC__
-// to get tm_zone, tm_gmtoff defined
-# define _BSD_SOURCE
+// to get tm_zone, tm_gmtoff defined in glibc.
+// some other header, e.g. math.h, might define the macro.
+#if defined HAVE_FEATURES_H
+# include <features.h>
+# ifdef __GNUC_PREREQ
+#  if __GNUC_PREREQ(2,20) && !defined(_DEFAULT_SOURCE_)
+#   define _DEFAULT_SOURCE 1
+#  endif
+# endif
+#endif
+#if defined(HAVE_GLIBC2) && !defined(_DEFAULT_SOURCE_) && !defined(_BSD_SOURCE)
+# define _BSD_SOURCE 1
 #endif
 #include <time.h>
 
