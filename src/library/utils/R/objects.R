@@ -123,13 +123,14 @@ function(generic.function, class, envir=parent.frame())
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
         ## check that these are all functions
         ## might be none at this point
-        if(nrow(info)) {
-            if (warn.not.generic)
-                warning(gettextf("function '%s' appears not to be S3 generic; found functions that look like S3 methods",
-                                 generic.function), domain = NA)
+	if(nrow(info)) {
 	    keep <- vapply(row.names(info), exists, logical(1), mode="function")
-            info <- info[keep, ]
-        }
+	    info <- info[keep, ]
+	}
+	if(warn.not.generic && nrow(info))
+	    warning(gettextf(
+	"function '%s' appears not to be S3 generic; found functions that look like S3 methods",
+			     generic.function), domain = NA)
 
         ## also look for registered methods from namespaces
         ## we assume that only functions get registered.
