@@ -18,8 +18,7 @@
 
 ## findGeneric(fname) :  is 'fname' the name of an S3 generic ?
 ##			[unexported function used only in this file]
-findGeneric <-
-function(fname, envir)
+findGeneric <- function(fname, envir, warnS4only = TRUE)
 {
     if(!exists(fname, mode = "function", envir = envir)) return("")
     f <- get(fname, mode = "function", envir = envir)
@@ -35,7 +34,7 @@ function(fname, envir)
         r <- meths[grep("^ANY\\b", names(meths))]
 	if(any(ddm <- vapply(r, is, logical(1L), "derivedDefaultMethod")))
 	    f <- r[ddm][[1]]@.Data
-	else
+	else if(warnS4only)
 	    warning(gettextf(
 	"'%s' is a formal generic function; S3 methods will not likely be found",
 			     fname), domain = NA)
@@ -90,6 +89,7 @@ function(generic.function, class, envir=parent.frame())
     S3MethodsStopList <- tools:::.make_S3_methods_stop_list(NULL)
     knownGenerics <- getKnownS3generics()
     sp <- search()
+    methods.called <- identical(sys.call(-1)[[1]], as.symbol("methods"))
     an <- lapply(seq_along(sp), ls)
     names(an) <- sp
     an <- unlist(an)
@@ -108,7 +108,7 @@ function(generic.function, class, envir=parent.frame())
                  domain = NA)
         warn.not.generic <- FALSE
         if(!any(generic.function == knownGenerics)) {
-            truegf <- findGeneric(generic.function, envir)
+	    truegf <- findGeneric(generic.function, envir, warnS4only = !methods.called)
             if(truegf == "")
                 warn.not.generic <- TRUE
             else if(truegf != generic.function) {
@@ -125,10 +125,9 @@ function(generic.function, class, envir=parent.frame())
         ## might be none at this point
         if(nrow(info)) {
             if (warn.not.generic)
-                warning(gettextf("function '%s' appears not to be an S3 generic",
+                warning(gettextf("function '%s' appears not to be S3 generic; found functions that look like S3 methods",
                                  generic.function), domain = NA)
-            keep <- sapply(row.names(info),
-                           function(nm) exists(nm, mode="function"))
+	    keep <- vapply(row.names(info), exists, logical(1), mode="function")
             info <- info[keep, ]
         }
 
@@ -164,13 +163,15 @@ function(generic.function, class, envir=parent.frame())
         if(nrow(info)) {
             ## check if we can find a generic matching the name
             possible.generics <- gsub(name, "", row.names(info))
-            keep <- sapply(possible.generics, function(nm) {
+            keep <- vapply(possible.generics, function(nm) {
                 if(nm %in% knownGenerics) return(TRUE)
                 where <- find(nm, mode = "function")
-                if(!length(where)) return(FALSE)
-                any(sapply(where, function(w)
-                           nzchar(findGeneric(nm, envir=as.environment(w)))))
-            })
+		if(length(where))
+		    any(vapply(where, function(w)
+			nzchar(findGeneric(nm, envir=as.environment(w))),
+			       logical(1)))
+		else FALSE
+	    }, logical(1))
             info <- info[keep, ]
         }
 
@@ -184,7 +185,7 @@ function(generic.function, class, envir=parent.frame())
         ## now methods like print.summary.aov will be picked up,
         ## so we do look for such mismatches.
         if(length(S3reg))
-            S3reg <- S3reg[sapply(gsub(name, "", S3reg), exists)]
+            S3reg <- S3reg[vapply(gsub(name, "", S3reg), exists, NA)]
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg = "registered S3method")
     }
