@@ -4800,8 +4800,8 @@ path: see its help page.
 @section CITATION files
 
 An installed file named @file{CITATION} will be used by the
-@code{citation()} function.  (To be installed, it needed to be in the
-@file{inst} subdirectory of the package sources.)
+@code{citation()} function.  (It should be in the @file{inst}
+subdirectory of the package sources.)
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
 declared encoding, or in @acronym{ASCII} if none is declared).  If no
@@ -4833,9 +4833,13 @@ bibentry(bibtype = "Manual",
 @end example
 
 Note the way that information that may need to be updated is picked up
-from the @file{DESCRIPTION} file -- it is tempting to hardcode such
-information, but it normally then gets outdated.  See @code{?bibentry}
-for further details of the information which can be provided.
+from object @code{meta}, a parsed version of the @file{DESCRIPTION}
+file@footnote{this object is available since @R{} 2.8.0, so the
+@samp{Depends} field in the @file{DESCRIPTION} file should contain
+something at least as restrictive as @samp{R (>= 2.8}.} -- it is
+tempting to hardcode such information, but it normally then gets
+outdated.  See @code{?bibentry} for further details of the information
+which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
@@ -4855,6 +4859,10 @@ argument to @code{bibentry}.  E.g., earlier versions of
 The @file{CITATION} file should itself produce no output when
 @code{source}-d.
 
+It is desirable (and essential for @acronym{CRAN}) that the
+@file{CITATION} file does not contain calls to functions such as
+@code{packageDescription} which assume the package is installed in a
+library tree on the package search path.
 
 @node Package types, Services, CITATION files, Creating R packages
 @section Package types
