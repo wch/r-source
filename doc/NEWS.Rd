@@ -9,7 +9,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The included versions of \code{zlib}, \code{bzip2},
-      \code{xz} and PCRE have been removed.
+      \code{xz} and PCRE have been removed, so system versions are
+      required (see the \sQuote{R Installation and Administration} manual).
     }
   }
 }

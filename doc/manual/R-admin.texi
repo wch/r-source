@@ -3049,7 +3049,7 @@ functions@footnote{including the @code{opendir}, @code{readdir},
 @code{realpath}, @code{symlink}.} will be used if available.
 
 @c PCRE 8.10 is from June 2010, 8.32 from May 2013
-Installations of @code{zlib} (version 1.2.5 or later),, @code{libbz2}
+Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 (version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
 @pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions),
 @code{liblzma}@footnote{most often distributed as part of @code{xz}:
@@ -4612,7 +4612,9 @@ You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
 with @option{--without-readline}), and a Fortran compiler.  Those and
 other binary components are available from
-@uref{http://r.research.att.com/libs}.
+@uref{http://r.research.att.com/libs}: you are likely to need
+@code{pcre} and @code{xz} (recent OS X provides libs but not headers for
+these).
 
 You may also need to install an X sub-system (or you will need to
 configure using option @option{--without-x}): X is part of the standard
@@ -4706,11 +4708,10 @@ the @acronym{CRAN} build is configured with @option{--disable-openmp}.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
-most likely want at least @code{pcre}, @code{xz}, @code{jpeg},
-@code{libpng} and @code{readline} (and perhaps @code{tiff}).
-@code{pkg-config} is not provided by Apple and useful for many packages:
-it will also be used if present when configuring the @code{X11()}
-device.
+most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
+(and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
+and useful for many packages: it will also be used if present when
+configuring the @code{X11()} device.
 
 Recent versions of OS X ship with @code{zlib} version 1.2.8 and
 @code{bzlib} version 1.0.6, sufficient for the default
