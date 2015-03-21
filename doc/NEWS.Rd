@@ -389,7 +389,8 @@
 
        Linux users should check that the \code{-devel} or \code{-dev}
        versions of packages \pkg{zlib}, \pkg{bzip2}/\pkg{libbz2} and
-       \pkg{pcre} (or similar names) are installed.
+       \pkg{pcre} as well as \pkg{xz-devel}/\pkg{liblzma-dev} (or
+       similar names) are installed.
 
        \item \command{configure} by default looks for the
        \command{texi2any} script from \pkg{texinfo} 5.1 or later, rather
