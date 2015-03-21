@@ -331,10 +331,10 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 
 %%
 
-prog	:	END_OF_INPUT			{ return 0; }
-	|	'\n'				{ return xxvalue(NULL,2,NULL); }
-	|	expr_or_assign '\n'			{ return xxvalue($1,3,&@1); }
-	|	expr_or_assign ';'			{ return xxvalue($1,4,&@1); }
+prog	:	END_OF_INPUT			{ YYACCEPT; }
+	|	'\n'				{ yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
+	|	expr_or_assign '\n'			{ yyresult = xxvalue($1,3,&@1);	goto yyreturn; }
+	|	expr_or_assign ';'			{ yyresult = xxvalue($1,4,&@1);	goto yyreturn; }
 	|	error	 			{ YYABORT; }
 	;
 
