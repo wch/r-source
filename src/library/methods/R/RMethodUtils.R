@@ -1707,8 +1707,7 @@ if(FALSE) {
         classi <- classes[[i]]
         pkgi <- pkgs[[i]]
         classDefi <- getClass(classi, where = where)
-        if(checkDups &&
-           classi %in% mulipleClasses()) { # hardly ever, we hope
+        if(checkDups && classi %in% multipleClasses()) { # hardly ever, we hope
             clDefsi <- get(classi, envir = .classTable)
             if(nzchar(pkgi) && pkgi %in% names(clDefsi))
                 ## use the chosen class, no message
