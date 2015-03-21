@@ -21,7 +21,7 @@ sink.number(type = c("output", "message"))
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
   \item{type}{character string.  Either the output stream or the messages
-    stream.}
+    stream.  The name will be partially matched so can be abbreviated.}
   \item{split}{logical: if \code{TRUE}, output will be sent to the new
     sink and to the current output stream, like the Unix program \code{tee}.}
 }
