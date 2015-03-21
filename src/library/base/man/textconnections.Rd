@@ -28,7 +28,7 @@ textConnectionValue(con)
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
-  \item{encoding}{character string.  Used only for input connections.  How
+  \item{encoding}{character string, partially matched.  Used only for input connections.  How
     marked strings in \code{object} should be handled: converted to the
     current locale, used byte-by-byte or translated to UTF-8.}
   \item{con}{An output text connection.}

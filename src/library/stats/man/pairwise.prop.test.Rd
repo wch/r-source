@@ -18,7 +18,7 @@ pairwise.prop.test(x, n, p.adjust.method = p.adjust.methods, ...)
    giving the counts of successes and failures, respectively. }
  \item{n}{ Vector of counts of trials; ignored if \code{x} is a matrix.}
  \item{p.adjust.method}{Method for adjusting p values
-   (see \code{\link{p.adjust}}) }
+   (see \code{\link{p.adjust}}).  Can be abbreviated. }
  \item{\dots}{ Additional arguments to pass to \code{prop.test} }
 }
 \value{

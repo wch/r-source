@@ -23,7 +23,7 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   \item{p2}{probability in other group}
   \item{sig.level}{significance level (Type I error probability)}
   \item{power}{power of test (1 minus Type II error probability)}
-  \item{alternative}{one- or two-sided test}
+  \item{alternative}{one- or two-sided test.  Can be abbreviated.}
   \item{strict}{use strict interpretation in two-sided case}
   \item{tol}{numerical tolerance used in root finding, the default
     providing (at least) four significant digits.}

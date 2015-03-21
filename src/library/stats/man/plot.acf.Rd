@@ -35,7 +35,7 @@
   \item{main}{overall title for the plot.}
   \item{ci.col}{colour to plot the confidence interval lines.}
   \item{ci.type}{should the confidence limits assume a white noise
-    input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
+    input or for lag \eqn{k} an MA(\eqn{k-1}) input?   Can be abbreviated.}
   \item{max.mfrow}{positive integer; for multivariate \code{x}
     indicating how many rows and columns of plots should be put on one
     page, using \code{\link{par}(mfrow = c(m,m))}.}

@@ -20,7 +20,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 
   \item{type}{the class of structural model.  If omitted, a BSM is used
     for a time series with \code{frequency(x) > 1}, and a local trend
-    model otherwise.}
+    model otherwise.  Can be abbreviated.}
 
   \item{init}{initial values of the variance parameters.}
 

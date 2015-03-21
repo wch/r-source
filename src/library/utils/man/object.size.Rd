@@ -24,7 +24,7 @@ object.size(x)
   \item{units}{The units to be used in printing the size.  Allowed
     values are \code{"b"}, \code{"Kb"}, \code{"Mb"}, \code{"Gb"},
     \code{"B"}, \code{"KB"}, \code{"MB"}, \code{"GB"}, and \code{"auto"}
-    (see \sQuote{Details}).} 
+    (see \sQuote{Details}).  Can be abbreviated.} 
   \item{\dots}{Arguments to be passed to or from other methods.}
 }
 \details{

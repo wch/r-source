@@ -98,7 +98,7 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     (\code{big.mark} or \code{small.mark}) are added.  \code{"common"},
     the default, corresponds to \code{\link{format}}-like behavior
     whereas \code{"individual"} is the default in
-    \code{formatC()}.}
+    \code{formatC()}. Value can be abbreviated.}
   \item{zero.print}{logical, character string or \code{NULL} specifying
     if and how \emph{zeros} should be formatted specially.  Useful for
     pretty printing \sQuote{sparse} objects.}

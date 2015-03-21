@@ -18,11 +18,11 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
     convolved.}
   \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
     before back-transforming (default, and used for usual convolution).}
-  \item{type}{character; one of \code{"circular"}, \code{"open"},
-    \code{"filter"} (beginning of word is ok).  For \code{circular}, the
+  \item{type}{character; partially matched to \code{"circular"}, \code{"open"},
+    \code{"filter"}.  For \code{"circular"}, the
     two sequences are treated as \emph{circular}, i.e., periodic.
 
-    For \code{open} and \code{filter}, the sequences are padded with
+    For \code{"open"} and \code{"filter"}, the sequences are padded with
     \code{0}s (from left and right) first; \code{"filter"} returns the
     middle sub-vector of \code{"open"}, namely, the result of running a
     weighted mean of \code{x} with weights \code{y}.}

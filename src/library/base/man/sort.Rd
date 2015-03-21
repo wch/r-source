@@ -35,7 +35,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
   \item{partial}{\code{NULL} or a  vector of indices for partial sorting.}
   \item{method}{character string specifying the algorithm used.  Not
-    available for partial sorting.}
+    available for partial sorting.  Can be abbreviated.}
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
     \code{na.last = NA} and full sorting of non-factors.}

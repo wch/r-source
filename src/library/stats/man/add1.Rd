@@ -55,6 +55,7 @@ drop1(object, scope, \dots)
     \code{"Rao"} for likelihood ratio tests and Rao's efficient score test.
     The former is synonymous with \code{"Chisq"} (although both have
     an asymptotic chi-square distribution).
+    Values can be abbreviated.
     }
   \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
   \item{trace}{if \code{TRUE}, print out progress reports.}

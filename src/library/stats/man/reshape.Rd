@@ -37,8 +37,6 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{v.names}{names of variables in the long format that correspond
     to multiple variables in the wide format.  See \sQuote{Details}.}
   \item{timevar}{the variable in long format that differentiates multiple
-    records from the same group or individual.  If more than one record
-    matches, the first will be taken (with a warning). }
   \item{idvar}{Names of one or more variables in long format that
     identify multiple records from the same group/individual.  These
     variables may also be present in wide format.}
@@ -47,7 +45,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{times}{the values to use for a newly created \code{timevar}
     variable in long format.  See \sQuote{Details}.}
   \item{drop}{a vector of names of variables to drop before reshaping.}
-  \item{direction}{character string, either \code{"wide"} to reshape to
+  \item{direction}{character string, parially matched to either \code{"wide"} to reshape to
     wide format, or \code{"long"} to reshape to long format.}
   \item{new.row.names}{character or \code{NULL}: a non-null value will be
     used for the row names of the result.}

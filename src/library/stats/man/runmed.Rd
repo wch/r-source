@@ -26,6 +26,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
     isolated outliers.}
   \item{endrule}{character string indicating how the values at the
     beginning and the end (of the data) should be treated.
+    Can be abbreviated.  Possible values are:
     \describe{
       \item{\code{"keep"}}{keeps the first and last \eqn{k_2}{k2} values
         at both ends, where \eqn{k_2}{k2} is the half-bandwidth

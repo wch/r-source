@@ -157,9 +157,11 @@ truncate.connection <- function(con, ...)
     .Internal(truncate(con))
 }
 
-pushBack <- function(data, connection, newLine = TRUE, encoding = c("", "bytes", "UTF-8")) {
+pushBack <- function(data, connection, newLine = TRUE,
+                     encoding = c("", "bytes", "UTF-8"))
+{
     # match.arg doesn't work on "" default
-    if (length(encoding) > 1) encoding <- encoding[1]
+    if (length(encoding) > 1L) encoding <- encoding[1]
     if (nchar(encoding)) encoding <- match.arg(encoding)
     type <- match(encoding, c("", "bytes", "UTF-8"))
     .Internal(pushBack(data, connection, newLine, type))

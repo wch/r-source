@@ -28,6 +28,7 @@ RSiteSearch(string,
     search.  If the words are to be searched as one entity, enclose all
     words in braces (see the first example).}
   \item{restrict}{a character vector, typically of length greater than one.
+    Values can be abbreviated.
     Possible areas to search in:
     \code{functions} for help pages,
     \code{views} for task views and

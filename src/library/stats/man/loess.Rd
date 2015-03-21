@@ -50,8 +50,8 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     coordinate predictors and others know to be a common scale.}
   \item{family}{if \code{"gaussian"} fitting is by least-squares, and if
     \code{"symmetric"} a re-descending M estimator is used with Tukey's
-    biweight function.}
-  \item{method}{fit the model or just extract the model frame.}
+    biweight function.  Can be abbreviated.}
+  \item{method}{fit the model or just extract the model frame.  Can be abbreviated.}
   \item{control}{control parameters: see \code{\link{loess.control}}.}
   \item{\dots}{control parameters can also be supplied directly.}
 }

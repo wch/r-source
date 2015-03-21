@@ -32,7 +32,7 @@ getSrcLocation(x, which = c("line", "column", "byte", "parse"),
     Whether to list only unique filenames/directories.
   }
   \item{which}{
-    Which part of a source reference to extract.
+    Which part of a source reference to extract.  Can be abbreviated.
   }
   \item{first}{
     Whether to show the first (or last) location of the object.
