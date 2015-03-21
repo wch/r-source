@@ -50,7 +50,7 @@ write.ftable(x, file = "", quote = TRUE, append = FALSE,
     use for (the cell entries of) \code{x}.}
   \item{method}{string specifying how the \code{"ftable"} object is formatted
     (and printed if used as in \code{write.ftable()} or the \code{print}
-    method).  Available methods are (see the examples):
+    method).  Can be abbreviated.  Available methods are (see the examples):
     \describe{
       \item{"non.compact"}{the default representation of an
         \code{"ftable"} object.}

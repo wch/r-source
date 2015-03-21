@@ -20,8 +20,8 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
 \arguments{
   \item{filename}{Name of a file produced by \code{Rprof()}.}
   \item{chunksize}{Number of lines to read at a time.}
-  \item{memory}{Summaries for memory information.  See \sQuote{Memory profiling} below.}
-  \item{lines}{Summaries for line information.  See \sQuote{Line profiling} below.}
+  \item{memory}{Summaries for memory information.  See \sQuote{Memory profiling} below.   Can be abbreviated.}
+  \item{lines}{Summaries for line information.  See \sQuote{Line profiling} below.   Can be abbreviated.}
   \item{index}{How to summarize the stack trace for memory
     information.  See \sQuote{Details} below.}
   \item{diff}{If \code{TRUE} memory summaries use change in memory

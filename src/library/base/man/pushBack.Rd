@@ -23,7 +23,7 @@ clearPushBack(connection)
   \item{connection}{A \link{connection}.}
   \item{newLine}{logical.  If true, a newline is appended to each string
     pushed back.}
-  \item{encoding}{character.  See details.}
+  \item{encoding}{character string, partially matched.  See details.}
 }
 \details{
   Several character strings can be pushed back on one or more occasions.

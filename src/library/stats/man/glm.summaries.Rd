@@ -18,7 +18,8 @@
     a call to \code{\link{glm}}.}
   \item{type}{the type of residuals which should be returned.
     The alternatives are: \code{"deviance"} (default), \code{"pearson"},
-    \code{"working"}, \code{"response"}, and \code{"partial"}.}
+    \code{"working"}, \code{"response"}, and \code{"partial"}.
+    Can be abbreviated.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

@@ -16,7 +16,7 @@
   \item{x}{an object containing a \code{sdev} component, such as that
     returned by \code{\link{princomp}()} and \code{\link{prcomp}()}.}
   \item{npcs}{the number of components to be plotted.}
-  \item{type}{the type of plot.}
+  \item{type}{the type of plot.  Can be abbreviated.}
   \item{main, \dots}{graphics parameters.}
 }
 \description{

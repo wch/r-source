@@ -64,7 +64,7 @@ arima(x, order = c(0L, 0L, 0L),
   \item{method}{fitting method: maximum likelihood or minimize
     conditional sum-of-squares.  The default (unless there are missing
     values) is to use conditional-sum-of-squares to find starting
-    values, then maximum likelihood.}
+    values, then maximum likelihood.  Can be abbreviated.}
 
   \item{n.cond}{only used if fitting by conditional-sum-of-squares: the
     number of initial observations to ignore.  It will be ignored if
@@ -72,7 +72,7 @@ arima(x, order = c(0L, 0L, 0L),
 
   \item{SSinit}{a string specifying the algorithm to compute the
     state-space initialization of the likelihood; see
-    \code{\link{KalmanLike}} for details.}
+    \code{\link{KalmanLike}} for details.   Can be abbreviated.}
 
   \item{optim.method}{The value passed as the \code{method} argument to
     \code{\link{optim}}.}

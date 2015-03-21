@@ -18,7 +18,7 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \item{x}{A univariate or multivariate time series.}
   \item{method}{String specifying the method used to estimate the
     spectral density.  Allowed methods are \code{"pgram"} (the default)
-    and \code{"ar"}.}
+    and \code{"ar"}.  Can be abbreviated.}
   \item{\dots}{Further arguments to specific spec methods or
     \code{plot.spec}.}
 }

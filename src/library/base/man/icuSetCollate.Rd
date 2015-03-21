@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-2014 R Core Team
+% Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -20,8 +20,8 @@ icuGetCollate(type = c("actual", "valid"))
 }
 \arguments{
   \item{\dots}{Named arguments, see \sQuote{Details}.}
-  \item{type}{either the actual locale in use for collation or the most
-    specific locale which would be valid.}
+  \item{type}{character string: can be abbreviated.  Either the actual locale
+    in use for collation or the most specific locale which would be valid.}
 }
 \details{
   Optionally, \R can be built to collate character strings by ICU

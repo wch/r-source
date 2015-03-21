@@ -76,6 +76,8 @@ ppr(x, \dots)
     the smoothing spline code underlying \code{smooth.spline}, either with a
     specified (equivalent) degrees of freedom for each ridge functions, or
     to allow the smoothness to be chosen by GCV.
+
+    Can be abbreviated.
   }
   \item{bass}{
     super smoother bass tone control used with automatic span selection

@@ -20,8 +20,8 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
  \item{sd}{standard deviation}
  \item{sig.level}{significance level (Type I error probability)}
  \item{power}{power of test (1 minus Type II error probability)}
- \item{type}{string specifying the type of t test}
- \item{alternative}{one- or two-sided test}
+ \item{type}{string specifying the type of t test.  Can be abbreviated.}
+ \item{alternative}{one- or two-sided test.  Can be abbreviated.}
  \item{strict}{use strict interpretation in two-sided case}
   \item{tol}{numerical tolerance used in root finding, the default
     providing (at least) four significant digits.}

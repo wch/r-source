@@ -17,7 +17,7 @@ pairwise.table(compare.levels, level.names, p.adjust.method)
  \item{compare.levels}{ Function to compute (raw) p value given indices
    \code{i} and \code{j} }
  \item{level.names}{ Names of the group levels}
- \item{p.adjust.method}{Method for multiple testing adjustment}
+ \item{p.adjust.method}{Method for multiple testing adjustment.  Can be abbreviated.}
 }
 \details{
   Functions that do multiple group comparisons create separate

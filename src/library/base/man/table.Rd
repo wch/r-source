@@ -42,7 +42,7 @@ is.table(x)
     If set to \code{NULL}, it implies \code{useNA = "always"}.  See
     \sQuote{Details} for its interpretation for non-factor arguments.}
   \item{useNA}{whether to include \code{NA} values in the table.
-    See \sQuote{Details}.}
+    See \sQuote{Details}.  Can be abbreviated.}
   \item{dnn}{the names to be given to the dimensions in the result (the
     \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is

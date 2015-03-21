@@ -112,7 +112,7 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \item{object}{an object inheriting from class \code{"glm"}.}
   \item{type}{character, partial matching allowed.  Type of weights to
-    extract from the fitted model object.}
+    extract from the fitted model object.  Can be abbreviated.}
 
   \item{\dots}{
     For \code{glm}: arguments to be used to form the default
