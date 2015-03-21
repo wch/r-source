@@ -36,7 +36,7 @@ compactPDF(paths,
   \item{gs_quality}{A character string indicating the quality required:
     the options are \code{"none"} (so GhostScript is not used),
     \code{"printer"} (300dpi), \code{"ebook"} (150dpi) and
-    \code{"screen"} (72dpi).}
+    \code{"screen"} (72dpi).  Can be abbreviated.}
   \item{gs_extras}{An optional character vector of further options to be
     passed to GhostScript.}
   \item{x}{An object of class \code{"compactPDF"}.}

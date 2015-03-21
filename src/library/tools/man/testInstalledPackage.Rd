@@ -40,7 +40,7 @@ testInstalledBasic(scope = c("basic", "devel", "both", "internet"))
     passed to \command{R CMD BATCH} when running examples or tests.}
   \item{\dots}{additional arguments use when preparing the files to be
     run, e.g.\sspace{}\code{commentDontrun} and \code{commentDonttest}.}
-  \item{scope}{Which set(s) should be tested?}
+  \item{scope}{Which set(s) should be tested?  Can be abbreviated.}
 }
 \details{
   These tests depend on having the package example files installed (which
