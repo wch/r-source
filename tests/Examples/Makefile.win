@@ -36,7 +36,7 @@ test-Examples-Recommended: test-Examples-Base
 
 mostlyclean: clean
 clean:
-	-@rm -f *.R *.Rout *.Rd* *.pdf *.tex *.dat* data foo* ex*.gz
+	-@rm -f *.R *.R-cnt *.Rout *.Rd* *.pdf *.tex *.dat* data foo* ex*.gz
 distclean: clean
 	-@rm -f *.R*bak *.R*bakk *.R*prev .RData sink-examp.txt
 

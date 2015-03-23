@@ -49,7 +49,7 @@ test-Examples-Recommended: test-Examples-Base
 
 mostlyclean: clean
 clean:
-	-@rm -f *.R *.Rout *.Rd* *.pdf *.tex *.dat* data foo* ex*.gz Makedeps
+	-@rm -f *.R *.R-cnt *.Rout *.Rd* *.pdf *.tex *.dat* data foo* ex*.gz Makedeps
 distclean: clean
 	-@rm -f *.R*prev .RData sink-examp.txt Makefile
 maintainer-clean: distclean
