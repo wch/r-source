@@ -71,7 +71,7 @@ clean:
 	  reg-examples-*.pdf  testCID.* \
 	  reg-plot-latin1.ps reg-plot.ps \
 	  reg-plot-latin1.pdf reg-plot.pdf reg-tests-*.pdf \
-	  R-exts.* R-intro.R 
+	  R-exts.* R-intro.R no-segfault.R
 	@rm -f R-exts_res.rc Makedeps
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
