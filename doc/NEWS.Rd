@@ -443,9 +443,9 @@
 	needs \command{pandoc} installed.
 
 	\item checks the existence and accessibility of URLs in the
-	\file{DESCRIPTION}, \file{CITATION} and \file{NEWS.Rd} files and
-	in the help files (provided the build has \code{libcurl}
-	support).
+	\file{DESCRIPTION}, \file{CITATION}, \file{NEWS.Rd} and
+	\file{README.md} files and in the help files (provided the build
+	has \code{libcurl} support).
 
 	\item reports non-ASCII characters in R source files when there
 	is no package encoding declared in the \file{DESCRIPTION} file.
