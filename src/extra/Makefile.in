@@ -56,7 +56,7 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	-@rm -f Makefile
+	-@rm -f Makefile tzone/Makefile
 maintainer-clean: distclean
 
 install install-strip:
