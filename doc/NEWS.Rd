@@ -360,9 +360,9 @@
       S3 and S4 methods separately.
 
       \item Higher order functions such as the \code{apply} functions
-      and \code{Reduce} now force arguments to the functions they apply
+      and \code{Reduce()} now force arguments to the functions they apply
       in order to eliminate undesirable interactons between lazy
-      evaluation and variable capture in closures. This resolves
+      evaluation and variable capture in closures.  This resolves
       \PR{16093}.
     }
   }
@@ -437,32 +437,34 @@
       \item \command{R CMD check} now checks that the \samp{Title} and
       \samp{Description} fields are correctly terminated.
 
-      \item \command{R CMD check --as-cran} checks a \file{README.md}
-      file can be processed: this needs \command{pandoc} installed.
+      \item \command{R CMD check --as-cran} now:
+      \itemize{
+	\item checks a \file{README.md} file can be processed: this
+	needs \command{pandoc} installed.
 
-      \item \command{R CMD check --as-cran} checks the existence and
-      accessibility of URLs in the \file{DESCRIPTION}, \file{CITATION}
-      and \file{NEWS.Rd} files and in the help files.
+	\item checks the existence and accessibility of URLs in the
+	\file{DESCRIPTION}, \file{CITATION} and \file{NEWS.Rd} files and
+	in the help files (provided the build has \code{libcurl}
+	support).
 
-      \item \command{R CMD check --as-cran} reports non-ASCII characters
-      in R source files when there is no package encoding declared in
-      the \file{DESCRIPTION} file.
+	\item reports non-ASCII characters in R source files when there
+	is no package encoding declared in the \file{DESCRIPTION} file.
 
-      \item \command{R CMD check --as-cran} reports (apparent) S3
-      methods exported but not registered.
+	\item reports (apparent) S3 methods exported but not registered.
 
-      It reports overwriting registered S3 methods from base/recommended
-      packages.  (Such methods are replaced in the affected package for
-      the rest of the session, even if the replacing namespace is
-      unloaded.)
+	\item reports overwriting registered S3 methods from
+	base/recommended packages.  (Such methods are replaced in the
+	affected package for the rest of the session, even if the
+	replacing namespace is unloaded.)
 
-      These checks can also be selected by environment variables: see
-      the \sQuote{R Internals} manual.
-
-      \item \command{R CMD check --as-cran} reports if the \code{Title}
-      field does not appear to be in title case (see \sQuote{Writing R
-      Extensions}: there may be false positives, but note that
-      technical words should be single-quoted and will then be accepted).
+	\item reports if the \code{Title} field does not appear to be in
+	title case (see \sQuote{Writing R Extensions}: there may be
+	false positives, but note that technical words should be
+	single-quoted and will then be accepted).
+      }
+      
+      Most of these checks can also be selected by environment
+      variables: see the \sQuote{R Internals} manual.
     }
   }
 
