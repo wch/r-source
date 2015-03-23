@@ -1,6 +1,6 @@
 % File src/library/base/man/Version.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{R.Version}
@@ -31,7 +31,7 @@ version
   \item{arch}{the architecture (CPU) \R was built on/for.}
   \item{os}{the underlying operating system.}
   \item{system}{CPU and OS, separated by a comma.}
-  \item{status}{the status of the version (e.g., \code{"Alpha"})}
+  \item{status}{the status of the version (e.g., \code{"alpha"})}
   \item{major}{the major version number}
   \item{minor}{the minor version number, including the patchlevel}
   \item{year}{the year the version was released}
@@ -63,7 +63,7 @@ version
   This gives details of the OS under which \R was built, not the one
   under which it is currently running (for which see
   \code{\link{Sys.info}}).
-  
+
   Note that OS names might not be what you expect: for example OS X
   Mavericks 10.9.4 identifies itself as \samp{darwin13.3.0}, Linux
   usually as \samp{linux-gnu} and Solaris 10 as \samp{solaris2.10}.
