@@ -191,6 +191,9 @@ utils::globalVariables(".addBasicGeneric")
     setGeneric("norm", function(x, type, ...) standardGeneric("norm"),
 	       useAsDefault = function(x, type, ...) base::norm(x, type, ...),
 	       signature = c("x", "type"), where = where)
+    ## this method *belong*s to the generic:
+    setMethod("norm", signature(x = "ANY", type = "missing"),
+              function (x, type, ...) norm(x, type = "O", ...))
     setGenericImplicit("norm", where, FALSE)
 
     setGeneric("backsolve", function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)
@@ -226,6 +229,15 @@ utils::globalVariables(".addBasicGeneric")
     setGenericImplicit("colSums",  where, FALSE)
     setGenericImplicit("rowMeans", where, FALSE)
     setGenericImplicit("rowSums",  where, FALSE)
+
+    setGeneric("crossprod", function(x, y = NULL, ...) standardGeneric("crossprod"),
+	       useAsDefault = function(x, y = NULL, ...) base::crossprod(x, y),
+	       signature = c("x", "y"), where = where)
+    setGeneric("tcrossprod", function(x, y = NULL, ...) standardGeneric("tcrossprod"),
+	       useAsDefault = function(x, y = NULL, ...) base::tcrossprod(x, y),
+	       signature = c("x", "y"), where = where)
+    setGenericImplicit("crossprod",  where, FALSE)
+    setGenericImplicit("tcrossprod",  where, FALSE)
 
     setGeneric("sample", function(x, size, replace = FALSE, prob = NULL, ...)
 			standardGeneric("sample"),
