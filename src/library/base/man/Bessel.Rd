@@ -50,7 +50,7 @@ besselY(x, nu)
   \code{besselK} which is symmetric in \code{nu}.
 
   The current algorithms will give warnings about accuracy loss for
-  large arguments.  In some cases, these warnings are exagerated, and
+  large arguments.  In some cases, these warnings are exaggerated, and
   the precision is perfect.  For large \code{nu}, say in the order of
   millions, the current algorithms are rarely useful.
 }

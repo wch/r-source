@@ -5715,7 +5715,7 @@ Indicate a hyperlink to the World Wide Web. The first argument is
 handled as `verbatim' text (with percent and braces escaped by
 backslash) and is used as the @acronym{URL} in the hyperlink, with the
 second argument of @LaTeX{}-like text displayed to the user.  Linefeeds
-are removed from the first arguemnt, and as from @R{} 3.2.0 leading and
+are removed from the first argument, and as from @R{} 3.2.0 leading and
 trailing whitespace is removed.
 
 Note that RFC3986-encoded URLs (e.g.@: using @samp{\%28VS.85\%29} in
