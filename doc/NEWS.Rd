@@ -361,7 +361,7 @@
 
       \item Higher order functions such as the \code{apply} functions
       and \code{Reduce()} now force arguments to the functions they apply
-      in order to eliminate undesirable interactons between lazy
+      in order to eliminate undesirable interactions between lazy
       evaluation and variable capture in closures.  This resolves
       \PR{16093}.
     }
