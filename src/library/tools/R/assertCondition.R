@@ -50,7 +50,7 @@ assertCondition <-
                     found <-
                         unique(sapply(res, function(cond) class(cond)[class(cond) %in% conds]))
                     message(sprintf("assertCondition: caught %s",
-                                    paste(dQuote(found), collapse =", ")))
+                                    paste(dQuote(found), collapse =", ")), domain = NA)
                 }
 		invisible(res)
             }

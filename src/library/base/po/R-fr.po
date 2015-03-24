@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 11:51\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -802,12 +802,9 @@ msgid "%s not found on search path, using pos = 2"
 msgstr ""
 "%s n'est pas trouvé dans le chemin de recherche, utilisation de pos = 2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "l'espace de noms %s ne peut être déchargé :"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "la package %s n'est pas chargé"
 
 msgid "package or namespace load failed for %s"
 msgstr "le chargement du package ou de l'espace de noms a échoué pour %s"
@@ -1178,10 +1175,6 @@ msgstr "impossible d'ajouter aux exportations d'un espace de noms verrouillé"
 
 msgid "undefined exports: %s"
 msgstr "exportations non définies : %s"
-
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "l'objet %s n'est pas exporté par 'namespace:%s'"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "le package %s n'a aucun fichier 'NAMESPACE'"
@@ -1799,6 +1792,14 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "l'espace de noms %s ne peut être déchargé :"
+
+#, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr "l'objet %s n'est pas exporté par 'namespace:%s'"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "le package %s %s est trouvé, mais %s %s est réquis par %s"

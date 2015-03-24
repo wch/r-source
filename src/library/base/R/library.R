@@ -294,7 +294,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     	# No, so try to unload the previous one
                     	res <- try(unloadNamespace(package))
                     	if (inherits(res, "try-error"))
-                    	    stop(dQuote(package), " version ", oldversion, " cannot be unloaded.")
+                    	    stop(gettextf("Package %s version %s cannot be unloaded", sQuote(package), oldversion, domain = "R-base"))
                     }
                 }
                 tt <- try({

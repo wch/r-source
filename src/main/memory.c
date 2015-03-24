@@ -3126,7 +3126,7 @@ void R_ProtectWithIndex(SEXP s, PROTECT_INDEX *pi)
 
 void NORET R_signal_reprotect_error(PROTECT_INDEX i)
 {
-    error(ngettext("R_Reprotect: only %d protected items, can't reprotect index %d",
+    error(ngettext("R_Reprotect: only %d protected item, can't reprotect index %d",
 		   "R_Reprotect: only %d protected items, can't reprotect index %d",
 		   R_PPStackTop),
           R_PPStackTop, i);

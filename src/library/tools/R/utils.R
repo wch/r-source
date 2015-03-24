@@ -181,7 +181,7 @@ function(x)
     if(any(ind))
         message(paste0(which(ind), ": ",
                        iconv(x[ind], "latin1", "ASCII", sub = "byte"),
-                       collapse = "\n"))
+                       collapse = "\n"), domain = NA)
     invisible(x[ind])
 }
 
