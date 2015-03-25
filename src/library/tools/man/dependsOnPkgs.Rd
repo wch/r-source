@@ -1,6 +1,6 @@
 % File src/library/tools/man/getDepList.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-2013 R Core Team
+% Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dependsOnPkgs}
@@ -34,9 +34,9 @@ dependsOnPkgs(pkgs,
   \code{pkgs}.
 }
 % do not test as result depends if recommended packages are installed.
-\examples{
+\examples{\donttest
 ## there are few dependencies in a vanilla R installation:
 ## lattice may not be installed
 dependsOnPkgs("lattice")
-}
+}}
 \keyword{utilities}
