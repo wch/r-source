@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,13 +83,6 @@ msgstr "sti til %s indeholder mellemrum."
 
 msgid "this may cause problems when running LaTeX"
 msgstr "dette kan medføre problemer, når der køres LaTeX"
-
-msgid "at"
-msgstr ""
-
-#, fuzzy
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr ""
@@ -514,10 +507,12 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr ""
 
-msgid "function '%s' appears not to be generic"
+msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
 
-msgid "generic function '%s' dispatches methods for generic '%s'"
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
 msgstr ""
 
 msgid "must supply 'generic.function' or 'class'"
@@ -1229,15 +1224,14 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ugyldig værdi for %s: %s"
 msgstr[1] "ugyldig værdi for %s: %s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid "broken installation, no CITATION file in the base package."
 #~ msgstr "ødelagt installation, ingen CITATION-fil i basispakken."

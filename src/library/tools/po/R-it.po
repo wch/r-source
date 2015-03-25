@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -723,12 +723,6 @@ msgstr "esecuzione di make fallita"
 msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "assertCondition: caught %s"
-msgstr ""
-
-msgid ","
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -794,9 +788,6 @@ msgid "downloading reverse dependencies ..."
 msgstr ""
 
 msgid "downloading %s ..."
-msgstr ""
-
-msgid "installing dependencies %s"
 msgstr ""
 
 msgid "checking %s ..."
@@ -990,9 +981,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr ""
 
-msgid "%s"
-msgstr ""
-
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1178,18 +1166,6 @@ msgstr "l'argomento 'txt' deve essere una stringa carattere"
 
 msgid "test '%s' is not available"
 msgstr "il test '%s' non è disponibile"
-
-msgid ":"
-msgstr ""
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "l'argomento 'x' deve essere un vettore carattere"

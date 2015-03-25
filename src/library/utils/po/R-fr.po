@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-17 11:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -85,12 +85,6 @@ msgstr "le chemin vers %s contient des espaces,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "cela peut provoquer des problèmes dans l'utilisation de LaTeX"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "le fichier en sortie '%s' a disparu"
@@ -546,11 +540,14 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "aucune fonction '%s' n'est visible"
 
-msgid "function '%s' appears not to be generic"
-msgstr "la fonction '%s' semble ne pas être générique"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "la fonction générique '%s' distribue les méthodes génériques '%s'"
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "la fonction '%s' semble ne pas être générique"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "il faut fournir 'generic.function' ou 'class'"
@@ -1332,16 +1329,14 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "nombre roman incorrect : %s"
 msgstr[1] "nombres romans incorrects : %s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "le package %s est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages %s sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "
@@ -1455,8 +1450,8 @@ msgstr[1] ""
 
 #~ msgid "A bibentry of bibtype %s has to correctly specify the field(s): %s"
 #~ msgstr ""
-#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) champ"
-#~ "(s) : %s"
+#~ "Une entrée bibentry de bibtype %s doit spécifier correctement le(s) "
+#~ "champ(s) : %s"
 
 #~ msgid "'pb' is not from class \"winProgressBar\""
 #~ msgstr "'pb' n'est pas un objet de classe \"winProgressBar\""

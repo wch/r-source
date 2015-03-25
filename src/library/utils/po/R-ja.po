@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-26 14:24+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -76,12 +76,6 @@ msgstr " %s へのパスは空白を含みます "
 
 msgid "this may cause problems when running LaTeX"
 msgstr " これは LaTeX を実行するとき問題を引き起こすかも知れません "
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr " , "
 
 msgid "the output file '%s' has disappeared"
 msgstr " 出力ファイル '%s' がなくなりました "
@@ -292,8 +286,8 @@ msgstr " 環境ナンバーを入力してください。0 を入力すると終
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-" recover が非対話的に呼び出されました; フレームがダンプされました。debugger"
-"() を使用してみて下さい "
+" recover が非対話的に呼び出されました; フレームがダンプされました。"
+"debugger() を使用してみて下さい "
 
 msgid "No suitable frames for recover()"
 msgstr " recover() に対する適当なフレームがありません "
@@ -526,11 +520,14 @@ msgstr " '%s' は形式的な総称的関数です; S3 メソッドは見付か�
 msgid "no function '%s' is visible"
 msgstr " 可視的な関数 '%s' はありません "
 
-msgid "function '%s' appears not to be generic"
-msgstr " 関数 '%s' は総称的では無いようです "
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr " 総称的関数 '%s' は総称的な '%s' に対するメソッドを選択提供します "
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr " 関数 '%s' は総称的では無いようです "
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr " 'generic.function' か 'class' を与える必要があります "
@@ -1279,13 +1276,12 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] " 不正なローマ数字です: %s "
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
+#~ msgid ","
+#~ msgstr " , "
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "

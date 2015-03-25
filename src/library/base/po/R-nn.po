@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -804,12 +804,9 @@ msgstr "«%s» er ikkje ein gyldig installert pakke"
 msgid "%s not found on search path, using pos = 2"
 msgstr "fann ikkje «%s» i søkjestigen – brukar «pos = 2»"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "namnerom kan ikkje lastast ut:"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "pakken «%s» er ikkje lasta"
 
 #, fuzzy
 msgid "package or namespace load failed for %s"
@@ -1802,6 +1799,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "namnerom kan ikkje lastast ut:"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "fann pakken «%s %s», men «%s %s» trengst av «%s»"

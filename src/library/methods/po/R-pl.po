@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -475,6 +475,15 @@ msgid ""
 msgstr ""
 "pierwszy argument powinien być nazwami jeden lub więcej ogólnych funkcji "
 "(otrzymano obiekt klasy %s)"
+
+# methods/R/RMethodUtils.R: 47
+# stop(gettextf("must supply either a generic function or a function as default for %s",
+#                           sQuote(f)),
+#                  domain = NA)
+#, fuzzy
+msgid "must supply 'generic.function' or 'class'"
+msgstr ""
+"potrzeba dostarczyć albo ogólną funkcję albo funkcję jako domyślną dla %s"
 
 # methods/R/Methods.R: 1062
 # warning(gettextf("%s is not an S4 generic function in %s; methods not removed",

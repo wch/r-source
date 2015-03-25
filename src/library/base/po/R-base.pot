@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 3.2.0\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"Project-Id-Version: base 3.3.0\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -709,10 +709,7 @@ msgstr ""
 msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "version"
-msgstr ""
-
-msgid "cannot be unloaded."
+msgid "Package %s version %s cannot be unloaded"
 msgstr ""
 
 msgid "package or namespace load failed for %s"

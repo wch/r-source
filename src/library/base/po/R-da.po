@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2014-03-17 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -763,12 +763,9 @@ msgstr "%s er ikke en gyldig installeret pakke"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s ikke fundet på søgesti, bruger pos = 2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "%s navnerum kan ikke deaktiveres:"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "pakke %s er ikke indlæst"
 
 msgid "package or namespace load failed for %s"
 msgstr "indlæsning af pakke eller navnerum fejlede for %s"
@@ -1729,6 +1726,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "%s navnerum kan ikke deaktiveres:"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "pakke %s %s blev fundet, men %s %s er krævet af %s"

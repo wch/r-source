@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -758,12 +758,9 @@ msgstr "%s不是有效的已经安装了的程序包"
 msgid "%s not found on search path, using pos = 2"
 msgstr "在搜索路径上找不到%s，用pos=2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "无法卸下%s这个名字空间："
+msgid "Package %s version %s cannot be unloaded"
+msgstr "没有载入程辑包%s"
 
 msgid "package or namespace load failed for %s"
 msgstr "%s程辑包或名字空间载入失败，"
@@ -1672,6 +1669,10 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "无法卸下%s这个名字空间："
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "找到了程辑包%1$s %2$s，但%5$s需要%3$s %4$s"

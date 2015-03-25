@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-27 13:35-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -775,12 +775,6 @@ msgstr "로딩에 실패했습니다"
 msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "assertCondition: caught %s"
-msgstr ""
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
 
@@ -843,9 +837,6 @@ msgstr ""
 
 msgid "downloading %s ..."
 msgstr "%s을 다운로드 하고 있습니다  ..."
-
-msgid "installing dependencies %s"
-msgstr "종속된 %s들을 설치하고 있습니다"
 
 msgid "checking %s ..."
 msgstr "%s를 확인합니다 ..."
@@ -1034,9 +1025,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr "다음의 섹션 제목으로부터 버전정보를 추출할 수 없습니다:"
 
-msgid "%s"
-msgstr "%s"
-
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1204,18 +1192,6 @@ msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
 
 msgid "test '%s' is not available"
 msgstr "테스트 '%s'는 사용가능하지 않습니다"
-
-msgid ":"
-msgstr ""
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "인자 'x'는 반드시 문자형 벡터이어야 합니다"
@@ -1394,6 +1370,15 @@ msgstr[0] "객체 %s는 하나 이상의 데이터 호출로부터 생성되었�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "종속된 %s들을 설치하고 있습니다"
+
+#~ msgid "%s"
+#~ msgstr "%s"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

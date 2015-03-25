@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -851,12 +851,9 @@ msgstr "'%s' non è una scelta valida"
 msgid "%s not found on search path, using pos = 2"
 msgstr "'%s' non trovato nel percorso di ricerca, uso pos = 2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "namespace '%s' caricato"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "pacchetto %s non caricato"
 
 #, fuzzy
 msgid "package or namespace load failed for %s"
@@ -1887,6 +1884,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "namespace '%s' caricato"
 
 #, fuzzy
 #~ msgid "package %s %s was found, but %s %s is required by %s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-26 23:11-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team:  <chl948@mail.usask.ca>\n"
@@ -87,12 +87,6 @@ msgstr "%s로의 파일경로에 공백들이 있습니다,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "이것은 LaTeX를 실행할때 문제를 야기할 수 있습니다"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ""
 
 msgid "the output file '%s' has disappeared"
 msgstr "출력결과를 포함한 파일 '%s'가 사라졌습니다"
@@ -534,11 +528,14 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "함수 '%s'는 볼 수 없습니다"
 
-msgid "function '%s' appears not to be generic"
-msgstr "함수 '%s'는 제네릭처럼 나타나지 않을 것입니다"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "제네릭 '%2$s'에 대해서 제네릭 함수 '%1$s'는 메소드들을 디스패치합니다"
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "함수 '%s'는 제네릭처럼 나타나지 않을 것입니다"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' 또는 'class'를 반드시 제공해야 합니다"
@@ -1269,10 +1266,6 @@ msgstr[0] "마지막 레코드가 완성되지 않아 %d 번째 라인은 삭제
 
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] ""
-
-msgid "is"
-msgid_plural "are"
 msgstr[0] ""
 
 msgid "package %s is in use and will not be installed"

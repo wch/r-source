@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -145,12 +145,6 @@ msgstr "ścieżka do %s zawiera spacje,"
 #                     domain = NA)
 msgid "this may cause problems when running LaTeX"
 msgstr "to może spowodować problemy podczas uruchamiania LaTeX'a"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ""
 
 # utils/R/SweaveDrivers.R: 507
 # stop(gettextf("the output file '%s' has disappeared", outputname))
@@ -983,17 +977,20 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "nie ma widocznej funkcji '%s'"
 
-# utils/R/objects.R: 113
-# warning(gettextf("function '%s' appears not to be generic",
-#                                  generic.function), domain = NA)
-msgid "function '%s' appears not to be generic"
-msgstr "wygląda na to, że funkcja '%s' nie jest ogólna"
-
 # utils/R/objects.R: 116
 # warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
 #                         generic.function, truegf), domain = NA)
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "ogólna funkcja '%s' rozdziela metody dla ogólnej '%s'"
+
+# utils/R/objects.R: 113
+# warning(gettextf("function '%s' appears not to be generic",
+#                                  generic.function), domain = NA)
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "wygląda na to, że funkcja '%s' nie jest ogólna"
 
 # utils/R/objects.R: 189
 # stop("must supply 'generic.function' or 'class'")
@@ -2517,12 +2514,6 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "niepoprawna rzymska numeracja: %s"
 msgstr[1] "niepoprawne rzymskie numeracje: %s"
 msgstr[2] "niepoprawne rzymskie numeracje: %s"
-
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 # utils/R/windows/install.packages.R: 220
 # warning(sprintf(ngettext(sum(inuse),

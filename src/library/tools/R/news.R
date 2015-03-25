@@ -555,8 +555,7 @@ function(file)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n",
-                sprintf("  %s", unique(nms[!ind])))
+        warning("Cannot extract version info from the following section titles:\n", paste(unique(nms[!ind]), collapse = "  "), sep = "")
     .make_news_db(cbind(ifelse(ind,
                                sub(re_v, "\\1", nms, ignore.case = TRUE),
                                NA_character_),

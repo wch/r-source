@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-16 16:00+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -757,12 +757,6 @@ msgstr "Laden fehlgeschlagen"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertCondition: Erfolgreich eine Bedingung abgefangen"
 
-msgid "assertCondition: caught %s"
-msgstr "assertCondition: %s abgefangen"
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -825,9 +819,6 @@ msgstr "lade umgekehrte Abhängikeiten herunter ..."
 
 msgid "downloading %s ..."
 msgstr "Herunterladen von %s ..."
-
-msgid "installing dependencies %s"
-msgstr "installiere Abhängigkeiten %s"
 
 msgid "checking %s ..."
 msgstr "überprüfe %s ..."
@@ -1025,9 +1016,6 @@ msgstr ""
 "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation "
 "extrahieren<:"
 
-msgid "%s"
-msgstr "%s"
-
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1205,18 +1193,6 @@ msgstr "'x' muss eine Zeichenkette sein"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
-
-msgid ":"
-msgstr ":"
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
@@ -1430,6 +1406,21 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
+
+#~ msgid "assertCondition: caught %s"
+#~ msgstr "assertCondition: %s abgefangen"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "installiere Abhängigkeiten %s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

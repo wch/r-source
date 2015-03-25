@@ -1943,7 +1943,7 @@ cmpMath1 <- function(e, cb, cntxt) {
         name <- as.character(e[[1]])
         idx <- match(name, math1funs) - 1
         if (is.na(idx))
-            stop(sQuote(name), "is not a registered math1 function")
+            stop(gettextf("%s is not a registered math1 function", sQuote(name)))
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
         ci <- cb$putconst(e)

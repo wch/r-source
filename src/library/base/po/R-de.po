@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2013-03-13 12:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -773,12 +773,9 @@ msgstr "%s ist keine gültiges installiertes Paket"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s nicht im Suchpfad gefunden, nutze pos = 2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "%s Namensraum kann nicht entladen werden:"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "Paket %s nicht geladen"
 
 msgid "package or namespace load failed for %s"
 msgstr "Laden von Paket oder Namensraum für %s fehlgeschlagen"
@@ -1755,6 +1752,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "%s Namensraum kann nicht entladen werden:"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "Paket %s %s gefunden, aber %s %s wird von %s benötigt"

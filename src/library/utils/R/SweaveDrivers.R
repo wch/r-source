@@ -461,7 +461,7 @@ RweaveLatexWritedoc <- function(object, chunk)
 	               filenum <- attr(chunk, "srcFilenum")[pos[1L]]
                        filename <- attr(chunk, "srcFilenames")[filenum]
                        location <- paste0(basename(filename), ":", attr(chunk, "srclines")[pos[1L]])
-		       stop("at ",location, ", ", conditionMessage(e), call. = FALSE)
+		       stop("at ",location, ", ", conditionMessage(e), domain = NA, call. = FALSE)
 		   })
             ## protect against character(), because sub() will fail
             if (length(val) == 0L) val <- ""

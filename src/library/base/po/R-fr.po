@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:08\n"
+"POT-Creation-Date: 2015-03-24 20:05\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -802,12 +802,9 @@ msgid "%s not found on search path, using pos = 2"
 msgstr ""
 "%s n'est pas trouvé dans le chemin de recherche, utilisation de pos = 2"
 
-msgid "version"
-msgstr ""
-
 #, fuzzy
-msgid "cannot be unloaded."
-msgstr "l'espace de noms %s ne peut être déchargé :"
+msgid "Package %s version %s cannot be unloaded"
+msgstr "la package %s n'est pas chargé"
 
 msgid "package or namespace load failed for %s"
 msgstr "le chargement du package ou de l'espace de noms a échoué pour %s"
@@ -1799,6 +1796,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+#~ msgid "cannot be unloaded."
+#~ msgstr "l'espace de noms %s ne peut être déchargé :"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "le package %s %s est trouvé, mais %s %s est réquis par %s"

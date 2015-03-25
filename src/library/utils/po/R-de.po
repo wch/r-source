@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2013-03-18 10:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -82,12 +82,6 @@ msgstr "Pfad zu %s enthält Leerstellen."
 
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "Die Ausgabedatei '%s' ist verschwunden"
@@ -528,12 +522,15 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "keine Funktion '%s' sichtbar"
 
-msgid "function '%s' appears not to be generic"
-msgstr "Funktion '%s' scheint nicht generisch sein"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
 "generische Funktion '%s' leistet Methodendispatch für  die generische '%s'"
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "Funktion '%s' scheint nicht generisch sein"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' oder 'class' muss angegeben werden"
@@ -1297,15 +1294,13 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ungültige römische Zahl: %s"
 msgstr[1] "ungültige römische Zahlen: %s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "

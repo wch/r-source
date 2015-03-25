@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -82,12 +82,6 @@ msgid "path to %s contains spaces,"
 msgstr ""
 
 msgid "this may cause problems when running LaTeX"
-msgstr ""
-
-msgid "at"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "the output file '%s' has disappeared"
@@ -505,10 +499,12 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr ""
 
-msgid "function '%s' appears not to be generic"
+msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
 
-msgid "generic function '%s' dispatches methods for generic '%s'"
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
 msgstr ""
 
 msgid "must supply 'generic.function' or 'class'"
@@ -1212,11 +1208,6 @@ msgstr[1] ""
 
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "is"
-msgid_plural "are"
 msgstr[0] ""
 msgstr[1] ""
 

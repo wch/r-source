@@ -234,7 +234,7 @@ function(dir,
                                       paste(sQuote(depends),
                                             collapse = ", ")),
                               exdent = 2L),
-                      collapse = "\n"))
+                      collapse = "\n"), domain = NA)
         ## <NOTE>
         ## Ideally we would capture stdout and stderr in e.g.
         ##   outdir/install_stdout.txt

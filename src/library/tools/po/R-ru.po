@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-11 10:34-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -766,12 +766,6 @@ msgstr "загрузка не удалась"
 msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "assertCondition: caught %s"
-msgstr ""
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -834,9 +828,6 @@ msgstr "скачиваю обратные зависимости ..."
 
 msgid "downloading %s ..."
 msgstr "скачиваю %s ..."
-
-msgid "installing dependencies %s"
-msgstr "устанавливаю зависимости %s"
 
 msgid "checking %s ..."
 msgstr "проверяю %s..."
@@ -1030,9 +1021,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr "Не могу выделить информацию о версии из следующих заголовков секции:"
 
-msgid "%s"
-msgstr "%s"
-
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1209,18 +1197,6 @@ msgstr "аргумент 'x' должен быть текстовой строкой"
 
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
-
-msgid ":"
-msgstr ":"
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "аргумент 'x' должен быть текстовым вектором"
@@ -1456,6 +1432,18 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "устанавливаю зависимости %s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

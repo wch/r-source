@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"POT-Creation-Date: 2015-03-24 20:06-0700\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -53,81 +53,81 @@ msgstr "没有这样的格式设定'%s'"
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "每一个转换设置最多只支持一个星'*'"
 
-#: gramLatex.c:2376 gramRd.y:1328
+#: gramLatex.c:2499 gramRd.c:3933
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "无法为%d行的长字串分配缓冲区"
 
-#: gramLatex.c:2613 gramRd.y:1817 gramRd.y:1823
+#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
-#: gramRd.y:303 gramRd.y:306
+#: gramRd.c:2591 gramRd.c:2594
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "坏标记（额外的空间？）在%s：%d：%d"
 
-#: gramRd.y:545
+#: gramRd.c:3150
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "'%s'宏之前已经定义了"
 
-#: gramRd.y:555
+#: gramRd.c:3160
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "用户定义的宏最多只允许四个参数"
 
-#: gramRd.y:589
+#: gramRd.c:3194
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "'%s'宏的定义没有。"
 
-#: gramRd.y:743 gramRd.y:747
+#: gramRd.c:3348 gramRd.c:3352
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "出现了换行内引号的字符串在%s:%d"
 
-#: gramRd.y:766
+#: gramRd.c:3371
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "无法为在第%d行的长宏分配缓冲区"
 
-#: gramRd.y:796
+#: gramRd.c:3401
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "宏嵌套过深：无限递归？"
 
-#: gramRd.y:1190
+#: gramRd.c:3795
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "找不到宏%s "
 
-#: gramRd.y:1388
+#: gramRd.c:3993
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "意外结束输入（在%c 引号的字符串于%s:%d:%d）"
 
-#: gramRd.y:1830
+#: gramRd.c:4435
 msgid "cannot open the connection"
 msgstr "打不开链接"
 
-#: gramRd.y:1837
+#: gramRd.c:4442
 msgid "cannot read from this connection"
 msgstr "无法从这个链接读取"
 
-#: gramRd.y:1845
+#: gramRd.c:4450
 msgid "invalid Rd file"
 msgstr "Rd文件不对"
 
-#: gramRd.y:1864
+#: gramRd.c:4469
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd'只支持反解析字符元素"
 
-#: gramRd.y:1867
+#: gramRd.c:4472
 msgid "bad state"
 msgstr "状态不好"
 
-#: gramRd.y:1880
+#: gramRd.c:4485
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd'里的文本模式%d不对"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -1643,178 +1643,6 @@ msgstr "ładowanie nie powiodło się"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertConditon: Pomyślnie przechwycono warunek"
 
-# tools/R/assertCondition.R: 51
-# message(sprintf("assertCondition: caught %s",
-#                                     paste(dQuote(found), collapse =", ")))
-msgid "assertCondition: caught %s"
-msgstr "assertCondition: przechwycono %s"
-
-# tools/R/Vignettes.R: 29
-# stop(gettextf("Vignette product %s does not have a known filename extension (%s)",
-#                       sQuote(file), paste(sQuote(names(type)), collapse=", ")),
-#              domain = NA)
-# tools/R/Vignettes.R: 78
-# stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
-#                           sQuote(by),
-#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-#                           sQuote(name), sQuote(dir),
-#                           paste(sQuote(output0), collapse=", ")),
-#                  domain = NA)
-# tools/R/Vignettes.R: 85
-# stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s", sQuote(by),
-#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-#                           sQuote(name), paste(sQuote(output), collapse=", ")),
-#                  domain  = NA)
-# tools/R/Vignettes.R: 102
-# stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
-#                           sQuote(by),
-#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-#                           sQuote(name), sQuote(dir),
-#                           paste(sQuote(output0), collapse=", ")),
-#                  domain = NA)
-# tools/R/Vignettes.R: 109
-# stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s",
-#                           sQuote(by),
-#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
-#                           sQuote(name), paste(sQuote(output), collapse=", ")),
-#                  domain = NA)
-# tools/R/Vignettes.R: 219
-# stop(gettextf("Vignette %s overwrites the following %s output by vignette %s: %s",
-#                                    sQuote(basename(names(resultsT)[j])),
-#                                    sQuote(name),
-#                                    sQuote(basename(names(resultsT)[i])),
-#                                    paste(basename(bad), collapse=", ")),
-#                           domain = NA)
-# tools/R/Vignettes.R: 478
-# stop(gettextf("Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each others output files",
-#                       paste(sQuote(docs), collapse=", "),
-#                       paste(sQuote(names), collapse=", ")),
-#              domain = NA)
-# tools/R/Vignettes.R: 1057
-# stop(gettextf("None of packages %s have registered vignette engines",
-#                                  paste(sQuote(package), collapse = ", ")),
-#                         domain = NA)
-# tools/R/Vignettes.R: 1091
-# stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
-#                                   sQuote(name),
-#                                   paste(sQuote(package), collapse = ", ")),
-#                          domain = NA)
-# tools/R/Vignettes.R: 1098
-# stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
-#                               sQuote(name),
-#                               paste(sQuote(package), collapse = ", ")),
-#                      domain = NA)
-# tools/R/makeLazyLoad.R: 132
-# warning(sprintf(ngettext(sum(dup),
-#                                          "object %s is created by more than one data call",
-#                                          "objects %s are created by more than one data call"),
-#                                 paste(sQuote(loaded[dup]), collapse=", ")),
-#                         call. = FALSE, domain = NA)
-# tools/R/checktools.R: 208
-# message(paste(strwrap(sprintf("installing dependencies %s",
-#                                       paste(sQuote(depends),
-#                                             collapse = ", ")),
-#                               exdent = 2L),
-#                       collapse = "\n"))
-# tools/R/QC.R: 4030
-# message(sprintf(ngettext(sum(obsolete),
-#                                  "Obsolete package %s in Rd xrefs",
-#                                  "Obsolete packages %s in Rd xrefs"),
-#                         paste(sQuote(unknown[obsolete]), collapse = ", ")),
-#                 domain = NA)
-# tools/R/QC.R: 4046
-# message(sprintf(ngettext(sum(miss),
-#                                      "Package unavailable to check Rd xrefs: %s",
-#                                      "Packages unavailable to check Rd xrefs: %s"),
-#                              paste(sQuote(unknown[miss]), collapse = ", ")),
-#                     domain = NA)
-# tools/R/QC.R: 4052
-# message(sprintf(ngettext(sum(!miss),
-#                                      "Unknown package %s in Rd xrefs",
-#                                      "Unknown packages %s in Rd xrefs"),
-#                              paste(sQuote(unknown[!miss]), collapse = ", ")),
-#                     domain = NA)
-# tools/R/QC.R: 4695
-# gettextf("  %s has wrong argument list %s",
-#                          f, sQuote(paste(bad, collapse = ", ")))
-# tools/R/QC.R: 4841
-# gettextf("  %s has wrong argument list %s",
-#                          f, sQuote(paste(bad, collapse = ", ")))
-# tools/R/QC.R: 6033
-# sprintf("entry %d (%s): missing required field(s) %s",
-#                                    pos,
-#                                    db$Entry[pos],
-#                                    sapply(bad[pos],
-#                                           function(s)
-#                                           paste(sQuote(s),
-#                                                 collapse = ", ")))
-# tools/R/QC.R: 6678
-# sprintf("  %s (%s)",
-#                     names(s),
-#                     lapply(s, paste, collapse = ", "))
-# tools/R/QC.R: 7166
-# warning(gettextf("Generics 'g' in 'env' %s where '%s' errors: %s\nMay need something like\n\n%s\nin NAMESPACE.",
-#                              format(env),
-#                              "hasMethods(g, env)",
-#                              paste(sQuote(rErr), collapse = ", "),
-#                              paste0("  importFrom(",
-#                                     paste(dq(pkgs), dq(rErr), sep =", "),
-#                                     ")\n")
-#                              ),
-#                     domain = NA)
-# tools/R/QC.R: 7180
-# message(sprintf(ngettext(sum(!ok),
-#                                      "Generic without any methods in %s: %s",
-#                                      "Generics without any methods in %s: %s"),
-#                             format(env),
-#                             paste(sQuote(r[!ok]), collapse = ", ")),
-#                     domain = NA)
-# tools/R/admin.R: 305
-# warning(sprintf(ngettext(length(bad),
-#                                          "unable to re-encode %s line %s",
-#                                          "unable to re-encode %s lines %s"),
-#                                 sQuote(basename(f)),
-#                                 paste(bad, collapse = ", ")),
-#                         domain = NA, call. = FALSE)
-# tools/R/sotools.R: 387
-# gettextf("Found %s, possibly from %s",
-#                                     sQuote(v),
-#                                     paste(sprintf("%s (%s)",
-#                                                   sQuote(u[, "ssname"]),
-#                                                   u[, "language"]),
-#                                           collapse = ", "))
-# tools/R/sotools.R: 395
-# sprintf("Objects: %s",
-#                                        paste(sQuote(w), collapse =
-#                                              ", "))
-# tools/R/pdftools.R: 998
-# sprintf("PDF_Dictionary(<<%s>>)",
-#             paste(names(x), collapse = ","))
-# tools/R/pdftools.R: 1005
-# sprintf("PDF_Stream(<<%s>>)",
-#             paste(names(x), collapse = ","))
-# tools/R/assertCondition.R: 51
-# message(sprintf("assertCondition: caught %s",
-#                                     paste(dQuote(found), collapse =", ")))
-# tools/R/check.R: 4492
-# sprintf("Current CRAN status: %s",
-#                         paste(sprintf("%s: %s", names(tab), tab),
-#                               collapse = ", "))
-# tools/R/check.R: 4533
-# sprintf("See: %s",
-#                                  paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
-#                                                flavors,
-#                                                p),
-#                                        collapse = ",\n     "))
-# tools/R/check.R: 4552
-# sprintf("See: %s",
-#                         paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
-#                                       tests,
-#                                       paths),
-#                               collapse = ",\n     "))
-msgid ","
-msgstr ","
-
 # tools/R/assertCondition.R: 59
 # stop(gettextf("Got %s in evaluating %s; wanted %s",
 # 			      .got, .exprString, .Wanted))
@@ -1928,15 +1756,6 @@ msgstr "pobieranie wstecznych zależności ..."
 #                         appendLF = FALSE)
 msgid "downloading %s ..."
 msgstr "pobieranie pliku %s ..."
-
-# tools/R/checktools.R: 208
-# message(paste(strwrap(sprintf("installing dependencies %s",
-#                                       paste(sQuote(depends),
-#                                             collapse = ", ")),
-#                               exdent = 2L),
-#                       collapse = "\n"))
-msgid "installing dependencies %s"
-msgstr "instalowanie zależności %s"
 
 # tools/R/checktools.R: 270
 # message(sprintf("checking %s ...", pfile))
@@ -2247,32 +2066,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr ""
 "Nie można wyodrębnić informacji o wersji z następujących tytułów sekcji:"
-
-# tools/R/QC.R: 1470
-# sprintf("  %s", unlist(lapply(assignments, format)))
-# tools/R/QC.R: 3665
-# sprintf("  %s", lapply(x, paste, collapse = " "))
-# tools/R/QC.R: 3673
-# sprintf("  %s", bad)
-# tools/R/QC.R: 6687
-# sprintf("  %s", paste(sQuote(y), collapse = " "))
-# tools/R/QC.R: 6920
-# sprintf("  %s", offending_autogenerated_content[, 1L])
-# tools/R/news.R: 560
-# warning("Cannot extract version info from the following section titles:\n",
-#                 sprintf("  %s", unique(nms[!ind])))
-# tools/R/check.R: 2434
-# sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
-# tools/R/check.R: 4530
-# sprintf("  %s",
-#                                  gsub("\n", "\n  ", tmp$Output,
-#                                       perl = TRUE, useBytes = TRUE))
-# tools/R/translations.R: 186
-# sprintf('--copyright-holder="%s"', copyright)
-# tools/R/translations.R: 188
-# sprintf('--msgid-bugs-address="%s"', bugs)
-msgid "%s"
-msgstr "%s"
 
 # tools/R/news.R: 587
 # stop(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\itemize.",
@@ -2650,18 +2443,6 @@ msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
 #                 domain = NA)
 msgid "test '%s' is not available"
 msgstr "test '%s' nie jest dostępny"
-
-msgid ":"
-msgstr ""
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 # tools/R/utils.R: 182
 # stop("argument 'x' must be a character vector")
@@ -3111,6 +2892,213 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+# tools/R/assertCondition.R: 51
+# message(sprintf("assertCondition: caught %s",
+#                                     paste(dQuote(found), collapse =", ")))
+#~ msgid "assertCondition: caught %s"
+#~ msgstr "assertCondition: przechwycono %s"
+
+# tools/R/Vignettes.R: 29
+# stop(gettextf("Vignette product %s does not have a known filename extension (%s)",
+#                       sQuote(file), paste(sQuote(names(type)), collapse=", ")),
+#              domain = NA)
+# tools/R/Vignettes.R: 78
+# stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+#                           sQuote(by),
+#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
+#                           sQuote(name), sQuote(dir),
+#                           paste(sQuote(output0), collapse=", ")),
+#                  domain = NA)
+# tools/R/Vignettes.R: 85
+# stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s", sQuote(by),
+#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
+#                           sQuote(name), paste(sQuote(output), collapse=", ")),
+#                  domain  = NA)
+# tools/R/Vignettes.R: 102
+# stop(gettextf("Failed to locate the %s output file (by engine %s) for vignette with name %s. The following files exist in directory %s: %s",
+#                           sQuote(by),
+#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
+#                           sQuote(name), sQuote(dir),
+#                           paste(sQuote(output0), collapse=", ")),
+#                  domain = NA)
+# tools/R/Vignettes.R: 109
+# stop(gettextf("Located more than one %s output file (by engine %s) for vignette with name %s: %s",
+#                           sQuote(by),
+#                           sQuote(sprintf("%s::%s", engine$package, engine$name)),
+#                           sQuote(name), paste(sQuote(output), collapse=", ")),
+#                  domain = NA)
+# tools/R/Vignettes.R: 219
+# stop(gettextf("Vignette %s overwrites the following %s output by vignette %s: %s",
+#                                    sQuote(basename(names(resultsT)[j])),
+#                                    sQuote(name),
+#                                    sQuote(basename(names(resultsT)[i])),
+#                                    paste(basename(bad), collapse=", ")),
+#                           domain = NA)
+# tools/R/Vignettes.R: 478
+# stop(gettextf("Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each others output files",
+#                       paste(sQuote(docs), collapse=", "),
+#                       paste(sQuote(names), collapse=", ")),
+#              domain = NA)
+# tools/R/Vignettes.R: 1057
+# stop(gettextf("None of packages %s have registered vignette engines",
+#                                  paste(sQuote(package), collapse = ", ")),
+#                         domain = NA)
+# tools/R/Vignettes.R: 1091
+# stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
+#                                   sQuote(name),
+#                                   paste(sQuote(package), collapse = ", ")),
+#                          domain = NA)
+# tools/R/Vignettes.R: 1098
+# stop(gettextf("Vignette engine %s is not registered by any of the packages %s",
+#                               sQuote(name),
+#                               paste(sQuote(package), collapse = ", ")),
+#                      domain = NA)
+# tools/R/makeLazyLoad.R: 132
+# warning(sprintf(ngettext(sum(dup),
+#                                          "object %s is created by more than one data call",
+#                                          "objects %s are created by more than one data call"),
+#                                 paste(sQuote(loaded[dup]), collapse=", ")),
+#                         call. = FALSE, domain = NA)
+# tools/R/checktools.R: 208
+# message(paste(strwrap(sprintf("installing dependencies %s",
+#                                       paste(sQuote(depends),
+#                                             collapse = ", ")),
+#                               exdent = 2L),
+#                       collapse = "\n"))
+# tools/R/QC.R: 4030
+# message(sprintf(ngettext(sum(obsolete),
+#                                  "Obsolete package %s in Rd xrefs",
+#                                  "Obsolete packages %s in Rd xrefs"),
+#                         paste(sQuote(unknown[obsolete]), collapse = ", ")),
+#                 domain = NA)
+# tools/R/QC.R: 4046
+# message(sprintf(ngettext(sum(miss),
+#                                      "Package unavailable to check Rd xrefs: %s",
+#                                      "Packages unavailable to check Rd xrefs: %s"),
+#                              paste(sQuote(unknown[miss]), collapse = ", ")),
+#                     domain = NA)
+# tools/R/QC.R: 4052
+# message(sprintf(ngettext(sum(!miss),
+#                                      "Unknown package %s in Rd xrefs",
+#                                      "Unknown packages %s in Rd xrefs"),
+#                              paste(sQuote(unknown[!miss]), collapse = ", ")),
+#                     domain = NA)
+# tools/R/QC.R: 4695
+# gettextf("  %s has wrong argument list %s",
+#                          f, sQuote(paste(bad, collapse = ", ")))
+# tools/R/QC.R: 4841
+# gettextf("  %s has wrong argument list %s",
+#                          f, sQuote(paste(bad, collapse = ", ")))
+# tools/R/QC.R: 6033
+# sprintf("entry %d (%s): missing required field(s) %s",
+#                                    pos,
+#                                    db$Entry[pos],
+#                                    sapply(bad[pos],
+#                                           function(s)
+#                                           paste(sQuote(s),
+#                                                 collapse = ", ")))
+# tools/R/QC.R: 6678
+# sprintf("  %s (%s)",
+#                     names(s),
+#                     lapply(s, paste, collapse = ", "))
+# tools/R/QC.R: 7166
+# warning(gettextf("Generics 'g' in 'env' %s where '%s' errors: %s\nMay need something like\n\n%s\nin NAMESPACE.",
+#                              format(env),
+#                              "hasMethods(g, env)",
+#                              paste(sQuote(rErr), collapse = ", "),
+#                              paste0("  importFrom(",
+#                                     paste(dq(pkgs), dq(rErr), sep =", "),
+#                                     ")\n")
+#                              ),
+#                     domain = NA)
+# tools/R/QC.R: 7180
+# message(sprintf(ngettext(sum(!ok),
+#                                      "Generic without any methods in %s: %s",
+#                                      "Generics without any methods in %s: %s"),
+#                             format(env),
+#                             paste(sQuote(r[!ok]), collapse = ", ")),
+#                     domain = NA)
+# tools/R/admin.R: 305
+# warning(sprintf(ngettext(length(bad),
+#                                          "unable to re-encode %s line %s",
+#                                          "unable to re-encode %s lines %s"),
+#                                 sQuote(basename(f)),
+#                                 paste(bad, collapse = ", ")),
+#                         domain = NA, call. = FALSE)
+# tools/R/sotools.R: 387
+# gettextf("Found %s, possibly from %s",
+#                                     sQuote(v),
+#                                     paste(sprintf("%s (%s)",
+#                                                   sQuote(u[, "ssname"]),
+#                                                   u[, "language"]),
+#                                           collapse = ", "))
+# tools/R/sotools.R: 395
+# sprintf("Objects: %s",
+#                                        paste(sQuote(w), collapse =
+#                                              ", "))
+# tools/R/pdftools.R: 998
+# sprintf("PDF_Dictionary(<<%s>>)",
+#             paste(names(x), collapse = ","))
+# tools/R/pdftools.R: 1005
+# sprintf("PDF_Stream(<<%s>>)",
+#             paste(names(x), collapse = ","))
+# tools/R/assertCondition.R: 51
+# message(sprintf("assertCondition: caught %s",
+#                                     paste(dQuote(found), collapse =", ")))
+# tools/R/check.R: 4492
+# sprintf("Current CRAN status: %s",
+#                         paste(sprintf("%s: %s", names(tab), tab),
+#                               collapse = ", "))
+# tools/R/check.R: 4533
+# sprintf("See: %s",
+#                                  paste(sprintf("<http://www.r-project.org/nosvn/R.check/%s/%s-00check.html>",
+#                                                flavors,
+#                                                p),
+#                                        collapse = ",\n     "))
+# tools/R/check.R: 4552
+# sprintf("See: %s",
+#                         paste(sprintf("<http://www.stats.ox.ac.uk/pub/bdr/memtests/%s/%s>",
+#                                       tests,
+#                                       paths),
+#                               collapse = ",\n     "))
+#~ msgid ","
+#~ msgstr ","
+
+# tools/R/checktools.R: 208
+# message(paste(strwrap(sprintf("installing dependencies %s",
+#                                       paste(sQuote(depends),
+#                                             collapse = ", ")),
+#                               exdent = 2L),
+#                       collapse = "\n"))
+#~ msgid "installing dependencies %s"
+#~ msgstr "instalowanie zależności %s"
+
+# tools/R/QC.R: 1470
+# sprintf("  %s", unlist(lapply(assignments, format)))
+# tools/R/QC.R: 3665
+# sprintf("  %s", lapply(x, paste, collapse = " "))
+# tools/R/QC.R: 3673
+# sprintf("  %s", bad)
+# tools/R/QC.R: 6687
+# sprintf("  %s", paste(sQuote(y), collapse = " "))
+# tools/R/QC.R: 6920
+# sprintf("  %s", offending_autogenerated_content[, 1L])
+# tools/R/news.R: 560
+# warning("Cannot extract version info from the following section titles:\n",
+#                 sprintf("  %s", unique(nms[!ind])))
+# tools/R/check.R: 2434
+# sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, use_gct = %s, addTiming = %s)', pkgname, pkgtopdir, use_gct, do_timings)
+# tools/R/check.R: 4530
+# sprintf("  %s",
+#                                  gsub("\n", "\n  ", tmp$Output,
+#                                       perl = TRUE, useBytes = TRUE))
+# tools/R/translations.R: 186
+# sprintf('--copyright-holder="%s"', copyright)
+# tools/R/translations.R: 188
+# sprintf('--msgid-bugs-address="%s"', bugs)
+#~ msgid "%s"
+#~ msgstr "%s"
 
 # tools/R/QC.R: 4052
 # message(sprintf(ngettext(sum(!miss),

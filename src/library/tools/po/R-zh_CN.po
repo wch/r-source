@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -739,12 +739,6 @@ msgstr "载入失败"
 msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "assertCondition: caught %s"
-msgstr ""
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -807,9 +801,6 @@ msgstr "下载扭转了的依赖关系"
 
 msgid "downloading %s ..."
 msgstr "下载%s。。。"
-
-msgid "installing dependencies %s"
-msgstr "安装依赖关系%s"
 
 msgid "checking %s ..."
 msgstr "%s…"
@@ -996,9 +987,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr "无法从下面的段标题找到关于版本的信息"
 
-msgid "%s"
-msgstr "%s"
-
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1174,18 +1162,6 @@ msgstr "'x'必需是单字符串"
 
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
-
-msgid ":"
-msgstr "："
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
-msgstr ""
 
 msgid "argument 'x' must be a character vector"
 msgstr "参数'x'必需是字符矢量"
@@ -1364,6 +1340,18 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "安装依赖关系%s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr "："
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

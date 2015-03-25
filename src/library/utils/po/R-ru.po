@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-02-09 08:50\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2014-03-11 10:35-0600\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -88,12 +88,6 @@ msgstr "путь у %s содержит пробелы,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "это может привести к проблемам с LaTeX"
-
-msgid "at"
-msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "the output file '%s' has disappeared"
 msgstr "файл вывода '%s' пропал :("
@@ -300,8 +294,8 @@ msgstr "Введите номер окружения или 0 для выхода"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-"восстановление вызвано неинтерактивно; кадры сброшены, используйте debugger"
-"(), чтобы их просмотреть"
+"восстановление вызвано неинтерактивно; кадры сброшены, используйте "
+"debugger(), чтобы их просмотреть"
 
 msgid "No suitable frames for recover()"
 msgstr "Нет подходящих кадров для recover()"
@@ -532,11 +526,14 @@ msgstr ""
 msgid "no function '%s' is visible"
 msgstr "не видна функция '%s'"
 
-msgid "function '%s' appears not to be generic"
-msgstr "функция '%s', похоже, не общая"
-
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr "общая функция '%s' отправляет методы для общей '%s'"
+
+#, fuzzy
+msgid ""
+"function '%s' appears not to be S3 generic; found functions that look like "
+"S3 methods"
+msgstr "функция '%s', похоже, не общая"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "надо указать 'generic.function' или 'class'"
@@ -1330,17 +1327,14 @@ msgstr[0] "Неправильные римский номер: %s"
 msgstr[1] "Неправильные римские номера: %s"
 msgstr[2] "Неправильные римские номера: %s"
 
-msgid "is"
-msgid_plural "are"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid ","
+#~ msgstr ","
 
 #~ msgid ""
 #~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "

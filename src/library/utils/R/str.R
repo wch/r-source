@@ -229,7 +229,7 @@ str.default <-
 	    cat(indent.str, "and ", n.of(length(meths), "method"), sep = "")
 	    sNms <- names(cld@slots)
 	    if(lo <- length(oMeths)) {
-		cat(", of which", lo, ngettext(lo, "is", "are"), " possibly relevant")
+		cat(", of which", lo, ngettext(lo, "is", "are", domain = NA), " possibly relevant")
 		if (is.na(max.level) || nest.lev < max.level)
 		    cat(":",
 			strwrap(paste(sort(oMeths), collapse=", "),

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-01-31 13:18\n"
+"POT-Creation-Date: 2015-03-24 20:06\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -333,6 +333,10 @@ msgid ""
 msgstr ""
 "primeiro argumento deve ser o(s) nome(s) de funções genérica (foi "
 "especificado objeto de classe \"%s\""
+
+#, fuzzy
+msgid "must supply 'generic.function' or 'class'"
+msgstr "a definição genérica de função fornecida para"
 
 #, fuzzy
 msgid "%s is not an S4 generic function in %s; methods not removed"
