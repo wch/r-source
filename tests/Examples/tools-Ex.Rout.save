@@ -501,12 +501,6 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
-> ## there are few dependencies in a vanilla R installation:
-> ## lattice may not be installed
-> dependsOnPkgs("lattice")
-[1] "Matrix" "nlme"   "mgcv"  
-> 
-> 
 > 
 > cleanEx()
 > nameEx("encoded")
