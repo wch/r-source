@@ -1,5 +1,5 @@
 
-R version 3.2.0 alpha (2015-03-20 r68039)
+R version 3.2.0 alpha (2015-03-25 r68078)
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -45,4 +45,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.123   0.017   0.218 
+  0.128   0.020   0.234 
