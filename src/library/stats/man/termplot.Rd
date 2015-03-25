@@ -117,14 +117,14 @@ termplot(model, partial.resid = TRUE, se = TRUE, main = TRUE)
 termplot(model, partial.resid = TRUE, smooth = panel.smooth, span.smth = 1/4)
 if(!had.splines && rs) detach("package:splines")
 
-if (suppressWarnings(require(MASS, quietly = TRUE))) {
-    hills.lm <- lm(log(time) ~ log(climb)+log(dist), data=hills)
-    termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
-             terms = "log(dist)", main = "Original")
-    termplot(hills.lm, transform.x = TRUE, partial.resid = TRUE,
-	     terms = "log(dist)", main = "Transformed",
-	     smooth=panel.smooth)
-}
-}
+\donttest{## requires recommended package MASS
+hills.lm <- lm(log(time) ~ log(climb)+log(dist), data = MASS::hills)
+termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
+        terms = "log(dist)", main = "Original")
+termplot(hills.lm, transform.x = TRUE,
+         partial.resid = TRUE, smooth = panel.smooth,
+	 terms = "log(dist)", main = "Transformed")
+
+}}
 \keyword{hplot}
 \keyword{regression}
