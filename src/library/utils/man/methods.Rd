@@ -31,7 +31,7 @@ methods(generic.function, class)
   \code{methods()} finds S3 and S4 methods associated with either the
   \code{generic.function} or \code{class} argument.  Methods are found in
   all packages on the current \code{search()} path.  \code{.S3methods()}
-  finds only S3 methods.
+  finds only S3 methods, \code{.S4methods()} finds only only S4 methods.
 
   When invoked with the \code{generic.function} argument, the
   \code{print} method displays the signatures (full names) of S3 and S4
@@ -59,9 +59,9 @@ methods(generic.function, class)
   name of the generic and tab completion, \code{?"generic<tab>"} to
   select the method for which help is desired.
 
-  The S3 functions listed are those which are \emph{are named like
-  methods} and may not actually be methods (known exceptions are
-  discarded in the code).
+  The S3 functions listed are those which \emph{are named like methods}
+  and may not actually be methods (known exceptions are discarded in the
+  code).
 
 }
 
