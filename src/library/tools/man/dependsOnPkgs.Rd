@@ -34,7 +34,7 @@ dependsOnPkgs(pkgs,
   \code{pkgs}.
 }
 % do not test as result depends if recommended packages are installed.
-\examples{\donttest
+\examples{\donttest{
 ## there are few dependencies in a vanilla R installation:
 ## lattice may not be installed
 dependsOnPkgs("lattice")
