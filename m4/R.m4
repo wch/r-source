@@ -1691,13 +1691,13 @@ AC_DEFINE_UNQUOTED(R_SOCKLEN_T, ${r_cv_type_socklen},
 AC_DEFUN([R_TYPE_KEYSYM],
 [AC_REQUIRE([R_X11])
 if test "${use_X11}" = yes; then
-  r_save_CFLAGS="${CFLAGS}"
-  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  r_save_CPPFLAGS="${CPPFLAGS}"
+  CPPFLAGS="${CPPFLAGS} ${X_CFLAGS}"
   AC_CHECK_TYPE([KeySym],
                 r_cv_type_keysym=yes,
                 r_cv_type_keysym=no,
 		[#include <X11/X.h>])
-  CFLAGS="${r_save_CFLAGS}"
+  CPPFLAGS="${r_save_CPPFLAGS}"
   if test "${r_cv_type_keysym}" = yes; then
     AC_DEFINE(HAVE_KEYSYM, 1,
               [Define if you have KeySym defined in X11.])
@@ -1714,10 +1714,10 @@ AC_DEFUN([R_X11],
 use_X11="no"
 if test -z "${no_x}"; then
   ## now we look for Xt and its header: it seems Intrinsic.h is key.
-  r_save_CFLAGS="${CFLAGS}"
-  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  r_save_CPPFLAGS="${CFLAGS}"
+  CPPFLAGS="${CPPFLAGS} ${X_CFLAGS}"
   AC_CHECK_HEADER(X11/Intrinsic.h)
-  CFLAGS="${r_save_CFLAGS}"
+  CPPFLAGS="${r_save_CPPFLAGS}"
   if test "${ac_cv_header_X11_Intrinsic_h}" = yes ; then
     AC_CHECK_LIB(Xt, XtToolkitInitialize, [have_Xt=yes], [have_Xt=no],
                  [${X_LIBS} -lX11])
@@ -1745,10 +1745,10 @@ fi
 ## test for -lXmu and for X11/Xmu/Xatom.h header (for XA_CLIPBOARD).
 AC_DEFUN([R_X11_Xmu],
 [if test "${use_X11}" = yes; then
-  r_save_CFLAGS="${CFLAGS}"
-  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  r_save_CPPFLAGS="${CPPFLAGS}"
+  CPPFLAGS="${CPPFLAGS} ${X_CFLAGS}"
   AC_CHECK_HEADER(X11/Xmu/Atoms.h)
-  CFLAGS="${r_save_CFLAGS}"
+  CPPFLAGS="${r_save_CPPFLAGS}"
   if test "${ac_cv_header_X11_Xmu_Atoms_h}" = yes ; then
     AC_CHECK_LIB(Xmu, XmuInternAtom, [use_Xmu=yes], [use_Xmu=no], ${X_LIBS})
     if test "${use_Xmu}" = yes; then
