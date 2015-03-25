@@ -6608,7 +6608,8 @@ function(dir)
     ## For now (2012-11-28), PACKAGES.in is all ASCII, so there is no
     ## need to re-encode.  Eventually, it might be in UTF-8 ...
     entry <- odb[odb[, "Package"] == meta["Package"], ]
-    entry <- entry[!is.na(entry) & (names(entry) != "Package")]
+    entry <- entry[!is.na(entry) &
+                   !(names(entry) %in% c("Package", "X-CRAN-History"))]
     if(length(entry)) {
         ## Check for conflicts between package license implications and
         ## repository overrides.  Note that the license info predicates
