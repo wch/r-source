@@ -163,8 +163,8 @@ static int      mkVerbEnv();
 
 %%
 
-Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); return 0; }
-	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); return 0; }
+Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); YYACCEPT; }
+	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); YYACCEPT; }
 	|	error				{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
 	;
 

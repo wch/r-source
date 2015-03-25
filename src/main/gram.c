@@ -2106,22 +2106,22 @@ yyreduce:
     {
         case 2:
 
-    { return 0; }
+    { YYACCEPT; }
     break;
 
   case 3:
 
-    { return xxvalue(NULL,2,NULL); }
+    { yyresult = xxvalue(NULL,2,NULL);	goto yyreturn; }
     break;
 
   case 4:
 
-    { return xxvalue((yyvsp[(1) - (2)]),3,&(yylsp[(1) - (2)])); }
+    { yyresult = xxvalue((yyvsp[(1) - (2)]),3,&(yylsp[(1) - (2)]));	goto yyreturn; }
     break;
 
   case 5:
 
-    { return xxvalue((yyvsp[(1) - (2)]),4,&(yylsp[(1) - (2)])); }
+    { yyresult = xxvalue((yyvsp[(1) - (2)]),4,&(yylsp[(1) - (2)]));	goto yyreturn; }
     break;
 
   case 6:
