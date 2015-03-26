@@ -193,11 +193,10 @@
                       assign(what, elNamed(args, what), envir = value)
                   value
               }, where = envir)
-    ## from 2.11.0, the MethodsList classs is deprecated
-    setMethod("initialize", "MethodsList", function(.Object, ...) {
-        .MlistDeprecated()
-        callNextMethod()
-    }, where = envir)
+    ## from 2.11.0, the MethodsList class is deprecated
+    ## from 3.3.0, it is defunct
+    setMethod("initialize", "MethodsList", function(.Object, ...) .MlistDefunct(),
+              where = envir)
 
     ## make sure body(m) <- .... leaves a method as a method
     setGeneric("body<-", where = envir)

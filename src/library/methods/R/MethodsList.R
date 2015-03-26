@@ -874,6 +874,7 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
   .noMlistsFlag
 }
 
+if(FALSE) { ##  "MethodsList" is now defunct
 .MlistDepTable <- new.env()
 .MlistDeprecated <- function(this = "<default>", instead) {
     if(is.character(this)) {
@@ -892,5 +893,22 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
       msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
     msg <- paste(msg, "see ?MethodsList. (This warning is shown once per session.)")
     base::.Deprecated(msg = msg)
+}
+}
+
+.MlistDefunct <- function(this = "<default>", instead) {
+    msg <-
+        if(missing(this))
+            "Use of the \"MethodsList\" meta data objects is defunct."
+        else if(is.character(this))
+            gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is defunct.",
+                     dQuote(this))
+        else
+            gettextf("in %s: use of \"MethodsList\" metadata objects is defunct.",
+                     deparse(this))
+    if(!missing(instead))
+        msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
+    msg <- paste(msg, "see ?MethodsList.")
+    base::.Defunct(msg = msg)
 }
 
