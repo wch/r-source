@@ -443,9 +443,11 @@ static R_xlen_t getElementLength(SEXP x, R_xlen_t i, SEXP call, SEXP rho) {
         PROTECT(args = list1(x_elt));
         if (length_op == NULL)
             length_op = R_Primitive("length");
-        if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1))
-          return (R_xlen_t)
-	      (TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len));
+        if (DispatchOrEval(call, length_op, "length", args, rho, &len, 0, 1)) {
+	    UNPROTECT(1);
+	    return (R_xlen_t)
+		(TYPEOF(len) == REALSXP ? REAL(len)[0] : asInteger(len));
+	}
         UNPROTECT(1);
     }
     return(xlength(x_elt));
