@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2013-03-18 10:11+0100\n"
+"POT-Creation-Date: 2015-03-24 11:52\n"
+"PO-Revision-Date: 2015-03-26 15:07+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -64,9 +64,8 @@ msgstr ""
 "Parsing-Fehler oder leere Option in\n"
 "%s"
 
-#, fuzzy
 msgid "Warning: unknown option '--clean='%s"
-msgstr "Warnung: unbekannte Option %s"
+msgstr "Warnung: unbekannte Option '--clean='%s"
 
 msgid "Warning: unknown option %s"
 msgstr "Warnung: unbekannte Option %s"
@@ -78,7 +77,7 @@ msgid "Compacting PDF document"
 msgstr "Komprimieren PDF Dokument"
 
 msgid "path to %s contains spaces,"
-msgstr "Pfad zu %s enthält Leerstellen."
+msgstr "Pfad für %s enthält Leerstellen."
 
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
@@ -526,11 +525,12 @@ msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
 "generische Funktion '%s' leistet Methodendispatch für  die generische '%s'"
 
-#, fuzzy
 msgid ""
 "function '%s' appears not to be S3 generic; found functions that look like "
 "S3 methods"
-msgstr "Funktion '%s' scheint nicht generisch sein"
+msgstr ""
+"Funktion '%s' scheint nicht S3 generisch sein; habe Funktionen\n"
+"gefunden, die wie S3 Methoden aussehen"
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr "'generic.function' oder 'class' muss angegeben werden"
@@ -588,6 +588,8 @@ msgid ""
 "specifying 'contriburl' or 'available' requires a single type, not type = "
 "\"both\""
 msgstr ""
+"Spezifizieren von 'contribul' oder 'available' verlangt einfachen Typ,\n"
+"nicht type = \"both\""
 
 msgid "package '%s' in library '%s' will not be updated"
 msgstr "Paket '%s' in der Bibliothek '%s' wird nicht aktualisiert"
@@ -662,9 +664,8 @@ msgstr ""
 "Weiß nicht in welches Element von 'lib' die Abhängigkeiten installiert "
 "werden sollen; überspringe Abhängigkeiten"
 
-#, fuzzy
 msgid "type 'binary' is not supported on this platform"
-msgstr "nur 'html = TRUE' ist auf dieser Plattform unterstützt"
+msgstr "Type 'binary' ist auf dieser Plattform nicht unterstützt"
 
 msgid "no packages were specified"
 msgstr "keine Pakete angegeben"
@@ -678,9 +679,8 @@ msgstr "kann keine Pakete installieren"
 msgid "unable to create %s"
 msgstr "kann %s nicht erzeugen"
 
-#, fuzzy
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr "leite 'repos = NULL' aus dem Dateinamen ab"
+msgstr "leite 'repos = NULL' aus 'pkgs' ab"
 
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
@@ -773,9 +773,8 @@ msgstr "Datei namens %s erzeugt."
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Bearbeite die Datei und verschiebe sie in das geeignete Verzeichnis."
 
-#, fuzzy
 msgid "cannot determine import name"
-msgstr "kann keinen nutzbaren Namen finden"
+msgstr "kann keinen Importnamen bestimmen"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
@@ -1075,13 +1074,11 @@ msgstr "'ccaddress' muss von der Länge 1 sein"
 msgid "no download method found"
 msgstr "keine Downloadmethode gefunden"
 
-#, fuzzy
 msgid "'url' must be a length-one character vector"
-msgstr "'title' muss NULL oder ein Charaktervektor mit Länge 1 sein"
+msgstr "'url' muss ein Charaktervektor mit Länge 1 sein"
 
-#, fuzzy
 msgid "'destfile' must be a length-one character vector"
-msgstr "'title' muss NULL oder ein Charaktervektor mit Länge 1 sein"
+msgstr "'destfile' muss ein Charaktervektor mit Länge 1 sein"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1145,10 +1142,9 @@ msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
 msgid "winDialogString() cannot be used non-interactively"
 msgstr "winDialogString() kann nicht nicht-interaktiv genutzt werden"
 
-#, fuzzy
 msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
-msgstr[0] "%d Sweave Dateien für Basisnamen %s gefunden"
+msgstr[0] "%d Sweave Datei für Basisnamen %s gefunden"
 msgstr[1] "%d Sweave Dateien für Basisnamen %s gefunden"
 
 msgid "%d occurrence in %s"
@@ -1194,11 +1190,10 @@ msgstr[1] ""
 "Entferne Pakete von %s\n"
 "(da %s nicht spezifiziert)"
 
-#, fuzzy
 msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
-msgstr[0] "Paket %s ist nicht verfügbar (für %s)"
-msgstr[1] "Pakete %s sind nicht verfügbar (für %s)"
+msgstr[0] "Paket %s ist nicht verfügbar (%s)"
+msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1234,19 +1229,17 @@ msgid_plural ""
 msgstr[0] "Es gibt eine Binärversion, jedoch ist der Quelltext neuer"
 msgstr[1] "Es gibt Binärversionen, jedoch sind die Quelltexte neuer"
 
-#, fuzzy
 msgid ""
 "Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
 msgstr[0] ""
 "Möchten Sie versuchen, das Paket aus den Quelltexten\n"
-"zu installieren, welches eine Kompilierung erfordert?"
+"zu installieren, was eine Kompilierung erfordert?"
 msgstr[1] ""
 "Möchten Sie versuchen, die Paktete aus den Quelltexten\n"
-"zu installieren, welche eine Kompilierung erfordern?"
+"zu installieren, was eine Kompilierung erfordert?"
 
-#, fuzzy
 msgid ""
 "Package which is only available in source form, and may need compilation of "
 "C/C++/Fortran"
@@ -1680,3 +1673,11 @@ msgstr[1] "Pakete %s werden gerade bennutzt und deshalb nicht installiert"
 #~ msgstr ""
 #~ "Optional andere Standardschlüsselwörter, eines pro Zeile aus der Datei "
 #~ "KEYWORDS im R Doku Verzeichnis"
+
+#~ msgid "at"
+#~ msgstr "an"
+
+#~ msgid "is"
+#~ msgid_plural "are"
+#~ msgstr[0] "ist"
+#~ msgstr[1] "sind"

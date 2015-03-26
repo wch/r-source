@@ -4,27 +4,24 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2014-03-16 16:00+0100\n"
+"POT-Creation-Date: 2015-03-01 13:20\n"
+"PO-Revision-Date: 2015-03-20 23:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#, fuzzy
 msgid "Reading %s failed with message: %s"
-msgstr ""
-"TeX Durchlauf für Datei %s fehlgeschlagen mit Nachricht:\n"
-"%s"
+msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
 
-#, fuzzy
 msgid "Checking %s"
-msgstr "überprüfe %s ..."
+msgstr "Überprüfe %s"
 
 msgid "argument 'package' must be of length 1"
 msgstr "Argument 'package' muss Länge 1 haben"
@@ -249,18 +246,19 @@ msgstr ""
 "bereits bekannt sein"
 
 msgid "Malformed Title field: should not end in a period."
-msgstr ""
+msgstr "Schlecht formatiertes Title Feld: Sollte nicht mit einem Punkt enden"
 
 msgid ""
 "Malformed Description field: should contain one or more complete sentences."
 msgstr ""
+"Schlecht formatiertes Description Feld: sollte einen oder mehrere\n"
+"vollständige Sätze enthalten."
 
-#, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
-"Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
-"packages' im 'Writing R Extension' Handbuch"
+"Bitte im Abschnitt 'The DESCRIPTION file' im 'Writing R Extension'\n"
+"Handbuch nachlesen"
 
 msgid "Malformed Authors@R field:"
 msgstr "Falsch formatiertes Authors@R Feld:"
@@ -277,16 +275,15 @@ msgstr "Das Authors@R Feld enthält Personen ohne gültige Rolle."
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Kann kein Maintainer Feld aus dem Authors@R Feld extrahieren:"
 
-#, fuzzy
 msgid "Authors@R field gives more than one person with maintainer role:"
-msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
+msgstr "Das Authors@R Feld enthält mehr als eine Person"
 
-#, fuzzy
 msgid ""
 "Authors@R field gives no person with maintainer role, valid email address "
 "and non-empty name."
 msgstr ""
-"Das Authors@R Feld enthält keine Person als Maintainer mit email Adresse."
+"Das Authors@R Feld enthält keine Person als Maintainer mit zulässiger\n"
+"Mailadresse und nicht-leerem Namen"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
@@ -331,10 +328,9 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
 
-#, fuzzy
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
-"Bitte im 'Writing R Extensions' Handbuch im Abschnitt über Kreuzreferenzen "
+"Bitte im Abschnitt \"Cross-references\" im 'Writing R Extensions' Handbuch "
 "nachsehen!"
 
 msgid "File %s:"
@@ -366,12 +362,11 @@ msgstr "Startfunktionen des Pakets sollten %s nicht aufrufen."
 msgid "See section %s in '%s'."
 msgstr "Siehe Abschnitt %s in '%s'."
 
-#, fuzzy
 msgid ""
 "Package detach functions should have one argument with name starting with %s."
 msgstr ""
-"Detachfuktion für Pakete sollte ein Argumente haben, deren Namen\n"
-"mit %s beginnen."
+"Detachfuktion für Pakete sollte ein Argument haben, dessen Name\n"
+"mit %s beginnt."
 
 msgid "Package detach functions should not call %s."
 msgstr "Detachfunktion für Pakete sollten nicht %s aufrufen."
@@ -397,13 +392,13 @@ msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 msgid "'library' or 'require' call not declared from: %s"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
 
-#, fuzzy
 msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+msgstr ""
+"Aufrufe von 'loadNamespace' oder 'requireNamespace' nicht angemeldet von:"
 
-#, fuzzy
 msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von: %s"
+msgstr ""
+"Aufrufe von 'loadNamespace' oder 'requireNamespace' nicht angemeldet von: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"
 msgstr ""
@@ -415,13 +410,11 @@ msgstr ""
 "Aufruf von 'library' oder 'require'  für %s, ist aber bereits mit Depends "
 "geladen."
 
-#, fuzzy
 msgid "'library' or 'require' calls in package code:"
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+msgstr "Aufrufe von 'library' oder 'require' im Paket-Code:"
 
-#, fuzzy
 msgid "'library' or 'require' call to %s in package code."
-msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
+msgstr "Aufrufe von 'library' oder 'require' für %s in Paket-Code"
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr "Namensräume im Imports Feld nicht importiert aus:"
@@ -507,7 +500,7 @@ msgstr ""
 "in NAMESPACE."
 
 msgid "Rd object required"
-msgstr ""
+msgstr "Rd Objekt nötig"
 
 msgid "missing/empty %s field in '%s'"
 msgstr "fehlendes oder leeres %s Feld in '%s'"
@@ -539,13 +532,13 @@ msgstr "Keine Hilfe zu %s in RdDB %s gefunden"
 
 msgid "'macros' must be TRUE or must specify existing macros"
 msgstr ""
+"'macros' muss entwerder TRUE sein oder ein exisitierendes Makro spezifizieren"
 
 msgid "Macro file %s should only contain Rd macro definitions and comments"
-msgstr ""
+msgstr "Makrodatei %s sollte nur Rd Makrodefinitionen und Kommentare enthalten"
 
-#, fuzzy
 msgid "No Rd macros in package '%s'."
-msgstr "Keine Dokumente zu Paket %s gefunden"
+msgstr "Keine Rd Makros in Paket '%s'"
 
 msgid "more than one \\examples section, using the first"
 msgstr "mehr als eine \\examples section, benutze die erste"
@@ -586,9 +579,8 @@ msgstr "Ungültiger Wert für '%s' : %s"
 msgid "Only one Rd section per %s is supported."
 msgstr "Nur ein Rd Abschnitt pro %s wird unterstützt"
 
-#, fuzzy
 msgid "DESCRIPTION file is for package '%s', not '%s'"
-msgstr "'DESCRIPTION.in' fehlt für Paket '%s'"
+msgstr "DESCRIPTION Datei ist für Paket '%s', nicht für '%s'"
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr "Vignettenprodukt %s hat keine bekannte Dateinamenserweiterung (%s)"
@@ -611,7 +603,7 @@ msgid "unable to create temp directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "Vignette '%s' is non-ASCII but has no declared encoding"
-msgstr ""
+msgstr "Vignette '%s' ist nicht-ASCII aber deklariert kein Enkoding"
 
 msgid "Running"
 msgstr "Ausführen"
@@ -757,6 +749,12 @@ msgstr "Laden fehlgeschlagen"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertCondition: Erfolgreich eine Bedingung abgefangen"
 
+msgid "assertCondition: caught %s"
+msgstr "assertCondition: %s abgefangen"
+
+msgid ","
+msgstr ","
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -819,6 +817,9 @@ msgstr "lade umgekehrte Abhängikeiten herunter ..."
 
 msgid "downloading %s ..."
 msgstr "Herunterladen von %s ..."
+
+msgid "installing dependencies %s"
+msgstr "installiere Abhängigkeiten %s"
 
 msgid "checking %s ..."
 msgstr "überprüfe %s ..."
@@ -1016,6 +1017,9 @@ msgstr ""
 "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation "
 "extrahieren<:"
 
+msgid "%s"
+msgstr "%s"
+
 msgid ""
 "Malformed NEWS.Rd file:\n"
 "Chunk starting\n"
@@ -1194,6 +1198,18 @@ msgstr "'x' muss eine Zeichenkette sein"
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
 
+msgid ":"
+msgstr ":"
+
+msgid "latin1"
+msgstr "latin1"
+
+msgid "ASCII"
+msgstr "ASCII"
+
+msgid "byte"
+msgstr "byte"
+
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
 
@@ -1215,9 +1231,8 @@ msgstr "kann %s nicht auf '%s' ausführen"
 msgid "unable to run %s on '%s'"
 msgstr "kann %s nicht für '%s' ausführen"
 
-#, fuzzy
 msgid "cannot coerce %s to logical"
-msgstr "kann nicht umwandeln"
+msgstr "kann %s nicht in logischen Wert umwandeln"
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr "Datei 'DESCRIPTION' fehlt."
@@ -1243,9 +1258,8 @@ msgstr "kann Paketquelltext nicht einlesen"
 msgid "Call sequence:"
 msgstr "Aufrufsequenz:"
 
-#, fuzzy
 msgid "'text' must be a character vector"
-msgstr "Argument 'x' muss ein Charaktervektor sein"
+msgstr "'text' muss ein Zeichenkettenvektor sein"
 
 msgid "parsing '%s'"
 msgstr "parse '%s'"
@@ -1401,26 +1415,10 @@ msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
-#, fuzzy
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
-
-#~ msgid "assertCondition: caught %s"
-#~ msgstr "assertCondition: %s abgefangen"
-
-#~ msgid ","
-#~ msgstr ","
-
-#~ msgid "installing dependencies %s"
-#~ msgstr "installiere Abhängigkeiten %s"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid ":"
-#~ msgstr ":"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-24 20:05-0700\n"
-"PO-Revision-Date: 2014-03-16 15:58+0100\n"
+"POT-Creation-Date: 2015-03-24 11:51-0700\n"
+"PO-Revision-Date: 2015-03-26 14:30+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -632,14 +632,14 @@ msgid "shared object '%s' was not loaded"
 msgstr "shared object '%s' wurde nicht geladen"
 
 #: src/main/Rdynload.c:979
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d byte)"
 msgid_plural "cannot allocate memory for registered native symbol (%d bytes)"
 msgstr[0] ""
-"kann keinen Speicher für ein registriertes natives Symbol(%d Bytes) "
+"kann keinen Speicher für ein registriertes natives Symbol (%d Byte) "
 "allozieren"
 msgstr[1] ""
-"kann keinen Speicher für ein registriertes natives Symbol(%d Bytes) "
+"kann keinen Speicher für ein registriertes natives Symbol (%d Bytes) "
 "allozieren"
 
 #: src/main/Rdynload.c:1102 src/main/Rdynload.c:1323
@@ -674,9 +674,9 @@ msgid "problem in setting variable '%s' in Renviron"
 msgstr "Problem beim Setzen der Variable '%s' in Renviron"
 
 #: src/main/Renviron.c:311 src/main/objects.c:1127 src/main/raw.c:150
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s' must be a character string"
-msgstr "Argument 'x' muss Zeichenkette sein"
+msgstr "Argument '%s' muss Zeichenkette sein"
 
 #: src/main/Renviron.c:315
 #, c-format
@@ -883,13 +883,13 @@ msgid "unimplemented real function of %d numeric arguments"
 msgstr "nicht implementierte reelle Funktion von %d numerischen Argumenten"
 
 #: src/main/arithmetic.c:1513
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires 1 or 2 arguments"
 msgid_plural "%d arguments passed to '%s'which requires 1 or 2 arguments"
 msgstr[0] ""
-"%d Argumente an '%s' üergeben, welches aber 1 oder 2 Argumente benötigt"
+"%d Argument an '%s' übergeben, welches aber 1 oder 2 Argumente benötigt"
 msgstr[1] ""
-"%d Argumente an '%s' üergeben, welches aber 1 oder 2 Argumente benötigt"
+"%d Argumente an '%s' übergeben, welches aber 1 oder 2 Argumente benötigt"
 
 #: src/main/arithmetic.c:1532
 msgid "invalid second argument of length 0"
@@ -982,7 +982,7 @@ msgid "'allocArray': too many elements specified by 'dims'"
 msgstr "'allocArray': zu viele Elemente durch 'dims' angegeben"
 
 #: src/main/array.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
 msgstr "'%s' muss eine Liste sein"
 
@@ -1363,14 +1363,12 @@ msgid "can not set parent of the empty environment"
 msgstr "kann keinen Parent für die leere Umgebung setzen"
 
 #: src/main/builtin.c:393
-#, fuzzy
 msgid "can not set the parent environment of a namespace"
-msgstr "kann keinen Parent für die leere Umgebung setzen"
+msgstr "kann keine Elternumgebung für einen Namensraum setzen"
 
 #: src/main/builtin.c:395
-#, fuzzy
 msgid "can not set the parent environment of package imports"
-msgstr "kann keinen Parent für die leere Umgebung setzen"
+msgstr "kann keine Elternumgebung für Paketimporte setzen"
 
 #: src/main/builtin.c:403
 msgid "'parent' is not an environment"
@@ -2292,9 +2290,8 @@ msgid "there is no connection %d"
 msgstr "Es gibt keine Verbindung %d"
 
 #: src/main/connections.c:5024
-#, fuzzy
 msgid "method = \"wininet\" is only supported on Windows"
-msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
+msgstr "method = \"wininet\" wird nur für Windows unterstützt"
 
 #: src/main/connections.c:5114
 msgid ""
@@ -2305,9 +2302,8 @@ msgstr ""
 
 #: src/main/connections.c:5168 src/modules/internet/internet.c:150
 #: src/modules/internet/internet.c:271
-#, fuzzy
 msgid "URL scheme unsupported by this method"
-msgstr "ICU wird in diesem Binary nicht unterstützt"
+msgstr "URL Schema wird von dieser Methode nicht unterstützt"
 
 #: src/main/connections.c:5259
 msgid "file stream does not have gzip magic number"
@@ -2489,9 +2485,9 @@ msgid "argument must be a function"
 msgstr "Argument muss eine Funktion sein"
 
 #: src/main/debug.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Value for '%s' must be TRUE or FALSE"
-msgstr "'all.x' muss TRUE oder FALSE sein"
+msgstr "Wert für '%s' muss TRUE oder FALSE sein"
 
 #: src/main/debug.c:139 src/main/debug.c:167 src/main/debug.c:237
 msgid "argument must not be a function"
@@ -2535,9 +2531,8 @@ msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr "deparse evtl. nicht source()bar in R < 2.7.0"
 
 #: src/main/deparse.c:346 src/main/deparse.c:396 src/main/source.c:206
-#, fuzzy
 msgid "'file' must be a character string or connection"
-msgstr "'what' muss eine Zeichenkette oder eine Funktion sein"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 #: src/main/deparse.c:374 src/main/deparse.c:468 src/main/deparse.c:474
 msgid "wrote too few characters"
@@ -3246,7 +3241,7 @@ msgstr "Interrupts aufgehoben; Signal ignoriert"
 
 #: src/main/errors.c:258
 msgid "[... truncated]"
-msgstr ""
+msgstr "[... abgeschnitten]"
 
 #: src/main/errors.c:318
 msgid "invalid option \"warning.expression\""
@@ -3258,46 +3253,44 @@ msgid "(converted from warning) %s"
 msgstr "(konvertiert von Warnung) %s"
 
 #: src/main/errors.c:357
-#, fuzzy
 msgid "Warning:"
-msgstr "Warnung: %s\n"
+msgstr "Warnung:"
 
 #: src/main/errors.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "Warning in %s :"
-msgstr "Warnung in %s : %s\n"
+msgstr "Warnung in %s"
 
 #: src/main/errors.c:368 src/main/errors.c:382 src/main/errors.c:695
 msgid "Calls:"
-msgstr ""
+msgstr "Ruft auf:"
 
 #: src/main/errors.c:429 src/main/errors.c:448 src/main/errors.c:610
 msgid "Lost warning messages\n"
 msgstr "Warnmeldungen verloren\n"
 
 #: src/main/errors.c:460
-#, fuzzy
 msgid "Warning message:"
 msgid_plural "Warning messages:"
-msgstr[0] "Warnmeldung:\n"
-msgstr[1] "Warnmeldungen:\n"
+msgstr[0] "Warnmeldung:"
+msgstr[1] "Warnmeldungen:"
 
 #: src/main/errors.c:470 src/main/errors.c:498
 #, c-format
 msgid "In %s :"
-msgstr ""
+msgstr "In %s :"
 
 #: src/main/errors.c:523
-#, fuzzy, c-format
+#, c-format
 msgid "There was %d warning (use warnings() to see it)"
 msgid_plural "There were %d warnings (use warnings() to see them)"
-msgstr[0] "Es gab %d Warnungen (Anzeige mit warnings())\n"
-msgstr[1] "Es gab %d Warnungen (Anzeige mit warnings())\n"
+msgstr[0] "Es gab %d Warnung (Anzeige mit warnings())"
+msgstr[1] "Es gab %d Warnungen (Anzeige mit warnings())"
 
 #: src/main/errors.c:528
-#, fuzzy, c-format
+#, c-format
 msgid "There were %d or more warnings (use warnings() to see the first %d)"
-msgstr "Es gab %d oder mehr Warnungen (Anzeige der ersten %d mit warnings())\n"
+msgstr "Es gab %d oder mehr Warnungen (Anzeige der ersten %d mit warnings())"
 
 #: src/main/errors.c:601
 msgid "Error during wrapup: "
@@ -3308,14 +3301,14 @@ msgid "Error in "
 msgstr "Fehler in "
 
 #: src/main/errors.c:648 src/main/errors.c:655
-#, fuzzy, c-format
+#, c-format
 msgid "Error in %s (from %s) : "
-msgstr " (von %s) : "
+msgstr "Fehler in %s (von %s) : "
 
 #: src/main/errors.c:657
-#, fuzzy, c-format
+#, c-format
 msgid "Error in %s : "
-msgstr "Fehler in "
+msgstr "Fehler in %s : "
 
 #: src/main/errors.c:677 src/main/errors.c:683
 #, c-format
@@ -3336,9 +3329,9 @@ msgstr "Ausführung angehalten\n"
 
 #: src/main/errors.c:1046 src/main/errors.c:1048 src/main/options.c:336
 #: src/main/unique.c:1577
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a character string"
-msgstr "'sep' muss Zeichenkette sein"
+msgstr "'%s' muss eine Zeichenkette sein"
 
 #: src/main/errors.c:1145
 msgid " [invalid string in stop(.)]"
@@ -3696,9 +3689,8 @@ msgid "not byte code profiling"
 msgstr "Byte Code Profiling läuft nicht"
 
 #: src/main/eval.c:6374 src/main/eval.c:6377 src/main/eval.c:6380
-#, fuzzy
 msgid "byte code profiling is not supported in this build"
-msgstr "ICU wird in diesem Binary nicht unterstützt"
+msgstr "Bytecodeprofiling wird in diesem Binary nicht unterstützt"
 
 #: src/main/gevents.c:43
 #, c-format
@@ -3752,39 +3744,39 @@ msgid "contextstack overflow"
 msgstr "Kontextstacküberlauf"
 
 #: src/main/gram.y:1907 src/main/gram.y:1913
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected input"
-msgstr "Unerwartete(s) %s"
+msgstr "unerwartete Eingabe"
 
 #: src/main/gram.y:1910
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected end of input"
-msgstr "Ende der Eingabe"
+msgstr "unerwartetes Ende der Eingabe"
 
 #: src/main/gram.y:1916
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected string constant"
-msgstr "Zeichenkettenkonstante"
+msgstr "unerwartete Zeichenkettenkonstante"
 
 #: src/main/gram.y:1919
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected numeric constant"
-msgstr "numerische Konstante"
+msgstr "unerwartete numerische Konstante"
 
 #: src/main/gram.y:1922
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected symbol"
-msgstr "Unerwartete(s) %s"
+msgstr "unerwartetes Symbol"
 
 #: src/main/gram.y:1925
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected assignment"
-msgstr "Unerwartete(s) %s"
+msgstr "unerwartete Zuweisung"
 
 #: src/main/gram.y:1928
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected end of line"
-msgstr "Zeilenende"
+msgstr "unerwartetes Zeilenende"
 
 #: src/main/gram.y:1931 src/main/gram.y:1939
 #, c-format
@@ -3820,9 +3812,9 @@ msgstr ""
 
 #: src/main/gram.y:2347 src/main/gram.y:2370 src/main/gram.y:2407
 #: src/main/gram.y:2443
-#, fuzzy, c-format
+#, c-format
 msgid "nul character not allowed (line %d)"
-msgstr "ungültiges multibyte Zeichen im Parser in Zeile %d"
+msgstr "nul Zeichen nicht erlaubt (Zeile %d)"
 
 #: src/main/gram.y:2363
 #, c-format
@@ -4267,10 +4259,10 @@ msgid "protect(): protection stack overflow"
 msgstr "protect(): protection stack Überlauf"
 
 #: src/main/memory.c:3056
-#, fuzzy, c-format
+#, c-format
 msgid "unprotect(): only %d protected item"
 msgid_plural "unprotect(): only %d protected items"
-msgstr[0] "unprotect(): nur %d geschützte Elemente"
+msgstr[0] "unprotect(): nur %d geschütztes Element"
 msgstr[1] "unprotect(): nur %d geschützte Elemente"
 
 #: src/main/memory.c:3091
@@ -4278,13 +4270,11 @@ msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: Zeiger nicht gefunden"
 
 #: src/main/memory.c:3129
-#, fuzzy, c-format
+#, c-format
 msgid "R_Reprotect: only %d protected item, can't reprotect index %d"
 msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr[0] ""
-"R_Reprotect(): nur %d geschützte Elemente, kann Index %d nicht reprotecten"
-msgstr[1] ""
-"R_Reprotect(): nur %d geschützte Elemente, kann Index %d nicht reprotecten"
+msgstr[0] "R_Reprotect: nur %d geschütztes Element, kann Index %d nicht reprotecten"
+msgstr[1] "R_Reprotect: nur %d geschützte Elemente, kann Index %d nicht reprotecten"
 
 #: src/main/memory.c:3181
 #, c-format
@@ -4537,9 +4527,8 @@ msgid "C level MAKE_CLASS macro called with NULL string pointer"
 msgstr "Makro MAKE_CLASS auf C Level mit NULL Zeichenkettenzeiger aufgerufen"
 
 #: src/main/objects.c:1461
-#, fuzzy
 msgid "'methods' package not yet loaded"
-msgstr "Hershey fonts können nicht geladen werden"
+msgstr "Paket 'method' noch nicht geladen"
 
 #: src/main/objects.c:1471
 msgid "R_getClassDef(.) called with NULL string pointer"
@@ -4979,9 +4968,8 @@ msgid "NA in probability vector"
 msgstr "NA in Vektor von Wahrscheinlichkeiten"
 
 #: src/main/random.c:437
-#, fuzzy
 msgid "negative probability"
-msgstr "nicht-positive Wahrscheinlichkeit"
+msgstr "negative Wahrscheinlichkeit"
 
 #: src/main/random.c:444
 msgid "too few positive probabilities"
@@ -5379,10 +5367,10 @@ msgid "argument of length 0"
 msgstr "Argument der Länge 0"
 
 #: src/main/seq.c:162 src/main/seq.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "numerical expression has %d element: only the first used"
 msgid_plural "numerical expression has %d elements: only the first used"
-msgstr[0] "numerischer Ausdruck hat %d Elemente: nur erstes wird genutzt"
+msgstr[0] "numerischer Ausdruck hat %d Element: nur erstes wird genutzt"
 msgstr[1] "numerischer Ausdruck hat %d Elemente: nur erstes wird genutzt"
 
 #: src/main/seq.c:173
@@ -6097,9 +6085,9 @@ msgid "no 'fileext'"
 msgstr "keine 'fileext'"
 
 #: src/main/sysutils.c:322
-#, fuzzy, c-format
+#, c-format
 msgid "system call failed: %s"
-msgstr "seek fehlgeschlagen auf %s"
+msgstr "Systemaufruf fehlgeschlagen: %s"
 
 #: src/main/sysutils.c:351 src/main/sysutils.c:354 src/main/sysutils.c:445
 #: src/main/sysutils.c:447 src/main/sysutils.c:483
@@ -6146,9 +6134,8 @@ msgid "translating strings with \"bytes\" encoding is not allowed"
 msgstr "Übersetzung von Zeichenketten mit \"bytes\"-Kodierung nicht erlaubt"
 
 #: src/main/sysutils.c:812
-#, fuzzy
 msgid "internal error: no translation needed"
-msgstr "interner Fehler in unz Code"
+msgstr "interner Fehler: Keine Übersetzung nötig"
 
 #: src/main/sysutils.c:1065
 #, c-format
@@ -6232,9 +6219,8 @@ msgid "... used in a situation where it does not exist"
 msgstr "... in einer Situation benutzt, in der es nicht existiert"
 
 #: src/main/unique.c:1242
-#, fuzzy
 msgid "... is not a pairlist"
-msgstr "Wert in '...' ist kein 'promise'"
+msgstr "... ist keine Paarliste"
 
 #: src/main/unique.c:1470
 msgid "non-numeric data frame in rowsum"
@@ -6310,7 +6296,7 @@ msgstr "'all.y' muss TRUE oder FALSE sein"
 
 #: src/main/util.c:670
 msgid "number of rows in the result exceeds maximum vector length"
-msgstr ""
+msgstr "Anzahl der Zeilen im Ergebnis überschreitet die maximale Vektorlänge"
 
 #: src/main/util.c:762
 msgid "missing value is invalid"
@@ -6364,7 +6350,7 @@ msgstr "Warnung auf 255 Zeichen gekürzt"
 #: src/main/util.c:1623
 #, c-format
 msgid "accuracy loss in conversion from \"%s\" to numeric"
-msgstr ""
+msgstr "Genauigkeitsverlust bei der Konvertierung von \"%s\" in numerisch\""
 
 #: src/main/util.c:1930
 msgid "all arguments must be named"
@@ -6677,7 +6663,7 @@ msgstr "kann Speicher für X11Routines-Struktur nicht zuteilen"
 
 #: src/modules/internet/internet.c:113
 msgid "for https:// URLs use setInternet2(TRUE)"
-msgstr ""
+msgstr "um https:// URLs zu nutzen setze setInternet2(TRUE)"
 
 #: src/modules/internet/internet.c:345 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:354 src/modules/internet/internet.c:378
@@ -6718,9 +6704,9 @@ msgstr "versuche URL '%s'\n"
 
 #: src/modules/internet/internet.c:634 src/modules/internet/internet.c:745
 #: src/modules/internet/libcurl.c:453
-#, fuzzy, c-format
+#, c-format
 msgid "downloaded length %0.f != reported length %0.f"
-msgstr "heruntergeladene Länge %d != angegebener Länge %d"
+msgstr "heruntergeladene Länge %0.f != angegebener Länge %0.f"
 
 #: src/modules/internet/internet.c:639 src/modules/internet/internet.c:750
 #, c-format
@@ -6743,14 +6729,13 @@ msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl fehlgeschlagen: '%s'"
 
 #: src/modules/internet/libcurl.c:136
-#, fuzzy
 msgid "curlGetHeaders is not supported on this platform"
-msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
+msgstr "curlGetHeaders wird auf dieser Plattform nicht unterstützt"
 
 #: src/modules/internet/libcurl.c:145 src/modules/internet/libcurl.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "invalid %s argument"
-msgstr "ungültiges '%s' Argument"
+msgstr "ungültiges %s Argument"
 
 #: src/modules/internet/libcurl.c:165
 #, c-format
@@ -6758,21 +6743,22 @@ msgid ""
 "libcurl error code %d\n"
 "\t%s\n"
 msgstr ""
+"libcurl Fehlercode %d\n"
+"\\t%s\n"
 
 #: src/modules/internet/libcurl.c:299
-#, fuzzy
 msgid "download.file(method = \"libcurl\") is not supported on this platform"
-msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
+msgstr ""
+"download.file(method = \"libcurl\") wird auf dieser Plattform nicht "
+"unterstützt"
 
 #: src/modules/internet/libcurl.c:315
-#, fuzzy
 msgid "lengths of 'url' and 'destfile' must match"
-msgstr "Länge von Import- und Exportnamen muss übereinstimmen"
+msgstr "Länge von 'url' und 'destfile' muss übereinstimmen"
 
 #: src/modules/internet/libcurl.c:682
-#, fuzzy
 msgid "url(method = \"libcurl\") is not supported on this platform"
-msgstr "nsl() wird auf dieser Plattform nicht unterstützt"
+msgstr "url(method = \"libcurl\") wird auf dieser Plattform nicht unterstützt"
 
 #: src/modules/internet/nanoftp.c:290 src/modules/internet/nanoftp.c:303
 #: src/modules/internet/nanoftp.c:314 src/modules/internet/nanoftp.c:348
@@ -7181,9 +7167,9 @@ msgid "underflow occurred in '%s'\n"
 msgstr "Underflow in '%s' aufgetreten\n"
 
 #: src/nmath/pbeta.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "pbeta_raw(%g, a=%g, b=%g, ..) -> bratio() gave error code %d"
-msgstr "pbeta_raw() -> bratio() ergab Fehlerkode %d"
+msgstr "pbeta_raw(%g, a=%g, b=%g, ..) -> bratio() ergab Fehlerkode %d"
 
 #: src/nmath/pnbinom.c:79
 #, c-format

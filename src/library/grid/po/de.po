@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2009-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2013-03-01 15:06+0100\n"
+"PO-Revision-Date: 2015-03-20 16:09+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
 "Language: de\n"
@@ -92,7 +92,6 @@ msgid "invalid unit or unit not yet implemented"
 msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
 #: unit.c:1702 unit.c:1733
-#, fuzzy
 msgid "Viewport has zero dimension(s)"
 msgstr "Viewport hat keine Dimension(en)"
 

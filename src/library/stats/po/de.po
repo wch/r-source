@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2013-03-11 16:08+0100\n"
+"PO-Revision-Date: 2015-03-20 16:21+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -51,7 +51,7 @@ msgstr "maximal unterstützter Lag ist 350"
 #: bandwidths.c:121
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
-msgstr ""
+msgstr "nicht-endliches x[%d] in der Bandbreitenberechnung"
 
 #: complete_cases.c:26
 #, c-format
@@ -708,7 +708,7 @@ msgstr "RF_divset: alg = %d muss 1, 2, 3 oder 4 sein"
 
 #: port.c:149
 msgid "port algorithms 3 or higher are not supported"
-msgstr ""
+msgstr "die Port Algorithmen 3 oder höher sind nicht unterstützt"
 
 #: port.c:313
 #, c-format
@@ -801,15 +801,15 @@ msgstr "ungültige Argumente"
 
 #: random.c:310
 msgid "NA in probability vector"
-msgstr ""
+msgstr "NA im Wahrscheinlichkeiten-Vektor"
 
 #: random.c:312
 msgid "negative probability"
-msgstr ""
+msgstr "negative Wahrscheinlichkeiten"
 
 #: random.c:318
 msgid "no positive probabilities"
-msgstr ""
+msgstr "keine positive Wahrscheinlichkeit"
 
 #: random.c:330
 msgid "invalid first argument 'n'"

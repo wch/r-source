@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2014-03-16 16:02+0100\n"
+"POT-Creation-Date: 2015-03-24 10:19\n"
+"PO-Revision-Date: 2015-03-26 14:56+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -289,11 +289,8 @@ msgstr ""
 "erstes Argument sollte(n) Name(n) generischer Funktion(en) sein (bekam "
 "Objekt der Klasse %s"
 
-#, fuzzy
 msgid "must supply 'generic.function' or 'class'"
-msgstr ""
-"Enweder eine generische Funktion oder eine Standardfunktion muss für %s "
-"angegeben werden"
+msgstr "entweder eine 'generic.function' oder eine 'class' muss angegeben werden"
 
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr "%s ist keine generische S4 Funktion in %s; Methoden nicht entfernt"
@@ -318,11 +315,8 @@ msgstr "Funktion %s ist bereits gruppengenerisch; keine Änderung"
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "Funktion %s ist gruppengenerisch; nicht direkt aufrufen"
 
-#, fuzzy
 msgid "callGeneric() must be called from within a method body"
-msgstr ""
-"'callGeneric' muss von einer generischen Funktion oder Methode aufgerufen "
-"werden"
+msgstr "'callGeneric' muss in einer Methode aufgerufen werden"
 
 msgid "expected a non-empty character string for argument name"
 msgstr "erwarte nicht-leere Zeichenkette als Argumentnamen"
@@ -385,10 +379,11 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "nicht-generische Funktion '%s' an findMethods() übergeben"
 
-#, fuzzy
 msgid ""
 "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
-msgstr "nur FALSE sinnvoll für 'inherited', wenn 'where' angegeben (bekam"
+msgstr ""
+"nur FALSE sinnvoll für 'inherited', wenn 'where' angegeben wurde\n"
+"(bekam %s)"
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr "Argument 'f' muss eine generische Funktion oder %s sein"
@@ -541,12 +536,11 @@ msgstr ""
 "die Namen in der Signatur für die Methode (%s) passen nicht zu den "
 "Argumenten von %s (%s)"
 
-#, fuzzy
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
-"die Namen in der Signatur für die Methode (%s) passen nicht zu den "
-"Argumenten von %s (%s)"
+"die Namen in der Signatur für die Methode (%s) passen nicht zu den\n"
+"Argumenten der Funktion (%s)"
 
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
@@ -567,7 +561,7 @@ msgid "bad object found as method (class %s)"
 msgstr "ungültiges Objekt als Methode (Klasse %s) gefunden"
 
 msgid "No next method available"
-msgstr ""
+msgstr "Keine weiter Methode verfügbar"
 
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
@@ -1321,10 +1315,9 @@ msgstr ""
 "ungültiges Objekt in der Methodentabelle (%s), Methode war erwartet,\n"
 "bekam Objekt der Klasse %s"
 
-#, fuzzy
 msgid "invalid or unset methods table in generic function %s"
 msgstr ""
-"ungültige oder zurückgesetzte Methodentabelle in generischer Funktion \""
+"ungültige oder zurückgesetzte Methodentabelle in generischer Funktion %s"
 
 msgid "trying to find a methods table in a non-generic function"
 msgstr ""

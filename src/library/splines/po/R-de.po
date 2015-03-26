@@ -31,7 +31,8 @@ msgid "need at least %s (=%d) knots"
 msgstr "brauche mindestens %s (=%d) Knoten"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist %s gesetzt"
+msgstr ""
+"die 'x' Daten müssen im Bereich %g bis %g liegen, außer es ist %s gesetzt"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s benötigt das korrekt installierte Paket 'Matrix'"
