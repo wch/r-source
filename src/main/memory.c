@@ -1866,7 +1866,7 @@ SEXP attribute_hidden do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int gap, wait;
     Rboolean inhibit;
-    SEXP old = ScalarInteger(gc_force_gap);
+    int old = gc_force_gap;
 
     checkArity(op, args);
     gap = asInteger(CAR(args));
@@ -1874,7 +1874,7 @@ SEXP attribute_hidden do_gctorture2(SEXP call, SEXP op, SEXP args, SEXP rho)
     inhibit = asLogical(CADDR(args));
     R_gc_torture(gap, wait, inhibit);
 
-    return old;
+    return ScalarInteger(old);
 }
 
 /* initialize gctorture settings from environment variables */

@@ -2525,12 +2525,13 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
 	InitMemOutPStream(&out, &mbs, type, version, hook, fun);
 	R_Serialize(object, &out);
 
-	val =  CloseMemOutPStream(&out);
+	PROTECT(val = CloseMemOutPStream(&out));
 
 	/* end the context after anything that could raise an error but before
 	   calling OutTerm so it doesn't get called twice */
 	endcontext(&cntxt);
 
+	UNPROTECT(1); /* val */
 	return val;
     }
     else {
