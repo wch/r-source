@@ -494,25 +494,26 @@
     The following are currently in place.
     \itemize{
       \item Installation using external binary distributions
-      of \pkg{zlib}, \pkg{bzip}, \pkg{liblzma}, \pkg{pcre},
+      of \pkg{zlib}, \pkg{bzip2}, \pkg{liblzma}, \pkg{pcre},
       \pkg{libpng}, \pkg{jpeglib} and \pkg{libtiff} is now required,
       and the build instructions have been revised.
 
       \item A new \command{make} target \code{rsync-extsoft} has been
-      added to obtain copies of the external libraries from \acronym{CRAN}.
+      added to obtain copies of the external libraries from
+      \acronym{CRAN}.
 
       \item Building the manuals now requires \command{texi2any} from
-      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds
-      include the manuals, but by default builds from source will not, and
-      they will be accessed from \acronym{CRAN}.  See the comments in
+      \pkg{texinfo} 5.1 or later.  \acronym{CRAN} binary builds include
+      the manuals, but by default builds from source will not, and they
+      will be accessed from \acronym{CRAN}.  See the comments in
       \file{src/gnuwin32/MkRules.dist} for how to specify the location
       of \command{texi2any}.
 
       \item (Windows) Changes have been made to support an experimental
-      Windows toolchain based on GCC 4.9.2.   The default toolchain 
+      Windows toolchain based on GCC 4.9.2.  The default toolchain
       continues to be based on GCC 4.6.3, as the new toolchain is not
-      yet stable enough.  A change to a new toolchain is expected 
-      during the R 3.2.x lifetime.
+      yet stable enough.  A change to a new toolchain is expected during
+      the R 3.2.x lifetime.
     }
   }
 
