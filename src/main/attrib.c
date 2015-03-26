@@ -42,7 +42,10 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
     if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
 	/* This should not happen, but if a careless user dput()s a
 	   data frame and sources the result, it will */
-	PROTECT(val = coerceVector(val, INTSXP));
+	PROTECT(val);
+	val = coerceVector(val, INTSXP);
+	UNPROTECT(1);
+	PROTECT(val);
 	ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	UNPROTECT(1);
 	return ans;
@@ -342,8 +345,10 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 	}
 	t = s; // record last attribute, if any
     }
+
     /* The usual convention is that the caller protects,
-       so this is historical over-cautiousness */
+       but a lot of existing code depends assume that
+       setAttrib/installAttrib protects its arguments */
     PROTECT(vec); PROTECT(name); PROTECT(val);
     SEXP s = CONS(val, R_NilValue);
     SET_TAG(s, name);
@@ -691,9 +696,9 @@ static SEXP S4_extends(SEXP klass)
     SETCAR(e, s_extendsForS3);
     val = CDR(e);
     SETCAR(val, klass);
-    val = eval(e, R_MethodsNamespace);
+    PROTECT(val = eval(e, R_MethodsNamespace));
     cache_class(class, val);
-    UNPROTECT(1);
+    UNPROTECT(2); /* val, e */
     return(val);
 }
 
@@ -762,10 +767,18 @@ void InitS3DefaultTypes()
 
 	Type2DefaultClass[type].vector =
 	    createDefaultClass(R_NilValue, part2, part3);
+
+	SEXP part1;
+	PROTECT(part1 = mkChar("matrix"));
 	Type2DefaultClass[type].matrix =
-	    createDefaultClass(mkChar("matrix"), part2, part3);
+	    createDefaultClass(part1, part2, part3);
+	UNPROTECT(1);
+
+	PROTECT(part1 = mkChar("array"));
 	Type2DefaultClass[type].array =
-	    createDefaultClass(mkChar("array"), part2, part3);
+	    createDefaultClass(part1, part2, part3);
+	UNPROTECT(1);
+
 	UNPROTECT(nprotected);
     }
 }

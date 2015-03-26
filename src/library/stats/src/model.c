@@ -1517,8 +1517,9 @@ static SEXP EncodeVars(SEXP formula)
 		    if(!strcmp(c, translateChar(STRING_ELT(framenames, j))))
 			error(_("duplicated name '%s' in data frame using '.'"),
 			      c);
+		int cIndex = InstallVar(install(c));
 		term = AllocTerm();
-		SetBit(term, InstallVar(install(c)), 1);
+		SetBit(term, cIndex, 1);
 		if(i == 0) PROTECT(v = r = cons(term, R_NilValue));
 		else {SETCDR(v, CONS(term, R_NilValue)); v = CDR(v);}
 	    }
@@ -1527,8 +1528,9 @@ static SEXP EncodeVars(SEXP formula)
 	    return r;
 	}
 	else {
+	    int formulaIndex = InstallVar(formula);
 	    term = AllocTerm();
-	    SetBit(term, InstallVar(formula), 1);
+	    SetBit(term, formulaIndex, 1);
 	    return CONS(term, R_NilValue);
 	}
     }
@@ -1569,8 +1571,9 @@ static SEXP EncodeVars(SEXP formula)
 	if (CAR(formula) == parenSymbol) {
 	    return EncodeVars(CADR(formula));
 	}
+	int formulaIndex = InstallVar(formula);
 	term = AllocTerm();
-	SetBit(term, InstallVar(formula), 1);
+	SetBit(term, formulaIndex, 1);
 	return CONS(term, R_NilValue);
     }
     error(_("invalid model formula in EncodeVars"));

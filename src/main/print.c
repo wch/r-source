@@ -428,13 +428,14 @@ static void PrintGenericVector(SEXP s, SEXP env)
 			rn, cn);
 	}
 	else {
-	    names = GetArrayDimnames(s);
+	    PROTECT(names = GetArrayDimnames(s));
 	    printArray(t, dims, 0, Rprt_adj_left, names);
+	    UNPROTECT(1);
 	}
 	UNPROTECT(2);
     }
     else { // no dim()
-	names = getAttrib(s, R_NamesSymbol);
+	PROTECT(names = getAttrib(s, R_NamesSymbol));
 	taglen = (int) strlen(tagbuf);
 	ptag = tagbuf + taglen;
 	PROTECT(newcall = allocList(2));
@@ -510,7 +511,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    }
 	    if(className) {
 		Rprintf("An object of class \"%s\"\n", className);
-		UNPROTECT(1);
+		UNPROTECT(2); /* newcall, names */
 		printAttributes(s, env, TRUE);
 		vmaxset(vmax);
 		return;
@@ -521,7 +522,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    }
 	    vmaxset(vmax);
 	}
-	UNPROTECT(1);
+	UNPROTECT(2); /* newcall, names */
     }
     printAttributes(s, env, FALSE);
 } // PrintGenericVector
@@ -592,8 +593,9 @@ static void printList(SEXP s, SEXP env)
 			rn, cn);
 	}
 	else {
-	    dimnames = getAttrib(s, R_DimNamesSymbol);
+	    PROTECT(dimnames = getAttrib(s, R_DimNamesSymbol));
 	    printArray(t, dims, 0, Rprt_adj_left, dimnames);
+	    UNPROTECT(1);
 	}
 	UNPROTECT(2);
     }
@@ -799,8 +801,9 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	    }
 	    else {
 		SEXP dimnames;
-		dimnames = GetArrayDimnames(s);
+		PROTECT(dimnames = GetArrayDimnames(s));
 		printArray(s, t, R_print.quote, R_print.right, dimnames);
+		UNPROTECT(1);
 	    }
 	}
 	else {

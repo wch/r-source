@@ -48,9 +48,11 @@ SEXP attribute_hidden in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_CURL_CURL_H
     curl_version_info_data *d = curl_version_info(CURLVERSION_NOW);
     SET_STRING_ELT(ans, 0, mkChar(d->version));
-    setAttrib(ans, install("ssl_version"),
+    SEXP sSSLVersion = install("ssl_version");
+    setAttrib(ans, sSSLVersion,
 	      mkString(d->ssl_version ? d->ssl_version : "none"));
-    setAttrib(ans, install("libssh_version"),
+    SEXP sLibSSHVersion = install("libssh_version");
+    setAttrib(ans, sLibSSHVersion,
 	      mkString(((d->age >= 3) && d->libssh_version) ? d->libssh_version : ""));
     const char * const *p;
     int n, i;
@@ -84,7 +86,8 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
     }
     // for consistency, but all that does is look up an option.
-    SEXP agentFun = PROTECT(lang2(install("makeUserAgent"), ScalarLogical(0)));
+    SEXP sMakeUserAgent = install("makeUserAgent");
+    SEXP agentFun = PROTECT(lang2(sMakeUserAgent, ScalarLogical(0)));
     SEXP sua = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
     if(TYPEOF(sua) != NILSXP)
 	curl_easy_setopt(hnd, CURLOPT_USERAGENT, CHAR(STRING_ELT(sua, 0)));
@@ -170,7 +173,8 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans = PROTECT(allocVector(STRSXP, used));
     for (int i = 0; i < used; i++)
 	SET_STRING_ELT(ans, i, mkChar(headers[i]));
-    setAttrib(ans, install("status"), ScalarInteger((int) http_code));
+    SEXP sStatus = install("status");
+    setAttrib(ans, sStatus, ScalarInteger((int) http_code));
     UNPROTECT(1);
     return ans;
 #endif

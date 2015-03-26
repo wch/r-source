@@ -286,13 +286,12 @@ SEXP DropDims(SEXP x)
 
     PROTECT(x);
     dims = getAttrib(x, R_DimSymbol);
-    dimnames = getAttrib(x, R_DimNamesSymbol);
 
     /* Check that dropping will actually do something. */
     /* (1) Check that there is a "dim" attribute. */
 
     if (dims == R_NilValue) {
-	UNPROTECT(1);
+	UNPROTECT(1); /* x */
 	return x;
     }
     ndims = LENGTH(dims);
@@ -302,10 +301,11 @@ SEXP DropDims(SEXP x)
     for (i = 0; i < ndims; i++)
 	if (INTEGER(dims)[i] != 1) n++;
     if (n == ndims) {
-	UNPROTECT(1);
+	UNPROTECT(1); /* x */
 	return x;
     }
 
+    PROTECT(dimnames = getAttrib(x, R_DimNamesSymbol));
     if (n <= 1) {
 	/* We have reduced to a vector result.
 	   If that has length one, it is ambiguous which dimnames to use,
@@ -343,11 +343,11 @@ SEXP DropDims(SEXP x)
 /* 	    setAttrib(x, R_ClassSymbol, R_NilValue); */
 /* 	    UNSET_S4_OBJECT(x); */
 /* 	} */
-	UNPROTECT(1);
+	UNPROTECT(1); /* newnames */
     } else {
 	/* We have a lower dimensional array. */
 	SEXP newdims, dnn, newnamesnames = R_NilValue;
-	dnn = getAttrib(dimnames, R_NamesSymbol);
+	PROTECT(dnn = getAttrib(dimnames, R_NamesSymbol));
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
@@ -372,7 +372,6 @@ SEXP DropDims(SEXP x)
 	    }
 	    else dimnames = R_NilValue;
 	}
-	PROTECT(dimnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue)
@@ -380,11 +379,11 @@ SEXP DropDims(SEXP x)
 	    if(!isNull(dnn))
 		setAttrib(newnames, R_NamesSymbol, newnamesnames);
 	    setAttrib(x, R_DimNamesSymbol, newnames);
-	    UNPROTECT(2);
+	    UNPROTECT(2); /* newnamesnames, newnames */
 	}
-	UNPROTECT(2);
+	UNPROTECT(2); /* newdims, dnn */
     }
-    UNPROTECT(1);
+    UNPROTECT(2); /* dimnames, x */
     return x;
 }
 
@@ -1066,6 +1065,7 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else
 	goto not_matrix;
+    PROTECT(dimnamesnames);
     PROTECT(r = allocVector(TYPEOF(a), len));
     R_xlen_t i, j, l_1 = len-1;
     switch (TYPEOF(a)) {
@@ -1108,14 +1108,14 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
         break;
     default:
-        UNPROTECT(1);
+        UNPROTECT(2); /* r, dimnamesnames */
         goto not_matrix;
     }
     PROTECT(dims = allocVector(INTSXP, 2));
     INTEGER(dims)[0] = ncol;
     INTEGER(dims)[1] = nrow;
     setAttrib(r, R_DimSymbol, dims);
-    UNPROTECT(1);
+    UNPROTECT(1); /* dims */
     /* R <= 2.2.0: dropped list(NULL,NULL) dimnames :
      * if(rnames != R_NilValue || cnames != R_NilValue) */
     if(!isNull(dimnames)) {
@@ -1129,13 +1129,13 @@ SEXP attribute_hidden do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 			   (ldim == 2) ? STRING_ELT(dimnamesnames, 1):
 			   R_BlankString);
 	    setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
-	    UNPROTECT(1);
+	    UNPROTECT(1); /* ndimnamesnames */
 	}
 	setAttrib(r, R_DimNamesSymbol, dimnames);
-	UNPROTECT(1);
+	UNPROTECT(1); /* dimnames */
     }
     copyMostAttrib(a, r);
-    UNPROTECT(1);
+    UNPROTECT(2); /* r, dimnamesnames */
     return r;
  not_matrix:
     error(_("argument is not a matrix"));
