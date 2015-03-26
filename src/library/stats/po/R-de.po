@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2014-11-20 11:48\n"
-"PO-Revision-Date: 2013-03-18 10:10+0100\n"
+"PO-Revision-Date: 2015-03-26 14:46+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -104,7 +104,7 @@ msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "kann ci.type=\"ma\" nur benutzen, wenn lag gleich 0 ist"
 
 msgid "Page [%d,%d]: i =%s; j =%s"
-msgstr ""
+msgstr "Seite [%d,%d]: i=%s; j=%s"
 
 msgid "univariate time series only"
 msgstr "nur univariate Zeitreihen"
@@ -154,7 +154,7 @@ msgid ""
 msgstr "Länge von FUN, %d,\\n entspricht nicht der Länge der Ränder, %d"
 
 msgid "no rows to aggregate"
-msgstr "keine Zeile für die Aggragation"
+msgstr "keine Zeile für die Aggregation"
 
 msgid "'by' must be a list"
 msgstr "'by' muss eine Liste sein"
@@ -625,6 +625,8 @@ msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
 msgstr ""
+"Dendogrammeinträge müssen 1,2,..,%d (in beliebiger Reihenfolge) sein,\n"
+"damit sie in \"hclust\" umgewandelt werden können"
 
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "Dendrogrammknoten mit nicht-positiver #{Verzweigungen}"
@@ -752,9 +754,9 @@ msgstr "bitte 'rate' oder 'scale' aber nicht beides angeben"
 msgid "x[] and prob[] must be equal length vectors."
 msgstr "x[] und prob[] müssen gleich lange Vektoren sein"
 
-#, fuzzy
 msgid "probabilities must be finite, non-negative and not all 0"
-msgstr "Wahrscheinlichkeiten müssen nicht-negativ sein"
+msgstr ""
+"Wahrscheinlichkeiten müssen endlich, nicht-negativ und nicht alle 0 sein"
 
 msgid "'x' must be non-negative"
 msgstr "'x' muss nicht-negativ sein"
@@ -1131,6 +1133,8 @@ msgstr ""
 msgid ""
 "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
 msgstr ""
+"Die \"ward\" Methode wurde in \"ward.D\" umbenannt; beachte das neue \"ward."
+"D2\""
 
 msgid "invalid clustering method"
 msgstr "unzulässige Clustring-Methode"
@@ -1257,10 +1261,12 @@ msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "'x' und 'centers' müssen die selbe Zahl von Spalten haben"
 
 msgid "'x' is a list, so ignoring argument 'g'"
-msgstr ""
+msgstr "'x' ist eine Liste, also ignoriere Argument 'g'"
 
 msgid "some elements of 'x' are not numeric and will be coerced to numeric"
 msgstr ""
+"einige Elemente von 'x' sind nicht numerisch und werden nach numerisch "
+"gewandelt"
 
 msgid "not enough 'x' data"
 msgstr "zu wenig 'x' Daten"
@@ -1321,10 +1327,8 @@ msgstr ""
 "Freiheitsgrade der Residuen legt nahe, dass es sich nicht um einen \"lm\" "
 "Fit handelt"
 
-#, fuzzy
 msgid "essentially perfect fit: summary may be unreliable"
-msgstr ""
-"ANOVA F-Tests auf einem im Wesentlichen perfekten Fit sind unzuverlässig"
+msgstr "Essentiell ein perfekter Fit: summary kann unzuverlässig sein"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"
@@ -2016,7 +2020,7 @@ msgid "invalid 'endrule' argument"
 msgstr "unzulässiges 'endrule' Argument"
 
 msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
-msgstr ""
+msgstr ".nknots.smspl() wird jetzt exportiert; bitte statt n.knots() nutzen"
 
 msgid "invalid 'control.spar'"
 msgstr "unzulässiges 'control.spar'"
@@ -2158,9 +2162,8 @@ msgstr "keine zulässige Treppenfunktion"
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr "'plot.stepfun' mit einem Argument 'x' vom falschen Typ aufgerufen"
 
-#, fuzzy
 msgid "%s must be 0 or 1"
-msgstr "muss 0 oder 1 sein"
+msgstr "%s muss 0 oder 1 sein"
 
 msgid "only univariate series are allowed"
 msgstr "nur univariate Zeitreihen erlaubt"
@@ -2459,11 +2462,10 @@ msgid_plural "unable to optimize from these starting values"
 msgstr[0] "kann von diesem Startwert aus nicht optimieren"
 msgstr[1] "kann von diesen Startwerten aus nicht optimieren"
 
-#, fuzzy
 msgid "'init' must have %d column"
 msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] "'init'  muss  1 Spalte haben"
-msgstr[1] "'init'  muss  1 Spalte haben"
+msgstr[0] "'init'  muss  %d Spalte haben"
+msgstr[1] "'init'  muss  1 oder %d Spalten haben"
 
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"

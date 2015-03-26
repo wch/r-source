@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2014-03-16 16:24+0100\n"
+"PO-Revision-Date: 2015-03-20 23:11+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -52,7 +52,7 @@ msgstr "das erste Argument muss vom Mode character sein"
 #: io.c:595
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
-msgstr ""
+msgstr "unzulässiger 'numerals' Zeichenkette \"%s\""
 
 #: io.c:771
 #, c-format
