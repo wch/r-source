@@ -241,8 +241,11 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     } else if(need_ellipses) {
 	SET_STRING_ELT(svec, R_BrowseLines, mkChar("  ..."));
     }
-    if(nlines > 0 && localData.linenumber < nlines)
+    if(nlines > 0 && localData.linenumber < nlines) {
+	UNPROTECT(1); /* old svec value */
+	PROTECT(svec);
 	svec = lengthgets(svec, localData.linenumber);
+    }
     UNPROTECT(1);
     PROTECT(svec); /* protect from warning() allocating, PR#14356 */
     R_print.digits = savedigits;

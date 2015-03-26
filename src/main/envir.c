@@ -2213,9 +2213,9 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ddv = ddVal(sym);
 	sym = R_DotsSymbol;
     }
-    rval = allocVector(LGLSXP,1);
 
     t = findVarLocInFrame(rho, sym, NULL);
+    rval = allocVector(LGLSXP,1);
     if (t != R_NilValue) {
 	if (DDVAL(s)) {
 	    if (length(CAR(t)) < ddv  || CAR(t) == R_MissingArg) {
@@ -2244,7 +2244,11 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = findRootPromise(t);
     if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
-    else LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
+    else {
+	PROTECT(rval);
+	LOGICAL(rval)[0] = R_isMissing(PREXPR(t), PRENV(t));
+	UNPROTECT(1);
+    }
     return rval;
 }
 

@@ -412,6 +412,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP env = CAR(args), ans=mkString(""), res;
 
     checkArity(op, args);
+    PROTECT(ans);
     if (TYPEOF(env) == ENVSXP ||
 	TYPEOF((env = simple_as_environment(env))) == ENVSXP) {
 	if (env == R_GlobalEnv) ans = mkString("R_GlobalEnv");
@@ -423,6 +424,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = ScalarString(STRING_ELT(R_NamespaceEnvSpec(env), 0));
 	else if (!isNull(res = getAttrib(env, R_NameSymbol))) ans = res;
     }
+    UNPROTECT(1); /* ans */
     return ans;
 }
 
