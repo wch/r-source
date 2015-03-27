@@ -606,6 +606,9 @@
 
       \item Auto-printing no longer duplicates objects when printing is
       dispatched to a method.
+
+      \item \code{kmeans(x, k)} would fail when \code{nrow(x) >= 42949673}.
+      (Comment 6 of \PR{15364})
     }
   }
 }
