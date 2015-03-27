@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2014-03-26 13:54+0200 \n"
+"POT-Creation-Date: 2015-03-02 10:09-0800 \n"
+"PO-Revision-Date: 2015-02-17 08:52+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -25,9 +25,9 @@ msgid "'%s' must be numeric of length %d"
 msgstr " '%s' は長さ %d の数値でなければなりません "
 
 #: colors.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "color intensity %s, not in [0,1]"
-msgstr " 色彩強度 %g が [0, 1] の範囲内にありません "
+msgstr " 色彩強度 %s が [0, 1] の範囲内にありません "
 
 #: colors.c:71
 #, c-format
@@ -35,9 +35,9 @@ msgid "color intensity %g, not in [0,1]"
 msgstr " 色彩強度 %g が [0, 1] の範囲内にありません "
 
 #: colors.c:78
-#, fuzzy, c-format
+#, c-format
 msgid "color intensity %s, not in 0:255"
-msgstr " 色彩強度 %d が 0:255 の範囲内にありません "
+msgstr " 色彩強度 %s が 0:255 の範囲内にありません "
 
 #: colors.c:80
 #, c-format
@@ -45,9 +45,9 @@ msgid "color intensity %d, not in 0:255"
 msgstr " 色彩強度 %d が 0:255 の範囲内にありません "
 
 #: colors.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "alpha level %s, not in [0,1]"
-msgstr " アルファ値 %g が [0, 1] の範囲内にありません "
+msgstr " アルファ値 %s が [0, 1] の範囲内にありません "
 
 #: colors.c:89
 #, c-format
@@ -55,9 +55,9 @@ msgid "alpha level %g, not in [0,1]"
 msgstr " アルファ値 %g が [0, 1] の範囲内にありません "
 
 #: colors.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "alpha level %s, not in 0:255"
-msgstr " アルファ値 %d が 0:255 の範囲内にありません "
+msgstr " アルファ値 %s が 0:255 の範囲内にありません "
 
 #: colors.c:98
 #, c-format

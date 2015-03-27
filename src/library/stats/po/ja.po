@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2014-03-26 10:20+0200 \n"
+"POT-Creation-Date: 2015-03-27 13:58+0900 \n"
+"PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -16,7 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427436568.000000 \n"
 
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
@@ -53,7 +54,7 @@ msgstr " サポートされているラグの最大値は350です "
 #: bandwidths.c:121
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
-msgstr ""
+msgstr " バンド幅の計算中に有限でない x[%d] "
 
 #: complete_cases.c:26
 #, c-format
@@ -363,23 +364,23 @@ msgstr " ExtractVars 中のモデル式が不正です "
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr " データフレーム中の重複した名前 '%s' を '.' を使って複製しました "
 
-#: model.c:1576
+#: model.c:1579
 msgid "invalid model formula in EncodeVars"
 msgstr " EncodeVars 中のモデル式が不正です "
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr " 引数は有効なモデルではありません "
 
-#: model.c:1672
+#: model.c:1675
 msgid "'specials' must be NULL or a character vector"
 msgstr " 'specials' は NULL または文字ベクタでなくてはなりません "
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr " 'data' 引数が誤った型です "
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr " '.' が式中にありますが, 'data' 引数がありません "
 
@@ -705,7 +706,7 @@ msgstr " Rf_divset: alg = %d は 1, 2, 3, または 4 でなければなりま�
 
 #: port.c:149
 msgid "port algorithms 3 or higher are not supported"
-msgstr ""
+msgstr " 3 以上のポートアルゴリズムはサポートされていません "
 
 #: port.c:313
 #, c-format
@@ -793,15 +794,15 @@ msgstr " 引数 (複数) が不正です "
 
 #: random.c:310
 msgid "NA in probability vector"
-msgstr ""
+msgstr " 確率ベクトル中にNAがあります "
 
 #: random.c:312
 msgid "negative probability"
-msgstr ""
+msgstr " 負の確率 "
 
 #: random.c:318
 msgid "no positive probabilities"
-msgstr ""
+msgstr " 正の確率がありません "
 
 #: random.c:330
 msgid "invalid first argument 'n'"

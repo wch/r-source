@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:19\n"
-"PO-Revision-Date: 2014-03-22 05:27+0200 \n"
-"Last-Translator: sakamotoki  \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2015-03-01 13:19 \n"
+"PO-Revision-Date: 2015-03-27 14:16+0900 \n"
+"Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
 "Report- Msgid-Bugs-To: bugs@r-project.org \n"
+"X-POOTLE-MTIME: 1427433405.000000 \n"
 
 msgid "'a' is overridden by 'reg'"
 msgstr " 'a' は 'reg' により無効にされます "
@@ -234,9 +235,8 @@ msgstr " 'x' と 'y' の値は有限値であり欠損は許されません "
 msgid "'z' must be a matrix"
 msgstr " 'z' は行列でなければなりません "
 
-#, fuzzy
 msgid "'z' must be numeric or logical"
-msgstr " 'x' は数値でなければなりません "
+msgstr " 'z' は数値または論理値でなければなりません "
 
 msgid "invalid z limits"
 msgstr " 無効な z の限界です "
@@ -321,13 +321,11 @@ msgstr " 'pairs' へ数値でない引数が与えられました "
 msgid "only one column in the argument to 'pairs'"
 msgstr " 'pairs' の引数はただ一つの列しか持ちません "
 
-#, fuzzy
 msgid "invalid argument 'horInd'"
-msgstr " 最初の引数が無効です "
+msgstr " 無効な引数 'horInd' です "
 
-#, fuzzy
 msgid "invalid argument 'verInd'"
-msgstr " 最初の引数が無効です "
+msgstr " 無効な引数 'verInd' です "
 
 msgid "the 'panel' function made a new plot"
 msgstr " 'panel' 関数は新規のプロットを行いました "
