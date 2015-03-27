@@ -18,9 +18,11 @@
 
 .InitMethodsListClass <- function(envir)
 {
-    if(exists(classMetaName("MethodsList"), envir))
+    if(exists(classMetaName("EmptyMethodsList"), envir))
         return(FALSE)
     clList <- character()
+    ## Even though it is defunct from R 3.2.0, other functions using it are
+    ## only deprecated: So we define it and give .MlistDeprecated() messages there:
     setClass("MethodsList",
              representation(methods = "list", argument = "name", allMethods = "list"),
              where = envir); clList <- c(clList, "MethodsList")
@@ -37,7 +39,8 @@
     setIs("PossibleMethod", "optionalMethod", where = envir)
     setIs("NULL", "optionalMethod", where = envir)
     ## prior to 2.11.0, the default slot in generic function objects was a MethodsList or NULL
-    setIs("MethodsList", "optionalMethod", where = envir) #only until MethodsList class is defunct
+    ## from 3.2.0, no longer:
+    ## setIs("MethodsList", "optionalMethod", where = envir) #only until MethodsList class is defunct
 
     ## signatures -- multiple class names w. package slot in ||
     setClass("signature", representation("character", names = "character", package = "character"), where = envir); clList <- c(clList, "signature")
@@ -194,7 +197,7 @@
                   value
               }, where = envir)
     ## from 2.11.0, the MethodsList class is deprecated
-    ## from 3.3.0, it is defunct
+    ## from 3.2.0, it is defunct
     setMethod("initialize", "MethodsList", function(.Object, ...) .MlistDefunct(),
               where = envir)
 

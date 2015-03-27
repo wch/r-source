@@ -228,9 +228,9 @@
     ## once generic functions are installed from 2.11.0 or later, this should
     ## only be called with mlist a method or NULL.
     if(is.null(mlist)) return(table)
-    m <- (if(is(mlist, "MethodsList")) mlist@methods
-        else list(ANY=mlist)
-        )
+    m <- if(is(mlist, "MethodsList")) { .MlistDeprecated(); mlist@methods }
+	 else list(ANY=mlist)
+
   ## once MethodsList is defunct, this should be rewritten (and renamed!)
 
   ## the methods slot is a list named by class, with elements either
@@ -246,6 +246,7 @@
         remove(list = .sigLabel(sig), envir = table)
     }
     else if(is(el,"MethodsList")) {
+	.MlistDeprecated()
       i1 <- i+1
       if(i1 >= length(sig)) {
         ## a reset of the labels will be needed
@@ -255,7 +256,8 @@
       Recall(table, sig, el, i1, add, fenv)
     }
     else
-      stop(gettextf("invalid mlist element for signature %s at level %d (should be methods list or method, had class %s)",
+      stop(gettextf(
+   "invalid mlist element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)",
                     sQuote(classes[[j]]),
                     i,
                     dQuote(class(el))),
@@ -268,8 +270,7 @@
                                 table = get(".AllMTable", envir = fenv)) {
     ## store method in cache table.
     ## called from setMethod()
-    ## also Called from cacheMethod (from as(),
-  ## as<-())
+    ## also Called from cacheMethod (from as(), as<-())
   fenv <- environment(fdef)
   if(missing(table) && !exists(".AllMTable", envir = fenv, inherits = FALSE))
     .setupMethodsTables(fdef)
@@ -1344,6 +1345,7 @@ listFromMethods <- function(generic, where, table) {
 }
 
 .makeMlist1 <- function(arg, objects, j = 1) {
+    .MlistDefunct(".makeMlist1()")
     mnames <- character(length(objects))
     for(i in seq_along(objects)) {
         what <- objects[[i]]
@@ -1359,6 +1361,7 @@ listFromMethods <- function(generic, where, table) {
 
 .makeMlist2 <- function(args, objects, j = 1) {
     ## make a list according to  argument j, convert these as needed
+    .MlistDefunct(".makeMlist2()")
     mlists <- list()
     for(what in objects) {
         sig <- if(!is.primitive(what)) what@defined # else NULL
@@ -1386,6 +1389,7 @@ listFromMethods <- function(generic, where, table) {
 }
 
 .makeMlistFromTable <- function(generic, where = NULL) {
+    .MlistDefunct(".makeMlistFromTable()")
     if(is.null(where)) {
         what <- ".MTable"
         where <- environment(generic)
@@ -1423,14 +1427,14 @@ listFromMethods <- function(generic, where, table) {
 .assignMethodsTableMetaData <- function(name, generic, where, table) {
     what <-  .TableMetaName(generic@generic, generic@package)
     if(missing(table))
-          table <- .copyEnv(.getMethodsTable(generic))
+	table <- .copyEnv(.getMethodsTable(generic))
     assign(what, table, envir = as.environment(where))
 }
 
 .getMethodsTableMetaData <-  function(generic, where, optional = FALSE) {
-    what <-  .TableMetaName(generic@generic, generic@package)
-    if(exists(what, envir = where, inherits = FALSE))
-      get(what, envir = where )
+    what <- .TableMetaName(generic@generic, generic@package)
+    if(!is.null(f <- get0(what, envir = where, inherits = FALSE)))
+	f
     else if(optional)
       NULL
     else

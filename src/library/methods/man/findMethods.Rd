@@ -1,6 +1,6 @@
 % File src/library/methods/man/findMethods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Team
+% Copyright 2008-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{findMethods}
@@ -39,7 +39,7 @@ the objects in the table.
   function \code{f} in the environment or search position \code{where}
   (or for the generic function generally if \code{where} is missing).
 
-  The deprecated function \code{getMethods} is an older alternative to
+  The defunct function \code{getMethods} is an older alternative to
   \code{findMethods} , returning information in the form of an object of
   class \code{MethodsList}, previously used for method dispatch.  It is
   not recommended, since this class of objects is deprecated generally
@@ -53,7 +53,7 @@ findMethodSignatures(..., target = TRUE, methods = )
 
 hasMethods(f, where, package)
 
-### DEPRECATED
+## Deprecated in 2010 and defunct in 2015 for \code{table = FALSE}:
 getMethods(f, where, table = FALSE)
 }
 \arguments{
