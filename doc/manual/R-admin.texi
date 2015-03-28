@@ -453,6 +453,7 @@ make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).}
 @end example
 
+@c texi2any from Mar 2013.
 You will not be able to build any of these unless you have
 @command{texi2any} version 5.1 or later installed, and for PDF you must
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
