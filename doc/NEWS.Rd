@@ -553,8 +553,8 @@
       treated as level \code{2}.
 
       \item The \code{MethodsList} class in package \pkg{methods} had
-      been deprecated in \R 2.1.0 and is defunct now.  Functions using
-      it are defunct if they had been deprecated in \R 2.1.0, and are
+      been deprecated in \R 2.11.0 and is defunct now.  Functions using
+      it are defunct if they had been deprecated in \R 2.11.0, and are
       deprecated now, otherwise.
     }
   }
@@ -609,7 +609,7 @@
 
       \item \code{kmeans(x, k)} would fail when \code{nrow(x) >= 42949673}.
       (Comment 6 of \PR{15364})
-      
+
       \item \sQuote{Abbreviated} locale-specific day and month names
       could have been truncated in those rare locales where there are
       the same as the full names.
