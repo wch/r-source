@@ -609,6 +609,10 @@
 
       \item \code{kmeans(x, k)} would fail when \code{nrow(x) >= 42949673}.
       (Comment 6 of \PR{15364})
+      
+      \item \sQuote{Abbreviated} locale-specific day and month names
+      could have been truncated in those rare locales where there are
+      the same as the full names.
     }
   }
 }

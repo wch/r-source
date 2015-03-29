@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -82,11 +82,13 @@ strptime(x, format, tz = "")
   \code{\%}).  Widely implemented conversion specifications include
   \describe{
     \item{\code{\%a}}{Abbreviated weekday name in the current
-      locale.  (Also matches full name on input.)}
+      locale on this platform.  (Also matches full name on input:
+      in some locales there are no abbreviations of names.)}
     \item{\code{\%A}}{Full weekday name in the current locale.  (Also
       matches abbreviated name on input.)}
-    \item{\code{\%b}}{Abbreviated month name in the current
-      locale.  (Also matches full name on input.)}
+    \item{\code{\%b}}{Abbreviated month name in the current locale on
+      this platform.  (Also matches full name on input: in
+      some locales there are no abbreviations of names.)}
     \item{\code{\%B}}{Full month name in the current locale.  (Also
       matches abbreviated name on input.)}
     \item{\code{\%c}}{Date and time.   Locale-specific on output,
@@ -174,8 +176,8 @@ strptime(x, format, tz = "")
   locale.  Note that abbreviated names are platform-specific (although
   the standards specify that in the \samp{C} locale they must be the
   first three letters of the capitalized English name: this convention
-  is widely used in English-language locales but for example French
-  month abbreviations are not the same on any of Linux, OS X, Solaris
+  is widely used in English-language locales but for example the French
+  month abbreviations are not the same on any two of Linux, OS X, Solaris
   and Windows).
 
   When \code{\%z} or \code{\%Z} is used for output with an
