@@ -1,16 +1,16 @@
 % File src/library/methods/man/MethodsList-class.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{MethodsList-class}
 \alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 \docType{class}
-\title{Class MethodsList, Deprecated Representation of Methods }
+\title{Class MethodsList, Defunct Representation of Methods }
 \description{ This class of objects was used in the original
   implementation of the package to control method dispatch.  Its use
-  is now deprecated, but object appear as the default method slot in
+  is now defunct, but object appear as the default method slot in
   generic functions.  This and any other remaining uses will be
   removed in the future.
 

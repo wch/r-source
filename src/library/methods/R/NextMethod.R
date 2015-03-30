@@ -134,8 +134,8 @@ callNextMethod <- function(...) {
     }
 }
 
-loadMethod <- function(method, fname, envir)
-    method
+## Skeleton for the generic in ./MethodsListClass.R :
+loadMethod <- function(method, fname, envir) method
 
 .doSubNextCall <- function(call, method) {
     idrop <- match("drop", names(call))

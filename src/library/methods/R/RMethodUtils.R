@@ -254,6 +254,7 @@ mergeMethods <-
     ## and return the merged result.
     function(m1, m2, genericLabel = character())
 {
+    .MlistDeprecated("mergeMethods()")
     if(length(genericLabel) && is(m2, "MethodsList"))
         m2 <- .GenericInPrimitiveMethods(m2, genericLabel)
     if(is.null(m1) || is(m1, "EmptyMethodsList"))
@@ -722,6 +723,7 @@ assignMethodsMetaData <-
 {
     where <- as.environment(where)
     if(is(value, "MethodsList")) {
+	.MlistDeprecated()
         mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
         if(exists(mname, envir = where, inherits = FALSE) &&
            bindingIsLocked(mname, where))
@@ -957,6 +959,7 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
             body(method, envir = environment(method)) <- newBody
         }
         else if(is(method, "MethodsList")) {
+	    .MlistDeprecated()
             methods <- method@allMethods
             for(i in seq_along(methods))
                 methods[[i]] <- Recall(methods[[i]], addExpr)
@@ -974,6 +977,7 @@ missingArg <- function(symbol, envir = parent.frame(), eval = FALSE)
 
 balanceMethodsList <- function(mlist, args, check = TRUE)
 {
+    .MlistDeprecated("balanceMethodsList()")
     moreArgs <- args[-1L]
     if(length(moreArgs) == 0L)
         return(mlist)
@@ -1070,7 +1074,8 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined"))
     allMethods <- getMethodsMetaData(f, where = where)
     if(is.null(allMethods)) {
         argName <- genericFun@signature[[1L]]
-        allMethods <- new("MethodsList", argument = as.name(argName))
+	warning("\"MethodsList\" is defunct; allMethods now are empty")
+##-        allMethods <- new("MethodsList", argument = as.name(argName))
 #         other <- getMethodsMetaData(f)
 #         if(is.null(other))
 #             ## this utility is called AFTER ensuring the existence of a generic for f
@@ -1197,9 +1202,10 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
                 substitute({.Generic <- FF; BODY},
                            list(FF = f,BODY = body(mi)))
         }
-        else if(is(mi, "MethodsList"))
+	else if(is(mi, "MethodsList")) {
+	    .MlistDeprecated()
             mi <- Recall(mi, f)
-        else
+	} else
             stop(sprintf("internal error: Bad methods list object in fixing methods for primitive function %s",
                           sQuote(f)),
                  domain = NA)
