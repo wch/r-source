@@ -1355,12 +1355,18 @@ SEXP asCharacterFactor(SEXP x)
 
     R_xlen_t i, n = XLENGTH(x);
     SEXP labels = getAttrib(x, R_LevelsSymbol);
+    if (TYPEOF(labels) != STRSXP)
+	error(_("malformed factor"));
+    int nl = LENGTH(labels);
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
       int ii = INTEGER(x)[i];
-      SET_STRING_ELT(ans, i,
-		   (ii == NA_INTEGER) ? NA_STRING
-		   : STRING_ELT(labels, ii - 1));
+      if (ii == NA_INTEGER)
+	  SET_STRING_ELT(ans, i, NA_STRING);
+      else if (ii >= 1 && ii <= nl)
+	  SET_STRING_ELT(ans, i, STRING_ELT(labels, ii - 1));
+      else
+	  error(_("malformed factor"));
     }
     UNPROTECT(1);
     return ans;
