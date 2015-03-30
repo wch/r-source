@@ -1,24 +1,28 @@
 # Korean translation for R stats4 package
 # src/library/stats4/po/R-ko.po
-# Copyright (C) 1995-2014 The R Core Team
+# 
+# Copyright (C) 1995-2015 The R Core Team
+# 
 # This file is distributed under the same license as the R stats4 package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2012-12-10 18:35\n"
-"PO-Revision-Date: 2014-03-26 21:17-0600\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
 msgid ""
 "some named arguments in 'fixed' are not arguments to the supplied log-"
@@ -28,23 +32,21 @@ msgstr ""
 "니다"
 
 msgid "'start' must be a named list"
-msgstr "'start'는 반드시 named list이어야 합니다"
+msgstr "'start'는 반드시 이름이 주어진 리스트(named list)이어야 합니다"
 
 msgid ""
 "some named arguments in 'start' are not arguments to the supplied log-"
 "likelihood"
 msgstr ""
-"'start'내의 일부 named arguments는 주어진 log-likelihood에 쓰이는 인자가 아닙"
-"니다"
+"'start'내의 일부 이름을 가진 인자(named arguments)들은 주어진 로그-우도함수(log-likelihood)에 쓰이는 인자가 아닙니다."
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
 msgstr ""
-"프로파일링이 더 적합한 해를 찾았기 대문에 초기의 적합은 수렴하지 않았음을 의"
-"미합니다"
+"프로파일링(profiling)으로부터 더 적합한 해를 찾았기 대문에 초기의 적합은 수렴하지 않았음을 의미합니다"
 
 msgid "levels truncated to positive values only"
-msgstr "levels는 양의 값만을 가지도록 잘려집니다"
+msgstr "levels는 오로지 양의 값만을 가지도록 잘려집니다."
 
 msgid "extra arguments discarded"
-msgstr "추가적인 인자들은 무시되었습니다"
+msgstr ""
