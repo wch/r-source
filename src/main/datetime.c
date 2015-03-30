@@ -992,11 +992,16 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 			strcat(buf2, p+nused);
 		    }
 		}
+		// The overflow behaviour is not determined by C99.
+		// We assume truncation, and ensure termination.
 #ifdef USE_INTERNAL_MKTIME
 		R_strftime(buff, 256, buf2, &tm);
 #else
 		strftime(buff, 256, buf2, &tm);
 #endif
+		buff[256] = '\0';
+		// Now assume tzone abbreviated name is < 40 bytes,
+		// but they are currently 3 or 4 bytes.
 		if(UseTZ) {
 		    if(LENGTH(x) >= 10) {
 			const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i));

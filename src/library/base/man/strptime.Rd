@@ -40,9 +40,9 @@ strptime(x, format, tz = "")
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
     the specified number of digits will be printed for seconds.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{usetz}{logical.  Should the time zone be appended to the output?
-    This is used in printing times, and more reliable than using
-    \code{"\%Z"}.}
+  \item{usetz}{logical.  Should the time zone abbreviation be appended
+    to the output?  This is used in printing times, and more reliable
+    than using \code{"\%Z"}.}
 }
 \details{
   The \code{format} and \code{as.character} methods and \code{strftime}
@@ -218,7 +218,11 @@ strptime(x, format, tz = "")
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors
-  representing the time.  \code{NA} times are returned as \code{NA_character_}.
+  representing the time.  \code{NA} times are returned as
+  \code{NA_character_}.  The elements are restricted to 256 bytes, plus
+  a time zone abbreviation if \code{usetz} is true.  (On known platforms
+  longer strings are truncated at 255 or 256 bytes, but this is not
+  guaranteed by the C99 standard.)
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The time zone is used to set the
@@ -281,8 +285,11 @@ strptime(x, format, tz = "")
   For \code{strptime} the input string need not specify the date
   completely: it is assumed that unspecified seconds, minutes or hours
   are zero, and an unspecified year, month or day is the current one.
-  Some components may be returned as \code{NA} (but an unknown
-  \code{tzone} component is represented by an empty string).
+  (However, if a month is specified, the day of that month has to be
+  specified by \code{\%d} or \code{\%e} since the current day of the
+  month need not be valid for the specified month.)  Some components may
+  be returned as \code{NA} (but an unknown \code{tzone} component is
+  represented by an empty string).
 
   If the time zone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
