@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2014-03-26 14:24+0200 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2015-03-24 20:06 \n"
+"PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -11,7 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427436958.000000 \n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -58,9 +59,8 @@ msgstr ""
 " 構文解析エラーか空のオプションが以下にあります \n"
 " %s "
 
-#, fuzzy
 msgid "Warning: unknown option '--clean='%s"
-msgstr " 警告: 不明なオプション %s "
+msgstr " 警告: 不明なオプション '--clean=%s "
 
 msgid "Warning: unknown option %s"
 msgstr " 警告: 不明なオプション %s "
@@ -286,8 +286,8 @@ msgstr " 環境ナンバーを入力してください。0 を入力すると終
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-" recover が非対話的に呼び出されました; フレームがダンプされました。"
-"debugger() を使用してみて下さい "
+" recover が非対話的に呼び出されました; フレームがダンプされました。debugger"
+"() を使用してみて下さい "
 
 msgid "No suitable frames for recover()"
 msgstr " recover() に対する適当なフレームがありません "
@@ -523,11 +523,12 @@ msgstr " 可視的な関数 '%s' はありません "
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr " 総称的関数 '%s' は総称的な '%s' に対するメソッドを選択提供します "
 
-#, fuzzy
 msgid ""
 "function '%s' appears not to be S3 generic; found functions that look like "
 "S3 methods"
-msgstr " 関数 '%s' は総称的では無いようです "
+msgstr ""
+" 関数 '%s' はS3ジェネリックでは無いようです; S3メソッドのように見える関数があ"
+"ります "
 
 msgid "must supply 'generic.function' or 'class'"
 msgstr " 'generic.function' か 'class' を与える必要があります "
@@ -586,6 +587,8 @@ msgid ""
 "specifying 'contriburl' or 'available' requires a single type, not type = "
 "\"both\""
 msgstr ""
+" 'contriburl' もしくは 'available' を指定する場合は, typeは1つだけ指定する必"
+"要があります。type=\"both\" は指定できません "
 
 msgid "package '%s' in library '%s' will not be updated"
 msgstr " パッケージ '%s' (ライブラリ '%s' 中) はアップデートされません "
@@ -662,9 +665,8 @@ msgstr ""
 " 'lib' のどの要素を依存関係のインストールに使うかわかりません \n"
 " 依存関係のインストールをスキップします "
 
-#, fuzzy
 msgid "type 'binary' is not supported on this platform"
-msgstr " このプラットフォームでは 'html = TRUE' のみがサポートされています "
+msgstr " このプラットフォームでは type 'binary' はサポートされていません "
 
 msgid "no packages were specified"
 msgstr " 如何なるパッケージも指定されませんでした "
@@ -678,9 +680,8 @@ msgstr " パッケージをインストール出来ませんでした "
 msgid "unable to create %s"
 msgstr " %s を生成できませんでした "
 
-#, fuzzy
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr " ファイル名から 'repos = NULL' を推測 "
+msgstr " 'pkgs'から 'repos = NULL' を推測 "
 
 msgid "unable to create temporary directory %s"
 msgstr " 一時的ディレクトリ %s を作ることが出来ません "
@@ -781,9 +782,8 @@ msgstr " 名前 %s のファイルを作成しました。 "
 msgid "Edit the file and move it to the appropriate directory."
 msgstr " ファイルを編集してきとうなディレクトリに移動してください "
 
-#, fuzzy
 msgid "cannot determine import name"
-msgstr " 利用可能な名前を決定することができません "
+msgstr " インポート名を決定することができません "
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
@@ -1091,13 +1091,11 @@ msgstr " 'ccaddress' は長さ 1 の整数でなければなりません "
 msgid "no download method found"
 msgstr " ダウンロードの方法が見付かりません "
 
-#, fuzzy
 msgid "'url' must be a length-one character vector"
-msgstr " 'title' は NULL か長さ 1 の文字ベクトルでなければなりません "
+msgstr " 'url' は長さ1の文字ベクトルでなければなりません "
 
-#, fuzzy
 msgid "'destfile' must be a length-one character vector"
-msgstr " 'title' は NULL か長さ 1 の文字ベクトルでなければなりません "
+msgstr " 'destfile' は長さ1の文字ベクトルでなければなりません "
 
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
@@ -1161,10 +1159,9 @@ msgstr " winDialog() は対話的にしか使用できません "
 msgid "winDialogString() cannot be used non-interactively"
 msgstr " winDialogString() は対話的にしか使用できません "
 
-#, fuzzy
 msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
-msgstr[0] " %d 個の Sweve ファイルが基本名 %s に対して見付かりました "
+msgstr[0] " %d 個の Sweve ファイルが基本名 %s に対して見つかりました "
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
@@ -1201,10 +1198,9 @@ msgstr[0] ""
 " パッケージを %s から取り除きます \n"
 " (%s が指定されていないため) "
 
-#, fuzzy
 msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
-msgstr[0] " パッケージ %s が利用できません (%s に対して) "
+msgstr[0] " パッケージ %s が利用できません (%s) "
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1233,14 +1229,13 @@ msgid_plural ""
 "There are binary versions available but the source versions are later"
 msgstr[0] " 利用できるバイナリー版がありますがソース版は後者です "
 
-#, fuzzy
 msgid ""
 "Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
-msgstr[0] " コンパイルが必要なパッケージのソースからインストールを行いますか? "
+msgstr[0] ""
+" パッケージのソースからインストールを行いますか? (コンパイルが必要です) "
 
-#, fuzzy
 msgid ""
 "Package which is only available in source form, and may need compilation of "
 "C/C++/Fortran"
@@ -1248,8 +1243,8 @@ msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
 "of C/C++/Fortran"
 msgstr[0] ""
-" ソースの形でのみ利用可能なパッケージです，C/C++/Fortran でコンパイルの必要が"
-"あるかもしれません "
+" ソースコードの形でのみ利用可能なパッケージです，C/C++/Fortran でコンパイルの"
+"必要があるかもしれません "
 
 msgid "installing the source package %s"
 msgid_plural "installing the source packages %s"
@@ -1706,3 +1701,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr " オプションの doc/KEYWORDS からの他のキーワード、一行に一つずつ "
+
+#~ msgid "at"
+#~ msgstr " at "

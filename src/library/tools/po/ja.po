@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-24 20:06-0700\n"
+"POT-Creation-Date: 2015-03-27 13:58+0900 \n"
 "PO-Revision-Date: 2014-03-26 13:56+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -54,81 +54,84 @@ msgstr " 識別不能なフォーマット指定 '%s' です "
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr " 各変換指定に許されるアステリスク '*' は多くても一つです "
 
-#: gramLatex.c:2499 gramRd.c:3933
+#: gramLatex.c:2499 gramRd.c:3933 gramRd.tab.c:3890 y.tab.c:3933
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr " %d 行にある長い文字列のためのバッファを確保できませんでした "
 
-#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428
+#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428 gramRd.tab.c:4379
+#: gramRd.tab.c:4385 y.tab.c:4422 y.tab.c:4428
 #, c-format
 msgid "invalid '%s' value"
 msgstr " 不正な '%s' 値です "
 
-#: gramRd.c:2591 gramRd.c:2594
+#: gramRd.c:2591 gramRd.c:2594 gramRd.tab.c:2548 gramRd.tab.c:2551
+#: y.tab.c:2591 y.tab.c:2594
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr " %s:%d:%d に誤ったマークアップがあります (スペースが余計?) "
 
-#: gramRd.c:3150
+#: gramRd.c:3150 gramRd.tab.c:3107 y.tab.c:3150
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr " マクロ '%s' は既に定義されています。 "
 
-#: gramRd.c:3160
+#: gramRd.c:3160 gramRd.tab.c:3117 y.tab.c:3160
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr " ユーザー定義のマクロに許されている引数の数は最大 4 つです "
 
-#: gramRd.c:3194
+#: gramRd.c:3194 gramRd.tab.c:3151 y.tab.c:3194
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr " '%s' に対するマクロが定義されていません。 "
 
-#: gramRd.c:3348 gramRd.c:3352
+#: gramRd.c:3348 gramRd.c:3352 gramRd.tab.c:3305 gramRd.tab.c:3309
+#: y.tab.c:3348 y.tab.c:3352
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr " 引用文字列の %s に改行:%d "
 
-#: gramRd.c:3371
+#: gramRd.c:3371 gramRd.tab.c:3328 y.tab.c:3371
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr " 行 %d にある長いマクロに対するバッファを確保できません "
 
-#: gramRd.c:3401
+#: gramRd.c:3401 gramRd.tab.c:3358 y.tab.c:3401
 msgid "macros nested too deeply: infinite recursion?"
 msgstr " マクロが過剰に入れ子になっています: 無限な再帰？ "
 
-#: gramRd.c:3795
+#: gramRd.c:3795 gramRd.tab.c:3752 y.tab.c:3795
 #, c-format
 msgid "Unable to find macro %s"
 msgstr " マクロ %s を見つけることができません "
 
-#: gramRd.c:3993
+#: gramRd.c:3993 gramRd.tab.c:3950 y.tab.c:3993
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr " 予想外の入力の停止 (%c 引用文字列中の %s:%d:%d で開かれた) "
 
-#: gramRd.c:4435
+#: gramRd.c:4435 gramRd.tab.c:4392 y.tab.c:4435
 msgid "cannot open the connection"
 msgstr " コネクションを開くことができません "
 
-#: gramRd.c:4442
+#: gramRd.c:4442 gramRd.tab.c:4399 y.tab.c:4442
 msgid "cannot read from this connection"
 msgstr " このコネクションからは読み取りができません "
 
-#: gramRd.c:4450
+#: gramRd.c:4450 gramRd.tab.c:4407 y.tab.c:4450
 msgid "invalid Rd file"
 msgstr " 不正な Rd ファイルです "
 
-#: gramRd.c:4469
+#: gramRd.c:4469 gramRd.tab.c:4426 y.tab.c:4469
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr " 'deparseRd' は文字要素のディパースだけをサポートしています "
 
-#: gramRd.c:4472
+#: gramRd.c:4472 gramRd.tab.c:4429 y.tab.c:4472
 msgid "bad state"
 msgstr " 不都合な状態 "
 
-#: gramRd.c:4485
+#: gramRd.c:4485 gramRd.tab.c:4442 y.tab.c:4485
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr " 'deparseRd' 中に不都合なテキストモード %d "

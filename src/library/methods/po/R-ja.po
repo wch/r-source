@@ -1,17 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2014-03-26 13:54+0200 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2015-03-27 13:58 \n"
+"PO-Revision-Date: 2015-03-27 14:52+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=utf-8 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427435556.000000 \n"
 
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr " おや、'.OldClassesPrototypes' の第 %d 行目が何か変です "
@@ -149,8 +150,8 @@ msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
 "standardGeneric(\"%s\") or is the default"
 msgstr ""
-" もし 'def' 引数が与えられるなら、それはメソッドを割り当てる "
-"standardGeneric(\"%s\") を呼び出す関数である必要があります "
+" もし 'def' 引数が与えられるなら、それはメソッドを割り当てる standardGeneric"
+"(\"%s\") を呼び出す関数である必要があります "
 
 msgid ""
 "must supply a function skeleton for %s, explicitly or via an existing "
@@ -291,9 +292,8 @@ msgstr ""
 " 最初の引数はより総称的な関数の一つの名前であるべきです (クラス %s のオブジェ"
 "クトを得ました) "
 
-#, fuzzy
 msgid "must supply 'generic.function' or 'class'"
-msgstr " %s に対する既定値として、総称的関数か関数をあたえる必要があります "
+msgstr " 'generic.function' か 'class' を与える必要があります "
 
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr ""
@@ -318,9 +318,8 @@ msgstr " 関数 %s は既にグループ総称的です; 変更しません "
 msgid "Function %s is a group generic; do not call it directly"
 msgstr " 関数 %s はグループ総称的です；直接呼び出さないで下さい "
 
-#, fuzzy
 msgid "callGeneric() must be called from within a method body"
-msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されなくてはなりません "
+msgstr " callGeneric() はメソッド本体から呼び出されなくてはなりません "
 
 msgid "expected a non-empty character string for argument name"
 msgstr " 引数の名前には空ではない文字列が必要です "
@@ -381,12 +380,11 @@ msgstr ""
 msgid "non-generic function '%s' given to findMethods()"
 msgstr " findMethods() に総称的でない関数 '%s' が与えられました "
 
-#, fuzzy
 msgid ""
 "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
 " 'where' が与えられた時は、'inherited' に対しては FALSE だけが意味を持ちます "
-"(以下が与えられました "
+"(%s が与えられました) "
 
 msgid "argument 'f' must be a generic function or %s"
 msgstr " 引数 'f' に対する関数は総称的関数または %s でなければなりません "
@@ -510,6 +508,15 @@ msgstr ""
 msgid "use %s instead."
 msgstr " %s を代わりに使ってください． "
 
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+" %s を別の \"MethodsList\" メタデータオブジェクトとともに使うことは廃止されま"
+"した "
+
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr " %s ：\"MethodsList\" メタデータオブジェクトの使用は廃止されました "
+
 msgid "invalid object for formal method definition: type %s"
 msgstr " 形式的なメソッド定義に対する不正なオブジェクト：タイプ %s "
 
@@ -538,11 +545,10 @@ msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 " メソッド (%s) に対するシグナチャ中の名前が %s の引数 (%s) にマッチしません "
 
-#, fuzzy
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
-" メソッド (%s) に対するシグナチャ中の名前が %s の引数 (%s) にマッチしません "
+" メソッド (%s) に対するシグネチャ中の名前が関数の引数 (%s) にマッチしません "
 
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
@@ -562,7 +568,7 @@ msgid "bad object found as method (class %s)"
 msgstr " 間違ったオブジェクトがメソッド (クラス %s) として見付かりました "
 
 msgid "No next method available"
-msgstr ""
+msgstr " 次のメソッドは利用可能ではありません "
 
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
@@ -1289,9 +1295,8 @@ msgstr ""
 " メソッドテーブル (%s) 中に不正なオブジェクトがあります。メソッドが期待されま"
 "すが、クラス %s のオブジェクトが得られました "
 
-#, fuzzy
 msgid "invalid or unset methods table in generic function %s"
-msgstr " 以下の総称的関数中に不正か未設定のメソッドがあります \" "
+msgstr " 総称的関数 %s 中に不正か未設定のメソッドテーブルがあります "
 
 msgid "trying to find a methods table in a non-generic function"
 msgstr " 総称的でない関数中にメソッドテーブルを探しています "

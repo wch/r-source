@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
-"PO-Revision-Date: 2014-03-26 13:57+0200 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2015-03-27 13:57 \n"
+"PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -11,7 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427434951.000000 \n"
 
 msgid "'%s' is defunct."
 msgstr " '%s' は廃止されました。 "
@@ -43,8 +44,8 @@ msgstr " 'x' に無限値か欠測値があります "
 msgid "a dimension is zero"
 msgstr " 次元が 0 です "
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
-msgstr ""
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
+msgstr " \"hexNumeric\" と \"digits17\" は矛盾します "
 
 msgid "second argument must be a list"
 msgstr " 第二引数はリストでなければなりません "
@@ -301,9 +302,8 @@ msgstr " 存在しない列中の要素の置き換えです: %s "
 msgid "only a single element should be replaced"
 msgstr " ただ一つの要素しか置き換えられるべきではありません "
 
-#, fuzzy
 msgid "Partial match of '%s' to '%s' in data frame"
-msgstr " データフレーム中の名前は部分的にマッチしました "
+msgstr " データフレーム中の名前 '%s' は '%s'と部分的にマッチしました "
 
 msgid "names do not match previous names"
 msgstr " 名前が以前の名前と一致しません "
@@ -320,9 +320,8 @@ msgstr " <0 行> (または長さ 0 の row.names) "
 msgid "non-numeric variable in data frame:"
 msgstr " 以下のデータフレーム中に数値でない変数があります: "
 
-#, fuzzy
 msgid "%s only defined for equally-sized data frames"
-msgstr " 同じ大きさのデータフレームに対してだけ定義されています "
+msgstr " %s は同じ大きさのデータフレームに対してだけ定義されています "
 
 msgid "list of length %d not meaningful"
 msgstr " 長さ %d のリストは意味がありません "
@@ -555,9 +554,8 @@ msgstr " 無効な 'labels' です; 長さ %d は 1 または %d であるべき
 msgid "number of levels differs"
 msgstr " 水準の数が異なります "
 
-#, fuzzy
 msgid "%s not meaningful for factors"
-msgstr " 因子に対しては無意味です "
+msgstr " %s は因子に対しては無意味です "
 
 msgid "level sets of factors are different"
 msgstr " 因子の水準セットが異なっています "
@@ -653,6 +651,7 @@ msgstr ""
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr ""
+" 'big.mark' と 'decimal.mark' が両方とも '%s' ですが，これは混乱を招きます "
 
 msgid "'zero.print' has length > 1"
 msgstr " 'zero.print' は長さ > 1 を持ちます "
@@ -773,9 +772,8 @@ msgstr " %s は有効なインストール済みパッケージではありま�
 msgid "%s not found on search path, using pos = 2"
 msgstr " %s は検索パス上には見つかりませんでした。pos = 2 を使用します "
 
-#, fuzzy
 msgid "Package %s version %s cannot be unloaded"
-msgstr " パッケージ %s はロードされません "
+msgstr " パッケージ %s のバージョン %s はアンロードできません "
 
 msgid "package or namespace load failed for %s"
 msgstr " %s に対するパッケージもしくは名前空間のロードが失敗しました "
@@ -873,7 +871,7 @@ msgid "package %s required by %s could not be found"
 msgstr " パッケージ %s が %s によって要求されましたが、見つけられませんでした "
 
 msgid "version %s of %s masked by %s in %s"
-msgstr ""
+msgstr " %2$s の バージョン %1$s は，%4$s 中の %3$s によってマスクされます "
 
 msgid "package %s could not be loaded"
 msgstr " パッケージ %s をロードできませんでした "
@@ -983,13 +981,13 @@ msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr " 'by' は列を数値、名前ラベルもしくは論理値で特定しなければなりません "
 
 msgid "long vectors are not supported"
-msgstr ""
+msgstr " long vectorはサポートされていません "
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr " 'by.x' そして 'by.y' は異なった列数を指定しています "
 
 msgid "'incomparables' is supported only for merging on a single column"
-msgstr ""
+msgstr " 'incomparables' は単一列上でのマージの際にのみサポートされます "
 
 msgid "additional arguments ignored in message()"
 msgstr " message() で追加引数は無視されました "
@@ -1141,10 +1139,6 @@ msgstr " 封印された名前空間のエクスポートへ加えることが�
 
 msgid "undefined exports: %s"
 msgstr " 未定義のエクスポートです: %s "
-
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr " オブジェクト %s は 'namespace:%s' によってエクスポートされていません "
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr " パッケージ %s には 'NAMESPACE' ファイルがありません "
@@ -1588,7 +1582,6 @@ msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] " 逆構文解析オプション %s は認識できません "
 
-#, fuzzy
 msgid ""
 "The following object is masked _by_ %s:\n"
 "\n"
@@ -1598,11 +1591,10 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-" 以下のオブジェクトはマスクされています (%s %s) : \n"
+" 以下のオブジェクトは %s によってマスクされています: \n"
 "\n"
 " %s \n"
 
-#, fuzzy
 msgid ""
 "The following object is masked from %s:\n"
 "\n"
@@ -1612,7 +1604,7 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-" 以下のオブジェクトはマスクされています (%s %s) : \n"
+" 以下のオブジェクトは %s からマスクされています: \n"
 "\n"
 " %s \n"
 
@@ -1659,7 +1651,6 @@ msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] " %d 個の変数を与えて、%d 個の変数を置換しようとしています "
 
-#, fuzzy
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
 msgstr[0] " 0 列 %d 行のデータフレーム "
@@ -1725,8 +1716,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ: \n"
 
 #, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr ""
+#~ " オブジェクト %s は 'namespace:%s' によってエクスポートされていません "
+
 #~ msgid "cannot be unloaded."
-#~ msgstr " %s 名前空間はアンロード出来ません "
+#~ msgstr " アンロード出来ません "
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr ""
@@ -1740,6 +1735,7 @@ msgstr[0] " 警告メッセージ: \n"
 #~ msgid "wrong argument"
 #~ msgstr " 間違った引数です "
 
+#, fuzzy
 #~ msgid ""
 #~ "The following object is masked %s %s:\n"
 #~ "\n"
@@ -1749,7 +1745,7 @@ msgstr[0] " 警告メッセージ: \n"
 #~ "\n"
 #~ "%s\n"
 #~ msgstr[0] ""
-#~ " 以下のオブジェクトはマスクされています (%s %s) : \n"
+#~ " 以下のオブジェクトは %s によってマスクされています: \n"
 #~ "\n"
 #~ " %s \n"
 
@@ -1990,3 +1986,6 @@ msgstr[0] " 警告メッセージ: \n"
 #, fuzzy
 #~ msgid "invalid value of length(bin)"
 #~ msgstr " 無効な値です "
+
+#~ msgid "version"
+#~ msgstr " バージョン "

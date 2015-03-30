@@ -1,27 +1,24 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
-"PO-Revision-Date: 2014-03-26 14:20+0200 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2015-03-24 20:06 \n"
+"PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
 "MIME-Version: 1.0 \n"
-"Content-Type: text/plain; charset=utf-8 \n"
+"Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427436981.000000 \n"
 
-#, fuzzy
 msgid "Reading %s failed with message: %s"
-msgstr ""
-" TeXファイル %s のコンパイルに失敗しました。メッセージは以下の通りです: \n"
-" %s "
+msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
 
-#, fuzzy
 msgid "Checking %s"
-msgstr " %s をチェックしています... "
+msgstr " %s をチェックしています "
 
 msgid "argument 'package' must be of length 1"
 msgstr " 引数 'package' は 長さ 1 でなければなりません "
@@ -250,18 +247,18 @@ msgstr ""
 "既に知らなければならない。 "
 
 msgid "Malformed Title field: should not end in a period."
-msgstr ""
+msgstr "Titleフィールドがおかしいです: ピリオドで終わるべきではありません． "
 
 msgid ""
 "Malformed Description field: should contain one or more complete sentences."
 msgstr ""
+"Descriptionフィールドがおかしいです: 1つ以上の完全な文が含まれるべきです. "
 
-#, fuzzy
 msgid ""
 "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
 msgstr ""
-" マニュアル 'Writing R Extensions' の章 'Creating R packages' 中の "
-"DESCRIPTION ファイルにある情報を参照してください。 "
+" マニュアル 'Writing R Extensions' の 節 'The DESCRIPTION file' 中の情報を参"
+"照してください. "
 
 msgid "Malformed Authors@R field:"
 msgstr " 不正な Authors@R フィールドです: "
@@ -278,15 +275,15 @@ msgstr " Authors@Rフィールドに役割が明示されていない人がい�
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr " Authors@R フィールドから Maintainer フィールドを抽出できません: "
 
-#, fuzzy
 msgid "Authors@R field gives more than one person with maintainer role:"
-msgstr " Authors@R フィールドに役割が明示された人がいません "
+msgstr "Authors@R フィールドでMaintainerロールを持つ人が１人を超えています: "
 
-#, fuzzy
 msgid ""
 "Authors@R field gives no person with maintainer role, valid email address "
 "and non-empty name."
-msgstr " Authors@R にメインテナの役割と e-mail アドレスを持った人がいません。 "
+msgstr ""
+" Authors@R にMaintainerロールをもち，かつ正しいe-mail アドレスをもち，かつ空"
+"白でない名前を持っている人がひとりもいません. "
 
 msgid "Encoding '%s' is not portable"
 msgstr " エンコーディング '%s' は移植出来ません "
@@ -333,11 +330,10 @@ msgstr ""
 msgid "Missing link or links in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
-#, fuzzy
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
 " マニュアル 'Writing R Extensions' の節 'Cross-references' 中の情報を参照して"
-"ください。 "
+"ください. "
 
 msgid "File %s:"
 msgstr " ファイル %s: "
@@ -369,11 +365,9 @@ msgstr " パッケージのスタートアップ関数は %s を呼び出して�
 msgid "See section %s in '%s'."
 msgstr " セクション %s ('%s' 中) を見てください "
 
-#, fuzzy
 msgid ""
 "Package detach functions should have one argument with name starting with %s."
-msgstr ""
-" パッケージの切り離し関数は %s で始まる名前を持つ一つの引数が必要です。 "
+msgstr " パッケージのdetach関数は %s で始まる名前を持つ1つの引数が必要です。 "
 
 msgid "Package detach functions should not call %s."
 msgstr " パッケージの切り離し関数は %s を呼び出してはいけません。 "
@@ -401,15 +395,15 @@ msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 " 'library' もしくは 'requires' による呼出しが以下から宣言されていません: %s "
 
-#, fuzzy
 msgid "'loadNamespace' or 'requireNamespace' calls not declared from:"
 msgstr ""
-" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
+" 'loadNamespace' もしくは 'requireNamespace' 呼出しが以下から宣言されていませ"
+"ん: "
 
-#, fuzzy
 msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr ""
-" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: %s "
+" 'loadNamespace' もしくは 'requireNamespace' 呼出しが以下から宣言されていませ"
+"ん: %s "
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"
 msgstr ""
@@ -422,15 +416,14 @@ msgstr ""
 " 'library' もしくは 'requires' により、すでにDepends によりアタッチされた %s "
 "が呼び出されました "
 
-#, fuzzy
 msgid "'library' or 'require' calls in package code:"
 msgstr ""
-" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
+" 'library' もしくは 'require' による呼出しがパッケージのコード中にあります: "
 
-#, fuzzy
 msgid "'library' or 'require' call to %s in package code."
 msgstr ""
-" 'library' もしくは 'requires' による呼出しが以下から宣言されていません: "
+" 'library' もしくは 'require' による %s の呼出しがパッケージのコード中にあり"
+"ます. "
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr ""
@@ -525,7 +518,7 @@ msgstr ""
 " (NAMESPACE 中に)。 "
 
 msgid "Rd object required"
-msgstr ""
+msgstr "Rd オブジェクトが必要です "
 
 msgid "missing/empty %s field in '%s'"
 msgstr " 欠如もしくは空の %s 欄があります ('%s' 中) "
@@ -558,13 +551,14 @@ msgstr " %s に関するいかなるヘルプも RdDB %s 中にはありませ�
 
 msgid "'macros' must be TRUE or must specify existing macros"
 msgstr ""
+" 'macros' はTRUEとするか，もしくは既存のマクロを指定しなくてはなりません "
 
 msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
+" マクロファイル %s は Rd マクロの定義とコメントのみを含んでいるべきです "
 
-#, fuzzy
 msgid "No Rd macros in package '%s'."
-msgstr " package %s にドキュメントは見つけられませんでした "
+msgstr " パッケージ '%s' にRdマクロは見つけられませんでした "
 
 msgid "more than one \\examples section, using the first"
 msgstr " 2 つ以上の \\examples 節があります、1 番目を用います "
@@ -606,9 +600,8 @@ msgstr " '%s' に対する不正な値 : %s "
 msgid "Only one Rd section per %s is supported."
 msgstr " %s は Rd セクションを 1 つしか持てません。 "
 
-#, fuzzy
 msgid "DESCRIPTION file is for package '%s', not '%s'"
-msgstr " パッケージ '%s' には 'DESCRIPTION.in' がありません "
+msgstr "DESCRIPTION ファイルはパッケージ '%s' のものです．'%s' ではありません "
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
 msgstr " ビニエットの生成物 %s は既知の拡張子を持っていません( %s ) "
@@ -632,6 +625,8 @@ msgstr " 一時ディレクトリ %s を生成することが出来ません "
 
 msgid "Vignette '%s' is non-ASCII but has no declared encoding"
 msgstr ""
+" ビニエット '%s' はASCII文字のみではありませんが，エンコーディングが宣言され"
+"ていません "
 
 msgid "Running"
 msgstr " 実行中 "
@@ -1247,9 +1242,8 @@ msgstr " '%s' を '%s' に対して実行出来ません "
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
 
-#, fuzzy
 msgid "cannot coerce %s to logical"
-msgstr " 強制変換できません "
+msgstr " %s を論理値に強制変換できません "
 
 msgid "File 'DESCRIPTION' is missing."
 msgstr " ファイル 'DESCRIPTION' が見当たりません。 "
@@ -1275,9 +1269,8 @@ msgstr " パッケージコードを読み込めません "
 msgid "Call sequence:"
 msgstr " 呼び出しシーケンス: "
 
-#, fuzzy
 msgid "'text' must be a character vector"
-msgstr " 引数 'x' は文字型ベクトルでなければいけません "
+msgstr " 'text' は文字型ベクトルでなければなりません "
 
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
@@ -1407,7 +1400,6 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しにより生成されました "
 
-#, fuzzy
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-11-20 11:48\n"
-"PO-Revision-Date: 2014-03-26 10:17+0200 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org \n"
+"POT-Creation-Date: 2014-11-20 11:48 \n"
+"PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "Language: ja \n"
@@ -11,7 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Plural-Forms: nplurals=1; plural=0; \n"
-"X-Generator: Pootle 2.0.5 \n"
+"X-Generator: Pootle 2.5.1.1 \n"
+"X-POOTLE-MTIME: 1427433504.000000 \n"
 
 msgid "models are not all fitted to the same number of observations"
 msgstr " モデルあてはめに使用した観察数が全て同じではありません "
@@ -102,7 +103,7 @@ msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr " 第一ラグが 0 であるときだけ ci.type=\"ma\" を使用することができます "
 
 msgid "Page [%d,%d]: i =%s; j =%s"
-msgstr ""
+msgstr " ページ [%d,%d]: i =%s; j =%s "
 
 msgid "univariate time series only"
 msgstr " 一変量時系列専用です "
@@ -622,6 +623,8 @@ msgid ""
 "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to "
 "\"hclust\""
 msgstr ""
+" \"hclust\"に適合するためには、デンドログラムの要素は1,2,...,%d (順序は問わな"
+"い)である必要があります "
 
 msgid "dendrogram node with non-positive #{branches}"
 msgstr " 枝数が正でないデンドログラムノードです "
@@ -751,9 +754,10 @@ msgstr " 'rate' または 'scale' のどちらか一方を指定してくださ�
 msgid "x[] and prob[] must be equal length vectors."
 msgstr " x[] と prob[] は等しい長さのベクトルでなければなりません "
 
-#, fuzzy
 msgid "probabilities must be finite, non-negative and not all 0"
-msgstr " 確率は非負でなければなりません "
+msgstr ""
+" probabilities は有限であり、負ではない値であって、すべてが0であってはいけま"
+"せん "
 
 msgid "'x' must be non-negative"
 msgstr " 'x' は非負でなければなりません "
@@ -1126,6 +1130,8 @@ msgstr " 重みが 0 の観測値は標準偏差の計算で使われません "
 msgid ""
 "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
 msgstr ""
+" \"ward\"法は \"ward.D\" 法に名称変更されました。新しい \"ward.D2\"もありま"
+"す "
 
 msgid "invalid clustering method"
 msgstr " 無効なクラスタリング法です "
@@ -1252,10 +1258,10 @@ msgid "must have same number of columns in 'x' and 'centers'"
 msgstr " 'x' と中心 ('centers') の列数は同じでなければなりません "
 
 msgid "'x' is a list, so ignoring argument 'g'"
-msgstr ""
+msgstr " ’x’はリストなので、引数 'g' は無視します "
 
 msgid "some elements of 'x' are not numeric and will be coerced to numeric"
-msgstr ""
+msgstr " 'x'のうちいくつかの要素は数値ではないので，数値に強制変換されます "
 
 msgid "not enough 'x' data"
 msgstr " 'x' データの数が十分ではありません "
@@ -1315,9 +1321,8 @@ msgstr ""
 " オブジェクト中の残り自由度はこれは \"lm\" オブジェクトではないことを示唆しま"
 "す "
 
-#, fuzzy
 msgid "essentially perfect fit: summary may be unreliable"
-msgstr " 完全なフィットに対する ANOVA F 検定には信頼性がありません "
+msgstr " ほぼ完全なフィットなので，summary には信頼性がない場合があります "
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"
@@ -2001,6 +2006,8 @@ msgstr " 無効な引数 'endrule' です "
 
 msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 msgstr ""
+" .nknots.smspl() がエクスポートされるようになりましたから，n.knots() の代わり"
+"にこちらを用いてください "
 
 msgid "invalid 'control.spar'"
 msgstr " 無効な 'control.spar' です "
@@ -2141,9 +2148,8 @@ msgstr " 適正な階段関数ではありません "
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
 msgstr " 関数 'plot.stepfun' が誤ったタイプの引数 'x' で呼ばれました "
 
-#, fuzzy
 msgid "%s must be 0 or 1"
-msgstr " 0 か 1 でなければなりません "
+msgstr " %s は 0 か 1 でなければなりません "
 
 msgid "only univariate series are allowed"
 msgstr " 一変量系列だけが許されます "
@@ -2421,10 +2427,9 @@ msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
 msgstr[0] " 指定された初期値からは最適化を行うことができませんでした "
 
-#, fuzzy
 msgid "'init' must have %d column"
 msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] " 'init' は 1 列でなければなりません "
+msgstr[0] " 'init' は %d 列でなければなりません "
 
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
