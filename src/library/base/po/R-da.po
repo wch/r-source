@@ -1,18 +1,21 @@
 # Danish translation R.
-# Copyright (c) 2014 R & nedenstående oversættere.
+# Copyright (c) 2015 R & nedenstående oversættere.
 # This file is distributed under the same license as the R package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2013, 2014.
+# Joe Hansen <joedalton2@yahoo.dk>, 2011, 2013, 2014, 2015.
 #
+# '' -> ''
+# \" -> ""
 # coercing -> tvinger
+# sink -> datakanal
 # unary -> unær
 # strenge mellem '' og med store bogstaver er ikke oversat.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
-"PO-Revision-Date: 2014-03-17 14:20+0200\n"
+"POT-Creation-Date: 2015-03-24 11:51\n"
+"PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -52,7 +55,7 @@ msgid "a dimension is zero"
 msgstr "en dimension er nul"
 
 msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
-msgstr ""
+msgstr "\"hexNumeric\" og \"digits17\" udelukker hinanden"
 
 msgid "second argument must be a list"
 msgstr "andet argument skal være en liste"
@@ -305,9 +308,8 @@ msgstr "erstatter element i ikkeeksisterende kolonne: %s"
 msgid "only a single element should be replaced"
 msgstr "kun et enkelt element skal erstattes"
 
-#, fuzzy
 msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "Navn delvist matchet i dataramme"
+msgstr "Delvis match for '%s' til '%s' i dataramme"
 
 msgid "names do not match previous names"
 msgstr "navne matcher ikke tidligere navne"
@@ -324,9 +326,8 @@ msgstr "<0 rækker> (eller 0-længde row.names)"
 msgid "non-numeric variable in data frame:"
 msgstr "variabel der ikke er numerisk i dataramme:"
 
-#, fuzzy
 msgid "%s only defined for equally-sized data frames"
-msgstr "kun defineret for lige store datarammer"
+msgstr "%s kun defineret for lige store datarammer"
 
 msgid "list of length %d not meaningful"
 msgstr "liste på længde %d er ikke meningsfuld"
@@ -552,9 +553,8 @@ msgstr "ugyldige 'labels'; længde %d skal være 1 eller %d"
 msgid "number of levels differs"
 msgstr "niveauantal er forskelligt"
 
-#, fuzzy
 msgid "%s not meaningful for factors"
-msgstr "ikke meningsfuldt for faktorer"
+msgstr "%s er ikke meningsfuld for faktorer"
 
 msgid "level sets of factors are different"
 msgstr "niveausæt for faktorer er forskellige"
@@ -645,7 +645,7 @@ msgstr ""
 "ødelagt dataramme: kolonner vil blive afkortet eller forlænget med NA'er"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
+msgstr "'big.mark' og 'decimal.mark' er begge '%s', hvilket kan være forvirrende"
 
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' har længde > 1"
@@ -763,9 +763,8 @@ msgstr "%s er ikke en gyldig installeret pakke"
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s ikke fundet på søgesti, bruger pos = 2"
 
-#, fuzzy
 msgid "Package %s version %s cannot be unloaded"
-msgstr "pakke %s er ikke indlæst"
+msgstr "Pakke %s version %s er ikke læst ud"
 
 msgid "package or namespace load failed for %s"
 msgstr "indlæsning af pakke eller navnerum fejlede for %s"
@@ -858,7 +857,7 @@ msgid "package %s required by %s could not be found"
 msgstr "pakke %s krævet af %s kunne ikke findes"
 
 msgid "version %s of %s masked by %s in %s"
-msgstr ""
+msgstr "version %s for %s maskeret af %s i %s"
 
 msgid "package %s could not be loaded"
 msgstr "pakke %s kunne ikke indlæses"
@@ -967,13 +966,13 @@ msgid "'by' must specify one or more columns as numbers, names or logical"
 msgstr "'by' skal angive en eller flere kolonner som tal, navne eller logiske"
 
 msgid "long vectors are not supported"
-msgstr ""
+msgstr "lange vektorer er ikke understøttet"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' og 'by.y' angiver forskellige antal kolonner"
 
 msgid "'incomparables' is supported only for merging on a single column"
-msgstr ""
+msgstr "'incomparables' er kun understøttet for sammenføjning af en enkel kolonne"
 
 msgid "additional arguments ignored in message()"
 msgstr "yderligere argumenter ignoreres i message()"
@@ -1117,10 +1116,6 @@ msgstr "kan ikke tilføje eksport for et forseglet navnerum"
 
 msgid "undefined exports: %s"
 msgstr "ej defineret eksport: %s"
-
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "objekt %s er ikke eksporteret af 'navnerum:%s'"
 
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "pakke %s har ikke en 'NAMESPACE'-fil"
@@ -1559,7 +1554,6 @@ msgid_plural "deparse options %s are not recognized"
 msgstr[0] "deparse-tilvalg %s genkendes ikke"
 msgstr[1] "deparse-tilvalg %s genkendes ikke"
 
-#, fuzzy
 msgid ""
 "The following object is masked _by_ %s:\n"
 "\n"
@@ -1569,15 +1563,14 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-"Det følgende objekt er maskeret %s %s:\n"
+"Det følgende objekt er maskeret _af_ %s:\n"
 "\n"
 "%s\n"
 msgstr[1] ""
-"De følgende objekter er maskerede %s %s:\n"
+"De følgende objekter er maskerede _af_ %s:\n"
 "\n"
 "%s\n"
 
-#, fuzzy
 msgid ""
 "The following object is masked from %s:\n"
 "\n"
@@ -1587,11 +1580,11 @@ msgid_plural ""
 "\n"
 "%s\n"
 msgstr[0] ""
-"Det følgende objekt er maskeret %s %s:\n"
+"Det følgende objekt er maskeret fra %s:\n"
 "\n"
 "%s\n"
 msgstr[1] ""
-"De følgende objekter er maskerede %s %s:\n"
+"De følgende objekter er maskerede fra %s:\n"
 "\n"
 "%s\n"
 
@@ -1648,10 +1641,9 @@ msgid_plural "provided %d variables to replace %d variables"
 msgstr[0] "leverede %d variabel til at erstatte %d variabler"
 msgstr[1] "leverede %d variabler til at erstatte %d variabler"
 
-#, fuzzy
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
-msgstr[0] "dataramme med 0 kolonner og %d rækker"
+msgstr[0] "dataramme med 0 kolonner og %d række"
 msgstr[1] "dataramme med 0 kolonner og %d rækker"
 
 msgid "library %s contains no packages"
@@ -1727,32 +1719,3 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
 
-#, fuzzy
-#~ msgid "cannot be unloaded."
-#~ msgstr "%s navnerum kan ikke deaktiveres:"
-
-#~ msgid "package %s %s was found, but %s %s is required by %s"
-#~ msgstr "pakke %s %s blev fundet, men %s %s er krævet af %s"
-
-#~ msgid "package %s %s is loaded, but %s %s is required by %s"
-#~ msgstr "pakke %s %s er indlæst, men %s %s er krævet af %s"
-
-#~ msgid "wrong argument"
-#~ msgstr "forkert argument"
-
-#~ msgid ""
-#~ "The following object is masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgid_plural ""
-#~ "The following objects are masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgstr[0] ""
-#~ "Det følgende objekt er maskeret %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgstr[1] ""
-#~ "De følgende objekter er maskerede %s %s:\n"
-#~ "\n"
-#~ "%s\n"
