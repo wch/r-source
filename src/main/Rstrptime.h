@@ -1163,7 +1163,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 */
 
 attribute_hidden
-void dt_invalidate_locale() // used in plaform.c
+void dt_invalidate_locale() // used in platform.c
 {
     locale_strings_set = 0;
     locale_w_strings_set = 0;
@@ -1181,23 +1181,31 @@ static void get_locale_strings(void)
     tm.tm_year = 30;
     for(i = 0; i < 12; i++) {
 	tm.tm_mon = i;
+	// What happens if this does not fit is not well-defined,
+	// so we null-terminate as a precaution.
 	strftime(ab_month_name[i], DT_BUFSIZE, "%b", &tm);
+	ab_month_name[i][DT_BUFSIZE-1] = '\0';
 	strftime(month_name[i], DT_BUFSIZE, "%B", &tm);
+	month_name[i][DT_BUFSIZE-1] = '\0';
     }
     tm.tm_mon = 0;
     for(i = 0; i < 7; i++) {
 	tm.tm_mday = tm.tm_yday = i+1; /* 2000-01-02 was a Sunday */
 	tm.tm_wday = i;
 	strftime(ab_weekday_name[i], DT_BUFSIZE, "%a", &tm);
+	ab_weekday_name[i][DT_BUFSIZE-1] = '\0';
 	strftime(weekday_name[i], DT_BUFSIZE, "%A", &tm);
+	weekday_name[i][DT_BUFSIZE-1] = '\0';
     }
     tm.tm_hour = 1;
     /* in locales where these are unused, they may be empty:
        better not to reset them then */
     strftime(buff, DT_BUFSIZE, "%p", &tm);
+    buff[DT_BUFSIZE-1] = '\0';
     if(strlen(buff)) strcpy(am_pm[0], buff);
     tm.tm_hour = 13;
     strftime(buff, DT_BUFSIZE, "%p", &tm);
+    buff[DT_BUFSIZE-1] = '\0';
     if(strlen(buff)) strcpy(am_pm[1], buff);
     locale_strings_set = 1;
 }
@@ -1215,22 +1223,28 @@ static void get_locale_w_strings(void)
     for(i = 0; i < 12; i++) {
 	tm.tm_mon = i;
 	wcsftime(w_ab_month_name[i], DT_WBUFSIZE, L"%b", &tm);
+	w_ab_month_name[i][DT_WBUFSIZE - 1] = L'\0';
 	wcsftime(w_month_name[i], DT_WBUFSIZE, L"%B", &tm);
+	w_month_name[i][DT_WBUFSIZE - 1] = L'\0';
     }
     tm.tm_mon = 0;
     for(i = 0; i < 7; i++) {
 	tm.tm_mday = tm.tm_yday = i+1; /* 2000-01-02 was a Sunday */
 	tm.tm_wday = i;
 	wcsftime(w_ab_weekday_name[i], DT_WBUFSIZE, L"%a", &tm);
+	w_ab_weekday_name[i][DT_WBUFSIZE - 1] = L'\0';
 	wcsftime(w_weekday_name[i], DT_WBUFSIZE, L"%A", &tm);
+	w_weekday_name[i][DT_WBUFSIZE - 1] = L'\0';
     }
     tm.tm_hour = 1;
     /* in locales where these are unused, they may be empty:
        better not to reset them then */
     wcsftime(buff, DT_WBUFSIZE, L"%p", &tm);
+    buff[DT_WBUFSIZE - 1] = L'\0';
     if(wcslen(buff)) wcscpy(w_am_pm[0], buff);
     tm.tm_hour = 13;
     wcsftime(buff, DT_WBUFSIZE, L"%p", &tm);
+    buff[DT_WBUFSIZE - 1] = L'\0';
     if(wcslen(buff)) wcscpy(w_am_pm[1], buff);
     locale_w_strings_set = 1;
 }
