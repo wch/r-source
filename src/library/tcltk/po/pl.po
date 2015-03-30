@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
 "PO-Revision-Date: \n"
@@ -14,10 +14,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
-# tcltk/src/tcltk.c: 66
-#  _("parse error in R expression")
 #: tcltk.c:67
 msgid "parse error in R expression"
 msgstr "Błąd składni w wyrażeniu R"
@@ -26,56 +24,32 @@ msgstr "Błąd składni w wyrażeniu R"
 msgid "tcl error.\n"
 msgstr "błąd 'tcl'.\n"
 
-# tcltk/src/tcltk.c: 197
-# error(_("invalid argument"))
-# tcltk/src/tcltk.c: 742
-# error(_("invalid argument"))
 #: tcltk.c:200 tcltk.c:745
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
-# tcltk/src/tcltk.c: 301
-# error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 319
-# error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 392
-# error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 455
-# error(_("invalid tclObj -- perhaps saved from another session?"))
-# tcltk/src/tcltk.c: 507
-# error(_("invalid tclObj -- perhaps saved from another session?"))
 #: tcltk.c:304 tcltk.c:322 tcltk.c:395 tcltk.c:458 tcltk.c:510
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "niepoprawny obiekt typu 'tclObj' -- być może zapisany z innej sesji?"
 
-# tcltk/src/tcltk.c: 617
-# error(_("argument list is too long in tcltk internal function 'callback_closure'"))
 #: tcltk.c:620
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
 "'callback_closure'"
 
-# tcltk/src/tcltk.c: 650
-# error(_("argument is not of correct type"))
 #: tcltk.c:653
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
-# tcltk/src/tcltk.c: 701
-# warning(_("no DISPLAY variable so Tk is not available"))
 #: tcltk.c:704
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "brak zmiennej 'DISPLAY' więc Tk nie jest dostępne"
 
-# tcltk/src/tcltk_unix.c: 94
-# error(_("Tcl is not loaded"))
 #: tcltk_unix.c:94
 msgid "Tcl is not loaded"
 msgstr "Tcl nie został załadowany"
 
-# tcltk/src/tcltk_unix.c: 98
-# error(_("Tcl is not last loaded handler"))
 #: tcltk_unix.c:98
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl nie jest ostatnią załadowaną usługą"

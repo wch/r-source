@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-03-24 10:19\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,17 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
-# methods/R/BasicClasses.R: 159
-# warning(gettextf("OOPS: something wrong with line %d in '.OldClassesPrototypes'", i), domain = NA)
 msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
 msgstr "OOPS: coś nie tak z linią %d w '.OldClassesPrototypes'"
 
-# methods/R/BasicClasses.R: 264
-# stop(gettextf("unnamed argument to initialize() for S3 class must have a class definition; %s does not",
-#                                 dQuote(Classi)),
-#                        domain = NA)
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class definition; "
 "%s does not"
@@ -32,8 +26,6 @@ msgstr ""
 "nienazwany argument przekazany do metody 'initialize()' dla klasy S3 musi "
 "posiadać definicję klasy; a %s takiej nie posiada"
 
-# methods/R/BasicClasses.R: 278
-# stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class %s", dQuote(Classi)), domain = NA)
 msgid ""
 "unnamed argument must extend either the S3 class or the class of the data "
 "part; not true of class %s"
@@ -41,10 +33,6 @@ msgstr ""
 "nienazwany argument musi rozszerzać albo klasę S3 albo klasę części danych; "
 "nie jest to prawdą dla klasy %s"
 
-# methods/R/BasicClasses.R: 331
-# stop(gettextf("class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent",
-#                                        dQuote(class(from))),
-#                               domain = NA)
 msgid ""
 "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 "
 "equivalent"
@@ -52,59 +40,36 @@ msgstr ""
 "klasa %s nie ma części danych S3, i dlatego też jest typu S4; brak "
 "ekwiwalentu S3"
 
-# methods/R/BasicClasses.R: 346
-# stop(gettextf("class %s is VIRTUAL; not meaningful to create an S4 object from this class",
-#                                       dQuote(cl)),
-#                              domain = NA)
 msgid ""
 "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
 msgstr "klasa %s jest WIRTUALNA; nie ma sensu tworzyć obiektu S4 z tej klasy"
 
-# methods/R/BasicClasses.R: 355
-# stop(gettextf("object must be a valid data part for class %s; not true of type %s", dQuote(cl), dQuote(class(data))),
-#                                  domain = NA)
 msgid "object must be a valid data part for class %s; not true of type %s"
 msgstr ""
 "obiekt musi być poprawną częścią danych dla klasy %s; nie jest to prawdą dla "
 "typu %s"
 
-# methods/R/BasicClasses.R: 419
-# stop("cannot specify matrix() arguments when specifying '.Data'")
 msgid "cannot specify matrix() arguments when specifying '.Data'"
 msgstr ""
 "nie można określić argumentów metody 'matrix()' gdy określane jest '.Data'"
 
-# methods/R/BasicClasses.R: 461
-# stop("cannot specify array() arguments when specifying '.Data'")
 msgid "cannot specify array() arguments when specifying '.Data'"
 msgstr ""
 "nie można określić argumentów metody 'array()' gdy określane jest '.Data'"
 
-# methods/R/BasicClasses.R: 600
-# stop("cannot have more than one unnamed argument as environment")
 msgid "cannot have more than one unnamed argument as environment"
 msgstr "nie można mieć więcej niż jeden nienazwany argument jako środowisko"
 
-# methods/R/BasicClasses.R: 606
-# stop("unnamed argument to new() must be an environment for the new object")
 msgid "unnamed argument to new() must be an environment for the new object"
 msgstr ""
 "nienazwany argument przekazywany do metody 'new()' musi być środowiskiem dla "
 "nowego obiektu"
 
-# methods/R/BasicFunsList.R: 127
-# stop(gettextf("methods may not be defined for primitive function %s in this version of R", sQuote(f)), domain = NA)
-# methods/R/BasicFunsList.R: 133
-# stop(gettextf("methods may not be defined for primitive function %s in this version of R",
-#                       sQuote(f)),
-#              domain = NA)
 msgid ""
 "methods may not be defined for primitive function %s in this version of R"
 msgstr ""
 "metody nie mogą być zdefiniowane dla prymitywnej funkcji %s w tej wersji R"
 
-# methods/R/ClassExtensions.R: 87
-# stop(gettextf("S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class %s", dQuote(class(object))), domain = NA)
 msgid ""
 "S3Part() is only defined for classes set up by setOldCLass(), basic classes "
 "or subclasses of these:  not true of class %s"
@@ -113,36 +78,22 @@ msgstr ""
 "'setOldCLass()', podstawowe klasy lub ich podklasy: nie jest to prawdą dla "
 "klasy %s"
 
-# methods/R/ClassExtensions.R: 98
-# stop(gettextf("the 'S3Class' argument must be a superclass of %s:  not true of class %s", dQuote(class(object)), dQuote(S3Class)), domain = NA)
 msgid ""
 "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
 msgstr ""
 "argument 'S3Class' musi być superklasą %s: nie jest to prawdą dla klasy %s"
 
-# methods/R/ClassExtensions.R: 118
-# stop(gettextf("replacement value must extend class %s, got %s", dQuote(needClass), dQuote(S3Class[[1L]])), domain = NA)
 msgid "replacement value must extend class %s, got %s"
 msgstr "wartość zastępcza musi rozszerzać klasę %s, otrzymano %s"
 
-# methods/R/ClassExtensions.R: 147
-# stop(gettextf("replacement value must be of class %s, got one of class %s",
-#                                dQuote(CLASS),
-#                                dQuote(class(value)[[1L]])))
 msgid "replacement value must be of class %s, got one of class %s"
 msgstr "wartość zastępcza musi być klasy %s, otrzymano jedną klasy %s"
 
-# methods/R/ClassExtensions.R: 159
-# stop(gettextf("no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s",
-#                   to, dQuote(class(from))), domain = NA)
 msgid ""
 "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
 msgstr ""
 "nie zdefiniowano metody 'replace' dla 'as(x, \"%s\") <- value' dla klasy %s"
 
-# methods/R/ClassExtensions.R: 225
-# stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class %s",
-#                        dQuote(class(coerce))), domain = NA)
 msgid ""
 "the 'coerce' argument to 'setIs' should be a function of one argument, got "
 "an object of class %s"
@@ -150,9 +101,6 @@ msgstr ""
 "argument 'coerce' przekazywany do 'setIs' powinien być funkcją jednego "
 "argumentu, otrzymano obiekt klasy %s"
 
-# methods/R/ClassExtensions.R: 267
-# stop(gettextf("the computation: 'as(object,\"%s\") <- value' is valid when object has class %s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)\n",
-#                                  TO, dQuote(FROM), TO, dQuote(class(value))), domain = NA)
 msgid ""
 "the computation: 'as(object,\"%s\") <- value' is valid when object has class "
 "%s only if 'is(value, \"%s\")' is TRUE ('class(value)' was %s)"
@@ -160,9 +108,6 @@ msgstr ""
 "obliczenie: 'as(object,\"%s\") <- value' jest poprawne gdy obiekt posiada "
 "klasę %s tylko jeśli 'is(value, \"%s\")' jest TRUE ('class(value)' było %s)"
 
-# methods/R/ClassExtensions.R: 301
-# warning(gettextf("there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error",
-#                              to, dQuote(Class)), domain = NA)
 msgid ""
 "there is no automatic definition for 'as(object, \"%s\") <- value' when "
 "object has class %s and no 'replace' argument was supplied; replacement will "
@@ -172,9 +117,6 @@ msgstr ""
 "posiada klasę %s oraz brak dostarczonego argumentu 'replace'; wartość "
 "zastępcza będzie błędem"
 
-# methods/R/ClassExtensions.R: 316
-# stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class %s",
-#                       dQuote(class(replace))), domain = NA)
 msgid ""
 "the 'replace' argument to setIs() should be a function of 2 or 3 arguments, "
 "got an object of class %s"
@@ -182,26 +124,15 @@ msgstr ""
 "argument 'replace' przekazywany do 'setIs()' powinien być funkcją 2 lub 3 "
 "argumentów, otrzymano obiekt klasy %s"
 
-# methods/R/ClassUnion.R: 40
-# stop(gettextf("the member classes must be defined: not true of %s",
-#                           paste(.dQ(as(members[!membersDefined], "character")), collapse=", ")), domain = NA)
 msgid "the member classes must be defined: not true of %s"
 msgstr "klasy członkowe muszą być zdefiniowane: nie jest to prawda dla %s"
 
-# methods/R/ClassUnion.R: 65
-# stop(gettextf("unable to create union class:  could not set members %s",
-#                       paste(.dQ(failed), collapse=", ")), domain = NA)
 msgid "unable to create union class:  could not set members %s"
 msgstr "nie można utworzyć uni klas:  nie można ustawić członków %s"
 
-# methods/R/Methods.R: 38
-# stop(gettextf("invalid argument 'name': %s",
-#                       .isSingleName(name)), domain = NA)
 msgid "invalid argument 'name': %s"
 msgstr "niepoprawny argument 'name': %s"
 
-# methods/R/Methods.R: 53
-# gettextf("%s is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", sQuote(name))
 msgid ""
 "%s is a primitive function;  methods can be defined, but the generic "
 "function is implicit, and cannot be changed."
@@ -209,9 +140,6 @@ msgstr ""
 "%s jest prymitywną funkcją; metody mogą zostać zdefiniowane, ale ogólna "
 "funkcja jest niejawna i nie może być zmieniona."
 
-# methods/R/Methods.R: 110
-# stop(gettextf("if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") or is the default",
-#                           name), domain = NA)
 msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
 "standardGeneric(\"%s\") or is the default"
@@ -219,8 +147,6 @@ msgstr ""
 "jeśli dostarczono argument 'def', musi być funkcją, która wywołuje "
 "standardGeneric(\"%s\") lub musi być funkcją domyślną"
 
-# methods/R/Methods.R: 129
-# stop(gettextf("must supply a function skeleton for %s, explicitly or via an existing function", sQuote(name)), domain = NA)
 msgid ""
 "must supply a function skeleton for %s, explicitly or via an existing "
 "function"
@@ -228,11 +154,6 @@ msgstr ""
 "potrzeba dostarczyć strukturę funkcji dla %s, jawnie lub poprzez istniejącą "
 "funkcję"
 
-# methods/R/Methods.R: 174
-# message(gettextf(
-#                        "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)",
-#                                      sQuote(name), sQuote(package),
-#                                      thisPName), domain = NA)
 msgid ""
 "Creating a generic function for %s from %s in %s\n"
 "    (from the saved implicit definition)"
@@ -240,20 +161,9 @@ msgstr ""
 "Tworzenie ogólnej funkcji dla %s z pakietu %s w pakiecie %s (z zachowanej "
 "niejawnej definicji)"
 
-# methods/R/Methods.R: 181
-# message(gettextf(
-#                          "Creating a new generic function for %s in %s",
-#                                      sQuote(name), thisPName),
-#                         domain = NA)
 msgid "Creating a new generic function for %s in %s"
 msgstr "Tworzenie nowej ogólnej funkcji dla %s w pakiecie %s"
 
-# methods/R/Methods.R: 189
-# warning(gettextf(
-# 			"no generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s",
-#                                  sQuote(name), sQuote(package),
-#                                  thisPName),
-#                         domain = NA)
 msgid ""
 "no generic version of %s on package %s is allowed;\n"
 "   a new generic will be assigned for %s"
@@ -261,39 +171,19 @@ msgstr ""
 "żadna ogólna wersja %s w pakiecie %s nie jest dozwolona; nowa ogólna funkcja "
 "będzie przypisana dla pakietu %s"
 
-# methods/R/Methods.R: 291
-# warning(gettextf("function %s appears to be a generic function, but with generic name %s",
-#                          sQuote(f), sQuote(gen)),
-#                 domain = NA)
 msgid "function %s appears to be a generic function, but with generic name %s"
 msgstr "funkcja %s wygląda na ogólną funkcję ale z ogólną nazwą %s"
 
-# methods/R/Methods.R: 325
-# warning(gettextf("generic function %s not found for removal",
-#                          sQuote(f)),
-#                 domain = NA)
 msgid "generic function %s not found for removal"
 msgstr "nie znaleziono ogólnej funkcji %s do usunięcia"
 
-# methods/R/Methods.R: 467
-# stop("a function for argument 'f' must be a generic function")
-# methods/R/trace.R: 597
-# stop("a function for argument 'f' must be a generic function")
 msgid "a function for argument 'f' must be a generic function"
 msgstr "funkcja dla argumentu 'f' musi być ogólną funkcją"
 
-# methods/R/Methods.R: 480
-# stop(gettextf("the environment %s is locked; cannot assign methods for function %s",
-#                       sQuote(getPackageName(where)),
-#                       sQuote(f)),
-#              domain = NA)
 msgid "the environment %s is locked; cannot assign methods for function %s"
 msgstr ""
 "środowisko %s jest zablokowane; nie można przypisać metod dla funkcji %s"
 
-# methods/R/Methods.R: 505
-# stop(gettextf("the 'where' environment (%s) is a locked namespace; cannot assign methods there",
-#                                   getPackageName(where)), domain = NA)
 msgid ""
 "the 'where' environment (%s) is a locked namespace; cannot assign methods "
 "there"
@@ -301,11 +191,6 @@ msgstr ""
 "środowisko 'where' (%s) jest zablokowaną przestrzenią nazw; nie można "
 "przypisać tam metod"
 
-# methods/R/Methods.R: 508
-# gettextf("Copying the generic function %s to environment %s, because the previous version was in a sealed namespace (%s)",
-#                              sQuote(f),
-#                              sQuote(getPackageName(where)),
-#                              sQuote(getPackageName(gwhere)))
 msgid ""
 "Copying the generic function %s to environment %s, because the previous "
 "version was in a sealed namespace (%s)"
@@ -313,31 +198,15 @@ msgstr ""
 "Kopiowanie ogólnej funkcji %s do środowiska %s, ponieważ poprzednia wersja "
 "była w zamkniętej przestrzeni nazw (%s)"
 
-# methods/R/Methods.R: 521
-# stop(gettextf("no existing definition for function %s",
-#                       sQuote(f)),
-#              domain = NA)
 msgid "no existing definition for function %s"
 msgstr "brak istniejącej definicji dla funkcji %s"
 
-# methods/R/Methods.R: 532
-# message(gettextf("Creating a generic function from function %s in %s",
-#                            sQuote(f), thisPName), domain = NA)
 msgid "Creating a generic function from function %s in %s"
 msgstr "Tworzenie nowej ogólnej funkcji z funkcji %s w pakiecie %s"
 
-# methods/R/Methods.R: 535
-# message(gettextf("Creating a generic function for %s from package %s in %s",
-#                            sQuote(f), sQuote(fdef@package), thisPName),
-#                   domain = NA)
 msgid "Creating a generic function for %s from package %s in %s"
 msgstr "Tworzenie ogólnej funkcji dla %s z pakietu %s w pakiecie %s"
 
-# methods/R/Methods.R: 548
-# stop(gettextf("the method for function %s and signature %s is sealed and cannot be re-defined",
-#                       sQuote(f),
-#                       .signatureString(fdef, signature)),
-#              domain = NA)
 msgid ""
 "the method for function %s and signature %s is sealed and cannot be re-"
 "defined"
@@ -345,13 +214,6 @@ msgstr ""
 "metoda dla funkcji %s oraz sygnatury %s jest zamknięta i nie może być "
 "przedefiniowana"
 
-# methods/R/Methods.R: 562
-# warning(gettextf("For function %s, signature %s: argument in method definition changed from (%s) to (%s)",
-# 					sQuote(f),
-#                                         sQuote(signature),
-#                                         mnames,
-#                                         fnames),
-#                                domain = NA, call. = FALSE)
 msgid ""
 "For function %s, signature %s: argument in method definition changed from "
 "(%s) to (%s)"
@@ -359,8 +221,6 @@ msgstr ""
 "Dla funkcji %s, sygnatura %s: argument w definicji metody zmienił się z (%s) "
 "na (%s)"
 
-# methods/R/Methods.R: 592
-# stop("primitive functions cannot be methods; they must be enclosed in a regular function")
 msgid ""
 "primitive functions cannot be methods; they must be enclosed in a regular "
 "function"
@@ -368,67 +228,32 @@ msgstr ""
 "prymitywne funkcje nie mogą być metodami; muszą być zawarte w regularnej "
 "funkcji"
 
-# methods/R/Methods.R: 597
-# stop(gettextf("invalid method definition: expected a function, got an object of class %s",
-# 			 dQuote(class(definition))), domain = NA)
 msgid ""
 "invalid method definition: expected a function, got an object of class %s"
 msgstr ""
 "niepoprawna definicja metody: oczekiwano funkcji, otrzymano obiekt klasy %s"
 
-# methods/R/Methods.R: 639
-# stop("function supplied as argument 'f' must be a generic")
 msgid "function supplied as argument 'f' must be a generic"
 msgstr "funkcja dostarczona jako argument 'f' musi być ogólną funkcją"
 
-# methods/R/Methods.R: 644
-# warning(gettextf("no generic function %s found", sQuote(f)),
-#                 domain = NA)
-# methods/R/Methods.R: 663
-# warning(gettextf("no generic function %s found",
-#                          sQuote(f)),
-#                 domain = NA)
-# methods/R/Methods.R: 680
-# warning(gettextf("no generic function %s found",
-#                          sQuote(f)),
-#                 domain = NA)
 msgid "no generic function %s found"
 msgstr "nie znaleziono ogólnej funkcji %s "
 
-# methods/R/Methods.R: 649
-# warning(gettextf("no method found for function %s and signature %s",
-#                          sQuote(fdef@generic),
-#                          paste(.dQ(signature), collapse =", ")),
-#                 domain = NA)
 msgid "no method found for function %s and signature %s"
 msgstr "nie znaleziono metody dla funkcji %s oraz sygnatury %s"
 
-# methods/R/Methods.R: 713
-# stop(gettextf("no environment or package corresponding to argument where=%s",
-#                deparse(where)), domain = NA)
 msgid "no environment or package corresponding to argument where=%s"
 msgstr "brak środowiska lub pakietu odpowiadającego argumentowi 'where=%s'"
 
-# methods/R/Methods.R: 731
-# stop(gettextf("no generic function found for '%s'", f), domain = NA)
 msgid "no generic function found for '%s'"
 msgstr "nie znaleziono ogólnej funkcji dla '%s'"
 
-# methods/R/Methods.R: 744
-# stop(gettextf("no method found for function '%s' and signature %s",
-# 			  f, paste(signature, collapse = ", ")))
 msgid "no method found for function '%s' and signature %s"
 msgstr "nie znaleziono metody dla funkcji '%s' oraz sygnatury %s"
 
-# methods/R/Methods.R: 817
-# stop("'file' must be a character string or a connection")
-# methods/R/Methods.R: 844
-# stop("'file' must be a character string or a connection")
 msgid "'file' must be a character string or a connection"
 msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
 
-# methods/R/Methods.R: 834
-# warning("argument 'signature' is not meaningful with the current implementation and is ignored \n(extract a subset of the methods list instead)")
 msgid ""
 "argument 'signature' is not meaningful with the current implementation and "
 "is ignored \n"
@@ -438,37 +263,21 @@ msgstr ""
 "zostaje zignorowany \n"
 "(zamiast tego wyodrębnij podzbiór listy metod)"
 
-# methods/R/Methods.R: 870
-# stop(gettextf("no method for %s matches class %s",
-#                             sQuote("..."), dQuote(signature)),
-#                    domain = NA)
 msgid "no method for %s matches class %s"
 msgstr "żadna metoda dla %s nie zgadza się z klasą %s"
 
-# methods/R/Methods.R: 900
-# stop(gettextf("no method found for signature %s",
-# 			       paste(signature, collapse=", ")))
 msgid "no method found for signature %s"
 msgstr "nie znaleziono metody dla sygnatury %s"
 
-# methods/R/Methods.R: 910
-# stop(gettextf("%s has no methods defined",
-#                           sQuote(f)),
-#                  domain = NA)
 msgid "%s has no methods defined"
 msgstr "%s nie ma zdefiniowanych metod"
 
-# methods/R/Methods.R: 959
-# stop(gettextf("bad class specified for element %d (should be a single character string)", i), domain = NA)
 msgid ""
 "bad class specified for element %d (should be a single character string)"
 msgstr ""
 "określono błędną klasę dla elementu %d (powinien być jednym łańcuchem "
 "tekstowym)"
 
-# methods/R/Methods.R: 998
-# stop(gettextf("first argument should be the names of one of more generic functions (got object of class %s)",
-#                       dQuote(class(f))), domain = NA)
 msgid ""
 "first argument should be the names of one of more generic functions (got "
 "object of class %s)"
@@ -476,41 +285,19 @@ msgstr ""
 "pierwszy argument powinien być nazwami jeden lub więcej ogólnych funkcji "
 "(otrzymano obiekt klasy %s)"
 
-# methods/R/RMethodUtils.R: 47
-# stop(gettextf("must supply either a generic function or a function as default for %s",
-#                           sQuote(f)),
-#                  domain = NA)
-#, fuzzy
 msgid "must supply 'generic.function' or 'class'"
-msgstr ""
-"potrzeba dostarczyć albo ogólną funkcję albo funkcję jako domyślną dla %s"
+msgstr "'generic.function' lub 'class' muszą być dostarczone"
 
-# methods/R/Methods.R: 1062
-# warning(gettextf("%s is not an S4 generic function in %s; methods not removed",
-#                          sQuote(f),
-#                          sQuote(getPackageName(where))),
-#                 domain = NA)
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr ""
 "'%s' nie jest ogólną funkcją S4 w pakiecie %s; metody nie zostały usunięte"
 
-# methods/R/Methods.R: 1085
-# warning(gettextf("cannot remove methods for %s in locked environment/package %s",
-#                                  sQuote(f), sQuote(getPackageName(db))),
-#                         domain = NA)
 msgid "cannot remove methods for %s in locked environment/package %s"
 msgstr "nie można usunąć metod dla %s w zablokowanym środowisku/pakiecie %s"
 
-# methods/R/Methods.R: 1110
-# message(gettextf("Restoring default function definition of %s",
-#                                      sQuote(f)),
-#                             domain = NA)
 msgid "Restoring default function definition of %s"
 msgstr "Przywracanie domyślnej definicji funkcji %s"
 
-# methods/R/Methods.R: 1135
-# stop(gettextf("error in updating S4 generic function %s; the function definition is not an S4 generic function (class %s)", sQuote(f), dQuote(class(fdef))),
-#                  domain = NA)
 msgid ""
 "error in updating S4 generic function %s; the function definition is not an "
 "S4 generic function (class %s)"
@@ -518,51 +305,25 @@ msgstr ""
 "błąd w aktualizacji ogólnej funkcji S4 %s; definicja funkcji nie jest ogólną "
 "funkcją S4 (klasa %s)"
 
-# methods/R/Methods.R: 1156
-# message(gettextf("Function %s is already a group generic; no change",
-#                                  sQuote(name)),
-#                         domain = NA)
 msgid "Function %s is already a group generic; no change"
 msgstr "funkcja %s już jest w grupie ogólnej; brak zmian"
 
-# methods/R/Methods.R: 1167
-# gettextf("Function %s is a group generic; do not call it directly",
-#                             sQuote(name))
 msgid "Function %s is a group generic; do not call it directly"
 msgstr "Funkcja %s jest w grupie ogólnej; nie wywołuj jej bezpośrednio"
 
-# methods/R/Methods.R: 1218
-# stop("'callGeneric' must be called from a generic function or method")
-#, fuzzy
 msgid "callGeneric() must be called from within a method body"
-msgstr "'callGeneric' musi być wywołana z ogólnej funkcji lub metody"
+msgstr "'callGeneric()' musi być wywołana z wewnątrz ciała ogólnej metody"
 
-# methods/R/addedFunctions.R: 45
-# stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
-# methods/R/Methods.R: 1320
-# stop(gettextf('expected a non-empty character string for argument name'), domain = NA)
 msgid "expected a non-empty character string for argument name"
 msgstr "oczekiwano niepustego łańcucha tekstowego dla nazwy argumentu"
 
-# methods/R/Methods.R: 1322
-# stop(gettextf('generic function supplied was not created for %s',
-#                       sQuote(name)),
-#              domain = NA)
 msgid "generic function supplied was not created for %s"
 msgstr "dostarczona funkcja ogólna nie została utworzona dla %s"
 
-# methods/R/Methods.R: 1335
-# stop(gettextf("%s is a primitive function; its generic form cannot be redefined",
-#                                 sQuote(name)),
-#                        domain = NA)
 msgid "%s is a primitive function; its generic form cannot be redefined"
 msgstr ""
 "%s jest prymitywną funkcją; jej ogólna forma nie może zostać przedefiniowana"
 
-# methods/R/Methods.R: 1367
-# warning(gettextf("%s is not currently a generic:  define it first to create a non-default implicit form",
-#                          sQuote(name)),
-#                 domain = NA)
 msgid ""
 "%s is not currently a generic:  define it first to create a non-default "
 "implicit form"
@@ -570,81 +331,39 @@ msgstr ""
 "%s nie jest aktualnie funkcją ogólną: zdefiniuj ją najpierw aby utworzyć "
 "niedomyślną niejawną formę"
 
-# methods/R/Methods.R: 1391
-# stop(gettextf("must provide an environment table; got class %s",
-#                       dQuote(class(what))), domain = NA)
 msgid "must provide an environment table; got class %s"
 msgstr "potrzeba dostarczyć tablicę środowiska; otrzymano klasę %s"
 
-# methods/R/Methods.R: 1434
-# gettext("original function is prohibited as a generic function")
 msgid "original function is prohibited as a generic function"
 msgstr "oryginalna funkcja jest zakazana jako ogólna funkcja"
 
-# methods/R/Methods.R: 1436
-# gettext("not both functions!")
 msgid "not both functions!"
 msgstr "jeden z argumentów nie jest funkcją!"
 
-# methods/R/Methods.R: 1441
-# gettextf("argument %s is not S4",
-#                                   deparse(substitute(f1)))
-# methods/R/Methods.R: 1443
-# gettextf("argument %s is not S4",
-#                                   deparse(substitute(f2)))
 msgid "argument %s is not S4"
 msgstr "argument '%s' nie jest S4"
 
-# methods/R/Methods.R: 1451
-# gettext("formal arguments differ (in default values?)")
 msgid "formal arguments differ (in default values?)"
 msgstr "formalne argumenty różnią się (w wartościach domyślnych?)"
 
-# methods/R/Methods.R: 1457
-# gettextf("formal arguments differ: (%s), (%s)",
-# 			    paste(a1, collapse = ", "),
-# 			    paste(a2, collapse = ", "))
 msgid "formal arguments differ: (%s), (%s)"
 msgstr "formalne argumenty różnią się: (%s), (%s)"
 
-# methods/R/Methods.R: 1462
-# gettextf("value classes differ: %s, %s",
-#                         .dQ(gpString(f1@valueClass)),
-#                         .dQ(gpString(f2@valueClass)))
 msgid "value classes differ: %s, %s"
 msgstr "wartości klas różnią się: %s, %s"
 
-# methods/R/Methods.R: 1468
-# gettextf("signatures differ:  (%s), (%s)",
-#                         paste(f1@signature, collapse = ", "),
-#                         paste(f2@signature, collapse = ", "))
 msgid "signatures differ:  (%s), (%s)"
 msgstr "sygnatury różnią się:  (%s), (%s)"
 
-# methods/R/Methods.R: 1472
-# gettextf("package slots  differ: %s, %s",
-#                         .dQ(gpString(f1@package)),
-#                         .dQ(gpString(f2@package)))
 msgid "package slots  differ: %s, %s"
 msgstr "gniazda pakietów różnią się: %s, %s"
 
-# methods/R/Methods.R: 1476
-# gettextf("groups differ: %s, %s",
-#                         .dQ(gpString(f1@group)),
-#                         .dQ(gpString(f2@group)))
 msgid "groups differ: %s, %s"
 msgstr "grupy różnią się: %s, %s"
 
-# methods/R/Methods.R: 1481
-# gettextf("generic names differ: %s, %s",
-#                         .dQ(f1@generic), .dQ(f2@generic))
 msgid "generic names differ: %s, %s"
 msgstr "ogólne nazwy różnią się: %s, %s"
 
-# methods/R/Methods.R: 1521
-# stop(gettextf("argument %s must be a generic function or a single character string; got an object of class %s",
-#                       sQuote("f"), dQuote(class(f))),
-#              domain = NA)
 msgid ""
 "argument %s must be a generic function or a single character string; got an "
 "object of class %s"
@@ -652,36 +371,21 @@ msgstr ""
 "argument %s musi być funkcją ogólną lub pojedynczym łańcuchem tekstowym; "
 "otrzymano obiekt klasy %s"
 
-# methods/R/Methods.R: 1529
-# warning(gettextf("non-generic function '%s' given to findMethods()", f),
-#                 domain = NA)
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "nieogólna funkcja '%s' przekazana do 'findMethods()'"
 
-# methods/R/Methods.R: 1539
-# stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
-#, fuzzy
 msgid ""
 "only FALSE is meaningful for 'inherited', when 'where' is supplied (got %s)"
 msgstr ""
-"tylko FALSE ma sens dla 'inherited', gdy dostarczono 'where' (otrzymano"
+"tylko FALSE ma sens dla 'inherited', gdy dostarczono 'where' (otrzymano %s)"
 
-# methods/R/Methods.R: 1604
-# stop(gettextf("argument 'f' must be a generic function or %s",
-#                       .notSingleString(f)), domain = NA)
 msgid "argument 'f' must be a generic function or %s"
 msgstr "argument 'f' musi być funkcją ogólną lub %s"
 
-# methods/R/Methods.R: 1619
-# stop(gettextf("'%s' is not a known generic function {and 'package' not specified}",
-# 			      f),
-# 		     domain = NA)
 msgid "'%s' is not a known generic function {and 'package' not specified}"
 msgstr ""
 "'%s' nie jest znaną ogólną funkcją {oraz 'package' nie został określony}"
 
-# methods/R/MethodsList.R: 41
-# stop("invalid first argument: should be the name of the first argument in the dispatch")
 msgid ""
 "invalid first argument: should be the name of the first argument in the "
 "dispatch"
@@ -689,17 +393,9 @@ msgstr ""
 "niepoprawny pierwszy argument: powinna to być nazwa pierwszego argumentu w "
 "wysyłce"
 
-# methods/R/MethodsList.R: 62
-# stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
-#              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
-#                           collapse=", ")), domain = NA)
 msgid "duplicate element names in 'MethodsList' at level %d: %s"
 msgstr "powtórzone nazwy elementów w 'MethodsList' na poziomie %d: %s"
 
-# methods/R/MethodsList.R: 73
-# stop(gettextf("element %d at level %d (class %s) cannot be interpreted as a function or named list",
-#                           i, level, dQuote(class(eli))),
-#                  domain = NA)
 msgid ""
 "element %d at level %d (class %s) cannot be interpreted as a function or "
 "named list"
@@ -707,52 +403,29 @@ msgstr ""
 "element %d na poziomie %d (klasa %s) nie może być interpretowany jak funkcja "
 "lub nazwana lista"
 
-# methods/R/MethodsList.R: 94
-# stop("arguments 'names' and 'signature' must have the same length")
 msgid "arguments 'names' and 'signature' must have the same length"
 msgstr "argumenty 'names' oraz 'signature' muszą posiadać tę samą długość"
 
-# methods/R/MethodsList.R: 117
-# stop(gettextf("inserting method with invalid signature matching argument '...' to class %s",
-#                          dQuote(signature[[1L]])),
-#                 domain = NA)
 msgid ""
 "inserting method with invalid signature matching argument '...' to class %s"
 msgstr ""
 "wstawianie metody z niepoprawną sygnaturą pasującą do argumentu '...' do "
 "klasy %s"
 
-# methods/R/MethodsList.R: 126
-# stop("inserting method corresponding to empty signature")
 msgid "inserting method corresponding to empty signature"
 msgstr "wstawienie metody odpowiadającej pustej sygnaturze"
 
-# methods/R/MethodsList.R: 128
-# stop(gettextf("inserting method into non-methods-list object (class %s)",
-#                       dQuote(.class1(mlist))),
-#              domain = NA)
 msgid "inserting method into non-methods-list object (class %s)"
 msgstr "wstawienie metody w obiekt nie będący listą metod (klasa %s)"
 
-# methods/R/MethodsList.R: 221
-# stop("invalid method sublist")
 msgid "invalid method sublist"
 msgstr "niepoprawne podlista metod"
 
-# methods/R/MethodsList.R: 223
-# stop(gettextf("%f is not a valid generic function: methods list was an object of class %s",
-#                           sQuote(f), dQuote(class(mlist))),
-#                  domain = NA)
 msgid ""
 "%f is not a valid generic function: methods list was an object of class %s"
 msgstr ""
 "%f nie jest poprawną ogólną funkcją: lista metod była obiektem klasy %s"
 
-# methods/R/MethodsList.R: 228
-# stop(gettextf("%s must be TRUE, FALSE, or a named logical vector of those values; got an object of class %s",
-#                       sQuote("useInherited"),
-#                       dQuote(class(useInherited))),
-#              domain = NA)
 msgid ""
 "%s must be TRUE, FALSE, or a named logical vector of those values; got an "
 "object of class %s"
@@ -760,9 +433,6 @@ msgstr ""
 "%s musi być TRUE, FALSE, lub nazwanym wektorem logicznym tych wartości; "
 "otrzymano obiekt klasy %s"
 
-# methods/R/MethodsList.R: 389
-# stop(gettextf("default method must be a method definition, a primitive or NULL: got an object of class %s", dQuote(class(method))),
-#                domain = NA)
 msgid ""
 "default method must be a method definition, a primitive or NULL: got an "
 "object of class %s"
@@ -770,10 +440,6 @@ msgstr ""
 "domyślna metoda musi być definicją metody, prymitywną funkcją lub wartością "
 "NULL: otrzymano obiekt klasy %s"
 
-# methods/R/MethodsList.R: 460
-# stop(gettextf("trying to match a method signature to an object (of class %s) that is not a generic function",
-#                       dQuote(class(fun))),
-#              domain = NA)
 msgid ""
 "trying to match a method signature to an object (of class %s) that is not a "
 "generic function"
@@ -781,14 +447,9 @@ msgstr ""
 "próba dopasowania sygnatury metody do obiektu (klasy %s), który nie jest "
 "ogólną funkcją"
 
-# methods/R/MethodsList.R: 471
-# stop("invalid 'package' slot or attribute, wrong length")
 msgid "invalid 'package' slot or attribute, wrong length"
 msgstr "niepoprawna gniazdo 'package' lub atrybut; niepoprawna długość"
 
-# methods/R/MethodsList.R: 489
-# stop(gettextf("invalid element in a list for \"signature\" argument; element %d is neither a class definition nor a class name",
-#                      i), domain = NA)
 msgid ""
 "invalid element in a list for \"signature\" argument; element %d is neither "
 "a class definition nor a class name"
@@ -796,10 +457,6 @@ msgstr ""
 "niepoprawny element na liście dla argumentu 'signature'; element %d nie jest "
 "ani definicją klasy ani nazwą klasy"
 
-# methods/R/MethodsList.R: 494
-# stop(gettextf("trying to match a method signature of class %s; expects a list or a character vector",
-#                       dQuote(class(signature))),
-#              domain = NA)
 msgid ""
 "trying to match a method signature of class %s; expects a list or a "
 "character vector"
@@ -807,12 +464,6 @@ msgstr ""
 "próba dopasowania sygnatury metody klasy %s; oczekuje listy lub wektor "
 "tekstowego"
 
-# methods/R/MethodsList.R: 523
-# stop(gettextf("object to use as a method signature for function %s does not look like a legitimate signature (a vector of single class names): there were %d class names, but %d elements in the signature object",
-#                       sQuote(fun@generic),
-#                       length(sigClasses),
-#                       length(signature)),
-#              domain = NA)
 msgid ""
 "object to use as a method signature for function %s does not look like a "
 "legitimate signature (a vector of single class names): there were %d class "
@@ -822,9 +473,6 @@ msgstr ""
 "poprawną sygnaturę (wektor pojedynczych nazw klas): było %d nazw klas, ale "
 "%d elementów w obiekcie sygnatury"
 
-# methods/R/MethodsList.R: 531
-# stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d) for function %s",
-# 	       length(which), length(anames), sQuote(fun@generic)), domain = NA)
 msgid ""
 "more elements in the method signature (%d) than in the generic signature "
 "(%d) for function %s"
@@ -832,18 +480,12 @@ msgstr ""
 "więcej elementów w sygnaturze metody (%d) niż w ogólnej sygnaturze (%d) dla "
 "funkcji %s"
 
-# methods/R/MethodsList.R: 672
-# stop(gettextf("no generic function found corresponding to %s",
-#                       sQuote(f)),
-# 	     domain = NA)
 msgid "no generic function found corresponding to %s"
 msgstr "nie znaleziono ogólnej funkcji odpowiadającej %s"
 
 msgid "skipping methods list element %s of unexpected class %s"
 msgstr "pomijanie elementów listy metod %s nieoczekiwanej klasy %s"
 
-# methods/R/MethodsList.R: 888
-# gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is deprecated.", dQuote(this))
 msgid ""
 "%s, along with other use of the \"MethodsList\" metadata objects, is "
 "deprecated."
@@ -851,38 +493,20 @@ msgstr ""
 "%s, razem z innym użyciem obiektów metadanych 'MethodsList' jest "
 "przestarzałe."
 
-# methods/R/MethodsList.R: 890
-# gettextf("in %s: use of \"MethodsList\" metadata objects is deprecated.", deparse(this))
 msgid "in %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr "w %s: użycie obiektów metadanych \"MethodsList\" jest przestarzałe."
 
-# methods/R/MethodsList.R: 892
-# gettextf("use %s instead.", dQuote(instead))
 msgid "use %s instead."
 msgstr "użyj wzamian %s."
 
-# methods/R/MethodsListClass.R: 97
-# stop(gettextf("invalid object for formal method definition: type %s",
-#                              dQuote(typeof(def))),
-#                     domain = NA)
 msgid "invalid object for formal method definition: type %s"
 msgstr "niepoprawny obiekt dla definicji formalnej metody: typ %s"
 
-# methods/R/MethodsListClass.R: 154
-# warning(gettextf("missing package slot (%s) in object of class %s (package info added)",
-#                                          packageSlot(co),
-#                                          dQuote(class(.Object))),
-#                                 domain = NA)
 msgid "missing package slot (%s) in object of class %s (package info added)"
 msgstr ""
 "brakujące gniazdo pakietu (%s) w obiekcie klasy %s (dodana informacja o "
 "pakiecie)"
 
-# methods/R/MethodsListClass.R: 164
-# stop(gettextf("'initialize' method returned an object of class %s instead of the required class %s",
-#                                   paste(dQuote(class(value)), collapse=", "),
-#                                   dQuote(class(.Object))),
-#                          domain = NA)
 msgid ""
 "'initialize' method returned an object of class %s instead of the required "
 "class %s"
@@ -895,39 +519,19 @@ msgstr "%d: cel \"%s\": wybrano \"%s\" (inne: %s)"
 msgid "Notes: %s."
 msgstr "Uwagi: %s."
 
-# methods/R/MethodsListClass.R: 254
-# gettextf("class generator function for class %s from package %s\n",
-#                                dQuote(object@className),
-#                                sQuote(object@package))
 msgid "class generator function for class %s from package %s"
 msgstr "funkcja generatora klas dla klasy %s z pakietu %s"
 
-# methods/R/MethodsListClass.R: 418
-# stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
-#                             paste(sigArgs, collapse = ", "),
-#                             if(is(fdef, "genericFunction")) fdef@generic else "function",
-#                             paste(formalNames, collapse = ", ")),
-#                    domain = NA)
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr ""
 "nazwy w sygnaturze dla metody (%s) nie zgadzają się z argumentami %s (%s)"
 
-# methods/R/MethodsListClass.R: 418
-# stop(gettextf("the names in signature for method (%s) do not match %s's arguments (%s)",
-#                             paste(sigArgs, collapse = ", "),
-#                             if(is(fdef, "genericFunction")) fdef@generic else "function",
-#                             paste(formalNames, collapse = ", ")),
-#                    domain = NA)
-#, fuzzy
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
-"nazwy w sygnaturze dla metody (%s) nie zgadzają się z argumentami %s (%s)"
+"nazwy w sygnaturze dla metody (%s) nie zgadzają się z argumentami funkcji "
+"(%s)"
 
-# methods/R/NextMethod.R: 60
-# stop(gettextf("a call to callNextMethod() appears in a call to %s, but the call does not seem to come from either a generic function or another 'callNextMethod'",
-#                           sQuote(f)),
-#                  domain = NA)
 msgid ""
 "a call to callNextMethod() appears in a call to %s, but the call does not "
 "seem to come from either a generic function or another 'callNextMethod'"
@@ -935,8 +539,6 @@ msgstr ""
 "wywołanie 'callNextMethod()' pojawia się w wywołaniu %s, ale wywołanie nie "
 "wygląda na pochodzące ani z ogólnej funkcji albo drugiego 'callNextMethod'"
 
-# methods/R/NextMethod.R: 81
-# stop("call to 'callNextMethod' does not appear to be in a 'method' or 'callNextMethod' context")
 msgid ""
 "call to 'callNextMethod' does not appear to be in a 'method' or "
 "'callNextMethod' context"
@@ -944,21 +546,12 @@ msgstr ""
 "wywołanie 'callNextMethod' nie wygląda aby było w kontekście 'method' lub "
 "'callNextMethod'"
 
-# methods/R/NextMethod.R: 95
-# stop(gettextf("bad object found as method (class %s)",
-#                       dQuote(class(method))), domain = NA)
 msgid "bad object found as method (class %s)"
 msgstr "znaleziono błędny obiekt jako metodę (klasa %s)"
 
 msgid "No next method available"
-msgstr ""
+msgstr "Brak dostępnej następnej metody"
 
-# methods/R/RClassUtils.R: 147
-# stop(gettextf("in constructing the prototype for class %s: prototype has class %s, but the data part specifies class %s",
-#                               dQuote(className),
-#                               dQuote(.class1(prototype)),
-#                               dQuote(dataPartClass)),
-#                      domain = NA)
 msgid ""
 "in constructing the prototype for class %s: prototype has class %s, but the "
 "data part specifies class %s"
@@ -966,11 +559,6 @@ msgstr ""
 "podczas konstruowaniu prototypu dla klasy %s: prototyp posiada klasę %s, ale "
 "dane określają klasę %s"
 
-# methods/R/RClassUtils.R: 168
-# warning(gettextf("in constructing the prototype for class %s, slots in prototype and not in class: %s",
-#                          dQuote(className),
-#                          paste(extra, collapse=", ")),
-#                 domain = NA)
 msgid ""
 "in constructing the prototype for class %s, slots in prototype and not in "
 "class: %s"
@@ -978,15 +566,6 @@ msgstr ""
 "podczas konstruowaniu prototypu dla klasy %s, gniazda są w prototypie a nie "
 "w klasie: %s"
 
-# methods/R/RClassUtils.R: 190
-# stop(gettextf("in making the prototype for class %s elements of the prototype failed to match the corresponding slot class: %s",
-#                       dQuote(className),
-#                       paste(pnames[check],
-#                             "(class",
-#                             .dQ(slotDefs[match(pnames[check], slotNames)]),
-#                             ")",
-#                             collapse = ", ")),
-#              domain = NA)
 msgid ""
 "in making the prototype for class %s elements of the prototype failed to "
 "match the corresponding slot class: %s"
@@ -994,11 +573,6 @@ msgstr ""
 "podczas tworzenia prototypu dla klasy %s elementy prototypu nie zgodziły się "
 "z odpowiadającymi gniazdami klasy: %s"
 
-# methods/R/RClassUtils.R: 248
-# warning(gettextf("potential cycle in class inheritance: %s has duplicates in superclasses and subclasses (%s)",
-#                          dQuote(Class),
-#                          paste(bad, collapse = ", ")),
-#                 domain = NA)
 msgid ""
 "potential cycle in class inheritance: %s has duplicates in superclasses and "
 "subclasses (%s)"
@@ -1006,25 +580,12 @@ msgstr ""
 "potencjalny cykl w dziedziczeniu klasy: %s ma powtórzenia w superklasach "
 "oraz podklasach (%s)"
 
-# methods/R/RClassUtils.R: 320
-# warning(gettextf("undefined slot classes in definition of %s: %s",
-#                              .dQ(ClassDef@className),
-#                              paste(names(properties)[undefClasses], "(class ",
-#                                    .dQ(unlist(properties, recursive = FALSE)[undefClasses]),
-#                                    ")", collapse = ", ", sep = "")),
-#                     call. = FALSE, domain = NA)
 msgid "undefined slot classes in definition of %s: %s"
 msgstr "niezdefiniowane gniazda klas w definicji %s: %s"
 
 msgid "(class %s)"
-msgstr ""
+msgstr "(klasa %s)"
 
-# methods/R/RClassUtils.R: 408
-# stop(gettextf("in definition of class %s, information for superclass %s is of class %s (expected \"SClassExtension\")",
-#                           dQuote(ClassDef@className),
-#                           dQuote(what),
-#                           dQuote(class(exti))),
-#                  domain = NA)
 msgid ""
 "in definition of class %s, information for superclass %s is of class %s "
 "(expected \"SClassExtension\")"
@@ -1032,24 +593,12 @@ msgstr ""
 "w definicji klasy %s, informacja dla superklasy %s jest klasy %s (oczekiwano "
 "'SClassExtension')"
 
-# methods/R/RClassUtils.R: 415
-# warning(gettextf("class %s extends an undefined class, %s",
-#                                  dQuote(ClassDef@className),
-#                                  dQuote(what)),
-#                         domain = NA)
 msgid "class %s extends an undefined class, %s"
 msgstr "klasa %s rozszerza niezdefiniowaną klasę, %s"
 
-# methods/R/RClassUtils.R: 451
-# stop("'Class' must be a valid class definition or class")
 msgid "'Class' must be a valid class definition or class"
 msgstr "Argument 'Class' musi być poprawną definicją klasy lub klasą"
 
-# methods/R/RClassUtils.R: 507
-# stop(gettextf("trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object",
-#                         dQuote(class(def)),
-#                         dQuote(Class)),
-#                domain = NA)
 msgid ""
 "trying to assign an object of class %s as the definition of class %s: must "
 "supply a \"classRepresentation\" object"
@@ -1057,37 +606,20 @@ msgstr ""
 "próba przypisania obiekt klasy %s jako definicję klasy %s: potrzeba "
 "dostarczyć obiekt 'classRepresentation'"
 
-# methods/R/RClassUtils.R: 513
-# stop(gettextf("assigning as %s a class representation with internal name %s",
-#                         dQuote(Class),
-#                         dQuote(def@className)),
-#                domain = NA)
 msgid "assigning as %s a class representation with internal name %s"
 msgstr "przypisywanie jako %s reprezentacji klasy z wewnętrzną nazwą %s"
 
-# methods/R/RClassUtils.R: 528
-# stop(gettextf("class %s has a locked definition in package %s",
-#                           dQuote(Class), sQuote(getPackageName(where))))
 msgid "class %s has a locked definition in package %s"
 msgstr "klasa %s ma zablokowaną definicję w pakiecie %s"
 
-# methods/R/RClassUtils.R: 612
-# stop("'externalptr' objects cannot be initialized from new()")
 msgid "'externalptr' objects cannot be initialized from new()"
 msgstr "obiekty 'externalptr' nie mogą być inicjalizowane z funkcji 'new()'"
 
-# methods/R/RClassUtils.R: 636
-# gettextf("initializing objects from class %s with these arguments is not supported",
-#                                        dQuote(Class))
 msgid ""
 "initializing objects from class %s with these arguments is not supported"
 msgstr ""
 "inicjalizowanie obiektów z klasy %s z tymi argumentami nie jest wspierane"
 
-# methods/R/RClassUtils.R: 681
-# stop(gettextf("in defining class %s, the supplied data part class, %s is not valid (must be a basic class or a virtual class combining basic classes)",
-#                         dQuote(name), dQuote(dataPartClass)),
-#                domain = NA)
 msgid ""
 "in defining class %s, the supplied data part class, %s is not valid (must be "
 "a basic class or a virtual class combining basic classes)"
@@ -1096,28 +628,14 @@ msgstr ""
 "poprawna (musi być podstawową klasą lub klasą wirtualną łączącą podstawowe "
 "klasy)"
 
-# methods/R/RClassUtils.R: 692
-# stop(gettextf("no definition was found for superclass %s in the specification of class %s",
-#                               dQuote(cl), dQuote(name)),
-#                      domain = NA)
 msgid ""
 "no definition was found for superclass %s in the specification of class %s"
 msgstr "nie znaleziono definicji dla superklasy %s w specyfikacji klasy %s"
 
-# methods/R/RClassUtils.R: 710
-# stop(gettextf("conflicting definition of data part: .Data = %s, superclass implies %s",
-#                                 dQuote(elNamed(properties, ".Data")),
-#                                 dQuote(dataPartClass)),
-#                        domain = NA)
 msgid "conflicting definition of data part: .Data = %s, superclass implies %s"
 msgstr ""
 "sprzeczne definicje części danych: '.Data = %s', superklasa sugeruje %s"
 
-# methods/R/RClassUtils.R: 740
-# stop(gettextf("a prototype object was supplied with object slot of class %s, but the class definition requires an object that is class %s",
-#                                         dQuote(class(prototype@object)),
-#                                         dQuote(dataPartClass)),
-#                                domain = NA)
 msgid ""
 "a prototype object was supplied with object slot of class %s, but the class "
 "definition requires an object that is class %s"
@@ -1125,11 +643,6 @@ msgstr ""
 "obiekt prototypu został dostarczony z gniazdami klasy %s, ale definicja "
 "klasy wymaga obiektu klasy %s"
 
-# methods/R/RClassUtils.R: 746
-# stop(gettextf("a prototype was supplied of class %s, but the class definition requires an object that is class %s",
-#                                     dQuote(class(prototype)),
-#                                     dQuote(dataPartClass)),
-#                            domain = NA)
 msgid ""
 "a prototype was supplied of class %s, but the class definition requires an "
 "object that is class %s"
@@ -1137,13 +650,6 @@ msgstr ""
 "został dostarczony prototyp klasy %s, ale definicja klasy wymaga obiektu "
 "klasy %s"
 
-# methods/R/RClassUtils.R: 768
-# stop(gettextf("slot %s in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
-#                                     sQuote(dup),
-#                                     dQuote(name),
-#                                     elNamed(allProps, dup),
-#                                     dQuote(cl)),
-#                            domain = NA)
 msgid ""
 "slot %s in class %s currently defined (or inherited) as \"%s\", conflicts "
 "with an inherited definition in class %s"
@@ -1151,17 +657,9 @@ msgstr ""
 "gniazdo %s w klasie %s aktualnie zdefiniowane (lub odziedziczone) jako %s, "
 "jest w konflikcie z odziedziczoną definicją w klasie %s"
 
-# methods/R/RClassUtils.R: 779
-# stop(gettextf("class %s extends an undefined class (%s)",
-#                             dQuote(name), dQuote(cl)),
-#                    domain = NA)
 msgid "class %s extends an undefined class (%s)"
 msgstr "klasa %s rozszerza niezdefiniowaną klasę (%s)"
 
-# methods/R/RClassUtils.R: 801
-# stop(gettextf("%s is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)",
-#                             dQuote(dataPartClass)),
-#                    domain = NA)
 msgid ""
 "%s is not eligible to be the data part of another class (must be a basic "
 "class or a virtual class with no slots)"
@@ -1169,8 +667,6 @@ msgstr ""
 "%s nie kwalifikuje się aby być częścią danych innej klasy (musi być "
 "podstawową klasą albo klasą wirtualną bez gniazd)"
 
-# methods/R/RClassUtils.R: 808
-# warning("prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble.")
 msgid ""
 "prototype is a list with named elements (could be ambiguous):  better to use "
 "function prototype() to avoid trouble."
@@ -1178,32 +674,15 @@ msgstr ""
 "prototyp jest listą z nazwanymi elementami (mogą być niejednoznaczne):  "
 "lepiej używać funkcji 'prototype()' aby uniknąć kłopotów."
 
-# methods/R/RClassUtils.R: 1137
-# stop(gettextf("the '%s' list for class %s, includes an undefined class %s",
-#                           if(superClassCase) "superClass" else "subClass",
-#                           dQuote(className),
-#                           dQuote(.className(by))),
-#                  domain = NA)
 msgid "the '%s' list for class %s, includes an undefined class %s"
 msgstr "lista '%s' dla klasy %s, zawiera w sobie niezdefiniowaną klasę %s"
 
-# methods/R/RClassUtils.R: 1186
-# warning(gettextf("class %s is inheriting an inconsistent superclass structure from class %s, inconsistent with %s",
-#                                  .dQ(className), .dQ(by),
-#                                  paste(.dQ(coni), collapse = ", ")),
-#                         call. = FALSE, domain = NA)
 msgid ""
 "class %s is inheriting an inconsistent superclass structure from class %s, "
 "inconsistent with %s"
 msgstr ""
 "klasa %s dziedziczy niespójną strukturę superklasy z klasy %s, niespójną z %s"
 
-# methods/R/RClassUtils.R: 1196
-# warning(gettextf("unable to find a consistent ordering of superclasses for class %s: order chosen is inconsistent with the superclasses of %s",
-#                            .dQ(className),
-#                            paste(.dQ(setdiff(newconflicts, conflicts)),
-#                                  collapse = ", ")),
-#                   call. = FALSE, domain = NA)
 msgid ""
 "unable to find a consistent ordering of superclasses for class %s: order "
 "chosen is inconsistent with the superclasses of %s"
@@ -1211,48 +690,27 @@ msgstr ""
 "nie można znaleźć spójnego uporządkowania superklas dla klasy %s: wybrany "
 "porządek jest niespójny z superklasami %s"
 
-# methods/R/RClassUtils.R: 1338
-# stop("\"class\" is a reserved slot name and cannot be redefined")
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr ""
 "'class' jest zarezerwowaną nazwą gniazda i nie może zostać przedefiniowana"
 
-# methods/R/RClassUtils.R: 1350
-# stop("Data part is undefined for general S4 object")
 msgid "Data part is undefined for general S4 object"
 msgstr ""
 "Część 'Data' (gniazdo '.Data') jest niezdefiniowana dla ogólnego obiektu S4"
 
-# methods/R/RClassUtils.R: 1361
-# stop(gettextf("no '.Data' slot defined for class %s",
-#                      dQuote(class(object))),
-#             domain = NA)
 msgid "no '.Data' slot defined for class %s"
 msgstr "nie zdefiniowano gniazda '.Data' dla klasy %s"
 
-# methods/R/RClassUtils.R: 1406
-# stop(gettextf("class %s does not have a data part (a .Data slot) defined",
-#                         dQuote(class(object))),
-#                domain = NA)
 msgid "class %s does not have a data part (a .Data slot) defined"
 msgstr "klasa %s nie ma zdefiniowanej części danych (gniazdo '.Data')"
 
-# methods/R/RClassUtils.R: 1460
-# warning(gettextf("more than one possible class for the data part: using %s rather than %s",
-#                   .dQ(prevDataPartClass), .dQ(value)), domain = NA)
 msgid "more than one possible class for the data part: using %s rather than %s"
 msgstr ""
 "więcej niż jedna możliwa klasa dla części danych: używanie %s zamiast %s"
 
-# methods/R/RClassUtils.R: 1471
-# stop("class cannot have both an ordinary and hidden data type")
 msgid "class cannot have both an ordinary and hidden data type"
 msgstr "klasa nie może mieć jednocześnie zwykłego oraz ukrytego typu danych"
 
-# methods/R/RClassUtils.R: 1737
-# stop(gettextf("a validity method must be a function of one argument, got an object of class %s",
-#                           dQuote(class(validity))),
-#                  domain = NA)
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
 "%s"
@@ -1260,26 +718,12 @@ msgstr ""
 "metoda poprawności musi być funkcją jednego argumentu, otrzymano obiekt "
 "klasy %s"
 
-# methods/R/RClassUtils.R: 1807
-# stop(gettextf("unable to find required package %s",
-#                         sQuote(package)),
-#                domain = NA)
 msgid "unable to find required package %s"
 msgstr "nie można znaleźć wymaganego pakietu %s"
 
-# methods/R/RClassUtils.R: 1870
-# stop(gettextf("unable to find an environment containing class %s",
-# 			  dQuote(Class)),
-#                  domain = NA)
 msgid "unable to find an environment containing class %s"
 msgstr "nie można znaleźć środowiska zawierającego klasę %s"
 
-# methods/R/RClassUtils.R: 1973
-# message(gettextf("Note: the specification for S3 class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class.",
-#                              dQuote(def@className),
-#                              sQuote(def@package),
-#                              sQuote(prev@package)),
-#                     domain = NA)
 msgid ""
 "Note: the specification for S3 class %s in package %s seems equivalent to "
 "one from package %s: not turning on duplicate class definitions for this "
@@ -1288,12 +732,6 @@ msgstr ""
 "Uwaga: specyfikacja dla klasy S3 %s w pakiecie %s wydaje się być równoważna "
 "tej z pakietu %s i nie jest duplikatem definicji klasy dla tej klasy"
 
-# methods/R/RClassUtils.R: 1987
-# message(gettextf("Note: some superclasses of class %s in package %s have duplicate definitions.  This definition is not being treated as equivalent to that from package %s",
-#                                  dQuote(def@className),
-#                                  sQuote(def@package),
-#                                  sQuote(prev@package)),
-#                     domain = NA)
 msgid ""
 "Note: some superclasses of class %s in package %s have duplicate "
 "definitions.  This definition is not being treated as equivalent to that "
@@ -1302,12 +740,6 @@ msgstr ""
 "Uwaga: niektóre superklasy klasy %s w pakiecie %s posiadają powtórzone "
 "definicje. Ta definicja nie jest traktowana jako równoważna tej z pakietu %s"
 
-# methods/R/RClassUtils.R: 2012
-# message(gettextf("Note: the specification for class %s in package %s seems equivalent to one from package %s: not turning on duplicate class definitions for this class.",
-#                          dQuote(def@className),
-#                          sQuote(def@package),
-#                          sQuote(prev@package)),
-#                     domain = NA)
 msgid ""
 "Note: the specification for class %s in package %s seems equivalent to one "
 "from package %s: not turning on duplicate class definitions for this class."
@@ -1315,17 +747,10 @@ msgstr ""
 "Uwaga: specyfikacja dla klasy S3 %s w pakiecie %s wydaje się być równoważna "
 "tej z pakietu %s i nie jest duplikatem definicji klasy dla tej klasy"
 
-# methods/R/RClassUtils.R: 2075
-# warning(gettextf("undefined subclass %s of class %s; definition not updated",
-#                              .dQ(what), .dQ(def@className)))
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
 "niezdefiniowana podklasa %s klasy %s; definicja nie została zaktualizowana"
 
-# methods/R/RClassUtils.R: 2112
-# warning(gettextf("subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()",
-#                            .dQ(what), .dQ(class)),
-#                   call. = FALSE, domain = NA)
 msgid ""
 "subclass %s of class %s is not local and cannot be updated for new "
 "inheritance information; consider setClassUnion()"
@@ -1333,10 +758,6 @@ msgstr ""
 "podklasa %s klasy %s nie jest lokalna i nie może być zaktualizowana dla "
 "nowych dziedziczonych informacji; rozważ 'setClassUnion()'"
 
-# methods/R/RClassUtils.R: 2119
-# warning(gettextf("no definition of inheritance from %s to %s, though the relation was implied by the setIs() from %s",
-#                            .dQ(what), .dQ(def2@className), .dQ(class)),
-#                   call. = FALSE, domain = NA)
 msgid ""
 "no definition of inheritance from %s to %s, though the relation was implied "
 "by the setIs() from %s"
@@ -1344,8 +765,6 @@ msgstr ""
 "brak definicji dziedziczenia z %s do %s mimo, że relacja została "
 "zasugerowana przez 'setIs()' z %s"
 
-# methods/R/RClassUtils.R: 2263
-# stop("argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'")
 msgid ""
 "argument 'includeSubclasses' must be a logical, either one value or a vector "
 "of the same length as argument 'classes'"
@@ -1353,22 +772,12 @@ msgstr ""
 "argument 'includeSubclasses' musi być argumentem logicznym posiadającym "
 "jedną wartość lub wektorem o tej samej długości jak argument 'classes'"
 
-# methods/R/RClassUtils.R: 2272
-# stop("argument 'abbreviate' must be 0, 1, 2, or 3")
 msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
 msgstr "argument 'abbreviate' musi mieć wartość 0, 1, 2, lub 3"
 
-# methods/R/RClassUtils.R: 2306
-# stop(gettextf("needed the supplied labels vector of length %d, got %d",
-#                               length(nodes), length(short)), domain = NA)
 msgid "needed the supplied labels vector of length %d, got %d"
 msgstr "potrzebowano dostarczyć wektora etykiet o długości %d, otrzymano %d"
 
-# methods/R/RMethodUtils.R: 36
-# warning(gettextf("the function being used as %s in making a generic function for %s is currently traced; the function used will have tracing removed",
-#                              what,
-#                              sQuote(f)),
-#                     domain = NA)
 msgid ""
 "the function being used as %s in making a generic function for %s is "
 "currently traced; the function used will have tracing removed"
@@ -1376,19 +785,10 @@ msgstr ""
 "funkcja użyta jako %s podczas tworzenia ogólnej funkcji dla %s jest "
 "aktualnie śledzona; użyta funkcja będzie miała usunięte śledzenie"
 
-# methods/R/RMethodUtils.R: 47
-# stop(gettextf("must supply either a generic function or a function as default for %s",
-#                           sQuote(f)),
-#                  domain = NA)
 msgid "must supply either a generic function or a function as default for %s"
 msgstr ""
 "potrzeba dostarczyć albo ogólną funkcję albo funkcję jako domyślną dla %s"
 
-# methods/R/RMethodUtils.R: 72
-# stop(gettextf("the %s argument must be NULL or a generic function object; got an object of class %s",
-#                       sQuote("genericFunction"),
-#                       dQuote(class(genericFunction))),
-#              domain = NA)
 msgid ""
 "the %s argument must be NULL or a generic function object; got an object of "
 "class %s"
@@ -1396,48 +796,24 @@ msgstr ""
 "argument %s musi być wartością NULL lub obiektem ogólnej funkcji; otrzymano "
 "obiekt klasy %s"
 
-# methods/R/RMethodUtils.R: 96
-# stop("no suitable arguments to dispatch methods in this function")
-# methods/R/RMethodUtils.R: 174
-# stop("no suitable arguments to dispatch methods in this function")
 msgid "no suitable arguments to dispatch methods in this function"
 msgstr "brak odpowiednich argumentów do rozdzielenia metod w tej funkcji"
 
-# methods/R/RMethodUtils.R: 220
-# message(gettextf("making a generic for special function %s",
-#                              sQuote(f)),
-#                     domain = NA)
 msgid "making a generic for special function %s"
 msgstr "tworzenie ogólnej funkcji dla funkcji specjalnej %s"
 
-# methods/R/RMethodUtils.R: 244
-# gettextf("invalid call in method dispatch to '%s' (no default method)", name)
 msgid "invalid call in method dispatch to '%s' (no default method)"
 msgstr ""
 "niepoprawne wywołanie w metodzie rozdziału do %s (brak domyślnej metody)"
 
-# methods/R/RMethodUtils.R: 313
-# gettextf("in method for %s with signature %s: ", sQuote(f), sQuote(msig))
 msgid "in method for %s with signature %s:"
 msgstr "W metodzie dla %s z sygnaturą %s:"
 
-# methods/R/RMethodUtils.R: 326
-# stop(.renderSignature(f, signature),
-#              "formal arguments in method and generic do not appear in the same order",
-#              call. = FALSE)
-# methods/R/RMethodUtils.R: 390
-# stop(.renderSignature(generic@generic, signature),
-#              "formal arguments in method and generic do not appear in the same order",
-#              call. = FALSE)
 msgid "formal arguments in method and generic do not appear in the same order"
 msgstr ""
 "formalne argumenty w metodzie i ogólnej funkcji nie pojawiają się w tej "
 "samej kolejności"
 
-# methods/R/RMethodUtils.R: 346
-# stop(.renderSignature(f, sig0),
-#              gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
-#              call. = TRUE, domain = NA)
 msgid ""
 "formal arguments (%s) omitted in the method definition cannot be in the "
 "signature"
@@ -1445,17 +821,10 @@ msgstr ""
 "formalne argumenty (%s) pominięte w definicji metody nie mogą pojawić się w "
 "sygnaturze"
 
-# methods/R/RMethodUtils.R: 352
-# message("Note: ", .renderSignature(f, sig0),
-#                  gettextf("expanding the signature to include omitted arguments in definition: %s",
-#                           paste(sigNames[omittedSig], "= \"missing\"",collapse = ", ")))
 msgid "expanding the signature to include omitted arguments in definition: %s"
 msgstr ""
 "rozszerzanie sygnatury aby uwzględnić pominięte argumenty w definicji: %s"
 
-# methods/R/RMethodUtils.R: 379
-# stop(gettextf("methods can add arguments to the generic %s only if '...' is an argument to the generic", sQuote(generic@generic)),
-#              call. = TRUE)
 msgid ""
 "methods can add arguments to the generic %s only if '...' is an argument to "
 "the generic"
@@ -1463,10 +832,6 @@ msgstr ""
 "metody mogą dodawać argumenty do ogólnej funkcji %s tylko jeśli '...' jest "
 "argumentem dla ogólnej funkcji"
 
-# methods/R/RMethodUtils.R: 407
-# stop(gettextf("arguments (%s) after '...' in the generic must appear in the method, in the same place at the end of the argument list",
-# 			  paste(trailingArgs, collapse=", ")),
-#                  call. = TRUE, domain = NA)
 msgid ""
 "arguments (%s) after '...' in the generic must appear in the method, in the "
 "same place at the end of the argument list"
@@ -1474,8 +839,6 @@ msgstr ""
 "argumenty (%s) po '...' w ogólnej funkcji muszą pojawić się w metodzie w tym "
 "samym miejscu na końcu listy argumentów"
 
-# methods/R/RMethodUtils.R: 452
-# stop("argument 'f' must be a string, generic function, or primitive: got an ordinary function")
 msgid ""
 "argument 'f' must be a string, generic function, or primitive: got an "
 "ordinary function"
@@ -1483,56 +846,29 @@ msgstr ""
 "argument 'f' musi być łańcuchem, ogólną funkcją, lub funkcją prymitywną: "
 "otrzymano zwykłą funkcję"
 
-# methods/R/RMethodUtils.R: 463
-# stop(gettextf("methods cannot be defined for the primitive function %s",
-#                               sQuote(f)), domain = NA)
 msgid "methods cannot be defined for the primitive function %s"
 msgstr "metody nie mogą być zdefiniowane dla prymitywnej funkcji %s"
 
-# methods/R/RMethodUtils.R: 485
-# stop(gettextf("no generic function found for %s",
-#                           sQuote(f)),
-#                  domain = NA)
 msgid "no generic function found for %s"
 msgstr "nie znaleziono ogólnej funkcji dla %s"
 
-# methods/R/RMethodUtils.R: 505
-# message("Empty function name in .getGeneric")
 msgid "Empty function name in .getGeneric"
 msgstr "Pusta nazwa funkcji w '.getGeneric'"
 
-# methods/R/RMethodUtils.R: 813
-# warning(sprintf("package %s seems to have out-of-date methods; need to reinstall from source",
-#                          sQuote(getPackageName(where[[1L]]))))
 msgid ""
 "package %s seems to have out-of-date methods; need to reinstall from source"
 msgstr ""
 "pakiet %s wydaje się mieć nieaktualne metody; potrzeba przeinstalować ze "
 "źródła"
 
-# methods/R/RMethodUtils.R: 910
-# warning(gettextf("no methods found for %s; cacheGenericsMetaData() will have no effect",
-# 			 sQuote(f)),
-# 		domain = NA)
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
 "nie znaleziono metod dla %s; 'cacheGenericsMetaData()' nie będzie miał efektu"
 
-# methods/R/RMethodUtils.R: 1086
-# stop(gettextf("invalid value from generic function %s, class %s, expected %s",
-#                       sQuote(fname),
-#                       dQuote(class(object)),
-#                       paste(dQuote(classes), collapse = " or ")),
-#              domain = NA)
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr ""
 "niepoprawna wartość z ogólnej funkcji %s, klasa %s, oczekiwano jednego z %s"
 
-# methods/R/RMethodUtils.R: 1182
-# warning(gettextf("the body of the generic function for %s calls 'standardGeneric' to dispatch on a different name (\"%s\")!",
-#                                  sQuote(fname),
-#                                  paste(as.character(x[[2L]]), collapse = "\n")),
-#                         domain = NA)
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
 "on a different name (\"%s\")!"
@@ -1540,10 +876,6 @@ msgstr ""
 "ciało ogólnej funkcji dla %s wywołuje 'standardGeneric' by rozdzielić pod "
 "inna nazwą ('%s')!"
 
-# methods/R/RMethodUtils.R: 1260
-# stop(gettextf("trying to change the formal arguments in %s in an object of class %s; expected a function definition",
-#                       msg, dQuote(class(def))),
-#              domain = NA)
 msgid ""
 "trying to change the formal arguments in %s in an object of class %s; "
 "expected a function definition"
@@ -1551,10 +883,6 @@ msgstr ""
 "próba zmiany formalnych argumentów w %s w obiekcie klasy %s; oczekiwano "
 "definicji funkcji"
 
-# methods/R/RMethodUtils.R: 1264
-# stop(gettextf("trying to change the formal arguments in %s, but getting the new formals from an object of class %s; expected a function definition",
-#                       msg, dQuote(class(def))),
-#              domain = NA)
 msgid ""
 "trying to change the formal arguments in %s, but getting the new formals "
 "from an object of class %s; expected a function definition"
@@ -1562,11 +890,6 @@ msgstr ""
 "próba zmiany formalnych argumentów w %s, ale otrzymano nowe argumenty "
 "formalne z obiektu klasy %s; oczekiwano definicji funkcji"
 
-# methods/R/RMethodUtils.R: 1270
-# stop(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)",
-#                       msg, paste0("\"", old, "\"", collapse=", "),
-#                       paste0("\"", new, "\"", collapse=", ")),
-#              domain = NA)
 msgid ""
 "trying to change the formal arguments in %s, but the number of existing "
 "arguments is less than the number of new arguments: (%s) vs (%s)"
@@ -1574,11 +897,6 @@ msgstr ""
 "próba zmiany formalnych argumentów w %s, ale liczba istniejących argumentów "
 "jest mniejsza niż liczba nowych argumentów: (%s) względem (%s)"
 
-# methods/R/RMethodUtils.R: 1275
-# warning(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)",
-#                          msg, paste0("\"", old, "\"", collapse=", "),
-#                          paste0("\"", new, "\"", collapse=", ")),
-#                 domain = NA)
 msgid ""
 "trying to change the formal arguments in %s, but the number of existing "
 "arguments is greater than the number of new arguments (the extra arguments "
@@ -1588,10 +906,6 @@ msgstr ""
 "jest większa niż liczba nowych argumentów (dodatkowe argumenty nie będą "
 "użyte): (%s) względem (%s)"
 
-# methods/R/RMethodUtils.R: 1290
-# stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s",
-# 		      msg, paste0("\"", old[is.na(match(old, names(dlist)))], "\"", collapse=", ")),
-# 	     domain = NA)
 msgid ""
 "in changing formal arguments in %s, some of the old names are not in fact "
 "arguments: %s"
@@ -1599,58 +913,31 @@ msgstr ""
 "podczas zmiany formalnych argumentów w %s, niektóre ze starych nazw nie są "
 "tak naprawdę argumentami: %s"
 
-# methods/R/RMethodUtils.R: 1351
-# stop("got a negative maximum number of frames to look at")
 msgid "got a negative maximum number of frames to look at"
 msgstr "utrzymano ujemną maksymalną liczbę ramek"
 
-# methods/R/RMethodUtils.R: 1455
-# warning(gettextf("%s is not a generic function (or not visible here)",
-#                          sQuote(f)),
-#                 domain = NA)
 msgid "%s is not a generic function (or not visible here)"
 msgstr "%s nie jest ogólną funkcją (albo nie jest widoczna)"
 
-# methods/R/RMethodUtils.R: 1480
-# stop(gettextf("invalid element in the \"groupMembers\" slot (class %s)",
-# 				  dQuote(class(x))),
-#                          domain = NA)
 msgid "invalid element in the \"groupMembers\" slot (class %s)"
 msgstr "niepoprawny element w gnieździe \"groupMembers\" (klasa %s)"
 
-# methods/R/RMethodUtils.R: 1569
-# stop("argument f must be a generic function with signature \"...\"")
 msgid "argument f must be a generic function with signature \"...\""
 msgstr "argument 'f' musi być ogólną funkcją z sygnaturą '...'"
 
-# methods/R/RMethodUtils.R: 1587
-# stop(gettextf("no method or default matching the \"...\" arguments in %s",
-#                       deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
 msgid "no method or default matching the \"...\" arguments in %s"
 msgstr "brak metody lub domyślnego dopasowania argumentów \"...\" w %s"
 
-# methods/R/RMethodUtils.R: 1619
-# warning(gettextf("multiple direct matches: %s; using the first of these", .pasteC(classes)), domain = NA)
 msgid "multiple direct matches: %s; using the first of these"
 msgstr "wielokrotne bezpośrednie dopasowania: %s; używanie pierwszego z nich"
 
-# methods/R/RMethodUtils.R: 1665
-# warning(gettextf("multiple equivalent inherited matches: %s; using the first of these",
-#                              .pasteC(classes)), domain = NA)
 msgid "multiple equivalent inherited matches: %s; using the first of these"
 msgstr ""
 "wiele równoważnie dziedziczonych dopasowań: %s; używanie pierwszego z nich"
 
-# methods/R/RMethodUtils.R: 1687
-# gettextf("single string; got an object of class %s",
-#                  dQuote(class(what)[[1L]]))
 msgid "single string; got an object of class %s"
 msgstr "pojedynczy łańcuch; otrzymano obiekt klasy %s"
 
-# methods/R/RMethodUtils.R: 1747
-# gettextf("multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)",
-#                                    dQuote(classi), sQuote(pkgi),
-#                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", "))
 msgid ""
 "multiple definitions exist for class %s, but the supplied package (%s) is "
 "not one of them (%s)"
@@ -1658,10 +945,6 @@ msgstr ""
 "istnieją wielokrotne definicje dla klasy %s, ale dostarczony pakiet (%s) nie "
 "jest jedną z nich (%s)"
 
-# methods/R/RMethodUtils.R: 1754
-# gettextf("multiple definitions exist for class %s; should specify one of them (%s), e.g. by className()",
-#                                    dQuote(classi),
-#                                    paste(dQuote(get(classi, envir = .classTable)), collapse = ", "))
 msgid ""
 "multiple definitions exist for class %s; should specify one of them (%s), e."
 "g. by className()"
@@ -1669,66 +952,36 @@ msgstr ""
 "istnieją wielokrotne definicje dla klasy %s; powinieneś określić jedną z "
 "nich (%s), na przykład poprzez 'className()'"
 
-# methods/R/RMethodUtils.R: 1769
-# gettextf("no definition found for class %s",
-#                                  dQuote(classi))
 msgid "no definition found for class %s"
 msgstr "nie znaleziono definicji dla klasy %s"
 
-# methods/R/RMethodUtils.R: 1816
-# warning("trying to execute load actions without 'methods' package")
 msgid "trying to execute load actions without 'methods' package"
 msgstr "próba wykonania akcji ładowania bez pakietu 'methods'"
 
-# methods/R/RMethodUtils.R: 1822
-# warning(gettextf("missing function for load action: %s", what))
 msgid "missing function for load action: %s"
 msgstr "brakująca funkcja dla akcji ładowania: %s"
 
-# methods/R/RMethodUtils.R: 1830
-# stop(gettextf("error in load action %s for package %s: %s: %s",
-#                           aname, getPackageName(where), callString, value$message))
 msgid "error in load action %s for package %s: %s: %s"
 msgstr "błąd w akcji ładowania %s dla pakietu %s: %s: %s"
 
-# methods/R/RMethodUtils.R: 1855
-# stop(gettextf("non-function action: %s",
-#                           sQuote(fname)),
-#                  domain = NA)
 msgid "non-function action: %s"
 msgstr "akcja nie-funkcji: %s"
 
-# methods/R/RMethodUtils.R: 1859
-# stop(gettextf("action function %s has no arguments, should have at least 1",
-#                           sQuote(fname)),
-#                  domain = NA)
 msgid "action function %s has no arguments, should have at least 1"
 msgstr "funkcja akcji %s nie posiada argumentów, a powinna mieć przynajmniej 1"
 
-# methods/R/RMethodUtils.R: 1910
-# warning(gettextf("some actions are missing: %s",
-#                              paste(actions[!allExists], collapse =", ")),
-#                     domain = NA)
 msgid "some actions are missing: %s"
 msgstr "brakuje niektórych akcji: %s"
 
-# methods/R/SClasses.R: 29
-# stop(gettextf("%s has a sealed class definition and cannot be redefined",
-#                       dQuote(Class)),
-#              domain = NA)
 msgid "%s has a sealed class definition and cannot be redefined"
 msgstr "Klasa %s ma zablokowaną definicję klasy i nie może być przedefiniowana"
 
-# methods/R/SClasses.R: 36
-# stop("Argument \"representation\" cannot be used if argument \"slots\" is supplied")
 msgid ""
 "Argument \"representation\" cannot be used if argument \"slots\" is supplied"
 msgstr ""
 "Argument 'representation' nie może być użyty, jeśli dostarczony został "
 "argument 'slots'"
 
-# methods/R/SClasses.R: 47
-# stop("only arguments 'Class' and 'where' can be supplied when argument 'representation' is a 'classRepresentation' object")
 msgid ""
 "only arguments 'Class' and 'where' can be supplied when argument "
 "'representation' is a 'classRepresentation' object"
@@ -1736,11 +989,6 @@ msgstr ""
 "tylko argumenty 'Class' oraz 'where' mogą być dostarczone gdy argument "
 "'representation' jest obiektem klasy \"classRepresentation\""
 
-# methods/R/SClasses.R: 86
-# stop(gettextf("error in contained classes (%s) for class %s and unable to remove definition from %s",
-#                               msg, dQuote(Class),
-#                               sQuote(getPackageName(where))),
-#                      domain = NA)
 msgid ""
 "error in contained classes (%s) for class %s and unable to remove definition "
 "from %s"
@@ -1748,11 +996,6 @@ msgstr ""
 "błąd w zawartych klasach (%s) dla klasy %s przez co nie można usunąć "
 "definicji z %s"
 
-# methods/R/SClasses.R: 91
-# stop(gettextf("error in contained classes (%s) for class %s; class definition removed from %s",
-#                               msg, dQuote(Class),
-#                               sQuote(getPackageName(where))),
-#                      domain = NA)
 msgid ""
 "error in contained classes (%s) for class %s; class definition removed from "
 "%s"
@@ -1760,11 +1003,6 @@ msgstr ""
 "błąd w zawartych klasach (%s) dla klasy %s; definicja klasy została usunięta "
 "z %s"
 
-# methods/R/SClasses.R: 96
-# stop(gettextf("error in contained classes (%s) for class %s and unable to restore previous definition from %s",
-#                               msg, dQuote(Class),
-#                               sQuote(getPackageName(where))),
-#                      domain = NA)
 msgid ""
 "error in contained classes (%s) for class %s and unable to restore previous "
 "definition from %s"
@@ -1772,11 +1010,6 @@ msgstr ""
 "błąd w zawartych klasach (%s) dla klasy %s przez co nie można przywrócić "
 "poprzedniej definicji z %s"
 
-# methods/R/SClasses.R: 101
-# stop(gettextf("error in contained classes (%s) for class %s; previous definition restored to %s",
-#                               msg, dQuote(Class),
-#                               sQuote(getPackageName(where))),
-#                      domain = NA)
 msgid ""
 "error in contained classes (%s) for class %s; previous definition restored "
 "to %s"
@@ -1784,48 +1017,23 @@ msgstr ""
 "błąd w zawartych klasach (%s) dla klasy %s; poprzednia definicja została "
 "przywrócona w %s"
 
-# methods/R/SClasses.R: 132
-# stop(gettextf("element %d of the representation was not a single character string", i), domain = NA)
 msgid "element %d of the representation was not a single character string"
 msgstr "element %d reprezentacji nie był pojedynczym łańcuchem tekstowym"
 
-# methods/R/SClasses.R: 136
-# stop(gettextf("duplicate class names among superclasses: %s",
-#                       paste(.dQ(includes[duplicated(includes)]),
-#                             collapse = ", ")),
-#              domain = NA)
 msgid "duplicate class names among superclasses: %s"
 msgstr "powtórzone nazwy klasy pośród superklas: %s"
 
-# methods/R/SClasses.R: 165
-# stop("only one data object (unnamed argument to prototype) allowed")
 msgid "only one data object (unnamed argument to prototype) allowed"
 msgstr ""
 "tylko jeden obiekt danych (nienazwany argument przekazany do funkcji "
 "'prototype()') jest dozwolony"
 
-# methods/R/SClasses.R: 269
-# stop(gettextf("%s is not a defined class",
-#                               dQuote(Class)),
-#                      domain = NA)
 msgid "%s is not a defined class"
 msgstr "%s nie jest zdefiniowaną klasą"
 
-# methods/R/SClasses.R: 308
-# stop(gettextf("%s is not a slot in class %s",
-#                       sQuote(name), dQuote(cl)),
-#              domain = NA)
-# methods/R/SClasses.R: 334
-# stop(gettextf("%s is not a slot in class %s",
-#                       sQuote(name), dQuote(cl)),
-#              domain = NA)
 msgid "%s is not a slot in class %s"
 msgstr "%s nie jest gniazdem w klasie %s"
 
-# methods/R/SClasses.R: 319
-# stop(gettextf("assignment of an object of class %s is not valid for slot %s in an object of class %s; is(value, \"%s\") is not TRUE",
-# 		     dQuote(valueClass), sQuote(name), dQuote(cl), slotClass),
-#             domain = NA)
 msgid ""
 "assignment of an object of class %s is not valid for slot %s in an object of "
 "class %s; is(value, \"%s\") is not TRUE"
@@ -1833,10 +1041,6 @@ msgstr ""
 "przypisanie obiektu klasy %s nie jest poprawny dla gniazda %s w obiekcie "
 "klasy %s; 'is(value, %s)' nie ma wartości TRUE"
 
-# methods/R/SClasses.R: 344
-# stop(gettextf("assignment of an object of class %s is not valid for @%s in an object of class %s; is(value, \"%s\") is not TRUE",
-# 		     dQuote(valueClass), sQuote(name), dQuote(cl), slotClass),
-#             domain = NA)
 msgid ""
 "assignment of an object of class %s is not valid for @%s in an object of "
 "class %s; is(value, \"%s\") is not TRUE"
@@ -1844,45 +1048,24 @@ msgstr ""
 "przypisanie obiektu klasy %s nie jest poprawny dla @%s w obiekcie klasy %s; "
 "'is(value, \"%s\")' nie ma wartości TRUE"
 
-# methods/R/SClasses.R: 383
-# warning(gettextf("class definition for %s not found (no action taken)",
-#                              dQuote(Class)),
-#                     domain = NA)
 msgid "class definition for %s not found (no action taken)"
 msgstr "nie znaleziono definicji klasy dla %s (nie podjęto żadnej akcji)"
 
-# methods/R/SClasses.R: 389
-# warning(gettextf("class %s has multiple definitions visible; only the first removed",
-#                              dQuote(Class)),
-#                     domain = NA)
 msgid "class %s has multiple definitions visible; only the first removed"
 msgstr ""
 "klasa %s posiada widoczne wielokrotne definicje; usunięto tylko pierwszą"
 
-# methods/R/SClasses.R: 543
-# gettextf("invalid class %s object", dQuote(Class))
 msgid "invalid class %s object"
 msgstr "niepoprawny obiekt klasy %s"
 
-# methods/R/SClasses.R: 568
-# stop("validity method must be NULL or a function of one argument")
 msgid "validity method must be NULL or a function of one argument"
 msgstr ""
 "metoda poprawności musi być wartością NULL lub funkcją jednego argumentu"
 
-# methods/R/SClasses.R: 597
-# warning(gettextf("class %s not found on %s; 'resetClass' will have no effect",
-#                                      dQuote(Class),
-#                                      sQuote(getPackageName(where))),
-#                             domain = NA)
 msgid "class %s not found on %s; 'resetClass' will have no effect"
 msgstr ""
 "klasa %s nie została znaleziona w %s; 'resetClass' nie będzie miał efektu"
 
-# methods/R/SClasses.R: 605
-# stop(gettextf("argument 'classDef' must be a string or a class representation; got an object of class %s",
-#                               dQuote(class(classDef))),
-#                      domain = NA)
 msgid ""
 "argument 'classDef' must be a string or a class representation; got an "
 "object of class %s"
@@ -1890,41 +1073,17 @@ msgstr ""
 "argument 'classDef' musi być łańcuchem albo reprezentacją klasy; otrzymano "
 "obiekt klasy %s"
 
-# methods/R/SClasses.R: 611
-# warning(gettextf("class %s is sealed; 'resetClass' will have no effect",
-#                              dQuote(Class)),
-#                     domain = NA)
 msgid "class %s is sealed; 'resetClass' will have no effect"
 msgstr "klasa %s jest zamknięta; 'resetClass' nie będzie mieć efektu"
 
-# methods/R/SClasses.R: 674
-# stop(gettextf("cannot use object of class %s in new():  class %s does not extend that class",
-#                                       dQuote(Classi),
-#                                       dQuote(Class)),
-#                              domain = NA)
 msgid ""
 "cannot use object of class %s in new():  class %s does not extend that class"
 msgstr ""
 "nie można użyć obiektu klasy %s w 'new()': klasa %s nie rozszerza tej klasy"
 
-# methods/R/SClasses.R: 143
-# stop(sprintf(ngettext(length(dslots),
-#                               "duplicated slot name: %s",
-#                               "duplicated slot names: %s"),
-#                      paste(sQuote(dslots), collapse="")),
-#              domain = NA)
-# methods/R/SClasses.R: 684
-# stop(gettextf("duplicated slot names: %s",
-#                               paste(sQuote(snames[duplicated(snames)]),
-#                                     collapse = ", ")), domain = NA)
 msgid "duplicated slot names: %s"
 msgstr "powtórzona nazwa gniazda: %s"
 
-# methods/R/SClasses.R: 756
-# stop(gettextf("class %s is defined, with package %s, but no corresponding metadata object was found (not exported?)",
-#                               dQuote(Class),
-#                               sQuote(classDef@package)),
-#                      domain = NA)
 msgid ""
 "class %s is defined, with package %s, but no corresponding metadata object "
 "was found (not exported?)"
@@ -1932,63 +1091,32 @@ msgstr ""
 "klasa %s jest zdefiniowana z pakietem %s, ale nie znaleziono odpowiadającego "
 "jej obiektu metadanych (nie wyeksportowano?)"
 
-# methods/R/SClasses.R: 761
-# stop(gettextf("no definition of %s to use for %s",
-#                               dQuote(Class),
-#                               unique),
-#                      domain = NA)
 msgid "no definition of %s to use for %s"
 msgstr "brak definicji %s do użycia dla %s"
 
-# methods/R/SClasses.R: 829
-# stop(gettextf("class definition cannot extend more than one of these data types: %s",
-# 		  paste0('"',type, '"', collapse = ", ")),
-#          domain = NA)
 msgid "class definition cannot extend more than one of these data types: %s"
 msgstr ""
 "definicja klasy nie może rozszerzać więcej niż jednego z tych typów danych: "
 "%s"
 
-# methods/R/SClasses.R: 834
-# stop(gettextf("abnormal type %s is not supported as a superclass of a class definition",
-#                   dQuote(type)),
-#          domain = NA)
 msgid "abnormal type %s is not supported as a superclass of a class definition"
 msgstr "nienormalny typ %s nie jest wspierany jako superklasa definicji klasy"
 
-# methods/R/SClasses.R: 923
-# warning(gettextf("multiple class definitions for %s from packages: %s; picking the first",
-#                                  dQuote(className),
-#                                  paste(sQuote(pkgs), collapse = ", ")),
-#                         domain = NA)
 msgid "multiple class definitions for %s from packages: %s; picking the first"
 msgstr ""
 "wielokrotne definicje klasy dla %s z pakietów: %s; wybieranie pierwszego"
 
-# methods/R/SClasses.R: 930
-# stop(gettextf("no package name supplied and no class definition found for %s",
-#                               dQuote(className)),
-#                      domain = NA)
 msgid "no package name supplied and no class definition found for %s"
 msgstr ""
 "nie dostarczono nazwy pakietu oraz nie znaleziono definicji klasy dla klasy "
 "%s"
 
-# methods/R/SClasses.R: 962
-# stop("argument 'classDef' must be a class definition or the name of a class")
 msgid "argument 'classDef' must be a class definition or the name of a class"
 msgstr "argument 'classDef' musi być definicją klasy lub nazwą klasy"
 
-# methods/R/SClasses.R: 981
-# stop(gettextf("No %s names supplied", what),
-#                  domain = NA, call. = FALSE)
 msgid "No %s names supplied"
 msgstr "Nie dostarczono nazw %s"
 
-# methods/R/SClasses.R: 984
-# stop(gettextf("All %s names must be nonempty in:\n(%s)", what,
-#                           paste(sQuote(propNames), collapse = ", ")),
-#                  domain = NA, call. = FALSE)
 msgid ""
 "All %s names must be nonempty in:\n"
 "(%s)"
@@ -1996,10 +1124,6 @@ msgstr ""
 "Wszystkie nazwy %s muszą być niepuste w:\n"
 "(%s)"
 
-# methods/R/SClasses.R: 988
-# stop(gettextf("All %s names must be distinct in:\n(%s)", what,
-#                           paste(sQuote(propNames), collapse = ", ")),
-#                  domain = NA, call. = FALSE)
 msgid ""
 "All %s names must be distinct in:\n"
 "(%s)"
@@ -2007,82 +1131,38 @@ msgstr ""
 "Wszystkie nazwy %s muszą być różne w:\n"
 "(%s)"
 
-# methods/R/SClasses.R: 1011
-# stop(gettextf("argument %s must be a list or a character vector; got an object of class %s",
-#                       dQuote(what), dQuote(class(fields))),
-#              domain = NA)
 msgid ""
 "argument %s must be a list or a character vector; got an object of class %s"
 msgstr ""
 "argument %s musi być listą  lub wektorem tekstowym; otrzymano obiekt klasy %s"
 
-# methods/R/addedFunctions.R: 63
-# stop(if(generic)
-# 	     gettextf("no function %s found", sQuote(name)) else
-# 	     gettextf("no non-generic function %s found", sQuote(name)),
-# 	     domain = NA)
 msgid "no function %s found"
 msgstr "nie znaleziono funkcji %s"
 
-# methods/R/addedFunctions.R: 63
-# stop(if(generic)
-# 	     gettextf("no function %s found", sQuote(name)) else
-# 	     gettextf("no non-generic function %s found", sQuote(name)),
-# 	     domain = NA)
 msgid "no non-generic function %s found"
 msgstr "nie znaleziono nie-ogólnej funkcji %s"
 
-# methods/R/addedFunctions.R: 89
-# stop(gettextf("%s is not one of the element names",
-#                           sQuote(name)),
-#                  domain = NA)
 msgid "%s is not one of the element names"
 msgstr "%s nie jest jedną z nazw elementów"
 
-# methods/R/as.R: 80
-# stop(gettextf("no method or default for coercing %s to %s",
-# 			      dQuote(thisClass),
-#                               dQuote(Class)),
-#                      domain = NA)
 msgid "no method or default for coercing %s to %s"
 msgstr "brak metody lub domyślnego schematu przekształcania %s w %s"
 
-# methods/R/as.R: 191
-# stop(gettextf("no method or default for as() replacement of %s with Class=\"%s\"",
-#                       dQuote(thisClass),
-#                       Class),
-#              domain = NA)
 msgid "no method or default for as() replacement of %s with Class=\"%s\""
 msgstr ""
 "brak metody lub wartości domyślnej dla zamiany 'as()' %s z 'class=\"%s\"'"
 
-# methods/R/as.R: 215
-# stop(gettextf("trying to set an 'as' relation from %s to itself",
-#                           dQuote(.class1(from))),
-#                  domain = NA)
 msgid "trying to set an 'as' relation from %s to itself"
 msgstr "próba ustawienia relacji 'as' z %s na siebie samą"
 
-# methods/R/as.R: 222
-# stop(gettextf("class %s is not defined in this environment",
-#                           dQuote(to)),
-#                  domain = NA)
 msgid "class %s is not defined in this environment"
 msgstr "klasa %s nie jest zdefiniowana w tym środowisku"
 
-# methods/R/as.R: 226
-# stop(gettextf("class %s is a class union: 'coerce' relations to a class union are not meaningful",
-#                           dQuote(to)),
-#                  domain = NA)
 msgid ""
 "class %s is a class union: 'coerce' relations to a class union are not "
 "meaningful"
 msgstr "klasa %s jest unią klas: relacje 'coerce' dla uni klas nie mają sensu"
 
-# methods/R/as.R: 238
-# stop(gettextf("'as' method should have one argument, or match the arguments of coerce(): got  (%s)",
-#                            paste(formalArgs(def), collapse = ", ")),
-#                   domain = NA)
 msgid ""
 "'as' method should have one argument, or match the arguments of coerce(): "
 "got  (%s)"
@@ -2090,8 +1170,6 @@ msgstr ""
 "metod 'as()' powinna mieć jeden argument lub zgadzać się z argumentami "
 "'coerce()': otrzymano (%s)"
 
-# methods/R/as.R: 254
-# stop(gettextf("a 'replace' method definition in 'setAs' must be a function of two arguments, got %d", length(args)), domain = NA)
 msgid ""
 "a 'replace' method definition in 'setAs' must be a function of two "
 "arguments, got %d"
@@ -2099,9 +1177,6 @@ msgstr ""
 "definicja metody 'replace' w 'setAs' musi być funkcją dwóch argumentów, "
 "otrzymano %d"
 
-# methods/R/as.R: 260
-# warning(gettextf("argument names in 'replace' changed to agree with 'coerce<-' generic:\n%s", paste(deparse(replace), sep="\n    ")),
-#                             domain = NA)
 msgid ""
 "argument names in 'replace' changed to agree with 'coerce<-' generic:\n"
 "%s"
@@ -2110,39 +1185,20 @@ msgstr ""
 "ogólnym 'coerce<-':\n"
 "%s"
 
-# methods/R/as.R: 337
-# warning("ambiguous object (length != 1) to coerce to \"name\"")
 msgid "ambiguous object (length != 1) to coerce to \"name\""
 msgstr "dwuznaczny obiekt (długość różna od 1) do przekształcenia w \"name\""
 
-# methods/R/as.R: 345
-# stop("undefined 'coerce' method")
 msgid "undefined 'coerce' method"
 msgstr "nieokreślona metoda 'coerce'"
 
-# methods/R/as.R: 394
-# warning(gettextf("methods currently exist for coercing from %s to %s; they will be replaced.",
-#                              dQuote(from),
-#                              dQuote(to)),
-#                     domain = NA)
 msgid ""
 "methods currently exist for coercing from %s to %s; they will be replaced."
 msgstr ""
 "metody aktualnie istnieją dla przekształcenia z %s w %s; będą zastąpione."
 
-# methods/R/fixPrevious.R: 32
-# warning(gettextf("object %s not found",
-#                              sQuote(what)),
-#                     domain = NA)
 msgid "object %s not found"
 msgstr "obiekt %s nie został znaleziony"
 
-# methods/R/fixPrevious.R: 54
-# warning(gettextf("object %s not changed (it is not consistent with the current definition of class %s from %s)",
-#                                      sQuote(what),
-#                                      dQuote(Class),
-#                                      sQuote(ClassDef@package)),
-#                             domain = NA)
 msgid ""
 "object %s not changed (it is not consistent with the current definition of "
 "class %s from %s)"
@@ -2150,18 +1206,9 @@ msgstr ""
 "obiekt %s nie został zmieniony (nie jest spójny z bieżącą definicją klasy %s "
 "z %s)"
 
-# methods/R/fixPrevious.R: 61
-# warning(gettextf("no definition for the class of %s (class %s) found",
-#                                  sQuote(what),
-#                                  dQuote(class)),
-#                         domain = NA)
 msgid "no definition for the class of %s (class %s) found"
 msgstr "nie znaleziono definicji dla klasy z %s (klasa %s)"
 
-# methods/R/fixPrevious.R: 67
-# warning(gettextf("object %s not changed (it does not appear to be from a version of R earlier than 1.8.0)",
-#                              sQuote(what)),
-#                     domain = NA)
 msgid ""
 "object %s not changed (it does not appear to be from a version of R earlier "
 "than 1.8.0)"
@@ -2169,29 +1216,15 @@ msgstr ""
 "obiekt %s nie został zmieniony (nie wygląda aby był z wersji R wcześniejszej "
 "niż 1.8.0)"
 
-# methods/R/is.R: 72
-# stop("'class1' must be the name of a class or a class definition")
 msgid "'class1' must be the name of a class or a class definition"
 msgstr "'class1' musi być nazwą klasy albo definicją klasy"
 
-# methods/R/is.R: 104
-# stop("'class2' must be the name of a class or a class definition")
 msgid "'class2' must be the name of a class or a class definition"
 msgstr "'class2' musi być nazwą klasy albo definicją klasy"
 
-# methods/R/is.R: 137
-# stop(gettextf("class %s has no visible definition from package or environment %s",
-#                       dQuote(class2),
-#                       sQuote(getPackageName(where))),
-#              domain = NA)
 msgid "class %s has no visible definition from package or environment %s"
 msgstr "klasa %s nie ma widocznej definicji w pakiecie lub środowisku %s"
 
-# methods/R/is.R: 151
-# stop(gettextf("cannot create a 'setIs' relation when neither of the classes (%s and %s) is local and modifiable in this package",
-#                       dQuote(class1),
-#                       dQuote(class2)),
-#              domain = NA)
 msgid ""
 "cannot create a 'setIs' relation when neither of the classes (%s and %s) is "
 "local and modifiable in this package"
@@ -2199,10 +1232,6 @@ msgstr ""
 "nie można utworzyć relacji 'setIs' kiedy żadna z klas (%s oraz %s) nie jest "
 "lokalna oraz modyfikowalna w tym pakiecie"
 
-# methods/R/is.R: 156
-# stop(gettextf("class %s is sealed; new superclasses can not be defined, except by 'setClassUnion'",
-#                       dQuote(class1)),
-#              domain = NA)
 msgid ""
 "class %s is sealed; new superclasses can not be defined, except by "
 "'setClassUnion'"
@@ -2210,11 +1239,6 @@ msgstr ""
 "klasa %s jest zamknięta; nowa superklasa nie może zostać zdefiniowana, za "
 "wyjątkiem 'setClassUnion'"
 
-# methods/R/is.R: 209
-# warning(gettextf("class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
-#                          .dQ(class), sQuote(classDef@package), purpose,
-#                          sQuote(getPackageName(where, FALSE))),
-#                 call. = FALSE, domain = NA)
 msgid ""
 "class %s is defined (with package slot %s) but no metadata object found to "
 "revise %s information---not exported?  Making a copy in package %s"
@@ -2223,59 +1247,29 @@ msgstr ""
 "obiektu metadanych do przeglądu informacji %s -- nie wyeksportowano? "
 "Tworzenie kopii w pakiecie %s"
 
-# methods/R/is.R: 220
-# gettextf("class %s cannot extend class %s",
-#                  dQuote(class1),
-#                  dQuote(class2))
 msgid "class %s cannot extend class %s"
 msgstr "klasa %s nie może rozszerzyć klasy %s"
 
-# methods/R/is.R: 226
-# gettext("both classes must be defined")
 msgid "both classes must be defined"
 msgstr "obie klasy muszą być zdefiniowane"
 
-# methods/R/languageEl.R: 74
-# stop("invalid index for function argument")
 msgid "invalid index for function argument"
 msgstr "niepoprawny indeks dla argumentu funkcji"
 
-# methods/R/method.skeleton.R: 26
-# stop(gettextf("no function definition found for %s",
-#                           sQuote(generic)),
-#                  domain = NA)
 msgid "no function definition found for %s"
 msgstr "nie znaleziono definicji funkcji dla %s"
 
-# methods/R/method.skeleton.R: 42
-# stop("need a definition for the method here")
 msgid "need a definition for the method here"
 msgstr "potrzeba tutaj definicji dla metody"
 
-# methods/R/method.skeleton.R: 60
-# message(gettextf("Skeleton of method written to %s",
-#                      if (is.character(file)) file else "connection"),
-#             domain = NA)
 msgid "Skeleton of method written to %s"
 msgstr "struktura metody zapisana w %s"
 
-# methods/R/methodsTable.R: 89
-# stop(gettextf("invalid object in meta table of methods for %s, label %s, had class %s",
-#                     sQuote(generic@generic),
-#                     sQuote(what),
-#                     dQuote(class(obj))),
-#            domain = NA)
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "niepoprawny obiekt w meta tablicy metod dla %s, etykieta %s, otrzymano klasę "
 "%s"
 
-# methods/R/methodsTable.R: 269
-# stop(gettextf("invalid mlist element for signature %s at level %d (should be methods list or method, had class %s)",
-#                     sQuote(classes[[j]]),
-#                     i,
-#                     dQuote(class(el))),
-#            domain = NA)
 msgid ""
 "invalid mlist element for signature %s at level %d (should be methods list "
 "or method, had class %s)"
@@ -2283,19 +1277,9 @@ msgstr ""
 "niepoprawny element 'mlist' dla sygnatury %s na poziomie %d (powinna być "
 "lista metod lub metoda, otrzymano klasę %s)"
 
-# methods/R/methodsTable.R: 339
-# stop(
-#                          gettextf("bad method object stored in method table, class %s",
-#                                   dQuote(class(current))),
-#                          domain = NA)
 msgid "bad method object stored in method table, class %s"
 msgstr "błędny obiekt metody przechowywany w tablicy metod, klasy %s"
 
-# methods/R/methodsTable.R: 428
-# stop(gettextf("invalid object in methods table (%s), expected a method, got an object of class %s",
-#                           sQuote(what),
-#                           dQuote(class(method))),
-#                  domain = NA)
 msgid ""
 "invalid object in methods table (%s), expected a method, got an object of "
 "class %s"
@@ -2303,22 +1287,12 @@ msgstr ""
 "niepoprawny obiekt w tablicy metod (%s), oczekiwano metody, otrzymano obiekt "
 "klasy %s"
 
-# methods/R/methodsTable.R: 471
-# stop("invalid or unset methods table in generic function \"",
-#                fdef@generic,"\"", damain = NA)
-#, fuzzy
 msgid "invalid or unset methods table in generic function %s"
-msgstr "niepoprawna lub nieustawiona tablica metod w ogólnej funkcji \""
+msgstr "niepoprawna lub nieustawiona tablica metod w ogólnej funkcji %s"
 
-# methods/R/methodsTable.R: 474
-# stop("trying to find a methods table in a non-generic function")
 msgid "trying to find a methods table in a non-generic function"
 msgstr "próba znalezienia tablicy metod w nieogólnej funkcji"
 
-# methods/R/methodsTable.R: 594
-# stop(gettextf("the \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s",
-#                             dQuote(class(condAction))),
-#                    domain = NA)
 msgid ""
 "the \"ambiguousMethodSelection\" option should be a function to be called as "
 "the condition action; got an object of class %s"
@@ -2326,24 +1300,12 @@ msgstr ""
 "opcja \"ambiguousMethodSelection\" powinna być funkcją wywoływaną jako akcja "
 "warunkowa; otrzymano obiekt klasy %s"
 
-# methods/R/methodsTable.R: 611
-# message(gettextf("No simply inherited methods found for function %s; using non-simple method",
-#                            sQuote(fdef@generic)),
-#                   domain = NA)
 msgid ""
 "No simply inherited methods found for function %s; using non-simple method"
 msgstr ""
 "Nie znaleziono prostych dziedziczonych metod dla funkcji %s; używanie "
 "nieprostej metody"
 
-# methods/R/methodsTable.R: 670
-# message(gettextf("Note: method with signature %s chosen for function %s,\n target signature %s.\n %s would also be valid",
-#                      sQuote(selected),
-#                      sQuote(attr(cond, "generic")),
-#                      sQuote(attr(cond, "target")),
-# 		     paste0('"', possible[is.na(match(possible, selected))], '"',
-# 			    collapse=", ")),
-#             domain = NA)
 msgid ""
 "Note: method with signature %s chosen for function %s,\n"
 " target signature %s.\n"
@@ -2353,38 +1315,21 @@ msgstr ""
 " docelowa sygnatura %s.\n"
 " %s również byłaby poprawna"
 
-# methods/R/methodsTable.R: 754
-# stop(gettextf("unable to find an inherited method for function %s for signature %s",
-#                   sQuote(fdef@generic),
-#                   sQuote(cnames)),
-#          domain = NA)
 msgid "unable to find an inherited method for function %s for signature %s"
 msgstr "nie można znaleźć dziedziczonej metody dla funkcji %s dla sygnatury %s"
 
-# methods/R/methodsTable.R: 1114
-# stop("failed to find expected group generic function: ",
-#                                     what)
 msgid "failed to find expected group generic function:"
 msgstr "nie udało się znaleźć oczekiwanej funkcji grupy ogólnej:"
 
-# methods/R/methodsTable.R: 1135
-# stop(gettextf("invalid group generic function in search for inherited method (class %s)",
-#                     dQuote(class(gen))),
-#            domain = NA)
 msgid ""
 "invalid group generic function in search for inherited method (class %s)"
 msgstr ""
 "niepoprawna funkcja grupy ogólnej w poszukiwaniu dziedziczonej metody (klasa "
 "%s)"
 
-# methods/R/methodsTable.R: 1158
-# stop("invalid methods table request")
 msgid "invalid methods table request"
 msgstr "niepoprawne żądanie tablicy metod"
 
-# methods/R/methodsTable.R: 1178
-# warning(gettextf("trying to check signature length of group generic '%s', but it is not a group generic", what),
-#               domain = NA)
 msgid ""
 "trying to check signature length of group generic '%s', but it is not a "
 "group generic"
@@ -2392,11 +1337,6 @@ msgstr ""
 "próba sprawdzenia długości sygnatury grupy ogólnej '%s', ale to nie jest "
 "grupa ogólna"
 
-# methods/R/methodsTable.R: 1204
-# warning(gettextf("trying to check signature length of generic '%s', but it is not a generic function: i = %d, funs = %s, gnames = %s",
-#                        what,  i, paste(unlist(funs), collapse = ", "),
-#                        paste(as.character(gnames), collapse = ", ")),
-#               domain = NA)
 msgid ""
 "trying to check signature length of generic '%s', but it is not a generic "
 "function: i = %d, funs = %s, gnames = %s"
@@ -2404,24 +1344,12 @@ msgstr ""
 "próba sprawdzenia długości sygnatury funkcji ogólnej '%s', ale to nie jest "
 "funkcja ogólna: i = %d, funs = %s, gnames = %s"
 
-# methods/R/methodsTable.R: 1463
-# stop(gettextf("no methods table for generic %s from package %s in package %s",
-#                     sQuote(generic@generic),
-#                     sQuote(generic@package),
-#                     sQuote(getPackageName(where))),
-#            domain = NA)
 msgid "no methods table for generic %s from package %s in package %s"
 msgstr "brak tablicy metod dla ogolnej funkcji %s z pakietu %s w pakiecie %s"
 
-# methods/R/methodsTable.R: 1581
-# warning(gettextf("undefined classes (%s) will be ignored for argument '%s'",
-#                          paste0('"',unique(.undefClasses),'"', collapse=", "),
-#                          colnames(sigs)[[j]]), domain = NA)
 msgid "undefined classes (%s) will be ignored for argument '%s'"
 msgstr "niezdefiniowane klasy (%s) zostaną zignorowane dla argumentu '%s'"
 
-# methods/R/methodsTable.R: 1598
-# stop("argument 'signatures' must be a character matrix whose rows are method signatures")
 msgid ""
 "argument 'signatures' must be a character matrix whose rows are method "
 "signatures"
@@ -2429,24 +1357,13 @@ msgstr ""
 "argument 'signatures' musi być macierzą tekstową której wiersze są "
 "sygnaturami metod"
 
-# methods/R/oldClass.R: 29
-# stop("not allowed to have test==TRUE and an S4Class definition")
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr "niedozwolone by mieć 'test==TRUE' oraz definicję S4Class"
 
-# methods/R/oldClass.R: 38
-# stop(gettextf("argument 'S4Class' must be a class definition: got an object of class %s",
-#                             dQuote(class(S4Class))),
-#                    domain = NA)
 msgid ""
 "argument 'S4Class' must be a class definition: got an object of class %s"
 msgstr "argument 'S4Class' musi być definicją klasy: otrzymano obiekt klasy %s"
 
-# methods/R/oldClass.R: 77
-# stop(gettextf("inconsistent old-style class information for %s; the class is defined but does not extend %s and is not valid as the data part",
-#                                 dQuote(cl),
-#                                 dQuote(prevClass)),
-#                        domain = NA)
 msgid ""
 "inconsistent old-style class information for %s; the class is defined but "
 "does not extend %s and is not valid as the data part"
@@ -2454,8 +1371,6 @@ msgstr ""
 "niespójny stary styl informacji o klasie dla %s; klasa jest zdefiniowana, "
 "ale nie rozszerza %s oraz nie jest poprawna jako część danych"
 
-# methods/R/oldClass.R: 101
-# stop(gettextf('the S3 class of the prototype, "%s", is undefined; only allowed when this is the S3 class being registered ("%s")', .class1(prototype), mainClass), domain = NA)
 msgid ""
 "the S3 class of the prototype, \"%s\", is undefined; only allowed when this "
 "is the S3 class being registered (\"%s\")"
@@ -2463,26 +1378,12 @@ msgstr ""
 "klasa S3 prototypu, \"%s\", jest niezdefiniowana; dozwolone tylko jeśli jest "
 "to klasa S3 będąca w trakcie rejestracji (\"%s\")"
 
-# methods/R/oldClass.R: 121
-# message(gettextf("restoring definition of class %s", dQuote(cl)),
-#             domain = NA)
 msgid "restoring definition of class %s"
 msgstr "przywracanie definicji klasy %s"
 
-# methods/R/oldClass.R: 181
-# message(gettextf("slot %s: class %s should extend class %s",
-#                                sQuote(what),
-#                                dQuote(elNamed(slots1, what)),
-#                                dQuote(elNamed(slots2, what))),
-#                       domain = NA)
 msgid "slot %s: class %s should extend class %s"
 msgstr "gniazdo %s: klasa %s powinna rozszerzać klasę %s"
 
-# methods/R/oldClass.R: 189
-# stop(
-#                gettextf("invalid S4 class corresponding to S3 class: slots in  S4 version must extend corresponding slots in S3 version: fails for %s",
-#                         paste0('"', bad, '"',  collapse = ", ")),
-#                domain = NA)
 msgid ""
 "invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
 "corresponding slots in S3 version: fails for %s"
@@ -2490,15 +1391,9 @@ msgstr ""
 "niepoprawna klasa S4 odpowiadająca klasie S3: gniazda w wersji S4 muszą "
 "rozszerzać odpowiadające im sloty w wersji S3: nie powiodło się dla %s"
 
-# methods/R/oldClass.R: 207
-# stop(gettextf("explicit coercion of old-style class (%s) is not defined", paste(class(from), collapse = ", ")), domain = NA)
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "nie zdefiniowano jawnego przekształcenia klasy starego stylu (%s)"
 
-# methods/R/oldClass.R: 211
-# stop(gettextf("explicit replacement not defined for as(x, \"%s\") <- value for old-style class %s",
-#                   to, dQuote(class(from)[1L])),
-#          domain = NA)
 msgid ""
 "explicit replacement not defined for as(x, \"%s\") <- value for old-style "
 "class %s"
@@ -2506,8 +1401,6 @@ msgstr ""
 "nie zdefiniowano jawnej zamiany dla 'as(x, \"%s\") <- value' dla klasy "
 "starego stylu %s"
 
-# methods/R/oldClass.R: 222
-# stop(gettextf("argument 'Classes' must be a vector of two classes; got an argument of length %d", length(Classes)), domain = NA)
 msgid ""
 "argument 'Classes' must be a vector of two classes; got an argument of "
 "length %d"
@@ -2515,9 +1408,6 @@ msgstr ""
 "argument 'Classes' musi być wektorem dwóch klas; otrzymano argument o "
 "długości %d"
 
-# methods/R/oldClass.R: 226
-# warning(gettextf("inconsistent old-style class information for %s (maybe mixing old and new classes?)",
-#                                  dQuote(cl)), domain = NA)
 msgid ""
 "inconsistent old-style class information for %s (maybe mixing old and new "
 "classes?)"
@@ -2525,11 +1415,6 @@ msgstr ""
 "niespójna informacja o starym stylu klasy dla %s (być może mieszanie starych "
 "oraz nowych klas?)"
 
-# methods/R/oldClass.R: 252
-# stop(gettextf("'S3Class' only defined for extensions of %s or classes with a data part:  not true of class %s",
-#                               dQuote("oldClass"),
-#                               dQuote(class(object))),
-#                      domain = NA)
 msgid ""
 "'S3Class' only defined for extensions of %s or classes with a data part:  "
 "not true of class %s"
@@ -2537,10 +1422,6 @@ msgstr ""
 "'S3Class' zdefiniowana tylko dla rozszerzeń %s lub klas z częściami danych: "
 "nie jest to prawda dla klasy %s"
 
-# methods/R/oldClass.R: 282
-# stop(gettextf("'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true of class %s",
-#                              dQuote(class(object))),
-#                     domain = NA)
 msgid ""
 "'S3Class' can only assign to S4 objects that extend \"oldClass\"; not true "
 "of class %s"
@@ -2548,39 +1429,19 @@ msgstr ""
 "'S3Class' może być przypisana do obiektów S4, które rozszerzają \"oldClass"
 "\"; nie jest to prawda dla klasy %s"
 
-# methods/R/packageName.R: 68
-# warning(gettextf("Created a package name, %s, when none found",
-#                          sQuote(pkg)),
-#                 domain = NA)
 msgid "Created a package name, %s, when none found"
 msgstr "Utworzono nazwę pakietu, %s, gdy nie znaleziono żadnej"
 
-# methods/R/promptClass.R: 95
-# stop(gettextf("no definition of class %s found",
-#                           dQuote(clName)), domain = NA)
 msgid "no definition of class %s found"
 msgstr "nie znaleziono definicji klasy %s"
 
-# methods/R/promptClass.R: 100
-# warning(gettextf("multiple definitions of %s found; using the one on %s",
-#                                  dQuote(clName), whereClass), domain = NA)
 msgid "multiple definitions of %s found; using the one on %s"
 msgstr "znaleziono wielokrotne definicje %s; używanie jednej z %s"
 
-# methods/R/refClass.R: 41
-# stop(gettextf("%s is not a valid field or method name for reference class %s",
-#                           sQuote(field),
-#                           dQuote(thisClass@className)),
-#                  domain = NA)
 msgid "%s is not a valid field or method name for reference class %s"
 msgstr ""
 "%s nie jest poprawnym polem lub nazwą metody dla klasy referencyjnej %s"
 
-# methods/R/refClass.R: 71
-# stop(gettextf("a call to superClass() is in the method %s but there is no superclass definition of this method for class %s",
-#                           sQuote(me),
-#                           dQuote(thisClass@className)),
-#                  domain = NA)
 msgid ""
 "a call to superClass() is in the method %s but there is no superclass "
 "definition of this method for class %s"
@@ -2588,45 +1449,16 @@ msgstr ""
 "wywołanie 'superClass()' jest w metodzie %s, ale brak tam definicji "
 "superklasy tej metody dla klasy %s"
 
-# methods/R/refClass.R: 114
-# warning(gettextf("methods declared in usingMethods() but not found: %s",
-#                 paste0(declared[! declared %in% allMethods], collapse = ", ")))
 msgid "methods declared in usingMethods() but not found: %s"
 msgstr ""
 "metody zostały zadeklarowanie w 'usingMethods() ', ale nie znaleziono: %s"
 
-# methods/R/refClass.R: 129
-# stop(gettextf("%s is not a reference class",
-#                       dQuote(Class)),
-#              domain = NA)
-# methods/R/refClass.R: 1260
-# stop(gettextf("%s is not a reference class",
-#              dQuote(def@className)))
 msgid "%s is not a reference class"
 msgstr "%s nie jest klasą referencyjną"
 
-# methods/R/refClass.R: 139
-# stop(gettextf("%s is not a field in class %s",
-#                       sQuote(field),
-#                       dQuote(thisClass@className)),
-#              domain = NA)
-# methods/R/refClass.R: 628
-# stop(gettextf("%s is not a field in class %s",
-#                           sQuote(what),
-#                           dQuote(def@className)),
-#                  domain = NA)
-# methods/R/refClass.R: 1200
-# stop(gettextf("%s is not a field in class %s",
-#                           sQuote(what),
-#                           dQuote(className)),
-#                  domain = NA)
 msgid "%s is not a field in class %s"
 msgstr "%s nie jest polem w klasie %s"
 
-# methods/R/refClass.R: 213
-# warning(gettextf("unnamed arguments to $new() must be objects from a reference class; got an object of class %s",
-#                                  dQuote(class(super))),
-#                         domain = NA)
 msgid ""
 "unnamed arguments to $new() must be objects from a reference class; got an "
 "object of class %s"
@@ -2634,49 +1466,23 @@ msgstr ""
 "nienazwane argumenty przekazane do '$new()' muszą być obiektami z klasy "
 "referencyjnej; otrzymano obiekt klasy %s"
 
-# methods/R/refClass.R: 247
-# stop(gettextf("%s is not a valid field or method name for this class",
-#                       sQuote(what)),
-#              domain = NA)
 msgid "%s is not a valid field or method name for this class"
 msgstr "%s nie jest poprawnym polem lub nazwą metody dla tej klasy"
 
-# methods/R/refClass.R: 282
-# stop(gettextf("the class of field %s in the object is not compatible with the desired class %s in the target",
-#                                        sQuote(field),
-#                                        dQuote(fieldClasses[[field]])),
-#                               domain = NA)
-# methods/R/refClass.R: 319
-# stop(gettextf("the class of field %s in the object is not compatible with the desired class %s in the target",
-#                                        sQuote(field),
-#                                        dQuote(fieldClasses[[field]])),
-#                               domain = NA)
 msgid ""
 "the class of field %s in the object is not compatible with the desired class "
 "%s in the target"
 msgstr "klasa pola %s w obiekcie nie jest zgodna z pożądaną klasą %s w celu"
 
-# methods/R/refClass.R: 293
-# stop(gettextf("%s is not a defined class in this environment",
-#                                dQuote(Class)),
-#                       domain = NA)
 msgid "%s is not a defined class in this environment"
 msgstr " %s nie jest zdefiniowaną klasą w tym środowisku"
 
-# methods/R/refClass.R: 297
-# stop("invalid 'Class' argument:  should be a single string")
 msgid "invalid 'Class' argument:  should be a single string"
 msgstr "niepoprawny argument 'Class': powinien być pojedycznym łańcuchem"
 
-# methods/R/refClass.R: 328
-# stop(gettextf("%s is not one of the reference super classes for this object",
-#                                dQuote(Class)),
-#                       domain = NA)
 msgid "%s is not one of the reference super classes for this object"
 msgstr "Klasa %s nie jest jedną z referencyjnych superklas dla tego obiektu"
 
-# methods/R/refClass.R: 332
-# stop("direct calls to callSuper() are invalid:  should only be called from another method")
 msgid ""
 "direct calls to callSuper() are invalid:  should only be called from another "
 "method"
@@ -2684,18 +1490,9 @@ msgstr ""
 "bezpośrednie wywołania 'callSuper()' są niepoprawne:  powinna być wywoływana "
 "tylko z innej metody"
 
-# methods/R/refClass.R: 358
-# stop(gettextf("%s is not a field in this class",
-#                                sQuote(name)),
-#                       domain = NA)
 msgid "%s is not a field in this class"
 msgstr "%s nie jest polem w tej klasie"
 
-# methods/R/refClass.R: 519
-# stop(gettextf("the definition of class %s in package %s is locked, methods may not be redefined",
-#                       dQuote(def@className),
-#                       sQuote(def@package)),
-#              domain = NA)
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
 "redefined"
@@ -2703,8 +1500,6 @@ msgstr ""
 "definicja klasy %s w pakiecie %s jest zablokowana, metody nie mogą zostać "
 "przedefiniowane"
 
-# methods/R/refClass.R: 529
-# stop("arguments to methods() must be named, or one named list")
 msgid "arguments to methods() must be named, or one named list"
 msgstr ""
 "argumenty przekazane do 'methods()' muszą być nazwane lub być jedną nazwaną "
@@ -2717,16 +1512,6 @@ msgstr ""
 "temat %s nie jest nazwą metody w klasie %s\n"
 "Definicja klasy przedstawia się następująco"
 
-# methods/R/refClass.R: 614
-# stop(gettextf("the definition of class %s in package %s is locked so fields may not be modified",
-#                       dQuote(def@className),
-#                       sQuote(def@package)),
-#              domain = NA)
-# methods/R/refClass.R: 1186
-# stop(gettextf("the definition of class %s in package %s is locked so fields may not be modified",
-#                       dQuote(def@className),
-#                       sQuote(def@package)),
-#              domain = NA)
 msgid ""
 "the definition of class %s in package %s is locked so fields may not be "
 "modified"
@@ -2734,12 +1519,6 @@ msgstr ""
 "definicja klasy %s w pakiecie %s jest zablokowana, pola nie mogą zostać "
 "zmodyfikowane"
 
-# methods/R/refClass.R: 693
-# stop(gettextf("the overriding class (\"%s\") of field %s is not a subclass of the existing field definition (\"%s\")",
-#                               value[[field]],
-#                               sQuote(field),
-#                               fieldList[[field]]),
-#                      domain = NA)
 msgid ""
 "the overriding class (\"%s\") of field %s is not a subclass of the existing "
 "field definition (\"%s\")"
@@ -2747,9 +1526,6 @@ msgstr ""
 "nadrzędna 'class(\"%s\")' pola %s nie jest podklasą istniejącej definicji "
 "pola (\"%s\")"
 
-# methods/R/refClass.R: 752
-# stop(gettextf("invalid assignment for reference class field %s, should be from class %s or a subclass (was class %s)",
-#                        sQuote(fieldName), dQuote(fieldClass), dQuote(class(value))), call. = FALSE)
 msgid ""
 "invalid assignment for reference class field %s, should be from class %s or "
 "a subclass (was class %s)"
@@ -2757,16 +1533,9 @@ msgstr ""
 "niepoprawne przypisanie dla pola %s klasy referencyjnej, powinien być z "
 "klasy %s lub podklasy (była klasa %s)"
 
-# methods/R/refClass.R: 757
-# stop(gettextf("invalid replacement: reference class field %s is read-only", sQuote(fieldName)),
-#                  call. = FALSE)
 msgid "invalid replacement: reference class field %s is read-only"
 msgstr "niepoprawna zamiana: pole %s klasy referencyjnej jest tylko do odczytu"
 
-# methods/R/refClass.R: 777
-# stop(gettextf("the 'contains' argument should be the names of superclasses:  got an element of class %s",
-#                                                        dQuote(class(what))),
-#                                               domain = NA)
 msgid ""
 "the 'contains' argument should be the names of superclasses:  got an element "
 "of class %s"
@@ -2774,18 +1543,9 @@ msgstr ""
 "argument 'contains' powinien być nazwami superklas: otrzymano element klasy "
 "%s"
 
-# methods/R/refClass.R: 783
-# stop(gettextf("no definition found for inherited class: %s",
-#                           paste0('"',contains[missingDefs], '"', collapse = ", ")),
-#                  domain = NA)
 msgid "no definition found for inherited class: %s"
 msgstr "nie znaleziono definicji dla dziedziczonej klasy: %s"
 
-# methods/R/refClass.R: 819
-# stop(gettextf("a single class name is needed for field %s, got a character vector of length %d",
-#                               sQuote(thisName),
-#                               length(thisField)),
-#                      domain = NA)
 msgid ""
 "a single class name is needed for field %s, got a character vector of length "
 "%d"
@@ -2793,19 +1553,9 @@ msgstr ""
 "potrzeba pojedynczej nazwy klasy dla pola %s, otrzymano wektor tekstowy o "
 "długości %d"
 
-# methods/R/refClass.R: 824
-# stop(gettextf("class %s for field %s is not defined",
-#                               dQuote(thisField),
-#                               sQuote(thisName)),
-#                      domain = NA)
 msgid "class %s for field %s is not defined"
 msgstr "klasa %s dla pola %s nie jest zdefiniowana"
 
-# methods/R/refClass.R: 843
-# stop(gettextf("field %s was supplied as an object of class %s; must be a class name or a binding function",
-#                           sQuote(thisName),
-#                           dQuote(class(thisField))),
-#                  domain = NA)
 msgid ""
 "field %s was supplied as an object of class %s; must be a class name or a "
 "binding function"
@@ -2813,11 +1563,6 @@ msgstr ""
 "pole %s zostało dostarczone jako obiekt klasy %s; musi być nazwa klasy lub "
 "funkcja wiążąca"
 
-# methods/R/refClass.R: 904
-# message(gettextf("code for methods in class %s was not checked for suspicious field assignments (recommended package %s not available?)",
-#                          dQuote(Class),
-#                          sQuote("codetools"))
-#                 , domain = NA)
 msgid ""
 "code for methods in class %s was not checked for suspicious field "
 "assignments (recommended package %s not available?)"
@@ -2825,17 +1570,9 @@ msgstr ""
 "kod dla metod w klasie %s nie był sprawdzony pod kątem podejrzanych "
 "przypisań pól (rekomendowany pakiet %s nie jest dostępny?)"
 
-# methods/R/refClass.R: 971
-# stop(gettextf("class %s is defined but is not a reference class",
-#                           dQuote(Class)),
-#                  domain = NA)
 msgid "class %s is defined but is not a reference class"
 msgstr "klasa %s jest zdefiniowana, ale nie jest referencyjną klasą"
 
-# methods/R/refClass.R: 976
-# stop(gettextf("class must be a reference class representation or a character string; got an object of class %s",
-#                       dQuote(class(Class))),
-#              domain = NA)
 msgid ""
 "class must be a reference class representation or a character string; got an "
 "object of class %s"
@@ -2843,19 +1580,9 @@ msgstr ""
 "klasa musi być referencyjną reprezentacją klasy lub łańcuchem tekstowym; "
 "otrzymano obiekt klasy %s"
 
-# methods/R/refClass.R: 994
-# stop(gettextf("not a reference class: %s", ClassDef@name),
-#              domain = NA)
-# methods/R/refClass.R: 1003
-# stop(gettextf("not a reference class: %s", ClassDef@name),
-#              domain = NA)
 msgid "not a reference class: %s"
 msgstr "to nie jest referencja klasy: %s"
 
-# methods/R/refClass.R: 1131
-# warning(gettextf("local assignment to field name will not change the field:\n    %s\n Did you mean to use \"<<-\"? ( in method %s for class %s)",
-#                 paste(unlist(assigned$locals)[localsAreFields], collapse="; "), methodName, className),
-#                 domain = NA)
 msgid ""
 "local assignment to field name will not change the field:\n"
 "    %s\n"
@@ -2865,10 +1592,6 @@ msgstr ""
 "    %s\n"
 " Czy chciałeś użyć \"<<-\"? ( w metodzie %s klasy %s)"
 
-# methods/R/refClass.R: 1139
-# warning(gettextf("non-local assignment to non-field names (possibly misspelled?)\n    %s\n( in method %s for class %s)",
-#                 paste(unlist(assigned$globals)[globalsNotFields], collapse="; "), methodName, className),
-#                 domain = NA)
 msgid ""
 "non-local assignment to non-field names (possibly misspelled?)\n"
 "    %s\n"
@@ -2878,10 +1601,6 @@ msgstr ""
 "    %s\n"
 "( w metodzie %s klasy %s)"
 
-# methods/R/refClass.R: 1144
-# stop(gettextf("non-local assignment to method names is not allowed\n    %s\n( in method %s for class %s)",
-#                 paste(unlist(assigned$globals)[globalsInMethods], collapse="; "), methodName, className),
-#                 domain = NA)
 msgid ""
 "non-local assignment to method names is not allowed\n"
 "    %s\n"
@@ -2891,28 +1610,16 @@ msgstr ""
 "    %s\n"
 "(w metodzie %s dla klasy %s)"
 
-# methods/R/refClass.R: 1184
-# stop("arguments must all be character string names of fields")
 msgid "arguments must all be character string names of fields"
 msgstr "wszystkie argumenty muszą być łańcuchami tekstowymi nazw pól"
 
-# methods/R/refClass.R: 1194
-# warning(gettextf("field %s is already locked", sQuote(what)),
-#                     domain = NA)
 msgid "field %s is already locked"
 msgstr "pole %s jest już zablokowane"
 
-# methods/R/refClass.R: 1209
-# stop(gettextf("field %s of class %s has a non-default binding and cannot be locked",
-#                               sQuote(what),
-#                               dQuote(className)),
-#                      domain = NA)
 msgid "field %s of class %s has a non-default binding and cannot be locked"
 msgstr ""
 "pole %s klasy %s posiada niedomyślne powiązanie i nie może zostać zablokowane"
 
-# methods/R/refClass.R: 1278
-# stop(gettextf("Class %s is not a subclass of %s; functional semantics not defined for this class", dQuote(class(object)), dQuote("envRefClass")))
 msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
 "class"
@@ -2920,14 +1627,9 @@ msgstr ""
 "Klasa %s nie jest podklasą %s; semantyka funkcjonalna nie jest zdefiniowana "
 "dla tej klasy"
 
-# methods/R/refClass.R: 1298
-# stop("Could not find local object in supplied environment")
 msgid "Could not find local object in supplied environment"
 msgstr "Nie można znaleźć lokalnego obiektu w dostarczonym środowisku"
 
-# methods/R/show.R: 83
-# stop(gettextf("invalid 'ignore' argument; should be a class definition or a character vector, got an object of class %s", dQuote(class(ignore))),
-#            domain = NA)
 msgid ""
 "invalid 'ignore' argument; should be a class definition or a character "
 "vector, got an object of class %s"
@@ -2935,14 +1637,9 @@ msgstr ""
 "niepoprawny argument 'ignore'; powinien być definicją klasy lub łańcuchem "
 "tekstowym; otrzymano obiekt klasy %s"
 
-# methods/R/show.R: 153
-# message(gettextf("An object of class %s", dQuote(class(object))),
-#                 domain = NA)
 msgid "An object of class %s"
 msgstr "Obiekt klasy %s"
 
-# methods/R/show.R: 181
-# stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s", classLabel(class(Class))), domain = NA)
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "
 "object of class %s"
@@ -2950,66 +1647,35 @@ msgstr ""
 "niepoprawne wywołanie przekazane do 'classLabel': oczekiwano nazwy lub "
 "definicji klasy, otrzymano obiekt klasy %s"
 
-# methods/R/trace.R: 65
-# stop("argument 'signature' is not meaningful for tracing reference methods")
 msgid "argument 'signature' is not meaningful for tracing reference methods"
 msgstr "argument 'signature' nie ma sensu dla śledzenia metod referencyjnych"
 
-# methods/R/trace.R: 83
-# stop(gettextf("%s is not a method for reference class %s",
-#                           sQuote(as.character(if(is.symbol(thisName)) thisName else what)),
-#                           dQuote(class(where))),
-#                  domain = NA)
 msgid "%s is not a method for reference class %s"
 msgstr "%s nie jest metodą dla klasy referencyjnej %s"
 
-# methods/R/trace.R: 119
-# stop("argument 'what' should be the name of a function")
 msgid "argument 'what' should be the name of a function"
 msgstr "argument 'what' musi być nazwą funkcji"
 
-# methods/R/trace.R: 138
-# stop(gettextf("tracing the internal function %s is not allowed",
-#                       sQuote(what)))
 msgid "tracing the internal function %s is not allowed"
 msgstr "śledzenie wewnętrznej funkcji %s nie jest dozwolone"
 
-# methods/R/trace.R: 149
-# stop(gettextf("no function definition for %s found",
-#                           sQuote(what)),
-#                  domain = NA)
 msgid "no function definition for %s found"
 msgstr "nie znaleziono definicji funkcji dla %s"
 
-# methods/R/trace.R: 165
-# warning(gettextf("cannot untrace method for %s; no method defined for this signature: %s",
-#                              sQuote(what),
-#                              paste(signature, collapse = ", ")),
-#                     domain = NA)
 msgid "cannot untrace method for %s; no method defined for this signature: %s"
 msgstr ""
 "nie można zwolnić śledzenia metody dla %s; nie zdefiniowano metody dla tej "
 "sygnatury: %s"
 
-# methods/R/trace.R: 194
-# warning(gettextf("the method for %s for this signature was not being traced",
-#                                  sQuote(what)),
-#                         domain = NA)
 msgid "the method for %s for this signature was not being traced"
 msgstr "metoda dla %s dla tej sygnatury nie była śledzona"
 
-# methods/R/trace.R: 311
-# warning("making a traced version of a primitive; arguments will be treated as '...'")
 msgid ""
 "making a traced version of a primitive; arguments will be treated as '...'"
 msgstr ""
 "tworzenie śledzonej wersji funkcji prymitywnej; argumenty będą traktowane "
 "jak  '...'"
 
-# methods/R/trace.R: 338
-# stop(gettextf("the editing in trace() can only change the body of the function; got an object of class %s",
-#                           dQuote(class(def2))),
-#                  domain = NA)
 msgid ""
 "the editing in trace() can only change the body of the function; got an "
 "object of class %s"
@@ -3017,8 +1683,6 @@ msgstr ""
 "edytowanie w 'trace()' może zmienić jedynie ciało funkcji; otrzymano obiekt "
 "klasy %s"
 
-# methods/R/trace.R: 342
-# stop("the editing in trace() can only change the body of the function, not the arguments or defaults")
 msgid ""
 "the editing in trace() can only change the body of the function, not the "
 "arguments or defaults"
@@ -3026,45 +1690,27 @@ msgstr ""
 "edytowanie w 'trace()' może zmienić jedynie ciało funkcji, a nie argumenty "
 "lub wartości domyślne"
 
-# methods/R/trace.R: 350
-# stop("cannot use 'at' argument without a trace expression")
 msgid "cannot use 'at' argument without a trace expression"
 msgstr "nie można użyć argumentu 'at' bez wyrażenia śledzenia"
 
-# methods/R/trace.R: 352
-# stop("cannot use 'at' argument unless the function body has the form '{ ... }'")
 msgid ""
 "cannot use 'at' argument unless the function body has the form '{ ... }'"
 msgstr "nie można użyć argumentu 'at' o ile ciało funkcji ma formę '{ ... }'"
 
-# methods/R/trace.R: 485
-# gettextf("assigning over the binding of symbol %s in environment/package %s",
-#                      sQuote(what), sQuote(pname))
 msgid "assigning over the binding of symbol %s in environment/package %s"
 msgstr "przypisywanie poprzez powiązanie symbolu %s w środowisku/pakiecie %s"
 
-# methods/R/trace.R: 514
-# warning(gettextf("setting a method over the binding of symbol %s in environment/package %s",
-#                          sQuote(what),
-#                          sQuote(getPackageName(where))),
-#                 domain = NA)
 msgid ""
 "setting a method over the binding of symbol %s in environment/package %s"
 msgstr ""
 "ustawianie metody poprzez powiązanie symbolu %s w środowisku/pakiecie %s"
 
-# methods/R/trace.R: 572
-# message(gettextf("Environment of class %s is locked; using global environment for new class",
-#                      dQuote(className)),
-#             domain = NA)
 msgid ""
 "Environment of class %s is locked; using global environment for new class"
 msgstr ""
 "Środowisko klasy %s jest zablokowane; używanie globalnego środowiska dla "
 "nowej klasy"
 
-# methods/R/trace.R: 624
-# stop("none of the objects in the source code could be found:  need to attach or specify the package")
 msgid ""
 "none of the objects in the source code could be found:  need to attach or "
 "specify the package"
@@ -3072,29 +1718,15 @@ msgstr ""
 "żaden z obiektów w kodzie źródłowym nie mógł zostać znaleziony:  potrzeba "
 "dołączyć lub określić pakiet"
 
-# methods/R/trace.R: 631
-# warning(gettextf("objects found in multiple packages: using %s and ignoring %s",
-#                              sQuote(names(possible[[1L]])),
-#                              paste(sQuote(names(possible[-1L])),
-#                                    collapse = ", ")),
-#                     domain = NA)
 msgid "objects found in multiple packages: using %s and ignoring %s"
 msgstr ""
 "obiekty zostały znalezione w wielu pakietach: używanie %s oraz ignorowanie %s"
 
-# methods/R/trace.R: 656
-# stop(gettextf("package %s is not attached and no namespace found for it",
-#                           sQuote(package)),
-#                  domain = NA)
 msgid "package %s is not attached and no namespace found for it"
 msgstr ""
 "pakiet %s nie jest dołączony przez co nie znaleziono dla niego przestrzeni "
 "nazw"
 
-# methods/R/trace.R: 669
-# stop(gettextf("invalid 'source' argument: expected file names or a connection but got an object of class %s",
-#                       dQuote(class(source)[[1L]])),
-#              domain = NA)
 msgid ""
 "invalid 'source' argument: expected file names or a connection but got an "
 "object of class %s"
@@ -3102,34 +1734,16 @@ msgstr ""
 "niepoprawny argument 'source': oczekiwano nazw plików lub połączenia, a "
 "otrzymano obiekt klasy %s"
 
-# methods/R/trace.R: 717
-# stop(gettextf(
-#                      "cannot find an environment corresponding to package name \'%s\"",
-#                      package), domain = NA)
 msgid "cannot find an environment corresponding to package name '%s\""
 msgstr "nie można znaleźć środowiska odpowiadającego nazwie pakietu '%s'"
 
-# methods/R/trace.R: 733
-# warning(gettextf("supplied package, %s, differs from package inferred from source, %s",
-#                          sQuote(package), sQuote(envPackage)),
-#                 domain = NA)
 msgid "supplied package, %s, differs from package inferred from source, %s"
 msgstr ""
 "dostarczony pakiet, %s, różni się od pakietu wywnioskowanego ze źródła, %s"
 
-# methods/R/trace.R: 744
-# warning(gettextf("cannot insert these (not found in source): %s",
-#                     paste('"',functions[notThere],'"',
-#                           sep = "", collapse = ", ")),
-#                     domain = NA)
 msgid "cannot insert these (not found in source): %s"
 msgstr "nie można ich wstawić (nie znaleziono w źródle): %s"
 
-# methods/R/trace.R: 756
-# warning(gettextf("cannot insert methods for these functions (methods table not found in source): %s",
-#                     paste('"',methods[notThere],'"',
-#                           sep = "", collapse = ", ")),
-#                     domain = NA)
 msgid ""
 "cannot insert methods for these functions (methods table not found in "
 "source): %s"
@@ -3137,28 +1751,16 @@ msgstr ""
 "nie można wstawić metod dla tych funkcji (tablica metod nie została "
 "znaleziona w źródle): %s"
 
-# methods/R/trace.R: 814
-# message(gettextf("Non-function objects are not currently inserted (not traceable): %s",
-#                          paste(notTraceable, collapse = ", ")), domain = NA)
 msgid "Non-function objects are not currently inserted (not traceable): %s"
 msgstr ""
 "niefunkcjonalne obiekty nie są aktualnie wstawione (nie są śledzone): %s"
 
-# methods/R/trace.R: 817
-# message(gettextf("New functions are not currently inserted (not untraceable): %s",
-#                          paste(newObjects, collapse = ", ")), domain = NA)
 msgid "New functions are not currently inserted (not untraceable): %s"
 msgstr "nowe funkcje nie są aktualnie wstawione (nie są śledzone): %s"
 
-# methods/R/trace.R: 820
-# message(gettextf("Modified functions inserted through trace(): %s",
-#                          paste(objectsDone, collapse = ", ")), domain = NA)
 msgid "Modified functions inserted through trace(): %s"
 msgstr "Zmodyfikowane funkcje wstawione poprzez 'trace()': %s"
 
-# methods/R/trace.R: 845
-# message(gettextf("%s() is not a generic function in the target environment -- methods will not be inserted",
-#                          f), domain = NA)
 msgid ""
 "%s() is not a generic function in the target environment -- methods will not "
 "be inserted"
@@ -3166,78 +1768,38 @@ msgstr ""
 "'%s()' nie jest ogólną funkcją w docelowym środowisku -- metody nie zostaną "
 "wstawione"
 
-# methods/R/trace.R: 866
-# message(gettextf("Methods inserted for function %s(): %s",
-#                   f, paste(methodsInserted, collapse =", ")),
-#                   domain = NA)
 msgid "Methods inserted for function %s(): %s"
 msgstr "Metody wstawione dla funkcji '%s()': %s"
 
-# methods/R/trace.R: 881
-# stop(gettextf("no definition for object %s found in tracing environment",
-#                           sQuote(what), source),
-#                  domain = NA)
 msgid "no definition for object %s found in tracing environment"
 msgstr "nie znaleziono definicji dla obiektu %s w śledzonym środowisku"
 
-# methods/R/trace.R: 895
-# warning(gettextf("multiple generics match pattern, using table %s", table)
-#                 , domain = NA)
 msgid "multiple generics match pattern, using table %s"
 msgstr "wielokrotne dopasowania wzorca funkcji ogólnej, używanie tablicy %s"
 
-# methods/R/trace.R: 900
-# stop(gettextf("does not seem to be a method table for generic %s in tracing environment",
-#                           sQuote(what)),
-#                  domain = NA)
 msgid ""
 "does not seem to be a method table for generic %s in tracing environment"
 msgstr ""
 "nie wygląda na tablicę metod dla funkcji ogólnej %s w śledzonym środowisku"
 
-# methods/R/trace.R: 906
-# stop(gettextf("no method in methods table for %s for signature %s",
-#                         sQuote(what),
-#                         sQuote(signature)),
-#                domain = NA)
 msgid "no method in methods table for %s for signature %s"
 msgstr "brak metod w tablicy metod dla %s dla sygnatury %s"
 
-# methods/R/zzz.R: 109
-# message("unloading 'methods' package ...")
 msgid "unloading 'methods' package ..."
 msgstr "zwalnianie pakietu 'methods'..."
 
-# methods/R/zzz.R: 125
-# warning("apparently bad method or class metadata in saved environment;\n",
-#                   "move the file or remove the class/method")
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr "najwyraźniej złe metadane metody lub klasy w zapisanym środowisku;"
 
-# methods/R/zzz.R: 125
-# warning("apparently bad method or class metadata in saved environment;\n",
-#                   "move the file or remove the class/method")
 msgid "move the file or remove the class/method"
 msgstr "przenieś plik lub usuń klasę/metodę"
 
-# methods/R/MethodsList.R: 514
-# sprintf(ngettext(length(unknown),
-# 				 "no definition for class %s",
-# 				 "no definition for classes %s"),
-# 			paste(dQuote(unknown), collapse = ", "))
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "brak definicji dla klasy %s"
 msgstr[1] "brak definicji dla klas %s"
 msgstr[2] "brak definicji dla klas %s"
 
-# methods/R/MethodsList.R: 556
-# stop(sprintf(ngettext(sum(is.na(which)),
-#                               "in the method signature for function %s invalid argument name in the signature: %s",
-#                               "in the method signature for function %s invalid argument names in the signature: %s"),
-#                      sQuote(fun@generic),
-#                      paste(snames[is.na(which)], collapse = ", ")),
-#              domain = NA)
 msgid ""
 "in the method signature for function %s invalid argument name in the "
 "signature: %s"
@@ -3262,44 +1824,18 @@ msgstr[1] ""
 msgstr[2] ""
 "Odnotowano %d niejednoznacznych wyborów z możliwych %d dla funkcji %s\n"
 
-# methods/R/RClassUtils.R: 818
-# stop(sprintf(ngettext(sum(is.na(match(pnames, slots))),
-#                                     "named elements of prototype do not correspond to slot name: %s",
-#                                     "named elements of prototype do not correspond to slot names: %s"),
-#                            paste(.dQ(pnames[is.na(match(pnames, slots))]),
-#                                  collapse =", ")),
-#                    domain = NA)
 msgid "named elements of prototype do not correspond to slot name: %s"
 msgid_plural "named elements of prototype do not correspond to slot names: %s"
 msgstr[0] "nazwane elementy prototypu nie odnoszą się do nazwy gniazda: %s"
 msgstr[1] "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
 msgstr[2] "nazwane elementy prototypu nie odnoszą się do nazw gniazd: %s"
 
-# methods/R/RMethodUtils.R: 85
-# stop(sprintf(ngettext(sum(is.na(match(signature, args))),
-#                               "non-argument found in the signature: %s",
-#                               "non-arguments found in the signature: %s"),
-#                      paste(signature[is.na(match(signature, args))], collapse = ", ")),
-#              domain = NA)
-# methods/R/RMethodUtils.R: 164
-# stop(sprintf(ngettext(sum(is.na(match(signature, args))),
-#                               "non-argument found in the signature: %s",
-#                               "non-arguments found in the signature: %s"),
-#                      paste(signature[is.na(match(signature, args))], collapse = ", ")),
-#              domain = NA)
 msgid "non-argument found in the signature: %s"
 msgid_plural "non-arguments found in the signature: %s"
 msgstr[0] "nie znaleziono argumentu w sygnaturze: %s"
 msgstr[1] "nie znaleziono argumentów w sygnaturze: %s"
 msgstr[2] "nie znaleziono argumentów w sygnaturze: %s"
 
-# methods/R/RMethodUtils.R: 106
-# stop(sprintf(ngettext(length(fdef),
-#                                   "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)",
-#                                   "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"),
-#                           paste(formalArgs(fdef), collapse = ", "),
-#                           paste(formalArgs(fdefault), collapse = ", ")),
-#                  domain = NA)
 msgid ""
 "the formal argument of the generic function for %s (%s) differs from that of "
 "the non-generic to be used as the default (%s)"
@@ -3316,40 +1852,18 @@ msgstr[2] ""
 "formalne argumenty ogólnej funkcji dla %s (%s) różnią się od tych dla "
 "nieogólnej, która ma być użyta jako domyślna (%s)"
 
-# methods/R/SClasses.R: 143
-# stop(sprintf(ngettext(length(dslots),
-#                               "duplicated slot name: %s",
-#                               "duplicated slot names: %s"),
-#                      paste(sQuote(dslots), collapse="")),
-#              domain = NA)
 msgid "duplicated slot name: %s"
 msgid_plural "duplicated slot names: %s"
 msgstr[0] "powtórzona nazwa gniazda: %s"
 msgstr[1] "powtórzone nazwy gniazd: %s"
 msgstr[2] "powtórzone nazwy gniazd: %s"
 
-# methods/R/SClasses.R: 689
-# stop(sprintf(ngettext(sum(is.na(which)),
-#                                       "invalid name for slot of class %s: %s",
-#                                       "invalid names for slots of class %s: %s"),
-#                               dQuote(Class),
-#                               paste(snames[is.na(which)], collapse=", ")),
-#                      domain = NA)
 msgid "invalid name for slot of class %s: %s"
 msgid_plural "invalid names for slots of class %s: %s"
 msgstr[0] "niepoprawna nazwa gniazda klasy %s: %s"
 msgstr[1] "niepoprawne nazwy gniazd klasy %s: %s"
 msgstr[2] "niepoprawne nazwy gniazd klasy %s: %s"
 
-# methods/R/SClasses.R: 777
-# warning(sprintf(ngettext(length(pkgs),
-#                                          "multiple definition of class %s visible (%s); using the definition\n   in package %s for %s",
-#                                          "multiple definitions of class %s visible (%s); using the definition\n   in package %s for %s"),
-#                                 dQuote(Class),
-#                                 paste(sQuote(pkgs), collapse = ", "),
-#                                 sQuote(pkgs[[1L]]),
-#                                 unique),
-#                         domain = NA)
 msgid ""
 "multiple definition of class %s visible (%s); using the definition\n"
 "   in package %s for %s"
@@ -3366,13 +1880,6 @@ msgstr[2] ""
 "wielokrotne definicje klasy %s są widoczne (%s); używanie definicji\n"
 "   w pakiecie %s dla %s"
 
-# methods/R/is.R: 235
-# sprintf(ngettext(sum(is.na(match(n2, n1))),
-#                                           "class %s is missing slot from class %s (%s), and no coerce method was supplied",
-#                                           "class %s is missing slots from class %s (%s), and no coerce method was supplied"),
-#                                  dQuote(class1),
-#                                  dQuote(class2),
-#                                  paste(n2[is.na(match(n2, n1))], collapse = ", "))
 msgid ""
 "class %s is missing slot from class %s (%s), and no coerce method was "
 "supplied"
@@ -3389,13 +1896,6 @@ msgstr[2] ""
 "klasie %s brakuje gniazd z klasy %s (%s), przez co nie dostarczono żadnej "
 "metody przekształcenia"
 
-# methods/R/is.R: 247
-# sprintf(ngettext(length(bad),
-#                                           "slot in class %s must extend corresponding slot in class %s: fails for %s",
-#                                           "slots in class %s must extend corresponding slots in class %s: fails for %s"),
-#                                  dQuote(class1),
-#                                  dQuote(class2),
-#                                  paste(bad, collapse = ", "))
 msgid ""
 "slot in class %s must extend corresponding slot in class %s: fails for %s"
 msgid_plural ""
@@ -3410,69 +1910,36 @@ msgstr[2] ""
 "gniazda w klasie %s muszą rozszerzać odpowiadające im gniazda w klasie %s: "
 "nie udało się dla %s"
 
-# methods/R/methodsTable.R: 734
-# warning(sprintf(ngettext(length(methods),
-#                                  "found %d equally good next method",
-#                                  "found %d equally good next methods"),
-#                         length(methods)),
-#                 domain = NA)
 msgid "found %d equally good next method"
 msgid_plural "found %d equally good next methods"
 msgstr[0] "znaleziono %d równie dobrą kolejną metodę"
 msgstr[1] "znaleziono %d równie dobre kolejne metody"
 msgstr[2] "znaleziono %d równie dobrych kolejnych metod"
 
-# methods/R/methodsTable.R: 888
-# sprintf(ngettext(which2,
-#                                "Selecting %d method of minimum distance",
-#                                "Selecting %d methods of minimum distance"),
-#                       which2)
 msgid "Selecting %d method of minimum distance"
 msgid_plural "Selecting %d methods of minimum distance"
 msgstr[0] "Wybieranie %d metody minimalnej odległości"
 msgstr[1] "Wybieranie %d metod minimalnej odległości"
 msgstr[2] "Wybieranie %d metod minimalnej odległości"
 
-# methods/R/methodsTable.R: 897
-# sprintf(ngettext(length(which),
-#                                       "Selecting %d non-group method",
-#                                       "Selecting %d non-group methods"),
-#                              length(which))
 msgid "Selecting %d non-group method"
 msgid_plural "Selecting %d non-group methods"
 msgstr[0] "Wybieranie %d nie-grupowej metody"
 msgstr[1] "Wybieranie %d nie-grupowych metod"
 msgstr[2] "Wybieranie %d nie-grupowych metod"
 
-# methods/R/methodsTable.R: 909
-# sprintf(ngettext(length(which),
-#                                        "Selecting %d partially exact-matching method",
-#                                        "Selecting %d partially exact-matching methods"),
-#                               length(which))
 msgid "Selecting %d partially exact-matching method"
 msgid_plural "Selecting %d partially exact-matching methods"
 msgstr[0] "Wybieranie %d w pełni pasującej metody"
 msgstr[1] "Wybieranie %d w pełni pasujących metod"
 msgstr[2] "Wybieranie %d w pełni pasujących metod"
 
-# methods/R/methodsTable.R: 920
-# sprintf(ngettext(length(candidates),
-#                           "Choosing method %s from %d ambiguous possibility",
-#                           "Choosing method %s from %d ambiguous possibilities"),
-#                  sQuote(selected), length(candidates))
 msgid "Choosing method %s from %d ambiguous possibility"
 msgid_plural "Choosing method %s from %d ambiguous possibilities"
 msgstr[0] "Wybieranie metody %s z %d niejednoznacznej możliwości"
 msgstr[1] "Wybieranie metody %s z %d niejednoznacznych możliwości"
 msgstr[2] "Wybieranie metody %s z %d niejednoznacznych możliwości"
 
-# methods/R/promptClass.R: 107
-# stop(sprintf(ngettext(length(whereClass),
-#                                           "no definition of class %s in the specified position, %s, definition on : %s",
-#                                           "no definition of class %s in the specified position, %s, definitions on : %s"),
-#                                  dQuote(clName), where,
-#                                  paste(whereClass, collapse = ", ")),
-#                          domain = NA)
 msgid ""
 "no definition of class %s in the specified position, %s, definition on : %s"
 msgid_plural ""
@@ -3480,55 +1947,3 @@ msgid_plural ""
 msgstr[0] "brak definicji klasy %s we wskazanym położeniu, %s, definicja: %s"
 msgstr[1] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
 msgstr[2] "brak definicji klasy %s we wskazanym położeniu, %s, definicje: %s"
-
-# methods/R/RMethodUtils.R: 209
-# stop(gettextf("special function %s is not permitted to have methods",
-#                           sQuote(f)),
-#                  domain = NA)
-#~ msgid "special function %s is not permitted to have methods"
-#~ msgstr "specjalna funkcja %s nie ma prawa posiadać metod"
-
-# methods/R/RMethodUtils.R: 213
-# warning(gettextf("special function %s has no known argument list; will assume '(x, ...)'",
-#                              sQuote(f)),
-#                     domain = NA)
-#~ msgid ""
-#~ "special function %s has no known argument list; will assume '(x, ...)'"
-#~ msgstr ""
-#~ "specjalna funkcja %s nie ma znanej listy argumentów; zostanie założone "
-#~ "'(x, ...)'"
-
-# methods/R/Methods.R: 1210
-# stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
-#~ msgid ""
-#~ "'callGeneric' with a primitive needs explicit arguments (no formal args "
-#~ "defined)"
-#~ msgstr ""
-#~ "'callGeneric' z prymitywną funkcją potrzebuje jawnych argumentów (nie "
-#~ "zdefiniowano formalnych argumentów)"
-
-# methods/R/MethodsList.R: 62
-# stop(gettextf("duplicate element names in 'MethodsList' at level %d: %s",
-#              level, paste("\"", unique(mnames[duplicated(mnames)]), "\"",
-#                           collapse=", ")), domain = NA)
-# methods/R/RMethodUtils.R: 1270
-# stop(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)",
-#                       msg, paste0("\"", old, "\"", collapse=", "),
-#                       paste0("\"", new, "\"", collapse=", ")),
-#              domain = NA)
-# methods/R/RMethodUtils.R: 1275
-# warning(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)",
-#                          msg, paste0("\"", old, "\"", collapse=", "),
-#                          paste0("\"", new, "\"", collapse=", ")),
-#                 domain = NA)
-# methods/R/RMethodUtils.R: 1290
-# stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s",
-# 		      msg, paste0("\"", old[is.na(match(old, names(dlist)))], "\"", collapse=", ")),
-# 	     domain = NA)
-# methods/R/methodsTable.R: 471
-# stop("invalid or unset methods table in generic function \"",
-#                fdef@generic,"\"", damain = NA)
-# methods/R/Methods.R: 1539
-# stop("only FALSE is meaningful for 'inherited', when 'where' is supplied (got ", inherited, "\"")
-#~ msgid "\""
-#~ msgstr "\""

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-24 20:06-0700\n"
+"POT-Creation-Date: 2015-03-02 10:09-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,291 +14,155 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
-# tools/src/Rmd5.c: 37
-# error(_("argument 'files' must be character"))
 #: Rmd5.c:37
 msgid "argument 'files' must be character"
 msgstr "argument 'files' musi być tekstem"
 
-# tools/src/Rmd5.c: 51
-# warning(_("md5 failed on file '%s'"), path)
 #: Rmd5.c:51
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 nie powiodło się na pliku '%s'"
 
-# tools/src/getfmts.c: 61
-# error(_("only %d arguments are allowed"), MAXNARGS)
 #: getfmts.c:61
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "tylko %d argumentów jest dozwolonych"
 
-# tools/src/getfmts.c: 66
-# error(_("'fmt' is not a character vector"))
 #: getfmts.c:66
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' nie jest wektorem tekstowym"
 
-# tools/src/getfmts.c: 69
-# error(_("'fmt' must be length 1"))
 #: getfmts.c:69
 msgid "'fmt' must be length 1"
 msgstr "'fmt' musi mieć długość 1"
 
-# tools/src/getfmts.c: 75
-# error(_("'fmt' length exceeds maximal format length %d"), MAXLINE)
 #: getfmts.c:75
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "długość 'fmt' przekracza maksymalną długość %d formatu"
 
-# tools/src/getfmts.c: 96
-# error(_("unrecognised format specification '%s'"), curFormat)
 #: getfmts.c:96
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "nierozpoznane określenie '%s' formatu"
 
-# tools/src/getfmts.c: 136
-# error(_("at most one asterisk '*' is supported in each conversion specification"))
 #: getfmts.c:136
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 "co najwyżej jedna gwiazdka '*' jest wspierana w każdym określeniu zamiany"
 
-# tools/src/gramLatex.c: 2447
-# error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
-# tools/src/gramRd.y: 1307
-# error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
-# tools/src/gramLatex.y: 685
-# error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
-# tools/src/gramRd.c: 4164
-# error(_("unable to allocate buffer for long string at line %d"), parseState.xxlineno)
-#: gramLatex.c:2499 gramRd.c:3933
+#: gramLatex.c:2376 gramRd.y:1328
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nie można przydzielić bufora dla długiego łańcucha w linii %d"
 
-# tools/src/gramLatex.c: 2684
-# error(_("invalid '%s' value"), "verbose")
-# tools/src/gramRd.y: 1795
-# error(_("invalid '%s' value"), "verbose")
-# tools/src/gramRd.y: 1801
-# error(_("invalid '%s' value"), "warningCalls")
-# tools/src/gramLatex.y: 922
-# error(_("invalid '%s' value"), "verbose")
-# tools/src/gramRd.c: 4652
-# error(_("invalid '%s' value"), "verbose")
-# tools/src/gramRd.c: 4658
-# error(_("invalid '%s' value"), "warningCalls")
-#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428
+#: gramLatex.c:2613 gramRd.y:1817 gramRd.y:1823
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawny wartość '%s'"
 
-# tools/src/gramRd.y: 302
-# warning(_("bad markup (extra space?) at %s:%d:%d"), 
-#     	    					            parseState.xxBasename, @2.first_line, @2.first_column)
-# tools/src/gramRd.y: 305
-# warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
-#     	    					            parseState.xxBasename, @2.first_line, @2.first_column)
-# tools/src/gramRd.c: 2809
-# warning(_("bad markup (extra space?) at %s:%d:%d"), 
-#     	    					            parseState.xxBasename, (yylsp[(2) - (2)]).first_line, (yylsp[(2) - (2)]).first_column)
-# tools/src/gramRd.c: 2812
-# warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
-#     	    					            parseState.xxBasename, (yylsp[(2) - (2)]).first_line, (yylsp[(2) - (2)]).first_column)
-#: gramRd.c:2591 gramRd.c:2594
+#: gramRd.y:303 gramRd.y:306
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "błędne oznakowanie (dodatkowa spacja?) w %s:%d:%d"
 
-# tools/src/gramRd.y: 541
-#  _("Macro '%s' previously defined.")
-# tools/src/gramRd.c: 3398
-#  _("Macro '%s' previously defined.")
-#: gramRd.c:3150
+#: gramRd.y:545
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Makro '%s' zostało już poprzednio zdefiniowane."
 
-# tools/src/gramRd.y: 550
-#  _("At most 4 arguments are allowed for user defined macros.")
-# tools/src/gramRd.c: 3407
-#  _("At most 4 arguments are allowed for user defined macros.")
-#: gramRd.c:3160
+#: gramRd.y:555
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
 "Co najwyżej 4 argumenty są dozwolone dla makr zdefiniowanych przez "
 "użytkownika."
 
-# tools/src/gramRd.y: 584
-# error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)))
-# tools/src/gramRd.c: 3441
-# error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)))
-#: gramRd.c:3194
+#: gramRd.y:589
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Brak makra zdefiniowanego dla '%s'"
 
-# tools/src/gramRd.y: 736
-# warning(_("newline within quoted string at %s:%d"), 
-# 		    parseState.xxBasename, parseState.xxNewlineInString)
-# tools/src/gramRd.y: 739
-# warningcall(R_NilValue,
-# 			_("newline within quoted string at %s:%d"), 
-# 			parseState.xxBasename, parseState.xxNewlineInString)
-# tools/src/gramRd.c: 3593
-# warning(_("newline within quoted string at %s:%d"), 
-# 		    parseState.xxBasename, parseState.xxNewlineInString)
-# tools/src/gramRd.c: 3596
-# warningcall(R_NilValue,
-# 			_("newline within quoted string at %s:%d"), 
-# 			parseState.xxBasename, parseState.xxNewlineInString)
-#: gramRd.c:3348 gramRd.c:3352
+#: gramRd.y:743 gramRd.y:747
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nowa linia wewnątrz cytowanego łańcucha w %s:%d"
 
-# tools/src/gramRd.y: 759
-# error(_("unable to allocate buffer for long macro at line %d"), parseState.xxlineno)
-# tools/src/gramRd.c: 3616
-# error(_("unable to allocate buffer for long macro at line %d"), parseState.xxlineno)
-#: gramRd.c:3371
+#: gramRd.y:766
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nie można przydzielić bufora dla długiego makra w linii %d"
 
-# tools/src/gramRd.y: 789
-# error(_("macros nested too deeply: infinite recursion?"))
-# tools/src/gramRd.c: 3646
-# error(_("macros nested too deeply: infinite recursion?"))
-#: gramRd.c:3401
+#: gramRd.y:796
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makra są zagnieżdżone zbyt głęboko: nieskończona rekurencja?"
 
-# tools/src/gramRd.y: 1172
-# error(_("Unable to find macro %s"), s)
-# tools/src/gramRd.c: 4029
-# error(_("Unable to find macro %s"), s)
-#: gramRd.c:3795
+#: gramRd.y:1190
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nie można znaleźć makra %s"
 
-# tools/src/gramRd.y: 1367
-# error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
-#  			parseState.xxinRString, parseState.xxBasename, parseState.xxQuoteLine, parseState.xxQuoteCol)
-# tools/src/gramRd.c: 4224
-# error(_("Unexpected end of input (in %c quoted string opened at %s:%d:%d)"), 
-#  			parseState.xxinRString, parseState.xxBasename, parseState.xxQuoteLine, parseState.xxQuoteCol)
-#: gramRd.c:3993
+#: gramRd.y:1388
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 "Nieoczekiwane zakończenie wejścia (w %c cytowanym łańcuchu otwartym w %s:%d:"
 "%d)"
 
-# tools/src/gramRd.y: 1806
-# error(_("cannot open the connection"))
-# tools/src/gramRd.c: 4663
-# error(_("cannot open the connection"))
-#: gramRd.c:4435
+#: gramRd.y:1830
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
-# tools/src/gramRd.y: 1813
-# error(_("cannot read from this connection"))
-# tools/src/gramRd.c: 4670
-# error(_("cannot read from this connection"))
-#: gramRd.c:4442
+#: gramRd.y:1837
 msgid "cannot read from this connection"
 msgstr "nie można czytać z tego połączenia"
 
-# tools/src/gramRd.y: 1821
-# error(_("invalid Rd file"))
-# tools/src/gramRd.c: 4678
-# error(_("invalid Rd file"))
-#: gramRd.c:4450
+#: gramRd.y:1845
 msgid "invalid Rd file"
 msgstr "niepoprawny plik Rd"
 
-# tools/src/gramRd.y: 1840
-# error(_("'deparseRd' only supports deparsing character elements"))
-# tools/src/gramRd.c: 4697
-# error(_("'deparseRd' only supports deparsing character elements"))
-#: gramRd.c:4469
+#: gramRd.y:1864
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 "'deparseRd' wspiera tylko konwertowanie wyrażenia na łańcuch tekstowy dla "
 "elementów znakowych"
 
-# tools/src/gramRd.y: 1843
-# error(_("bad state"))
-# tools/src/gramRd.c: 4700
-# error(_("bad state"))
-#: gramRd.c:4472
+#: gramRd.y:1867
 msgid "bad state"
 msgstr "błędny stan"
 
-# tools/src/gramRd.y: 1856
-# error(_("bad text mode %d in 'deparseRd'"), parseState.xxmode)
-# tools/src/gramRd.c: 4713
-# error(_("bad text mode %d in 'deparseRd'"), parseState.xxmode)
-#: gramRd.c:4485
+#: gramRd.y:1880
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "błędny tryb %d tekstu w 'deparseRd'"
 
-# tools/src/http.c: 32
-# error(_("invalid bind address specification"))
 #: http.c:32
 msgid "invalid bind address specification"
 msgstr "niepoprawne określenie adresu wiążącego"
 
-# tools/src/install.c: 112
-# error(_("invalid '%s' argument"), "dir")
-# tools/src/install.c: 133
-# error(_("invalid '%s' argument"), "file1")
-# tools/src/install.c: 135
-# error(_("invalid '%s' argument"), "file2")
 #: install.c:112 install.c:133 install.c:135
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
-# tools/src/install.c: 163
-# warning(_("write error during file append"))
 #: install.c:163
 msgid "write error during file append"
 msgstr "błąd zapisu podczas dołączania pliku"
 
-# tools/src/signals.c: 43
-# warning(_("pskill() is not supported on this platform"))
 #: signals.c:43
 msgid "pskill() is not supported on this platform"
 msgstr "'pskill()' nie jest wspierany na tej platformie"
 
-# tools/src/signals.c: 140
-# error(_("psnice() is not supported on this platform"))
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "'psnice()' nie jest wspierany na tej platformie"
 
-# tools/src/text.c: 66
-# error(_("invalid argument type"))
 #: text.c:66
 msgid "invalid argument type"
 msgstr "niepoprawny typ argumentu"
 
-# tools/src/text.c: 223
-# error(_("out of memory"))
-# tools/src/text.c: 245
-# error(_("out of memory"))
 #: text.c:223 text.c:245
 msgid "out of memory"
 msgstr "brakło pamięci"

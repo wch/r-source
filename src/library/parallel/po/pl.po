@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
 "PO-Revision-Date: \n"
@@ -14,120 +14,76 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
-# parallel/src/fork.c: 206
-# error(_("unable to create a pipe"))
-# parallel/src/fork.c: 209
-# error(_("unable to create a pipe"))
 #: fork.c:253 fork.c:256
 msgid "unable to create a pipe"
 msgstr "nie można utworzyć potoku"
 
-# parallel/src/fork.c: 226
-# error(_("unable to fork, possible reason: %s"), strerror(errno))
 #: fork.c:274
 #, c-format
 msgid "unable to fork, possible reason: %s"
 msgstr "nie można rozdzielić, prawdopodobny powód: %s"
 
-# parallel/src/fork.c: 272
-# error(_("memory allocation error"))
 #: fork.c:320
 msgid "memory allocation error"
 msgstr "błąd przydziału pamięci"
 
-# parallel/src/fork.c: 325
-# error(_("only children can send data to the master process"))
 #: fork.c:373
 msgid "only children can send data to the master process"
 msgstr "tylko potomne procesy mogą przesłać dane do procesu głównego"
 
-# parallel/src/fork.c: 327
-# error(_("there is no pipe to the master process"))
 #: fork.c:375
 msgid "there is no pipe to the master process"
 msgstr "nie ma potoku do procesu głównego"
 
-# parallel/src/fork.c: 329
-# error(_("content to send must be RAW, use serialize() if needed"))
 #: fork.c:377
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
 "zawartość do wysłania musi być PUSTA, użyj 'serialize()' jeśli konieczne"
 
-# parallel/src/fork.c: 338
-# error(_("write error, closing pipe to the master"))
-# parallel/src/fork.c: 345
-# error(_("write error, closing pipe to the master"))
-# parallel/src/fork.c: 667
-# error(_("write error, closing pipe to the master"))
 #: fork.c:386 fork.c:393 fork.c:717
 msgid "write error, closing pipe to the master"
 msgstr "błąd zapisu, zamykanie potoku do procesu głównego"
 
-# parallel/src/fork.c: 358
-# error(_("only the master process can send data to a child process"))
 #: fork.c:406
 msgid "only the master process can send data to a child process"
 msgstr "tylko główny proces może przesłać dane do potomnego procesu"
 
-# parallel/src/fork.c: 365
-# error(_("child %d does not exist"), pid)
 #: fork.c:413
 #, c-format
 msgid "child %d does not exist"
 msgstr "potomny proces %d nie istnieje"
 
-# parallel/src/fork.c: 371
-# error(_("write error"))
 #: fork.c:419
 msgid "write error"
 msgstr "błąd zapisu"
 
-# parallel/src/fork.c: 439
-# warning(_("error '%s' in select"), strerror(errno))
-# parallel/src/fork.c: 561
-# warning(_("error '%s' in select"), strerror(errno))
 #: fork.c:487 fork.c:611
 #, c-format
 msgid "error '%s' in select"
 msgstr "błąd '%s' przy wyborze"
 
-# parallel/src/fork.c: 649
-# error(_("'mckill' failed"))
 #: fork.c:699
 msgid "'mckill' failed"
 msgstr "'mckill' nie powiodło się"
 
-# parallel/src/fork.c: 659
-# error(_("'mcexit' can only be used in a child process"))
 #: fork.c:709
 msgid "'mcexit' can only be used in a child process"
 msgstr "'mcexit' może być użyty jedynie w potomnym procesie"
 
-# parallel/src/fork.c: 680
-# error(_("'mcexit' failed"))
 #: fork.c:730
 msgid "'mcexit' failed"
 msgstr "'mcexit' nie powiodło się"
 
-# parallel/src/fork.c: 710
-# error(_("invalid CPU affinity specification"))
-# parallel/src/fork.c: 719
-# error(_("invalid CPU affinity specification"))
 #: fork.c:759 fork.c:768
 msgid "invalid CPU affinity specification"
 msgstr "niepoprawne określenie koligacji CPU"
 
-# parallel/src/fork.c: 730
-# error(_("requested CPU set is too large for this system"))
 #: fork.c:779
 msgid "requested CPU set is too large for this system"
 msgstr "zażądane ustawienie CPU jest zbyt duże dla tego systemu"
 
-# parallel/src/fork.c: 753
-# error(_("retrieving CPU affinity set failed"))
 #: fork.c:802
 msgid "retrieving CPU affinity set failed"
 msgstr "pozyskiwanie ustawienia koligacji CPU nie powiodło się"

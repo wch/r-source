@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
 "PO-Revision-Date: \n"
@@ -14,64 +14,36 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
-# stats/src/Srunmed.c: 55
-# error(_("bandwidth/span of running medians is larger than n"))
 #: Srunmed.c:55
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "pasmo/rozpiętość ruchomych median jest większe niż 'n'"
 
-# stats/src/ansari.c: 116
-# error(_("probabilities outside [0,1] in qansari()"))
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "prawdopodobieństwa poza przedziałem [0,1] w 'qansari()'"
 
-# stats/src/approx.c: 102
-# error(_("approx(): invalid f value"))
 #: approx.c:102
 msgid "approx(): invalid f value"
 msgstr "approx(): niepoprawna wartość 'f'"
 
-# stats/src/approx.c: 105
-# error(_("approx(): invalid interpolation method"))
 #: approx.c:105
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): niepoprawna metoda interpolacji"
 
-# stats/src/approx.c: 111
-# error(_("approx(): attempted to interpolate NA values"))
 #: approx.c:111
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): próbowano interpolować wartości NA"
 
-# stats/src/arima.c: 81
-# error(_("invalid argument type"))
-# stats/src/arima.c: 192
-# error(_("invalid argument type"))
-# stats/src/arima.c: 377
-# error(_("invalid argument type"))
-# stats/src/arima.c: 608
-# error(_("invalid argument type"))
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608
 msgid "invalid argument type"
 msgstr "niepoprawny typ argumentu"
 
-# stats/src/pacf.c: 331
-# error(_("can only transform 100 pars in arima0"))
-# stats/src/pacf.c: 371
-# error(_("can only transform 100 pars in arima0"))
-# stats/src/arima.c: 444
-# error(_("can only transform 100 pars in arima0"))
-# stats/src/arima.c: 530
-# error(_("can only transform 100 pars in arima0"))
 #: arima.c:444 arima.c:530 pacf.c:327 pacf.c:366
 msgid "can only transform 100 pars in arima0"
 msgstr "można przekształcić tylko do 100 par w 'arima0'"
 
-# stats/src/arima.c: 1016
-# error(_("maximum supported lag is 350"))
 #: arima.c:1016
 msgid "maximum supported lag is 350"
 msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
@@ -79,974 +51,572 @@ msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
 #: bandwidths.c:121
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
-msgstr ""
+msgstr "nieskończone x[%d] w obliczeniach pasma"
 
-# stats/src/complete_cases.c: 26
-# 	_("invalid 'type' (%s) of argument")
 #: complete_cases.c:26
 #, c-format
 msgid "invalid 'type' (%s) of argument"
 msgstr "niepoprawny 'type' (%s) argumentu"
 
-# stats/src/complete_cases.c: 120
-# error(_("no input has determined the number of cases"))
 #: complete_cases.c:120
 msgid "no input has determined the number of cases"
 msgstr "żadne wejście nie określiło liczby przypadków"
 
-# stats/src/complete_cases.c: 223
-# error(_("not all arguments have the same length"))
 #: complete_cases.c:223
 msgid "not all arguments have the same length"
 msgstr "nie wszystkie argumenty mają tę samą długość"
 
-# stats/src/cov.c: 566
-# error(_("missing observations in cov/cor"))
 #: cov.c:566
 msgid "missing observations in cov/cor"
 msgstr "brakujące obserwacje w macierzy kowariancji/korelacji"
 
-# stats/src/cov.c: 644
-# error(_("'x' is NULL"))
 #: cov.c:644
 msgid "'x' is NULL"
 msgstr "'x' ma wartość NULL"
 
-# stats/src/cov.c: 663
-# error(_("incompatible dimensions"))
-# stats/src/cov.c: 669
-# error(_("incompatible dimensions"))
-# stats/R/lm.R: 108
-# stop("incompatible dimensions")
-# stats/R/lm.R: 165
-# stop("incompatible dimensions")
 #: cov.c:663 cov.c:669
 msgid "incompatible dimensions"
 msgstr "niezgodne wymiary"
 
-# stats/src/cov.c: 688
-# error(_("no complete element pairs"))
-# stats/src/cov.c: 729
-# error(_("no complete element pairs"))
-# stats/src/cov.c: 762
-# error(_("no complete element pairs"))
 #: cov.c:688 cov.c:729 cov.c:762
 msgid "no complete element pairs"
 msgstr "brak kompletnych par elementów"
 
-# stats/src/cov.c: 701
-# error(_("invalid 'use' (computational method)"))
 #: cov.c:701
 msgid "invalid 'use' (computational method)"
 msgstr "niepoprawne 'use' (metoda obliczeniowa)"
 
-# stats/src/cov.c: 704
-# error(_("'x' is empty"))
-# stats/R/cor.R: 77
-# stop("'x' is empty")
 #: cov.c:704
 msgid "'x' is empty"
 msgstr "'x' jest puste"
 
-# stats/src/cov.c: 798
-# warning(_("the standard deviation is zero"))
 #: cov.c:798
 msgid "the standard deviation is zero"
 msgstr "odchylenie standardowe wynosi zero"
 
-# stats/src/deriv.c: 126
-# error(_("invalid form in unary minus check"))
 #: deriv.c:126
 msgid "invalid form in unary minus check"
 msgstr "niepoprawna forma sprawdzania jednoargumentowej operacji minus"
 
-# stats/src/deriv.c: 533
-# error(_("Function '%s' is not in the derivatives table"),
-# 		  translateChar(STRING_ELT(u, 0)))
 #: deriv.c:535
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funkcja '%s' nie znajduje się w tablicy pochodnych"
 
-# stats/src/deriv.c: 640
-# error(_("variable must be a character string"))
 #: deriv.c:642
 msgid "variable must be a character string"
 msgstr "zmienna musi być łańcuchem tekstowym"
 
-# stats/src/deriv.c: 642
-# warning(_("only the first element is used as variable name"))
 #: deriv.c:644
 msgid "only the first element is used as variable name"
 msgstr "tylko pierwszy element jest używany jako nazwa zmiennej"
 
-# stats/src/deriv.c: 655
-# error(_("invalid expression in '%s'"), where)
 #: deriv.c:657
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "niepoprawne wyrażenie w '%s'"
 
-# stats/src/deriv.c: 933
-# error(_("invalid variable names"))
-# stats/src/model.c: 99
-# error(_("invalid variable names"))
 #: deriv.c:935 model.c:99
 msgid "invalid variable names"
 msgstr "niepoprawne nazwy zmiennych"
 
-# stats/src/deriv.c: 942
-# error(_("invalid tag"))
 #: deriv.c:944
 msgid "invalid tag"
 msgstr "niepoprawny znacznik"
 
-# stats/src/distance.c: 153
-# warning(_("treating non-finite values as NA"))
 #: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "traktowanie nieskończonych wartości jako NA"
 
-# stats/src/distance.c: 226
-# error(_("distance(): invalid p"))
 #: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): niepoprawne 'p'"
 
-# stats/src/distance.c: 229
-# error(_("distance(): invalid distance"))
 #: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
-# stats/src/distn.c: 41
-# 	_("NaNs produced")
 #: distn.c:41
 msgid "NaNs produced"
 msgstr "wyprodukowano wartości NaN"
 
-# stats/src/distn.c: 42
-#  _("Non-numeric argument to mathematical function")
 #: distn.c:42
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument nieliczbowy przekazany do funkcji matematycznej"
 
-# stats/src/family.c: 44
-# error(_("Value %g out of range (0, 1)"), x)
 #: family.c:44
 #, c-format
 msgid "Value %g out of range (0, 1)"
 msgstr "Wartość %g jest poza zakresem (0, 1)"
 
-# stats/src/family.c: 65
-# error(_("Argument %s must be a nonempty numeric vector"), "mu")
-# stats/src/family.c: 79
-# error(_("Argument %s must be a nonempty numeric vector"), "eta")
-# stats/src/family.c: 97
-# error(_("Argument %s must be a nonempty numeric vector"), "eta")
 #: family.c:65 family.c:79 family.c:97
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argument '%s' musi być niepustym wektorem liczbowym"
 
-# stats/src/family.c: 130
-# error(_("argument %s must be a numeric vector of length 1 or length %d"),
-# 	      "mu", n)
-# stats/src/family.c: 133
-# error(_("argument %s must be a numeric vector of length 1 or length %d"),
-# 	      "wt", n)
 #: family.c:130 family.c:133
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument '%s' musi być wektorem liczbowym o długości 1 lub długości %d"
 
-# stats/src/fourier.c: 66
-# error(_("non-numeric argument"))
-# stats/src/fourier.c: 161
-# error(_("non-numeric argument"))
 #: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
 msgstr "argument nieliczbowy"
 
-# stats/src/fourier.c: 84
-# error(_("fft factorization error"))
-# stats/src/fourier.c: 102
-# error(_("fft factorization error"))
-# stats/src/fourier.c: 175
-# error(_("fft factorization error"))
 #: fourier.c:84 fourier.c:102 fourier.c:175
 msgid "fft factorization error"
 msgstr "błąd faktoryzacji szybkiej transformaty Fouriera"
 
-# stats/src/fourier.c: 147
-# error(_("vector-valued (multivariate) series required"))
 #: fourier.c:147
 msgid "vector-valued (multivariate) series required"
 msgstr "wymagany jest (wielowymiarowy) szereg o wartościach będących wektorami"
 
-# stats/src/fourier.c: 223
-# error(_("no factors"))
 #: fourier.c:223
 msgid "no factors"
 msgstr "brak czynników"
 
-# stats/src/fourier.c: 226
-# error(_("invalid factors"))
 #: fourier.c:226
 msgid "invalid factors"
 msgstr "niepoprawne czynniki"
 
-# stats/src/ksmooth.c: 67
-# error(_("only 2500 rows are allowed for sm.method=\"spline\""))
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "tylko 2500 wierszy jest dozwolonych dla 'sm.method=\"spline\"'"
 
-# stats/src/lm.c: 57
-# error(_("'x' is not a matrix"))
 #: lm.c:57
 msgid "'x' is not a matrix"
 msgstr "argument 'x' nie jest macierzą"
 
-# stats/src/lm.c: 62
-# error(_("dimensions of 'x' (%d,%d) and 'y' (%d) do not match"),
-# 	      n,p, XLENGTH(y))
 #: lm.c:62
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%d) do not match"
 msgstr "wymiary 'x' (%d,%d) oraz 'y' (%d) nie zgadzają się"
 
-# stats/src/lm.c: 77
-# error(_("NA/NaN/Inf in '%s'"), "x")
-# stats/src/lm.c: 81
-# error(_("NA/NaN/Inf in '%s'"), "y")
 #: lm.c:77 lm.c:81
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
 msgstr "wartości NA/NaN/Inf w '%s'"
 
-# stats/src/loessc.c: 233
-# error(_("span is too small"))
 #: loessc.c:233
 msgid "span is too small"
 msgstr "argument 'span' jest zbyt mały"
 
-# stats/src/loglin.c: 371
-# error(_("this should not happen"))
 #: loglin.c:371
 msgid "this should not happen"
 msgstr "to nie powinno się wydarzyć"
 
-# stats/src/loglin.c: 373
-# warning(_("algorithm did not converge"))
 #: loglin.c:373
 msgid "algorithm did not converge"
 msgstr "algorytm nie uzbieżnił się"
 
-# stats/src/loglin.c: 375
-# error(_("incorrect specification of 'table' or 'start'"))
 #: loglin.c:375
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "niepoprawne określenie 'table' lub 'start'"
 
-# stats/src/lowess.c: 292
-# error(_("'f' must be finite and > 0"))
 #: lowess.c:292
 msgid "'f' must be finite and > 0"
 msgstr "argument 'f' musi być skończony oraz > 0"
 
-# stats/src/lowess.c: 295
-# error(_("'iter' must be finite and >= 0"))
 #: lowess.c:295
 msgid "'iter' must be finite and >= 0"
 msgstr "argument 'iter' musi być skończony oraz >= 0"
 
-# stats/src/lowess.c: 298
-# error(_("'delta' must be finite and > 0"))
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
 msgstr "argument 'delta' musi być skończony oraz > 0"
 
-# stats/src/mAR.c: 467
-# error(_("Singular matrix in qr_solve"))
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
 msgstr "Osobliwa macierz w 'qr_solve'"
 
-# stats/src/mAR.c: 510
-# error(_("Singular matrix in ldet"))
 #: mAR.c:510
 msgid "Singular matrix in ldet"
 msgstr "Osobliwa macierz w 'qr_solve'"
 
-# stats/src/mAR.c: 697
-# error(_("Invalid vmethod"))
 #: mAR.c:697
 msgid "Invalid vmethod"
 msgstr "Niepoprawne 'vmethod'"
 
-# stats/src/mAR.c: 833
-# error(_("Burg's algorithm failed to find partial correlation"))
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr ""
 "Algorytm Burga nie powiódł się przy próbie znalezienia częściowej korelacji"
 
-# stats/src/model.c: 97
-# error(_("invalid variables"))
 #: model.c:97
 msgid "invalid variables"
 msgstr "niepoprawne zmienne"
 
-# stats/src/model.c: 101
-# error(_("number of variables != number of variable names"))
-# stats/src/model.c: 106
-# error(_("number of variables != number of variable names"))
 #: model.c:101 model.c:106
 msgid "number of variables != number of variable names"
 msgstr "liczba zmiennych != liczbie nazw zmiennych"
 
-# stats/src/model.c: 104
-# error(_("invalid extra variables"))
 #: model.c:104
 msgid "invalid extra variables"
 msgstr "niepoprawne dodatkowe zmienne"
 
-# stats/src/model.c: 108
-# error(_("invalid extra variable names"))
 #: model.c:108
 msgid "invalid extra variable names"
 msgstr "niepoprawne nazwy dodatkowych zmiennych"
 
-# stats/src/model.c: 129
-# error(_("overlong names in '%s'"), ss)
 #: model.c:129
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "zbyt długie nazwy w '%s'"
 
-# stats/src/model.c: 156
-# error(_("invalid type (%s) for variable '%s'"),
-# 		      type2char(TYPEOF(ans)),
-# 		      translateChar(STRING_ELT(names, i)))
 #: model.c:156
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "niepoprawny typ (%s) dla zmiennej '%s'"
 
-# stats/src/model.c: 161
-# error(_("variable lengths differ (found for '%s')"),
-# 		      translateChar(STRING_ELT(names, i)))
 #: model.c:161
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "długości zmiennych różnią się (znaleziono dla '%s')"
 
-# stats/src/model.c: 215
-# error(_("invalid result from na.action"))
 #: model.c:215
 msgid "invalid result from na.action"
 msgstr "niepoprawny wynik z 'na.action'"
 
-# stats/src/optim.c: 197
-# error(_("invalid '%s' argument"), "method")
-# stats/src/model.c: 369
-# error(_("invalid '%s' argument"), "terms")
-# stats/src/model.c: 377
-# error(_("invalid '%s' argument"), "terms")
-# stats/src/massdist.c: 41
-# error("invalid '%s' argument", "n")
 #: model.c:369 model.c:377 optim.c:197
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
-# stats/src/model.c: 388
-# error(_("invalid model frame"))
 #: model.c:388
 msgid "invalid model frame"
 msgstr "niepoprawna ramka modelu"
 
-# stats/src/model.c: 390
-# error(_("do not know how many cases"))
 #: model.c:390
 msgid "do not know how many cases"
 msgstr "nie wiadomo jak wiele przypadków"
 
-# stats/src/model.c: 414
-# error(_("variable lengths differ (found for variable %d)"), i)
 #: model.c:414
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "długości zmiennej różnią się (znaleziono dla zmiennej %d)"
 
-# stats/src/model.c: 418
-# error(_("variable %d has no levels"), i+1)
-# stats/src/model.c: 425
-# error(_("variable %d has no levels"), i+1)
 #: model.c:418 model.c:425
 #, c-format
 msgid "variable %d has no levels"
 msgstr "zmienna %d nie posiada poziomów"
 
-# stats/src/model.c: 537
-# warning(_("the response appeared on the right-hand side and was dropped"))
 #: model.c:537
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr ""
 "zmienna zależna pojawiła się po prawej stronie równania więc została "
 "odrzucona"
 
-# stats/src/model.c: 557
-# error(_("term %d would require %.0g columns"), j+1, dk)
 #: model.c:557
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "człon %d wymaga %.0g kolumn"
 
-# stats/src/model.c: 561
-# error(_("matrix would require %.0g columns"), dnc)
 #: model.c:561
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "macierz wymaga %.0g kolumn"
 
-# stats/src/model.c: 572
-# warning(_("problem with term %d in model.matrix: no columns are assigned"),
-# 		      j+1)
 #: model.c:572
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "problem z członem %d w 'model.matrix()': brak przypisanych kolumn"
 
-# stats/src/model.c: 621
-# warning(_("term names will be truncated"))
-# stats/src/model.c: 626
-# warning(_("term names will be truncated"))
-# stats/src/model.c: 632
-# warning(_("term names will be truncated"))
-# stats/src/model.c: 643
-# warning(_("term names will be truncated"))
-# stats/src/model.c: 649
-# warning(_("term names will be truncated"))
-# stats/src/model.c: 655
-# warning(_("term names will be truncated"))
 #: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
 msgid "term names will be truncated"
 msgstr "nazwy członów będą przycięte"
 
-# stats/src/model.c: 635
-# error(_("complex variables are not currently allowed in model matrices"))
 #: model.c:635
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "zmienne zespolone nie są aktualnie dozwolone w macierzach modelu"
 
-# stats/src/model.c: 659
-# error(_("variables of type '%s' are not allowed in model matrices"),
-# 			      type2char(TYPEOF(var_i)))
 #: model.c:659
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "zmienne typu '%s' nie są dozwolone w macierzach modelu"
 
-# stats/src/model.c: 881
-# error(_("invalid formula in 'update'"))
 #: model.c:881
 msgid "invalid formula in 'update'"
 msgstr "niepoprawna formuła w 'update'"
 
-# stats/src/model.c: 915
-# error(_("formula expected"))
 #: model.c:915
 msgid "formula expected"
 msgstr "oczekiwano formuły"
 
-# stats/src/model.c: 1046
-# error(_("invalid term in model formula"))
 #: model.c:1046
 msgid "invalid term in model formula"
 msgstr "niepoprawny człon w formule modelu"
 
-# stats/src/model.c: 1121
-# error(_("invalid model formula"))
 #: model.c:1121
 msgid "invalid model formula"
 msgstr "niepoprawna formuła modelu"
 
-# stats/src/model.c: 1147
-# error(_("invalid power in formula"))
-# stats/src/model.c: 1395
-# error(_("invalid power in formula"))
 #: model.c:1147 model.c:1395
 msgid "invalid power in formula"
 msgstr "niepoprawna potęga w formule"
 
-# stats/src/model.c: 1183
-# error(_("invalid model formula in ExtractVars"))
 #: model.c:1183
 msgid "invalid model formula in ExtractVars"
 msgstr "niepoprawna formuła modelu w funkcji 'ExtractVars()'"
 
-# stats/src/model.c: 1518
-# error(_("duplicated name '%s' in data frame using '.'"),
-# 			      c)
 #: model.c:1518
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "powtórzona nazwa '%s' w ramce danych używając '.'"
 
-# stats/src/model.c: 1576
-# error(_("invalid model formula in EncodeVars"))
 #: model.c:1576
 msgid "invalid model formula in EncodeVars"
 msgstr "niepoprawna formuła modelu w funkcji 'EncodeVars()'"
 
-# stats/src/model.c: 1662
-# error(_("argument is not a valid model"))
 #: model.c:1662
 msgid "argument is not a valid model"
 msgstr "argument nie jest poprawnym modelem"
 
-# stats/src/model.c: 1672
-# error(_("'specials' must be NULL or a character vector"))
 #: model.c:1672
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' musi być wektorem tekstowym lub wartością 'NULL'"
 
-# stats/src/model.c: 1684
-# error(_("'data' argument is of the wrong type"))
 #: model.c:1684
 msgid "'data' argument is of the wrong type"
 msgstr "argument 'data' posiada niepoprawny typ"
 
-# stats/src/model.c: 1952
-# error(_("'.' in formula and no 'data' argument"))
 #: model.c:1954
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' w formule oraz brak argumentu 'data'"
 
-# stats/src/monoSpl.c: 34
-# error(_("n must be at least two"))
 #: monoSpl.c:34
 msgid "n must be at least two"
 msgstr "argument 'n' musi wynosić co najmniej 2"
 
-# stats/src/monoSpl.c: 67
-# error(_("Argument m must be numeric"))
 #: monoSpl.c:67
 msgid "Argument m must be numeric"
 msgstr "argument 'm' musi być liczbą"
 
-# stats/src/monoSpl.c: 70
-# error(_("length(m) must be at least two"))
 #: monoSpl.c:70
 msgid "length(m) must be at least two"
 msgstr "'length(m)' musi wynosić co najmniej dwa"
 
-# stats/src/monoSpl.c: 72
-# error(_("Argument Sx must be numeric vector one shorter than m[]"))
 #: monoSpl.c:72
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "Argument 'Sx' musi być wektorem liczbowym o jeden którszym niż 'm[]'"
 
-# stats/src/nls.c: 97
-# error(_("'control' must be a list"))
 #: nls.c:97
 msgid "'control' must be a list"
 msgstr "argument 'control' musi być listą"
 
-# stats/src/nls.c: 99
-# error(_("'m' must be a list"))
 #: nls.c:99
 msgid "'m' must be a list"
 msgstr "argument 'm' musi być listą"
 
-# stats/src/nls.c: 105
-# error(_("'%s' absent"), "control$maxiter")
-# stats/src/nls.c: 110
-# error(_("'%s' absent"), "control$tol")
-# stats/src/nls.c: 115
-# error(_("'%s' absent"), "control$minFactor")
-# stats/src/nls.c: 120
-# error(_("'%s' absent"), "control$warnOnly")
-# stats/src/nls.c: 125
-# error(_("'%s' absent"), "control$printEval")
-# stats/src/nls.c: 166
-# error(_("'%s' absent"), "m$conv()")
-# stats/src/nls.c: 171
-# error(_("'%s' absent"), "m$incr()")
-# stats/src/nls.c: 176
-# error(_("'%s' absent"), "m$deviance()")
-# stats/src/nls.c: 181
-# error(_("'%s' absent"), "m$trace()")
-# stats/src/nls.c: 186
-# error(_("'%s' absent"), "m$setPars()")
-# stats/src/nls.c: 191
-# error(_("'%s' absent"), "m$getPars()")
 #: nls.c:105 nls.c:110 nls.c:115 nls.c:120 nls.c:125 nls.c:166 nls.c:171
 #: nls.c:176 nls.c:181 nls.c:186 nls.c:191
 #, c-format
 msgid "'%s' absent"
 msgstr "'%s' jest niedostępne"
 
-# stats/src/nls.c: 232
-#  _("singular gradient")
 #: nls.c:232
 msgid "singular gradient"
 msgstr "osobliwy gradient"
 
-# stats/src/nls.c: 253
-#  _("step factor %g reduced below 'minFactor' of %g")
 #: nls.c:253
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
 msgstr "czynnik kroku %g zmiejszony poniżej  'minFactor' %g"
 
-# stats/src/nls.c: 262
-#  _("number of iterations exceeded maximum of %d")
 #: nls.c:262
 #, c-format
 msgid "number of iterations exceeded maximum of %d"
 msgstr "liczba iteracji przekroczyła maksymalną liczbę %d"
 
-# stats/src/nls.c: 267
-# (_("converged"), 0)
 #: nls.c:267
 msgid "converged"
 msgstr "zbiegł się"
 
-# stats/src/nls.c: 288
-# error(_("'theta' should be of type character"))
 #: nls.c:288
 msgid "'theta' should be of type character"
 msgstr "argument 'theta' powinien być typu tekstowego"
 
-# stats/src/nls.c: 290
-# error(_("use of NULL environment is defunct"))
-# stats/src/port.c: 375
-# error(_("use of NULL environment is defunct"))
 #: nls.c:290 port.c:376
 msgid "use of NULL environment is defunct"
 msgstr "użycie wartości NULL dla środowiska zostało zlikwidowane"
 
-# stats/src/nls.c: 294
-# error(_("'rho' should be an environment"))
 #: nls.c:294
 msgid "'rho' should be an environment"
 msgstr "argument 'rho' musi być środowiskiem"
 
-# stats/src/nls.c: 297
-# error(_("'dir' is not a numeric vector of the correct length"))
 #: nls.c:297
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' nie jest wektorem liczbowym o poprawnej długości"
 
-# stats/src/nls.c: 311
-# error(_("Missing value or an infinity produced when evaluating the model"))
-# stats/src/nls.c: 341
-# error(_("Missing value or an infinity produced when evaluating the model"))
 #: nls.c:311 nls.c:346
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr ""
 "Brakuje wartości lub wyprodukowano wartości nieskończone podczas wyliczania "
 "modelu"
 
-# stats/src/nls.c: 318
-# error(_("variable '%s' is integer, not numeric"), name)
 #: nls.c:318
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "zmienna '%s' jest liczbą całkowitą, a nie rzeczywistą"
 
-# stats/src/nls.c: 320
-# error(_("variable '%s' is not numeric"), name)
 #: nls.c:320
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "zmienna '%s' nie jest liczbą rzeczywistą"
 
-# stats/src/optim.c: 80
-# error(_("non-finite value supplied by optim"))
-# stats/src/optim.c: 107
-# error(_("non-finite value supplied by optim"))
 #: optim.c:80 optim.c:107
 msgid "non-finite value supplied by optim"
 msgstr "nieskończona wartość dostarczona przez 'optim()'"
 
-# stats/src/optim.c: 87
-# error(_("objective function in optim evaluates to length %d not 1"),
-# 	      LENGTH(s))
 #: optim.c:87
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
 msgstr "funkcja celu w 'optim' została obliczona do długości %d a nie 1"
 
-# stats/src/optim.c: 114
-# error(_("gradient in optim evaluated to length %d not %d"),
-# 		  LENGTH(s), n)
 #: optim.c:114
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "gradient w 'optim' obliczony do długości %d a nie %d"
 
-# stats/src/optim.c: 193
-# error(_("'fn' is not a function"))
-# stats/src/optim.c: 399
-# error(_("'fn' is not a function"))
 #: optim.c:193 optim.c:399
 msgid "'fn' is not a function"
 msgstr "argument 'fn' nie jest funkcją"
 
-# stats/src/optim.c: 211
-# error(_("'parscale' is of the wrong length"))
-# stats/src/optim.c: 405
-# error(_("'parscale' is of the wrong length"))
 #: optim.c:211 optim.c:405
 msgid "'parscale' is of the wrong length"
 msgstr "argument 'parscale' posiada niepoprawną długość"
 
-# stats/src/optim.c: 240
-# error(_("'maxit' is not an integer"))
 #: optim.c:240
 msgid "'maxit' is not an integer"
 msgstr "argument 'maxit' nie jest liczbą całkowitą"
 
-# stats/src/optim.c: 260
-# error(_("'tmax' is not a positive integer"))
 #: optim.c:260
 msgid "'tmax' is not a positive integer"
 msgstr "argument 'tmax' nie jest dodatnią liczbą całkowitą"
 
-# stats/src/optim.c: 262
-# error(_("'gr' is not a function"))
-# stats/src/optim.c: 279
-# error(_("'gr' is not a function"))
-# stats/src/optim.c: 304
-# error(_("'gr' is not a function"))
-# stats/src/optim.c: 334
-# error(_("'gr' is not a function"))
-# stats/src/optim.c: 413
-# error(_("'gr' is not a function"))
 #: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
 msgid "'gr' is not a function"
 msgstr "argument 'gr' nie jest funkcją"
 
-# stats/src/optim.c: 285
-# error(_("'ndeps' is of the wrong length"))
-# stats/src/optim.c: 310
-# error(_("'ndeps' is of the wrong length"))
-# stats/src/optim.c: 340
-# error(_("'ndeps' is of the wrong length"))
-# stats/src/optim.c: 419
-# error(_("'ndeps' is of the wrong length"))
 #: optim.c:285 optim.c:310 optim.c:340 optim.c:419
 msgid "'ndeps' is of the wrong length"
 msgstr "argument 'ndeps' posiada niepoprawną długość"
 
-# stats/src/optim.c: 370
-# error(_("unknown 'method'"))
 #: optim.c:370
 msgid "unknown 'method'"
 msgstr "nieznana wartość 'method'"
 
-# stats/src/optimize.c: 217
-# warning(_("NA replaced by maximum positive value"))
-# stats/src/optimize.c: 309
-# warning(_("NA replaced by maximum positive value"))
-# stats/src/optimize.c: 530
-# warning(_("NA replaced by maximum positive value"))
 #: optimize.c:220 optimize.c:306 optimize.c:528
 msgid "NA replaced by maximum positive value"
 msgstr "wartość NA zastąpiona przez maksymalną dodatnią wartość"
 
-# stats/src/optimize.c: 225
-# warning(_("NA/Inf replaced by maximum positive value"))
-# stats/src/optimize.c: 321
-# warning(_("NA/Inf replaced by maximum positive value"))
-# stats/src/optimize.c: 538
-# warning(_("NA/Inf replaced by maximum positive value"))
 #: optimize.c:228 optimize.c:318 optimize.c:536
 msgid "NA/Inf replaced by maximum positive value"
 msgstr "wartości NA/Inf zastąpione przez maksymalne dodatnie wartości"
 
-# stats/src/optimize.c: 234
-# error(_("invalid function value in 'optimize'"))
 #: optimize.c:237
 msgid "invalid function value in 'optimize'"
 msgstr "niepoprawna wartość funkcji w funkcji 'optimize()'"
 
-# stats/src/optimize.c: 252
-# error(_("attempt to minimize non-function"))
-# stats/src/optimize.c: 350
-# error(_("attempt to minimize non-function"))
-# stats/src/optimize.c: 723
-# error(_("attempt to minimize non-function"))
 #: optimize.c:255 optimize.c:347 optimize.c:721
 msgid "attempt to minimize non-function"
 msgstr "próba minimalizacji nie-funkcji"
 
-# stats/src/optimize.c: 259
-# error(_("invalid '%s' value"), "xmin")
-# stats/src/optimize.c: 266
-# error(_("invalid '%s' value"), "xmax")
-# stats/src/optimize.c: 275
-# error(_("invalid '%s' value"), "tol")
-# stats/src/optimize.c: 355
-# error(_("invalid '%s' value"), "xmin")
-# stats/src/optimize.c: 360
-# error(_("invalid '%s' value"), "xmax")
-# stats/src/optimize.c: 376
-# error(_("invalid '%s' value"), "tol")
 #: optimize.c:262 optimize.c:269 optimize.c:278 optimize.c:352 optimize.c:357
 #: optimize.c:373
 #, c-format
 msgid "invalid '%s' value"
 msgstr "niepoprawna wartość '%s'"
 
-# stats/src/optimize.c: 268
-# error(_("'xmin' not less than 'xmax'"))
-# stats/src/optimize.c: 361
-# error(_("'xmin' not less than 'xmax'"))
 #: optimize.c:271 optimize.c:358
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' nie jest mniejsze niż 'xmax'"
 
-# stats/src/optimize.c: 318
-# warning(_("-Inf replaced by maximally negative value"))
 #: optimize.c:315
 msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf zastąpiona maksymalną ujemną wartością"
 
-# stats/src/optimize.c: 331
-# error(_("invalid function value in 'zeroin'"))
 #: optimize.c:328
 msgid "invalid function value in 'zeroin'"
 msgstr "niepoprawna wartość funkcji w funkcji 'zeroin()'"
 
-# stats/src/optimize.c: 366
-# error(_("NA value for '%s' is not allowed"), "f.lower")
-# stats/src/optimize.c: 371
-# error(_("NA value for '%s' is not allowed"), "f.upper")
 #: optimize.c:363 optimize.c:368
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "wartość NA dla '%s' nie jest dozwolona"
 
-# stats/src/optimize.c: 381
-# error(_("'maxiter' must be positive"))
 #: optimize.c:378
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' musi być liczbą dodatnią"
 
-# stats/src/optimize.c: 522
-# error(_("non-finite value supplied by 'nlm'"))
 #: optimize.c:520
 msgid "non-finite value supplied by 'nlm'"
 msgstr "nieskończona wartość dostarczona przez 'nlm'"
 
-# stats/src/optimize.c: 557
-# error(_("invalid function value in 'nlm' optimizer"))
 #: optimize.c:555
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 
-# stats/src/optimize.c: 568
-# error(_("function value caching for optimization is seriously confused"))
-# stats/src/optimize.c: 583
-# error(_("function value caching for optimization is seriously confused"))
 #: optimize.c:566 optimize.c:581
 msgid "function value caching for optimization is seriously confused"
 msgstr ""
 "buforowanie wartości funkcji na potrzeby optymalizacji poważnie pomylone"
 
-# stats/src/optimize.c: 598
-# error(_("numeric parameter expected"))
 #: optimize.c:596
 msgid "numeric parameter expected"
 msgstr "oczekiwano parametru liczbowego"
 
-# stats/src/optimize.c: 602
-# error(_("conflicting parameter lengths"))
 #: optimize.c:600
 msgid "conflicting parameter lengths"
 msgstr "kolidujące długości parametrów"
 
-# stats/src/optimize.c: 606
-# error(_("invalid parameter length"))
 #: optimize.c:604
 msgid "invalid parameter length"
 msgstr "niepoprawna długość parametru"
 
-# stats/src/optimize.c: 616
-# error(_("missing value in parameter"))
-# stats/src/optimize.c: 623
-# error(_("missing value in parameter"))
 #: optimize.c:614 optimize.c:621
 msgid "missing value in parameter"
 msgstr "brakuje wartości w parametrze"
 
-# stats/src/optimize.c: 628
-# error(_("invalid parameter type"))
 #: optimize.c:626
 msgid "invalid parameter type"
 msgstr "niepoprawny typ parametru"
 
-# stats/src/optimize.c: 639
-# error(_("non-positive number of parameters in nlm"))
 #: optimize.c:637
 msgid "non-positive number of parameters in nlm"
 msgstr "niedodatnia liczba parametrów w 'nlm'"
 
-# stats/src/optimize.c: 641
-# error(_("nlm is inefficient for 1-d problems"))
 #: optimize.c:639
 msgid "nlm is inefficient for 1-d problems"
 msgstr "'nlm' jest nieefektywna dla jednowymiarowych problemów"
 
-# stats/src/optimize.c: 643
-# error(_("invalid gradient tolerance in nlm"))
 #: optimize.c:641
 msgid "invalid gradient tolerance in nlm"
 msgstr "niepoprawna tolerancja gradientu w 'nlm'"
 
-# stats/src/optimize.c: 645
-# error(_("invalid iteration limit in nlm"))
 #: optimize.c:643
 msgid "invalid iteration limit in nlm"
 msgstr "niepoprawna granica iteracji w 'nlm'"
 
-# stats/src/optimize.c: 647
-# error(_("minimization function has no good digits in nlm"))
 #: optimize.c:645
 msgid "minimization function has no good digits in nlm"
 msgstr "funkcja minimalizacyjna nie ma dobrych cyfr w 'nlm'"
 
-# stats/src/optimize.c: 649
-# error(_("no analytic gradient to check in nlm!"))
 #: optimize.c:647
 msgid "no analytic gradient to check in nlm!"
 msgstr "brak analitycznego gradientu do sprawdzenia w 'nlm'!"
 
-# stats/src/optimize.c: 651
-# error(_("no analytic Hessian to check in nlm!"))
 #: optimize.c:649
 msgid "no analytic Hessian to check in nlm!"
 msgstr "brak analitycznego hesjanu do sprawdzenia w 'nlm'!"
 
-# stats/src/optimize.c: 653
-# error(_("probable coding error in analytic gradient"))
 #: optimize.c:651
 msgid "probable coding error in analytic gradient"
 msgstr "prawdopodobny błąd kodowania w analitycznym gradiencie"
 
-# stats/src/optimize.c: 655
-# error(_("probable coding error in analytic Hessian"))
 #: optimize.c:653
 msgid "probable coding error in analytic Hessian"
 msgstr "prawdopodobny błąd kodowania w analitycznym hesjanie"
 
-# stats/src/optimize.c: 657
-# error(_("*** unknown error message (msg = %d) in nlm()\n*** should not happen!"), nerr)
 #: optimize.c:655
 #, c-format
 msgid ""
@@ -1073,8 +643,6 @@ msgid "Last global step failed to locate a point lower than x.\n"
 msgstr ""
 "Ostatni globalny krok nie dał rady zlokalizować punktu niższego niż 'x'.\n"
 
-# stats/src/optimize.c: 677
-# (_("Either x is an approximate local minimum of the function,\nthe function is too non-linear for this algorithm,\nor steptol is too large.\n"))
 #: optimize.c:675
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
@@ -1103,69 +671,41 @@ msgstr ""
 "z góry w którymś kierunku,\n"
 "lub też 'stepmx' jest zbyt mały.\n"
 
-# stats/src/optimize.c: 747
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 752
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 756
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 760
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 764
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 768
-# error(_("invalid NA value in parameter"))
-# stats/src/optimize.c: 773
-# error(_("invalid NA value in parameter"))
 #: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
 #: optimize.c:766 optimize.c:771
 msgid "invalid NA value in parameter"
 msgstr "niepoprawna wartość NA w parametrze"
 
-# stats/src/optimize.c: 804
-# warning(_("hessian supplied is of the wrong length or mode, so ignored"))
 #: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony hesjan posiada niepoprawną długość lub tryb, tak więc został "
 "zignorowany"
 
-# stats/src/optimize.c: 808
-# warning(_("gradient supplied is of the wrong length or mode, so ignored"))
 #: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr ""
 "dostarczony gradient posiada niepoprawną długość lub tryb, tak więc został "
 "zignorowany"
 
-# stats/src/pacf.c: 94
-# error(_("bad Starma struct"))
 #: pacf.c:90
 msgid "bad Starma struct"
 msgstr "zła struktura 'Starma'"
 
-# stats/src/pacf.c: 240
-# error(_("starma error code %d"), ifault)
 #: pacf.c:236
 #, c-format
 msgid "starma error code %d"
 msgstr "starma: kod błędu %d"
 
-# stats/src/pacf.c: 300
-# error(_("forkal error code %d"), ifault)
 #: pacf.c:296
 #, c-format
 msgid "forkal error code %d"
 msgstr "forkal: kod błędu %d"
 
-# stats/src/pacf.c: 474
-# error(_("invalid value of lag.max"))
 #: pacf.c:469
 msgid "invalid value of lag.max"
 msgstr "niepoprawna wartość 'lag.max'"
 
-# stats/src/port.c: 133
-# error(_("Rf_divset: alg = %d must be 1, 2, 3, or 4"), alg)
 #: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
@@ -1173,165 +713,87 @@ msgstr "Rf_divset: 'alg = %d' musi wynosić 1, 2, 3, lub 4"
 
 #: port.c:149
 msgid "port algorithms 3 or higher are not supported"
-msgstr ""
+msgstr "algorytmy portu 3 lub wyższe nie są wspierane"
 
-# stats/src/port.c: 312
-# error(_("gradient function must return a numeric vector of length %d"), n)
 #: port.c:313
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "funkcja gradientu musi zwrócić wektor liczbowy o długości %d"
 
-# stats/src/port.c: 324
-# error(_("Hessian function must return a square numeric matrix of order %d"),
-# 		  n)
 #: port.c:325
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Funkcja hesjana musi zwrócić kwadratową macierz liczbową rzędu %d"
 
-# stats/src/port.c: 379
-# error(_("'rho' must be an environment"))
 #: port.c:380
 msgid "'rho' must be an environment"
 msgstr "'rho' musi być środowiskiem"
 
-# stats/src/port.c: 381
-# error(_("'d' must be a nonempty numeric vector"))
-# stats/src/port.c: 542
-# error(_("'d' must be a nonempty numeric vector"))
 #: port.c:382 port.c:543
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' musi być niepustym wektorem liczbowym"
 
-# stats/src/port.c: 383
-# error(_("When Hessian defined must also have gradient defined"))
 #: port.c:384
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Kiedy jest zdefiniowany Hesjan musi być również zdefiniowany gradient"
 
-# stats/src/port.c: 386
-# error(_("environment 'rho' must contain a numeric vector '.par' of length %d"),
-# 	      n)
 #: port.c:387
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "środowisko 'rho' musi zawierać wektor liczbowy '.par' o długości %d"
 
-# stats/src/port.c: 400
-# error(_("'lower' and 'upper' must be numeric vectors"))
 #: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' oraz 'upper' muszą być wektorami liczbowymi"
 
-# stats/src/port.c: 456
-# error(_("'getElement' applies only to named lists"))
 #: port.c:457
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' stosuje się jedynie do nazwanych list"
 
-# stats/src/port.c: 477
-# error(_("%s$%s() not found"), lnm, enm)
 #: port.c:478
 #, c-format
 msgid "%s$%s() not found"
 msgstr "'%s$%s()' nie zostało znalezione"
 
-# stats/src/port.c: 490
-# error(_("'gradient' must be a numeric matrix of dimension (%d,%d)"),
-# 	      gdims[0], gdims[1])
 #: port.c:491
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' musi być macierzą liczbową o wymiarze (%d,%d)"
 
-# stats/src/port.c: 511
-# error(_("fcn produced mode %d, length %d - wanted mode %d, length %d"),
-# 	      TYPEOF(v), LENGTH(v), TYPEOF(vv), LENGTH(vv))
 #: port.c:512
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "'fcn' wyprodukował tryb %d, długość %d - oczekiwano tryb %d, długość %d"
 
-# stats/src/port.c: 524
-# error(_("invalid type for eval_check_store"))
 #: port.c:525
 msgid "invalid type for eval_check_store"
 msgstr "niepoprawny typ dla funkcji 'eval_check_store()'"
 
-# stats/src/port.c: 543
-# error(_("m must be a list"))
 #: port.c:544
 msgid "m must be a list"
 msgstr "argument 'm' musi być listą"
 
-# stats/src/port.c: 563
-# error(_("'lowerb' and 'upperb' must be numeric vectors"))
 #: port.c:564
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' oraz 'upperb' muszą być wektorami liczbowymi"
 
-# stats/src/rWishart.c: 51
-# error(_("inconsistent degrees of freedom and dimension"))
 #: rWishart.c:51
 msgid "inconsistent degrees of freedom and dimension"
 msgstr "niespójna liczba stopni swodoby oraz wymiaru"
 
-# stats/src/rWishart.c: 84
-# error(_("'scal' must be a square, real matrix"))
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
 msgstr "'scal' musi być kwadratową, rzeczywistą macierzą"
 
-# stats/src/rWishart.c: 96
-# error(_("'scal' matrix is not positive-definite"))
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"
 msgstr "macierz 'scal' nie jest dodatnio określona"
 
-# stats/src/random.c: 95
-# warning(_("NAs produced"))
-# stats/src/random.c: 121
-# warning(_("NAs produced"))
-# stats/src/random.c: 194
-# warning(_("NAs produced"))
-# stats/src/random.c: 222
-# warning(_("NAs produced"))
-# stats/src/random.c: 270
-# warning(_("NAs produced"))
-# stats/src/random.c: 289
-# warning(_("NAs produced"))
 #: random.c:53 random.c:128 random.c:200 random.c:284
 msgid "NAs produced"
 msgstr "wyprodukowano wartości NA"
 
-# stats/src/random.c: 66
-# error(_("invalid arguments"))
-# stats/src/random.c: 70
-# error(_("invalid arguments"))
-# stats/src/random.c: 75
-# error(_("invalid arguments"))
-# stats/src/random.c: 80
-# error(_("invalid arguments"))
-# stats/src/random.c: 161
-# error(_("invalid arguments"))
-# stats/src/random.c: 167
-# error(_("invalid arguments"))
-# stats/src/random.c: 172
-# error(_("invalid arguments"))
-# stats/src/random.c: 177
-# error(_("invalid arguments"))
-# stats/src/random.c: 240
-# error(_("invalid arguments"))
-# stats/src/random.c: 245
-# error(_("invalid arguments"))
-# stats/src/random.c: 250
-# error(_("invalid arguments"))
-# stats/src/random.c: 264
-# error(_("invalid arguments"))
-# stats/src/random.c: 355
-# error(_("invalid arguments"))
 #: random.c:60 random.c:66 random.c:72 random.c:90 random.c:161 random.c:242
 #: random.c:376
 msgid "invalid arguments"
@@ -1339,44 +801,34 @@ msgstr "niepoprawne argumenty"
 
 #: random.c:310
 msgid "NA in probability vector"
-msgstr ""
+msgstr "wartość NA w wektorze prawdopodobieństwa"
 
 #: random.c:312
 msgid "negative probability"
-msgstr ""
+msgstr "ujemne prawdopodobieństwo"
 
 #: random.c:318
 msgid "no positive probabilities"
-msgstr ""
+msgstr "brak dodatnich prawdopodobieństw"
 
-# stats/src/random.c: 308
-# error(_("invalid first argument 'n'"))
 #: random.c:330
 msgid "invalid first argument 'n'"
 msgstr "niepoprawny pierwszy argument 'n'"
 
-# stats/src/random.c: 310
-# error(_("invalid second argument 'size'"))
 #: random.c:332
 msgid "invalid second argument 'size'"
 msgstr "niepoprawny drugi argument 'size'"
 
-# stats/src/rcont.c: 83
-# error(_("rcont2 [%d,%d]: exp underflow to 0; algorithm failure"), l, m)
 #: rcont.c:83
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
 msgstr "rcont2 [%d,%d]: wyrażenie spadło do 0; niepowodzenie algorytmu"
 
-# stats/src/smooth.c: 101
-# error(_("invalid end-rule for running median of 3: %d"),	end_rule)
 #: smooth.c:101
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
 msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
 
-# stats/src/starma.c: 366
-# error(_("missing value in last %d observations"), d)
 #: starma.c:366
 #, c-format
 msgid "missing value in last %d observations"
