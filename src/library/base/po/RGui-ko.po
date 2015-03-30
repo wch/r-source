@@ -1,21 +1,22 @@
 # Korean translation for R base package
 # src/library/base/po/RGui-ko.po
+#
 # Copyright (C) 1995-2015 The R Core Team
-#
+# 
 # This file is distributed under the same license as the R base package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
 #
-# Reviewing source codes for translation was completed (17-JAN-2015)
-# QC: PASS
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 # Bug-reports are processed (17-JAN-2015)
-# Freezed on 06-FEB-2015 for R-3.1.3
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2015-02-09 08:52+0000\n"
-"PO-Revision-Date: 2015-02-08 21:30-0600\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
@@ -116,8 +117,7 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 바로 이전문자를 삭제합니다;\n"
 
 #: src/gnuwin32/console.c:2245
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 또는 Ctrl+K: 현재 문자부터 라인의 끝까지 삭제합니다.\n"
 
 #: src/gnuwin32/console.c:2246
@@ -129,26 +129,16 @@ msgid "  Copy and paste.\n"
 msgstr "  복사하여 붙여넣기.\n"
 
 #: src/gnuwin32/console.c:2248
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하"
-"세요. \n"
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     복사할 텍스트를 선택하기 위해서는 (좌측 버튼을 누른채로) 마우스를 이용하세요. \n"
 
 #: src/gnuwin32/console.c:2249
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 "
-"사용합니다. \n"
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     선택된 텍스트를 클립보드에 복사하기 위해서는 Shift+Del (또는 Ctrl+C)를 사용합니다. \n"
 
 #: src/gnuwin32/console.c:2250
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V "
-"혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     클립보드에 있는 내용을 콘솔에 붙여넣고자 한다면 Shift+Ins (또는 Ctrl+V 혹은 Ctrl+Y)를 사용할 수 있습니다.\n"
 
 #: src/gnuwin32/console.c:2251
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -164,8 +154,7 @@ msgstr "     Ctrl+L: 콘솔화면을 깨끗하게 정리해 줍니다.\n"
 
 #: src/gnuwin32/console.c:2254
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr ""
-"     Ctrl+O 또는 INS: 덮어쓰기 모드로 전환합니다: 처음에는 꺼져있습니다.\n"
+msgstr "     Ctrl+O 또는 INS: 덮어쓰기 모드로 전환합니다: 처음에는 꺼져있습니다.\n"
 
 #: src/gnuwin32/console.c:2255
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -200,8 +189,7 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-"TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니"
-"다.\n"
+"TAB키를 이용하여 현재 입력중인 단어에 대한 자동완성기능을 살펴볼 수 있습니다.\n"
 "\n"
 
 #: src/gnuwin32/console.c:2260
@@ -210,8 +198,7 @@ msgstr "표준 윈도우즈 핫키들이 그래픽 장치 전환에 사용될 �
 
 #: src/gnuwin32/console.c:2261
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr ""
-"(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
+msgstr "(MDI의 경우 Ctrl+Tab 또는 Ctrl+F6를, SDI의 경우 Alt+Tab을 사용할 수 있습니다)"
 
 #: src/gnuwin32/editor.c:91 src/gnuwin32/editor.c:93
 msgid "R Editor"
@@ -236,8 +223,8 @@ msgstr "파일 '%s'를 저장할 수 없었습니다"
 msgid "Save script as"
 msgstr "다른 이름으로 스크립트를 저장"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
+#: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "스크립트 열기"
 
@@ -259,8 +246,7 @@ msgstr "명령들을 실행중입니다\n"
 
 #: src/gnuwin32/editor.c:609
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr ""
-"R 코드 한 줄 또는 선택한 영역을 실행하고자 한다면, 코드를 먼저 선택한 뒤 \n"
+msgstr "R 코드 한 줄 또는 선택한 영역을 실행하고자 한다면, 코드를 먼저 선택한 뒤 \n"
 
 #: src/gnuwin32/editor.c:610
 msgid "     Press Ctrl-R\n"
@@ -275,15 +261,12 @@ msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr "     툴바에 있는 \"줄 또는 선택영역 실행\" 아이콘을 눌러 주세요\n"
 
 #: src/gnuwin32/editor.c:613
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "이것은 선택된 명령어들을 콘솔로 복사하고 평가할 것입니다.\n"
 
 #: src/gnuwin32/editor.c:614
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
-msgstr ""
-"만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "만약 선택된 명령어들이 없다면, 이것은 단순히 커서가 놓인 라인을 실행하고\n"
 
 #: src/gnuwin32/editor.c:615
 msgid "the cursor by one line.\n"
@@ -302,9 +285,9 @@ msgstr "실행취소"
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
-#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
+#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
+#: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "복사하기"
 
@@ -317,9 +300,8 @@ msgstr "붙여넣기"
 msgid "Delete"
 msgstr "삭제하기"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
-#: src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
+#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "모두 선택하기"
 
@@ -988,8 +970,7 @@ msgstr ""
 "  Ctrl-L 키는 열의 크기를 자동으로 재조정하여 화면을 다시 그려 보여줍니다\n"
 "  Ctrl-C 키는 선택된 셀을 복사합니다\n"
 "  Ctrl-V 키는 선택된 셀을 붙여넣습니다\n"
-"  우측 버튼을 누르면 복사, 붙여넣기, 선태된 열에 대한 자동크기 조절을 할 수 "
-"있는 메뉴를 보여줍니다\n"
+"  우측 버튼을 누르면 복사, 붙여넣기, 선태된 열에 대한 자동크기 조절을 할 수 있는 메뉴를 보여줍니다\n"
 "\n"
 
 #: src/library/utils/src/windows/dataentry.c:1700

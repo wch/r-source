@@ -1,24 +1,28 @@
 # Korean translation for R parallel package
 # src/library/parallel/po/ko.po
-# Copyright (C) 1995-2014 The R Core Team
+# 
+# Copyright (C) 1995-2015 The R Core Team
+#
 # This file is distributed under the same license as the R parallel package.
-# Chel Hee Lee <chl948@mail.usask.ca>, 2008-2014.
+# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
+#
+# Notes:
+# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
+# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
-"PO-Revision-Date: 2014-03-26 20:57-0600\n"
+"PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team:  <chl948@mail.usask.ca>\n"
+"Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
 
 #: fork.c:253 fork.c:256
 msgid "unable to create a pipe"
@@ -43,8 +47,7 @@ msgstr "마스터 프로세스로 연결된 파이프가 없습니다"
 
 #: fork.c:377
 msgid "content to send must be RAW, use serialize() if needed"
-msgstr ""
-"보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
+msgstr "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
 
 #: fork.c:386 fork.c:393 fork.c:717
 msgid "write error, closing pipe to the master"
