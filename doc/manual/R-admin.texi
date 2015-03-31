@@ -118,8 +118,8 @@ before unpacking so that the files will be readable by the target group
 (e.g.,@: @code{umask 022} to be usable by all users).  Keep this
 setting of @code{umask} whilst building and installing.
 
-If you use a recent GNU version of @command{tar} and do this as a root
-account (which on Windows includes accounts with administrator
+If you use a recent @acronym{GNU} version of @command{tar} and do this
+as a root account (which on Windows includes accounts with administrator
 privileges) you may see many warnings about changing ownership.  In
 which case you can use
 
@@ -365,7 +365,8 @@ and so on, as described further below.  This has the advantage of always
 keeping your source tree clean and is particularly recommended when you
 work with a version of @R{} from Subversion.  (You may need
 @acronym{GNU} @command{make} to allow this, and you will need no spaces
-in the path to the build directory.)
+in the path to the build directory.  It is unlikely to work if the
+source directory has previously been used for a build.)
 
 @c For those obtaining @R{} @emph{via} Subversion, one additional step is
 @c necessary:
