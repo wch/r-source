@@ -1,5 +1,5 @@
 
-R version 3.2.0 alpha (2015-03-25 r68078)
+R version 3.2.0 beta (2015-04-02 r68136) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.202 0.006 1.208 0 0 
+Time elapsed:  1.413 0.003 1.417 0 0 
 > 
 > 

@@ -1,5 +1,5 @@
 
-R version 3.2.0 alpha (2015-03-25 r68078)
+R version 3.2.0 beta (2015-04-02 r68136) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -95,4 +95,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.449   0.013   0.452 
+  0.505   0.023   0.521 

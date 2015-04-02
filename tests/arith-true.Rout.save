@@ -1,5 +1,5 @@
 
-R version 3.2.0 alpha (2015-03-25 r68078)
+R version 3.2.0 beta (2015-04-02 r68136) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.16 0.002 0.162 0 0 
+Time elapsed:  0.29 0.003 0.292 0 0 
 > 
