@@ -6859,21 +6859,48 @@ function(dir)
 
     ## Check CITATION file for CRAN needs.
     .check_citation_for_CRAN <- function(cfile, meta) {
-        ## For publishing on CRAN, we need to be able to process package
-        ## CITATION files without having the package installed
-        ## (actually, using only the base and recommended packages),
-        ## which we cannot perfectly emulate when checking.
+        ## For publishing on CRAN, we need to be able to correctly
+        ## process package CITATION files without having the package
+        ## installed (actually, using only the base and recommended
+        ## packages), which we cannot perfectly emulate when checking.
         ## The best we can easily do is reduce the library search path
         ## to the system and site library.  If the package is not
         ## installed there, check directly; otherwise, check for
         ## offending calls likely to cause trouble.
+        ## Note however that in most cases, the issue is calling
+        ## packageDescription() to get the package metadata, instead of
+        ## using 'meta' as passed to readCitationFile() since R 2.8.0.
+        ## Unfortunately, when the package is not installed,
+        ## packageDescription() only warns and returns NA, or a vector
+        ## of NAs if called with specific fields.  Subscripting the
+        ## return value using $ will fail (as this needs lists);
+        ## subscripting by other means, or using specific fields, 
+        ## incorrectly results in NAs.
+        ## The warnings are currently not caught by the direct check.
+        ## (We could need a suitably package-not-found condition for
+        ## reliable analysis: the condition messages are locale
+        ## specific.)
         libpaths <- .libPaths()
         .libPaths(character())
         on.exit(.libPaths(libpaths))
         out <- list()
         if(nzchar(system.file(package = meta["Package"]))) {
-            ccalls <- .find_calls_in_file(cfile, encoding = meta["Encoding"],
-                                          recursive = TRUE)
+            ## Ignore pre-2.8.0 compatibility calls to
+            ## packageDescription() inside
+            ##   if(!exists("meta") || is.null(meta))
+            ccalls <- .parse_code_file(cfile, meta["Encoding"])
+            ind <- vapply(ccalls,
+                          function(e) {
+                              is.call(e) &&
+                              (length(e) == 3L) &&
+                              identical(deparse(e[[1L]]), "if") &&
+                              identical(deparse(e[[2L]]),
+                                        "!exists(\"meta\") || is.null(meta)")
+                          },
+                          NA)
+            if(any(ind))
+                ccalls <- ccalls[!ind]
+            ccalls <- .find_calls(ccalls, recursive = TRUE)
             cnames <-
                 intersect(unique(.call_names(ccalls)),
                           c("packageDescription", "library", "require"))
