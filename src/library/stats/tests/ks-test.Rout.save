@@ -1,5 +1,5 @@
 
-R version 3.2.0 beta (2015-04-02 r68136) -- "Full of Ingredients"
+R version 3.2.0 beta (2015-04-05 r68147) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -114,4 +114,4 @@ In ks.test(round(ds2, 1), "pnorm", exact = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.180   0.017   0.190 
+  0.111   0.010   0.111 
