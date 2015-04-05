@@ -481,9 +481,11 @@ holder(s) are not the authors.  If necessary, this can refer to an
 installed file: the convention is to use file @file{inst/COPYRIGHTS}.
 
 @c DESCRIPTION field Date
-The @samp{Date} field gives the release date of the current
-version of the package.  It is strongly recommended to use the yyyy-mm-dd
-format conforming to the ISO 8601 standard.
+The optional @samp{Date} field gives the @emph{release date} of the
+current version of the package.  It is strongly recommended@footnote{and
+required by @acronym{CRAN}, so checked by @command{R CMD check
+--as-cran}.} to use the @samp{yyyy-mm-dd} format conforming to the ISO
+8601 standard.
 
 The @samp{Depends}, @samp{Imports}, @samp{Suggests}, @samp{Enhances},
 @samp{LinkingTo} and @samp{Additional_repositories} fields are discussed
