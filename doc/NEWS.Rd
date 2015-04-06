@@ -134,9 +134,9 @@
       functions by \R since before \R version 2.14.0) is no longer
       treated as special.
 
-      \item An experimental function \code{returnValue()} has been added
-      to give \code{on.exit()} code access to a function's return
-      value for debugging purposes.
+      \item Function \code{returnValue()} has been added to give
+      \code{on.exit()} code access to a function's return value for
+      debugging purposes.
 
       \item \code{crossprod(x, y)} allows more matrix coercions when
       \code{x} or \code{y} are vectors, now equalling
@@ -144,7 +144,7 @@
       Similarly, \code{tcrossprod(x,y)} and \code{\%*\%} work in more
       cases with vector arguments.
 
-      \item An experimental utility \code{dynGet()} useful for detecting
+      \item Utility function \code{dynGet()} useful for detecting
       cycles, aka infinite recursions.
 
       \item The byte-code compiler and interpreter include new
