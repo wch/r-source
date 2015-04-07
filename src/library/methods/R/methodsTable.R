@@ -1283,7 +1283,7 @@ outerLabels <- function(labels, new) {
 
 ## Assertion: following is unused
 .assignMethodsMetaTable <- function(mlist, generic, where, overwrite = TRUE) {
-    .MlistDeprecated(".assignMethodsMetaTable")
+    .MlistDefunct(".assignMethodsMetaTable")
     tname <- .TableMetaName(generic@generic, generic@package)
     if(overwrite || !exists(tname, envir = where, inherits = FALSE)) {
         table <- .mlistAddToTable(generic, mlist) # asserted never to be called.
@@ -1410,7 +1410,8 @@ listFromMethods <- function(generic, where, table) {
     ## USES THE PATTERN OF class#class#.... in the methods tables
     nargs <- nchar(unique(gsub("[^#]","", allNames)))+1
     if(length(nargs) > 1L) {
-        warning("something weird:  inconsistent number of args in methods table strings:", paste(nargs,collapse = ", ")," (using the largest value)",
+	warning("something weird:  inconsistent number of args in methods table strings:",
+		paste(nargs,collapse = ", ")," (using the largest value)",
                 domain = NA)
         nargs <- max(nargs)
     }

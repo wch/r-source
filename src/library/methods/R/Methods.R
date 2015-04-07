@@ -345,7 +345,7 @@ getMethods <-
     function(f, where = topenv(parent.frame()), table = FALSE)
 {
     if(!table)
-      .MlistDeprecated("getMethods", "findMethods")
+      .MlistDefunct("getMethods", "findMethods")
     nowhere <- missing(where)
     fdef <- getGeneric(f, where = where)
     f <- fdef@generic
