@@ -613,6 +613,10 @@
       \item \sQuote{Abbreviated} locale-specific day and month names
       could have been truncated in those rare locales where there are
       the same as the full names.
+
+      \item An irrelevant warning message from updating subclass
+      information was silenced (the namespace would not be writable
+      in this case).
     }
   }
 }
