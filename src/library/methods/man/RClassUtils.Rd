@@ -1,7 +1,7 @@
 % File src/library/methods/man/RClassUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
-% Copyright 2008-2011 The R Foundation
+% Copyright 1995-2015 R Core Team
+% Copyright 2008-2015 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{RClassUtils}
@@ -297,10 +297,12 @@ setDataPart(object, value, check = TRUE)
         and, if appropriate, the package from which the class came.
     }
 
-    \item{\code{.classEnv}: }{
+    \item{\code{.classEnv}: }{% is called from C level  R_check_class_etc()
         Returns the environment, typically a namespace, in which the
-        \code{Class} has been defined.
-	%% is called from C level  R_check_class_etc()
+        \code{Class} has been defined.  \code{Class} should typically be
+        the result of \code{\link{class}()} (and hence contain a
+        \code{"package"} attribute) or \code{\link{getClass}} (or
+        \code{\link{getClassDef}}).
     }
 
     \item{\code{completeExtends}:}{
@@ -397,9 +399,10 @@ if(get4 <- !any("package:stats4" == search()))
 stopifnot(TRUE
  , identical(.classEnv("data.frame"), meth.ns)
  , identical(.classEnv(class(new("data.frame"))), meth.ns)
+ , identical(.classEnv(     "mle"       ), meth.ns) # <- *not* 'stats4'
  , identical(.classEnv(class(new("mle"))), asNamespace("stats4"))
+ , identical(.classEnv(getClass ("mle") ), asNamespace("stats4"))
  )
 if(get4) detach("package:stats4")
-
 }
 \keyword{internal}
