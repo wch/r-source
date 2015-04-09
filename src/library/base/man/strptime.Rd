@@ -178,7 +178,7 @@ strptime(x, format, tz = "")
   first three letters of the capitalized English name: this convention
   is widely used in English-language locales but for example the French
   month abbreviations are not the same on any two of Linux, OS X, Solaris
-  and Windows). Knowing what the abbrevations are is essential
+  and Windows). Knowing what the abbreviations are is essential
   if you wish to use \code{\%a}, \code{\%b} or \code{\%h} as part of an
   input format: see the examples for how to check.
 % Unlike Dominic Comtois in non-bug PR#16301
