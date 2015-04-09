@@ -967,8 +967,8 @@ CRAN package @CRANpkg{BH} and almost all users of
 For another use of @samp{LinkingTo} see @ref{Linking to native routines
 in other packages}.
 
-@c DESCRIPTION field Addiitonal_repositories
-The @samp{Addiitonal_repositories} field is a comma-separated list of
+@c DESCRIPTION field Additional_repositories
+The @samp{Additional_repositories} field is a comma-separated list of
 repository URLs where the packages named in the other fields may be
 found.  It is currently used by @command{R CMD check} to check that the
 packages can be found, at least as source packages (which can be
