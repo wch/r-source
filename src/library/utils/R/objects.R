@@ -234,16 +234,14 @@ function(s3, s4, byclass)
               class="MethodsFunction")
 }
 
-print.MethodsFunction <-
-function(x, ...)
+print.MethodsFunction <- function(x, byclass = attr(x, "byclass"), ...)
 {
     info <- attr(x, "info")
-    if (attr(x, "byclass")) {
-        values <- unique(info$generic)
-    } else {
-        visible <- ifelse(info$visible, "", "*")
-        values <- paste0(rownames(info), visible)
-    }
+    values <-
+	if (byclass)
+	    unique(info$generic)
+	else
+	    paste0(rownames(info), visible = ifelse(info$visible, "", "*"))
 
     if (length(values)) {
         print(noquote(values))

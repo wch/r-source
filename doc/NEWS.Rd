@@ -6,6 +6,12 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The \code{print} method for \code{methods()} gains a
+      \code{byclass} argument.
+    }
+  }
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The included versions of \code{zlib}, \code{bzip2},
