@@ -844,6 +844,20 @@ function(dir, installed = FALSE)
     stop("invalid package layout")
 }
 
+### ** .get_repositories
+
+.get_repositories <-
+function()
+{
+    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA)
+    if(is.na(rfile) || !file_test("-f", rfile)) {
+        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+        if(!file_test("-f", rfile))
+            rfile <- file.path(R.home("etc"), "repositories")
+    }
+    .read_repositories(rfile)
+}
+
 ### ** .get_requires_from_package_db
 
 .get_requires_from_package_db <-
@@ -1004,16 +1018,10 @@ function()
            (repos["CRAN"] != "@CRAN@"))
             repos <- repos[nms]
         else {
-            p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-            repos <- if(file_test("-f", p)) {
-                a <- .read_repositories(p)
-                a[nms, "URL"]
-            } else {
-                a <- .read_repositories(file.path(R.home("etc"),
-                                                  "repositories"))
-                c("http://CRAN.R-project.org", a[nms[-1L], "URL"])
-            }
+            repos <- .get_repositories()[nms, "URL"]
             names(repos) <- nms
+            if(repos["CRAN"] == "@CRAN@")
+                repos["CRAN"] <- "http://CRAN.R-project.org"
         }
     }
     repos
