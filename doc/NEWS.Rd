@@ -1007,7 +1007,7 @@
       dendrogram.
 
       \item The \code{plot} method for \code{"hclust"} objects gets an
-      optional argument \code{check}; When that is true (the default) it
+      optional argument \code{check}; when that is true (the default) it
       checks more carefully for valid input.
 
       \item (Windows only) If a user chose to install 64 bit \R but not
