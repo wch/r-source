@@ -624,12 +624,12 @@ function(x)
         s[nzchar(s)]
     }
 
-    cbind_names_and_texts <- function(u, v)
-        cbind(rep_len(u, length(v)), v)
+    cbind_safely <- function(u, v)
+        cbind(rep_len(u, NROW(v)), v)
 
     y <- x[RdTags(x) == "\\section"]
     do.call(rbind,
-            Map(cbind,
+            Map(cbind_safely,
                 get_section_names(y),
                 lapply(y,
                        function(e) {
@@ -638,14 +638,14 @@ function(x)
                            if(any(ind)) {
                                z <- z[ind]
                                do.call(rbind,
-                                       Map(cbind_names_and_texts,
+                                       Map(cbind_safely,
                                            get_section_names(z),
                                            lapply(z,
                                                   function(e)
                                                   get_item_texts(e[[2L]]))))
                            } else {
-                               cbind_names_and_texts(NA_character_,
-                                                     get_item_texts(z))
+                               cbind_safely(NA_character_,
+                                            get_item_texts(z))
                            }
                        })))
 
