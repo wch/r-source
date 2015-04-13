@@ -2061,6 +2061,21 @@ setRlibs <-
                                     indent = 2, exdent = 2), collapse = "\n"),
                       "\nPlease remove them from your package.\n")
         }
+
+        ## Probable leftovers from knitr
+        dirs <- file.path(pkgdir, "vignettes", c("cache", "figure"))
+        dirs <- basename(dirs[dir.exists(dirs)])
+        if(length(dirs)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog0(Log,
+                      if(length(dirs)> 1L) "The following directories look like leftovers from 'knitr':\n"
+                      else "The following directory looks like a leftover from 'knitr':\n",
+                      paste(strwrap(paste(sQuote(dirs), collapse = ", "),
+                                    indent = 2, exdent = 2), collapse = "\n"),
+                      "\nPlease remove from your package.\n")
+        }
+
         if (!any) resultLog(Log, "OK")
     }
 
