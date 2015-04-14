@@ -19,6 +19,7 @@
 \alias{Summary.difftime}
 \alias{[.difftime}
 \alias{mean.difftime}
+\alias{c.difftime}
 \alias{units}
 \alias{units<-}
 \alias{time interval} % used by mean.Rd
