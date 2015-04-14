@@ -6506,8 +6506,10 @@ function(dir)
     if((is.na(language) || language == "en") &&
        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_USE_ASPELL_",
                                         FALSE))) {
-        ignore <- c("[ \t]'[^']*'[ \t[:punct:]]",
-                    "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]")
+        ignore <-
+            list(c("(?<=[ \t[:punct:]])'[^']*'(?=[ \t[:punct:]])",
+                   "(?<=[ \t[:punct:]])[[:alnum:]_.]*\\(\\)(?=[ \t[:punct:]])"),
+                 perl = TRUE)
         a <- utils:::aspell_package_description(dir,
                                                 ignore = ignore,
                                                 control =
