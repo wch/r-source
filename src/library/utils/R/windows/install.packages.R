@@ -282,7 +282,7 @@ menuInstallPkgs <- function(type = getOption("pkgType"))
 menuInstallLocal <- function()
 {
     install.packages(choose.files('',filters=Filters[c('zip','All'),]),
-                     .libPaths()[1L], repos = NULL)
+                     .libPaths()[1L], repos = NULL, type = 'binary')
 }
 
 ### Deprecated in 2.13.0, defunct in 2.14.0
