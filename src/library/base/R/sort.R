@@ -100,7 +100,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
 {
     z <- list(...)
     if(any(unlist(lapply(z, is.object)))) {
-        z <- lapply(z, function(x) if(is.object(x)) xtfrm(x) else x)
+        z <- lapply(z, function(x) if(is.object(x)) as.integer(xtfrm(x)) else x)
         if(!is.na(na.last))
             return(do.call("order", c(z, na.last = na.last,
                                       decreasing = decreasing)))
@@ -111,15 +111,14 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
     }
 
     ## na.last = NA case: remove nas
-    if(any(diff(l.z <- vapply(z, length, 1L)) != 0L))
+    if(any(diff((l.z <- lengths(z)) != 0L)))
         stop("argument lengths differ")
-    ans <- vapply(z, is.na, rep.int(NA, l.z[1L]))
-    ok <- if(is.matrix(ans)) !apply(ans, 1, any) else !any(ans)
+    na <- vapply(z, is.na, rep.int(NA, l.z[1L]))
+    ok <- if(is.matrix(na)) rowSums(na) == 0L else !any(na)
     if(all(!ok)) return(integer())
     z[[1L]][!ok] <- NA
     ans <- do.call("order", c(z, decreasing = decreasing))
-    keep <- seq_along(ok)[ok]
-    ans[ans %in% keep]
+    ans[ok[ans]]
 }
 
 sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
