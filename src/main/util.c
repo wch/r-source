@@ -138,8 +138,7 @@ const static char * const falsenames[] = {
 
 SEXP asChar(SEXP x)
 {
-    if (XLENGTH(x) >= 1) {
-	if (isVectorAtomic(x)) {
+	if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
 	    int w, d, e, wi, di, ei;
 	    char buf[MAXELTSIZE];  /* Probably 100 would suffice */
 
@@ -148,9 +147,9 @@ SEXP asChar(SEXP x)
 		if (LOGICAL(x)[0] == NA_LOGICAL)
 		    return NA_STRING;
 		if (LOGICAL(x)[0])
-		    sprintf(buf, "T");
+		    sprintf(buf, "TRUE");
 		else
-		    sprintf(buf, "F");
+		    sprintf(buf, "FALSE");
 		return mkChar(buf);
 	    case INTSXP:
 		if (INTEGER(x)[0] == NA_INTEGER)
@@ -174,7 +173,6 @@ SEXP asChar(SEXP x)
 	    return x;
 	} else if(TYPEOF(x) == SYMSXP)
 	    return PRINTNAME(x);
-    }
     return NA_STRING;
 }
 

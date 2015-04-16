@@ -19,6 +19,13 @@
       required (see the \sQuote{R Installation and Administration} manual).
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
+      vector, and it returns \dQuote{TRUE}/\dQuote{FALSE} instead of
+      \dQuote{T}/\dQuote{F} for logical vectors.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.2.0}{
