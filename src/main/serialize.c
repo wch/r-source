@@ -1008,7 +1008,8 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    warning(_("namespaces may not be available when loading"));
 #endif
 	    OutInteger(stream, NAMESPACESXP);
-	    OutStringVec(stream, R_NamespaceEnvSpec(s), ref_table);
+	    OutStringVec(stream, PROTECT(R_NamespaceEnvSpec(s)), ref_table);
+	    UNPROTECT(1);
 	}
 	else {
 	    OutInteger(stream, ENVSXP);

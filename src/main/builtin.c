@@ -955,7 +955,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 
     while (el != R_NilValue) {
 	if (CAR(el) == R_DotsSymbol) {
-	    SEXP h = findVar(CAR(el), rho);
+	    SEXP h = PROTECT(findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    SETCDR(tail, CONS(CAR(h), R_NilValue));
@@ -965,6 +965,7 @@ static SEXP expandDots(SEXP el, SEXP rho)
 		}
 	    } else if (h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
+	    UNPROTECT(1); /* h */
 	} else {
 	    SETCDR(tail, CONS(CAR(el), R_NilValue));
 	    tail = CDR(tail);

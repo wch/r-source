@@ -3120,6 +3120,8 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
 	txt = coerceVector(txt, EXPRSXP);
     else if (!isExpression(txt))
 	txt = coerceVector(txt, STRSXP);
+    UNPROTECT(1);
+    PROTECT(txt);
     if (overlapChecking || !draw) {
 	bounds = (LRect *) R_alloc(nx, sizeof(LRect));
     }

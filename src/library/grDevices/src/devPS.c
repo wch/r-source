@@ -1566,7 +1566,8 @@ static SEXP getFontDB(const char *fontdbname) {
     if(TYPEOF(PSenv) == PROMSXP) {
 	PROTECT(PSenv);
 	PSenv = eval(PSenv, graphicsNS);
-	UNPROTECT(1);
+	UNPROTECT(2);
+	PROTECT(PSenv);
     }
     PROTECT(fontdb = findVar(install(fontdbname), PSenv));
     UNPROTECT(3);

@@ -713,10 +713,15 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	    case STRSXP:
 		if (iop == 2 || iop == 3) {
-		    if(!empty && ans_type == INTSXP)
+		    if(!empty && ans_type == INTSXP) {
 			scum = StringFromInteger(icum, &warn);
-		    else if(!empty && ans_type == REALSXP)
+			UNPROTECT(1); /* scum */
+			PROTECT(scum);
+		    } else if(!empty && ans_type == REALSXP) {
 			scum = StringFromReal(zcum.r, &warn);
+			UNPROTECT(1); /* scum */
+			PROTECT(scum);
+		    }
 		    ans_type = STRSXP;
 		    break;
 		}

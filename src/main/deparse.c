@@ -469,13 +469,14 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    res = Rconn_printf(con, "`%s` <-\n", s);
 		if(!havewarned && res < strlen(s) + extra)
 		    warning(_("wrote too few characters"));
-		tval = deparse1(CAR(o), 0, opts);
+		PROTECT(tval = deparse1(CAR(o), 0, opts));
 		for (j = 0; j < LENGTH(tval); j++) {
 		    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 		    if(!havewarned &&
 		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
 			warning(_("wrote too few characters"));
 		}
+		UNPROTECT(1); /* tval */
 		o = CDR(o);
 	    }
 	    if(!wasopen) {endcontext(&cntxt); con->close(con);}
