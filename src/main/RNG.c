@@ -767,13 +767,13 @@ static Int32 KT_next(void)
 static void RNG_Init_R_KT(Int32 seed)
 {
     SEXP fun, sseed, call, ans;
-    fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE);
+    PROTECT(fun = findVar1(install(".TAOCP1997init"), R_BaseEnv, CLOSXP, FALSE));
     if(fun == R_UnboundValue)
 	error("function '.TAOCP1997init' is missing");
     PROTECT(sseed = ScalarInteger((int)(seed % 1073741821)));
     PROTECT(call = lang2(fun, sseed));
     ans = eval(call, R_GlobalEnv);
     memcpy(dummy, INTEGER(ans), 100*sizeof(int));
-    UNPROTECT(2);
+    UNPROTECT(3);
     KT_pos = 100;
 }

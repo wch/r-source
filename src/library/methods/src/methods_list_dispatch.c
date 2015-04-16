@@ -903,12 +903,13 @@ static SEXP dots_class(SEXP ev, int *checkerrP)
     if(call == NULL) {
 	SEXP dotFind, f, R_dots;
 	dotFind = install(".dotsClass");
-	f = findFun(dotFind, R_MethodsNamespace);
+	PROTECT(f = findFun(dotFind, R_MethodsNamespace));
 	R_dots = install("...");
 	call = allocVector(LANGSXP, 2);
 	R_PreserveObject(call);
 	SETCAR(call,f); ee = CDR(call);
 	SETCAR(ee, R_dots);
+	UNPROTECT(1);
     }
     return R_tryEvalSilent(call, ev, checkerrP);
 }

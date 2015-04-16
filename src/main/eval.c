@@ -2859,13 +2859,14 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     generic = PRIMNAME(op);
 
-    lclass = classForGroupDispatch(CAR(args));
+    PROTECT(lclass = classForGroupDispatch(CAR(args)));
 
     if( nargs == 2 )
 	rclass = classForGroupDispatch(CADR(args));
     else
 	rclass = R_NilValue;
 
+    PROTECT(rclass);
     lsxp = R_NilValue; lgr = R_NilValue; lmeth = R_NilValue;
     rsxp = R_NilValue; rgr = R_NilValue; rmeth = R_NilValue;
 
@@ -2882,7 +2883,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     PROTECT(rgr);
 
     if( !isFunction(lsxp) && !isFunction(rsxp) ) {
-	UNPROTECT(2);
+	UNPROTECT(4);
 	return 0; /* no generic or group method so use default */
     }
 
@@ -2901,7 +2902,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    else {
 		warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
 			lname, rname, generic);
-		UNPROTECT(2);
+		UNPROTECT(4);
 		return 0;
 	    }
 	}
@@ -2956,7 +2957,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     }
 
     *ans = applyClosure(t, lsxp, s, rho, newvars);
-    UNPROTECT(8);
+    UNPROTECT(10);
     return 1;
 }
 
