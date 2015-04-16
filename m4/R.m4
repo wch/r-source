@@ -1714,7 +1714,7 @@ AC_DEFUN([R_X11],
 use_X11="no"
 if test -z "${no_x}"; then
   ## now we look for Xt and its header: it seems Intrinsic.h is key.
-  r_save_CPPFLAGS="${CFLAGS}"
+  r_save_CPPFLAGS="${CPPFLAGS}"
   CPPFLAGS="${CPPFLAGS} ${X_CFLAGS}"
   AC_CHECK_HEADER(X11/Intrinsic.h)
   CPPFLAGS="${r_save_CPPFLAGS}"
