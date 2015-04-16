@@ -279,7 +279,7 @@
       locked namespace or namespace imports environment.  Contributed by
       Karl Millar.
 
-      \item New function \code{isLoadedNamespace()} for readability and speed.
+      \item New function \code{isNamespaceLoaded()} for readability and speed.
 
       \item \code{names(env)} now returns all the object names of an
       \code{environment} \code{env}, equivalently to
