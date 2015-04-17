@@ -100,7 +100,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
 {
     z <- list(...)
     if(any(unlist(lapply(z, is.object)))) {
-        z <- lapply(z, function(x) if(is.object(x)) as.integer(xtfrm(x)) else x)
+        z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
         if(!is.na(na.last))
             return(do.call("order", c(z, na.last = na.last,
                                       decreasing = decreasing)))
