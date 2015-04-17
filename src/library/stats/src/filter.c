@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1999-12   The R Core Team
+ *  Copyright (C) 1999-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -109,16 +109,14 @@ SEXP rfilter(SEXP x, SEXP filter, SEXP out)
 
 /* now allows missing values */
 static void
-acf0(double *x, int n, int ns, int nl, int correlation, double *acf)
+acf0(double *x, int n, int ns, int nl, Rboolean correlation, double *acf)
 {
-    int d1 = nl+1, d2 = ns*d1, nu;
-    double sum, *se;
+    int d1 = nl+1, d2 = ns*d1;
 
-    se = (double *) R_alloc(ns, sizeof(double));
     for(int u = 0; u < ns; u++)
 	for(int v = 0; v < ns; v++)
 	    for(int lag = 0; lag <= nl; lag++) {
-		sum = 0.0; nu = 0;
+		double sum = 0.0; int nu = 0;
 		for(int i = 0; i < n-lag; i++)
 		    if(!ISNAN(x[i + lag + n*u]) && !ISNAN(x[i + n*v])) {
 			nu++;
@@ -127,16 +125,19 @@ acf0(double *x, int n, int ns, int nl, int correlation, double *acf)
 		acf[lag + d1*u + d2*v] = (nu > 0) ? sum/(nu + lag) : NA_REAL;
 	    }
     if(correlation) {
-	for(int u = 0; u < ns; u++)
-	    se[u] = sqrt(acf[0 + d1*u + d2*u]);
 	if(n == 1) {
 	    for(int u = 0; u < ns; u++)
 		acf[0 + d1*u + d2*u] = 1.0;
 	} else {
+	    double *se = (double *) R_alloc(ns, sizeof(double));
+	    for(int u = 0; u < ns; u++)
+		se[u] = sqrt(acf[0 + d1*u + d2*u]);
 	    for(int u = 0; u < ns; u++)
 		for(int v = 0; v < ns; v++)
-		    for(int lag = 0; lag <= nl; lag++)
-			acf[lag + d1*u + d2*v] /= se[u]*se[v];
+		    for(int lag = 0; lag <= nl; lag++) { // ensure correlations remain in  [-1,1] :
+			double a = acf[lag + d1*u + d2*v] / (se[u]*se[v]);
+			acf[lag + d1*u + d2*v] = (a > 1.) ? 1. : ((a < -1.) ? -1. : a);
+		    }
 	}
     }
 }
