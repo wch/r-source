@@ -2724,6 +2724,12 @@ SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
    names and a boolean if sorted is desired */
 SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
 {
+    if(IS_USER_DATABASE(env)) {
+	R_ObjectTable *tb = (R_ObjectTable*)
+	    R_ExternalPtrAddr(HASHTAB(env));
+	return(tb->objects(tb));
+    }
+
     /* Step 1 : Compute the Vector Size */
     int k = 0;
     if (env == R_BaseEnv || env == R_BaseNamespace)
