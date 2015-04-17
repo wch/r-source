@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallback.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallback}
@@ -88,35 +88,33 @@ will be called on the completion of the next top-level task.
 }
 \examples{
 times <- function(total = 3, str = "Task a") {
-   ctr <- 0
-
-   function(expr, value, ok, visible) {
+  ctr <- 0
+  function(expr, value, ok, visible) {
     ctr <<- ctr + 1
     cat(str, ctr, "\n")
-    if(ctr == total) {
+    keep.me <- (ctr < total)
+    if (!keep.me)
       cat("handler removing itself\n")
-    }
-    return(ctr < total)
-   }
- }
 
- # add the callback that will work for
- # 4 top-level tasks and then remove itself.
- n <- addTaskCallback(times(4))
-
- # now remove it, assuming it is still first in the list.
- removeTaskCallback(n)
-
-\dontrun{
-# There is no point in running this
-# as
- addTaskCallback(times(4))
-
- sum(1:10)
- sum(1:10)
- sum(1:10)
- sum(1:10)
- sum(1:10)
+    # return
+    keep.me
+  }
 }
+
+# add the callback that will work for
+# 4 top-level tasks and then remove itself.
+n <- addTaskCallback(times(4))
+
+# now remove it, assuming it is still first in the list.
+removeTaskCallback(n)
+
+## See how the handler is called every time till "self distruction":
+
+addTaskCallback(times(4)) # counts as once already
+
+sum(1:10) ; mean(1:3) # two more
+sinpi(1)              # 4th - and "done"
+cospi(1)
+tanpi(1)
 }
 \keyword{environment}
