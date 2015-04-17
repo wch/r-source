@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2012 The R Core Team
+ *  Copyright (C) 1998-2015 The R Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -46,7 +46,8 @@
  *	make CFLAGS='-DDEBUG_pnt -g'
 
  * -- Feb.3, 1999; M.Maechler:
-	- For 't > ncp > 20' (or so)	the result is completely WRONG!
+	- For 't > ncp > 20' (or so)	the result is completely WRONG!  <== no longer true
+	- but for ncp > 100
  */
 
 double pnt(double t, double df, double ncp, int lower_tail, int log_p)
@@ -81,7 +82,7 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	/* Approx. from	 Abramowitz & Stegun 26.7.10 (p.949) */
 	s = 1./(4.*df);
 
-	return pnorm((double)(tt*(1. - s)), del, 
+	return pnorm((double)(tt*(1. - s)), del,
 		     sqrt((double) (1. + tt*tt*2.*s)),
 		     lower_tail != negdel, log_p);
     }

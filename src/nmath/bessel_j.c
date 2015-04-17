@@ -65,7 +65,7 @@ double bessel_j(double x, double alpha)
 	return ML_NAN;
     }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
-    alpha -= (double)(nb-1);
+    alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
 #ifdef MATHLIB_STANDALONE
     bj = (double *) calloc(nb, sizeof(double));
     if (!bj) MATHLIB_ERROR("%s", _("bessel_j allocation error"));

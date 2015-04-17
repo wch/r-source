@@ -145,7 +145,7 @@
 
 #define n_max (100)
 
-/* From R, currently only used for kode = 1, m = 1, n in {0,1,2,3} : */
+/* From R, currently only used for kode = 1, m = 1 : */
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
     const static double bvalues[] = {	/* Bernoulli Numbers */

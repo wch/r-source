@@ -23,19 +23,19 @@ format.object_size <-
     function(x, units = "b", ...)
 {
     units <- match.arg(units, c("b", "auto", "Kb", "Mb", "Gb",
-                                "B", "KB", "MB", "GB"))
+				"B", "KB", "MB", "GB"))
     if (units == "auto") {
-        if (x >= 1024^3) units <- "Gb"
-        else if (x >= 1024^2) units <- "Mb"
-        else if (x >= 1024) units <- "Kb"
-        else units <- "b"
+	if (x >= 1024^3) units <- "Gb"
+	else if (x >= 1024^2) units <- "Mb"
+	else if (x >= 1024) units <- "Kb"
+	else units <- "b"
     }
-     switch(units,
-            "b" =, "B" = paste(x, "bytes"),
-            "Kb" =, "KB" = paste(round(x/1024, 1L), "Kb"),
-            "Mb" =, "MB" = paste(round(x/1024^2, 1L), "Mb"),
-            "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb")
-            )
+    switch(units,
+	   "b" =, "B" = paste(x, "bytes"),
+	   "Kb" =, "KB" = paste(round(x/1024, 1L), "Kb"),
+	   "Mb" =, "MB" = paste(round(x/1024^2, 1L), "Mb"),
+	   "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb")
+	   )
 }
 
 print.object_size <-

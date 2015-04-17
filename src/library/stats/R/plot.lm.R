@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	    text.id(yhn0[show.rs], sqrtabsr[show.rs], show.rs)
         dev.flush()
     }
-    if (show[4L]) {
+    if (show[4L]) { ## Cook's Distances
 	if(id.n > 0) {
 	    show.r <- order(-cook)[iid]# index of largest 'id.n' ones
 	    ymx <- cook[show.r[1L]] * 1.075

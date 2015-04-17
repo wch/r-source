@@ -276,8 +276,10 @@ double logspace_sum (double* logx, int n)
 
 
 
-/* dpois_wrap (x_P_1,  lambda, g_log) ==
- *   dpois (x_P_1 - 1, lambda, g_log) :=  exp(-L)  L^k / gamma(k+1) ,  k := x_P_1 - 1
+/* dpois_wrap (x__1, lambda) := dpois(x__1 - 1, lambda);  where
+ * dpois(k, L) := exp(-L) L^k / gamma(k+1)  {the usual Poisson probabilities}
+ *
+ * and  dpois*(.., give_log = TRUE) :=  log( dpois*(..) )
 */
 static double
 dpois_wrap (double x_plus_1, double lambda, int give_log)

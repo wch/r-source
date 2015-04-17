@@ -3379,7 +3379,7 @@ double GExpressionHeight(SEXP expr, GUnit units, pGEDevDesc dd)
  * Could be removed if Rgraphics.h ever gets REPLACED by new API
  * NOTE that base graphics code no longer calls this -- the base
  * graphics system directly calls the graphics engine for mathematical
- * annotation (GEMathText)
+ * annotation (GEMathText in ../../../main/plotmath.c )
  */
 void GMathText(double x, double y, int coords, SEXP expr,
 	       double xc, double yc, double rot,
