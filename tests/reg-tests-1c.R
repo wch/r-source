@@ -724,9 +724,8 @@ stopifnot(identical( MI, as.integer( MI + 0.99)),
 
 
 ## Ensure that sort() works with a numeric vector "which is an object":
-fm1 <- lm(y ~ ., freeny)
-stopifnot(is.object(r1 <- fm1$residuals))
-stopifnot(diff(sort(r1)) > 0)
+stopifnot(is.object(y <- freeny$y))
+stopifnot(diff(sort(y)) > 0)
 ## order() and hence sort() failed here badly for a while around 2015-04-16
 
 
