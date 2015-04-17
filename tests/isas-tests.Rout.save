@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-04-05 r68147) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-04-16 r68190) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1330,7 +1330,7 @@ IS: [1] TRUE
 > res <- try(as.numeric_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 > if(!inherits(res, 'try-error')) report(is.numeric_version(res))
 [1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
@@ -1339,7 +1339,7 @@ In lapply(strsplit(x[ok], "[.-]"), as.integer) :
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 > if(!inherits(res, 'try-error')) report(is.package_version(res))
 [1] TRUE
 > res <- try(as.pairlist( x ), silent = TRUE)
@@ -1451,7 +1451,7 @@ IS: [1] TRUE
 > res <- try(as.numeric_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 > if(!inherits(res, 'try-error'))
 +    report({if(is.numeric_version(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
@@ -1464,7 +1464,7 @@ In lapply(strsplit(x[ok], "[.-]"), as.integer) :
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 > if(!inherits(res, 'try-error'))
 +    report({if(is.package_version(x)) { cat('IS: ');all.equal(x, res, tolerance=0)
 +    } else   !isall.equal(x, res)})
@@ -1569,7 +1569,7 @@ IS: [1] TRUE
 > f <- try(as.numeric_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric_version( f )))
 [1] TRUE
 > f <- try(as.octmode( x ), silent = TRUE)
@@ -1580,7 +1580,7 @@ In lapply(strsplit(x[ok], "[.-]"), as.integer) :
 > f <- try(as.package_version( x ), silent = TRUE)
 Warning message:
 In lapply(strsplit(x[ok], "[.-]"), as.integer) :
-  inaccurate integer conversion in coercion
+  NAs introduced by coercion to integer range
 >   if(!inherits(f, 'try-error')) report(identical(f, as.package_version( f )))
 [1] TRUE
 > f <- try(as.pairlist( x ), silent = TRUE)
@@ -2568,6 +2568,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.14 0.011 0.15 0 0 
+Time elapsed:  0.159 0.021 0.18 0 0 
 > 
 > 

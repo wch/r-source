@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-04-05 r68147) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-04-16 r68190) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -550,7 +550,7 @@ b 1.2+11i 2.4+23.141593i
 > 
 > e1 <- tryCatch(options(max.print=Inf), error=function(e)e)
 Warning message:
-In options(max.print = Inf) : NAs introduced by coercion
+In options(max.print = Inf) : NAs introduced by coercion to integer range
 > e2 <- tryCatch(options(max.print= 0),  error=function(e)e)
 > stopifnot(inherits(e1, "error"))
 > 
