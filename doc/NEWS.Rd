@@ -34,6 +34,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.2.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{acf()} and \code{ccf()} now guarantee values strictly
+      in \eqn{[-1,1]} (instead of sometimes very slightly outside). \PR{15832}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.2.0}{
   \subsection{NEW FEATURES}{
     \itemize{

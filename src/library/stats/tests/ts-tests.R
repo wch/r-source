@@ -49,6 +49,12 @@ tsdiag(fit1)
 (fit3 <- arima(presidents, c(3, 0, 0)))  # smaller AIC
 tsdiag(fit3)
 
+## Short example for bug PR#15832:
+e <- rep(c(1.48e-6, 1.49e-6, 1.5e-6, 1.51e-6), c(2,3,9,7))
+stopifnot(abs(acf(e, plot=FALSE)$acf) <= 1)
+## Failed for R <= 3.2.0
+
+
 
 ### tests of arima:
 arima(USAccDeaths, order = c(0,1,1), seasonal = list(order=c(0,1,1)))
