@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2014  The R Core Team
- *  Copyright (C) 2003-2009 The R Foundation
+ *  Copyright (C) 1997-2015  The R Core Team
+ *  Copyright (C) 2003-2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ IntegerFromReal(double x, int *warn)
 {
     if (ISNAN(x))
 	return NA_INTEGER;
-    else if (x > INT_MAX || x <= INT_MIN ) {
+    else if (x >= INT_MAX+1. || x <= INT_MIN ) {
 	*warn |= WARN_NA;
 	return NA_INTEGER;
     }
@@ -138,7 +138,7 @@ IntegerFromComplex(Rcomplex x, int *warn)
 {
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
-    else if (x.r > INT_MAX || x.r <= INT_MIN ) {
+    else if (x.r > INT_MAX+1. || x.r <= INT_MIN ) {
 	*warn |= WARN_NA;
 	return NA_INTEGER;;
     }
@@ -156,14 +156,22 @@ IntegerFromString(SEXP x, int *warn)
     if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
 	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp)) {
+#ifdef _R_pre_Version_3_3_0
 	    if (xdouble > INT_MAX) {
 		*warn |= WARN_INACC;
 		return INT_MAX;
 	    }
 	    else if(xdouble < INT_MIN+1) {
 		*warn |= WARN_INACC;
-		return INT_MIN;
+		return INT_MIN;// <- "wrong" as INT_MIN == NA_INTEGER currently; should have used IN_MIN+1
 	    }
+#else
+	    // behave the same as IntegerFromReal() etc:
+	    if (xdouble >= INT_MAX+1. || xdouble <= INT_MIN ) {
+		*warn |= (WARN_NA | WARN_INACC);
+		return NA_INTEGER;
+	    }
+#endif
 	    else
 		return (int) xdouble;
 	}
@@ -2445,7 +2453,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'args' must be a list or expression"));
 #else
     if (!isNull(args) && !isNewList(args))
-	error(_("'args' must be a list"));
+        error(_("'%s' must be a list"), "args");
 #endif
 
     if (!isEnvironment(envir))

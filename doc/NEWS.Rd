@@ -24,6 +24,12 @@
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
       vector, and it returns \dQuote{TRUE}/\dQuote{FALSE} instead of
       \dQuote{T}/\dQuote{F} for logical vectors.
+
+      %% Plan to port to 3.2.0 patched:
+      \item \code{as.integer("111111111111")} now gives NA (with a warning) as
+      it does for the corresponding numeric or negative number
+      coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
+      (instead of NA) when M is the maximal representable integer.
     }
   }
 }
