@@ -723,4 +723,12 @@ stopifnot(identical( MI, as.integer( MI + 0.99)),
 ## The two cases with positive numbers  failed in R <= 3.2.0
 
 
+## Ensure that sort() works with a numeric vector "which is an object":
+fm1 <- lm(y ~ ., freeny)
+stopifnot(is.object(r1 <- fm1$residuals))
+stopifnot(diff(sort(r1)) > 0)
+## order() and hence sort() failed here badly for a while around 2015-04-16
+
+
+
 proc.time()
