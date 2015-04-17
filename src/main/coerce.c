@@ -41,7 +41,7 @@
 
 /* Coercion warnings will be OR'ed : */
 #define WARN_NA	   1
-#define WARN_INACC 2
+#define WARN_INT_NA 2
 #define WARN_IMAG  4
 #define WARN_RAW  8
 
@@ -75,8 +75,8 @@ void attribute_hidden CoercionWarning(int warn)
 */
     if (warn & WARN_NA)
 	warning(_("NAs introduced by coercion"));
-    if (warn & WARN_INACC)
-	warning(_("inaccurate integer conversion in coercion"));
+    if (warn & WARN_INT_NA)
+	warning(_("NAs introduced by coercion to integer range"));
     if (warn & WARN_IMAG)
 	warning(_("imaginary parts discarded in coercion"));
     if (warn & WARN_RAW)
@@ -127,7 +127,7 @@ IntegerFromReal(double x, int *warn)
     if (ISNAN(x))
 	return NA_INTEGER;
     else if (x >= INT_MAX+1. || x <= INT_MIN ) {
-	*warn |= WARN_NA;
+	*warn |= WARN_INT_NA;
 	return NA_INTEGER;
     }
     return (int) x;
@@ -139,7 +139,7 @@ IntegerFromComplex(Rcomplex x, int *warn)
     if (ISNAN(x.r) || ISNAN(x.i))
 	return NA_INTEGER;
     else if (x.r > INT_MAX+1. || x.r <= INT_MIN ) {
-	*warn |= WARN_NA;
+	*warn |= WARN_INT_NA;
 	return NA_INTEGER;;
     }
     if (x.i != 0)
@@ -158,17 +158,17 @@ IntegerFromString(SEXP x, int *warn)
 	if (isBlankString(endp)) {
 #ifdef _R_pre_Version_3_3_0
 	    if (xdouble > INT_MAX) {
-		*warn |= WARN_INACC;
+		*warn |= WARN_INT_NA;
 		return INT_MAX;
 	    }
 	    else if(xdouble < INT_MIN+1) {
-		*warn |= WARN_INACC;
-		return INT_MIN;// <- "wrong" as INT_MIN == NA_INTEGER currently; should have used IN_MIN+1
+		*warn |= WARN_INT_NA;
+		return INT_MIN;// <- "wrong" as INT_MIN == NA_INTEGER currently; should have used INT_MIN+1
 	    }
 #else
 	    // behave the same as IntegerFromReal() etc:
 	    if (xdouble >= INT_MAX+1. || xdouble <= INT_MIN ) {
-		*warn |= (WARN_NA | WARN_INACC);
+		*warn |= WARN_INT_NA;
 		return NA_INTEGER;
 	    }
 #endif
