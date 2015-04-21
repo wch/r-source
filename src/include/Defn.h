@@ -769,6 +769,9 @@ extern SEXP R_cmpfun(SEXP);
 extern void R_init_jit_enabled(void);
 extern void R_initAsignSymbols(void);
 
+LibExtern SEXP R_CachedScalarReal INI_as(NULL);
+LibExtern SEXP R_CachedScalarInteger INI_as(NULL);
+
 LibExtern int R_num_math_threads INI_as(1);
 LibExtern int R_max_num_math_threads INI_as(1);
 

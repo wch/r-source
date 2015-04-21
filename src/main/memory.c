@@ -1644,6 +1644,9 @@ static void RunGenCollect(R_size_t size_needed)
 	FORWARD_NODE(*sp);
 #endif
 
+    FORWARD_NODE(R_CachedScalarReal);
+    FORWARD_NODE(R_CachedScalarInteger);
+
     /* main processing loop */
     PROCESS_NODES();
 
