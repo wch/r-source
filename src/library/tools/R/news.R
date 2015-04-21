@@ -571,10 +571,13 @@ function(file)
 .extract_news_from_Rd <-
 function(x)
 {
-    .get_Rd_section_names <- function(x)
+    spaces <- function(n)
+        paste(rep.int(" ", n), collapse = "")
+    
+    get_section_names <- function(x)
         sapply(x, function(e) .Rd_get_text(e[[1L]]))
 
-    do_chunk <- function(x) {
+    get_item_texts <- function(x) {
         ## Currently, chunks should consist of a single \itemize list
         ## containing the news items.  Notify if there is more than one
         ## such list, and stop if there is none.
@@ -606,28 +609,28 @@ function(x)
 
         ## Try to find the column offset of the top-level bullets.
         pat <- "^( *)\036.*"
-        off <- min(nchar(sub(pat, "\\1", out[grepl(pat, out)])))
-        pat <- sprintf("^%s\036 ",
-                       paste(rep.int(" ", off), collapse = ""))
+        pos <- grep(pat, out)
+        if(!length(pos)) return(character())
+        off <- min(nchar(sub(pat, "\\1", out[pos])))
+        pat <- sprintf("^%s\036 *", spaces(off))
         s <- sub(pat, "\036", out)
         ## Try to remove some indent for nested material.
-        pat <- sprintf("^%s",
-                       paste(rep.int(" ", off + 2L), collapse = ""))
+        pat <- sprintf("^%s", spaces(off + 2L))
         s <- sub(pat, "", s)
-
+        
         s <- paste(s, collapse = "\n")
-        s <- sub("^[[:space:]]*\036", "", s)
-        s <- sub("[[:space:]]*$", "", s)
-        ## <FIXME>
-        ## Could be more fancy and use \u2022 "if possible".
-        gsub("\036", "*", unlist(strsplit(s, "\n\036", fixed = TRUE)))
-        ## </FIXME>
+        s <- trimws(gsub("\036", "*",
+                         unlist(strsplit(s, "\n\036", fixed = TRUE))))
+        s[nzchar(s)]
     }
+
+    cbind_names_and_texts <- function(u, v)
+        cbind(rep_len(u, length(v)), v)
 
     y <- x[RdTags(x) == "\\section"]
     do.call(rbind,
             Map(cbind,
-                .get_Rd_section_names(y),
+                get_section_names(y),
                 lapply(y,
                        function(e) {
                            z <- e[[2L]]
@@ -635,13 +638,14 @@ function(x)
                            if(any(ind)) {
                                z <- z[ind]
                                do.call(rbind,
-                                       Map(cbind,
-                                           .get_Rd_section_names(z),
+                                       Map(cbind_names_and_texts,
+                                           get_section_names(z),
                                            lapply(z,
                                                   function(e)
-                                                  do_chunk(e[[2L]]))))
+                                                  get_item_texts(e[[2L]]))))
                            } else {
-                               cbind(NA_character_, do_chunk(z))
+                               cbind_names_and_texts(NA_character_,
+                                                     get_item_texts(z))
                            }
                        })))
 
