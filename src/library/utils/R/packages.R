@@ -834,10 +834,7 @@ setRepositories <-
 {
     if(is.null(ind) && !interactive())
         stop("cannot set repositories non-interactively")
-    p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-    if(!file.exists(p))
-        p <- file.path(R.home("etc"), "repositories")
-    a <- tools:::.read_repositories(p)
+    a <- tools:::.get_repositories()
     pkgType <- getOption("pkgType")
     if (pkgType == "both") pkgType <- "source" #.Platform$pkgType
     if (pkgType == "binary") pkgType <- .Platform$pkgType
