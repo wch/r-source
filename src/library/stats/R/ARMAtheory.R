@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ARMAtheory.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,18 +29,21 @@ ARMAacf <- function(ar = numeric(), ma = numeric(), lag.max = r,
                 ar <- c(ar, rep(0, r - p))
                 p <- r
             }
-            A <- matrix(0, p + 1L, 2L * p + 1L)
-            ind <- as.matrix(expand.grid(1L:(p + 1), 1L:(p+1)))[, 2L:1L]
+            p1 <- p + 1L
+            p2.1 <- p + p1 # = 2p + 1
+            A <- matrix(0, p1, p2.1)
+            ind <- seq_len(p1)
+            ind <- as.matrix(expand.grid(ind, ind))[, 2L:1L]
             ind[, 2] <- ind[, 1L] + ind[, 2L] - 1L
             A[ind] <- c(1, -ar)
-            A[,  1L:p] <- A[, 1L:p] + A[, (2L * p + 1L):(p + 2L)]
+            A[, 1L:p] <- A[, 1L:p] + A[, p2.1:(p + 2L)]
             rhs <- c(1, rep(0, p))
             if(q > 0) {
                 psi <- c(1, ARMAtoMA(ar, ma, q))
                 theta <- c(1, ma, rep(0, q+1L))
-                for(k in 1 + 0:q) rhs[k] <- sum(psi * theta[k + 0:q])
+                for(k in 1L + 0:q) rhs[k] <- sum(psi * theta[k + 0:q])
             }
-            ind <- (p+1):1
+            ind <- p1:1
             Acf <- solve(A[ind, ind], rhs)
 	    Acf <- Acf[-1L]/Acf[1L]
         } else Acf <- ar
