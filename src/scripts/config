@@ -61,7 +61,7 @@ Variables:
   CXX1X         C++ compiler command for C++11 code
   CXX1XSTD      flag used to enable C++11 support
   CXX1XFLAGS    C++11 compiler flags
-  CXX1XXPICFLAGS
+  CXX1XPICFLAGS
                 special flags for compiling C++11 code to be turned into
                 a shared library
   DYLIB_EXT	file extension (including '.') for dynamic libraries
