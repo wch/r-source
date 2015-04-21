@@ -20,7 +20,7 @@
      id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
      qqline = TRUE, cook.levels = c(0.5, 1.0),
      add.smooth = getOption("add.smooth"), label.pos = c(4,2),
-     cex.caption = 1)
+     cex.caption = 1, cex.oma.main = 1.25)
 }
 \arguments{
   \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
@@ -29,8 +29,9 @@
     the numbers \code{1:6}.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
-    graphics annotations, see \code{\link{as.graphicsAnnot}}.
-    Can be set to \code{""} or \code{NA} to suppress all captions.
+    graphics annotations, see \code{\link{as.graphicsAnnot}}, of length
+    6, the j-th entry corresponding to \code{which[j]}.  Can be set to
+    \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function.  The useful alternative to
     \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
@@ -57,6 +58,8 @@
   \item{label.pos}{positioning of labels, for the left half and right
     half of the graph respectively, for plots 1-3.}
   \item{cex.caption}{controls the size of \code{caption}.}
+  \item{cex.oma.main}{controls the size of the \code{sub.caption} only if
+    that is \emph{above} the figures when there is more than one.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
@@ -65,7 +68,8 @@
   against fitted values, a Normal Q-Q plot, a
   plot of Cook's distances versus row labels, a plot of residuals
   against leverages, and a plot of Cook's distances against
-  leverage/(1-leverage).  By default, the first three and \code{5} are provided.
+  leverage/(1-leverage).  By default, the first three and \code{5} are
+  provided.
 }
 \details{
   \code{sub.caption}---by default the function call---is shown as

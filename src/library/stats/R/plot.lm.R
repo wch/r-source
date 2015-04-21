@@ -28,7 +28,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
 	  qqline = TRUE, cook.levels = c(0.5, 1.0),
 	  add.smooth = getOption("add.smooth"),
-	  label.pos = c(4,2), cex.caption = 1)
+	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25)
 {
     dropInf <- function(x, h) {
 	if(any(isInf <- h >= 1.0)) {
@@ -327,6 +327,6 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
     }
 
     if (!one.fig && par("oma")[3L] >= 1)
-	mtext(sub.caption, outer = TRUE, cex = 1.25)
+	mtext(sub.caption, outer = TRUE, cex = cex.oma.main)
     invisible()
 }
