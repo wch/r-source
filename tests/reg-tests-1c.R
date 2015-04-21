@@ -713,4 +713,14 @@ stopifnot(all.equal(BB[,"BIC"],
                     sapply(fmLst, function(fm) AIC(fm, k = log(nobs(fm))))))
 ## BIC() was NA unnecessarily in  R < 3.2.0; nobs() was not available eiher
 
+
+## as.integer() close and beyond maximal integer
+MI <- .Machine$integer.max
+stopifnot(identical( MI, as.integer( MI + 0.99)),
+	  identical(-MI, as.integer(-MI - 0.99)),
+	  is.na(as.integer(as.character( 100*MI))),
+	  is.na(as.integer(as.character(-100*MI))))
+## The two cases with positive numbers  failed in R <= 3.2.0
+
+
 proc.time()

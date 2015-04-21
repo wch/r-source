@@ -10,6 +10,11 @@
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly
       in \eqn{[-1,1]} (instead of sometimes very slightly outside). \PR{15832}.
+
+      \item \code{as.integer("111111111111")} now gives NA (with a warning) as
+      it does for the corresponding numeric or negative number
+      coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
+      (instead of NA) when M is the maximal representable integer.
     }
   }
 }
@@ -1000,7 +1005,7 @@
       dendrogram.
 
       \item The \code{plot} method for \code{"hclust"} objects gets an
-      optional argument \code{check}; When that is true (the default) it
+      optional argument \code{check}; when that is true (the default) it
       checks more carefully for valid input.
 
       \item (Windows only) If a user chose to install 64 bit \R but not
