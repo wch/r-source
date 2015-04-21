@@ -1,6 +1,6 @@
 % File src/library/utils/man/news.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{news}
@@ -25,7 +25,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   \item{db}{a news db obtained from \code{news()}.}
 }
 \value{
-  An data frame inheriting from class \code{"news_db"}.
+  A data frame inheriting from class \code{"news_db"}.
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
