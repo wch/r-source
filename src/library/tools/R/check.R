@@ -4052,7 +4052,7 @@ setRlibs <-
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-manual       do not produce the PDF manual",
-            "      --no-vignettes    do not run R code in vignettes",
+            "      --no-vignettes    do not run R code in vignettes nor build outputs",
             "      --no-build-vignettes    do not build vignette outputs",
             "      --run-dontrun     do run \\dontrun sections in the Rd files",
             "      --run-donttest    do run \\donttest sections in the Rd files",
