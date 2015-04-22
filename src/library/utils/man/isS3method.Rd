@@ -25,10 +25,8 @@ isS3method(method, f, class, envir = parent.frame())
     class name.  Used, when \code{method} is not specified.}
   \item{envir}{the \code{\link{environment}} in which the method and its
     generic are searched first, as in \code{\link{getS3method}()}.}
-  }
 }
 %% \details{
-
 %% }
 \value{
   \code{\link{logical}} \code{TRUE} or \code{FALSE}
@@ -44,5 +42,11 @@ isS3method("t.test")      # FALSE
 isS3method("t.data.frame")# TRUE
 isS3method("t.lm")        # FALSE - not existing
 isS3method("t.foo.bar")   # FALSE - not existing
+\dontshow{
+stopifnot(
+  !isS3method("t"), !isS3method("t.test"), !isS3method("qr.coef"), !isS3method("sort.list"),
+  isS3method("t.default"), isS3method("t.ts"), isS3method("t.data.frame"),
+  !isS3method("t.lm"), !isS3method("t.foo.bar"))
+}
 }
 \keyword{methods}
