@@ -740,6 +740,7 @@ setRlibs <-
 
     check_build <- function()
     {
+        ## currently only checks vignettes
         fv <- file.path("build", "vignette.rds")
         if(!file.exists(fv)) return()
         checkingLog(Log, "'build' directory")
@@ -4034,7 +4035,7 @@ setRlibs <-
             "control files are performed.  The package is installed into the log",
             "directory and production of the package PDF manual is tested.",
             "All examples and tests provided by the package are tested to see if",
-            "they run successfully.  Code in the vignettes is tested,",
+            "they run successfully.  By default code in the vignettes is tested,",
             "as is re-building the vignette PDFs.",
             "",
             "Options:",
@@ -4186,7 +4187,7 @@ setRlibs <-
         } else if (a == "--no-rebuild-vignettes") { # pre-3.0.0 version
             stop("'--no-rebuild-vignettes' is defunct: use '--no-build-vignettes' instead",
                  call. = FALSE, domain = NA)
-      } else if (a == "--no-vignettes") {
+        } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
         } else if (a == "--no-manual") {
             do_manual  <- FALSE
