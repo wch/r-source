@@ -2810,7 +2810,8 @@ function(x, ...)
 
 
 .check_package_depends <-
-function(dir, force_suggests = TRUE, check_incoming = FALSE)
+function(dir, force_suggests = TRUE, check_incoming = FALSE,
+         ignore_vignettes = FALSE)
 {
     .check_dependency_cycles <-
         function(db, available = available.packages(),
@@ -2945,7 +2946,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE)
             if(length(m))
                 bad_depends$suggests_but_not_installed <- m
         }
-        if (length(VB)) {
+        if (!ignore_vignettes && length(VB)) {
             ## These need both to be declared and installed
             ## If people explicitly state 'utils' they ought really to
             ## declare it, but skip for now.
@@ -3077,7 +3078,7 @@ function(x, ...)
       if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
           c(.pretty_format2("VignetteBuilder packages required for checking but not installed:", bad), "")
       } else if(length(bad)) {
-          c(sprintf("VignetteBuilder package required for checking but installed: %s", sQuote(bad)), "")
+          c(sprintf("VignetteBuilder package required for checking but not installed: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
@@ -6876,7 +6877,7 @@ function(dir)
         ## packageDescription() only warns and returns NA, or a vector
         ## of NAs if called with specific fields.  Subscripting the
         ## return value using $ will fail (as this needs lists);
-        ## subscripting by other means, or using specific fields, 
+        ## subscripting by other means, or using specific fields,
         ## incorrectly results in NAs.
         ## The warnings are currently not caught by the direct check.
         ## (We could need a suitably package-not-found condition for

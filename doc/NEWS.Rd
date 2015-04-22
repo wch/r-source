@@ -12,6 +12,15 @@
       \code{byclass} argument.
     }
   }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} has a new option
+      \option{--ignore-vignettes} for use with non-Sweave vignettes
+      whose \samp{VignetteBuilder} package is not available.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The included versions of \code{zlib}, \code{bzip2},
@@ -19,6 +28,7 @@
       required (see the \sQuote{R Installation and Administration} manual).
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
