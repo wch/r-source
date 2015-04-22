@@ -743,7 +743,7 @@ setRlibs <-
     check_build <- function()
     {
         ## currently only checks vignettes
-        if (!ignore_vignettes) return()
+        if (ignore_vignettes) return()
         fv <- file.path("build", "vignette.rds")
         if(!file.exists(fv)) return()
         checkingLog(Log, "'build' directory")
