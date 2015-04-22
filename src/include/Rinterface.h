@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006  The R Core Team.
+ *  Copyright (C) 1998--2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,12 +85,12 @@ extern FILE * R_Consolefile;
 extern FILE * R_Outputfile;
 
 
-/* in unix/sys-unix.c */
+/* in ../unix/sys-unix.c */
 void R_setStartTime(void);
 void fpu_setup(Rboolean);
 
-/* in unix/system.c */
-int R_running_as_main_program; 
+/* in ../unix/system.c */
+extern int R_running_as_main_program;
 
 #ifdef CSTACK_DEFNS
 /* duplicating Defn.h */
