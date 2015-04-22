@@ -1344,7 +1344,7 @@ function(parent = parent.frame(), fixup = FALSE)
     env <- list2env(as.list(base::.GenericArgsEnv, all.names=TRUE),
                     hash=TRUE, parent=parent)
     if(fixup) {
-        ## now fixup the operators
+        ## now fixup the operators from (e1,e2) to (x,y)
         for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
                    '==', '!=', '<', '<=', '>=', '>')) {
             fx <- get(f, envir = env)
@@ -1357,6 +1357,7 @@ function(parent = parent.frame(), fixup = FALSE)
 
 ### ** .make_S3_primitive_nongeneric_env
 
+## why not just use  base::.ArgsEnv -- is the parent really important if(is_base)?
 .make_S3_primitive_nongeneric_env <-
 function(parent = parent.frame())
 {
@@ -1366,10 +1367,9 @@ function(parent = parent.frame())
              hash=TRUE, parent=parent)
 }
 
-### ** .make_S3_methods_stop_list
+### ** nonS3methods [was .make_S3_methods_stop_list ]
 
-.make_S3_methods_stop_list <-
-function(package)
+nonS3methods <- function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.

@@ -10,6 +10,10 @@
     \itemize{
       \item The \code{print} method for \code{methods()} gains a
       \code{byclass} argument.
+
+      \item Experimental new functionality for S3 method checking, notably
+      \code{isS3method()}.  Also, the \R \dQuote{language element} names
+      are exported as \code{tools::langElts}.
     }
   }
 

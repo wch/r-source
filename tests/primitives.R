@@ -47,24 +47,17 @@ for(f in ls(.ArgsEnv, all.names=TRUE))
 }
 
 
-## check that all primitives are accounted for in .[Generic]ArgsEnv.
-## and nothing else
-ff <- ls("package:base", all.names=TRUE)
-ff <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
-## NB: there is a another version of this list in tools::undoc()
-lang_elements <-
-    c('$', '$<-', '&&', '(', ':', '<-', '<<-', '=', '@', '@<-',
-      '[', '[<-', '[[', '[[<-', 'break', 'for', 'function', 'if', 'next',
-      'repeat', 'return', 'while', '{', '||', '~')
+## check that all primitives are accounted for in .[Generic]ArgsEnv,
+## apart from the language elements:
+ff <- as.list(baseenv(), all.names=TRUE)
+ff <- names(ff)[vapply(ff, is.primitive, logical(1L))]
 
-known <- c(ls(.GenericArgsEnv, all.names=TRUE),
-           ls(.ArgsEnv, all.names=TRUE),
-           lang_elements)
+known <- c(names(.GenericArgsEnv), names(.ArgsEnv), tools::langElts)
 stopifnot(ff %in% known, known %in% ff)
 
 
 ## check which are not considered as possibles for S4 generic
-ff4 <- names(methods:::.BasicFunsList)
+ff4 <- names(meth.FList <- methods:::.BasicFunsList)
 # as.double is the same as as.numeric
 S4generic <- ff %in% c(ff4, "as.double")
 notS4 <- ff[!S4generic]
@@ -83,7 +76,7 @@ stopifnot(ff4 %in% c(ff, extraS4))
 ## primitives which are not internally generic cannot have S4 methods
 ## unless specifically arranged (e.g. %*%)
 nongen_prims <- ff[!ff %in% ls(.GenericArgsEnv, all.names=TRUE)]
-ff3 <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.logical(x) && !x)]
+ff3 <- ff4[vapply(meth.FList, function(x) is.logical(x) && !x, NA, USE.NAMES=FALSE)]
 ex <- nongen_prims[!nongen_prims %in% c("$", "$<-", "[", "[[" ,"[[<-", "[<-", "%*%", ff3)]
 if(length(ex))
     cat("non-generic primitives not excluded in methods:::.BasicFunsList:",
@@ -94,7 +87,7 @@ stopifnot(length(ex) == 0)
 require(methods)
 setClass("foo", representation(x="numeric", y="numeric"))
 xx <- new("foo",  x=1, y=2)
-S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
+S4gen <- ff4[vapply(meth.FList, is.function, NA, USE.NAMES=FALSE)]
 for(f in S4gen) {
     g <- get(f)
     if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.
@@ -126,7 +119,7 @@ for(f in ls(.GenericArgsEnv, all.names=TRUE)[-(1:15)])
     if (f %in% except) next
     g <- get(f, envir = .GenericArgsEnv)
     an <- names(formals(args(g)))
-    if(length(an) >0 && an[1] == "...") next
+    if(length(an) > 0 && an[1] == "...") next
     an <- an[an != "..."]
     a <- rep(list(NULL), length(an))
     names(a) <- c("zZ", an[-1])
@@ -141,7 +134,7 @@ for(f in ls(.ArgsEnv, all.names=TRUE))
     if (f %in% except) next
     g <- get(f, envir = .ArgsEnv)
     an <- names(formals(args(g)))
-    if(length(an) >0 && an[1] == "...") next
+    if(length(an) > 0 && an[1] == "...") next
     an <- an[an != "..."]
     if(length(an)) {
         a <- rep(list(NULL), length(an))
