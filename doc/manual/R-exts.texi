@@ -4158,7 +4158,7 @@ in batch mode when checking.  So they should behave appropriately in
 both scenarios, conditioning by @code{interactive()} the parts which
 need an operator or observer.  For instance, progress
 bars@footnote{except perhaps the simplest kind as used by
-@code{download.file()} on non-Windows OSes.} are only appropriate in
+@code{download.file()} in non-interactive use.} are only appropriate in
 interactive use, as is displaying help pages or calling @code{View()}
 (see below).
 
