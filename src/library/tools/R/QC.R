@@ -3077,7 +3077,7 @@ function(x, ...)
       if(length(bad <- x$required_for_checking_but_not_installed) > 1L) {
           c(.pretty_format2("VignetteBuilder packages required for checking but not installed:", bad), "")
       } else if(length(bad)) {
-          c(sprintf("VignetteBuilder package required for checking but installed: %s", sQuote(bad)), "")
+          c(sprintf("VignetteBuilder package required for checking but not installed: %s", sQuote(bad)), "")
       },
       if(length(bad <- x$missing_vignette_depends)) {
           c(if(length(bad) > 1L) {
@@ -6874,7 +6874,7 @@ function(dir)
         ## packageDescription() only warns and returns NA, or a vector
         ## of NAs if called with specific fields.  Subscripting the
         ## return value using $ will fail (as this needs lists);
-        ## subscripting by other means, or using specific fields, 
+        ## subscripting by other means, or using specific fields,
         ## incorrectly results in NAs.
         ## The warnings are currently not caught by the direct check.
         ## (We could need a suitably package-not-found condition for
