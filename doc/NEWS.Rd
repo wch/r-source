@@ -9,7 +9,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{utf8ToInt()} now checks that its input is valid UTF-8
-      and return \code{NA} if it is not.
+      and returns \code{NA} if it is not.
     }
   }
   
@@ -26,7 +26,7 @@
       \item Under some circumstances \code{nchar(x, "c")} and
       \code{nchar(x, "w")} would return values (possibly \code{NA}) for
       inputs which were declared to be UTF-8 but were not, or for
-      invalid strings without a declared encoding in a UTF-8 locale.
+      invalid strings without a marked encoding in a multi-byte locale.
     }
   }
 }
