@@ -2158,7 +2158,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	     *	the list of resulting values into the return value.
 	     * Anything else bound to a ... symbol is an error
 	     */
-	    h = findVar(CAR(el), rho);
+	    PROTECT(h = findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    ev = CONS_NR(eval(CAR(h), rho), R_NilValue);
@@ -2173,6 +2173,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    }
 	    else if (h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
+	    UNPROTECT(1); /* h */
 	} else if (CAR(el) == R_MissingArg) {
 	    /* It was an empty element: most likely get here from evalArgs
 	       which may have been called on part of the args. */
@@ -2232,7 +2233,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	 * Anything else bound to a ... symbol is an error
 	*/
 	if (CAR(el) == R_DotsSymbol) {
-	    h = findVar(CAR(el), rho);
+	    PROTECT(h = findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    if (CAR(h) == R_MissingArg)
@@ -2250,6 +2251,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	    }
 	    else if(h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
+	    UNPROTECT(1); /* h */
 	}
 	else {
 	    if (CAR(el) == R_MissingArg ||
@@ -2299,7 +2301,7 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 	/* Is this double promise mechanism really needed? */
 
 	if (CAR(el) == R_DotsSymbol) {
-	    h = findVar(CAR(el), rho);
+	    PROTECT(h = findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    SETCDR(tail, CONS(mkPROMISE(CAR(h), rho), R_NilValue));
@@ -2310,6 +2312,7 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 	    }
 	    else if (h != R_MissingArg)
 		error(_("'...' used in an incorrect context"));
+	    UNPROTECT(1); /* h */
 	}
 	else if (CAR(el) == R_MissingArg) {
 	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));

@@ -232,7 +232,7 @@
 	R_DEV__(lwd) = x;
     }
     else if (streql(what, "mgp")) {
-	value = coerceVector(value, REALSXP);
+	PROTECT(value = coerceVector(value, REALSXP));
 	lengthCheck(what, value, 3);
 	/* Since 1.6.x: Allow negative (S-compatibly): */
 	naRealCheck(REAL(value)[0], what);
@@ -244,6 +244,7 @@
 	R_DEV__(mgp[0]) = REAL(value)[0];
 	R_DEV__(mgp[1]) = REAL(value)[1];
 	R_DEV__(mgp[2]) = REAL(value)[2];
+	UNPROTECT(1);
     }
     else if (streql(what, "mkh")) {
 	lengthCheck(what, value, 1);	x = asReal(value);

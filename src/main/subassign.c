@@ -1274,7 +1274,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 
     if (stretch) {
 	SEXP t = CAR(s);
-	SEXP yi = allocList((int)(stretch - nx));
+	SEXP yi = PROTECT(allocList((int)(stretch - nx)));
 	/* This is general enough for only usage */
 	if(isString(t) && length(t) == stretch - nx) {
 	    SEXP z = yi;
@@ -1282,6 +1282,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y, int ind)
 	    for(i = 0; i < LENGTH(t); i++, z = CDR(z))
 		SET_TAG(z, installTrChar(STRING_ELT(t, i)));
 	}
+	UNPROTECT(1);
 	PROTECT(x = listAppend(x, yi));
 	nx = (int) stretch;
     }
@@ -1962,7 +1963,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
 	xS4 = x;
-        x = R_getS4DataSlot(x, ANYSXP);
+	REPROTECT(x = R_getS4DataSlot(x, ANYSXP), pxidx);
 	if(x == R_NilValue)
 	  errorcall(call, _("no method for assigning subsets of this S4 class"));
     }
