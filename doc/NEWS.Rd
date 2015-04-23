@@ -18,6 +18,9 @@
       \item Experimental new functionality for S3 method checking, notably
       \code{isS3method()}.  Also, the \R \dQuote{language element} names
       are exported as \code{tools::langElts}.
+
+      \item \code{str(x)} now displays \code{"Time-Series"} also for
+      matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
     }
   }
 
