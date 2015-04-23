@@ -1615,16 +1615,24 @@ X'. Click on that, then download the file
 @file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
 X 10.9 and later (Mavericks and Yosemite).
 
-There may be a separate installer package,
-@file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
-later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
-it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
-from mid-2008 on.  For older Intel Macs and some older versions of the
-OS you can in principle (it is little tested) install @R{} from the
-sources.
+@c There may be a separate installer package,
+@c @file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
+@c later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
+@c it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
+@c from mid-2008 on.
+
+Installers for R-patched and R-devel are usually available from
+@uref{http://r.research.att.com}, including a
+@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched which
+runs on OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion,
+Mavericks, Yosemite, @dots{}) which should run on all Macs
+from mid-2008 on.
+
+For older Intel Macs and some older versions of the OS you can in
+principle (it is little tested) install @R{} from the sources.
 
 It is important that if you use a binary installer package that your OS
-is fully updated: run `Software Update' from the Apple menu to be sure.
+is fully updated: look at `Updates' from the `App Store' to be sure.
 (If using XQuartz, check that is current.)
 
 To install, just double-click on the icon of the file you downloaded.
@@ -1732,11 +1740,10 @@ The installation consisted of three Apple packages:
 @code{org.r-project.R.x86_64.fw.pkg},
 @code{org.r-project.R.x86_64.GUI.pkg} and
 @code{org.r-project.x86_64.tcltk.x11} (not all of which need be
-installed). You can use @code{pkgutil --unlink} (not supported by Lion
-or later) to remove their files or @code{pkgutil --forget} if you want
-the Apple Installer to forget about the package without deleting its
-files (useful for the @R{} framework when installing multiple R versions
-in parallel), or after you have deleted the files.
+installed). You can use @code{pkgutil --forget} if you want the Apple
+Installer to forget about the package without deleting its files (useful
+for the @R{} framework when installing multiple R versions in parallel),
+or after you have deleted the files.
 
 Uninstalling the Tcl/Tk component (which is installed under
 @file{/usr/local}) is not simple.  You can list the files it installed
