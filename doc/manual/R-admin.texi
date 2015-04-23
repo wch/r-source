@@ -1615,21 +1615,11 @@ X'. Click on that, then download the file
 @file{R-@value{VERSIONno}-mavericks.pkg} and install it. This runs on OS
 X 10.9 and later (Mavericks and Yosemite).
 
-@c There may be a separate installer package,
-@c @file{R-@value{VERSIONno}-snowleopard.pkg} which runs on OS X 10.6 and
-@c later (Snow Leopard, Lion, Mountain Lion, Mavericks, Yosemite, @dots{});
-@c it is a 64-bit (@cputype{x86_64}) build which should run on all Macs
-@c from mid-2008 on.
-
 Installers for R-patched and R-devel are usually available from
-@uref{http://r.research.att.com}, including a
-@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched which
-runs on OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion,
-Mavericks, Yosemite, @dots{}) which should run on all Macs
-from mid-2008 on.
+@uref{http://r.research.att.com}.
 
-For older Intel Macs and some older versions of the OS you can in
-principle (it is little tested) install @R{} from the sources.
+For some older versions of the OS you can in principle (it is little
+tested) install @R{} from the sources.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Updates' from the `App Store' to be sure.
@@ -1686,8 +1676,7 @@ It has been reported that running @Rapp{} under Yosemite may fail if no
 preferences are stored, so if it fails when launched for the very first
 time, try it again (the first attempt will store some preferences).
 
-Users of @Rapp{} under Mavericks and later need to be aware of the `App
-Nap' feature
+Users of @Rapp{} need to be aware of the `App Nap' feature
 (@uref{https://developer.apple.com/library/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_9.html})
 which can cause @R{} tasks to appear to run very slowly when not
 producing output in the console.  Here are three ways to avoid it:
@@ -1696,12 +1685,6 @@ producing output in the console.  Here are three ways to avoid it:
 @item
 Ensure that the console is completely visible (or at least the activity
 indicator at the top right corner is visible).
-
-@item
-Call @samp{Get Info} on the application (e.g.@: from Finder). This may
-have two tick boxes in the `General' panel: click the one named `Prevent
-App Nap' if it is not already ticked.  (This only available for builds
-made prior to Mavericks.)
 
 @item
 In a Terminal, run
@@ -2129,20 +2112,14 @@ to do so for those with, if @command{make} is available.
 Note that most binary packages including compiled code are tied to a
 particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
 
-You should not attempt to mix-and-match binary packages built for the
-`Snow Leopard' and `Mavericks' @acronym{CRAN} distributions: doing so is
-likely to lead to crashes or failures to load.
-
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
 `Command-line Tools' for @command{Xcode} and compilers which match those
-used to build @R{}: see @ref{OS X}.  (Note that the Fortran compilers
-differ for the `Snow Leopard' and `Mavericks' binary installations of
-@R{}.)
+used to build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
 installed and several packages need X11 installed, including those using
-Tk.  For Mountain Lion and later see @ref{OS X} and @ref{Java (OS X)}.
+Tk.  See @ref{OS X} and @ref{Java (OS X)}.
 
 Tcl/Tk extensions @code{BWidget} and @code{Tktable} are part of the
 Tcl/Tk contained in the @R{} installer.  These are required by a number
@@ -2365,20 +2342,19 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"mac.binary"}: located at @file{bin/macosx/contrib/@var{3.y}} for
-the CRAN build for `Snow Leopard' (and later) for @R{} versions @var{3.y.z},
-containing @file{.tgz} files.
-
-@item 
 @code{"mac.binary.mavericks"}: located at
 @file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN build for
-`Mavericks' (and later) for @R{} versions @var{3.y.z}, containing @file{.tgz} files.
+`Mavericks' (and later) for @R{} versions @var{3.y.z}, containing
+@file{.tgz} files.
 
 @item 
 @code{"mac.binary.leopard"}: located at
 @file{bin/macosx/leopard/contrib/@var{2.y}} for @R{} versions
 @var{2.y.z} and containing @file{.tgz} files.
 @end itemize
+
+(Areas @code{"mac.binary.leopard"} and @code{"mac.binary"} are no longer
+in use.)
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
 can be a concatenation of the @file{DESCRIPTION} files of the packages
@@ -4619,6 +4595,11 @@ the configure flag @option{--disable-largefile} was needed (since
 @section OS X
 @cindex OS X
 
+The instructions here are for @cputype{x86_64} builds on 10.9
+(Mavericks) or later.  In principle @R{} can be built for 10.4 to 10.8
+and for PowerPC or 32-bit Intel Macs but these has not been tested
+recently.
+
 You can build @R{} using Apple's `Command-line Tools for Xcode' and and
 suitable compilers.  You will also need @code{readline} (or to configure
 with @option{--without-readline}), and a Fortran compiler.  Those and
@@ -4628,24 +4609,18 @@ other binary components are available from
 these).
 
 You may also need to install an X sub-system (or you will need to
-configure using option @option{--without-x}): X is part of the standard
-OS X distribution in versions prior to Mountain Lion, but not always
-installed.  For Mountain Lion and later, see
+configure using option @option{--without-x}): see
 @uref{http://xquartz.macosforge.org/}.  (Note that XQuartz will likely
 need to be re-installed after an OS upgrade.)
-
-The instructions here are for @cputype{x86_64} builds on 10.6 (Snow
-Leopard) or later.  In principle @R{} can be built for 10.4.x, 10.5.x
-and for PowerPC or 32-bit Intel Macs but these has not been tested
-recently.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
 becomes the default device when running @R{} at the console and X11
-would only be used for the command-line-@R{} data editor/viewer.  (This
-needs an Objective-C compiler@footnote{These days that is defined by
-Apple's implementation of @code{clang}, so it is strongly recommended to
-use that.} which can compile the source code of @code{quartz()}.)
+would only be used for the command-line-@R{} data editor/viewer and one
+version of Tcl/Tk.  (This needs an Objective-C compiler@footnote{These
+days that is defined by Apple's implementation of @code{clang}, so it is
+strongly recommended to use that.} which can compile the source code of
+@code{quartz()}.)
 
 Use @option{--without-aqua} if you want a standard Unix-alike build:
 apart from disabling @code{quartz()} and the ability to use the build
@@ -4677,57 +4652,12 @@ is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}.}  Apple's
 builds of @command{clang} currently have little or no OpenMP support.
 
-The @acronym{CRAN} `Snow Leopard' distribution of @R{} was built using
-
-@itemize
-@item @command{gcc}
-from an Xcode distribution prior to version 5.  This is a version of gcc
-4.2.1 with an LLVM backend.
-
-@item @command{gfortran}
-from
-@uref{http://cran.r-project.org/bin/macosx/tools/gfortran-4.2.3.pkg}.
-Note that this installs into @file{/usr/local/bin}, so make sure that is
-on your path.  Other compilers from
-@uref{http://r.research.att.com/tools/} can also be used.
-
-@item @command{clang}
-from the Xcode distribution, to compile the Objective-C parts of the
-@code{quartz()} device. 
-@end itemize
-
-To use these, have in @file{config.site} something like
-
-@example
-CC="llvm-gcc-4.2"
-CXX="llvm-g++-4.2"
-F77="gfortran-4.2 -arch x86_64"
-FC=$F77
-OBJC="clang"
-@end example
-
-@noindent
-Full names help to ensure that the intended compilers are used.  In
-particular @command{gcc} is a copy of @command{llvm-gcc-4.2} for Xcode <
-5 but of @command{clang} in Xcode 5.  The recommended Fortran compiler
-defaults to 32-bit, so @code{-arch x86_64} is needed.  (For a 32-bit
-build, use @code{-arch i386} for all compiler commands.)
-
-The OpenMP support in this version of @command{gcc} is problematic, so
-the @acronym{CRAN} build is configured with @option{--disable-openmp}.
-
-
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{http://r.research.att.com/libs/}.  You will
 most likely want at least @code{jpeg}, @code{libpng} and @code{readline}
 (and perhaps @code{tiff}).  @code{pkg-config} is not provided by Apple
 and useful for many packages: it will also be used if present when
 configuring the @code{X11()} device.
-
-Recent versions of OS X ship with @code{zlib} version 1.2.8 and
-@code{bzlib} version 1.0.6, sufficient for the default
-@command{configure} checks.  Mavericks has a recent enough version of
-@code{libcurl}: Snow Leopard does not.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -4739,10 +4669,8 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
-and LAPACK routines.  (Use of @code{Accelerate} with
-@option{--with-lapack} does not work on Snow Leopard: it may work there
-without.)@footnote{It is reported that for some non-Apple toolchains
-@code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
+and LAPACK routines.@footnote{It is reported that for some non-Apple
+toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4754,9 +4682,9 @@ will show the compilers and configuration options used for the
 @noindent
 was used for `Mavericks'.
 
-Configure option @option{--with-internal-tzcode} is the default, as a
-64-bit @code{time_t} is available but the system implementation of time
-zones does not work correctly for times before 1902 or after 2037.
+Configure option @option{--with-internal-tzcode} is the default on OS X,
+as a 64-bit @code{time_t} is available but the system implementation of
+time zones does not work correctly for times before 1902 or after 2037.
 
 The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
@@ -4779,32 +4707,28 @@ versions.
 
 @menu
 * Mavericks and Yosemite::      
-* Lion and Mountain Lion::      
-* Snow Leopard::                
 * Tcl/Tk headers and libraries::  
 * Java (OS X)::                 
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Mavericks and Yosemite, Lion and Mountain Lion, OS X, OS X
+@node Mavericks and Yosemite, Tcl/Tk headers and libraries, OS X, OS X
 @subsection Mavericks and Yosemite
 
-Xcode for Mavericks provides different compilers, headers and libraries from
-earlier versions.  In particular the compilers (even those called
-@command{gcc} and @command{g++}) are based on @command{clang}, and the 
-C++ headers and runtime are from LLVM's @samp{libc++} project).
+For these versions Apple makes available compilers based on
+@command{clang}, and C++ headers and runtime are from LLVM's
+@samp{libc++} project, as part of the `Command Line Tools' (sometimes
+called `Command Line Developer Tools').
 
-The command-line tools can be (re-)installed by @command{xcode-select
---install}.  (If you have a fresh installation of Mavericks, running
-e.g.@: @command{make} in a terminal will offer the installation of the
+These tools can be (re-)installed by @command{xcode-select --install}.
+(If you have a fresh installation of Mavericks/Yosemite, running e.g.@:
+@command{make} in a terminal will offer the installation of the
 command-line tools, or perhaps use the versions from Xcode.  However,
-after an update to Mavericks, you are advised to re-install them.)  They
-are not available under the @samp{Downloads} preference pane in Xcode.
+after an OS update, you are advised to re-install them.)
 
-To use the compilers from the command-line tools for Xcode 5 or 6 with
-the recommended Fortran compiler, have in @file{config.site} something
-like
+To use the compilers from the command-line tools with the recommended
+Fortran compiler, have in @file{config.site} something like
 
 @example
 CC=clang
@@ -4815,43 +4739,7 @@ OBJC=clang
 @end example
 @noindent
 (@code{CC=gcc} and @code{CXX=g++} are slightly different front-ends to
-the same compilers.)  Recent versions of the @acronym{CRAN} binary package
-installer for `Snow Leopard' change the settings in @file{etc/Makeconf}
-to
-@example
-CC = gcc -arch x86_64 -std=gnu99
-CXX g++ -arch x86_64
-F77 = gfortran-4.2 -arch x86_64
-OBJC = gcc -arch x86_64
-OBJCXX = g++ -arch x86_64
-@end example
-when installing on Mavericks.
-
-See the comments under Mountain Lion about X11 and GTK.
-
-If you upgrade to Yosemite you should re-install any of XQuartz, the
-`Command-line Tools for Xcode' and Java which you have installed.
-(Upgrading may partially remove previous versions which can be
-confusing.)
-
-There are some problems with the recommended @command{gfortran} builds
-under Yosemite.  They give warnings and @command{gfortran-4.8} is
-reported to be unable to link packages containing Fortran 9x code.  (The
-solution is to use a compiler built under Yosemite.)
-
-@node Lion and Mountain Lion, Snow Leopard, Mavericks and Yosemite, OS X
-@subsection Lion and Mountain Lion
-
-`Command-line Tools for Xcode' used to be part of the Apple Developer
-Tools (`Xcode') but nowadays need to be installed separately.  They can
-be downloaded from @uref{http://developer.apple.com/devcenter/mac/} (you
-will need to register there: that allows you to download older versions
-available for your OS) or from within some versions of Xcode you can
-install the command-line tools from the @samp{Downloads} pane in the
-@samp{Preferences}.
-
-The X11 system used with Mountain Lion is XQuartz (see above): Lion
-included an X11 system.
+the same compilers.)
 
 To build the graphics devices depending on cairographics, the XQuartz
 path for @command{pkg-config} files needs to be known to
@@ -4875,26 +4763,18 @@ in @file{config.site}.
 For some pre-compiled software, for example the GTK framework,
 @file{/opt/X11/include} may need to be added to the include paths.
 
-If you install the command-line tools for Xcode 4.6.3 you will get the
-compilers used for the CRAN binary distribution: those for Xcode 5 can
-be installed afterwards.
 
+If you upgrade to Yosemite you should re-install any of XQuartz, the
+`Command-line Tools for Xcode' and Java which you have installed.
+(Upgrading may partially remove previous versions which can be
+confusing.)
 
-@node Snow Leopard, Tcl/Tk headers and libraries, Lion and Mountain Lion, OS X
-@subsection Snow Leopard
+There are some problems with the recommended @command{gfortran} builds
+under Yosemite.  They give warnings and @command{gfortran-4.8} is
+reported to be unable to link packages containing Fortran 9x code.  (The
+solution is to use a compiler built under Yosemite.)
 
-A quirk on Snow Leopard is that the X11 libraries are not in the default
-linking path, so something like @samp{LIBS=-L/usr/X11/lib} may be
-required in @file{config.site}, or you can use the @command{configure}
-options @option{--x-includes=/usr/X11/include
---x-libraries=/usr/X11/lib} .
-
-The @acronym{CRAN} binaries are built using Xcode 4.2, a version
-available only to subscribing developers.  It is believed that 3.2.6 (the
-last public free version for Snow Leopard) will work.
-
-
-@node Tcl/Tk headers and libraries, Java (OS X), Snow Leopard, OS X
+@node Tcl/Tk headers and libraries, Java (OS X), Mavericks and Yosemite, OS X
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -4910,19 +4790,17 @@ or
 --with-tcl-config=/usr/local/lib/tclConfig.sh 
 --with-tk-config=/usr/local/lib/tkConfig.sh
 @end example
-Note that this requires a fully-updated X11 installation (XQuartz for
-Mountain Lion and later).
+Note that this requires a fully-updated XQuartz installation.
 
 There is also a native (`Aqua') version of Tcl/Tk which produces widgets
 in the native OS X style: this will not work with @Rapp{} because of
 conflicts over the OS X menu, but for those only using command-line @R{}
 this provides a much more intuitive interface to Tk for experienced Mac
 users.  Most versions of OS X come with Aqua Tcl/Tk libraries, but these
-are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mountain
-Lion and Mavericks).  It is better to install Tcl/Tk 8.6.x or 8.5.x from
-the sources or a binary distribution from
-@uref{http://www.activestate.com/activetcl/downloads}.  Configure @R{}
-with
+are not current (nor recent) versions of Tcl/Tk (8.5.9 in Mavericks).
+It is better to install Tcl/Tk 8.6.x from the sources or a binary
+distribution from @uref{http://www.activestate.com/activetcl/downloads}.
+Configure @R{} with
 @example
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
@@ -4942,15 +4820,13 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on OS X is messy, with Apple essentially
-no longer supporting Java (and what it does support is Java 6, which has
-reached end-of-life).  Snow Leopard and Lion shipped with a Java 6
-runtime (JRE).
+no longer supporting Java.
 
-Mountain Lion and later do not come with an installed JRE, and an OS X
-upgrade removes one if already installed: it is intended to be installed
-at first use.  Check if a JRE is installed by running @command{java
--version} in a @command{Terminal} window: if Java is not installed this
-should prompt you to install it.
+OS X no longer comes with an installed JRE, and an OS X upgrade removes
+one if already installed: it is intended to be installed at first use.
+Check if a JRE is installed by running @command{java -version} in a
+@command{Terminal} window: if Java is not installed this should prompt
+you to install it.
 
 You may want/need to install the latest Java from Oracle (currently Java
 8 from
@@ -4973,7 +4849,7 @@ compiling JNI programs (used by packages @CRANpkg{rJava} and
 JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  The Apple JRE can be
+need some help, e.g.@: by setting @env{JAVA_HOME}.  An Apple JRE can be
 specified explicitly by something like
 @example
 JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
@@ -4989,7 +4865,7 @@ JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home
 @noindent
 The Oracle JDK can be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
@@ -5044,10 +4920,10 @@ svn co https://svn.r-project.org/R-packages/trunk/Mac-GUI
 @end example
 @noindent
 This can be built by loading the @code{R.xcodeproj} project (select the
-@code{R} target and the @code{SnowLeopard64} or @code{Lion64}
-configuration), or from the command-line by e.g.@:
+@code{R} target and a suitable configuration), or from the command-line
+by e.g.@:
 @example
-xcodebuild -target R -configuration SnowLeopard64
+xcodebuild -target R -configuration Release
 @end example
 See also the @file{INSTALL} file in the checkout or directly at
 @uref{https://svn.r-project.org/R-packages/trunk/Mac-GUI/INSTALL}.
@@ -5286,7 +5162,7 @@ The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
 tested.
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.9.0
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.9.2
 needed
 
 @example
@@ -5314,7 +5190,7 @@ be in the
 The compilation can be tuned to a particular cpu: the @acronym{CRAN}
 check system uses @code{-mtune=niagara2}.
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.0
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.2
 needed
 
 @example
@@ -5331,7 +5207,7 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib -L/usr/local/lib"
 32-bit @code{gcc}, and we need @file{/opt/csw/lib} in
 @code{R_LD_LIBRARY_PATH}.)
 
-For an @cputype{amd64} target with @command{gcc}@tie{}4.9.0
+For an @cputype{amd64} target with @command{gcc}@tie{}4.9.2
 we used 
 
 @example
