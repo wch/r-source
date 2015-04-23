@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1365,6 +1365,39 @@ Rboolean mbcsValid(const char *str)
 Rboolean utf8Valid(const char *str)
 {
     return valid_utf8(str, strlen(str)) == 0;
+}
+
+SEXP attribute_hidden do_validUTF8(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (!isString(x))
+	error(_("invalid '%s' argument"), "x");
+    R_xlen_t n = XLENGTH(x);
+    SEXP ans = allocVector(LGLSXP, n); // no allocation below
+    int *lans = LOGICAL(ans);
+    for (R_xlen_t i = 0; i < n; i++)
+	lans[i] = utf8Valid(CHAR(STRING_ELT(x, i)));
+    return ans;
+}
+
+SEXP attribute_hidden do_validEnc(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (!isString(x))
+	error(_("invalid '%s' argument"), "x");
+    R_xlen_t n = XLENGTH(x);
+    SEXP ans = allocVector(LGLSXP, n); // no allocation below
+    int *lans = LOGICAL(ans);
+    for (R_xlen_t i = 0; i < n; i++) {
+	SEXP p = STRING_ELT(x, i);
+	if (IS_BYTES(p) || IS_LATIN1(p)) lans[i] = 1;
+	else if (IS_UTF8(p) || utf8locale) lans[i] = utf8Valid(CHAR(p));
+	else if(mbcslocale) lans[i] = mbcsValid(CHAR(p));
+	else lans[i] = 1;
+    }
+    return ans;
 }
 
 

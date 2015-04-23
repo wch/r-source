@@ -440,6 +440,8 @@ SEXP do_unsetenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unzip(SEXP, SEXP, SEXP, SEXP);
 SEXP NORET do_usemethod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_utf8ToInt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_validEnc(SEXP, SEXP, SEXP, SEXP);
+SEXP do_validUTF8(SEXP, SEXP, SEXP, SEXP);
 SEXP do_vapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);
 SEXP do_warning(SEXP, SEXP, SEXP, SEXP);

@@ -11,6 +11,10 @@
       \item The \code{print} method for \code{methods()} gains a
       \code{byclass} argument.
 
+      \item New functions \code{validEnc()} and \code{validUTF8()} to
+      give access to the validity checks for inputs used by
+      \code{grep()} and friends.
+
       \item Experimental new functionality for S3 method checking, notably
       \code{isS3method()}.  Also, the \R \dQuote{language element} names
       are exported as \code{tools::langElts}.
@@ -43,6 +47,13 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.2.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{utf8ToInt()} now checks that its input is valid UTF-8
+      and returns \code{NA} if it is not.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly
@@ -52,6 +63,11 @@
       it does for the corresponding numeric or negative number
       coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
       (instead of NA) when M is the maximal representable integer.
+
+      \item Under some circumstances \code{nchar(x, "c")} and
+      \code{nchar(x, "w")} would return values (possibly \code{NA}) for
+      inputs which were declared to be UTF-8 but were not, or for
+      invalid strings without a marked encoding in a multi-byte locale.
     }
   }
 }

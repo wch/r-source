@@ -1,7 +1,7 @@
 #  File src/library/base/R/raw.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,3 +36,6 @@ packBits <- function(x, type=c("raw", "integer"))
 
 utf8ToInt <- function(x) .Internal(utf8ToInt(x))
 intToUtf8 <- function(x, multiple=FALSE) .Internal(intToUtf8(x, multiple))
+
+validUTF8 <- function(x) .Internal(validUTF8(x))
+validEnc <- function(x) .Internal(validEnc(x))

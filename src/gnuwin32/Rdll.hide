@@ -1033,6 +1033,8 @@
  do_url
  do_usemethod
  do_utf8ToInt
+ do_validEnc
+ do_validUTF8
  do_vapply
  do_version
  do_warning
