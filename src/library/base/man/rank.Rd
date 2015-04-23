@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -30,7 +30,7 @@ rank(x, na.last = TRUE,
 }
 \details{
   If all components are different (and no \code{NA}s), the ranks are
-  well defined, with values in \code{seq_len(x)}.  With some values equal
+  well defined, with values in \code{seq_along(x)}.  With some values equal
   (called \sQuote{ties}), the argument \code{ties.method} determines the
   result at the corresponding indices.  The \code{"first"} method results
   in a permutation with increasing values at each index set of ties.
@@ -58,7 +58,8 @@ rank(x, na.last = TRUE,
   (whether or not there are any ties).
 }
 \seealso{
-  \code{\link{order}} and \code{\link{sort}}.
+  \code{\link{order}} and \code{\link{sort}};
+  \code{\link{xtfrm}}, see above.
 }
 \examples{
 (r1 <- rank(x1 <- c(3, 1, 4, 15, 92)))
