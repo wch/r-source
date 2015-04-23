@@ -6,6 +6,13 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.2.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{utf8ToInt()} now checks that its input is valid UTF-8
+      and return \code{NA} if it is not.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly
@@ -15,6 +22,11 @@
       it does for the corresponding numeric or negative number
       coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
       (instead of NA) when M is the maximal representable integer.
+
+      \item Under some circumstances \code{nchar(x, "c")} and
+      \code{nchar(x, "w")} would return values (possibly \code{NA}) for
+      inputs which were declared to be UTF-8 but were not, or for
+      invalid strings without a declared encoding in a UTF-8 locale.
     }
   }
 }
