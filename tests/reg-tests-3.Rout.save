@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-04-17 r68202) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-04-22 r68231) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -833,4 +833,52 @@ Loading required package: Matrix
 [1,] 1 4 7 10 1 4 7 10
 [2,] 2 5 8 11 2 5 8 11
 [3,] 3 6 9 12 3 6 9 12
+> 
+> ## Invalid UTF-8 strings
+> x <- c("Jetz", "no", "chli", "z\xc3\xbcrit\xc3\xbc\xc3\xbctsch:",
++        "(noch", "ein", "bi\xc3\x9fchen", "Z\xc3\xbc", "deutsch)",
++        "\xfa\xb4\xbf\xbf\x9f")
+> lapply(x, utf8ToInt)
+[[1]]
+[1]  74 101 116 122
+
+[[2]]
+[1] 110 111
+
+[[3]]
+[1]  99 104 108 105
+
+[[4]]
+ [1] 122 252 114 105 116 252 252 116 115  99 104  58
+
+[[5]]
+[1]  40 110 111  99 104
+
+[[6]]
+[1] 101 105 110
+
+[[7]]
+[1]  98 105 223  99 104 101 110
+
+[[8]]
+[1]  90 252
+
+[[9]]
+[1] 100 101 117 116 115  99 104  41
+
+[[10]]
+[1] NA
+
+> Encoding(x) <- "UTF-8"
+> nchar(x, "b")
+ [1]  4  2  4 15  5  3  8  3  8  5
+> try(nchar(x, "c"))
+Error in nchar(x, "c") : invalid multibyte string 10
+> try(nchar(x, "w"))
+Error in nchar(x, "w") : invalid multibyte string 10
+> nchar(x, "c", allowNA = TRUE)
+ [1]  4  2  4 12  5  3  7  2  8 NA
+> nchar(x, "w", allowNA = TRUE)
+ [1]  4  2  4 12  5  3  7  2  8 NA
+> ## Results differed by platform, but some gave incorrect results on string 10.
 > 
