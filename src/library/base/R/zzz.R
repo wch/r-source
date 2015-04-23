@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ is.name <- is.symbol
     graphicsGenerics <- c("contour", "hist", "identify", "image",
         "lines", "pairs", "plot", "points", "text")
 
-    statsGenerics <- c( "add1", "AIC", "anova", "biplot", "coef",
+    statsGenerics <- c("add1", "AIC", "anova", "biplot", "coef",
         "confint", "deviance", "df.residual", "drop1", "extractAIC",
         "fitted", "formula", "logLik", "model.frame", "model.matrix",
         "predict", "profile", "qqnorm", "residuals", "se.contrast",
@@ -48,6 +48,10 @@ is.name <- is.symbol
         c(baseGenerics, utilsGenerics, graphicsGenerics, statsGenerics)
     tmp
 })
+
+###--- Arguments (for printing and QC analysis) for the .Primitive functions ----
+
+## 1) .ArgsEnv : The non-generics .Primitives :
 
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
@@ -121,7 +125,7 @@ assign("lazyLoadDBfetch", function(key, file, compressed, hook) NULL,
        envir = .ArgsEnv)
 assign("missing", function(x) NULL, envir = .ArgsEnv)
 assign("nargs", function() NULL, envir = .ArgsEnv)
-assign("nzchar", function(x) NULL, envir = .ArgsEnv)
+assign("nzchar", function(x, keepNA=TRUE) NULL, envir = .ArgsEnv)
 assign("oldClass", function(x) NULL, envir = .ArgsEnv)
 assign("oldClass<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("on.exit", function(expr = NULL, add = FALSE) NULL, envir = .ArgsEnv)
@@ -140,6 +144,8 @@ assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
 
+## 2) .GenericArgsEnv : The generic .Primitives :
+
 .S3PrimitiveGenerics <-
   c("anyNA", "as.character", "as.complex", "as.double", "as.environment",
     "as.integer", "as.logical", "as.numeric", "as.raw",
@@ -151,7 +157,7 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
-    ## those with different arglists are overridden below.
+    ## those with different arglists are overridden below
     for(f in .S3PrimitiveGenerics) {
         fx <- function(x) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))

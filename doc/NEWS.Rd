@@ -21,6 +21,10 @@
 
       \item \code{str(x)} now displays \code{"Time-Series"} also for
       matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
+
+      %% Port to 3.2.0 patched, but with *DIFFERENT* default keepNA = FALSE:
+      \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
+      governs how the result for \code{NA}s in \code{x} is determined.
     }
   }
 
@@ -56,7 +60,7 @@
       and returns \code{NA} if it is not.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly

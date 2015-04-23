@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -8,9 +8,9 @@
 \alias{nzchar}
 \title{Count the Number of Characters (or Bytes or Width)}
 \usage{
-nchar(x, type = "chars", allowNA = FALSE)
+nchar(x, type = "chars", allowNA = FALSE, keepNA = NA)
 
-nzchar(x)
+nzchar(x, keepNA = TRUE)
 }
 \description{
   \code{nchar} takes a character vector as an argument and
@@ -28,20 +28,28 @@ nzchar(x)
   \item{allowNA}{logical: should \code{NA} be returned for invalid
     multibyte strings or \code{"bytes"}-encoded strings (rather than
     throwing an error)?}
+  \item{keepNA}{logical: should \code{NA} be returned where ever
+    \code{x} is \code{\link{NA}}?  If false, \code{nchar()} returns
+    \code{2}, as that is the number of printing characters used when
+    strings are written to output.  The default for \code{nchar()},
+    \code{NA}, means to use \code{keepNA = TRUE} unless \code{type} is
+    \code{"width"}.  Used to be (implicitly) hard coded to \code{FALSE}
+    in \R versions \eqn{\le}{<=} 3.2.0.}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
-  three ways
+  three ways (corresponding to the \code{type} argument):
   \describe{
     \item{\code{bytes}}{The number of bytes needed to store the string
       (plus in C a final terminator which is not counted).}
     \item{\code{chars}}{The number of human-readable characters.}
-    \item{\code{width}}{The number of columns \code{cat} will use to
+    \item{\code{width}}{The number of columns \code{\link{cat}} will use to
       print the string in a monospaced font.  The same as \code{chars}
       if this cannot be calculated.}
   }
   These will often be the same, and almost always will be in single-byte
-  locales.  There will be differences between the first two with
+  locales (but note how \code{type} determines the default for
+  \code{keepNA}).  There will be differences between the first two with
   multibyte character sequences, e.g.\sspace{}in UTF-8 locales.
 
   The internal equivalent of the default method of
@@ -50,8 +58,10 @@ nzchar(x)
   passing them through \code{\link{deparse}} first will be required.
 }
 \value{
-  For \code{nchar}, an integer vector giving the sizes of each element,
-  currently always \code{2} for missing values (for \code{NA}).
+  For \code{nchar}, an integer vector giving the sizes of each element.
+  For missing values (i.e., \code{NA}, i.e., \code{\link{NA_character_}}),
+  \code{nchar()} returns \code{\link{NA_integer_}} if \code{keepNA} is
+  true, and \code{2}, the number of printing characters, otherwise.
 
   If \code{allowNA = TRUE} and an element is invalid in a multi-byte
   character set such as UTF-8, its number of characters and the width
@@ -103,6 +113,12 @@ nchar(x)
 # 5  6  6  1 15
 
 nchar(deparse(mean))
-# 18 17
+# 18 17  <-- unless mean differs from base::mean
+
+x[3] <- NA; x
+nchar(x, keepNA= TRUE) #  5  6 NA  1 15
+nchar(x, keepNA=FALSE) #  5  6  2  1 15
+stopifnot(identical(nchar(x     ), nchar(x, keepNA= TRUE)),
+          identical(nchar(x, "w"), nchar(x, keepNA=FALSE)))
 }
 \keyword{character}
