@@ -1,5 +1,5 @@
 
-R version 3.2.0 Patched (2015-04-17 r68202) -- "Full of Ingredients"
+R version 3.2.0 Patched (2015-04-23 r68245) -- "Full of Ingredients"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.291   0.021   0.329 
+  0.190   0.013   0.193 
