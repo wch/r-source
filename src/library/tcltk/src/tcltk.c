@@ -75,6 +75,7 @@ static int R_eval(ClientData clientData,
 	int n = length(expr);
 	for(i = 0 ; i < n ; i++)
 	    ans = eval(VECTOR_ELT(expr, i), R_GlobalEnv);
+	PROTECT(ans);
 	R_Busy(0);
     }
 
@@ -82,7 +83,7 @@ static int R_eval(ClientData clientData,
     if (inherits(ans, "tclObj"))
 	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
-    UNPROTECT(2);
+    UNPROTECT(3);
     return TCL_OK;
 }
 
@@ -119,16 +120,17 @@ static int R_call(ClientData clientData,
     sscanf(argv[1], "%p", &fun);
 
     expr = LCONS( (SEXP)fun, alist);
-    expr = LCONS(s_try, LCONS(expr, R_NilValue));
+    PROTECT(expr = LCONS(s_try, LCONS(expr, R_NilValue)));
 
     R_Busy(1);
-    ans = eval(expr, R_GlobalEnv);
+    PROTECT(ans = eval(expr, R_GlobalEnv));
     R_Busy(0);
 	
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
 	Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
+    UNPROTECT(2);
     return TCL_OK;
 }
 
@@ -145,15 +147,17 @@ static int R_call_lang(ClientData clientData,
 
     SEXP s_try = install("try");
     expr = LCONS(s_try, LCONS(expr, R_NilValue));
+    PROTECT((SEXP)expr);
 
     R_Busy(1);
-    ans = eval((SEXP)expr, (SEXP)env);
+    PROTECT(ans = eval((SEXP)expr, (SEXP)env));
     R_Busy(0);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
 	Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
+    UNPROTECT(2);
     return TCL_OK;
 }
 

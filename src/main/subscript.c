@@ -308,10 +308,11 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    else
 		errorcall(call, _("attempt to select more than one element"));
 	}
+	PROTECT(x);
 	SEXP names = PROTECT(getAttrib(x, R_NamesSymbol));
 	offset = get1index(thesub, names,
 		           xlength(x), pok, i, call);
-	UNPROTECT(1); /* names */
+	UNPROTECT(2); /* x, names */
 	if(offset < 0 || offset >= xlength(x))
 	    errorcall(call, _("no such index at level %d\n"), i+1);
 	if(isPairList(x)) {

@@ -245,9 +245,9 @@ SEXP mc_fork(SEXP sEstranged)
     int pipefd[2]; /* write end, read end */
     int sipfd[2];
     pid_t pid;
+    int estranged = (asInteger(sEstranged) > 0);
     SEXP res = allocVector(INTSXP, 3);
     int *res_i = INTEGER(res);
-    int estranged = (asInteger(sEstranged) > 0);
 
     if (!estranged) {
 	if (pipe(pipefd)) error(_("unable to create a pipe"));

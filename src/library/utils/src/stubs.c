@@ -311,9 +311,9 @@ SEXP shortpath(SEXP paths)
 /* called from tar() */
 SEXP octsize(SEXP size)
 {
+    double s = asReal(size);
     SEXP ans = allocVector(RAWSXP, 11);
     Rbyte *ra = RAW(ans);
-    double s = asReal(size);
     if (!R_FINITE(s) && s >= 0) error("size must be finite and >= 0");
     /* We have to be able to do this on a 32-bit system */
     for (int i = 0; i < 11; i++) {

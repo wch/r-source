@@ -662,21 +662,20 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
     SEXP e, val, args, this_sym, op;
-    int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
+    int i, nargs = length(matched_call)-1, error_flag;
     Rboolean prim_case;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
      * going into an infinite loop of method calls
     */
-    op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
+    PROTECT(op = findVarInFrame3(ev, R_dot_nextMethod, TRUE));
     if(op == R_UnboundValue)
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
-    {PROTECT(e = duplicate(matched_call)); nprotect++;}
+    PROTECT(e = duplicate(matched_call));
     prim_case = isPrimitive(op);
     if(prim_case) {
 	/* retain call to primitive function, suppress method
 	   dispatch for it */
         do_set_prim_method(op, "suppress", R_NilValue, R_NilValue);
-	PROTECT(op); nprotect++; /* needed? */
     }
     else
 	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
@@ -701,7 +700,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     }
     else
 	val = eval(e, ev);
-    UNPROTECT(nprotect);
+    UNPROTECT(2);
     return val;
 }
 
