@@ -1,6 +1,6 @@
 % File src/library/base/man/get.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{get}
@@ -86,7 +86,8 @@ dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
   \code{ifnotfound}).
 }
 \note{
-  The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.
+  The reverse (or \dQuote{inverse}) of \code{a <- get(nam)} is
+  \code{\link{assign}(nam, a)}, assigning \code{a} to name \code{nam}.
 
   \code{inherits = TRUE} is the default for \code{get} in \R
   but not for S where it had a different meaning.
@@ -97,7 +98,16 @@ dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{exists}}, \code{\link{assign}}.
+  \code{\link{exists}} for checking whether an object exists;
+  \code{\link{get0}} for an efficient way of both checking existence and
+  getting an object.
+
+  \code{\link{assign}}, the inverse of \code{get()}, see above.
+
+  Use \code{\link[utils]{getAnywhere}} for searching for an object
+  anywhere, including in other namespaces, and
+  \code{\link[utils]{getFromNamespace}} to find an object in a specific
+  namespace.
 }
 \examples{
 get("\%o\%")
