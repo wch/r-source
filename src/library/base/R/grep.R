@@ -85,9 +85,44 @@ function(pattern, x, offset = 1L, ignore.case = FALSE, value = FALSE,
 }
 
 regexec <-
-function(pattern, text, ignore.case = FALSE,
+function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
-    .Internal(regexec(pattern, text, ignore.case, fixed, useBytes))
+{
+    if(!perl || fixed)
+        return(.Internal(regexec(pattern, text, ignore.case, fixed,
+                                 useBytes)))
+
+    ## For perl = TRUE, re-use regexpr(perl = TRUE) which always
+    ## captures subexpressions.
+
+    match_data_from_pos_and_len <- function(pos, len) {
+        attr(pos, "match.length") <- len
+        pos
+    }
+    
+    m <- regexpr(pattern, text,
+                 ignore.case = ignore.case, useBytes = useBytes, 
+                 perl = TRUE)
+    y <- vector("list", length(text))
+    ind <- (m == -1L)
+    if(any(ind)) {
+        y[ind] <- rep.int(list(match_data_from_pos_and_len(-1L, -1L)),
+                          sum(ind))
+    }
+    ind <- !ind
+    if(any(ind)) {
+        pos <- cbind(m[ind],
+                     attr(m, "capture.start")[ind, , drop = FALSE])
+        len <- cbind(attr(m, "match.length")[ind],
+                     attr(m, "capture.length")[ind, , drop = FALSE])
+        y[ind] <- Map(match_data_from_pos_and_len,
+                      split(pos, row(pos)),
+                      split(len, row(len)))
+    }
+    if(identical(attr(m, "useBytes"), TRUE))
+        y <- lapply(y, `attr<-`, "useBytes", TRUE)
+    y
+}
 
 agrep <-
 function(pattern, x, max.distance = 0.1, costs = NULL,
