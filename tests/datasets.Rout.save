@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-04-23 r68245) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-04-24 r68262) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -47,9 +47,9 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	84 ob
  $ Treatment: Factor w/ 2 levels "nonchilled","chilled": 1 1 1 1 1 1 1 1 1 1 ...
  $ conc     : num  95 175 250 350 500 675 1000 95 175 250 ...
  $ uptake   : num  16 30.4 34.8 37.2 35.3 39.2 39.7 13.6 27.3 37.1 ...
- - attr(*, "formula")=Class 'formula' length 3 uptake ~ conc | Plant
+ - attr(*, "formula")=Class 'formula'  language uptake ~ conc | Plant
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
- - attr(*, "outer")=Class 'formula' length 2 ~Treatment * Type
+ - attr(*, "outer")=Class 'formula'  language ~Treatment * Type
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Ambient carbon dioxide concentration"
@@ -64,9 +64,9 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	578 o
  $ Time  : num  0 2 4 6 8 10 12 14 16 18 ...
  $ Chick : Ord.factor w/ 50 levels "18"<"16"<"15"<..: 15 15 15 15 15 15 15 15 15 15 ...
  $ Diet  : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 1 ...
- - attr(*, "formula")=Class 'formula' length 3 weight ~ Time | Chick
+ - attr(*, "formula")=Class 'formula'  language weight ~ Time | Chick
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
- - attr(*, "outer")=Class 'formula' length 2 ~Diet
+ - attr(*, "outer")=Class 'formula'  language ~Diet
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Time"
@@ -80,7 +80,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	176 o
  $ Run    : Ord.factor w/ 11 levels "10"<"11"<"9"<..: 4 4 4 4 4 4 4 4 4 4 ...
  $ conc   : num  0.0488 0.0488 0.1953 0.1953 0.3906 ...
  $ density: num  0.017 0.018 0.121 0.124 0.206 0.215 0.377 0.374 0.614 0.609 ...
- - attr(*, "formula")=Class 'formula' length 3 density ~ conc | Run
+ - attr(*, "formula")=Class 'formula'  language density ~ conc | Run
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "DNase concentration"
@@ -89,12 +89,10 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	176 o
   ..$ x: chr "(ng/ml)"
 
 ** structure of dataset EuStockMarkets
- mts [1:1860, 1:4] 1629 1614 1607 1621 1618 ...
+ Time-Series [1:1860, 1:4] from 1991 to 1999: 1629 1614 1607 1621 1618 ...
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
   ..$ : chr [1:4] "DAX" "SMI" "CAC" "FTSE"
- - attr(*, "tsp")= num [1:3] 1991 1999 260
- - attr(*, "class")= chr [1:3] "mts" "ts" "matrix"
 
 ** structure of dataset Formaldehyde
 'data.frame':	6 obs. of  2 variables:
@@ -131,7 +129,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	66 ob
  $ Subject: Ord.factor w/ 6 levels "1"<"4"<"2"<"5"<..: 1 1 1 1 1 1 1 1 1 1 ...
  $ time   : num  0.25 0.5 0.75 1 1.25 2 3 4 5 6 ...
  $ conc   : num  1.5 0.94 0.78 0.48 0.37 0.19 0.12 0.11 0.08 0.07 ...
- - attr(*, "formula")=Class 'formula' length 3 conc ~ time | Subject
+ - attr(*, "formula")=Class 'formula'  language conc ~ time | Subject
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Time since drug administration"
@@ -164,7 +162,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	84 ob
  $ height: num  4.51 10.89 28.72 41.74 52.7 ...
  $ age   : num  3 5 10 15 20 25 3 5 10 15 ...
  $ Seed  : Ord.factor w/ 14 levels "329"<"327"<"325"<..: 10 10 10 10 10 10 13 13 13 13 ...
- - attr(*, "formula")=Class 'formula' length 3 height ~ age | Seed
+ - attr(*, "formula")=Class 'formula'  language height ~ age | Seed
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Age of tree"
@@ -181,7 +179,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	35 ob
  $ Tree         : Ord.factor w/ 5 levels "3"<"1"<"5"<"2"<..: 2 2 2 2 2 2 2 4 4 4 ...
  $ age          : num  118 484 664 1004 1231 ...
  $ circumference: num  30 58 87 115 120 142 145 33 69 111 ...
- - attr(*, "formula")=Class 'formula' length 3 circumference ~ age | Tree
+ - attr(*, "formula")=Class 'formula'  language circumference ~ age | Tree
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Time since December 31, 1968"
@@ -210,12 +208,10 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	35 ob
  - attr(*, "reference")= chr "A1.3, p. 269"
 
 ** structure of dataset Seatbelts
- mts [1:192, 1:8] 107 97 102 87 119 106 110 106 107 134 ...
+ Time-Series [1:192, 1:8] from 1969 to 1985: 107 97 102 87 119 106 110 106 107 134 ...
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
   ..$ : chr [1:8] "DriversKilled" "drivers" "front" "rear" ...
- - attr(*, "tsp")= num [1:3] 1969 1985 12
- - attr(*, "class")= chr [1:2] "mts" "ts"
 
 ** structure of dataset Theoph
 Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	132 obs. of  5 variables:
@@ -224,7 +220,7 @@ Classes 'nfnGroupedData', 'nfGroupedData', 'groupedData' and 'data.frame':	132 o
  $ Dose   : num  4.02 4.02 4.02 4.02 4.02 4.02 4.02 4.02 4.02 4.02 ...
  $ Time   : num  0 0.25 0.57 1.12 2.02 ...
  $ conc   : num  0.74 2.84 6.57 10.5 9.66 8.58 8.36 7.47 6.89 5.94 ...
- - attr(*, "formula")=Class 'formula' length 3 conc ~ Time | Subject
+ - attr(*, "formula")=Class 'formula'  language conc ~ Time | Subject
   .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
  - attr(*, "labels")=List of 2
   ..$ x: chr "Time since drug administration"
