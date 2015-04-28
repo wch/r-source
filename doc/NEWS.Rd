@@ -67,6 +67,9 @@
     \itemize{
       \item \code{utf8ToInt()} now checks that its input is valid UTF-8
       and returns \code{NA} if it is not.
+      
+      \item \code{install.packages()} now allows \code{type = "both"}
+      with \code{repos = NULL} if it can infer the type of file.
     }
   }
 

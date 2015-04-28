@@ -31,7 +31,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     file paths of \file{.zip} files containing binary builds of
     packages.  (\code{http://} and \code{file://} URLs are also accepted
     and the files will be downloaded and installed from local copies.)
-    Source directories or file paths or URLs of archives be
+    Source directories or file paths or URLs of archives may be
     specified with \code{type = "source"}, but some packages need
     suitable tools installed (see the \sQuote{Details} section).
 #endif
