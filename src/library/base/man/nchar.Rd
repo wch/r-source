@@ -10,7 +10,7 @@
 \usage{
 nchar(x, type = "chars", allowNA = FALSE, keepNA = NA)
 
-nzchar(x, keepNA = TRUE)
+nzchar(x, keepNA = FALSE)
 }
 \description{
   \code{nchar} takes a character vector as an argument and
@@ -29,12 +29,12 @@ nzchar(x, keepNA = TRUE)
     multibyte strings or \code{"bytes"}-encoded strings (rather than
     throwing an error)?}
   \item{keepNA}{logical: should \code{NA} be returned where ever
-    \code{x} is \code{\link{NA}}?  If false, \code{nchar()} returns
-    \code{2}, as that is the number of printing characters used when
-    strings are written to output.  The default for \code{nchar()},
-    \code{NA}, means to use \code{keepNA = TRUE} unless \code{type} is
-    \code{"width"}.  Used to be (implicitly) hard coded to \code{FALSE}
-    in \R versions \eqn{\le}{<=} 3.2.0.}
+  \code{x} is \code{\link{NA}}?  If false, \code{nchar()} returns
+  \code{2}, as that is the number of printing characters used when
+  strings are written to output, and \code{nzchar()} is \code{TRUE}.  The
+  default for \code{nchar()}, \code{NA}, means to use \code{keepNA = TRUE}
+  unless \code{type} is \code{"width"}.  Used to be (implicitly) hard
+  coded to \code{FALSE} in \R versions \eqn{\le}{<=} 3.2.0.}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
@@ -61,7 +61,7 @@ nzchar(x, keepNA = TRUE)
   For \code{nchar}, an integer vector giving the sizes of each element.
   For missing values (i.e., \code{NA}, i.e., \code{\link{NA_character_}}),
   \code{nchar()} returns \code{\link{NA_integer_}} if \code{keepNA} is
-  true, and \code{2}, the number of printing characters, otherwise.
+  true, and \code{2}, the number of printing characters, if false.
 
   If \code{allowNA = TRUE} and an element is invalid in a multi-byte
   character set such as UTF-8, its number of characters and the width
@@ -77,7 +77,9 @@ nzchar(x, keepNA = TRUE)
   Names, dims and dimnames are copied from the input.
 
   For \code{nzchar}, a logical vector of the same length as \code{x},
-  true if and only if the element has non-zero length.
+  true if and only if the element has non-zero length; if the element is
+  \code{NA}, \code{nzchar()} is true when \code{keepNA} is false, as by
+  default, and \code{NA} otherwise.
 }
 \note{
   This does \strong{not} by default give the number of characters that

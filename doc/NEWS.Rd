@@ -6,6 +6,19 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
+      governs how the result for \code{NA}s in \code{x} is determined.
+      The new default \code{keepNA = TRUE} returns \code{NA} where
+      \code{x} is \code{NA}, unless for \code{type = "width"} which still
+      returns \code{2}, the formatting / printing width of \code{NA}.
+
+      \code{nzchar(x)} gets the same new argument, with default
+      \code{keepNA = FALSE} however.  Consequently \code{nzchar(x)} keeps
+      returning a non-\code{NA} logical vector, back compatibly.
+    }
+  }
   \subsection{NEW FEATURES}{
     \itemize{
       \item The \code{print} method for \code{methods()} gains a
@@ -21,10 +34,6 @@
 
       \item \code{str(x)} now displays \code{"Time-Series"} also for
       matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
-
-      %% Port to 3.2.0 patched, but with *DIFFERENT* default keepNA = FALSE:
-      \item \code{nchar(x, *)} gains a new argument \code{keepNA} which
-      governs how the result for \code{NA}s in \code{x} is determined.
     }
   }
 

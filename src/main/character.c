@@ -113,10 +113,10 @@ SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x))
 	error(_("'%s' requires a character vector"), "nzchar()");
 
-    int keepNA = TRUE;
+    int keepNA = FALSE; // the default
     if(nargs > 1) {
 	keepNA = asLogical(CADR(args));
-	if (keepNA == NA_LOGICAL) keepNA = TRUE;
+	if (keepNA == NA_LOGICAL) keepNA = FALSE;
     }
     R_xlen_t i, len = XLENGTH(x);
     PROTECT(ans = allocVector(LGLSXP, len));

@@ -125,7 +125,7 @@ assign("lazyLoadDBfetch", function(key, file, compressed, hook) NULL,
        envir = .ArgsEnv)
 assign("missing", function(x) NULL, envir = .ArgsEnv)
 assign("nargs", function() NULL, envir = .ArgsEnv)
-assign("nzchar", function(x, keepNA=TRUE) NULL, envir = .ArgsEnv)
+assign("nzchar", function(x, keepNA=FALSE) NULL, envir = .ArgsEnv)
 assign("oldClass", function(x) NULL, envir = .ArgsEnv)
 assign("oldClass<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("on.exit", function(expr = NULL, add = FALSE) NULL, envir = .ArgsEnv)
