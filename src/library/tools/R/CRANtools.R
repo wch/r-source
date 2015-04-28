@@ -173,48 +173,6 @@ function(x, ...)
     invisible(x)
 }
 
-
-## CRAN_check_results <-
-## function()
-## {
-##     ## This allows for partial local mirrors, or to
-##     ## look at a more-freqently-updated mirror
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/check_results.rds"),
-##                      open = "rb"))
-##     results <- readRDS(rds)
-##     close(rds)
-##
-##     results
-## }
-
-## CRAN_check_details <-
-## function()
-## {
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/check_details.rds"),
-##                      open = "rb"))
-##     details <- readRDS(rds)
-##     close(rds)
-##
-##     details
-## }
-
-## CRAN_memtest_notes <-
-## function()
-## {
-##     CRAN_repos <- Sys.getenv("R_CRAN_WEB", getOption("repos")["CRAN"])
-##     rds <- gzcon(url(sprintf("%s/%s", CRAN_repos,
-##                              "web/checks/memtest_notes.rds"),
-##                      open = "rb"))
-##     mtnotes <- readRDS(rds)
-##     close(rds)
-##
-##     mtnotes
-## }
-
 CRAN_baseurl_for_src_area <-
 function()
     .get_standard_repository_URLs()[1L]
