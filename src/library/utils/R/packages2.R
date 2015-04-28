@@ -451,13 +451,15 @@ install.packages <-
                                    method = method, available = av2,
                                    destdir = destdir,
                                    dependencies = NULL,
-                                   libs_only = libs_only, ...)
+                                   libs_only = libs_only,
+                                   quiet = quiet, ...)
             else
                 .install.macbinary(pkgs = bins, lib = lib,
                                    contriburl = contrib.url(repos, type2),
                                    method = method, available = av2,
                                    destdir = destdir,
-                                   dependencies = NULL, ...)
+                                   dependencies = NULL,
+                                   quiet = quiet, ...)
         }
         pkgs <- setdiff(pkgs, bins)
         if(!length(pkgs)) return(invisible())
