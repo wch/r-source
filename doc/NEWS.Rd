@@ -83,10 +83,11 @@
       coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
       (instead of NA) when M is the maximal representable integer.
 
-      \item Under some circumstances \code{nchar(x, "c")} and
-      \code{nchar(x, "w")} would return values (possibly \code{NA}) for
-      inputs which were declared to be UTF-8 but were not, or for
-      invalid strings without a marked encoding in a multi-byte locale.
+      \item On some plaforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
+      would return values (possibly \code{NA}) for inputs which were
+      declared to be UTF-8 but were not, or for invalid strings without a
+      marked encoding in a multi-byte locale, rather than give an
+      error.  Additional check have been added to mitigate this.
     }
   }
 }
