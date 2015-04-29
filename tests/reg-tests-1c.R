@@ -738,4 +738,16 @@ stopifnot(identical(names(d11), dn[[2]]),
 ## note that format(d11) does fail currently, and hence print(), too
 
 
+## Ensure  R -e ..  works on Unix
+if(.Platform$OS.type == "unix" &&
+   file.exists(Rc <- file.path(R.home("bin"), "R")) &&
+   file.access(Rc, mode = 1) == 0) { # 1: executable
+    cmd <- paste(Rc, "-q --vanilla -e 1:3")
+    ans <- system(cmd, intern=TRUE)
+    stopifnot(length(ans) >= 3,
+	      identical(ans[1:2], c("> 1:3",
+				    "[1] 1 2 3")))
+}
+
+
 proc.time()
