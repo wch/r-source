@@ -121,6 +121,7 @@ x[3] <- NA; x
 nchar(x, keepNA= TRUE) #  5  6 NA  1 15
 nchar(x, keepNA=FALSE) #  5  6  2  1 15
 stopifnot(identical(nchar(x     ), nchar(x, keepNA= TRUE)),
-          identical(nchar(x, "w"), nchar(x, keepNA=FALSE)))
+          identical(nchar(x, "w"), nchar(x, keepNA=FALSE)),
+          identical(is.na(x), is.na(nchar(x))))
 }
 \keyword{character}
