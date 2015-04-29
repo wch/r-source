@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -549,20 +549,25 @@ function(file)
     ## Post-process section names to extract versions and dates.
     re_v <- sprintf(".*version[[:space:]]+(%s).*$",
                     .standard_regexps()$valid_package_version)
-    re_d <- sprintf("^.*(%s)[[:punct:][:space:]]*$",
-                    "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}")
-
+    reDt <- "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}"
+    rEnd <- "[[:punct:][:space:]]*$"
+    re_d1 <- sprintf(paste0("^.*(%s)", rEnd), reDt)
+    ## or ending with '(YYYY-MM-DD, <note>)'
+    re_d2 <- sprintf(paste0("^.*\\((%s)[[:punct:]] .*\\)", rEnd), reDt)
     nms <- db[, 1L]
     ind <- grepl(re_v, nms, ignore.case = TRUE)
     if(!all(ind))
-        warning("Cannot extract version info from the following section titles:\n", paste(unique(nms[!ind]), collapse = "  "), sep = "")
+        warning("Cannot extract version info from the following section titles:\n",
+		paste(unique(nms[!ind]), collapse = "  "))
     .make_news_db(cbind(ifelse(ind,
-                               sub(re_v, "\\1", nms, ignore.case = TRUE),
-                               NA_character_),
-                        ifelse(grepl(re_d, nms, perl = TRUE),
-                               sub(re_d, "\\1", nms, perl = TRUE),
-                               NA_character_),
-                        db[, 2L],
+			       sub(re_v, "\\1", nms, ignore.case = TRUE),
+			       NA_character_),
+			ifelse(grepl(re_d1, nms, perl = TRUE),
+			       sub(re_d1, "\\1", nms, perl = TRUE),
+			       ifelse(grepl(re_d2, nms, perl = TRUE),
+				      sub(re_d2, "\\1", nms, perl = TRUE),
+				      NA_character_)),
+			db[, 2L],
                         sub("\n*$", "", db[, 3L])),
                   logical(nrow(db)),
                   "news_db_from_Rd")
@@ -573,7 +578,7 @@ function(x)
 {
     spaces <- function(n)
         paste(rep.int(" ", n), collapse = "")
-    
+
     get_section_names <- function(x)
         sapply(x, function(e) .Rd_get_text(e[[1L]]))
 
@@ -617,7 +622,7 @@ function(x)
         ## Try to remove some indent for nested material.
         pat <- sprintf("^%s", spaces(off + 2L))
         s <- sub(pat, "", s)
-        
+
         s <- paste(s, collapse = "\n")
         s <- trimws(gsub("\036", "*",
                          unlist(strsplit(s, "\n\036", fixed = TRUE))))
