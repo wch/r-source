@@ -275,3 +275,6 @@
 ## To force a static link use the line below: this is only needed
 ## if both shared and static libcurl libraries were built.
 ## CURL_LIBS=`curl-config --static-libs`
+
+## Path to the version of pkg-config to be used for locating cairographics.
+## PKGCONF =

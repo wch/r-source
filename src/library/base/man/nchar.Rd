@@ -53,11 +53,11 @@ nzchar(x)
   For \code{nchar}, an integer vector giving the sizes of each element,
   currently always \code{2} for missing values (for \code{NA}).
 
-  If \code{allowNA = TRUE} and an element is invalid in a multi-byte
-  character set such as UTF-8, its number of characters and the width
-  will be \code{NA}.  Otherwise the number of characters will be
-  non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test of
-  validity.
+  If \code{allowNA = TRUE} and an element is detected as invalid in a
+  multi-byte character set such as UTF-8, its number of characters and
+  the width will be \code{NA}.  Otherwise the number of characters will
+  be non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test
+  of validity.
 
   A character string marked with \code{"bytes"} encoding (see
   \code{\link{Encoding}}) has a number of bytes, but neither a known
