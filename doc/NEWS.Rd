@@ -10,12 +10,19 @@
     \itemize{
       \item \code{utf8ToInt()} now checks that its input is valid UTF-8
       and returns \code{NA} if it is not.
-      
+
       \item \code{install.packages()} now allows \code{type = "both"}
       with \code{repos = NULL} if it can infer the type of file.
+
+      \item \code{nchar(x, *)} and \code{nzchar(x)} gain a new argument
+      \code{keepNA} which governs how the result for \code{NA}s in
+      \code{x} is determined.  For the \R 3.2.x series, the default
+      remains \code{FALSE} which is fully back compatible.
+      From \R 3.3.0, the default will change to \code{keepNA = NA} and
+      you are advised to consider this for code portability.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{acf()} and \code{ccf()} now guarantee values strictly
@@ -30,7 +37,7 @@
       would return values (possibly \code{NA}) for inputs which were
       declared to be UTF-8 but were not, or for invalid strings without a
       marked encoding in a multi-byte locale, rather than give an
-      error.  Additional check have been added to mitigate this.
+      error.  Additional checks have been added to mitigate this.
     }
   }
 }
