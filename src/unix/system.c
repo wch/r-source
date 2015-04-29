@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -143,11 +143,23 @@ extern void * __libc_stack_end;
 
 int R_running_as_main_program = 0;
 
-/* In src/main/main.c, to avoid inlining */
+/* In ../main/main.c, to avoid inlining */
 extern uintptr_t dummy_ii(void);
 
 /* Protection against embedded misuse, PR#15420 */
 static int num_initialized = 0;
+
+static void unescape_arg(char *p, char* AV) {
+    /* Undo the escaping done in the front end */
+    char *q;
+    for(q = AV; *q; q++) {
+	if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
+	    q += 2;
+	    *p++ = ' ';
+	} else *p++ = *q;
+    }
+    return;
+}
 
 int Rf_initialize_R(int ac, char **av)
 {
@@ -171,7 +183,7 @@ int Rf_initialize_R(int ac, char **av)
     {
 	uintptr_t ii = dummy_ii();
 	/* 1 is downwards */
-	
+
 	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
     }
 
@@ -304,57 +316,32 @@ int Rf_initialize_R(int ac, char **av)
 		UsingReadline = FALSE;
 	    } else if(!strcmp(*av, "-f")) {
 		ac--; av++;
-		Rp->R_Interactive = FALSE;
-		if(strcmp(*av, "-")) {
-		    /* Undo the escaping done in the front end */
-		    char path[PATH_MAX], *p = path, *q;
-		    for(q = *av; *q; q++) {
-			if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
-			    q += 2;
-			    *p++ = ' ';
-			} else *p++ = *q;
-		    }
-		    *p = '\0';
-		    ifp = R_fopen(path, "r");
-		    if(!ifp) {
-			snprintf(msg, 1024,
-				 _("cannot open file '%s': %s"),
-				 path, strerror(errno));
-			R_Suicide(msg);
-		    }
+#define R_INIT_TREAT_F(_AV_)						\
+		Rp->R_Interactive = FALSE;				\
+		if(strcmp(_AV_, "-")) {					\
+		    char path[PATH_MAX], *p = path;			\
+		    unescape_arg(p, _AV_);				\
+		    *p = '\0';						\
+		    ifp = R_fopen(path, "r");				\
+		    if(!ifp) {						\
+			snprintf(msg, 1024,				\
+				 _("cannot open file '%s': %s"),	\
+				 path, strerror(errno));		\
+			R_Suicide(msg);					\
+		    }							\
 		}
+		R_INIT_TREAT_F(*av);
+
 	    } else if(!strncmp(*av, "--file=", 7)) {
-		Rp->R_Interactive = FALSE;
-		if(strcmp((*av)+7, "-")) {
-		    /* Undo the escaping done in the front end */
-		    char path[PATH_MAX], *p = path, *q;
-		    for(q = (*av)+7; *q; q++) {
-			if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
-			    q += 2;
-			    *p++ = ' ';
-			} else *p++ = *q;
-		    }
-		    *p = '\0';
-		    ifp = R_fopen(path, "r");
-		    if(!ifp) {
-			snprintf(msg, 1024,
-				 _("cannot open file '%s': %s"),
-				 path, strerror(errno));
-			R_Suicide(msg);
-		    }
-		}
+
+		R_INIT_TREAT_F((*av)+7);
+
 	    } else if(!strcmp(*av, "-e")) {
 		ac--; av++;
 		Rp->R_Interactive = FALSE;
 		if(strlen(cmdlines) + strlen(*av) + 2 <= 10000) {
-		    char *p = cmdlines+strlen(cmdlines), *q;
-		    /* Undo the escaping done in the front end */
-		    for(q = *av; *q; q++) {
-			if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
-			    q += 2;
-			    *p++ = ' ';
-			} else *p++ = *q;
-		    }
+		    char *p = cmdlines+strlen(cmdlines);
+		    unescape_arg(p, *av);
 		    *p++ = '\n'; *p = '\0';
 		} else {
 		    snprintf(msg, 1024, _("WARNING: '-e %s' omitted as input is too long\n"), *av);
@@ -419,8 +406,8 @@ int Rf_initialize_R(int ac, char **av)
 	ptr_R_WriteConsole = NULL;
     } else {
 #endif
-    R_Outputfile = stdout;
-    R_Consolefile = stderr;
+	R_Outputfile = stdout;
+	R_Consolefile = stderr;
 #ifdef HAVE_AQUA
     }
 #endif
