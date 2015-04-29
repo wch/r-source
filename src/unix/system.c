@@ -149,16 +149,16 @@ extern uintptr_t dummy_ii(void);
 /* Protection against embedded misuse, PR#15420 */
 static int num_initialized = 0;
 
-static void unescape_arg(char *p, char* AV) {
+static char* unescape_arg(char *p, char* avp) {
     /* Undo the escaping done in the front end */
     char *q;
-    for(q = AV; *q; q++) {
+    for(q = avp; *q; q++) {
 	if(*q == '~' && *(q+1) == '+' && *(q+2) == '~') {
 	    q += 2;
 	    *p++ = ' ';
 	} else *p++ = *q;
     }
-    return;
+    return p;
 }
 
 int Rf_initialize_R(int ac, char **av)
@@ -320,7 +320,7 @@ int Rf_initialize_R(int ac, char **av)
 		Rp->R_Interactive = FALSE;				\
 		if(strcmp(_AV_, "-")) {					\
 		    char path[PATH_MAX], *p = path;			\
-		    unescape_arg(p, _AV_);				\
+		    p = unescape_arg(p, _AV_);				\
 		    *p = '\0';						\
 		    ifp = R_fopen(path, "r");				\
 		    if(!ifp) {						\
@@ -341,7 +341,7 @@ int Rf_initialize_R(int ac, char **av)
 		Rp->R_Interactive = FALSE;
 		if(strlen(cmdlines) + strlen(*av) + 2 <= 10000) {
 		    char *p = cmdlines+strlen(cmdlines);
-		    unescape_arg(p, *av);
+		    p = unescape_arg(p, *av);
 		    *p++ = '\n'; *p = '\0';
 		} else {
 		    snprintf(msg, 1024, _("WARNING: '-e %s' omitted as input is too long\n"), *av);
