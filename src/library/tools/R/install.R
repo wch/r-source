@@ -99,7 +99,8 @@
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
 
-    MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
+    if (WINDOWS) MAKE <- "make"
+    else MAKE <- Sys.getenv("MAKE") # FIXME shQuote, default?
     rarch <- Sys.getenv("R_ARCH") # unix only
     if (WINDOWS && nzchar(.Platform$r_arch))
         rarch <- paste0("/", .Platform$r_arch)

@@ -98,6 +98,9 @@
 
       \item \code{apply(a, M, function(u) c(X = ., Y = .))} again
       has dimnames containing "X" and "Y" (as in R < 3.2.0).
+      
+      \item (Windows only) In some cases, the \command{--clean} option
+      to \command{R CMD INSTALL} could fail.  (\PR{16178})
     }
   }
 }
