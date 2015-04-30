@@ -1,6 +1,6 @@
 % File src/library/base/man/apply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright (C) 1995-2014 R Core Team
+% Copyright (C) 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{apply}
@@ -94,14 +94,20 @@ identical(x,  apply( x,  2,  identity))
 identical(x3, apply(x3, 2:3, identity))
 \dontshow{
 xN <- x; dimnames(xN) <- list(row=NULL, col=NULL)
-stopifnot(identical( x, apply( x, 2, identity)),
+x2 <- x; names(dimnames(x2)) <- NULL
+fXY <- function(u) c(X=u[1], Y=u[2])
+ax1 <- apply(x, 1, fXY)
+ax2 <- apply(x2,1, fXY)
+stopifnot(identical(dimnames(ax1), list(col=c("X.x1", "Y.x2"), row=letters[1:8])),
+          identical(dimnames(ax2), unname(dimnames(ax1))),
+          identical( x, apply( x, 2, identity)),
           identical(xN, apply(xN, 2, identity)),
 	  identical(dimnames(x),
 		    dimnames(apply(x, 2, format))),
           identical(x3, apply(x3, 2:3, identity)),
 	  identical(dimnames(apply(x3, 2:1, identity)),
 		    dimnames(x3)[3:1]))
-rm(xN)
+rm(xN, x2, fXY, ax1, ax2)
 }
 ##- function with extra args:
 cave <- function(x, c1, c2) c(mean(x[c1]), mean(x[c2]))

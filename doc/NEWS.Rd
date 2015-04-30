@@ -95,6 +95,9 @@
       declared to be UTF-8 but were not, or for invalid strings without a
       marked encoding in a multi-byte locale, rather than give an
       error.  Additional checks have been added to mitigate this.
+
+      \item \code{apply(a, M, function(u) c(X = ., Y = .))} again
+      has dimnames containing "X" and "Y" (as in R < 3.2.0).
     }
   }
 }
