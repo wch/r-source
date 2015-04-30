@@ -1,7 +1,7 @@
 #  File src/library/base/R/apply.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2013, 2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,9 +98,10 @@ apply <- function(X, MARGIN, FUN, ...)
 	return(array(ans, d.ans, dn.ans))
     if(len.a && len.a %% d2 == 0L) {
         if(is.null(dn.ans)) dn.ans <- vector(mode="list", length(d.ans))
-	dn1 <- if(length(dn.call) &&
-		  length(ans.names) == length(dn.call[[1L]])) dn.call[1L]
-	       else list(ans.names)
+	dn1 <- list(ans.names)
+	if(length(dn.call) && !is.null(n1 <- names(dn <- dn.call[1])) &&
+	   nzchar(n1) && length(ans.names) == length(dn[[1]]))
+	    names(dn1) <- n1
 	dn.ans <- c(dn1, dn.ans)
 	return(array(ans, c(len.a %/% d2, d.ans),
 		     if(!is.null(names(dn.ans)) || !all(vapply(dn.ans, is.null, NA)))
