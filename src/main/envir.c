@@ -2697,6 +2697,7 @@ BuiltinValues(int all, int intern, SEXP values, int *indx)
     }
 }
 
+// .Internal(ls(envir, all.names, sorted)) :
 SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -2720,7 +2721,7 @@ SEXP attribute_hidden do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_lsInternal3(env, all, sort_nms);
 }
 
-/* takes a *list* of environments, a boolean indicating whether to get all
+/* takes an environment, a boolean indicating whether to get all
    names and a boolean if sorted is desired */
 SEXP R_lsInternal3(SEXP env, Rboolean all, Rboolean sorted)
 {
