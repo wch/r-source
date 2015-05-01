@@ -101,6 +101,10 @@
       
       \item (Windows only) In some cases, the \command{--clean} option
       to \command{R CMD INSTALL} could fail.  (\PR{16178})
+      
+      \item (Windows only) \code{choose.files()} would occasionally
+      include characters from the result of an earlier call in 
+      the result of a later one.  (\PR{16270})
     }
   }
 }

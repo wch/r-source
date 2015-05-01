@@ -302,6 +302,7 @@ wchar_t *askfilenamesW(const wchar_t *title, const wchar_t *default_name,
     HWND prev = GetFocus();
 
     if (!default_name) default_name = L"";
+    memset(wcsbuf, 0, sizeof(wcsbuf));
     wcscpy(wcsbuf, default_name);
     GetCurrentDirectory(MAX_PATH, cwd);
     if (!strcmp(cod, "")) {
