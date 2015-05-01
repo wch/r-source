@@ -2443,7 +2443,7 @@ top-level @file{po} directory.
 @section OS X GUI
 
 This is handled separately: see
-@uref{http://developer.r-project.org/Translations.html}.
+@uref{http://developer.r-project.org/Translations30.html}.
 
 
 @node Updating,  , OS X GUI, Internationalization in the R sources
