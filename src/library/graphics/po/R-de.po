@@ -35,7 +35,7 @@ msgid "all entries of 'x' must be nonnegative and finite"
 msgstr "alle Einträge in 'x' müssen nicht-negativ und endlich sein"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr "midestens ein Eintrag in 'x' muss positiv sein"
+msgstr "mindestens ein Eintrag in 'x' muss positiv sein"
 
 msgid "incorrect 'col': must be length 2"
 msgstr "ungültiger Wert für 'col': muss Länge 2 haben"
@@ -101,7 +101,7 @@ msgstr "abhängige Variable sollte ein Faktor sein"
 
 msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr ""
-"Y-Achse ist eine kumulative Wahscheinlichkeitsskala, 'ylim' muss in [0,1] "
+"Y-Achse ist eine kumulative Wahrscheinlichkeitsskala, 'ylim' muss in [0,1] "
 "sein"
 
 msgid "no 'z' matrix specified"
@@ -123,7 +123,7 @@ msgid "'number' must be integer >= 1"
 msgstr "'number' muss eine ganze Zahl >= 1 sein"
 
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr "'overlap' muss , 1 (und typisch >= 0 ) sein"
+msgstr "'overlap' muss < 1 (und typischerweise >= 0) sein"
 
 msgid "invalid 'given.values'"
 msgstr "ungültige 'given.values'"
@@ -140,7 +140,7 @@ msgstr ""
 "enthält"
 
 msgid "'add' will be ignored as there is no existing plot"
-msgstr "'add' wird ignoriert, da noch keine Grafik exisitiert"
+msgstr "'add' wird ignoriert, da noch keine Grafik existiert"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""
 msgstr "'from' und 'to' müssen > 0 sein mit log=\"x\""
@@ -161,7 +161,7 @@ msgid "Must specify 'breaks' in hist(<Date>)"
 msgstr "In hist(<Date>) müssen 'breaks' angegeben werden"
 
 msgid "'x' must be a numeric vector or matrix"
-msgstr "'x' muss ein nummerischer Vektor oder eine Matrix sein"
+msgstr "'x' muss ein numerischer Vektor oder eine Matrix sein"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' ist weder Vektor noch Matrix: nutze as.numeric(x)"
@@ -182,10 +182,10 @@ msgid "incorrect 'margin' specification"
 msgstr "ungültige Spezifikation von 'margin'"
 
 msgid "incorrect geometry specification"
-msgstr "ungültige Spzifikation der Geometrie"
+msgstr "ungültige Spezifikation der Geometrie"
 
 msgid "'x' must be numeric"
-msgstr "'x' muss nummerisch sein"
+msgstr "'x' muss numerisch sein"
 
 msgid "invalid length(x)"
 msgstr "ungültige length(x)"
@@ -200,7 +200,7 @@ msgid "unknown 'breaks' algorithm"
 msgstr "unbekannter Algorithmus für 'breaks'"
 
 msgid "invalid number of 'breaks'"
-msgstr "unzulässige Anzahle für 'breaks'"
+msgstr "unzulässige Anzahl für 'breaks'"
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: Fehler in pretty(), breaks=%s"
@@ -238,13 +238,13 @@ msgid "'z' must be a matrix"
 msgstr "'z' muss eine Matrix sein"
 
 msgid "'z' must be numeric or logical"
-msgstr "'z' muss nummerisch oder logisch sein"
+msgstr "'z' muss numerisch oder logisch sein"
 
 msgid "invalid z limits"
 msgstr "unzulässige Grenzen für z"
 
 msgid "must have one more break than colour"
-msgstr "es muss eine Stützstelle mehr gebe als Farben"
+msgstr "es muss eine Stützstelle mehr geben als Farben"
 
 msgid "'breaks' must all be finite"
 msgstr "alle 'breaks' müssen endlich sein"
@@ -263,7 +263,7 @@ msgstr "ganzzahlige Farbangaben müssen nicht-negativ sein"
 
 msgid "'respect' must be logical or matrix with same dimension as 'mat'"
 msgstr ""
-"'respect' muss boolesch oder eine Matrix mit dem selben Format wie 'mat' sein"
+"'respect' muss boolesch oder eine Matrix mit demselben Format wie 'mat' sein"
 
 msgid ""
 "layout matrix must contain at least one reference\n"
@@ -282,7 +282,7 @@ msgid "invalid coordinate lengths"
 msgstr "unzulässige Koordinatenlängen"
 
 msgid "'text.width' must be numeric, >= 0"
-msgstr "'text.width' muss nummerisch >= 0 sein"
+msgstr "'text.width' muss numerisch >= 0 sein"
 
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "horizontale Spezifikation überschreibt Anzahl der Spalten := %d"
@@ -314,13 +314,13 @@ msgid "'x' must not have 0 dimensionality"
 msgstr "'x' darf nicht Dimension 0 haben"
 
 msgid "invalid 'shade' specification"
-msgstr "unzulässige spezifikation für 'shade'"
+msgstr "unzulässige Spezifikation für 'shade'"
 
 msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr "Länge von 'sort' passt nicht zu 'dim(x)'"
 
 msgid "non-numeric argument to 'pairs'"
-msgstr "nicht-nummerisches Argument für 'pairs'"
+msgstr "nicht-numerisches Argument für 'pairs'"
 
 msgid "only one column in the argument to 'pairs'"
 msgstr "nur eine Spalte im Argument zu 'pairs'"
@@ -353,7 +353,7 @@ msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' auf etwas anderes als einen Dataframe angewendet"
 
 msgid "'y' must be a numeric vector"
-msgstr "'z' muss nummerischer Vektor sein"
+msgstr "'z' muss numerischer Vektor sein"
 
 msgid "'x' must be a data frame"
 msgstr "'x' muss Dataframe sein"
@@ -368,10 +368,10 @@ msgid "'x' must be a dataframe or a formula"
 msgstr "'x' muss entweder Dataframe oder Formel sein"
 
 msgid "a variable in 'y' is not numeric"
-msgstr "a variable in 'y' ist nicht nummerisch"
+msgstr "a variable in 'y' ist nicht numerisch"
 
 msgid "there must be at least one numeric variable!"
-msgstr "es muss zumindest eine nummerische Varable vorhanden sein!"
+msgstr "es muss zumindest eine numerische Varable vorhanden sein!"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "bei logarithmischer Skala hatch nicht möglich"
@@ -409,10 +409,10 @@ msgid "'x' must be a matrix or a data frame"
 msgstr "'x' muss eine Matrix oder ein Dataframe sein"
 
 msgid "data in 'x' must be numeric"
-msgstr "die Daten in 'x' müssen nummerisch sein"
+msgstr "die Daten in 'x' müssen numerisch sein"
 
 msgid "'nrow * ncol' is less than the number of observations"
-msgstr "'nrow * ncol' kleiner als die  Anzahl der Beobachtungen"
+msgstr "'nrow * ncol' ist kleiner als die Anzahl der Beobachtungen"
 
 msgid "labels do not make sense for a single location"
 msgstr "Labels haben keine Sinn für eine einzelne Position"
@@ -424,10 +424,10 @@ msgid "number of rows of 'locations' and 'x' must be equal."
 msgstr "Anzahl der Zeilen von 'locations' und 'x' müssen gleich sein"
 
 msgid "length of 'angles' must equal 'ncol(x)'"
-msgstr "Länge von 'angels' muss 'ncol(x)' entsprechen"
+msgstr "Länge von 'angles' muss 'ncol(x)' entsprechen"
 
 msgid "no finite and non-missing values"
-msgstr "keine endliche nicht-fehlenden Werte"
+msgstr "keine endlichen nicht-fehlenden Werte"
 
 msgid "'scale' must be positive"
 msgstr "'scale' muss positiv sein"

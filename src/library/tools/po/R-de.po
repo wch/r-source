@@ -62,17 +62,19 @@ msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
 msgid ""
 "Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr ""
-"Funktionen bzw. Methoden mit Anleitung im Dokuobjekt '%s' jedoch nicht im "
-"Code"
+"Funktionen bzw. Methoden mit Anleitung im Dokumentations-Objekt '%s' "
+"jedoch nicht im Code"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
-msgstr "Datensätze mit Anleitung im Dokuobjekt '%s', jedoch nicht im Code"
+msgstr ""
+"Datensätze mit Anleitung im Dokumentations-Objekt '%s', "
+"jedoch nicht im Code"
 
 msgid "Argument names in code not in docs:"
-msgstr "Argumentnamen im Code (ohne Doku):"
+msgstr "Argumentnamen im Code (ohne Dokumentation):"
 
 msgid "Argument names in docs not in code:"
-msgstr "Argumentnamen in Doku (ohne Code):"
+msgstr "Argumentnamen in Dokumentation (ohne Code):"
 
 msgid "Mismatches in argument names (first 3):"
 msgstr "Nichtpassende Argumentnamen (die ersten 3):"
@@ -81,53 +83,54 @@ msgid "Mismatches in argument names:"
 msgstr "Nichtpassende Argumentnamen:"
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr "Unpassende Standardargumente (<die ersten 3):"
+msgstr "Unpassende Standardargumente (die ersten 3):"
 
 msgid "Mismatches in argument default values:"
 msgstr "Unpassende Standardargumente"
 
 msgid "Codoc mismatches from documentation object '%s':"
-msgstr "Unpassende Kodierung aus dem Dokuobjekt '%s'"
+msgstr "Unpassende Kodierung aus dem Dokumentations-Objekt '%s'"
 
 msgid "Code: %s"
 msgstr "Code: %s"
 
 msgid "Docs: %s"
-msgstr "Doku: %s"
+msgstr "Dokumentation: %s"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
-msgstr "S4 Klassendoku passt nicht zum Dokuobjekt '%s':"
+msgstr "S4 Klassendokumentation passt nicht zum Dokumentations-Objekt '%s':"
 
 msgid "Slots for class '%s'"
 msgstr "Slots für Klasse '%s'"
 
 msgid "Data codoc mismatches from documentation object '%s':"
-msgstr "Datendoku passt nicht zum Dokuobjekt '%s':"
+msgstr "Datendokumentation passt nicht zum Dokumentations-Objekt '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Variablen im Dataframe '%s'"
 
 msgid "Undocumented arguments in documentation object '%s'"
-msgstr "Undokumentierte Argumente im Dokuobjekt '%s'"
+msgstr "Undokumentierte Argumente im Dokumentations-Objekt '%s'"
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
-msgstr "Doppelte Einträge zu \\argument im Dokuobjekt '%s'"
+msgstr "Doppelte Einträge zu \\argument im Dokumentations-Objekt '%s'"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
 msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
-"Objekte kommen bei \\usage, aber nicht unter \\alias im Dokuobjekt '%s' vor"
+"Objekte kommen bei \\usage, aber nicht unter \\alias im "
+"Dokumentations-Objekt '%s' vor"
 
 msgid "Assignments in \\usage in documentation object '%s':"
-msgstr "Zuweisungen in \\\\usage im Dokumentationsobjekt '%s':"
+msgstr "Zuweisungen in \\usage im Dokumentations-Objekt '%s':"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr "Ungültige \\usage Zeile im Dokuobjekt '%s' gefunden:"
+msgstr "Ungültige \\usage Zeile im Dokumentations-Objekt '%s' gefunden:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
-msgstr "S3 Methoden mit vollem Namen im Dokuobjekt '%s' gezeigt: "
+msgstr "S3 Methoden mit vollem Namen im Dokumentations-Objekt '%s' gezeigt: "
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
@@ -190,7 +193,7 @@ msgid "These fields must have ASCII values."
 msgstr "Diese Felder müssen ASCII Werte haben."
 
 msgid "Malformed package version."
-msgstr "Falsch formatierte 'paket version'."
+msgstr "Falsch formatierte 'package version'."
 
 msgid "Malformed maintainer field."
 msgstr "Falsch formatiertes 'maintainer' Feld"
@@ -211,7 +214,7 @@ msgstr ""
 "Leerraum, sowie einer gültigen Versionsnummer in Klammern "
 
 msgid "Entries with infeasible comparison operator:"
-msgstr "Einträgen mit falschen Vergleichsoperator:"
+msgstr "Einträge mit falschem Vergleichsoperator:"
 
 msgid "Only operators '<=' and '>=' are possible."
 msgstr "Nur die Operatoren '<=' und '>=' sind zulässig."
@@ -326,7 +329,7 @@ msgstr ""
 "Querverweise nicht überprüft werden können"
 
 msgid "Missing link or links in documentation object '%s':"
-msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+msgstr "Fehlende(r) Link(s) im Dokumentations-Objekt '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr ""
@@ -365,11 +368,11 @@ msgstr "Siehe Abschnitt %s in '%s'."
 msgid ""
 "Package detach functions should have one argument with name starting with %s."
 msgstr ""
-"Detachfuktion für Pakete sollte ein Argument haben, dessen Name\n"
+"Detach-Funktion für Pakete sollte ein Argument haben, dessen Name "
 "mit %s beginnt."
 
 msgid "Package detach functions should not call %s."
-msgstr "Detachfunktion für Pakete sollten nicht %s aufrufen."
+msgstr "Detach-Funktion für Pakete sollten nicht %s aufrufen."
 
 msgid "unable to create"
 msgstr "kann nicht erzeugen"
@@ -465,7 +468,7 @@ msgid "'data(package=)' call not declared from: %s"
 msgstr "Aufruf von 'data(package=' nicht angemeldet von: %s"
 
 msgid "Package has no 'Version' field"
-msgstr "Paket  hat kein 'Version' Feld"
+msgstr "Paket hat kein Feld 'Version'"
 
 msgid "NB: need Internet access to use CRAN incoming checks"
 msgstr "NB: benötige Internetzugang, um CRAN-Incoming zu checken"
@@ -532,7 +535,7 @@ msgstr "Keine Hilfe zu %s in RdDB %s gefunden"
 
 msgid "'macros' must be TRUE or must specify existing macros"
 msgstr ""
-"'macros' muss entwerder TRUE sein oder ein exisitierendes Makro spezifizieren"
+"'macros' muss entweder TRUE sein oder ein existierendes Makro spezifizieren"
 
 msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr "Makrodatei %s sollte nur Rd Makrodefinitionen und Kommentare enthalten"
@@ -583,20 +586,20 @@ msgid "DESCRIPTION file is for package '%s', not '%s'"
 msgstr "DESCRIPTION Datei ist für Paket '%s', nicht für '%s'"
 
 msgid "Vignette product %s does not have a known filename extension (%s)"
-msgstr "Vignettenprodukt %s hat keine bekannte Dateinamenserweiterung (%s)"
+msgstr "Vignetten-Ergebnis %s hat keine bekannte Dateinamenserweiterung (%s)"
 
 msgid ""
 "Failed to locate the %s output file (by engine %s) for vignette with name "
 "%s. The following files exist in directory %s: %s"
 msgstr ""
-"Konnte %s Ausgabedadatei (von Treiber %s) für Vignette namens%s nicht "
-"finden. Folgende Dateien exisitieren im Verzeichnis %s: %s"
+"Konnte %s Ausgabedadatei (von Treiber %s) für Vignette namens %s nicht "
+"finden. Folgende Dateien existieren im Verzeichnis %s: %s"
 
 msgid ""
 "Located more than one %s output file (by engine %s) for vignette with name "
 "%s: %s"
 msgstr ""
-"Mehr als eine %s Ausgabedatei (von Treiber %s) für Vignette namens%s "
+"Mehr als eine %s Ausgabedatei (von Treiber %s) für Vignette namens %s "
 "gefunden: %s"
 
 msgid "unable to create temp directory %s"
@@ -615,8 +618,8 @@ msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each others output files"
 msgstr ""
-"Vignettenquelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb "
-"dieGefahr gegenseitigen Überschreibens besteht"
+"Vignetten-Quelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb "
+"die Gefahr gegenseitigen Überschreibens besteht"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -639,29 +642,29 @@ msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr "Vignettendateiname '%s' passt zu keinem der %s' Dateinamenmuster"
+msgstr "Vignetten-Dateiname '%s' passt zu keinem der %s' Dateinamenmuster"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
-msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignettennamen"
+msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignetten-Namen"
 
 msgid "argument 'vignette' must be of length 1"
 msgstr "Argument 'vignette' muss Länge 1 haben"
 
 msgid "Vignette engine package not specified"
-msgstr "Vignettentreiberpaket nicht angegeben"
+msgstr "Vignetten-Treiberpaket nicht angegeben"
 
 msgid "Unsupported engine name"
 msgstr "nicht unterstützter Engine Name"
 
 msgid "None of packages %s have registered vignette engines"
-msgstr "Keines der Pakete %s hat Vignettentreiber registriert"
+msgstr "Keines der Pakete %s hat Vignetten-Treiber registriert"
 
 msgid "Vignette engine %s is not registered"
-msgstr "Vignettentreiber %s ist nicht registiert"
+msgstr "Vignetten-Treiber %s ist nicht registiert"
 
 msgid "Vignette engine %s is not registered by any of the packages %s"
 msgstr ""
-"Vignettentreiber %s ist nicht von irgendeinem der Pakete %s registriert"
+"Vignetten-Treiber %s ist nicht von irgendeinem der Pakete %s registriert"
 
 msgid "Engine name %s and package %s do not match"
 msgstr "Treibername %s und Paket %s passen nicht "
@@ -699,7 +702,7 @@ msgid "duplicated files in '%s' field:"
 msgstr "doppelte Dateien in Feld '%s':"
 
 msgid "files in '%s' field missing from '%s':"
-msgstr "fehlende  Dateien im '%s' Feld von '%s':"
+msgstr "fehlende Dateien im '%s' Feld von '%s':"
 
 msgid "files in '%s' missing from '%s' field:"
 msgstr "fehlende Dateien in '%s' im Feld '%s':"
@@ -804,7 +807,7 @@ msgid "Error: no packages were specified"
 msgstr "Fehler: keine Pakete angegeben"
 
 msgid "ERROR: cannot create check dir %s"
-msgstr "Fehler: kann  Verzeichnis %s für Check nicht erzeugen"
+msgstr "Fehler: kann Verzeichnis %s für Check nicht erzeugen"
 
 msgid "package directory %s does not exist"
 msgstr "Paketverzeichnis '%s' existiert nicht"
@@ -901,7 +904,7 @@ msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr "sieht aus wie ein Bundle --  und diese sind veraltet"
+msgstr "sieht aus wie ein Bundle -- und diese funktionieren nicht mehr"
 
 msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
@@ -936,7 +939,7 @@ msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
 msgid "cannot create temporary directory"
-msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+msgstr "kann temporäres Verzeichnis nicht erzeugen"
 
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
 msgstr "Fehler: '--merge-multiarch' bezieht sich nur auf einzelnes Tar-Archiv"
@@ -948,7 +951,7 @@ msgid "ERROR: no packages specified"
 msgstr "Fehler: keine Pakete angegeben"
 
 msgid "ERROR: cannot cd to directory %s"
-msgstr "Fehler: kann  nicht in Verzeichnis %s wechseln"
+msgstr "Fehler: kann nicht in Verzeichnis %s wechseln"
 
 msgid "ERROR: no permission to install to directory"
 msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
@@ -1054,7 +1057,7 @@ msgid "PDF header not found"
 msgstr "PDF Header nicht gefunden"
 
 msgid "EOF marker not found"
-msgstr "EOF Markierunge nicht gefunden"
+msgstr "EOF Markierung nicht gefunden"
 
 msgid "cannot find 'startxref' keyword"
 msgstr "kann das Schlüsselwort 'startxref' nicht finden"
@@ -1081,19 +1084,19 @@ msgid "cannot read literal string object"
 msgstr "kann literales Zeichenkettenobjekt nicht lesen"
 
 msgid "cannot read hexadecimal string object"
-msgstr "kann hexasezimales Zeichenkettenobjekt nicht lesen"
+msgstr "kann hexadezimales Zeichenkettenobjekt nicht lesen"
 
 msgid "cannot read name object"
 msgstr "kann Namensobjekt nicht lesen"
 
 msgid "cannot read array object"
-msgstr "kann Arrayobjekt nicht lesen"
+msgstr "kann Array-Objekt nicht lesen"
 
 msgid "cannot read dictionary object"
 msgstr "kann Dictionary-Objekt nicht lesen"
 
 msgid "cannot read stream object"
-msgstr "kann Streamobjekt nicht lesen"
+msgstr "kann Stream-Objekt nicht lesen"
 
 msgid "cannot read indirect reference object"
 msgstr "kann indirektes Referenzobjekt nicht lesen"
@@ -1177,7 +1180,7 @@ msgid "Comparing %s to %s ..."
 msgstr "Vergleiche %s mit %s ..."
 
 msgid "no parsed files found"
-msgstr "keine gparsten Dateien gefunden"
+msgstr "keine geparsten Dateien gefunden"
 
 msgid "FAILED"
 msgstr "fehlgeschlagen"
@@ -1211,10 +1214,10 @@ msgid "byte"
 msgstr "byte"
 
 msgid "argument 'x' must be a character vector"
-msgstr "Argument 'x' muss ein Charaktervektor sein"
+msgstr "Argument 'x' muss ein Zeichenkettenvektor sein"
 
 msgid "argument 'delim' must specify two characters"
-msgstr "Argument 'delim' muss zwei Charakter spezifizieren"
+msgstr "Argument 'delim' muss zwei Zeichen spezifizieren"
 
 msgid "only Rd syntax is currently supported"
 msgstr "momentan nur Rd Syntax unterstützt"
@@ -1326,7 +1329,7 @@ msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] ".Internal Aufruf in Methoden für folgende Referenzklasse gefunden:"
-msgstr[1] ".Internal Aufrufe in Methoden folgende Referenzklassen gefunden:"
+msgstr[1] ".Internal Aufrufe in Methoden für folgende Referenzklassen gefunden:"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
@@ -1374,8 +1377,8 @@ msgstr[1] "Abgeschaltete/entfernte Funktionen gefunden:"
 
 msgid "Found the platform-specific device:"
 msgid_plural "Found the platform-specific devices:"
-msgstr[0] "Plattform-spezifisches gefunden:"
-msgstr[1] "Plattform-spezifische Devices gefunden"
+msgstr[0] "Plattformspezifisches Device gefunden:"
+msgstr[1] "Plattformspezifische Devices gefunden"
 
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"

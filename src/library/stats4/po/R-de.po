@@ -20,7 +20,7 @@ msgid ""
 "some named arguments in 'fixed' are not arguments to the supplied log-"
 "likelihood"
 msgstr ""
-"einige benannte Argumentes in 'fixed' sind keine Argumente für die "
+"einige benannte Argumente in 'fixed' sind keine Argumente für die "
 "angegebene Log-Likelihood"
 
 msgid "'start' must be a named list"

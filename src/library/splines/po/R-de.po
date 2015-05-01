@@ -78,5 +78,5 @@ msgstr "'df' war zu klein; habe %d benutzt"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""
-"einige 'x' Werte ausserhalb der Begrenzungsknoten erzeugen eventuwll "
+"einige 'x' Werte ausserhalb der Begrenzungsknoten erzeugen eventuell "
 "schlecht konditionierte Basis"

@@ -24,7 +24,7 @@ msgstr "nicht endlicher Wert von 'optim' übergeben"
 #, c-format
 msgid "candidate point in 'optim' evaluated to length %d not %d"
 msgstr ""
-"Kandidatenpunkt in 'optim' gibt Ergebnis der Länge %d zurück, nicht Länge %d"
+"Kandidatenpunkt in 'optim' gibt Ergebnis der Länge %d zurück, nicht %d"
 
 #: src/appl/optim.c:136
 msgid "REPORT must be > 0 (method = \"BFGS\")"
@@ -257,7 +257,7 @@ msgstr "falsches Argument"
 
 #: src/gnuwin32/extra.c:302
 msgid "don't be silly!: your machine has a 4Gb address limit"
-msgstr "Stell Dich nicht dumm!: Deine Kiste kann nur 4Gb adressieren"
+msgstr "Stell Dich nicht dumm!: Dein Computer kann nur 4Gb adressieren"
 
 #: src/gnuwin32/extra.c:306
 msgid "cannot decrease memory limit: ignored"
@@ -265,7 +265,7 @@ msgstr "kann Speicherobergrenze nicht reduzieren: wird ignoriert"
 
 #: src/gnuwin32/extra.c:413 src/gnuwin32/extra.c:514 src/main/util.c:959
 msgid "'path' must be a character vector"
-msgstr "'path' muss eine Charaktervektor sein"
+msgstr "'path' muss eine Zeichenkettenvektor sein"
 
 #: src/gnuwin32/extra.c:562 src/gnuwin32/extra.c:564 src/gnuwin32/extra.c:587
 #: src/gnuwin32/extra.c:589 src/gnuwin32/extra.c:624 src/main/gevents.c:61
@@ -296,7 +296,7 @@ msgstr "Dateiauswahl abgebrochen"
 #: src/gnuwin32/run.c:244
 #, c-format
 msgid "'CreateProcess' failed to run '%s'"
-msgstr "'Createprocess' konnte '%s' nicht ausführen"
+msgstr "'CreateProcess' konnte '%s' nicht ausführen"
 
 #: src/gnuwin32/run.c:346
 msgid "Child process not responding.  R will terminate it."
@@ -328,7 +328,7 @@ msgstr "Einrichtung einer pipe Verbindung fehlgeschlagen"
 
 #: src/gnuwin32/run.c:790
 msgid "'names' is not a character vector"
-msgstr "'names' ist kein Zeichenketten-Vektor"
+msgstr "'names' ist kein Zeichenkettenvektor"
 
 #: src/gnuwin32/sys-win32.c:179
 msgid "character string expected as first argument"
@@ -475,7 +475,7 @@ msgstr "Objekt des Typs '%s' ist nicht indizierbar"
 
 #: src/main/CommandLineArgs.c:170
 msgid "WARNING: no value given for --encoding"
-msgstr "Warnung: kein Wert für --encoding gegeben"
+msgstr "Warnung: kein Wert für --encoding angegeben"
 
 #: src/main/CommandLineArgs.c:195
 #, c-format
@@ -485,7 +485,7 @@ msgstr "Warnung: Option '%s' wird nicht mehr unterstützt"
 #: src/main/CommandLineArgs.c:206
 #, c-format
 msgid "WARNING: no value given for '%s'"
-msgstr "Warnung: kein Wert für '%s' gegeben"
+msgstr "Warnung: kein Wert für '%s' angegeben"
 
 #: src/main/CommandLineArgs.c:216
 #, c-format
@@ -564,7 +564,7 @@ msgstr ""
 #: src/main/RNG.c:380
 msgid "'.Random.seed[1] = 5' but no user-supplied generator, so ignored"
 msgstr ""
-"'.Random.seed[1] = 5', aber kein nitzerdefinierter Generator angegeben, wird "
+"'.Random.seed[1] = 5', aber kein nutzerdefinierter Generator angegeben, wird "
 "also ignoriert"
 
 #: src/main/RNG.c:385
@@ -615,7 +615,7 @@ msgstr "konnte keinen Speicher für 'name' zuteilen"
 
 #: src/main/Rdynload.c:881 src/main/Rdynload.c:897 src/main/util.c:760
 msgid "character argument expected"
-msgstr "Charakter als Argument erwartet"
+msgstr "Zeichenkette als Argument erwartet"
 
 #: src/main/Rdynload.c:887 src/main/Rdynload.c:919 src/main/Rdynload.c:939
 #, c-format
@@ -698,11 +698,11 @@ msgstr "ungültige multi-byte Eingabe-Zeichenkette"
 
 #: src/main/Rstrptime.h:1248
 msgid "format string is too long"
-msgstr "Formattierungs-Zeichenkette ist zu lang"
+msgstr "Formatierungs-Zeichenkette ist zu lang"
 
 #: src/main/Rstrptime.h:1250
 msgid "invalid multibyte format string"
-msgstr "ungültige multi-byte Formattierungs-Zeichenkette"
+msgstr "ungültige multi-byte Formatierungs-Zeichenkette"
 
 #: src/main/agrep.c:133 src/main/agrep.c:778 src/main/character.c:1041
 #: src/main/character.c:1045 src/main/grep.c:782 src/main/grep.c:1530
@@ -719,7 +719,7 @@ msgstr "'pattern' muss eine nicht-leere Zeichenkette sein"
 #: src/main/agrep.c:201 src/main/agrep.c:829 src/main/grep.c:853
 #: src/main/grep.c:2405 src/main/grep.c:2690
 msgid "regular expression is invalid in this locale"
-msgstr "regular expression ist in dieser Lokalisierung ungültig"
+msgstr "regular expression ist in dieser locale ungültig"
 
 #: src/main/agrep.c:207 src/main/agrep.c:624
 #, c-format
@@ -732,7 +732,7 @@ msgstr "Fehler bei regcomp: '%s'"
 #: src/main/grep.c:2727
 #, c-format
 msgid "input string %d is invalid in this locale"
-msgstr "Eingabezeichenkette %d ungültig in dieser locale"
+msgstr "Eingabe-Zeichenkette %d ungültig in dieser locale"
 
 #: src/main/agrep.c:526 src/main/agrep.c:766 src/main/grep.c:159
 #: src/main/grep.c:773 src/main/grep.c:775 src/main/grep.c:1065
@@ -971,7 +971,7 @@ msgstr "allocMatrix: zu viele Elemente angegeben"
 
 #: src/main/array.c:236
 msgid "negative extents to 3D array"
-msgstr "negative Ausdehnung für einen 3D Array"
+msgstr "negative Ausdehnung für ein 3D Array"
 
 #: src/main/array.c:239
 msgid "'alloc3Darray': too many elements specified"
@@ -1205,7 +1205,7 @@ msgstr "alle Attribute müssen Namen haben [%d hat keinen]"
 
 #: src/main/attrib.c:1375
 msgid "'which' must be of mode character"
-msgstr "'which' muss vom Modus Charakter sein"
+msgstr "'which' muss vom Modus character sein"
 
 #: src/main/attrib.c:1377
 msgid "exactly one attribute 'which' must be given"
@@ -1448,7 +1448,7 @@ msgstr ""
 #: src/main/character.c:135
 #, c-format
 msgid "'%s' requires a character vector"
-msgstr "'%s' benötigt einen Charakter-Vektor"
+msgstr "'%s' benötigt einen Zeichenkettenvektor"
 
 #: src/main/character.c:164
 #, c-format
@@ -1473,7 +1473,7 @@ msgstr ""
 
 #: src/main/character.c:265
 msgid "extracting substrings from a non-character object"
-msgstr "extrahieren von Teilzeichenketten aus einem Nicht-Charakter Objekt"
+msgstr "extrahieren von Teilzeichenketten aus einem nicht-character Objekt"
 
 #: src/main/character.c:270 src/main/character.c:365
 msgid "invalid substring arguments"
@@ -1481,11 +1481,11 @@ msgstr "ungültige Teilzeichenkettenargument"
 
 #: src/main/character.c:360
 msgid "replacing substrings in a non-character object"
-msgstr "Ersetzen von Teilzeichenketten in einem Nicht-Charakter Objekt"
+msgstr "Ersetzen von Teilzeichenketten in einem nicht-character Objekt"
 
 #: src/main/character.c:553
 msgid "the first argument must be a character vector"
-msgstr "erstes Argument muss ein Charaktervektor sein"
+msgstr "erstes Argument muss ein Zeichenkettenvektor sein"
 
 #: src/main/character.c:572
 msgid "abbreviate used with non-ASCII chars"
@@ -1493,11 +1493,11 @@ msgstr "abbreviate mit nicht-ASCII Zeichen genutzt"
 
 #: src/main/character.c:593
 msgid "non-character names"
-msgstr "Nicht-Charakter Namen"
+msgstr "Nicht-character Namen"
 
 #: src/main/character.c:698 src/main/grep.c:163
 msgid "non-character argument"
-msgstr "Nicht-Charakter Argument"
+msgstr "nicht-character Argument"
 
 #: src/main/character.c:807
 #, c-format
@@ -1536,7 +1536,7 @@ msgstr "ungültige multibyte Eingabezeichenkette %d"
 
 #: src/main/character.c:1273
 msgid "strtrim() requires a character vector"
-msgstr "strtrim() benötigt Charakter-Vektor"
+msgstr "strtrim() benötigt Zeichenkettenvektor"
 
 #: src/main/coerce.c:32
 msgid "invalid 'mode' argument"
@@ -1565,7 +1565,7 @@ msgstr "Werte außerhalb des Bereichs als 0 behandelt in Umwandlung nach raw"
 #: src/main/coerce.c:384
 #, c-format
 msgid "invalid data of mode '%s' (too short)"
-msgstr "ungültige Daten vom Mode '%s' (zu kurz)"
+msgstr "ungültige Daten vom Modus '%s' (zu kurz)"
 
 #: src/main/coerce.c:986
 #, c-format
@@ -1584,7 +1584,7 @@ msgstr "(symbol) Objekt kann nicht in Typ '%s' umgewandelt werden"
 
 #: src/main/coerce.c:1143 src/main/coerce.c:1457
 msgid "no method for coercing this S4 class to a vector"
-msgstr "Keine Methode um diese S4 Klasse in einen Vektor zu verwandeln"
+msgstr "Keine Methode um diese S4 Klasse in einen Vektor umzuwandeln"
 
 #: src/main/coerce.c:1206
 msgid "environments cannot be coerced to other types"
@@ -1851,21 +1851,21 @@ msgstr "zu großer Block spezifiziert"
 
 #: src/main/connections.c:989 src/main/connections.c:995
 msgid "allocation of fifo name failed"
-msgstr "Allokation des FIFO Namens fehlgeschlagen"
+msgstr "Allokation des fifo Namens fehlgeschlagen"
 
 #: src/main/connections.c:1057
 #, c-format
 msgid "cannot open fifo '%s', reason '%s'"
-msgstr "kann FIFO '%s' nicht öffnen. Grund '%s'"
+msgstr "kann fifo '%s' nicht öffnen. Grund '%s'"
 
 #: src/main/connections.c:1098 src/main/connections.c:1122
 msgid "allocation of fifo buffer failed"
-msgstr "Allokation des FIFO Buffers fehlgeschlagen"
+msgstr "Allokation des fifo Buffers fehlgeschlagen"
 
 #: src/main/connections.c:1130
 #, c-format
 msgid "cannot write FIFO '%s'"
-msgstr "kann nicht in FIFO  '%s' schreiben"
+msgstr "kann nicht in fifo  '%s' schreiben"
 
 #: src/main/connections.c:1166 src/main/connections.c:1170
 #: src/main/connections.c:1176 src/main/connections.c:1192
@@ -2033,15 +2033,15 @@ msgstr "Allokation einer Zwischenablage-Verbindung fehlgeschlagen"
 #: src/main/connections.c:2400 src/main/connections.c:2404
 #: src/main/connections.c:2410
 msgid "allocation of terminal connection failed"
-msgstr "Allokation einer Terminal Verbindung fehlgeschlagen"
+msgstr "Allokation einer Terminal-Verbindung fehlgeschlagen"
 
 #: src/main/connections.c:2543
 msgid "attempting to add too many elements to raw vector"
-msgstr "Versuch einem raw Vektor zu viele Elements hinzuzufügen"
+msgstr "Versuch einem raw Vektor zu viele Elemente hinzuzufügen"
 
 #: src/main/connections.c:2595
 msgid "attempt to seek outside the range of the raw connection"
-msgstr "Versuch außerhalb des Bereichs einer raw connection zuzugreifen"
+msgstr "Versuch außerhalb des Bereichs einer raw-Verbindung zuzugreifen"
 
 #: src/main/connections.c:2606 src/main/connections.c:2610
 #: src/main/connections.c:2616 src/main/connections.c:2642
@@ -2058,15 +2058,15 @@ msgstr "'con' ist keine Ausgabe-Verbindung vom raw Typ"
 
 #: src/main/connections.c:2736
 msgid "too many characters for text connection"
-msgstr "zu viele Zeichen für eine Textverbindung"
+msgstr "zu viele Zeichen für eine Text-Verbindung"
 
 #: src/main/connections.c:2741
 msgid "cannot allocate memory for text connection"
-msgstr "kann keinen Speicher für Textverbindung zuweisen"
+msgstr "kann keinen Speicher für Text-Verbindung zuweisen"
 
 #: src/main/connections.c:2790
 msgid "seek is not relevant for text connection"
-msgstr "seek ist nicht relevant für Textverbindungen"
+msgstr "seek ist nicht relevant für Text-Verbindungen"
 
 #: src/main/connections.c:2798 src/main/connections.c:2802
 #: src/main/connections.c:2808 src/main/connections.c:2821
@@ -2078,7 +2078,7 @@ msgstr "Allokation einer Textverbindung fehlgeschlagen"
 
 #: src/main/connections.c:2983
 msgid "text connection: appending to a non-existent char vector"
-msgstr "Text Verbindung: Anhängen an nicht existierenden Charakter Vektor"
+msgstr "Text-Verbindung: Anhängen an nicht existierenden Zeichenkettenvektor"
 
 #: src/main/connections.c:3087
 msgid "unsupported mode"
@@ -2213,7 +2213,7 @@ msgstr "lediglich 2^31-1 Bytes können in einen raw vector geschrieben werden"
 #: src/main/connections.c:4089
 msgid "only 2^31-1 bytes can be written in a single writeBin() call"
 msgstr ""
-"lediglich 2^31 -1 Bytes können in einem einzelnen aufruf von writeBin() "
+"lediglich 2^31 -1 Bytes können in einem einzelnen Aufruf von writeBin() "
 "geschrieben werden"
 
 #: src/main/connections.c:4138 src/main/connections.c:4291
@@ -2266,7 +2266,7 @@ msgstr "push back geht nur auf offenen lesbaren Verbindungen"
 
 #: src/main/connections.c:4680
 msgid "can only push back on text-mode connections"
-msgstr "push back geht nur bei Text Verbindungen"
+msgstr "push back geht nur bei Text-Verbindungen"
 
 #: src/main/connections.c:4742 src/main/connections.c:4812
 msgid "sink stack is full"
@@ -2345,7 +2345,7 @@ msgstr "kann nur entweder read- oder write- binäre Verbindungen benutzen"
 #: src/main/connections.c:5513
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
-"Benutzung einer text-mode 'file' connection arbeitet evtl. nicht korrekt"
+"Benutzung einer text-mode 'file' Verbindung arbeitet evtl. nicht korrekt"
 
 #: src/main/connections.c:5516
 msgid ""
@@ -2353,7 +2353,7 @@ msgid ""
 "rawConnection"
 msgstr ""
 "kann aus einer schreibbaren textConnection keine 'gzcon' Verbindung "
-"erzeugen; evtl. rawconnection benutzen"
+"erzeugen; evtl. rawConnection benutzen"
 
 #: src/main/connections.c:5519 src/main/connections.c:5523
 #: src/main/connections.c:5530 src/main/connections.c:5544
@@ -2540,7 +2540,7 @@ msgstr "zu wenig Zeichen geschrieben"
 
 #: src/main/deparse.c:398
 msgid "character arguments expected"
-msgstr "Charakter Argumente erwartet"
+msgstr "Zeichenketten-Argumente erwartet"
 
 #: src/main/deparse.c:401
 msgid "zero-length argument"
@@ -2700,7 +2700,7 @@ msgstr "komplexes NA/NaN/Inf in externem Funktionsaufruf (arg %d)"
 
 #: src/main/dotcode.c:1616
 msgid "only first string in char vector used in .Fortran"
-msgstr "nur erste Zeichenkette in Charaktervektor in .Fortran benutzt"
+msgstr "nur erste Zeichenkette in Zeichenkettenvektor in .Fortran benutzt"
 
 #: src/main/dotcode.c:1659 src/main/dotcode.c:1675 src/main/dotcode.c:1686
 #, c-format
@@ -2892,7 +2892,7 @@ msgstr "ungültige Zusammenfassung von Zeilen"
 #: src/main/engine.c:761 src/main/engine.c:865 src/main/engine.c:1098
 #: src/main/engine.c:1205 src/main/engine.c:1328 src/main/engine.c:1392
 msgid "'lwd' must be non-negative and finite"
-msgstr "'lwd' muss nicht-negative und endlich sein"
+msgstr "'lwd' muss nicht-negativ und endlich sein"
 
 #: src/main/engine.c:798
 msgid "out of memory while clipping polyline"
@@ -3061,7 +3061,7 @@ msgstr "das erste Argument muss eine benannte Liste sein"
 
 #: src/main/envir.c:1778
 msgid "names(x) must be a character vector of the same length as x"
-msgstr "names(x) muss ein Charaktervektor so lang wie x sein"
+msgstr "names(x) muss ein Zeichenkettenvektor derselben Länge wie x sein"
 
 #: src/main/envir.c:1781
 msgid "'envir' argument must be an environment"
@@ -3510,7 +3510,7 @@ msgstr "ungültige (NULL) linke Seite in Zuweisung"
 
 #: src/main/eval.c:1817
 msgid "target of assignment expands to non-language object"
-msgstr "ziel der Zuweisung expandiert zu keinem Sprachobjekt"
+msgstr "Ziel der Zuweisung expandiert zu keinem Sprachobjekt"
 
 #: src/main/eval.c:1900
 #, c-format
@@ -3579,7 +3579,7 @@ msgstr "\"%s\" ist keine %s Funktion"
 
 #: src/main/eval.c:3883
 msgid "node stack overflow"
-msgstr "Knotenstacküberlauf"
+msgstr "Knotenstack-Überlauf"
 
 #: src/main/eval.c:3889
 msgid "integer stack overflow"
@@ -3741,7 +3741,7 @@ msgstr "ungültiger tag-Typ in Zeile %d"
 
 #: src/main/gram.y:1657
 msgid "contextstack overflow"
-msgstr "Kontextstacküberlauf"
+msgstr "Kontextstack-Überlauf"
 
 #: src/main/gram.y:1907 src/main/gram.y:1913
 #, c-format
@@ -3874,7 +3874,7 @@ msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
-"Zeichenkette in Zeile %d mit Unicodeescapes nicht aus dieser Lokalisierung\n"
+"Zeichenkette in Zeile %d mit Unicode-Escapecodes nicht aus dieser Lokalisierung\n"
 "ist zu lang (max. 1000 Zeichen)"
 
 #: src/main/gram.y:3143 src/main/gram.y:3150 src/main/gram.y:3156
@@ -3907,7 +3907,7 @@ msgstr "ungültiger regulärer Ausdruck '%s'"
 #: src/main/grep.c:900 src/main/grep.c:2499
 #, c-format
 msgid "input string %d is invalid UTF-8"
-msgstr "Eingabezeichenkette %d ist unkorrektes UTF-8"
+msgstr "Eingabe-Zeichenkette %d ist ungültig in UTF-8"
 
 #: src/main/grep.c:292 src/main/grep.c:391
 #, c-format
@@ -3997,7 +3997,7 @@ msgstr "ignoriere Attribute, die keine Paarliste sind"
 
 #: src/main/internet.c:83
 msgid "internet routines cannot be accessed in module"
-msgstr "Internetroutinen können nicht im Modul angesprochen werden"
+msgstr "Internet-Routinen können nicht angesprochen werden im Modul"
 
 #: src/main/internet.c:94 src/main/internet.c:128 src/main/internet.c:141
 #: src/main/internet.c:152 src/main/internet.c:163 src/main/internet.c:174
@@ -4273,8 +4273,8 @@ msgstr "unprotect_ptr: Zeiger nicht gefunden"
 #, c-format
 msgid "R_Reprotect: only %d protected item, can't reprotect index %d"
 msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr[0] "R_Reprotect: nur %d geschütztes Element, kann Index %d nicht reprotecten"
-msgstr[1] "R_Reprotect: nur %d geschützte Elemente, kann Index %d nicht reprotecten"
+msgstr[0] "R_Reprotect: nur %d geschütztes Element, kann Index %d nicht re-protecten"
+msgstr[1] "R_Reprotect: nur %d geschützte Elemente, kann Index %d nicht re-protecten"
 
 #: src/main/memory.c:3181
 #, c-format
@@ -4293,12 +4293,12 @@ msgstr "Vektorzeigerrückgabe ist unsicher"
 #: src/main/memory.c:3444
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_STRING_ELT"
-msgstr "Versuch den Inde %lu/%lu in SET_STRING_ELT zu setzen"
+msgstr "Versuch den Index %lu/%lu in SET_STRING_ELT zu setzen"
 
 #: src/main/memory.c:3460
 #, c-format
 msgid "attempt to set index %lu/%lu in SET_VECTOR_ELT"
-msgstr "Versuch den Inde %lu/%lu in SET_VECTOR_ELT zu setzen"
+msgstr "Versuch den Index %lu/%lu in SET_VECTOR_ELT zu setzen"
 
 #: src/main/memory.c:3719
 msgid "memory profiling is not available on this system"
@@ -4433,7 +4433,7 @@ msgstr "kann Klasse von externem Zeiger nicht entfernen"
 
 #: src/main/objects.c:816
 msgid "'what' must be a character vector"
-msgstr "'what' muss eine Charaktervektor sein"
+msgstr "'what' muss ein Zeichenkettenvektor sein"
 
 #: src/main/objects.c:820
 msgid "'which' must be a length 1 logical vector"
@@ -4460,7 +4460,7 @@ msgstr "kann nicht-generische Version der Funktion \"%s\" nicht finden"
 msgid ""
 "'standardGeneric' called without 'methods' dispatch enabled (will be ignored)"
 msgstr ""
-"'standardGeneric' aufgerufen Dispatch  aus 'methods' zu aktivieren(wird "
+"'standardGeneric' aufgerufen ohne Dispatch aus 'methods' zu aktivieren (wird "
 "ignoriert)"
 
 #: src/main/objects.c:1098
@@ -4524,7 +4524,7 @@ msgstr ""
 
 #: src/main/objects.c:1445
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
-msgstr "Makro MAKE_CLASS auf C Level mit NULL Zeichenkettenzeiger aufgerufen"
+msgstr "Makro MAKE_CLASS auf C Level mit Zeichenketten-NULL-Zeiger aufgerufen"
 
 #: src/main/objects.c:1461
 msgid "'methods' package not yet loaded"
@@ -4551,7 +4551,7 @@ msgstr ""
 
 #: src/main/options.c:120 src/main/options.c:180
 msgid "corrupted options list"
-msgstr "korrupte Optionsliste"
+msgstr "beschädigte Optionsliste"
 
 #: src/main/options.c:130
 msgid "invalid printing width, used 80"
@@ -4559,7 +4559,7 @@ msgstr "ungültige Ausgabeweite, nutze 80"
 
 #: src/main/options.c:141
 msgid "invalid printing digits, used 7"
-msgstr "unzulässige Anzahl von Stelle für die Ausgabe, nutze 7"
+msgstr "unzulässige Anzahl von Stellen für die Ausgabe, nutze 7"
 
 #: src/main/options.c:153
 msgid "invalid 'deparse.cutoff', used 60"
@@ -4713,7 +4713,7 @@ msgstr "expandierter Name 'from' zu lang"
 
 #: src/main/platform.c:724 src/main/platform.c:734
 msgid "expanded 'to' name too long"
-msgstr "expandierter 'to' Name zu lang"
+msgstr "expandierter Name 'to' zu lang"
 
 #: src/main/platform.c:738
 #, c-format
@@ -4754,12 +4754,12 @@ msgstr "LC_MESSAGES existiert unter Windows, ist aber nicht funktionsfähig"
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
-"OS meldet: Anfrage Lokilisierung auf \"%s\" zu setzen kann nicht beachtet "
+"OS meldet: Anfrage Lokalisierung auf \"%s\" zu setzen kann nicht beachtet "
 "werden"
 
 #: src/main/platform.c:2147
 msgid "'hostname' must be a character vector of length 1"
-msgstr "'hostname' muss eine Charaktervektor der Länge 1 sein"
+msgstr "'hostname' muss ein Zeichenkettenvektor der Länge 1 sein"
 
 #: src/main/platform.c:2153
 #, c-format
@@ -4860,7 +4860,7 @@ msgstr "alle z Werte sind NA"
 
 #: src/main/plotmath.c:333
 msgid "invalid math style encountered"
-msgstr "unzulässiger Math-Stil aufgetreten"
+msgstr "unzulässiger mathematischer Stil aufgetreten"
 
 #: src/main/plotmath.c:1260 src/main/plotmath.c:1365 src/main/plotmath.c:2654
 msgid "invalid mathematical annotation"
@@ -4991,7 +4991,7 @@ msgstr "n >= 2^31, replace = FALSE ist nur auf 64-bit Plattformen unterstützt"
 
 #: src/main/raw.c:37 src/main/raw.c:273
 msgid "argument must be a character vector of length 1"
-msgstr "Argument muss ein Charaktervektor der Länge 1 sein"
+msgstr "Argument muss ein Zeichenkettenvektor der Länge 1 sein"
 
 #: src/main/raw.c:39 src/main/raw.c:275
 msgid ""
@@ -5007,7 +5007,7 @@ msgstr "Argument 'x' muss ein raw-Vektor sein"
 
 #: src/main/raw.c:56 src/main/raw.c:330
 msgid "argument 'multiple' must be TRUE or FALSE"
-msgstr "Argument 'mulitple' muss TRUE oder FALSE sein"
+msgstr "Argument 'multiple' muss TRUE oder FALSE sein"
 
 #: src/main/raw.c:91
 msgid "argument 'shift' must be a small integer"
@@ -5019,7 +5019,7 @@ msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
 #: src/main/raw.c:148
 msgid "argument 'x' must be raw, integer or logical"
-msgstr "Argument 'x' muss raw, ganzzahlig oder Boole'sch sein"
+msgstr "Argument 'x' muss raw, ganzzahlig oder boolesch sein"
 
 #: src/main/raw.c:154
 #, c-format
@@ -5145,7 +5145,7 @@ msgstr "NewWriteVec mit Nicht-Vektor Typ aufgerufen"
 
 #: src/main/saveload.c:1084
 msgid "cannot save byte code objects in version 1 workspaces"
-msgstr "kann Bytecodeobjekte nicht in Version 1 workspace sichern"
+msgstr "kann Bytecode-Objekte nicht in Version 1 Workspace sichern"
 
 #: src/main/saveload.c:1086
 #, c-format
@@ -5158,7 +5158,7 @@ msgstr "NewReadVec mit Nicht-Vektor Typ aufgerufen"
 
 #: src/main/saveload.c:1286
 msgid "cannot read byte code objects from version 1 workspaces"
-msgstr "kann keine Bytecodeobjekte aus Version 1 workspace laden"
+msgstr "kann keine Bytecodeobjekte aus Version 1 Workspace laden"
 
 #: src/main/saveload.c:1288
 #, c-format
@@ -5179,7 +5179,7 @@ msgstr "Speicher erschöpft beim Lesen einer binären Zeichenkette"
 
 #: src/main/saveload.c:1585
 msgid "a binary string read error occurred"
-msgstr "binärer Zeichenkettenlesefehler aufgetreten"
+msgstr "Lesefehler bei binärer Zeichenkette aufgetreten"
 
 #: src/main/saveload.c:1645
 msgid "an xdr integer data write error occurred"
@@ -5191,7 +5191,7 @@ msgstr "xdr Lesefehler bei integer Daten aufgetreten"
 
 #: src/main/saveload.c:1667 src/main/saveload.c:1686
 msgid "an xdr string data write error occurred"
-msgstr "xdr Schreibfehler bei Zeichenkettendaten aufgetreten"
+msgstr "xdr Schreibfehler bei Zeichenketten-Daten aufgetreten"
 
 #: src/main/saveload.c:1694
 msgid "an xdr real data write error occurred"
@@ -5203,7 +5203,7 @@ msgstr "xdr Lesefehler bei real Daten aufgetreten"
 
 #: src/main/saveload.c:1708
 msgid "an xdr complex data write error occurred"
-msgstr "xdr Schreibfehler bei complex aufgetreten"
+msgstr "xdr Schreibfehler bei complex Daten aufgetreten"
 
 #: src/main/saveload.c:1715
 msgid "an xdr complex data read error occurred"
@@ -5226,12 +5226,12 @@ msgstr "Restore Datei evtl. von neuerer R Version -- keine Daten geladen"
 #: src/main/saveload.c:1914
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
-"unbrauchbare Restoredatei magic number (Datei evtl. korrupt) -- keine Daten "
+"unbrauchbare Restore Datei magic number (Datei evtl. beschädigt) -- keine Daten "
 "geladen"
 
 #: src/main/saveload.c:1940 src/main/saveload.c:2238
 msgid "first argument must be a character vector"
-msgstr "erstes Argument muss ein Charaktervektor sein"
+msgstr "erstes Argument muss ein Zeichenkettenvektor sein"
 
 #: src/main/saveload.c:2012
 msgid "not a valid named list"
@@ -5240,11 +5240,11 @@ msgstr "keine gültige benannte Liste"
 #: src/main/saveload.c:2019 src/main/saveload.c:2040
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
-msgstr "'%s' sieht aus wie ein pre R-2.4.0 Objekt: bitte neu erzeugen"
+msgstr "'%s' sieht aus wie ein prä R-2.4.0 S4 Objekt: bitte neu erzeugen"
 
 #: src/main/saveload.c:2027
 msgid "loaded data is not in pair list form"
-msgstr "geladene Daten sind nicht in Paarlisten Form"
+msgstr "geladene Daten sind nicht in Form von Paarlisten"
 
 #: src/main/saveload.c:2063
 msgid "first argument must be a file name"
@@ -5499,7 +5499,7 @@ msgid ""
 "negative serialized vector length:\n"
 "perhaps long vector from 64-bit version of R?"
 msgstr ""
-"negative Länge für einen serialisierten vektor:\n"
+"negative Länge für einen serialisierten Vektor:\n"
 "evtl. ein langer Vektor aus der 64-bit Version von R"
 
 #: src/main/serialize.c:1745
@@ -5572,7 +5572,7 @@ msgstr "binäre Verbindung für ascii=FALSE benötigt"
 #: src/main/serialize.c:2480
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
-"Serialisierung ist zu groß, um in einem Raw-Vektor gespeichert zu werden"
+"Serialisierung ist zu groß, um in einem raw Vektor gespeichert zu werden"
 
 #: src/main/serialize.c:2397
 msgid "cannot allocate buffer"
@@ -5703,7 +5703,7 @@ msgstr ""
 
 #: src/main/sprintf.c:105
 msgid "'fmt' is not a character vector"
-msgstr "'fmt' ist kein Charakter-Vektor"
+msgstr "'fmt' ist kein Zeichenkettenvektor"
 
 #: src/main/sprintf.c:110
 #, c-format
@@ -5718,7 +5718,7 @@ msgstr "ungültiger Typ des Argumentes[%d]: '%s'"
 #: src/main/sprintf.c:128 src/main/sprintf.c:131
 msgid "arguments cannot be recycled to the same length"
 msgstr ""
-"Argumente können nicht durch Wiederverwendung auf gleiche Länge gebraucht "
+"Argumente können nicht durch Wiederverwendung auf gleiche Länge gebracht "
 "werden"
 
 #: src/main/sprintf.c:153 src/main/sprintf.c:260
@@ -5740,11 +5740,11 @@ msgstr "Referenz auf nicht existierendes Argument %d"
 #: src/main/sprintf.c:221
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
-"höchstens ein Stern `*' wird in jeder Konvertierungsspezifikation unterstützt"
+"höchstens ein Stern '*' wird in jeder Konvertierungsspezifikation unterstützt"
 
 #: src/main/sprintf.c:231
 msgid "argument for '*' conversion specification must be a number"
-msgstr "Argument für `*' Konvertierung muss eine Zahl sein"
+msgstr "Argument für '*' Konvertierung muss eine Zahl sein"
 
 #: src/main/sprintf.c:269
 msgid "coercion has changed vector length to 0"
@@ -5774,7 +5774,7 @@ msgstr "benutze Format %f, %e, %g or %a für numerische Objekte"
 #: src/main/sprintf.c:406
 #, c-format
 msgid "use format %s for character objects"
-msgstr "benutze Format %s für Charakter-Objekte"
+msgstr "benutze Format %s für Zeichenketten-Objekte"
 
 #: src/main/sprintf.c:411
 #, c-format
@@ -6007,7 +6007,7 @@ msgstr "interner Fehler ('op = %d' in do_summary).\t Call a Guru"
 
 #: src/main/summary.c:623
 msgid "Integer overflow - use sum(as.numeric(.))"
-msgstr "Integer-Überlauf - nutze sum(as.numeric(,))"
+msgstr "Integer-Überlauf - nutze sum(as.numeric(.))"
 
 #: src/main/summary.c:731
 msgid "no non-missing arguments, returning NA"
@@ -6062,7 +6062,7 @@ msgstr "Problem bei der Konvertierung des Dateinamens -- zu lang?"
 
 #: src/main/sysutils.c:179
 msgid "file name conversion problem"
-msgstr "Problem bei der Konversion des Dateinamens"
+msgstr "Problem bei der Konvertierung des Dateinamens"
 
 #: src/main/sysutils.c:248
 msgid "invalid filename pattern"
@@ -6082,7 +6082,7 @@ msgstr "kein 'tempdir' angegeben"
 
 #: src/main/sysutils.c:258
 msgid "no 'fileext'"
-msgstr "keine 'fileext'"
+msgstr "keine 'fileext' angegeben"
 
 #: src/main/sysutils.c:322
 #, c-format
@@ -6117,11 +6117,11 @@ msgstr "nicht unterstützte Umwandlung von '%s' nach '%s' in codepage %d"
 
 #: src/main/sysutils.c:637
 msgid "'x' must be a character vector"
-msgstr "'x' muss ein Charaktervektor sein"
+msgstr "'x' muss ein Zeichenkettenvektor sein"
 
 #: src/main/sysutils.c:652
 msgid "'x' must be a list of NULL or raw vectors"
-msgstr "'x' muss eine Liste von NULL oder ein raw vector sein"
+msgstr "'x' muss eine Liste von NULL oder von raw-Vektoren sein"
 
 #: src/main/sysutils.c:730 src/main/sysutils.c:908 src/main/sysutils.c:926
 #: src/main/sysutils.c:943 src/main/sysutils.c:959 src/main/sysutils.c:1036
@@ -6212,7 +6212,7 @@ msgstr "'match' benötigt Vektoren als Argumente"
 
 #: src/main/unique.c:973 src/main/unique.c:1111
 msgid "argument is not of mode character"
-msgstr "Argument hat nicht Modus Charakter"
+msgstr "Argument hat nicht Modus character"
 
 #: src/main/unique.c:1236
 msgid "... used in a situation where it does not exist"
@@ -6224,7 +6224,7 @@ msgstr "... ist keine Paarliste"
 
 #: src/main/unique.c:1470
 msgid "non-numeric data frame in rowsum"
-msgstr "nicht-numerischer dataframe in rowsum"
+msgstr "nicht-numerischer Dataframe in rowsum"
 
 #: src/main/unique.c:1502
 msgid "this cannot happen"
@@ -6232,7 +6232,7 @@ msgstr "dies kann nicht passieren"
 
 #: src/main/unique.c:1573
 msgid "'names' must be a character vector"
-msgstr "'names' muss Charaktervektor sein"
+msgstr "'names' muss ein Zeichenkettenvektor sein"
 
 #: src/main/util.c:87 src/main/util.c:105
 msgid "object is not a matrix"
@@ -6310,7 +6310,7 @@ msgstr "kann Arbeitsverzeichnis nicht wechseln"
 #: src/main/util.c:914 src/main/util.c:1043 src/main/util.c:1102
 #: src/main/util.c:1125
 msgid "a character vector argument expected"
-msgstr "Charaktervektor als Argument erwartet"
+msgstr "Zeichenkettenvektor als Argument erwartet"
 
 #: src/main/util.c:804 src/main/util.c:839 src/main/util.c:881
 #: src/main/util.c:922
@@ -6323,7 +6323,7 @@ msgstr "nur das erste Zeichen von 'quote' wird benutzt"
 
 #: src/main/util.c:1127
 msgid "a character vector 'value' expected"
-msgstr "Charaktervektor 'value' erwartet"
+msgstr "Zeichenkettenvektor 'value' erwartet"
 
 #: src/main/util.c:1130
 msgid "'value' must be of positive length"
@@ -6421,7 +6421,7 @@ msgstr "add_point - erreichte MAXNUMPTS (%d)"
 
 #: src/main/xspline.c:74
 msgid "insufficient memory to allocate point array"
-msgstr "zu wenig Hauptspeicher um Punktarry zu allozieren"
+msgstr "zu wenig Hauptspeicher um Punkt-Array zu allozieren"
 
 #: src/main/xspline.c:472
 msgid "there must be at least two control points"
@@ -6483,17 +6483,17 @@ msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
-"Semi-TRansparenz ist auf diesem Gerät nicht verfügbar: Meldung nur ein Mal "
+"Semi-Transparenz ist auf diesem Gerät nicht verfügbar: Meldung nur ein Mal "
 "pro Seite"
 
 #: src/modules/X11/devX11.c:1254
 #, c-format
 msgid "X11 I/O error while opening X11 connection to '%s'"
-msgstr "X11 E/A Fehler beim Öffnen einer X11 Verbindung nach '%s'"
+msgstr "X11 I/O Fehler beim Öffnen einer X11 Verbindung nach '%s'"
 
 #: src/modules/X11/devX11.c:1271
 msgid "X11 fatal IO error: please save work and shut down R"
-msgstr "fataler IO Fehler in X11: Bitte Arbeit sichern und R schließen!"
+msgstr "fataler I/O Fehler in X11: Bitte Arbeit sichern und R schließen!"
 
 #: src/modules/X11/devX11.c:1326
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
@@ -6706,7 +6706,7 @@ msgstr "versuche URL '%s'\n"
 #: src/modules/internet/libcurl.c:453
 #, c-format
 msgid "downloaded length %0.f != reported length %0.f"
-msgstr "heruntergeladene Länge %0.f != angegebener Länge %0.f"
+msgstr "heruntergeladene Länge %0.f != angegebene Länge %0.f"
 
 #: src/modules/internet/internet.c:639 src/modules/internet/internet.c:750
 #, c-format
@@ -6858,7 +6858,7 @@ msgstr "Allokation einer Socketverbindung fehlgeschlagen"
 #: src/modules/lapack/Lapack.c:48 src/modules/lapack/Lapack.c:67
 #, c-format
 msgid "argument type[1]='%s' must be a character string of string length 1"
-msgstr "Argument type[1]='%s' muss ein Charakter-Vektor der Länge 1 sein"
+msgstr "Argument type[1]='%s' muss ein Zeichenkettenvektor der Länge 1 sein"
 
 #: src/modules/lapack/Lapack.c:56
 #, c-format
@@ -6887,7 +6887,7 @@ msgstr "Argument type[1]='%s' muss einer von '1','O' oder 'I' sein"
 #: src/modules/lapack/Lapack.c:1255
 #, c-format
 msgid "error code %d from Lapack routine '%s'"
-msgstr "Fehlercode %d von Lapackroutine '%s'"
+msgstr "Fehlercode %d von Lapack-Routine '%s'"
 
 #: src/modules/lapack/Lapack.c:153 src/modules/lapack/Lapack.c:248
 #: src/modules/lapack/Lapack.c:874
@@ -6911,7 +6911,7 @@ msgstr "'norm' muss eine Zeichenkette sein"
 #: src/modules/lapack/Lapack.c:377
 #, c-format
 msgid "error [%d] from Lapack 'dgetrf()'"
-msgstr "Fehlercode %d von Lapackroutine 'dgetrf()'"
+msgstr "Fehlercode %d von Lapack-Routine 'dgetrf()'"
 
 #: src/modules/lapack/Lapack.c:382
 #, c-format
@@ -6921,7 +6921,7 @@ msgstr "exakte Singularität: U[%d,%d] = 0 in LU-Zerlegung {Lapack 'dgetrf()'}"
 #: src/modules/lapack/Lapack.c:394
 #, c-format
 msgid "error [%d] from Lapack 'dgecon()'"
-msgstr "Fehlercode %d von Lapackroutine 'dgecon()'"
+msgstr "Fehlercode %d von Lapack-Routine 'dgecon()'"
 
 #: src/modules/lapack/Lapack.c:414 src/modules/lapack/Lapack.c:446
 #: src/modules/lapack/Lapack.c:504
@@ -6931,7 +6931,7 @@ msgstr "'A' muss *quadratische* Matrix sein"
 #: src/modules/lapack/Lapack.c:428
 #, c-format
 msgid "error [%d] from Lapack 'dtrcon()'"
-msgstr "Fehlercode %d von Lapackroutine 'dtrcon()'"
+msgstr "Fehlercode %d von Lapack-Routine 'dtrcon()'"
 
 #: src/modules/lapack/Lapack.c:443 src/modules/lapack/Lapack.c:500
 msgid "'A' must be a complex matrix"
@@ -6940,12 +6940,12 @@ msgstr "'A' muss eine komplexe Matrix sein"
 #: src/modules/lapack/Lapack.c:465 src/modules/lapack/Lapack.c:472
 #, c-format
 msgid "error [%d] from Lapack 'zgetrf()'"
-msgstr "Fehlercode %d von Lapackroutine 'zgetrf()'"
+msgstr "Fehlercode %d von Lapack-Routine 'zgetrf()'"
 
 #: src/modules/lapack/Lapack.c:480
 #, c-format
 msgid "error [%d] from Lapack 'zgecon()'"
-msgstr "Fehlercode %d von Lapackroutine 'zgecon()'"
+msgstr "Fehlercode %d von Lapack-Routine 'zgecon()'"
 
 #: src/modules/lapack/Lapack.c:484 src/modules/lapack/Lapack.c:519
 #: src/modules/lapack/Lapack.c:588 src/modules/lapack/Lapack.c:648
@@ -6958,7 +6958,7 @@ msgstr "komplexe Fortran Funktionen auf dieser Plattform nicht verfügbar"
 #: src/modules/lapack/Lapack.c:516
 #, c-format
 msgid "error [%d] from Lapack 'ztrcon()'"
-msgstr "Fehlercode %d von Lapackroutine 'ztrcon()'"
+msgstr "Fehlercode %d von Lapack-Routine 'ztrcon()'"
 
 #: src/modules/lapack/Lapack.c:532 src/modules/lapack/Lapack.c:602
 msgid "'a' must be a complex matrix"
@@ -6988,7 +6988,7 @@ msgstr "'b' (%d x %d) muss zu 'a' (%d x %d) passen"
 #: src/modules/lapack/Lapack.c:1092
 #, c-format
 msgid "argument %d of Lapack routine %s had invalid value"
-msgstr "Argument %d der Lapackroutine '%s' hatte ungültigen Wert"
+msgstr "Argument %d der Lapack-Routine '%s' hatte ungültigen Wert"
 
 #: src/modules/lapack/Lapack.c:662 src/modules/lapack/Lapack.c:707
 msgid "'b' must be a complex matrix"
@@ -7266,7 +7266,7 @@ msgid ""
 "report using bug.report()"
 msgstr ""
 "Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. "
-"Bitte melden Sie's via bug.report()"
+"Bitte melden Sie dies via bug.report()"
 
 #: src/unix/sys-std.c:1082 src/unix/sys-std.c:1249
 #, c-format
@@ -7304,7 +7304,7 @@ msgstr "ungültiger Zeitstempel"
 
 #: src/unix/sys-unix.c:247
 msgid "non-empty character argument expected"
-msgstr "erwarte nicht-leeres Charakter-Argument"
+msgstr "erwarte nicht-leeres Zeichenketten-Argument"
 
 #: src/unix/sys-unix.c:250
 msgid "'intern' must be logical and not NA"
@@ -7328,12 +7328,12 @@ msgstr "Fehler bei der Ausführung von: '%s'"
 
 #: src/unix/sys-unix.c:286
 msgid "error in running command"
-msgstr "Fehler bei der Ausführung des Kommandos"
+msgstr "Fehler bei der Ausführung des Befehls"
 
 #: src/unix/sys-unix.c:290
 #, c-format
 msgid "running command '%s' had status %d and error message '%s'"
-msgstr "Ausführung von Kommando '%s' ergab Status %d und Fehlermeldung '%s'"
+msgstr "Ausführung von Befehl '%s' ergab Status %d und Fehlermeldung '%s'"
 
 #: src/unix/sys-unix.c:395
 msgid "Sys.info() is not implemented on this system"

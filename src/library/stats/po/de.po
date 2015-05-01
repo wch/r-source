@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the R package.
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
-msgstr ""
+msgstr ""	
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-02 10:09-0800\n"
@@ -22,7 +22,7 @@ msgstr "Bandbreite/Spannweite der gleitenden Mediane größer als n"
 
 #: ansari.c:116
 msgid "probabilities outside [0,1] in qansari()"
-msgstr "Wahrscheinlichkeiten außerhalb von [0,1] in qansar()"
+msgstr "Wahrscheinlichkeiten außerhalb von [0,1] in qansari()"
 
 #: approx.c:102
 msgid "approx(): invalid f value"
@@ -219,7 +219,7 @@ msgstr "'f' muss endlich und > 0 sein"
 
 #: lowess.c:295
 msgid "'iter' must be finite and >= 0"
-msgstr "'iter' muss endlich und >= 0  sein"
+msgstr "'iter' muss endlich und >= 0 sein"
 
 #: lowess.c:298
 msgid "'delta' must be finite and > 0"
@@ -227,15 +227,15 @@ msgstr "'delta' muss endlich und > 0 sein"
 
 #: mAR.c:467
 msgid "Singular matrix in qr_solve"
-msgstr "singläre Matrix in qr_solve"
+msgstr "Singuläre Matrix in qr_solve"
 
 #: mAR.c:510
 msgid "Singular matrix in ldet"
-msgstr "singläre Matrix in ldet"
+msgstr "Singuläre Matrix in ldet"
 
 #: mAR.c:697
 msgid "Invalid vmethod"
-msgstr "unzulässige vmethod"
+msgstr "Unzulässige vmethod"
 
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
@@ -324,7 +324,7 @@ msgstr "Term-Namen werden abgeschnitten"
 
 #: model.c:635
 msgid "complex variables are not currently allowed in model matrices"
-msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
+msgstr "komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
 
 #: model.c:659
 #, c-format
@@ -358,7 +358,7 @@ msgstr "ungültige Modellformel in ExtractVars"
 #: model.c:1518
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
-msgstr "verdoppelter Name '%s' in Data Frame bei Benutzung von '.'"
+msgstr "verdoppelter Name '%s' in Dataframe bei Benutzung von '.'"
 
 #: model.c:1576
 msgid "invalid model formula in EncodeVars"
@@ -370,7 +370,7 @@ msgstr "Argument ist kein gültiges Modell"
 
 #: model.c:1672
 msgid "'specials' must be NULL or a character vector"
-msgstr "'specials' muss NULL oder eine Charaktervektor sein"
+msgstr "'specials' muss NULL oder eine Zeichenkettenvektor sein"
 
 #: model.c:1684
 msgid "'data' argument is of the wrong type"
@@ -563,7 +563,7 @@ msgstr "numerischer Parameter erwartet"
 
 #: optimize.c:600
 msgid "conflicting parameter lengths"
-msgstr "Parameter Längen passen nicht"
+msgstr "Parameterlängen passen nicht"
 
 #: optimize.c:604
 msgid "invalid parameter length"
@@ -669,7 +669,7 @@ msgstr ""
 #: optimize.c:745 optimize.c:750 optimize.c:754 optimize.c:758 optimize.c:762
 #: optimize.c:766 optimize.c:771
 msgid "invalid NA value in parameter"
-msgstr "ungültige NA Wert in Parameter"
+msgstr "ungültiger NA Wert in Parameter"
 
 #: optimize.c:800
 msgid "hessian supplied is of the wrong length or mode, so ignored"
@@ -704,7 +704,7 @@ msgstr "unzulässiger Wert von lag.max"
 #: port.c:133
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
-msgstr "RF_divset: alg = %d muss 1, 2, 3 oder 4 sein"
+msgstr "Rf_divset: alg = %d muss 1, 2, 3 oder 4 sein"
 
 #: port.c:149
 msgid "port algorithms 3 or higher are not supported"
@@ -720,7 +720,7 @@ msgstr ""
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
-"Hessematrixfunktion muss eine quadratische numerische Matrix mit Rang %d "
+"Hessematrix-Funktion muss eine quadratische numerische Matrix mit Rang %d "
 "zurückgeben"
 
 #: port.c:380
@@ -768,7 +768,7 @@ msgstr "fcn erzeugte Modus %d, Länge %d - gewünscht Modus %d, Länge %d"
 
 #: port.c:525
 msgid "invalid type for eval_check_store"
-msgstr "unzulässiger Typ für eval_check_source"
+msgstr "unzulässiger Typ für eval_check_store"
 
 #: port.c:544
 msgid "m must be a list"
@@ -784,7 +784,7 @@ msgstr "Freiheitsgrade und Dimension sind inkonsistent"
 
 #: rWishart.c:84
 msgid "'scal' must be a square, real matrix"
-msgstr "'scal' muss eine quadratische, reelwertige Matrix sein"
+msgstr "'scal' muss eine quadratische, reellwertige Matrix sein"
 
 #: rWishart.c:96
 msgid "'scal' matrix is not positive-definite"

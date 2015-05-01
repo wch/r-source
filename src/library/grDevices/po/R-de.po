@@ -26,7 +26,7 @@ msgid "no 'z' matrix specified"
 msgstr "keine 'z' Matrix angegeben"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "ansteigende 'x' und 'y' Werte erwarted"
+msgstr "ansteigende 'x' und 'y' Werte erwartet"
 
 msgid "no proper 'z' matrix specified"
 msgstr "keine geeignete 'z' Matrix angegeben"
@@ -47,7 +47,7 @@ msgid "at least 3 columns needed"
 msgstr "zumindest 3 Spalten benötigt"
 
 msgid "rgb matrix must be numeric"
-msgstr "RGB Matrix muss nummerisch sein"
+msgstr "RGB Matrix muss numerisch sein"
 
 msgid "rgb matrix must have 3 rows"
 msgstr "RGB Matrix muss 3 Zeilen haben"
@@ -86,7 +86,7 @@ msgid "color spaces use different reference whites"
 msgstr "Farbräume nutzen unterschiedliches Referenz-Weiß"
 
 msgid "'name' must be a character vector"
-msgstr "'name' muss Charakter-Vektor sein"
+msgstr "'name' muss Zeichenkettenvektor sein"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "kann Device 1 (Null Device) nicht schließen"
@@ -125,7 +125,7 @@ msgid "dev.displaylist() called without an open graphics device"
 msgstr "dev.displaylist() ohne geöffnetes Grafik-Device aufgerufen"
 
 msgid "invalid setting for 'getOption(\"device\")'"
-msgstr "unzulässige einstellung für 'getOption(\"device\")'"
+msgstr "unzulässige Einstellung für 'getOption(\"device\")'"
 
 msgid "device '%s' not found"
 msgstr "Device '%s' nicht gefunden"
@@ -143,11 +143,11 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): nutze postscript(file=\"%s\")"
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt"
+msgstr "unzulässige Argumente in '%s' (benannte Argumente benötigt)"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr ""
-"'name.opt' muss ein Charkter, ein Name oder eine exisitierende Liste sein"
+"'name.opt' muss eine Zeichenkette sein, der Name einer existierenden Liste"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "kann nicht existierendes ' %s' nicht zurücksetzen"
@@ -229,7 +229,7 @@ msgstr "Spannweite zu klein für 'min.n'"
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr ""
-"Eine Rastermatrix muss entweder character, nummerisch oder boole'sch sein"
+"Eine Rastermatrix muss entweder character, numerisch oder boolesch sein"
 
 msgid "a raster array must be numeric"
 msgstr "ein Raster-Array muss numerisch sein"
@@ -238,16 +238,16 @@ msgid "a raster array must have exactly 3 dimensions"
 msgstr "ein Raster-Array muss genau 3 Dimensionen haben"
 
 msgid "a raster array must have exactly 3 or 4 planes"
-msgstr "ein Rater-Array muss genau 3 oder 4 Ebenen haben"
+msgstr "ein Raster-Array muss genau 3 oder 4 Ebenen haben"
 
 msgid "'drop' is always implicitly FALSE in '[.raster'"
 msgstr "'drop' ist implizit immer FALSE in '[.raster'"
 
 msgid "invalid raster subsetting"
-msgstr "ungültiges Rastersubsetting"
+msgstr "ungültiges Raster-Subsetting"
 
 msgid "invalid raster subassignment"
-msgstr "ungültige Rasterteilzuweisung"
+msgstr "ungültige Raster-Teilzuweisung"
 
 msgid "operator not meaningful for raster objects"
 msgstr "Operator hat für Rasterobjekte keine Bedeutung"
@@ -262,10 +262,10 @@ msgid "loading snapshot from a different session"
 msgstr "lade Snapshot einer anderen R Sitzung"
 
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr "'nbin' muss nummerisch mit Länge 1 oder 2 sein"
+msgstr "'nbin' muss numerisch mit Länge 1 oder 2 sein"
 
 msgid "'bandwidth' must be numeric"
-msgstr "'bandwidth' muss nummerisch sein"
+msgstr "'bandwidth' muss numerisch sein"
 
 msgid "'bandwidth' must be positive"
 msgstr "'bandwidth' muss positiv sein"
@@ -280,7 +280,7 @@ msgid "'x' is a list, but does not have components 'x' and 'y'"
 msgstr "'x' ist eine Liste, hat aber keine Komponenten 'x' und 'y'"
 
 msgid "'x' and 'y' lengths differ"
-msgstr "Längen von 'x' nud 'y' unterscheiden sich"
+msgstr "Längen von 'x' und 'y' unterscheiden sich"
 
 msgid "invalid first argument [bad language object]"
 msgstr "ungültiges erstes Argument [schlechtes Sprachobjekt]"
@@ -307,7 +307,7 @@ msgid ""
 "Available devices are:\n"
 "%s"
 msgstr ""
-"Verfügbar Devices sind:\n"
+"Verfügbare Devices sind:\n"
 "%s"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
@@ -334,7 +334,7 @@ msgstr ""
 "nutze \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr "unbekannte Famiile für X11(type = \"XLib\")"
+msgstr "unbekannte Familie für X11(type = \"XLib\")"
 
 msgid "invalid X11 font specification:"
 msgstr "ungültige X11 Zeichensatzspezifikation"
@@ -355,7 +355,7 @@ msgid "invalid value for 'rescale'"
 msgstr "unzulässiger Wert für 'rescale'"
 
 msgid "can only bring windows devices to the front"
-msgstr "kann nur windows-Devices nach Vorne bringen"
+msgstr "kann nur Windows-Devices nach vorne bringen"
 
 msgid "'type' not applicable to the R console"
 msgstr "'type' für die R-Konsole nicht anwendbar"

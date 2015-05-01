@@ -21,11 +21,11 @@ msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
 msgstr ""
-"RShowDoc() sollte mit einen Zeichenkettenargument genutzt werden,\n"
-"das eine Dokudatei spezifiziert"
+"RShowDoc() sollte mit einem Zeichenkettenargument genutzt werden,\n"
+"das eine Dokumentationsdatei spezifiziert"
 
 msgid "no documentation for %s found in package %s"
-msgstr "keine Doku für %s in Paket %s gefunden"
+msgstr "keine Dokumentation für %s in Paket %s gefunden"
 
 msgid "document not found"
 msgstr "Dokument nicht gefunden"
@@ -34,7 +34,7 @@ msgid "A search query has been submitted to %s"
 msgstr "Eine Suchanfrage wurde gesendet an %s"
 
 msgid "The results page should open in your browser shortly"
-msgstr "Die Ergebnissseite sollte sich in Kürze in Ihrem Browser öffnen"
+msgstr "Die Ergebnisseite sollte sich in Kürze in Ihrem Browser öffnen"
 
 msgid "reference to unknown chunk %s"
 msgstr "Referenz auf unbekannten Abschnitt %s"
@@ -74,10 +74,10 @@ msgid "Output file:"
 msgstr "Ausgabedateien:"
 
 msgid "Compacting PDF document"
-msgstr "Komprimieren PDF Dokument"
+msgstr "Komprimiere PDF Dokument"
 
 msgid "path to %s contains spaces,"
-msgstr "Pfad für %s enthält Leerstellen."
+msgstr "Pfad für %s enthält Leerzeichen,"
 
 msgid "this may cause problems when running LaTeX"
 msgstr "Das kann Schwierigkeiten mit LaTeX machen"
@@ -149,7 +149,7 @@ msgid "'full.names' must be TRUE for multiple paths."
 msgstr "'full.names' muss TRUE sein bei mehrfachen Pfaden."
 
 msgid "Timestamp file no longer exists."
-msgstr "Zeitstempel exisitiert nicht länger."
+msgstr "Zeitstempel existiert nicht länger."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -214,8 +214,8 @@ msgid ""
 "ATTENTION: This citation information has been auto-generated from the "
 "package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
-"ACHTUNG: Diese Zitatinformation wurde aus der DESCRIPTION-Datei\n"
-"automatischn generiert. Evtl. manuelle Nacharbeit nötig, siehe %s."
+"ACHTUNG: Diese Zitationsinformation wurde aus der DESCRIPTION-Datei\n"
+"automatisch generiert. Evtl. ist manuelle Nachbearbeitung nötig, siehe %s."
 
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN' muss eine Funktion oder NULL sein"
@@ -347,19 +347,19 @@ msgid "'fix' requires a name"
 msgstr "'fix' beötigt einen Namen"
 
 msgid "too many list items (at most up to %d)"
-msgstr "zu viele Listenpunke (höchstens %d)"
+msgstr "zu viele Listenpunkte (höchstens %d)"
 
 msgid "no vector columns were selected"
 msgstr "keine Vektorspalten ausgewählt"
 
 msgid "non-vector columns will be ignored"
-msgstr "nicht-vector Spalten werden ignoriert"
+msgstr "nicht-Vektor Spalten werden ignoriert"
 
 msgid "at least one vector element is required"
 msgstr "mindestens ein Vektorelement ist nötig"
 
 msgid "non-vector elements will be ignored"
-msgstr "nicht-vektor Elemente werden ignoriert"
+msgstr "nicht-Vektor Elemente werden ignoriert"
 
 msgid "'form' must be a two-sided formula"
 msgstr "'form' muss eine zweiseitige Formel sein"
@@ -414,7 +414,7 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
 msgstr ""
-"Paket %s exisitiert, wurde aber nicht unter R >= 2.10.0 installiert, weshalb "
+"Paket %s existiert, wurde aber nicht unter R >= 2.10.0 installiert, weshalb "
 "die Hilfe nicht genutzt werden kann"
 
 msgid "creation of %s failed"
@@ -452,7 +452,7 @@ msgid "package %s has empty hsearch data - strangely"
 msgstr "Paket %s hat leere hsearch Daten - seltsam"
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr "entferne alle Ein<räge mit unzulässigen multi-byte Charakterdaten"
+msgstr "entferne alle Einträge mit unzulässigen multi-byte Charakterdaten"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "ungültiger Browsername, überprüfen Sie options(\"browser\")."
@@ -485,10 +485,10 @@ msgid "no package '%s' was found"
 msgstr "kein Paket '%s' gefunden"
 
 msgid "metadata of package '%s' is corrupt"
-msgstr "Metadaten für Paket '%s' sind korrumpiert"
+msgstr "Metadaten für Paket '%s' sind beschädigt"
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
-msgstr "DESCRIPTION von Paket '%s' ist korrumpiert"
+msgstr "DESCRIPTION von Paket '%s' ist beschädigt"
 
 msgid ""
 "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
@@ -496,7 +496,7 @@ msgstr ""
 "Die 'DESCRIPTION' Datei hat Feld 'Encoding' und rekodieren ist nicht möglich"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr "DESCRIPTIN von Paket '%s' fehlt oder zerstört"
+msgstr "DESCRIPTION von Paket '%s' fehlt oder zerstört"
 
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
@@ -511,7 +511,7 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Geben Sie Menüpunkt ein oder 0 zum Abbruch"
 
 msgid "invalid query"
-msgstr "unzulässiges Anfrage"
+msgstr "unzulässige Anfrage"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -523,7 +523,7 @@ msgstr "keine Funktion '%s' sichtbar"
 
 msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
-"generische Funktion '%s' leistet Methodendispatch für  die generische '%s'"
+"generische Funktion '%s' leistet Methodendispatch für die generische '%s'"
 
 msgid ""
 "function '%s' appears not to be S3 generic; found functions that look like "
@@ -542,7 +542,7 @@ msgid "S3 method '%s' not found"
 msgstr "S3 Methode '%s' nicht gefunden"
 
 msgid "environment specified is not a package"
-msgstr "angegebenen Umgebung ist kein Paket"
+msgstr "angegebene Umgebung ist kein Paket"
 
 msgid "changing locked binding for %s in %s whilst loading %s"
 msgstr "ändere geschlossene Bindung für %s in %s während des Ladens von %s"
@@ -560,16 +560,16 @@ msgid "cannot create directory '%s'"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
 
 msgid "'code_files' must be a character vector"
-msgstr "'code_files' muss ein Charaktervektor sein"
+msgstr "'code_files' muss ein Zeichenkettenvektor sein"
 
 msgid "'list' must be a character vector naming R objects"
-msgstr "'list' muss ein Charaktervektor sein, mit Namen von R Objekten"
+msgstr "'list' muss ein Zeichenkettenvektor sein, mit Namen von R Objekten"
 
 msgid "no R objects specified or available"
 msgstr "keine R Objekte spezifiziert oder verfügbar"
 
 msgid "directory '%s' already exists"
-msgstr "Verzeichnis '%s' exisitiert bereits"
+msgstr "Verzeichnis '%s' existiert bereits"
 
 msgid ""
 "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use "
@@ -597,11 +597,11 @@ msgstr "Paket '%s' in der Bibliothek '%s' wird nicht aktualisiert"
 msgid ""
 "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
 msgstr ""
-"unzulässige 'oldPkgs'; muss eine Zeichenkette oder ein Ergebniss von old."
-"packages() sein"
+"unzulässige 'oldPkgs'; muss eine Zeichenkette oder ein Ergebnis von "
+old.packages() sein"
 
 msgid "ill-formed 'instPkgs' matrix"
-msgstr "missgestaltete 'instPkgs' Matrix"
+msgstr "unzulässig gestaltete 'instPkgs' Matrix"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "keine installierten Pakete für (falsche?) 'lib.loc=%s'"
@@ -610,10 +610,10 @@ msgid "no new packages are available"
 msgstr "keine neuen Pakete verfügbar"
 
 msgid "metadata of %s is corrupt"
-msgstr "Metadaten für %s sind korrumpiert"
+msgstr "Metadaten für %s sind beschädigt"
 
 msgid "'priority' must be character or NULL"
-msgstr "'priority' muss ein Zeichen oder NULL sein"
+msgstr "'priority' muss eine Zeichenkette oder NULL sein"
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "Aktualisiere HTML Index der Pakete in '.Library'"
@@ -622,10 +622,10 @@ msgid "'destdir' is not a directory"
 msgstr "'destdir' ist kein Verzeichnis"
 
 msgid "no package %s at the repositories"
-msgstr "kein Paket %s in den Repostories"
+msgstr "kein Paket %s in den Repositories"
 
 msgid "package %s does not exist on the local repository"
-msgstr "Paket %s exisitiert nicht in lokalem Repository"
+msgstr "Paket %s existiert nicht in lokalem Repository"
 
 msgid "download of package %s failed"
 msgstr "Download von Paket %s fehlgeschlagen"
@@ -746,14 +746,14 @@ msgid ""
 "The namespace for package \"%s\" is locked; no changes in the global "
 "variables list may be made."
 msgstr ""
-"Der Namensraum für Paket \"%s\" ist geschlossen; Es können keine\n"
+"Der Namensraum für Paket \"%s\" ist geschlossen; Es sind keine\n"
 "Änderungen in der globalen Variablenliste möglich."
 
 msgid "'env' must be an environment"
 msgstr "'env' muss eine Umgebung sein"
 
 msgid "no object named '%s' to show"
-msgstr "kein Objket namens '%s' anzuzeigen"
+msgstr "kein Objekt namens '%s' anzuzeigen"
 
 msgid "'file' must be \"\" or an open connection object"
 msgstr "'file' muss \"\" oder eine bereits geöffnetes Verbindungsobjekt sein"
@@ -778,27 +778,29 @@ msgstr "kann keinen Importnamen bestimmen"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
 msgstr ""
-"keine Doku des Typs %s zum Thema %s (oder Fehler in der Hilfeverarbeitung)"
+"keine Dokumentation des Typs %s zum Thema %s (oder Fehler in der "
+"Hilfeverarbeitung)"
 
 msgid ""
 "the object of class %s in the function call %s could not be used as a "
 "documentation topic"
 msgstr ""
-"das Objekt der Klasse %s im Funktionsaufruf %s konnte nicht als Doku-Thema "
-"benutzt werden"
+"das Objekt der Klasse %s im Funktionsaufruf %s konnte nicht als "
+"Dokumentations-Thema benutzt werden"
 
 msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
-"keine Methoden für %s und keine Doku darüber, es als Funktion zu nutzen"
+"keine Methoden für %s und keine Dokumentation darüber, "
+"es als Funktion zu nutzen"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
 
 msgid "no method defined for function %s and signature %s"
-msgstr "keine Methode für Funktion %s und  Signatur %s definiert"
+msgstr "keine Methode für Funktion %s und Signatur %s definiert"
 
 msgid "no documentation for function %s and signature %s"
-msgstr "keine Doku für Funktion %s und Signatur %s"
+msgstr "keine Dokumentation für Funktion %s und Signatur %s"
 
 msgid "No DIF data on clipboard"
 msgstr "Keine DIF Daten im Clipboard"
@@ -810,13 +812,13 @@ msgid "row and column counts not found"
 msgstr "Zeilen und Spaltenzahlen nicht gefunden"
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr "mehr Zeilen als im Kopf spezifiziert; evtl 'transpose=TRUE'?"
+msgstr "mehr Zeilen als im Kopf der Datei spezifiziert; evtl. 'transpose=TRUE'?"
 
 msgid "Unrecognized special data value"
 msgstr "Unerkannte spezielle Datenwerte"
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr "mehr Spalten als im Kopf spezifiziert; evtl. 'transpose=TRUE'?"
+msgstr "mehr Spalten als im Kopf der Datei spezifiziert; evtl. 'transpose=TRUE'?"
 
 msgid "Unrecognized value indicator"
 msgstr "Unbekannter Wertindikator"
@@ -837,13 +839,13 @@ msgid "rows are empty: giving up"
 msgstr "Zeilen sind leer: gebe auf"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr "nicht alle Spalten in 'colClasses' exisitieren"
+msgstr "nicht alle Spalten in 'colClasses' existieren"
 
 msgid "invalid numeric 'as.is' expression"
 msgstr "ungültige numerische 'as.is' Expression"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr "nicht alle in 'as.is' benannten Spalten exisitieren"
+msgstr "nicht alle in 'as.is' benannten Spalten existieren"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is' hat die falsche Länge %d != cols = %d"
@@ -852,7 +854,7 @@ msgid "invalid 'row.names' specification"
 msgstr "ungültige 'row.names' Spezifikation"
 
 msgid "invalid 'row.names' length"
-msgstr "ungültige 'roe.names' Länge"
+msgstr "ungültige 'row.names' Länge"
 
 msgid "duplicate 'row.names' are not allowed"
 msgstr "doppelte 'row.names' sind nicht zulässig"
@@ -891,10 +893,10 @@ msgid ""
 "Either ensure you unlist a relistable object, or specify the skeleton "
 "separately."
 msgstr ""
-"Entweder ein wiedr listbares Objekt entlisten oder ein Gerüst separat angeben"
+"Entweder ein wieder-listbares Objekt entlisten oder ein Gerüst separat angeben"
 
 msgid "cannot coerce 'x' to roman"
-msgstr "kann 'x' nicht nach Roman unwandeln"
+msgstr "kann 'x' nicht nach in römische Zahl unwandeln"
 
 msgid "Could not create file %s, aborting"
 msgstr "Konnte Datei %s nicht erzeugen, abgebrochen"
@@ -909,17 +911,17 @@ msgid "'port' must be integer of length 1"
 msgstr "'port' muss ganze Zahl der Länge 1 sein"
 
 msgid "'host' must be character of length 1"
-msgstr "'host' muss Charakter der Länge 1 sein"
+msgstr "'host' muss Zeichenkette der Länge 1 sein"
 
 msgid "can only receive calls on local machine"
-msgstr "kann Aufrufe nur auf der lokalen Maschiene entgegennehmen"
+msgstr "kann Aufrufe nur auf der lokalen Maschine entgegennehmen"
 
 msgid "socket not established"
 msgstr "socket nicht etabliert"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
-"str.data.frame() mit nicht-Data-Frame aufgerufen --- umwandeln in einen."
+"str.data.frame() mit nicht-Data-Frame aufgerufen -- umgewandelt in einen solchen."
 
 msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "ungültige options(\"str\") -- nutze stattdessen Standard"
@@ -938,10 +940,10 @@ msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
 
 msgid "no lines found in %s"
-msgstr "kein Zeilen in  '%s'"
+msgstr "kein Zeilen in '%s'"
 
 msgid "profile does not contain memory information"
-msgstr "Profil einthält keine Speicherinformation"
+msgstr "Profil enthält keine Speicherinformation"
 
 msgid "profile does not contain line information"
 msgstr "Profil enthält keine Zeileninformation"
@@ -953,7 +955,7 @@ msgid "invalid 'tarfile' argument"
 msgstr "unzulässiges 'tarfile' Argument"
 
 msgid "'compressed' must be logical or character"
-msgstr "'commpressed' muss Boole'sch oder ein Charakter sein"
+msgstr "'compressed' muss boolesch oder eine Zeichenkette sein"
 
 msgid "failed to create directory %s"
 msgstr "kann Verzeichnis '%s' nicht erzeugen"
@@ -1014,7 +1016,7 @@ msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
 
 msgid "'title' must be NULL or a length-1 character vector"
-msgstr "'title' muss NULL oder ein Charaktervektor mit Länge 1 sein"
+msgstr "'title' muss NULL oder ein Zeichenkettenvektor mit Länge 1 sein"
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
@@ -1047,17 +1049,17 @@ msgid "attempt to set '%s' ignored"
 msgstr "Versuch ignoriert '%s' zu setzen"
 
 msgid "'unzip' must be a single character string"
-msgstr "'unzip' muss ein einzelne Zeichenkette sein"
+msgstr "'unzip' muss eine einzelne Zeichenkette sein"
 
 msgid "'files' must a character vector specifying one or more filepaths"
 msgstr ""
-"'files' muss ein Charaktervektor sein, der einen oder mehrere Pfade "
+"'files' muss ein Zeichenkettenvektor sein, der einen oder mehrere Pfade "
 "spezifiziert"
 
 msgid ""
 "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
 msgstr ""
-"kein programm um 'mailto' URIs zu öffnen: rückfall auf 'method=\"none\"'"
+"kein Programm um 'mailto' URIs zu öffnen: Rückfall auf 'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
 msgstr "Nutze Browser, um mailto: URI zu öffnen"
@@ -1069,16 +1071,16 @@ msgid "'subject' is missing"
 msgstr "'subject' fehlt"
 
 msgid "'ccaddress' must be of length 1"
-msgstr "'ccaddress' muss von der Länge 1 sein"
+msgstr "'ccaddress' muss die Länge 1 haben"
 
 msgid "no download method found"
 msgstr "keine Downloadmethode gefunden"
 
 msgid "'url' must be a length-one character vector"
-msgstr "'url' muss ein Charaktervektor mit Länge 1 sein"
+msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
 msgid "'destfile' must be a length-one character vector"
-msgstr "'destfile' muss ein Charaktervektor mit Länge 1 sein"
+msgstr "'destfile' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1096,7 +1098,7 @@ msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
 "Try removing %s"
 msgstr ""
-"ERROR: Verzeichnis-Lock für %s für Änderung fehlgeschlagen<\n"
+"ERROR: Verzeichnis-Lock für %s für Änderung fehlgeschlagen\n"
 "Versuche %s zu entfernen"
 
 msgid "ERROR: failed to create lock directory %s"
@@ -1128,7 +1130,7 @@ msgid "method 'mailx' is Unix-only"
 msgstr "Methode 'mailx' nur unter UNIX"
 
 msgid "zip file %s not found"
-msgstr "Zipfile %s nicht gefunden"
+msgstr "Zip-Datei %s nicht gefunden"
 
 msgid "failed to create %s"
 msgstr "Erzeugen von %s fehlgeschlagen"
@@ -1220,7 +1222,7 @@ msgstr[1] ""
 
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
-msgstr[0] "'lib' Element %s ist keine schreibbares Verzeichnis"
+msgstr[0] "'lib' Element %s ist kein schreibbares Verzeichnis"
 msgstr[1] "'lib' Elemente %s sind keine schreibbaren Verzeichnisse"
 
 msgid "There is a binary version available but the source version is later"

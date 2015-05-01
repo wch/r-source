@@ -75,7 +75,7 @@ msgid "target is %s, current is %s"
 msgstr "Ziel ist %s, aktuell ist %s"
 
 msgid "'tolerance' should be numeric"
-msgstr "'tolernce' sollte  numerisch sein"
+msgstr "'tolerance' sollte  numerisch sein"
 
 msgid "'scale' should be numeric or NULL"
 msgstr "'scale' sollte numerisch oder NULL sein"
@@ -111,11 +111,11 @@ msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
 msgid "invalid 'name' argument"
-msgstr "ungültiges 'name'Argument"
+msgstr "ungültiges 'name' Argument"
 
 msgid "package %s is required by %s, which may no longer work correctly"
 msgstr ""
-"Paket '%s' wird von %s benötigt, welches evtl nicht mehr korrekt arbeitet"
+"Paket '%s' wird von %s benötigt, welches evtl. nicht mehr korrekt arbeitet"
 
 msgid "package %s is required by %s so will not be detached"
 msgstr "Paket %s wird von %s benötigt, wird deshalb nicht detached"
@@ -184,10 +184,10 @@ msgid "can only truncate an open connection"
 msgstr "kann nur eine geöffnete Verbindung abschneiden"
 
 msgid "can only write vector objects"
-msgstr "kann nur Vektorobjekte schreiben"
+msgstr "kann nur Vektor-Objekte schreiben"
 
 msgid "can only write character objects"
-msgstr "kann nur Zeichenobjekte schreiben"
+msgstr "kann nur Zeichenketten-Objekte schreiben"
 
 msgid "'timeout' must be NULL or a non-negative number"
 msgstr "'timeout' muss NULL oder eine nicht-negative Zahl sein"
@@ -274,14 +274,14 @@ msgid "'value' is the wrong length"
 msgstr "'value' hat falsche Länge"
 
 msgid "unsupported matrix index in replacement"
-msgstr "nicht unterstützter Matrixindes in der Ersetzung"
+msgstr "nicht unterstützter Matrix-Index in der Ersetzung"
 
 msgid "need 0, 1, or 2 subscripts"
 msgstr "brauche 0, 1, oder 2 Indizes"
 
 msgid ""
 "missing values are not allowed in subscripted assignments of data frames"
-msgstr "Fehlende Werte sind in Teilzuweisungen von data frames nicht erlaubt"
+msgstr "fehlende Werte sind in Teilzuweisungen von Dataframes nicht erlaubt"
 
 msgid "non-existent rows not allowed"
 msgstr "nicht existierende Zeilen sind nicht erlaubt"
@@ -306,7 +306,7 @@ msgid "only a single element should be replaced"
 msgstr "nur ein einzelnes Element sollte ersetzt werden"
 
 msgid "Partial match of '%s' to '%s' in data frame"
-msgstr "Partielle Übereinstimmung von '%s' mit '%s' in data frame"
+msgstr "Partielle Übereinstimmung von '%s' mit '%s' in Dataframe"
 
 msgid "names do not match previous names"
 msgstr "Namen passen nicht zu den vorhergehenden Namen"
@@ -321,16 +321,16 @@ msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 Zeilen> (oder row.names mit Länge 0)"
 
 msgid "non-numeric variable in data frame:"
-msgstr "nicht numerische Variable in data frame:"
+msgstr "nicht numerische Variable in Dataframe:"
 
 msgid "%s only defined for equally-sized data frames"
-msgstr "%s ist nur definiert für dataframes gleicher Größe"
+msgstr "%s ist nur definiert für Dataframes gleicher Größe"
 
 msgid "list of length %d not meaningful"
 msgstr "Liste der Länge %d nicht sinnvoll"
 
 msgid "only defined on a data frame with all numeric variables"
-msgstr "nur für einen data frame definiert, mit nur nummerischen Variablen"
+msgstr "nur für einen Dataframe mit nur numerischen Variablen definiert"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "Zeichenkette ist nicht in einem eindeutigen Standardformat"
@@ -441,10 +441,10 @@ msgid "'tzone' attributes are inconsistent"
 msgstr "'tzone' Attribute sind inkonsistent"
 
 msgid "'tim' is not character or numeric"
-msgstr "'tim' ist nicht Character oder nummerisch"
+msgstr "'tim' ist keine Zeichenkette und nicht numerisch"
 
 msgid "need explicit units for numeric conversion"
-msgstr "benötige explizite Einheiten für nummerische Konversion"
+msgstr "benötige explizite Einheiten für numerische Konversion"
 
 msgid "invalid units specified"
 msgstr "ungültige Einheiten spezifiziert"
@@ -580,14 +580,14 @@ msgid "no files to copy to"
 msgstr "keine Dateien, um dorthin zu kopieren"
 
 msgid "attempt to copy a directory to itself"
-msgstr "Versuch ein Verzeichnis rekrusiv in sich selbst zu kopieren"
+msgstr "Versuch ein Verzeichnis rekursiv in sich selbst zu kopieren"
 
 msgid "more 'from' files than 'to' files"
 msgstr "mehr 'from' Dateien als 'to' Dateien"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
 msgstr ""
-"'recursive' wird ignoriert, da 'to' keine einzelnes, existierendes\n"
+"'recursive' wird ignoriert, da 'to' kein einzelnes, existierendes\n"
 "Verzeichnis ist"
 
 msgid "file can not be copied both 'from' and 'to'"
@@ -609,7 +609,7 @@ msgid "no file found"
 msgstr "keine Datei gefunden"
 
 msgid "invalid 'path' argument"
-msgstr "ungültiges 'path'Argument"
+msgstr "ungültiges 'path' Argument"
 
 msgid "invalid 'time' argument"
 msgstr "ungültiges 'time' Argument"
@@ -630,7 +630,7 @@ msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "'mode' muss \"double\" (\"real\"), \"integer\" oder \"character\" sein"
 
 msgid "coercing argument to \"character\" for format=\"s\""
-msgstr "wandle Argument in \"character\" für das Format=\"s\""
+msgstr "wandle Argument um in \"character\" für das Format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
@@ -644,7 +644,7 @@ msgstr "'flag' kann nur '0+- #' enthalten"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
-"Korrupter Data Frame: Spalten werden abgeschnitten oder mit NAs aufgefüllt"
+"Beschädigter Dataframe: Spalten werden abgeschnitten oder mit NAs aufgefüllt"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
 msgstr ""
@@ -654,7 +654,7 @@ msgid "'zero.print' has length > 1"
 msgstr "'zero.print' muss Länge > 1 haben"
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr "'zero.print' muss Charakter, logisch oder NULL sein"
+msgstr "'zero.print' muss Zeichenkette, boolesch oder NULL sein"
 
 msgid "'subset' must be logical"
 msgstr "'subset' muss boolesch sein"
@@ -766,7 +766,7 @@ msgid "no library trees found in 'lib.loc'"
 msgstr "keine Bibliotheken in 'lib.loc' gefunden"
 
 msgid "%s is not a valid installed package"
-msgstr "%s ist keine gültiges installiertes Paket"
+msgstr "%s ist kein gültiges, installiertes Paket"
 
 msgid "%s not found on search path, using pos = 2"
 msgstr "%s nicht im Suchpfad gefunden, nutze pos = 2"
@@ -876,7 +876,7 @@ msgid "empty (zero-byte) input file"
 msgstr "leere (Null Bytes) Eingabedatei"
 
 msgid "input has been corrupted, with LF replaced by CR"
-msgstr "Eingabe wurde korrumpiert, LF wurde ersetzt durch CR"
+msgstr "Eingabe wurde beschädigt, LF wurde ersetzt durch CR"
 
 msgid "bad 'file' argument"
 msgstr "unbrauchbares 'file' Argument"
@@ -913,7 +913,7 @@ msgstr "Versuch die Umgebung %s zu laden"
 
 msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr ""
-"spezifizierte Umgebung nicht gefunden: benutze '.globalEnv' statt dessen"
+"spezifizierte Umgebung nicht gefunden: benutze stattdessen '.globalEnv'"
 
 msgid "invalid 'category' argument"
 msgstr "ungültiges Argument für 'category'"
@@ -922,7 +922,7 @@ msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "für 'vectorize' müssen Namen für formale Argumente angegeben werden"
 
 msgid "'arg' must be NULL or a character vector"
-msgstr "'arg' muss NULL sein oder ein Charakter-Vektor."
+msgstr "'arg' muss NULL sein oder ein Zeichenkettenvektor"
 
 msgid "'arg' must be of length 1"
 msgstr "'arg' muss Länge 1 haben"
@@ -931,7 +931,7 @@ msgid "'arg' must be of length >= 1"
 msgstr "'arg' muss Länge >=1 haben"
 
 msgid "'arg' should be one of %s"
-msgstr "'arg' sollte eines  von '%s' sein"
+msgstr "'arg' sollte eines von '%s' sein"
 
 msgid "there is more than one match in 'match.arg'"
 msgstr "mehr als ein Treffer in 'match.arg'"
@@ -963,7 +963,7 @@ msgid "argument is not numeric or logical: returning NA"
 msgstr "Argument ist weder numerisch noch boolesch: gebe NA zurück"
 
 msgid "'trim' must be numeric of length one"
-msgstr "'trim' muss nummerisch sein und Länge 1 haben"
+msgstr "'trim' muss numerisch sein und Länge 1 haben"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "getrimmte Mittelwerte sind für komplexe Daten nicht definiert"
@@ -1027,22 +1027,22 @@ msgid ""
 "failed to assign RegisteredNativeSymbol for %s to %s since %s is already "
 "defined in the %s namespace"
 msgstr ""
-"Zuweisung von RegisteredNativeSymbol gescheitert für %s zu %s\n"
+"Zuweisung von RegisteredNativeSymbol für %s zu %s\n"
 "fehlgeschlagen, da %s bereits im %s Namensraum definiert"
 
 msgid ""
 "failed to assign NativeSymbolInfo for %s to %s since %s is already defined "
 "in the %s namespace"
 msgstr ""
-"konnte kein NativeSymbolInfo für %s zu %s hinzufügen, da %s bereits im\n"
+"konnte kein NativeSymbolInfo für %s zu %s hinzufügen, da %s bereits im "
 "%s Namensraum definiert"
 
 msgid ""
 "failed to assign NativeSymbolInfo for %s since %s is already defined in the "
 "%s namespace"
 msgstr ""
-"\"konnte kein NativeSymbolInfo für %s hinzufügen, da %s bereits im\\n\"\n"
-"\"%s Namensraum definiert\""
+"konnte kein NativeSymbolInfo für %s hinzufügen, da %s bereits im "
+"%s Namensraum definiert
 
 msgid "package %s does not have a namespace"
 msgstr "Paket %s hat keinen Namensraum"
@@ -1141,7 +1141,7 @@ msgid "package %s has no 'NAMESPACE' file"
 msgstr "Paket %s hat keine 'NAMESPACE' Datei"
 
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
-msgstr "leerer Name in der Direktive  '%s' in der 'NAMESPACE' Datei"
+msgstr "leerer Name in der Direktive '%s' in der 'NAMESPACE' Datei"
 
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
 msgstr "doppelte Symbolnamen %s in useDynLib(\"%s\")"
@@ -1246,7 +1246,7 @@ msgid "missing values for 'group'"
 msgstr "fehlende Werte für 'group'"
 
 msgid "not a data frame"
-msgstr "kein Data Frame"
+msgstr "kein Dataframe"
 
 msgid "length of 'center' must equal the number of columns of 'x'"
 msgstr "Länge von 'center' muss mit der Spaltenanzahl von 'x' übereinstimmen"
@@ -1410,13 +1410,13 @@ msgid "STATS does not recycle exactly across MARGIN"
 msgstr "STATS recycelt nicht exakt über MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr "length(STATS) oder dim(STATS) passen nciiht zu dim(x)[MARGIN]"
+msgstr "length(STATS) oder dim(STATS) passen nicht zu dim(x)[MARGIN]"
 
 msgid "nothing to tabulate"
 msgstr "nichts zu tabellarisieren"
 
 msgid "all arguments must have the same length"
-msgstr "alle Argumente müssen die selbe Länge haben"
+msgstr "alle Argumente müssen dieselbe Länge haben"
 
 msgid "attempt to make a table with >= 2^31 elements"
 msgstr "Versuch eine Tabelle mit mehr als 2^31 Elementen zu erstellen"
@@ -1440,7 +1440,7 @@ msgid "invalid value of 'nbins'"
 msgstr "ungültiger Wert für 'nbins'"
 
 msgid "'INDEX' is of length zero"
-msgstr "'INDEX' hat  Länge 0"
+msgstr "'INDEX' hat Länge 0"
 
 msgid "arguments must have same length"
 msgstr "Argumente müssen die selbe Länge haben"
@@ -1534,7 +1534,7 @@ msgid "fewer 'from' files than 'to' files"
 msgstr "weniger 'from' Dateien als 'to' Dateien"
 
 msgid "link '%s' already exists"
-msgstr "link '%s' exisitiert bereits"
+msgstr "link '%s' existiert bereits"
 
 msgid "failed to create directory for link '%s"
 msgstr "konnte Verzeichnis für link %s nicht anlegen"
@@ -1610,8 +1610,8 @@ msgstr[1] ""
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr[0] "ungültige 'row.names', Länge %d für data frame mit %d Zeile"
-msgstr[1] "ungültige 'row.names', Länge %d für data frame mit %d Zeilen"
+msgstr[0] "ungültige 'row.names', Länge %d für Dataframe mit %d Zeile"
+msgstr[1] "ungültige 'row.names', Länge %d für Dataframe mit %d Zeilen"
 
 msgid "supplied %d row name for %d rows"
 msgid_plural "supplied %d row names for %d rows"
@@ -1632,10 +1632,10 @@ msgid "replacement element %d is a matrix/data frame of %d row, need %d"
 msgid_plural ""
 "replacement element %d is a matrix/data frame of %d rows, need %d"
 msgstr[0] ""
-"Ersetzungselement %d ist eine Matrix/data frame mit %d Zeile, benötigt "
+"Ersetzungselement %d ist eine Matrix/Dataframe mit %d Zeile, benötigt "
 "werden %d"
 msgstr[1] ""
-"Ersetzungselement %d ist eine Matrix/data frame mit %d Zeilen, benötigt "
+"Ersetzungselement %d ist eine Matrix/Dataframe mit %d Zeilen, benötigt "
 "werden %d"
 
 msgid "replacement element %d has %d row, need %d"

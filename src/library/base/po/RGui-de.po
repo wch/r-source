@@ -23,7 +23,7 @@ msgstr "Nicht genügend Hauptspeicher"
 
 #: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
 msgid "Insufficient memory: text not copied to the clipboard"
-msgstr "Nicht genügend Speicher: Text nicht in Zwischenablege kopiert"
+msgstr "Nicht genügend Speicher: Text nicht in Zwischenablage kopiert"
 
 #: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
@@ -246,7 +246,7 @@ msgstr "R Editor\n"
 
 #: src/gnuwin32/editor.c:606
 msgid "A standard text editor for editing and running R code.\n"
-msgstr "Ein Standardtexteditor zum Bearbeiten und Laufen lassen von R Code.\n"
+msgstr "Ein Standardtexteditor zum Bearbeiten und Ausführen lassen von R Code.\n"
 
 #: src/gnuwin32/editor.c:608
 msgid "RUNNING COMMANDS\n"
@@ -475,7 +475,7 @@ msgid ""
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
 "Die Eigenschaften der Konsole können nicht geändert\n"
-"werden während die Konsole läuft.\n"
+"werden, während die Konsole läuft.\n"
 "\n"
 "Sichern Sie die Einstellungen und starten Sie Rgui neu.\n"
 
@@ -540,7 +540,7 @@ msgstr "Lade History aus"
 
 #: src/gnuwin32/rui.c:199
 msgid "Save history in"
-msgstr "Speicher History in"
+msgstr "Speichere History in"
 
 #: src/gnuwin32/rui.c:246 src/gnuwin32/rui.c:255
 msgid "No text available"
@@ -548,7 +548,7 @@ msgstr "Kein Text verfügbar"
 
 #: src/gnuwin32/rui.c:304
 msgid "Name of data frame or matrix"
-msgstr "Name von Data Frame oder Matrix"
+msgstr "Name von Dataframe oder Matrix"
 
 #: src/gnuwin32/rui.c:311
 #, c-format
@@ -569,7 +569,7 @@ msgstr "Durchsuche Hilfe"
 
 #: src/gnuwin32/rui.c:617
 msgid "Search for words in help list archives and documentation"
-msgstr "Suche nach den Worten in den Archiven von R-help und der Dokumentation"
+msgstr "Suche nach Begriffen in den Archiven von R-help und der Dokumentation"
 
 #: src/gnuwin32/rui.c:632
 msgid "Apropos"
@@ -769,7 +769,7 @@ msgstr "Wortvervollständigung"
 
 #: src/gnuwin32/rui.c:1172
 msgid "Filename completion"
-msgstr "Dateinamenvervolständigung"
+msgstr "Dateinamenvervollständigung"
 
 #: src/gnuwin32/rui.c:1179
 msgid "List objects"
@@ -838,7 +838,7 @@ msgstr "Workspace sichern?"
 
 #: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
-msgstr "Ungenügend Speicher: Zelle wurde nicht in Zwischenablage kopiert"
+msgstr "Ungenügender Speicher: Zelle wurde nicht in Zwischenablage kopiert"
 
 #: src/extra/graphapp/dialogs.c:148 src/extra/graphapp/dialogs.c:165
 #: src/extra/graphapp/dialogs.c:182
@@ -922,15 +922,15 @@ msgstr "dataentry: Ausdruck zu lang"
 
 #: src/library/utils/src/windows/dataentry.c:1473
 msgid "column names cannot be blank"
-msgstr "Spaltennamen können keine Blanks sein"
+msgstr "Spaltennamen können nicht leer sein"
 
 #: src/library/utils/src/windows/dataentry.c:1519
 msgid "Variable editor"
-msgstr "Variable Editor"
+msgstr "Variableneditor"
 
 #: src/library/utils/src/windows/dataentry.c:1524
 msgid "variable name"
-msgstr "Variable Name"
+msgstr "Variablenname"
 
 #: src/library/utils/src/windows/dataentry.c:1526
 msgid "type"
@@ -1079,12 +1079,12 @@ msgstr "Kopiere als Metafile in die Zwischenablage"
 #: src/library/grDevices/src/devWindows.c:1619
 #: src/library/grDevices/src/devWindows.c:1630
 msgid "Stop locator"
-msgstr "Stopp locator()"
+msgstr "Beende locator()"
 
 #: src/library/grDevices/src/devWindows.c:1629
 #: src/library/grDevices/src/devWindows.c:1633
 msgid "Stop"
-msgstr "Stopp"
+msgstr "Beenden"
 
 #: src/library/grDevices/src/devWindows.c:1635
 msgid "Continue"

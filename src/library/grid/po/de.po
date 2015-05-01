@@ -29,7 +29,7 @@ msgstr ""
 
 #: grid.c:975
 msgid "attempt to plot on null device"
-msgstr "Versuch in das NUll-Gerät zu zeichnen"
+msgstr "Versuch in das Null-Device zu zeichnen"
 
 #: grid.c:1307
 msgid "there is no layout defined"

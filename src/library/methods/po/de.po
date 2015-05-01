@@ -32,7 +32,7 @@ msgid ""
 "very bad things to happen"
 msgstr ""
 "konnte die Skelettaufrufe für 'methods' nicht finden (Paket entfernt?): "
-"erwarte,dass wirklich schlimme Dinge passieren"
+"erwarte, dass wirklich schlimme Dinge passieren"
 
 #: methods_list_dispatch.c:215
 #, c-format
@@ -119,7 +119,7 @@ msgid ""
 "be used for methods dispatch"
 msgstr ""
 "(bei der Auswahl einer Methode für Funktion '%s') '...' und damit "
-"zusammenhängende Variablenkönnen nicht für Methodendispatch gennutzt werden"
+"zusammenhängende Variablen können nicht für Methodendispatch gennutzt werden"
 
 #: methods_list_dispatch.c:598
 #, c-format
@@ -137,14 +137,14 @@ msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
 "'%s': %s"
 msgstr ""
-"Fehler bei der Auswertung des Argumentes '%s' bei der Methodenauswahl\n"
+"Fehler bei der Auswertung des Argumentes '%s' bei der Methodenauswahl "
 "für Funktion '%s': %s"
 
 #: methods_list_dispatch.c:632
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
-"kein passende Methode für die Funktion '%s' (Argument '%s', mit Klasse \"%s\""
+"kein passende Methode für die Funktion '%s' (Argument '%s', mit Klasse \"%s\")"
 
 #: methods_list_dispatch.c:639
 #, c-format

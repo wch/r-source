@@ -30,7 +30,7 @@ msgid "cannot constant fold literal promises"
 msgstr "kann literale Promises nicht konstant falten"
 
 msgid "cannot constant fold literal bytecode objects"
-msgstr "kann literale Bytecodeobjecte nicht konstant falten"
+msgstr "kann literale Bytecode-Objekte nicht konstant falten"
 
 msgid "no offset recorded for label \"%s\""
 msgstr "kein Offset aufgezeichnet für Label \"%s\""
@@ -39,7 +39,7 @@ msgid "cannot compile byte code literals in code"
 msgstr "kann Bytecode Literale im Code nicht kompilieren"
 
 msgid "cannot compile promise literals in code"
-msgstr "kann literatle promises nicht in Programm kompilieren"
+msgstr "kann literale promises nicht in Programm kompilieren"
 
 msgid "possible error in '%s': %s"
 msgstr "möglicher Fehler in '%s': %s"
@@ -57,7 +57,7 @@ msgid "invalid function in complex assignment"
 msgstr "unzulässige Funktion in komplexer Zuweisung"
 
 msgid "is not a registered math1 function"
-msgstr "ist keine regisitrierte math1 Funktion"
+msgstr "ist keine registrierte math1 Funktion"
 
 msgid "missing arguments are not allowed"
 msgstr "fehlende Argumente sind nicht zugelassen"
@@ -105,7 +105,7 @@ msgid "file '%s' does not exist"
 msgstr "Datei '%s' existiert nicht"
 
 msgid "'%s' is not a valid compiler option"
-msgstr "'%s' ist keine zulässige Kompileroption"
+msgstr "'%s' ist keine zulässige Compiler-Option"
 
 msgid "function is not compiled"
 msgstr "Funktion ist nicht kompiliert"

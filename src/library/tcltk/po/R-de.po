@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "cannot handle object of mode '%s'"
-msgstr "kann object mit Modus '%s' nicht bedienen"
+msgstr "kann Objekt mit Modus '%s' nicht bedienen"
 
 msgid "cannot change names on Tcl array"
 msgstr "kann Namen eines Tcl Arrays nicht ändern"
@@ -101,7 +101,7 @@ msgid "Tcl/Tk support is not available on this system"
 msgstr "Tcl/Tk auf diesem System nicht verfügbar"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr "Tcl/TK Unterstützung nciht installiert"
+msgstr "Tcl/TK Unterstützung nicht installiert"
 
 #~ msgid "Loading Tcl/Tk interface ..."
 #~ msgstr "Lade Tcl/Tk Interface ..."

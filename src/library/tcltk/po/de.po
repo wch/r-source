@@ -35,7 +35,7 @@ msgstr "ungültiges tclObj -- evtl. aus einer anderen Sitzung gespeichert?"
 #: tcltk.c:620
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
-"Argumentliste ist für internen tcltk Funktion 'calback_closure' zu lang"
+"Argumentliste ist für interne tcltk Funktion 'callback_closure' zu lang"
 
 #: tcltk.c:653
 msgid "argument is not of correct type"
@@ -51,7 +51,7 @@ msgstr "Tcl ist nicht geladen"
 
 #: tcltk_unix.c:98
 msgid "Tcl is not last loaded handler"
-msgstr "Tcl ist nicht der letztw geladenen Handler"
+msgstr "Tcl ist nicht der letzte geladene Handler"
 
 #~ msgid "Tcl already loaded"
 #~ msgstr "Tcl ist bereits geladen"
