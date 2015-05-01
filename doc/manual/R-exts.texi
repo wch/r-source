@@ -1257,7 +1257,8 @@ in the installed package.
 @cindex news
 Things you might like to add to @file{inst} are a @file{CITATION} file
 for use by the @code{citation} function, and a @file{NEWS.Rd} file for
-use by the @code{news} function.
+use by the @code{news} function.  See its help page for the specific
+format restrictions of the @file{NEWS.Rd} file.
 
 @findex AUTHORS
 @findex COPYRIGHTS
