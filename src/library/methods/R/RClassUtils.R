@@ -2364,7 +2364,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
           return(-candidates[[i]]+1)
     }
     # the first min. scoring possibility and its score
-    i <- which.min(vapply(scores, length, 1))
+    i <- which.min(lengths(scores))
     list(-candidates[[i]]+1, scores[[i]])
 }
 

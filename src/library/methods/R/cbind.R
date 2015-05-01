@@ -78,7 +78,7 @@ cbind <- function(..., deparse.level = 1)
 	fix.na <- identical(nrs[(na-1L):na], list(NULL,NULL))
 	if(fix.na) {
 	    ## "fix" last argument, using 1-column `matrix' of proper nrow():
-	    nr <- max(if(all(iV)) vapply(argl, length, 1) else unlist(nrs[!iV]))
+	    nr <- max(if(all(iV)) lengths(argl) else unlist(nrs[!iV]))
 	    argl[[na]] <- cbind(rep(argl[[na]], length.out = nr),
 				deparse.level = 0)
 	    ## and since it's a 'matrix' now, cbind() below may not name it

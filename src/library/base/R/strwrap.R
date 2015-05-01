@@ -1,7 +1,7 @@
 #  File src/library/base/R/strwrap.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ function(x, y, style = c("table", "list"),
          width = 0.9 * getOption("width"), indent = NULL)
 {
     if(is.list(x)) {
-        if(length(x) == 2L && diff(vapply(x, length, 1L)) == 0L) {
+        if(length(x) == 2L && diff(lengths(x)) == 0L) {
             y <- x[[2L]]; x <- x[[1L]]
         }
         else

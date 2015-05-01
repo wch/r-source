@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2014 The R Core Team
+# Changes Copyright (C) 1998-2015 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1217,7 +1217,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 	else ri
     }
     allargs <- list(...)
-    allargs <- allargs[vapply(allargs, length, 1L) > 0L]
+    allargs <- allargs[lengths(allargs) > 0L]
     if(length(allargs)) {
     ## drop any zero-row data frames, as they may not have proper column
     ## types (e.g. NULL).
@@ -1292,7 +1292,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
             }
 	}
 	else if(is.list(xi)) {
-	    ni <- range(vapply(xi, length, 1L))
+	    ni <- range(lengths(xi))
 	    if(ni[1L] == ni[2L])
 		ni <- ni[1L]
 	    else stop("invalid list argument: all variables should have the same length")
@@ -1319,7 +1319,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
     }
     nvar <- length(clabs)
     if(nvar == 0L)
-	nvar <- max(vapply(allargs, length, 1L)) # only vector args
+	nvar <- max(lengths(allargs)) # only vector args
     if(nvar == 0L)
 	return(structure(list(), class = "data.frame",
 			 row.names = integer()))
