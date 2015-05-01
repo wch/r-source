@@ -112,6 +112,9 @@
       \item (Windows only) \code{choose.files()} would occasionally
       include characters from the result of an earlier call in
       the result of a later one.  (\PR{16270})
+      
+      \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
+      submit invalid URLs.  (\PR{16329})
     }
   }
 }
