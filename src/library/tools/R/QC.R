@@ -2298,7 +2298,10 @@ function(package, dir, lib.loc = NULL)
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
             ns_S3_generics <- ns_S3_methods_db[, 1L]
-            ns_S3_methods <- ns_S3_methods_db[, 3L]
+            ## We really need the GENERIC.CLASS method names used in the
+            ## registry:
+            ns_S3_methods <-
+                paste(ns_S3_generics, ns_S3_methods_db[, 2L], sep = ".")
             ## Determine unexported but declared S3 methods.
             S3_reg <- setdiff(ns_S3_methods, objects_in_code)
         }
@@ -2451,12 +2454,18 @@ function(package, dir, lib.loc = NULL)
     bad_methods <- list()
     methods_stop_list <- nonS3methods(basename(dir))
     ## some packages export S4 generics derived from other packages ....
-    methods_stop_list <- c(methods_stop_list, "all.equal",
-        "all.names", "all.vars", "fitted.values", "qr.Q", "qr.R",
-        "qr.X", "qr.coef", "qr.fitted", "qr.qty", "qr.qy", "qr.resid",
-        "qr.solve", "rep.int", "seq.int", "sort.int", "sort.list", "t.test")
+    methods_stop_list <-
+        c(methods_stop_list,
+          "all.equal", "all.names", "all.vars", "fitted.values", "qr.Q",
+          "qr.R", "qr.X", "qr.coef", "qr.fitted", "qr.qty", "qr.qy",
+          "qr.resid", "qr.solve", "rep.int", "seq.int", "sort.int",
+          "sort.list", "t.test")
     methods_not_registered_but_exported <- character()
+    ## <FIXME>
+    ## Seems we currently cannot get these, because we only look at
+    ## *exported* functions in addition to the S3 registry.
     methods_not_registered_not_exported <- character()
+    ## </FIXME>
     for(g in all_S3_generics) {
         if(!exists(g, envir = code_env)) next
         ## Find all methods in functions_in_code for S3 generic g.
