@@ -2665,7 +2665,7 @@ If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, `English'@footnote{with
 Americanisms.} is used.
 
-See @uref{http://developer.r-project.org/@/Translations.html} for how to
+See @uref{http://developer.r-project.org/@/Translations30.html} for how to
 prepare and install translation catalogues.
 
 @node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
