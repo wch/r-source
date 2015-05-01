@@ -43,6 +43,8 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   8601 (\%Y-\%m-\%d, see \code{\link{strptime}}) format date, and
   possibly further grouped according to categories using
   \verb{\subsection} elements named as the categories.
+  At the very end of \verb{\section{..}}, the date may also be specified
+  as \verb{(\%Y-\%m-\%d, <note>)}, i.e., including parentheses.
 
   The plain text \file{NEWS} files in add-on packages use a variety of
   different formats; the default news reader should be capable to
@@ -101,10 +103,18 @@ db <- news()
 \dontshow{
   vv <- capture.output(db)  # without an error
 }
-\donttest{% <- is not sensibly diff-ed against previous versions
 ## Bug fixes with PR number in 3.0.1.
-news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
-     db = db)
+db3 <- news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
+            db = db)
+\dontshow{stopifnot( !any(attr(db3,"bad")) && nrow(db3) == 12 )}
+
+## News from a date range ('Matrix' is there in a regular R installation):
+if(length(iM <- find.package("Matrix", quiet=TRUE)) && nzchar(iM)) {
+   dM <- news(package="Matrix")
+   dM2014 <- news("2014-01-01" <= Date & Date <= "2014-12-31", db = dM)
+   stopifnot(paste0("1.1-", 2:4) \%in\% dM2014[,"Version"])
+}
+\donttest{% <- is not sensibly diff-ed against previous versions
 ## Which categories have been in use? % R-core maybe should standardize a bit more
 sort(table(db[, "Category"]), decreasing = TRUE)
 ## Entries with version >= 3.0.0 (including "3.0.0 patched"):
