@@ -12,14 +12,15 @@
 \usage{
 package_dependencies(packages = NULL, db,
         which = c("Depends", "Imports", "LinkingTo"),
-	recursive = FALSE, reverse = FALSE)
+	recursive = FALSE, reverse = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
   \item{packages}{a character vector of package names.}
-  \item{db}{character matrix as from available.packages(), or data frame variants thereof.
-    Alternatively, a package database like the one available from
+  \item{db}{character matrix as from \code{\link{available.packages}()},
+    or data frame variants thereof.  Alternatively, a package database
+    like the one available from
     \url{http://cran.r-project.org/web/packages/packages.rds}.
-}
+  }
   \item{which}{a character vector listing the types of
     dependencies, a subset of
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
@@ -28,23 +29,23 @@ package_dependencies(packages = NULL, db,
     \code{"Enhances"}.
   }
   \item{recursive}{logical: should (reverse) dependencies of (reverse)
-    dependencies (and so on) be included?
-  }
+    dependencies (and so on) be included?}
   \item{reverse}{logical: if \code{FALSE} (default), regular
-    dependencies are calculated, otherwise reverse dependencies.
-  }
+    dependencies are calculated, otherwise reverse dependencies.}
+  \item{verbose}{logical indicating if output should monitor the package
+    search cycles.}
 }
 \value{
-Named list with one element for each package in argument \code{packages},
-each consists of a character vector naming the (recursive) (reverse) dependencies
-of that package.
+  Named list with one element for each package in argument \code{packages},
+  each consists of a character vector naming the (recursive) (reverse) dependencies
+  of that package.
 
-For given packages which are not found in the db, \code{NULL} entries are returned,
-as opposed to \code{character(0)} entries which indicate no dependencies.
+  For given packages which are not found in the db, \code{NULL} entries are returned,
+  as opposed to \code{character(0)} entries which indicate no dependencies.
 }
 \seealso{
-\code{\link{dependsOnPkgs}}, and \code{\link{package.dependencies}} for checking
-dependencies
+  \code{\link{dependsOnPkgs}}, and \code{\link{package.dependencies}} for checking
+  dependencies.
 }
 \examples{
 \dontrun{
