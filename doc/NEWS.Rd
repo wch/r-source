@@ -115,6 +115,10 @@
       
       \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
       submit invalid URLs.  (\PR{16329})
+      
+      \item \command{Rscript} and command line \command{R} silently
+      ignored incomplete statements at the end of a script; now they
+      are reported as parse errors.  (\PR{16350})      
     }
   }
 }
