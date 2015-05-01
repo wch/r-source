@@ -377,7 +377,7 @@ function(x, m, invert = FALSE, value)
         if(anyNA(value))
             stop("missing replacement values are not allowed")
         ## Entries for matched elements have length 2.
-        pos <- which(sapply(y, length) == 2L)
+        pos <- which(lengths(y) == 2L)
         np <- length(pos)
         nv <- length(value)
         if(np != nv) {

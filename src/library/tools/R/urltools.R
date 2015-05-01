@@ -114,7 +114,7 @@ function(db)
     urls <- Filter(length, lapply(db, .get_urls_from_Rd))
     url_db(unlist(urls, use.names = FALSE),
            rep.int(file.path("man", names(urls)),
-                   sapply(urls, length)))
+                   lengths(urls)))
 }
 
 url_db_from_package_metadata <-
@@ -192,7 +192,7 @@ function(dir, installed = FALSE)
         if(length(urls)) {
             parents <- rep.int(.file_path_relative_to_dir(names(urls),
                                                           dir),
-                               sapply(urls, length))
+                               lengths(urls))
             urls <- unlist(urls, use.names = FALSE)
         }
     }

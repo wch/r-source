@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 2011-2014 The R Core Team
+#  Copyright (C) 2011-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ read_symbols_from_object_file <- function(f)
     tab <- matrix("", nrow = n, ncol = 4L)
     colnames(tab) <- c("name", "type", "value", "size")
     ## Compute desired i and j positions in tab.
-    i <- rep.int(seq_len(n), sapply(s, length))
+    i <- rep.int(seq_len(n), lengths(s))
     j <- unlist(lapply(s, seq_along))
     tab[n * (j - 1L) + i] <- unlist(s)
     tab
@@ -475,7 +475,7 @@ if(.Platform$OS.type == "windows") {
             attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
 
             attr(x, "objects") <-
-                split(rep.int(names(symbols), sapply(symbols, length)),
+                split(rep.int(names(symbols), lengths(symbols)),
                       unlist(symbols))
             class(x) <- "check_so_symbols"
             x
@@ -566,7 +566,7 @@ if(.Platform$OS.type == "windows") {
             x <- x[!is.na(match(x[, "osname"], osnames_in_objects)), , drop = FALSE]
             attr(x, "file") <- .file_path_relative_to_dir(so, dir, TRUE)
             attr(x, "objects") <-
-                split(rep.int(names(symbols), sapply(symbols, length)),
+                split(rep.int(names(symbols), lengths(symbols)),
                       unlist(symbols))
             class(x) <- "check_so_symbols"
             x

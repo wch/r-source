@@ -682,7 +682,7 @@
                 if (length(paths)) {
                     ## check any version requirements
                     have_vers <-
-                        (vapply(linkTo, length, 1L) > 1L) & lpkgs %in% bpaths
+                        (lengths(linkTo) > 1L) & lpkgs %in% bpaths
                     for (z in linkTo[have_vers]) {
                         p <- z[[1L]]
                         path <- paths[bpaths %in% p]
@@ -1994,7 +1994,7 @@
                    Internal = character(),
                    stringsAsFactors = FALSE)
     } else {
-        lens <- sapply(topics, length)
+        lens <- lengths(topics)
         files <- sub("\\.[Rr]d$", "", Rd$File)
         internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
         data.frame(Topic = unlist(topics),

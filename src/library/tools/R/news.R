@@ -24,7 +24,7 @@
 ##     ## This currently is a list of x.y lists of x.y.z lists of
 ##     ## categories list of entries.
 ##     flatten <- function(e)
-##         cbind(rep.int(names(e), sapply(e, length)),
+##         cbind(rep.int(names(e), lengths(e)),
 ##               unlist(lapply(e,
 ##                             function(s) {
 ##                                 ## Also remove leading white space and

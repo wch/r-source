@@ -70,8 +70,8 @@ function(dir,
         xvfb_options <- as.character(xvfb)
         xvfb <- TRUE
     }
-    
-    curl <- if(os_type == "windows") 
+
+    curl <- if(os_type == "windows")
         sprintf("file:///%s", dir)
     else
         sprintf("file://%s", dir)
@@ -136,11 +136,11 @@ function(dir,
           setdiff(pnames_using_install_fake, available[, "Package"]))
     pnames_using_install_fake <-
         intersect(pnames_using_install_fake, available[, "Package"])
-    
+
     if(!is.null(reverse) && !identical(reverse, FALSE)) {
         ## Determine and download reverse dependencies to be checked as
         ## well.
-        
+
         reverse <- as.list(reverse)
         ## Merge with defaults, using partial name matching.
         defaults <- list(which = c("Depends", "Imports", "LinkingTo"),
@@ -255,7 +255,7 @@ function(dir,
                                 dependencies = NA,
                                 INSTALL_opts = iflags,
                                 keep_outputs = tmpdir,
-                                Ncpus = Ncpus, 
+                                Ncpus = Ncpus,
                                 type = "source")
         outfiles <- Sys.glob(file.path(tmpdir, "*.out"))
         file.rename(outfiles,
@@ -367,7 +367,7 @@ function(x, ...)
         writeLines("No packages checked.")
         return(invisible(x))
     }
-    
+
     dir <- attr(x, "dir")
     writeLines(c(strwrap(sprintf("Check results for packages in dir '%s':",
                                  dir)),
@@ -422,7 +422,7 @@ function(options)
     ## This could be done via
     ##   system2("Xvfb", options, stdout = FALSE, stderr = FALSE,
     ##           wait = FALSE)
-    ## and then determine the pid as 
+    ## and then determine the pid as
     ##   pid <- scan(text =
     ##               grep(sprintf("Xvfb %s", num),
     ##                    system2("ps", "auxw", stdout = TRUE),
@@ -441,7 +441,7 @@ function(options)
                tf)
     pid <- system2("sh", tf, stdout = TRUE)
     Sys.setenv("DISPLAY" = num)
-    
+
     ## Propagate both pid and original setting of DISPLAY so that the
     ## latter can be restored when Xvfb is closed.
     attr(pid, "display") <- dis
@@ -482,12 +482,12 @@ summarize_check_packages_in_dir_depends <-
 function(dir, all = FALSE, which = c("Depends", "Imports", "LinkingTo"))
 {
     ## See tools::package_dependencies(): should perhaps separate out.
-    if(identical(which, "all")) 
+    if(identical(which, "all"))
         which <- c("Depends", "Imports", "LinkingTo", "Suggests",
                    "Enhances")
-    else if(identical(which, "most")) 
+    else if(identical(which, "most"))
         which <- c("Depends", "Imports", "LinkingTo", "Suggests")
-    
+
     for(d in R_check_outdirs(dir, all = all)) {
         dfile <- Sys.glob(file.path(d, "00_pkg_src", "*",
                                     "DESCRIPTION"))[1L]
@@ -519,7 +519,7 @@ function(dir, all = TRUE, full = FALSE)
     outdirs <- R_check_outdirs(dir, all = all)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    
+
     results <- check_packages_in_dir_results(logs = logs)
 
     writeLines("Check status summary:")
@@ -616,7 +616,7 @@ function(dir, logs = NULL)
     ## Perhaps make the individual non-OK check values more readily
     ## available?
     ## </NOTE>
-    
+
     results <- lapply(logs, function(log) {
         lines <- read_check_log(log)
         ## Should this be anchored with $ as well?
@@ -778,7 +778,7 @@ function(log, drop_ok = TRUE)
         ind <- grepl(re, lines, perl = TRUE, useBytes = TRUE)
         csi <- cumsum(ind)
         ind <- (csi > 0)
-        chunks <- 
+        chunks <-
             lapply(split(lines[ind], csi[ind]),
                    function(s) {
                        ## Note that setting
@@ -797,7 +797,7 @@ function(log, drop_ok = TRUE)
         if(identical(drop_ok, TRUE) ||
            (is.na(drop_ok) && all(status != "ERROR")))
             chunks <- chunks[is.na(match(status, drop_ok_status_tags))]
-        
+
         chunks
     }
 
@@ -821,12 +821,12 @@ function(dir, logs = NULL, drop_ok = TRUE)
 
     db_from_logs <- function(logs, drop_ok) {
         out <- lapply(logs, analyze_check_log, drop_ok)
-        out <- out[sapply(out, length) > 0L]
+        out <- out[lengths(out) > 0L]
         if(!length(out))
             return(matrix(character(), ncol = 6L))
         chunks <- lapply(out, `[[`, "Chunks")
         package <- sapply(out, `[[`, "Package")
-        lens <- sapply(chunks, length)
+        lens <- lengths(chunks)
         cbind(rep.int(package, lens),
               rep.int(sapply(out, `[[`, "Version"), lens),
               matrix(as.character(unlist(chunks)), ncol = 3L,
@@ -846,7 +846,7 @@ function(dir, logs = NULL, drop_ok = TRUE)
                       "Output", "Flags")
 
     ## Now some cleanups.
-    
+
     ## Alternatives for left and right quotes.
     lqa <- "'|\xe2\x80\x98"
     rqa <- "'|\xe2\x80\x99"

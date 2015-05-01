@@ -1,7 +1,7 @@
 #  File src/library/utils/R/format.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ function(labels, x, offset = 0, width = 0.9 * getOption("width"),
     delta <- nchar(labels[1L], "width") + offset
     x <- strwrap(x, width = width - delta - nchar(sep, "width"),
                  simplify = FALSE)
-    nlines <- cumsum(sapply(x, length))
+    nlines <- cumsum(lengths(x))
     prefix <- rep.int(.make_empty_string(delta), nlines[len])
     prefix[1L + c(0L, nlines[-len])] <-
         paste0(.make_empty_string(offset), labels)

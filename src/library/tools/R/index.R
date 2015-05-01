@@ -1,7 +1,7 @@
 #  File src/library/tools/R/index.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ function(dataDir, contents)
     ## Note that NROW(contents) might be 0.
     if(length(datasets) && NROW(contents)) {
         aliasIndices <-
-            rep(1 : NROW(contents), sapply(contents$Aliases, length))
+            rep(1 : NROW(contents), lengths(contents$Aliases))
         idx <- match(datasets, unlist(contents$Aliases), 0L)
         dataIndex[which(idx != 0L), 2L] <-
             contents[aliasIndices[idx], "Title"]
@@ -209,19 +209,19 @@ function(contents, packageName, defaultEncoding = NULL)
         ## without aliases are useless ...)
         if(length(tmp <- unlist(aliases)))
             dbAliases <-
-                cbind(tmp, rep.int(IDs, sapply(aliases, length)),
+                cbind(tmp, rep.int(IDs, lengths(aliases)),
                       packageName)
         ## And similarly if there are no keywords at all.
         if(length(tmp <- unlist(keywords)))
             dbKeywords <-
-                cbind(tmp, rep.int(IDs, sapply(keywords, length)),
+                cbind(tmp, rep.int(IDs, lengths(keywords)),
                       packageName)
         ## Finally, concepts are a feature added in R 1.8 ...
         if("Concepts" %in% colnames(contents)) {
             concepts <- contents[, "Concepts"]
             if(length(tmp <- unlist(concepts)))
                 dbConcepts <-
-                    cbind(tmp, rep.int(IDs, sapply(concepts, length)),
+                    cbind(tmp, rep.int(IDs, lengths(concepts)),
                           packageName)
         }
     }
@@ -250,7 +250,7 @@ function(contents, package)
 {
     if(length(contents)) {
         aliases <- contents$Aliases
-        lens <- sapply(aliases, length)
+        lens <- lengths(aliases)
         files <- sub("\\.[Rr]d$", "\\.html", contents$File)
         structure(file.path("../..", package, "html", rep.int(files, lens)),
                   names = unlist(aliases))
