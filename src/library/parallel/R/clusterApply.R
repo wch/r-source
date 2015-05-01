@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/clusterApply.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
     args <- list(...)
     if (length(args) == 0) stop("need at least one argument")
     .scheduling <- match.arg(.scheduling)
-    n <- sapply(args, length)
+    n <- lengths(args)
     if (RECYCLE) {
         vlen <- max(n)
         if(vlen && min(n) == 0L)
@@ -290,7 +290,7 @@ parApply <- function(cl = NULL, X, MARGIN, FUN, ...)
 
     ans.names <- names(ans[[1L]])
     if(!ans.list)
-	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
+	ans.list <- any(lengths(ans) != l.ans)
     if(!ans.list && length(ans.names)) {
         all.same <- vapply(ans, function(x) identical(names(x), ans.names), NA)
         if (!all(all.same)) ans.names <- NULL

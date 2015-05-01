@@ -305,7 +305,7 @@ function(x, ...)
           })
     }
 
-    as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
+    as.character(unlist(lapply(which(lengths(x) > 0L), .fmt)))
 }
 
 ### * codoc
@@ -964,7 +964,7 @@ function(package, lib.loc = NULL)
     aliases <- lapply(db, .Rd_get_metadata, "alias")
     named_class <- lapply(aliases, grepl, pattern="-class$")
     nClass <- sApply(named_class, sum)
-    oneAlias <- sApply(aliases, length) == 1L
+    oneAlias <- lengths(aliases, use.names=FALSE) == 1L
     idx <- oneAlias | nClass == 1L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
@@ -1118,7 +1118,7 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
     aliases <- lapply(db, .Rd_get_metadata, "alias")
-    idx <- sapply(aliases, length) == 1L
+    idx <- lengths(aliases) == 1L
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     aliases <- aliases[idx]
@@ -1146,7 +1146,7 @@ function(package, lib.loc = NULL)
         re <- "\\\\code\\{([^}]*)\\}( *, *)?"
         m <- gregexpr(re, s)
         add <- regmatches(s, m)
-        lens <- sapply(add, length)
+        lens <- lengths(add)
         add <- sub(re, "\\1", unlist(add))
         ## The old code base simply dropped the \code markup via
         ##   gsub("\\\\code\\{(.*)\\}:?", "\\1", s)
@@ -1195,7 +1195,7 @@ function(package, lib.loc = NULL)
 
     Rd_var_names <- lapply(db, .get_data_frame_var_names)
 
-    idx <- (sapply(Rd_var_names, length) > 0L)
+    idx <- (lengths(Rd_var_names) > 0L)
     if(!length(idx)) return(bad_Rd_objects)
     aliases <- unlist(aliases[idx])
     Rd_var_names <- Rd_var_names[idx]
@@ -1714,7 +1714,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Determine function names in the \usage.
         exprs <- db_usages[[docObj]]
-        exprs <- exprs[sapply(exprs, length) > 1L]
+        exprs <- exprs[lengths(exprs) > 1L]
         ## Ordinary functions.
         functions <-
             as.character(sapply(exprs,
@@ -1827,7 +1827,7 @@ function(package, dir, file, lib.loc = NULL,
                     pkgDLL <- unclass(DLLs[[1L]])$name # different for data.table
                     if(registration) {
                         reg <- getDLLRegisteredRoutines(DLLs[[1L]])
-                        have_registration <- sum(sapply(reg, length)) > 0L
+                        have_registration <- sum(lengths(reg)) > 0L
                     }
                 }
             }
@@ -3313,7 +3313,7 @@ function(x, ...)
     if(length(x$bad_maintainer))
         writeLines(c(gettext("Malformed maintainer field."), ""))
 
-    if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)) > 0L )) {
+    if(any(as.integer(lengths(x$bad_depends_or_suggests_or_imports)) > 0L )) {
         bad <- x$bad_depends_or_suggests_or_imports
         writeLines(gettext("Malformed Depends or Suggests or Imports or Enhances field."))
         if(length(bad$bad_dep_entry)) {
@@ -3356,7 +3356,7 @@ function(x, ...)
 
     xx<- x; xx$bad_Title <- xx$bad_Description <- NULL
 
-    if(any(as.integer(sapply(xx, length)) > 0L))
+    if(any(as.integer(lengths(xx)) > 0L))
         writeLines(c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
                      ""))
 
@@ -3401,7 +3401,7 @@ function(dfile)
             }
         }
         if(!status) {
-            llinks <- llinks[sapply(llinks, length) > 1L]
+            llinks <- llinks[lengths(llinks) > 1L]
             if(length(llinks)) links <- sapply(llinks, `[[`, 1L)
         }
         ## and check if we can actually link to these.
@@ -3605,7 +3605,7 @@ function(x, ...)
           c(gettext("Fields with non-ASCII values:"),
             .pretty_format(x$fields_with_non_ASCII_values))
       },
-      if(any(as.integer(sapply(x, length)) > 0L)) {
+      if(any(as.integer(lengths(x)) > 0L)) {
           c(strwrap(gettextf("See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual.")),
             "")
       })
@@ -4570,7 +4570,7 @@ function(x, ...)
           .pretty_format(x[[i]]))
     }
 
-    as.character(unlist(lapply(which(sapply(x, length) > 0L), .fmt)))
+    as.character(unlist(lapply(which(lengths(x) > 0L), .fmt)))
 }
 
 ### * .check_package_ASCII_code
@@ -4697,7 +4697,7 @@ function(dir)
                                     OS_subdirs = c("unix", "windows")),
                collect_parse_woes)
     Sys.setlocale("LC_CTYPE", "C")
-    structure(out[sapply(out, length) > 0L],
+    structure(out[lengths(out) > 0L],
               class = "check_package_code_syntax")
 }
 
@@ -5947,7 +5947,7 @@ function(package, dir, lib.loc = NULL)
                         },
                                  error = function(e) character())
                     })
-        names(txts)[sapply(x, length) > 0L]
+        names(txts)[lengths(x) > 0L]
     }
 
     if(!missing(package)) {
@@ -6222,7 +6222,7 @@ function(cfile, dir = NULL)
         writeLines(sprintf("entry %d: invalid type %s",
                            pos, sQuote(entries)))
     }
-    pos <- which(!ind & (sapply(bad, length) > 0L))
+    pos <- which(!ind & (lengths(bad) > 0L))
     if(length(pos)) {
         writeLines(strwrap(sprintf("entry %d (%s): missing required field(s) %s",
                                    pos,
@@ -7373,7 +7373,7 @@ function(package, dir, lib.loc = NULL)
             files_with_duplicated_names
 
     files_grouped_by_aliases <-
-        split(rep.int(files, sapply(aliases, length)),
+        split(rep.int(files, lengths(aliases)),
               unlist(aliases, use.names = FALSE))
     files_with_duplicated_aliases <-
         files_grouped_by_aliases[sapply(files_grouped_by_aliases,

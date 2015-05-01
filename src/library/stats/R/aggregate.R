@@ -53,7 +53,7 @@ function(x, by, FUN, ..., simplify = TRUE)
 
     nrx <- NROW(x)
 
-    if(any(unlist(lapply(by, length)) != nrx))
+    if(any(lengths(by) != nrx))
         stop("arguments must have same length")
 
     y <- as.data.frame(by, stringsAsFactors = FALSE)
@@ -84,7 +84,7 @@ function(x, by, FUN, ..., simplify = TRUE)
                     ## the transpose of what we need ...
                     ans <- lapply(X = split(e, grp), FUN = FUN, ...)
                     if(simplify &&
-                       length(len <- unique(sapply(ans, length))) == 1L) {
+                       length(len <- unique(lengths(ans))) == 1L) {
                         ## this used to lose classes
                         if(len == 1L) {
                             cl <- lapply(ans, oldClass)

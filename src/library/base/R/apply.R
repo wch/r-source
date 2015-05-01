@@ -84,7 +84,7 @@ apply <- function(X, MARGIN, FUN, ...)
 
     ans.names <- names(ans[[1L]])
     if(!ans.list)
-	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
+	ans.list <- any(lengths(ans) != l.ans)
     if(!ans.list && length(ans.names)) {
         all.same <- vapply(ans, function(x) identical(names(x), ans.names), NA)
         if (!all(all.same)) ans.names <- NULL
@@ -92,20 +92,20 @@ apply <- function(X, MARGIN, FUN, ...)
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
     if(length(MARGIN) == 1L && len.a == d2) {
 	names(ans) <- if(length(dn.ans[[1L]])) dn.ans[[1L]] # else NULL
-	return(ans)
+	ans
     }
-    if(len.a == d2)
-	return(array(ans, d.ans, dn.ans))
-    if(len.a && len.a %% d2 == 0L) {
+    else if(len.a == d2)
+	array(ans, d.ans, dn.ans)
+    else if(len.a && len.a %% d2 == 0L) {
         if(is.null(dn.ans)) dn.ans <- vector(mode="list", length(d.ans))
 	dn1 <- list(ans.names)
 	if(length(dn.call) && !is.null(n1 <- names(dn <- dn.call[1])) &&
 	   nzchar(n1) && length(ans.names) == length(dn[[1]]))
 	    names(dn1) <- n1
 	dn.ans <- c(dn1, dn.ans)
-	return(array(ans, c(len.a %/% d2, d.ans),
-		     if(!is.null(names(dn.ans)) || !all(vapply(dn.ans, is.null, NA)))
-			 dn.ans))
-    }
-    return(ans)
+	array(ans, c(len.a %/% d2, d.ans),
+	      if(!is.null(names(dn.ans)) || !all(vapply(dn.ans, is.null, NA)))
+		  dn.ans)
+    } else
+	ans
 }
