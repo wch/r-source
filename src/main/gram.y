@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2533,7 +2533,7 @@ static int StringValue(int c, Rboolean forSymbol)
     	strcpy(yytext, currtext);
     else if (forSymbol || !use_wcs) {
         size_t total = strlen(stext);
-        snprintf(yytext, MAXELTSIZE, "[%d chars quoted with '%c']", total, quote);
+        snprintf(yytext, MAXELTSIZE, "[%u chars quoted with '%c']", (unsigned int)total, quote);
     } else 
         snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
     if(forSymbol) {
