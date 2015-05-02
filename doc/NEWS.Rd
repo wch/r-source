@@ -60,6 +60,9 @@
       are reported as parse errors.  (\PR{16350})    
 
       \item Parse data for very long strings was not stored.  (\PR{16354})
+      
+      \item The parser could overflow internally when given numbers
+      in scientific format with extremely large exponents.  (\PR{16358})
     }
   }
 }
