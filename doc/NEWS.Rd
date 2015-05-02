@@ -125,6 +125,9 @@
       \item \code{plotNode()}, the workhorse of the \code{plot} method
       for \code{"dendrogram"}s is no longer recursive, thanks to Suharto
       Anggono, and hence also works for deeply nested dendrograms.  (\PR{15215})
+      
+      \item The parser could overflow internally when given numbers
+      in scientific format with extremely large exponents.  (\PR{16358})
     }
   }
 }
