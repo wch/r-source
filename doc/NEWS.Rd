@@ -119,6 +119,10 @@
       \item \command{Rscript} and command line \command{R} silently
       ignored incomplete statements at the end of a script; now they
       are reported as parse errors.  (\PR{16350})      
+
+      \item \code{plotNode()}, the workhorse of the \code{plot} method
+      for \code{"dendrogram"}s is no longer recursive, thanks to Suharto
+      Anggono, and hence also works for deeply nested dendrograms.  (\PR{15215})
     }
   }
 }

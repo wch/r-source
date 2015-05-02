@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dendrogram.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -346,10 +346,19 @@ plotNode <-
     function(x1, x2, subtree, type, center, leaflab, dLeaf,
 	     nodePar, edgePar, horiz = FALSE)
 {
+  wholetree <- subtree
+  depth <- 0L
+  llimit <- list()
+  KK <- integer()
+  kk <- integer()
+
+  repeat {
     inner <- !is.leaf(subtree) && x1 != x2
     yTop <- attr(subtree, "height")
     bx <- plotNodeLimit(x1, x2, subtree, center)
     xTop <- bx$x
+    depth <- depth + 1L
+    llimit[[depth]] <- bx$limit
 
     ## handle node specific parameters in "nodePar":
     hasP <- !is.null(nPar <- attr(subtree, "nodePar"))
@@ -489,11 +498,34 @@ plotNode <-
                          font = t.font)
                 }
 	    }
-	    plotNode(bx$limit[k], bx$limit[k + 1], subtree = child,
-		     type, center, leaflab, dLeaf, nodePar, edgePar, horiz)
 	}
     }
-    invisible()
+
+    if (inner && length(subtree)) {
+	KK[depth] <- length(subtree)
+	if (storage.mode(kk) != storage.mode(KK))
+	    storage.mode(kk) <- storage.mode(KK)
+
+	## go to first child
+	kk[depth] <- 1L
+	x1 <- bx$limit[1L]
+	x2 <- bx$limit[2L]
+	subtree <- subtree[[1L]]
+    }
+    else {
+	repeat {
+	    depth <- depth - 1L
+	    if (!depth || kk[depth] < KK[depth]) break
+	}
+	if (!depth) break
+	length(kk) <- depth
+	kk[depth] <- k <- kk[depth] + 1L
+	x1 <- llimit[[depth]][k]
+	x2 <- llimit[[depth]][k + 1L]
+	subtree <- wholetree[[kk]]
+    }
+  } ## repeat
+  invisible()
 }
 
 plotNodeLimit <- function(x1, x2, subtree, center)
