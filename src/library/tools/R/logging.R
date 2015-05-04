@@ -1,7 +1,7 @@
 #  File src/library/tools/R/logging.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -106,6 +106,8 @@ function(Log, text = "")
 summaryLog <-
 function(Log)
 {
+    messageLog(Log, "DONE")
+    message("")
     counts <- c(ERROR = Log$errors,
                 WARNING = Log$warnings,
                 NOTE = Log$notes)
@@ -121,6 +123,6 @@ function(Log)
                                        names(counts),
                                        ifelse(counts > 1L, "s", "")),
                                collapse = ", ")))
-        cat(sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
+        message(sprintf("See\n  %s\nfor details.\n", sQuote(Log$filename)))
     }
 }
