@@ -34,6 +34,8 @@ function(package, results = NULL, details = NULL, mtnotes = NULL)
         if(is.null(details))
             details <- CRAN_check_details()
         details <- details[!is.na(match(details$Package, package)), ]
+        ## Remove all ok stubs.
+        details <- details[details$Check != "*", ]
         ## Remove trailing white space from outputs ... remove eventually
         ## when this is done on CRAN.
         details$Output <- sub("[[:space:]]+$", "", details$Output)
