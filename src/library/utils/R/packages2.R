@@ -215,7 +215,9 @@ install.packages <-
         ## do not want 'available' set for "source".
 	if(is.null(available)) {
 	    av <- available.packages(contriburl = contriburl, method = method)
-            if(type != "both") available <- av
+	    if (missing(repos)) ## Evaluating contriburl may have changed repos, which may be used below
+	      repos <- getOption("repos")
+            if(type != "both") available <- av 
         } else av <- available
 	if(NROW(av)) {
             ## avoid duplicate entries in menus, since the latest available
