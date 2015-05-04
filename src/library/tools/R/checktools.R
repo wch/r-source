@@ -746,6 +746,7 @@ function(log, drop_ok = TRUE)
              perl = TRUE, useBytes = TRUE)) {
         ## New-style status summary.
         lines <- lines[-len]
+        len <- len - 1L
     } else {
         ## Old-style status summary.
         num <- length(grep("^(NOTE|WARNING): There",
@@ -753,8 +754,12 @@ function(log, drop_ok = TRUE)
         if(num > 0L) {
             pos <- seq.int(len - num + 1L, len)
             lines <- lines[-pos]
+            len <- len - num
         }
     }
+    ## New-style end-of-check tag.
+    if(lines[len] == "* DONE")
+        lines <- lines[-len]
 
     analyze_lines <- function(lines) {
         ## Windows has
@@ -802,7 +807,7 @@ function(log, drop_ok = TRUE)
     }
 
     chunks <- analyze_lines(lines)
-    if(!length(chunks) && is.na(drop_ok)) {
+    if(!length(chunks) && !identical(drop_ok, FALSE)) {
         chunks <- list(list(check = "*", status = "OK", output = ""))
     }
 
@@ -893,17 +898,17 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     else
         normalizePath(dir)
 
-    outdirs <- tools:::R_check_outdirs(dir, all = sources, invert = TRUE)
+    outdirs <- R_check_outdirs(dir, all = sources, invert = TRUE)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    new <- tools:::check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
+    new <- check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
 
     ## Use
     ##   old = tools:::CRAN_check_details(FLAVOR)
     ## to compare against the results/details of a CRAN check flavor.
 
     if(!inherits(old, "check_details"))
-        old <- tools:::check_packages_in_dir_details(old, drop_ok = FALSE)
+        old <- check_packages_in_dir_details(old, drop_ok = FALSE)
 
     ## Simplify matters by considering only "changes" in *available*
     ## results/details.
