@@ -12,6 +12,7 @@
 \alias{as.table}
 \alias{as.table.default}
 \alias{is.table}
+\alias{[.table}
 
 \concept{counts}
 \concept{frequencies}
@@ -23,8 +24,10 @@
   table of the counts at each combination of factor levels.
 }
 \usage{
-table(\dots, exclude = if (useNA == "no") c(NA, NaN), useNA = c("no",
-    "ifany", "always"), dnn = list.names(\dots), deparse.level = 1)
+table(\dots,
+      exclude = if (useNA == "no") c(NA, NaN),
+      useNA = c("no", "ifany", "always"),
+      dnn = list.names(\dots), deparse.level = 1)
 
 as.table(x, \dots)
 is.table(x)

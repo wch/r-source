@@ -245,3 +245,34 @@ margin.table <- function(x, margin = NULL)
     class(z) <- oldClass(x) # avoid adding "matrix"
     z
 }
+
+`[.table` <- function(i, j, ..., drop = NA)
+{
+    tmp <- NextMethod(drop = FALSE)
+    ret <- drop(tmp)
+
+    ## Special case: for 1 x 1 tables, keep default behavior
+    ## (i.e., drop dim and dimnames attributes):
+    if (is.na(drop) && length(ret) == 1L) return(ret)
+
+    ## For all other tables, restore class attribute
+    ## removed by array indexing:
+    class(ret) <- "table"
+
+    ## Handle explicit setting of drop= argument:
+    if(!is.na(drop))
+        return(if (drop) ret else structure(tmp, class = "table"))
+
+    ## If a two-way table is indexed so that one margin has length 1,
+    ## standard array indexing removes dim and dimnames attributes.
+    ## In this case, restore one dimension to obtain
+    ## a 1 x n or n x 1 table:
+    d <- dim(tmp)
+    if (!is.null(d) && is.null(dim(ret))) {
+        dim(ret) <- length(ret)
+        dimnames(ret) <- dimnames(tmp)[d > 1L]
+    }
+
+    ## In all other cases, keep default indexing.
+    ret
+}
