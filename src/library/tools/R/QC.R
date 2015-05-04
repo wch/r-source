@@ -5324,7 +5324,7 @@ function(package, dir, lib.loc = NULL)
                             if(pkg %in% depends)
                                 bad_deps <<- c(bad_deps, pkg)
                            ## assume calls to itself are to clusterEvalQ etc
-                           else if (pkg != package)
+                           else if (pkg != pkg_name)
                                bad_prac <<- c(bad_prac, pkg)
                         }
                     }
