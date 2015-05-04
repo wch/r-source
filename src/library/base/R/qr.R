@@ -1,7 +1,7 @@
 #  File src/library/base/R/qr.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -220,12 +220,7 @@ qr.Q <- function (qr, complete = FALSE, Dvec)
 qr.R <- function (qr, complete = FALSE, ...)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    if(!missing(...))
-	warning(sprintf(ngettext(length(list(...)),
-				 "extra argument %s will be disregarded",
-				 "extra arguments %s will be disregarded"),
-			 paste(sQuote(names(list(...))), collapse = ", ")),
-		domain = NA)
+    chkDots(...)
     R <- qr$qr
     if (!complete)
 	R <- R[seq.int(min(dim(R))), , drop = FALSE]

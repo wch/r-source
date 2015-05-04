@@ -38,10 +38,12 @@
       \item \code{lengths(x)} now also works (trivially) for atomic
       \code{x} and hence can be used more generally as an efficient
       replacement of \code{sapply(x, length)} and similar.
-      
+
       \item (Windows only)  The GUI menu item to install local packages
       now accepts \file{*.tar.gz} files as well as \file{*.zip} files
       (but defaults to the latter).
+
+      \item new programmeR's utility \code{chkDots}.
     }
   }
 
@@ -116,23 +118,23 @@
       \item (Windows only) \code{choose.files()} would occasionally
       include characters from the result of an earlier call in
       the result of a later one.  (\PR{16270})
-      
+
       \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
       submit invalid URLs.  (\PR{16329})
-      
+
       \item \command{Rscript} and command line \command{R} silently
       ignored incomplete statements at the end of a script; now they
-      are reported as parse errors.  (\PR{16350})    
+      are reported as parse errors.  (\PR{16350})
 
       \item Parse data for very long strings was not stored.  (\PR{16354})
 
       \item \code{plotNode()}, the workhorse of the \code{plot} method
       for \code{"dendrogram"}s is no longer recursive, thanks to Suharto
       Anggono, and hence also works for deeply nested dendrograms.  (\PR{15215})
-      
+
       \item The parser could overflow internally when given numbers
       in scientific format with extremely large exponents.  (\PR{16358})
-      
+
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
       could repeatedly query the user for it.  (Part of \PR{16362})
     }

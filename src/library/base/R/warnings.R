@@ -1,7 +1,7 @@
 #  File src/library/base/R/warnings.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -56,4 +56,22 @@ print.warnings <- function(x, ...)
         }
     }
     invisible(x)
+}
+
+##' @title Warn about extraneous arguments in the "..."	 (of its caller).
+##' @author Martin Maechler, June 2012, May 2014
+##' @param ...
+##' @param which.call passed to sys.call().  A caller may use -2 if the message should
+##' mention *its* caller
+##' @param allowed not yet implemented: character vector of *named* elements in '...'
+##' which are \dQuote{allowed} and hence not warned about
+chkDots <- function(..., which.call = -1, allowed = character(0)) {
+    if(nx <- length(list(...)))
+	warning(sprintf(ngettext(nx,
+				 "In %s :\n extra argument %s will be disregarded",
+				 "In %s :\n extra arguments %s will be disregarded"),
+			deparse(sys.call(which.call), control=c()),
+			## sub(")$", '', sub("^list\\(", '', deparse(list(...), control=c())))
+			paste(sQuote(names(list(...))), collapse = ", ")),
+		call. = FALSE, domain=NA)
 }

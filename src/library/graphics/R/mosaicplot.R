@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/mosaicplot.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -180,12 +180,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     dimd <- length(dx <- dim(x))
     if(dimd == 0L || any(dx == 0L))
         stop("'x' must not have 0 dimensionality")
-    if(!missing(...))
-        warning(sprintf(ngettext(length(list(...)),
-                                 "extra argument %s will be disregarded",
-                                 "extra arguments %s will be disregarded"),
-                         paste(sQuote(names(list(...))), collapse = ", ")),
-                domain = NA)
+    chkDots(...)
     ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1L:dx[1L]
     if(dimd > 1L) {
