@@ -212,10 +212,18 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	SEXP table = findVarInFrame3(defrho,
 				     s_S3MethodsTable,
 				     TRUE);
-	if (TYPEOF(table) == PROMSXP) table = eval(table, R_BaseEnv);
+	if (TYPEOF(table) == PROMSXP) {
+	    PROTECT(table);
+	    table = eval(table, R_BaseEnv);
+	    UNPROTECT(1);
+	}
 	if (TYPEOF(table) == ENVSXP) {
 	    val = findVarInFrame3(table, method, TRUE);
-	    if (TYPEOF(val) == PROMSXP) val = eval(val, rho);
+	    if (TYPEOF(val) == PROMSXP) {
+	        PROTECT(val);
+	        val = eval(val, rho);
+	        UNPROTECT(1);
+	    }
 	    return val;
 	}
 	return R_UnboundValue;
@@ -718,8 +726,11 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isFunction(nextfun)) {
 	    t = install(sg);
 	    nextfun = findVar(t, env);
-	    if (TYPEOF(nextfun) == PROMSXP)
+	    if (TYPEOF(nextfun) == PROMSXP) {
+		PROTECT(nextfun);
 		nextfun = eval(nextfun, env);
+		UNPROTECT(1);
+	    }
 	    if (!isFunction(nextfun))
 		error(_("no method to invoke"));
 	    if (TYPEOF(nextfun) == CLOSXP) {
@@ -882,12 +893,15 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 {
     int ans;
-    SEXP cl = getAttrib(x, R_ClassSymbol);
-    const char *class = CHAR(asChar(cl));
+    SEXP cl = PROTECT(asChar(getAttrib(x, R_ClassSymbol)));
+    const char *class = CHAR(cl);
     for (ans = 0; ; ans++) {
 	if (!strlen(valid[ans])) // empty string
 	    break;
-	if (!strcmp(class, valid[ans])) return ans;
+	if (!strcmp(class, valid[ans])) {
+	    UNPROTECT(1); /* cl */
+	    return ans;
+	}
     }
     /* if not found directly, now search the non-virtual super classes :*/
     if(IS_S4_OBJECT(x)) {
@@ -913,13 +927,14 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 		if (!strlen(valid[ans]))
 		    break;
 		if (!strcmp(s_class, valid[ans])) {
-		    UNPROTECT(1); /* superCl */
+		    UNPROTECT(2); /* superCl, cl */
 		    return ans;
 		}
 	    }
 	}
 	UNPROTECT(1); /* superCl */
     }
+    UNPROTECT(1); /* cl */
     return -1;
 }
 
@@ -952,7 +967,10 @@ int R_check_class_etc(SEXP x, const char **valid)
 	if(!isEnvironment(rho))
 	    error(_("could not find correct environment; please report!"));
     }
-    return R_check_class_and_super(x, valid, rho);
+    PROTECT(rho);
+    int res = R_check_class_and_super(x, valid, rho);
+    UNPROTECT(1);
+    return res;
 }
 
 /* standardGeneric:  uses a pointer to R_standardGeneric, to be
