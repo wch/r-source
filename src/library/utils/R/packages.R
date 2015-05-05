@@ -332,10 +332,11 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(type == "both" && (!missing(contriburl) || !is.null(available))) {
         stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
     }
-    if(is.null(available))
+    if(is.null(available)) {
         available <- available.packages(contriburl = contriburl,
                                         method = method)
-
+        if (missing(repos)) repos <- getOption("repos") # May have changed
+    } 
     if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
     	subset <- oldPkgs
     	oldPkgs <- NULL
@@ -347,6 +348,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 	oldPkgs <- old.packages(lib.loc = lib.loc,
 				contriburl = contriburl, method = method,
 				available = available, checkBuilt = checkBuilt)
+	if (missing(repos)) repos <- getOption("repos") # May have changed
 	## prune package versions which are invisible to require()
 	if(!is.null(oldPkgs)) {
 	    pkg <- 0L

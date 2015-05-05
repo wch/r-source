@@ -281,8 +281,16 @@ menuInstallPkgs <- function(type = getOption("pkgType"))
 
 menuInstallLocal <- function()
 {
-    install.packages(choose.files('',filters=Filters[c('zip','tarball', 'All'),]),
-                     .libPaths()[1L], repos = NULL)
+    files <- choose.files('',filters=Filters[c('zip','tarball', 'All'),])
+    zips <- grepl("[.]zip$", files)
+    tarballs <- grepl("[.]tar[.]gz$", files)
+    bad <- !(zips | tarballs)
+    if (any(bad)) 
+        stop("Only '*.zip' and '*.tar.gz' files can be installed.")
+    if (any(zips)) install.packages(files[zips],
+        .libPaths()[1L], repos = NULL, type = "binary")
+    if (any(tarballs)) install.packages(files[tarballs],
+        .libPaths()[1L], repos = NULL, type = "source")
 }
 
 ### Deprecated in 2.13.0, defunct in 2.14.0

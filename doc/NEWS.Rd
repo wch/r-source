@@ -136,7 +136,8 @@
       in scientific format with extremely large exponents.  (\PR{16358})
 
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
-      could repeatedly query the user for it.  (Part of \PR{16362})
+      and related functions could repeatedly query the user for it.  
+      (Part of \PR{16362})
     }
   }
 }
