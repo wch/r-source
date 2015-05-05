@@ -793,7 +793,10 @@ static char *R_completion_generator(const char *text, int state)
 	ncomp = length(completions);
 	if (ncomp > 0) {
 	    compstrings = (char **) malloc(ncomp * sizeof(char*));
-	    if (!compstrings)  return (char *)NULL;
+	    if (!compstrings) {
+		UNPROTECT(4);
+		return (char *)NULL;
+	    }
 	    for (i = 0; i < ncomp; i++)
 		compstrings[i] = strdup(translateChar(STRING_ELT(completions, i)));
 	}

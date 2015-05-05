@@ -2562,9 +2562,11 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 		h = LCONS(R_DotsSymbol, R_NilValue);
 	    else if (h == R_NilValue  || h == R_MissingArg)
 		h = R_NilValue;
-	    else if (TYPEOF(h) == DOTSXP)
+	    else if (TYPEOF(h) == DOTSXP) {
+		PROTECT(h);
 		h = substituteList(h, R_NilValue);
-	    else
+		UNPROTECT(1);
+	    } else
 		error(_("'...' used in an incorrect context"));
 	} else {
 	    h = substitute(CAR(el), rho);

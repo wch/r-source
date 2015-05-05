@@ -1987,8 +1987,11 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #     define GET_VALUE(rval)				\
 	/* We need to evaluate if it is a promise */	\
-	if (TYPEOF(rval) == PROMSXP)			\
+	if (TYPEOF(rval) == PROMSXP) {			\
+	    PROTECT(rval);				\
 	    rval = eval(rval, genv);			\
+	    UNPROTECT(1);				\
+	}						\
 							\
 	if (!ISNULL(rval) && NAMED(rval) == 0)		\
 	    SET_NAMED(rval, 1)
@@ -2027,7 +2030,11 @@ static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
     }
 
     /* We need to evaluate if it is a promise */
-    if (TYPEOF(rval) == PROMSXP) rval = eval(rval, env);
+    if (TYPEOF(rval) == PROMSXP) {
+	PROTECT(rval);
+	rval = eval(rval, env);
+	UNPROTECT(1);
+    }
     if (!ISNULL(rval) && NAMED(rval) == 0) SET_NAMED(rval, 1);
     return rval;
 }
@@ -2964,10 +2971,11 @@ SEXP attribute_hidden do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
     intern = asLogical(CAR(args));
     if (intern == NA_INTEGER) intern = 0;
     nelts = BuiltinSize(1, intern);
-    ans = allocVector(STRSXP, nelts);
+    PROTECT(ans = allocVector(STRSXP, nelts));
     nelts = 0;
     BuiltinNames(1, intern, ans, &nelts);
     sortVector(ans, TRUE);
+    UNPROTECT(1); /* ans */
     return ans;
 }
 
