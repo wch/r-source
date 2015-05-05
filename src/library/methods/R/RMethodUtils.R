@@ -104,10 +104,11 @@
         if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
            !is.primitive(fdefault))
             stop(sprintf(ngettext(length(fdef),
-                                  "the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)",
-                                  "the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"),
-                          paste(formalArgs(fdef), collapse = ", "),
-                          paste(formalArgs(fdefault), collapse = ", ")),
+	"the formal argument of the generic function for %s (%s) differs from that of the non-generic to be used as the default (%s)",
+	"the formal arguments of the generic function for %s (%s) differ from those of the non-generic to be used as the default (%s)"),
+			 f,
+			 paste(formalArgs(fdef), collapse = ", "),
+			 paste(formalArgs(fdefault), collapse = ", ")),
                  domain = NA)
         fdefault <- asMethodDefinition(fdefault, fdef = value)
         if(is(fdefault, "MethodDefinition"))
@@ -1919,4 +1920,3 @@ evalqOnLoad <- function(expr, where = topenv(parent.frame()), aname = "")
     else
         0L
 }
-
