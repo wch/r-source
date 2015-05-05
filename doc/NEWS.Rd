@@ -138,6 +138,9 @@
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
       and related functions could repeatedly query the user for it.  
       (Part of \PR{16362})
+      
+      \item The low-level functions \code{.rowSums()} etc. did not 
+      check the length of their argument, so could segfault. (\PR{16367})
     }
   }
 }
