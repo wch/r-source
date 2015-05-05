@@ -67,6 +67,10 @@
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
       and related functions could repeatedly query the user for it.  
       (Part of \PR{16362})
+
+      \item \code{plotNode()}, the workhorse of the \code{plot} method
+      for \code{"dendrogram"}s is no longer recursive, thanks to Suharto
+      Anggono, and hence also works for deeply nested dendrograms.  (\PR{15215})
     }
   }
 }
