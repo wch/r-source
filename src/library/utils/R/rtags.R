@@ -1,7 +1,7 @@
 #  File src/library/tools/R/rtags.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2013, 2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ rtags.file <-
     startlines <- sapply(attr(elist, "srcref"), "[", 1L)
     if (length(tokens) != length(startlines))
         stop("length mismatch: bug in code!", domain = NA)
-    keep <- sapply(tokens, length) == 1L
+    keep <- lengths(tokens) == 1L
     if (!any(keep)) return(invisible())
     tokens <- unlist(tokens[keep])
     startlines <- startlines[keep]

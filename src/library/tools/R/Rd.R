@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -585,7 +585,7 @@ function(x)
     ## Extract two-arg \item tags at top level ... non-recursive.
     x <- x[RdTags(x) == "\\item"]
     if(!length(x)) return(matrix(character(), 0L, 2L))
-    x <- lapply(x[sapply(x, length) == 2L], sapply, .Rd_deparse)
+    x <- lapply(x[lengths(x) == 2L], sapply, .Rd_deparse)
     matrix(unlist(x), ncol = 2L, byrow = TRUE)
 }
 
@@ -596,7 +596,7 @@ function(x)
 {
     ## Extract two-arg \item tags at top level ... non-recursive.
     x <- x[RdTags(x) == "\\item"]
-    out <- lapply(x[sapply(x, length) == 2L],
+    out <- lapply(x[lengths(x) == 2L],
                   function(e) .Rd_deparse(e[[1L]]))
     as.character(unlist(out))
 }
@@ -645,7 +645,7 @@ function(x)
     if(!length(x)) return(y)
     x <- x[RdTags(x) == "\\item"]
     if(!length(x)) return(y)
-    x <- lapply(x[sapply(x, length) == 2L], sapply, .Rd_deparse)
+    x <- lapply(x[lengths(x) == 2L], sapply, .Rd_deparse)
     matrix(unlist(x), ncol = 2L, byrow = TRUE)
 }
 
@@ -754,7 +754,7 @@ function(db)
     ## For Rd dbs created from a package source directory, we now add
     ## the Rd file paths as the names attribute, so that we can point to
     ## the files with missing \name entries.
-    idx <- as.integer(sapply(Rd_names, length)) == 0L
+    idx <- as.integer(lengths(Rd_names)) == 0L
     if(any(idx)) {
         Rd_paths <- names(db)
         if(is.null(Rd_paths)) {
@@ -875,9 +875,9 @@ loadPkgRdMacros <- function(pkgdir, macros) {
 
     if (!is.na(others)) {
     	others <- trimws(unlist(strsplit(others, ",")))
-    	
+
     	for (p in others) {
-    	    if (dir.exists(system.file("help/macros", package = p))) 
+    	    if (dir.exists(system.file("help/macros", package = p)))
     	    	macros <- loadPkgRdMacros(system.file(package = p), macros)
     	    else
     	    	warning(gettextf("No Rd macros in package '%s'.", p), call. = FALSE)
@@ -885,10 +885,10 @@ loadPkgRdMacros <- function(pkgdir, macros) {
     }
     files <- c(list.files(file.path(pkgdir, "man", "macros"), pattern = "\\.Rd$", full.names = TRUE),
                list.files(file.path(pkgdir, "help", "macros"), pattern = "\\.Rd$", full.names = TRUE))
-        
-    for (f in files) 
+
+    for (f in files)
     	macros <- loadRdMacros(f, macros)
-    
+
     macros
 }
 

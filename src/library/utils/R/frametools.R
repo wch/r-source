@@ -1,7 +1,7 @@
 #  File src/library/utils/R/frametools.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ stack.data.frame <- function(x, select, ...)
     x <- x[, keep, drop = FALSE]
     ## need to avoid promotion to factors
     data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))),
+               ind = factor(rep.int(names(x), lengths(x))),
                stringsAsFactors = FALSE)
 }
 
@@ -45,7 +45,7 @@ stack.default <- function(x, ...)
     if(!all(keep)) warning("non-vector elements will be ignored")
     x <- x[keep]
     data.frame(values = unlist(unname(x)),
-               ind = factor(rep.int(names(x), lapply(x, length))),
+               ind = factor(rep.int(names(x), lengths(x))),
                stringsAsFactors = FALSE)
 }
 
@@ -57,7 +57,7 @@ unstack.data.frame <- function(x, form, ...)
     if (length(form) < 3)
         stop("'form' must be a two-sided formula")
     res <- c(tapply(eval(form[[2L]], x), eval(form[[3L]], x), as.vector))
-    if (length(res) >= 2L && any(diff(unlist(lapply(res, length))) != 0L))
+    if (length(res) >= 2L && any(diff(lengths(res)) != 0L))
         return(res)
     data.frame(res, stringsAsFactors = FALSE)
 }
@@ -69,7 +69,7 @@ unstack.default <- function(x, form, ...)
     if ((length(form) < 3) || (length(all.vars(form))>2))
         stop("'form' must be a two-sided formula with one term on each side")
     res <- c(tapply(eval(form[[2L]], x), eval(form[[3L]], x), as.vector))
-    if (length(res) >= 2L && any(diff(unlist(lapply(res, length))) != 0L))
+    if (length(res) >= 2L && any(diff(lengths(res)) != 0L))
         return(res)
     data.frame(res, stringsAsFactors = FALSE)
 }

@@ -54,7 +54,7 @@ function(hDB, path, pkg)
 	aliases[, "ID"] <- id
 	aliases[, "Package"] <- pkg
 	hDB[[2L]] <- rbind(hDB[[2L]], aliases)
-	nkeywords <- sum(sapply(vDB$Keywords, length))
+	nkeywords <- sum(lengths(vDB$Keywords))
 	if (nkeywords) {
 	    keywords <- matrix("", nrow = nkeywords, ncol = 3L)
 	    colnames(keywords) <- colnames(hDB[[4L]])
@@ -635,7 +635,7 @@ function()
     list(Keywords = sub("^.*\\|([^:]*):.*", "\\1", lines),
          Descriptions = sub(".*:[[:space:]]*", "", lines))
 }
-             
+
 ## This extra indirection allows the Mac GUI to replace this
 ## yet call the printhsearchInternal function.
 print.hsearch <-
@@ -828,7 +828,7 @@ function(db = hsearch_db())
                row.names = NULL)
 }
 
-print.hsearch_db <- 
+print.hsearch_db <-
 function(x, ...)
 {
     writeLines(c("A help search database:",

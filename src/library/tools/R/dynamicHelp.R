@@ -87,7 +87,7 @@ httpd <- function(path, query, ...)
                                fields <- c(fields, "keyword"),
                        ignore.case =
                            args$ignore.case <- bool(query[i]),
-                       agrep = 
+                       agrep =
                            args$agrep <- bool(query[i]),
                        types.help =
                            if(bool(query[i]))
@@ -212,7 +212,7 @@ httpd <- function(path, query, ...)
                 "</html>"))
         list(payload = paste(out, collapse = "\n"))
     }
-    
+
     unfix <- function(file)
     {
         ## we need to re-fix links altered by fixup.package.URLs
@@ -395,7 +395,7 @@ httpd <- function(path, query, ...)
         if(! helpdoc %in% files) {
             ## or call help()
             aliases <- contents$Aliases
-            lens <- sapply(aliases, length)
+            lens <- lengths(aliases)
             aliases <- structure(rep.int(contents$File, lens),
                                  names = unlist(aliases))
             tmp <- sub("\\.[Rr]d$", "", aliases[helpdoc])

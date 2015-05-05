@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2013 The R Core Team
+#  Copyright (C) 1998-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     Terms <- delete.response(Terms)
     vars <- all.vars(Terms) # e.g. drops I(.), ...
     nxl <- setNames(rep.int(1, length(vars)), vars)
-    tmp <- vapply(xl, length, 1L)
+    tmp <- lengths(xl)
     nxl[names(tmp)] <- tmp
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
@@ -97,7 +97,7 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 	return(as.list(coef(object)))
     }
     nxl <- setNames(rep.int(1, length(vars)), vars)
-    tmp <- unlist(lapply(xl, length))
+    tmp <- lengths(xl)
     nxl[names(tmp)] <- tmp
     lterms <- apply(facs, 2L, function(x) prod(nxl[x > 0]))
     nl <- sum(lterms)
@@ -160,7 +160,7 @@ print.dummy_coef <- function(x, ..., title)
 {
     terms <- names(x)
     n <- length(x)
-    nm <- max(vapply(x, length, 1L))
+    nm <- max(lengths(x))
     ans <- matrix("", 2L*n, nm)
     rn <- rep.int("", 2L*n)
     line <- 0

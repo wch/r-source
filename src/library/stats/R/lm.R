@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -582,7 +582,7 @@ anova.lm <- function(object, ...)
         nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
         tlabels <- nmeffects[1 + unique(asgn)]
         ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
-        df <- c(unlist(lapply(split(asgn,  asgn), length)), dfr)
+        df <- c(lengths(split(asgn,  asgn)), dfr)
     } else {
         ss <- ssr
         df <- dfr

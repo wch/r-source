@@ -3807,7 +3807,7 @@ setRlibs <-
             OK <- TRUE
             ## Look for empty importFrom
             imp <- ns$imports
-            lens <- sapply(imp, length)
+            lens <- lengths(imp)
             imp <- imp[lens == 2L]
             nm <- sapply(imp, "[[", 1)
             lens <- sapply(imp, function(x) length(x[[2]]))
@@ -3863,7 +3863,7 @@ setRlibs <-
         ## Namespace imports must really be in Depends.
         res <- .check_package_depends(pkgdir, R_check_force_suggests,
                                       check_incoming)
-        if(any(sapply(res, length) > 0L)) {
+        if(any(lengths(res) > 0L)) {
             out <- format(res)
             allowed <- c("suggests_but_not_installed",
                          "enhances_but_not_installed",

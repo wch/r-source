@@ -1,8 +1,8 @@
 #  File src/library/utils/R/completion.R
 #  Part of the R package, http://www.R-project.org
 #
-# Copyright (C) 2006  Deepayan Sarkar
-#               2006-2014  The R Core Team
+# Copyright     2006 Deepayan Sarkar
+#           (C) 2006-2015  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -682,7 +682,7 @@ inFunction <-
 
     temp <-
         data.frame(i = c(parens[["("]], parens[[")"]]),
-                   c = rep(c(1, -1), sapply(parens, length)))
+                   c = rep(c(1, -1), lengths(parens)))
     if (nrow(temp) == 0) return(character())
     temp <- temp[order(-temp$i), , drop = FALSE] ## order backwards
     wp <- which(cumsum(temp$c) > 0)

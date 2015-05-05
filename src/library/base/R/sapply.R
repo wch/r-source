@@ -1,7 +1,7 @@
 #  File src/library/base/R/sapply.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 ##' @return x itself, or an array if the simplification "is sensible"
 simplify2array <- function(x, higher = TRUE)
 {
-    if(length(common.len <- unique(unlist(lapply(x, length)))) > 1L)
+    if(length(common.len <- unique(lengths(x))) > 1L)
         return(x)
     if(common.len == 1L)
         unlist(x, recursive = FALSE)

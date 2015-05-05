@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@ SweaveReadFile <- function(file, syntax, encoding = "")
 
     if (encoding != "bytes")  {
         ## now sort out an encoding, if needed.
-        enc <- tools:::.getVignetteEncoding(text, 
+        enc <- tools:::.getVignetteEncoding(text,
 			    default = if (identical(encoding, "")) NA else encoding)
         if (enc == "non-ASCII") {
             enc <- if (nzchar(encoding)) {
@@ -386,7 +386,7 @@ SweaveParseOptions <- function(text, defaults = list(), check = NULL)
         if (length(x[[1L]]) == 1L) x[[1L]] <- c("label", x[[1L]])
     } else return(defaults)
 
-    if (any(sapply(x, length) != 2L))
+    if (any(lengths(x) != 2L))
         stop(gettextf("parse error or empty option in\n%s", text), domain = NA)
 
     options <- defaults
