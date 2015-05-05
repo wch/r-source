@@ -217,10 +217,9 @@ qr.Q <- function (qr, complete = FALSE, Dvec)
     qr.qy(qr, D)
 }
 
-qr.R <- function (qr, complete = FALSE, ...)
+qr.R <- function (qr, complete = FALSE)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
-    chkDots(...)
     R <- qr$qr
     if (!complete)
 	R <- R[seq.int(min(dim(R))), , drop = FALSE]
