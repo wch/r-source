@@ -35,10 +35,6 @@
       \item \code{str(x)} now displays \code{"Time-Series"} also for
       matrix (multivariate) time-series, i.e. when \code{is.ts(x)} is true.
 
-      \item \code{lengths(x)} now also works (trivially) for atomic
-      \code{x} and hence can be used more generally as an efficient
-      replacement of \code{sapply(x, length)} and similar.
-
       \item (Windows only)  The GUI menu item to install local packages
       now accepts \file{*.tar.gz} files as well as \file{*.zip} files
       (but defaults to the latter).
@@ -90,6 +86,10 @@
 
       \item \code{news()} more flexibly extracts dates from package
       \file{NEWS.Rd} files.
+
+      \item \code{lengths(x)} now also works (trivially) for atomic
+      \code{x} and hence can be used more generally as an efficient
+      replacement of \code{sapply(x, length)} and similar.
     }
   }
 
