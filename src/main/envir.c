@@ -2948,7 +2948,11 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 int envlength(SEXP rho)
 {
-    if( HASHTAB(rho) != R_NilValue)
+    if(IS_USER_DATABASE(rho)) {
+        R_ObjectTable *tb = (R_ObjectTable*)
+	    R_ExternalPtrAddr(HASHTAB(rho));
+        return(xlength(tb->objects(tb)));
+    } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
     else
 	return FrameSize(FRAME(rho), 1);
