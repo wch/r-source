@@ -748,6 +748,15 @@ if(.Platform$OS.type == "unix" &&
 	      identical(ans[1:2], c("> 1:3",
 				    "[1] 1 2 3")))
 }
+## (failed for < 1 hr, in R-devel only)
 
 
-proc.time()
+## Parsing large exponents of floating point numbers, PR#16358
+set.seed(12)
+lrg <- sprintf("%.0f", round(exp(10*(2+abs(rnorm(2^10))))))
+head(huge <- paste0("1e", lrg))
+    micro <- paste0("1e-", lrg)
+stopifnot(as.numeric(huge) == Inf,
+          as.numeric(micro) == 0)
+## Both failed in R <= 3.2.0
+
