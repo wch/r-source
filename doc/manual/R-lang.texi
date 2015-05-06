@@ -1677,13 +1677,16 @@ selected.  If @code{i} contains negative elements, all elements except
 those indicated are selected.
 
 If @code{i} is positive and exceeds @code{length(x)} then the
-corresponding selection is @code{NA}.  A negative out of bounds value
-for @code{i} causes an error.
+corresponding selection is @code{NA}.  Negative out of bounds values
+for @code{i} are silently disregarded since R version 2.6.0, S compatibly,
+as they mean to drop non-existing elements and that is an empty operation
+(``no-op''). 
 
 A special case is the zero index, which has null effects: @code{x[0]} is
 an empty vector and otherwise including zeros among positive or negative
 indices has the same effect as if they were omitted.
-@c Are there any useful uses of zero indices??
+@c Q: Are there any useful uses of zero indices?? A: There are cases where
+@c it is useful that they are allowed and are no-ops
 
 @item
 @strong{Other numeric}.  Non-integer values are converted to integer
