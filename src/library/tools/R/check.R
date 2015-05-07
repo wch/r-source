@@ -4748,8 +4748,6 @@ setRlibs <-
                 }
             }
         }
-        messageLog(Log, "DONE")
-        message("")
         summaryLog(Log)
         if (Log$errors > 0L)
             do_exit(1L)
