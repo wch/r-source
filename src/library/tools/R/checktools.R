@@ -929,6 +929,21 @@ function(dir, old, outputs = FALSE, sources = FALSE)
                 new[!is.na(match(new$Package, packages)), ],
                 by = c("Package", "Check"), all = TRUE)
 
+    ## Complete possibly missing version information.
+    chunks <-
+        lapply(split(db, db$Package),
+               function(e) {
+                   len <- nrow(e)
+                   if(length(pos <- which(!is.na(e$Version.x))))
+                       e$Version.x <-
+                           rep.int(e[pos[1L], "Version.x"], len)
+                   if(length(pos <- which(!is.na(e$Version.y))))
+                       e$Version.y <-
+                           rep.int(e[pos[1L], "Version.y"], len)
+                   e
+               })
+    db <- do.call(rbind, chunks)
+    
     ## Drop checks that are OK in both versions
     x.issue <- !is.na(match(db$Status.x, c("NOTE","ERROR","WARNING")))
     y.issue <- !is.na(match(db$Status.y, c("NOTE","ERROR","WARNING")))
@@ -939,22 +954,6 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     ## Hence leave as missing and show as empty in the diff.
     ## An exception to this rule is made if we find an "ERROR" result
     ## as this may explain skipped checks.
-
-    ## Complete possibly missing version information.
-    chunks <-
-        lapply(split(db, db$Package),
-               function(e) {
-                   len <- nrow(e)
-                   if(length(pos <- which(!is.na(e$Version.x))))
-                       e$Version.x <-
-                           rep.int(e[pos[1L], "Version.x"], len)
-                    if(length(pos <- which(!is.na(e$Version.y))))
-                       e$Version.y <-
-                           rep.int(e[pos[1L], "Version.y"], len)
-                   e
-               })
-
-    db <- do.call(rbind, chunks)
 
     sx <- as.character(db$Status.x)
     sy <- as.character(db$Status.y)
