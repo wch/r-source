@@ -64,6 +64,10 @@
       \item C-level \code{asChar(x)} is fixed for when \code{x} is not a
       vector, and it returns \dQuote{TRUE}/\dQuote{FALSE} instead of
       \dQuote{T}/\dQuote{F} for logical vectors.
+
+      \item \code{.colSums()} etc (with an initial dot) first argument
+      name \code{x} matches \code{colSums()} such that error messages
+      are correct.
     }
   }
 }
@@ -136,10 +140,10 @@
       in scientific format with extremely large exponents.  (\PR{16358})
 
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
-      and related functions could repeatedly query the user for it.  
+      and related functions could repeatedly query the user for it.
       (Part of \PR{16362})
-      
-      \item The low-level functions \code{.rowSums()} etc. did not 
+
+      \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
     }
   }

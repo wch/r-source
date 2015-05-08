@@ -1,7 +1,7 @@
 #  File src/library/base/R/colSums.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ colSums <- function(x, na.rm = FALSE, dims = 1L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
-    n <- prod(dn[1L:dims])
-    dn <- dn[-(1L:dims)]
+    n <- prod(dn[id <- seq_len(dims)])
+    dn <- dn[-id]
     z <- if(is.complex(x))
         .Internal(colSums(Re(x), n, prod(dn), na.rm)) +
             1i * .Internal(colSums(Im(x), n, prod(dn), na.rm))
     else .Internal(colSums(x, n, prod(dn), na.rm))
     if(length(dn) > 1L) {
         dim(z) <- dn
-        dimnames(z) <- dimnames(x)[-(1L:dims)]
-    } else names(z) <- dimnames(x)[[dims+1]]
+        dimnames(z) <- dimnames(x)[-id]
+    } else names(z) <- dimnames(x)[[dims+1L]]
     z
 }
 
@@ -47,16 +47,16 @@ colMeans <- function(x, na.rm = FALSE, dims = 1L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
-    n <- prod(dn[1L:dims])
-    dn <- dn[-(1L:dims)]
+    n <- prod(dn[id <- seq_len(dims)])
+    dn <- dn[-id]
     z <- if(is.complex(x))
         .Internal(colMeans(Re(x), n, prod(dn), na.rm)) +
             1i * .Internal(colMeans(Im(x), n, prod(dn), na.rm))
     else .Internal(colMeans(x, n, prod(dn), na.rm))
     if(length(dn) > 1L) {
         dim(z) <- dn
-        dimnames(z) <- dimnames(x)[-(1L:dims)]
-    } else names(z) <- dimnames(x)[[dims+1]]
+        dimnames(z) <- dimnames(x)[-id]
+    } else names(z) <- dimnames(x)[[dims+1L]]
     z
 }
 
@@ -67,16 +67,16 @@ rowSums <- function(x, na.rm = FALSE, dims = 1L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
-    p <- prod(dn[-(1L:dims)])
-    dn <- dn[1L:dims]
+    p <- prod(dn[-(id <- seq_len(dims))])
+    dn <- dn[id]
     z <- if(is.complex(x))
         .Internal(rowSums(Re(x), prod(dn), p, na.rm)) +
             1i * .Internal(rowSums(Im(x), prod(dn), p, na.rm))
     else .Internal(rowSums(x, prod(dn), p, na.rm))
     if(length(dn) > 1L) {
         dim(z) <- dn
-        dimnames(z) <- dimnames(x)[1L:dims]
-    } else  names(z) <- dimnames(x)[[1L]]
+        dimnames(z) <- dimnames(x)[id]
+    } else names(z) <- dimnames(x)[[1L]]
     z
 }
 
@@ -87,25 +87,25 @@ rowMeans <- function(x, na.rm = FALSE, dims = 1L)
         stop("'x' must be an array of at least two dimensions")
     if(dims < 1L || dims > length(dn) - 1L)
         stop("invalid 'dims'")
-    p <- prod(dn[-(1L:dims)])
-    dn <- dn[1L:dims]
+    p <- prod(dn[-(id <- seq_len(dims))])
+    dn <- dn[id]
     z <- if(is.complex(x))
         .Internal(rowMeans(Re(x), prod(dn), p, na.rm)) +
             1i * .Internal(rowMeans(Im(x), prod(dn), p, na.rm))
     else .Internal(rowMeans(x, prod(dn), p, na.rm))
     if(length(dn) > 1L) {
         dim(z) <- dn
-        dimnames(z) <- dimnames(x)[1L:dims]
-    } else  names(z) <- dimnames(x)[[1L]]
+        dimnames(z) <- dimnames(x)[id]
+    } else names(z) <- dimnames(x)[[1L]]
     z
 }
 
-.colSums <- function(X, m, n, na.rm = FALSE)
-    .Internal(colSums(X, m, n, na.rm))
-.colMeans <- function(X, m, n, na.rm = FALSE)
-    .Internal(colMeans(X, m, n, na.rm))
+.colSums <- function(x, m, n, na.rm = FALSE)
+    .Internal(colSums(x, m, n, na.rm))
+.colMeans <- function(x, m, n, na.rm = FALSE)
+    .Internal(colMeans(x, m, n, na.rm))
 
-.rowSums <- function(X, m, n, na.rm = FALSE)
-    .Internal(rowSums(X, m, n, na.rm))
-.rowMeans <- function(X, m, n, na.rm = FALSE)
-    .Internal(rowMeans(X, m, n, na.rm))
+.rowSums <- function(x, m, n, na.rm = FALSE)
+    .Internal(rowSums(x, m, n, na.rm))
+.rowMeans <- function(x, m, n, na.rm = FALSE)
+    .Internal(rowMeans(x, m, n, na.rm))

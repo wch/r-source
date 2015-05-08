@@ -1368,19 +1368,19 @@ SEXP attribute_hidden do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (p == NA_INTEGER || p < 0)
 	error(_("invalid '%s' argument"), "p");
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
-    if (n*p > xlength(x))
-    	error(_("'X' is too short")); /* PR#16367 */
     keepNA = !NaRm;
 
-    int OP = PRIMVAL(op);
     switch (type = TYPEOF(x)) {
-    case LGLSXP: break;
-    case INTSXP: break;
+    case LGLSXP:
+    case INTSXP:
     case REALSXP: break;
     default:
-	error(_("'X' must be numeric"));
+	error(_("'x' must be numeric"));
     }
+    if (n * (double)p > XLENGTH(x))
+    	error(_("'x' is too short")); /* PR#16367 */
 
+    int OP = PRIMVAL(op);
     if (OP == 0 || OP == 1) { /* columns */
 	PROTECT(ans = allocVector(REALSXP, p));
 #ifdef _OPENMP
