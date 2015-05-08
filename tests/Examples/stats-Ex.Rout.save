@@ -6115,6 +6115,11 @@ attr(,"gradient")
 [6,]  1 0.3535534 0.2756976
 [7,]  1 0.2973018 0.2704720
 > 
+> ## First derivative
+> 
+> D(expression(x^2), "x")
+2 * x
+> 
 > ## Higher derivatives
 > deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
 +      c("b0", "b1", "th", "x") )

@@ -637,6 +637,8 @@ SEXP doD(SEXP args)
     args = CDR(args);
     if (isExpression(CAR(args))) expr = VECTOR_ELT(CAR(args), 0);
     else expr = CAR(args);
+    if (!(isLanguage(expr) || isNumeric(expr) || isComplex(expr)))
+        error(_("'expr' must be an expression or call"));
     var = CADR(args);
     if (!isString(var) || length(var) < 1)
 	error(_("variable must be a character string"));

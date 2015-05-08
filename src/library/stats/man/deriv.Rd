@@ -134,6 +134,10 @@ deriv((y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
              function(b0, b1, th, x = 1:7){} ) )
 fx(2, 3, 4)
 
+## First derivative
+
+D(expression(x^2), "x")
+
 ## Higher derivatives
 deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
      c("b0", "b1", "th", "x") )

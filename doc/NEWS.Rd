@@ -40,6 +40,9 @@
       (but defaults to the latter).
 
       \item new programmeR's utility \code{chkDots}.
+      
+      \item \code{D()} now signals an error when given invalid input,
+      rather than silently returning \code{NA}.  (Request of John Nash.)
     }
   }
 
