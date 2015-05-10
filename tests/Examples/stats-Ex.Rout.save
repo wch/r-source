@@ -6119,6 +6119,7 @@ attr(,"gradient")
 > 
 > D(expression(x^2), "x")
 2 * x
+> stopifnot(D(as.name("x"), "x") == 1)
 > 
 > ## Higher derivatives
 > deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
