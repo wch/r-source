@@ -6991,7 +6991,10 @@ function(dir)
     if(!is.na(date)) {
         dd <- strptime(date, "%Y-%m-%d", tz = "GMT")
         if (is.na(dd)) out$bad_date <- TRUE
-        else if (as.Date(dd) < Sys.Date() - 31) out$old_date <- TRUE
+        else if((as.Date(dd) < Sys.Date() - 31) &&
+                !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DATES_",
+                                                  FALSE)))
+            out$old_date <- TRUE
     }
 
     ## Check URLs.
