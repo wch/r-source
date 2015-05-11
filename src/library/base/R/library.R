@@ -871,7 +871,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 packageStartupMessage(gettextf("Loading required package: %s",
                                                pkg), domain = NA)
             library(pkg, character.only = TRUE, logical.return = TRUE,
-                    lib.loc = lib.loc) ||
+                    lib.loc = lib.loc, quietly = quietly) ||
                 stop(gettextf("package %s could not be loaded", sQuote(pkg)),
                      call. = FALSE, domain = NA)
         }
