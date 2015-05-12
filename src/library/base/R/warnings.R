@@ -66,11 +66,11 @@ print.warnings <- function(x, ...)
 ##' @param allowed not yet implemented: character vector of *named* elements in '...'
 ##' which are \dQuote{allowed} and hence not warned about
 chkDots <- function(..., which.call = -1, allowed = character(0)) {
-    if(nx <- length(list(...)))
+    if(nx <- length(list(...))) ## <- or  if(missing(...)) ?
 	warning(sprintf(ngettext(nx,
 				 "In %s :\n extra argument %s will be disregarded",
 				 "In %s :\n extra arguments %s will be disregarded"),
-			deparse(sys.call(which.call), control=c()),
+			paste(deparse(sys.call(which.call), control=c()), collapse="\n"),
 			## sub(")$", '', sub("^list\\(", '', deparse(list(...), control=c())))
 			paste(sQuote(names(list(...))), collapse = ", ")),
 		call. = FALSE, domain=NA)

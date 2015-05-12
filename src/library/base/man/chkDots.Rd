@@ -27,5 +27,9 @@ chkDots(..., which.call = -1, allowed = character(0))
 seq.default ## <- you will see  ' chkDots(...) '
 
 seq(1,5, foo = "bar") # gives warning via chkDots()
+
+## warning with more than one ...-entry:
+density.f <- function(x, ...) NextMethod("density")
+x <- density(structure(rnorm(10), class="f"), bar=TRUE, baz=TRUE)
 }
 \keyword{utilities}
