@@ -29,7 +29,7 @@
       \code{grep()} and friends.
 
       \item Experimental new functionality for S3 method checking, notably
-      \code{isS3method()}.  Also, the \R \dQuote{language element} names
+      \code{isS3method()}.  Also, the \R \sQuote{language element} names
       are exported as \code{tools::langElts}.
 
       \item \code{str(x)} now displays \code{"Time-Series"} also for
@@ -39,7 +39,7 @@
       now accepts \file{*.tar.gz} files as well as \file{*.zip} files
       (but defaults to the latter).
 
-      \item new programmeR's utility \code{chkDots}.
+      \item New programmeR's utility function \code{chkDots()}.
       
       \item \code{D()} now signals an error when given invalid input,
       rather than silently returning \code{NA}.  (Request of John Nash.)
