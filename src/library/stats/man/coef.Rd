@@ -33,6 +33,7 @@ coefficients(object, \dots)
   Coefficients extracted from the model object \code{object}.
 
   For standard model fitting classes this will be a named numeric vector.
+  For \code{"maov"} objects (produced by \code{\link{aov}}) it will be a matrix.
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;

@@ -71,6 +71,9 @@
       \item \code{.colSums()} etc (with an initial dot) first argument
       name \code{x} matches \code{colSums()} such that error messages
       are correct.
+      
+      \item A \code{coef.maov()} method has been added to allow 
+      \code{vcov()} to work with multivariate results. (\PR{16380})
     }
   }
 }
