@@ -3110,8 +3110,8 @@ int main() {
 fi
 if test "x${r_cv_have_pcre810}" != xyes; then
   have_pcre=no
+  LIBS="${r_save_LIBS}"
 fi
-LIBS="${r_save_LIBS}"
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
 if test "x${r_cv_have_pcre810}" = xyes; then
   AC_MSG_RESULT([no])

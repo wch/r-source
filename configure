@@ -34546,8 +34546,8 @@ $as_echo "$r_cv_have_pcre810" >&6; }
 fi
 if test "x${r_cv_have_pcre810}" != xyes; then
   have_pcre=no
+  LIBS="${r_save_LIBS}"
 fi
-LIBS="${r_save_LIBS}"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether PCRE support needs to be compiled" >&5
 $as_echo_n "checking whether PCRE support needs to be compiled... " >&6; }
 if test "x${r_cv_have_pcre810}" = xyes; then
