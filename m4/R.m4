@@ -3077,8 +3077,8 @@ AC_DEFUN([R_PCRE],
 else
   have_pcre=no
 fi
-if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
+if test "x${have_pcre}" = xyes; then
 LIBS="-lpcre ${LIBS}"
 AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -3110,8 +3110,8 @@ int main() {
 fi
 if test "x${r_cv_have_pcre810}" != xyes; then
   have_pcre=no
-  LIBS="${r_save_LIBS}"
 fi
+LIBS="${r_save_LIBS}"
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])
 if test "x${r_cv_have_pcre810}" = xyes; then
   AC_MSG_RESULT([no])

@@ -27,6 +27,9 @@
       \item \code{lengths(x)} now also works (trivially) for atomic
       \code{x} and hence can be used more generally as an efficient
       replacement of \code{sapply(x, length)} and similar.
+
+      \item The included version of PCRE has been updated to 8.37, a
+      bug-fix release.
     }
   }
 
@@ -75,9 +78,12 @@
       \item If the CRAN mirror was not set, \code{install.packages(type = "both")}
       and related functions could repeatedly query the user for it.
       (Part of \PR{16362})
-      
-      \item The low-level functions \code{.rowSums()} etc. did not 
+
+      \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
+      
+      \item Under some circumstances using the internal PCRE would cause
+      external libs such as \code{-llzma} to omitted from the main link.
     }
   }
 }
