@@ -34,11 +34,9 @@
            function(name, properties, prototype, extends, where) {
                list(properties=properties, prototype = prototype, extends = extends)
            }, envir)
-    clList <- character()
-    setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
-    setClass("ANY", where = envir); clList <- c(clList, "ANY")
-    setClass("vector", where = envir); clList <- c(clList, "vector")
-    setClass("missing", where = envir); clList <- c(clList, "missing")
+    clList <- c("VIRTUAL", "ANY", "vector", "missing")
+    for(.class in clList)
+        setClass(.class, where = envir)
     ## "numeric" is the class returned by class() for double vectors
     vClasses <- c("logical", "numeric", "character",
                   "complex", "integer", "raw",
@@ -236,16 +234,16 @@
         }
         NULL
     }, where = envir)
-   .initS3 <- function(.Object, ...) {
-         if(nargs() < 2)
-           return(.Object)
-         Class <- class(.Object)
-         ClassDef <- getClass(Class)
-         S3Class <- attr(ClassDef@prototype, ".S3Class")
-         if(is.null(S3Class)) # not a class set up by setOldClass()
-             return(callNextMethod())
+    .initS3 <- function(.Object, ...) {
+	if(nargs() < 2)
+	    return(.Object)
+	Class <- class(.Object)
+	ClassDef <- getClass(Class)
+	S3Class <- attr(ClassDef@prototype, ".S3Class")
+	if(is.null(S3Class)) # not a class set up by setOldClass()
+	    return(callNextMethod())
         S3ClassP <- S3Class[[1L]]
-         args <- list(...)
+	args <- list(...)
         ## separate the slots, superclass objects
         snames <- allNames(args)
         which <- nzchar(snames)
@@ -256,29 +254,29 @@
         dataPart <- elNamed(slotDefs, ".Data")
         if(is.null(dataPart))
           dataPart <- "missing" # nothing will extend this => no data part args allowed
-        if(length(supers) > 0) {
-            for(i in rev(seq_along(supers))) {
-                obj <- el(supers, i)
-                Classi <- class(obj)
-                defi <- getClassDef(Classi)
-                if(is.null(defi))
-                  stop(gettextf("unnamed argument to initialize() for S3 class must have a class definition; %s does not",
-                                dQuote(Classi)),
-                       domain = NA)
-                if(is(obj, S3ClassP)) {
-                    ## eligible to be the S3 part; merge other slots from prototype;
-                    ## obj then becomes the object, with its original class as the S3Class
-                    if(is.null(attr(obj, ".S3Class"))) # must be an S3 object; use its own class
-                       attr(obj, ".S3Class") <- Classi
-                    .Object <- .asS4(.mergeAttrs(obj, .Object))
-                }
-                else if(is(obj, dataPart)) {
-                    ## the S3Class stays from the prototype
-                    .Object <- .mergeAttrs(obj, .Object)
-                }
-                else stop(gettextf("unnamed argument must extend either the S3 class or the class of the data part; not true of class %s", dQuote(Classi)), domain = NA)
-
+        for(i in rev(seq_along(supers))) {
+            obj <- el(supers, i)
+            Classi <- class(obj)
+            defi <- getClassDef(Classi)
+            if(is.null(defi))
+                stop(gettextf(
+                    "unnamed argument to initialize() for S3 class must have a class definition; %s does not",
+                    dQuote(Classi)),
+                     domain = NA)
+            if(is(obj, S3ClassP)) {
+                ## eligible to be the S3 part; merge other slots from prototype;
+                ## obj then becomes the object, with its original class as the S3Class
+                if(is.null(attr(obj, ".S3Class"))) # must be an S3 object; use its own class
+                    attr(obj, ".S3Class") <- Classi
+                .Object <- .asS4(.mergeAttrs(obj, .Object))
             }
+            else if(is(obj, dataPart)) {
+                ## the S3Class stays from the prototype
+                .Object <- .mergeAttrs(obj, .Object)
+            }
+            else stop(gettextf(
+	"unnamed argument must extend either the S3 class or the class of the data part; not true of class %s",
+			       dQuote(Classi)), domain = NA)
         }
         ## named slots are done as in the default method, which will also call validObject()
         if(length(elements)>0) {
@@ -374,7 +372,8 @@
                       if(match(".Data", names(slots), 0L) > 0L) {
                           data <- unclass(from)
                           if(!is(data, slots[[".Data"]]))
-                            stop(gettextf("object must be a valid data part for class %s; not true of type %s", dQuote(cl), dQuote(class(data))),
+                            stop(gettextf("object must be a valid data part for class %s; not true of type %s",
+					  dQuote(cl), dQuote(class(data))),
                                  domain = NA)
                           value@.Data <- unclass(from)
                       }
@@ -458,7 +457,7 @@
     setMethod("initialize", "matrix", where = where,
               function(.Object, ...) {
 		  if(nargs() < 2) # guaranteed to be called with .Object from new
-                    return(.Object)
+                      return(.Object)
 		  else {
                       if(isMixin(getClass(class(.Object)))) # other superclasses
                           callNextMethod()
@@ -519,13 +518,13 @@
 
 }
 
-## .OldClassList is a purely heuristic list of known old-style classes, with emphasis
+## .OldClassesList is a purely heuristic list of known old-style classes, with emphasis
 ## on old-style class inheritiance.  Used in .InitBasicClasses to call setOldClass for
 ## each known class pattern.
 ## .OldClassesPrototypes is a list of S3 classes for which prototype
 ## objects are known & reasonable.
-## Its classes should not reappear in .OldClassesList, as these become VIRTUAL.
-## and will have been initialized first in .InitBasicClasses.
+## Its classes should not reappear in .OldClassesList (as these become VIRTUAL)
+## and will have been initialized first in .InitBasicClasses().
 ## NB: the methods package will NOT set up prototypes for S3 classes
 ##     except those in package base and for "ts" and "formula"
 ##     (and would rather not do those either).
@@ -598,8 +597,9 @@
         print(structure(object@.Data, names=object@names))
         showExtraSlots(object, getClass("namedList"))
     })
-    setClass("listOfMethods", representation(  arguments = "character",
-                                                 signatures = "list", generic = "genericFunction"), contains = "namedList",
+    setClass("listOfMethods", representation(arguments = "character",
+					     signatures = "list", generic = "genericFunction"),
+             contains = "namedList",
              where = where)
     specialClasses <- c(specialClasses, "namedList", "listOfMethods")
     assign(".SealedClasses", c(get(".SealedClasses", where), specialClasses), where)
