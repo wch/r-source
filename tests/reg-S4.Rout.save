@@ -1104,6 +1104,9 @@ rbind2(<A>, <matrix>) :  x@a done
 > C2 <- new("C", slot1=a@slot1, slot2=a@slot2, design=x ~ y)
 > stopifnot(identical(C1, C2),
 + 	  identical(formula(), formula(NULL)),
-+ 	  length(new("formula")) == 0)
-> ## formula() and new("formula") also failed  in R <= 3.2.0
++ 	  length(N <- new("formula")) == 0, inherits(N, "formula"),
++ 	  length(N <- new("table")  ) == 0, is.table(N),
++ 	  validObject(N <- new("summary.table")),
++ 	  length(N <- new("ordered")) == 0, is.ordered(N))
+> ## formula() and new("formula"), new("..") also failed  in R <= 3.2.0
 > 
