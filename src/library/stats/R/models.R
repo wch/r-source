@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #  http://www.r-project.org/Licenses/
 
 formula <- function(x, ...) UseMethod("formula")
-formula.default <- function (x, env = parent.frame(), ...)
+formula.default <- function (x = NULL, env = parent.frame(), ...)
 {
     notAtomic <- !is.atomic(x)
     notnull <- function(z) notAtomic && !is.null(z)
@@ -82,7 +82,7 @@ print.formula <- function(x, showEnv = !identical(e, .GlobalEnv), ...)
 `[.formula` <- function(x,i) {
     ans <- NextMethod("[")
     ## as.character gives a vector.
-    if(as.character(ans[[1L]])[1L] == "~") {
+    if(length(ans) == 0L || as.character(ans[[1L]])[1L] == "~") {
 	class(ans) <- "formula"
         environment(ans) <- environment(x)
     }
@@ -175,27 +175,27 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
                                   attr(termobj, "intercept"))
         environment(newformula) <- environment(termobj)
 	result <- terms(newformula, specials=names(attr(termobj, "specials")))
-	
+
 	# Edit the optional attributes
-	
+
 	response <- attr(termobj, "response")
-	if (response && !keep.response) 
+	if (response && !keep.response)
 	    # we have a response in termobj, but not in the result
 	    dropOpt <- c(response, dropx + length(response))
-	else 
+	else
 	    dropOpt <- dropx + max(response)
-	 
+
 	if (!is.null(predvars <- attr(termobj, "predvars"))) {
-	    # predvars is a language expression giving a list of 
+	    # predvars is a language expression giving a list of
 	    # values corresponding to terms in the model
             # so add 1 for the name "list"
 	    attr(result, "predvars") <- predvars[-(dropOpt+1)]
 	}
 	if (!is.null(dataClasses <- attr(termobj, "dataClasses"))) {
-	    # dataClasses is a character vector of 
+	    # dataClasses is a character vector of
 	    # values corresponding to terms in the model
 	    attr(result, "dataClasses") <- dataClasses[-dropOpt]
-	}	
+	}
 	result
     }
 }
@@ -209,31 +209,31 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"))
     environment(newformula) <- environment(termobj)
     result <- terms(newformula, specials = names(attr(termobj, "specials")))
-    
+
     # Edit the optional attributes
 
-    addindex <- function(index, offset) 
+    addindex <- function(index, offset)
         # add a non-negative offset to a possibly negative index
-    	ifelse(index < 0, index - offset, 
+    	ifelse(index < 0, index - offset,
     	       ifelse(index == 0, 0, index + offset))
-    	       
+
     if (is.logical(i))
     	i <- which(rep_len(i, length.out = length(attr(termobj, "term.labels"))))
-    	
+
     response <- attr(termobj, "response")
-    if (response) 
+    if (response)
 	iOpt <- c(if (max(i) > 0) response, # inclusive indexing
 	          addindex(i, max(response)))
-    else 
+    else
 	iOpt <- i
 
-    if (!is.null(predvars <- attr(termobj, "predvars"))) 
-	attr(result, "predvars") <- predvars[c(if (max(iOpt) > 0) 1, 
+    if (!is.null(predvars <- attr(termobj, "predvars")))
+	attr(result, "predvars") <- predvars[c(if (max(iOpt) > 0) 1,
 	                                     addindex(iOpt, 1))]
-    
-    if (!is.null(dataClasses <- attr(termobj, "dataClasses"))) 
+
+    if (!is.null(dataClasses <- attr(termobj, "dataClasses")))
 	attr(result, "dataClasses") <- dataClasses[iOpt]
-    
+
     result
 }
 
@@ -511,7 +511,7 @@ model.frame.default <-
 	        ctr <- attr(x, "contrasts")
 		data[[nm]] <- x[, drop = TRUE]
 		if (!identical(attr(data[[nm]], "contrasts"), ctr))
-		    warning(gettext(sprintf("contrasts dropped from factor %s due to missing levels", nm), domain = NA), 
+		    warning(gettext(sprintf("contrasts dropped from factor %s due to missing levels", nm), domain = NA),
 		            call. = FALSE)
 	    }
 	}

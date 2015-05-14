@@ -758,8 +758,26 @@ stopifnot(identical(t(m3), rbind(m1, three, m2+3, deparse.level = 2)),
           identical(colnames(mm), c("", "", "T")),
           identical(cbind(m1, m2, deparse.level=0),
                     cbind(m1@.Data, m2@.Data)))
-rm(m1,m2)
-removeClass("mondate")
 ##
+## Cleanup all class definitions etc -- seems necessary for the following "re"-definitions:
+invisible(lapply(getClasses(globalenv()), removeClass))
+nn <- names(globalenv())
+rm(list = c("nn", nn))
 
-
+## Using "data.frame" in a slot -- all have worked for long:
+setClass("A", representation(slot1="numeric", slot2="logical"))
+setClass("D1", contains="A", representation(design="data.frame"))
+setClass("D2", contains="D1")
+validObject(a <- new("A", slot1=77, slot2=TRUE))
+validObject(D. <- new("D2", a, design = data.frame(x = 1)))
+## using "formula" in a slot -- from Hervé Pages :
+setClass("B", contains="A", representation(design="formula"))
+setClass("C", contains="B")
+##
+a <- new("A", slot1=77, slot2=TRUE)
+validObject(C1 <- new("C", a, design = x ~ y))# failed for R <= 3.2.0
+C2 <- new("C", slot1=a@slot1, slot2=a@slot2, design=x ~ y)
+stopifnot(identical(C1, C2),
+	  identical(formula(), formula(NULL)),
+	  length(new("formula")) == 0)
+## formula() and new("formula") also failed  in R <= 3.2.0

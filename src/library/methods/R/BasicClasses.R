@@ -34,7 +34,7 @@
            function(name, properties, prototype, extends, where) {
                list(properties=properties, prototype = prototype, extends = extends)
            }, envir)
-    clList = character()
+    clList <- character()
     setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
     setClass("ANY", where = envir); clList <- c(clList, "ANY")
     setClass("vector", where = envir); clList <- c(clList, "vector")
@@ -156,7 +156,8 @@
         if(is.list(el) && length(el) > 1)
             setOldClass(el[[1L]], prototype = el[[2L]],  where = envir)
         else
-            warning(gettextf("OOPS: something wrong with line %d in '.OldClassesPrototypes'", i), domain = NA)
+	    warning(gettextf("OOPS: something wrong with '.OldClassesPrototypes[[%d]]'", i),
+		    domain = NA)
     }
     setGeneric("slotsFromS3", where = envir)
     ## the method for "oldClass" is really a constant, just hard to express that way
@@ -522,13 +523,14 @@
 ## on old-style class inheritiance.  Used in .InitBasicClasses to call setOldClass for
 ## each known class pattern.
 ## .OldClassesPrototypes is a list of S3 classes for which prototype
-## objects are known & reasonable.  The classes will reappear in
-## .OldClassesList, but will have been initialized first in
-## .InitBasicClasses.  NB:  the methods package will NOT set up
-## prototypes for S3 classes except those in package base and for "ts"
-## (and would rather not do those either).  The package that owns the
-## S3 class should have code to call setOldClass in its
-## initialization.
+## objects are known & reasonable.
+## Its classes should not reappear in .OldClassesList, as these become VIRTUAL.
+## and will have been initialized first in .InitBasicClasses.
+## NB: the methods package will NOT set up prototypes for S3 classes
+##     except those in package base and for "ts" and "formula"
+##     (and would rather not do those either).
+## Ideally, the package that owns the S3 class should have code to call
+## setOldClass in its initialization.
 .OldClassesPrototypes <-
   list(
        list("data.frame",  data.frame(), "data.frame"),
@@ -537,6 +539,7 @@
        list("table",  table(factor())),
        list("summary.table",  summary.table(table(factor())))
        , list("ts", stats::ts())
+       , list("formula", stats::formula())
        )
 .OldClassesList <-
     list(
@@ -551,7 +554,6 @@
          c("POSIXlt", "POSIXt"),
          "Date",
          "dump.frames",
-         c("ordered", "factor"),
          c("glm.null", "glm", "lm"),
          c("anova.glm.null", "anova.glm"),
          "hsearch",
@@ -560,14 +562,11 @@
          "libraryIQR",
          "packageIQR",
          "mtable",
-         "table",
          c("summaryDefault","table"),
-         "summary.table",
          "recordedplot",
          "socket",
          "packageIQR",
          "density",
-         "formula",
          "logLik",
          "rle"
 )

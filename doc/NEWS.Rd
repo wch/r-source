@@ -40,9 +40,12 @@
       (but defaults to the latter).
 
       \item New programmeR's utility function \code{chkDots()}.
-      
+
       \item \code{D()} now signals an error when given invalid input,
       rather than silently returning \code{NA}.  (Request of John Nash.)
+
+      \item \code{formula} objects are slightly more \dQuote{first class}:
+      e.g., \code{formula()} or \code{new("formula", y ~ x)} are now valid.
     }
   }
 
@@ -71,8 +74,8 @@
       \item \code{.colSums()} etc (with an initial dot) first argument
       name \code{x} matches \code{colSums()} such that error messages
       are correct.
-      
-      \item A \code{coef.maov()} method has been added to allow 
+
+      \item A \code{coef.maov()} method has been added to allow
       \code{vcov()} to work with multivariate results. (\PR{16380})
     }
   }
@@ -154,7 +157,7 @@
 
       \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
-      
+
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
     }
