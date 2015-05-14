@@ -750,10 +750,6 @@ predict.lm <-
 	asgn <- split(order(aa), aaa)
 	if (hasintercept) {
 	    asgn$"(Intercept)" <- NULL
-	    if(!mmDone) {
-                mm <- model.matrix(object)
-                mmDone <- TRUE
-            }
 	    avx <- colMeans(mm)
 	    termsconst <- sum(avx[piv] * beta[piv])
 	}
