@@ -770,3 +770,12 @@ rate <- factor(gl(2,10), labels = c("Low", "High"))
 fit <- manova(Y ~ rate)
 vcov(fit)
 ## Gave error because coef.aov() turned matrix of coefficients into a vector
+
+
+## Unary / Binary uses of logic operations, PR#16385
+tools::assertError(`&`(FALSE))
+tools::assertError(`|`(TRUE))
+## Did not give errors in R <= 3.2.0
+E <- tryCatch(`!`(), error = function(e)e)
+stopifnot(grepl("0 arguments .*\\<1", conditionMessage(E)))
+## Gave wrong error message in R <= 3.2.0

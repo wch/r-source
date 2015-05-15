@@ -160,6 +160,11 @@
 
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
+
+      \item The .Primitive default methods of the logic operators, i.e.,
+      \code{!}, \code{&} and \code{|}, now give correct error messages
+      when appropriate, e.g., for \code{`&`(TRUE)} or \code{`!`()}.
+      (\PR{16385})
     }
   }
 }
