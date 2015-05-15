@@ -1,6 +1,6 @@
 % File src/library/base/man/vector.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vector}
@@ -18,15 +18,16 @@ is.vector(x, mode = "any")
 \arguments{
   \item{mode}{character string naming an atomic mode or
     \code{"list"} or \code{"expression"} or (except for \code{vector})
-    \code{"any"}.}
+    \code{"any"}.  Currently, \code{is.vector()} allows any type (see
+    \code{\link{typeof}}) for \code{mode}, and when mode is not
+    \code{"any"}, \code{is.vector(x, mode)} is almost the same as
+    \code{typeof(x) == mode}.}% differences: for mode=NA, or mode="numeric"
   \item{length}{a non-negative integer specifying the desired length.
     For a long vector, i.e., \code{length > .Machine$integer.max}, it
     has to be of type \code{"double"}.  Supplying an argument of length
     other than one is an error.}
   \item{x}{an \R object.}
 }
-%% The implementation of is.vector allows any _type_ to be named,
-%% and MM uses "symbol" and "language" in str.default()
 \description{
   \code{vector} produces a vector of the given length and mode.
 
