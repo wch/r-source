@@ -4371,9 +4371,10 @@ to specify a suitable locale @emph{via} environment variable
 @end example
 
 @noindent
-(which is appropriate for a system based on @code{glibc}) except that if
-the current locale is UTF-8 then the package code is translated to UTF-8
-for syntax checking.
+(which is appropriate for a system based on @code{glibc}: OS X requires
+@code{latin9=fr_FR.ISO8859-15}) except that if the current locale is
+UTF-8 then the package code is translated to UTF-8 for syntax checking,
+so it is strongly recommended to check in a UTF-8 locale.
 
 @node Portable C and C++ code, Binary distribution, Encoding issues, Writing portable packages
 @subsection Portable C and C++ code
