@@ -1,6 +1,6 @@
 % File src/library/base/man/is.language.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.language}
@@ -20,6 +20,9 @@ is.language(x)
   \item{x}{object to be tested.}
 }
 \note{
+  A \code{name} is also known as \sQuote{symbol}, from its type
+  (\code{\link{typeof}}), see \code{\link{is.symbol}}.
+
   This is a \link{primitive} function.
 }
 \references{
