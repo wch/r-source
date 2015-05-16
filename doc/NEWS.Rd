@@ -111,6 +111,9 @@
 
       \item The included version of PCRE has been updated to 8.37, a
       bug-fix release.
+
+      \item \code{diag()} no longer duplicates a matrix when extracting
+      its diagonal.
     }
   }
 

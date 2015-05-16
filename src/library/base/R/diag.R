@@ -24,7 +24,7 @@ diag <- function(x = 1, nrow, ncol)
 
         if((m <- min(dim(x))) == 0L) return(vector(typeof(x), 0L))
         ## NB: need double index to avoid overflows.
-        y <- c(x)[1 + 0L:(m - 1L) * (dim(x)[1L] + 1)]
+        y <- x[1 + 0L:(m - 1L) * (dim(x)[1L] + 1)]
         nms <- dimnames(x)
         if (is.list(nms) && !any(sapply(nms, is.null)) &&
             identical((nm <- nms[[1L]][seq_len(m)]), nms[[2L]][seq_len(m)]))
