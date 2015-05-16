@@ -163,6 +163,9 @@
       \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
 
+      \item The \code{quietly} argument of \code{library()} is correctly
+      propagated from \code{.getRequiredPackages2()} now.
+
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
 
