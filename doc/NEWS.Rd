@@ -45,7 +45,12 @@
       rather than silently returning \code{NA}.  (Request of John Nash.)
 
       \item \code{formula} objects are slightly more \dQuote{first class}:
-      e.g., \code{formula()} or \code{new("formula", y ~ x)} are now valid.
+      e.g., \code{formula()} or \code{new("formula", y ~ x)} are now
+      valid.  Similarly, for \code{"table"}, \code{"ordered"} and
+      \code{"summary.table"}.  Packages defining S4 classes with the above
+      S3/S4 classes as slots should be reinstalled.
+      % notably if their classes are reused in other
+      % packages. e.g. re-install arules for arulesSequence, flexmix for betareg
     }
   }
 
