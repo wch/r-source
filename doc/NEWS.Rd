@@ -21,9 +21,6 @@
       From \R 3.3.0, the default will change to \code{keepNA = NA} and
       you are advised to consider this for code portability.
 
-      \item \code{news()} more flexibly extracts dates from package
-      \file{NEWS.Rd} files.
-
       \item \code{lengths(x)} now also works (trivially) for atomic
       \code{x} and hence can be used more generally as an efficient
       replacement of \code{sapply(x, length)} and similar.
@@ -43,7 +40,7 @@
       coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
       (instead of NA) when M is the maximal representable integer.
 
-      \item On some platforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
+      \item On some plaforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
       would return values (possibly \code{NA}) for inputs which were
       declared to be UTF-8 but were not, or for invalid strings without a
       marked encoding in a multi-byte locale, rather than give an
@@ -51,13 +48,9 @@
 
       \item \code{apply(a, M, function(u) c(X = ., Y = .))} again
       has dimnames containing "X" and "Y" (as in R < 3.2.0).
-
+      
       \item (Windows only) In some cases, the \command{--clean} option
       to \command{R CMD INSTALL} could fail.  (\PR{16178})
-
-      \item (Windows only) \code{choose.files()} would occasionally
-      include characters from the result of an earlier call in
-      the result of a later one.  (\PR{16270})
 
       \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
       submit invalid URLs.  (\PR{16329})
@@ -82,6 +75,9 @@
       \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
       
+      \item The \code{quietly} argument of \code{library()} is correctly
+      propagated from \code{.getRequiredPackages2()} now.
+
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
     }
