@@ -176,6 +176,9 @@
       \code{!}, \code{&} and \code{|}, now give correct error messages
       when appropriate, e.g., for \code{`&`(TRUE)} or \code{`!`()}.
       (\PR{16385})
+
+      \item \code{cummax(x)} now correctly propagates \code{NA}s also
+      when \code{x} is of type \code{integer} and begins with an \code{NA}.
     }
   }
 }
