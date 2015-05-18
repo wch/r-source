@@ -83,6 +83,9 @@
 
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
+
+      \item \code{cummax(x)} now correctly propagates \code{NA}s also
+      when \code{x} is of type \code{integer} and begins with an \code{NA}.
     }
   }
 }

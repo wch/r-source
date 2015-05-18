@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -127,8 +127,10 @@ static SEXP cummin(SEXP x, SEXP s)
 
 static SEXP icummax(SEXP x, SEXP s)
 {
-    int *ix = INTEGER(x), *is = INTEGER(s);
-    int max = ix[0];
+    int *ix = INTEGER(x);
+    if(ix[0] == NA_INTEGER)
+	return s; // all NA
+    int *is = INTEGER(s), max = ix[0];
     is[0] = max;
     for (R_xlen_t i = 1 ; i < xlength(x) ; i++) {
 	if(ix[i] == NA_INTEGER) break;
