@@ -51,7 +51,7 @@
 
       \item \code{apply(a, M, function(u) c(X = ., Y = .))} again
       has dimnames containing "X" and "Y" (as in R < 3.2.0).
-      
+
       \item (Windows only) In some cases, the \command{--clean} option
       to \command{R CMD INSTALL} could fail.  (\PR{16178})
 
@@ -77,12 +77,17 @@
 
       \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
-      
+
       \item The \code{quietly} argument of \code{library()} is correctly
       propagated from \code{.getRequiredPackages2()} now.
 
       \item Under some circumstances using the internal PCRE would cause
       external libs such as \code{-llzma} to omitted from the main link.
+
+      \item The .Primitive default methods of the logic operators, i.e.,
+      \code{!}, \code{&} and \code{|}, now give correct error messages
+      when appropriate, e.g., for \code{`&`(TRUE)} or \code{`!`()}.
+      (\PR{16385})
 
       \item \code{cummax(x)} now correctly propagates \code{NA}s also
       when \code{x} is of type \code{integer} and begins with an \code{NA}.
