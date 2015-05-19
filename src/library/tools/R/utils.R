@@ -1376,7 +1376,7 @@ nonS3methods <- function(package)
     ## Using package = NULL returns all known examples
 
     stopList <-
-        list(base = c("all.equal", "all.names", "all.vars",
+        list(base = c("all.equal", "all.names", "all.vars", "expand.grid",
              "format.char", "format.info", "format.pval",
              "max.col",
              ## the next two only exist in *-defunct.Rd.
@@ -1444,8 +1444,8 @@ nonS3methods <- function(package)
              sm = "print.graph",
              splusTimeDate = "sort.list",
              splusTimeSeries = "sort.list",
-             stats = c("anova.lmlist", "fitted.values", "lag.plot",
-                       "influence.measures", "t.test",
+	     stats = c("anova.lmlist", "expand.model.frame", "fitted.values",
+		       "influence.measures", "lag.plot", "t.test",
                        "plot.spec.phase", "plot.spec.coherency"),
              supclust = c("sign.change", "sign.flip"),
              tensorA = "chol.tensor",
