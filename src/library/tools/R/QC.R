@@ -6970,9 +6970,12 @@ function(dir)
                         gsub(".", "[.]", package, fixed = TRUE),
                         "[ :]"), title, ignore.case = TRUE))
             out$title_includes_name <- TRUE
-        title2 <- toTitleCase(title)
-        if(title != title2)
-            out$title_case <- c(title, title2)
+        language <- meta["Language"]
+        if(is.na(language) || (language == "en")) {
+            title2 <- toTitleCase(title)
+            if(title != title2)
+                out$title_case <- c(title, title2)
+        }
     }
 
     ## Check Description field.
