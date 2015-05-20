@@ -2992,7 +2992,7 @@ the C compilers it knows about, but you may have to set @code{CC} or
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality. The default mode for GCC
-5 will be @option{-std=gnu11}.}.  If the compiler is detected as
+5 is @option{-std=gnu11}.}.  If the compiler is detected as
 @command{gcc}, @option{-std=gnu99} will be appended to @code{CC} unless
 it conflicts with a setting of @code{CFLAGS}.  (Note that options
 essential to run the compiler even for linking, such as those to set the
@@ -3017,9 +3017,11 @@ usage requires @code{iconv} to be able to translate between
 @code{"latin1"} and @code{"UTF-8"}, to recognize @code{""} (as the
 current encoding) and @code{"ASCII"}, and to translate to and from the
 Unicode wide-character formats @code{"UCS-[24][BL]E"} --- this is true
-for @code{glibc} but not of most commercial Unixes.  However, you can
-make use of @acronym{GNU} @code{libiconv} (possibly as a plug-in
-replacement: see @uref{http://www.gnu.org/@/software/@/libiconv/}).
+by default for @code{glibc}@footnote{However, it is possible to break
+the default behaviour of @code{glibc} by re-specifying the @code{gconv}
+modules to be loaded.} but not of most commercial Unixes.  However, you
+can make use of @acronym{GNU} @code{libiconv} (as used on OS X: see
+@uref{http://www.gnu.org/@/software/@/libiconv/}).
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -3054,13 +3056,13 @@ A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
 @uref{http://code.google.com/@/p/libarchive/}, as used by FreeBSD and OS
-10.6 and later) or @command{tar} from the Heirloom Toolchest
+X 10.6 and later) or @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
 @enindex TAR
-@command{tar}: use environment variable @env{TAR} to override this.
+@command{tar} -- use environment variable @env{TAR} to override this.
 
 There need to be suitable versions of the tools @command{grep} and
 @command{sed}: the problems are usually with old AT&T and BSD variants.
@@ -3076,9 +3078,9 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (including that from from @pkg{texinfo} 5.2) need
-to be run under @command{bash} rather than a Bourne shell.}  Further,
-the versions of @command{texi2dvi} and @file{texinfo.tex} need to be
+script.  Some versions (including that from @pkg{texinfo} 5.2) need to
+be run under @command{bash} rather than a Bourne shell.}  Further, the
+versions of @command{texi2dvi} and @file{texinfo.tex} need to be
 compatible: we have seen problems with older @TeX{} distributions.
 
 @cindex Subversion
