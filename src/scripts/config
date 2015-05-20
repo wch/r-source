@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2013 The R Core Team
+## Copyright (C) 2002-2015 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-2013 The R Core Team.
+Copyright (C) 2002-2015 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -48,21 +48,21 @@ Variables:
   BLAS_LIBS     flags needed for linking against external BLAS libraries
   CC            C compiler command
   CFLAGS        C compiler flags
-  CPICFLAGS     special flags for compiling C code to be turned into a
+  CPICFLAGS     special flags for compiling C code to be included in a
 		shared library
   CPP           C preprocessor
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
 		headers in a nonstandard directory <dir>
-  CXX           C++ compiler command for C++98 code
-  CXXCPP        C++ preprocessor
-  CXXFLAGS      C++ compiler flags
-  CXXPICFLAGS   special flags for compiling C++ code to be turned into a
+  CXX           compiler command for C++98 code
+  CXXCPP        C++98 preprocessor
+  CXXFLAGS      compiler flags for CXX
+  CXXPICFLAGS   special flags for compiling C++98 code to be included in a
 		shared library
-  CXX1X         C++ compiler command for C++11 code
-  CXX1XSTD      flag used to enable C++11 support
-  CXX1XFLAGS    C++11 compiler flags
+  CXX1X         compiler command for C++11 code
+  CXX1XSTD      flag used with CXX1X to enable C++11 support
+  CXX1XFLAGS    further compiler flags for CXX1X
   CXX1XPICFLAGS
-                special flags for compiling C++11 code to be turned into
+                special flags for compiling C++11 code to be included in
                 a shared library
   DYLIB_EXT	file extension (including '.') for dynamic libraries
   DYLIB_LD      command for linking dynamic libraries which contain
