@@ -4296,13 +4296,12 @@ Setting @env{_R_CHECK_TIMINGS_} to a positive value sets a threshold (in
 seconds elapsed time) for reporting timings.
 
 If you need to look in more detail at the timings for examples, use
-option @option{--timings} to @command{R CMD check} (this is implied by
-@option{--as-cran} as from @R{} 3.0.2).  This adds a summary to the
-check output for all the examples with CPU or elapsed time of more than
-5 seconds.  It produces a file
-@file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings} containing timings for
-each help file: it is a tab-delimited file which can be read into @R{}
-for further analysis.
+option @option{--timings} to @command{R CMD check} (this is set by
+@option{--as-cran}).  This adds a summary to the check output for all
+the examples with CPU or elapsed time of more than 5 seconds.  It
+produces a file @file{@var{mypkg}.Rcheck/@var{mypkg}-Ex.timings}
+containing timings for each help file: it is a tab-delimited file which
+can be read into @R{} for further analysis.
 
 Timings for the tests and vignette runs are given at the bottom of the
 corresponding log file: note that log files for successful vignette runs
@@ -4467,11 +4466,12 @@ using std::floor;
 @end example
 
 @item
-Macros defined by the compiler/OS can cause problems.  Macros starting
-with an underscore followed by an upper-case letter or another
-underscore are reserved and should not be used in portable code.  Other
-macros, typically upper-case, may be defined by the compiler or system
-headers and can cause problems.
+Macros defined by the compiler/OS can cause problems.  Identifiers
+starting with an underscore followed by an upper-case letter or another
+underscore are reserved for system macros and should not be used in
+portable code (including not as guards in C/C++ headers).  Other macros,
+typically upper-case, may be defined by the compiler or system headers
+and can cause problems.
 @c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
 The most common issue involves the names of the Intel CPU registers such
 as @code{CS}, @code{DS} and @code{SS} defined on i586/x64 Solaris in
