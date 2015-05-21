@@ -783,7 +783,7 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     v = allocVector(REALSXP, n);
     for (i = 0; i < n; i++) REAL(v)[i] = x[i];
     SETCADR(state->R_fcall, v);
-    value = eval(state->R_fcall, state->R_env);
+    PROTECT(value = eval(state->R_fcall, state->R_env));
 
     v = getAttrib(value, R_gradientSymbol);
     if (v != R_NilValue) {
@@ -804,6 +804,7 @@ SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(_("gradient supplied is of the wrong length or mode, so ignored"));
 	}
     }
+    UNPROTECT(1); /* value */
     if (((msg/4) % 2) && !iahflg) { /* skip check of analytic Hessian */
       msg -= 4;
     }

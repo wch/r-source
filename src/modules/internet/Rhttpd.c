@@ -539,7 +539,9 @@ static SEXP handler_for_path(const char *path) {
 	    /* we cache custom_handlers_env so in case it has not been loaded yet, fetch it */
 	    if (!custom_handlers_env) {
 		if (!R_HandlersName) R_HandlersName = install(".httpd.handlers.env");
-		custom_handlers_env = eval(R_HandlersName, R_FindNamespace(mkString("tools")));
+		SEXP toolsNS = PROTECT(R_FindNamespace(mkString("tools")));
+		custom_handlers_env = eval(R_HandlersName, toolsNS);
+		UNPROTECT(1); /* toolsNS */
 	    }
 	    /* we only proceed if .httpd.handlers.env really exists */
 	    if (TYPEOF(custom_handlers_env) == ENVSXP) {
@@ -584,7 +586,10 @@ static void process_request_(void *ptr)
 	DBG(Rprintf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
 	
 	/* evaluate the above in the tools namespace */
-	x = PROTECT(eval(x, R_FindNamespace(mkString("tools"))));
+	SEXP toolsNS = PROTECT(R_FindNamespace(mkString("tools")));
+	x = eval(x, toolsNS);
+	UNPROTECT(1); /* toolsNS */
+	PROTECT(x);
 
 	/* the result is expected to have one of the following forms:
 

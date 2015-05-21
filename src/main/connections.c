@@ -2986,7 +2986,9 @@ static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 		SET_NAMED(val, 2);
 		UNPROTECT(1);
 	    }
+	    PROTECT(val);
 	    R_LockBinding(this->namesymbol, VECTOR_ELT(OutTextData, idx));
+	    UNPROTECT(1);
 	}
     }
     this->len = LENGTH(val);
