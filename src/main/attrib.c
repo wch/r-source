@@ -138,11 +138,10 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    return R_NilValue;
 	}
     }
-    /* This is where the old/new list adjustment happens. */
     for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 	if (TAG(s) == name) {
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP)
-		error("old list is no longer allowed for dimnames attribute\n");
+		error("old list is no longer allowed for dimnames attribute");
 	    SET_NAMED(CAR(s), 2);
 	    return CAR(s);
 	}

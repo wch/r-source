@@ -119,7 +119,10 @@ static Rboolean url_open(Rconnection con)
 	const char *headers;
 	SEXP s_makeUserAgent = install("makeUserAgent");
 	agentFun = PROTECT(lang1(s_makeUserAgent)); // defaults to ,TRUE
-	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+	SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
+	sheaders = eval(agentFun, utilsNS);
+	UNPROTECT(1); /* utilsNS */
+	PROTECT(sheaders);
 	if(TYPEOF(sheaders) == NILSXP)
 	    headers = NULL;
 	else
@@ -546,7 +549,10 @@ static SEXP in_do_download(SEXP args)
 #else
 	agentFun = PROTECT(lang1(install("makeUserAgent")));
 #endif
-	sheaders = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+	SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
+	sheaders = eval(agentFun, utilsNS);
+	UNPROTECT(1); /* utilsNS */
+	PROTECT(sheaders);
 	const char *headers = (TYPEOF(sheaders) == NILSXP) ?
 	    NULL : CHAR(STRING_ELT(sheaders, 0));
 	ctxt = Ri_HTTPOpen(url, headers, cacheOK);

@@ -88,7 +88,10 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     // for consistency, but all that does is look up an option.
     SEXP sMakeUserAgent = install("makeUserAgent");
     SEXP agentFun = PROTECT(lang2(sMakeUserAgent, ScalarLogical(0)));
-    SEXP sua = PROTECT(eval(agentFun, R_FindNamespace(mkString("utils"))));
+    SEXP utilsNS = PROTECT(R_FindNamespace(mkString("utils")));
+    SEXP sua = eval(agentFun, utilsNS);
+    UNPROTECT(1); /* utilsNS */
+    PROTECT(sua);
     if(TYPEOF(sua) != NILSXP)
 	curl_easy_setopt(hnd, CURLOPT_USERAGENT, CHAR(STRING_ELT(sua, 0)));
     UNPROTECT(2);

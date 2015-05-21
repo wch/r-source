@@ -432,9 +432,10 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(isValidName(obj_name)) Rprintf("%s <-\n", obj_name);
 		else if(opts & S_COMPAT) Rprintf("\"%s\" <-\n", obj_name);
 		else Rprintf("`%s` <-\n", obj_name);
-		tval = deparse1(CAR(o), 0, opts);
+		tval = PROTECT(deparse1(CAR(o), 0, opts));
 		for (j = 0; j < LENGTH(tval); j++)
 		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));/* translated */
+		UNPROTECT(1); /* tval */
 		o = CDR(o);
 	    }
 	}
