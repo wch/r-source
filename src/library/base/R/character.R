@@ -191,3 +191,10 @@ dQuote <- function(x)
 strtoi <-
 function(x, base = 0L)
     .Internal(strtoi(as.character(x), as.integer(base)))
+
+strrep <-
+function(x, times)
+{
+    if(!is.character(x)) x <- as.character(x)
+    .Internal(strrep(x, as.integer(times)))
+}
