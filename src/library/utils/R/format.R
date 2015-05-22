@@ -67,18 +67,14 @@ function(labels, x, offset = 0, width = 0.9 * getOption("width"),
     ## left-justified text.  Somewhat tricky because strwrap() eats up
     ## leading whitespace ...
 
-    .make_empty_string <- function(n) {
-        paste(rep.int(" ", n), collapse = "")
-    }
-
     labels <- format(labels, justify = "right")
     len <- length(x)
     delta <- nchar(labels[1L], "width") + offset
     x <- strwrap(x, width = width - delta - nchar(sep, "width"),
                  simplify = FALSE)
     nlines <- cumsum(lengths(x))
-    prefix <- rep.int(.make_empty_string(delta), nlines[len])
+    prefix <- rep.int(strrep(" ", delta), nlines[len])
     prefix[1L + c(0L, nlines[-len])] <-
-        paste0(.make_empty_string(offset), labels)
+        paste0(strrep(" ", offset), labels)
     paste(prefix, unlist(x), sep = sep)
 }

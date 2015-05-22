@@ -286,9 +286,7 @@ function(file)
     exdent <- exdent[exdent > 1L]
     if(length(exdent)) {
         out[, 4L] <-
-            gsub(sprintf("\n%s",
-                         paste(rep.int(" ", min(exdent) - 1L),
-                               collapse = "")),
+            gsub(sprintf("\n%s", strrep(" ", min(exdent) - 1L)),
                  "\n", entries)
     }
 
@@ -576,9 +574,6 @@ function(file)
 .extract_news_from_Rd <-
 function(x)
 {
-    spaces <- function(n)
-        paste(rep.int(" ", n), collapse = "")
-
     get_section_names <- function(x)
         sapply(x, function(e) .Rd_get_text(e[[1L]]))
 
@@ -617,10 +612,10 @@ function(x)
         pos <- grep(pat, out)
         if(!length(pos)) return(character())
         off <- min(nchar(sub(pat, "\\1", out[pos])))
-        pat <- sprintf("^%s\036 *", spaces(off))
+        pat <- sprintf("^%s\036 *", strrep(" ", off))
         s <- sub(pat, "\036", out)
         ## Try to remove some indent for nested material.
-        pat <- sprintf("^%s", spaces(off + 2L))
+        pat <- sprintf("^%s", strrep(" ", off + 2L))
         s <- sub(pat, "", s)
 
         s <- paste(s, collapse = "\n")

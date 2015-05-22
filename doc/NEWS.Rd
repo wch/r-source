@@ -51,6 +51,9 @@
       S3/S4 classes as slots should be reinstalled.
       % notably if their classes are reused in other
       % packages. e.g. re-install arules for arulesSequence, flexmix for betareg
+
+      \item New function \code{strrep()} for repeating the elements of a
+      character vector.
     }
   }
 

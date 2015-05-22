@@ -769,11 +769,6 @@ function(x, style = "text", .bibstyle = NULL, ...)
     invisible(x)
 }
 
-## Not vectorized for now: see ?regmatches for a vectorized version.
-.blanks <-
-function(n)
-    paste(rep.int(" ", n), collapse = "")
-
 .format_call_RR <-
 function(cname, cargs)
 {
@@ -783,7 +778,7 @@ function(cname, cargs)
     lens <- lengths(cargs)
     sums <- cumsum(lens)
     starters <- c(sprintf("%s(", cname),
-                  rep.int(.blanks(nchar(cname) + 1L), sums[n] - 1L))
+                  rep.int(strrep(" ", nchar(cname) + 1L), sums[n] - 1L))
     trailers <- c(rep.int("", sums[n] - 1L), ")")
     trailers[sums[-n]] <- ","
     sprintf("%s%s%s", starters, unlist(cargs), trailers)
@@ -822,7 +817,7 @@ function(x, collapse = FALSE)
         n <- length(v)
         if(n > 1L)
             prefix <- c(prefix,
-                        rep.int(.blanks(nchar(prefix)), n - 1L))
+                        rep.int(strrep(" ", nchar(prefix)), n - 1L))
         sprintf("%s%s", prefix, v)
     }
 
@@ -853,10 +848,10 @@ function(x, collapse = FALSE)
 
     if(!is.null(mheader <- attr(x, "mheader")))
         s[[1L]] <- c(s[[1L]],
-                     paste("mheader = ", deparse(mheader)))
+                     paste("mheader =", deparse(mheader)))
     if(!is.null(mfooter <- attr(x, "mfooter")))
         s[[1L]] <- c(s[[1L]],
-                     paste("mfooter = ", deparse(mfooter)))
+                     paste("mfooter =", deparse(mfooter)))
 
     s <- Map(.format_call_RR, "bibentry", s)
     if(collapse && (length(s) > 1L))

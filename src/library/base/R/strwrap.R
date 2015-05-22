@@ -28,8 +28,8 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 {
     if(!is.character(x)) x <- as.character(x)
     ## Useful variables.
-    indentString <- paste(rep.int(" ", indent), collapse = "")
-    exdentString <- paste(rep.int(" ", exdent), collapse = "")
+    indentString <- strrep(" ", indent)
+    exdentString <- strrep(" ", exdent)
     y <- list()                         # return value
     UB <- TRUE
     ## input need not be valid in this locale, e.g. from write.dcf
@@ -175,7 +175,7 @@ function(x, y, style = c("table", "list"),
     if(indent > 0.5 * width)
         stop("incorrect values of 'indent' and 'width'")
 
-    indentString <- paste(rep.int(" ", indent), collapse = "")
+    indentString <- strrep(" ", indent)
 
     if(style == "table") {
         i <- (nchar(x, type="w") > indent - 3L)

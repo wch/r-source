@@ -226,8 +226,7 @@ makeHelpTable <- function(help, depth=2) {
              '<col style="width:  2%;" />',
              '<col style="width: 74%;" />')
     pkg <- help[, "Package"]
-    root <- paste0(paste(rep.int("../", depth), collapse = ""),
-                   "library/", pkg, "/html/")
+    root <- paste0(strrep("../", depth), "library/", pkg, "/html/")
     topic <- help[, "Topic"]
     Title <- help[, "Title"]
     links <- paste0('<a href="', root, topic, '.html">',

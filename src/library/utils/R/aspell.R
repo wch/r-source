@@ -268,8 +268,7 @@ function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
                    from,
                    split(x$Suggestions, x$Original)))
     } else {
-        sep <- sprintf("\n%s",
-                       paste(rep.int(" ", indent), collapse = ""))
+        sep <- sprintf("\n%s", strrep(" ", indent))
         paste(names(from),
               sapply(from, paste, collapse = sep),
               sep = sep)
@@ -1159,14 +1158,10 @@ blank_out_regexp_matches <-
 function(s, re, ...)
 {
     m <- gregexpr(re, s, ...)
-    regmatches(s, m) <- Map(blanks, lapply(regmatches(s, m), nchar))
+    regmatches(s, m) <-
+        Map(function(n) strrep(" ", n),
+            lapply(regmatches(s, m), nchar))
     s
-}
-
-blanks <-
-function(n) {
-    vapply(Map(rep.int, rep.int(" ", length(n)), n, USE.NAMES = FALSE),
-           paste, "", collapse = "")
 }
 
 blank_out_ignores_in_lines <-

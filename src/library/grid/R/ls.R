@@ -711,7 +711,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
     padPrefix <- function(path, maxLen) {
         numSpaces <- maxLen - nchar(path)
         if (length(path) == 1L) {
-            paste0(path, paste(rep.int(" ", numSpaces), collapse=""))
+            paste0(path, strrep(" ", numSpaces))
         } else {
             padding <- rep(" ", length(path))
             padding <- mapply(rep.int, padding, numSpaces)
