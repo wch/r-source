@@ -39,8 +39,8 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg1 = CAR(args); //, arg2 = CADR(args)
-
-    if (ATTRIB(arg1) != R_NilValue || ATTRIB(CADR(args)) != R_NilValue) {
+    Rboolean attr1 = ATTRIB(arg1) != R_NilValue;
+    if (attr1 || ATTRIB(CADR(args)) != R_NilValue) {
 	SEXP ans;
 	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
@@ -51,7 +51,7 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (CDR(args) == R_NilValue) { // one argument  <==>  !(arg1)
-	if (IS_SIMPLE_SCALAR(arg1, LGLSXP)) {
+	if (!attr1 && IS_SCALAR(arg1, LGLSXP)) {
 	    /* directly handle '!' operator for simple logical scalars. */
 	    int v = LOGICAL(arg1)[0];
 	    return ScalarLogical(v == NA_LOGICAL ? v : ! v);
