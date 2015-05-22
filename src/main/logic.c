@@ -51,7 +51,7 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (CDR(args) == R_NilValue) { // one argument  <==>  !(arg1)
-	if (IS_SCALAR(arg1, LGLSXP)) {
+	if (IS_SIMPLE_SCALAR(arg1, LGLSXP)) {
 	    /* directly handle '!' operator for simple logical scalars. */
 	    int v = LOGICAL(arg1)[0];
 	    return ScalarLogical(v == NA_LOGICAL ? v : ! v);

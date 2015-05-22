@@ -779,6 +779,9 @@ tools::assertError(`|`(TRUE))
 E <- tryCatch(`!`(), error = function(e)e)
 stopifnot(grepl("0 arguments .*\\<1", conditionMessage(E)))
 ## Gave wrong error message in R <= 3.2.0
+stopifnot(identical(!matrix(TRUE), matrix(FALSE)),
+	  identical(!matrix(FALSE), matrix(TRUE)))
+## was wrong for while in R 3.2.0 patched
 
 
 ## cummax(<integer>)
@@ -787,3 +790,4 @@ x <- c(iNA, 1L)
 stopifnot(identical(cummin(x), c(iNA, iNA)),
           identical(cummax(x), c(iNA, iNA)))
 ## an initial NA was not propaged in R <= 3.2.0
+
