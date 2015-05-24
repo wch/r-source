@@ -38,8 +38,8 @@ R.home(component = "home")
   The value for \code{"modules"} and on Windows \code{"bin"} is a
   sub-architecture-specific location.
 
-  On a Unix-alike, the constructed paths are based on the on the current
-  value of the environment variables \env{R_HOME} and where set
+  On a Unix-alike, the constructed paths are based on the current
+  values of the environment variables \env{R_HOME} and where set
   \env{R_SHARE_DIR}, \env{R_DOC_DIR} and \env{R_INCLUDE_DIR} (these are
   set on startup and should not be altered).
 
