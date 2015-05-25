@@ -1,6 +1,6 @@
 % File src/library/methods/man/slot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Copyright 2005-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -93,9 +93,8 @@ getSlots(x)
   \code{\link{attr<-}}, and such assignments are not checked for
   legitimate slot names.
 
-  Note that the \code{"@"} operators for extraction and (since \R 3.0.0)
-  replacement are primitive and actually reside in the \pkg{base}
-  package.
+  Note that the \code{"@"} operators for extraction and replacement are
+  primitive and actually reside in the \pkg{base} package.
 
   The replacement versions of  \code{"@"} and \code{slot()} differ in
   the computations done to coerce the right side of the assignment to

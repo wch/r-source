@@ -64,8 +64,8 @@ get.gpar(names = NULL)
   Colours can be specified in one of the forms returned by
   \code{\link{rgb}}, as a name (see \code{\link{colors}}) or as a
   non-negative integer index into the current \link{palette} (with zero
-  being taken as transparent).  (Prior to \R 3.0.0 negative integer
-  values were allowed and taken as transparent: they are now an error.)
+  being taken as transparent).  (Negative integer values are now an
+  error.)
 
   The \code{alpha} setting is combined with the alpha channel for
   individual colours by multiplying (with both alpha settings
