@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -110,10 +110,10 @@ hist(x, \dots)
   and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
-  (for more than four bins, otherwise the median is substituted)
-  is applied when counting entries on the edges of bins.  This is not
-  included in the reported \code{breaks} nor (as from \R 2.11.0) in the
-  calculation of \code{density}.
+  (for more than four bins, otherwise the median is substituted) is
+  applied when counting entries on the edges of bins.  This is not
+  included in the reported \code{breaks} nor in the calculation of
+  \code{density}.
 
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms

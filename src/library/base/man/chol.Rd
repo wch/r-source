@@ -1,6 +1,6 @@
 % File src/library/base/man/chol.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol}
@@ -52,12 +52,10 @@ chol(x, \dots)
   or, alternatively, \code{t(Q) \%*\% Q} equals \code{x[pivot,
     pivot]}.  See the examples.
   
-  Pivoting with LAPACK requires LAPACK >= 3.2 and was added in \R 2.15.2
-  (it was previously available using LINPACK).  The value of \code{tol}
-  is passed to LAPACK, with negative values selecting the default
-  tolerance of (usually) \code{nrow(x) * .Machine$double.neg.eps *
-    max(diag(x)}.  The algorithm terminates once the pivot is less than
-  \code{tol}.
+  The value of \code{tol} is passed to LAPACK, with negative values
+  selecting the default tolerance of (usually) \code{nrow(x) *
+  .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
+  the pivot is less than \code{tol}.
 
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code: these can only be interpreted by
