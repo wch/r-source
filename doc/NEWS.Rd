@@ -185,6 +185,11 @@
       
       \item \code{summaryRprof()} could fail when the profile contained
       only two records.  (\PR{16395})
+      
+      \item HTML vignettes opened using \code{vignette()} did not support
+      links into the rest of the HTML help system.  (Links worked properly 
+      when the vignette was opened using \code{browseVignettes()} or from
+      within the help system.)
     }
   }
 }
