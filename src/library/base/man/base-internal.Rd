@@ -1,6 +1,6 @@
 % File src/library/base/man/base-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-internal}
@@ -213,7 +213,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   respectively.
 
   \code{.POSIXct}, \code{.POSIXlt} and \code{.difftime} are class
-  generators added in \R 2.11.0.
+  generators.
 
   \code{.cache_class} caches the inheritance of an S4 class for use in
   S3 method dispatch.  With \code{NULL} second argument it returns the

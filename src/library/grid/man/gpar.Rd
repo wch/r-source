@@ -1,6 +1,6 @@
 % File src/library/grid/man/gpar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gpar}
@@ -101,8 +101,6 @@ get.gpar(names = NULL)
   All parameter values can be vectors of multiple values.  (This will
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)
-
-  The \code{gamma} parameter is defunct since \R 2.7.0.
 
   \code{get.gpar()} returns all current graphical parameter settings.
 }

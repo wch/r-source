@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -80,12 +80,6 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   result will be in UTF-8 and have their encoding declared as UTF-8.
   For \code{perl = TRUE, useBytes = FALSE} all non-ASCII strings in a
   multibyte locale are translated to UTF-8.
-}
-
-\note{
-  Prior to \R 2.11.0 there was an argument \code{extended} which could
-  be used to select \sQuote{basic} regular expressions: this was often
-  used when \code{fixed = TRUE} would be preferable.
 }
 
 \seealso{

@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -160,30 +160,29 @@ Sys.junction(from, to)
   POSIX file systems do not exist on Windows: however, NTFS file systems
   support two similar concepts.
 
-  Windows 2000 and later have \sQuote{junctions} (or
-  \sQuote{junction points}), unfortunately without a public API.  They
-  are a Windows version of the Unix concept of mounting one directory on
-  another.  One way to create, list and delete junctions is \emph{via}
+  Windows 2000 and later have \sQuote{junctions} (or \sQuote{junction
+  points}), unfortunately without a public API.  They are a Windows
+  version of the Unix concept of mounting one directory on another.  One
+  way to create, list and delete junctions is \emph{via}
   \file{junction.exe} from
   \url{http://download.sysinternals.com/Files/Junction.zip} (see
   \url{http://technet.microsoft.com/en-us/sysinternals/bb896768}).  On
   recent enough versions of Windows \command{mklink /J} can also be
-  used.  Function \code{Sys.junction} (added in \R 2.15.0) creates one
-  or more junctions: \code{to} should either specify a single existing
-  directory or a set of non-existent file paths of the same length as
-  \code{from}.
+  used.  Function \code{Sys.junction} creates one or more junctions:
+  \code{to} should either specify a single existing directory or a set
+  of non-existent file paths of the same length as \code{from}.
 
   A version of symbolic linking to files/directories was implemented
   starting with Vista, and \code{file.symlink} makes use of that
-  interface since \R 2.15.0.  However, it has restrictions (apart from
-  the OS version restriction) which are crippling.  First, the user
-  needs permission to make symbolic links, and that permission is not
-  normally granted except to Administrator accounts (note: not users
-  with Administrator rights): further many users report that whereas the
-  Policy Editor appears to be able to grant such rights, the API still
-  reports insufficient permissions.  Second, the interface needs to know
-  if \code{from} is a file or a directory (and it need not yet exist):
-  we have implemented this to allow linking from a directory only if it
+  interface.  However, it has restrictions (apart from the OS version
+  restriction) which are crippling.  First, the user needs permission to
+  make symbolic links, and that permission is not normally granted
+  except to Administrator accounts (note: not users with Administrator
+  rights): further many users report that whereas the Policy Editor
+  appears to be able to grant such rights, the API still reports
+  insufficient permissions.  Second, the interface needs to know if
+  \code{from} is a file or a directory (and it need not yet exist): we
+  have implemented this to allow linking from a directory only if it
   currently exists.  Prior to \R 3.0.3 the paths had to use backslashes
   (an undocumented restriction of the Windows system call).
 

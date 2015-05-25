@@ -141,10 +141,9 @@ iconvlist()
   
   Encoding names \code{"utf8"}, \code{"mac"} and \code{"macroman"} are
   not portable.  \code{"utf8"} is converted to \code{"UTF-8"} for
-  \code{from} (as from \R 2.8.0) and \code{to} (as from \R 3.0.3) by
-  \code{iconv}, but not for e.g.\sspace{}\code{fileEncoding} arguments.
-  \code{"macintosh"} is the official (and most widely supported) name
-  for \sQuote{Mac Roman}
+  \code{from} and \code{to} (as from \R 3.0.3) by \code{iconv}, but not
+  for e.g.\sspace{}\code{fileEncoding} arguments.  \code{"macintosh"} is
+  the official (and most widely supported) name for \sQuote{Mac Roman}
   (\url{http://en.wikipedia.org/wiki/Mac_OS_Roman}).
 }
 

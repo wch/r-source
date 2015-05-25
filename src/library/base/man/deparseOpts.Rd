@@ -81,8 +81,6 @@
       with maximal opportunity to be recorded exactly to full precision.
       Complex numbers with one or both non-finite components are
       output as if this option were not set.
-
-      All platforms can \code{source} this format as from \R 2.7.0.
     }
     \item{\code{digits17}}{
       Real and finite complex numbers are output using format

@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -107,9 +107,7 @@ rep_len(x, length.out)
   result is always \code{NULL} even when \code{length.out} is positive.
 
   Although it has never been documented, these functions have always
-  worked on \link{expression} vectors.  \R 2.x.y accepted pairlists and
-  some other objects (although the results were rarely what their users
-  intended).
+  worked on \link{expression} vectors.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
