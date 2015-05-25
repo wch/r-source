@@ -791,3 +791,13 @@ stopifnot(identical(cummin(x), c(iNA, iNA)),
           identical(cummax(x), c(iNA, iNA)))
 ## an initial NA was not propaged in R <= 3.2.0
 
+
+## summaryRprof failed for very short profile, PR#16395
+profile <- tempfile()
+writeLines(c(
+'memory profiling: sample.interval=20000',
+':145341:345360:13726384:0:"stdout"', 
+':208272:345360:19600000:0:"stdout"'), profile)
+summaryRprof(filename = profile, memory = "both")
+unlink(profile)
+## failed when a matrix was downgraded to a vector

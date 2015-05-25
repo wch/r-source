@@ -182,6 +182,9 @@
 
       \item \code{cummax(x)} now correctly propagates \code{NA}s also
       when \code{x} is of type \code{integer} and begins with an \code{NA}.
+      
+      \item \code{summaryRprof()} could fail when the profile contained
+      only two records.  (\PR{16395})
     }
   }
 }

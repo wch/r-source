@@ -95,9 +95,11 @@ summaryRprof <-
            if (memory == "both") {
                memstuff <- substr(chunk, 2L, memprefix-1L)
                memcounts <- pmax(apply(sapply(strsplit(memstuff, ":"), as.numeric), 1, diff), 0)
+	       if (!is.matrix(memcounts)) # Need a matrix result (PR#16395)
+	           memcounts <- matrix(memcounts, nrow = 1)
                ##  memcounts <- c(0, rowSums(memcounts[, 1L:3L]))
                ## convert to bytes.
-               memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L] * 8, memcounts[, 3L])))
+               memcounts <- c(0, rowSums(cbind(memcounts[, 1L:2L, drop = FALSE] * 8, memcounts[, 3L, drop = FALSE])))
                rm(memstuff)
            }
            chunk <- substr(chunk, memprefix+1L, nchar(chunk,  "c"))
