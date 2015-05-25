@@ -140,9 +140,6 @@ hist(x, \dots)
   \item{xname}{a character string with the actual \code{x} argument name.}
   \item{equidist}{logical, indicating if the distances between
     \code{breaks} are all the same.}
-
-  Prior to \R 3.0.0 there was a component \code{intensities}, the same
-  as \code{density}, for long-term back compatibility.
 }
 
 \references{

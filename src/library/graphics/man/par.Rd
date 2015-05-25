@@ -615,8 +615,7 @@ par(\dots, no.readonly = FALSE)
   \code{0} corresponds to the background color.  Note that the palette
   (apart from \code{0} which is per-device) is a per-session setting.
 
-  Negative integer colours were accepted prior to \R 3.0.0, but treated
-  inconsistently.  They are now errors.
+  Negative integer colours are errors.
 
   Additionally, \code{"transparent"} is \emph{transparent}, useful for
   filled areas (such as the background!), and just invisible for things
@@ -630,8 +629,6 @@ par(\dots, no.readonly = FALSE)
   The functions \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}},
   \code{\link{gray}} and \code{\link{rainbow}} provide additional ways
   of generating colors.
-
-  It was possible to specify color numbers as strings prior to \R 3.0.0.
 }
 
 \section{Line Type Specification}{
