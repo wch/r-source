@@ -1,7 +1,7 @@
 #  File src/library/utils/R/news.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ function(query, package = "R", lib.loc = NULL,
             tools:::.build_news_db(package, lib.loc, format, reader)
     }
     if(is.null(db))
-        return(invisible())
+        return(NULL)
 
     attr(db, "package") <- package
 
@@ -69,10 +69,12 @@ function(query, package = "R", lib.loc = NULL,
     else if(!is.logical(r) || length(r) != length(version))
         stop("invalid query")
     r <- r & !is.na(r)
+    result <- db[r, ]
+    if (any(!r))
+    	result <- structure(result, subset = r)
     if(has_bad_attr)
-        structure(db[r, ], bad = bad[r])
-    else
-        db[r, ]
+        result <- structure(result, bad = bad[r])
+    result
 }
 
 format.news_db <-
@@ -147,6 +149,20 @@ function(x, ...)
 print.news_db <-
 function(x, ...)
 {
-    writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))
+    port <- tools::startDynamicHelp(NA)
+    if (port > 0L) {
+    	if ((pkg <- attr(x, "package")) == "R")
+    	    url <- sprintf("http://127.0.0.1:%d/doc/html/NEWS.html", port)
+    	else
+    	    url <- sprintf("http://127.0.0.1:%d/library/%s/NEWS", port, pkg)
+    	if (!is.null(subset <- attr(x, "subset"))) {
+	    # Subsets are typically ranges of dates or version numbers, so we run-length encode
+	    # the subset vector.  We put TRUE in front so the values alternate TRUE, FALSE, ... .
+    	    rle <- paste(rle(c(TRUE, subset))$lengths, collapse="_")
+    	    url <- paste0(url, "?subset=", rle)
+    	}
+    	browseURL(url)
+    } else 
+	writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))
     invisible(x)
 }

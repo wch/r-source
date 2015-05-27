@@ -488,7 +488,16 @@ httpd <- function(path, query, ...)
 				")' in the console.")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
-    	formatted <- toHTML(news(package = pkg),
+    	if (!is.null(query) && !is.na(subset <- query["subset"])) {
+    	    # See utils:::print.news_db for the encoding of the subset
+    	    rle <- strsplit(subset, "_")[[1]]
+    	    rle <- structure(list(lengths = as.numeric(rle),
+    	    	                  values = rep(c(TRUE, FALSE), length.out = length(rle))),
+    	    	             class = "rle")
+    	    news <- news(inverse.rle(rle)[-1], package = pkg)
+	} else
+    	    news <- news(package = pkg)
+    	formatted <- toHTML(news,
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")
         if (length(formatted))
