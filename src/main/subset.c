@@ -210,11 +210,12 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 		(attrib = GetRowNames(attrib)) != R_NilValue
 		)
 	    ) {
+	    PROTECT(attrib);
 	    nattrib = allocVector(TYPEOF(attrib), n);
 	    PROTECT(nattrib); /* seems unneeded */
 	    nattrib = ExtractSubset(attrib, nattrib, indx, call);
 	    setAttrib(result, R_NamesSymbol, nattrib);
-	    UNPROTECT(1);
+	    UNPROTECT(2); /* attrib, nattrib */
 	}
 	if ((attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue &&
 	    TYPEOF(attrib) == VECSXP) {

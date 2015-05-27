@@ -191,22 +191,27 @@ SEXP attribute_hidden do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	n = XLENGTH(t);
 	PROTECT(s = allocVector(INTSXP, n));
 	setAttrib(s, R_NamesSymbol, getAttrib(t, R_NamesSymbol));
-	UNPROTECT(2);
-	if(n == 0) return s;
+	if(n == 0) {
+	    UNPROTECT(2); /* t, s */
+	    return s;
+	}
 	for(i = 0 ; i < n ; i++) INTEGER(s)[i] = NA_INTEGER;
 	switch (PRIMVAL(op) ) {
 	case 1:	/* cumsum */
-	    return icumsum(t,s);
+	    ans = icumsum(t,s);
 	    break;
 	case 3: /* cummax */
-	    return icummax(t,s);
+	    ans = icummax(t,s);
 	    break;
 	case 4: /* cummin */
-	    return icummin(t,s);
+	    ans = icummin(t,s);
 	    break;
 	default:
 	    errorcall(call, _("unknown cumxxx function"));
+	    ans = R_NilValue;
 	}
+	UNPROTECT(2); /* t, s */
+	return ans;
     } else {
 	PROTECT(t = coerceVector(CAR(args), REALSXP));
 	n = XLENGTH(t);
