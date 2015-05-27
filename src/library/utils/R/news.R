@@ -149,7 +149,8 @@ function(x, ...)
 print.news_db <-
 function(x, ...)
 {
-    port <- tools::startDynamicHelp(NA)
+    if (interactive()) port <- tools::startDynamicHelp(NA)
+    else port <- 0L
     if (port > 0L) {
     	if ((pkg <- attr(x, "package")) == "R")
     	    url <- sprintf("http://127.0.0.1:%d/doc/html/NEWS.html", port)

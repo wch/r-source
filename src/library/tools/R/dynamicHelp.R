@@ -618,7 +618,6 @@ startDynamicHelp <- function(start = TRUE)
     if(!start && (port <= 0L))
         stop("no running server to stop")
     if (start) {
-        message("starting httpd help server ...", appendLF = FALSE)
         utils::flush.console()
         OK <- FALSE
         ports <- getOption("help.ports")
@@ -631,6 +630,9 @@ startDynamicHelp <- function(start = TRUE)
             ports <- 10000 + 22000*((stats::runif(10) + unclass(Sys.time())/300) %% 1)
         }
         ports <- as.integer(ports)
+	if (all(ports == 0))
+	    return(invisible(0))
+        message("starting httpd help server ...", appendLF = FALSE)
         for(i in seq_along(ports)) {
             ## the next can throw an R-level error,
             ## so do not assign port unless it succeeds.

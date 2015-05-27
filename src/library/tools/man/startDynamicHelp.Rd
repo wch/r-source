@@ -23,10 +23,11 @@ startDynamicHelp(start = TRUE)
 \details{
   This function starts the internal HTTP server, which runs on the
   loopback interface (\code{127.0.0.1}).  If \code{options("help.ports")}
-  is set to a vector of integer values, \code{startDynamicHelp} will try
+  is set to a vector of non-zero integer values, \code{startDynamicHelp} will try
   those ports in order; otherwise, it tries up to 10 random ports to
   find one not in use.  It can be disabled by setting the environment
-  variable \env{R_DISABLE_HTTPD} to a non-empty value.
+  variable \env{R_DISABLE_HTTPD} to a non-empty value or \code{options("help.ports")}
+  to \code{0}.
 
   \code{startDynamicHelp} is called by functions that need to use the
   server, so would rarely be called directly by a user.
