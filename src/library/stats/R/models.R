@@ -389,7 +389,7 @@ model.frame.default <-
     ## and note the number of rows.
     possible_newdata <-
         !missing(data) && is.data.frame(data) &&
-        identical(deparse(substitute(data)), "newdata") &&
+        identical(substitute(data), quote(newdata)) &&
         (nr <- nrow(data)) > 0
 
     ## were we passed just a fitted model object?
