@@ -117,14 +117,14 @@
 
       \item \code{diag()} no longer duplicates a matrix when extracting
       its diagonal.
-      
+
       \item \code{news()} now displays \R and package news files within
       the HTML help system if it is available.  If no news file is found,
       a visible \code{NULL} is returned to the console.
-      
+
       \item \code{as.character.srcref()} gains an argument to allow
-      characters corresponding to a range of source references
-      to be extracted.
+      characters corresponding to a range of source references to be
+      extracted.
     }
   }
 
@@ -190,14 +190,18 @@
 
       \item \code{cummax(x)} now correctly propagates \code{NA}s also
       when \code{x} is of type \code{integer} and begins with an \code{NA}.
-      
+
       \item \code{summaryRprof()} could fail when the profile contained
       only two records.  (\PR{16395})
-      
+
       \item HTML vignettes opened using \code{vignette()} did not support
-      links into the rest of the HTML help system.  (Links worked properly 
+      links into the rest of the HTML help system.  (Links worked properly
       when the vignette was opened using \code{browseVignettes()} or from
       within the help system.)
+
+      \item \code{arima(*, xreg = .)} (for \eqn{d \ge 1}{d >= 1})
+      computes estimated variances based on a the number of effective
+      observations as in \R version 3.0.1 and earlier.  (\PR{16278})
     }
   }
 }

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-05-19 r68384) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-05-20 r68389) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -7154,9 +7154,9 @@ arima(x = x, order = c(1, 1, 1), seasonal = c(1, 0, 1), xreg = xreg)
 Coefficients:
           ar1     ma1    sar1     sma1    xreg
       -0.4791  0.3525  0.9877  -0.8295  0.3574
-s.e.   0.4184  0.4444  0.0331   0.2221  0.7480
+s.e.   0.4162  0.4420  0.0329   0.2209  0.7440
 
-sigma^2 estimated as 0.001515:  log likelihood = 162.05,  aic = -312.09
+sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
 > (f2 <- arima(diff(x), xreg = diff(xreg), order = c(1,0,1), seasonal = c(1,0,1),
 +              include.mean = FALSE))
 
