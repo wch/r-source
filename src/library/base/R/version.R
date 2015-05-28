@@ -134,19 +134,11 @@ function()
 .encode_numeric_version <-
 function(x)
 {
-    strings <- function(char, n) {
-        vapply(Map(rep.int,
-                   rep_len(char, length(n)),
-                   n,
-                   USE.NAMES = FALSE),
-               paste, "", collapse = "")
-    }
-
     strlpad <- function(x, char, width)
-        paste0(strings(char, width - nchar(x)), x)
+        paste0(strrep(char, width - nchar(x)), x)
 
     strrpad <- function(x, char, width)
-        paste0(x, strings(char, width - nchar(x)))
+        paste0(x, strrep(char, width - nchar(x)))
 
     if(!is.numeric_version(x)) stop("wrong class")
 
