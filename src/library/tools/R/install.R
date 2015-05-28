@@ -649,7 +649,7 @@
 
 
         if (more_than_libs) {
-            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS"))
+            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS", "NEWS.md"))
                 if (file.exists(f)) {
                     file.copy(f, instdir, TRUE)
 		    Sys.chmod(file.path(instdir, f), fmode)
