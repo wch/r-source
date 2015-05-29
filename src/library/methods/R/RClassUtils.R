@@ -992,8 +992,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
             if(!.identC(class(ClassDef2), "classRepresentation") &&
                isClassUnion(ClassDef2))
                 ## a simple TRUE iff class1 or one of its superclasses belongs to the union
-		i <- as.logical(anyDuplicated(c(class1, unique(nm1),
-						names(ext))))
+		            i <- any(c(class1, nm1) %in% names(ext))
             else {
                 ## class1 could be multiple classes here.
                 ## I think we want to know if any extend
