@@ -1697,9 +1697,9 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 @end itemize
 
 Using the @code{X11} device or the X11-based versions of @code{View()}
-and @code{edit} for data frames and matrices (the latter are the default
-for command-line @R{} but not @Rapp{}) requires an X sub-system to be
-installed: see @ref{OS X}.  (So do some third-party packages.)
+and @code{edit()} for data frames and matrices (the latter are the
+default for command-line @R{} but not @Rapp{}) requires an X sub-system
+to be installed: see @ref{OS X}.  (So do some third-party packages.)
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -1759,11 +1759,11 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 However, @Rapp{} will always run the `current' version, that is the last
 installed version.  A small utility, @command{Rswitch.app} (available at
 @url{http://r.research.att.com/#other}), can be used to change the
-`current' version.  However, this is of limited use as @Rapp{} is
-compiled against a particular version of @R{} and will likely crash if
-switched to an earlier version.  This may allow you to install a
-development version of @R{} (de-selecting @Rapp{}) and then switch back
-to the release version.
+`current' version.  This is of limited use as @Rapp{} is compiled
+against a particular version of @R{} and will likely crash if switched
+to an earlier version.  This may allow you to install a development
+version of @R{} (de-selecting @Rapp{}) and then switch back to the
+release version.
 
 
 @node Running R, Add-on packages, Installing R under OS X, Top
