@@ -54,6 +54,9 @@
 
       \item New function \code{strrep()} for repeating the elements of a
       character vector.
+
+      \item \code{rapply} preserves attributes on the list when
+      \code{how="replace"}. 
     }
   }
 
