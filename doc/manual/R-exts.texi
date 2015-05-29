@@ -9230,8 +9230,8 @@ support it, the path to the directory containing the dynamic library can
 be hardcoded at install time (which assumes that the location of package
 @pkg{packB} will not be changed nor the package updated to a changed
 API).  On systems with the @command{gcc} or @command{clang} and the
-@acronym{GNU} linker (e.g.@: Linux) and some others (e.g.@: OS X) this
-can be done by e.g.@:
+@acronym{GNU} linker (e.g.@: Linux) and some others this can be done by
+e.g.@:
 
 @example
 PKGB_PATH=`echo 'library(packB);
@@ -9247,9 +9247,7 @@ the compiler as well as the linker).
 
 It may be possible to figure out what is required semi-automatically
 from the result of @command{R CMD libtool --config} (look for
-@samp{hardcode}), although that does not currently know the spell for OS
-X (as given in the example above, as @option{-rpath} is only supported for
-shared objects and not for executables).
+@samp{hardcode}).
 
 Making headers provided by package @pkg{packB} available to the code to
 be compiled in package @pkg{packA} can be done by the @code{LinkingTo}
