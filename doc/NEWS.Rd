@@ -177,12 +177,12 @@
       \item The low-level functions \code{.rowSums()} etc. did not
       check the length of their argument, so could segfault. (\PR{16367})
 
-      \item The \code{quietly} argument of \code{library()} is correctly
-      propagated from \code{.getRequiredPackages2()} now.
+      \item The \code{quietly} argument of \code{library()} is now
+      correctly propagated from \code{.getRequiredPackages2()}.
 
       \item Under some circumstances using the internal PCRE when
       building \R fron source would cause external libs such as
-      \code{-llzma} to omitted from the main link.
+      \code{-llzma} to be omitted from the main link.
 
       \item The .Primitive default methods of the logic operators, i.e.,
       \code{!}, \code{&} and \code{|}, now give correct error messages
