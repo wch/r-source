@@ -180,8 +180,9 @@
       \item The \code{quietly} argument of \code{library()} is correctly
       propagated from \code{.getRequiredPackages2()} now.
 
-      \item Under some circumstances using the internal PCRE would cause
-      external libs such as \code{-llzma} to omitted from the main link.
+      \item Under some circumstances using the internal PCRE when
+      building \R fron source would cause external libs such as
+      \code{-llzma} to omitted from the main link.
 
       \item The .Primitive default methods of the logic operators, i.e.,
       \code{!}, \code{&} and \code{|}, now give correct error messages
