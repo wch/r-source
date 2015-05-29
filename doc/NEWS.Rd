@@ -21,6 +21,9 @@
       From \R 3.3.0, the default will change to \code{keepNA = NA} and
       you are advised to consider this for code portability.
 
+      \item \code{news()} more flexibly extracts dates from package
+      \file{NEWS.Rd} files.
+
       \item \code{lengths(x)} now also works (trivially) for atomic
       \code{x} and hence can be used more generally as an efficient
       replacement of \code{sapply(x, length)} and similar.
@@ -30,14 +33,14 @@
 
       \item \code{diag()} no longer duplicates a matrix when extracting
       its diagonal.
-      
+
       \item \code{news()} now displays \R and package news files within
       the HTML help system if it is available.  If no news file is found,
       a visible \code{NULL} is returned to the console.
-      
+
       \item \code{as.character.srcref()} gains an argument to allow
-      characters corresponding to a range of source references
-      to be extracted.
+      characters corresponding to a range of source references to be
+      extracted.
     }
   }
 
@@ -51,7 +54,7 @@
       coercions.  Further, \code{as.integer(M + 0.1)} now gives \code{M}
       (instead of NA) when M is the maximal representable integer.
 
-      \item On some plaforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
+      \item On some platforms \code{nchar(x, "c")} and \code{nchar(x, "w")}
       would return values (possibly \code{NA}) for inputs which were
       declared to be UTF-8 but were not, or for invalid strings without a
       marked encoding in a multi-byte locale, rather than give an
@@ -62,6 +65,10 @@
 
       \item (Windows only) In some cases, the \command{--clean} option
       to \command{R CMD INSTALL} could fail.  (\PR{16178})
+
+      \item (Windows only) \code{choose.files()} would occasionally
+      include characters from the result of an earlier call in
+      the result of a later one.  (\PR{16270})
 
       \item A change in \code{RSiteSearch()} in \R 3.2.0 caused it to
       submit invalid URLs.  (\PR{16329})
@@ -89,8 +96,9 @@
       \item The \code{quietly} argument of \code{library()} is correctly
       propagated from \code{.getRequiredPackages2()} now.
 
-      \item Under some circumstances using the internal PCRE would cause
-      external libs such as \code{-llzma} to omitted from the main link.
+      \item Under some circumstances using the internal PCRE when
+      building \R fron source would cause external libs such as
+      \code{-llzma} to omitted from the main link.
 
       \item The .Primitive default methods of the logic operators, i.e.,
       \code{!}, \code{&} and \code{|}, now give correct error messages
@@ -99,14 +107,18 @@
 
       \item \code{cummax(x)} now correctly propagates \code{NA}s also
       when \code{x} is of type \code{integer} and begins with an \code{NA}.
-      
+
       \item \code{summaryRprof()} could fail when the profile contained
       only two records.  (\PR{16395})
-      
+
       \item HTML vignettes opened using \code{vignette()} did not support
-      links into the rest of the HTML help system.  (Links worked properly 
+      links into the rest of the HTML help system.  (Links worked properly
       when the vignette was opened using \code{browseVignettes()} or from
       within the help system.)
+
+      \item \code{arima(*, xreg = .)} (for \eqn{d \ge 1}{d >= 1})
+      computes estimated variances based on a the number of effective
+      observations as in \R version 3.0.1 and earlier.  (\PR{16278})
     }
   }
 }
