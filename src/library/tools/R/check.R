@@ -782,24 +782,41 @@ setRlibs <-
             wrapLog("These files are defunct.",
                     "See manual 'Writing R Extensions'.\n")
         }
-        ## if README.md is present, it must be able to be processed
-        ## by CRAN to README.html, which is done by pandoc.
-        if (file.exists("README.md") && check_incoming) {
-            if (nzchar(Sys.which("pandoc"))) {
-                rfile <- file.path(tempdir(), "README.html")
-                out <- .pandoc_README_md_for_CRAN("README.md", rfile)
-                if(out$status) {
-                    if(!any) warningLog(Log)
+        if(check_incoming) {
+            ## CRAN must be able to convert
+            ##   inst/README.md or README.md
+            ##   inst/NEWS.md or NEWS.md
+            ## to HTML using pandoc: check that this works fine.
+            md_files <-
+                c(Filter(file.exists,
+                         c(file.path("inst", "README.md"),
+                           "README.md"))[1L],
+                  Filter(file.exists,
+                         c(file.path("inst", "NEWS.md"),
+                           "NEWS.md"))[1L])
+            md_files <- md_files[!is.na(md_files)]
+            if(length(md_files)) {
+                if(nzchar(Sys.which("pandoc"))) {
+                    for(ifile in md_files) {
+                        ofile <- tempfile("pandoc", fileext = ".html")
+                        out <- .pandoc_md_for_CRAN(ifile, ofile)
+                        if(out$status) {
+                            if(!any) warningLog(Log)
+                            any <- TRUE
+                            printLog(Log,
+                                     sprintf("Conversion of '%s' failed:\n",
+                                             ifile),
+                                     paste(out$stderr, collapse = "\n"),
+                                     "\n")
+                        }
+                        unlink(ofile)
+                    }
+                } else {
+                    if(!any) noteLog(Log)
                     any <- TRUE
-                    printLog(Log, "Conversion of README.md failed:\n",
-                             paste(out$stderr, collapse = "\n"), "\n")
+                    printLog(Log,
+                             "Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.\n")
                 }
-            } else {
-                if(!any) noteLog(Log)
-                any <- TRUE
-                printLog(Log,
-                         "File README.md cannot be checked without ",
-                         "'pandoc' being installed.\n")
             }
         }
         topfiles <- Sys.glob(c("LICENCE", "LICENSE"))
