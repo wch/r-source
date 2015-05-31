@@ -4744,7 +4744,7 @@ setRlibs <-
                 if (this_multiarch && length(R_check_skip_arch))
                     inst_archs <- inst_archs[!(inst_archs %in% R_check_skip_arch)]
             }
-        }   ## end of if (!is_base_pkg)
+        } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
 
         elibs <- if(is_base_pkg) character()
         else if(R_check_depends_only)
