@@ -345,9 +345,10 @@ function(db, verbose = FALSE)
     .gather <- function(u = character(),
                         p = list(),
                         s = character(),
-                        m = character()) {
+                        m = character(),
+                        cran = character()) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
-                        stringsAsFactors = FALSE)
+                        CRAN = cran, stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
         y
@@ -376,7 +377,7 @@ function(db, verbose = FALSE)
             s <- as.character(attr(h, "status"))
             msg <- table_of_FTP_server_return_codes[s]
         }
-        c(s, msg, "")
+        c(s, msg, "", "")
     }
 
     .check_http <- function(u) {
@@ -403,7 +404,9 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        c(s, msg, newLoc)
+        cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)",
+                      u, ignore.case = TRUE)
+        c(s, msg, newLoc, if(cran) u else "")
     }
 
     bad <- .gather()
@@ -460,23 +463,22 @@ function(db, verbose = FALSE)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- !(status %in% c(200L, 405L))
+        ind <- !(status %in% c(200L, 405L)) | nzchar(results[, 4L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            url <- urls[pos]; newLoc <- results[ind, 3]
+            url <- urls[pos]; newLoc <- results[ind, 3L]
             ind2 <- nzchar(newLoc)
             url[ind2] <-
                 paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
-            bad <- rbind(bad, .gather(url, parents[pos], s, m))
+            bad <- rbind(bad, .gather(url, parents[pos], s, m,
+                                      results[ind, 4L]))
         }
     }
-
     bad
-
 }
 
 format.check_url_db <-
@@ -492,7 +494,11 @@ function(x, ...)
                   sprintf("\nStatus: %s", s)),
            ifelse((m <- x$Message) == "",
                   "",
-                  sprintf("\nMessage: %s", m)))
+                  sprintf("\nMessage: %s", m)),
+           ifelse((m <- x$CRAN) == "",
+                  "",
+                  sprintf("\nCRAN URL: %s", m))
+           )
 }
 
 print.check_url_db <-
