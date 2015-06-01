@@ -404,7 +404,7 @@ function(db, verbose = FALSE)
         ## A mis-configured site
         if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
             s <- "405"
-        cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)",
+        cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html$)",
                       u, ignore.case = TRUE)
         c(s, msg, newLoc, if(cran) u else "")
     }
@@ -497,7 +497,7 @@ function(x, ...)
                   sprintf("\nMessage: %s", m)),
            ifelse((m <- x$CRAN) == "",
                   "",
-                  sprintf("\nCRAN URL: %s", m))
+                  "\nCRAN URL not in canonical form")
            )
 }
 
