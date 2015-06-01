@@ -214,6 +214,11 @@ function(dir,
 
     ## Install what is needed.
 
+    if(xvfb) {
+        pid <- start_virtual_X11_fb(xvfb_options)
+        on.exit(close_virtual_X11_db(pid), add = TRUE)
+    }
+
     depends <-
         package_dependencies(pnames, available, which = "most")
     depends <- setdiff(unique(unlist(depends, use.names = FALSE)),
@@ -309,11 +314,6 @@ function(dir,
                             stdout = out,
                             stderr = err,
                             env = env))
-    }
-
-    if(xvfb) {
-        pid <- start_virtual_X11_fb(xvfb_options)
-        on.exit(close_virtual_X11_db(pid), add = TRUE)
     }
 
     if(Ncpus > 1L) {
