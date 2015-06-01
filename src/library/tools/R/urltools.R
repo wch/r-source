@@ -467,7 +467,7 @@ function(db, verbose = FALSE)
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
         ind <- !(status %in% c(200L, 405L)) |
-            nzchar(results[, 4L]) | nzchar(results[, 4L])
+            nzchar(results[, 4L]) | nzchar(results[, 5L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
@@ -482,7 +482,6 @@ function(db, verbose = FALSE)
                                       results[ind, 4L], results[ind, 5L]))
         }
     }
-    print(bad)
     bad
 }
 
