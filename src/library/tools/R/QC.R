@@ -7302,9 +7302,12 @@ function(x, ...)
               c(if (length(y) > 1L) "Found the following (possibly) invalid URLs:" else "Found the following (possibly) invalid URL:",
                 paste(" ", gsub("\n", "\n    ", format(y))))
       },
-      if(any(nzchar(y[, 4L]))) {
+      if(length(y) && any(nzchar(y$CRAN))) {
           c("\n  The canonical URL of the CRAN page for a package is ",
             "  http://cran.r-project.org/package=pkgname")
+      },
+      if(length(y) && any(nzchar(y$Spaces))) {
+          "\n  Spaces in an http:// URL should probably be replaced by %20"
       },
       if(length(y <- x$no_url_checks) && y) {
           c("\nChecking URLs requires 'libcurl' support in the R build")

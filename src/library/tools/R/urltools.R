@@ -346,9 +346,11 @@ function(db, verbose = FALSE)
                         p = list(),
                         s = character(),
                         m = character(),
-                        cran = character()) {
+                        cran = character(),
+                        spaces = character()) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
-                        CRAN = cran, stringsAsFactors = FALSE)
+                        CRAN = cran, Spaces = spaces,
+                        stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
         y
@@ -406,7 +408,8 @@ function(db, verbose = FALSE)
             s <- "405"
         cran <- grepl("http://cran.r-project.org/web/packages/[.[:alnum:]]+(|/|/index.html)$",
                       u, ignore.case = TRUE)
-        c(s, msg, newLoc, if(cran) u else "")
+        spaces <- grepl(" ", u)
+        c(s, msg, newLoc, if(cran) u else "", if(spaces) u else "")
     }
 
     bad <- .gather()
@@ -463,7 +466,8 @@ function(db, verbose = FALSE)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- !(status %in% c(200L, 405L)) | nzchar(results[, 4L])
+        ind <- !(status %in% c(200L, 405L)) |
+            nzchar(results[, 4L]) | nzchar(results[, 4L])
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
@@ -475,9 +479,10 @@ function(db, verbose = FALSE)
             url[ind2] <-
                 paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
             bad <- rbind(bad, .gather(url, parents[pos], s, m,
-                                      results[ind, 4L]))
+                                      results[ind, 4L], results[ind, 5L]))
         }
     }
+    print(bad)
     bad
 }
 
@@ -495,6 +500,9 @@ function(x, ...)
            ifelse((m <- x$Message) == "",
                   "",
                   sprintf("\nMessage: %s", m)),
+           ifelse((m <- x$Spaces) == "",
+                  "",
+                  "\nURL contains spaces"),
            ifelse((m <- x$CRAN) == "",
                   "",
                   "\nCRAN URL not in canonical form")
