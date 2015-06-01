@@ -7307,7 +7307,7 @@ function(x, ...)
             "  http://cran.r-project.org/package=pkgname")
       },
       if(length(y) && any(nzchar(y$Spaces))) {
-          "\n  Spaces in an http:// URL should probably be replaced by %20"
+          "\n  Spaces in an http[s] URL should probably be replaced by %20"
       },
       if(length(y <- x$no_url_checks) && y) {
           c("\nChecking URLs requires 'libcurl' support in the R build")
