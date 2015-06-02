@@ -84,7 +84,7 @@ Q0bis <- function(phi,theta, tol=.Machine$double.eps) {
     A %*% S %*% t(A)
     ## == 2 x 2 Block matrix product; A = [A1 | A2 ]
     ## == A1 SX A1' + A1 SXZ A2' + (A1 SXZ A2')' + A2 A2'
-    
+
 }## {Q0bis}
 
 ## The second way is to resolve brutally the equation of Gardner et al. in the
@@ -173,7 +173,7 @@ lapply(ev3.0, round, digits=3) ## problem for q >= 1 (none for q=0)
 ev3.bis <- lapply(chks, function(ck) t(sapply(lapply(ck, `[[`, "Q0bis"), EV.k, k=3)))
 lapply(ev3.bis[-1], round, digits=3) ## all fine
 e1.bis <- sapply(ev3.bis, function(m) m[,1])
-min(e1.bis) # -7.1e-15 , -7.5e-15 
+min(e1.bis) # -7.1e-15 , -7.5e-15
 stopifnot(e1.bis > -1e-12)
 
 
@@ -182,7 +182,7 @@ phi <- mkPhi(s = 12)
 theta <- 0.7
 true.cf <- c(ar1=phi[1], ma1=theta, sar1=phi[12])
 tt <- chkQ0(phi,theta, tol=0.50, doEigen=TRUE)
-tt$eigen 
+tt$eigen
 
 out.0 <- makeARIMA(phi, theta, NULL)
 out.R <- makeARIMA(phi, theta, NULL, SSinit="Rossignol")
@@ -223,3 +223,43 @@ arima(x, order= c(1,0,1), seasonal= list(period=12, order=c(1,0,0)),
 
 stopifnot(all.equal(confint(fm1),
                     confint(fm2), tol = 4e-4))
+
+###---------- PR#16278 --------------------------------------
+
+##  xreg  *and*  differentiation order d >= 1 :
+set.seed(0)
+n <- 5
+x <- cumsum(rnorm(n, sd=0.01))
+Vr <- var(diff(x))                 # 6.186e-5 : REML
+V. <- var(diff(x)) * (n-2) / (n-1) # 4.640e-5 : ML
+
+f00   <- arima0(x, c(0,1,0), method="ML", xreg=1:n)
+(fit1 <- arima (x, c(0,1,0), method="ML", xreg=1:n))
+stopifnot(all.equal(fit1$sigma2, V.), fit1$nobs == n-1,
+	  all.equal(fit1$loglik, 14.28, tol=4e-4),
+	  all.equal(f00$sigma2, fit1$sigma2),
+	  all.equal(f00$loglik, fit1$loglik))
+
+(fit2 <- arima (x, c(0,2,0), method="ML", xreg=(1:n)^2))
+stopifnot(all.equal(fit2$sigma2, 0.000109952342),
+          all.equal(fit2$loglik, 9.4163797), fit2$nobs == n-2)
+
+## "well"-fitting higher order model  {optim failed in R <= 3.0.1)
+n <- length(x. <- c(1:4,3:-2,2*(0:3),4:5,5:-4)/32)
+xr <- poly(x., 3)
+x. <- cumsum(cumsum(cumsum(x.))) + xr %*% 10^(0:2)
+(fit3 <- arima (x., c(0,3,0), method="ML", xreg = xr))
+stopifnot(fit3$ nobs == n-3,
+	  all.equal(fit3$ sigma2, 0.00859843, tol = 1e-6),
+	  all.equal(fit3$ loglik, 22.06043, tol = 1e-6),
+          all.equal(unname(coef(fit3)),
+                    c(0.70517, 9.9415, 100.106), tol = 1e-5))
+
+x.[5:6] <- NA
+(fit3N <- arima (x., c(0,3,0), method="ML", xreg = xr))
+stopifnot(fit3N$ nobs == n-3-2, # ==  #{obs} - d - #{NA}
+	  all.equal(fit3N$ sigma2, 0.009297345, tol = 1e-6),
+	  all.equal(fit3N$ loglik, 16.73918,    tol = 1e-6),
+	  all.equal(unname(coef(fit3N)),
+		    c(0.64904, 9.92660, 100.126), tol = 1e-5))
+

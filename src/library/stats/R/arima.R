@@ -48,7 +48,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
 
     arimaSS <- function(y, mod)
     {
-        ## next call changes mod elemnts a, P, Pn so beware!
+        ## next call changes mod components a, P, Pn so beware!
         .Call(C_ARIMA_Like, y, mod, 0L, TRUE)
     }
 
@@ -62,7 +62,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
 				 error = function(e) NULL)))
 	    return(.Machine$double.xmax)# bad parameters giving error, e.g. in solve(.)
         if(ncxreg > 0) x <- x - xreg %*% par[narma + (1L:ncxreg)]
-        ## next call changes objects a, P, Pn so beware!
+        ## next call changes Z components a, P, Pn so beware!
         res <- .Call(C_ARIMA_Like, x, Z, 0L, FALSE)
         s2 <- res[1L]/res[3L]
         0.5*(log(s2) + res[2L]/res[3L])
@@ -212,7 +212,8 @@ arima <- function(x, order = c(0L, 0L, 0L),
             ## Degenerate model. Proceed anyway so as not to break old code
             fit <- lm(x ~ xreg - 1, na.action = na.omit)
         }
-        n.used <- sum(!is.na(resid(fit))) - length(Delta)
+        isna <- is.na(x) | apply(xreg, 1L, anyNA)
+        n.used <- sum(!isna) - length(Delta)
         init0 <- c(init0, coef(fit))
         ses <- summary(fit)$coefficients[, 2L]
         parscale <- c(parscale, 10 * ses)
@@ -294,7 +295,7 @@ arima <- function(x, order = c(0L, 0L, 0L),
             list(convergence = 0, par = numeric(),
                  value = armafn(numeric(), as.logical(transform.pars)))
         else
-            optim(init[mask], armafn,  method = optim.method,
+            optim(init[mask], armafn, method = optim.method,
                   hessian = TRUE, control = optim.control,
                   trans = as.logical(transform.pars))
         if(res$convergence > 0)
@@ -442,9 +443,9 @@ predict.Arima <-
         se <- ts(sqrt(z[[2L]] * object$sigma2),
                  start = xtsp[2L] + deltat(rsd),
                  frequency = xtsp[3L])
-        return(list(pred=pred, se=se))
+        list(pred=pred, se=se)
     }
-    else return(pred)
+    else pred
 }
 
 
