@@ -43,3 +43,16 @@ vcov.summary.lm  <- function(object, ...) object$sigma^2 * object$cov.unscaled
 
 ## gls and lme methods moved to nlme in 2.6.0
 
+
+### "The" sigma in lm/nls - "like" models:
+
+sigma <- function(object, ...) UseMethod("sigma")
+
+## works whenever deviance(), nobs() and coef() do fine:
+sigma.default <- function (object, use.fallback=TRUE, ...)
+    sqrt(deviance(object, ...) /
+             (nobs(object, use.fallback=use.fallback) - length(coef(object))))
+
+sigma.mlm <- function (object, ...)
+    sqrt(colSums(mlmfit$residuals^2) / object$df.residual)
+

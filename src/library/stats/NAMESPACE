@@ -62,7 +62,7 @@ export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        rlnorm, rlogis, rmultinom, rnbinom, rnorm, rpois, rsignrank,
        rstandard, rstudent, rt, runif, runmed, rweibull, rwilcox,
        rWishart, scatter.smooth, screeplot, sd, se.contrast,
-       selfStart, setNames, simulate, smooth, smooth.spline,
+       selfStart, setNames, sigma, simulate, smooth, smooth.spline,
        smoothEnds, sortedXyData, spec.ar, spec.pgram, spec.taper,
        spectrum, spline, splinefun, splinefunH, SSD, SSasymp,
        SSasympOff, SSasympOrig, SSbiexp, SSfol, SSfpl, SSgompertz,
@@ -454,6 +454,8 @@ S3method(se.contrast, aov)
 S3method(se.contrast, aovlist)
 S3method(selfStart, default)
 S3method(selfStart, formula)
+S3method(sigma, default)
+S3method(sigma, mlm)
 S3method(simulate, lm)
 S3method(sortedXyData, default)
 S3method(str, dendrogram)

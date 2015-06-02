@@ -56,7 +56,11 @@
       character vector.
 
       \item \code{rapply} preserves attributes on the list when
-      \code{how="replace"}. 
+      \code{how="replace"}.
+
+      \item New S3 generic function \code{sigma()} with methods for
+      extracting the estimated standard deviation aka \dQuote{residual
+	standard deviation} from a fitted model.
     }
   }
 
