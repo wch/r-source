@@ -38,7 +38,7 @@ sigma(object, ...)
  and \code{PP <- length(\link{coef}(object))}.
 }
 \value{
-  a (\sQuote{scalar}) number, the estimated standard deviation of the
+  typically a number, the estimated standard deviation of the
   errors (\dQuote{residual standard deviation}) for Gaussian
   models, and---less interpretably---the square root of the residual
   deviance per degree of freedom in more general models.
@@ -49,10 +49,13 @@ sigma(object, ...)
 
   Very strictly speaking, \eqn{\hat{\sigma}}{\sigma^} (\dQuote{\eqn{\sigma} hat})
   is actually \eqn{\sqrt{\widehat{\sigma^2}}}{\sqrt(hat(\sigma^2))}.
+
+  For multivariate linear models (class \code{"mlm"}), a \emph{vector}
+  of sigmas is returned, each corresponding to one column of \eqn{Y}.
 }
 \note{
-  The misnomer \dQuote{Residual standard error} has been part of too
-  many \R (and S) outputs to be easily changed there.
+  The misnomer \dQuote{Residual standard \bold{error}} has been part of
+  too many \R (and S) outputs to be easily changed there.
 }
 \seealso{
   \code{\link{deviance}}, \code{\link{nobs}}, \code{\link{vcov}}.
