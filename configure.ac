@@ -2949,7 +2949,7 @@ R is now configured for ${host}
   Fortran 77 compiler:       ${r_f77_compiler}
 
   C++ compiler:              ${r_cxx_compiler}
-  C++ 11 compiler:           ${r_cxx1x_compiler}
+  C++11 compiler:            ${r_cxx1x_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 
