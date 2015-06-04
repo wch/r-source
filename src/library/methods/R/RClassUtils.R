@@ -752,8 +752,7 @@ reconcilePropertiesAndPrototype <-
       }
       ## check for conflicts in the slots
       allProps <- properties
-      for(i in seq_along(superClasses)) {
-          cl <- superClasses[[i]]
+      for(cl in superClasses) {
           clDef <- getClassDef(cl, where)
           if(is(clDef, "classRepresentation")) {
               theseProperties <- getSlots(clDef)
