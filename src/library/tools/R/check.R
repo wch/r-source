@@ -3649,7 +3649,7 @@ setRlibs <-
     check_install_sizes <- function()
     {
         pd <- file.path(libdir, pkgname)
-        ## if we used a log, the installation need still not exist.
+        ## if we used a log, the installation would not need to remain.
         if (!dir.exists(pd)) return()
         checkingLog(Log, "installed package size")
         owd <- setwd(pd)
@@ -3664,7 +3664,7 @@ setRlibs <-
             printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]
             rest[, 2L] <- sub("./", "", rest[, 2L])
-            # keep only top-level directories
+            ## keep only top-level directories
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
             if(nrow(rest)) {
@@ -3672,12 +3672,8 @@ setRlibs <-
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
                 size <- sprintf('%4.1fMb', rest[, 1L]/1024)
                 printLog0(Log,
-                          paste("    ",
-                                format(rest[o, 2L], justify = "left"),
-                                "  ",
-                                format(size[o], justify = "right"),
-                                "\n",
-                                sep=""))
+			  paste0("    ", format(rest[o, 2L], justify = "left"),
+				 "  ", format(size[o], justify = "right"), "\n"))
             }
         } else resultLog(Log, "OK")
         setwd(owd)
