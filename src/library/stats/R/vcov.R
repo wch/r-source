@@ -54,5 +54,5 @@ sigma.default <- function (object, use.fallback=TRUE, ...)
              (nobs(object, use.fallback=use.fallback) - length(coef(object))))
 
 sigma.mlm <- function (object, ...)
-    sqrt(colSums(mlmfit$residuals^2) / object$df.residual)
+    sqrt(colSums(object$residuals^2) / object$df.residual)
 
