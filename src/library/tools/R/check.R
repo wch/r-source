@@ -3648,8 +3648,8 @@ setRlibs <-
     ## It also depends on the total being last.
     check_install_sizes <- function()
     {
-        ## if we used a log, the installation need not still exist.
         pd <- file.path(libdir, pkgname)
+        ## if we used a log, the installation need still not exist.
         if (!dir.exists(pd)) return()
         checkingLog(Log, "installed package size")
         owd <- setwd(pd)
