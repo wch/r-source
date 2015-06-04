@@ -21,7 +21,7 @@ news <-
 function(query, package = "R", lib.loc = NULL,
          format = NULL, reader = NULL, db = NULL)
 {
-    if(is.null(db)) {
+    if(new.db <- is.null(db)) {
         db <- if(package == "R")
             tools:::.build_news_db_from_R_NEWS_Rd()
         else
@@ -30,7 +30,8 @@ function(query, package = "R", lib.loc = NULL,
     if(is.null(db))
         return(NULL)
 
-    attr(db, "package") <- package
+    if(new.db)
+	attr(db, "package") <- package
 
     ## Is there a way to directly call/use subset.data.frame?
     ## E.g.,
@@ -64,26 +65,24 @@ function(query, package = "R", lib.loc = NULL,
 
     r <- eval(substitute(query), db1, parent.frame())
     ## Do something if this is not logical ...
-    if(is.null(r))
-        return(db)
-    else if(!is.logical(r) || length(r) != length(version))
-        stop("invalid query")
-    r <- r & !is.na(r)
-    result <- db[r, ]
-    if (any(!r))
-    	result <- structure(result, subset = r)
-    if(has_bad_attr)
-        result <- structure(result, bad = bad[r])
-    result
+    if(!is.null(r)) {
+	if(!is.logical(r) || length(r) != length(version))
+	    stop("invalid query")
+	r <- r & !is.na(r)
+	db <- db[r, ]
+	if (!all(r))
+	    db <- structure(db, subset = r)
+	else if(has_bad_attr)
+	    db <- structure(db, bad = bad[r])
+    }
+    db
 }
 
 format.news_db <-
 function(x, ...)
 {
     if(inherits(x, "news_db_from_Rd") ||
-       (!(is.null(bad <- attr(x, "bad")))
-        && (length(bad) == NROW(x))
-        && all(!bad))) {
+       (!is.null(bad <- attr(x, "bad")) && length(bad) == NROW(x) && !any(bad))) {
 
         ## Format news in the preferred input format:
         ##   Changes in $VERSION [($DATE)]:
@@ -146,16 +145,16 @@ function(x, ...)
     }
 }
 
-print.news_db <-
-function(x, ...)
+print.news_db <- function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 {
-    if (interactive()) port <- tools::startDynamicHelp(NA)
-    else port <- 0L
+    port <- if (doBrowse && !identical("false", browser) &&
+                is.character(pkg <- attr(x, "package")))
+        tools::startDynamicHelp(NA) else 0L
     if (port > 0L) {
-    	if ((pkg <- attr(x, "package")) == "R")
-    	    url <- sprintf("http://127.0.0.1:%d/doc/html/NEWS.html", port)
+        url <- if (pkg == "R")
+    	    sprintf("http://127.0.0.1:%d/doc/html/NEWS.html", port)
     	else
-    	    url <- sprintf("http://127.0.0.1:%d/library/%s/NEWS", port, pkg)
+    	    sprintf("http://127.0.0.1:%d/library/%s/NEWS", port, pkg)
     	if (!is.null(subset <- attr(x, "subset"))) {
 	    # Subsets are typically ranges of dates or version numbers, so we run-length encode
 	    # the subset vector.  We put TRUE in front so the values alternate TRUE, FALSE, ... .
@@ -163,7 +162,7 @@ function(x, ...)
     	    url <- paste0(url, "?subset=", rle)
     	}
     	browseURL(url)
-    } else 
+    } else ## simply show in console:
 	writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))
     invisible(x)
 }

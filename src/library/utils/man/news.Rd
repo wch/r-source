@@ -4,14 +4,18 @@
 % Distributed under GPL 2 or later
 
 \name{news}
-\alias{news}
 \title{Build and Query R or Package News Information}
+\alias{news}
+\alias{print.news_db}
 \description{
-  Build and query the news for R or add-on packages.
+  Build and query the news data base for \R or add-on packages.
 }
 \usage{
 news(query, package = "R", lib.loc = NULL, format = NULL,
      reader = NULL, db = NULL)
+
+\S3method{print}{news_db}(x, doBrowse = interactive(),
+      browser = getOption("browser"), \dots)
 }
 \arguments{
   \item{query}{an expression for selecting news entries}
@@ -22,10 +26,17 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
     libraries currently known.}
   \item{format}{Not yet used.}
   \item{reader}{Not yet used.}
-  \item{db}{a news db obtained from \code{news()}.}
+  \item{db, x}{a news db obtained from \code{news()}.}
+
+  \item{doBrowse}{logical specifying that the news should be opened in
+    the browser (by \code{\link{browseURL}}, accessible as via
+    \code{\link{help.start}}) instead of printed to the console.}
+  \item{browser}{the browser to be used, see \code{\link{browseURL}}.}
+  \item{\dots}{potentially further arguments passed to \code{print()}.}
 }
 \value{
-  A data frame inheriting from class \code{"news_db"}.
+  A data frame inheriting from class \code{"news_db"}, with
+  \code{\link{attributes}} \code{"package"} and \code{"query"}.
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
@@ -101,7 +112,8 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 ## Build a db of all R news entries.
 db <- news()
 \dontshow{
-  vv <- capture.output(db)  # without an error
+  vv <- capture.output(print(db, doBrowse=FALSE))  # without an error
+  stopifnot(is.character(vv), length(vv) >= 3) # was wrong (for weeks during devel.)
 }
 ## Bug fixes with PR number in 3.0.1.
 db3 <- news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
@@ -111,6 +123,7 @@ db3 <- news(Version == "3.0.1" & grepl("^BUG", Category) & grepl("PR#", Text),
 ## News from a date range ('Matrix' is there in a regular R installation):
 if(length(iM <- find.package("Matrix", quiet=TRUE)) && nzchar(iM)) {
    dM <- news(package="Matrix")
+   stopifnot(identical(dM, news(db=dM)))
    dM2014 <- news("2014-01-01" <= Date & Date <= "2014-12-31", db = dM)
    stopifnot(paste0("1.1-", 2:4) \%in\% dM2014[,"Version"])
 }
