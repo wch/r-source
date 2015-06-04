@@ -36,7 +36,8 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 }
 \value{
   A data frame inheriting from class \code{"news_db"}, with
-  \code{\link{attributes}} \code{"package"} and \code{"query"}.
+  \code{\link{attributes}} \code{"package"} (and \code{"subset"} if the
+    \code{query} lead to proper subsetting).
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
