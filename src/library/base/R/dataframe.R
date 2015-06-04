@@ -265,8 +265,8 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
     ## changed in 1.8.0
     if(is.null(row.names)) row.names <- dn[[1L]]
     collabs <- dn[[2L]]
-    ## These might be NA: use pre-3.3.0 behaviour.
-    if(any(empty <- !nzchar(collabs, keepNA = FALSE)))
+    ## These might be NA
+    if(any(empty <- !nzchar(collabs)))
 	collabs[empty] <- paste0("V", ic)[empty]
     value <- vector("list", ncols)
     if(mode(x) == "character" && stringsAsFactors) {
@@ -416,7 +416,7 @@ data.frame <-
     vnames <- names(x)
     if(length(vnames) != n)
 	vnames <- character(n)
-    no.vn <- !nzchar(vnames, keepNA = FALSE)
+    no.vn <- !nzchar(vnames)
     vlist <- vnames <- as.list(vnames)
     nrows <- ncols <- integer(n)
     for(i in seq_len(n)) {
@@ -490,7 +490,7 @@ data.frame <-
     value <- unlist(vlist, recursive=FALSE, use.names=FALSE)
     ## unlist() drops i-th component if it has 0 columns
     vnames <- unlist(vnames[ncols > 0L])
-    noname <- !nzchar(vnames, keepNA = FALSE)
+    noname <- !nzchar(vnames)
     if(any(noname))
 	vnames[noname] <- paste("Var", seq_along(vnames), sep = ".")[noname]
     if(check.names)
@@ -1207,7 +1207,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
     if(make.row.names)
     Make.row.names <- function(nmi, ri, ni, nrow)
     {
-	if(nzchar(nmi, keepNA = FALSE)) {
+	if(nzchar(nmi)) {
             if(ni == 0L) character()  # PR8506
 	    else if(ni > 1L) paste(nmi, ri, sep = ".")
 	    else nmi
@@ -1314,7 +1314,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE)
 	else if(length(xi)) {
 	    rows[[i]] <- nrow <- nrow + 1L
             if(make.row.names)
-                rlabs[[i]] <- if(nzchar(nmi, keepNA = FALSE)) nmi else as.integer(nrow)
+		rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
 	}
     }
     nvar <- length(clabs)
