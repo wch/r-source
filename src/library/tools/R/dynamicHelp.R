@@ -488,16 +488,7 @@ httpd <- function(path, query, ...)
 				")' in the console.")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
-    	if (!is.null(query) && !is.na(subset <- query["subset"])) {
-    	    # See utils:::print.news_db for the encoding of the subset
-    	    rle <- strsplit(subset, "_")[[1]]
-    	    rle <- structure(list(lengths = as.numeric(rle),
-    	    	                  values = rep(c(TRUE, FALSE), length.out = length(rle))),
-    	    	             class = "rle")
-    	    news <- news(inverse.rle(rle)[-1], package = pkg)
-	} else
-    	    news <- news(package = pkg)
-    	formatted <- toHTML(news,
+    	formatted <- toHTML(news(package = pkg),
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")
         if (length(formatted))
@@ -618,6 +609,7 @@ startDynamicHelp <- function(start = TRUE)
     if(!start && (port <= 0L))
         stop("no running server to stop")
     if (start) {
+        message("starting httpd help server ...", appendLF = FALSE)
         utils::flush.console()
         OK <- FALSE
         ports <- getOption("help.ports")
@@ -630,9 +622,6 @@ startDynamicHelp <- function(start = TRUE)
             ports <- 10000 + 22000*((stats::runif(10) + unclass(Sys.time())/300) %% 1)
         }
         ports <- as.integer(ports)
-	if (all(ports == 0))
-	    return(invisible(0))
-        message("starting httpd help server ...", appendLF = FALSE)
         for(i in seq_along(ports)) {
             ## the next can throw an R-level error,
             ## so do not assign port unless it succeeds.

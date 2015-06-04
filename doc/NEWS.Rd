@@ -34,10 +34,6 @@
       \item \code{diag()} no longer duplicates a matrix when extracting
       its diagonal.
 
-      \item \code{news()} now displays \R and package news files within
-      the HTML help system if it is available.  If no news file is found,
-      a visible \code{NULL} is returned to the console.
-
       \item \code{as.character.srcref()} gains an argument to allow
       characters corresponding to a range of source references to be
       extracted.
