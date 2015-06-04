@@ -162,7 +162,7 @@ pushBack <- function(data, connection, newLine = TRUE,
 {
     # match.arg doesn't work on "" default
     if (length(encoding) > 1L) encoding <- encoding[1]
-    if (nchar(encoding)) encoding <- match.arg(encoding)
+    if (nzchar(encoding)) encoding <- match.arg(encoding)
     type <- match(encoding, c("", "bytes", "UTF-8"))
     .Internal(pushBack(data, connection, newLine, type))
 }
