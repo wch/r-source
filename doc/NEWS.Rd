@@ -115,6 +115,9 @@
       \item \code{arima(*, xreg = .)} (for \eqn{d \ge 1}{d >= 1})
       computes estimated variances based on a the number of effective
       observations as in \R version 3.0.1 and earlier.  (\PR{16278})
+
+      \item \code{slotNames(.)} is now correct for \code{"signature"}
+      objects (mostly used internally in \pkg{methods}).
     }
   }
 }
