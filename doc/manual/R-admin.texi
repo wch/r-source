@@ -1622,13 +1622,12 @@ X 10.9 and later (Mavericks and Yosemite).
 
 Installers for R-patched and R-devel are usually available from
 @uref{http://r.research.att.com}, including a
-@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched which
-runs on OS X 10.6 and later (Snow Leopard, Lion, Mountain Lion,
-Mavericks, Yosemite, @dots{}) which should run on all Macs
-from mid-2008 on.
+@file{R-3-2-branch-snowleopard-signed.pkg} version for R-patched for OS
+X 10.6 and later (Snow Leopard, Lion, Mountain Lion, Mavericks,
+Yosemite, @dots{}) which should run on all Macs from mid-2008 on.
 
-For older Intel Macs and some older versions of the OS you can in
-principle (it is little tested) install @R{} from the sources.
+For some older versions of the OS you can in principle (it is little
+tested) install @R{} from the sources.
 
 It is important that if you use a binary installer package that your OS
 is fully updated: look at `Updates' from the `App Store' to be sure.
@@ -2134,7 +2133,7 @@ likely to lead to crashes or failures to load.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
-`Command-line Tools' for @command{Xcode} and compilers which match those
+`Command Line Tools' for @command{Xcode} and compilers which match those
 used to build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
@@ -2155,7 +2154,7 @@ appropriate version at the time of writing was
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
 the version of OS X under which @R{} was installed, and are appropriate
-to the latest version of the Xcode command-line tools for that version
+to the latest version of the command-line tools for that version
 of OS X.  The settings can be changed, either by editing that file or in
 a file such as @file{~/.R/Makevars} (see the next section).  Entries
 which may need to be changed include @samp{CC}, @samp{CXX}, @samp{FC},
@@ -3082,10 +3081,9 @@ make PDF versions of the manuals you will also need file
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
 script.  Some versions (e.g.@: those from @pkg{texinfo} 4.13a and 5.2)
-need to be run under @command{bash} rather than a Bourne shell as on,
-say, Solaris.}  Further, the versions of @command{texi2dvi} and
-@file{texinfo.tex} need to be compatible: we have seen problems with
-older @TeX{} distributions.
+need to be run under @command{bash} rather than a Bourne shell.}
+Further, the versions of @command{texi2dvi} and @file{texinfo.tex} need
+to be compatible: we have seen problems with older @TeX{} distributions.
 
 @cindex Vignettes
 The PDF documentation (including @file{doc/NEWS.pdf}) and building
@@ -4829,9 +4827,8 @@ when installing on Mavericks.
 See the comments under Mountain Lion about X11 and GTK.
 
 If you upgrade to Yosemite you should re-install any of XQuartz, the
-`Command-line Tools for Xcode' and Java which you have installed.
-(Upgrading may partially remove previous versions which can be
-confusing.)
+`Command Line Tools' and Java which you have installed.  (Upgrading may
+partially remove previous versions which can be confusing.)
 
 There are some problems with the recommended @command{gfortran} builds
 under Yosemite.  They give warnings and @command{gfortran-4.8} is
