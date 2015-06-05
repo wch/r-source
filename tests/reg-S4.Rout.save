@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2015-05-28 r68424) -- "Unsuffered Consequences"
+R Under development (unstable) (2015-06-05 r68476) -- "Unsuffered Consequences"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -1109,4 +1109,14 @@ rbind2(<A>, <matrix>) :  x@a done
 + 	  validObject(N <- new("summary.table")),
 + 	  length(N <- new("ordered")) == 0, is.ordered(N))
 > ## formula() and new("formula"), new("..") also failed  in R <= 3.2.0
+> 
+> require("stats4")# -> "mle" class
+> validObject(sig <- new("signature", obj = "mle"))
+[1] TRUE
+> stopifnot(c("package", "names") %in% slotNames(sig))
+> str(sig) # failed, too
+Formal class 'signature' [package "methods"] with 3 slots
+  ..@ .Data  : chr "mle"
+  ..@ names  : chr "obj"
+  ..@ package: chr ""
 > 

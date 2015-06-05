@@ -61,7 +61,7 @@
       \item New S3 generic function \code{sigma()} with methods for
       extracting the estimated standard deviation aka \dQuote{residual
 	standard deviation} from a fitted model.
-	
+
       \item \code{news()} now displays \R and package news files within
       the HTML help system if it is available.  If no news file is found,
       a visible \code{NULL} is returned to the console.
@@ -210,6 +210,9 @@
       \item \code{arima(*, xreg = .)} (for \eqn{d \ge 1}{d >= 1})
       computes estimated variances based on a the number of effective
       observations as in \R version 3.0.1 and earlier.  (\PR{16278})
+
+      \item \code{slotNames(.)} is now correct for \code{"signature"}
+      objects (mostly used internally in \pkg{methods}).
     }
   }
 }

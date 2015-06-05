@@ -784,3 +784,8 @@ stopifnot(identical(C1, C2),
 	  validObject(N <- new("summary.table")),
 	  length(N <- new("ordered")) == 0, is.ordered(N))
 ## formula() and new("formula"), new("..") also failed  in R <= 3.2.0
+
+require("stats4")# -> "mle" class
+validObject(sig <- new("signature", obj = "mle"))
+stopifnot(c("package", "names") %in% slotNames(sig))
+str(sig) # failed, too
