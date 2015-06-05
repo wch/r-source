@@ -2110,11 +2110,11 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.0.x or 3.1.x) of @R{}.
+particular series (e.g.@: @R{} 3.2.x or 3.1.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
-`Command-line Tools' for @command{Xcode} and compilers which match those
+`Command Line Tools' for @command{Xcode} and compilers which match those
 used to build @R{}: see @ref{OS X}.
 
 Package @CRANpkg{rJava} and those which depend on it need a Java runtime
@@ -2135,7 +2135,7 @@ appropriate version at the time of writing was
 The default compilers specified in
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
 the version of OS X under which @R{} was installed, and are appropriate
-to the latest version of the Xcode command-line tools for that version
+to the latest version of the command-line tools for that version
 of OS X.  The settings can be changed, either by editing that file or in
 a file such as @file{~/.R/Makevars} (see the next section).  Entries
 which may need to be changed include @samp{CC}, @samp{CXX}, @samp{FC},
@@ -4604,10 +4604,10 @@ The instructions here are for @cputype{x86_64} builds on 10.9
 and for PowerPC or 32-bit Intel Macs but these has not been tested
 recently.
 
-You can build @R{} using Apple's `Command-line Tools for Xcode' and and
-suitable compilers.  You will also need @code{readline} (or to configure
-with @option{--without-readline}), and a Fortran compiler.  Those and
-other binary components are available from
+You can build @R{} using Apple's `Command Line Tools' and suitable
+compilers.  You will also need @code{readline} (or to configure with
+@option{--without-readline}), and a Fortran compiler.  Those and other
+binary components are available from
 @uref{http://r.research.att.com/libs}: you are likely to need
 @code{pcre} and @code{xz} (recent OS X provides libs but not headers for
 these).
@@ -4769,9 +4769,8 @@ For some pre-compiled software, for example the GTK framework,
 
 
 If you upgrade to Yosemite you should re-install any of XQuartz, the
-`Command-line Tools for Xcode' and Java which you have installed.
-(Upgrading may partially remove previous versions which can be
-confusing.)
+`Command Line Tools' and Java which you have installed.  (Upgrading may
+partially remove previous versions which can be confusing.)
 
 There are some problems with the recommended @command{gfortran} builds
 under Yosemite.  They give warnings and @command{gfortran-4.8} is
@@ -4838,8 +4837,10 @@ You may want/need to install the latest Java from Oracle (currently Java
 this is for Lion and later.
 
 You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@code{Java For OS X 2014-001}.} to suppress pop-up messages, at least
-under Yosemite, even if you have a current version installed.
+@code{Java For OS X 2014-001} from
+@uref{https://support.apple.com/kb/DL1572}.} to suppress pop-up
+messages, at least under Yosemite, even if you have a current version
+installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
