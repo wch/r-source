@@ -316,10 +316,10 @@ function(db, verbose = FALSE)
 {
     .gather <- function(u = character(),
                         p = list(),
-                        s = character(),
-                        m = character(),
-                        cran = character(),
-                        spaces = character()) {
+                        s = rep.int("", length(u)),
+                        m = rep.int("", length(u)),
+                        cran = rep.int("", length(u)),
+                        spaces = rep.int("", length(u))) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
                         CRAN = cran, Spaces = spaces,
                         stringsAsFactors = FALSE)
@@ -399,8 +399,7 @@ function(db, verbose = FALSE)
         bad <- rbind(bad,
                      .gather(urls[ind],
                              parents[ind],
-                             rep.int("", len),
-                             rep.int("Empty URL", len)))
+                             m = rep.int("Empty URL", len)))
     }
 
     ## Invalid URI schemes.
@@ -411,8 +410,7 @@ function(db, verbose = FALSE)
         bad <- rbind(bad,
                      .gather(urls[ind],
                              parents[ind],
-                             rep.int("", len),
-                             rep.int("Invalid URI scheme", len)))
+                             m = rep.int("Invalid URI scheme", len)))
     }
 
     ## ftp.
@@ -427,7 +425,8 @@ function(db, verbose = FALSE)
             s[s == "-1"] <- "Error"
             m <- results[ind, 2L]
             m[is.na(m)] <- ""
-            bad <- rbind(bad, .gather(urls[pos], parents[pos], s, m))
+            bad <- rbind(bad,
+                         .gather(urls[pos], parents[pos], s, m))
         }
     }
 
@@ -450,13 +449,12 @@ function(db, verbose = FALSE)
             ind2 <- nzchar(newLoc)
             url[ind2] <-
                 paste0(url[ind2], " (moved to ", newLoc[ind2], ")")
-            bad <- rbind(bad, .gather(url, parents[pos], s, m,
-                                      results[ind, 4L], results[ind, 5L]))
+            bad <- rbind(bad,
+                         .gather(url, parents[pos], s, m,
+                                 results[ind, 4L], results[ind, 5L]))
         }
     }
-
     bad
-
 }
 
 format.check_url_db <-
