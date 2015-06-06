@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2011-12-01 22:45+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Pootle 2.1.6\n"
 
 #, fuzzy
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "UPS: Noget galt med linjen"
 
 msgid ""
@@ -433,6 +433,13 @@ msgstr ""
 msgid "use %s instead."
 msgstr ""
 
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr ""
+
 msgid "invalid object for formal method definition: type %s"
 msgstr ""
 
@@ -722,6 +729,9 @@ msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
 
 msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr ""
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
 msgstr ""
 
 msgid ""
@@ -1053,8 +1063,8 @@ msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr ""
 
 msgid "bad method object stored in method table, class %s"

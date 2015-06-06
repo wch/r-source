@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -48,7 +48,7 @@ msgstr "valeurs infinies ou manquantes dans 'x'"
 msgid "a dimension is zero"
 msgstr "une dimension est nulle"
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -1176,10 +1176,6 @@ msgstr "impossible d'ajouter aux exportations d'un espace de noms verrouillé"
 msgid "undefined exports: %s"
 msgstr "exportations non définies : %s"
 
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "l'objet %s n'est pas exporté par 'namespace:%s'"
-
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "le package %s n'a aucun fichier 'NAMESPACE'"
 
@@ -1428,6 +1424,10 @@ msgstr "'%s' n'est pas un fichier existant"
 
 msgid "Timestamp of %s has changed"
 msgstr "La date d'enregistrement de %s a changé"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x' et 'y' doivent avoir la même longueur"
 
 msgid "additional arguments ignored in stop()"
 msgstr "arguments supplémentaires ignorés dans stop()"
@@ -1782,11 +1782,6 @@ msgstr[0] "la méthode S3 %s est déclarée dans NAMESPACE mais est introuvable"
 msgstr[1] ""
 "les méthodes S3 %s sont déclarées dans NAMESPACE mais sont introuvables"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "l'argument supplémentaire %s sera ignoré"
-msgstr[1] "l'argument supplémentaire %s sera ignoré"
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "%s n'est pas TRUE"
@@ -1796,6 +1791,20 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "l'argument supplémentaire %s sera ignoré"
+msgstr[1] "l'argument supplémentaire %s sera ignoré"
+
+#, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr "l'objet %s n'est pas exporté par 'namespace:%s'"
 
 #, fuzzy
 #~ msgid "cannot be unloaded."

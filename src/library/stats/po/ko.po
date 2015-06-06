@@ -1,6 +1,6 @@
 # Korean translation for R stats package
 # src/library/stats/po/ko.po
-# 
+#
 # Copyright (C) 1995-2015 The R Core Team
 #
 # This file is distributed under the same license as the R stats package.
@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -111,24 +111,28 @@ msgstr ""
 msgid "Function '%s' is not in the derivatives table"
 msgstr "함수 '%s'는 미분함수 목록에 없습니다"
 
-#: deriv.c:642
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
+msgstr ""
+
+#: deriv.c:644
 msgid "variable must be a character string"
 msgstr "변수는 반드시 문자열이어야 합니다"
 
-#: deriv.c:644
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr "오로지 첫번째 요소만이 변수명으로서 사용되었습니다"
 
-#: deriv.c:657
+#: deriv.c:659
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "'%s'에 유효하지 않은 표현식이 있습니다"
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 msgid "invalid variable names"
 msgstr "유효하지 않은 변수명입니다"
 
-#: deriv.c:944
+#: deriv.c:946
 msgid "invalid tag"
 msgstr "유효하지 않은 태그입니다"
 
@@ -189,7 +193,9 @@ msgstr "유효하지 않은 요인입니다"
 
 #: ksmooth.c:67
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
-msgstr "sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 2500개입니다"
+msgstr ""
+"sm.method에 \"spline\"이 주어졌을 때에는 최대로 사용할 수 있는 행의 개수는 "
+"2500개입니다"
 
 #: lm.c:57
 msgid "'x' is not a matrix"
@@ -324,7 +330,9 @@ msgstr "행렬은 %.0g 열들을 필요로 합니다"
 #: model.c:572
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
-msgstr "model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니다"
+msgstr ""
+"model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니"
+"다"
 
 #: model.c:621 model.c:626 model.c:632 model.c:643 model.c:649 model.c:655
 msgid "term names will be truncated"
@@ -368,23 +376,23 @@ msgstr "ExtractVars에 유효하지 않은 모델식이 있습니다"
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "'.'를 이용한 데이터 프레임에서 중복된 이름 '%s'을 발견했습니다"
 
-#: model.c:1576
+#: model.c:1579
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars내에 유효하지 않은 모델식이 발견되었습니다"
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr "인자가 유효한 모델이 아닙니다"
 
-#: model.c:1672
+#: model.c:1675
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'는 반드시 NULL 또는 문자형 벡터이어야 합니다"
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr "'data' 인자의 유형이 잘못되었습니다"
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr "formula 안에  '.'가 사용되었는데 'data' 인자가 없습니다"
 
@@ -452,16 +460,16 @@ msgstr "'rho'는 반드시 environment이어야 합니다"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'은 올바른 길이를 가지는 수치형 벡터가 아닙니다"
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "모델 평가시에 값이 누락되거나 무한값이 생성되었습니다"
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "변수 '%s'는 약분할 수 없는 정수입니다"
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "변수 '%s'는 수치형이 아닙니다"
@@ -715,13 +723,14 @@ msgstr "gradient function은 반드시 길이가 %d인 수치형 벡터를 반�
 #: port.c:325
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
+msgstr ""
+"Hessian function은 반드시 사이즈가 %d인 수치형 정방행렬을 반환해야 합니다"
 
 #: port.c:380
 msgid "'rho' must be an environment"
 msgstr "'rho'는 반드시 인바이런먼트(environment)이어야 합니다."
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'는 반드시 비어있지 않은 수치형 벡터이어야 합니다"
 
@@ -732,40 +741,45 @@ msgstr "Hessian이 정의되었다면, 반드시 gradient 또한 정의되어져
 #: port.c:387
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
+msgstr ""
+"environment 'rho'는 반드시 길이가 %d인 수치형 벡터 '.par'를 포함해야 합니다"
 
 #: port.c:401
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'와 'upper'는 반드시 수치형 벡터들이어야 합니다."
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
-msgstr "'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있습니다."
+msgstr ""
+"'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있습"
+"니다."
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()를 찾을 수 없습니다."
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 합니다."
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
-msgstr "fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하였습니다."
+msgstr ""
+"fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
+"였습니다."
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store에 올바르지 않은 유형(type)입니다."
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr "m은 반드시 리스트(list)이어야 합니다."
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'와 'upperb'는 반드시 수치형 벡터들이어야 합니다."
 
@@ -813,7 +827,8 @@ msgstr "두 번째 인자 'size'가 올바르지 않습니다."
 #: rcont.c:83
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr "rcont2 [%d,%d]: exp의 값이 0보다 작기(underflow)하므로 알고리즘 실패입니다."
+msgstr ""
+"rcont2 [%d,%d]: exp의 값이 0보다 작기(underflow)하므로 알고리즘 실패입니다."
 
 #: smooth.c:101
 #, c-format

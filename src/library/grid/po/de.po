@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2015-03-20 16:09+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -21,49 +21,49 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "kann rotierten Viewport nicht beschneiden"
 
-#: grid.c:696 grid.c:701 grid.c:790 grid.c:795
+#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "kann den obersten viewport nicht vom Stack werfen ('grid' und 'graphics' "
 "Ausgaben gemischt?)"
 
-#: grid.c:975
+#: grid.c:977
 msgid "attempt to plot on null device"
 msgstr "Versuch in das Null-Device zu zeichnen"
 
-#: grid.c:1307
+#: grid.c:1309
 msgid "there is no layout defined"
 msgstr "kein Layout definiert"
 
-#: grid.c:1527
+#: grid.c:1529
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkante nicht gefunden (Breite oder Länge 0?)"
 
-#: grid.c:1536
+#: grid.c:1538
 msgid "polygon edge not found"
 msgstr "Polygonkante nicht gefunden"
 
-#: grid.c:1690
+#: grid.c:1692
 msgid "require at least two points to draw arrow"
 msgstr "mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
-#: grid.c:2006
+#: grid.c:2008
 msgid "non-finite control point in Xspline"
 msgstr "nicht-endlicher Kontrollpunkt in Xspline"
 
-#: grid.c:2871
+#: grid.c:2873
 msgid "non-finite x or y in graphics path"
 msgstr "unendliches x oder y im Grafikpfad"
 
-#: grid.c:2912
+#: grid.c:2914
 msgid "Empty raster"
 msgstr "Leeres Raster"
 
-#: grid.c:3364
+#: grid.c:3368
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:3450
+#: grid.c:3454
 msgid "unable to clip to rotated rectangle"
 msgstr "kann nicht auf das rotierte Rechteck zurechtschneiden"
 

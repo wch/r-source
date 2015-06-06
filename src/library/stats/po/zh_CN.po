@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -104,24 +104,28 @@ msgstr "检查一进列减号时发现形式不对"
 msgid "Function '%s' is not in the derivatives table"
 msgstr "微分表里没有这个函数'%s'"
 
-#: deriv.c:642
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
+msgstr ""
+
+#: deriv.c:644
 msgid "variable must be a character string"
 msgstr "变数必需是字符串"
 
-#: deriv.c:644
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr "只用了第一个元素作为变数名"
 
-#: deriv.c:657
+#: deriv.c:659
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "'%s'的表达式不对"
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 msgid "invalid variable names"
 msgstr "变数名字不对"
 
-#: deriv.c:944
+#: deriv.c:946
 msgid "invalid tag"
 msgstr "标签不对"
 
@@ -362,23 +366,23 @@ msgstr "ExtractVars里的模型公式不对"
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
-#: model.c:1576
+#: model.c:1579
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr "参数不是正确的模型"
 
-#: model.c:1672
+#: model.c:1675
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials'的值要么是NULL要么是字符矢量"
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr "'data'参数种类有错"
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr "公式里有'.'，而没有'data'这一参数"
 
@@ -446,16 +450,16 @@ msgstr "'rho'必需为环境"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir'这个数字向量的长度不对"
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "在计算模型的时候产生了缺省值或无限值"
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr "变量'%s'应该为整数，不能是数值"
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "变量'%s'不是数值"
@@ -716,7 +720,7 @@ msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
 msgid "'rho' must be an environment"
 msgstr "'rho'必需是环境"
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d'必需是非空数字向量"
 
@@ -733,34 +737,34 @@ msgstr "'rho'环境必包含长度为%d的数字向量'.par'"
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower'和'upper'必需为数字向量"
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement'只适用于带名串列"
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s()不存在"
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient'必需是一个维数为(%d,%d)的数值矩阵"
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该是%d，长度为%d"
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr "eval_check_store的种类不对"
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr "m必需为串列"
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb'和'upperb'必需为数字向量"
 

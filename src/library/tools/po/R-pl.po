@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -16,9 +16,6 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 1.7.5\n"
 "X-Poedit-Bookmarks: -1,232,-1,-1,-1,-1,-1,-1,-1,-1\n"
-
-msgid "Reading %s failed with message: %s"
-msgstr "Odczytywanie %s nie powiodło się zwracając komunikat: %s"
 
 msgid "Checking %s"
 msgstr "sprawdzanie %s"
@@ -760,12 +757,6 @@ msgstr "ładowanie nie powiodło się"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertConditon: Pomyślnie przechwycono warunek"
 
-msgid "assertCondition: caught %s"
-msgstr "assertCondition: przechwycono %s"
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Otrzymano %s podczas wyznaczania %s; oczekiwano %s"
 
@@ -828,9 +819,6 @@ msgstr "pobieranie wstecznych zależności ..."
 
 msgid "downloading %s ..."
 msgstr "pobieranie pliku %s ..."
-
-msgid "installing dependencies %s"
-msgstr "instalowanie zależności %s"
 
 msgid "checking %s ..."
 msgstr "sprawdzanie %s ..."
@@ -969,6 +957,12 @@ msgstr "BŁĄD: brak uprawnień aby zainstalować w katalogu"
 msgid "building a fake installation is disallowed"
 msgstr "budowałe fałszywej instalacji jest zabronione"
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "nie ma pakietu o nazwie '%s'"
 
@@ -1030,9 +1024,6 @@ msgstr ""
 msgid "Cannot extract version info from the following section titles:"
 msgstr ""
 "Nie można wyodrębnić informacji o wersji z następujących tytułów sekcji:"
-
-msgid "%s"
-msgstr "%s"
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -1212,18 +1203,6 @@ msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
 
 msgid "test '%s' is not available"
 msgstr "test '%s' nie jest dostępny"
-
-msgid ":"
-msgstr ":"
-
-msgid "latin1"
-msgstr "latin1"
-
-msgid "ASCII"
-msgstr "ASCII"
-
-msgid "byte"
-msgstr "byte"
 
 msgid "argument 'x' must be a character vector"
 msgstr "argument 'x' musi być wektorem tekstowym"
@@ -1493,6 +1472,33 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+#~ msgid "Reading %s failed with message: %s"
+#~ msgstr "Odczytywanie %s nie powiodło się zwracając komunikat: %s"
+
+#~ msgid "assertCondition: caught %s"
+#~ msgstr "assertCondition: przechwycono %s"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "instalowanie zależności %s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "latin1"
+#~ msgstr "latin1"
+
+#~ msgid "ASCII"
+#~ msgstr "ASCII"
+
+#~ msgid "byte"
+#~ msgstr "byte"
 
 #~ msgid "parsing file %s"
 #~ msgstr "parsowanie pliku %s"

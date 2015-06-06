@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -44,7 +44,7 @@ msgstr "uendelege eller manglande verdiar i «x»"
 msgid "a dimension is zero"
 msgstr ""
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -1175,10 +1175,6 @@ msgid "undefined exports: %s"
 msgstr "udefinerte eksportar:"
 
 #, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "objektet «%s» er ikkje eksportert av «namespace:%s»"
-
-#, fuzzy
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "pakken «%s» har inga NAMESPACE-fil"
 
@@ -1431,6 +1427,10 @@ msgstr "«%s» er ikkje ei fil som finst"
 #, fuzzy
 msgid "Timestamp of %s has changed"
 msgstr "Endringstidspunkt til «"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "«x» og «y» må ha same lengd"
 
 msgid "additional arguments ignored in stop()"
 msgstr "fleire argument ignorerte i stop()"
@@ -1784,12 +1784,6 @@ msgstr[0] "S3-metoden «%s» er deklarert i NAMESPACE, men vart ikkje funnen"
 msgstr[1] "S3-metodane «%s» er deklarerte i NAMESPACE, men vart ikkje funnen"
 
 #, fuzzy
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
-msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
-
-#, fuzzy
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "T brukt i staden for TRUE"
@@ -1799,6 +1793,20 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Åtvaring:\n"
 msgstr[1] "Åtvaringar:\n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr "objektet «%s» er ikkje eksportert av «namespace:%s»"
 
 #, fuzzy
 #~ msgid "cannot be unloaded."

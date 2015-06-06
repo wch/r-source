@@ -1,11 +1,11 @@
 # Korean translation for R grid package
 # src/library/grid/po/ko.po
-# 
+#
 # Copyright (C) 1995-2015 The R Core Team
 #
 # This file is distributed under the same license as the R grid package.
 # Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2015.
-# 
+#
 # Notes:
 # Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
 # Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS 
@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -28,47 +28,49 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
-#: grid.c:696 grid.c:701 grid.c:790 grid.c:795
+#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나요?)"
+msgstr ""
+"최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나"
+"요?)"
 
-#: grid.c:975
+#: grid.c:977
 msgid "attempt to plot on null device"
 msgstr "null 장치위에 플랏을 시도합니다"
 
-#: grid.c:1307
+#: grid.c:1309
 msgid "there is no layout defined"
 msgstr "정의된 레이아웃이 없습니다"
 
-#: grid.c:1527
+#: grid.c:1529
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "다각형의 끝점을 찾을 수 없습니다 (혹시 너비 또는 높이가 0인가요?)"
 
-#: grid.c:1536
+#: grid.c:1538
 msgid "polygon edge not found"
 msgstr "다각형의 끝점을 찾을 수 없습니다"
 
-#: grid.c:1690
+#: grid.c:1692
 msgid "require at least two points to draw arrow"
 msgstr "화살표를 그리기 위해서는 최소한 두개의 점이 필요합니다"
 
-#: grid.c:2006
+#: grid.c:2008
 msgid "non-finite control point in Xspline"
 msgstr "Xspline에서 유한하지 않은 컨트롤 포인트입니다"
 
-#: grid.c:2871
+#: grid.c:2873
 msgid "non-finite x or y in graphics path"
 msgstr "그래픽 패스에 유한하지 않은 x 또는 y가 있습니다"
 
-#: grid.c:2912
+#: grid.c:2914
 msgid "Empty raster"
 msgstr "비어있는 래스터입니다"
 
-#: grid.c:3364
+#: grid.c:3368
 msgid "invalid plotting symbol"
 msgstr "유효하지 않은 플랏팅 기호입니다"
 
-#: grid.c:3450
+#: grid.c:3454
 msgid "unable to clip to rotated rectangle"
 msgstr "회전된 사각형을 고정할 수 없습니다"
 

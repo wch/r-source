@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 3.3.0\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"Project-Id-Version: R 3.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -647,9 +648,6 @@ msgid "'ColSideColors' must be a character vector of length ncol(x)"
 msgstr ""
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr ""
-
-msgid "non-matched further arguments are disregarded"
 msgstr ""
 
 msgid "argument 'x' must be numeric"
@@ -2263,11 +2261,6 @@ msgstr[1]    ""
 
 msgid        "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
-msgstr[0]    ""
-msgstr[1]    ""
-
-msgid        "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
 msgstr[0]    ""
 msgstr[1]    ""
 

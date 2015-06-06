@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -72,7 +72,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 "nenhum método direto ou obtido por herança para a função '%s' nessa chamada"
 
-#: methods_list_dispatch.c:522 methods_list_dispatch.c:1042
+#: methods_list_dispatch.c:522 methods_list_dispatch.c:1045
 msgid "invalid object (non-function) used as method"
 msgstr "objeto inválido (não-função) usado como método"
 
@@ -154,29 +154,29 @@ msgid ""
 msgstr ""
 "uso recursivo da função '%s' na seleção do método, sem um método padrão"
 
-#: methods_list_dispatch.c:699
+#: methods_list_dispatch.c:698
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "erro na avaliação de um próximo método 'primitive': %s"
 
-#: methods_list_dispatch.c:797
+#: methods_list_dispatch.c:796
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' deve ser uma única string (foi especificado um vetor de caracteres de "
 "comprimento %d)"
 
-#: methods_list_dispatch.c:801
+#: methods_list_dispatch.c:800
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' deve ser uma string não-vazia; foi obtida uma string vazia"
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:804
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' deve ser uma string única (foi obtido um objeto da classe \"%s\")"
 
-#: methods_list_dispatch.c:876
+#: methods_list_dispatch.c:875
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr ""

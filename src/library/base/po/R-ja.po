@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2015-03-27 13:57 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1390,6 +1390,10 @@ msgstr " '%s' は既存のファイルではありません "
 msgid "Timestamp of %s has changed"
 msgstr " %s のタイムスタンプを変更しました "
 
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
+
 msgid "additional arguments ignored in stop()"
 msgstr " stop() により追加の引数は無視されました "
 
@@ -1703,10 +1707,6 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
 " S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした "
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] " 余分な引数 %s は無視されます "
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] " %s は TRUE ではありません "
@@ -1714,6 +1714,15 @@ msgstr[0] " %s は TRUE ではありません "
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ: \n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] " 余分な引数 %s は無視されます "
 
 #, fuzzy
 #~ msgid "re-exports %s not exported by %s"

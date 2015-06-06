@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2014-03-17 10:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
 
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+#, fuzzy
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr ""
 "OOPS : il y a un problème avec la ligne %d dans '.OldClassesPrototypes'"
 
@@ -531,6 +532,18 @@ msgstr ""
 msgid "use %s instead."
 msgstr "utilisez %s à la place."
 
+#, fuzzy
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+"%s, ainsi que d'autres utilisations des objets metadonnées \"MethodList\", "
+"sont obsolètes"
+
+#, fuzzy
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr ""
+"dans %s : l'utilisation des objets de métadonnée \"MethodList\" est obsolète."
+
 msgid "invalid object for formal method definition: type %s"
 msgstr "objet incorrect pour la définition formelle de méthode : type %s"
 
@@ -920,6 +933,9 @@ msgstr ""
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr ""
 "valeur incorrecte pour la fonction générique %s, classe %s, mais attendu %s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr ""
 
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
@@ -1352,9 +1368,10 @@ msgstr ""
 "objet incorrect dans la table de métadonnées des méthodes pour %s, "
 "l'étiquette %s, avait la classe %s"
 
+#, fuzzy
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr ""
 "élément mlist incorrect pour la signature %s au niveau %d (devrait être la "
 "liste des méthodes, a la classe %s)"

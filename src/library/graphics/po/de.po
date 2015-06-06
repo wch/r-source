@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2013-02-28 16:20+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -116,7 +116,7 @@ msgstr "ungültiger Wert für den Grafikparameter \"%s\" spezifiziert"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "Grafikparameter \"%s\" hat falsche Länge"
 
-#: par.c:262 par.c:672
+#: par.c:262 par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "Grafikparameter \"%s\" kann nicht gesetzt werden"
@@ -141,35 +141,35 @@ msgstr "Wert für 'nr' in \"mfg\" ist falsch und wird ignoriert"
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "Wert für 'nc' in \"mfg\" ist falsch und wird ignoriert"
 
-#: par.c:477
+#: par.c:478
 msgid "calling par(new=TRUE) with no plot"
 msgstr "par(new) ohne Plot aufgerufen"
 
-#: par.c:664 par.c:1062
+#: par.c:665 par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "Grafikparameter \"%s\" ist veraltet"
 
-#: par.c:668 par.c:1066
+#: par.c:669 par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" ist kein Grafikparameter"
 
-#: par.c:1119
+#: par.c:1120
 msgid "invalid argument passed to par()"
 msgstr "ungültiges Argument an par() übergeben"
 
-#: par.c:1163
+#: par.c:1164
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "zu viele Zeilen in layout, höchstens %d zulässig"
 
-#: par.c:1169
+#: par.c:1170
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "zu viele Spalten in layout, höchstens %d zulässig"
 
-#: par.c:1171
+#: par.c:1172
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "zu viele Zellen in layout, höchstens %d zulässig"

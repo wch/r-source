@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2014-11-20 11:48 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -678,9 +678,6 @@ msgstr " 'ColSideColors' は長さの ncol(x) の文字ベクトルでなけれ�
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr " 'RowSideColors' は長さ nrow(x) の文字ベクトルでなければなりません "
-
-msgid "non-matched further arguments are disregarded"
-msgstr " 余計な引数は捨てられました "
 
 msgid "argument 'x' must be numeric"
 msgstr " 引数 'x' は数値でなければなりません "
@@ -2411,10 +2408,6 @@ msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\"s"
 msgstr[0] " 追加入力された引数 %s は \"%s\" クラスではありません "
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] " 追加入力された引数 %s は無視されました "
-
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
 msgstr[0] " %d 個の因子は %d 個の変数に対しては多すぎます "
@@ -2502,6 +2495,13 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "non-matched further arguments are disregarded"
+#~ msgstr " 余計な引数は捨てられました "
+
+#~ msgid "extra argument %s will be disregarded"
+#~ msgid_plural "extra arguments %s will be disregarded"
+#~ msgstr[0] " 追加入力された引数 %s は無視されました "
 
 #~ msgid "'merge' and 'height' do not fit!"
 #~ msgstr " 'merge' と 'height' が合致していません! "

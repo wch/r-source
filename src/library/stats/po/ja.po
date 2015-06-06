@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 13:58+0900 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2015-03-27 15:09+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -106,24 +106,28 @@ msgstr " 単項のマイナスの検査に不正な形式があります "
 msgid "Function '%s' is not in the derivatives table"
 msgstr " 関数 '%s' は導関数の表中にありません "
 
-#: deriv.c:642
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
+msgstr ""
+
+#: deriv.c:644
 msgid "variable must be a character string"
 msgstr " 変数は文字列でなければいけません "
 
-#: deriv.c:644
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr " 最初の要素だけが変数名として使われました "
 
-#: deriv.c:657
+#: deriv.c:659
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr " '%s' 中の式が不正です "
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 msgid "invalid variable names"
 msgstr " 変数名が不正です "
 
-#: deriv.c:944
+#: deriv.c:946
 msgid "invalid tag"
 msgstr " タグが不正です "
 
@@ -448,16 +452,16 @@ msgstr " 'rho' は環境 (environment) でなければなりません "
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr " 'dir' は正しい長さの数値ベクトルではありません "
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr " モデルを評価する際，欠損値または無限大が生成されました "
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr " 変数 '%s' は整数です、数値ではありません "
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr " 変数 '%s' は数値ではありません "
@@ -722,7 +726,7 @@ msgstr " ヘッシアン関数は次数 %d の正方数値行列を返さなけ�
 msgid "'rho' must be an environment"
 msgstr " 'rho' は環境 (environment) でなければなりません "
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr " 'd' は空でない数値ベクトルでなければなりません "
 
@@ -739,35 +743,35 @@ msgstr " 環境 'rho' は長さが %d の数値ベクトル '.par' を含まね�
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr " 'lower' と 'upper' は数値ベクトルでなければなりません "
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr " 'getElement' は名前つきリストにだけ適用されます "
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr " %s$%s() が見つかりません "
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr " 'gradient' は次元 (%d, %d) の数値行列でなければなりません "
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 " モード %d, 長さ %d の fcn が作られました - モード %d, 長さ %d が必要でした "
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr " eval_check_store に対する不正なタイプです "
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr " m はリストでなければなりません "
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr " 'lowerb' と 'upperb' は数値ベクトルでなければなりません "
 

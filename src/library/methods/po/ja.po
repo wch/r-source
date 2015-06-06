@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2013-03-01 04:12+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -70,7 +70,7 @@ msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 " この呼び出しでは 関数 '%s' に対する直接的または継承メソッドはありません "
 
-#: methods_list_dispatch.c:522 methods_list_dispatch.c:1042
+#: methods_list_dispatch.c:522 methods_list_dispatch.c:1045
 msgid "invalid object (non-function) used as method"
 msgstr " (関数ではない) 不正なオブジェクトがメソッドとして使われました "
 
@@ -151,30 +151,30 @@ msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr " 既定メソッド無しの、メソッド選択時の関数 '%s' の再帰的使用です "
 
-#: methods_list_dispatch.c:699
+#: methods_list_dispatch.c:698
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr " 'primitive' なメソッド %s の評価中にエラーが起きました "
 
-#: methods_list_dispatch.c:797
+#: methods_list_dispatch.c:796
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 " '%s' は単一の文字列でなければなりません(長さ %d の文字ベクトルでした) "
 
-#: methods_list_dispatch.c:801
+#: methods_list_dispatch.c:800
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr " '%s' は空でない文字列でなければなりません; 空の文字列でした "
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:804
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 " '%s' は単一の文字列でなければなりません (クラス \"%s\" のオブジェクトでし"
 "た) "
 
-#: methods_list_dispatch.c:876
+#: methods_list_dispatch.c:875
 msgid "class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 

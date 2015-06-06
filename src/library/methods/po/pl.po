@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -70,7 +70,7 @@ msgstr ""
 "Brak bezpośredniej lub dziedziczonej metody dla funkcji '%s' dla tego "
 "wywołania"
 
-#: methods_list_dispatch.c:522 methods_list_dispatch.c:1042
+#: methods_list_dispatch.c:522 methods_list_dispatch.c:1045
 msgid "invalid object (non-function) used as method"
 msgstr "niepoprawny obiekt (nie-funkcja) użyty jako metoda"
 
@@ -151,28 +151,28 @@ msgstr ""
 "rekursywne użycie funkcji '%s' w wyborze metody, z brakiem określonej metody "
 "domyślnej"
 
-#: methods_list_dispatch.c:699
+#: methods_list_dispatch.c:698
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "błąd w trakcie obliczania 'primitive' następnej metody: %s"
 
-#: methods_list_dispatch.c:797
+#: methods_list_dispatch.c:796
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' musi być pojedynczym łańcuchem (otrzymano wektor tekstowy o długości %d)"
 
-#: methods_list_dispatch.c:801
+#: methods_list_dispatch.c:800
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' musi być niepustym łańcuchem; otrzymano pusty łańcuch"
 
-#: methods_list_dispatch.c:805
+#: methods_list_dispatch.c:804
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' musi być pojedynczym łańcuchem (otrzymano obiekt klasy '%s')"
 
-#: methods_list_dispatch.c:876
+#: methods_list_dispatch.c:875
 msgid "class should be either a character-string name or a class definition"
 msgstr "klasa powinna być albo nazwą tekstową albo definicją klasy"
 

@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -123,7 +123,7 @@ msgstr "grafiksel parametre \"%s\" için geçersiz değer berlirlendi"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "grafiksel parametre \"%s\" yanlış uzunlukta"
 
-#: par.c:262 par.c:672
+#: par.c:262 par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "grafiksel parametre \"%s\" belirlenemez"
@@ -150,35 +150,35 @@ msgstr "\"mfg\" içindeki nr değeri yanlış, görmezden gelinecek"
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" içindeki nc değeri yanlış, görmezden gelinecek"
 
-#: par.c:477
+#: par.c:478
 msgid "calling par(new=TRUE) with no plot"
 msgstr "çizim olmadan par(new=TRUE) çağırılıyor"
 
-#: par.c:664 par.c:1062
+#: par.c:665 par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "grafiksel parametre \"%s\" çok eski"
 
-#: par.c:668 par.c:1066
+#: par.c:669 par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" bir grafiksel parametre değil"
 
-#: par.c:1119
+#: par.c:1120
 msgid "invalid argument passed to par()"
 msgstr "par()'a geçersiz bir argüman geçirildi"
 
-#: par.c:1163
+#: par.c:1164
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "yerleşimde çok fazla sütun var, sınır %d"
 
-#: par.c:1169
+#: par.c:1170
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "yerleşimde çok fazla dize var, sınır %d"
 
-#: par.c:1171
+#: par.c:1172
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "yerleşimde çok fazla hücre var, sınır %d"

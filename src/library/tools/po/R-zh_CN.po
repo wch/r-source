@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -16,12 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#, fuzzy
-msgid "Reading %s failed with message: %s"
-msgstr ""
-"编译TeX文件%s失败，消息为:\n"
-"%s"
 
 #, fuzzy
 msgid "Checking %s"
@@ -931,6 +925,12 @@ msgstr "错误：没有在这个目录里安装的许可"
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
 
@@ -1340,6 +1340,12 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "Reading %s failed with message: %s"
+#~ msgstr ""
+#~ "编译TeX文件%s失败，消息为:\n"
+#~ "%s"
 
 #~ msgid ","
 #~ msgstr ","

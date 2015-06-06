@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2011-02-18 09:09+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -121,7 +121,7 @@ msgstr "ugyldig verdi oppgjeven for den grafiske parameteren «%s»"
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "den grafiske parameteren «%s» har feil lengd"
 
-#: par.c:262 par.c:672
+#: par.c:262 par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "den grafiske parameteren «%s» kan ikkje definerast"
@@ -148,35 +148,35 @@ msgstr "verdien «nr» i «mfg» er feil, og vert ikkje brukt"
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "verdien «nc» i «mfg» er feil, og vert ikkje brukt"
 
-#: par.c:477
+#: par.c:478
 msgid "calling par(new=TRUE) with no plot"
 msgstr "kallar par(new=TRUE) utan noko plott"
 
-#: par.c:664 par.c:1062
+#: par.c:665 par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "den grafiske parameteren «%s» er utdatert"
 
-#: par.c:668 par.c:1066
+#: par.c:669 par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "«%s» er ikkje ein grafisk parameter"
 
-#: par.c:1119
+#: par.c:1120
 msgid "invalid argument passed to par()"
 msgstr "ugyldig argument sendt til par()"
 
-#: par.c:1163
+#: par.c:1164
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "for mange rader i oppsett (grense: %d)"
 
-#: par.c:1169
+#: par.c:1170
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "for mange kolonnar i oppsett (grense: %d)"
 
-#: par.c:1171
+#: par.c:1172
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "for mange celler i oppsett (grense: %d)"

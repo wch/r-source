@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -105,24 +105,28 @@ msgstr ""
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funzione '%s' non presente nelle tavole delle derivate"
 
-#: deriv.c:642
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
+msgstr ""
+
+#: deriv.c:644
 msgid "variable must be a character string"
 msgstr "la variabile deve essere una stringa character"
 
-#: deriv.c:644
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr "solo il primo elemento è utilizzato come nome di variabile"
 
-#: deriv.c:657
+#: deriv.c:659
 #, fuzzy, c-format
 msgid "invalid expression in '%s'"
 msgstr "espressione non valida in \"%s\""
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 msgid "invalid variable names"
 msgstr "nomi variabili non validi"
 
-#: deriv.c:944
+#: deriv.c:946
 msgid "invalid tag"
 msgstr "'tag' non valido"
 
@@ -366,24 +370,24 @@ msgstr "formula modello non valida in ExtractVars"
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "duplicazione nome '%s' nel data frame nell'usare '.'"
 
-#: model.c:1576
+#: model.c:1579
 msgid "invalid model formula in EncodeVars"
 msgstr "formula modello non valida in EncodeVars"
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr "l'argomento non è un modello valido"
 
-#: model.c:1672
+#: model.c:1675
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' deve essere un vettore di tipo character"
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr "l'argomento 'data' è di tipo sbagliato"
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr "nella formula c'è il '.' ma nessun argomento 'data'"
 
@@ -454,16 +458,16 @@ msgstr "'rho' deve essere un environment"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr ""
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valore mancante o infinito generato durante il calcolo del modello"
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr ""
@@ -735,7 +739,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr "'rho' deve essere un environment"
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
@@ -752,34 +756,34 @@ msgstr ""
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr "m deve essere di tipo list"
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 

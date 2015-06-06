@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -17,12 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.6.4\n"
-
-#, fuzzy
-msgid "Reading %s failed with message: %s"
-msgstr ""
-"la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
-"%s"
 
 #, fuzzy
 msgid "Checking %s"
@@ -990,6 +984,12 @@ msgstr "ERREUR : pas de permission pour installer dans le répertoire"
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "aucun package nommé '%s' n'existe"
 
@@ -1454,6 +1454,12 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
+
+#, fuzzy
+#~ msgid "Reading %s failed with message: %s"
+#~ msgstr ""
+#~ "la compilation du fichier TeX %s a échoué avec le diagnostic :\n"
+#~ "%s"
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition : capture de %s"

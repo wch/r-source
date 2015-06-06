@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: methods 3.3.0\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"Project-Id-Version: R 3.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr ""
 
 msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
@@ -325,6 +326,12 @@ msgstr ""
 msgid "use %s instead."
 msgstr ""
 
+msgid "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr ""
+
 msgid "invalid object for formal method definition: type %s"
 msgstr ""
 
@@ -548,6 +555,9 @@ msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr ""
 
 msgid "invalid value from generic function %s, class %s, expected %s"
+msgstr ""
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
 msgstr ""
 
 msgid "the body of the generic function for %s calls 'standardGeneric' to dispatch on a different name (\"%s\")!"
@@ -814,7 +824,7 @@ msgstr ""
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 
-msgid "invalid mlist element for signature %s at level %d (should be methods list or method, had class %s)"
+msgid "invalid mlist element for signature %s at level %d (should be MethodDefinition or .Primitive, had class %s)"
 msgstr ""
 
 msgid "bad method object stored in method table, class %s"

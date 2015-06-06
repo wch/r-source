@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -20,50 +20,50 @@ msgstr ""
 msgid "cannot clip to rotated viewport"
 msgstr "nie można przypiąć do obróconego okienka ekranu"
 
-#: grid.c:696 grid.c:701 grid.c:790 grid.c:795
+#: grid.c:697 grid.c:702 grid.c:792 grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr ""
 "nie można wyświetlić okienka ekranu na wierzchu (siatka oraz grafika "
 "pomieszały się?)"
 
-#: grid.c:975
+#: grid.c:977
 msgid "attempt to plot on null device"
 msgstr "próba rysowania na pustym urządzeniu"
 
-#: grid.c:1307
+#: grid.c:1309
 msgid "there is no layout defined"
 msgstr "nie określono układu"
 
-#: grid.c:1527
+#: grid.c:1529
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr ""
 "nie znaleziono krawędzi wielokąta (zerowa szerokość lub zerowa wysokość?)"
 
-#: grid.c:1536
+#: grid.c:1538
 msgid "polygon edge not found"
 msgstr "nie znaleziono krawędzi wielokąta"
 
-#: grid.c:1690
+#: grid.c:1692
 msgid "require at least two points to draw arrow"
 msgstr "wymaga co najmniej dwu punktów, aby narysować strzałkę"
 
-#: grid.c:2006
+#: grid.c:2008
 msgid "non-finite control point in Xspline"
 msgstr "nieskończony punkt kontrolny w 'Xspline'"
 
-#: grid.c:2871
+#: grid.c:2873
 msgid "non-finite x or y in graphics path"
 msgstr "nieskończony 'x' lub 'y' w ścieżce grafiki"
 
-#: grid.c:2912
+#: grid.c:2914
 msgid "Empty raster"
 msgstr "Pusty raster"
 
-#: grid.c:3364
+#: grid.c:3368
 msgid "invalid plotting symbol"
 msgstr "Nieprawidłowy rysowany symbol"
 
-#: grid.c:3450
+#: grid.c:3454
 msgid "unable to clip to rotated rectangle"
 msgstr "nie można przypiąć do obróconego prostokąta"
 

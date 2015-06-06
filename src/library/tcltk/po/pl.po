@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -20,29 +20,29 @@ msgstr ""
 msgid "parse error in R expression"
 msgstr "Błąd składni w wyrażeniu R"
 
-#: tcltk.c:171 tcltk.c:248
+#: tcltk.c:176 tcltk.c:253
 msgid "tcl error.\n"
 msgstr "błąd 'tcl'.\n"
 
-#: tcltk.c:200 tcltk.c:745
+#: tcltk.c:205 tcltk.c:750
 msgid "invalid argument"
 msgstr "niepoprawny argument"
 
-#: tcltk.c:304 tcltk.c:322 tcltk.c:395 tcltk.c:458 tcltk.c:510
+#: tcltk.c:309 tcltk.c:327 tcltk.c:400 tcltk.c:463 tcltk.c:515
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "niepoprawny obiekt typu 'tclObj' -- być może zapisany z innej sesji?"
 
-#: tcltk.c:620
+#: tcltk.c:625
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "lista argumentów jest zbyt długa w wewnętrznej funkcji tcltk "
 "'callback_closure'"
 
-#: tcltk.c:653
+#: tcltk.c:658
 msgid "argument is not of correct type"
 msgstr "argument nie jest poprawnego typu"
 
-#: tcltk.c:704
+#: tcltk.c:709
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "brak zmiennej 'DISPLAY' więc Tk nie jest dostępne"
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2015-03-24 20:06 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -286,8 +286,8 @@ msgstr " 環境ナンバーを入力してください。0 を入力すると終
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr ""
-" recover が非対話的に呼び出されました; フレームがダンプされました。debugger"
-"() を使用してみて下さい "
+" recover が非対話的に呼び出されました; フレームがダンプされました。"
+"debugger() を使用してみて下さい "
 
 msgid "No suitable frames for recover()"
 msgstr " recover() に対する適当なフレームがありません "
@@ -1152,6 +1152,9 @@ msgstr " %s を作成できませんでした "
 
 msgid "there is no 'libs' directory in package %s"
 msgstr " パッケージ %s には 'libs' ディレクトリはありません "
+
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr " winDialog() は対話的にしか使用できません "

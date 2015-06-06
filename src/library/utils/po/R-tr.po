@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -1067,6 +1067,9 @@ msgid "failed to create %s"
 msgstr "oluşturulamadı"
 
 msgid "there is no 'libs' directory in package %s"
+msgstr ""
+
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

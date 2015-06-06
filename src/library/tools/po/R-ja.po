@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2015-03-24 20:06 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -13,9 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.5.1.1 \n"
 "X-POOTLE-MTIME: 1427436981.000000 \n"
-
-msgid "Reading %s failed with message: %s"
-msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
 
 msgid "Checking %s"
 msgstr " %s をチェックしています "
@@ -982,6 +979,12 @@ msgstr " エラー: ディレクトリへのインストール許可がありま
 msgid "building a fake installation is disallowed"
 msgstr " まがい物 (fake) インストールの構築は許されていません "
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
 
@@ -1403,6 +1406,9 @@ msgstr[0] " オブジェクト %s は 1 つ以上のデータ呼び出しによ�
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
+
+#~ msgid "Reading %s failed with message: %s"
+#~ msgstr " %s の読み込みに失敗しました．メッセージは以下の通りです: %s "
 
 #~ msgid "assertCondition: caught %s"
 #~ msgstr " assertCondition:  %s をキャッチしました "

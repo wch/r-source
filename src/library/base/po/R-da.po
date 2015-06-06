@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 11:51\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -54,7 +54,8 @@ msgstr "uendelig eller manglende værdier i 'x'"
 msgid "a dimension is zero"
 msgstr "en dimension er nul"
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
+#, fuzzy
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "\"hexNumeric\" og \"digits17\" udelukker hinanden"
 
 msgid "second argument must be a list"
@@ -645,7 +646,8 @@ msgstr ""
 "ødelagt dataramme: kolonner vil blive afkortet eller forlænget med NA'er"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr "'big.mark' og 'decimal.mark' er begge '%s', hvilket kan være forvirrende"
+msgstr ""
+"'big.mark' og 'decimal.mark' er begge '%s', hvilket kan være forvirrende"
 
 msgid "'zero.print' has length > 1"
 msgstr "'zero.print' har længde > 1"
@@ -972,7 +974,8 @@ msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' og 'by.y' angiver forskellige antal kolonner"
 
 msgid "'incomparables' is supported only for merging on a single column"
-msgstr "'incomparables' er kun understøttet for sammenføjning af en enkel kolonne"
+msgstr ""
+"'incomparables' er kun understøttet for sammenføjning af en enkel kolonne"
 
 msgid "additional arguments ignored in message()"
 msgstr "yderligere argumenter ignoreres i message()"
@@ -1362,6 +1365,10 @@ msgstr "'%s' er ikke en eksisterende fil"
 msgid "Timestamp of %s has changed"
 msgstr "Tidsstempel for %s har ændret sig"
 
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x' og 'y' skal have samme længde"
+
 msgid "additional arguments ignored in stop()"
 msgstr "yderligere argumenter ignoreret i stop()"
 
@@ -1704,11 +1711,6 @@ msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3-metode %s blev deklareret i NAMESPACE men ikke fundet"
 msgstr[1] "S3-metoder %s blev deklareret i NAMESPACE men ikke fundet"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "ekstra argument %s vil blive ignoreret"
-msgstr[1] "ekstra argumentet %s vil blive ignoreret"
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "%s er ikke TRUE"
@@ -1719,3 +1721,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Advarselsbesked:\n"
 msgstr[1] "Advarselsbeskeder:\n"
 
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "ekstra argument %s vil blive ignoreret"
+msgstr[1] "ekstra argumentet %s vil blive ignoreret"

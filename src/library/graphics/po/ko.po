@@ -1,6 +1,6 @@
 # Korean translation for R graphics package
 # src/library/graphics/po/ko.po
-# 
+#
 # Copyright (C) 1995-2015 The R Core Team
 #
 # This file is distributed under the same license as the R graphics package.
@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2015-03-30 14:01-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee  <chl948@mail.usask.ca>\n"
@@ -123,7 +123,7 @@ msgstr "그래픽 파라미터 \"%s\"에 지정된 값이 유효하지 않습니
 msgid "graphical parameter \"%s\" has the wrong length"
 msgstr "그래픽 파라미터 \"%s\"는 잘못된 길이를 가지고 있습니다"
 
-#: par.c:262 par.c:672
+#: par.c:262 par.c:673
 #, c-format
 msgid "graphical parameter \"%s\" cannot be set"
 msgstr "그래픽 파라미터 \"%s\"를 설정할 수 없습니다"
@@ -148,35 +148,35 @@ msgstr "\"mfg\"내 'nr'의 값이 잘못되었으므로 무시될 것입니다"
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\"내 'nc'의 값이 잘못되었으므로 무시될 것입니다"
 
-#: par.c:477
+#: par.c:478
 msgid "calling par(new=TRUE) with no plot"
 msgstr "플랏없이 par(new=TRUE)를 호출합니다"
 
-#: par.c:664 par.c:1062
+#: par.c:665 par.c:1063
 #, c-format
 msgid "graphical parameter \"%s\" is obsolete"
 msgstr "그래픽 파라미터 \"%s\"는 필요하지 않습니다"
 
-#: par.c:668 par.c:1066
+#: par.c:669 par.c:1067
 #, c-format
 msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\"는 그래픽 매개변수가 아닙니다"
 
-#: par.c:1119
+#: par.c:1120
 msgid "invalid argument passed to par()"
 msgstr "par()에 전달된 인자는 유효하지 않습니다"
 
-#: par.c:1163
+#: par.c:1164
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 행이 있습니다 (최대 %d입니다)"
 
-#: par.c:1169
+#: par.c:1170
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 열들이 있습니다 (최대 %d입니다)"
 
-#: par.c:1171
+#: par.c:1172
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "레이아웃내에 너무 많은 셀들이 있습니다 (최대 %d개입니다)"

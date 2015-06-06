@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2015-03-20 23:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -16,9 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
-
-msgid "Reading %s failed with message: %s"
-msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
 
 msgid "Checking %s"
 msgstr "Überprüfe %s"
@@ -62,13 +59,12 @@ msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
 msgid ""
 "Functions or methods with usage in documentation object '%s' but not in code:"
 msgstr ""
-"Funktionen bzw. Methoden mit Anleitung im Dokumentations-Objekt '%s' "
-"jedoch nicht im Code"
+"Funktionen bzw. Methoden mit Anleitung im Dokumentations-Objekt '%s' jedoch "
+"nicht im Code"
 
 msgid "Data with usage in documentation object '%s' but not in code:"
 msgstr ""
-"Datensätze mit Anleitung im Dokumentations-Objekt '%s', "
-"jedoch nicht im Code"
+"Datensätze mit Anleitung im Dokumentations-Objekt '%s', jedoch nicht im Code"
 
 msgid "Argument names in code not in docs:"
 msgstr "Argumentnamen im Code (ohne Dokumentation):"
@@ -120,8 +116,8 @@ msgstr "Dokumentierte Objekte kommen in \\usage des Dokuobjekts '%s' nicht vor"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
-"Objekte kommen bei \\usage, aber nicht unter \\alias im "
-"Dokumentations-Objekt '%s' vor"
+"Objekte kommen bei \\usage, aber nicht unter \\alias im Dokumentations-"
+"Objekt '%s' vor"
 
 msgid "Assignments in \\usage in documentation object '%s':"
 msgstr "Zuweisungen in \\usage im Dokumentations-Objekt '%s':"
@@ -368,8 +364,8 @@ msgstr "Siehe Abschnitt %s in '%s'."
 msgid ""
 "Package detach functions should have one argument with name starting with %s."
 msgstr ""
-"Detach-Funktion für Pakete sollte ein Argument haben, dessen Name "
-"mit %s beginnt."
+"Detach-Funktion für Pakete sollte ein Argument haben, dessen Name mit %s "
+"beginnt."
 
 msgid "Package detach functions should not call %s."
 msgstr "Detach-Funktion für Pakete sollten nicht %s aufrufen."
@@ -618,8 +614,8 @@ msgid ""
 "Detected vignette source files (%s) with shared names (%s) and therefore "
 "risking overwriting each others output files"
 msgstr ""
-"Vignetten-Quelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb "
-"die Gefahr gegenseitigen Überschreibens besteht"
+"Vignetten-Quelldateien (%s) mit gemeinsamen Namen (%s) entdeckt, weshalb die "
+"Gefahr gegenseitigen Überschreibens besteht"
 
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
@@ -752,12 +748,6 @@ msgstr "Laden fehlgeschlagen"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertCondition: Erfolgreich eine Bedingung abgefangen"
 
-msgid "assertCondition: caught %s"
-msgstr "assertCondition: %s abgefangen"
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -820,9 +810,6 @@ msgstr "lade umgekehrte Abhängikeiten herunter ..."
 
 msgid "downloading %s ..."
 msgstr "Herunterladen von %s ..."
-
-msgid "installing dependencies %s"
-msgstr "installiere Abhängigkeiten %s"
 
 msgid "checking %s ..."
 msgstr "überprüfe %s ..."
@@ -959,6 +946,12 @@ msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
 
@@ -1019,9 +1012,6 @@ msgid "Cannot extract version info from the following section titles:"
 msgstr ""
 "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation "
 "extrahieren<:"
-
-msgid "%s"
-msgstr "%s"
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -1201,18 +1191,6 @@ msgstr "'x' muss eine Zeichenkette sein"
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
 
-msgid ":"
-msgstr ":"
-
-msgid "latin1"
-msgstr "latin1"
-
-msgid "ASCII"
-msgstr "ASCII"
-
-msgid "byte"
-msgstr "byte"
-
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Zeichenkettenvektor sein"
 
@@ -1329,7 +1307,8 @@ msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural ""
 "Found .Internal calls in methods for the following reference classes:"
 msgstr[0] ".Internal Aufruf in Methoden für folgende Referenzklasse gefunden:"
-msgstr[1] ".Internal Aufrufe in Methoden für folgende Referenzklassen gefunden:"
+msgstr[1] ""
+".Internal Aufrufe in Methoden für folgende Referenzklassen gefunden:"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural ""
@@ -1422,6 +1401,33 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
+
+#~ msgid "Reading %s failed with message: %s"
+#~ msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
+
+#~ msgid "assertCondition: caught %s"
+#~ msgstr "assertCondition: %s abgefangen"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "installiere Abhängigkeiten %s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "latin1"
+#~ msgstr "latin1"
+
+#~ msgid "ASCII"
+#~ msgstr "ASCII"
+
+#~ msgid "byte"
+#~ msgstr "byte"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

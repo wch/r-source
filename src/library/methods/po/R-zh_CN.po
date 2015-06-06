@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "OOPS: something wrong with line %d in '.OldClassesPrototypes'"
+#, fuzzy
+msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "啊呀：'.OldClassesPrototypes'里第%d行哪里出错了"
 
 msgid ""
@@ -433,6 +434,15 @@ msgstr "%s里：\"MethodsList\"元数据目标对象已经不推荐使用了。"
 msgid "use %s instead."
 msgstr "请用%s。"
 
+#, fuzzy
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr "%s和其他\"MethodsList\"元数据目标对象都已经不推荐使用了"
+
+#, fuzzy
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr "%s里：\"MethodsList\"元数据目标对象已经不推荐使用了。"
+
 msgid "invalid object for formal method definition: type %s"
 msgstr "正式方法定义的对象不对: %s种类"
 
@@ -752,6 +762,9 @@ msgstr "%s找不到方法；'cacheGenericsMetaData()'没有作用"
 
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr "类别为%2$s的泛型函数'%1$s'的值不对, 所要求的是%3$s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr ""
 
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
@@ -1103,9 +1116,10 @@ msgstr "方法骨架写于%s "
 msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr "元方法表里方法%1$s，标签%2$s的对象不对，类别不应该是%3$s"
 
+#, fuzzy
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr "无效的mlist元素的标签%s的%d级（应该是方法列表或方法，类另是%s）"
 
 msgid "bad method object stored in method table, class %s"

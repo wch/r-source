@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:05\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -47,7 +47,7 @@ msgstr "'x'里有无穷值或遗漏值"
 msgid "a dimension is zero"
 msgstr "维度为零"
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -1101,10 +1101,6 @@ msgstr "不能在封闭名字空间里进行出口加入"
 msgid "undefined exports: %s"
 msgstr "出口不存在：%s"
 
-#, fuzzy
-msgid "re-exports %s not exported by %s"
-msgstr "'namespace:%2$s'没有出口%1$s这个对象"
-
 msgid "package %s has no 'NAMESPACE' file"
 msgstr "程辑包%s 没有'NAMESPACE'这一文件"
 
@@ -1349,6 +1345,10 @@ msgstr "'%s'不存在"
 
 msgid "Timestamp of %s has changed"
 msgstr "时间戳%s变了"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x'和'y'的长度必需一致"
 
 msgid "additional arguments ignored in stop()"
 msgstr "stop()里的附加参数略过不用"
@@ -1658,10 +1658,6 @@ msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 
-msgid "extra argument %s will be disregarded"
-msgid_plural "extra arguments %s will be disregarded"
-msgstr[0] "额外参数%s忽略不用"
-
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
 msgstr[0] "不是所有的%s都是TRUE"
@@ -1669,6 +1665,19 @@ msgstr[0] "不是所有的%s都是TRUE"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+msgid ""
+"In %s :\n"
+" extra argument %s will be disregarded"
+msgid_plural ""
+"In %s :\n"
+" extra arguments %s will be disregarded"
+msgstr[0] "额外参数%s忽略不用"
+
+#, fuzzy
+#~ msgid "re-exports %s not exported by %s"
+#~ msgstr "'namespace:%2$s'没有出口%1$s这个对象"
 
 #, fuzzy
 #~ msgid "cannot be unloaded."

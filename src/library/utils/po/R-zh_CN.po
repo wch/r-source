@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 20:06\n"
+"POT-Creation-Date: 2015-06-06 13:51\n"
 "PO-Revision-Date: 2011-01-18 13:56+0000\n"
 "Last-Translator: 陈斐 <FeiC@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -1104,6 +1104,9 @@ msgstr "无法建立%s"
 
 msgid "there is no 'libs' directory in package %s"
 msgstr "在程序包%s里找不到'libs'这个目录"
+
+msgid "Only '*.zip' and '*.tar.gz' files can be installed."
+msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"

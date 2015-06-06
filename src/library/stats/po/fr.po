@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 10:09-0800\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:51+0100\n"
 "PO-Revision-Date: 2014-03-17 10:58+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -105,24 +105,28 @@ msgstr "forme incorrecte dans la vérification d'un moins unitaire"
 msgid "Function '%s' is not in the derivatives table"
 msgstr "La fonction '%s' n'est pas dans la table des dérivées"
 
-#: deriv.c:642
+#: deriv.c:641
+msgid "'expr' must be an expression or call"
+msgstr ""
+
+#: deriv.c:644
 msgid "variable must be a character string"
 msgstr "la variable doit être une chaîne de caractères"
 
-#: deriv.c:644
+#: deriv.c:646
 msgid "only the first element is used as variable name"
 msgstr "seulement le premier élément est utilisé comme nom de variable"
 
-#: deriv.c:657
+#: deriv.c:659
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "expression incorrecte dans '%s'"
 
-#: deriv.c:935 model.c:99
+#: deriv.c:937 model.c:99
 msgid "invalid variable names"
 msgstr "nom de variable incorrect"
 
-#: deriv.c:944
+#: deriv.c:946
 msgid "invalid tag"
 msgstr "marque (tag) incorrecte"
 
@@ -366,23 +370,23 @@ msgstr "formule de modèle incorrecte dans ExtractVars"
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nom dupliqué '%s' dans le data frame utilisant '.'"
 
-#: model.c:1576
+#: model.c:1579
 msgid "invalid model formula in EncodeVars"
 msgstr "formule de modèle incorrecte dans EncodeVars"
 
-#: model.c:1662
+#: model.c:1665
 msgid "argument is not a valid model"
 msgstr "l'argument n'est pas un modèle correct"
 
-#: model.c:1672
+#: model.c:1675
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 
-#: model.c:1684
+#: model.c:1687
 msgid "'data' argument is of the wrong type"
 msgstr "l'argument 'data' est d'un mauvais type"
 
-#: model.c:1954
+#: model.c:1957
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' dans la formule et pas d'argument 'data'"
 
@@ -451,17 +455,17 @@ msgstr "'rho' doit être un environnement"
 msgid "'dir' is not a numeric vector of the correct length"
 msgstr "'dir' n'est pas un vecteur numérique de longueur correcte"
 
-#: nls.c:311 nls.c:346
+#: nls.c:311 nls.c:345
 msgid "Missing value or an infinity produced when evaluating the model"
 msgstr "Valeur manquante ou infinie obtenue au cours du calcul du modèle"
 
-#: nls.c:318
+#: nls.c:319
 #, c-format
 msgid "variable '%s' is integer, not numeric"
 msgstr ""
 "la variable '%s' est une valeur entière, non un nombre à virgule flottante"
 
-#: nls.c:320
+#: nls.c:321
 #, c-format
 msgid "variable '%s' is not numeric"
 msgstr "la variable '%s' n'est pas numérique"
@@ -731,7 +735,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: port.c:382 port.c:543
+#: port.c:382 port.c:546
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' doit être un vecteur numérique non vide"
 
@@ -750,36 +754,36 @@ msgstr ""
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques"
 
-#: port.c:457
+#: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' n'est applicable que pour des listes nommées"
 
-#: port.c:478
+#: port.c:481
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() introuvable"
 
-#: port.c:491
+#: port.c:494
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' doit être une matrice numérique de dimension (%d, %d)"
 
-#: port.c:512
+#: port.c:515
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de "
 "longueur %d"
 
-#: port.c:525
+#: port.c:528
 msgid "invalid type for eval_check_store"
 msgstr "type incorrect pour 'eval_check_store'"
 
-#: port.c:544
+#: port.c:547
 msgid "m must be a list"
 msgstr "'m' doit être une liste"
 
-#: port.c:564
+#: port.c:567
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 
