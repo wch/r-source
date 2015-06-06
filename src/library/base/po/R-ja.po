@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
-"Report-Msgid-Bugs-To: bugs.r-project.org \n"
-"POT-Creation-Date: 2015-03-27 13:57 \n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:58\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1389,6 +1389,10 @@ msgstr " '%s' は既存のファイルではありません "
 
 msgid "Timestamp of %s has changed"
 msgstr " %s のタイムスタンプを変更しました "
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 
 msgid "additional arguments ignored in stop()"
 msgstr " stop() により追加の引数は無視されました "

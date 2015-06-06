@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 10:19\n"
+"POT-Creation-Date: 2015-06-06 13:58\n"
 "PO-Revision-Date: 2015-03-26 14:56+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -290,7 +290,8 @@ msgstr ""
 "Objekt der Klasse %s"
 
 msgid "must supply 'generic.function' or 'class'"
-msgstr "entweder eine 'generic.function' oder eine 'class' muss angegeben werden"
+msgstr ""
+"entweder eine 'generic.function' oder eine 'class' muss angegeben werden"
 
 msgid "%s is not an S4 generic function in %s; methods not removed"
 msgstr "%s ist keine generische S4 Funktion in %s; Methoden nicht entfernt"
@@ -507,6 +508,17 @@ msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet"
 
 msgid "use %s instead."
 msgstr "nutze stattdessen %s."
+
+#, fuzzy
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
+msgstr ""
+"%s ist, zusammen mit der Nutzung der \"MethodsList\" Metsdatenobjekte. "
+"veraltet."
+
+#, fuzzy
+msgid "in %s: use of \"MethodsList\" metadata objects is defunct."
+msgstr "In %s: Nutzung der \"MethodsList\" Metadatenobjekte ist veraltet"
 
 msgid "invalid object for formal method definition: type %s"
 msgstr "unzulässiges Objekt für die formale Methodendefinition: Typ %s"
@@ -888,6 +900,9 @@ msgstr ""
 msgid "invalid value from generic function %s, class %s, expected %s"
 msgstr ""
 "unzulässiger Wert aus der generischen Funktion %s, Klasse %s, erwartet war %s"
+
+msgid "\"MethodsList\" is defunct; allMethods now are empty"
+msgstr ""
 
 msgid ""
 "the body of the generic function for %s calls 'standardGeneric' to dispatch "
@@ -1298,9 +1313,10 @@ msgid "invalid object in meta table of methods for %s, label %s, had class %s"
 msgstr ""
 "Ungültiges Objekt im Metatable der Methoden für %s, Label %s, hatte Klasse %s"
 
+#, fuzzy
 msgid ""
-"invalid mlist element for signature %s at level %d (should be methods list "
-"or method, had class %s)"
+"invalid mlist element for signature %s at level %d (should be "
+"MethodDefinition or .Primitive, had class %s)"
 msgstr ""
 "ungültiges mlist Element für die Signatur %s auf Stufe %d (sollte\n"
 "Methodenliste oder Methode sein, hat Klasse %s)"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-01 13:20\n"
+"POT-Creation-Date: 2015-06-06 13:58\n"
 "PO-Revision-Date: 2015-03-20 23:10+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -749,12 +749,6 @@ msgstr "Laden fehlgeschlagen"
 msgid "assertConditon: Successfully caught a condition"
 msgstr "assertCondition: Erfolgreich eine Bedingung abgefangen"
 
-msgid "assertCondition: caught %s"
-msgstr "assertCondition: %s abgefangen"
-
-msgid ","
-msgstr ","
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -817,9 +811,6 @@ msgstr "lade umgekehrte Abhängikeiten herunter ..."
 
 msgid "downloading %s ..."
 msgstr "Herunterladen von %s ..."
-
-msgid "installing dependencies %s"
-msgstr "installiere Abhängigkeiten %s"
 
 msgid "checking %s ..."
 msgstr "überprüfe %s ..."
@@ -956,6 +947,12 @@ msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
+msgid ""
+"See\n"
+"  %s\n"
+"for details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
 
@@ -1016,9 +1013,6 @@ msgid "Cannot extract version info from the following section titles:"
 msgstr ""
 "Kann aus den folgenden Abschnittsüberschriften keine Versioninformation "
 "extrahieren<:"
-
-msgid "%s"
-msgstr "%s"
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -1197,18 +1191,6 @@ msgstr "'x' muss eine Zeichenkette sein"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
-
-msgid ":"
-msgstr ":"
-
-msgid "latin1"
-msgstr "latin1"
-
-msgid "ASCII"
-msgstr "ASCII"
-
-msgid "byte"
-msgstr "byte"
 
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
@@ -1419,6 +1401,30 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] "%d der Pakettests fehlgeschlagen"
 msgstr[1] "%d der Pakettests fehlgeschlagen"
+
+#~ msgid "assertCondition: caught %s"
+#~ msgstr "assertCondition: %s abgefangen"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "installing dependencies %s"
+#~ msgstr "installiere Abhängigkeiten %s"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "latin1"
+#~ msgstr "latin1"
+
+#~ msgid "ASCII"
+#~ msgstr "ASCII"
+
+#~ msgid "byte"
+#~ msgstr "byte"
 
 #, fuzzy
 #~ msgid "Undeclared package used in Rd xrefs:"

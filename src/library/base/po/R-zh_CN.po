@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-03-24 11:51\n"
+"POT-Creation-Date: 2015-06-06 13:58\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -47,7 +47,7 @@ msgstr "'x'里有无穷值或遗漏值"
 msgid "a dimension is zero"
 msgstr "维度为零"
 
-msgid "\"hexNumeric\"and \"digits17\" are mutually exclusive"
+msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -1345,6 +1345,10 @@ msgstr "'%s'不存在"
 
 msgid "Timestamp of %s has changed"
 msgstr "时间戳%s变了"
+
+#, fuzzy
+msgid "'x' and 'to' must refer to same file"
+msgstr "'x'和'y'的长度必需一致"
 
 msgid "additional arguments ignored in stop()"
 msgstr "stop()里的附加参数略过不用"

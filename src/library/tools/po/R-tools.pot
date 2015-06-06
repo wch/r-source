@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tools 3.2.0\n"
-"POT-Creation-Date: 2015-03-02 10:09\n"
+"Project-Id-Version: R 3.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-06-06 13:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -637,12 +638,6 @@ msgstr ""
 msgid "assertConditon: Successfully caught a condition"
 msgstr ""
 
-msgid "assertCondition: caught %s"
-msgstr ""
-
-msgid ","
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -704,9 +699,6 @@ msgid "downloading reverse dependencies ..."
 msgstr ""
 
 msgid "downloading %s ..."
-msgstr ""
-
-msgid "installing dependencies %s"
 msgstr ""
 
 msgid "checking %s ..."
@@ -832,6 +824,9 @@ msgstr ""
 msgid "building a fake installation is disallowed"
 msgstr ""
 
+msgid "See\n  %s\nfor details."
+msgstr ""
+
 msgid "there is no package called '%s'"
 msgstr ""
 
@@ -878,9 +873,6 @@ msgid "Chunk %s:\n%s"
 msgstr ""
 
 msgid "Cannot extract version info from the following section titles:"
-msgstr ""
-
-msgid "%s"
 msgstr ""
 
 msgid "Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\itemize."
@@ -1040,18 +1032,6 @@ msgid "'x' must be a single character string"
 msgstr ""
 
 msgid "test '%s' is not available"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
-msgid "latin1"
-msgstr ""
-
-msgid "ASCII"
-msgstr ""
-
-msgid "byte"
 msgstr ""
 
 msgid "argument 'x' must be a character vector"
