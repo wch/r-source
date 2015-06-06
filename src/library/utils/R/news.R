@@ -72,7 +72,7 @@ function(query, package = "R", lib.loc = NULL,
 	db <- db[r, ]
 	if (!all(r))
 	    db <- structure(db, subset = r)
-	else if(has_bad_attr)
+	if(has_bad_attr)
 	    db <- structure(db, bad = bad[r])
     }
     db
