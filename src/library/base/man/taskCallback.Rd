@@ -108,7 +108,7 @@ n <- addTaskCallback(times(4))
 # now remove it, assuming it is still first in the list.
 removeTaskCallback(n)
 
-## See how the handler is called every time till "self distruction":
+## See how the handler is called every time till "self destruction":
 
 addTaskCallback(times(4)) # counts as once already
 

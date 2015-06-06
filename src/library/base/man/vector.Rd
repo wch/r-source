@@ -21,7 +21,7 @@ is.vector(x, mode = "any")
     \code{"any"}.  Currently, \code{is.vector()} allows any type (see
     \code{\link{typeof}}) for \code{mode}, and when mode is not
     \code{"any"}, \code{is.vector(x, mode)} is almost the same as
-    \code{typeof(x) == mode}.}% differences: for mode=NA, or mode="numeric"
+    \code{typeof(x) == mode}.}% differences: for mode = NA, or mode = "numeric"
   \item{length}{a non-negative integer specifying the desired length.
     For a long vector, i.e., \code{length > .Machine$integer.max}, it
     has to be of type \code{"double"}.  Supplying an argument of length
