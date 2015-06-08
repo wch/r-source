@@ -2044,6 +2044,7 @@ attribute_hidden
 int Scollate(SEXP a, SEXP b)
 {
     if (!collationLocaleSet) {
+    	int errsv = errno;      /* OSX may set errno in the operations below. */
 	collationLocaleSet = 1;
 #ifndef Win32
 	if (strcmp("C", getLocale()) ) {
@@ -2061,6 +2062,7 @@ int Scollate(SEXP a, SEXP b)
 		error("failed to open ICU collator (%d)", status);
 	    }
 	}
+	errno = errsv;
     }
     if (collator == NULL)
 	return collationLocaleSet == 2 ?

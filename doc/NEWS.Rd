@@ -213,6 +213,9 @@
 
       \item \code{slotNames(.)} is now correct for \code{"signature"}
       objects (mostly used internally in \pkg{methods}).
+      
+      \item On some systems, the first string comparison after
+      a locale change would result in \code{NA}.
     }
   }
 }
