@@ -5,11 +5,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2015
-@set FAQ_DATE @value{FAQ_YEAR}-04-16
-@set REL_YEAR 2014
+@set FAQ_DATE @value{FAQ_YEAR}-06-08
+@set REL_YEAR 2015
 @set REL_MAJOR 3
 @set REL_MINOR 2
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 @documentlanguage en
