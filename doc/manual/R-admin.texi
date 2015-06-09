@@ -1699,7 +1699,8 @@ defaults write org.R-project.R NSAppSleepDisabled -bool YES
 Using the @code{X11} device or the X11-based versions of @code{View()}
 and @code{edit()} for data frames and matrices (the latter are the
 default for command-line @R{} but not @Rapp{}) requires an X sub-system
-to be installed: see @ref{OS X}.  (So do some third-party packages.)
+to be installed: see @ref{OS X}.  (As do the @pkg{tcltk} package and
+some third-party packages.)
 
 @node Uninstalling under OS X, Multiple versions, Running R under OS X, Installing R under OS X
 @section Uninstalling under OS X
@@ -2028,10 +2029,10 @@ containing either or both architectures (32- and 64-bit).
 
 A few of the binary packages need other software to be installed on your
 system: see for example
-@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.1/@/@@ReadMe}.
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/contrib/@/3.2/@/@@ReadMe}.
 Packages using Gtk+ (@CRANpkg{Cairo}, @CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the @file{bin}
-directory of a bundled distribution from
+directory of a bundled distribution of Gtk2 from
 @uref{http://www.gtk.org/@/download/@/win32.php} or
 @uref{http://www.gtk.org/@/download/@/win64.php} in the path: it should
 work to have both 32- and 64-bit Gtk+ @file{bin} directories in the path
@@ -2042,9 +2043,9 @@ additional tools are needed if the package does not contain compiled
 code, and @code{install.packages(type="source")} will work for such
 packages (and for those with compiled code if the tools (see @ref{The
 Windows toolset}) are in the path).  We have seen occasional permission
-problems after unpacking source packages on some Windows 7 and Server
-2008 systems: these have been circumvented by setting the environment
-variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
+problems after unpacking source packages on some systems: these have
+been circumvented by setting the environment variable
+@env{R_INSTALL_TAR} to @samp{tar.exe}.
 @enindex R_INSTALL_TAR
 
 If you have only a source package that is known to work with current
@@ -2085,7 +2086,7 @@ Unix-alike.  This can be set in @file{src/gnuwin/MkRules.local} when
 a file such as @file{etc/i386/Makevars.site}, which does not exist by
 default.}  @file{etc/i386/Makeconf} or @file{etc/x64/Makeconf} for an
 installed version of @R{}.  The version used by @acronym{CRAN} can be
-installed as described in @xref{Building from source}.
+installed as described in @ref{Building from source}.
 
 
 @node OS X packages, Customizing package compilation, Windows packages, Installing packages
