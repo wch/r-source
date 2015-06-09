@@ -1439,9 +1439,8 @@ will need to tell your users how to make use of it:
 @noindent
 It should work with no further user action as from @R{} 3.0.0.
 
-@samp{BWidget} needs to be installed by the user for OS X with @R{}
-2.x.y and on other OSes.  This is fairly easy to do: first find the
-Tcl/Tk search path:
+@samp{BWidget} needs to be installed by the user on other OSes.  This is
+fairly easy to do: first find the Tcl/Tk search path:
 
 @example
 library(tcltk)
@@ -1451,11 +1450,11 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 @noindent
 then download the sources from
 @uref{http://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
-at the command line run
+at the command line run something like
 
 @example
-tar xf bwidget-1.9.6.tar.gz
-sudo mv bwidget-1.9.6 /usr/local/lib
+tar xf bwidget-1.9.8.tar.gz
+sudo mv bwidget-1.9.8 /usr/local/lib
 @end example
 
 @noindent
@@ -2042,23 +2041,18 @@ should do their own @command{configure} checks.
 There is nothing to say what version of OpenMP is supported: version 3.0
 (May 2008) is supported by recent versions of the Linux, Windows and
 Solaris platforms, but portable packages cannot assume that end users
-have recent versions.  The compilers used on earlier versions of OS X
-had partial support for OpenMP 2.5, but this was not enabled in the
-@acronym{CRAN} build of @R{}.  As from OS X 10.9 @command{clang} is
-used, and the Apple builds currently@footnote{Projects to add it has
-been announced at @uref{http://clang-omp.github.io/} and
-@uref{http://openmp.llvm.org/}, but it is unknown when or even if the
-Apple builds will incorporate it.} have no OpenMP support.
+have recent versions.  OS X nowadays uses @command{clang}, and the Apple
+builds currently@footnote{Projects to add it has been announced, but it
+is unknown when or even if the Apple builds will incorporate them.}
+have no OpenMP support.
 
 The performance of OpenMP varies substantially between platforms.  Both
-the Windows and the Apple OS X@footnote{using the @code{libgomp} from
-@command{g++} 4.2: versions using @code{libiomp} seem better.}
-implementations have substantial overheads and are only beneficial if
-quite substantial tasks are run in parallel.  Also, on Windows new
-threads are started with the default@footnote{Windows, not MinGW-w64
-default.} FPU control word, so computations done on OpenMP threads will
-not make use of extended-precision arithmetic which is the default for
-the main process.
+the Windows and earlier Apple OS X implementations have substantial
+overheads and are only beneficial if quite substantial tasks are run in
+parallel.  Also, on Windows new threads are started with the
+default@footnote{Windows, not MinGW-w64 default.} FPU control word, so
+computations done on OpenMP threads will not make use of
+extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c http://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
@@ -2371,10 +2365,7 @@ extension @file{.f90} or @file{.f95}.  For platforms using
 @command{gfortran}, you may need to include @option{-std=f2003} or
 @option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
 Fortran 95 with non-standard extensions.  The Solaris @command{f95}
-compiler `accepts some Fortran 2003 features'.  Note that the compiler
-used for OS X <= 10.8 is @command{gfortran 4.2.3} which has limited
-Fortran 2003 support
-(@uref{http://gcc.gnu.org/@/onlinedocs/@/gcc-4.2.3/@/gfortran/}).
+compiler `accepts some Fortran 2003 features'.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others. (Module
@@ -2395,24 +2386,23 @@ cmi.o dmi.o: iface.o
 @node Using C++11 code,  , Using F95 code, Configure and cleanup
 @subsection Using C++11 code
 
-@R{} can be built without a C++ compiler although one is available
-(but not necessarily installed) on all known @R{} platforms.
-For full portability across platforms, all
-that can be assumed is approximate support for the C++98 standard (the
-widely used @command{g++} deviates considerably from the standard).
-Some compilers have a concept of `C++03' (`essentially a bug fix') or
-`C++ Technical Report 1' (TR1), an optional addition to the `C++03' revision
-which was published in 2007.  Finally a revised standard was published
-in 2011 and compilers with fairly complete implementations are becoming
-available.  C++11 added all of the C99 features which are not otherwise
-implemented in C++, and C++ compilers commonly accept C99 extensions to
-C++98. A minor update to C++11 (sometimes known as C++14) was approved
-in August 2014.
+@R{} can be built without a C++ compiler although one is available (but
+not necessarily installed) on all known @R{} platforms.  For full
+portability across platforms, all that can be assumed is approximate
+support for the C++98 standard (the widely used @command{g++} deviates
+considerably from the standard).  Some compilers have a concept of
+`C++03' (`essentially a bug fix') or `C++ Technical Report 1' (TR1), an
+optional addition to the `C++03' revision which was published in 2007.
+A revised standard was published in 2011 and compilers with fairly
+complete implementations are becoming available.  C++11 added all of the
+C99 features which are not otherwise implemented in C++, and C++
+compilers commonly accept C99 extensions to C++98. A minor update to
+C++11 (sometimes known as C++14) was approved in August 2014.
 
-From version 3.1.0, @R{} provides support for C++11 in packages, in
-addition to C++98.  This support is not uniform across platforms as
-it depends on the capabilities of the compiler (see below).  When @R{}
-is configured, it will determine whether the C++ compiler supports C++11
+Since version 3.1.0, @R{} has provided support for C++11 in packages in
+addition to C++98.  This support is not uniform across platforms as it
+depends on the capabilities of the compiler (see below).  When @R{} is
+configured, it will determine whether the C++ compiler supports C++11
 and which compiler flags, if any, are required to enable C++11 support.
 For example, recent versions of @command{g++} or @command{clang++}
 accept the compiler flag @option{-std=c++11}, and earlier versions
@@ -2472,20 +2462,30 @@ enable support for the 2014 revision using something like @option{-std=c++14}
 or @option{-std=c++1y}.
 
 As noted above, support for C++11 varies across platforms.  The default
-compiler@footnote{OS X 10.7 and later have @command{clang++} but for
-10.7 and 10.8 it uses the @command{g++} 4.2.x headers.} for OS X (<=
-10.8) is based on GCC 4.2.1 and has no support for anything other than
-the GNU version of C++98 and GNU extensions (which include TR1).  The
-default compiler on Windows is GCC 4.6.x and supports the
-@option{-std=c++0x} flag and some C++11 features (see
-@uref{http://gcc.gnu.org/@/gcc-4.6/@/cxx0x_status.html}).  On these
-platforms, it is necessary to select a different compiler for C++11,
-@emph{via} personal or site @file{Makevars} files.
+compiler on Windows is GCC 4.6.x and supports the @option{-std=c++0x}
+flag and some C++11 features (see
+@uref{http://gcc.gnu.org/@/gcc-4.6/@/cxx0x_status.html}).  On some
+platforms, it may be possible or necessary to select a different
+compiler for C++11, @emph{via} personal or site @file{Makevars} files.
 
 There is no guarantee that C++11 can be used in a package in combination
 with any other compiled language (even C), as the C++11 compiler may be
 incompatible with the native compilers for the platform.  (There are
 known problems mixing C++11 with Fortran.)
+
+If a package using C++11 has a @command{configure} script it is
+essential that it selects the correct compiler, @emph{via} something like
+
+@example
+CXX1X=`"$@{R_HOME@}/bin/R" CMD config CXX11X`
+CXX1XSTD=`"$@{R_HOME@}/bin/R" CMD config CXX11XSTD`
+CXX="$(CXX1X) $(CXX1XSTD)"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11XFLAGS`
+AC_LANG(C++)
+@end example
+
+@noindent
+(paying attention to all the quotes required).
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -3019,9 +3019,8 @@ will be installed as a subdirectory of @file{location}, and the package binary
 will be created in the current directory.
 
 Other options for @command{R CMD INSTALL} can be found using @command{R
-CMD INSTALL --help}, and platform-specific details for special cases
-(e.g. handling Fortran sources on OS X) are discussed in the
-platform-specific FAQs.
+CMD INSTALL --help}, and platform-specific details for special cases are
+discussed in the platform-specific FAQs.
 
 
 @c In much earlier versions of @R{}, @command{R CMD build --binary} could
