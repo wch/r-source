@@ -3862,7 +3862,7 @@ function(package, lib.loc = NULL)
                                                           silent = TRUE)))
             }, type = "output")
         }
-        runif(1) # create .Random.seed
+        stats::runif(1)                 # create .Random.seed
         compat <- new.env(hash=TRUE)
         if(.Platform$OS.type != "unix") {
             assign("nsl", function(hostname) {}, envir = compat)
