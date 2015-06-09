@@ -21,7 +21,7 @@
 browseVignettes <- function(package = NULL, lib.loc = NULL, all = TRUE)
 {
 
-    vinfo <- tools:::getVignetteInfo(package, lib.loc, all)
+    vinfo <- tools::getVignetteInfo(package, lib.loc, all)
     pkgs <- unique(vinfo[, "Package"])
     db <- lapply(pkgs, function(p) vinfo[vinfo[,"Package"] == p,,drop=FALSE])
     names(db) <- pkgs

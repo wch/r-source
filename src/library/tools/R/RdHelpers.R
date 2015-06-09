@@ -66,7 +66,7 @@ Rd_package_DESCRIPTION <- function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 	tabular <- function(col1, col2)
 	    c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
-	desc <- packageDescription(pkg, lib.loc = lib.loc)
+	desc <- utils::packageDescription(pkg, lib.loc = lib.loc)
 	if (pkg != desc[["Package"]])
 	    stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
 	desc <- desc[names(desc) != "Built"] # Probably a stale value

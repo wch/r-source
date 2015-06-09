@@ -242,9 +242,9 @@ function(db, predicate, recursive = TRUE)
     ## Now find the recursive reverse dependencies of these and the
     ## non-standard packages missing from the db.
     rdepends <-
-        tools:::package_dependencies(db1$Package[ind], db = db1,
-                                     reverse = TRUE,
-                                     recursive = recursive)
+        tools::package_dependencies(db1$Package[ind], db = db1,
+                                    reverse = TRUE,
+                                    recursive = recursive)
     rdepends <- unique(unlist(rdepends))
     ind[match(rdepends, db1$Package, nomatch = 0L)] <- TRUE
 

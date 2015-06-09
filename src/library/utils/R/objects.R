@@ -309,7 +309,7 @@ isS3method <- function(method, f, class, envir = parent.frame())
 	## know: f is a knownS3generic, and method m is a visible function
 	pkg <- if(isNamespace(em <- environment(m))) environmentName(em)
 	       else if(is.primitive(m)) "base" else NULL
-	return(is.na(match(method, tools:::nonS3methods(pkg)))) ## TRUE unless an exception
+	return(is.na(match(method, tools::nonS3methods(pkg)))) ## TRUE unless an exception
     }
     ## also look for registered method in namespaces
     defenv <- if(!is.na(w <- .knownS3Generics[f])) asNamespace(w)

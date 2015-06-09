@@ -341,7 +341,7 @@ function(dir,
 
     timings <- do.call(rbind, lapply(timings, summary))
     rownames(timings) <- pnames
-    write.table(timings, "timings.tab")
+    utils::write.table(timings, "timings.tab")
 
     file.rename(sprintf("%s.Rcheck", rnames),
                 sprintf("rdepends_%s.Rcheck", rnames))
@@ -582,7 +582,7 @@ function(dir, all = FALSE, full = FALSE)
         tfiles <- Sys.glob(file.path(R_check_outdirs(dir, all = all),
                                      "*-Ex.timings"))
         if(length(tfiles)) message("")
-        timings <- lapply(tfiles, read.table, header = TRUE)
+        timings <- lapply(tfiles, utils::read.table, header = TRUE)
         ## Order by CPU time.
         timings <- lapply(timings,
                           function(x)

@@ -19,7 +19,7 @@
 vignette <-
     function(topic, package = NULL, lib.loc = NULL, all = TRUE)
 {
-    vinfo <- tools:::getVignetteInfo(package, lib.loc, all)
+    vinfo <- tools::getVignetteInfo(package, lib.loc, all)
     
     if(!missing(topic)) {
         topic <- topic[1L]               # Just making sure ...

@@ -21,12 +21,12 @@ function()
 {
     ## See <http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml>.
     baseurl <- "http://www.iana.org/assignments/uri-schemes/"
-    permanent <- read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
-                          stringsAsFactors = FALSE)
-    provisional <- read.csv(url(paste0(baseurl, "uri-schemes-2.csv")),
-                            stringsAsFactors = FALSE)
-    historical <- read.csv(url(paste0(baseurl, "uri-schemes-3.csv")),
-                           stringsAsFactors = FALSE)
+    permanent <- utils::read.csv(url(paste0(baseurl, "uri-schemes-1.csv")),
+                                 stringsAsFactors = FALSE)
+    provisional <- utils::read.csv(url(paste0(baseurl, "uri-schemes-2.csv")),
+                                   stringsAsFactors = FALSE)
+    historical <- utils::read.csv(url(paste0(baseurl, "uri-schemes-3.csv")),
+                                  stringsAsFactors = FALSE)
     db <- rbind(permanent, provisional, historical)
     db$Category <-
         rep.int(c("permanent", "provisional", "historical"),
@@ -296,8 +296,8 @@ function()
     ## See
     ## <http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>
     baseurl <- "http://www.iana.org/assignments/http-status-codes/"
-    db <- read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
-                   stringsAsFactors = FALSE)
+    db <- utils::read.csv(url(paste0(baseurl, "http-status-codes-1.csv")),
+                          stringsAsFactors = FALSE)
     ## Drop "Unassigned".
     db[db$Description != "Unassigned", ]
 }

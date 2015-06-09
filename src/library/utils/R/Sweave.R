@@ -528,7 +528,7 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
 	## .build_packages() ...
 	message("Compacting PDF document")
 	if(compact %in% c("gs", "gs+qpdf", "both")) {
-	    gs_cmd <- tools:::find_gs_cmd(Sys.getenv("R_GSCMD", ""))
+	    gs_cmd <- tools::find_gs_cmd(Sys.getenv("R_GSCMD", ""))
 	    gs_quality <- "ebook"
 	} else {
 	    gs_cmd <- ""

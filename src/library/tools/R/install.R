@@ -2007,8 +2007,9 @@
     outman <- file.path(outDir, "help")
     dir.create(outman, showWarnings = FALSE)
     MM <- M[re(M[, 1L]), 1:2]
-    write.table(MM, file.path(outman, "AnIndex"),
-                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    utils::write.table(MM, file.path(outman, "AnIndex"),
+                       quote = FALSE, row.names = FALSE, col.names = FALSE,
+                       sep = "\t")
     a <- structure(MM[, 2L], names=MM[, 1L])
     saveRDS(a, file.path(outman, "aliases.rds"))
 

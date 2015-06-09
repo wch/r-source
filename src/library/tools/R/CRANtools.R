@@ -328,7 +328,7 @@ function(mirrors = NULL, verbose = FALSE)
     master_ts3 <- read_timestamp(master, path_ts3)
 
     if(is.null(mirrors)) {
-        mirrors <- as.character(getCRANmirrors(all = TRUE)$URL)
+        mirrors <- as.character(utils::getCRANmirrors(all = TRUE)$URL)
     }
 
     results <- lapply(mirrors,
@@ -398,7 +398,7 @@ function()
     ## catches availability in standard repositories, but not in
     ## additional repositories.
     archived <- setdiff(names(CRAN_archive_db()),
-                        c(rownames(available.packages(filters = list())),
+                        c(rownames(utils::available.packages(filters = list())),
                           unlist(.get_standard_package_names(),
                                  use.names = FALSE)))
     y$xrefs_likely_to_archived_CRAN_packages <-

@@ -64,7 +64,7 @@ httpd <- function(path, query, ...)
     {
     	bool <- function(x) as.logical(as.numeric(x))
         res <- if(identical(names(query), "category")) {
-            help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
+            utils::help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
         } else if(identical(names(query), "results")) {
             utils:::.hsearch_results()
         } else {
@@ -107,7 +107,7 @@ httpd <- function(path, query, ...)
             args$fields <- fields
             args$use_UTF8 <- TRUE
             args$types <- types
-            do.call(help.search, args)
+            do.call(utils::help.search, args)
         }
         types <- res$types
         res <- res$matches
@@ -166,13 +166,13 @@ httpd <- function(path, query, ...)
         concepts <- utils::hsearch_db_concepts()
         s <- concepts$Concept
         out <-
-            c(tools:::HTMLheader("Help search concepts"),
+            c(HTMLheader("Help search concepts"),
               c("",
                 "<table>",
                 "<tr><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
                 paste0("<tr><td>",
                        "<a href=\"/doc/html/Search?pattern=",
-                       vapply(reQuote(s), URLencode, "", reserved = TRUE),
+                       vapply(reQuote(s), utils::URLencode, "", reserved = TRUE),
                        "&fields.concept=1&agrep=0\">",
                        shtmlify(substring(s, 1, 80)),
                        "</a>",
@@ -190,7 +190,7 @@ httpd <- function(path, query, ...)
     .HTML_hsearch_db_keywords <- function() {
         keywords <- utils::hsearch_db_keywords()
         out <-
-            c(tools:::HTMLheader("Help search keywords"),
+            c(HTMLheader("Help search keywords"),
               c("",
                 "<table>",
                 "<tr><th style=\"text-align: left\">Keyword</th><th style=\"text-align: left\">Concept</th><th>Frequency</th><th>Packages</th><tr>",
@@ -309,9 +309,9 @@ httpd <- function(path, query, ...)
     	topic <- sub(topicRegexp, "\\2", path)
         ## if a package is specified, look there first, then everywhere
     	if (!is.null(pkg)) # () avoids deparse here
-    	    file <- help(topic, package = (pkg), help_type = "text")
+    	    file <- utils::help(topic, package = (pkg), help_type = "text")
     	if (!length(file))
-            file <- help(topic, help_type = "text", try.all.packages = TRUE)
+            file <- utils::help(topic, help_type = "text", try.all.packages = TRUE)
 	if (!length(file)) {
             msg <- gettextf("No help found for topic %s in any package.",
                             mono(topic))
@@ -402,8 +402,8 @@ httpd <- function(path, query, ...)
             if(is.na(tmp)) {
                 msg <- gettextf("Link %s in package %s could not be located",
                                 mono(helpdoc), mono(pkg))
-                files <- help(helpdoc, help_type = "text",
-                              try.all.packages = TRUE)
+                files <- utils::help(helpdoc, help_type = "text",
+                                     try.all.packages = TRUE)
                 if (length(files)) {
                     path <- dirname(dirname(files))
                     files <- paste0('/library/', basename(path), '/html/',

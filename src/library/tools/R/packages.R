@@ -200,7 +200,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 dependsOnPkgs <-
 function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
          recursive = TRUE, lib.loc = NULL,
-         installed = installed.packages(lib.loc, fields = "Enhances"))
+         installed = utils::installed.packages(lib.loc, fields = "Enhances"))
 {
     if(identical(dependencies, "all"))
         dependencies <-
