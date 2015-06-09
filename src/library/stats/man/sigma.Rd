@@ -44,8 +44,8 @@ sigma(object, ...)
   deviance per degree of freedom in more general models.
   In some generalized linear modelling (\code{\link{glm}}) contexts,
   \eqn{sigma^2} (\code{sigma(.)^2}) is called \dQuote{dispersion
-    (parameter)}.  Consequently, for well-fitting binomial or poisson
-  glm's, \code{sigma} is around 1.
+    (parameter)}.  Consequently, for well-fitting binomial or Poisson
+  GLMs, \code{sigma} is around 1.
 
   Very strictly speaking, \eqn{\hat{\sigma}}{\sigma^} (\dQuote{\eqn{\sigma} hat})
   is actually \eqn{\sqrt{\widehat{\sigma^2}}}{\sqrt(hat(\sigma^2))}.

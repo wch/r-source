@@ -188,7 +188,7 @@
       correctly propagated from \code{.getRequiredPackages2()}.
 
       \item Under some circumstances using the internal PCRE when
-      building \R fron source would cause external libs such as
+      building \R from source would cause external libs such as
       \code{-llzma} to be omitted from the main link.
 
       \item The .Primitive default methods of the logic operators, i.e.,
