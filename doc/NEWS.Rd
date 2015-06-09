@@ -100,7 +100,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.2.0 patched}{
+\section{\Rlogo CHANGES IN R 3.2.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{utf8ToInt()} now checks that its input is valid UTF-8
