@@ -5440,7 +5440,7 @@ bcprof <- function(expr) {
     expr
     .Internal(bcprofstop())
     val <- structure(.Internal(bcprofcounts()),
-                     names = compiler:::Opcodes.names)
+                     names = Opcodes.names)
     hits <- sort(val[val > 0], decreasing = TRUE)
     pct <- round(100 * hits / sum(hits), 1)
     data.frame(hits = hits, pct = pct)
