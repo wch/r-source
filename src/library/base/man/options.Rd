@@ -32,12 +32,12 @@ getOption(x, default = NULL)
 \arguments{
   \item{\dots}{any options can be defined, using \code{name = value}.
     However, only the ones below are used in base \R.
-    
+
     Options can also be passed by giving a single unnamed argument which
     is a named list.
   }
   \item{x}{a character string holding an option name.}
-  
+
   \item{default}{if the specified option is not set in the options list,
     this value is returned.  This facilitates retrieving an option and
     checking whether it is set and setting it separately if not.}
@@ -74,7 +74,7 @@ getOption(x, default = NULL)
       used by \code{\link{plot.lm}}.}
 
     \item{\code{browserNLdisabled}:}{logical: whether newline is
-      disabled as a synonym for \code{"n"} is the browser.}
+      disabled as a synonym for \code{"n"} in the browser.}
 
     \item{\code{checkPackageLicense}:}{logical, not set by default.  If
       true, \code{\link{library}} asks a user to accept any non-standard
@@ -250,7 +250,7 @@ getOption(x, default = NULL)
 #ifdef unix
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
-	
+
       This is the set of characters use to break the input line into
       tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer\cr
@@ -554,7 +554,7 @@ getOption(x, default = NULL)
       printed on URL downloads etc, using the \code{"internal"} method.
       Default is 2, for failure causes.  Set to 1 or 0 to get more
       detailed information.
-  
+
       For methods based on \code{libcurl} a value less than 2 (the
       default) selects verbose output.
     }
@@ -576,7 +576,7 @@ getOption(x, default = NULL)
       \code{"interactive"} if unset.  However, \code{install.packages}
       uses \code{"never"} unless a \command{make} program is found,
       consulting the environment variable \env{MAKE}.}
-    
+
     \item{\code{mailer}:}{default emailing method used by
       \code{\link{create.post}} and hence \code{\link{bug.report}} and
       \code{\link{help.request}}.}
