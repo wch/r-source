@@ -891,11 +891,12 @@ signature <-
     for(i in seq_along(value)) {
         sigi <- el(value, i)
         if(!is.character(sigi) || length(sigi) != 1L)
-            stop(gettextf("bad class specified for element %d (should be a single character string)", i), domain = NA)
+            stop(gettextf(
+		"bad class specified for element %d (should be a single character string)",
+		i), domain = NA)
+
     }
-      value <- as.character(value)
-      names(value) <- names
-      value
+    setNames(as.character(value), names)
 }
 
 showMethods <-
@@ -995,37 +996,32 @@ showMethods <-
     if (is.null(def))
         return(.methods_info())
 
-    mtable <- ".MTable"
     classes <- c(class, names(getClass(class)@contains))
-    generics <- getGenerics(where=search())
-    nms <- setNames(as.vector(generics), as.vector(generics))
+    generics <- as.vector(getGenerics(where=search()))
+    nms <- setNames(generics, generics)
 
     packages <- lapply(nms, function(generic) {
-        table <- get(mtable, environment(getGeneric(generic)))
-        lapply(names(table), function(nm, table) {
-            environmentName(environment(table[[nm]]))
-        }, table)
+	table <- environment(getGeneric(generic))[[".MTable"]]
+	lapply(table, function(m) environmentName(environment(m)))
     })
-    methods <- lapply(nms, function(generic, classes) {
-        table <- get(mtable, environment(getGeneric(generic)))
-        methods <- names(table)
-        lapply(methods, function(method, classes) {
-            m <- table[[method]]
+    methods <- lapply(nms, function(generic) {
+	table <- environment(getGeneric(generic))[[".MTable"]]
+	lapply(table, function(m) {
             if (is(m, "MethodDefinition") && any(m@defined %in% classes))
                 setNames(as.vector(m@defined), names(m@defined))
-            else
-                NULL
-        }, classes)
-    }, classes)
+            ## else NULL
+        })
+    })
 
     geom <- lapply(methods, function(method) {
         !vapply(method, is.null, logical(1))
     })
     filter <- function(elt, geom) elt[geom]
     packages <- Map(filter, packages, geom)
-    methods <- Map(filter, methods, geom)
-    packages <- packages[lengths(methods) != 0L]
-    methods <- methods[lengths(methods) != 0L]
+    methods  <- Map(filter, methods,  geom)
+    non0 <- lengths(methods) != 0L
+    packages <- packages[non0]
+    methods  <-  methods[non0]
 
     ## only derived methods
     geom <- lapply(methods, function(method, classes) {
@@ -1048,9 +1044,9 @@ showMethods <-
             lapply(split(score, sig0), function(elt) elt == min(elt))
         score == 1
     }, classes)
-    filter <- function(elt, geom) elt[geom]
+
     packages <- Map(filter, packages, geom)
-    methods <- Map(filter, methods, geom)
+    methods  <- Map(filter, methods,  geom)
 
     generic <- rep(names(methods), lengths(methods))
     signature <- unlist(lapply(methods, function(method) {

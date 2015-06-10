@@ -1,7 +1,7 @@
 useDynLib(methods, .registration = TRUE, .fixes = "C_")
 
-importFrom(utils, find)
-
+importFrom("utils", find, prompt, tail)
+importFrom("stats", formula, setNames, toeplitz, ts)
 
 exportPattern("^\\.__C__")
 exportPattern("^\\.__M__")

@@ -177,11 +177,11 @@
 	slotnames <- if(is.null(argnames)) FALSE else {
             nzchar(argnames) & is.na(match(argnames, .tsArgNames)) }
 	if(any(slotnames)) {
-	    value <- do.call(stats::ts, args[!slotnames])
+	    value <- do.call(ts, args[!slotnames])
 	    .mergeAttrs(value, .Object, args[slotnames])
 	}
 	else
-	    .mergeAttrs(stats::ts(...), .Object)
+	    .mergeAttrs(ts(...), .Object)
     }
     setMethod("initialize", "ts", .init_ts, where = envir)
     setMethod("initialize", "mts", .init_ts, where = envir) #else, it's ambiguous
@@ -411,7 +411,7 @@
 }
 
 
-.tsArgNames <- names(formals(stats::ts))
+.tsArgNames <- names(formals(ts))
 
 ### The following methods are now activated
 ### via the last line of the function .InitMethodDefinitions in ./MethodsListClass.R
@@ -537,8 +537,9 @@
        list(c("ordered", "factor"), ordered(character())),
        list("table",  table(factor())),
        list("summary.table",  summary.table(table(factor())))
-       , list("ts", stats::ts())
-       , list("formula", stats::formula())
+      ## pkg 'stats' :
+       , list("ts", ts())
+       , list("formula", formula())
        )
 .OldClassesList <-
     list(
