@@ -395,7 +395,7 @@ function(formula, data = NULL, ...,
        || inherits(edata, "table")
        || length(dim(edata)) > 2) {
         data <- as.table(data)
-        varnames <- attr(stats:::terms.formula(formula), "term.labels")
+        varnames <- attr(stats::terms.formula(formula), "term.labels")
         if(all(varnames != "."))
             data <- margin.table(data,
                                  match(varnames, names(dimnames(data))))
