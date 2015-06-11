@@ -2,8 +2,10 @@
 useDynLib(stats, .registration = TRUE, .fixes = "C_")
 
 import(graphics)
-importFrom(grDevices, dev.interactive, palette, extendrange, xy.coords)
-importFrom(utils, str)
+importFrom(grDevices, as.graphicsAnnot, dev.flush, dev.hold,
+           dev.interactive, dev.new, devAskNewPage, palette,
+           extendrange, xy.coords)
+importFrom(utils, str, tail)
 
 
 export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,

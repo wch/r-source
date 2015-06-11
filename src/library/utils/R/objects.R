@@ -32,7 +32,7 @@ findGeneric <- function(fname, envir, warnS4only = TRUE)
 	fMethsEnv <- methods::getMethodsForDispatch(f)
         meths <- as.list(fMethsEnv, all.names=TRUE)
         r <- meths[grep("^ANY\\b", names(meths))]
-	if(any(ddm <- vapply(r, is, logical(1L), "derivedDefaultMethod")))
+	if(any(ddm <- vapply(r, methods::is, logical(1L), "derivedDefaultMethod")))
 	    f <- r[ddm][[1]]@.Data
 	else if(warnS4only)
 	    warning(gettextf(

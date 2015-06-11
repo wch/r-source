@@ -29,7 +29,7 @@ blues9 <- c("#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6",
 	stop("'nbin' must be numeric of length 1 or 2")
 
     if (missing(bandwidth)) { ## cheap
-	bandwidth <- diff(apply(x, 2, quantile,
+	bandwidth <- diff(apply(x, 2, stats::quantile,
 				probs = c(0.05, 0.95),
                                 na.rm = TRUE, names = FALSE)) / 25
 	bandwidth[bandwidth==0] <- 1
