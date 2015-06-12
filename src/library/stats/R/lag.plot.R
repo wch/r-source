@@ -53,7 +53,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1L:lags,
     if(is.null(layout))
         layout <-
             if(prod(pmf <- par("mfrow")) >= tot.lags) pmf
-            else grDevices::n2mfrow(tot.lags)
+            else n2mfrow(tot.lags)
 
     ## Plotting
     ## avoid resetting mfrow and using outer margins for just one plot

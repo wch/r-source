@@ -58,7 +58,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	tt <- scope[i]
 	if(trace > 1) {
 	    cat("trying +", tt, "\n", sep = "")
-	    utils::flush.console()
+	    flush.console()
 	}
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
@@ -384,7 +384,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	tt <- scope[i]
 	if(trace > 1) {
 	    cat("trying -", tt, "\n", sep = "")
-	    utils::flush.console()
+	    flush.console()
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
@@ -779,7 +779,7 @@ step <- function(object, scope, scale = 0,
     if(trace) {
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
 	    cut.string(deparse(formula(fit))), "\n\n", sep = "")
-        utils::flush.console()
+        flush.console()
     }
 
     ## FIXME think about df.residual() here
@@ -843,7 +843,7 @@ step <- function(object, scope, scale = 0,
 	if(trace) {
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
 		cut.string(deparse(formula(fit))), "\n\n", sep = "")
-            utils::flush.console()
+            flush.console()
         }
         ## add a tolerance as dropping 0-df terms might increase AIC slightly
 	if(bAIC >= AIC + 1e-7) break

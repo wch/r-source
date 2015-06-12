@@ -6,3 +6,5 @@ Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
 Description: R statistical functions.
 License: Part of R @VERSION@
+Imports: utils, grDevices, graphics
+Suggests: MASS, Matrix, SuppDists, methods, stats4
