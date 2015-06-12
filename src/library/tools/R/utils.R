@@ -1421,6 +1421,7 @@ nonS3methods <- function(package)
              crossdes = "all.combn",
              ctv = "update.views",
              deSolve = "plot.1D",
+             effects = "all.effects", # already deprecated
              elliptic = "sigma.laurent",
              equivalence = "sign.boot",
              fields = c("qr.q2ty", "qr.yq2"),
