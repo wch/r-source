@@ -5497,7 +5497,7 @@ give a description of each column, preferably as a list or table.
 @item \source@{@dots{}@}
 @findex \source
 Details of the original source (a reference or @acronym{URL},
-@xref{Specifying URLs}).  In addition, section @code{\references} could
+@pxref{Specifying URLs}).  In addition, section @code{\references} could
 give secondary sources and usages.
 @end table
 
