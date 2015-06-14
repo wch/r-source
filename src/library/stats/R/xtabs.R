@@ -1,7 +1,7 @@
 #  File src/library/stats/R/xtabs.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
     m$... <- m$exclude <- m$drop.unused.levels <- m$sparse <- NULL
+    ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     if(length(formula) == 2L) {

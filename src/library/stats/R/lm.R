@@ -30,6 +30,7 @@ lm <- function (formula, data, subset, weights, na.action,
                names(mf), 0L)
     mf <- mf[c(1L, m)]
     mf$drop.unused.levels <- TRUE
+    ## need stats:: for non-standard evaluation
     mf[[1L]] <- quote(stats::model.frame)
     mf <- eval(mf, parent.frame())
     if (method == "model.frame")
@@ -522,6 +523,7 @@ model.frame.lm <- function(formula, ...)
                      "offset"), names(fcall), 0L)
         fcall <- fcall[c(1L, m)]
         fcall$drop.unused.levels <- TRUE
+        ## need stats:: for non-standard evaluation
         fcall[[1L]] <- quote(stats::model.frame)
         fcall$xlev <- formula$xlevels
         ## We want to copy over attributes here, especially predvars.

@@ -2,7 +2,7 @@
 #  Part of the R package, http://www.R-project.org
 #
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
-#  Copyright (C) 2000-2014 The R Core Team
+#  Copyright (C) 2000-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -558,6 +558,7 @@ nls <-
                            env = environment(formula))
             mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
             mf$lower <- mf$upper <- NULL
+            ## need stats:: for non-standard evaluation
             mf[[1L]] <- quote(stats::model.frame)
             mf <- eval.parent(mf)
             n <- nrow(mf)

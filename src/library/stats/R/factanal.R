@@ -1,7 +1,7 @@
 #  File src/library/stats/R/factanal.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,6 +69,7 @@ factanal <-
             names(mf)[names(mf) == "x"] <- "formula"
             mf$factors <- mf$covmat <- mf$scores <- mf$start <-
                 mf$rotation <- mf$control <- mf$... <- NULL
+            ## need stats:: for non-standard evaluation
             mf[[1L]] <- quote(stats::model.frame)
             mf <- eval.parent(mf)
             na.act <- attr(mf, "na.action")
