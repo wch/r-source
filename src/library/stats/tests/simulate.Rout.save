@@ -1,5 +1,5 @@
 
-R version 3.2.0 Patched (2015-06-06 r68483) -- "Full of Ingredients"
+R version 3.2.1 RC (2015-06-10 r68510) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -406,4 +406,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.175   0.024   0.190 
+  0.216   0.024   0.229 

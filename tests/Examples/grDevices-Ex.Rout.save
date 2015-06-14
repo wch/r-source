@@ -1,5 +1,5 @@
 
-R version 3.2.0 Patched (2015-06-06 r68483) -- "Full of Ingredients"
+R version 3.2.1 RC (2015-06-10 r68510) -- "World-Famous Astronaut"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-unknown-linux-gnu (64-bit)
 
@@ -3764,7 +3764,7 @@ $zlab
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.883 0.146 8.032 0 0 
+Time elapsed:  7.813 0.137 7.954 0 0 
 > grDevices::dev.off()
 null device 
           1 
