@@ -304,7 +304,7 @@ replications <- function(formula, data = NULL, na.action)
     labels <- attr(formula, "term.labels")
     vars <- as.character(attr(formula, "variables"))[-1L]
     if(is.null(data)) {
-	v <- c(quote(stats::data.frame), attr(formula, "variables"))
+	v <- c(quote(data.frame), attr(formula, "variables"))
 	data <- eval(as.call(v), parent.frame())
     }
     if(!is.function(na.action)) stop("na.action must be a function")
