@@ -801,3 +801,19 @@ writeLines(c(
 summaryRprof(filename = profile, memory = "both")
 unlink(profile)
 ## failed when a matrix was downgraded to a vector
+
+
+## Garbage collection  protection problem
+if((as.numeric(Sys.time()) %% 10) < 1) { ## only run in 1 / 10 times
+ cat(" gctorture() + print(factor with NA) .. ")
+ x <- c("a", NA, "b")
+ fx <- factor(x, exclude="")
+ gctorture()
+ ct <- system.time(r <- replicate(30, capture.output(print(fx))))
+ stopifnot(r[,1] == r)
+ gctorture(on=FALSE)
+ cat("[Ok]\n")
+ writeLines(r[,1])
+ print(ct)
+}
+## the '<NA>' levels part would be wrong occasionally
