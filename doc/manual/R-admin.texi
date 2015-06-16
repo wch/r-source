@@ -4695,10 +4695,10 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{http://www.tug.org/mactex/}): the full installation is about 4GB,
 but a smaller version is available at
 @uref{http://www.tug.org/mactex/morepackages.html}: you will need to add
-some packages, e.g.@: for the 2014 version we needed to add
-@pkg{cm-super}, @pkg{ec}, @pkg{helvetic}, @pkg{inconsolata} and
-@pkg{texinfo} which brought this to about 380MB (or package
-@pkg{texinfo} and the collections @pkg{collection-fontsrecommended},
+some packages, e.g.@: for the 2015 version we needed to add
+@pkg{cm-super}, @pkg{helvetic}, @pkg{inconsolata} and @pkg{texinfo}
+which brought this to about 410MB (or package @pkg{texinfo} and the
+collections @pkg{collection-fontsrecommended},
 @pkg{collection-fontsextra} and @pkg{collection-latexextra} which will
 take this up to about 1GB).  @samp{TeX Live Utility} (available
 @emph{via} the MacTeX front page) provides a graphical means to manage
