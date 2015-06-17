@@ -2952,7 +2952,6 @@ int Rf_envlength(SEXP rho)
     if(IS_USER_DATABASE(rho)) {
         R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-	// cast to suppress warning, but maybe this should be re-thought?
         return (int) xlength(tb->objects(tb));
     } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
@@ -2965,7 +2964,6 @@ R_xlen_t Rf_envxlength(SEXP rho)
     if(IS_USER_DATABASE(rho)) {
         R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-	// cast to suppress warning, but maybe this should be re-thought?
         return xlength(tb->objects(tb));
     } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
