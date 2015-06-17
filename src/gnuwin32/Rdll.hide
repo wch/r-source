@@ -342,6 +342,8 @@
  Rf_deparse1w
  Rf_evalList
  Rf_evalListKeepMissing
+ Rf_envlength
+ Rf_envxlength
  Rf_findVar1
  Rf_findcontext
  Rf_formatRaw

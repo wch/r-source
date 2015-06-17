@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2012  The R Core Team.
+ *  Copyright (C) 1999-2015  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,7 +121,6 @@ int Rf_envlength(SEXP rho);
 */
 INLINE_FUN R_len_t length(SEXP s)
 {
-    int i;
     switch (TYPEOF(s)) {
     case NILSXP:
 	return 0;
@@ -138,12 +137,14 @@ INLINE_FUN R_len_t length(SEXP s)
     case LISTSXP:
     case LANGSXP:
     case DOTSXP:
-	i = 0;
+    {
+	int i = 0;
 	while (s != NULL && s != R_NilValue) {
 	    i++;
 	    s = CDR(s);
 	}
 	return i;
+    }
     case ENVSXP:
 	return Rf_envlength(s);
     default:
@@ -151,9 +152,10 @@ INLINE_FUN R_len_t length(SEXP s)
     }
 }
 
+R_xlen_t Rf_envxlength(SEXP rho);
+
 INLINE_FUN R_xlen_t xlength(SEXP s)
 {
-    int i;
     switch (TYPEOF(s)) {
     case NILSXP:
 	return 0;
@@ -170,14 +172,17 @@ INLINE_FUN R_xlen_t xlength(SEXP s)
     case LISTSXP:
     case LANGSXP:
     case DOTSXP:
-	i = 0;
+    {
+	// it is implausible this would be >= 2^31 elements, but allow it
+	R_xlen_t i = 0;
 	while (s != NULL && s != R_NilValue) {
 	    i++;
 	    s = CDR(s);
 	}
 	return i;
+    }
     case ENVSXP:
-	return Rf_envlength(s);
+	return Rf_envxlength(s);
     default:
 	return 1;
     }
