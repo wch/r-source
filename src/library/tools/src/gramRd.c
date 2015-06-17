@@ -3903,7 +3903,7 @@ static void yyerror(const char *s)
     	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, "%s", s);
     }
     filename = findVar(install("filename"), SrcFile);
-    if (isString(filename) && length(filename))
+    if (isString(filename) && LENGTH(filename))
     	strncpy(ParseErrorFilename, CHAR(STRING_ELT(filename, 0)), PARSE_ERROR_SIZE - 1);
     else
         ParseErrorFilename[0] = '\0';
@@ -4465,11 +4465,11 @@ SEXP C_deparseRd(SEXP e, SEXP state)
     char *outbuf, *out, lookahead;
     Rboolean escape;
 
-    if(!isString(e) || length(e) != 1) 
+    if(!isString(e) || LENGTH(e) != 1) 
     	error(_("'deparseRd' only supports deparsing character elements"));
     e = STRING_ELT(e, 0);
     
-    if(!isInteger(state) || length(state) != 5) error(_("bad state"));
+    if(!isInteger(state) || LENGTH(state) != 5) error(_("bad state"));
     
     PushState();
     
