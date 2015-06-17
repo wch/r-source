@@ -2946,12 +2946,15 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans);
 }
 
+/* called internally by length() and xlength()
+   in Defn.h but not otherwise used */
 int envlength(SEXP rho)
 {
     if(IS_USER_DATABASE(rho)) {
         R_ObjectTable *tb = (R_ObjectTable*)
 	    R_ExternalPtrAddr(HASHTAB(rho));
-        return(xlength(tb->objects(tb)));
+	// cast to suppress warning, but maybe this should be re-thought?
+        return((int) xlength(tb->objects(tb)));
     } else if( HASHTAB(rho) != R_NilValue)
 	return HashTableSize(HASHTAB(rho), 1);
     else

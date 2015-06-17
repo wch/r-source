@@ -16,7 +16,8 @@ zoneinfo.zip is formed by installing tzdata on a system with zic, and
 zipping up the results, after adding a file VERSION giving the
 version.  (The binary databases are byte streams, and so do not depend
 on the architecture.  There are some comments about whether time_t is
-signed, which it is on all sensible platforms.)
+signed, which it is on all sensible platforms.  This is only used with
+R's implemntation, where time_t is int_fast64_t, hence signed.)
 
 To remake it, download the current version of tzdataXXXXx.tar.gz from
 http://www.iana.org/time-zones to this directory and run
@@ -29,6 +30,6 @@ make -f Make.zi VERSION=2015e ZIC=/usr/sbin/zic
 
 NB: it seems that this needs to be done on a system with 64-bit time_t
 or the catalogs will be confined to 1902-2038.  And even that did not
-to suffice on OS X.  As a sanity check, the size of zoneinfo.zip
-should be about 400KB if 64-bit: a 32-bit version will be about 280KB.
+suffice on OS X.  As a sanity check, the size of zoneinfo.zip should
+be about 400KB if 64-bit: a 32-bit version will be about 280KB.
 
