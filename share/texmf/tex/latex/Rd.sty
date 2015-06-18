@@ -42,15 +42,8 @@
 \RequirePackage{alltt}           % {verbatim} allowing \..
 \RequirePackage{verbatim}        % small example code
 \RequirePackage{url}             % set urls
+\RequirePackage{textcomp}        % for \textquotesingle etc
 
-%% See 'upquote.sty' for details.
-%% We use \pkg{verbatim} for our ExampleCode environment, which in its
-%% \verbatim@font has an explicit \let\do\do@noligs\verbatim@nolig@list
-%% rather than (the identical) \@noligs from the LaTeX2e kernel.
-%% Hence, we add to \verbatim@font ... suggestion by Bernd Raichle
-%% <raichle@Informatik.Uni-Stuttgart.DE>.
-\ifthenelse{\boolean{Rd@use@inconsolata}}{}{\RequirePackage{upquote}}
-\g@addto@macro\verbatim@font\@noligs
 
 \addtolength{\textheight}{12mm}
 \addtolength{\topmargin}{-9mm}   % still fits on US paper
@@ -260,24 +253,36 @@
   \usepackage[T1]{fontenc}
   \usepackage{ae}
   \input{t1aett.fd}
-  \DeclareFontShape{T1}{aett}{bx}{n}{<->ssub*aett/m/n}{}}
-  {\message{NOT loading ae}}
+  \DeclareFontShape{T1}{aett}{bx}{n}{<->ssub*aett/m/n}{}}{}
 \IfFileExists{times.sty}{\setboolean{Rd@has@times}{true}}{}
 \ifthenelse{\boolean{Rd@use@times}\and\boolean{Rd@has@times}}{%
   \usepackage[T1]{fontenc}
-  \usepackage{times}}
-  {\message{NOT loading times}}
+  \usepackage{times}}{}
 \IfFileExists{lmodern.sty}{\setboolean{Rd@has@lm}{true}}{}
 \ifthenelse{\boolean{Rd@use@lm}\and\boolean{Rd@has@lm}}{%
   \usepackage[T1]{fontenc}
-  \usepackage{lmodern}}
-  {\message{NOT loading lmodern}}
+  \usepackage{lmodern}}{}
 \ifthenelse{\boolean{Rd@use@cm-super}}{%
   \usepackage[T1]{fontenc}}{}
 \ifthenelse{\boolean{Rd@use@beramono}}{%
   \usepackage[scaled=.8]{beramono}}{}
 \ifthenelse{\boolean{Rd@use@inconsolata}}{%
  \IfFileExists{inconsolata.sty}{\usepackage{inconsolata}}{\usepackage{zi4}}}{}
+
+%% needs to come after \code is defined
+%% inspired by an earlier version of upquote.sty
+\begingroup
+\catcode`'=\active \catcode``=\active
+\g@addto@macro\@noligs {\let`\textasciigrave \let'\textquotesingle}
+\g@addto@macro\Rd@noligs {\let`\textasciigrave \let'\textquotesingle}
+\endgroup
+
+%% We use \pkg{verbatim} for our ExampleCode environment, which in its
+%% \verbatim@font has an explicit \let\do\do@noligs\verbatim@nolig@list
+%% rather than (the identical) \@noligs from the LaTeX2e kernel.
+%% Hence, we add to \verbatim@font ... suggestion by Bernd Raichle
+%% <raichle@Informatik.Uni-Stuttgart.DE>.
+\g@addto@macro\verbatim@font\@noligs
 
 \ifthenelse{\boolean{Rd@use@hyper}}{%
   \RequirePackage{color}    

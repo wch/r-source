@@ -192,7 +192,6 @@
 \alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
-\alias{viewport.transform}
 \alias{layout.heights}
 \alias{layout.widths}
 %% </LIST>

@@ -82,9 +82,13 @@
       \item The text and PDF news files, including \file{NEWS} and
       \file{NEWS.2}, have been moved to the \file{doc} directory.
 
-      \code{utils::modifyList()} gets a new argument \code{keep.null}
-      allowing \code{NULL} components in the replacement to be retained,
-      instead of causing corresponding components to be deleted.
+      \item \code{combn(x, simplify = TRUE)} now gives a factor result
+      for factor input \code{x} (previously user error).
+      (Related to \PR{15442}.)
+      
+      \item Added \code{utils::fileSnapshot()} and 
+      \code{utils::changedFiles()} functions to allow snapshots and 
+      comparison of directories of files.
     }
   }
 
@@ -119,10 +123,15 @@
     \itemize{
       \item In the \file{DESCRIPTION} file, \preformatted{    License: X11}
       is no longer recognized as valid. Use \samp{MIT} or
-    \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
+      \samp{BSD_2_clause} instead, both of which need \samp{+ file LICENSE}.
 
       \item For consistency, entries in \file{.Rinstignore} are now matched
       case-insensitively on all platforms.
+      
+      \item Help for S4 methods with very long signatures now tries
+      harder to split the description in the \samp{Usage} field to no
+      more than 80 characters per line (some packages had over 120
+      characters).
     }
   }
 
@@ -191,10 +200,8 @@
       library.
       
       \item \command{R CMD check} analyses \code{:::} calls.
-
-      \item \command{R CMD build} makes more use of the \file{build}
-      sub-directory of package sources, for example to record
-      information about the vignettes.
+      
+      \item \file{Sweave.sty} has a new option \samp{[inconsolata]}.
     }
   }
 
@@ -223,6 +230,8 @@
       \code{namespace} has been removed.
 
       \item Many methods are no longer exported by package \pkg{stats}.
+      They are all registered on their generic, which should be called
+      rather than calling a method directly.
       
       \item Functions \code{readNEWS()} and \code{checkNEWS()} in
       package \pkg{tools} are defunct.
@@ -239,6 +248,34 @@
       \item Error messages involving non-syntactic names (e.g. as produced
       by \code{`\\r`} when that object does not exist) now encode
       the control characters.  (Reported by Hadley Wickham.)
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.0.2 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} truncated the imaginary part of 
+      complex number constants.  (Reported by Yihui Xie.)
+      
+      \item \code{dbeta(x, a, b)} with \code{a} or \code{b} within a
+      factor of 2 of the largest representable number could
+      infinite-loop.  (Reported by Ioannis Kosmidis.)
+
+      \item \code{provideDimnames()} failed for arrays with a 0
+      dimension. (\PR{15465})
+      
+      \item \code{rbind()} and \code{cbind()} did not handle
+      list objects correctly. (\PR{15468})
+
+      \item \code{replayPlot()} now checks if it is replaying a plot
+      from the same session.
+
+      \item \code{rasterImage()} and \code{grid.raster()} now give
+      error on an empty (zero-length) raster.  (Reported by Ben North.)
+      
+      \item \code{plot.lm} would sometimes scramble the labels
+      in plot type 5.  (\PR{15458} and \PR{14837})
     }
   }
 }
@@ -326,8 +363,9 @@
       the result, to avoid misuse creating invalid objects as in
       \PR{15303}.  A warning is given if a class is discarded.
 
-      \item Dataset \code{npk} has been copied from \pkg{MASS} to allow
-      more tests to be run without recommended packages being installed.
+      \item Dataset \code{npk} has been copied from \CRANpkg{MASS} to
+      allow more tests to be run without recommended packages being
+      installed.
 
       \item The initialization of the regression coefficients for
       non-degenerate differenced models in \code{arima()} has been
@@ -343,6 +381,18 @@
       \item There is a new read-only \code{par()} parameter called
       \code{"page"}, which returns a logical value indicating whether
       the next \code{plot.new()} call will start a new page.
+
+      \item Processing Sweave and Rd documents to PDF now renders
+      backticks and single quotes better in several instances, including
+      in \samp{\\code} and \samp{\\samp} expressions.
+
+      \item \code{utils::modifyList()} gets a new argument \code{keep.null}
+      allowing \code{NULL} components in the replacement to be retained,
+      instead of causing corresponding components to be deleted.
+      
+      \item \code{tools::pkgVignettes()} gains argument \code{check};
+      if set to \code{TRUE}, it will warn when it appears a vignette requests
+      a non-existent vignette engine. 
     }
   }
 
@@ -365,7 +415,9 @@
       Windows).
       
       \item \command{R CMD build} now weaves and tangles all vignettes,
-      so suggested packages are never required during package installation.
+      so suggested packages are not required during package installation
+      if the source tarball was prepared with current
+      \command{R CMD build}.
 
       \item \code{checkFF()} (used by \command{R CMD check}) does a
       better job of detecting calls from other packages, including not
@@ -421,8 +473,18 @@
       See \sQuote{Writing R Extensions} for good practice.
       
       \item \command{R CMD check} optionally checks for non-standard
-      top-level files (which are often mistakes): this is enabled for
-      \option{--as-cran}.
+      top-level files and directories (which are often mistakes): this
+      is enabled for \option{--as-cran}.
+      
+      \item LaTeX style file \code{upquote.sty} is no longer included
+      (the version was several years old): it is no longer used in \R.
+      A much later version is commonly included in LaTeX distributions
+      but does not play well with the \code{ae} fonts which are the
+      default for Sweave vignettes.
+
+      \item \command{R CMD build} makes more use of the \file{build}
+      sub-directory of package sources, for example to record
+      information about the vignettes.
     }
   }
 
@@ -717,6 +779,10 @@
 
       \item \code{mcMap()} was not exported by package
       \pkg{parallel}. (\PR{15439})
+      
+      \item \code{plot()} for \code{TukeyHSD} objects did not balance
+      \code{dev.hold()} and \code{dev.flush()} calls on multi-page plots. 
+      (\PR{15449})
     }
   }
 }

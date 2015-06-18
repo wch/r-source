@@ -5,7 +5,6 @@
 
 \name{grid.grob}
 \title{Create Grid Graphical Objects, aka "Grob"s}
-\alias{grid.grob}
 \alias{grob}
 \alias{gTree}
 \alias{grobTree}
@@ -33,15 +32,12 @@ gList(...)
 childNames(gTree)
 is.grob(x)
 
-## deprecated:
-grid.grob(list.struct, cl = NULL, draw = TRUE)
 }
 \arguments{
   \item{...}{For \code{grob} and \code{gTree}, the
     named slots describing important features of
     the graphical object.  For \code{gList} and \code{grobTree},
     a series of grob objects. }
-  \item{list.struct}{a \code{\link{list}} (preferably with each element named).}
   \item{name}{a character identifier for the grob.  Used to find the
     grob on the display list and/or as a child of another grob. }
   \item{children}{a \code{"gList"} object. }
@@ -50,8 +46,7 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
   \item{vp}{a \code{\link{viewport}} object (or \code{NULL}).}
-  \item{cl}{string giving the class attribute for the \code{list.struct}.}
-  \item{draw}{logical indicating whether to produce graphical output.}
+  \item{cl}{string giving the class attribute for the new class.}
   \item{gTree}{a \code{"gTree"} object.}
   \item{x}{ An \R object. }
 }
@@ -71,7 +66,7 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
   draws all of its children.  Before drawing its children, a gTree
   pushes its \code{childrenvp} slot and then navigates back up (calls
   \code{\link{upViewport}}) so that the children can specify their location
-  within the childrenvp via a \code{\link{vpPath}}.
+  within the \code{childrenvp} via a \code{\link{vpPath}}.
 
   Grob names need not be unique in general, but all children of a
   gTree must have different names.
@@ -86,11 +81,11 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
   and some higher-level grid components (e.g., \code{\link{grid.xaxis}}
   and \code{grid.yaxis}) are derived from these classes.
 
-  \code{grobTree} is just a convenient wrapper for \code{gTree()}
+  \code{grobTree} is just a convenient wrapper for \code{gTree}
   when the only components of the gTree are grobs (so all
   unnamed arguments become children of the gTree).
 
-  \code{grid.grob} is deprecated.
+  The \code{grid.grob} function is defunct.
 }
 \value{
   An \R object of class \code{"grob"}, a \bold{gr}aphical \bold{ob}ject.

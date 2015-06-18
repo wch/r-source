@@ -314,6 +314,7 @@ setRlibs <-
                 warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
         }
         if (dir.exists("inst/doc") && do_install) check_doc_contents()
+        if (dir.exists("vignettes")) check_vign_contents()
 
         setwd(pkgoutdir)
 
@@ -563,7 +564,8 @@ setRlibs <-
         dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
         ## FIXME: this does not need to be run in another process
         ## but that needs conversion to format().
-        Rcmd <- sprintf("tools:::.check_package_description(\"%s\")", dfile)
+        Rcmd <- sprintf("tools:::.check_package_description(\"%s\", TRUE)",
+                        dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             errorLog(Log)
@@ -623,6 +625,43 @@ setRlibs <-
                 any <- TRUE
                 out <- .format_check_package_description_authors_at_R_field_results(out)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
+            }
+            ## and there might be stale Authors and Maintainer fields
+            yorig <- db[c("Author", "Maintainer")]
+            if(check_incoming &&any(!is.na(yorig))) {
+                enc <- db["Encoding"]
+                aar <- utils:::.read_authors_at_R_field(aar)
+                tmp <- utils:::.format_authors_at_R_field_for_author(aar)
+                ## uses strwrap, so will be in current locale
+                if(!is.na(enc)) tmp <- iconv(tmp, "", enc)
+                y <- c(Author = tmp,
+                       Maintainer =
+                       utils:::.format_authors_at_R_field_for_maintainer(aar))
+                ## ignore formatting as far as possible
+                clean_up <- function(x) {
+                    x <- gsub("[[:space:]]+", " ", x)
+                    x <- sub("^[[:space:]]+", " ", x)
+                    sub("^[[:space:]]+$", " ", x)
+                }
+                yorig <- sapply(yorig, clean_up)
+                y <- sapply(y, clean_up)
+                diff <- y != yorig
+                if(any(diff)) {
+                    if(!any) noteLog(Log)
+                    any <- TRUE
+                    if(diff[1L]) {
+                        printLog(Log, "Author field differs from that derived from Authors@R", "\n")
+                        printLog(Log, "  Author:    ", sQuote(yorig[1L]), "\n")
+                        printLog(Log, "  Authors@R: ", sQuote(y[1L]), "\n")
+                        printLog(Log, "\n")
+                    }
+                    if(diff[2L]) {
+                        printLog(Log, "Maintainer field differs from that derived from Authors@R", "\n")
+                        printLog(Log, "  Maintainer: ", sQuote(yorig[2L]), "\n")
+                        printLog(Log, "  Authors@R:  ", sQuote(y[2L]), "\n")
+                        printLog(Log, "\n")
+                    }
+                }
             }
         }
 
@@ -728,9 +767,9 @@ setRlibs <-
             if (lt <- length(topfiles)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
-                printLog(Log,
-                         if(lt > 1L) "Non-standard files found at top level:\n"
-                         else "Non-standard file found at top level:\n" )
+                printLog(Log, ## dirs are files, but maybe not on Windows
+                         if(lt > 1L) "Non-standard files/directories found at top level:\n"
+                         else "Non-standard file/directory found at top level:\n" )
                 msg <- strwrap(paste(sQuote(topfiles), collapse = " "),
                                indent = 2L, exdent = 2L)
                 printLog(Log, paste(c(msg, ""), collapse="\n"))
@@ -1153,7 +1192,7 @@ setRlibs <-
 
                 out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
-                    if(any(grepl("not declared from", out))) warningLog(Log)
+                    if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
                     else noteLog(Log)
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
                     wrapLog(msg_DESCRIPTION)
@@ -1817,6 +1856,72 @@ setRlibs <-
         if (!any) resultLog(Log, "OK")
     }
 
+    check_vign_contents <- function()
+    {
+        checkingLog(Log, "files in 'vignettes'")
+        ## special case common problems.
+        any <- FALSE
+        pattern <- vignetteEngine("Sweave")$pattern
+        vign_dir <- file.path(pkgdir, "vignettes")
+        sources <- setdiff(list.files(file.path(pkgdir, "inst", "doc"),
+                                      pattern = pattern),
+                           list.files(vign_dir, pattern = pattern))
+        if(length(sources)) {
+            warningLog(Log)
+            any <- TRUE
+            msg <- c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
+                    strwrap(paste(sources, collapse = ", "),
+                            indent = 2L, exdent = 4L),
+                     "")
+            printLog(Log, paste(msg, collapse = "\n"))
+        }
+
+        files <- dir(file.path(pkgdir, "vignettes"))
+        already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
+        bad <- files[files %in% already]
+        if (length(bad)) {
+            noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files are already in R: ",
+                     paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please remove them from your package.\n")
+        }
+        files2 <- dir(file.path(pkgdir, "vignettes"), recursive = TRUE,
+                     pattern = "[.](cls|sty|drv)$", full.names = TRUE)
+        files2 <- files2[! basename(files2) %in%
+                       c("jss.cls", "jss.drv", "Rnews.sty", "RJournal.sty")]
+        bad <- character()
+        for(f in files2) {
+            pat <- "%% (This generated file may be distributed as long as the|original source files, as listed above, are part of the|same distribution.)"
+            if(length(grep(pat, readLines(f, warn = FALSE), useBytes = TRUE))
+               == 3L) bad <- c(bad, basename(f))
+        }
+        if (length(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files contain a license that requires\n",
+                     "distribution of original sources:\n",
+                     "  ", paste(sQuote(bad), collapse = ", "), "\n",
+                     "Please ensure that you have complied with it.\n")
+        }
+
+        ## Now look for TeX leftovers (and soiltexture, Amelia ...).
+        bad <- grepl("[.](log|aux|bbl|blg|dvi|toc|out|Rd|Rout|dbj|drv|ins)$",
+                     files, ignore.case = TRUE)
+        if (any(bad)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog(Log,
+                     "The following files look like leftovers/mistakes:\n",
+                     paste(strwrap(paste(sQuote(files[bad]), collapse = ", "),
+                                   indent = 2, exdent = 2), collapse = "\n"),
+                     "\nPlease remove them from your package.\n")
+        }
+        if (!any) resultLog(Log, "OK")
+    }
+
     check_doc_size <- function()
     {
         ## Have already checked that inst/doc exists and qpdf can be found
@@ -1844,7 +1949,7 @@ setRlibs <-
                 gs_cmd <- find_gs_cmd()
                 if (nzchar(gs_cmd)) {
                     res <- compactPDF(td, gs_cmd = gs_cmd, gs_quality = "ebook")
-                    res <- format(res, diff = 2.5e5) # 250 KB for now
+                    res <- format(res, diff = 2.56e5) # 250 KB for now
                     if(length(res)) {
                         if (!any) warningLog(Log)
                         any <- TRUE
@@ -3344,9 +3449,11 @@ setRlibs <-
         res <- .check_package_depends(pkgdir, R_check_force_suggests)
         if(any(sapply(res, length) > 0L)) {
             out <- format(res)
-            if(!all(names(res) %in% c("suggests_but_not_installed",
-                                      "enhances_but_not_installed",
-                                      "many_depends"))) {
+            allowed <- c("suggests_but_not_installed",
+                         "enhances_but_not_installed",
+                         "many_depends",
+                         if(!check_incoming) "bad_engine")
+            if(!all(names(res) %in% allowed)) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse = "\n"), "\n")
                 if(length(res$suggested_but_not_installed))
@@ -4162,7 +4269,7 @@ setRlibs <-
                 check_pkg_manual(pkgdir, desc["Package"])
         }
 
-        if (check_incoming && no_examples &&
+        if (!is_base_pkg && check_incoming && no_examples &&
             dir.exists(file.path(pkgdir, "R"))) {
            tests_dir <- file.path(pkgdir, "tests")
             if (dir.exists(tests_dir) &&

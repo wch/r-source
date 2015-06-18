@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -208,13 +208,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
             facvars <- names(dcl)[dcl %in% c("factor", "ordered")]
             mf <- model.frame(x)[facvars]# better than x$model
             if(ncol(mf) > 0) {
-                ## now re-order the factor levels *along* factor-effects
-                ## using a "robust" method {not requiring dummy.coef}:
-                effM <- mf
-                for(j in seq_len(ncol(mf)))
-                    effM[, j] <- sapply(split(yh, mf[, j]), mean)[mf[, j]]
-                ord <- do.call(order, effM)
-                dm <- data.matrix(mf)[ord, , drop = FALSE]
+                dm <- data.matrix(mf)
                 ## #{levels} for each of the factors:
                 nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
                 ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
@@ -225,9 +219,8 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
                      ylim = ylim, xaxt = "n",
                      main = main, xlab = "Factor Level Combinations",
                      ylab = ylab5, type = "n", ...)
-                grp_means <- sapply(split(yh, mf[, 1L]), mean)#no [mf[, 1]]
-		axis(1, at = ff[1L]*(order(grp_means) - 1/2) - 1/2,
-		     labels = x$xlevels[[1L]])
+                axis(1, at = ff[1L]*(1L:nlev[1L] - 1/2) - 1/2,
+                     labels = x$xlevels[[1L]])
                 mtext(paste(facvars[1L],":"), side = 1, line = 0.25, adj=-.05)
                 abline(v = ff[1L]*(0:nlev[1L]) - 1/2, col="gray", lty="F4")
                 panel(facval, rsp, ...)

@@ -195,7 +195,8 @@ void R_ErrorImmediateSEXP(SEXP x);
 /* int SEXP_EQL(SEXP x, SEXP y);  -- declared in inlined funs below */
 #define SEXP_TO_PTR(x) SEXPPTR(x)
 
-#define REAL(x) ((x).tag ? &((x).u.dbl) : REAL0(x))
+//#define REAL(x) ((x).tag ? &((x).u.dbl) : REAL0(x))
+#define REAL(x) (/*(x).tag ? &((x).u.dbl) : */REAL0(x))
 
 #define SEXP_IS_IMMEDIATE(x) ((x).tag)
 #else

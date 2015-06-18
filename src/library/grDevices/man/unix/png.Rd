@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -75,9 +75,10 @@ tiff(filename = "Rplot\%03d.tiff",
     otherwise \code{"Xlib"}.}
 
   \item{antialias}{for \code{type = "cairo"}, giving the type of
-    anti-aliasing (if any) to be used.  See \code{\link{X11}}.  The
-    default is set by \code{\link{X11.options}}.  Also for \code{type =
-    "quartz"}, where antialiasing is used unless \code{antialias = "none"}.}
+    anti-aliasing (if any) to be used for fonts and lines (but not
+    fills). See \code{\link{X11}}.  The default is set by
+    \code{\link{X11.options}}.  Also for \code{type = "quartz"}, where
+    antialiasing is used unless \code{antialias = "none"}.}
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other

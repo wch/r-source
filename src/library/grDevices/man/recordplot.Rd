@@ -30,17 +30,17 @@ replayPlot(x)
 }
 \section{Warning}{
   The format of recorded plots may change between \R versions.
-  Recorded plots should \strong{not} be used as a permanent
+  Recorded plots can \strong{not} be used as a permanent
   storage format for \R plots.  There were extensive changes in \R
-  3.0.0, and only plots recorded in that or later can be replayed in
-  this version of \R.
-
-  \R will always attempt to replay a recorded plot, but if the plot was
-  recorded with a different \R version or build then bad things may happen.
+  3.0.0, and now only plots from the current session can be replayed.
 }
 \value{
   \code{recordPlot} returns an object of class \code{"recordedplot"}.
 
   \code{replayPlot} has no return value.
+}
+\seealso{
+  The displaylist can be turned on and off using \code{\link{dev.control}}.
+  Initially recording is on for screen devices, and off for print devices.
 }
 \keyword{iplot}

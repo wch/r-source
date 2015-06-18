@@ -19,7 +19,8 @@ INSTFILES = repositories
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(INSTFILES) $(SOURCES)
 
-CLEANFILES =
+## javareconf may create these
+CLEANFILES = Makeconf.old ldpaths.old
 DISTCLEANFILES = $(OBJECTS) Makefile
 
 all: Makefile R

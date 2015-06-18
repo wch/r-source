@@ -314,6 +314,13 @@ get_exclude_patterns <- function()
 
         libdir <- tempfile("Rinst")
 
+        ensure_installed <- function() {
+	    if (!pkgInstalled) {
+		messageLog(Log,
+			   "installing the package to build vignettes")
+		pkgInstalled <<- temp_install_pkg(pkgdir, libdir)
+	    }
+	}
         pkgInstalled <- build_Rd_db(pkgdir, libdir, desc)
 
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
@@ -325,15 +332,12 @@ get_exclude_patterns <- function()
         }
         if (vignettes &&
             parse_description_field(desc, "BuildVignettes", TRUE)) {
+	    if (nchar(parse_description_field(desc, "VignetteBuilder", "")))
+		ensure_installed()
             ## Look for vignette sources
-            vigns <- pkgVignettes(dir = '.')
+            vigns <- pkgVignettes(dir = '.', check = TRUE)
             if (!is.null(vigns) && length(vigns$docs)) {
-                if (!pkgInstalled) {
-                    messageLog(Log,
-                               "installing the package to build vignettes")
-                    pkgInstalled <- temp_install_pkg(pkgdir, libdir)
-                }
-
+                ensure_installed()
                 ## Good to do this in a separate process: it might die
                 creatingLog(Log, "vignettes")
                 R_LIBS <- Sys.getenv("R_LIBS", NA_character_)

@@ -1,4 +1,41 @@
 
+Changes from grid_3.0.* to grid_3.1.0:
+-------------------------------------
+
+1.  New current.rotation() function.
+
+2.  vpPath() and gPath() now automatically expand any embedded path 
+    separators in their input.
+
+3.  New functions depth(), for determining the depth of a viewport 
+    hierarchy or path, and explode(), for expanding a path into
+    its components.
+
+4.  New function grid.grep()
+    (based on ideas and code from Simon Potter).
+
+5.  The grid.force() function now accepts an explicit grob to (draw 
+    and) force or a gPath to force a specific already-drawn grob.
+    Ditto the grid.revert() function.
+
+6.  New current.parent() function to return parent of current viewport.
+
+7.  New resolveRasterSize() function.
+
+8.  Made 'vp' argument of current.viewport() defunct.
+
+9.  Deprecated functions made defunct: 
+    grid.grob, grid.arrows, arrowsGrob, grid.convert, grid.convertX,
+    grid.convertY, grid.convertWidth, grid.convertHeight,
+    grid.collection, push.viewport, pop.viewport, viewport.transform,
+    draw.details, convertNative.
+
+10. Down viewports are now recorded on the display list as full-depth
+    strict vpPaths even when downViewport() is called with non-strict
+    vpPath (which can produce a down viewport of greater depth than
+    the depth of the vpPath).
+
+
 Changes from grid_3.0.0 to grid_3.0.1:
 -------------------------------------
 

@@ -88,6 +88,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   interfere with certain encoding and typeface selections.  If you have
   problems in the rendering of certain character sets, try this option.
 
+  As from \R 3.1.0 it also supports the \samp{[inconsolata]} option, to
+  render monospaced text in \code{inconsolata}, the font used by default
+  for \R help pages.
+
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output.  Either set
   \code{\link{options}(useFancyQuotes = FALSE)} or arrange that LaTeX is

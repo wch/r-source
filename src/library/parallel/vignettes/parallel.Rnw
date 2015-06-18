@@ -152,8 +152,8 @@ The landscape of parallel computing has changed with the advent of
 shared-memory computers with multiple (and often many) CPU cores.
 Until the late 2000's parallel computing was mainly done on clusters
 of large numbers of single- or dual-CPU computers: nowadays even
-laptops have two or four cores, and servers with 8 or more cores are
-commonplace.  It is such hardware that package \pkg{parallel} is
+laptops have two or four cores, and servers with 8, 32 or more cores
+are commonplace.  It is such hardware that package \pkg{parallel} is
 designed to exploit.  It can also be used with several computers
 running the same version of \R{} connected by (reasonable-speed)
 ethernet: the computers need not be running the same OS.
@@ -297,10 +297,10 @@ information in the shape of extra arguments.
 
 Except on Windows, the package contains a copy of \CRANpkg{multicore}:
 there a few names with the added prefix \code{mc}, e.g.{}
-\code{mccollect} and \code{mcparallel}.  (Package \CRANpkg{multicore} used
-these names, but also the versions without the prefix which are too
-easily masked: e.g.{} package \CRANpkg{lattice} has a function
-\code{parallel}.)
+\code{mccollect} and \code{mcparallel}.  (Package \CRANpkg{multicore}
+used these names, but also the versions without the prefix which are
+too easily masked: e.g.{} package \CRANpkg{lattice} used to have a
+function \code{parallel}.)
 
 The low-level functions from \CRANpkg{multicore} are provided but not
 exported from the namespace.
@@ -313,8 +313,8 @@ package is loaded.  (Setting this to \code{1} inhibits parallel
 operation: there are stub versions of these functions on Windows which
 force \code{mc.cores = 1}.)
 
-As from \R{} 2.15.0, \code{mcmapply} and \code{mcMap} provide
-analogues of \code{mapply} and \code{Map}.
+Functions \code{mcmapply} and \code{mcMap} provide analogues of
+\code{mapply} and \code{Map}.
 
 Note the earlier comments about using forking in a GUI environment.
 
@@ -390,9 +390,9 @@ seed is advanced by $k$ steps by \R{} call
 \code{.Random.seed <- nextRNGStream(.Random.seed)}.
 
 % use \verb to get consistent quote mapping.
-The \citet{lecuyer.1999} generator is available in \R{} as from
-version 2.14.0 \emph{via} \verb|RNGkind("L'Ecuyer-CMRG")|.  Thus using
-the ideas of \citet{lecuyer.2002} is as simple as
+The \citet{lecuyer.1999} generator is available \emph{via}
+\verb|RNGkind("L'Ecuyer-CMRG")|.  Thus using the ideas of
+\citet{lecuyer.2002} is as simple as
 \begin{verbatim}
 RNGkind("L'Ecuyer-CMRG")
 set.seed(<something>)
@@ -423,8 +423,7 @@ using S4 classes in package \CRANpkg{rstream} \citep{rstream}.
 The introduction mentioned a different strategy which dynamically
 allocates tasks to workers: this is sometimes known as `load
 balancing' and is implemented in \code{mclapply(mc.preschedule =
-  FALSE)}, \code{clusterApplyLB} and wrappers such as
-\code{parLapplyLB} and \code{clusterMap(.scheduling = "dynamic")}.
+  FALSE)}, \code{clusterApplyLB} and wrappers.
 
 Load balancing is potentially advantageous when the tasks take quite
 dissimilar amounts of computation time, or where the nodes are of

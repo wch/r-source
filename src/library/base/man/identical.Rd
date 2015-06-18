@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2001-2012 R Core Team
+% Copyright 2001-2013 R Core Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -13,7 +13,7 @@
 }
 \usage{
 identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
-                ignore.bytecode = TRUE, ignore.environment = FALSE)
+          ignore.bytecode = TRUE, ignore.environment = FALSE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
@@ -44,9 +44,9 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
 
   Users often use the comparison operators, such as \code{==} or
   \code{!=}, in these situations.  It looks natural, but it is not what
-  these operators are designed to do in R.  They return an object like
+  these operators are designed to do in \R.  They return an object like
   the arguments.  If you expected \code{x} and \code{y} to be of length
-  1, but it happened that one of them wasn't, you will \emph{not} get a
+  1, but it happened that one of them was not, you will \emph{not} get a
   single \code{FALSE}.  Similarly, if one of the arguments is \code{NA},
   the result is also \code{NA}.  In either case, the expression
   \code{if(x == y)....} won't work as expected.
@@ -77,13 +77,13 @@ identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
 
   If \code{ignore.bytecode} is true (the default), the compiled
   bytecode of a function (see \code{\link{cmpfun}}) will be ignored in
-  the comparison. If it is false, functions will compare equal only if
+  the comparison.  If it is false, functions will compare equal only if
   they are copies of the same compiled object (or both are
   uncompiled).  To check whether two different compiles are equal, you
   should compare the results of \code{\link{disassemble}()}.
 
   Note that \code{identical(x, y, FALSE, FALSE, FALSE, FALSE)} pickily tests for
-  very exact equality.
+  exact equality.
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}

@@ -10,7 +10,7 @@
 \alias{grobPathListing}
 \title{ List the names of grobs or viewports }
 \description{
-  Returns a listing of the names of grobs or viewports.
+  Return a listing of the names of grobs or viewports.
 
   This is a generic function with methods for grobs (including
   gTrees) and viewports (including vpTrees).

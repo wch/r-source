@@ -7197,3 +7197,28 @@ sigma^2 estimated as 0.001499:  log likelihood = 163.79,  aic = -315.58
  [7] 1016450281 1178703303 1324731023 1454533441
 > ## dropped spaces without long doubles
 > 
+> 
+> ## PR#15468
+> M <- matrix(11:14, ncol=2, dimnames=list(paste0("Row", 1:2), paste0("Col",
++ 1:2)))
+> L <- list(elem1=1, elem2=2)
+> rbind(M, L)
+     Col1 Col2
+Row1 11   13  
+Row2 12   14  
+L    1    2   
+> rbind(L, M)
+     elem1 elem2
+L    1     2    
+Row1 11    13   
+Row2 12    14   
+> cbind(M, L)
+     Col1 Col2 L
+Row1 11   13   1
+Row2 12   14   2
+> cbind(L, M)
+      L Col1 Col2
+elem1 1 11   13  
+elem2 2 12   14  
+> ## lost the dim of M, so returned NULL entries
+> 

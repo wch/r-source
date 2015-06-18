@@ -524,37 +524,12 @@ heightDetails.arrows <- function(x) {
 }
 
 arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
-                        default.units="npc",
-                        grob=NULL,
-                        angle=30, length=unit(0.25, "inches"),
-                        ends="last", type="open",
-                        name=NULL, gp=gpar(), vp=NULL) {
-    warning("grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions", domain = NA)
-  if (is.null(grob)) {
-    if (!is.unit(x))
-      x <- unit(x, default.units)
-    if (!is.unit(y))
-      y <- unit(y, default.units)
-  }
-  # Check the grob here
-  # Not in validDetails.arrows because that is for checking
-  # slots of an arrows object (the grob is a child of the arrows object)
-  # A possible alternative design would have a copy of the grob
-  # stored in a slot of the arrows object;  then it could be checked
-  # in the validDetails AND it could be edited
-  if (!is.null(grob)) {
-    # The grob can only be a "lines" or "segments"
-    # (splines would be another candidate if they existed)
-    if (!(inherits(grob, "lines") ||
-          inherits(grob, "segments") ||
-          inherits(grob, "line.to")))
-      stop("the 'grob' argument must be a 'line.to', 'lines', or 'segments' grob")
-    x <- y <- NULL
-  }
-  gTree(x=x, y=y, children=if (is.null(grob)) NULL else gList(grob),
-       angle=as.numeric(angle), length=length,
-       ends=ends, type=type,
-       name=name, gp=gp, vp=vp, cl="arrows")
+                       default.units="npc",
+                       grob=NULL,
+                       angle=30, length=unit(0.25, "inches"),
+                       ends="last", type="open",
+                       name=NULL, gp=gpar(), vp=NULL) {
+    .Defunct(msg="'arrowsGrob' is defunct; use 'arrow' arguments to line drawing functions")
 }
 
 grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
@@ -563,14 +538,7 @@ grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
                         angle=30, length=unit(0.25, "inches"),
                         ends="last", type="open",
                         name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  ag <- arrowsGrob(x=x, y=y,
-                   default.units=default.units,
-                   grob=grob, angle=angle, length=length,
-                   ends=ends, type=type,
-                   name=name, gp=gp, vp=vp)
-  if (draw)
-    grid.draw(ag)
-  invisible(ag)
+    .Defunct(msg="'grid.arrows' is defunct; use 'arrow' arguments to line drawing functions")
 }
 
 ######################################

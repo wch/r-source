@@ -2838,8 +2838,16 @@ function(dir, force_suggests = TRUE)
     ## FIXME: is this still needed now we do dependency analysis?
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vigns <- pkgVignettes(dir=dir, subdirs=file.path("inst", "doc"))
-    if (!is.null(vigns) && length(vigns$docs) > 0L) {
+
+    ## This is unsafe if the package itself is the VignetteBuilder,
+    ## as we may not have installed it yet.
+    ## But only problematic if we get an old version.
+    vigns <- pkgVignettes(dir = dir, subdirs = file.path("inst", "doc"),
+                          check = TRUE)
+
+     if(length(vigns$msg))
+         bad_depends$bad_engine <- vigns$msg
+   if (!is.null(vigns) && length(vigns$docs) > 0L) {
         reqs <- unique(unlist(.build_vignette_index(vigns)$Depends))
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
@@ -2946,6 +2954,9 @@ function(x, ...)
                           "and importing selectively is preferable."
                           , collapse = ", ")),
             "")
+      },
+      if(length(y <- x$bad_engine)) {
+          c(y, "")
       }
       )
 }
@@ -2953,7 +2964,7 @@ function(x, ...)
 ### * .check_package_description
 
 .check_package_description <-
-function(dfile)
+function(dfile, strict = FALSE)
 {
     dfile <- file_path_as_absolute(dfile)
     db <- .read_description(dfile)
@@ -3015,16 +3026,6 @@ function(dfile)
         mostattributes(res) <- NULL     # Keep names.
         out <- c(out, res)
     }
-
-    ## FIXME: this was done right at the beginning
-    ## Mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-##     required_fields <- c("Package", "Version", "License", "Description",
-##                          "Title", "Author", "Maintainer")
-##     if(length(i <- which(is.na(match(required_fields, names(db))) |
-##                          !nzchar(db[required_fields]))))
-##         out$missing_required_fields <- required_fields[i]
 
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
@@ -3094,6 +3095,11 @@ function(dfile)
                 list(bad_dep_entry = bad_dep_entry,
                      bad_dep_op = bad_dep_op,
                      bad_dep_version = bad_dep_version)
+    }
+    if(strict && !is.na(val <- db["VignetteBuilder"])) {
+        depends <- .strip_whitespace(unlist(strsplit(val, ",")))
+        if(length(depends) < 1L || !all(grepl("^[[:alnum:].]*$", depends)))
+            out$bad_vignettebuilder <- TRUE
     }
     if(!is.na(val <- db["Priority"])
        && !is.na(package_name)
@@ -3166,6 +3172,11 @@ function(x, ...)
             writeLines(tmp)
         }
         writeLines("")
+    }
+    if(identical(x$bad_vignettebuilder, TRUE)) {
+        writeLines(c(gettext("Invalid VignetteBuilder field."),
+                     strwrap(gettextf("This field must contain one or more packages (and no version requirement).")),
+                     ""))
     }
 
     if(length(x$bad_priority))
@@ -6387,7 +6398,9 @@ function(dir)
 
     v_m <- package_version(meta["Version"])
     v_d <- max(package_version(db[, "Version"]))
-    if(v_m <= v_d)
+    if((v_m <= v_d) &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_VERSIONS_",
+                                         FALSE)))
         out$bad_version <- list(v_m, v_d)
     if((v_m$major == v_d$major) & (v_m$minor >= v_d$minor + 10))
         out$version_with_jump_in_minor <- list(v_m, v_d)
@@ -6454,7 +6467,7 @@ function(dir)
     ## Check for vignette source (only) in old-style 'inst/doc' rather
     ## than new-style 'vignettes'.
     ## Currently only works for Sweave vignettes: eventually, we should
-    ## be able to use build/vignettes.rds for determining *all* package
+    ## be able to use build/vignette.rds for determining *all* package
     ## vignettes.
 
     pattern <- vignetteEngine("Sweave")$pattern
@@ -6467,6 +6480,12 @@ function(dir)
         out$vignette_sources_only_in_inst_doc <- sources
     }
 
+    ## Check for non-Sweave vignettes (as indicated by the presense of a
+    ## 'VignetteBuilder' field in DESCRIPTION) without
+    ## 'build/vignette.rds'.
+    if(!is.na(meta["VignetteBuilder"]) &&
+       !file.exists(file.path(dir, "build", "vignette.rds")))
+        out$missing_vignette_index <- TRUE
 
     out
 }
@@ -6578,6 +6597,9 @@ function(x, ...)
           else
               c("Vignette sources in 'inst/doc' missing from the 'vignettes' directory:",
                 strwrap(paste(y, collapse = ", "), indent = 2L, exdent = 4L))
+      },
+      if(length(y <- x$missing_vignette_index)) {
+          "Package has non-Sweave vignettes but no prebuilt vignette index."
       }
       )
 }

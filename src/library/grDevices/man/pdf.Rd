@@ -266,16 +266,16 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   section of the help for \code{\link{X11}}.
 #endif
 #ifdef windows
-  The TeXworks PDF viewer is one of those which has been seen to fail to
-  display Dingbats (used \code{pch = 1}) correctly.  Whereas on
+  The TeXworks PDF viewer was one of those which has been seen to fail to
+  display Dingbats (used by e.g. \code{pch = 1}) correctly.  Whereas on
   other platforms the problems seen were incorrect output, on Windows
   points were silently omitted: however recent versions seem to manage
   to display Dingbats.
 #endif
 
   There is a different font bug in the \command{pdf.js} viewer included
-  in Firefox 19: that maps Dingbats to the Symbol font and so displays
-  \code{pch = 1} as lambda.
+  in Firefox 19 and later: that maps Dingbats to the Symbol font and so
+  displays symbols such \code{pch = 1} as lambda.
 }
 
 \seealso{

@@ -88,8 +88,7 @@ push.vp.vpPath <- function(vp, recording) {
 }
 
 push.viewport <- function(..., recording=TRUE) {
-  .Deprecated("pushViewport")
-  pushViewport(..., recording=recording)
+    .Defunct("pushViewport")
 }
 
 pushViewport <- function(..., recording=TRUE) {
@@ -138,10 +137,28 @@ downViewport <- function(name, strict=FALSE, recording=TRUE) {
 # vpPath directly (i.e., w/o calling vpPath)
 downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
   name <- as.character(name)
-  downViewport(vpPathDirect(name), strict, recording=recording)
+  downViewport(vpPath(name), strict, recording=recording)
+}
+
+# Build vpPath from one (pushed) viewport up to another (pushed) viewport
+# 'anc' is assumed to be an ancestor of 'desc'
+# 'depth' is the depth that the final depth should have
+buildPath <- function(desc, anc, depth) {
+    path <- desc$name
+    while (!identical(desc$parent, anc)) {
+        if (is.null(desc$parent)) 
+            stop("Down viewport failed to record on display list")
+        desc <- desc$parent
+        path <- c(desc$name, path)
+    }
+    result <- vpPath(path)
+    if (depth(result) != depth)
+        warning("Down viewport incorrectly recorded on display list")
+    result
 }
 
 downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
+    start <- grid.Call(L_currentViewport)
     if (name$n == 1)
         result <- grid.Call.graphics(L_downviewport, name$name, strict)
     else
@@ -158,7 +175,9 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
     # ... including the depth navigated down
     if (recording) {
         attr(name, "depth") <- result
-        record(name)
+        # Record the strict path down
+        path <- buildPath(pvp, start, result)
+        record(path)
     }
     invisible(result)
 }
@@ -184,8 +203,7 @@ vpDepth <- function() {
 }
 
 pop.viewport <- function(n=1, recording=TRUE) {
-  .Deprecated("popViewport")
-  popViewport(n, recording=recording)
+    .Defunct("popViewport")
 }
 
 popViewport <- function(n=1, recording=TRUE) {
@@ -241,15 +259,29 @@ current.vpPath <- function() {
 }
 
 # Function to obtain the current viewport
-current.viewport <- function(vp=NULL) {
-  if (is.null(vp))
+current.viewport <- function() {
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
     vpFromPushedvp(grid.Call(L_currentViewport))
-  else {
-    warning("the 'vp' argument is deprecated")
-    vp
-  }
+}
+
+# Return the parent of the current viewport
+# (could be NULL)
+current.parent <- function(n=1) {
+    if (n < 1)
+        stop("Invalid number of generations")
+    vp <- grid.Call(L_currentViewport)
+    generation <- 1
+    while (generation <= n) {
+        if (is.null(vp))
+            stop("Invalid number of generations")
+        vp <- vp$parent
+        generation <- generation + 1
+    }
+    if (!is.null(vp))
+        vpFromPushedvp(vp)
+    else
+        vp
 }
 
 vpListFromNode <- function(node) {
@@ -293,7 +325,11 @@ current.vpTree <- function(all=TRUE) {
 }
 
 current.transform <- function() {
-  grid.Call(L_currentViewport)$trans
+    grid.Call(L_currentViewport)$trans
+}
+
+current.rotation <- function() {
+    grid.Call(L_currentViewport)$rotation
 }
 
 # Call this function if you want the graphics device erased or moved

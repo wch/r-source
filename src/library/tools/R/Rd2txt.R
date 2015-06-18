@@ -144,7 +144,7 @@ transformMethod <- function(i, blocks, Rdfile) {
     }
 
     rewriteBlocks <- function()
-    	c(blocks[seq_len(j-1)],
+    	c(blocks[seq_len(j-1L)],
     	            editblock(blocks[[j]],
     	                      paste(chars[seq_len(char)], collapse="")),
     	            if (char < length(chars))
@@ -175,7 +175,7 @@ transformMethod <- function(i, blocks, Rdfile) {
 	## need to assemble the call by matching parens in RCODE
 	findOpen(i) # Sets chars, char and j
 	chars[char] <- ""
-	blocks <- c(blocks[seq_len(j-1)],
+	blocks <- c(blocks[seq_len(j-1L)],
 	            editblock(blocks[[j]],
 	                      paste(chars[seq_len(char)], collapse="")),
 	            if (char < length(chars))
@@ -233,14 +233,31 @@ transformMethod <- function(i, blocks, Rdfile) {
 	methodtype <- if (grepl("<-", blocks[[j]])) "replacement " else ""
     }
 
-    if (blocktag == "\\S4method")
-    	blocks <- c( blocks[seq_len(i-1)],
-		     list(structure(paste0("## S4 ", methodtype, "method for signature '"),
-			   Rd_tag="RCODE", srcref=srcref)),
-		     class,
-		     list(structure("'\n", Rd_tag="RCODE", srcref=srcref)),
-		     blocks[-seq_len(i)] )
-    else if (default)
+    if (blocktag == "\\S4method") {
+        ## some signatures are very long.
+        blocks <- if(nchar(class) > 50L) {
+            cl <- paste0("'", as.character(class), "'")
+            if(nchar(cl) > 70L) {
+                cl <- strsplit(cl, ",")[[1L]]
+                ncl <- length(cl)
+                cl[-ncl] <- paste0(cl[-ncl], ",")
+                cl[-1L] <- paste0("  ", cl[-1L])
+            }
+            cl <- paste("##", cl, collapse="\n")
+            c( blocks[seq_len(i-1L)],
+              list(structure(paste0("## S4 ", methodtype, "method for signature \n"),
+                             Rd_tag="RCODE", srcref=srcref)),
+              list(structure(cl, Rd_tag="TEXT", srcref=srcref)),
+              list(structure("\n", Rd_tag="RCODE", srcref=srcref)),
+              blocks[-seq_len(i)] )
+        } else
+            c( blocks[seq_len(i-1L)],
+              list(structure(paste0("## S4 ", methodtype, "method for signature '"),
+                             Rd_tag="RCODE", srcref=srcref)),
+              class,
+              list(structure("'\n", Rd_tag="RCODE", srcref=srcref)),
+              blocks[-seq_len(i)] )
+    } else if (default)
     	blocks <- c( blocks[seq_len(i-1)],
     		     list(structure(paste0("## Default S3 ", methodtype, "method:\n"),
     		     	       Rd_tag="RCODE", srcref=srcref)),

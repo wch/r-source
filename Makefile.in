@@ -158,6 +158,7 @@ distclean: clean
 	fi
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(NON_SVN_INSTFILES); \
+	  rm -rf $(SUBDIRS) $(SUBDIRS_WITH_NO_BUILD); \
 	fi
 	-@rm -rf libconftest.dSYM
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \

@@ -134,31 +134,27 @@ validGP <- function(gpars) {
   if (!is.na(match("fontface", names(gpars)))) {
     if (!is.na(match("font", names(gpars))))
       stop("must specify only one of 'font' and 'fontface'")
-    if (is.null(gpars$fontface))
-      gpars$font <- NULL
-    else {
-      check.length("fontface")
-      if (is.numeric(gpars$fontface))
-        gpars$font <- as.integer(gpars$fontface)
-      else {
-        temp.char <- as.character(gpars$fontface)
-        temp.num <- integer(length(temp.char))
-        for (i in seq_along(temp.char))
-          temp.num[i] <- switch(temp.char[i],
-                                plain=1,
-                                italic=3,
-                                oblique=3,
-                                bold=2,
-                                bold.italic=4,
-                                symbol=5,
-                                # These are Hershey variants
-                                cyrillic=5,
-                                cyrillic.oblique=6,
-                                EUC=7,
-                                stop("invalid font face"))
-        gpars$font <- as.integer(temp.num)
-      }
-    }
+    gpars$font <-
+	if (is.null(gpars$fontface)) NULL # remove it
+	else {
+	    check.length("fontface")
+	    if (is.numeric(gpars$fontface))
+		as.integer(gpars$fontface)
+	    else
+		vapply(as.character(gpars$fontface),
+		       function(ch) # returns integer
+		       switch(ch,
+			      plain = 1L,
+			      bold  = 2L,
+			      italic=, oblique = 3L,
+			      bold.italic = 4L,
+			      symbol= 5L,
+					# These are Hershey variants
+			      cyrillic=5L,
+			      cyrillic.oblique=6L,
+			      EUC   = 7L,
+			      stop("invalid fontface ", ch)), 0L)
+	}
   }
   gpars
 }

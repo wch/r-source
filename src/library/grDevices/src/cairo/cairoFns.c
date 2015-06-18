@@ -503,6 +503,8 @@ PG_text_extents(cairo_t *cc, PangoLayout *layout,
 {
     PangoRectangle rect, lrect;
 
+    // This could be pango_layout_get_line_readonly since 1.16
+    // Something like #if PANGO_VERSION_CHECK(1,16,0)
     pango_layout_line_get_pixel_extents(pango_layout_get_line(layout, 0),
 					&rect, &lrect);
 

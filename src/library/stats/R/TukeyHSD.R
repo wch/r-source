@@ -119,5 +119,6 @@ plot.TukeyHSD <- function (x, ...)
                             "% family-wise confidence level\n"),
               xlab = paste("Differences in mean levels of", names(x)[i]))
         box()
+	dev.flush(); on.exit()
     }
 }

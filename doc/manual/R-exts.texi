@@ -546,11 +546,12 @@ include large figures which are not part of the package sources (and
 hence only in packages which do not have an Open Source license).
 
 @c DESCRIPTION field VignetteBuilder
-The @samp{VignetteBuilder} field names a package that provides 
-an engine other than Sweave for building vignettes.  This may
-be the current package, or one listed in @samp{Depends},
-@samp{Suggests} or @samp{Imports}.
-See @ref{Non-Sweave vignettes} for details.
+The @samp{VignetteBuilder} field names (in a comma-separated list) 
+packages that provide an engine for building vignettes.  These may 
+include the current package, or ones listed in @samp{Depends},
+@samp{Suggests} or @samp{Imports}. The @pkg{utils} package is always
+implicitly appended.  See @ref{Non-Sweave vignettes} for 
+details.
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
@@ -880,8 +881,8 @@ place.
 Field @samp{Depends} should nowadays be used rarely, only for packages
 which are intended to be put on the search path to make their facilities
 available to the end user (and not to the package itself): for example
-it makes sense that a user of package @pkg{latticeExtra} would want the
-functions of package @pkg{lattice} made available.
+it makes sense that a user of package @CRANpkg{latticeExtra} would want
+the functions of package @CRANpkg{lattice} made available.
 
 Almost always packages mentioned in @samp{Depends} should also be
 imported from in the @file{NAMESPACE} file: this ensures that any needed
@@ -1472,11 +1473,11 @@ versions of Autoconf in fact allow an already set @code{FLIBS} to
 override the test for the FORTRAN linker flags.)
 
 
-@strong{Note bene:} If the @command{configure} script creates files,
-e.g.@: @file{src/Makevars}, you do need a @command{cleanup} script to
-remove them.  Otherwise if the package has vignettes, @command{R CMD
-build} will ship the files that are created.  For example, package
-@pkg{RODBC} has
+@strong{N.B.}: If the @command{configure} script creates files, e.g.@:
+@file{src/Makevars}, you do need a @command{cleanup} script to remove
+them.  Otherwise if the package has vignettes, @command{R CMD build}
+will ship the files that are created.  For example, package
+@CRANpkg{RODBC} has
 
 @example
 #!/bin/sh
@@ -1602,7 +1603,7 @@ preprocessor options (for example include paths) for C/C++ files
 @code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
 (@pxref{Creating shared objects}).
 
-@strong{NB:} Include paths are preprocessor options, not compiler
+@strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.
@@ -2963,7 +2964,8 @@ package @file{DESCRIPTION} file, and also specified in the
 namespace must be available to build or check your package).  If more
 than one package is specified as a builder, they will be searched in the
 order given there.  The @pkg{utils} package is always implicitly
-appended to the list of builder packages.
+appended to the list of builder packages, but may be included earlier
+to change the search order.
 
 Note that a package with non-Sweave vignettes should always have a
 @samp{VignetteBuilder} field in the @file{DESCRIPTION} file, since this
@@ -6934,8 +6936,8 @@ non-empty value before the @command{INSTALL}.)
 memory checker in @command{valgrind}.  It is available with suitable
 builds of @command{gcc} 4.8.x and @command{clang} 3.1 and
 later@footnote{not including the version distributed by Apple in
-@code{Xcode} 4.6.}, on common Linux platforms and 64-bit Mac OS X.  See
-@uref{https://code.google.com/p/address-sanitizer/}.
+@code{Xcode} 4.6.x or 5}, on common Linux platforms and 64-bit Mac OS X.
+See @uref{https://code.google.com/p/address-sanitizer/}.
 
 It requires code to have been compiled @emph{and linked} with
 @option{-fsanitize=address} (@command{gcc} and recent versions of
@@ -8649,7 +8651,7 @@ given in the table.
 
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{Note}: although it is
+@code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{N.B.}: although it is
 possible to return objects of internal types, it is unsafe to do so as
 assumptions are made about how they are handled which may be violated at
 user-level evaluation.)  More details are given in @ref{R Internal
