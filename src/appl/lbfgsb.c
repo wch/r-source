@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2014 The R Core Team
+ *  Copyright (C) 2000-2015 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1291,7 +1291,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
        info is an integer variable.
 	 On entry info is 0.
 	 On exit info = 0	for normal return,
-		      = nonzero for abnormal return when the the system
+		      = nonzero for abnormal return when the system
 				used in routine bmv is singular.
 
        Subprograms called:
@@ -3301,7 +3301,7 @@ static void dcstep(double *stx, double *fx, double *dx,
 	  On exit fp is unchanged.
 
 	dp is a double precision variable.
-	  On entry dp is the the derivative of the function at stp.
+	  On entry dp is the derivative of the function at stp.
 	  On exit dp is unchanged.
 
 	brackt is an logical variable.
