@@ -1,6 +1,6 @@
 % File src/library/stats/man/cmdscale.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
@@ -9,10 +9,11 @@
 \concept{MDS}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
-cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
+cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
+         list. = eig || add || x.ret)
 }
 \description{
-  Classical multidimensional scaling of a data matrix.
+  Classical multidimensional scaling (MDS) of a data matrix.
   Also known as \emph{principal coordinates analysis} (Gower, 1966).
 }
 \arguments{
@@ -26,6 +27,8 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     the modified dissimilarities are Euclidean.}
   \item{x.ret}{indicates whether the doubly centred symmetric distance
     matrix should be returned.}
+  \item{list.}{logical indicating if a \code{\link{list}} should be
+    retured or just the \eqn{n \times k}{n * k} matrix, see \sQuote{Value:}.}
 }
 \details{
   Multidimensional scaling takes a set of dissimilarities and returns a
@@ -46,7 +49,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \R platforms (see \code{\link{prcomp}}).
 
   When \code{add = TRUE}, a minimal additive constant \eqn{c*} is
-  computed such that the the dissimilarities \eqn{d_{ij} + c*}{d[i,j] +
+  computed such that the dissimilarities \eqn{d_{ij} + c*}{d[i,j] +
   c*} are Euclidean and hence can be represented in \code{n - 1}
   dimensions.  Whereas S (Becker \emph{et al}, 1988) computes this
   constant using an approximation suggested by Torgerson, \R uses the
@@ -56,11 +59,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   could be in fewer than \code{n - 1} dimensions.
 }
 \value{
-  If \code{eig = FALSE}, \code{add = FALSE} and \code{x.ret = FALSE}
-  (default), a matrix with \code{k} columns whose rows give the
-  coordinates of the points chosen to represent the dissimilarities.
+  If \code{.list} is false (as per default), a matrix with \code{k}
+  columns whose rows give the coordinates of the points chosen to
+  represent the dissimilarities.
 
-  Otherwise, a list containing the following components.
+  Otherwise, a \code{\link{list}} containing the following components.
   \item{points}{a matrix with up to \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
   \item{eig}{the \eqn{n} eigenvalues computed during the scaling process if

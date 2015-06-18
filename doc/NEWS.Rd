@@ -65,6 +65,9 @@
       \item \code{news()} now displays \R and package news files within
       the HTML help system if it is available.  If no news file is found,
       a visible \code{NULL} is returned to the console.
+
+      \item \code{as.raster(x)} now also accepts \code{\link{raw}}
+      arrays \code{x} assuming values in \code{0:255}.
     }
   }
 
@@ -96,6 +99,19 @@
 
       \item A \code{coef.maov()} method has been added to allow
       \code{vcov()} to work with multivariate results. (\PR{16380})
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.2.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{cmdscale()} gets new option \code{list.} for increased
+      flexibility when a list should be returned.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
     }
   }
 }
@@ -213,7 +229,7 @@
 
       \item \code{slotNames(.)} is now correct for \code{"signature"}
       objects (mostly used internally in \pkg{methods}).
-      
+
       \item On some systems, the first string comparison after
       a locale change would result in \code{NA}.
     }

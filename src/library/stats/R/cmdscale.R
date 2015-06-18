@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cmdscale.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,10 +16,15 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
+cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
+		      list. = eig || add || x.ret)
 {
     if (anyNA(d))
 	stop("NA values not allowed in 'd'")
+    if(!list.) {
+	if (eig)  warning(  "eig=TRUE is disregarded when list.=FALSE")
+	if(x.ret) warning("x.ret=TRUE is disregarded when list.=FALSE")
+    }
     if (is.null(n <- attr(d, "Size"))) {
         if(add) d <- as.matrix(d)
 	x <- as.matrix(d^2)
@@ -27,7 +32,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	if ((n <- nrow(x)) != ncol(x))
 	    stop("distances must be result of 'dist' or a square matrix")
         rn <- rownames(x)
-    } else {
+    } else { # d is  dist()-like  object
         rn <- attr(d, "Labels")
 	x <- matrix(0, n, n) # must be double
         if (add) d0 <- x
@@ -73,7 +78,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     }
     points <- evec * rep(sqrt(ev), each=n)
     dimnames(points) <- list(rn, NULL)
-    if (eig || x.ret || add) {
+    if (list.) {
         evalus <- e$values # Cox & Cox have sum up to n-1, though
         list(points = points, eig = if(eig) evalus, x = if(x.ret) x,
              ac = if(add) add.c else 0,
