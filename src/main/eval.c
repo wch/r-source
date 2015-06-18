@@ -216,7 +216,7 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 	    get_current_mem(&smallv, &bigv, &nodes);
 	    if((len = strlen(buf)) < PROFLINEMAX)
 		snprintf(buf+len, PROFBUFSIZ - len,
-			 ":%lu:%lu:%lu:%lu:", 
+			 ":%lu:%lu:%lu:%lu:",
 			 (unsigned long) smallv, (unsigned long) bigv,
 			 (unsigned long) nodes, get_duplicate_counter());
 	    reset_duplicate_counter();
@@ -1218,7 +1218,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
     UNPROTECT(1);
     return tmp;
 }
-    
+
 SEXP attribute_hidden do_forceAndCall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n = asInteger(eval(CADR(call), rho));
@@ -2693,7 +2693,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 						call, 0));
 		else {
 		    PROTECT(argValue = CONS_NR(x, evalArgs(CDR(argValue), rho,
-							dropmissing, call, 1)));
+							   dropmissing, call, 1)));
 		    SET_TAG(argValue, CreateTag(TAG(args)));
 		}
 		nprotect++;
@@ -3184,7 +3184,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     /* no error checking since only called with tag != 0 */
     SEXP value;
     switch (s->tag) {
-    case REALSXP: 
+    case REALSXP:
 #ifdef CACHE_SCALARS
 	if (R_CachedScalarReal != NULL) {
 	    value = R_CachedScalarReal;
@@ -3348,7 +3348,7 @@ static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 #ifdef TYPED_STACK
     int tag = s->tag;
 
-    if (tag) 
+    if (tag)
 	switch(tag) {
 	case REALSXP: v->dval = s->u.dval; return tag;
 	case INTSXP: v->ival = s->u.ival; return tag;
@@ -3708,26 +3708,26 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 
 	{"expm1", NULL, expm1},
 	{"log1p", NULL, log1p},
-	
+
 	{"cos", NULL, cos},
 	{"sin", NULL, sin},
 	{"tan", NULL, tan},
 	{"acos", NULL, acos},
 	{"asin", NULL, asin},
 	{"atan", NULL, atan},
-	
+
 	{"cosh", NULL, cosh},
 	{"sinh", NULL, sinh},
 	{"tanh", NULL, tanh},
 	{"acosh", NULL, acosh},
 	{"asinh", NULL, asinh},
 	{"atanh", NULL, atanh},
-	
+
 	{"lgamma", NULL, lgammafn},
 	{"gamma", NULL, gammafn},
 	{"digamma", NULL, digamma},
 	{"trigamma", NULL, trigamma},
-	
+
 	{"cospi", NULL, cospi},
 	{"sinpi", NULL, sinpi},
 #ifndef HAVE_TANPI
@@ -3736,7 +3736,7 @@ static struct { const char *name; SEXP sym; double (*fun)(double); }
 	{"tanpi", NULL, Rtanpi}
 #endif
     };
-    
+
 static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
     if (math1funs[i].sym == NULL)
 	math1funs[i].sym = install(math1funs[i].name);
@@ -3744,7 +3744,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	error("math1 compiler/interpreter mismatch");
     return math1funs[i].fun;
 }
-    
+
 #define DO_MATH1() do {							\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
 	double (*fun)(double) = getMath1Fun(GETOP(), call);		\
@@ -4011,7 +4011,7 @@ static R_INLINE SEXP BINDING_VALUE(SEXP loc)
    table is used as the cache index.  Two options can be used to chose
    among implementation strategies:
 
-       If CACHE_ON_STACK is defined the the cache is allocated on the
+       If CACHE_ON_STACK is defined the cache is allocated on the
        byte code stack. Otherwise it is allocated on the heap as a
        VECSXP.  The stack-based approach is more efficient, but runs
        the risk of running out of stack space.
@@ -4852,7 +4852,7 @@ static R_INLINE void VECSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 
 static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 				      R_bcstack_t *si, R_bcstack_t *sj,
-				      R_bcstack_t *sv, 
+				      R_bcstack_t *sv,
 				      SEXP rho, SEXP consts, int callidx,
 				      Rboolean subassign2)
 {
@@ -4909,7 +4909,7 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 
 static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 				     R_bcstack_t *srhs,
-				     R_bcstack_t *si, R_bcstack_t *sv, 
+				     R_bcstack_t *si, R_bcstack_t *sv,
 				     SEXP rho, SEXP consts, int callidx,
 				     Rboolean subassign2)
 {
@@ -5024,13 +5024,13 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 #define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
 
 static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
-						    SEXP constants) 
+						    SEXP constants)
 {
 #ifdef TYPED_STACK
     if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL)
 	return s->u.ival;
 #endif
-    SEXP value = GETSTACK_PTR(s); 
+    SEXP value = GETSTACK_PTR(s);
     if (IS_SCALAR(value, LGLSXP) && LOGICAL(value)[0] != NA_LOGICAL)
 	return LOGICAL(value)[0];
     else {

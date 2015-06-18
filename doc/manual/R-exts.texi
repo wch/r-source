@@ -8273,7 +8273,7 @@ In general the representation of each object follows the format:
 @@<address> <type-nr> <type-name> <gc-info> [<flags>] ...
 @end smallexample
 
-For a more fine-grained control over the the depth of the recursion
+For a more fine-grained control over the depth of the recursion
 and the output of vectors @code{R_inspect3} takes additional two character()
 parameters: maximum depth and the maximal number of elements that will
 be printed for scalar vectors. The defaults in @code{R_inspect} are
@@ -11123,7 +11123,7 @@ is created by
 @noindent
 Note the symbol given to identify the usage of the external pointer, and
 the use of the finalizer.  Since the final argument when registering the
-finalizer is @code{TRUE}, the finalizer will be run at the the of the
+finalizer is @code{TRUE}, the finalizer will be run at the of the
 @R{} session (unless it crashes).  This is used to close and clean up
 the connection to the database.  The finalizer code is simply
 

@@ -3252,7 +3252,7 @@ returned.  C functions @code{doMouseEvent} and @code{doKeybd} are
 provided to call the R event handlers @code{onMouseDown},
 @code{onMouseMove}, @code{onMouseUp}, and @code{onKeybd} and set
 @code{eventEnv$result} during this step.  Finally, @code{initEvent} is
-called again with @code{init=false} to inform the the devices that the
+called again with @code{init=false} to inform the devices that the
 loop is done, and the result is returned to the user.
 
 @node Specific devices,  , Graphics events, Graphics devices

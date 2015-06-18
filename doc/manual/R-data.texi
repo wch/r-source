@@ -1477,7 +1477,7 @@ database system.
 Windows provides drivers not just for DBMSs but also for Excel
 (@file{.xls}) spreadsheets, DBase (@file{.dbf}) files and even text
 files.  (The named applications do @emph{not} need to be
-installed. Which file formats are supported depends on the the versions
+installed. Which file formats are supported depends on the versions
 of the drivers.)  There are versions for Excel and Access 2007/2010 (go
 to @uref{http://download.microsoft.com}, and search for `Office ODBC',
 which will lead to @file{AccessDatabaseEngine.exe}), the `2007 Office

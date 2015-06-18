@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2015 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.readlink}
@@ -23,7 +23,7 @@ Sys.readlink(paths)
     see \code{\link{path.expand}}.}
 }
 \value{
-  A character vector of the the same length as \code{paths}.  The
+  A character vector of the same length as \code{paths}.  The
   entries are the path of the file linked to, \code{""} if the path is
   not a symbolic link, and \code{NA} if there is an error (e.g., the
   path does not exist).
