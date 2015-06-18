@@ -1255,7 +1255,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 	R_varloc_t loc;
 	int missing;
 	loc = R_findVarLocInFrame(rho,symbol);
-	if(loc == NULL)
+	if(R_VARLOC_IS_NULL(loc))
 	    error(_("could not find symbol \"%s\" in environment of the generic function"),
 		  CHAR(PRINTNAME(symbol)));
 	missing = R_GetVarLocMISSING(loc);
@@ -1463,8 +1463,8 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
     if (rho == R_BaseEnv || rho == R_BaseNamespace)
 	return R_NilValue;
     else {
-	SEXP loc = (SEXP) R_findVarLocInFrame(rho, symbol);
-	return (loc != NULL) ? loc : R_NilValue;
+	R_varloc_t loc = R_findVarLocInFrame(rho, symbol);
+	return (! R_VARLOC_IS_NULL(loc)) ? loc.cell : R_NilValue;
     }
 }
 
@@ -1991,9 +1991,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rho == R_BaseEnv)
 	errorcall(call, _("cannot do complex assignments in base environment"));
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
-    PROTECT((SEXP) (tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol)));
-    DISABLE_REFCNT((SEXP) tmploc);
-    DECREMENT_REFCNT(CDR((SEXP) tmploc));
+    tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
+    PROTECT(tmploc.cell);
+    DISABLE_REFCNT(tmploc.cell);
+    DECREMENT_REFCNT(CDR(tmploc.cell));
 
     /* Now set up a context to remove it when we are done, even in the
      * case of an error.  This all helps error() provide a better call.

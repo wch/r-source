@@ -947,31 +947,33 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 R_varloc_t R_findVarLocInFrame(SEXP rho, SEXP symbol)
 {
     SEXP binding = findVarLocInFrame(rho, symbol, NULL);
-    return binding == R_NilValue ? NULL : (R_varloc_t) binding;
+    R_varloc_t val;
+    val.cell = binding == R_NilValue ? NULL : binding;
+    return val;
 }
 
 attribute_hidden
 SEXP R_GetVarLocValue(R_varloc_t vl)
 {
-    return BINDING_VALUE((SEXP) vl);
+    return BINDING_VALUE(vl.cell);
 }
 
 attribute_hidden
 SEXP R_GetVarLocSymbol(R_varloc_t vl)
 {
-    return TAG((SEXP) vl);
+    return TAG(vl.cell);
 }
 
 /* used in methods */
 Rboolean R_GetVarLocMISSING(R_varloc_t vl)
 {
-    return MISSING((SEXP) vl);
+    return MISSING(vl.cell);
 }
 
 attribute_hidden
 void R_SetVarLocValue(R_varloc_t vl, SEXP value)
 {
-    SET_BINDING_VALUE((SEXP) vl, value);
+    SET_BINDING_VALUE(vl.cell, value);
 }
 
 

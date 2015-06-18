@@ -998,7 +998,8 @@ Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 
 /* environment cell access */
-typedef struct R_varloc_st *R_varloc_t;
+typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */
+#define R_VARLOC_IS_NULL(loc) ((loc).cell == NULL)
 R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
 SEXP R_GetVarLocValue(R_varloc_t);
 SEXP R_GetVarLocSymbol(R_varloc_t);
