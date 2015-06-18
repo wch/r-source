@@ -1,7 +1,7 @@
 #  File src/library/stats/R/acf.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1999-2013 The R Core Team
+#  Copyright (C) 1999-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ acf <-
     type <- match.arg(type)
     if(type == "partial") {
         m <- match.call()
+        ## need stats:: for non-standard evaluation
         m[[1L]] <- quote(stats::pacf)
         m$type <- NULL
         return(eval(m, parent.frame()))

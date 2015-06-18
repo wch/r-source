@@ -1,7 +1,7 @@
 #  File src/library/stats/R/loess.R
 #  Part of the R package, http://www.R-project.org
 #
-#  Copyright (C) 1998-2013 The R Core Team
+#  Copyright (C) 1998-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     mf$model <- mf$span <- mf$enp.target <- mf$degree <-
 	mf$parametric <- mf$drop.square <- mf$normalize <- mf$family <-
 	    mf$method <- mf$control <- mf$... <- NULL
+    ## need stats:: for non-standard evaluation
     mf[[1L]] <- quote(stats::model.frame)
     mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)

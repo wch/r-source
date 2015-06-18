@@ -97,6 +97,7 @@ sunflowerplot.formula <-
 	m$data <- as.data.frame(data)
     m$xlab <- m$ylab <- m$... <- NULL
     m$na.action <- na.action # force use of default for this method
+    ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::model.frame)
     mf <- eval(m, parent.frame())
     if(NCOL(mf) != 2L)
