@@ -110,10 +110,10 @@
       flexibility when a list should be returned.
     }
   }
-  \subsection{BUG FIXES}{
-    \itemize{
-    }
-  }
+%%   \subsection{BUG FIXES}{
+%%     \itemize{
+%%     }
+%%   }
 }
 
 \section{\Rlogo CHANGES IN R 3.2.1}{
